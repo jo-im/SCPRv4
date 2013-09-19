@@ -41,50 +41,45 @@
 
             contents: [{
               id: "main",
-              elements: [
-                {
-                  id          : 'embed-notification',
-                  className   : "embed-notification",
-                  type        : 'html',
-                  html        : "<strong>There are no embeds yet! Add them below.</strong>"
-                },
-                {
-                  id    : 'embed-selection',
-                  className : 'embed-selection',
-                  type  : 'radio',
-                  label : "Select Embed",
-                  items: [""] // This has to be here or CKEditor complains
-                } // element
-              ] // elements
+              elements: [] // ckeditor complains if this is missing.
             }], // contents
 
+            onLoad: function() {
+              var dialogEl = $(this.parts.contents.$)
+
+              this.noEmbedNotification = $('<strong />', {
+                text    : "There are no embeds yet. Add them in the Embeds section.",
+                class   : "embed-notification"
+              })
+
+              this.embedSelectHeader = $('<strong />', {
+                text : "Select an Embed"
+              })
+
+              this.inputsWrapper = $('<ul />', {
+                class: 'cke_dialog_ui_radio'
+              })
+
+              dialogEl.append(this.noEmbedNotification)
+              dialogEl.append(this.embedSelectHeader)
+              dialogEl.append(this.inputsWrapper)
+            },
+
             onShow: function() {
-              var notificationClass = $('.embed-notification'),
-                  radioClass        = $('.embed-selection'),
-                  radioWrapper      = $('.cke_dialog_ui_radio'),
-                  embeds            = plugin.findEmbeds(),
-                  radioUl           = $("<ul />");
+              var embeds = plugin.findEmbeds();
 
-              // Clear out existing selection options,
-              // append the empty UL
-              radioWrapper.html(radioUl)
-
-              // I don't want to talk about this. Move along.
-              // Because we're using jQuery to clear out the radioWrapper
-              // directly from the DOM, ckeditor still thinks that it has
-              // some child elements. So we have to hack into the 
-              // uiElement so ckeditor doesn't go looking for those children,
-              // which was causing a javascript error.
-              this._.contents['main']['embed-selection']._.children = []
-              this._.contents['main']['embed-notification']._.children = []
+              // Clear out existing radio buttons.
+              this.inputsWrapper.empty()
 
               // Handle the "No Embeds" notification
               if(embeds.length) {
-                notificationClass.hide()
+                this.noEmbedNotification.hide()
+                this.embedSelectHeader.show()
               } else {
                 // If there are no embeds, show the notification
                 // and return - no need to continue.
-                notificationClass.show()
+                this.noEmbedNotification.show()
+                this.embedSelectHeader.hide()
                 return
               }
 
@@ -95,16 +90,29 @@
                     title       = embed.title,
                     url         = embed.url,
                     elId        = "cke_embed_"+i+"_uiElement",
-                    labelId     = "cke_embed_"+i+"_radio_input_label";
+                    labelId     = "cke_embed_"+i+"_radio_input_label",
+                    li          = $("<li />");
 
-                var radioLi = $("<li />")
+                var input = $('<input />', {
+                  'type'    : 'radio',
+                  'class'   : 'embed-selection cke_dialog_ui_radio_input',
+                  'name'    : 'embed-selection_radio',
+                  'id'      : elId,
+                  'value'   : "<a href=\'"+url+"\' " +
+                              "class=\'embed-placeholder\'>"+title+"</a>"
+                })
 
-                radioLi.append('<input type="radio" class="embed-selection cke_dialog_ui_radio_input" ' +
-                'name="embed-selection_radio" value="&lt;a href=\''+url+'\' class=\'embed-placeholder\'&gt;'+title+'&lt;/a&gt;" ' +
-                'aria-labelledby="'+labelId+'" id="'+elId+'">')
+                var label = $('<label />', {
+                  'id'      : labelId,
+                  'for'     : elId,
+                  'class'   : 'embed-selection',
+                  'text'    : title
+                })
 
-                radioLi.append('<label id="'+labelId+'" for="'+elId+'" class="embed-selection">'+title+'</label>')
-                radioUl.append(radioLi)
+                li.html(input)
+                li.append(label)
+
+                this.inputsWrapper.append(li)
               }
             },
 
