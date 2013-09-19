@@ -9,7 +9,7 @@ $ ->
     $('.cke-editor-restrictive').ckeditor({
         # P and BR are added by CKEditor
         extraAllowedContent: [
-            "a[*](*){*}",
+            "a[*](*)",
             "img[*](*){*}",
             "strong", "em", "small",
             "u", "s", "i", "b",
