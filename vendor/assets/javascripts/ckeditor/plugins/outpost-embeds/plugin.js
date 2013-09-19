@@ -62,10 +62,21 @@
               var notificationClass = $('.embed-notification'),
                   radioClass        = $('.embed-selection'),
                   radioWrapper      = $('.cke_dialog_ui_radio'),
-                  embeds            = plugin.findEmbeds();
+                  embeds            = plugin.findEmbeds(),
+                  radioUl           = $("<ul />");
 
-              // Clear out existing selection options
-              radioWrapper.empty()
+              // Clear out existing selection options,
+              // append the empty UL
+              radioWrapper.html(radioUl)
+
+              // I don't want to talk about this. Move along.
+              // Because we're using jQuery to clear out the radioWrapper
+              // directly from the DOM, ckeditor still thinks that it has
+              // some child elements. So we have to hack into the 
+              // uiElement so ckeditor doesn't go looking for those children,
+              // which was causing a javascript error.
+              this._.contents['main']['embed-selection']._.children = []
+              this._.contents['main']['embed-notification']._.children = []
 
               // Handle the "No Embeds" notification
               if(embeds.length) {
@@ -80,24 +91,26 @@
               // Loop through existing embeds and append them to the
               // list in the dialog.
               for(var i=0; i < embeds.length; i++) {
-                var embed = embeds[i],
-                    title = embed.title,
-                    url   = embed.url
+                var embed       = embeds[i],
+                    title       = embed.title,
+                    url         = embed.url,
+                    elId        = "cke_embed_"+i+"_uiElement",
+                    labelId     = "cke_embed_"+i+"_radio_input_label";
 
+                var radioLi = $("<li />")
 
-                var newRadio = '<input type="radio" class="embed-selection cke_dialog_ui_radio_input" ' +
+                radioLi.append('<input type="radio" class="embed-selection cke_dialog_ui_radio_input" ' +
                 'name="embed-selection_radio" value="&lt;a href=\''+url+'\' class=\'embed-placeholder\'&gt;'+title+'&lt;/a&gt;" ' +
-                'aria-labelledby="cke_52_radio_input_label" id="cke_53_uiElement">'
+                'aria-labelledby="'+labelId+'" id="'+elId+'">')
 
-                newRadio += '<label id="cke_52_radio_input_label" for="cke_53_uiElement" class="embed-selection">'+title+'</label>'
-                radioWrapper.append(newRadio)
+                radioLi.append('<label id="'+labelId+'" for="'+elId+'" class="embed-selection">'+title+'</label>')
+                radioUl.append(radioLi)
               }
             },
 
             onOk: function() {
               if($("input.embed-selection").length) {
                 var p = instance.document.createElement('p');
-                console.log($('input.embed-selection:checked').val())
                 p.setHtml($('input.embed-selection:checked').val());
                 instance.insertElement(p);
               }
