@@ -43,57 +43,62 @@
               id: "main",
               elements: [
                 {
-                  id    : 'embed-notification',
-                  type  : 'html',
-                  html  : "<strong>There are no embeds yet! Add them below.</strong>"
+                  id          : 'embed-notification',
+                  className   : "embed-notification",
+                  type        : 'html',
+                  html        : "<strong>There are no embeds yet! Add them below.</strong>"
                 },
                 {
                   id    : 'embed-selection',
+                  className : 'embed-selection',
                   type  : 'radio',
                   label : "Select Embed",
-                  items: [""]
+                  items: [""] // This has to be here or CKEditor complains
                 } // element
               ] // elements
             }], // contents
 
             onShow: function() {
-              var notification = this.getContentElement('main', 'embed-notification'),
-                  embeds       = plugin.findEmbeds();
+              var notificationClass = $('.embed-notification'),
+                  radioClass        = $('.embed-selection'),
+                  radioWrapper      = $('.cke_dialog_ui_radio'),
+                  embeds            = plugin.findEmbeds();
 
+              // Clear out existing selection options
+              radioWrapper.empty()
+
+              // Handle the "No Embeds" notification
               if(embeds.length) {
-                notification.hide()
+                notificationClass.hide()
               } else {
-                notification.show()
+                // If there are no embeds, show the notification
+                // and return - no need to continue.
+                notificationClass.show()
+                return
               }
 
-              return;
-
+              // Loop through existing embeds and append them to the
+              // list in the dialog.
               for(var i=0; i < embeds.length; i++) {
                 var embed = embeds[i],
                     title = embed.title,
                     url   = embed.url
 
-                el.append(url)
 
-                // items.push([
-                //   title + " (" + url + ")",
-                //   "<a href='"+url+"' class='embed-placeholder'>"+title+"</a>"
-                // ]);
-              }
+                var newRadio = '<input type="radio" class="embed-selection cke_dialog_ui_radio_input" ' +
+                'name="embed-selection_radio" value="&lt;a href=\''+url+'\' class=\'embed-placeholder\'&gt;'+title+'&lt;/a&gt;" ' +
+                'aria-labelledby="cke_52_radio_input_label" id="cke_53_uiElement">'
 
-              var elements = this.definition.getContents('main').elements;
-              for(var i = 0; i < elements.length; i++) {
-                var el   = elements[i],
-                    func = el.onShow;
-
-                if(func) func.apply(el);
+                newRadio += '<label id="cke_52_radio_input_label" for="cke_53_uiElement" class="embed-selection">'+title+'</label>'
+                radioWrapper.append(newRadio)
               }
             },
 
             onOk: function() {
-              if($("#embed-selection").length) {
+              if($("input.embed-selection").length) {
                 var p = instance.document.createElement('p');
-                p.setHtml(this.getValueOf('main', 'embed-selection'));
+                console.log($('input.embed-selection:checked').val())
+                p.setHtml($('input.embed-selection:checked').val());
                 instance.insertElement(p);
               }
             }
