@@ -3,4 +3,9 @@
 // CKEditor body.
 body.ckeditor-body {
   padding: 10px;
+
+  .embed-placeholder {
+    color: #ff0000;
+    &:before { content: "[EMBED] " }
+  }
 }
