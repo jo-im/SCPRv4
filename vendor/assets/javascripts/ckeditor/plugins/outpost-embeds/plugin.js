@@ -53,7 +53,7 @@
               })
 
               this.embedSelectHeader = $('<strong />', {
-                text : "Select an Embed"
+                text : "Select an Embed to insert into the post body:"
               })
 
               this.inputsWrapper = $('<ul />', {
