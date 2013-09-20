@@ -30,6 +30,7 @@ module TestClass
         :teaser             => self.teaser,
         :body               => self.body,
         :assets             => self.assets,
+        :embeds             => self.embeds,
         :byline             => "KPCC"
       })
     end

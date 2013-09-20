@@ -166,6 +166,7 @@ class ShowSegment < ActiveRecord::Base
       :assets             => self.assets,
       :audio              => self.audio.available,
       :attributions       => self.bylines,
+      :embeds             => self.embeds,
       :byline             => self.byline,
       :edit_url           => self.admin_edit_url
     })

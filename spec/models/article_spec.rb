@@ -26,6 +26,10 @@ describe Article do
     it 'forces audio into an array' do
       article.audio.should eq []
     end
+
+    it 'forces embeds into an array' do
+      article.embeds.should eq []
+    end
   end
 
   describe '#to_article' do
