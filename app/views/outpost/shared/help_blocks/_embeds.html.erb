@@ -1,0 +1,19 @@
+<div class="pull-right">
+  <%= modal_toggle title: "Help: Embeds", id: "embeds-help-modal" do %>
+    <h4>Embeds</h4>
+    To add an embed to a post body:
+
+    <ol>
+      <li>Fill in the fields in the "EMBEDS" section for as many embeds as you need.</li>
+      <li>In the WYSIWYG, place the caret where you want the embed to be inserted.</li>
+      <li>Click the Embeds icon in the WYSIWYG.</li>
+      <li>Select the Embed that you want to insert.</li>
+      <li>Click "OK"</li>
+    </ol>
+    <hr />
+
+    <h4>Embed URLs</h4>
+    <p>We use oEmbed to retrieve embed codes. It is important that you provde the canonincal URL to the piece of the content that is to be embedded.</p>
+    <p>If you add the Embed to the post body, but it's just showing up as a normal link on the article page on KPCC.org, then either you provided the wrong URL, or we don't have support for the URL you provided. If the latter, please contact the web team to request support for that URL.</p>
+  <% end %>
+</div>
