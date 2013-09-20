@@ -4,7 +4,7 @@ class scpr.Embedder
         method      : "before"
         className   : "embed-wrapper"
         endpoint    : 'oembed'
-        query       : 
+        query       :
             maxHeight : 450
 
     defaults:
