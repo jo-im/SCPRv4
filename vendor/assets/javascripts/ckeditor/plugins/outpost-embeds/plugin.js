@@ -106,7 +106,7 @@
                   'id'      : labelId,
                   'for'     : elId,
                   'class'   : 'embed-selection',
-                  'text'    : title
+                  'text'    : title + " (" + url + ")"
                 })
 
                 li.html(input)
