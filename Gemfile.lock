@@ -58,6 +58,14 @@ GIT
       faraday (>= 0.8.0)
       faraday_middleware (>= 0.9.0)
 
+GIT
+  remote: git://github.com/bricker/turbo-sprockets-rails3.git
+  revision: cb58096e55dd7805e4c6f8cc37e65dd230f27ac9
+  specs:
+    turbo-sprockets-rails3 (0.3.10)
+      railties (> 3.2.8, < 4.0.0)
+      sprockets (>= 2.0.0)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -362,9 +370,6 @@ GEM
     treetop (1.4.15)
       polyglot
       polyglot (>= 0.3.1)
-    turbo-sprockets-rails3 (0.3.10)
-      railties (> 3.2.8, < 4.0.0)
-      sprockets (>= 2.0.0)
     twitter (4.8.1)
       faraday (~> 0.8, < 0.10)
       multi_json (~> 1.0)
@@ -444,7 +449,7 @@ DEPENDENCIES
   sqlite3
   test_after_commit
   thinking-sphinx (~> 2.0.14)
-  turbo-sprockets-rails3 (~> 0.3.9)
+  turbo-sprockets-rails3!
   twitter (~> 4.1)
   twitter-text (~> 1.5)
   uglifier (>= 1.3)
