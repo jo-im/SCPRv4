@@ -40,8 +40,8 @@ CKEDITOR.editorConfig = (config) ->
     config.height       = "400px"
     config.width        = "635px"
     config.bodyClass    = 'ckeditor-body'
-    config.contentsCss  = "/assets/application.css"
-    config.baseHref     = "http://www.scpr.org/"
+    config.contentsCss  = "/assets/application.css?20130920"
+    config.baseHref     = BASE_HREF
 
     config.disableNativeSpellChecker    = false
     config.forcePasteAsPlainText        = true
