@@ -75,7 +75,7 @@ group :assets do
   gem "compass-rails"
   gem 'coffee-rails', "~> 3.2"
   gem 'uglifier', '>= 1.3'
-  gem 'turbo-sprockets-rails3', github: "bricker/turbo-sprockets-rails3"
+  gem 'turbo-sprockets-rails3', github: "bricker/turbo-sprockets-rails3", branch: 'force-utf8'
 end
 
 
