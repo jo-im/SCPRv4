@@ -78,7 +78,7 @@ Scprv4::Application.configure do
   config.dbsync.remote_host = "scprdb@66.226.4.229"
   config.dbsync.remote_dir  = "~scprdb"
 
-  default_url_options[:host] = "www.scpr.org"
+  default_url_options[:host] = "staging.scprdev.org"
 
   config.scpr.host         = "staging.scprdev.org"
   config.scpr.media_root   = "/home/kpcc/media"
