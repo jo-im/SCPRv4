@@ -5,7 +5,7 @@ class scpr.Embedder
         className   : "embed-wrapper"
         endpoint    : 'oembed'
         query       :
-            maxHeight : 450
+            maxheight : 450
 
     defaults:
         placeholderFinder   : "embed-placeholder"
