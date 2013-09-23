@@ -60,8 +60,8 @@ GIT
 
 GIT
   remote: git://github.com/bricker/turbo-sprockets-rails3.git
-  revision: 50caeed8907d3bc0c04437763c8f8be87d80282d
-  branch: force-utf8
+  revision: 5102c06677f80aeb9f9cf77fdd6f39b439420e70
+  branch: utf8-conversion
   specs:
     turbo-sprockets-rails3 (0.3.10)
       railties (> 3.2.8, < 4.0.0)
