@@ -23,3 +23,4 @@
 //= require utilities
 //= require collapse
 //= require cms_popup
+//= require reader_bookmarklet

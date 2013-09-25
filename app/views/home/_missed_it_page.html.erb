@@ -5,7 +5,7 @@
       <% contents.map { |c| c.content.to_article }.each do |article| %>
         <% register_content article.original_object %>
         <div class="span4">
-          <div class="carousel-item">
+          <div class="carousel-item" data-vr-contentbox="">
             <%= render_asset article, "thumbnail", true %>
             <span class="title"><%= link_to article.short_title, article.public_url %></span>
           </div>
