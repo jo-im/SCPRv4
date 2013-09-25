@@ -202,7 +202,6 @@ class Event < ActiveRecord::Base
       :body               => self.body,
       :assets             => self.assets,
       :audio              => self.audio.available,
-      :embeds             => self.embeds,
       :byline             => "KPCC",
       :edit_url           => self.admin_edit_url
     })
