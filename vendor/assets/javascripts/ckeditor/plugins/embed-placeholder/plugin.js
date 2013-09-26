@@ -55,6 +55,33 @@
                     }
                   },
                   {
+                    id : 'embedService',
+                    type : 'select',
+                    label : "Service",
+                    items : [
+                      ['Select a Servce:', ''],
+                      ['YouTube', 'youtube'],
+                      ['Vimeo', 'vimeo'],
+                      ['Brightcove', 'brightcove'],
+                      ['Ustream', 'ustream'],
+                      ['Google Maps', 'googlemaps'],
+                      ['Scribd', 'scribd'],
+                      ['DocumentCloud', 'documentcloud'],
+                      ['Polldaddy', 'polldaddy'],
+                      ['Facebook', 'facebook'],
+                      ['Storify', 'storify'],
+                      ['Cover It Live', 'coveritlive'],
+                      ['RebelMouse', 'rebelmouse'],
+                      ['Fire Tracker', 'firetracker'],
+                      ['Twitter', 'twitter'],
+                      ['Vine', 'vine'],
+                      ['Instagram', 'instagram'],
+                      ['SoundCloud', 'soundcloud'],
+                      ['Spotify', 'spotify'],
+                      ['Other', 'other']
+                    ]
+                  },
+                  {
                     id          : 'linkTitle',
                     type        : 'text',
                     label       : 'Link Title'
@@ -72,7 +99,8 @@
             onOk: function() {
               var url         = this.getContentElement('embed', 'embedUrl').getValue(),
                   title       = this.getContentElement('embed', 'linkTitle').getValue(),
-                  maxheight   = this.getContentElement('embed', 'embedMaxHeight').getValue();
+                  maxheight   = this.getContentElement('embed', 'embedMaxHeight').getValue(),
+                  service     = this.getContentElement('embed', 'embedService').getValue();
 
               if(title === "") title = url;
 
@@ -88,7 +116,8 @@
                 'text'            : title
               }
 
-              if(maxheight !== "") tagProps['data-maxheight'] = maxheight
+              if(maxheight !== "") tagProps['data-maxheight'] = maxheight;
+              if(service !== "") tagProps['data-service'] = service;
 
               var tag = $("<a />", tagProps);
 
