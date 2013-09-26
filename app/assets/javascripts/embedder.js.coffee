@@ -1,32 +1,22 @@
 class scpr.Embedder
-    embedlyDefaults :
-        key         : "0cb3651dde4740db8fcb147850c6b555"
-        method      : "before"
-        className   : "embed-wrapper"
-        endpoint    : 'oembed'
-
-    displayDefaults :
-        placeholderFinder   : "embed-placeholder"
-        wrapperClass        : "embed-wrapper"
+    placeholderFinder : "embed-placeholder"
 
 
-    constructor: (@options={}) ->
-        @displayOptions     = _.defaults(@options['display'] || {}, @displayDefaults)
-        @embedlyOptions     = _.defaults(@options['embedly'] || {}, @embedlyDefaults)
-
-        @embeds = $(@_classify(@displayOptions.placeholderFinder))
-        @swapEmbeds()
+    constructor: ->
+        @placeholders = []
+        @links = $(@_classify @placeholderFinder)
+        @findEmbeds()
 
 
-    swapEmbeds: ->
-        for placeholder in @embeds
-            placeholder = $(placeholder)
+    swap: ->
+        placeholder.swap() for placeholder in @placeholders
 
-            params         = _.defaults({}, @embedlyOptions)
-            params.query   = _.defaults(placeholder.data(), params.query)
 
-            console.log(params)
-            placeholder.embedly(params)
+    findEmbeds: ->
+        for link in @links
+            link = $(link)
+            placeholder = new scpr.EmbedPlaceholder(link)
+            @placeholders.push(placeholder)
 
 
     _classify: (str) ->

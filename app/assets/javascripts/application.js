@@ -13,6 +13,7 @@
 //= require audio
 //= require modal
 //= require gmapsloader
+//= require embed_placeholder
 //= require embedder
 //= require hero_fader
 //= require presentation
