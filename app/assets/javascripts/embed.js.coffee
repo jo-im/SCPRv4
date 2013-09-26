@@ -18,6 +18,8 @@ class scpr.Embed
         'spotify'       : 'Embedly'
         'other'         : 'Embedly'
 
+    @defaultHandler = 'Embedly'
+    @defaultService = 'other'
 
     constructor: ->
         @placeholders = []
@@ -33,8 +35,15 @@ class scpr.Embed
         for link in @links
             link = $(link)
 
-            service = link.data('service') || 'other'
-            handler = Embed.embedHandlers[service]
+            # If "service" is blank in the CKEditor dialog, then it will
+            # omit that data-attribute from the tag, and therefore
+            # be undefined. In this scenario, we want to use the default
+            # service as a fallback.
+            #
+            # If "service" is present but has no match in the Handlers object,
+            # then we want to use the default handler as a fallback.
+            service = link.data('service') || Embed.defaultService
+            handler = Embed.embedHandlers[service] || Embed.defaultHandler
 
             placeholder = new scpr.Embed[handler](link)
             @placeholders.push(placeholder)
