@@ -1,19 +1,24 @@
 class scpr.Embed
-    @placeholderFinder = "embed-placeholder"
+    @placeholderFinder  = "embed-placeholder"
+    @wrapperClass       = "embed-wrapper"
 
     @embedHandlers =
         'youtube'       : 'Embedly'
         'vimeo'         : 'Embedly'
-        'vine'          : 'Embedly'
-        'brightcove'    : 'Embedly'
+        # 'brightcove'    : 'Embedly'
         'ustream'       : 'Embedly'
-        'twitter'       : 'Embedly'
-        'instagram'     : 'Embedly'
-        'facebook'      : 'Embedly'
-        'googlemaps'    : 'Embedly'
-        'polldaddy'     : 'Embedly'
+        'vine'          : 'Embedly'
+        # 'googlemaps'    : 'Embedly'
         'scribd'        : 'Embedly'
-        'storify'       : 'Embedly'
+        # 'documentcloud' : 'DocumentCloud'
+        # 'polldaddy'     : 'Embedly'
+        'facebook'      : 'Embedly'
+        # 'storify'       : 'Embedly'
+        # 'coveritlive'   : 'CoverItLive'
+        # 'rebelmouse'    : 'RebelMouse'
+        # 'firetracker'   : 'FireTracker'
+        # 'twitter'       : 'Embedly'
+        'instagram'     : 'Embedly'
         'soundcloud'    : 'Embedly'
         'spotify'       : 'Embedly'
         'other'         : 'Embedly'

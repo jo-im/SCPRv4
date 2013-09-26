@@ -8,7 +8,7 @@ class scpr.Embed.Embedly extends scpr.Embed.Placeholder
     @embedlyDefaults =
         key         : "0cb3651dde4740db8fcb147850c6b555"
         method      : "before"
-        className   : "embed-wrapper"
+        className   : scpr.Embed.wrapperClass
         endpoint    : 'oembed'
 
 
