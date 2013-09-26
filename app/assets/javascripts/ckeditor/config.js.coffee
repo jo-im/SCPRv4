@@ -1,6 +1,12 @@
 # Global Configuration
 CKEDITOR.editorConfig = (config) ->
-    config.extraPlugins = 'mediaembed,codemirror,autosave,embed-placeholder'
+    config.extraPlugins = [
+        'mediaembed',
+        'codemirror',
+        'autosave',
+        'embed-placeholder',
+        'webkit-span-fix'
+    ].join(',')
 
     config.codemirror =
         # https://github.com/w8tcha/CKEditor-CodeMirror-Plugin 
