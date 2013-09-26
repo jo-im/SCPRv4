@@ -44,7 +44,9 @@
                   {
                     id          : 'embedUrl',
                     type        : 'text',
-                    label       : 'oEmbed URL',
+                    label       : 'oEmbed URL (<a href="' +
+                                  'https://github.com/SCPR/oembed-manual/tree/master/services#readme' +
+                                  '" target="_blank">Help</a>)',
                     autofocus   : 'autofocus',
 
                     validate : function() {
