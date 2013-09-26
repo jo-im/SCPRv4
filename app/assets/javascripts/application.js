@@ -9,12 +9,15 @@
 //= require_tree ./slideshow/templates
 //= require slideshow/slideshow
 
+//= require embed
+//= require embed/placeholder
+//= require embed/embedly
+//= require embed/document_cloud
+
 //= require content_carousel
 //= require audio
 //= require modal
 //= require gmapsloader
-//= require embed_placeholder
-//= require embedder
 //= require hero_fader
 //= require presentation
 //= require listen_live

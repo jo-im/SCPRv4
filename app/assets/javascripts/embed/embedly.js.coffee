@@ -1,4 +1,4 @@
-class scpr.EmbedPlaceholder
+class scpr.Embed.Embedly extends scpr.Embed.Placeholder
     # This object should hold any keys that we want to
     # send to the API. Any key not in this object will
     # be ignored as a data attribute.
@@ -12,27 +12,26 @@ class scpr.EmbedPlaceholder
         endpoint    : 'oembed'
 
 
-    buildEmbedlyParams: (queryParams) ->
-        if @embedlyParams
-            return @embedlyParams
-
-        @embedlyParams = _.extend(
-            EmbedPlaceholder.embedlyDefaults,
-            query : queryParams)
-
-
     constructor: (@element) ->
         data = {}
 
         for key,val of @element.data()
             # Make sure we care about this attribute
-            if EmbedPlaceholder.queryDefaults[key]
+            if Embedly.queryDefaults[key]
                 data[key] = val
 
-        @queryParams = _.defaults data, EmbedPlaceholder.queryDefaults
+        @queryParams = _.defaults data, Embedly.queryDefaults
 
 
     swap: ->
-        params = @buildEmbedlyParams(@queryParams)
+        params = @_buildEmbedlyParams(@queryParams)
         @element.embedly(params)
 
+
+    _buildEmbedlyParams: (queryParams) ->
+        if @embedlyParams
+            return @embedlyParams
+
+        @embedlyParams = _.extend(
+            Embedly.embedlyDefaults,
+            query : queryParams)
