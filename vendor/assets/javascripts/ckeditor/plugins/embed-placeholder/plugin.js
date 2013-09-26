@@ -37,7 +37,7 @@
                   {
                     id : "alpha-warning",
                     type : 'html',
-                    html : '<span style="color:#ff0000">Warning: ' +
+                    html : '<span style="color:#ff0000">' +
                            'This feature is still a WIP, and you may see ' +
                            'some rendering errors. Please report any problems.</span>'
                   },
@@ -57,7 +57,10 @@
                   {
                     id : 'embedService',
                     type : 'select',
-                    label : "Service",
+                    label : 'Service<br /><span style="color:#ff0000">' +
+                            'If a service is not listed here, then it is not ' +
+                            'officially supported. You may select "Other" ' +
+                            'to try it out.</span>',
                     items : [
                       ['Select a Servce:', ''],
                       ['YouTube', 'youtube'],
