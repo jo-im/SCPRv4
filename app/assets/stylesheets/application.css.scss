@@ -42,6 +42,7 @@
 @import 'specials/election';
 
 // Put these at the bottom for overriding
+@import "embed_overrides";
 @import "base/ie-overrides";
 @import "base/responsive";
 
