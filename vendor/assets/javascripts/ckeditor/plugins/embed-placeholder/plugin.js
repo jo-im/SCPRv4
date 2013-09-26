@@ -89,8 +89,11 @@
                   {
                     id          : 'embedMaxHeight',
                     type        : 'text',
-                    label       : 'Embed Maximum Height (px)',
-                    width       : '45px'
+                    label       : 'Embed Maximum Height',
+                    width       : '45px',
+                    onLoad: function() {
+                      $('input', '#'+this.domId).after(' <strong>px</strong>')
+                    }
                   }
                 ]
               }
