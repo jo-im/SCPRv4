@@ -35,6 +35,13 @@
                 id : 'embed',
                 elements : [
                   {
+                    id : "alpha-warning",
+                    type : 'html',
+                    html : '<span style="color:red"><strong>Warning: ' +
+                           'This feature is still a WIP, and you may see ' +
+                           'some rendering errors. Please report any problems.'
+                  },
+                  {
                     id          : 'embedUrl',
                     type        : 'text',
                     label       : 'oEmbed URL',
