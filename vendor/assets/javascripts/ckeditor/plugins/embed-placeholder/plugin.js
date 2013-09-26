@@ -37,9 +37,9 @@
                   {
                     id : "alpha-warning",
                     type : 'html',
-                    html : '<span style="color:red"><strong>Warning: ' +
+                    html : '<span style="color:#ff0000">Warning: ' +
                            'This feature is still a WIP, and you may see ' +
-                           'some rendering errors. Please report any problems.'
+                           'some rendering errors. Please report any problems.</span>'
                   },
                   {
                     id          : 'embedUrl',
@@ -62,7 +62,7 @@
                   {
                     id          : 'embedMaxHeight',
                     type        : 'text',
-                    label       : 'Embed Maximum Height',
+                    label       : 'Embed Maximum Height (px)',
                     width       : '45px'
                   }
                 ]
