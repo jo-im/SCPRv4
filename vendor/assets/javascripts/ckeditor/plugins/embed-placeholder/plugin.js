@@ -76,7 +76,7 @@
                       //['Polldaddy', 'polldaddy'],
                       ['Facebook', 'facebook'],
                       //['Storify', 'storify'],
-                      //['Cover It Live', 'coveritlive'],
+                      ['Cover It Live', 'coveritlive'],
                       //['RebelMouse', 'rebelmouse'],
                       //['Fire Tracker', 'firetracker'],
                       //['Twitter', 'twitter'],

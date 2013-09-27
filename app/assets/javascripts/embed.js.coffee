@@ -14,7 +14,7 @@ class scpr.Embed
         # 'polldaddy'     : 'Embedly'
         'facebook'      : 'Embedly'
         # 'storify'       : 'Embedly'
-        # 'coveritlive'   : 'CoverItLive'
+        'coveritlive'   : 'CoverItLive'
         # 'rebelmouse'    : 'RebelMouse'
         # 'firetracker'   : 'FireTracker'
         # 'twitter'       : 'Embedly'

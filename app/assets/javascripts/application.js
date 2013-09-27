@@ -9,10 +9,15 @@
 //= require_tree ./slideshow/templates
 //= require slideshow/slideshow
 
+// The order of these is important
 //= require embed
 //= require embed/placeholder
-//= require embed/embedly
+//= require_tree ./embed/templates/
+//= require embed/cover_it_live
 //= require embed/document_cloud
+//= require embed/embedly
+//= require embed/fire_tracker
+//= require embed/rebel_mouse
 
 //= require content_carousel
 //= require audio

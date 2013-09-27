@@ -13,6 +13,7 @@ class scpr.Embed.Embedly extends scpr.Embed.Placeholder
 
 
     constructor: (@element) ->
+        super
         data = {}
 
         for key,val of @element.data()
