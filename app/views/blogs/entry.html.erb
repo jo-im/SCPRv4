@@ -1,6 +1,5 @@
 <%= render_content @entry, "opengraph" %>
 <% add_to_page_title @entry.headline %>
-<% @OG_TYPE = "blog" %>
 
 <%= cache ["show", "v10", @entry] do %>
   <%= render "/blogs/entry", entry: @entry, full: true %>
