@@ -73,7 +73,7 @@
                       //['Google Maps', 'googlemaps'],
                       ['Scribd', 'scribd'],
                       //['DocumentCloud', 'documentcloud'],
-                      //['Polldaddy', 'polldaddy'],
+                      ['Polldaddy', 'polldaddy'],
                       ['Facebook', 'facebook'],
                       //['Storify', 'storify'],
                       ['Cover It Live', 'coveritlive'],
