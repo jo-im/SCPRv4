@@ -78,7 +78,7 @@
                       //['Storify', 'storify'],
                       ['Cover It Live', 'coveritlive'],
                       //['RebelMouse', 'rebelmouse'],
-                      //['Fire Tracker', 'firetracker'],
+                      ['Fire Tracker', 'firetracker'],
                       //['Twitter', 'twitter'],
                       ['Instagram', 'instagram'],
                       ['SoundCloud', 'soundcloud'],
