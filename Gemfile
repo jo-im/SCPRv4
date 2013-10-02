@@ -41,6 +41,9 @@ gem 'escape_utils'
 gem 'simple_form', "~> 2.0"
 gem 'jbuilder'
 
+#gem 'embeditor-rails', github: 'SCPR/embeditor-rails'
+gem 'embeditor-rails', path: "#{ENV['PROJECT_HOME']}/embeditor-rails"
+
 
 ## Utility
 gem "diffy", "~> 2.0"
