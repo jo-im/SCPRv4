@@ -5,7 +5,7 @@ module Api::Public::V3
       :limit => 2
     }
 
-    MAX_RESULTS = 4
+    MAX_RESULTS = 12
 
     before_filter \
       :sanitize_limit, 
