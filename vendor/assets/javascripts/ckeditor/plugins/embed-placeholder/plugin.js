@@ -79,7 +79,7 @@
                       ['Cover It Live', 'coveritlive'],
                       //['RebelMouse', 'rebelmouse'],
                       ['Fire Tracker', 'firetracker'],
-                      //['Twitter', 'twitter'],
+                      ['Twitter', 'twitter'],
                       ['Instagram', 'instagram'],
                       ['SoundCloud', 'soundcloud'],
                       ['Spotify', 'spotify'],

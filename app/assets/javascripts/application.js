@@ -16,6 +16,7 @@
 //= require embeditor/adapters/embedly
 //= require embeditor/adapters/fire_tracker
 //= require embeditor/adapters/polldaddy
+//= require embeditor/adapters/twitter
 
 //= require content_carousel
 //= require audio
