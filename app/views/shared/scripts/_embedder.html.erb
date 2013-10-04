@@ -1,4 +1,6 @@
 <% content_for :footer do %>
+<script src="http://maps.googleapis.com/maps/api/js?key=<%=Rails.application.config.api["google"]["maps"]%>&amp;sensor=true"></script>
+
   <script>
     embeditor = new Embeditor.Base({
       Embedly: {
