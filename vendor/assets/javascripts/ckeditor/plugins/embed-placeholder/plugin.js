@@ -70,7 +70,7 @@
                       //['Brightcove', 'brightcove'],
                       ['Ustream', 'ustream'],
                       ['Vine', 'vine'],
-                      //['Google Maps', 'googlemaps'],
+                      ['Google Maps', 'googlemaps'],
                       ['Scribd', 'scribd'],
                       //['DocumentCloud', 'documentcloud'],
                       ['Polldaddy', 'polldaddy'],

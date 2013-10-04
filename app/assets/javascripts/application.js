@@ -20,6 +20,7 @@
 //= require embeditor/adapters/instagram
 //= require embeditor/adapters/facebook
 //= require embeditor/adapters/storify
+//= require embeditor/adapters/google_maps
 
 //= require content_carousel
 //= require audio
