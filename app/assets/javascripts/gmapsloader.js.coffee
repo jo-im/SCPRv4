@@ -2,6 +2,8 @@
 # If `data-map-id` is not specified on the map loader, then it will find the first element with id="map-canvas"
 # data-address is required
 
+# Note that the google maps script is being included by the embedder partial,
+# which is probably not the best place to put it.
 class scpr.GMapsLoader
     DefaultOptions:
         mapLink: ".map-link"
