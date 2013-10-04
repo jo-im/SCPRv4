@@ -15,8 +15,8 @@ class scpr.GMapsLoader
         defaultLat: 34.1372402
         defaultLong: -118.1487027
 
-    constructor: (options) ->
-        @options = _(_({}).extend(@DefaultOptions)).extend( options || {} )
+    constructor: (options={}) ->
+        @options = _.defaults options, @DefaultOptions
 
         $(@options.mapLink).on
             # Specify a map ID to load. If no map ID is specified on the link, then it will load the first element on the page with id="map-canvas"
