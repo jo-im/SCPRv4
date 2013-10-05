@@ -9,7 +9,7 @@ GIT
 
 GIT
   remote: git://github.com/SCPR/embeditor-rails.git
-  revision: fc126c4c04e603131652f54d3a0c403d12901b19
+  revision: 22199a8338e45302b1ce6fd053f724197746c8f7
   specs:
     embeditor-rails (0.0.1)
       eco (~> 1.0.0)
@@ -229,7 +229,7 @@ GEM
     mime-types (1.25)
     mini_portile (0.5.1)
     mono_logger (1.1.0)
-    multi_json (1.8.0)
+    multi_json (1.8.1)
     multi_xml (0.5.5)
     multipart-post (1.2.0)
     mysql2 (0.3.13)
