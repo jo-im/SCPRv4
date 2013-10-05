@@ -29,7 +29,7 @@ class scpr.GMapsLoader
                 else
                     mapElement = $(@options.defaultMapId)
                     return false if $.trim(mapElement.html()) # don't do anything if the element already has a map in it
-                
+
                 @mapInit mapElement, $(event.target).attr(@options.address)
 
 
@@ -37,16 +37,16 @@ class scpr.GMapsLoader
         if typeof(mapElement) == undefined # Make sure there is something to load the map into
             console.log "There is nowhere to load the map into."
             return false
-    
+
         if !address # Make sure Google Maps has something to do when it's loaded
             @notifyError()
             return false
 
-        mapOpts = 
+        mapOpts =
            zoom: @options.zoom
            center: new google.maps.LatLng(@options.defaultLat, @options.defaultLong)
            mapTypeId: google.maps.MapTypeId.ROADMAP
-    
+
         map = new google.maps.Map(mapElement[0], mapOpts)
         @getLatLong(address, map)
 
@@ -56,13 +56,14 @@ class scpr.GMapsLoader
         geocoder.geocode { 'address': address }, (results, status) =>
              if status == google.maps.GeocoderStatus.OK
                 map.setCenter(results[0].geometry.location)
+
                 marker = new google.maps.Marker
                     map: map
                     position: results[0].geometry.location
-         
+
               else
                 @notifyError("Sorry, we couldn't find the location of this event.")
-    
+
 
     notifyError: (msg=@options.errorMsg) ->
         $(@options.errorsDiv).append msg
