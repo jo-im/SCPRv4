@@ -19,11 +19,6 @@ describe ExternalProgram do
         :content_type   => 'text/xml',
         :body           => load_fixture('rss/rss_feed.xml')
       })
-
-      stub_request(:get, %r{downloads\.bbc\.co\.uk}).to_return({
-        :content_type => 'audio/mpeg',
-        :body         => load_fixture('media/audio/2sec.mp3')
-      })
     end
 
     it "syncs the programs" do
@@ -81,11 +76,6 @@ describe ExternalProgram do
         stub_request(:get, %r{rss\.com}).to_return({
           :content_type   => 'text/xml',
           :body           => load_fixture('rss/rss_feed.xml')
-        })
-
-        stub_request(:get, %r{downloads\.bbc\.co\.uk}).to_return({
-          :content_type => 'audio/mpeg',
-          :body         => load_fixture('media/audio/2sec.mp3')
         })
       end
 
