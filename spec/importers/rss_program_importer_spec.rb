@@ -10,13 +10,6 @@ describe RssProgramImporter do
     end
 
     context 'with audio available' do
-      before :each do
-        stub_request(:get, %r{downloads\.bbc\.co\.uk}).to_return({
-          :content_type => 'audio/mpeg',
-          :body         => load_fixture('media/audio/2sec.mp3')
-        })
-      end
-
       it "imports episodes and enclosures as audio" do
         external_program = create :external_program, :from_rss
         RssProgramImporter.sync(external_program)
@@ -40,11 +33,13 @@ describe RssProgramImporter do
 
 
     context 'without audio available' do
-      it "doesn't import episodes with unavailable audio" do
-        stub_request(:get, %r{downloads\.bbc\.co\.uk}).to_return({
+      before :each do
+        stub_request(:get, %r{\.mp3\z}).to_return({
           :status => [404, "Not Found"]
         })
+      end
 
+      it "doesn't import episodes with unavailable audio" do
         external_program = create :external_program, :from_rss
         external_program.external_episodes.count.should eq 0
         RssProgramImporter.sync(external_program)
