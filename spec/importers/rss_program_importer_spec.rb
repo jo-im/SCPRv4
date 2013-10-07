@@ -9,22 +9,47 @@ describe RssProgramImporter do
       })
     end
 
-    it "imports episodes and enclosures as audio" do
-      external_program = create :external_program, :from_rss
-      RssProgramImporter.sync(external_program)
-      external_program.external_episodes.should_not be_empty
-      external_program.external_episodes(true).order("air_date").last.audio.first.url.should eq "http://downloads.bbc.co.uk/podcasts/worldservice/globalnews/globalnews_20130723-0200a.mp3"
+    context 'with audio available' do
+      before :each do
+        stub_request(:get, %r{downloads\.bbc\.co\.uk}).to_return({
+          :content_type => 'audio/mpeg',
+          :body         => load_fixture('media/audio/2sec.mp3')
+        })
+      end
+
+      it "imports episodes and enclosures as audio" do
+        external_program = create :external_program, :from_rss
+        RssProgramImporter.sync(external_program)
+        external_program.external_episodes.should_not be_empty
+        external_program.external_episodes(true).order("air_date").last
+          .audio.first.url
+          .should eq "http://downloads.bbc.co.uk/podcasts/worldservice/globalnews/globalnews_20130723-0200a.mp3"
+      end
+
+      it "doesn't import episodes that have already been imported" do
+        external_program = create :external_program, :from_rss
+        external_program.external_episodes.count.should eq 0
+        RssProgramImporter.sync(external_program)
+        count = external_program.external_episodes.count
+        count.should_not eq 0
+
+        RssProgramImporter.sync(external_program)
+        external_program.external_episodes.count.should eq count
+      end
     end
 
-    it "doesn't import episodes that have already been imported" do
-      external_program = create :external_program, :from_rss
-      external_program.external_episodes.count.should eq 0
-      RssProgramImporter.sync(external_program)
-      count = external_program.external_episodes.count
-      count.should_not eq 0
 
-      RssProgramImporter.sync(external_program)
-      external_program.external_episodes.count.should eq count
+    context 'without audio available' do
+      it "doesn't import episodes with unavailable audio" do
+        stub_request(:get, %r{downloads\.bbc\.co\.uk}).to_return({
+          :status => [404, "Not Found"]
+        })
+
+        external_program = create :external_program, :from_rss
+        external_program.external_episodes.count.should eq 0
+        RssProgramImporter.sync(external_program)
+        external_program.external_episodes.count.should eq 0
+      end
     end
   end
 end
