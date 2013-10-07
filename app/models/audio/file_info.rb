@@ -8,6 +8,12 @@
 # * size=
 class Audio
   module FileInfo
+    def compute_file_info
+      compute_duration
+      compute_size
+      self
+    end
+
     # Compute duration via Mp3Info
     # Set to 0 if something goes wrong
     # so it's not considered "blank"

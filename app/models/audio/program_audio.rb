@@ -15,7 +15,6 @@ class Audio
     include Audio::Paths
     include Audio::FileInfo
 
-    extend LogsAsTask
     logs_as_task
 
     # 20121001_mbrand.mp3
