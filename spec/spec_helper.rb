@@ -36,6 +36,7 @@ RSpec.configure do |config|
   config.include FormFillers,           type: :feature
   config.include AuthenticationHelper,  type: :feature
 
+
   config.before :suite do
     DatabaseCleaner.clean_with :truncation
     load "#{Rails.root}/db/seeds.rb"
