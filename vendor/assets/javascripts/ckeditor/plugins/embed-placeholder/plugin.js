@@ -64,7 +64,7 @@
                             'officially supported. You may select "Other" ' +
                             'to try it out.</span>',
                     items : [
-                      ['Select a Servce:', ''],
+                      ['Select a Service:', ''],
                       ['YouTube', 'youtube'],
                       ['Vimeo', 'vimeo'],
                       //['Brightcove', 'brightcove'],
