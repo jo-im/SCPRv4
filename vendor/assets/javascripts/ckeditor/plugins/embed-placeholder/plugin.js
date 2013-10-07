@@ -70,16 +70,16 @@
                       //['Brightcove', 'brightcove'],
                       ['Ustream', 'ustream'],
                       ['Vine', 'vine'],
-                      //['Google Maps', 'googlemaps'],
+                      ['Google Maps', 'googlemaps'],
                       ['Scribd', 'scribd'],
                       //['DocumentCloud', 'documentcloud'],
-                      //['Polldaddy', 'polldaddy'],
+                      ['Polldaddy', 'polldaddy'],
                       ['Facebook', 'facebook'],
-                      //['Storify', 'storify'],
+                      ['Storify', 'storify'],
                       ['Cover It Live', 'coveritlive'],
                       //['RebelMouse', 'rebelmouse'],
-                      //['Fire Tracker', 'firetracker'],
-                      //['Twitter', 'twitter'],
+                      ['Fire Tracker', 'firetracker'],
+                      ['Twitter', 'twitter'],
                       ['Instagram', 'instagram'],
                       ['SoundCloud', 'soundcloud'],
                       ['Spotify', 'spotify'],
@@ -94,7 +94,10 @@
                   {
                     id          : 'embedMaxHeight',
                     type        : 'text',
-                    label       : 'Embed Maximum Height',
+                    label       : 'Embed Maximum Height (Optional)<br />' +
+                                  '<span style="color:#ff0000">' +
+                                  'This parameter is not honored by all ' +
+                                  'embeds.</span>',
                     width       : '45px',
                     onLoad: function() {
                       $('input', '#'+this.domId).after(' <strong>px</strong>')

@@ -2,6 +2,8 @@
 # If `data-map-id` is not specified on the map loader, then it will find the first element with id="map-canvas"
 # data-address is required
 
+# Note that the google maps script is being included by the embedder partial,
+# which is probably not the best place to put it.
 class scpr.GMapsLoader
     DefaultOptions:
         mapLink: ".map-link"
@@ -15,8 +17,8 @@ class scpr.GMapsLoader
         defaultLat: 34.1372402
         defaultLong: -118.1487027
 
-    constructor: (options) ->
-        @options = _(_({}).extend(@DefaultOptions)).extend( options || {} )
+    constructor: (options={}) ->
+        @options = _.defaults options, @DefaultOptions
 
         $(@options.mapLink).on
             # Specify a map ID to load. If no map ID is specified on the link, then it will load the first element on the page with id="map-canvas"
@@ -27,7 +29,7 @@ class scpr.GMapsLoader
                 else
                     mapElement = $(@options.defaultMapId)
                     return false if $.trim(mapElement.html()) # don't do anything if the element already has a map in it
-                
+
                 @mapInit mapElement, $(event.target).attr(@options.address)
 
 
@@ -35,16 +37,16 @@ class scpr.GMapsLoader
         if typeof(mapElement) == undefined # Make sure there is something to load the map into
             console.log "There is nowhere to load the map into."
             return false
-    
+
         if !address # Make sure Google Maps has something to do when it's loaded
             @notifyError()
             return false
 
-        mapOpts = 
+        mapOpts =
            zoom: @options.zoom
            center: new google.maps.LatLng(@options.defaultLat, @options.defaultLong)
            mapTypeId: google.maps.MapTypeId.ROADMAP
-    
+
         map = new google.maps.Map(mapElement[0], mapOpts)
         @getLatLong(address, map)
 
@@ -54,13 +56,14 @@ class scpr.GMapsLoader
         geocoder.geocode { 'address': address }, (results, status) =>
              if status == google.maps.GeocoderStatus.OK
                 map.setCenter(results[0].geometry.location)
+
                 marker = new google.maps.Marker
                     map: map
                     position: results[0].geometry.location
-         
+
               else
                 @notifyError("Sorry, we couldn't find the location of this event.")
-    
+
 
     notifyError: (msg=@options.errorMsg) ->
         $(@options.errorsDiv).append msg

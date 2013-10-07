@@ -8,6 +8,14 @@ GIT
       rails (>= 3.0)
 
 GIT
+  remote: git://github.com/SCPR/embeditor-rails.git
+  revision: 22199a8338e45302b1ce6fd053f724197746c8f7
+  specs:
+    embeditor-rails (0.0.1)
+      eco (~> 1.0.0)
+      rails (>= 3.2.0)
+
+GIT
   remote: git://github.com/SCPR/outpost-aggregator.git
   revision: f4f6ffe1aed23c87a830d68457c687038442c9e7
   specs:
@@ -159,7 +167,7 @@ GEM
     eco-source (1.1.0.rc.1)
     erubis (2.7.0)
     escape_utils (0.3.2)
-    execjs (2.0.1)
+    execjs (2.0.2)
     factory_girl (4.2.0)
       activesupport (>= 3.0.0)
     factory_girl_rails (4.2.1)
@@ -221,7 +229,7 @@ GEM
     mime-types (1.25)
     mini_portile (0.5.1)
     mono_logger (1.1.0)
-    multi_json (1.8.0)
+    multi_json (1.8.1)
     multi_xml (0.5.5)
     multipart-post (1.2.0)
     mysql2 (0.3.13)
@@ -409,6 +417,7 @@ DEPENDENCIES
   dbsync
   diffy (~> 2.0)
   eco (~> 1.0)
+  embeditor-rails!
   escape_utils
   factory_girl_rails
   faraday (~> 0.8)

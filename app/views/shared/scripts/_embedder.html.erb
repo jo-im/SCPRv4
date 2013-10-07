@@ -1,6 +1,15 @@
 <% content_for :footer do %>
+<script src="http://maps.googleapis.com/maps/api/js?key=<%=Rails.application.config.api["google"]["maps"]%>&amp;sensor=true"></script>
+
   <script>
-    embedder = new scpr.Embed()
-    embedder.swap()
+    embeditor = new Embeditor.Base({
+      Embedly: {
+        plugin: {
+          key : '0cb3651dde4740db8fcb147850c6b555'
+        }
+      }
+    })
+
+    embeditor.swap()
   </script>
 <% end %>
