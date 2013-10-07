@@ -40,11 +40,13 @@ describe RssProgramImporter do
 
 
     context 'without audio available' do
-      it "doesn't import episodes with unavailable audio" do
+      before :each do
         stub_request(:get, %r{downloads\.bbc\.co\.uk}).to_return({
           :status => [404, "Not Found"]
         })
+      end
 
+      it "doesn't import episodes with unavailable audio" do
         external_program = create :external_program, :from_rss
         external_program.external_episodes.count.should eq 0
         RssProgramImporter.sync(external_program)
