@@ -15,15 +15,12 @@
         <% if f.object.persisted? %>
           <div class="existing-audio" id="audio-existing-<%=index%>">
             <!-- existing audio -->
-            <% if f.object.mp3.present? %>
+            <% if f.object.live?%>
               <h5 class="alert alert-success">Audio is Live</h5>
-              <%= link_to f.object.mp3.filename, f.object.url, target: "_blank" %>
-            <% elsif f.object.external_url.present? %>
-              <h5 class="alert alert-success">Audio is Live</h5>
-              <%= link_to f.object.external_url, f.object.url, target: "_blank" %>
+              <%= link_to f.object.filename, f.object.url, target: "_blank" %>
             <% else %>
               <h5 class="alert alert-info">Awaiting Audio</h5>
-              <%= f.object.path %>
+              <%= f.object.filename %>
             <% end %>
           </div>
 
