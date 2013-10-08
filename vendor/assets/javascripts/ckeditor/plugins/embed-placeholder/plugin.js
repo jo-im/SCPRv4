@@ -97,7 +97,8 @@
                     label       : 'Embed Maximum Height (Optional)<br />' +
                                   '<span style="color:#ff0000">' +
                                   'This parameter is not honored by all ' +
-                                  'embeds.</span>',
+                                  'embeds, and it is recommended that you ' +
+                                  'leave it blank unless necessary.</span>',
                     width       : '45px',
                     onLoad: function() {
                       $('input', '#'+this.domId).after(' <strong>px</strong>')
