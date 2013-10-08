@@ -1,6 +1,6 @@
 # --------------
 # Variables
-set :branch, "embeditor"
+set :branch, "master"
 set :rails_env, "staging"
 
 # --------------
