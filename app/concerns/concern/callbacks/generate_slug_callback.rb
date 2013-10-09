@@ -8,7 +8,7 @@ module Concern
   module Callbacks
     module GenerateSlugCallback
       extend ActiveSupport::Concern
-      
+
       included do
         before_validation :generate_slug, if: :should_generate_slug?
       end
@@ -19,7 +19,7 @@ module Concern
       def should_generate_slug?
         self.slug.blank? && self.should_validate?
       end
-      
+
       #--------------------
       # Generate the slug if the headline is present.
       # Also strips trailing hyphens.
