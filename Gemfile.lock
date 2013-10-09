@@ -9,9 +9,9 @@ GIT
 
 GIT
   remote: git://github.com/SCPR/embeditor-rails.git
-  revision: 2c627f676c77a03411425bc392136858066f50e6
+  revision: b6a3484c1ef26f1dad95c10360dc7ee8b2e83d7c
   specs:
-    embeditor-rails (0.1.0)
+    embeditor-rails (0.2.0)
       eco (~> 1.0.0)
       rails (>= 3.2.0)
 
@@ -385,7 +385,7 @@ GEM
       simple_oauth (~> 0.2)
     twitter-text (1.6.3)
       unf (~> 0.1.0)
-    tzinfo (0.3.37)
+    tzinfo (0.3.38)
     uglifier (2.2.1)
       execjs (>= 0.3.0)
       multi_json (~> 1.0, >= 1.0.2)
