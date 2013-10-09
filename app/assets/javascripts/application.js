@@ -18,7 +18,6 @@
 //= require embeditor/adapters/polldaddy
 //= require embeditor/adapters/twitter
 //= require embeditor/adapters/instagram
-//= require embeditor/adapters/facebook
 //= require embeditor/adapters/storify
 
 //= require content_carousel
