@@ -76,7 +76,7 @@
                       ['Google Maps', 'googlemaps'],
                       ['Instagram', 'instagram'],
                       ['Polldaddy', 'polldaddy'],
-                      //['RebelMouse', 'rebelmouse'],
+                      ['RebelMouse', 'rebelmouse'],
                       ['Scribd', 'scribd'],
                       ['SoundCloud', 'soundcloud'],
                       ['Spotify', 'spotify'],

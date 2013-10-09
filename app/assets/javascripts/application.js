@@ -20,6 +20,7 @@
 //= require embeditor/adapters/instagram
 //= require embeditor/adapters/storify
 //= require embeditor/adapters/brightcove
+//= require embeditor/adapters/rebel_mouse
 
 //= require content_carousel
 //= require audio
