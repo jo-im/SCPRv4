@@ -68,24 +68,24 @@
                             '"Other" to try it out.</span>',
                     items   : [
                       ['Select a Service:', ''],
-                      ['YouTube', 'youtube'],
-                      ['Vimeo', 'vimeo'],
-                      //['Brightcove', 'brightcove'],
-                      ['Ustream', 'ustream'],
-                      ['Vine', 'vine'],
-                      ['Google Maps', 'googlemaps'],
-                      ['Scribd', 'scribd'],
-                      //['DocumentCloud', 'documentcloud'],
-                      ['Polldaddy', 'polldaddy'],
-                      ['Facebook', 'facebook'],
-                      ['Storify', 'storify'],
+                      ['Brightcove', 'brightcove'],
                       ['Cover It Live', 'coveritlive'],
-                      //['RebelMouse', 'rebelmouse'],
+                      //['DocumentCloud', 'documentcloud'],
+                      ['Facebook', 'facebook'],
                       ['Fire Tracker', 'firetracker'],
-                      ['Twitter', 'twitter'],
+                      ['Google Maps', 'googlemaps'],
                       ['Instagram', 'instagram'],
+                      ['Polldaddy', 'polldaddy'],
+                      //['RebelMouse', 'rebelmouse'],
+                      ['Scribd', 'scribd'],
                       ['SoundCloud', 'soundcloud'],
                       ['Spotify', 'spotify'],
+                      ['Storify', 'storify'],
+                      ['Twitter', 'twitter'],
+                      ['Ustream', 'ustream'],
+                      ['Vimeo', 'vimeo'],
+                      ['Vine', 'vine'],
+                      ['YouTube', 'youtube'],
                       ['Other (Embedly)', 'other']
                     ], // items
 
@@ -130,7 +130,7 @@
             onOk: function() {
               var url         = this.getContentElement(
                                   'embed', 'embedUrl'
-                                ).getValue(),
+                                ).getValue().trim(),
 
                   title       = this.getContentElement(
                                   'embed', 'linkTitle'
