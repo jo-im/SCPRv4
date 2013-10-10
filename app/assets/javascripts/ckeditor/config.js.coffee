@@ -1,3 +1,7 @@
+# Change this to force-refresh the JS/CSS files dynamically loaded
+# by CKEditor.
+CKEDITOR.timestamp = '20131009'
+
 # Global Configuration
 CKEDITOR.editorConfig = (config) ->
     config.extraPlugins = [
