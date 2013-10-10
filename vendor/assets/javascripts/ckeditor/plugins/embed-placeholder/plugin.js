@@ -75,6 +75,7 @@
                       ['Fire Tracker', 'firetracker'],
                       ['Google Maps', 'googlemaps'],
                       ['Instagram', 'instagram'],
+                      ['LiveStream', 'livestream'],
                       ['Polldaddy', 'polldaddy'],
                       ['RebelMouse', 'rebelmouse'],
                       ['Scribd', 'scribd'],
