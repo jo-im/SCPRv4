@@ -9,11 +9,12 @@ GIT
 
 GIT
   remote: git://github.com/SCPR/embeditor-rails.git
-  revision: c2b599570e1b0c129fafe07068248b235a95d333
+  revision: d27c6487b4857f87ee8cfe2bbaac0dc47842a93f
   specs:
-    embeditor-rails (0.2.0)
+    embeditor-rails (1.0.1)
+      actionpack (>= 3.2.0)
+      coffee-rails (>= 3.2.0)
       eco (~> 1.0.0)
-      rails (>= 3.2.0)
 
 GIT
   remote: git://github.com/SCPR/outpost-aggregator.git

@@ -74,6 +74,7 @@
                       ['Facebook', 'facebook'],
                       ['Fire Tracker', 'firetracker'],
                       ['Google Maps', 'googlemaps'],
+                      ['Google Fusion', 'googlefusion'],
                       ['Instagram', 'instagram'],
                       ['LiveStream', 'livestream'],
                       ['Polldaddy', 'polldaddy'],
