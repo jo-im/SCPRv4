@@ -8,6 +8,7 @@
 /config/api_config.yml
 /config/app_config.yml
 /config/sphinx.yml
+/config/thinking_sphinx.yml
 
 /config/environments/development.rb
 /db/*.sqlite3
