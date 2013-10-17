@@ -2,7 +2,7 @@ module Api::Public::V3
   class ArticlesController < BaseController
     TYPES = {
       "news"        => [NewsStory],
-      "shells"      => [ContentShell],
+      "external"    => [ContentShell],
       "blogs"       => [BlogEntry],
       "segments"    => [ShowSegment]
     }
