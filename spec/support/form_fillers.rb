@@ -27,45 +27,52 @@ module FormFillers
   #------------
 
   private
-  
-    def fill_field(record, attribute)      
-      if record.class.reflect_on_association(attribute)
-        attribute = "#{attribute}_id"
+
+  def fill_field(record, attribute)
+    if record.class.reflect_on_association(attribute)
+      attribute = "#{attribute}_id"
+    end
+
+    field_id  = "#{record.class.singular_route_key}_#{attribute}"
+    value     = record.send(attribute)
+
+    # For serialized arrays acting as has_many associations
+    if record.class
+    .serialized_attributes[attribute.to_s].try(:object_class) == Array
+      record.send(attribute).each do |v|
+        interact(field_id + "_#{v}", value)
       end
-      
-      field_id = "#{record.class.singular_route_key}_#{attribute}"
-      
+    else
       if page.has_field? field_id
-        value = record.send(attribute)
         interact(field_id, value)
       end
     end
-    
-    #----------------
-    
-    def interact(field_id, value)
-      field = find_field(field_id)
-      
-      case field.tag_name
-      when "select"
-        text = find("##{field_id} option[value='#{value}']").text
-        select text, from: field_id
-      
-      when "textarea"
-        fill_in field_id, with: value
-        
-      when "input"
-        case field[:type]
-        when "checkbox"
-          value ? check(field_id) : uncheck(field_id)
-        
-        else
-          fill_in field_id, with: value
-        end
-        
+  end
+
+  #----------------
+
+  def interact(field_id, value)
+    field = find_field(field_id)
+
+    case field.tag_name
+    when "select"
+      text = find("##{field_id} option[value='#{value}']").text
+      select text, from: field_id
+
+    when "textarea"
+      fill_in field_id, with: value
+
+    when "input"
+      case field[:type]
+      when "checkbox"
+        check(field_id)
+
       else
-        raise StandardError, "Unexpected field tag_name: #{field.tag_name}"
+        fill_in field_id, with: value
       end
+
+    else
+      raise StandardError, "Unexpected field tag_name: #{field.tag_name}"
     end
-  #
+  end
 end
