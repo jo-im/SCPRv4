@@ -1,0 +1,32 @@
+ThinkingSphinx::Index.define :content_shell, with: :active_record do
+  indexes headline
+  indexes body
+  indexes bylines.user.name, as: :bylines
+
+  has status
+  has published_at
+  has updated_at
+  has "CRC32(CONCAT('#{ContentShell.content_key}" \
+      "#{Outpost::Model::Identifier::OBJ_KEY_SEPARATOR}'," \
+      "#{ContentShell.table_name}.id))", 
+    :type   => :integer,
+    :as     => :obj_key
+
+  # For category/homepage building
+  has category.id, as: :category
+
+  # For megamenu
+  has category.is_news, as: :category_is_news
+
+  # For Feeds - we only want to send our original content to RSS
+  # (not stuff copies from AP or NPR, for example)
+  has "1",
+    :type   => :boolean,
+    :as     => :is_source_kpcc
+
+  # Required attributes for ContentBase.search
+  has published_at, as: :public_datetime
+  has "#{ContentShell.table_name}.status = #{ContentBase::STATUS_LIVE}", 
+    :type   => :boolean,
+    :as     => :is_live
+end

@@ -2,13 +2,19 @@ class Outpost::FlatpagesController < Outpost::ResourceController
   outpost_controller
 
   define_list do |l|
-    l.default_order       = "path"
-    l.default_sort_mode   = "asc"
+    l.default_order_attribute   = "path"
+    l.default_order_direction   = ASCENDING
 
     l.column :title
-    l.column :path, sortable: true, default_sort_mode: "asc"
+    l.column :path,
+      :sortable                   => true,
+      :default_order_direction    => ASCENDING
+
     l.column :redirect_to
-    l.column :updated_at, sortable: true, default_sort_mode: "desc"
+    l.column :updated_at,
+      :sortable                   => true,
+      :default_order_direction    => DESCENDING
+
     l.column :is_public, header: "Public?"
 
     l.filter :is_public,

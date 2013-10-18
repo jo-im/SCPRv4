@@ -43,15 +43,6 @@ class ScheduleOccurrence < ActiveRecord::Base
     self.is_recurring? && (self.starts_at_changed? || self.ends_at_changed?)
   }
 
-  define_index do
-    indexes event_title
-    indexes program.title
-    indexes info_url
-
-    has updated_at
-    has starts_at
-  end
-
 
   class << self
     def program_select_collection

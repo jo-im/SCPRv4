@@ -5,12 +5,16 @@ gem 'rails', "~> 3.2"
 gem 'mysql2'
 gem 'jquery-rails'
 gem "bcrypt-ruby", "~> 3.0.0"
-gem 'thinking-sphinx', '~> 2.0.14', require: "thinking_sphinx"
 
+# https://github.com/pat/thinking-sphinx/issues/634
+# gem 'thinking-sphinx', '~> 3.0.5'
+# gem 'thinking-sphinx', github: 'pat/thinking-sphinx'
+#gem 'thinking-sphinx', path: "#{ENV['PROJECT_HOME']}/../clones/thinking-sphinx"
+gem 'thinking-sphinx', github: 'bricker/thinking-sphinx'
 
 ## Outpost
-gem 'outpost-cms', github: 'SCPR/outpost'
-#gem 'outpost-cms', path: "#{ENV['PROJECT_HOME']}/outpost"
+#gem 'outpost-cms', github: 'SCPR/outpost'
+gem 'outpost-cms', path: "#{ENV['PROJECT_HOME']}/outpost"
 
 gem 'outpost-publishing', github: "SCPR/outpost-publishing"
 #gem 'outpost-publishing', path: "#{ENV['PROJECT_HOME']}/outpost-publishing"

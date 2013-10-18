@@ -9,12 +9,6 @@ class FeaturedCommentBucket < ActiveRecord::Base
     :order          => "created_at desc"
 
   validates :title, presence: true
-  
-  define_index do
-    indexes title, sortable: true
-    has created_at
-    has updated_at
-  end
 
   class << self
     def select_collection

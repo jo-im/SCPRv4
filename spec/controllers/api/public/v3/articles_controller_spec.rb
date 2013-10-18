@@ -78,13 +78,7 @@ describe Api::Public::V3::ArticlesController do
 
   describe "GET index" do
     context 'with the category parameter' do
-      before :all do
-        setup_sphinx
-      end
-
-      after :all do
-        teardown_sphinx
-      end
+      sphinx_spec(num: 0)
 
       it 'only selects stories with the requested categories' do
         category1  = create :category_not_news, slug: "film"
@@ -111,13 +105,7 @@ describe Api::Public::V3::ArticlesController do
     end
 
     context 'with the date parameter' do
-      before :all do
-        setup_sphinx
-      end
-
-      after :all do
-        teardown_sphinx
-      end
+      sphinx_spec(num: 0)
 
       it "selects stories only from that date" do
         story_new  = create :news_story, published_at: Time.new(2013, 10, 16, 12)
@@ -139,13 +127,7 @@ describe Api::Public::V3::ArticlesController do
     end
 
     context 'with the date range paramters' do
-      before :all do
-        setup_sphinx
-      end
-
-      after :all do
-        teardown_sphinx
-      end
+      sphinx_spec(num: 0)
 
       it 'can filter by date range' do
         story_new  = create :news_story, published_at: Time.new(2013, 10, 16, 12)

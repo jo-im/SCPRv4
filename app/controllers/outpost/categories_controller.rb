@@ -2,8 +2,8 @@ class Outpost::CategoriesController < Outpost::ResourceController
   outpost_controller
 
   define_list do |l|
-    l.default_order = "title"
-    l.default_sort_mode = "asc"
+    l.default_order_attribute   = "title"
+    l.default_order_direction   = ASCENDING
     
     l.column :title, sortable: true
     l.column :slug, sortable: true

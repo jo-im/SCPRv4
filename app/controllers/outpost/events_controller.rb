@@ -2,14 +2,20 @@ class Outpost::EventsController < Outpost::ResourceController
   outpost_controller
 
   define_list do |l|
-    l.default_order = "starts_at"
-    l.default_sort_mode = "desc"
+    l.default_order_attribute   = "starts_at"
+    l.default_order_direction   = DESCENDING
 
     l.column :headline
-    l.column :starts_at, sortable: true, default_sort_mode: "desc"
+    l.column :starts_at,
+      :sortable                   => true,
+      :default_order_direction    => DESCENDING
+
     l.column :location_name, header: "Location"
-    l.column :event_type,         header: "Type", display: ->(r) { Event::EVENT_TYPES[r.event_type] }
-    l.column :is_kpcc_event,    header: "KPCC?"
+    l.column :event_type,
+      :header     => "Type",
+      :display    => ->(r) { Event::EVENT_TYPES[r.event_type] }
+
+    l.column :is_kpcc_event, header: "KPCC?"
     l.column :status
 
     l.filter :is_kpcc_event,

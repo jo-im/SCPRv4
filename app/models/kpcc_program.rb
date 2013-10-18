@@ -48,15 +48,6 @@ class KpccProgram < ActiveRecord::Base
   # Callbacks
 
   #-------------------
-  # Sphinx
-  define_index do
-    indexes title, sortable: true
-    indexes airtime
-    indexes description
-    indexes host
-  end
-
-  #-------------------
 
   class << self
     def select_collection

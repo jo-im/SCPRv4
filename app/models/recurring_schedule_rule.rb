@@ -61,14 +61,6 @@ class RecurringScheduleRule < ActiveRecord::Base
   before_update :rebuild_occurrences, if: :rule_changed?
   before_save :update_occurrence_program, if: :program_changed?
 
-  #--------------
-  # Sphinx
-  define_index do
-    has :id # just so the Search in outpost can be ordered.
-    indexes program.title
-    indexes schedule_hash
-  end
-
 
   class << self
     def create_occurrences(options={})

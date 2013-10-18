@@ -25,15 +25,7 @@ class AdminUser < ActiveRecord::Base
   has_one  :bio, foreign_key: "user_id"
 
   # ----------------
-  # Sphinx
-  
-  define_index do
-    indexes username
-    indexes name, sortable: true
-  end
 
-  # ----------------
-  
   class << self
     def select_collection
       AdminUser.order("name").map { |u| [u.to_title, u.id] }

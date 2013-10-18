@@ -74,13 +74,6 @@ class FeaturedComment < ActiveRecord::Base
   # Callbacks
 
   #----------------
-  # Sphinx
-  define_index do
-    indexes username
-    indexes excerpt
-  end
-
-  #----------------
 
   class << self
     def status_select_collection

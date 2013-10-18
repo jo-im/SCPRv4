@@ -75,31 +75,6 @@ class ShowEpisode < ActiveRecord::Base
     end
   end
 
-  #-------------------
-  # Sphinx
-  define_index do
-    indexes headline
-    indexes body
-
-    has show.id, as: :program
-    has air_date
-    has status
-    has published_at
-    has updated_at
-
-    # For podcasts
-    join audio
-    has "COUNT(DISTINCT #{Audio.table_name}.id) > 0",
-        as: :has_audio, type: :boolean
-
-    # Required attributes for ContentBase.search
-    # For ShowEpisode, this is needed just for the
-    # podcast feed.
-    has air_date, as: :public_datetime
-    has "#{ShowEpisode.table_name}.status = #{ContentBase::STATUS_LIVE}",
-        as: :is_live, type: :boolean
-  end
-
   #----------
 
   # For podcasts

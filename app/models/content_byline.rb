@@ -24,15 +24,6 @@ class ContentByline < ActiveRecord::Base
 
   belongs_to :content, polymorphic: true
   belongs_to :user, class_name: "Bio"
-    
-  define_index do
-    indexes user.name, as: :name
-    has role
-    has user_id
-    has content_id
-    has content.published_at, as: :published_at,  type: :datetime
-    has content.status,       as: :status,        type: :integer
-  end
 
   #-----------------------
 

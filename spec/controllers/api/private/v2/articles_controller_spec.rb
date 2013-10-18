@@ -131,7 +131,7 @@ describe Api::Private::V2::ArticlesController do
 
       ts_retry(2) do
         get :index, { order: "published_at", sort_mode: "asc" }.merge(request_params)
-        assigns(:sort_mode).should eq :asc
+        assigns(:order).should eq "published_at #{ASCENDING}"
         assigns(:articles).first.should eq entry.to_article
       end
     end
@@ -142,7 +142,7 @@ describe Api::Private::V2::ArticlesController do
 
       ts_retry(2) do
         get :index, { order: "published_at", sort_mode: "Evil Sort Mode" }.merge(request_params)
-        assigns(:sort_mode).should eq :desc
+        assigns(:order).should eq "published_at #{DESCENDING}"
         assigns(:articles).first.should eq entry.to_article
       end
     end

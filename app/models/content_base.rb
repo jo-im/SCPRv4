@@ -61,8 +61,7 @@ module ContentBase
     options.reverse_merge!({
       :classes     => CONTENT_CLASSES,
       :page        => 1,
-      :order       => :public_datetime,
-      :sort_mode   => :desc,
+      :order       => "public_datetime #{DESCENDING}",
       :retry_stale => true,
       :populate    => true
     })
@@ -76,10 +75,13 @@ module ContentBase
 
     begin
       ThinkingSphinx.search(query, options)
-    rescue Riddle::ConnectionError, Riddle::ResponseError, ThinkingSphinx::SphinxError
+    rescue  Riddle::ConnectionError,
+            Riddle::ResponseError,
+            ThinkingSphinx::SphinxError
       # In this one scenario, we need to fail gracefully from a Sphinx error,
-      # because otherwise the entire website will be down if media isn't available,
-      # or if we need to stop the searchd daemon for some reason, like a rebuild.
+      # because otherwise the entire website will be down if media isn't 
+      # available, or if we need to stop the searchd daemon for some reason,
+      # like a rebuild.
       Kaminari.paginate_array([]).page(0).per(0)
     end
   end
@@ -103,7 +105,12 @@ module ContentBase
         teaser = first_paragraph
       else
         shortened_paragraph = first_paragraph.match(/\A.{#{length}}[^\.]*\.?/)
-        teaser = shortened_paragraph ? "#{shortened_paragraph[0]}" : first_paragraph
+
+        teaser = if shortened_paragraph
+          "#{shortened_paragraph[0]}"
+        else
+          first_paragraph
+        end
       end
     end
 

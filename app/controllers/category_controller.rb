@@ -73,7 +73,7 @@ class CategoryController < ApplicationController
         :classes     => [NewsStory, BlogEntry, ContentShell, ShowSegment],
         :limit       => 5,
         :with        => { category: sec.id },
-        :without_any => { obj_key: without.obj_key.to_crc32 }
+        :without_all => { obj_key: without.obj_key.to_crc32 }
       })
 
       top       = nil

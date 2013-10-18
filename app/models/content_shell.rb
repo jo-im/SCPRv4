@@ -54,38 +54,6 @@ class ContentShell < ActiveRecord::Base
   # Callbacks
 
 
-  #-------------------
-  # Sphinx  
-  define_index do
-    indexes headline
-    indexes body
-    indexes bylines.user.name, as: :bylines
-
-    has status
-    has published_at
-    has updated_at
-    has "CRC32(CONCAT('#{ContentShell.content_key}" \
-        "#{Outpost::Model::Identifier::OBJ_KEY_SEPARATOR}'," \
-        "#{ContentShell.table_name}.id))", 
-        type: :integer, as: :obj_key
-
-    # For category/homepage building
-    has category.id, as: :category
-
-    # For megamenu
-    has category.is_news, as: :category_is_news
-
-    # For Feeds - we only want to send our original content to RSS
-    # (not stuff copies from AP or NPR, for example)
-    has "1", as: :is_source_kpcc, type: :boolean
-
-    # Required attributes for ContentBase.search
-    has published_at, as: :public_datetime
-    has "#{ContentShell.table_name}.status = #{ContentBase::STATUS_LIVE}", 
-        as: :is_live, type: :boolean
-  end
-
-
   # Override Outpost's routing methods for these
   def public_path(options={})
     self.public_url

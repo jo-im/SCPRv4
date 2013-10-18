@@ -35,16 +35,6 @@ class DataPoint < ActiveRecord::Base
   # Callbacks
 
   #--------------
-  # Sphinx  
-  define_index do
-    indexes title
-    indexes data_key, sortable: true
-    indexes data_value
-    indexes group_name, sortable: true
-    has updated_at
-  end
-  
-  #--------------
 
   class << self
     # DataPoint::to_hash lets us take an array and turn it into

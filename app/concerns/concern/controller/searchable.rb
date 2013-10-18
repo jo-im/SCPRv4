@@ -25,8 +25,7 @@ module Concern
 
       def search_params
         @search_params ||= {
-          :order       => order.to_sym,
-          :sort_mode   => sort_mode.to_sym
+          :order => order
         }
       end
     end

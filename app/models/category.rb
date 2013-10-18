@@ -22,14 +22,6 @@ class Category < ActiveRecord::Base
   #-------------------
   # Callbacks
 
-  #-------------------
-  # Sphinx
-  define_index do
-    indexes title, sortable: true
-    indexes slug, sortable: true
-    has is_news
-  end
-
   #----------
 
   def route_hash
@@ -89,7 +81,7 @@ class Category < ActiveRecord::Base
         :category     => self.id,
         :is_slideshow => true
       },
-      :without_any => { obj_key: Array(args[:exclude]).map { |c| c.obj_key.to_crc32 } }
+      :without_all => { obj_key: Array(args[:exclude]).map { |c| c.obj_key.to_crc32 } }
     })
 
     if slideshow.any?
@@ -111,7 +103,7 @@ class Category < ActiveRecord::Base
       :classes     => [ShowSegment],
       :limit       => 1,
       :with        => { category: self.id },
-      :without_any => { obj_key: Array(args[:exclude]).map { |c| c.obj_key.to_crc32 } }
+      :without_all => { obj_key: Array(args[:exclude]).map { |c| c.obj_key.to_crc32 } }
     })
 
     if segments.any?

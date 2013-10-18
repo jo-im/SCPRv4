@@ -72,45 +72,6 @@ class ShowSegment < ActiveRecord::Base
   #-------------------
   # Callbacks
 
-  #-------------------
-  # Sphinx
-  define_index do
-    indexes headline
-    indexes teaser
-    indexes body
-    indexes bylines.user.name, as: :bylines
-
-    has show.id, as: :program
-    has status
-    has published_at
-    has updated_at
-    has "CRC32(CONCAT('#{ShowSegment.content_key}" \
-        "#{Outpost::Model::Identifier::OBJ_KEY_SEPARATOR}'," \
-        "#{ShowSegment.table_name}.id))",
-        type: :integer, as: :obj_key
-
-    # For the megamenu
-    has category.is_news, as: :category_is_news
-
-    # For category/homepage sections
-    has category.id, as: :category
-    has "(#{ShowSegment.table_name}.segment_asset_scheme <=> 'slideshow')",
-        type: :boolean, as: :is_slideshow
-
-    # For RSS Feed
-    has "1", as: :is_source_kpcc, type: :boolean
-
-    # For podcast searches
-    join audio
-    has "COUNT(DISTINCT #{Audio.table_name}.id) > 0",
-        as: :has_audio, type: :boolean
-
-    # Required attributes for ContentBase.search
-    has published_at, as: :public_datetime
-    has "#{ShowSegment.table_name}.status = #{ContentBase::STATUS_LIVE}",
-        as: :is_live, type: :boolean
-  end
-
   #----------
 
   def episode

@@ -64,14 +64,6 @@ class Homepage < ActiveRecord::Base
     Rails.cache.expire_obj(self)
   end
 
-  #-------------------
-  # Sphinx
-  define_index do
-    indexes base
-    has published_at
-    has updated_at
-  end
-
 
   def published?
     self.status == STATUS_LIVE
@@ -113,7 +105,7 @@ class Homepage < ActiveRecord::Base
         :classes     => [NewsStory, BlogEntry, ContentShell, ShowSegment],
         :limit       => 5,
         :with        => { category: cat.id },
-        :without_any => { obj_key: citems.map { |c| c.obj_key.to_crc32 } }
+        :without_all => { obj_key: citems.map { |c| c.obj_key.to_crc32 } }
       })
 
       more     = []

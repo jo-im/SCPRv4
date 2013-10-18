@@ -2,15 +2,21 @@ class Outpost::BlogEntriesController < Outpost::ResourceController
   outpost_controller
 
   define_list do |l|
-    l.default_order = "updated_at"
-    l.default_sort_mode = "desc"
-    
+    l.default_order_attribute   = "updated_at"
+    l.default_order_direction   = DESCENDING
+
     l.column :headline
     l.column :blog
     l.column :byline
-    l.column :published_at, sortable: true, default_sort_mode: "desc"
+    l.column :published_at,
+      :sortable                   => true,
+      :default_order_direction    => DESCENDING
+
     l.column :status
-    l.column :updated_at, header: "Last Updated", sortable: true, default_sort_mode: "desc"
+    l.column :updated_at,
+      :header                     => "Last Updated",
+      :sortable                   => true,
+      :default_order_direction    => DESCENDING
 
     l.filter :blog_id, collection: -> { Blog.select_collection }
     l.filter :bylines, collection: -> { Bio.select_collection }

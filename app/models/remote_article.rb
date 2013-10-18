@@ -18,17 +18,6 @@ class RemoteArticle < ActiveRecord::Base
   }
 
   #---------------
-  # Sphinx
-  define_index do
-    indexes headline
-    indexes teaser
-    indexes article_id
-    indexes :source
-
-    has published_at
-  end
-
-  #---------------
 
   class << self
     include ::NewRelic::Agent::Instrumentation::ControllerInstrumentation

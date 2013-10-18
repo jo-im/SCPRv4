@@ -60,22 +60,6 @@ class PijQuery < ActiveRecord::Base
   #------------
   # Callbacks
 
-  #------------
-  # Sphinx
-  define_index do
-    indexes headline
-    indexes body
-    indexes teaser
-    indexes pin_query_id
-    has published_at
-    has status
-
-    # Required attributes for ContentBase.search
-    has published_at, as: :public_datetime
-    has "#{PijQuery.table_name}.status = #{STATUS_LIVE}",
-        as: :is_live, type: :boolean
-  end
-
 
   class << self
     def status_select_collection

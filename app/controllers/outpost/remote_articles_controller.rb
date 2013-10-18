@@ -14,13 +14,19 @@ class Outpost::RemoteArticlesController < Outpost::BaseController
   self.model = RemoteArticle
 
   define_list do |l|
-    l.default_order       = "published_at"
-    l.default_sort_mode   = "desc"
-    l.per_page            = 50
+    l.default_order_attribute   = "published_at"
+    l.default_order_direction   = DESCENDING
+    l.per_page                  = 50
 
-    l.column :type, header: "Source", display: ->(r) { r.source }
+    l.column :type,
+      :header     => "Source",
+      :display    => ->(r) { r.source }
+
     l.column :headline
-    l.column :published_at, sortable: true, default_sort_mode: "desc"
+    l.column :published_at,
+      :sortable                   => true,
+      :default_order_direction    => DESCENDING
+
     l.column :teaser
     l.column :url, display: :display_link
     l.column :article_id, header: "ID"
