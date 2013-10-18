@@ -5,6 +5,7 @@ describe ShowEpisode do
   let(:updated_record) { build :show_episode, :published }
   let(:invalid_record) { build :show_episode, :published, body: "" }
 
+  it_behaves_like "managed resource"
   it_behaves_like "save options"
   it_behaves_like "admin routes"
   it_behaves_like "versioned model"

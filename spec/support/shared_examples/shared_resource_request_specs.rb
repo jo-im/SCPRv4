@@ -25,13 +25,15 @@ shared_examples_for "managed resource create" do
 
     context "invalid" do
       it "shows validation errors" do
-        fill_required_fields(invalid_record)
-        click_button "edit"
-        current_path.should eq described_class.admin_index_path
-        described_class.count.should eq 0
-        page.should_not have_css ".alert-success"
-        page.should have_css ".alert-error"
-        page.should have_css ".help-inline"
+        if invalid_record
+          fill_required_fields(invalid_record)
+          click_button "edit"
+          current_path.should eq described_class.admin_index_path
+          described_class.count.should eq 0
+          page.should_not have_css ".alert-success"
+          page.should have_css ".alert-error"
+          page.should have_css ".help-inline"
+        end
       end
     end
 
@@ -72,10 +74,12 @@ shared_examples_for "managed resource update" do
 
     context "invalid" do
       it "shows validation error" do
-        fill_required_fields(invalid_record)
-        click_button "edit"
-        page.should have_css ".alert-error"
-        current_path.should eq valid_record.admin_show_path # Technically "#update" but this'll do        
+        if invalid_record
+          fill_required_fields(invalid_record)
+          click_button "edit"
+          page.should have_css ".alert-error"
+          current_path.should eq valid_record.admin_show_path # Technically "#update" but this'll do
+        end
       end
     end
 
@@ -143,7 +147,7 @@ shared_examples_for "save options" do
         page.should have_css ".index-header"
       end
     end
-    
+
     context "Save & Add Another" do
       it "returns to the new page" do
         click_button "new"
