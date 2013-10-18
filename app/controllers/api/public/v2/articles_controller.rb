@@ -165,7 +165,7 @@ module Api::Public::V2
         return false
       end
 
-      @conditions[:published_at] = date.beginning_of_day..date.end_of_day
+      @conditions[:public_datetime] = date.beginning_of_day..date.end_of_day
     end
 
 
@@ -189,7 +189,7 @@ module Api::Public::V2
         return false
       end
 
-      @conditions[:published_at] =
+      @conditions[:public_datetime] =
         start_date.beginning_of_day..end_date.end_of_day
     end
   end
