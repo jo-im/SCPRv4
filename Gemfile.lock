@@ -59,7 +59,8 @@ GIT
 
 GIT
   remote: git://github.com/bricker/thinking-sphinx.git
-  revision: 06d8950bd74583ba28a8bd3970bc3950e2f51035
+  revision: ba3b85e951e4b2fc467913049478e46f4c2c63ae
+  branch: ar-methods
   specs:
     thinking-sphinx (3.0.5)
       activerecord (>= 3.1.0)
@@ -348,7 +349,7 @@ GEM
     safe_yaml (0.9.6)
     sanitize (2.0.6)
       nokogiri (>= 1.4.4)
-    sass (3.2.10)
+    sass (3.2.12)
     sass-rails (3.2.6)
       railties (~> 3.2.0)
       sass (>= 3.1.10)

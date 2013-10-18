@@ -10,7 +10,7 @@ gem "bcrypt-ruby", "~> 3.0.0"
 # gem 'thinking-sphinx', '~> 3.0.5'
 # gem 'thinking-sphinx', github: 'pat/thinking-sphinx'
 #gem 'thinking-sphinx', path: "#{ENV['PROJECT_HOME']}/../clones/thinking-sphinx"
-gem 'thinking-sphinx', github: 'bricker/thinking-sphinx'
+gem 'thinking-sphinx', github: 'bricker/thinking-sphinx', branch: 'ar-methods'
 
 ## Outpost
 #gem 'outpost-cms', github: 'SCPR/outpost'
