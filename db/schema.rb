@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130904222240) do
+ActiveRecord::Schema.define(:version => 20131016224744) do
 
   create_table "abstracts", :force => true do |t|
     t.string   "source"
@@ -24,8 +24,10 @@ ActiveRecord::Schema.define(:version => 20130904222240) do
     t.datetime "updated_at",                               :null => false
   end
 
+  add_index "abstracts", ["article_published_at"], :name => "index_abstracts_on_article_published_at"
   add_index "abstracts", ["category_id"], :name => "index_abstracts_on_category_id"
   add_index "abstracts", ["source"], :name => "index_abstracts_on_source"
+  add_index "abstracts", ["updated_at"], :name => "index_abstracts_on_updated_at"
 
   create_table "assethost_contentasset", :force => true do |t|
     t.integer "content_id"
@@ -35,8 +37,6 @@ ActiveRecord::Schema.define(:version => 20130904222240) do
     t.string  "content_type"
   end
 
-  add_index "assethost_contentasset", ["content_id"], :name => "content_type_id"
-  add_index "assethost_contentasset", ["content_id"], :name => "index_assethost_contentasset_on_content_id"
   add_index "assethost_contentasset", ["content_type", "content_id"], :name => "index_assethost_contentasset_on_content_type_and_content_id"
   add_index "assethost_contentasset", ["position"], :name => "index_assethost_contentasset_on_asset_order"
 
@@ -53,6 +53,9 @@ ActiveRecord::Schema.define(:version => 20130904222240) do
     t.string   "name"
   end
 
+  add_index "auth_user", ["can_login"], :name => "index_auth_user_on_can_login"
+  add_index "auth_user", ["is_superuser"], :name => "index_auth_user_on_is_superuser"
+  add_index "auth_user", ["name"], :name => "index_auth_user_on_name"
   add_index "auth_user", ["username", "can_login"], :name => "index_auth_user_on_username_and_can_login"
 
   create_table "bios_bio", :force => true do |t|
@@ -75,6 +78,7 @@ ActiveRecord::Schema.define(:version => 20130904222240) do
   add_index "bios_bio", ["is_public", "last_name"], :name => "index_bios_bio_on_is_public_and_last_name"
   add_index "bios_bio", ["is_public"], :name => "index_bios_bio_on_is_public"
   add_index "bios_bio", ["last_name"], :name => "index_bios_bio_on_last_name"
+  add_index "bios_bio", ["name"], :name => "index_bios_bio_on_name"
   add_index "bios_bio", ["slug"], :name => "index_bios_bio_on_slug"
 
   create_table "blogs_blog", :force => true do |t|
@@ -90,8 +94,9 @@ ActiveRecord::Schema.define(:version => 20130904222240) do
     t.string   "twitter_handle"
   end
 
+  add_index "blogs_blog", ["is_active"], :name => "index_blogs_blog_on_is_active"
   add_index "blogs_blog", ["missed_it_bucket_id"], :name => "blogs_blog_d12628ce"
-  add_index "blogs_blog", ["name"], :name => "name", :unique => true
+  add_index "blogs_blog", ["name"], :name => "index_blogs_blog_on_name"
   add_index "blogs_blog", ["slug"], :name => "slug", :unique => true
 
   create_table "blogs_blogauthor", :force => true do |t|
@@ -126,7 +131,10 @@ ActiveRecord::Schema.define(:version => 20130904222240) do
 
   add_index "blogs_entry", ["blog_id"], :name => "blogs_entry_blog_id"
   add_index "blogs_entry", ["category_id"], :name => "blogs_entry_42dc49bc"
+  add_index "blogs_entry", ["published_at"], :name => "index_blogs_entry_on_published_at"
   add_index "blogs_entry", ["status", "published_at"], :name => "index_blogs_entry_on_status_and_published_at"
+  add_index "blogs_entry", ["status"], :name => "index_blogs_entry_on_status"
+  add_index "blogs_entry", ["updated_at"], :name => "index_blogs_entry_on_updated_at"
 
   create_table "contentbase_category", :force => true do |t|
     t.string   "title"
@@ -138,7 +146,9 @@ ActiveRecord::Schema.define(:version => 20130904222240) do
   end
 
   add_index "contentbase_category", ["comment_bucket_id"], :name => "contentbase_category_36c0cbca"
+  add_index "contentbase_category", ["is_news"], :name => "index_contentbase_category_on_is_news"
   add_index "contentbase_category", ["slug"], :name => "contentbase_category_a951d5d6"
+  add_index "contentbase_category", ["title"], :name => "index_contentbase_category_on_title"
 
   create_table "contentbase_contentalarm", :force => true do |t|
     t.integer  "content_id"
@@ -148,8 +158,8 @@ ActiveRecord::Schema.define(:version => 20130904222240) do
     t.datetime "updated_at",   :null => false
   end
 
-  add_index "contentbase_contentalarm", ["content_id"], :name => "index_contentbase_contentalarm_on_content_id"
   add_index "contentbase_contentalarm", ["content_type", "content_id"], :name => "index_contentbase_contentalarm_on_content_type_and_content_id"
+  add_index "contentbase_contentalarm", ["fire_at"], :name => "index_contentbase_contentalarm_on_fire_at"
 
   create_table "contentbase_contentbyline", :force => true do |t|
     t.integer  "content_id"
@@ -161,8 +171,6 @@ ActiveRecord::Schema.define(:version => 20130904222240) do
     t.datetime "updated_at",                  :null => false
   end
 
-  add_index "contentbase_contentbyline", ["content_id"], :name => "content_key"
-  add_index "contentbase_contentbyline", ["content_id"], :name => "index_contentbase_contentbyline_on_content_id"
   add_index "contentbase_contentbyline", ["content_type", "content_id"], :name => "index_contentbase_contentbyline_on_content_type_and_content_id"
   add_index "contentbase_contentbyline", ["user_id"], :name => "contentbase_contentbyline_fbfc09f1"
 
@@ -179,8 +187,11 @@ ActiveRecord::Schema.define(:version => 20130904222240) do
   end
 
   add_index "contentbase_contentshell", ["category_id"], :name => "contentbase_contentshell_42dc49bc"
+  add_index "contentbase_contentshell", ["published_at"], :name => "index_contentbase_contentshell_on_published_at"
   add_index "contentbase_contentshell", ["site"], :name => "index_contentbase_contentshell_on_site"
   add_index "contentbase_contentshell", ["status", "published_at"], :name => "index_contentbase_contentshell_on_status_and_published_at"
+  add_index "contentbase_contentshell", ["status"], :name => "index_contentbase_contentshell_on_status"
+  add_index "contentbase_contentshell", ["updated_at"], :name => "index_contentbase_contentshell_on_updated_at"
 
   create_table "contentbase_featuredcomment", :force => true do |t|
     t.integer  "bucket_id",                                         :null => false
@@ -194,8 +205,8 @@ ActiveRecord::Schema.define(:version => 20130904222240) do
   end
 
   add_index "contentbase_featuredcomment", ["bucket_id"], :name => "contentbase_featuredcomment_25ef9024"
-  add_index "contentbase_featuredcomment", ["content_id"], :name => "index_contentbase_featuredcomment_on_content_id"
   add_index "contentbase_featuredcomment", ["content_type", "content_id"], :name => "index_contentbase_featuredcomment_on_content_type_and_content_id"
+  add_index "contentbase_featuredcomment", ["created_at"], :name => "index_contentbase_featuredcomment_on_created_at"
   add_index "contentbase_featuredcomment", ["status"], :name => "index_contentbase_featuredcomment_on_status"
 
   create_table "contentbase_featuredcommentbucket", :force => true do |t|
@@ -204,12 +215,18 @@ ActiveRecord::Schema.define(:version => 20130904222240) do
     t.datetime "updated_at", :null => false
   end
 
+  add_index "contentbase_featuredcommentbucket", ["created_at"], :name => "index_contentbase_featuredcommentbucket_on_created_at"
+  add_index "contentbase_featuredcommentbucket", ["title"], :name => "index_contentbase_featuredcommentbucket_on_title"
+  add_index "contentbase_featuredcommentbucket", ["updated_at"], :name => "index_contentbase_featuredcommentbucket_on_updated_at"
+
   create_table "contentbase_misseditbucket", :force => true do |t|
     t.string   "title",      :null => false
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
     t.string   "slug"
   end
+
+  add_index "contentbase_misseditbucket", ["title"], :name => "index_contentbase_misseditbucket_on_title"
 
   create_table "contentbase_misseditcontent", :force => true do |t|
     t.integer  "bucket_id",                    :null => false
@@ -221,7 +238,6 @@ ActiveRecord::Schema.define(:version => 20130904222240) do
   end
 
   add_index "contentbase_misseditcontent", ["bucket_id"], :name => "contentbase_misseditcontent_25ef9024"
-  add_index "contentbase_misseditcontent", ["content_id"], :name => "index_contentbase_misseditcontent_on_content_id"
   add_index "contentbase_misseditcontent", ["content_type", "content_id"], :name => "index_contentbase_misseditcontent_on_content_type_and_content_id"
 
   create_table "data_points", :force => true do |t|
@@ -236,6 +252,7 @@ ActiveRecord::Schema.define(:version => 20130904222240) do
 
   add_index "data_points", ["data_key"], :name => "index_data_points_on_data_key"
   add_index "data_points", ["group_name"], :name => "index_data_points_on_group"
+  add_index "data_points", ["updated_at"], :name => "index_data_points_on_updated_at"
 
   create_table "edition_slots", :force => true do |t|
     t.string   "item_type"
@@ -257,7 +274,10 @@ ActiveRecord::Schema.define(:version => 20130904222240) do
     t.datetime "updated_at",   :null => false
   end
 
+  add_index "editions", ["published_at"], :name => "index_editions_on_published_at"
   add_index "editions", ["status", "published_at"], :name => "index_editions_on_status_and_published_at"
+  add_index "editions", ["status"], :name => "index_editions_on_status"
+  add_index "editions", ["updated_at"], :name => "index_editions_on_updated_at"
 
   create_table "events", :force => true do |t|
     t.string   "headline"
@@ -291,9 +311,11 @@ ActiveRecord::Schema.define(:version => 20130904222240) do
   end
 
   add_index "events", ["event_type"], :name => "index_events_event_on_etype"
+  add_index "events", ["is_kpcc_event"], :name => "index_events_on_is_kpcc_event"
   add_index "events", ["kpcc_program_id"], :name => "events_event_7666a8c6"
   add_index "events", ["slug"], :name => "events_event_slug"
   add_index "events", ["starts_at", "ends_at"], :name => "index_events_event_on_starts_at_and_ends_at"
+  add_index "events", ["starts_at"], :name => "index_events_on_starts_at"
   add_index "events", ["status"], :name => "index_events_on_status"
 
   create_table "external_episode_segments", :force => true do |t|
@@ -373,6 +395,7 @@ ActiveRecord::Schema.define(:version => 20130904222240) do
 
   add_index "flatpages_flatpage", ["is_public"], :name => "index_flatpages_flatpage_on_is_public"
   add_index "flatpages_flatpage", ["path"], :name => "django_flatpage_url"
+  add_index "flatpages_flatpage", ["updated_at"], :name => "index_flatpages_flatpage_on_updated_at"
 
   create_table "layout_breakingnewsalert", :force => true do |t|
     t.string   "headline",                                                          :null => false
@@ -390,6 +413,10 @@ ActiveRecord::Schema.define(:version => 20130904222240) do
     t.datetime "published_at"
   end
 
+  add_index "layout_breakingnewsalert", ["alert_type"], :name => "index_layout_breakingnewsalert_on_alert_type"
+  add_index "layout_breakingnewsalert", ["email_sent"], :name => "index_layout_breakingnewsalert_on_email_sent"
+  add_index "layout_breakingnewsalert", ["mobile_notification_sent"], :name => "index_layout_breakingnewsalert_on_mobile_notification_sent"
+  add_index "layout_breakingnewsalert", ["published_at"], :name => "index_layout_breakingnewsalert_on_published_at"
   add_index "layout_breakingnewsalert", ["status", "published_at"], :name => "index_layout_breakingnewsalert_on_status_and_published_at"
   add_index "layout_breakingnewsalert", ["visible"], :name => "index_layout_breakingnewsalert_on_visible"
 
@@ -403,7 +430,9 @@ ActiveRecord::Schema.define(:version => 20130904222240) do
   end
 
   add_index "layout_homepage", ["missed_it_bucket_id"], :name => "layout_homepage_d12628ce"
+  add_index "layout_homepage", ["published_at"], :name => "index_layout_homepage_on_published_at"
   add_index "layout_homepage", ["status", "published_at"], :name => "index_layout_homepage_on_status_and_published_at"
+  add_index "layout_homepage", ["updated_at"], :name => "index_layout_homepage_on_updated_at"
 
   create_table "layout_homepagecontent", :force => true do |t|
     t.integer "homepage_id",                  :null => false
@@ -412,7 +441,6 @@ ActiveRecord::Schema.define(:version => 20130904222240) do
     t.string  "content_type"
   end
 
-  add_index "layout_homepagecontent", ["content_id"], :name => "index_layout_homepagecontent_on_content_id"
   add_index "layout_homepagecontent", ["content_type", "content_id"], :name => "index_layout_homepagecontent_on_content_type_and_content_id"
   add_index "layout_homepagecontent", ["homepage_id"], :name => "layout_homepagecontent_35da0e60"
 
@@ -435,10 +463,7 @@ ActiveRecord::Schema.define(:version => 20130904222240) do
     t.string   "path"
   end
 
-  add_index "media_audio", ["content_id"], :name => "index_media_audio_on_content_id"
-  add_index "media_audio", ["content_id"], :name => "media_audio_content_type_id_569dcfe00f4d911"
   add_index "media_audio", ["content_type", "content_id"], :name => "index_media_audio_on_content_type_and_content_id"
-  add_index "media_audio", ["mp3"], :name => "index_media_audio_on_mp3"
   add_index "media_audio", ["position"], :name => "index_media_audio_on_position"
   add_index "media_audio", ["status"], :name => "index_media_audio_on_status"
   add_index "media_audio", ["type"], :name => "index_media_audio_on_type"
@@ -473,9 +498,7 @@ ActiveRecord::Schema.define(:version => 20130904222240) do
     t.integer "position",     :default => 0, :null => false
   end
 
-  add_index "media_related", ["content_id"], :name => "index_media_related_on_content_id"
   add_index "media_related", ["content_type", "content_id"], :name => "index_media_related_on_content_type_and_content_id"
-  add_index "media_related", ["related_id"], :name => "index_media_related_on_related_id"
   add_index "media_related", ["related_type", "related_id"], :name => "index_media_related_on_related_type_and_related_id"
 
   create_table "news_story", :force => true do |t|
@@ -499,6 +522,8 @@ ActiveRecord::Schema.define(:version => 20130904222240) do
   add_index "news_story", ["category_id"], :name => "news_story_42dc49bc"
   add_index "news_story", ["published_at"], :name => "news_story_published_at"
   add_index "news_story", ["status", "published_at"], :name => "index_news_story_on_status_and_published_at"
+  add_index "news_story", ["status"], :name => "index_news_story_on_status"
+  add_index "news_story", ["updated_at"], :name => "index_news_story_on_updated_at"
 
   create_table "permissions", :force => true do |t|
     t.string   "resource"
@@ -549,8 +574,10 @@ ActiveRecord::Schema.define(:version => 20130904222240) do
   end
 
   add_index "podcasts", ["category_id"], :name => "podcasts_podcast_42dc49bc"
+  add_index "podcasts", ["is_listed"], :name => "index_podcasts_on_is_listed"
   add_index "podcasts", ["slug"], :name => "slug", :unique => true
   add_index "podcasts", ["source_id"], :name => "podcasts_podcast_7eef53e3"
+  add_index "podcasts", ["title"], :name => "index_podcasts_on_title"
 
   create_table "press_releases", :force => true do |t|
     t.string   "short_title"
@@ -561,6 +588,7 @@ ActiveRecord::Schema.define(:version => 20130904222240) do
     t.datetime "updated_at"
   end
 
+  add_index "press_releases", ["created_at"], :name => "index_press_releases_on_created_at"
   add_index "press_releases", ["slug"], :name => "press_releases_release_slug"
 
   create_table "programs_kpccprogram", :force => true do |t|
@@ -589,6 +617,7 @@ ActiveRecord::Schema.define(:version => 20130904222240) do
   add_index "programs_kpccprogram", ["is_featured"], :name => "index_programs_kpccprogram_on_is_featured"
   add_index "programs_kpccprogram", ["missed_it_bucket_id"], :name => "programs_kpccprogram_d12628ce"
   add_index "programs_kpccprogram", ["slug"], :name => "index_programs_kpccprogram_on_slug"
+  add_index "programs_kpccprogram", ["title"], :name => "index_programs_kpccprogram_on_title"
 
   create_table "recurring_schedule_rules", :force => true do |t|
     t.text     "schedule_hash", :limit => 16777215
@@ -629,7 +658,9 @@ ActiveRecord::Schema.define(:version => 20130904222240) do
     t.datetime "updated_at",                                           :null => false
   end
 
+  add_index "remote_articles", ["published_at"], :name => "index_remote_articles_on_published_at"
   add_index "remote_articles", ["source", "article_id"], :name => "index_remote_articles_on_source_and_article_id"
+  add_index "remote_articles", ["source"], :name => "index_remote_articles_on_source"
 
   create_table "schedule_occurrences", :force => true do |t|
     t.string   "event_title"
@@ -646,6 +677,8 @@ ActiveRecord::Schema.define(:version => 20130904222240) do
   add_index "schedule_occurrences", ["program_type", "program_id"], :name => "index_schedule_occurrences_on_program_type_and_program_id"
   add_index "schedule_occurrences", ["recurring_schedule_rule_id"], :name => "index_schedule_occurrences_on_recurring_schedule_rule_id"
   add_index "schedule_occurrences", ["starts_at", "ends_at"], :name => "index_schedule_occurrences_on_starts_at_and_ends_at"
+  add_index "schedule_occurrences", ["starts_at"], :name => "index_schedule_occurrences_on_starts_at"
+  add_index "schedule_occurrences", ["updated_at"], :name => "index_schedule_occurrences_on_updated_at"
 
   create_table "shows_episode", :force => true do |t|
     t.integer  "show_id",                            :null => false
@@ -658,8 +691,11 @@ ActiveRecord::Schema.define(:version => 20130904222240) do
     t.datetime "updated_at",                         :null => false
   end
 
+  add_index "shows_episode", ["air_date"], :name => "index_shows_episode_on_air_date"
+  add_index "shows_episode", ["published_at"], :name => "index_shows_episode_on_published_at"
   add_index "shows_episode", ["show_id"], :name => "shows_episode_show_id"
   add_index "shows_episode", ["status", "published_at"], :name => "index_shows_episode_on_status_and_published_at"
+  add_index "shows_episode", ["status"], :name => "index_shows_episode_on_status"
 
   create_table "shows_rundown", :force => true do |t|
     t.integer "episode_id", :null => false
@@ -688,9 +724,12 @@ ActiveRecord::Schema.define(:version => 20130904222240) do
   end
 
   add_index "shows_segment", ["category_id"], :name => "shows_segment_42dc49bc"
+  add_index "shows_segment", ["published_at"], :name => "index_shows_segment_on_published_at"
   add_index "shows_segment", ["show_id"], :name => "shows_segment_show_id"
   add_index "shows_segment", ["slug"], :name => "shows_segment_slug"
   add_index "shows_segment", ["status", "published_at"], :name => "index_shows_segment_on_status_and_published_at"
+  add_index "shows_segment", ["status"], :name => "index_shows_segment_on_status"
+  add_index "shows_segment", ["updated_at"], :name => "index_shows_segment_on_updated_at"
 
   create_table "taggit_tag", :force => true do |t|
     t.string  "name",  :limit => 100, :null => false
@@ -747,6 +786,7 @@ ActiveRecord::Schema.define(:version => 20130904222240) do
     t.text     "object_changes", :limit => 16777215
   end
 
+  add_index "versions", ["created_at"], :name => "index_versions_on_created_at"
   add_index "versions", ["user_id"], :name => "index_versions_on_user_id"
   add_index "versions", ["version_number"], :name => "index_versions_on_version_number"
   add_index "versions", ["versioned_type", "versioned_id"], :name => "index_versions_on_versioned_type_and_versioned_id"
