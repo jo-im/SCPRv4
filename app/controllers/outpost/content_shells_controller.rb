@@ -1,6 +1,6 @@
 class Outpost::ContentShellsController < Outpost::ResourceController
   outpost_controller
-  
+
   define_list do |l|
     l.default_order = "updated_at"
     l.default_sort_mode = "desc"

@@ -1,6 +1,6 @@
 class Outpost::ShowEpisodesController < Outpost::ResourceController
   outpost_controller
-  
+
   define_list do |l|
     l.default_order = "air_date"
     l.default_sort_mode = "desc"

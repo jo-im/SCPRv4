@@ -1,8 +1,5 @@
 class Outpost::HomepagesController < Outpost::ResourceController
   outpost_controller
-  #--------------------
-  # Outpost
-  self.model = Homepage
 
   define_list do |l|
     l.default_order       = "updated_at"

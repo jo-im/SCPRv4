@@ -1,8 +1,5 @@
 class Outpost::KpccProgramsController < Outpost::ResourceController
   outpost_controller
-  #---------------
-  # Outpost
-  self.model = KpccProgram
 
   define_list do |l|
     l.default_order = "title"

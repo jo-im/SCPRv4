@@ -21,7 +21,9 @@ class Outpost::PijQueriesController < Outpost::ResourceController
       :title      => "Type",
       :collection => -> { PijQuery::QUERY_TYPES }
 
-    l.filter :is_featured, title: "Featured?", collection: :boolean
+    l.filter :is_featured,
+      :title        => "Featured?",
+      :collection   => :boolean
   end
 
   #----------------

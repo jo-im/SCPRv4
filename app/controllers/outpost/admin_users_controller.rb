@@ -21,14 +21,15 @@ class Outpost::AdminUsersController < Outpost::ResourceController
   # own profile.
   def authorize_resource
     if @record
-      if current_user == @record && %w{show edit update activity}.include?(action_name)
+      if current_user == @record &&
+      %w{show edit update activity}.include?(action_name)
         return true
       end
     end
 
     super
   end
-  
+
   #---------------
 
   def activity

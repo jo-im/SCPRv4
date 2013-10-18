@@ -11,7 +11,9 @@ class Outpost::FlatpagesController < Outpost::ResourceController
     l.column :updated_at, sortable: true, default_sort_mode: "desc"
     l.column :is_public, header: "Public?"
 
-    l.filter :is_public, title: "Public?", collection: :boolean
+    l.filter :is_public,
+      :title        => "Public?",
+      :collection   => :boolean
   end
 
   #------------------

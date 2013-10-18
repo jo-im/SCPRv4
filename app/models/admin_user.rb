@@ -3,7 +3,7 @@ require 'digest/sha1'
 class AdminUser < ActiveRecord::Base
   self.table_name = 'auth_user'
   include Concern::Callbacks::SphinxIndexCallback
-  
+
   include Outpost::Model::Authentication
   include Outpost::Model::Authorization
   outpost_model
@@ -18,7 +18,7 @@ class AdminUser < ActiveRecord::Base
 
   # ----------------
   # Scopes
-  
+
   # ----------------
   # Association
   has_many :activities, class_name: "Secretary::Version", foreign_key: "user_id"
@@ -41,7 +41,7 @@ class AdminUser < ActiveRecord::Base
   end
 
   # ----------------
-  
+
   def json
     {
       :username     => self.username,

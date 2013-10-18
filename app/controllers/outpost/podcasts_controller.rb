@@ -1,6 +1,6 @@
 class Outpost::PodcastsController < Outpost::ResourceController
   outpost_controller
-  
+
   define_list do |l|
     l.default_order = "title"
     l.default_sort_mode = "asc"
@@ -12,6 +12,8 @@ class Outpost::PodcastsController < Outpost::ResourceController
     l.column :keywords
     l.column :is_listed, header: "Listed?"
 
-    l.filter :is_listed, title: "Listed?", collection: :boolean
+    l.filter :is_listed,
+      :title        => "Listed?",
+      :collection   => :boolean
   end
 end

@@ -25,8 +25,9 @@ class Outpost::RemoteArticlesController < Outpost::BaseController
     l.column :url, display: :display_link
     l.column :article_id, header: "ID"
 
-    l.filter :source, title: "Source",
-      collection: -> { RemoteArticle.types_select_collection }
+    l.filter :source,
+      :title        => "Source",
+      :collection   => -> { RemoteArticle.types_select_collection }
   end
 
   #------------------
@@ -42,14 +43,14 @@ class Outpost::RemoteArticlesController < Outpost::BaseController
   respond_to :html, :json, :js
 
   #------------------
-  
+
   def index
     @records = @records.where(is_new: true)
     respond_with :outpost, @records
   end
 
   #--------------
-  
+
   def sync
     breadcrumb "Sync"
     Resque.enqueue(Job::SyncRemoteArticles)
@@ -57,27 +58,27 @@ class Outpost::RemoteArticlesController < Outpost::BaseController
   end
 
   #--------------
-  
+
   def import
     breadcrumb "Importing", nil, @record.to_title
     @record.async_import(import_to_class: params[:import_to_class])
     render "import"
   end
-  
+
   #--------------
-  
+
   def skip
     if @record.update_attributes(is_new: false)
       flash[:notice] = "Skipped Remote Article: \"#{@record.to_title}\""
     else
       flash[:alert] = "Could not skip Remote Article"
     end
-    
+
     redirect_to outpost_remote_articles_path
   end
 
   #--------------
-  
+
   def extend_breadcrumbs_with_resource_root
     breadcrumb model.to_title.pluralize, model.admin_index_path
   end

@@ -1,6 +1,6 @@
 class Outpost::PressReleasesController < Outpost::ResourceController
   outpost_controller
-  
+
   define_list do |l|
     l.default_order = "created_at"
     l.default_sort_mode = "desc"

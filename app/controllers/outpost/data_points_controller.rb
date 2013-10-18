@@ -1,8 +1,5 @@
 class Outpost::DataPointsController < Outpost::ResourceController
   outpost_controller
-  #----------------
-  # Outpost
-  self.model = DataPoint
 
   define_list do |l|
     l.default_order = "group_name"
@@ -16,6 +13,7 @@ class Outpost::DataPointsController < Outpost::ResourceController
     l.column :notes
     l.column :updated_at, header: "Last Updated", sortable: true, default_sort_mode: "desc"
 
-    l.filter :group_name, collection: -> { DataPoint.group_names_select_collection }
+    l.filter :group_name,
+      :collection => -> { DataPoint.group_names_select_collection }
   end
 end

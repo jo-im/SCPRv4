@@ -13,6 +13,7 @@ class Outpost::ScheduleOccurrencesController < Outpost::ResourceController
     l.column :is_recurring?, header: "Recurring?", display: :display_boolean
     l.column :updated_at, sortable: true, default_sort_mode: :desc
 
-    l.filter :date, collection: -> { ScheduleOccurrence.date_select_collection }
+    l.filter :date,
+      collection: -> { ScheduleOccurrence.date_select_collection }
   end
 end

@@ -1,6 +1,6 @@
 class Outpost::NewsStoriesController < Outpost::ResourceController
   outpost_controller
-  
+
   define_list do |l|
     l.default_order = "updated_at"
     l.default_sort_mode = "desc"
@@ -20,13 +20,17 @@ class Outpost::NewsStoriesController < Outpost::ResourceController
 
   def preview
     @story = Outpost.obj_by_key(params[:obj_key]) || NewsStory.new
-    
+
     with_rollback @story do
       @story.assign_attributes(params[:news_story])
 
       if @story.unconditionally_valid?
         @title = @story.to_title
-        render "/news/_story", layout: "outpost/preview/application", locals: { story: @story }
+        render "/news/_story",
+          :layout => "outpost/preview/application",
+          :locals => {
+            :story => @story
+          }
       else
         render_preview_validation_errors(@story)
       end

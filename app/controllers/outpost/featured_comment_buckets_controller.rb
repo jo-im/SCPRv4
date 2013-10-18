@@ -1,6 +1,6 @@
 class Outpost::FeaturedCommentBucketsController < Outpost::ResourceController
   outpost_controller
-  
+
   define_list do |l|
     l.default_order = "title"
     l.default_sort_mode = "asc"
