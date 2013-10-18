@@ -115,7 +115,6 @@ module Concern
       # We can't really assume that anything with a byline will
       # be versioned, so we should check first.
       def build_custom_changes_for_bylines
-        binding.pry
         if self.class.has_secretary?
           build_custom_changes_for_association("bylines", @bylines_were)
         end
