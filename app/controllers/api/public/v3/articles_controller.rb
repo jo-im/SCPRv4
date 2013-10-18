@@ -10,8 +10,6 @@ module Api::Public::V3
     DEFAULTS = {
       :types        => "news,blogs,segments",
       :limit        => 10,
-      :order        => "published_at",
-      :sort_mode    => :desc, # Symbol plz
       :page         => 1 # o, rly?
     }
 
@@ -24,6 +22,8 @@ module Api::Public::V3
       :sanitize_page,
       :sanitize_query,
       :sanitize_categories,
+      :sanitize_date_range,
+      :sanitize_date,
       only: [:index]
 
     before_filter :sanitize_obj_key, only: [:show]
@@ -153,14 +153,53 @@ module Api::Public::V3
     #---------------------------
 
     def sanitize_categories
-      if params[:categories].present?
-        slugs   = params[:categories].to_s.split(',')
-        ids     = Category.where(slug: slugs).map(&:id)
+      return true if !params[:categories]
 
-        if ids.present?
-          @conditions[:category] = ids
-        end
+      slugs   = params[:categories].to_s.split(',')
+      ids     = Category.where(slug: slugs).map(&:id)
+
+      if ids.present?
+        @conditions[:category] = ids
       end
+    end
+
+
+    def sanitize_date
+      return true if !params[:date]
+
+      begin
+        date = Time.parse(params[:date])
+      rescue ArgumentError
+        render_bad_request(message: "Invalid Date. Format is YYYY-MM-DD.")
+        return false
+      end
+
+      @conditions[:published_at] = date.beginning_of_day..date.end_of_day
+    end
+
+
+    def sanitize_date_range
+      return true if !params[:start_date] && !params[:end_date]
+
+      if params[:end_date] && !params[:start_date]
+        render_bad_request(message: "start_date is required when " \
+                                    "requesting a date range.")
+        return false
+      end
+
+      begin
+        # If no end_date was passed in, then we should assume that they wanted
+        # everything from start_date to now.
+        start_date = Time.parse(params[:start_date])
+        end_date = params[:end_date] ? Time.parse(params[:end_date]) : Time.now
+
+      rescue ArgumentError # Time couldn't be parsed
+        render_bad_request(message: "Invalid Date. Format is YYYY-MM-DD.")
+        return false
+      end
+
+      @conditions[:published_at] =
+        start_date.beginning_of_day..end_date.end_of_day
     end
   end
 end
