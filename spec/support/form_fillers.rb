@@ -11,19 +11,21 @@ module FormFillers
       fill_field(record, attribute)
     end
   end
-  
+
   #------------------
   # Fill only required fields
-  def fill_required_fields(record)      
-    record.class.validators.select { |v| v.is_a? ActiveModel::Validations::PresenceValidator }.each do |validator|
+  def fill_required_fields(record)
+    record.class.validators.select { |v|
+      v.is_a? ActiveModel::Validations::PresenceValidator
+    }.each do |validator|
       validator.attributes.each do |attribute|
         fill_field(record, attribute)
       end
     end
   end
-  
+
   #------------
-  
+
   private
   
     def fill_field(record, attribute)      

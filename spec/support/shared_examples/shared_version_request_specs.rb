@@ -3,12 +3,12 @@ shared_examples_for "versioned model" do
     before :each do
       login
       @user.update_attribute(:is_superuser, true)
-      
+
       # touch records to created associated objects
       valid_record
       updated_record
     end
-    
+
     context "new record" do
       it "saves an initial version" do
         visit described_class.admin_new_path
@@ -21,7 +21,7 @@ shared_examples_for "versioned model" do
         page.should have_content "Created #{described_class.name.demodulize.titleize} ##{new_record.id}"
       end
     end
-    
+
     context "existing record" do
       it "saves a new version" do
         valid_record.save!

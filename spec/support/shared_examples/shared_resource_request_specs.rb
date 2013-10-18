@@ -15,14 +15,14 @@ shared_examples_for "managed resource create" do
     invalid_record
     updated_record
   end
-  
+
   #------------------------
-  
+
   describe "Create" do
     before :each do
       visit described_class.admin_new_path
     end
-        
+
     context "invalid" do
       it "shows validation errors" do
         fill_required_fields(invalid_record)
@@ -34,7 +34,7 @@ shared_examples_for "managed resource create" do
         page.should have_css ".help-inline"
       end
     end
-    
+
     context "valid" do
       it "is created" do
         fill_required_fields(valid_record)
@@ -61,15 +61,15 @@ shared_examples_for "managed resource update" do
     invalid_record
     updated_record
   end
-  
+
   #------------------------
-  
-  describe "Update" do    
+
+  describe "Update" do
     before :each do
       valid_record.save!
       visit valid_record.admin_edit_path
     end
-    
+
     context "invalid" do
       it "shows validation error" do
         fill_required_fields(invalid_record)
@@ -78,7 +78,7 @@ shared_examples_for "managed resource update" do
         current_path.should eq valid_record.admin_show_path # Technically "#update" but this'll do        
       end
     end
-    
+
     context "valid" do
       it "updates attributes" do
         fill_required_fields(updated_record)
@@ -100,13 +100,13 @@ shared_examples_for "managed resource destroy" do
     invalid_record
     updated_record
   end
-      
+
   describe "Destroy" do
     before :each do
       valid_record.save!
       visit valid_record.admin_edit_path
     end
-    
+
     it "Deletes the record and redirects to index" do
       click_link "Delete"
       current_path.should eq described_class.admin_index_path
@@ -125,7 +125,7 @@ shared_examples_for "save options" do
       valid_record.save!
       visit valid_record.admin_edit_path
     end
-    
+
     context "Save" do
       it "returns to the edit page" do
         click_button "edit"
@@ -134,7 +134,7 @@ shared_examples_for "save options" do
         page.should have_css "form#edit_#{described_class.singular_route_key}_#{valid_record.id}"
       end
     end
-    
+
     context "Save & Return to List" do
       it "returns to the index page" do
         click_button "index"

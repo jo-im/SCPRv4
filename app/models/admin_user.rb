@@ -11,7 +11,9 @@ class AdminUser < ActiveRecord::Base
 
   # ----------------
   # Callbacks
-  before_validation :generate_username, on: :create, if: -> { self.username.blank? }
+  before_validation :generate_username,
+    :on => :create,
+    :if => -> { self.username.blank? }
 
   # ----------------
   # Validation
@@ -21,7 +23,10 @@ class AdminUser < ActiveRecord::Base
 
   # ----------------
   # Association
-  has_many :activities, class_name: "Secretary::Version", foreign_key: "user_id"
+  has_many :activities,
+    :class_name     => "Secretary::Version",
+    :foreign_key    => "user_id"
+
   has_one  :bio, foreign_key: "user_id"
 
   # ----------------
