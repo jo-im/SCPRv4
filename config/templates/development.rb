@@ -64,7 +64,7 @@ Scprv4::Application.configure do
 
   config.dbsync.filename    = "mercer.dump"
   config.dbsync.local_dir   = "#{Rails.root}/../dbsync" # No trailing slash
-  config.dbsync.remote_host = "66.226.4.229"
+  config.dbsync.remote_host = "scprdb@66.226.4.229"
   config.dbsync.remote_dir  = "~scprdb"
 
   default_url_options[:host] = "localhost:3000"
