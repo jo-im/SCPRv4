@@ -72,24 +72,3 @@ namespace :deploy do
     end
   end
 end
-
-# --------------
-# Sphinx
-namespace :ts do
-  task :restart, roles: :sphinx do
-    thinking_sphinx.stop
-    thinking_sphinx.start
-  end
-
-  task :config, roles: :sphinx do
-    thinking_sphinx.config
-  end
-
-  task :index, roles: :sphinx do
-    thinking_sphinx.index
-  end
-
-  task :rebuild, roles: :sphinx do
-    thinking_sphinx.rebuild
-  end
-end

@@ -78,5 +78,4 @@ end
 # --------------
 # Callbacks
 before "deploy:update_code", "deploy:notify"
-before "deploy:create_symlink", "thinking_sphinx:configure"
 after "deploy:restart", "newrelic:notice_deployment"
