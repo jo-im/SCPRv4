@@ -26,7 +26,7 @@ shared_examples_for "managed resource create" do
     context "invalid" do
       it "shows validation errors" do
         if invalid_record
-          fill_required_fields(invalid_record)
+          fill_required_fields(invalid_record, status: "status-select")
           click_button "edit"
           current_path.should eq described_class.admin_index_path
           described_class.count.should eq 0

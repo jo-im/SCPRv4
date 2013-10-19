@@ -6,20 +6,20 @@
 #
 module FormFillers
   # Fill all fields, regardless of its validation
-  def fill_all_fields(record)
+  def fill_all_fields(record, options={})
     record.attributes.keys.each do |attribute|
-      fill_field(record, attribute)
+      fill_field(record, attribute, options)
     end
   end
 
   #------------------
   # Fill only required fields
-  def fill_required_fields(record)
+  def fill_required_fields(record, options={})
     record.class.validators.select { |v|
       v.is_a? ActiveModel::Validations::PresenceValidator
     }.each do |validator|
       validator.attributes.each do |attribute|
-        fill_field(record, attribute)
+        fill_field(record, attribute, options)
       end
     end
   end
@@ -28,13 +28,15 @@ module FormFillers
 
   private
 
-  def fill_field(record, attribute)
+  def fill_field(record, attribute, options={})
     if record.class.reflect_on_association(attribute)
       attribute = "#{attribute}_id"
     end
 
-    field_id  = "#{record.class.singular_route_key}_#{attribute}"
-    value     = record.send(attribute)
+    field_id  = options[attribute] ||
+      "#{record.class.singular_route_key}_#{attribute}"
+
+    value = record.send(attribute)
 
     # For serialized arrays acting as has_many associations
     if record.class
