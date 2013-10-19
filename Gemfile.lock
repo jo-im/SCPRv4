@@ -35,6 +35,16 @@ GIT
     outpost-publishing (1.0.0)
 
 GIT
+  remote: git://github.com/SCPR/outpost.git
+  revision: ce73b465c1aef18d7fa50d6898c1bfdf96d37c1a
+  specs:
+    outpost-cms (0.0.4)
+      bcrypt-ruby (>= 3.0.0)
+      jquery-rails
+      rails (>= 3.2)
+      select2-rails (= 3.4.1)
+
+GIT
   remote: git://github.com/SCPR/redis-content-store.git
   revision: 7838b07daee3c8ed9c1f0205e7f4fa9b4ff867c7
   specs:
@@ -77,15 +87,6 @@ GIT
     turbo-sprockets-rails3 (0.3.10)
       railties (> 3.2.8, < 4.0.0)
       sprockets (>= 2.0.0)
-
-PATH
-  remote: /Users/bricker/websites/kpcc/outpost
-  specs:
-    outpost-cms (0.0.4)
-      bcrypt-ruby (>= 3.0.0)
-      jquery-rails
-      rails (>= 3.2)
-      select2-rails (= 3.4.1)
 
 GEM
   remote: https://rubygems.org/

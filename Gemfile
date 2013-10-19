@@ -13,8 +13,8 @@ gem "bcrypt-ruby", "~> 3.0.0"
 gem 'thinking-sphinx', github: 'bricker/thinking-sphinx', branch: 'ar-methods'
 
 ## Outpost
-#gem 'outpost-cms', github: 'SCPR/outpost'
-gem 'outpost-cms', path: "#{ENV['PROJECT_HOME']}/outpost"
+gem 'outpost-cms', github: 'SCPR/outpost'
+#gem 'outpost-cms', path: "#{ENV['PROJECT_HOME']}/outpost"
 
 gem 'outpost-publishing', github: "SCPR/outpost-publishing"
 #gem 'outpost-publishing', path: "#{ENV['PROJECT_HOME']}/outpost-publishing"
