@@ -11,4 +11,8 @@
 .embed-wrapper {
     overflow: hidden;
     width: 100%;
+
+    iframe {
+        width: 100%;
+    }
 }
