@@ -9,8 +9,6 @@ gem "bcrypt-ruby", "~> 3.0.0"
 # https://github.com/pat/thinking-sphinx/issues/634
 # gem 'thinking-sphinx', '~> 3.0.5'
 gem 'thinking-sphinx', github: 'pat/thinking-sphinx', ref: '06d8950bd'
-#gem 'thinking-sphinx', path: "#{ENV['PROJECT_HOME']}/../clones/thinking-sphinx"
-#gem 'thinking-sphinx', github: 'bricker/thinking-sphinx', branch: 'ar-methods'
 
 ## Outpost
 gem 'outpost-cms', github: 'SCPR/outpost'

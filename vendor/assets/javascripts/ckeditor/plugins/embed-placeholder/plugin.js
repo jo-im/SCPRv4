@@ -124,7 +124,18 @@
                     onLoad: function() {
                       $('input', '#'+this.domId).after(' <strong>px</strong>')
                     }
-                  } // embedMaxHeight
+                  }, // embedMaxHeight
+                  {
+                    id      : 'embedPlacement',
+                    type    : 'select',
+                    label   : '<strong>Embed Placement</strong>',
+                    items   : [
+                      ['After Link', 'after'],
+                      ['Before Link', 'before'],
+                      ['Replace Link', 'replaceWith']
+                    ] // items
+                  }, // embedService
+
                 ] // elements
               }, // embed-advanced
             ], // contents
@@ -141,6 +152,9 @@
                   maxheight   = this.getContentElement(
                                   'embed-advanced', 'embedMaxHeight'
                                 ).getValue(),
+                  placement   = this.getContentElement(
+                                  'embed-advanced', 'embedPlacement'
+                                ).getValue(),
 
                   service     = this.getContentElement(
                                   'embed', 'embedService'
@@ -153,10 +167,11 @@
                   markEnd     = "<!-- END PLACEHOLDER -->";
 
               var tagProps = {
-                'href'    : url,
-                'class'   : "embed-placeholder",
-                'title'   : title,
-                'text'    : title
+                'href'            : url,
+                'class'           : "embed-placeholder",
+                'title'           : title,
+                'text'            : title,
+                'data-placement'  : placement
               }
 
               if(maxheight !== "") tagProps['data-maxheight'] = maxheight;
