@@ -2,7 +2,7 @@
 # Requires and Multistage setup
 
 require "bundler/capistrano"
-require 'thinking_sphinx/deploy/capistrano'
+require 'thinking_sphinx/capistrano'
 
 set :stages, %w{ production staging }
 set :default_stage, "production"
@@ -67,7 +67,7 @@ namespace :deploy do
   end
 
   task :symlink_config do
-    %w{ database.yml api_config.yml app_config.yml sphinx.yml newrelic.yml }.each do |file|
+    %w{ database.yml api_config.yml app_config.yml thinking_sphinx.yml newrelic.yml }.each do |file|
       run "ln -nfs #{shared_path}/config/#{file} #{release_path}/config/#{file}"
     end
   end
