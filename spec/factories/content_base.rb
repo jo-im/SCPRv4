@@ -1,14 +1,14 @@
 FactoryGirl.define do
   trait :pending do
-    status 3
+    status ContentBase::STATUS_PENDING
   end
-  
+
   trait :published do
-    status 5
+    status ContentBase::STATUS_LIVE
     sequence(:published_at) { |n| Time.now - n.hours }
   end
-  
+
   trait :draft do
-    status 0
+    status ContentBase::STATUS_DRAFT
   end
 end
