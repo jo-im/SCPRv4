@@ -68,18 +68,6 @@ GIT
       faraday_middleware (>= 0.9.0)
 
 GIT
-  remote: git://github.com/bricker/thinking-sphinx.git
-  revision: ba3b85e951e4b2fc467913049478e46f4c2c63ae
-  branch: ar-methods
-  specs:
-    thinking-sphinx (3.0.5)
-      activerecord (>= 3.1.0)
-      builder (>= 2.1.2)
-      innertube (>= 1.0.2)
-      middleware (>= 0.1.0)
-      riddle (>= 1.5.8)
-
-GIT
   remote: git://github.com/bricker/turbo-sprockets-rails3.git
   revision: 5102c06677f80aeb9f9cf77fdd6f39b439420e70
   branch: utf8-conversion
@@ -87,6 +75,18 @@ GIT
     turbo-sprockets-rails3 (0.3.10)
       railties (> 3.2.8, < 4.0.0)
       sprockets (>= 2.0.0)
+
+GIT
+  remote: git://github.com/pat/thinking-sphinx.git
+  revision: 06d8950bd74583ba28a8bd3970bc3950e2f51035
+  ref: 06d8950bd
+  specs:
+    thinking-sphinx (3.0.5)
+      activerecord (>= 3.1.0)
+      builder (>= 2.1.2)
+      innertube (>= 1.0.2)
+      middleware (>= 0.1.0)
+      riddle (>= 1.5.8)
 
 GEM
   remote: https://rubygems.org/
@@ -330,7 +330,7 @@ GEM
       rest-client (>= 0.3.0)
     rest-client (1.6.7)
       mime-types (>= 1.16)
-    riddle (1.5.8)
+    riddle (1.5.9)
     rspec (2.14.1)
       rspec-core (~> 2.14.0)
       rspec-expectations (~> 2.14.0)

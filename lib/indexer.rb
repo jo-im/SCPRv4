@@ -10,7 +10,7 @@
 class Indexer
   include ::NewRelic::Agent::Instrumentation::ControllerInstrumentation
 
-  attr_reader :indexes, :models
+  attr_reader :indices, :models
   
   class << self
     #--------------------
@@ -23,10 +23,10 @@ class Indexer
   #--------------
 
   def initialize(*models)
-    @models     = models.reject { |e| e.blank? || !e.has_sphinx_indices? }
+    @models     = models.reject { |m| m.blank? || !has_sphinx_indices?(m) }
     @controller = ThinkingSphinx::Configuration.instance.controller
-    @indexes    = @models.map(&:sphinx_index_names).flatten
-    @full_index = @indexes.blank?
+    @indices    = @models.map { |m| sphinx_index_names(m) }.flatten
+    @full_index = @indices.blank?
   end
 
   #--------------------
@@ -37,9 +37,24 @@ class Indexer
     if @full_index
       @controller.index
     else
-      @controller.index @indexes
+      @controller.index @indices
     end
   end
 
   add_transaction_tracer :index, category: :task
+
+
+  private
+
+  def has_sphinx_indices?(model)
+    !sphinx_indices(model).empty?
+  end
+
+  def sphinx_index_names(model)
+    sphinx_indices(model).map(&:name)
+  end
+
+  def sphinx_indices(model)
+    ThinkingSphinx::IndexSet.new([model], nil).to_a
+  end
 end
