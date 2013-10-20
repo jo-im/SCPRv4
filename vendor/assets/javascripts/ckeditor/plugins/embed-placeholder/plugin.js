@@ -132,7 +132,7 @@
                     items   : [
                       ['After Link', 'after'],
                       ['Before Link', 'before'],
-                      ['Replace Link', 'replaceWith']
+                      ['Replace Link', 'replace']
                     ] // items
                   }, // embedService
 
