@@ -81,9 +81,9 @@ class Category < ActiveRecord::Base
         :category     => self.id,
         :is_slideshow => true
       },
-      # :without_all => {
-      #   :obj_key => Array(args[:exclude]).map { |a| a.obj_key }
-      # }
+      :without => {
+        :obj_key => Array(args[:exclude]).map { |a| a.obj_key.to_crc32 }
+      }
     })
 
     if slideshow.any?
@@ -105,9 +105,9 @@ class Category < ActiveRecord::Base
       :classes     => [ShowSegment],
       :limit       => 1,
       :with        => { category: self.id },
-      # :without_all => {
-      #   :obj_key => Array(args[:exclude]).map { |a| a.obj_key }
-      # }
+      :without => {
+        :obj_key => Array(args[:exclude]).map { |a| a.obj_key.to_crc32 }
+      }
     })
 
     if segments.any?
