@@ -1,4 +1,3 @@
-raise "deployment is currently broken due to the thinkig sphinx upgrade... I'm working on it"
 # --------------
 # Requires and Multistage setup
 
