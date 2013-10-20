@@ -27,3 +27,10 @@ if defined?(ThinkingSphinx::RakeInterface)
     end
   end
 end
+
+# Copied from Thinking Sphinx 2
+class String
+  def to_crc32
+    Zlib.crc32 self
+  end
+end
