@@ -26,7 +26,6 @@ class Indexer
     @models     = models.reject { |m| m.blank? || !has_sphinx_indices?(m) }
     @controller = ThinkingSphinx::Configuration.instance.controller
     @indices    = @models.map { |m| sphinx_index_names(m) }.flatten
-    @full_index = @indices.blank?
   end
 
   #--------------------
@@ -34,7 +33,7 @@ class Indexer
   # If any models were passed in, only index those models.
   # If no classes passed in, run a full index.
   def index
-    if @full_index
+    if @indices.empty?
       @controller.index
     else
       @controller.index @indices
