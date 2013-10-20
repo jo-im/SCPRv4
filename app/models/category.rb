@@ -44,7 +44,7 @@ class Category < ActiveRecord::Base
     }
 
     if without_obj && without_obj.respond_to?("obj_key")
-      args[:without] = { obj_key: without_obj.obj_key.to_crc32 }
+      args[:without] = { obj_key: without_obj.obj_key }
     end
 
     ContentBase.search(args)
@@ -81,7 +81,7 @@ class Category < ActiveRecord::Base
         :category     => self.id,
         :is_slideshow => true
       },
-      :without_all => { obj_key: Array(args[:exclude]).map { |c| c.obj_key.to_crc32 } }
+      :without_all => { obj_key: Array(args[:exclude]).map(&:obj_key) }
     })
 
     if slideshow.any?
@@ -103,7 +103,7 @@ class Category < ActiveRecord::Base
       :classes     => [ShowSegment],
       :limit       => 1,
       :with        => { category: self.id },
-      :without_all => { obj_key: Array(args[:exclude]).map { |c| c.obj_key.to_crc32 } }
+      :without_all => { obj_key: Array(args[:exclude]).map(&:obj_key) }
     })
 
     if segments.any?
