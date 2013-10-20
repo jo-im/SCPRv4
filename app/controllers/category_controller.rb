@@ -102,11 +102,11 @@ class CategoryController < ApplicationController
       # assemble section object
       obj = {
         :section  => sec,
-        :content  => [top,more].flatten,
+        :content  => [top,more].flatten.compact,
         :sorttime => sorttime
       }
 
-      obj[:candidates] = sec.feature_candidates(exclude: [without,top])
+      obj[:candidates] = sec.feature_candidates(exclude: [without,top].flatten.compact)
       obj[:right] = obj[:candidates] ? obj[:candidates][0][:content] : nil
 
       # Add this to our section list
