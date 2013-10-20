@@ -1,5 +1,6 @@
 # --------------
 # Requires and Multistage setup
+set :thinking_sphinx_roles, :sphinx
 
 require "bundler/capistrano"
 require 'thinking_sphinx/capistrano'
