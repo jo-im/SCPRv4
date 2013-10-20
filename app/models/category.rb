@@ -43,7 +43,7 @@ class Category < ActiveRecord::Base
       :with     => { category: self.id }
     }
 
-    if without_obj && without_obj.respond_to?("obj_key")
+    if without_obj && without_obj.respond_to?(:obj_key)
       args[:without] = { obj_key: without_obj.obj_key }
     end
 
