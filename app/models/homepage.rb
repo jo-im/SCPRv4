@@ -105,7 +105,7 @@ class Homepage < ActiveRecord::Base
         :classes     => [NewsStory, BlogEntry, ContentShell, ShowSegment],
         :limit       => 5,
         :with        => { category: cat.id },
-        :without_all => { obj_key: citems.map(&:obj_key) }
+        #:without_all => { obj_key: citems.map { |a| a.obj_key } }
       })
 
       more     = []

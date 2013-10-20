@@ -73,7 +73,7 @@ class CategoryController < ApplicationController
         :classes     => [NewsStory, BlogEntry, ContentShell, ShowSegment],
         :limit       => 5,
         :with        => { category: sec.id },
-        :without_all => { obj_key: Array(without.obj_key) }
+        #:without     => { obj_key: without.obj_key }
       })
 
       top       = nil
