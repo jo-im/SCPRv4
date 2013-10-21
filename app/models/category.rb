@@ -57,7 +57,7 @@ class Category < ActiveRecord::Base
     }
 
     if exclude && exclude.respond_to?(:obj_key)
-      args[:without] = { obj_key: exclude.obj_key.to_crc32 }
+      args[:without] = { obj_key: exclude.obj_key_crc32 }
     end
 
     ContentBase.search(args)
