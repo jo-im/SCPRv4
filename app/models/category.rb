@@ -24,6 +24,19 @@ class Category < ActiveRecord::Base
 
   #----------
 
+  class << self
+    def previews(options={})
+      previews = []
+
+      self.all.each do |category|
+        previews << category.preview(options)
+      end
+
+      previews
+    end
+  end
+
+
   def route_hash
     return {} if !self.persisted?
     { path: self.persisted_record.slug }
@@ -50,82 +63,8 @@ class Category < ActiveRecord::Base
     ContentBase.search(args)
   end
 
-  #----------
 
-  def feature_candidates(args={})
-    # lower decay decays more slowly. eg. rate of -0.01 will have a lower score after 3 days than -0.05
-
-    candidates = []
-
-    # -- first look for featured comments -- #
-
-    featured = self.comment_bucket.comments.published.first
-
-    if featured.present?
-      # Initial score:  20
-      # Decay rate:     0.05
-      candidates << {
-        :content  => featured,
-        :score    => 20 * Math.exp( -0.04 * ((Time.now - featured.created_at) / 3600) ),
-        :metric   => :comment
-      }
-    end
-
-
-    # -- now try slideshows -- #
-
-    slideshow = ContentBase.search({
-      :classes     => [NewsStory, BlogEntry, ShowSegment],
-      :limit       => 1,
-      :with        => {
-        :category     => self.id,
-        :is_slideshow => true
-      },
-      :without => {
-        :obj_key => Array(args[:exclude]).map { |a| a.obj_key.to_crc32 }
-      }
-    })
-
-    if slideshow.any?
-      # Initial score:  5 + number of slides
-      # Decay rate:     0.01
-      slideshow = slideshow.first
-
-      candidates << {
-        :content  => slideshow,
-        :score    => (5 + slideshow.assets.size) * Math.exp( -0.01 * ((Time.now - slideshow.published_at) / 3600) ),
-        :metric   => :slideshow
-      }
-    end
-
-
-    # -- segment in the last two days? -- #
-
-    segments = ContentBase.search({
-      :classes     => [ShowSegment],
-      :limit       => 1,
-      :with        => { category: self.id },
-      :without => {
-        :obj_key => Array(args[:exclude]).map { |a| a.obj_key.to_crc32 }
-      }
-    })
-
-    if segments.any?
-      # Initial score:  10
-      # Decay rate:     0.02
-      seg = segments.first
-
-      candidates << {
-        :content  => seg,
-        :score    => 10 * Math.exp(-0.02 * ((Time.now - seg.published_at) / 3600) ),
-        :metric   => :segment
-      }
-    end
-
-    if candidates.any?
-      return candidates.sort_by! {|c| -c[:score] }
-    else
-      return nil
-    end
+  def preview(options={})
+    @preview ||= CategoryPreview.new(self, options)
   end
 end

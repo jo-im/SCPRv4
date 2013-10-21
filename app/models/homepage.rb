@@ -89,62 +89,12 @@ class Homepage < ActiveRecord::Base
   end
 
 
-  def scored_content
-    # -- Homepage Items -- #
+  def category_previews
+    @category_previews ||= begin
+      Category.previews(exclude: self.articles)
+      .sort_by { |p| -p.articles.first.public_datetime }
+    end
 
-    citems = self.content.collect { |c| c.content || nil }.compact
-
-    # -- Section Blocks -- #
-
-    sections = []
-
-    # run a query for each section
-    Category.all.each do |cat|
-      # exclude content that is used in our object
-      content = ContentBase.search({
-        :classes    => [NewsStory, BlogEntry, ContentShell, ShowSegment],
-        :limit      => 5,
-        :with       => { category: cat.id },
-        :without    => { obj_key: citems.map { |a| a.obj_key.to_crc32 } }
-      })
-
-      more     = []
-      top      = nil
-      sorttime = nil
-
-      content.each do |c|
-        # get the content time as Time
-        ctime = c.published_at.is_a?(Date) ? c.published_at.to_time : c.published_at
-
-        # if we're still here, weigh this content for sorting
-        if !sorttime || ctime > sorttime
-          sorttime = ctime
-        end
-
-        # does this content have an asset?
-        if !top && c.assets.any?
-          top = c
-          next
-        end
-
-        # finally, just drop it in the more bucket
-        more << c
-      end
-
-      # stick top at the front of content
-
-
-      # assemble section object
-      sec = {
-        :section  => cat,
-        :content  => [top,more].flatten.compact,
-        :sorttime => sorttime
-      }
-
-
-      #----------
-      # -- Right Feature Candidates -- #
-      #----------
 
       sec[:candidates] = cat.feature_candidates :exclude => [ citems,top ].flatten.compact
       sec[:right] = sec[:candidates] ? sec[:candidates][0][:content] : nil
@@ -152,11 +102,6 @@ class Homepage < ActiveRecord::Base
       # Add this to our section list
       sections << sec
     end
-
-    # now sort sections by the sorttime
-    sections.sort_by! {|s| s[:sorttime] }.reverse!
-
-    sections
   end
 
   #---------------------
