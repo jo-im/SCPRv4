@@ -43,10 +43,12 @@ module ThinkingSphinxHelpers
   # Creates `num` of each ContentBase subclass for
   # helping with Sphinx tests
   def make_content(num=nil, options=nil)
-    num     ||= 1
+    num     ||= 0
     options ||= {}
 
     @generated_content = []
+    return if num == 0
+
     ContentBase::CONTENT_CLASSES.each do |klass|
       @generated_content.push FactoryGirl.create_list(
         klass.to_s.underscore.to_sym, num.to_i, options

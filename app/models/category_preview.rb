@@ -3,19 +3,6 @@ class CategoryPreview
     :limit => 5
   }
 
-  DECAY_RATES = {
-    :featured_comments    => -0.04,
-    :slideshows           => -0.01,
-    :segments             => -0.02
-  }
-
-  INITIAL_SCORES = {
-    # slideshow initial scores are 5 * number of slides
-    :slideshows           => 5,
-    :featured_comments    => 20,
-    :segments             => 10
-  }
-
   attr_reader \
     :category,
     :articles,
@@ -35,7 +22,7 @@ class CategoryPreview
       :classes    => [NewsStory, BlogEntry, ContentShell, ShowSegment],
       :limit      => limit,
       :with       => { category: @category.id },
-      :without    => { obj_key: @exclude.map(&:obj_key_crc32) }
+#      :without    => { obj_key: @exclude.map(&:obj_key_crc32) }
     }).map(&:to_article)
 
     @top_article      = find_top_article
@@ -48,80 +35,29 @@ class CategoryPreview
   private
 
   def find_feature
-    # lower decay decays more slowly. eg. rate of -0.01 
-    # will have a lower score after 3 days than -0.05
-
     candidates = []
 
-    featured = @category.comment_bucket.comments.published.first
-
-    if featured.present?
-      candidates << {
-        :content  => featured,
-        :score    => INITIAL_SCORES[:featured_comments] * Math.exp(DECAY_RATES[:featured_comments] * hours_ago(featured.created_at)),
-        :metric   => :comment
-      }
+    # No need to even try if the category doesn't have a comment bucket.
+    if @category.comment_bucket.present?
+      candidates << FeatureCandidate::FeaturedComment.new(@category)
     end
 
-    slideshow = ContentBase.search({
-      :classes     => [NewsStory, BlogEntry, ShowSegment],
-      :limit       => 1,
-      :with        => {
-        :category     => @category.id,
-        :is_slideshow => true
-      },
-      :without => { obj_key: @exclude.map(&:obj_key_crc32) }
-    })
+    candidates << FeatureCandidate::Slideshow.new(@category)
+    candidates << FeatureCandidate::Segment.new(@category)
 
-    if slideshow.any?
-      slideshow = slideshow.first
-
-      candidates << {
-        :content  => slideshow,
-        :score    => (INITIAL_SCORES[:slideshows] + slideshow.assets.size) * Math.exp(DECAY_RATES[:slideshows] * hours_ago(slideshow.published_at)),
-        :metric   => :slideshow
-      }
-    end
-
-    segments = ContentBase.search({
-      :classes     => [ShowSegment],
-      :limit       => 1,
-      :with        => { category: self.id },
-      :without => { obj_key: @exclude.map(&:obj_key_crc32) }
-    })
-
-    if segments.any?
-      seg = segments.first
-
-      candidates << {
-        :content  => seg,
-        :score    => INITIAL_SCORES[:segments] * Math.exp(DECAY_RATES[:segments] * hours_ago(seg.published_at)),
-        :metric   => :segment
-      }
-    end
-
-    if candidates.any?
-      return candidates.sort_by { |c| -c[:score] }
-    else
-      return nil
-    end
+    # Only select candidates which were given a score,
+    # then reverse sort by score and return the first one.
+    candidates.select(&:score).sort_by { |c| -c.score }.first
   end
 
   def find_top_article
     @articles.find { |a| a.assets.any? }
   end
 
+  # Articles already get sorted in reverse chron on ContentBase.search
+  # We could remove the @top_article check, but I guess leaving it in
+  # doesn't hurt anything.
   def find_bottom_articles
-    bottom = if @top_article
-      @articles.select { |a| a.id != @top_article.id }
-    else
-      @articles
-    end
-
-    bottom.sort_by(&:publc_datetime)
-  end
-
-  def hours_ago(time)
-    (Time.now - time) / 1.hour.to_i
+    @top_article ? @articles.select { |a| a != @top_article } : @articles
   end
 end

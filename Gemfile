@@ -7,8 +7,7 @@ gem 'jquery-rails'
 gem "bcrypt-ruby", "~> 3.0.0"
 
 # https://github.com/pat/thinking-sphinx/issues/634
-# gem 'thinking-sphinx', '~> 3.0.5'
-gem 'thinking-sphinx', github: 'pat/thinking-sphinx', ref: '06d8950bd'
+gem 'thinking-sphinx', '~> 3.0.5'
 
 ## Outpost
 gem 'outpost-cms', github: 'SCPR/outpost'

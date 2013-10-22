@@ -94,14 +94,6 @@ class Homepage < ActiveRecord::Base
       Category.previews(exclude: self.articles)
       .sort_by { |p| -p.articles.first.public_datetime }
     end
-
-
-      sec[:candidates] = cat.feature_candidates :exclude => [ citems,top ].flatten.compact
-      sec[:right] = sec[:candidates] ? sec[:candidates][0][:content] : nil
-
-      # Add this to our section list
-      sections << sec
-    end
   end
 
   #---------------------
