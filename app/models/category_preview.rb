@@ -22,7 +22,7 @@ class CategoryPreview
       :classes    => [NewsStory, BlogEntry, ContentShell, ShowSegment],
       :limit      => limit,
       :with       => { category: @category.id },
-#      :without    => { obj_key: @exclude.map(&:obj_key_crc32) }
+      :without    => { obj_key: @exclude.map(&:obj_key_crc32) }
     }).map(&:to_article)
 
     @top_article      = find_top_article

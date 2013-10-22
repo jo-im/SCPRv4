@@ -40,8 +40,8 @@ describe CategoryPreview do
       index_sphinx
 
       ts_retry(2) do
-        preview = CategoryPreview.new(category)
-        preview.articles.should eq [story1]
+        preview = CategoryPreview.new(category, exclude: story2)
+        preview.articles.should eq [story1].map(&:to_article)
       end
     end
   end

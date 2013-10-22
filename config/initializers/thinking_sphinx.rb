@@ -15,3 +15,6 @@ class String
     Zlib.crc32(self)
   end
 end
+
+ThinkingSphinx::SphinxQL.functions!
+ThinkingSphinx::Middlewares::DEFAULT.delete ThinkingSphinx::Middlewares::UTF8
