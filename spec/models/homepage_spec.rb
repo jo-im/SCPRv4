@@ -47,4 +47,49 @@ describe Homepage do
       homepage.reload.published?.should eq true
     end
   end
+
+  describe '#category_previews' do
+    let(:category) { create :category_news }
+    let(:other_category) { create :category_not_news }
+    let(:homepage) { create :homepage }
+
+    sphinx_spec
+
+    it 'returns previews for all categories' do
+      story1 = create :news_story, category: category
+      story2 = create :news_story, category: other_category
+
+      index_sphinx
+
+      homepage.category_previews.size.should eq 2
+    end
+
+    it 'sorts previews by the descending article publish timestamps' do
+      story1 = create :news_story, category: category, published_at: 1.month.ago
+      story2 = create :news_story, category: other_category, published_at: Time.now
+
+      index_sphinx
+
+      homepage.category_previews.first.category.should eq other_category
+    end
+
+    it 'excludes articles from this homepage' do
+      story1 = create :news_story, category: category
+      story2 = create :news_story, category: category
+      homepage.content.create(content: story1)
+
+      index_sphinx
+
+      homepage.category_previews.first.articles.should eq [story2].map(&:to_article)
+    end
+
+    it "doesn't include categories with no articles" do
+      story1 = create :news_story, category: category
+      other_category # touch
+
+      index_sphinx
+
+      homepage.category_previews.map(&:category).should eq [category]
+    end
+  end
 end
