@@ -56,6 +56,12 @@ module Concern
           self.id == comparison_object.id
       end
       alias :eql? :==
+
+      def <=>(other_object)
+        if other_object.is_a?(self.class)
+          self.id <=> other_object.id
+        end
+      end
     end # AbstractModelMethods
   end # Methods
 end # Concern
