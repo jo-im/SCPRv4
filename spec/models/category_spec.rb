@@ -24,7 +24,7 @@ describe Category do
       index_sphinx
 
       ts_retry(2) do
-        category.content.should eq [story1].map(&:to_article)
+        category.content.to_a.should eq [story1]
       end
     end
 
@@ -35,8 +35,8 @@ describe Category do
       index_sphinx
 
       ts_retry(2) do
-        category.content(page: 1, per_page: 10, exclude: story2)
-        .should eq [story1].map(&:to_article)
+        category.content(page: 1, per_page: 10, exclude: story2).to_a
+        .should eq [story1]
       end
     end
 
