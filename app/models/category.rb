@@ -8,6 +8,11 @@ class Category < ActiveRecord::Base
 
   ROUTE_KEY = 'root_slug'
 
+  DEFAULTS = {
+    :page       => 1,
+    :per_page   => 10
+  }
+
   #-------------------
   # Scopes
 
@@ -44,7 +49,11 @@ class Category < ActiveRecord::Base
 
   #----------
 
-  def content(page=1, per_page=10, exclude=nil)
+  def content(options={})
+    page      = options[:page] || DEFAULTS[:page]
+    per_page  = options[:per_page] || DEFAULTS[:per_page]
+    exclude   = options[:exclude]
+
     if (page.to_i * per_page.to_i > SPHINX_MAX_MATCHES) || page.to_i < 1
       page = 1
     end
@@ -56,7 +65,7 @@ class Category < ActiveRecord::Base
       :with     => { category: self.id }
     }
 
-    if exclude && exclude.respond_to?(:obj_key)
+    if exclude && exclude.respond_to?(:obj_key_crc32)
       args[:without] = { obj_key: exclude.obj_key_crc32 }
     end
 

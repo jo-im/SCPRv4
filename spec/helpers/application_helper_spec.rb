@@ -34,6 +34,14 @@ describe ApplicationHelper do
       end
     end
 
+    it '#latest_news returns articles' do
+      index_sphinx
+
+      ts_retry(2) do
+        helper.latest_news.first.should be_a Article
+      end
+    end
+
     it "#latest_arts only gets object where category is not news" do
       index_sphinx
 
@@ -43,6 +51,14 @@ describe ApplicationHelper do
 
         arts.any? { |c| c.category.is_news == true }.should be_false
         arts.all? { |c| c.category.is_news == false }.should be_true
+      end
+    end
+
+    it '#latest_arts returns articles' do
+      index_sphinx
+
+      ts_retry(2) do
+        helper.latest_arts.first.should be_a Article
       end
     end
   end

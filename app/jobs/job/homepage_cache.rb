@@ -13,10 +13,11 @@ module Job
     @queue = "#{namespace}:sphinx"
 
     def self.perform
-      if homepage = ::Homepage.published.first
-        scored_content = homepage.scored_content
-        self.cache(scored_content, "/home/cached/sections", "home/sections")
-      end
+      homepage = ::Homepage.published.first
+      return if !homepage
+
+      previews = homepage.category_previews
+      self.cache(previews, "/home/cached/sections", "home/sections")
     end
   end
 end

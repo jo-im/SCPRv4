@@ -1,10 +1,6 @@
 require "spec_helper"
 
 describe Homepage do
-  describe "#scored_content" do
-    pending
-  end
-
   describe '::status_select_collection' do
     it 'is an array of status texts' do
       Homepage.status_select_collection.first[1].should eq Homepage::STATUS_DRAFT

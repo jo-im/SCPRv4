@@ -1,5 +1,6 @@
 module FeatureCandidate
   class Slideshow < Base
+    LIMIT           = 1
     DECAY_RATE      = -0.01
     INITIAL_SCORE   = 5 # slideshow initial scores are 5 * number of slides
 
@@ -9,7 +10,7 @@ module FeatureCandidate
     def find_content
       ContentBase.search({
         :classes     => [NewsStory, BlogEntry, ShowSegment],
-        :limit       => 1,
+        :limit       => LIMIT,
         :with        => {
           :category     => @category.id,
           :is_slideshow => true
