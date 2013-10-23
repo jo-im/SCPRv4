@@ -77,11 +77,12 @@ module ContentBase
       ThinkingSphinx.search(query, options)
     rescue  Riddle::ConnectionError,
             Riddle::ResponseError,
-            ThinkingSphinx::SphinxError
+            ThinkingSphinx::SphinxError => e
       # In this one scenario, we need to fail gracefully from a Sphinx error,
       # because otherwise the entire website will be down if media isn't 
       # available, or if we need to stop the searchd daemon for some reason,
       # like a rebuild.
+      warn "Caught error in ContentBase.search: #{e}"
       Kaminari.paginate_array([]).page(0).per(0)
     end
   end
