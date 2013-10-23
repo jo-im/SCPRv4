@@ -36,7 +36,8 @@ class CategoryPreview
   def find_feature
     candidates = []
 
-    # No need to even try if the category doesn't have a comment bucket.
+    # No need to try featured comment if the category
+    # doesn't have a comment bucket.
     if @category.comment_bucket.present?
       candidates << FeatureCandidate::FeaturedComment.new(@category)
     end
