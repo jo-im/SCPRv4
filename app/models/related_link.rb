@@ -12,7 +12,7 @@ class RelatedLink < ActiveRecord::Base
     ["Map", "map"],
     ["Other", "other"]
   ]
-  
+
   #--------------
   # Scopes
   scope :query, -> { where(link_type: "query") }
@@ -25,11 +25,13 @@ class RelatedLink < ActiveRecord::Base
   #--------------
   # Validation
   validates :title, presence: true
-  validates :url, presence: true, url: { allowed: [URI::HTTP, URI::FTP]}
+  validates :url,
+    :presence   => true,
+    :url        => { allowed: [URI::HTTP, URI::FTP, URI::MailTo] }
 
   #--------------
   # Callbacks
-  
+
   #----------
   # TODO Move this into a presenter
   def domain
