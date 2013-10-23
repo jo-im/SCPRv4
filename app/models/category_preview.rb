@@ -51,7 +51,7 @@ class CategoryPreview
   end
 
   def find_top_article
-    @articles.find { |a| a.assets.any? }
+    @articles.find { |a| !a.assets.empty? }
   end
 
   # Articles already get sorted in reverse chron on ContentBase.search

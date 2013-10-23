@@ -90,7 +90,7 @@ class CategoryController < ApplicationController
         end
 
         # does this content have an asset?
-        if !top && c.assets.any?
+        if !top && !c.assets.empty?
           top = c
           next
         end
