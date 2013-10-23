@@ -2,14 +2,14 @@ class CategoryController < ApplicationController
   respond_to :html, :xml, :rss
 
   def news
-    @categories = Category.where(:is_news => true).all
+    @categories = Category.where(is_news: true).all
     respond_by_format
   end
 
   #----------
 
   def arts
-    @categories = Category.where(:is_news => false).all
+    @categories = Category.where(is_news: false).all
     respond_by_format
   end
 
