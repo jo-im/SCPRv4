@@ -185,7 +185,7 @@ module ApplicationHelper
       :limit      => limit,
       :with       => { category_is_news: false },
       :without    => { category: false }
-    })
+    }).map(&:to_article)
   end
 
   #----------
@@ -196,7 +196,7 @@ module ApplicationHelper
       :limit      => limit,
       :with       => { category_is_news: true },
       :without    => { category: false }
-    })
+    }).map(&:to_article)
   end
 
   #----------
