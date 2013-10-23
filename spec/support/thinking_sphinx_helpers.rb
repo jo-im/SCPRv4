@@ -42,10 +42,7 @@ module ThinkingSphinxHelpers
 
   # Creates `num` of each ContentBase subclass for
   # helping with Sphinx tests
-  def make_content(num=nil, options=nil)
-    num     ||= 0
-    options ||= {}
-
+  def make_content(num=0, options={})
     @generated_content = []
     return if num == 0
 
@@ -121,8 +118,10 @@ module ThinkingSphinxHelpers
       end
 
       before :each do
-        make_content(content_options[:num], content_options[:options])
-        index_sphinx
+        if content_options[:num]
+          make_content(content_options[:num], content_options[:options])
+          index_sphinx if content_options[:num].to_i > 0
+        end
       end
 
       after :all do
