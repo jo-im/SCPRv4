@@ -16,7 +16,7 @@ class CategoryPreview
     limit = options[:limit] || DEFAULTS[:limit]
 
     @category = category
-    @exclude  = Array(options[:exclude])
+    @exclude  = Array(options[:exclude]).map(&:to_article)
 
     @articles = ContentBase.search({
       :classes    => [NewsStory, BlogEntry, ContentShell, ShowSegment],
@@ -36,14 +36,16 @@ class CategoryPreview
   def find_feature
     candidates = []
 
+    excludes = @exclude + @articles
+
     # No need to try featured comment if the category
     # doesn't have a comment bucket.
     if @category.comment_bucket.present?
       candidates << FeatureCandidate::FeaturedComment.new(@category)
     end
 
-    candidates << FeatureCandidate::Slideshow.new(@category)
-    candidates << FeatureCandidate::Segment.new(@category)
+    candidates << FeatureCandidate::Slideshow.new(@category, exclude: excludes)
+    candidates << FeatureCandidate::Segment.new(@category, exclude: excludes)
 
     # Only select candidates which were given a score,
     # then reverse sort by score and return the first one's content

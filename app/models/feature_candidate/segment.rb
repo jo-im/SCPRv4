@@ -1,5 +1,6 @@
 module FeatureCandidate
   class Segment < Base
+    LIMIT           = 1
     DECAY_RATE      = -0.02
     INITIAL_SCORE   = 10
 
@@ -8,10 +9,10 @@ module FeatureCandidate
 
     def find_content
       ContentBase.search({
-        :classes     => [ShowSegment],
-        :limit       => 1,
-        :with        => { category: @category.id },
-        :without => { obj_key: @exclude.map(&:obj_key_crc32) }
+        :classes    => [ShowSegment],
+        :limit      => LIMIT,
+        :with       => { category: @category.id },
+        :without    => { obj_key: @exclude.map(&:obj_key_crc32) }
       }).first.try(&:to_article)
     end
 

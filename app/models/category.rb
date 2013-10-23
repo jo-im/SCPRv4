@@ -65,7 +65,7 @@ class Category < ActiveRecord::Base
       :with     => { category: self.id }
     }
 
-    if exclude && exclude.respond_to?(:obj_key)
+    if exclude && exclude.respond_to?(:obj_key_crc32)
       args[:without] = { obj_key: exclude.obj_key_crc32 }
     end
 
