@@ -40,6 +40,29 @@ describe CategoryPreview do
         preview.articles.should eq [story1].map(&:to_article)
       end
     end
+
+    it "uses the limit option" do
+      story1 = create :news_story, category: category
+      story2 = create :news_story, category: category
+
+      index_sphinx
+
+      ts_retry(2) do
+        preview = CategoryPreview.new(category, limit: 1)
+        preview.articles.should eq [story1].map(&:to_article)
+      end
+    end
+
+    it 'uses the default limit if no limit is passed in' do
+      stories = create_list :news_story, 6, category: category
+
+      index_sphinx
+
+      ts_retry(2) do
+        preview = CategoryPreview.new(category)
+        preview.articles.sort.should eq stories.first(5).map(&:to_article).sort
+      end
+    end
   end
 
   describe '#top_article' do
