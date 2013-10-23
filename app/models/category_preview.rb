@@ -27,8 +27,7 @@ class CategoryPreview
 
     @top_article      = find_top_article
     @bottom_articles  = find_bottom_articles
-
-    @feature = find_feature
+    @feature          = find_feature
   end
 
 
