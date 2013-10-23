@@ -12,15 +12,9 @@ describe CategoryPreview do
   end
 
   describe '#articles' do
-    before :all do
-      setup_sphinx
-    end
+    sphinx_spec
 
-    after :all do
-      teardown_sphinx
-    end
-
-    it "only gets articles from this category", focus: true do
+    it "only gets articles from this category" do
       story1 = create :news_story, category: category
       story2 = create :news_story, category: other_category
 
@@ -40,8 +34,54 @@ describe CategoryPreview do
       index_sphinx
 
       ts_retry(2) do
-        preview = CategoryPreview.new(category, exclude: story2)
+        preview = CategoryPreview.new(category, exclude: [story2])
+        # We should actually test that story2 is not included, but this
+        # tests the same thing plus makes sure it's not a false positive.
         preview.articles.should eq [story1].map(&:to_article)
+      end
+    end
+  end
+
+  describe '#top_article' do
+    sphinx_spec
+
+    it 'selects the first article with assets' do
+      story1  = create :news_story, category: category, published_at: 1.month.ago
+      story2  = create :news_story, category: category, published_at: 2.months.ago
+      create :asset, content: story2
+
+      index_sphinx
+
+      ts_retry(2) do
+        preview = CategoryPreview.new(category)
+        preview.top_article.should eq story2.to_article
+      end
+    end
+
+    it 'is nil if no articles have assets' do
+      story1 = create :news_story, category: category
+      index_sphinx
+
+      ts_retry(2) do
+        preview = CategoryPreview.new(category)
+        preview.top_article.should be_nil
+      end
+    end
+  end
+
+  describe '#bottom_articles' do
+    sphinx_spec
+
+    it 'is the articles except the top article' do
+      story1  = create :news_story, category: category, published_at: 1.month.ago
+      story2  = create :news_story, category: category, published_at: 2.months.ago
+      create :asset, content: story2
+
+      index_sphinx
+
+      ts_retry(2) do
+        preview = CategoryPreview.new(category)
+        preview.bottom_articles.should eq [story1].map(&:to_article)
       end
     end
   end
