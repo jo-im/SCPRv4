@@ -85,4 +85,28 @@ describe CategoryPreview do
       end
     end
   end
+
+  describe '#feature' do
+    it 'returns the candidate with the highest score' do
+      # Slideshow
+      story1 = create :news_story, category: category
+      create :asset, content: story1
+
+      # Segment
+      segment = create :show_segment
+
+      # Featured Comment 
+      bucket = create :featured_comment_bucket
+      category.comment_bucket = bucket
+      comment = create :featured_comment, :published,
+        bucket: bucket, content: segment
+
+      index_sphinx
+
+      ts_retry(2) do
+        preview = CategoryPreview.new(category)
+        preview.feature.should eq comment
+      end
+    end
+  end
 end

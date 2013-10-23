@@ -45,8 +45,8 @@ class CategoryPreview
     candidates << FeatureCandidate::Segment.new(@category)
 
     # Only select candidates which were given a score,
-    # then reverse sort by score and return the first one.
-    candidates.select(&:score).sort_by { |c| -c.score }.first
+    # then reverse sort by score and return the first one's content
+    candidates.select(&:score).sort_by { |c| -c.score }.first.try(:content)
   end
 
   def find_top_article
