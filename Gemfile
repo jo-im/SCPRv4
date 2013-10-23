@@ -6,8 +6,9 @@ gem 'mysql2'
 gem 'jquery-rails'
 gem "bcrypt-ruby", "~> 3.0.0"
 
-# https://github.com/pat/thinking-sphinx/issues/634
 gem 'thinking-sphinx', '~> 3.0.5'
+# https://github.com/pat/riddle/pull/75
+gem 'riddle', github: 'bricker/riddle', branch: 'fix-empty-array-filter'
 
 ## Outpost
 gem 'outpost-cms', github: 'SCPR/outpost'

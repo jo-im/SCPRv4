@@ -68,6 +68,13 @@ GIT
       faraday_middleware (>= 0.9.0)
 
 GIT
+  remote: git://github.com/bricker/riddle.git
+  revision: c5e262c7766d1fc9b93ae1ec078fc0964b395952
+  branch: fix-empty-array-filter
+  specs:
+    riddle (1.5.9)
+
+GIT
   remote: git://github.com/bricker/turbo-sprockets-rails3.git
   revision: 5102c06677f80aeb9f9cf77fdd6f39b439420e70
   branch: utf8-conversion
@@ -318,7 +325,6 @@ GEM
       rest-client (>= 0.3.0)
     rest-client (1.6.7)
       mime-types (>= 1.16)
-    riddle (1.5.9)
     rspec (2.14.1)
       rspec-core (~> 2.14.0)
       rspec-expectations (~> 2.14.0)
@@ -452,6 +458,7 @@ DEPENDENCIES
   rb-readline (~> 0.4.2)
   redis-content-store!
   resque (~> 1.25.0.pre)
+  riddle!
   rspec-rails (~> 2.12)
   ruby-mp3info
   sanitize (~> 2.0)
