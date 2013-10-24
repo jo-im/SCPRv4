@@ -92,8 +92,6 @@ class Homepage < ActiveRecord::Base
   def category_previews
     @category_previews ||= begin
       Category.previews(exclude: self.articles)
-      .reject { |p| p.articles.empty? }
-      .sort_by { |p| -p.articles.first.public_datetime.to_i }
     end
   end
 

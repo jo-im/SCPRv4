@@ -2,13 +2,44 @@ require "spec_helper"
 
 describe Category do
   describe '::previews' do
+    let(:category) { create :category_news }
+    let(:other_category) { create :category_not_news }
+
+    sphinx_spec
+
     it "returns a list of previews for all categories" do
-      categories = create_list :category_news, 2
+      create :news_story, category: category
+      create :news_story, category: other_category
+
+      index_sphinx
+
       previews = Category.previews
 
       # Meh
       previews.size.should eq 2
       previews.first.should be_a CategoryPreview
+    end
+
+    it "doesn't include categories with no articles" do
+      story1 = create :news_story, category: category
+      other_category # touch
+
+      index_sphinx
+
+      ts_retry(2) do
+        Category.previews.map(&:category).should eq [category]
+      end
+    end
+
+    it 'sorts previews by the descending article publish timestamps' do
+      story1 = create :news_story, category: category, published_at: 1.month.ago
+      story2 = create :news_story, category: other_category, published_at: Time.now
+
+      index_sphinx
+
+      ts_retry(2) do
+        Category.previews.first.category.should eq other_category
+      end
     end
   end
 

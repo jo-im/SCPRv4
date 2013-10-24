@@ -37,7 +37,8 @@ class Category < ActiveRecord::Base
         previews << category.preview(options)
       end
 
-      previews
+      previews.reject { |p| p.articles.empty? }
+      .sort_by { |p| -p.articles.first.public_datetime.to_i }
     end
   end
 

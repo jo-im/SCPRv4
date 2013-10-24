@@ -64,15 +64,6 @@ describe Homepage do
       homepage.category_previews.size.should eq 2
     end
 
-    it 'sorts previews by the descending article publish timestamps' do
-      story1 = create :news_story, category: category, published_at: 1.month.ago
-      story2 = create :news_story, category: other_category, published_at: Time.now
-
-      index_sphinx
-
-      homepage.category_previews.first.category.should eq other_category
-    end
-
     it 'excludes articles from this homepage' do
       story1 = create :news_story, category: category
       story2 = create :news_story, category: category
@@ -81,15 +72,6 @@ describe Homepage do
       index_sphinx
 
       homepage.category_previews.first.articles.should eq [story2].map(&:to_article)
-    end
-
-    it "doesn't include categories with no articles" do
-      story1 = create :news_story, category: category
-      other_category # touch
-
-      index_sphinx
-
-      homepage.category_previews.map(&:category).should eq [category]
     end
   end
 end
