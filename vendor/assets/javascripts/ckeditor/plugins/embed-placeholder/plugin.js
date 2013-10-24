@@ -126,9 +126,11 @@
                     }
                   }, // embedMaxHeight
                   {
-                    id      : 'embedPlacement',
-                    type    : 'select',
-                    label   : '<strong>Embed Placement</strong>',
+                    id          : 'embedPlacement',
+                    type        : 'select',
+                    label       : '<strong>Embed Placement</strong>',
+                    'default'   : 'after',
+
                     items   : [
                       ['After Link', 'after'],
                       ['Before Link', 'before'],
