@@ -1,24 +1,6 @@
-<!-- google analytics -->
-<script type="text/javascript">
-  var _gaq = _gaq || [];
-  _gaq.push(['_setAccount', 'UA-624724-1']);
-  _gaq.push(['_setDomainName', 'none']); 
-  _gaq.push(['_setAllowHash', 'false']);
-  _gaq.push(['_setAllowLinker', true]);
-
-  //Additional page or section-specific GA tracking goes here
-  <%= yield :analytics %>
-
-  // track page view
-  _gaq.push(['_trackPageview']);
-
-  (function() {
-    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-  })();
-
-</script>
+<!-- google analytics (via NPR Digital Services Station Analytics [http://analytics.nprstations.org/]) -->
+<script type="text/javascript">(function() {var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;ga.src = '//stream.publicbroadcasting.net/analytics/abf7.js';var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);})();</script>
+<!-- /Google Analytics -->
 
 <!-- Stats: WebTrends -->
 <script src="http://media.scpr.org/assets/scripts/webtrends.v2.js"></script>
@@ -55,7 +37,7 @@ el.parentNode.insertBefore(s, el);
 <noscript>
 <img src="http://b.scorecardresearch.com/p?c1=2&c2=6035974&c3=&c4=&c5=&c6=&c15=&cv=2.0&cj=1" />
 </noscript>
-<!-- END Comscore -->
+<!-- /Comscore -->
 
 <!-- chartbeat -->
 <script type="text/javascript">
@@ -77,6 +59,7 @@ var _sf_async_config={uid:2825,domain:"scpr.org"};
 })();
 
 </script>
+<!-- /Chartbeat -->
 
 <!--Visual Revenue Reader Response Tracking Script (v6) -->
 <script type="text/javascript">
@@ -92,4 +75,4 @@ var _sf_async_config={uid:2825,domain:"scpr.org"};
 		x.parentNode.insertBefore(s, x);
 	})(document, 'script');
 </script>
-<!-- End of VR RR Tracking Script - All rights reserved -->
+<!-- /Visual Revenue -->
