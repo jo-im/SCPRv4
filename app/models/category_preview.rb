@@ -9,6 +9,7 @@ class CategoryPreview
     :top_article,
     :bottom_articles,
     :sorted_articles,
+    :candidates,
     :feature
 
 
@@ -25,6 +26,7 @@ class CategoryPreview
       :without    => { obj_key: @exclude.map(&:obj_key_crc32) }
     }).map(&:to_article)
 
+    @candidates       = find_candidates
     @top_article      = find_top_article
     @bottom_articles  = find_bottom_articles
     @feature          = find_feature
@@ -33,7 +35,7 @@ class CategoryPreview
 
   private
 
-  def find_feature
+  def find_candidates
     candidates = []
 
     excludes = @exclude + @articles
@@ -47,9 +49,13 @@ class CategoryPreview
     candidates << FeatureCandidate::Slideshow.new(@category, exclude: excludes)
     candidates << FeatureCandidate::Segment.new(@category, exclude: excludes)
 
+    candidates
+  end
+
+  def find_feature
     # Only select candidates which were given a score,
     # then reverse sort by score and return the first one's content
-    candidates.select(&:score).sort_by { |c| -c.score }.first.try(:content)
+    @candidates.select(&:score).sort_by { |c| -c.score }.first.try(:content)
   end
 
   def find_top_article

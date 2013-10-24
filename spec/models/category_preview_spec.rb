@@ -65,6 +65,21 @@ describe CategoryPreview do
     end
   end
 
+  describe '#candidates' do
+    sphinx_spec
+
+    it 'is the feature candidates' do
+      story1 = create :news_story, category: category
+
+      index_sphinx
+
+      ts_retry(2) do
+        preview = CategoryPreview.new(category)
+        preview.candidates.should_not be_empty
+      end
+    end
+  end
+
   describe '#top_article' do
     sphinx_spec
 
