@@ -17,10 +17,8 @@ module FeatureCandidate
 
     private
 
-    def decay(time, decay_rate)
-      # lower decay decays more slowly. eg. rate of -0.01 
-      # will have a lower score after 3 days than -0.05
-      Math.exp(decay_rate * (Time.now - time) / 1.hour.to_i)
+    def decay(time, decay_length)
+      Math.exp(-(decay_length.to_f/100) * ((Time.now - time) / 1.hour.to_i))
     end
   end
 end

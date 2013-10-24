@@ -1,6 +1,6 @@
 module FeatureCandidate
   class FeaturedComment < Base
-    DECAY_RATE      = -0.04
+    DECAY_LENGTH    = 4
     INITIAL_SCORE   = 20
 
 
@@ -14,7 +14,7 @@ module FeatureCandidate
     end
 
     def calculate_score
-      INITIAL_SCORE * decay(@content.created_at, DECAY_RATE)
+      INITIAL_SCORE * decay(@content.created_at, DECAY_LENGTH)
     end
   end
 end

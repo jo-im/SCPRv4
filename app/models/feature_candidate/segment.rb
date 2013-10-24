@@ -1,7 +1,7 @@
 module FeatureCandidate
   class Segment < Base
     LIMIT           = 1
-    DECAY_RATE      = -0.02
+    DECAY_LENGTH    = 2
     INITIAL_SCORE   = 10
 
 
@@ -17,7 +17,7 @@ module FeatureCandidate
     end
 
     def calculate_score
-      INITIAL_SCORE * decay(@content.public_datetime, DECAY_RATE)
+      INITIAL_SCORE * decay(@content.public_datetime, DECAY_LENGTH)
     end
   end
 end

@@ -1,7 +1,7 @@
 module FeatureCandidate
   class Slideshow < Base
     LIMIT           = 1
-    DECAY_RATE      = -0.01
+    DECAY_LENGTH    = 1
     INITIAL_SCORE   = 5 # slideshow initial scores are 5 * number of slides
 
 
@@ -20,8 +20,8 @@ module FeatureCandidate
     end
 
     def calculate_score
-      (INITIAL_SCORE + @content.assets.size) *
-      decay(@content.public_datetime, DECAY_RATE)
+      (INITIAL_SCORE + @content.assets.count) *
+      decay(@content.public_datetime, DECAY_LENGTH)
     end
   end
 end
