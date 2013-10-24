@@ -125,4 +125,19 @@ describe ProgramPresenter do
       p.twitter_link.should eq nil
     end
   end
+
+  describe "#email_link" do
+    it "returns the email link if specified" do
+      program = build :kpcc_program
+      program.related_links.build(title: "Email", url: "mailto:bricker@scpr.org", link_type: "email")
+      p = presenter(program)
+      p.email_link.should match %r{mailto:bricker@scpr\.org}
+    end
+
+    it "returns nil if not specified" do
+      program = build :kpcc_program
+      p = presenter(program)
+      p.email_link.should eq nil
+    end
+  end
 end

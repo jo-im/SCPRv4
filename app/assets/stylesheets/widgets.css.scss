@@ -466,6 +466,9 @@ a.with-icon {
     &.rss {
         background-image: url(image_path("icons/tiny-rss.png"));
     }
+    &.email {
+        background-image: url(image_path("icons/tiny-email.png"));
+    }
     &.archive {
         @include font-sans-serif($size: 12px, $weight: bold);
         background-image: url(image_path("icons/archived.png"));
