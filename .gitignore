@@ -1,6 +1,7 @@
 /.bundle
 /.rspec
 /coverage
+/spec/coverage
 /config/*.sphinx.conf
 
 /config/database.yml
