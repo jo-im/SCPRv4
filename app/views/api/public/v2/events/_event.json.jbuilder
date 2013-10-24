@@ -36,6 +36,10 @@ json.cache! [Api::Public::V2::VERSION, "v1", event] do
     json.url   event.sponsor_url
   end
 
+  if event.rsvp_url.present?
+    json.rsvp_url event.rsvp_url
+  end
+
   if event.kpcc_program.present?
     json.program do
       json.partial! "api/public/v2/programs/program",
