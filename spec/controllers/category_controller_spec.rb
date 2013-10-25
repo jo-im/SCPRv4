@@ -7,7 +7,6 @@ describe CategoryController do
   let(:category_not_news) { create :category_not_news }
 
   describe 'GET /news' do
-
     it 'sets @categories to all news categories' do
       category_news && category_not_news # touch
 
@@ -95,7 +94,6 @@ describe CategoryController do
         sections.size.should eq 1
         sections.first.articles.should eq [story1].map(&:to_article)
       end
-
     end
 
     context 'with xml request' do
