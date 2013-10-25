@@ -31,9 +31,11 @@ class Category < ActiveRecord::Base
 
   class << self
     def previews(options={})
+      categories = options.delete(:categories) || self.all
+
       previews = []
 
-      self.all.each do |category|
+      categories.each do |category|
         previews << category.preview(options)
       end
 

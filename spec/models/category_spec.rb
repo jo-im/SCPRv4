@@ -7,7 +7,7 @@ describe Category do
 
     sphinx_spec
 
-    it "returns a list of previews for all categories" do
+    it "returns a list of previews for all categories with no category option" do
       create :news_story, category: category
       create :news_story, category: other_category
 
@@ -18,6 +18,16 @@ describe Category do
       # Meh
       previews.size.should eq 2
       previews.first.should be_a CategoryPreview
+    end
+
+    it "only generates previews for the passed-in categories" do
+      create :news_story, category: category
+      create :news_story, category: other_category
+
+      index_sphinx
+
+      previews = Category.previews(categories: [category])
+      previews.size.should eq 1
     end
 
     it "doesn't include categories with no articles" do
