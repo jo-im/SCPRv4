@@ -10,43 +10,34 @@ class CategoryPreview
     :bottom_articles,
     :sorted_articles,
     :candidates,
-    :feature,
-    :cumulative_time
+    :featured_object
 
 
   def initialize(category, options={})
     limit = options[:limit] || DEFAULTS[:limit]
 
     @category = category
-    @exclude  = Array(options[:exclude])
+    @excludes  = Array(options[:exclude])
 
-    @candidates       = find_candidates
+    @candidates = find_candidates
 
-    if @feature = find_feature
-      @exclude.push(@feature)
+    if @featured_object = find_featured_object
+      @excludes.push(@featured_object)
     end
 
     @articles = ContentBase.search({
       :classes    => [NewsStory, BlogEntry, ContentShell, ShowSegment],
       :limit      => limit,
       :with       => { category: @category.id },
-      :without    => { obj_key: @exclude.map(&:obj_key_crc32) }
+      :without    => { obj_key: @excludes.map(&:obj_key_crc32) }
     }).map(&:to_article)
 
     @top_article      = find_top_article
     @bottom_articles  = find_bottom_articles
-
-    @cumulative_time = calculate_cumulative_time
   end
 
 
   private
-
-  def calculate_cumulative_time
-    (@articles + Array(@feature)).reduce do |sum, a|
-      sum + a.public_datetime.to_i
-    end
-  end
 
   def find_candidates
     candidates = []
@@ -57,16 +48,16 @@ class CategoryPreview
       candidates << FeatureCandidate::FeaturedComment.new(@category)
     end
 
-    candidates << FeatureCandidate::Slideshow.new(@category, exclude: @exclude)
-    candidates << FeatureCandidate::Segment.new(@category, exclude: @exclude)
+    candidates << FeatureCandidate::Slideshow.new(@category, exclude: @excludes)
+    candidates << FeatureCandidate::Segment.new(@category, exclude: @excludes)
 
     candidates
   end
 
-  def find_feature
+  def find_featured_object
     # Only select candidates which were given a score,
     # then reverse sort by score and return the first one's content
-    @candidates.select(&:score).sort_by { |c| -c.score }.first
+    @candidates.select(&:score).sort_by { |c| -c.score }.first.try(:content)
   end
 
   def find_top_article

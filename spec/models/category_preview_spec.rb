@@ -124,7 +124,7 @@ describe CategoryPreview do
     end
   end
 
-  describe '#feature' do
+  describe '#featured_object' do
     it 'returns the candidate with the highest score' do
       # Slideshow
       story1 = create :news_story, category: category
@@ -143,7 +143,7 @@ describe CategoryPreview do
 
       ts_retry(2) do
         preview = CategoryPreview.new(category)
-        preview.feature.should eq comment
+        preview.featured_object.should eq comment
       end
     end
   end

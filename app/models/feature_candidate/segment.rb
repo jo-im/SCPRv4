@@ -7,16 +7,12 @@ module FeatureCandidate
 
     private
 
-    def find_public_datetime
-      @content.published_at
-    end
-
     def find_content
       ContentBase.search({
         :classes    => [ShowSegment],
         :limit      => LIMIT,
         :with       => { category: @category.id },
-        :without    => { obj_key: @exclude.map(&:obj_key_crc32) }
+        :without    => { obj_key: @excludes.map(&:obj_key_crc32) }
       }).first.try(&:to_article)
     end
 

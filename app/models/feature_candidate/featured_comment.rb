@@ -6,10 +6,6 @@ module FeatureCandidate
 
     private
 
-    def find_public_datetime
-      @content.created_at
-    end
-
     def find_content
       bucket = @category.comment_bucket
       return nil if !bucket

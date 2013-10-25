@@ -5,12 +5,12 @@ module FeatureCandidate
       :content,
       :score
 
+
     def initialize(category, options={})
       @category = category
-      @exclude = Array(options[:exclude])
+      @excludes = Array(options[:exclude])
 
       if @content = find_content
-        @public_datetime = find_public_datetime
         @score = calculate_score
       end
     end

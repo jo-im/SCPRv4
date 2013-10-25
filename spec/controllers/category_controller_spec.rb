@@ -18,7 +18,7 @@ describe CategoryController do
     context 'with html request' do
       sphinx_spec
 
-      it 'gets the most recent article in this category' do
+      it 'gets the most recent article in news' do
         story1 = create :news_story, published_at: 1.month.ago, category: category_news
         story2 = create :news_story, published_at: 1.week.ago, category: category_news
         story3 = create :news_story, published_at: 1.day.ago, category: category_not_news
@@ -44,6 +44,20 @@ describe CategoryController do
     end
 
     context 'with xml request' do
+      sphinx_spec
+
+      it "sets content to the most recent content in news" do
+        story1 = create :news_story, published_at: 1.month.ago, category: category_news
+        story2 = create :news_story, published_at: 1.week.ago, category: category_news
+        story3 = create :news_story, published_at: 1.day.ago, category: category_not_news
+
+        index_sphinx
+
+        get :news, format: :xml
+
+        assigns(:content).should eq [story2, story1]
+        response.header['Content-Type'].should match /xml/
+      end
     end
   end
 
@@ -58,7 +72,7 @@ describe CategoryController do
     context 'with html request' do
       sphinx_spec
 
-      it 'gets the most recent article in this category' do
+      it 'gets the most recent article in arts' do
         story1 = create :news_story, published_at: 1.month.ago, category: category_not_news
         story2 = create :news_story, published_at: 1.week.ago, category: category_not_news
         story3 = create :news_story, published_at: 1.day.ago, category: category_news
@@ -85,6 +99,20 @@ describe CategoryController do
     end
 
     context 'with xml request' do
+      sphinx_spec
+
+      it "sets content to the most recent content in arts" do
+        story1 = create :news_story, published_at: 1.month.ago, category: category_not_news
+        story2 = create :news_story, published_at: 1.week.ago, category: category_not_news
+        story3 = create :news_story, published_at: 1.day.ago, category: category_news
+
+        index_sphinx
+
+        get :arts, format: :xml
+
+        assigns(:content).should eq [story2, story1]
+        response.header['Content-Type'].should match /xml/
+      end
     end
   end
 end
