@@ -10,6 +10,7 @@ class RelatedLink < ActiveRecord::Base
     ["RSS Feed (xml)", "rss"],
     ["Podcast Feed (xml)", "podcast"],
     ["Map", "map"],
+    ["Email (mailto:scprweb@scpr.org)", "email"],
     ["Other", "other"]
   ]
 

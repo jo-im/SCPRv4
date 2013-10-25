@@ -52,6 +52,13 @@ class ProgramPresenter < ApplicationPresenter
     end
   end
 
+  def email_link
+    if link = program.get_link("email")
+      h.link_to "Email", link,
+        :target => "_blank",
+        :class  => "email with-icon"
+    end
+  end
 
   private
 
