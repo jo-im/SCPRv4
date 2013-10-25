@@ -63,8 +63,13 @@ module ThinkingSphinxHelpers
 
   # -----------
 
-  def index_sphinx
-    ThinkingSphinx::Test.index
+  def index_sphinx(*indices)
+    if indices.empty?
+      ThinkingSphinx::Test.index
+    else
+      ThinkingSphinx::Test.index(*indices)
+    end
+
     sleep 0.25 until index_finished?
   end
 
@@ -78,6 +83,7 @@ module ThinkingSphinxHelpers
   # -----------
 
   def teardown_sphinx
+    index_sphinx
     DatabaseCleaner.strategy = :transaction
   end
 
