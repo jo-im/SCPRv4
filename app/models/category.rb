@@ -14,20 +14,12 @@ class Category < ActiveRecord::Base
   }
 
   #-------------------
-  # Scopes
-
-  #-------------------
   # Associations
   belongs_to :comment_bucket, class_name: "FeaturedCommentBucket"
 
   #-------------------
   # Validations
   validates :title, presence: true
-
-  #-------------------
-  # Callbacks
-
-  #----------
 
   class << self
     def previews(options={})
@@ -44,13 +36,6 @@ class Category < ActiveRecord::Base
     end
   end
 
-
-  def route_hash
-    return {} if !self.persisted?
-    { path: self.persisted_record.slug }
-  end
-
-  #----------
 
   def content(options={})
     page      = options[:page] || DEFAULTS[:page]
@@ -73,6 +58,12 @@ class Category < ActiveRecord::Base
     end
 
     ContentBase.search(args)
+  end
+
+
+  def route_hash
+    return {} if !self.persisted?
+    { path: self.persisted_record.slug }
   end
 
 
