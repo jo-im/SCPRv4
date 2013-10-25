@@ -7,6 +7,10 @@ module FeatureCandidate
 
     private
 
+    def find_public_datetime
+      @content.published_at
+    end
+
     def find_content
       ContentBase.search({
         :classes    => [ShowSegment],
