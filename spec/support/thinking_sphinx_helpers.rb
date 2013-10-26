@@ -83,8 +83,13 @@ module ThinkingSphinxHelpers
   # -----------
 
   def teardown_sphinx
-    index_sphinx
     DatabaseCleaner.strategy = :transaction
+  end
+
+  def clear_indices
+    FileUtils.rm_rf(
+      Dir[Rails.root.join(ThinkingSphinx::Test.config.indices_location, '*')]
+    )
   end
 
   #-----------
@@ -135,6 +140,10 @@ module ThinkingSphinxHelpers
           make_content(content_options[:num], content_options[:options])
           index_sphinx if content_options[:num].to_i > 0
         end
+      end
+
+      after :each do
+        clear_indices
       end
 
       after :all do
