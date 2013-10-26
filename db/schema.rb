@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20131016224744) do
+ActiveRecord::Schema.define(:version => 20131025232346) do
 
   create_table "abstracts", :force => true do |t|
     t.string   "source"
@@ -396,6 +396,20 @@ ActiveRecord::Schema.define(:version => 20131016224744) do
   add_index "flatpages_flatpage", ["is_public"], :name => "index_flatpages_flatpage_on_is_public"
   add_index "flatpages_flatpage", ["path"], :name => "django_flatpage_url"
   add_index "flatpages_flatpage", ["updated_at"], :name => "index_flatpages_flatpage_on_updated_at"
+
+  create_table "issues", :force => true do |t|
+    t.string   "title"
+    t.string   "slug"
+    t.text     "description"
+    t.boolean  "is_active"
+    t.datetime "created_at",  :null => false
+    t.datetime "updated_at",  :null => false
+  end
+
+  add_index "issues", ["is_active"], :name => "index_issues_on_is_active"
+  add_index "issues", ["slug"], :name => "index_issues_on_slug"
+  add_index "issues", ["title"], :name => "index_issues_on_title"
+  add_index "issues", ["updated_at"], :name => "index_issues_on_updated_at"
 
   create_table "layout_breakingnewsalert", :force => true do |t|
     t.string   "headline",                                                          :null => false
