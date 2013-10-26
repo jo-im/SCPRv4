@@ -11,6 +11,7 @@ class BlogEntry < ActiveRecord::Base
   include Concern::Associations::RelatedContentAssociation
   include Concern::Associations::RelatedLinksAssociation
   include Concern::Associations::BylinesAssociation
+  include Concern::Associations::IssueArticleAssociation
   include Concern::Associations::CategoryAssociation
   include Concern::Associations::HomepageContentAssociation
   include Concern::Associations::FeaturedCommentAssociation

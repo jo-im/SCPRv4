@@ -8,6 +8,7 @@ class ContentShell < ActiveRecord::Base
   include Concern::Associations::ContentAlarmAssociation
   include Concern::Associations::AssetAssociation
   include Concern::Associations::BylinesAssociation
+  include Concern::Associations::IssueArticleAssociation
   include Concern::Associations::CategoryAssociation
   include Concern::Associations::HomepageContentAssociation
   include Concern::Associations::FeaturedCommentAssociation

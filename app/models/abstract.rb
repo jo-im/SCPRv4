@@ -46,6 +46,7 @@ class Abstract < ActiveRecord::Base
   has_secretary
 
   include Concern::Associations::AssetAssociation
+  include Concern::Associations::IssueArticleAssociation
   include Concern::Associations::CategoryAssociation
   include Concern::Associations::AudioAssociation
   include Concern::Associations::EditionsAssociation

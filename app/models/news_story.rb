@@ -2,7 +2,6 @@ class NewsStory < ActiveRecord::Base
   self.table_name = 'news_story'
   outpost_model
   has_secretary
-
   include Concern::Scopes::SinceScope
   include Concern::Scopes::PublishedScope
   include Concern::Associations::ContentAlarmAssociation
@@ -11,6 +10,7 @@ class NewsStory < ActiveRecord::Base
   include Concern::Associations::RelatedContentAssociation
   include Concern::Associations::RelatedLinksAssociation
   include Concern::Associations::BylinesAssociation
+  include Concern::Associations::IssueArticleAssociation
   include Concern::Associations::CategoryAssociation
   include Concern::Associations::HomepageContentAssociation
   include Concern::Associations::FeaturedCommentAssociation
