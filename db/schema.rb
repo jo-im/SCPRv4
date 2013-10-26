@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20131025232346) do
+ActiveRecord::Schema.define(:version => 20131026001100) do
 
   create_table "abstracts", :force => true do |t|
     t.string   "source"
@@ -28,6 +28,17 @@ ActiveRecord::Schema.define(:version => 20131025232346) do
   add_index "abstracts", ["category_id"], :name => "index_abstracts_on_category_id"
   add_index "abstracts", ["source"], :name => "index_abstracts_on_source"
   add_index "abstracts", ["updated_at"], :name => "index_abstracts_on_updated_at"
+
+  create_table "article_issues", :force => true do |t|
+    t.integer  "issue_id"
+    t.integer  "article_id"
+    t.string   "article_type"
+    t.datetime "created_at",   :null => false
+    t.datetime "updated_at",   :null => false
+  end
+
+  add_index "article_issues", ["article_id", "article_type"], :name => "index_article_issues_on_article_id_and_article_type"
+  add_index "article_issues", ["issue_id"], :name => "index_article_issues_on_issue_id"
 
   create_table "assethost_contentasset", :force => true do |t|
     t.integer "content_id"
