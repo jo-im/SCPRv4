@@ -87,9 +87,15 @@ module ThinkingSphinxHelpers
   end
 
   def clear_indices
-    FileUtils.rm_rf(
-      Dir[Rails.root.join(ThinkingSphinx::Test.config.indices_location, '*')]
-    )
+    FileUtils.rm(indices)
+  end
+
+  def indices_cleared?
+    indices.empty?
+  end
+
+  def indices
+    Dir[Rails.root.join(ThinkingSphinx::Test.config.indices_location, '*')]
   end
 
   #-----------
@@ -144,6 +150,7 @@ module ThinkingSphinxHelpers
 
       after :each do
         clear_indices
+        sleep 0.25 until indices_cleared?
       end
 
       after :all do
