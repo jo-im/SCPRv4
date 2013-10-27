@@ -7,12 +7,12 @@ module StubPublishingCallbacks
   def stub_publishing_callbacks(*klasses, &block)
     options = klasses.extract_options!
     val     = !!options[:with]
-    
+
     if klasses.empty?
       # Warning: Does the test environment eager-load models?
       klasses = ActiveRecord::Base.descendants
     end
-    
+
     if block_given?
       context "with stubbed publishing callbacks" do      
         stub_classes(klasses, val)
@@ -24,10 +24,10 @@ module StubPublishingCallbacks
   end
 
   private
-    def stub_classes(klasses, val)
-      klasses.each do |klass|
-        klass.any_instance.stub(:publishing?) { val }
-      end
+
+  def stub_classes(klasses, val)
+    klasses.each do |klass|
+      klass.any_instance.stub(:publishing?) { val }
     end
-  #
+  end
 end
