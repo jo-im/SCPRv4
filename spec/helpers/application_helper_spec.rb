@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe ApplicationHelper do
   describe "sphinx category searches" do
-    sphinx_spec(num: 0)
+    sphinx_spec
 
     before :each do
       category_news     = create :category, :is_news
@@ -143,7 +143,6 @@ describe ApplicationHelper do
 
       helper.render_contributing_byline(content, false).should eq ""
     end
-
   end
 
   #------------------------
