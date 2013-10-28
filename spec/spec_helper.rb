@@ -49,6 +49,10 @@ RSpec.configure do |config|
       Rails.application.config.scpr.media_root.join("audio/upload")
     )
 
+    FileUtils.rm(
+      Dir[Rails.root.join(ThinkingSphinx::Test.config.indices_location, '*')]
+    )
+
     ThinkingSphinx::Test.init
     ThinkingSphinx::Test.start_with_autostop
   end
