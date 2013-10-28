@@ -7,6 +7,12 @@ class Issue < ActiveRecord::Base
 
   ROUTE_KEY = 'root_slug'
 
+  scope :active, -> { where(is_active: true) }
+
+  validates :title, presence: true
+  validates :slug, uniqueness: true
+  validates :description, presence: true
+
   def route_hash
     return {} if !self.persisted?
     { path: self.persisted_record.slug }

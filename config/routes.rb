@@ -31,7 +31,8 @@ Scprv4::Application.routes.draw do
   get '/blogs/:blog/'                                  => 'blogs#show',                   as: :blog
   get '/blogs/'                                        => 'blogs#index',                  as: :blogs
 
-
+  # Issues
+  get 'issues/:slug' => 'issues#show'
   # News Stories
   get '/news/:year/:month/:day/:id/:slug/'  => 'news#story',      as: :news_story,  constraints: { year: /\d{4}/, month: /\d{2}/, day: /\d{2}/, id: /\d+/, slug: /[\w_-]+/}
 
