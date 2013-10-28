@@ -12,4 +12,5 @@ database:
     - cp config/templates/database.yml.ci config/database.yml
     - cp config/templates/api_config.yml.ci config/api_config.yml
     - cp config/templates/app_config.yml.ci config/app_config.yml
+    - cp config/templates/thinking_sphinx.yml.ci config/thinking_sphinx.yml
     - bundle exec rake db:create db:schema:load

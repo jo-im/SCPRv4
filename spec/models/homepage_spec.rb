@@ -1,13 +1,10 @@
 require "spec_helper"
 
 describe Homepage do
-  describe "#scored_content" do
-    pending
-  end
-
   describe '::status_select_collection' do
     it 'is an array of status texts' do
-      Homepage.status_select_collection.first[1].should eq Homepage::STATUS_DRAFT
+      Homepage.status_select_collection.first[1]
+      .should eq Homepage::STATUS_DRAFT
     end
   end
 
@@ -49,6 +46,34 @@ describe Homepage do
       homepage.publish
 
       homepage.reload.published?.should eq true
+    end
+  end
+
+  describe '#category_previews' do
+    let(:category) { create :category_news }
+    let(:other_category) { create :category_not_news }
+    let(:homepage) { create :homepage }
+
+    sphinx_spec
+
+    it 'returns previews for all categories' do
+      story1 = create :news_story, category: category
+      story2 = create :news_story, category: other_category
+
+      index_sphinx
+
+      homepage.category_previews.size.should eq 2
+    end
+
+    it 'excludes articles from this homepage' do
+      story1 = create :news_story, category: category
+      story2 = create :news_story, category: category
+      homepage.content.create(content: story1)
+
+      index_sphinx
+
+      homepage.category_previews.first.articles
+      .should eq [story2].map(&:to_article)
     end
   end
 end

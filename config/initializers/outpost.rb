@@ -50,4 +50,12 @@ module Outpost
       end
     end
   end
+
+  module Model
+    module Identifier
+      def obj_key_crc32
+        @obj_key_crc32 ||= obj_key.to_crc32
+      end
+    end
+  end
 end

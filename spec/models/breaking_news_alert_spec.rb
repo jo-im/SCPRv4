@@ -48,7 +48,7 @@ describe BreakingNewsAlert do
     end
 
     it 'returns false and does not send the email if not emailized' do
-      alert = create :breaking_news_alert, :mobile, :published
+      alert = create :breaking_news_alert, :published
       alert.publish_email.should eq false
       alert.reload.email_sent?.should eq false
     end
@@ -56,7 +56,8 @@ describe BreakingNewsAlert do
 
   describe '#publish_mobile_notification' do
     before :each do
-      stub_request(:post, %r|api\.parse\.com|).to_return(body: { result: true }.to_json)
+      stub_request(:post, %r|api\.parse\.com|)
+      .to_return(body: { result: true }.to_json)
     end
 
     it 'publishes the notification if it should' do
@@ -74,7 +75,7 @@ describe BreakingNewsAlert do
     end
 
     it 'returns false and does not publish if it is not mobilized' do
-      alert = create :breaking_news_alert, :email, :published
+      alert = create :breaking_news_alert, :published
       alert.publish_mobile_notification.should eq false
       alert.reload.mobile_notification_sent?.should eq false
     end

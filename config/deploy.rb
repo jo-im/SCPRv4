@@ -1,3 +1,5 @@
+raise "Need to update sphinx on servers before deployment"
+
 # --------------
 # Requires and Multistage setup
 set :thinking_sphinx_roles, :sphinx

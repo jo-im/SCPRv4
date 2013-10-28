@@ -1,10 +1,3 @@
-# https://github.com/pat/thinking-sphinx/issues/635
-class ThinkingSphinx::ActiveRecord::DatabaseAdapters::MySQLAdapter
-  def time_zone_query_pre
-    []
-  end
-end
-
 class ThinkingSphinx::RakeInterface
   def index(reconfigure = true, verbose = true)
     configure if reconfigure
@@ -22,3 +15,6 @@ class String
     Zlib.crc32(self)
   end
 end
+
+ThinkingSphinx::SphinxQL.functions!
+ThinkingSphinx::Middlewares::DEFAULT.delete ThinkingSphinx::Middlewares::UTF8
