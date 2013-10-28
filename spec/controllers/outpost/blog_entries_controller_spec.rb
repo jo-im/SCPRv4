@@ -4,15 +4,15 @@ describe Outpost::BlogEntriesController do
   it_behaves_like "resource controller" do
     let(:resource) { :blog_entry }
   end
-  
+
   describe "preview" do
-    render_views 
-    
+    render_views
+
     before :each do
       @current_user = create :admin_user
       controller.stub(:current_user) { @current_user }
     end
-    
+
     context "existing object" do
       it "builds the object from existing attributes and assigns new ones" do
         entry = create :blog_entry, :published, headline: "This is a blog entry"
