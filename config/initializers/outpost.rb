@@ -1,4 +1,4 @@
-# We need to register models somewhere, because theoretically 
+# We need to register models somewhere, because theoretically
 # someone could visit the admin page before a class is loaded.
 # The other option is to eager load all classes, which breaks
 # some cool Rails functionality.
@@ -22,6 +22,7 @@ Outpost::Config.configure do |config|
     "FeaturedCommentBucket",
     "Flatpage",
     "Homepage",
+    "Issue",
     "KpccProgram",
     "MissedItBucket",
     "NewsStory",
@@ -34,7 +35,7 @@ Outpost::Config.configure do |config|
     "ShowEpisode",
     "ShowSegment"
   ]
-  
+
   config.user_class                   = "AdminUser"
   config.authentication_attribute     = :username
   config.title_attributes             = [:name, :headline, :short_headline, :title]
