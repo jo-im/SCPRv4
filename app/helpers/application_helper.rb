@@ -36,13 +36,13 @@ module ApplicationHelper
     return '' if content.blank?
     html = ''
 
-    Array(content).compact.map(&:to_article).each do |article|
+    Array(content).compact.each do |article|
       # if we're caching, add content to the objects list
       if defined? @COBJECTS
-        @COBJECTS << article.original_object
+        @COBJECTS << article
       end
 
-      directory   = article.original_object.class.name.underscore
+      directory   = article.class.name.underscore
       tmplt_opts  = ["#{directory}/#{context}", "default/#{context}"]
 
       partial = tmplt_opts.find do |template|
@@ -51,7 +51,7 @@ module ApplicationHelper
 
       html << render(
         "shared/content/#{partial}",
-        :article => article,
+        :article => article.to_article,
         :options => options
       )
     end
@@ -179,7 +179,7 @@ module ApplicationHelper
 
   #----------
 
-  def latest_arts(limit=12)
+  def latest_arts(limit=2)
     ContentBase.search({
       :classes    => [NewsStory, BlogEntry, ShowSegment, ContentShell],
       :limit      => limit,
@@ -190,7 +190,7 @@ module ApplicationHelper
 
   #----------
 
-  def latest_news(limit=12)
+  def latest_news(limit=2)
     ContentBase.search({
       :classes    => [NewsStory, BlogEntry, ShowSegment, ContentShell],
       :limit      => limit,

@@ -25,13 +25,14 @@ RSpec.configure do |config|
   config.run_all_when_everything_filtered = true
   config.order = 'random'
 
-  config.include ActionView::TestCase::Behavior, example_group: { file_path: %r{spec/presenters} }
+  config.include ActionView::TestCase::Behavior,
+    :example_group => { file_path: %r{spec/presenters} }
+
   config.include FactoryGirl::Syntax::Methods
   config.include ThinkingSphinxHelpers
   config.include RemoteStubs
   config.include PresenterHelper
   config.include DatePathHelper
-  config.include StubPublishingCallbacks
   config.include AudioCleanup
   config.include FormFillers,           type: :feature
   config.include AuthenticationHelper,  type: :feature
@@ -43,7 +44,15 @@ RSpec.configure do |config|
     DatabaseCleaner.strategy = :transaction
     migration = -> { FixtureMigration.new.up }
     silence_stream STDOUT, &migration
-    FileUtils.rm_rf Rails.application.config.scpr.media_root.join("audio/upload")
+
+    FileUtils.rm_rf(
+      Rails.application.config.scpr.media_root.join("audio/upload")
+    )
+
+    FileUtils.rm(
+      Dir[Rails.root.join(ThinkingSphinx::Test.config.indices_location, '*')]
+    )
+
     ThinkingSphinx::Test.init
     ThinkingSphinx::Test.start_with_autostop
   end

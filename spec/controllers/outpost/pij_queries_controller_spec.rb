@@ -6,13 +6,13 @@ describe Outpost::PijQueriesController do
   end
 
   describe "preview" do
-    render_views 
-    
+    render_views
+
     before :each do
       @current_user = create :admin_user
       controller.stub(:current_user) { @current_user }
     end
-    
+
     context "existing object" do
       it "builds the object from existing attributes and assigns new ones" do
         pij_query = create :pij_query, headline: "This is a story"

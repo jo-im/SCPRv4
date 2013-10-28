@@ -7,7 +7,8 @@ describe ContentBase do
     
       it "searches across ContentBase classes" do
         ts_retry(2) do
-          ContentBase.search.to_a.sort_by { |o| o.class.name }.should eq @generated_content.sort_by { |o| o.class.name }
+          ContentBase.search.to_a.sort_by { |o| o.class.name }
+          .should eq @generated_content.sort_by { |o| o.class.name }
         end
       end
 
@@ -31,6 +32,12 @@ describe ContentBase do
           results.should_not be_empty
           results.should_not include unpublished
         end
+      end
+
+      it "works with empty array conditions" do
+        -> {
+          ContentBase.search(with: { obj_key: [] }, without: { obj_key: [] })
+        }.should_not raise_error
       end
 
       it 'merges in is_live if I pass in with as nil' do
@@ -58,9 +65,12 @@ describe ContentBase do
     
     context "sphinx is not running" do
       it "has a graceful fallback if sphinx isn't working" do
-        %w{ ThinkingSphinx::SphinxError Riddle::ConnectionError Riddle::ResponseError }.each do |error|
-          ThinkingSphinx.should_receive(:search).and_raise(error.constantize)
-          content = ContentBase.search
+        [ ThinkingSphinx::SphinxError,
+          Riddle::ConnectionError,
+          Riddle::ResponseError
+        ].each do |error|
+          ThinkingSphinx.should_receive(:search).and_raise(error)
+          content = silence_warnings { ContentBase.search }
           content.should be_empty
           content.should respond_to :total_pages
           content.should respond_to :current_page

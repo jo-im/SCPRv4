@@ -22,6 +22,15 @@ describe Concern::Methods::AbstractModelMethods do
     end
   end
 
+  describe '#<=>' do
+    it "compares the ids" do
+      obj1 = AbstractModel.new(id: 1)
+      obj2 = AbstractModel.new(id: 2)
+
+      [obj2, obj1].sort.should eq [obj1, obj2]
+    end
+  end
+
   describe '#cache_key' do
     it 'is the original object cache_key' do
       klass = Struct.new(:cache_key, :updated_at)
@@ -92,5 +101,4 @@ describe Concern::Methods::AbstractModelMethods do
       obj.public_path.should eq nil
     end
   end
-
 end

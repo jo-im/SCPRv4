@@ -1,0 +1,4 @@
+test:
+    mysql41: 3311
+    skip_time_zone: true
+    utf8: true

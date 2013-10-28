@@ -42,11 +42,10 @@ module ThinkingSphinxHelpers
 
   # Creates `num` of each ContentBase subclass for
   # helping with Sphinx tests
-  def make_content(num=nil, options=nil)
-    num     ||= 1
-    options ||= {}
-
+  def make_content(num=0, options={})
     @generated_content = []
+    return if num == 0
+
     ContentBase::CONTENT_CLASSES.each do |klass|
       @generated_content.push FactoryGirl.create_list(
         klass.to_s.underscore.to_sym, num.to_i, options
@@ -64,9 +63,20 @@ module ThinkingSphinxHelpers
 
   # -----------
 
-  def index_sphinx
-    ThinkingSphinx::Test.index
-    sleep 0.5
+  def index_sphinx(*indices)
+    if indices.empty?
+      ThinkingSphinx::Test.index
+    else
+      ThinkingSphinx::Test.index(*indices)
+    end
+
+    sleep 0.25 until index_finished?
+  end
+
+  def index_finished?
+    Dir[
+      File.join(ThinkingSphinx::Test.config.indices_location, '*.{new,tmp}.*')
+    ].empty?
   end
 
   # -----------
@@ -119,8 +129,10 @@ module ThinkingSphinxHelpers
       end
 
       before :each do
-        make_content(content_options[:num], content_options[:options])
-        index_sphinx
+        if content_options[:num]
+          make_content(content_options[:num], content_options[:options])
+          index_sphinx if content_options[:num].to_i > 0
+        end
       end
 
       after :all do

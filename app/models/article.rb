@@ -80,4 +80,8 @@ class Article
   def asset
     @asset ||= self.assets.first
   end
+
+  def obj_key_crc32
+    @obj_key_crc32 ||= self.id.to_crc32
+  end
 end

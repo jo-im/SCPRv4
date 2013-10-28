@@ -10,7 +10,10 @@ module Concern
       extend ActiveSupport::Concern
 
       included do
-        has_many :featured_comments, as: :content, dependent: :destroy
+        has_many :featured_comments,
+          :as           => :content,
+          :dependent    => :destroy
+
         after_save :_destroy_featured_comments, if: -> { self.unpublishing? }
       end
 
