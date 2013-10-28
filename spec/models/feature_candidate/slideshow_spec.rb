@@ -59,9 +59,7 @@ describe FeatureCandidate::Slideshow do
 
       index_sphinx
 
-      ts_retry(2) do
-        score1 = FeatureCandidate::Slideshow.new(category).score
-      end
+      score1 = FeatureCandidate::Slideshow.new(category).score
 
       story1.destroy
 
@@ -70,9 +68,7 @@ describe FeatureCandidate::Slideshow do
 
       index_sphinx
 
-      ts_retry(2) do
-        score2 = FeatureCandidate::Slideshow.new(category).score
-      end
+      score2 = FeatureCandidate::Slideshow.new(category).score
 
       score2.should be > score1
     end
