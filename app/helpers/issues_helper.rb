@@ -1,2 +1,2 @@
-module IssueHelper
+module IssuesHelper
 end
