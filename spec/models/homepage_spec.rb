@@ -3,7 +3,8 @@ require "spec_helper"
 describe Homepage do
   describe '::status_select_collection' do
     it 'is an array of status texts' do
-      Homepage.status_select_collection.first[1].should eq Homepage::STATUS_DRAFT
+      Homepage.status_select_collection.first[1]
+      .should eq Homepage::STATUS_DRAFT
     end
   end
 
@@ -71,7 +72,8 @@ describe Homepage do
 
       index_sphinx
 
-      homepage.category_previews.first.articles.should eq [story2].map(&:to_article)
+      homepage.category_previews.first.articles
+      .should eq [story2].map(&:to_article)
     end
   end
 end
