@@ -233,7 +233,9 @@ Scprv4::Application.routes.draw do
     resources :categories do
       get "search", on: :collection, as: :search
     end
-
+    resources :issues do
+      get "search", on: :collection, as: :search
+    end
     resources :missed_it_buckets do
       get "search", on: :collection, as: :search
     end
