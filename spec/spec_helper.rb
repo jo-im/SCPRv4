@@ -31,7 +31,6 @@ RSpec.configure do |config|
   config.include RemoteStubs
   config.include PresenterHelper
   config.include DatePathHelper
-  config.include StubPublishingCallbacks
   config.include AudioCleanup
   config.include FormFillers,           type: :feature
   config.include AuthenticationHelper,  type: :feature
