@@ -74,9 +74,8 @@ module ThinkingSphinxHelpers
   end
 
   def index_finished?
-    Dir[Rails.root.join(
-      ThinkingSphinx::Test.config.indices_location,
-      '*.{new,tmp}.*')
+    Dir[
+      File.join(ThinkingSphinx::Test.config.indices_location, '*.{new,tmp}.*')
     ].empty?
   end
 
@@ -84,18 +83,6 @@ module ThinkingSphinxHelpers
 
   def teardown_sphinx
     DatabaseCleaner.strategy = :transaction
-  end
-
-  def clear_indices
-    FileUtils.rm(indices)
-  end
-
-  def indices_cleared?
-    indices.empty?
-  end
-
-  def indices
-    Dir[Rails.root.join(ThinkingSphinx::Test.config.indices_location, '*')]
   end
 
   #-----------
@@ -146,11 +133,6 @@ module ThinkingSphinxHelpers
           make_content(content_options[:num], content_options[:options])
           index_sphinx if content_options[:num].to_i > 0
         end
-      end
-
-      after :each do
-        clear_indices
-        sleep 0.25 until indices_cleared?
       end
 
       after :all do

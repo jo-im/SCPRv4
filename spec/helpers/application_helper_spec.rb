@@ -2,63 +2,30 @@ require 'spec_helper'
 
 describe ApplicationHelper do
   describe "sphinx category searches" do
+    let(:category_news) { create :category, :is_news }
+    let(:category_not_news) { create :category, :is_not_news }
+
     sphinx_spec
 
-    before :each do
-      category_news     = create :category, :is_news
-      category_not_news = create :category, :is_not_news
-
-      news = [
-        create(:news_story, category: category_news),
-        create(:blog_entry, category: category_news),
-        create(:show_segment, category: category_news),
-        create(:content_shell, category: category_news)
-      ]
-
-      not_news = [
-        create(:news_story, category: category_not_news),
-        create(:blog_entry, category: category_not_news),
-        create(:show_segment, category: category_not_news),
-        create(:content_shell, category: category_not_news)
-      ]
-    end
-
     it "#latest_news only gets objects where category is news" do
+      story1 = create :news_story, category: category_news
+      story2 = create :news_story, category: category_not_news
+
       index_sphinx
 
       ts_retry(2) do
-        news = helper.latest_news.to_a # to_a otherwise == comparison fails
-        news.should_not be_empty
-        news.any? { |c| c.category.is_news == false }.should be_false
-        news.all? { |c| c.category.is_news == true }.should be_true
-      end
-    end
-
-    it '#latest_news returns articles' do
-      index_sphinx
-
-      ts_retry(2) do
-        helper.latest_news.first.should be_a Article
+        helper.latest_news.should eq [story1].map(&:to_article)
       end
     end
 
     it "#latest_arts only gets object where category is not news" do
+      story1 = create :news_story, category: category_news
+      story2 = create :news_story, category: category_not_news
+
       index_sphinx
 
       ts_retry(2) do
-        arts = helper.latest_arts.to_a
-        arts.should_not be_empty
-
-        arts.any? { |c| c.category.is_news == true }.should be_false
-        arts.all? { |c| c.category.is_news == false }.should be_true
-      end
-    end
-
-    it '#latest_arts returns articles' do
-      index_sphinx
-
-      ts_retry(2) do
-        helper.latest_arts.first.should be_a Article
+        helper.latest_arts.should eq [story2].map(&:to_article)
       end
     end
   end
