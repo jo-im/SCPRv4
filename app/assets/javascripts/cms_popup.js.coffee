@@ -38,8 +38,8 @@ window.openCMS = (newWin) ->
         newWin.focus()
     else
         newWin.close()
-        alert "Only News Stories, Blog Entries, Show Segments, 
-              Show Episodes, and Events are supported."
+        alert "Only News Stories, Blog Entries, Show Segments, " +
+              "Show Episodes, and Events are supported."
 
 # Bookmark JS
 # Paste here to turn it into bookmark-safe code: http://ted.mielczarek.org/code/mozilla/bookmarklet.html

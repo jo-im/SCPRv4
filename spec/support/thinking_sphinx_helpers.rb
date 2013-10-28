@@ -21,47 +21,47 @@
 #
 # Or you can use make_content directly if you need
 # more control. sphinx_spec hijacks before(:all)
-# and after(:all), so if you need more inside use this 
+# and after(:all), so if you need more inside use this
 # method.
-# 
+#
 #    before :all do
 #      DatabaseCleaner.strategy = :truncation, { except: STATIC_TABLES }
 #      make_content(7)
 #      ThinkingSphinx::Test.start
 #    end
-#     
+#
 #    after :all do
 #      ThinkingSphinx::Test.stop
 #      DatabaseCleaner.strategy = :transaction
 #    end
 #
-# `make_content` assigns @generated_content for you, available for using in your specs. 
+# `make_content` assigns @generated_content for you, available for using in your specs.
 
 module ThinkingSphinxHelpers
   extend ActiveSupport::Concern
-  
-  # Creates `num` of each ContentBase subclass for 
+
+  # Creates `num` of each ContentBase subclass for
   # helping with Sphinx tests
   def make_content(num=nil, options=nil)
     num     ||= 1
     options ||= {}
-    
+
     @generated_content = []
     ContentBase::CONTENT_CLASSES.each do |klass|
       @generated_content.push FactoryGirl.create_list(
         klass.to_s.underscore.to_sym, num.to_i, options
       )
     end
-    
+
     @generated_content = @generated_content.flatten
   end
-  
+
   # -----------
-  
+
   def setup_sphinx
     DatabaseCleaner.strategy = :truncation, { except: STATIC_TABLES }
   end
-  
+
   # -----------
 
   def index_sphinx
@@ -70,18 +70,18 @@ module ThinkingSphinxHelpers
   end
 
   # -----------
-  
+
   def teardown_sphinx
     DatabaseCleaner.strategy = :transaction
   end
-  
+
   #-----------
   # Sometimes the index takes too long, but we
   # want to actually test the sphinx results.
   #
   # This method will help for slower computers,
   # for example, that take longer to run the index.
-  # 
+  #
   # Usage:
   #
   #   ts_retry(2) do
@@ -94,7 +94,7 @@ module ThinkingSphinxHelpers
   # fail as normal if it's still failing.
   def ts_retry(attempts=1, &block)
     attempt = 0
-    
+
     begin
       yield block
     rescue RSpec::Expectations::ExpectationNotMetError => e
@@ -107,9 +107,9 @@ module ThinkingSphinxHelpers
       end
     end
   end
-  
+
   # -----------
-  
+
   module ClassMethods
     # Takes the same arguments as make_content, but in hash form
     # spinx_spec(num: 10, options: { title: "Something"})
@@ -117,12 +117,12 @@ module ThinkingSphinxHelpers
       before :all do
         setup_sphinx
       end
-      
+
       before :each do
         make_content(content_options[:num], content_options[:options])
         index_sphinx
       end
-      
+
       after :all do
         teardown_sphinx
       end

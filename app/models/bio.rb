@@ -33,14 +33,6 @@ class Bio < ActiveRecord::Base
     end
   end
 
-  #--------------
-  # Sphinx
-  define_index do
-    indexes name, sortable: true
-    indexes title
-    indexes email
-  end
-
   #----------
 
   class << self
@@ -66,8 +58,7 @@ class Bio < ActiveRecord::Base
              .page(page).per(per_page)
     else
       ContentByline.search('',
-        :order        => :published_at,
-        :sort_mode    => :desc,
+        :order        => "published_at #{DESCENDING}",
         :per_page     => per_page,
         :page         => page,
         :with         => {

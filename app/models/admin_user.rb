@@ -3,7 +3,7 @@ require 'digest/sha1'
 class AdminUser < ActiveRecord::Base
   self.table_name = 'auth_user'
   include Concern::Callbacks::SphinxIndexCallback
-  
+
   include Outpost::Model::Authentication
   include Outpost::Model::Authorization
   outpost_model
@@ -11,29 +11,26 @@ class AdminUser < ActiveRecord::Base
 
   # ----------------
   # Callbacks
-  before_validation :generate_username, on: :create, if: -> { self.username.blank? }
+  before_validation :generate_username,
+    :on => :create,
+    :if => -> { self.username.blank? }
 
   # ----------------
   # Validation
 
   # ----------------
   # Scopes
-  
+
   # ----------------
   # Association
-  has_many :activities, class_name: "Secretary::Version", foreign_key: "user_id"
+  has_many :activities,
+    :class_name     => "Secretary::Version",
+    :foreign_key    => "user_id"
+
   has_one  :bio, foreign_key: "user_id"
 
   # ----------------
-  # Sphinx
-  
-  define_index do
-    indexes username
-    indexes name, sortable: true
-  end
 
-  # ----------------
-  
   class << self
     def select_collection
       AdminUser.order("name").map { |u| [u.to_title, u.id] }
@@ -41,7 +38,7 @@ class AdminUser < ActiveRecord::Base
   end
 
   # ----------------
-  
+
   def json
     {
       :username     => self.username,

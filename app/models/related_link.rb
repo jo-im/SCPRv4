@@ -10,9 +10,10 @@ class RelatedLink < ActiveRecord::Base
     ["RSS Feed (xml)", "rss"],
     ["Podcast Feed (xml)", "podcast"],
     ["Map", "map"],
+    ["Email (mailto:scprweb@scpr.org)", "email"],
     ["Other", "other"]
   ]
-  
+
   #--------------
   # Scopes
   scope :query, -> { where(link_type: "query") }
@@ -25,11 +26,13 @@ class RelatedLink < ActiveRecord::Base
   #--------------
   # Validation
   validates :title, presence: true
-  validates :url, presence: true, url: { allowed: [URI::HTTP, URI::FTP]}
+  validates :url,
+    :presence   => true,
+    :url        => { allowed: [URI::HTTP, URI::FTP, URI::MailTo] }
 
   #--------------
   # Callbacks
-  
+
   #----------
   # TODO Move this into a presenter
   def domain

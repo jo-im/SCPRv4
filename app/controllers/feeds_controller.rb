@@ -16,10 +16,10 @@ class FeedsController < ApplicationController
 
     # Anything with a news category is eligible
     @content = ContentBase.search({
-      :classes => [NewsStory, ContentShell, BlogEntry, ShowSegment],
-      :limit   => 15,
-      :with    => { is_source_kpcc: true },
-      :without => { category: '' }
+      :classes    => [NewsStory, ContentShell, BlogEntry, ShowSegment],
+      :limit      => 15,
+      :with       => { is_source_kpcc: true },
+      :without    => { category: false }
     })
 
     xml = render_to_string(action: "feed", formats: :xml)

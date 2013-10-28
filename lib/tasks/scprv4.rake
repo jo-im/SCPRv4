@@ -54,8 +54,10 @@ namespace :scprv4 do
 
 
   desc "Clear events cache"
-  task :clear_events => [ :environment ] do 
-    Rails.cache.expire_obj("events/event:new")
+  task :clear_events => [ :environment ] do
+    puts "*** [#{Time.now}] Clearing Event Cache..."
+    Rails.cache.expire_obj(Event.new_obj_key)
+    puts "Finished."
   end
 
 

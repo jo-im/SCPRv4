@@ -9,7 +9,7 @@ describe Indexer do
         indexer.index
       end
     end
-    
+
     context "partial index" do
       it "sends to ThinkingSphinx::Configuration.instance.controller#index with an array of indexes" do
         BlogEntry.stub(:sphinx_index_names) { ["blog_entry_core"] }
@@ -19,31 +19,31 @@ describe Indexer do
       end
     end
   end
-  
+
   #---------------------
-  
+
   describe "#enqueue" do
     it "sends off to Indexer::IndexJob with an array of model names" do
       Resque.should_receive(:enqueue).with(Job::Index, ["BlogEntry"])
       indexer = Indexer.enqueue(BlogEntry)
     end
   end
-  
+
   #---------------------
-  
+
   describe "#models" do
     context "with models passed in" do
       it "is an array of classes" do
         indexer = Indexer.new(BlogEntry, NewsStory)
         indexer.models.should eq [BlogEntry, NewsStory]
       end
-      
+
       it "ignores nils" do
         indexer = Indexer.new(BlogEntry, nil)
         indexer.models.should eq [BlogEntry]
       end
     end
-    
+
     context "without models passed in" do
       it "is an empty array" do
         indexer = Indexer.new
@@ -51,23 +51,21 @@ describe Indexer do
       end
     end
   end
-  
+
   #---------------------
 
   describe "#indexes" do
     context "with models passed in" do
       it "is an array of sphinx index names for the passed in models" do
-        BlogEntry.stub(:sphinx_index_names) { ["blog_entry_core"] }
-        NewsStory.stub(:sphinx_index_names) { ["news_story_core"] }
         indexer = Indexer.new(BlogEntry, NewsStory)
-        indexer.indexes.should eq ["blog_entry_core", "news_story_core"]
+        indexer.indices.should eq ["blog_entry_core", "news_story_core"]
       end
     end
-    
+
     context "without arguments passed in" do
       it "is an empty array" do
         indexer = Indexer.new
-        indexer.indexes.should eq []
+        indexer.indices.should eq []
       end
     end
   end

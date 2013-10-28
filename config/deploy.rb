@@ -1,8 +1,9 @@
 # --------------
 # Requires and Multistage setup
+set :thinking_sphinx_roles, :sphinx
 
 require "bundler/capistrano"
-require 'thinking_sphinx/deploy/capistrano'
+require 'thinking_sphinx/capistrano'
 
 set :stages, %w{ production staging }
 set :default_stage, "production"
@@ -39,6 +40,7 @@ set :restart_delay, 40
 # --------------
 # Universal Callbacks
 before "deploy:assets:precompile", "deploy:symlink_config"
+after "deploy:symlink_config", "thinking_sphinx:configure"
 after "deploy:update", "deploy:cleanup"
 
 # --------------
@@ -67,29 +69,8 @@ namespace :deploy do
   end
 
   task :symlink_config do
-    %w{ database.yml api_config.yml app_config.yml sphinx.yml newrelic.yml }.each do |file|
+    %w{ database.yml api_config.yml app_config.yml thinking_sphinx.yml newrelic.yml }.each do |file|
       run "ln -nfs #{shared_path}/config/#{file} #{release_path}/config/#{file}"
     end
-  end
-end
-
-# --------------
-# Sphinx
-namespace :ts do
-  task :restart, roles: :sphinx do
-    thinking_sphinx.stop
-    thinking_sphinx.start
-  end
-
-  task :config, roles: :sphinx do
-    thinking_sphinx.config
-  end
-
-  task :index, roles: :sphinx do
-    thinking_sphinx.index
-  end
-
-  task :rebuild, roles: :sphinx do
-    thinking_sphinx.rebuild
   end
 end

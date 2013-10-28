@@ -36,6 +36,7 @@ RSpec.configure do |config|
   config.include FormFillers,           type: :feature
   config.include AuthenticationHelper,  type: :feature
 
+
   config.before :suite do
     DatabaseCleaner.clean_with :truncation
     load "#{Rails.root}/db/seeds.rb"
@@ -58,19 +59,24 @@ RSpec.configure do |config|
   config.before :each do
     WebMock.reset!
 
-    stub_request(:any, %r|a\.scpr\.org\/api\/outputs|).to_return({
+    stub_request(:get, %r|a\.scpr\.org\/api\/outputs|).to_return({
       :body => load_fixture("api/assethost/outputs.json"),
       :content_type => "application/json"
     })
 
-    stub_request(:any, %r|a\.scpr\.org\/api\/assets|).to_return({
+    stub_request(:get, %r|a\.scpr\.org\/api\/assets|).to_return({
       :body => load_fixture("api/assethost/asset.json"),
       :content_type => "application/json"
     })
 
-    stub_request(:any, %r|a\.scpr\.org\/api\/as_asset|).to_return({
+    stub_request(:post, %r|a\.scpr\.org\/api\/assets|).to_return({
       :body => load_fixture("api/assethost/asset.json"),
       :content_type => "application/json"
+    })
+
+    stub_request(:get, %r{\.mp3\z}).to_return({
+      :content_type => 'audio/mpeg',
+      :body         => load_fixture('media/audio/2sec.mp3')
     })
 
     DatabaseCleaner.start

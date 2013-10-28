@@ -3,11 +3,6 @@
 #
 module Concern
   module Validations
-    # Define some defaults
-    DEFAULTS = {
-      slug_format: %r{\A[\w-]+\z}
-    }
-    
     module InstanceMethods
       # Whether or not to validate this object,
       # for any validations that have the condition:
@@ -56,7 +51,7 @@ module Concern
         self.valid?
       end
     end
-    
+
     ActiveRecord::Base.send :include, InstanceMethods
   end
 end

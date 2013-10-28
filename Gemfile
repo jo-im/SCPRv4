@@ -5,8 +5,10 @@ gem 'rails', "~> 3.2"
 gem 'mysql2'
 gem 'jquery-rails'
 gem "bcrypt-ruby", "~> 3.0.0"
-gem 'thinking-sphinx', '~> 2.0.14', require: "thinking_sphinx"
 
+# https://github.com/pat/thinking-sphinx/issues/634
+# gem 'thinking-sphinx', '~> 3.0.5'
+gem 'thinking-sphinx', github: 'pat/thinking-sphinx', ref: '06d8950bd'
 
 ## Outpost
 gem 'outpost-cms', github: 'SCPR/outpost'
@@ -40,6 +42,9 @@ gem 'sanitize', "~> 2.0"
 gem 'escape_utils'
 gem 'simple_form', "~> 2.0"
 gem 'jbuilder'
+
+gem 'embeditor-rails', github: 'SCPR/embeditor-rails'
+#gem 'embeditor-rails', path: "#{ENV['PROJECT_HOME']}/embeditor-rails"
 
 
 ## Utility
@@ -75,6 +80,7 @@ group :assets do
   gem "compass-rails"
   gem 'coffee-rails', "~> 3.2"
   gem 'uglifier', '>= 1.3'
+  gem 'turbo-sprockets-rails3', github: "bricker/turbo-sprockets-rails3", branch: 'utf8-conversion'
 end
 
 

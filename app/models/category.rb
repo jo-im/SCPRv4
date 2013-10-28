@@ -22,14 +22,6 @@ class Category < ActiveRecord::Base
   #-------------------
   # Callbacks
 
-  #-------------------
-  # Sphinx
-  define_index do
-    indexes title, sortable: true
-    indexes slug, sortable: true
-    has is_news
-  end
-
   #----------
 
   def route_hash
@@ -39,7 +31,7 @@ class Category < ActiveRecord::Base
 
   #----------
 
-  def content(page=1, per_page=10, without_obj=nil)
+  def content(page=1, per_page=10, exclude=nil)
     if (page.to_i * per_page.to_i > SPHINX_MAX_MATCHES) || page.to_i < 1
       page = 1
     end
@@ -51,8 +43,8 @@ class Category < ActiveRecord::Base
       :with     => { category: self.id }
     }
 
-    if without_obj && without_obj.respond_to?("obj_key")
-      args[:without] = { obj_key: without_obj.obj_key.to_crc32 }
+    if exclude && exclude.respond_to?(:obj_key)
+      args[:without] = { obj_key: exclude.obj_key.to_crc32 }
     end
 
     ContentBase.search(args)
@@ -89,7 +81,9 @@ class Category < ActiveRecord::Base
         :category     => self.id,
         :is_slideshow => true
       },
-      :without_any => { obj_key: Array(args[:exclude]).map { |c| c.obj_key.to_crc32 } }
+      :without => {
+        :obj_key => Array(args[:exclude]).map { |a| a.obj_key.to_crc32 }
+      }
     })
 
     if slideshow.any?
@@ -111,7 +105,9 @@ class Category < ActiveRecord::Base
       :classes     => [ShowSegment],
       :limit       => 1,
       :with        => { category: self.id },
-      :without_any => { obj_key: Array(args[:exclude]).map { |c| c.obj_key.to_crc32 } }
+      :without => {
+        :obj_key => Array(args[:exclude]).map { |a| a.obj_key.to_crc32 }
+      }
     })
 
     if segments.any?

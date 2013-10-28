@@ -57,21 +57,6 @@ class Abstract < ActiveRecord::Base
   validates :headline, presence: true
   validates :summary, presence: true
 
-
-  define_index do
-    indexes headline
-    indexes summary
-    indexes url
-    has :source
-    has category.id, as: :category
-    has updated_at
-    has article_published_at
-
-    # For ContentBase.search
-    has created_at, as: :public_datetime
-    has "1", as: :is_live, type: :boolean
-  end
-
   attr_accessor :original_object
 
   class << self

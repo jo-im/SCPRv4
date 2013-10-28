@@ -25,10 +25,13 @@
         </div>
 
         <footer>
-          <p><i><%= render_contributing_byline entry %></i></p>
-          <div class="visible-reader"><%= content_widget "extra_audio", entry %></div>
+          <% if full %>
+            <p><i><%= render_contributing_byline entry %></i></p>
+            <div class="visible-reader"><%= content_widget "extra_audio", entry %></div>
 
-          <%= pij_source(entry) %>
+            <%= pij_source(entry) %>
+            <%= render partial: "/shared/author_info", collection: entry.grouped_bylines[:primary], as: :byline %>
+          <% end %>
         </footer>
       </article>
 

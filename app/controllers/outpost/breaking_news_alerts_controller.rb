@@ -2,8 +2,8 @@ class Outpost::BreakingNewsAlertsController < Outpost::ResourceController
   outpost_controller
 
   define_list do |l|
-    l.default_order       = "published_at"
-    l.default_sort_mode   = "desc"
+    l.default_order_attribute   = "published_at"
+    l.default_order_direction   = DESCENDING
 
     l.column :headline
     l.column :alert_type,
@@ -14,15 +14,19 @@ class Outpost::BreakingNewsAlertsController < Outpost::ResourceController
     l.column :visible, header: "Visible?"
     l.column :email_sent, header: "Emailed?"
     l.column :mobile_notification_sent, header: "Pushed?"
-    l.column :published_at, sortable: true, default_sort_mode: "desc"
+    l.column :published_at,
+      :sortable                   => true,
+      :default_order_direction    => DESCENDING
 
 
     l.filter :alert_type,
       :title        => "Type",
       :collection   => -> { BreakingNewsAlert.types_select_collection }
 
-    l.filter :email_sent, title: "Email Sent?", collection: :boolean
-    
+    l.filter :email_sent,
+      :title        => "Email Sent?",
+      :collection   => :boolean
+
     l.filter :mobile_notification_sent,
       :title        => "Mobile Notification Sent?",
       :collection   => :boolean

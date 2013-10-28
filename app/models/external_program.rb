@@ -64,15 +64,6 @@ class ExternalProgram < ActiveRecord::Base
   # Callbacks
 
   #-------------------
-  # Sphinx
-  define_index do
-    indexes title, sortable: true
-    indexes description
-    indexes host
-    indexes organization
-  end
-
-  #-------------------
 
   class << self
     def select_collection

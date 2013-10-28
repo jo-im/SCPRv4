@@ -1,6 +1,16 @@
+# Change this to force-refresh the JS/CSS files dynamically loaded
+# by CKEditor.
+CKEDITOR.timestamp = '20131009'
+
 # Global Configuration
 CKEDITOR.editorConfig = (config) ->
-    config.extraPlugins = 'mediaembed,codemirror,autosave'
+    config.extraPlugins = [
+        'mediaembed',
+        'codemirror',
+        'autosave',
+        'embed-placeholder',
+        'webkit-span-fix'
+    ].join(',')
 
     config.codemirror =
         # https://github.com/w8tcha/CKEditor-CodeMirror-Plugin 
@@ -16,7 +26,7 @@ CKEDITOR.editorConfig = (config) ->
         enableCodeFormatting    : true
         autoFormatOnStart       : false
         autoFormatOnUncomment   : false
-        highlightActiveLine     : true
+        highlightActiveLine     : false
         highlightMatches        : false
         showTabs                : false
         showFormatButton        : false
@@ -28,17 +38,20 @@ CKEDITOR.editorConfig = (config) ->
     config.toolbar = [
         ['Bold', 'Italic', 'Underline', "RemoveFormat"]
         ['NumberedList', 'BulletedList', 'Blockquote']
-        ['Link', 'Unlink', 'Image', 'MediaEmbed']
+        ['Link', 'Unlink', 'Image', 'MediaEmbed', 'EmbedPlaceholder']
         ['Find', 'Paste']
         ['Source', 'Maximize']
     ]
+
+    # Anything can have an ID or any class
+    config.allowedContent = "*[id](*)"
 
     config.language     = 'en'
     config.height       = "400px"
     config.width        = "635px"
     config.bodyClass    = 'ckeditor-body'
-    config.contentsCss  = "/assets/application.css"
-    config.baseHref     = "http://www.scpr.org/"
+    config.contentsCss  = "/assets/application.css?20130920"
+    config.baseHref     = BASE_HREF
 
     config.disableNativeSpellChecker    = false
     config.forcePasteAsPlainText        = true

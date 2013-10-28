@@ -30,15 +30,6 @@ class PressRelease < ActiveRecord::Base
     end
   end
 
-  #-------------
-  # Sphinx
-  define_index do
-    indexes title
-    indexes body
-
-    has created_at
-  end
-
   #--------------
 
   def route_hash

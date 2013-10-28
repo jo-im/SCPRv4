@@ -1,6 +1,6 @@
-class ContentByline < ActiveRecord::Base 
+class ContentByline < ActiveRecord::Base
   self.table_name =  "contentbase_contentbyline"
-  
+
   ROLE_EXTRA        = -1
   ROLE_PRIMARY      = 0
   ROLE_SECONDARY    = 1
@@ -12,7 +12,7 @@ class ContentByline < ActiveRecord::Base
       ROLE_CONTRIBUTING => "Contributing",
       ROLE_EXTRA        => "Extra"
   }
-  
+
   ROLE_MAP = {
     :primary      => ROLE_PRIMARY,
     :secondary    => ROLE_SECONDARY,
@@ -21,21 +21,12 @@ class ContentByline < ActiveRecord::Base
   }
 
   ROLES = ROLE_TEXT.map { |k,v| [v, k] }[0..2] # TODO this is terrible
-  
+
   belongs_to :content, polymorphic: true
   belongs_to :user, class_name: "Bio"
-    
-  define_index do
-    indexes user.name, as: :name
-    has role
-    has user_id
-    has content_id
-    has content.published_at, as: :published_at,  type: :datetime
-    has content.status,       as: :status,        type: :integer
-  end
 
   #-----------------------
-  
+
   class << self
     #-----------------------
     # Takes a hash of bylines and concatenates them intelligently
@@ -44,14 +35,14 @@ class ContentByline < ActiveRecord::Base
       primary   = elements[:primary]
       secondary = elements[:secondary]
       extra     = elements[:extra]
-      
+
       names = [primary, secondary].reject { |e| e.blank? }.join(" with ")
       [names, extra].reject { |e| e.blank? }.join(" | ")
     end
   end
 
   #-----------------------
-  
+
   def role_text
     ROLE_TEXT[self.role]
   end

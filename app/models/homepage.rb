@@ -64,14 +64,6 @@ class Homepage < ActiveRecord::Base
     Rails.cache.expire_obj(self)
   end
 
-  #-------------------
-  # Sphinx
-  define_index do
-    indexes base
-    has published_at
-    has updated_at
-  end
-
 
   def published?
     self.status == STATUS_LIVE
@@ -110,10 +102,10 @@ class Homepage < ActiveRecord::Base
     Category.all.each do |cat|
       # exclude content that is used in our object
       content = ContentBase.search({
-        :classes     => [NewsStory, BlogEntry, ContentShell, ShowSegment],
-        :limit       => 5,
-        :with        => { category: cat.id },
-        :without_any => { obj_key: citems.map { |c| c.obj_key.to_crc32 } }
+        :classes    => [NewsStory, BlogEntry, ContentShell, ShowSegment],
+        :limit      => 5,
+        :with       => { category: cat.id },
+        :without    => { obj_key: citems.map { |a| a.obj_key.to_crc32 } }
       })
 
       more     = []

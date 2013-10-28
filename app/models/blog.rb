@@ -29,14 +29,6 @@ class Blog < ActiveRecord::Base
   #-------------------
   # Callbacks
 
-  #----------------
-  # Sphinx
-  define_index do
-    indexes name
-    indexes teaser
-    has is_active
-  end
-
   #-------------------
 
   class << self

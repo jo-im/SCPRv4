@@ -2,15 +2,18 @@ class Outpost::PijQueriesController < Outpost::ResourceController
   outpost_controller
 
   define_list do |l|
-    l.default_order       = "published_at"
-    l.default_sort_mode   = "desc"
+    l.default_order_attribute   = "published_at"
+    l.default_order_direction   = DESCENDING
 
     l.column :headline
     l.column :slug
     l.column :query_type, header: "Type"
     l.column :is_featured, header: "Featured?"
     l.column :status
-    l.column :published_at, sortable: true, default_sort_mode: "desc"
+    l.column :published_at,
+      :sortable                   => true,
+      :default_order_direction    => DESCENDING
+
     l.column :pin_query_id
 
     l.filter :status,
@@ -21,7 +24,9 @@ class Outpost::PijQueriesController < Outpost::ResourceController
       :title      => "Type",
       :collection => -> { PijQuery::QUERY_TYPES }
 
-    l.filter :is_featured, title: "Featured?", collection: :boolean
+    l.filter :is_featured,
+      :title        => "Featured?",
+      :collection   => :boolean
   end
 
   #----------------

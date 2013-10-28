@@ -2,8 +2,8 @@ class Outpost::BiosController < Outpost::ResourceController
   outpost_controller
 
   define_list do |l|
-    l.default_order       = "name"
-    l.default_sort_mode   = "asc"
+    l.default_order_attribute   = "name"
+    l.default_order_direction   = "asc"
 
     l.column :name, sortable: true
     l.column :email

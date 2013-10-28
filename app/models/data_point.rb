@@ -1,12 +1,12 @@
 ##
 # DataPoint
 #
-# A terribly-named model for storing arbitrary data 
+# A terribly-named model for storing arbitrary data
 # as key/value pairs. Like Redis but slower. :)
-# 
+#
 # Group pairs with the "group_name" column. The group_name
-# column is just an arbitrary string and isn't tied to any 
-# other models. This makes it possible to grab related data 
+# column is just an arbitrary string and isn't tied to any
+# other models. This makes it possible to grab related data
 # with only one query:
 #
 #   @data_points = DataPoint.where(group_name: "election2012")
@@ -23,37 +23,27 @@ class DataPoint < ActiveRecord::Base
 
   #--------------
   # Scopes
-  
+
   #--------------
   # Association
-  
+
   #--------------
   # Validation
   validates :data_key, presence: true, uniqueness: true
-  
+
   #--------------
   # Callbacks
 
   #--------------
-  # Sphinx  
-  define_index do
-    indexes title
-    indexes data_key, sortable: true
-    indexes data_value
-    indexes group_name, sortable: true
-    has updated_at
-  end
-  
-  #--------------
-  
+
   class << self
     # DataPoint::to_hash lets us take an array and turn it into
     # a hash, where the data_key is the key and the data_value
-    # is the value. 
+    # is the value.
     #
     # ...Why?
     #
-    # Because otherwise we would have to use Ruby's Enumerable#find 
+    # Because otherwise we would have to use Ruby's Enumerable#find
     # everywhere, which is a lot slower than a hash. Also, the DataPoint
     # model is modeled after a Hash - a key, and a value - so it makes
     # sense to turn it into a real hash.
@@ -72,7 +62,7 @@ class DataPoint < ActiveRecord::Base
   end
 
   #--------------
-  
+
   def json
     {
       :group_name => self.group_name,
@@ -81,26 +71,26 @@ class DataPoint < ActiveRecord::Base
       :data_value => self.data_value
     }
   end
-  
+
   #--------------
   # DataPoint::Hashed
   #
   class Hashed
     delegate :data_value, :data_key, :title, to: :@object
-    
+
     attr_accessor :object
     def initialize(object)
       @object = object
     end
-    
+
     #----------
-    
+
     def to_s
       @object.data_value
     end
-    
+
     #----------
-    
+
     def ==(val)
       self.to_s == val
     end

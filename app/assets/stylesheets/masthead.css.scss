@@ -71,16 +71,16 @@ header#masthead {
     white-space: nowrap;
 }
 
-// Pledge
+// Contribute
 .kpcc-personalities {
     @include ie-inline-block;
-    background: transparent url(image_path("pledge-container-bg.jpg")) no-repeat bottom;
+    background: transparent url(image_path("contribute-container-bg.jpg")) no-repeat bottom;
     height:73px;
     max-height: 73px;
     overflow: hidden;
     width:286px !important;
-    // Pledge Now button
-    .pledge {
+    // Contribute button
+    .contribute {
         float: right;
         left:132px;
         margin-left:30px;
@@ -92,16 +92,16 @@ header#masthead {
     }
 }
 
-.pledge {
+.contribute {
     margin:10px 0;
 }
 
-.pledge-button-container { // For the responsive button
+.contribute-button-container { // For the responsive button
     float: right;
     margin: 9px 7px 0 0;
     text-align: right;
     @include ie-inline-block();
-    .pledge { float:right; }
+    .contribute { float:right; }
 }
 
 nav.utils {
@@ -130,14 +130,14 @@ nav.utils {
     }
 }
 
-// Pledge Now button
-.pledge {
+// Contribute button
+.contribute {
     @include gradient-vertical-three-colors(#00b9f3, #00b9f3, 45%, #0098c7);
     @include border-radius(4px);
     @include font-heading(600, 13px);
     @include ie-inline-block();
     a {
-        background:transparent url(image_path('icons/pledge-heart.png')) no-repeat 7px 2px;
+        background:transparent url(image_path('icons/contribute-heart.png')) no-repeat 7px 2px;
         color:$white;
         @include ie-inline-block();
         padding:1px 8px 1px 34px;
@@ -427,7 +427,7 @@ $navHeight: 36px;
                     text-shadow:0 -1px 0 rgba(0,0,0,0.69);
                 }
                 span {
-                    background:url(image_path('icons/pledge-heart-large.png')) no-repeat 0 6px;
+                    background:url(image_path('icons/contribute-heart-large.png')) no-repeat 0 6px;
                     display:block;
                     padding:6px 0 6px 35px;
                 }
@@ -563,6 +563,9 @@ $navHeight: 36px;
                     right:0;
                 }
             }
+        }
+        .section.last {
+            min-height:190px;
         }
         nav {
             padding-left:32px;

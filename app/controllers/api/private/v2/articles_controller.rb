@@ -14,7 +14,7 @@ module Api::Private::V2
       :types        => "news,blogs,segments",
       :limit        => 10,
       :order        => "public_datetime",
-      :sort_mode    => :desc, # Symbol plz
+      :sort_mode    => DESCENDING,
       :page         => 1 # o, rly?
     }
 
@@ -24,7 +24,6 @@ module Api::Private::V2
       :sanitize_page,
       :sanitize_query,
       :sanitize_order,
-      :sanitize_sort_mode,
       :sanitize_conditions,
       only: [:index]
 
@@ -39,7 +38,6 @@ module Api::Private::V2
         :limit     => @limit,
         :page      => @page,
         :order     => @order,
-        :sort_mode => @sort_mode,
         :with      => @conditions
       })
 
@@ -116,19 +114,17 @@ module Api::Private::V2
     #---------------------------
 
     def sanitize_order
-      @order = params[:order] ? params[:order].to_s : DEFAULTS[:order]
-    end
+      order       = (params[:order] || DEFAULTS[:order]).to_s
+      sort_mode   = (params[:sort_mode] || DEFAULTS[:sort_mode]).upcase
 
-    #---------------------------
-    # For now just "desc" and "asc", although this could
-    # support any of the Sphinx sort modes in the future.
-    def sanitize_sort_mode
-      @sort_mode =
-        if %w{desc asc}.include?(params[:sort_mode])
-          params[:sort_mode].to_sym
+      direction =
+        if [DESCENDING, ASCENDING].include?(sort_mode)
+          sort_mode
         else
           DEFAULTS[:sort_mode]
         end
+
+      @order = "#{order} #{direction}"
     end
 
     #---------------------------

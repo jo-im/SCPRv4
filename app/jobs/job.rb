@@ -14,11 +14,11 @@ module Job
 
       def log(message, verbose=false)
         message = "*** #{message}"
-        
+
         # Rails log and custom log always gets it
         Rails.logger.info message
         logger.info("***[#{Time.now}] #{self.name}: #{message}")
-        
+
         # STDOUT only gets it if requested
         if !!ENV['VERBOSE'] || verbose
           $stdout.puts message
@@ -26,7 +26,7 @@ module Job
       end
 
       #---------------
-      
+
       def cache(*args)
         cacher.cache(*args)
       end
@@ -57,7 +57,7 @@ module Job
         end
       end
     end
-    
+
 
     #---------------
 

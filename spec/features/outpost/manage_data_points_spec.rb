@@ -10,9 +10,9 @@ describe DataPoint do
   it_behaves_like "save options"
   it_behaves_like "admin routes"
   it_behaves_like "versioned model"
-  
+
   #------------------------
-  
+
   describe "Update" do
     before :each do
       login

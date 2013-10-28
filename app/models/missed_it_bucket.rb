@@ -34,13 +34,6 @@ class MissedItBucket < ActiveRecord::Base
   end
 
 
-  #--------------------
-  # Sphinx  
-  define_index do
-    indexes title, sortable: true
-  end
-
-
   def articles(limit=nil)
     @articles ||= self.content.includes(:content).limit(limit).map do |c|
       c.content.to_article

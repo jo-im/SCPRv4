@@ -11,7 +11,7 @@ module Job
     # occurred, because the homepage caching relies
     # on an up-to-date index.
     @queue = "#{namespace}:sphinx"
-    
+
     def self.perform
       if homepage = ::Homepage.published.first
         scored_content = homepage.scored_content

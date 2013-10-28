@@ -30,6 +30,7 @@ class BlogEntry < ActiveRecord::Base
   include Concern::Methods::PublishingMethods
   include Concern::Methods::CommentMethods
 
+  self.disqus_identifier_base = "blogs/entry"
   ROUTE_KEY = "blog_entry"
 
   ASSET_SCHEMES = [
@@ -59,47 +60,6 @@ class BlogEntry < ActiveRecord::Base
 
   #------------------
   # Callbacks
-
-  #------------------
-  # Sphinx
-  define_index do
-    indexes headline
-    indexes body
-    indexes bylines.user.name, as: :bylines
-
-    has blog.id, as: :blog
-    has status
-    has published_at
-    has updated_at
-
-    has "CRC32(CONCAT('#{BlogEntry.content_key}:'," \
-        "#{BlogEntry.table_name}.id))",
-        type: :integer, as: :obj_key
-
-    # For RSS feeds
-    has "1", as: :is_source_kpcc, type: :boolean
-
-    # For the homepage/category sections
-    has "(#{BlogEntry.table_name}.blog_asset_scheme <=> 'slideshow')",
-        type: :boolean, as: :is_slideshow
-
-    has category.id, as: :category
-
-    # For podcasts
-    join audio
-    has "COUNT(DISTINCT #{Audio.table_name}.id) > 0",
-        type: :boolean, as: :has_audio
-
-    # For the megamenu
-    has category.is_news, as: :category_is_news
-
-    # Required attributes for ContentBase.search
-    has published_at, as: :public_datetime
-    has "#{BlogEntry.table_name}.status = #{ContentBase::STATUS_LIVE}",
-        as: :is_live, type: :boolean
-  end
-
-
 
   #-------------------
   # Need to work around multi-american until we can figure

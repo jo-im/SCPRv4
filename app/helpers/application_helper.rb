@@ -181,10 +181,10 @@ module ApplicationHelper
 
   def latest_arts(limit=12)
     ContentBase.search({
-      :classes     => [NewsStory, BlogEntry, ShowSegment, ContentShell],
-      :limit       => limit,
-      :with        => { category_is_news: false },
-      :without     => { category: '' }
+      :classes    => [NewsStory, BlogEntry, ShowSegment, ContentShell],
+      :limit      => limit,
+      :with       => { category_is_news: false },
+      :without    => { category: false }
     }).map(&:to_article)
   end
 
@@ -192,9 +192,10 @@ module ApplicationHelper
 
   def latest_news(limit=12)
     ContentBase.search({
-      :classes     => [NewsStory, BlogEntry, ShowSegment, ContentShell],
-      :limit       => limit,
-      :with        => { category_is_news: true }
+      :classes    => [NewsStory, BlogEntry, ShowSegment, ContentShell],
+      :limit      => limit,
+      :with       => { category_is_news: true },
+      :without    => { category: false }
     }).map(&:to_article)
   end
 
@@ -279,7 +280,7 @@ module ApplicationHelper
   def comment_count_for(object, options={})
     if has_comments?(object)
       options[:class] = "comment_link social_disq #{options[:class]}"
-      options["data-objkey"] = object.obj_key
+      options["data-objkey"] = object.disqus_identifier
       link_to("Add your comments", object.public_path(anchor: "comments"), options)
     end
   end

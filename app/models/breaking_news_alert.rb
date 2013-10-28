@@ -56,15 +56,6 @@ class BreakingNewsAlert < ActiveRecord::Base
   after_commit :expire_alert_fragment
 
   #-------------------
-  # Sphinx
-  define_index do
-    indexes headline
-    indexes alert_type
-    indexes teaser
-    has published_at
-  end
-
-  #-------------------
 
   class << self
     # Get the latest published alert, whether visible or not,

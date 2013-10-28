@@ -23,6 +23,25 @@ describe Api::Public::V3::EventsController do
       response.response_code.should eq 404
       response.body.should eq Hash[error: "Not Found"].to_json
     end
+
+    context 'with rsvp_url' do
+      it 'includes the rsvp_url' do
+        event = create :event, :published, rsvp_url: "http://COOLRSVP.org"
+        get :show, { id: event.id }.merge(request_params)
+
+        response.body.should match /"rsvp_url"/
+        response.body.should match /COOLRSVP\.org/
+      end
+    end
+
+    context 'without rsvp_url' do
+      it 'does not include the rsvp_url' do
+        event = create :event, :published, rsvp_url: ""
+        get :show, { id: event.id }.merge(request_params)
+
+        response.body.should_not match /"rsvp_url"/
+      end
+    end
   end
 
   describe "GET index" do

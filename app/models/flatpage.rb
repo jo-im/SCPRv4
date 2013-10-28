@@ -45,16 +45,6 @@ class Flatpage < ActiveRecord::Base
   end
 
   # -------------------
-  # Sphinx
-  define_index do
-    indexes path, sortable: true
-    indexes title
-    indexes description
-    indexes redirect_to
-    has updated_at
-  end
-
-  # -------------------
 
   def route_hash
     return {} if !self.persisted? || !self.persisted_record.is_public?

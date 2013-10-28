@@ -4,8 +4,13 @@
   <% add_to_page_title "Outpost" %>
   <title><%= page_title %></title>
   <%= stylesheet_link_tag "outpost/application" %>
+
+  <script>
+    BASE_HREF = "http://<%= Rails.application.default_url_options[:host]%>"
+  </script>
+
   <%= javascript_include_tag "shared", "outpost/application" %>
-  
+
   <link rel="shortcut icon" href="http://media.scpr.org/favicon.ico" />
   <%= csrf_meta_tags %>
 </head>

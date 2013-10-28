@@ -50,9 +50,9 @@ describe Api::Public::V3::EditionsController do
       assigns(:editions).size.should eq 1
     end
 
-    it "sets the max limit to 4" do
+    it "sets the max limit to 12" do
       get :index, { limit: 100 }.merge(request_params)
-      assigns(:limit).should eq 4
+      assigns(:limit).should eq 12
     end
 
     it "sanitizes the page" do

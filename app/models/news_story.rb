@@ -30,6 +30,7 @@ class NewsStory < ActiveRecord::Base
   include Concern::Methods::PublishingMethods
   include Concern::Methods::CommentMethods
 
+  self.disqus_identifier_base = "news/story"
   ROUTE_KEY = "news_story"
 
   SOURCES = [
@@ -71,43 +72,6 @@ class NewsStory < ActiveRecord::Base
 
   #------------------
   # Callbacks
-
-  #-------------------
-  # Sphinx
-  define_index do
-    indexes headline
-    indexes body
-    indexes bylines.user.name, as: :bylines
-
-    has status
-    has published_at
-    has updated_at
-    has "CRC32(CONCAT('#{NewsStory.content_key}:'," \
-        "#{NewsStory.table_name}.id))",
-        type: :integer, as: :obj_key
-
-    # For megamenu
-    has category.is_news, as: :category_is_news
-
-    # For RSS Feed
-    has "(#{NewsStory.table_name}.source <=> 'kpcc')",
-        as: :is_source_kpcc, type: :boolean
-
-    # For category/homepage building
-    has "(#{NewsStory.table_name}.story_asset_scheme <=> 'slideshow')",
-        type: :boolean, as: :is_slideshow
-    has category.id, as: :category
-
-    # For podcasts
-    join audio
-    has "COUNT(DISTINCT #{Audio.table_name}.id) > 0",
-        as: :has_audio, type: :boolean
-
-    # Required attributes for ContentBase.search
-    has published_at, as: :public_datetime
-    has "#{NewsStory.table_name}.status = #{ContentBase::STATUS_LIVE}",
-        as: :is_live, type: :boolean
-  end
 
   #----------
 

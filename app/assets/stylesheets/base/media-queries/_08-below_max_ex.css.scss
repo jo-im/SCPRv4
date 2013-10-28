@@ -23,13 +23,13 @@
     // default min-width (set to the $siteWidth) will keep the site 
     // at that width.
     #masthead-right-header-wrapper {
-        .pledge, nav.utils {
+        .contribute, nav.utils {
             float:none;
             li:first-child {
                 border-left:none;
             }
         }
-        .pledge-button-container { display: block; margin: 5px 0 0 0; }
+        .contribute-button-container { display: block; margin: 5px 0 0 0; }
     }
     .nav-primary .sections ul li a {padding: 8px 14px;}
     .nav-primary .search-form { width:150px;}

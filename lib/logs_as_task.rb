@@ -18,9 +18,16 @@ module LogsAsTask
   
   module ClassMethods
     def log(msg)
-      msg = "*** [#{Time.now}] #{msg}"
+      msg = ">>> [#{Time.now}] #{self.name}: #{msg}"
       Rails.logger.info msg
-      Logger.new(STDOUT).info(msg) unless Rails.env == "test"
+      stdout_logger.info(msg)
+      msg
+    end
+
+    def stdout_logger
+      @stdout_logger ||= begin
+        Rails.env.test? ? Logger.new(StringIO.new) : Logger.new(STDOUT)
+      end
     end
   end
 

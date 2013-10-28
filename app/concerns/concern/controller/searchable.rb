@@ -11,7 +11,7 @@ module Concern
       # Action
       def search
         breadcrumb "Search"
-        
+
         @records = model.search(params[:query], {
           :page     => params[:page] || 1,
           :per_page => 50
@@ -25,8 +25,7 @@ module Concern
 
       def search_params
         @search_params ||= {
-          :order       => order.to_sym,
-          :sort_mode   => sort_mode.to_sym
+          :order => order
         }
       end
     end

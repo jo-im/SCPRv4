@@ -18,6 +18,7 @@ class Event < ActiveRecord::Base
   include Concern::Methods::CommentMethods
   include Concern::Methods::PublishingMethods
 
+  self.disqus_identifier_base = "events"
   ROUTE_KEY = "event"
 
   ForumTypes = [
@@ -97,24 +98,6 @@ class Event < ActiveRecord::Base
 
   #-------------------
   # Callbacks
-
-  #-------------------
-  # Sphinx
-  define_index do
-    indexes headline
-    indexes body
-    indexes sponsor
-    indexes location_name
-    indexes city
-
-    has starts_at
-    has status
-
-    # Required attributes for ContentBase.search
-    has created_at, as: :public_datetime
-    has "#{Event.table_name}.status = #{STATUS_LIVE}",
-        as: :is_live, type: :boolean
-  end
 
   # -------------------
 
