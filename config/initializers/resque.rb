@@ -6,3 +6,11 @@ Resque.after_fork do |job|
   # error.
   ActiveRecord::Base.verify_active_connections!
 end
+
+if Rails.env.test?
+  module Resque
+    def self.enqueue(klass, *args)
+      true
+    end
+  end
+end
