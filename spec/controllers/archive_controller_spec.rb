@@ -49,6 +49,7 @@ describe ArchiveController do
         tomorrow  = create content.to_sym, published_at: Time.now.tomorrow
 
         get :show, date_path(Time.now.yesterday)
+
         assigns(:date).should be_present
         assigns(content.pluralize.to_sym).should eq [yesterday]
       end
