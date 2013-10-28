@@ -25,7 +25,9 @@ RSpec.configure do |config|
   config.run_all_when_everything_filtered = true
   config.order = 'random'
 
-  config.include ActionView::TestCase::Behavior, example_group: { file_path: %r{spec/presenters} }
+  config.include ActionView::TestCase::Behavior,
+    :example_group => { file_path: %r{spec/presenters} }
+
   config.include FactoryGirl::Syntax::Methods
   config.include ThinkingSphinxHelpers
   config.include RemoteStubs
@@ -42,7 +44,11 @@ RSpec.configure do |config|
     DatabaseCleaner.strategy = :transaction
     migration = -> { FixtureMigration.new.up }
     silence_stream STDOUT, &migration
-    FileUtils.rm_rf Rails.application.config.scpr.media_root.join("audio/upload")
+
+    FileUtils.rm_rf(
+      Rails.application.config.scpr.media_root.join("audio/upload")
+    )
+
     ThinkingSphinx::Test.init
     ThinkingSphinx::Test.start_with_autostop
   end
