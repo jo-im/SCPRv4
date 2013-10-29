@@ -2,6 +2,7 @@ class NewsStory < ActiveRecord::Base
   self.table_name = 'news_story'
   outpost_model
   has_secretary
+
   include Concern::Scopes::SinceScope
   include Concern::Scopes::PublishedScope
   include Concern::Associations::ContentAlarmAssociation
@@ -29,6 +30,9 @@ class NewsStory < ActiveRecord::Base
   include Concern::Methods::ContentStatusMethods
   include Concern::Methods::PublishingMethods
   include Concern::Methods::CommentMethods
+
+  attr_writer :issue_ids
+  after_save :assign_issues_to_article
 
   self.disqus_identifier_base = "news/story"
   ROUTE_KEY = "news_story"
@@ -127,5 +131,19 @@ class NewsStory < ActiveRecord::Base
       :category               => self.category,
       :article_published_at   => self.published_at
     })
+  end
+
+  def issue_ids
+    @issue_ids || issues.map(&:id).join(' ')
+  end
+
+  private
+
+  def assign_issues_to_article
+    if @issue_ids
+      self.issues = @issue_ids[1..-1].map do |issue|
+        Issue.find(issue)
+      end
+    end
   end
 end
