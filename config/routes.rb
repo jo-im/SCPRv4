@@ -197,6 +197,7 @@ Scprv4::Application.routes.draw do
             get ':obj_key' => 'articles#show'
           end
         end
+        resources :issues, only: [:index]
       end
     end
   end
