@@ -9,6 +9,8 @@ class AdminUser < ActiveRecord::Base
   include Outpost::Model::Authentication
   include Outpost::Model::Authorization
 
+  self.unversioned_attributes = ['password_digest']
+
   # ----------------
   # Callbacks
   before_validation :generate_username,
