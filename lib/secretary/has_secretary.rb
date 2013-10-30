@@ -12,6 +12,7 @@ module Secretary
     # Apply to any class that should be versioned
     def has_secretary
       @_has_secretary = true
+      Secretary.versioned_models.push self.name
 
       has_many :versions,
         :class_name   => "Secretary::Version",
