@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20131028180356) do
+ActiveRecord::Schema.define(:version => 20131030220048) do
 
   create_table "abstracts", :force => true do |t|
     t.string   "source"
@@ -146,6 +146,18 @@ ActiveRecord::Schema.define(:version => 20131028180356) do
   add_index "blogs_entry", ["status", "published_at"], :name => "index_blogs_entry_on_status_and_published_at"
   add_index "blogs_entry", ["status"], :name => "index_blogs_entry_on_status"
   add_index "blogs_entry", ["updated_at"], :name => "index_blogs_entry_on_updated_at"
+
+  create_table "category_articles", :force => true do |t|
+    t.integer  "position"
+    t.integer  "category_id"
+    t.integer  "article_id"
+    t.string   "article_type"
+    t.datetime "created_at",   :null => false
+    t.datetime "updated_at",   :null => false
+  end
+
+  add_index "category_articles", ["article_id", "article_type"], :name => "index_category_articles_on_article_id_and_article_type"
+  add_index "category_articles", ["category_id"], :name => "index_category_articles_on_category_id"
 
   create_table "contentbase_category", :force => true do |t|
     t.string   "title"
