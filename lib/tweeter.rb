@@ -8,19 +8,19 @@
 # corresponding YAML config in
 # config/api_keys.yml under "twitter_defaults"
 #
-class Tweeter  
+class Tweeter
   def initialize(screen_name)
     @screen_name = screen_name
   end
 
   #---------------
-  
+
   def method_missing(method, *args, &block)
     client.send(method, *args)
   end
-  
+
   private
-  
+
   def client
     @client ||= begin
       auth = Rails.application.config.api['twitter'][@screen_name]
