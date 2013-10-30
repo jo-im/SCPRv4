@@ -13,7 +13,9 @@ module Concern
           :as               => :content,
           :dependent        => :destroy
 
-        tracks_association :related_links
+        if self.has_secretary?
+          tracks_association :related_links
+        end
 
         accepts_nested_attributes_for :related_links,
           :allow_destroy => true,

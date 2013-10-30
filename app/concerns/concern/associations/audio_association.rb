@@ -14,7 +14,9 @@ module Concern
           :order            => "position",
           :dependent        => :destroy
 
-        tracks_association :audio
+        if self.has_secretary?
+          tracks_association :audio
+        end
 
         accepts_nested_attributes_for :audio,
           :allow_destroy    => true,

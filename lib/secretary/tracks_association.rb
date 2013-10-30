@@ -19,6 +19,11 @@ module Secretary
     # to keep track of dirty associations, so that checking stuff
     # like `changed?` will work.
     def tracks_association(*associations)
+      if !self.has_secretary?
+        raise NotVersionedError, self.name
+      end
+
+
       include InstanceMethodsOnActivation
 
       associations.each do |name|
@@ -67,8 +72,8 @@ module Secretary
       end
 
       def mark_association_as_changed(name, object)
-        return if !self.class.has_secretary? ||
-        send("should_reject_#{name}?", object.attributes.stringify_keys)
+        return if send("should_reject_#{name}?",
+          object.attributes.stringify_keys)
 
         self.custom_changes[name] = [send("#{name}_were"), send(name)]
       end

@@ -1,5 +1,6 @@
 require "secretary/config"
 require 'diffy'
+require 'secretary/errors'
 
 module Secretary
   extend ActiveSupport::Autoload

@@ -13,7 +13,9 @@ module Concern
           :class_name       => "ContentByline",
           :dependent        => :destroy
 
-        tracks_association :bylines
+        if self.has_secretary?
+          tracks_association :bylines
+        end
 
         accepts_nested_attributes_for :bylines,
           :allow_destroy    => true,
