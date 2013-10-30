@@ -15,6 +15,7 @@ class Category < ActiveRecord::Base
 
   #-------------------
   # Associations
+  has_many :category_articles, order: 'position'
   belongs_to :comment_bucket, class_name: "FeaturedCommentBucket"
 
   #-------------------
