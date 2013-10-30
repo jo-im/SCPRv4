@@ -47,6 +47,9 @@ module Secretary
             mark_association_as_changed("#{name}", object)
           end
 
+          def preload_#{name}(object)
+            #{name}_were
+          end
 
           def clear_dirty_#{name}
             clear_dirty_association(name)
@@ -56,8 +59,8 @@ module Secretary
         before_save :"build_custom_changes_for_#{name}"
         after_commit :"clear_dirty_#{name}"
 
-        send("before_add_for_#{name}=", Array(:"#{name}_were"))
-        send("before_remove_for_#{name}=", Array(:"#{name}_were"))
+        send("before_add_for_#{name}=", Array(:"preload_#{name}"))
+        send("before_remove_for_#{name}=", Array(:"preload_#{name}"))
         send("after_add_for_#{name}=", Array(:"mark_#{name}_as_changed"))
         send("after_remove_for_#{name}=", Array(:"mark_#{name}_as_changed"))
       end

@@ -23,4 +23,5 @@ end
 ActiveSupport.on_load(:active_record) do
   extend Secretary::HasSecretary
   extend Secretary::TracksAssociation
+  include Secretary::VersionedAttributes
 end

@@ -39,17 +39,17 @@ describe Concern::Associations::BylinesAssociation do
       story.changed?.should eq true
     end
 
-    it 'makes a version when removing' do
+    it 'makes a version when removing', focus: true do
       story   = build :test_class_story, :published
       byline  = build :byline, content: nil
       story.bylines << byline
       story.save!
 
-      story.bylines.destroy_all
+      story.bylines = []
       story.save!
 
       versions = story.versions.order('version_number').to_a
-
+      versions.size.should eq 2
       versions.last.object_changes["bylines"][0].should be_present
       versions.last.object_changes["bylines"][1].should_not be_present
     end
