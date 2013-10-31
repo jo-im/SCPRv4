@@ -83,6 +83,13 @@ GIT
       railties (> 3.2.8, < 4.0.0)
       sprockets (>= 2.0.0)
 
+PATH
+  remote: /Users/bricker/websites/kpcc/secretary-rails
+  specs:
+    secretary-rails (0.0.1)
+      diffy (~> 3.0.1)
+      rails (>= 3.2.0)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -167,7 +174,7 @@ GEM
     debugger-linecache (1.2.0)
     debugger-ruby_core_source (1.2.3)
     diff-lcs (1.2.4)
-    diffy (2.1.4)
+    diffy (3.0.1)
     eco (1.0.0)
       coffee-script
       eco-source
@@ -426,7 +433,6 @@ DEPENDENCIES
   compass-rails
   database_cleaner
   dbsync
-  diffy (~> 2.0)
   eco (~> 1.0)
   embeditor-rails!
   escape_utils
@@ -463,6 +469,7 @@ DEPENDENCIES
   ruby-mp3info
   sanitize (~> 2.0)
   sass-rails (~> 3.2)
+  secretary-rails!
   select2-rails (= 3.4.1)
   shoulda-matchers
   simple_form (~> 2.0)

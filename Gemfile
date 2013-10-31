@@ -50,7 +50,6 @@ gem 'embeditor-rails', github: 'SCPR/embeditor-rails'
 
 
 ## Utility
-gem "diffy", "~> 2.0"
 gem "carrierwave", "~> 0.6"
 gem "ruby-mp3info", require: 'mp3info'
 gem "ice_cube", "~> 0.11.0"
