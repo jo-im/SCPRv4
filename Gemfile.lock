@@ -1,8 +1,8 @@
 GIT
   remote: git://github.com/SCPR/asset_host_client.git
-  revision: 77bd97c0a584e76ea19af8ed3a84ecd0c9dfc07c
+  revision: 0fec1d09f7932d3e6b33db72a636f813f5b554c5
   specs:
-    asset_host_client (1.1.0)
+    asset_host_client (1.2.0)
       faraday (~> 0.8)
       faraday_middleware (~> 0.8)
       rails (>= 3.0)
@@ -36,7 +36,7 @@ GIT
 
 GIT
   remote: git://github.com/SCPR/outpost.git
-  revision: ce73b465c1aef18d7fa50d6898c1bfdf96d37c1a
+  revision: ab4050ca49197e15c72b170f34b7c4738833672c
   specs:
     outpost-cms (0.0.4)
       bcrypt-ruby (>= 3.0.0)
