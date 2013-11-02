@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20131030220048) do
+ActiveRecord::Schema.define(:version => 20131102002820) do
 
   create_table "abstracts", :force => true do |t|
     t.string   "source"
@@ -138,10 +138,12 @@ ActiveRecord::Schema.define(:version => 20131030220048) do
     t.datetime "updated_at",                                                 :null => false
     t.integer  "category_id"
     t.boolean  "is_from_pij",                             :default => false, :null => false
+    t.string   "feature_type"
   end
 
   add_index "blogs_entry", ["blog_id"], :name => "blogs_entry_blog_id"
   add_index "blogs_entry", ["category_id"], :name => "blogs_entry_42dc49bc"
+  add_index "blogs_entry", ["feature_type"], :name => "index_blogs_entry_on_feature_type"
   add_index "blogs_entry", ["published_at"], :name => "index_blogs_entry_on_published_at"
   add_index "blogs_entry", ["status", "published_at"], :name => "index_blogs_entry_on_status_and_published_at"
   add_index "blogs_entry", ["status"], :name => "index_blogs_entry_on_status"
@@ -554,9 +556,11 @@ ActiveRecord::Schema.define(:version => 20131030220048) do
     t.datetime "updated_at",                                                  :null => false
     t.integer  "category_id"
     t.boolean  "is_from_pij",                              :default => false, :null => false
+    t.string   "feature_type"
   end
 
   add_index "news_story", ["category_id"], :name => "news_story_42dc49bc"
+  add_index "news_story", ["feature_type"], :name => "index_news_story_on_feature_type"
   add_index "news_story", ["published_at"], :name => "news_story_published_at"
   add_index "news_story", ["status", "published_at"], :name => "index_news_story_on_status_and_published_at"
   add_index "news_story", ["status"], :name => "index_news_story_on_status"
@@ -758,9 +762,11 @@ ActiveRecord::Schema.define(:version => 20131030220048) do
     t.datetime "updated_at",                                 :null => false
     t.integer  "category_id"
     t.boolean  "is_from_pij"
+    t.string   "feature_type"
   end
 
   add_index "shows_segment", ["category_id"], :name => "shows_segment_42dc49bc"
+  add_index "shows_segment", ["feature_type"], :name => "index_shows_segment_on_feature_type"
   add_index "shows_segment", ["published_at"], :name => "index_shows_segment_on_published_at"
   add_index "shows_segment", ["show_id"], :name => "shows_segment_show_id"
   add_index "shows_segment", ["slug"], :name => "shows_segment_slug"
