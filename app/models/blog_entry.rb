@@ -43,8 +43,9 @@ class BlogEntry < ActiveRecord::Base
     ["Hidden", "hidden"]
   ]
 
-  # active_enum to enumerate feature_type attribute
-  enumerate :feature_type
+  FEATURE_TYPE = ['Slideshow', 'Video', 'Poll', 'Map', 'Audio', 'Infographic']
+  FEATURE_SET  = FEATURE_TYPE.each_with_index.map {|x,i| [x,i] }
+
   #------------------
   # Scopes
 

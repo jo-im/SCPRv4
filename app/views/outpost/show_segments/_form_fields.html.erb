@@ -6,7 +6,7 @@
 <%= f.section "short_details" do %>
   <%= f.section "category" %>
   <%= f.association :issues %>
-  <%= f.input :feature_type %>
+  <%= f.input :feature_type, collection: ShowSegment::FEATURE_SET %>
   <%= f.input :is_from_pij, hint: "Was this story informed by PIJ Sources?" %>
 <% end %>
 
