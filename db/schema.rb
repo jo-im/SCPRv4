@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20131104180752) do
+ActiveRecord::Schema.define(:version => 20131104195141) do
 
   create_table "abstracts", :force => true do |t|
     t.string   "source"
@@ -333,8 +333,10 @@ ActiveRecord::Schema.define(:version => 20131104180752) do
     t.integer  "status",                                                       :null => false
     t.boolean  "is_from_pij"
     t.string   "hashtag"
+    t.integer  "category_id"
   end
 
+  add_index "events", ["category_id"], :name => "index_events_on_category_id"
   add_index "events", ["event_type"], :name => "index_events_event_on_etype"
   add_index "events", ["is_kpcc_event"], :name => "index_events_on_is_kpcc_event"
   add_index "events", ["kpcc_program_id"], :name => "events_event_7666a8c6"
