@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20131102002820) do
+ActiveRecord::Schema.define(:version => 20131104180752) do
 
   create_table "abstracts", :force => true do |t|
     t.string   "source"
@@ -138,7 +138,7 @@ ActiveRecord::Schema.define(:version => 20131102002820) do
     t.datetime "updated_at",                                                 :null => false
     t.integer  "category_id"
     t.boolean  "is_from_pij",                             :default => false, :null => false
-    t.string   "feature_type"
+    t.integer  "feature_type"
   end
 
   add_index "blogs_entry", ["blog_id"], :name => "blogs_entry_blog_id"
@@ -556,7 +556,7 @@ ActiveRecord::Schema.define(:version => 20131102002820) do
     t.datetime "updated_at",                                                  :null => false
     t.integer  "category_id"
     t.boolean  "is_from_pij",                              :default => false, :null => false
-    t.string   "feature_type"
+    t.integer  "feature_type"
   end
 
   add_index "news_story", ["category_id"], :name => "news_story_42dc49bc"
@@ -762,7 +762,7 @@ ActiveRecord::Schema.define(:version => 20131102002820) do
     t.datetime "updated_at",                                 :null => false
     t.integer  "category_id"
     t.boolean  "is_from_pij"
-    t.string   "feature_type"
+    t.integer  "feature_type"
   end
 
   add_index "shows_segment", ["category_id"], :name => "shows_segment_42dc49bc"
