@@ -5,6 +5,7 @@ class Event < ActiveRecord::Base
   include Concern::Validations::SlugValidation
   include Concern::Associations::AudioAssociation
   include Concern::Associations::AssetAssociation
+  include Concern::Associations::CategoryAssociation
   include Concern::Associations::RelatedLinksAssociation
   include Concern::Associations::RelatedContentAssociation
   include Concern::Associations::FeaturedCommentAssociation
