@@ -43,6 +43,8 @@ class BlogEntry < ActiveRecord::Base
     ["Hidden", "hidden"]
   ]
 
+  # active_enum to enumerate feature_type attribute
+  enumerate :feature_type
   #------------------
   # Scopes
 

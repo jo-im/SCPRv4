@@ -62,7 +62,8 @@ class NewsStory < ActiveRecord::Base
 
   #-------------------
   # Scopes
-
+  # active_enum to enumerate feature_type attribute
+  enumerate :feature_type
   #-------------------
   # Association
 
