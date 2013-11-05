@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20131104195141) do
+ActiveRecord::Schema.define(:version => 20131105004425) do
 
   create_table "abstracts", :force => true do |t|
     t.string   "source"
@@ -160,6 +160,16 @@ ActiveRecord::Schema.define(:version => 20131104195141) do
 
   add_index "category_articles", ["article_id", "article_type"], :name => "index_category_articles_on_article_id_and_article_type"
   add_index "category_articles", ["category_id"], :name => "index_category_articles_on_category_id"
+
+  create_table "category_reporters", :force => true do |t|
+    t.integer  "category_id"
+    t.integer  "bio_id"
+    t.datetime "created_at",  :null => false
+    t.datetime "updated_at",  :null => false
+  end
+
+  add_index "category_reporters", ["bio_id"], :name => "index_category_reporters_on_bio_id"
+  add_index "category_reporters", ["category_id"], :name => "index_category_reporters_on_category_id"
 
   create_table "contentbase_category", :force => true do |t|
     t.string   "title"

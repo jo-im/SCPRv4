@@ -9,7 +9,9 @@
   <div id="aggregator" class="aggregator"></div>
   <%= f.input :category_articles_json, as: :hidden, input_html: { id: "category_articles_json" } %>
 <% end %>
-
+<%= form_block "Reporters" do %>
+  <%= f.association :bios %>
+<% end %>
 <% content_for :footer do %>
   <script>
     aggregator = new outpost.Aggregator(

@@ -16,6 +16,8 @@ class Bio < ActiveRecord::Base
   #--------------
   # Associations
   belongs_to  :user,    class_name: "AdminUser"
+  has_many :category_reporters
+  has_many :categories, through: :category_reporters
   has_many    :bylines, class_name: "ContentByline",  foreign_key: :user_id
 
   #--------------
