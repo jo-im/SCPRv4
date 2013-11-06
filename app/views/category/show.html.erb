@@ -15,4 +15,11 @@
   <% end %>
 
   <%= nav %>
+  <!-- TWITTER -->
+  <%- @twitter_feeds.each do |twitter_handle| %>
+    <% if cached_tweets = Rails.cache.fetch("twitter:#{twitter_handle}") %>
+      <%= cached_tweets %>
+    <% end %>
+  <% end %>
+
 </div>

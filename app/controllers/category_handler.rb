@@ -9,7 +9,7 @@ module CategoryHandler
       :page       => page,
       :per_page   => per_page
     )
-
+    @twitter_feeds = @category.bios.map(&:twitter_handle)
     respond_with @content, template: "category/show"
   end
 end

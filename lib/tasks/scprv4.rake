@@ -158,6 +158,23 @@ namespace :scprv4 do
 
     #----------
 
+    desc "Cache Verticals tweets"
+    task :verticals_twitter => [:environment] do
+      puts "*** [#{Time.now}] Caching Vertical tweets...."
+
+      if Rails.env.development?
+        Job::VerticalsTwitter.perform
+        puts "Finished.\n"
+      else
+        Resque.enqueue(Job::Twitter)
+        puts "Job was placed in queue.\n"
+      end
+
+    end
+
+
+    #----------
+
     desc "Cache KPCCForum tweets"
     task :twitter => [:environment] do
       puts "*** [#{Time.now}] Caching KPCCForum tweets...."
