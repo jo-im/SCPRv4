@@ -41,6 +41,10 @@ class Category < ActiveRecord::Base
     end
   end
 
+  def articles
+    @articles ||= self.category_articles.includes(:article).map { |a| a.article.to_article }
+  end
+
   def content(options={})
     page      = options[:page] || DEFAULTS[:page]
     per_page  = options[:per_page] || DEFAULTS[:per_page]

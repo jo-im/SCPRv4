@@ -53,6 +53,16 @@ describe Category do
     end
   end
 
+  describe '#articles' do
+    it 'turns all of the items into articles' do
+      category = create :category_news
+      story = create :news_story
+      category_article = create :category_article, category: category, article: story
+
+      category.articles.map(&:class).uniq.should eq [Article]
+    end
+  end
+
   describe '#content' do
     let(:category) { create :category_news }
     sphinx_spec
