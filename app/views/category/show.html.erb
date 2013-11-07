@@ -1,7 +1,7 @@
 <% add_to_page_title @category.title %>
 
     <section class="headline">
-      <h1 class="bound"><span><%= @featured_article.headline %></span></h1>
+      <h1 class="bound"><span><%= @featured_article.title %></span></h1>
     </section>
 
 
@@ -12,11 +12,11 @@
                 <figure class="ratio-pairing">
                     <div class="ratio">
                         <div class="fill"></div>
-                        <b class="img-contain"><img src="http://placekitten.com/500/500" alt="" /></b>
+                        <b class="img-contain"><%= image_tag(@featured_image.eight.url, alt:'') %></b>
                     </div><!--/ .ratio -->
                     <figcaption>
-                    <p><%= @featured_article.short_headline %></p>
-                        <mark class="credit"><a href="#" title="See more of Mae's work">Mae Ryan / KPCC</a></mark>
+                    <p><%= @featured_image.caption %></p>
+                    <mark class="credit"><a href="#" title="See more of <%=@featured_image.owner%>'s work"><%= @featured_image.owner %></a></mark>
                     </figcaption>
                 </figure><!--/ .ratio-pairing -->
             </div><!--/ .photo -->
@@ -35,7 +35,7 @@
         <div class="ataglance clearfix">
             <section class="latest">
                 <header>
-                    <h1>Latest Politics Headlines</h1>
+                  <h1>Latest <%= @category.title %> Headlines</h1>
                 </header>
                 <ul>
                     <li>

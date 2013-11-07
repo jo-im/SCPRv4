@@ -8,7 +8,8 @@ module CategoryHandler
       :page       => page,
       :per_page   => per_page
     )
-    @featured_article = @category.category_articles.first.article
+    @featured_article = @category.articles.first
+    @featured_image = @featured_article.asset
     @twitter_feeds = @category.bios.map(&:twitter_handle)
     respond_with @content, template: "category/show", layout: "vertical"
   end
