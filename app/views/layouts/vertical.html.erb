@@ -1,2 +1,289 @@
-<h1>Vertical Layout</h1>
-<%= yield %>
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <!--
+    //////////////////////////////////////////////////////////////////////
+    //////////////////////////////////////////////////////////////////////
+    //////////////////////////////////////////////////////////////////////
+    DELETE BEFORE LAUNCHING!
+    //////////////////////////////////////////////////////////////////////
+    ====================================================================== -->
+    <meta name="robots" content="noindex, nofollow"> <!--
+    ======================================================================
+    //////////////////////////////////////////////////////////////////////
+    //////////////////////////////////////////////////////////////////////
+    //////////////////////////////////////////////////////////////////////
+    -->
+
+
+    <title>Represent | 89.3 KPCC</title>
+
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <meta name="format-detection" content="telephone=no" />
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+
+    <meta name="description" content="Politics, government and public life for Southern California." />
+    <meta name="keywords" content="Represent, KPCC, politics, California, Southern California, Los Angeles, Pasadena, government, public life, SCPR, Southern California Public Radio" />
+    <meta name="author" content="89.3 KPCC" />
+    <meta property="og:title" content="Represent | 89.3 KPCC" />
+    <meta property="og:site_name" content="Represent" />
+    <meta property="og:type" content="website" />
+    <meta property="og:image" content="!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!" />
+    <meta property="og:url" content="http://www.scpr.org/politics" />
+    <meta property="og:description" content="Politics, government and public life for Southern California." />
+    <meta name="twitter:card" content="summary"/>
+    <meta name="twitter:url" content="http://www.scpr.org/politics" />
+    <meta name="twitter:domain" content="http://www.scpr.org/politics" />
+    <meta name="twitter:site" content="KPCC"/>
+    <meta name="twitter:title" content="Represent"/>
+    <meta name="twitter:description" content="Politics, government and public life for Southern California."/>
+    <meta name="twitter:image:src" content="!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!">
+    <link rel="shortcut icon" href="http://media.scpr.org/favicon.ico" type="image/x-icon" />
+    <link rel="apple-touch-icon-precomposed" href="!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!" />
+
+    <%= stylesheet_link_tag "new", media: "screen" %>
+    <%= stylesheet_link_tag "fonts", media: "screen" %>
+    <%= javascript_include_tag "shared", "application" %>
+
+    <!--[if lt IE 9]>
+        <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+        <script src="selectivizr-min.js" type="text/javascript"></script>
+        <link href="display-ie-6-7-8.css" media="screen" rel="stylesheet" />
+    <![endif]-->
+
+    <script type="text/javascript" src="//use.typekit.net/vtu6xsq.js"></script>
+    <script type="text/javascript">try{Typekit.load();}catch(e){}</script>
+
+</head>
+
+
+<body class="landing">
+
+
+    <header class="masthead">
+        <div class="inner bound">
+
+            <section class="titling clearfix">
+                <div class="brand">
+                    <h1><a href="#">Represent</a></h1>
+                    <h2>Politics, government and public life for Southern California.</h2>
+                </div>
+                <div class="partner">
+                    <h3><a href="#">
+                        <span>Presented by Mercedes-Benz.</span>
+                        <b class="img"><%= image_tag('sponsor-assets/mercedes-logo.png', alt: 'Mercedes-Benz logo') %></b></a>
+                    </h3>
+                </div>
+            </section><!--/ .titling -->
+
+            <section class="station clearfix">
+                <h4><a href="http://kpcc.org" rel="author">89.3 KPCC</a></h4>
+                <nav class="kpcc-links">
+                    <ul>
+                        <li><a href="#">Listen Live</a></li>
+                        <li><a href="http://www.scpr.org/news/">News</a></li>
+                        <li><a href="http://www.scpr.org/arts-life/">Arts &amp; Life</a></li>
+                        <li><a href="http://www.scpr.org/programs/">Programs</a></li>
+                        <li><a href="http://www.scpr.org/events/">Events</a></li>
+                        <li><a href="http://www.scpr.org/support/">Support Us</a></li>
+                        <li><a href="http://www.scpr.org/about/">About Us</a></li>
+                    </ul>
+                </nav>
+                <ul class="follow-us clearfix">
+                    <li><a href="#" title="Follow KPCC on Twitter" class="tw">KPCC on Twitter</a></li>
+                    <li><a href="#" title="Like KPCC on Facebook" class="fb">KPCC on Facebook</a></li>
+                    <li><a href="#" title="Join with KPCC on Google Plus" class="gp">KPCC on Google+</a></li>
+                </ul>
+                <button class="search-trigger" value="Activate search tool">Search KPCC</button>
+                <h5 class="donate"><a href="https://scprcontribute.publicradio.org/contribute.php">Donate Now</a></h5>
+                <button class="shownav" aria-hidden="true">Show Nav</button>
+            </section><!--/ .station -->
+
+            <nav class="kpcc-ledge pane" aria-hidden="true">
+                <h1><a href="http://kpcc.org" rel="author">89.3 KPCC</a></h1>
+                <button class="close" value="close">Close</button>
+                <ul class="links">
+                    <li><a href="#">Listen Live</a></li>
+                    <li><a href="http://www.scpr.org/news/">News</a></li>
+                    <li><a href="http://www.scpr.org/arts-life/">Arts &amp; Life</a></li>
+                    <li><a href="http://www.scpr.org/programs/">Programs</a></li>
+                    <li><a href="http://www.scpr.org/events/">Events</a></li>
+                    <li><a href="http://www.scpr.org/support/">Support Us</a></li>
+                    <li><a href="http://www.scpr.org/about/">About Us</a></li>
+                </ul>
+                <h2>Follow KPCC</h2>
+                <ul class="follow-us clearfix">
+                    <li><a href="#" title="Follow KPCC on Twitter" class="tw">KPCC on Twitter</a></li>
+                    <li><a href="#" title="Like KPCC on Facebook" class="fb">KPCC on Facebook</a></li>
+                    <li><a href="#" title="Join with KPCC on Google Plus" class="gp">KPCC on Google+</a></li>
+                </ul>
+            </nav><!--/ .kpcc-ledge -->
+
+            <aside class="kpcc-search pane">
+                <h1><a href="http://kpcc.org" rel="author">89.3 KPCC</a></h1>
+                <button class="close" value="close">Close</button>
+                <form method="get" action="/search/">
+                    <label for="q">Search:</label>
+                    <div class="search-wrap"><input class="search" id="q" type="text" placeholder="Search" name="q" /></div>
+                    <input id="submit" class="submit" type="submit" value="">
+                    <input class="toggle-search" type="button">
+                </form>
+            </aside>
+
+        </div>
+    </header><!--/ .masthead -->
+
+    <%= yield %>
+
+    <aside class="membership">
+        <div class="inner bound">
+            <h1><a href="#">KPCC's Represent! is a Southern California resource provided by member-supported public radio. We can't do it without you.</a></h1>
+            <h2><span>Your contributions power KPCC.</span> <a href="#">Give today.</a></h2>
+            <h3 class="brand"><a href="http://kpcc.org" title="Southern California Public Radio">89.3 KPCC</a></h3>
+        </div>
+    </aside><!--/ .membership -->
+
+
+    <footer class="epilogue">
+        <header>
+            <div class="inner bound">
+                <h1><a href="#" title="Southern California Public Radio">89.3 KPCC</a></h1>
+                <h2>
+                    <span>89.1 KUOR</span>
+                    <span>90.3 KVLA</span>
+                </h2>
+                <aside class="pledge">
+                    <p><span>Support the voices you trust!</span> <a href="#">Pledge Now</a></p>
+                </aside>
+            </div>
+        </header>
+        <div class="cols">
+            <div class="inner bound clearfix">
+                <div class="cols-pair primary clearfix">
+                    <nav class="sections">
+                        <h1>Sections</h1>
+                        <h2>News</h2>
+                        <ul>
+                            <li><a href="#">Local</a></li>
+                            <li><a href="#">State</a></li>
+                            <li><a href="#">U.S./World</a></li>
+                            <li><a href="#">Politics</a></li>
+                            <li><a href="#">Science</a></li>
+                            <li><a href="#">Money</a></li>
+                            <li><a href="#">Crime &amp; Safety</a></li>
+                            <li><a href="#">Education</a></li>
+                            <li><a href="#">Health</a></li>
+                            <li><a href="#">Archive</a></li>
+                        </ul>
+                        <h2>Arts &amp; Life</h2>
+                        <ul>
+                            <li><a href="#">Culture</a></li>
+                            <li><a href="#">Film</a></li>
+                            <li><a href="#">Books</a></li>
+                            <li class="av"><a href="#">AudioVision</a></li>
+                            <li><a href="#">Arts</a></li>
+                            <li><a href="#">Music</a></li>
+                            <li><a href="#">Food</a></li>
+                        </ul>
+                    </nav>
+                    <nav class="productions">
+                        <h1>Programs</h1>
+                        <ul>
+                            <li><a href="#">Take Two</a></li>
+                            <li><a href="#">AirTalk</a></li>
+                            <li><a href="#">Off-Ramp</a></li>
+                            <li><a href="#">Programs A&ndash;Z</a></li>
+                            <li><a href="#">Program Schedule</a></li>
+                            <li><a href="#">Program Archive</a></li>
+                        </ul>
+                        <h1>Events</h1>
+                        <ul>
+                            <li><a href="#">The Crawford Family Forum</a></li>
+                            <li><a href="#">Sponsored Events</a></li>
+                        </ul>
+                    </nav>
+                </div><!--/ .primary -->
+                <div class="cols-pair secondary clearfix">
+                    <nav class="outreach">
+                        <h1>Stay Connected</h1>
+                        <ul class="social">
+                            <li><a href="#">Facebook</a></li>
+                            <li><a href="#">Twitter</a></li>
+                            <li><a href="#">Google Plus</a></li>
+                        </ul>
+                        <ul>
+                            <li><a href="#">Newsletters</a></li>
+                            <li><a href="#">RSS</a></li>
+                            <li><a href="#">Podcasts</a></li>
+                        </ul>
+                        <aside class="mobile">
+                            <a href="#">Get our new <b>KPCC for iPad</b> app.</a>
+                        </aside>
+                    </nav>
+                    <nav class="about">
+                        <h1>About</h1>
+                        <ul>
+                            <li><a href="#">About KPCC</a></li>
+                            <li><a href="#">Staff</a></li>
+                            <li><a href="#">Contact Us</a></li>
+                            <li><a href="#">Help / FAQ</a></li>
+                            <li><a href="#">Feeback</a></li>
+                            <li><a href="#">Careers &#64; KPCC</a></li>
+                        </ul>
+                        <div class="vcard location">
+                            <h2 class="org"><b>89.3 KPCC</b> <span>Southern California Public Radio</span><h2>
+                            <div class="adr">
+                                <span class="street-address">474 S. Raymond Ave.</span><br />
+                                <span class="locality">Pasadena</span>,
+                                <span class="region">CA</span>
+                                <span class="postal-code">91105</span>
+                            </div>
+                        </div>
+                        <aside class="call">
+                            <p>Call in: 866-893-5722</p>
+                        </aside>
+                    </nav>
+                </div><!--/ .secondary -->
+            </div><!--/ .inner -->
+        </div><!--/ .cols -->
+        <aside class="grant">
+            <div class="inner bound">
+              <b class="logo"><%= image_tag('logo-keck.png', alt: 'Keck Foundation logo') %></b>
+                <p>KPCC’s <span>Represent!</span> is funded in part by a grant from the W.M. Keck Foundation.</p>
+            </div>
+        </aside>
+        <div class="lastwords bound">
+            <aside class="partners">
+                <h1>Our Partners</h1>
+                <ul class="clearfix">
+                    <li class="apm"><a href="#">American Public Media</a></li>
+                    <li class="npr"><a href="#">National Public Radio</a></li>
+                    <li class="bbc"><a href="#">BBC</a></li>
+                    <li class="pri"><a href="#">Public Radio International</a></li>
+                    <li class="nbc"><a href="#">NBC 4</a></li>
+                    <li class="pcc"><a href="#">Pasadena City College</a></li>
+                </ul>
+            </aside>
+            <nav class="fineprint">
+                <ul>
+                    <li><a href="#">Terms &amp; Conditions</a></li>
+                    <li><a href="#">Privacy</a></li>
+                    <li><a href="#">Feedback</a></li>
+                    <li>&copy; 2013 <a href="#">Southern California Public Radio</a></li>
+                </ul>
+            </nav>
+        </div>
+    </footer><!--/ .epilogue -->
+
+
+
+
+
+
+</body>
+</html>

@@ -1,6 +1,907 @@
 <% add_to_page_title @category.title %>
 
-<div class="category-page">
+    <section class="headline">
+      <h1 class="bound"><span><%= @content[0].headline %></span></h1>
+    </section>
+
+
+
+    <div class="welcome bound clearfix">
+        <section class="curated clearfix">
+            <div class="photo">
+                <figure class="ratio-pairing">
+                    <div class="ratio">
+                        <div class="fill"></div>
+                        <b class="img-contain"><img src="http://placekitten.com/500/500" alt="" /></b>
+                    </div><!--/ .ratio -->
+                    <figcaption>
+                        <p>L.A. City Council President Herb Wesson sent a letter Thursday to Mayor Eric Garcetti and the union representing DWP workers, telling them he plans to hold public hearings on labor negotiations.</p>
+                        <mark class="credit"><a href="#" title="See more of Mae's work">Mae Ryan / KPCC</a></mark>
+                    </figcaption>
+                </figure><!--/ .ratio-pairing -->
+            </div><!--/ .photo -->
+            <div class="supportive">
+              <h1 class="tease"><%= @content[0].teaser %></h1>
+                <h2 class="byline"><a href="#">by Alice Walton</a></h2>
+                <aside class="more">
+                    <h3>More from <a href="#">Labor</a></h3>
+                    <ul>
+                        <li><a href="#">Garcetti promises tough negotiations with DWP labor union</a></li>
+                        <li><a href="#">SEIU airing ads in GOP districts urging path to citizenship</a></li>
+                    </ul>
+                </aside>
+            </div><!--/ .supporting -->
+        </section><!--/ .curated -->
+        <div class="ataglance clearfix">
+            <section class="latest">
+                <header>
+                    <h1>Latest Politics Headlines</h1>
+                </header>
+                <ul>
+                    <li>
+                        <a href="#" class="clearfix">
+                            <div>
+                                <mark>Long Beach language plan includes Spanish and Khmer, but not Tagalog or Vietnamese</mark>
+                                <em>2h ago</em> <span>Sharon McNary</span>
+                            </div>
+                            <figure class="ratio">
+                                <div class="fill"></div>
+                                <b class="img-contain"><img src="http://placekitten.com/350/400" alt="" /></b>
+                            </figure>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" class="clearfix">
+                            <div>
+                                <mark>Former staffer files sexual harassment complaint against Councilman Jose Huizar</mark>
+                                <em>13h ago</em> <span>Alice Walton</span>
+                            </div>
+                            <figure class="ratio">
+                                <div class="fill"></div>
+                                <b class="img-contain"><img src="http://placekitten.com/600/400" alt="" /></b>
+                            </figure>
+                        </a>
+                    </li>
+                </ul>
+            </section>
+            <section class="event">
+                <header class="clearfix">
+                    <h1>Get Involved</h1>
+                    <a href="#">All <span>upcoming</span> events</a>
+                </header>
+                <div class="details clearfix">
+                    <div class="vitals">
+                        <h2><a href="#">Congressman Brad Sherman's Town Hall Meeting (30th District)</a></h2>
+                        <h3>El Camino Real High School</h3>
+                        <h4><a href="#">More details</a></h4>
+                    </div>
+                    <aside class="date">
+                        <em>25</em>
+                        <span>Aug</span>
+                    </aside>
+                </div>
+            </section>
+            <aside class="crawford">
+                <header>
+                    <h1>Politics Events at KPCC</h1>
+                </header>
+                <p>From our studio in Pasadena, KPCC hosts free events that open dialogue and deepen the understanding of Southern California’s civic landscape. <a href="#">See what we’ve got lined up.</a></p>
+            </aside>
+        </div><!--/ .ataglance -->
+    </div><!--/ .welcome -->
+
+
+
+    <section class="resources">
+        <div class="inner bound clearfix">
+            <header>
+                <h1><span>Represent Resources</span></h1>
+                <h2>Quick primers on civic life in California.</h2>
+                <h3>All of us at KPCC believe that civic life in Southern California should be understandable, relevant, and libero ante, aliquam congue mattis id, blandit quis risus. Sed iaculis tellus accumsan ipsum porta ultricies.</h3>
+                <h4>Represent Resources is made possible with support from <a href="#">The Robert Day School</a>.</h4>
+            </header>
+            <nav>
+                <ul class="clearfix">
+                    <li>
+                        <a href="#">
+                            <figure class="clearfix">
+                                <div class="ratio"><div class="fill"></div><b class="img-contain"><img src="http://placekitten.com/600/500" alt="" /></b></div>
+                                <figcaption>How do I find my local and state representatives?</figcaption>
+                            </figure>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">
+                            <figure class="clearfix">
+                                <div class="ratio"><div class="fill"></div><b class="img-contain"><img src="http://placekitten.com/600/1200" alt="" /></b></div>
+                                <figcaption>Who do I contact to get a bill introduced?</figcaption>
+                            </figure>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">
+                            <figure class="clearfix">
+                                <div class="ratio"><div class="fill"></div><b class="img-contain"><img src="http://placekitten.com/600/600" alt="" /></b></div>
+                                <figcaption>I’m not a citizen. How do I become one?</figcaption>
+                            </figure>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">
+                            <figure class="clearfix">
+                                <div class="ratio"><div class="fill"></div><b class="img-contain"><img src="http://placekitten.com/600/700" alt="" /></b></div>
+                                <figcaption>How do I make sure I’m eligible to vote?</figcaption>
+                            </figure>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </section><!--/ .resources -->
+
+
+
+    <div class="lunchbox">
+        <div class="inner bound clearfix">
+            <section class="issues">
+                <header>
+                    <h1>Issues We're Tracking</h1>
+                    <h2><a href="#">See all issues</a></h2>
+                </header>
+                <div>
+                    <header class="special">
+                        <h1>Reform</h1>
+                        <h2 class="clearfix">
+                            <mark>Special coverage from KPCC</mark>
+                            <a href="#">See all <span>Reform</span></a>
+                        </h2>
+                    </header>
+                    <nav>
+                        <ul>
+                            <li>
+                                <a href="#">
+                                    <figure class="ratio-pairing clearfix">
+                                        <div class="ratio">
+                                            <div class="fill"></div>
+                                            <b class="img-contain"><img src="http://placekitten.com/500/400" alt="" /></b>
+                                        </div><!--/ .ratio -->
+                                        <figcaption>
+                                            <p>Court finds Palmdale's at-large elections violate Voting Rights Act</p>
+                                            <mark>Alice Walton <em>with KPCC Wire Services</em></mark> <span>July 25</span>
+                                        </figcaption>
+                                    </figure><!--/ .ratio-pairing -->
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#">
+                                    <figure class="ratio-pairing clearfix">
+                                        <div class="ratio">
+                                            <div class="fill"></div>
+                                            <b class="img-contain"><img src="http://placekitten.com/500/500" alt="" /></b>
+                                        </div><!--/ .ratio -->
+                                        <figcaption>
+                                            <p>Redefining LA's city commissions to improve citizen involvement</p>
+                                            <mark>Marc Haefele</mark> <span>July 25</span>
+                                        </figcaption>
+                                    </figure><!--/ .ratio-pairing -->
+                                </a>
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
+
+                <div>
+                    <header class="slim clearfix">
+                        <h1>L.A. Money</h1>
+                        <h2><a href="#">See all <span>L.A. Money</span></a></h2>
+                    </header>
+                    <nav>
+                        <ul>
+                            <li>
+                                <a href="#">
+                                    <figure class="ratio-pairing clearfix">
+                                        <div class="ratio">
+                                            <div class="fill"></div>
+                                            <b class="img-contain"><img src="http://placekitten.com/800/600" alt="" /></b>
+                                        </div><!--/ .ratio -->
+                                        <figcaption>
+                                            <p>LA City Council rescinds policy of ticketing at broken parking meters</p>
+                                            <mark>Alice Walton</mark> <span>July 31</span>
+                                        </figcaption>
+                                    </figure><!--/ .ratio-pairing -->
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#">
+                                    <figure class="ratio-pairing clearfix">
+                                        <div class="ratio">
+                                            <div class="fill"></div>
+                                            <b class="img-contain"><img src="http://placekitten.com/700/500" alt="" /></b>
+                                        </div><!--/ .ratio -->
+                                        <figcaption>
+                                            <p>Central Basin Water District sues vendor as it reviews all finances</p>
+                                            <mark>Alice Walton</mark> <span>July 25</span>
+                                        </figcaption>
+                                    </figure><!--/ .ratio-pairing -->
+                                </a>
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
+
+                <div>
+                    <header class="slim clearfix">
+                        <h1>Immigration</h1>
+                        <h2><a href="#">See all <span>Immigration</span></a></h2>
+                    </header>
+                    <nav>
+                        <ul>
+                            <li>
+                                <a href="#">
+                                    <figure class="ratio-pairing clearfix">
+                                        <div class="ratio">
+                                            <div class="fill"></div>
+                                            <b class="img-contain"><img src="http://placekitten.com/500/350" alt="" /></b>
+                                        </div><!--/ .ratio -->
+                                        <figcaption>
+                                            <p>'Dream 9' protest: Youth immigration activists' tactics grow riskier</p>
+                                            <mark>Leslie Berestein Rojas</mark> <span>July 25</span>
+                                        </figcaption>
+                                    </figure><!--/ .ratio-pairing -->
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#">
+                                    <figure class="ratio-pairing clearfix">
+                                        <div class="ratio">
+                                            <div class="fill"></div>
+                                            <b class="img-contain"><img src="http://placekitten.com/400/400" alt="" /></b>
+                                        </div><!--/ .ratio -->
+                                        <figcaption>
+                                            <p>DHS to review same-sex couples' green card cases, the fate of immigrants with criminal records, more</p>
+                                            <mark>Leslie Berestein Rojas</mark> <span>July 25</span>
+                                        </figcaption>
+                                    </figure><!--/ .ratio-pairing -->
+                                </a>
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
+
+            </section><!--/ .issues -->
+            <div class="treats">
+                <aside class="featured" style="background-image: url(assets/featured-interactives/intersections.jpg);">
+                    <div>
+                        <h1>Featured Interactive</h1>
+                        <h2><a href="#">The most dangerous intersections in Los Angeles</a></h2>
+                        <h3>by Chris Keller &amp; Kim Bui</h3>
+                    </div>
+                </aside>
+                <div class="inbrief clearfix">
+                    <aside class="quote">
+                        <blockquote>
+                            <p>We are under a lot of public scrutiny right now because of this well-documented and well-publicized federal investigation of the Calderon family.</p>
+                            <cite>
+                                <mark>Tony Perez</mark>
+                                <span>District General Manager</span>
+                            </cite>
+                        </blockquote>
+                        <footer>
+                            <a href="#" title="Read this quote's source article">Central Basin Water District sues vendor as it reviews all finances</a>
+                        </footer>
+                    </aside>
+                    <aside class="events">
+                        <h1>Upcoming Politics Events</h1>
+                        <ul>
+                            <li>
+                                <figure class="clearfix">
+                                    <div class="date">
+                                        <b>21</b>
+                                        <span><mark>Jun</mark> 2013</span>
+                                    </div>
+                                    <figcaption>
+                                        <b>Los Angeles 2013 Mayoral Runoff Election</b>
+                                        <a href="#">More information</a>
+                                    </figcaption>
+                                </figure>
+                            </li>
+                            <li>
+                                <figure class="clearfix">
+                                    <div class="date">
+                                        <b>3</b>
+                                        <span><mark>Aug</mark> 2013</span>
+                                    </div>
+                                    <figcaption>
+                                        <b>Los Angeles County Comptroller Debate</b>
+                                        <a href="#">More information</a>
+                                    </figcaption>
+                                </figure>
+                            </li>
+                            <li>
+                                <figure class="clearfix">
+                                    <div class="date">
+                                        <b>18</b>
+                                        <span><mark>Oct</mark> 2013</span>
+                                    </div>
+                                    <figcaption>
+                                        <b>Water &amp; Power Commission Hearing</b>
+                                        <a href="#">More information</a>
+                                    </figcaption>
+                                </figure>
+                            </li>
+                        </ul>
+                    </aside>
+                </div>
+            </div><!--/ .bites -->
+        </div>
+    </div><!--/ .lunchbox -->
+
+
+    <section class="triptych">
+        <div class="inner bound">
+            <header><h1>Recent Politics Coverage</h1></header>
+            <div class="rail clearfix">
+
+                <article class="clearfix">
+                        <div class="graphic">
+                            <div class="ratio">
+                                <a class="issue" href="#"><span>State Budget</span></a>
+                                <div class="fill"></div>
+                                <b class="img-contain"><img src="http://placekitten.com/800/700" alt="" /></b>
+                            </div><!--/ .ratio -->
+                            <aside class="byline special">
+                                <p>
+                                    <b class="author"><a href="#">Sharon McNary</a></b>
+                                    <span>July 23</span>
+                                </p>
+                                <mark class="trait infographic">Infographic</mark>
+                            </aside>
+                        </div>
+                        <header>
+                            <h1><a href="#">Former Vernon official fights city and CalPers to keep his $500k annual pension</a></h1>
+                            <h2>After an audit, CalPers decided last year to cut Bruce Malkenhorst’s annual payments to $115,000. He is suing CalPers and Vernon to keep the money coming in.</h2>
+                        </header>
+                </article>
+
+                <article class="clearfix">
+                        <div class="graphic">
+                            <div class="ratio">
+                                <a class="issue" href="#"><span>L.A. Politics</span></a>
+                                <div class="fill"></div>
+                                <b class="img-contain"><img src="http://placekitten.com/800/800" alt="" /></b>
+                            </div><!--/ .ratio -->
+                            <aside class="byline">
+                                <p>
+                                    <b class="author"><a href="#">Alice Walton</a></b>
+                                    <span>July 22</span>
+                                </p>
+                            </aside>
+                        </div>
+                        <header>
+                            <h1><a href="#">LA City Councilwoman-elect Nury Martinez named caretaker for district</a></h1>
+                            <h2>The Los Angeles City Council voted to name Martinez chief deputy of the San Fernando Valley's Sixth District, pending certification of her win over Cindy Montañez.</h2>
+                        </header>
+                </article>
+
+                <article class="clearfix">
+                        <div class="graphic">
+                            <div class="ratio">
+                                <div class="fill"></div>
+                                <b class="img-contain"><img src="http://placekitten.com/800/650" alt="" /></b>
+                            </div><!--/ .ratio -->
+                            <aside class="byline special">
+                                <p>
+                                    <b class="author"><a href="#">Sharon McNary</a></b>
+                                    <span>July 23</span>
+                                </p>
+                                <mark class="trait taketwo">Take Two</mark>
+                            </aside>
+                        </div>
+                        <header>
+                            <h1><a href="#">Prop 8: San Diego County Clerk seeks halt to same-sex marriage licenses, asks Supreme Court to clarify legal questions</a></h1>
+                            <h2>Ernest Dronenburg, San Diego’s County Clerk, is asking the state Supreme Court to let him stop issuing marriage licenses while legal questions are pending.</h2>
+                        </header>
+                </article>
+
+            </div>
+        </div>
+    </section><!--/ .triptych -->
+
+
+    <aside class="partner mercedes">
+        <div class="inner bound">
+            <h1><b><span>Groundbreaking innovation</span> <span>has broken through again.</span></b></h1>
+            <b class="car"><%= image_tag('sponsor-assets/mercedes-car.png', alt: '') %></b>
+
+        </div>
+    </aside>
+
+
+
+    <section class="quadrant">
+        <div class="inner bound">
+
+            <div class="rail clearfix">
+<!--            ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ -->
+                <article class="clearfix has-trait">
+                        <div class="graphic">
+                            <div class="ratio">
+                                <span class="issue"><a href="#">San Bernadino</a></span>
+                                <div class="fill"></div>
+                                <b class="img-contain"><img src="http://a.scpr.org/i/e4fda643f730fa3f28465e8064efffb3/65499-eight.jpg" alt="" /></b>
+                            </div><!--/ .ratio -->
+                        </div>
+                        <div class="prose">
+                            <aside class="byline">
+                                <p class="author"><a href="#">Sharon McNary</a></p>
+                                <mark class="trait taketwo">Take Two</mark>
+                            </aside>
+                            <h1><a href="#">Turmoil in San Bernardino a year after filing bankrupty</a></h1>
+                            <h2 class="date">3 August 2013</h2>
+                            <p class="teaser">Angry residents are trying to recall three council members and the long-serving city attorney. Pensions and spending priorities still spur debate.</p>
+                        </div>
+                </article>
+<!--            ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ -->
+                <article class="clearfix">
+                        <div class="graphic">
+                            <div class="ratio">
+                                <span class="issue"><a href="#">Agencies</a></span>
+                                <div class="fill"></div>
+                                <b class="img-contain"><img src="http://a.scpr.org/i/882e67036986e00c7f5a15b76a310002/65358-eight.jpg" alt="" /></b>
+                            </div><!--/ .ratio -->
+                        </div>
+                        <div class="prose">
+                            <aside class="byline">
+                                <p class="author"><a href="#">Alice Walton</a></p>
+                            </aside>
+                            <h1><a href="#">Former mayoral candidate confirmed to Public Works in contentious hearing</a></h1>
+                            <h2 class="date">2 August 2013</h2>
+                            <p class="teaser">Kevin James was questioned about his comments on climate change and immigration Tuesday during a confirmation hearing to the Board of Public Works.</p>
+                        </div>
+                </article>
+<!--            ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ -->
+            </div><!--/ .rail -->
+
+            <div class="rail clearfix">
+<!--            ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ -->
+                <article class="clearfix">
+                        <div class="graphic">
+                            <div class="ratio">
+                                <span class="issue"><a href="#">L.A. Council</a></span>
+                                <div class="fill"></div>
+                                <b class="img-contain"><img src="http://a.scpr.org/i/41bb2ccec8f7819e07a1b331018d5510/64147-eight.jpg" alt="" /></b>
+                            </div><!--/ .ratio -->
+                        </div>
+                        <div class="prose">
+                            <aside class="byline">
+                                <p class="author"><a href="#">Julie Small</a></p>
+                            </aside>
+                            <h1><a href="#">Valley councilman wants to install free Wi-Fi citywide</a></h1>
+                            <h2 class="date">1 August 2013</h2>
+                            <p class="teaser">Newly-elected Bob Blumenfield wants to equip the entire city of Los Angeles with free wireless Internet. Former Mayor Villaraigosa tried same thing in 2007.</p>
+                        </div>
+                </article>
+<!--            ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ -->
+                <article class="clearfix has-trait">
+                        <div class="graphic">
+                            <div class="ratio">
+                                <div class="fill"></div>
+                                <b class="img-contain"><img src="http://a.scpr.org/i/70e843700427a13b83ecd7385345113e/46906-eight.jpg" alt="" /></b>
+                            </div><!--/ .ratio -->
+                        </div>
+                        <div class="prose">
+                            <aside class="byline">
+                                <p class="author"><a href="#">Alice Walton</a></p>
+                                <mark class="trait map">Map</mark>
+                            </aside>
+                            <h1><a href="#">DWP changes up sick policy, San Bernardino after bankruptcy, offensive comments in Lancaster</a></h1>
+                            <h2 class="date">31 July 2013</h2>
+                            <p class="teaser">Headlines include a new sick policy for the DWP, a look at San Bernardino one year after bankruptcy, and an anti-gay rant in Lancaster.</p>
+                        </div>
+                </article>
+<!--            ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ -->
+            </div><!--/ .rail -->
+
+        </div><!--/ .inner -->
+    </section><!--/ .quadrant -->
+
+
+
+
+    <div class="waterfall">
+        <div class="inner bound clearfix">
+
+            <section class="backlog">
+                <h1>More Politics</h1>
+
+<!--            ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ -->
+                <article class="clearfix">
+                        <div class="graphic">
+                            <div class="ratio">
+                                <div class="fill"></div>
+                                <b class="img-contain"><img src="http://placekitten.com/800/700" alt="" /></b>
+                            </div><!--/ .ratio -->
+                        </div>
+                        <div class="prose">
+                            <h1><a href="#">Asian-American academy seeks to develop new political leaders</a></h1>
+                            <aside class="byline">
+                                <p>
+                                    <b class="author"><a href="#">Frank Stoltze</a></b>
+                                    <span>July 22</span>
+                                </p>
+                                <mark class="trait video">Video</mark>
+                            </aside>
+                            <p class="teaser">People have been posting photos of their calves to Twitter in humorous protest of the immigrant remarks by the Republican congressman. And delivering melons.</p>
+                        </div>
+                </article>
+
+<!--            ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ -->
+                <article class="clearfix">
+                        <div class="graphic">
+                            <div class="ratio">
+                                <span class="issue"><a href="#">Mayoral Race 2013</a></span>
+                                <div class="fill"></div>
+                                <b class="img-contain"><img src="http://placekitten.com/800/800" alt="" /></b>
+                            </div><!--/ .ratio -->
+                        </div>
+                        <div class="prose">
+                            <h1><a href="#">Rep. Steve King's 'cantaloupes' comment about immigrants draws hilarious reaction</a></h1>
+                            <aside class="byline">
+                                <p>
+                                    <b class="author"><a href="#">Alice Walton</a></b>
+                                    <span>July 22</span>
+                                </p>
+                                <mark class="trait infographic">Infographic</mark>
+                            </aside>
+                            <p class="teaser">People have been posting photos of their calves to Twitter in humorous protest of the immigrant remarks by the Republican congressman. And delivering melons.</p>
+                        </div>
+                </article>
+
+<!--            ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ -->
+                <article class="clearfix">
+                        <div class="graphic">
+                            <div class="ratio">
+                                <span class="issue"><a href="#">Immigration</a></span>
+                                <div class="fill"></div>
+                                <b class="img-contain"><img src="http://placekitten.com/800/700" alt="" /></b>
+                            </div><!--/ .ratio -->
+                        </div>
+                        <div class="prose">
+                            <h1><a href="#">Spike in marriage licenses follows Prop 8 demise</a></h1>
+                            <aside class="byline">
+                                <p>
+                                    <b class="author"><a href="#">Frank Stoltze</a></b>
+                                    <span>July 22</span>
+                                </p>
+                            </aside>
+                            <p class="teaser">People have been posting photos of their calves to Twitter in humorous protest of the immigrant remarks by the Republican congressman. And delivering melons.</p>
+                        </div>
+                </article>
+
+<!--            ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ -->
+                <article class="clearfix">
+                        <div class="graphic">
+                            <div class="ratio">
+                                <div class="fill"></div>
+                                <b class="img-contain"><img src="http://placekitten.com/800/800" alt="" /></b>
+                            </div><!--/ .ratio -->
+                        </div>
+                        <div class="prose">
+                            <h1><a href="#">Ethics Commission: Wendy Greuel reports more than $500K in campaign debt (updated)</a></h1>
+                            <aside class="byline">
+                                <p>
+                                    <b class="author"><a href="#">Alice Walton</a></b>
+                                    <span>July 22</span>
+                                </p>
+                                <mark class="trait infographic">Infographic</mark>
+                            </aside>
+                            <p class="teaser">People have been posting photos of their calves to Twitter in humorous protest of the immigrant remarks by the Republican congressman. And delivering melons.</p>
+                        </div>
+                </article>
+
+<!--            ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ -->
+                <article class="clearfix">
+                        <div class="graphic">
+                            <div class="ratio">
+                                <div class="fill"></div>
+                                <b class="img-contain"><img src="http://placekitten.com/800/700" alt="" /></b>
+                            </div><!--/ .ratio -->
+                        </div>
+                        <div class="prose">
+                            <h1><a href="#">Asian-American academy seeks to develop new political leaders</a></h1>
+                            <aside class="byline">
+                                <p>
+                                    <b class="author"><a href="#">Frank Stoltze</a></b>
+                                    <span>July 22</span>
+                                </p>
+                                <mark class="trait video">Video</mark>
+                            </aside>
+                            <p class="teaser">People have been posting photos of their calves to Twitter in humorous protest of the immigrant remarks by the Republican congressman. And delivering melons.</p>
+                        </div>
+                </article>
+
+<!--            ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ -->
+                <article class="clearfix">
+                        <div class="graphic">
+                            <div class="ratio">
+                                <span class="issue"><a href="#">Mayoral Race 2013</a></span>
+                                <div class="fill"></div>
+                                <b class="img-contain"><img src="http://placekitten.com/800/800" alt="" /></b>
+                            </div><!--/ .ratio -->
+                        </div>
+                        <div class="prose">
+                            <h1><a href="#">Rep. Steve King's 'cantaloupes' comment about immigrants draws hilarious reaction</a></h1>
+                            <aside class="byline">
+                                <p>
+                                    <b class="author"><a href="#">Alice Walton</a></b>
+                                    <span>July 22</span>
+                                </p>
+                                <mark class="trait infographic">Infographic</mark>
+                            </aside>
+                            <p class="teaser">People have been posting photos of their calves to Twitter in humorous protest of the immigrant remarks by the Republican congressman. And delivering melons.</p>
+                        </div>
+                </article>
+
+<!--            ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ -->
+                <article class="clearfix">
+                        <div class="graphic">
+                            <div class="ratio">
+                                <span class="issue"><a href="#">Immigration</a></span>
+                                <div class="fill"></div>
+                                <b class="img-contain"><img src="http://placekitten.com/800/700" alt="" /></b>
+                            </div><!--/ .ratio -->
+                        </div>
+                        <div class="prose">
+                            <h1><a href="#">Spike in marriage licenses follows Prop 8 demise</a></h1>
+                            <aside class="byline">
+                                <p>
+                                    <b class="author"><a href="#">Frank Stoltze</a></b>
+                                    <span>July 22</span>
+                                </p>
+                            </aside>
+                            <p class="teaser">People have been posting photos of their calves to Twitter in humorous protest of the immigrant remarks by the Republican congressman. And delivering melons.</p>
+                        </div>
+                </article>
+
+<!--            ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ -->
+                <article class="clearfix">
+                        <div class="graphic">
+                            <div class="ratio">
+                                <span class="issue"><a href="#">Mayoral Race 2013</a></span>
+                                <div class="fill"></div>
+                                <b class="img-contain"><img src="http://placekitten.com/800/800" alt="" /></b>
+                            </div><!--/ .ratio -->
+                        </div>
+                        <div class="prose">
+                            <h1><a href="#">Ethics Commission: Wendy Greuel reports more than $500K in campaign debt (updated)</a></h1>
+                            <aside class="byline">
+                                <p>
+                                    <b class="author"><a href="#">Alice Walton</a></b>
+                                    <span>July 22</span>
+                                </p>
+                                <mark class="trait infographic">Infographic</mark>
+                            </aside>
+                            <p class="teaser">People have been posting photos of their calves to Twitter in humorous protest of the immigrant remarks by the Republican congressman. And delivering melons.</p>
+                        </div>
+                </article>
+
+            </section><!--/ .backlog -->
+
+            <div class="secondary">
+                <section class="reporters">
+                    <h1>Our Reporters</h1>
+                    <div class="clearfix">
+
+                        <figure class="ratio-pairing">
+                            <div class="ratio">
+                                <div class="fill"></div>
+                                <b class="img-contain"><a href="http://www.scpr.org/about/people/staff/kitty-felde"><img src="http://placekitten.com/300/800" alt="" /></a></b>
+                            </div><!--/ .ratio -->
+                            <figcaption>
+                                <h1><a href="http://www.scpr.org/about/people/staff/kitty-felde">Kitty Felde</a></h1>
+                                <ul class="clearfix">
+                                    <li><a href="#" class="email" title="Email Kitty">Email</a></li>
+                                    <li><a href="#" class="twitter" title="Kitty on Twitter">Twitter</a></li>
+                                </ul>
+                            </figcaption>
+                        </figure>
+
+                        <figure class="ratio-pairing">
+                            <div class="ratio">
+                                <div class="fill"></div>
+                                <b class="img-contain"><a href="http://www.scpr.org/about/people/staff/julie-small"><img src="http://placekitten.com/300/700" alt="" /></a></b>
+                            </div><!--/ .ratio -->
+                            <figcaption>
+                                <h1><a href="http://www.scpr.org/about/people/staff/julie-small">Julie Small</a></h1>
+                                <ul class="clearfix">
+                                    <li><a href="#" class="email" title="Email Julie">Email</a></li>
+                                    <li><a href="#" class="twitter" title="Julie on Twitter">Twitter</a></li>
+                                </ul>
+                            </figcaption>
+                        </figure>
+
+                        <figure class="ratio-pairing">
+                            <div class="ratio">
+                                <div class="fill"></div>
+                                <b class="img-contain"><a href="http://www.scpr.org/about/people/staff/frank-stoltze"><img src="http://placekitten.com/300/500" alt="" /></a></b>
+                            </div><!--/ .ratio -->
+                            <figcaption>
+                                <h1><a href="http://www.scpr.org/about/people/staff/frank-stoltze">Frank Stoltze</a></h1>
+                                <ul class="clearfix">
+                                    <li><a href="#" class="email" title="Email Frank">Email</a></li>
+                                    <li><a href="#" class="twitter" title="Frank on Twitter">Twitter</a></li>
+                                </ul>
+                            </figcaption>
+                        </figure>
+
+                        <figure class="ratio-pairing">
+                            <div class="ratio">
+                                <div class="fill"></div>
+                                <b class="img-contain"><a href="http://www.scpr.org/about/people/staff/alice-walton"><img src="http://placekitten.com/300/750" alt="" /></a></b>
+                            </div><!--/ .ratio -->
+                            <figcaption>
+                                <h1><a href="http://www.scpr.org/about/people/staff/alice-walton">Alice Walton</a></h1>
+                                <ul class="clearfix">
+                                    <li><a href="#" class="email" title="Email Alice">Email</a></li>
+                                    <li><a href="#" class="twitter" title="Alice on Twitter">Twitter</a></li>
+                                </ul>
+                            </figcaption>
+                        </figure>
+
+                        <figure class="ratio-pairing">
+                            <div class="ratio">
+                                <div class="fill"></div>
+                                <b class="img-contain"><a href="http://www.scpr.org/about/people/staff/sharon-mcnary"><img src="http://placekitten.com/300/450" alt="" /></a></b>
+                            </div><!--/ .ratio -->
+                            <figcaption>
+                                <h1><a href="http://www.scpr.org/about/people/staff/sharon-mcnary">Sharon McNary</a></h1>
+                                <ul class="clearfix">
+                                    <li><a href="#" class="email" title="Email Sharon">Email</a></li>
+                                    <li><a href="#" class="twitter" title="Sharon on Twitter">Twitter</a></li>
+                                </ul>
+                            </figcaption>
+                        </figure>
+
+                        <figure class="ratio-pairing">
+                            <div class="ratio">
+                                <div class="fill"></div>
+                                <b class="img-contain"><a href="http://www.scpr.org/about/people/staff/oscar-garza"><img src="http://placekitten.com/300/650" alt="" /></a></b>
+                            </div><!--/ .ratio -->
+                            <figcaption>
+                                <h1><a href="http://www.scpr.org/about/people/staff/oscar-garza">Oscar Garza</a></h1>
+                                <ul class="clearfix">
+                                    <li><a href="#" class="email" title="Email Oscar">Email</a></li>
+                                    <li><a href="#" class="twitter" title="Oscar on Twitter">Twitter</a></li>
+                                </ul>
+                            </figcaption>
+                        </figure>
+
+                    </div>
+                </section><!--/ .reporters -->
+                <section class="tweets">
+                    <h1>In Brief</h1>
+                    <ul>
+                        <li>
+                            <div>
+                                <figure>
+                                    <figcaption>
+                                        <h1><a href="#">Frank Stoltze</a></h1>
+                                        <h2><a href="#">@StoltzeFrankly</a></h2>
+                                        <span><a href="#" title="Link to tweet">31m</a></span>
+                                    </figcaption>
+                                    <blockquote>
+                                        <p>.<a href="#">@globalgreen</a> CEO Petersen will "create healthier nbrhoods w cleaner air &amp; water" &amp; 20k green jobs as <a href="#">#LA</a>'s new Chief Sustainability Offcr.</p>
+                                    </blockquote>
+                                </figure>
+                                <b class="pic"><a href="#"><img src="http://placekitten.com/350/350" alt="" /></a></b>
+                            </div>
+                        </li>
+                        <li>
+                            <div>
+                                <figure>
+                                    <figcaption>
+                                        <h1><a href="#">Frank Stoltze</a></h1>
+                                        <h2><a href="#">@StoltzeFrankly</a></h2>
+                                        <span><a href="#" title="Link to tweet">2h</a></span>
+                                    </figcaption>
+                                    <blockquote>
+                                        <p><a href="#">LA Mayor <a href="#">@ericgarcetti</a> appts <a href="#">@globalgreen</a> USA chief Matt Petersen as city's 1st "Chief Sustainability Officer" <a href="#">@mattspete</a> <a href="#">#KPCC</a></p>
+                                    </blockquote>
+                                </figure>
+                                <b class="pic"><a href="#"><img src="http://placekitten.com/350/350" alt="" /></a></b>
+                            </div>
+                        </li>
+                        <li>
+                            <div>
+                                <figure>
+                                    <figcaption>
+                                        <h1><a href="#">Alice Walton</a></h1>
+                                        <h2><a href="#">@TheCityMaven</a></h2>
+                                        <span><a href="#" title="Link to tweet">21h</a></span>
+                                    </figcaption>
+                                    <blockquote>
+                                        <p>Wendy Greuel reports $500K in campaign debt <a href="#">scpr.org/blogs/politics...</a> via <a href="#">@kpcc</a></p>
+                                    </blockquote>
+                                </figure>
+                                <b class="pic"><a href="#"><img src="http://placekitten.com/450/450" alt="" /></a></b>
+                            </div>
+                        </li>
+                        <li>
+                            <div>
+                                <figure>
+                                    <figcaption>
+                                        <h1><a href="#">Sharon McNary</a></h1>
+                                        <h2><a href="#">@KPCCsharon</a></h2>
+                                        <span><a href="#" title="Link to tweet">30 Jul</a></span>
+                                    </figcaption>
+                                    <blockquote>
+                                        <p>Spent reporting time today at Wildwood Park, CSUSB and San Bernardino city hall. I challenge you: Describe the city in six words.</p>
+                                    </blockquote>
+                                </figure>
+                                <b class="pic"><a href="#"><img src="http://placekitten.com/250/250" alt="" /></a></b>
+                            </div>
+                        </li>
+                        <li>
+                            <div>
+                                <figure>
+                                    <figcaption>
+                                        <h1><a href="#">Julie Small</a></h1>
+                                        <h2><a href="#">@KPCCjulie</a></h2>
+                                        <span><a href="#" title="Link to tweet">26 Jul</a></span>
+                                    </figcaption>
+                                    <blockquote>
+                                        <p>Whistleblower at <a href="#">#DSH</a> facility for mentally ill prisoners now under investigation claims he was blacklisted by <a href="#">#CDCR</a> <a href="#">tinyurl.com/kzn6zor</a></p>
+                                    </blockquote>
+                                </figure>
+                                <b class="pic"><a href="#"><img src="http://placekitten.com/375/375" alt="" /></a></b>
+                            </div>
+                        </li>
+                        <li>
+                            <div>
+                                <figure>
+                                    <figcaption>
+                                        <h1><a href="#">Frank Stoltze</a></h1>
+                                        <h2><a href="#">@StoltzeFrankly</a></h2>
+                                        <span><a href="#" title="Link to tweet">25 Jul</a></span>
+                                    </figcaption>
+                                    <blockquote>
+                                        <p><a href="#">LA Mayor <a href="#">@ericgarcetti</a> appts <a href="#">@globalgreen</a> USA chief Matt Petersen as city's 1st "Chief Sustainability Officer" <a href="#">@mattspete</a> <a href="#">#KPCC</a></p>
+                                    </blockquote>
+                                </figure>
+                                <b class="pic"><a href="#"><img src="http://placekitten.com/350/350" alt="" /></a></b>
+                            </div>
+                        </li>
+                        <li>
+                            <div>
+                                <figure>
+                                    <figcaption>
+                                        <h1><a href="#">Alice Walton</a></h1>
+                                        <h2><a href="#">@TheCityMaven</a></h2>
+                                        <span><a href="#" title="Link to tweet">24 Jul</a></span>
+                                    </figcaption>
+                                    <blockquote>
+                                        <p>Wendy Greuel reports $500K in campaign debt <a href="#">scpr.org/blogs/politics...</a> via <a href="#">@kpcc</a></p>
+                                    </blockquote>
+                                </figure>
+                                <b class="pic"><a href="#"><img src="http://placekitten.com/450/450" alt="" /></a></b>
+                            </div>
+                        </li>
+
+                    </ul>
+                </section><!--/ .tweets -->
+            </div><!--/ .secondary -->
+
+        </div>
+    </div><!--/ .waterfall -->
+
+
+
+
+
+
+
+
+    <% if false %> <div class="category-page">
   <h1><%= @category.title %></h1>
 
   <% nav = paginate @content %>
@@ -22,4 +923,4 @@
     <% end %>
   <% end %>
 
-</div>
+</div> <% end %>

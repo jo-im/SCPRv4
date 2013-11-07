@@ -10,6 +10,6 @@ module CategoryHandler
       :per_page   => per_page
     )
     @twitter_feeds = @category.bios.map(&:twitter_handle)
-    respond_with @content, template: "category/show"
+    respond_with @content, template: "category/show", layout: "vertical"
   end
 end

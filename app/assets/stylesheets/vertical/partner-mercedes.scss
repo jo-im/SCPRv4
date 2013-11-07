@@ -1,0 +1,74 @@
+// Variables
+$font-freight: "freight-sans-pro", "Avenir Next", "Avenir", "Lucida Grande", "Tahoma", Arial, sans-serif;
+$font-prox: "proxima-nova", "Avenir Next", "Avenir", "Lucida Grande", "Tahoma", Arial, sans-serif;
+$font-proxcond: "proxima-nova-condensed", "Avenir Next Condensed", "Arial Narrow", Arial, sans-serif;
+$font-merri: "merriweatherregular", "Baskerville", "Garamond", "Cambria", Georgia, serif;
+$font-merri-lightital: "merriweatherlight_italic", "Baskerville", "Garamond", "Cambria", Georgia, serif;
+$blue: #31aad3;
+$orange: #f17b21;
+
+
+
+//	################################################################################################
+//	################################################################################################
+//	DEBUGGIN'
+//	################################################################################################
+//	################################################################################################
+
+//	.welcome,.resources,.lunchbox,.triptych,.waterfall,.quadrant,.membership { display: none; }
+
+
+
+
+
+//	################################################################################################
+//	################################################################################################
+//	PARTNER
+//	################################################################################################
+//	################################################################################################
+
+.partner.mercedes {
+	background:
+		url(sponsor-assets/mercedes-scenery.jpg) no-repeat center -116px,
+		url(sponsor-assets/mercedes-texture-noise.jpg) repeat;
+	background-size:
+		1600px 500px,
+		100px 100px;
+	.inner {
+		min-height: 234px; // 268
+		position: relative;
+		padding-top: 34px;
+		h1 {
+			background: rgba(55,86,119,0.62);
+			color: white;
+			width: 102.461538461538%;
+			padding: 20px 0 24px 2.461538461538%;
+			margin-left: -2.461538461538%;
+			font-family: $font-prox;
+			font-size: 2.5em; // 40/16
+			line-height: 1.05;
+			letter-spacing: -0.01em;
+			b,span {
+				font-weight: 300;
+				display: block;
+			}
+		}
+		.car {
+			display: block;
+			width: 543px;
+			position: absolute;
+			top: 13px;
+			right: 44px;
+			img {
+				width: 100%;
+				height: auto;
+			}
+		}
+		.logo {
+
+		}
+	}
+}
+
+
+

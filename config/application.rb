@@ -43,6 +43,9 @@ module Scprv4
     # Version of your assets, change this if you want to expire all your assets
     config.assets.version = '1.0'
 
+    # Add fonts folder to asset pipeline
+    config.assets.paths << "#{Rails.root}/app/assets/fonts"
+
     # For testing purposes
     # Precompile additional assets (application.js, application.css, and all non-JS/CSS are already added)
     config.assets.precompile += %w( shared.js outpost/application.css outpost/application.js base/print.css )
