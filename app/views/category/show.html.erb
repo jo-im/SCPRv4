@@ -1,7 +1,7 @@
 <% add_to_page_title @category.title %>
 
     <section class="headline">
-      <h1 class="bound"><span><%= @content[0].headline %></span></h1>
+      <h1 class="bound"><span><%= @featured_article.headline %></span></h1>
     </section>
 
 
@@ -15,14 +15,14 @@
                         <b class="img-contain"><img src="http://placekitten.com/500/500" alt="" /></b>
                     </div><!--/ .ratio -->
                     <figcaption>
-                        <p>L.A. City Council President Herb Wesson sent a letter Thursday to Mayor Eric Garcetti and the union representing DWP workers, telling them he plans to hold public hearings on labor negotiations.</p>
+                    <p><%= @featured_article.short_headline %></p>
                         <mark class="credit"><a href="#" title="See more of Mae's work">Mae Ryan / KPCC</a></mark>
                     </figcaption>
                 </figure><!--/ .ratio-pairing -->
             </div><!--/ .photo -->
             <div class="supportive">
-              <h1 class="tease"><%= @content[0].teaser %></h1>
-                <h2 class="byline"><a href="#">by Alice Walton</a></h2>
+              <h1 class="tease"><%= @featured_article.teaser %></h1>
+              <h2 class="byline"><a href="#"><%= @featured_article.byline %></a></h2>
                 <aside class="more">
                     <h3>More from <a href="#">Labor</a></h3>
                     <ul>
