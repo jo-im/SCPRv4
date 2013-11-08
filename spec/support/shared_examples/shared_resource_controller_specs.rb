@@ -43,7 +43,13 @@ shared_examples_for "resource controller" do
 
   describe "POST /create" do
     it "creates the resource" do
+      klass = resource.to_s.classify.constantize
+
+      count = klass.count
       post :create, resource => build(resource).attributes
+      klass.count.should eq count + 1
+
+      response.should be_redirect
     end
   end
 
