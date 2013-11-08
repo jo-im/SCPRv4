@@ -1,5 +1,4 @@
 class Issue < ActiveRecord::Base
-  has_many :article_issues
   outpost_model
   has_secretary
   attr_accessible :description, :is_active, :slug, :title
@@ -8,6 +7,10 @@ class Issue < ActiveRecord::Base
   ROUTE_KEY = 'root_slug'
 
   scope :active, -> { where(is_active: true) }
+
+  has_many :article_issues
+  has_many :category_issues
+  has_many :categories, through: :category_issues
 
   validates :title, presence: true
   validates :slug, uniqueness: true

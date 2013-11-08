@@ -19,6 +19,8 @@ class Category < ActiveRecord::Base
   has_many :category_articles, order: 'position'
   has_many :category_reporters
   has_many :bios, through: :category_reporters
+  has_many :category_issues
+  has_many :issues, through: :category_issues
   belongs_to :comment_bucket, class_name: "FeaturedCommentBucket"
   has_many :events
   accepts_json_input_for :category_articles
