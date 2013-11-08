@@ -2,7 +2,7 @@ require 'open-uri'
 require 'timeout'
 
 ##
-# DirectAudio 
+# DirectAudio
 #
 # Given an arbitrary URL to an mp3
 #
@@ -18,7 +18,7 @@ class Audio
       end
     end
 
-    # Override these so it doesn't super up to Audio 
+    # Override these so it doesn't super up to Audio
     # and cause a stack overflow.
     # Yes, this is terrible.
     def full_path

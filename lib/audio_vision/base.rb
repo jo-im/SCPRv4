@@ -4,7 +4,7 @@ module AudioVision
     class << self
       def find(id)
         response = client.get(api_path + "/#{id}")
-        
+
         if response.success?
           new(response.body)
         else

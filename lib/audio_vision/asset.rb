@@ -13,20 +13,20 @@ module AudioVision
 
 
     #----------------------
-    
+
     ATTRIBUTES = [
       :caption,
       :owner,
       :title
     ]
-    
+
     SIZES = [
       :thumbnail,
       :small,
       :large,
       :full
     ]
-    
+
     attr_accessor *(ATTRIBUTES + SIZES)
 
     def initialize(json={})

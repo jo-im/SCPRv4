@@ -9,7 +9,7 @@ module Api::Public::V3
 
     before_filter \
       :set_conditions,
-      :sanitize_limit, 
+      :sanitize_limit,
       :sanitize_page,
       :sanitize_type,
       only: [:index]

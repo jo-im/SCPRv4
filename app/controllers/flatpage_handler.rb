@@ -10,7 +10,7 @@ module FlatpageHandler
     if @flatpage.is_redirect?
       redirect_to @flatpage.redirect_to and return
     end
-    
+
     render layout: flatpage_layout_template, template: 'flatpages/show'
   end
 

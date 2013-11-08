@@ -21,7 +21,7 @@ class BlogPresenter < ApplicationPresenter
 
   def twitter_link
     if blog.twitter_handle.present?
-      h.link_to "@#{blog.twitter_handle}", 
+      h.link_to "@#{blog.twitter_handle}",
         h.twitter_profile_url(blog.twitter_handle),
         :target => "_blank",
         :class  => "twitter with-icon"

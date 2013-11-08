@@ -10,7 +10,7 @@ module AudioVision
 
       def find_by_url(url)
         response = client.get(api_path + "/by_url", url: url)
-        
+
         if response.success?
           new(response.body)
         else
@@ -22,16 +22,16 @@ module AudioVision
 
 
     attr_accessor \
-      :id, 
-      :title, 
-      :teaser, 
+      :id,
+      :title,
+      :teaser,
       :body,
-      :published_at, 
+      :published_at,
       :thumbnail,
-      :assets, 
-      :category, 
-      :byline, 
-      :attributions, 
+      :assets,
+      :category,
+      :byline,
+      :attributions,
       :public_url
 
 
@@ -55,6 +55,6 @@ module AudioVision
         @assets << Asset.new(json)
       end
     end
-    
+
   end
 end

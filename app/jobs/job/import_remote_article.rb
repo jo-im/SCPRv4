@@ -28,7 +28,8 @@ module Job
           :data => {
             :location         => @story.admin_edit_path,
             :notifications    => {
-              :notice => "Successfully imported <strong>#{@remote_article.headline}</strong>"
+              :notice =>  "Successfully imported " \
+                          "<strong>#{@remote_article.headline}</strong>"
             }
           }
         )
@@ -50,7 +51,8 @@ module Job
             :notifications    => {
               :alert => \
                 if @story
-                  "The story was imported, but another error occurred. (#{error.message})"
+                  "The story was imported, but another error occurred. " \
+                  "(#{error.message})"
                 else
                   "The story could not be imported. (#{error.message})"
                 end

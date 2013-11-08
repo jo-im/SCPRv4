@@ -22,7 +22,9 @@ module Concern
           :order        => "position"
 
 
-        after_save :_destroy_incoming_references, if: -> { self.unpublishing? }
+        after_save :_destroy_incoming_references,
+          :if => -> { self.unpublishing? }
+
         accepts_json_input_for :outgoing_references
       end
 

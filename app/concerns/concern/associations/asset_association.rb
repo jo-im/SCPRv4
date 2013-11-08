@@ -7,12 +7,12 @@ module Concern
   module Associations
     module AssetAssociation
       extend ActiveSupport::Concern
-      
+
       included do
         has_many :assets, {
-          :class_name => "ContentAsset", 
-          :as         => :content, 
-          :order      => "position", 
+          :class_name => "ContentAsset",
+          :as         => :content,
+          :order      => "position",
           :dependent  => :destroy,
           :autosave   => true
         }
@@ -21,7 +21,7 @@ module Concern
       end
 
       #--------------------
-      
+
       def asset
         @asset ||= self.assets.first
       end

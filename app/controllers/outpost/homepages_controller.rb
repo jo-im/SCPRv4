@@ -23,7 +23,7 @@ class Outpost::HomepagesController < Outpost::ResourceController
 
   def preview
     @homepage = Outpost.obj_by_key(params[:obj_key]) || Homepage.new
-    
+
     with_rollback @homepage do
       @homepage.assign_attributes(params[:homepage])
 

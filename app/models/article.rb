@@ -12,11 +12,11 @@
 # work. This eliminates a lot of the "fakery" going on in
 # our classes - stuff like `def teaser; self.body; end`.
 #
-# This also makes it super-easy to mix any content into the 
+# This also makes it super-easy to mix any content into the
 # normal flow of things. If one day we decided that Bios
-# should show up in the normal rotation on the homepage 
+# should show up in the normal rotation on the homepage
 # (this is a contrived example to illustrate the point),
-# it would be a simple matter of defining a `to_article` 
+# it would be a simple matter of defining a `to_article`
 # instance method on the Bio class. How a Bio gets coerced
 # into an Article is up to the developer.
 #

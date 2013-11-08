@@ -10,7 +10,7 @@ module AudioVision
 
       def find_by_key(key)
         response = client.get(api_path + "/#{key}")
-        
+
         if response.success?
           new(response.body)
         else
@@ -44,6 +44,5 @@ module AudioVision
         @posts << AudioVision::Post.new(json)
       end
     end
-    
   end
 end

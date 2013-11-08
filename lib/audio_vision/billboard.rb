@@ -10,7 +10,7 @@ module AudioVision
 
       def current
         response = client.get(api_path + "/current")
-        
+
         if response.success?
           new(response.body)
         else

@@ -10,7 +10,7 @@ class RootPathController < ApplicationController
       # http://scpr.org/support/members -> support/members
       path = URI.encode(params[:path].to_s)
     rescue ArgumentError
-      # If you don't pass the URI.encode test, 
+      # If you don't pass the URI.encode test,
       # then you get NOTHING.
       # http://www.youtube.com/watch?v=xKG07305CBs
       render status: :bad_request and return

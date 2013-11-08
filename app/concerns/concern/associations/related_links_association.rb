@@ -10,8 +10,8 @@ module Concern
 
       included do
         has_many :related_links,
-          :as               => :content,
-          :dependent        => :destroy
+          :as           => :content,
+          :dependent    => :destroy
 
         if self.has_secretary?
           tracks_association :related_links

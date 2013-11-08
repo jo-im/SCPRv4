@@ -1,6 +1,6 @@
 ##
 # PublishedScope
-# 
+#
 # Select only published records (status = STATUS_LIVE),
 # and order by 'published_at desc'
 #

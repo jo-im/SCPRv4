@@ -13,7 +13,7 @@ class Outpost::RecurringScheduleRulesController < Outpost::ResourceController
   private
 
   def clean_days
-    params[:recurring_schedule_rule][:days] = 
+    params[:recurring_schedule_rule][:days] =
       params[:recurring_schedule_rule][:days].reject(&:blank?).map(&:to_i)
   end
 end

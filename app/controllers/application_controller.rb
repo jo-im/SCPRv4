@@ -1,13 +1,13 @@
 class ApplicationController < ActionController::Base
   include Outpost::Controller::CustomErrors
-  
+
   protect_from_forgery
   before_filter :get_content_for_masthead
   before_filter :add_params_for_newrelic
 
   def add_params_for_newrelic
     NewRelic::Agent.add_custom_parameters(
-      :request_referer => request.referer, 
+      :request_referer => request.referer,
       :agent           => request.env['HTTP_USER_AGENT']
     )
   end
@@ -64,7 +64,7 @@ class ApplicationController < ActionController::Base
     # Otherwise an error will occur
     # TODO: Fallback to SQL query instead of just cutting it off.
     if params[:page] && params[:page].to_i > (SPHINX_MAX_MATCHES / per_page.to_i)
-      params[:page] = 1 
+      params[:page] = 1
     end
   end
 end

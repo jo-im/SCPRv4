@@ -19,26 +19,26 @@ module Api::Public::V3
     before_filter :sanitize_id, only: [:show]
 
     #---------------------------
-    
+
     def index
       @events = Event.published.order("starts_at").page(@page).per(@limit)
-      
+
       @conditions.each do |condition|
         @events = @events.where(condition)
       end
-      
+
       respond_with @events
     end
-    
+
     #---------------------------
-    
+
     def show
       @event = Event.where(id: @id).first
 
       if !@event
         render_not_found and return false
       end
-      
+
       respond_with @event
     end
 
@@ -64,9 +64,9 @@ module Api::Public::V3
 
       # If we requested an end date in the future, then
       # it likely means that someone is looking for
-      # a list of events between now and then. In that 
+      # a list of events between now and then. In that
       # case, add a condition to filter start_date
-      # by Time.now. However, if an end_date was 
+      # by Time.now. However, if an end_date was
       # requested in the past, then it probably
       # means that they are listing archived
       # events, so in that case we will let it go to

@@ -43,11 +43,11 @@ Scprv4::Application.configure do
 
   # Enable serving of images, stylesheets, and JavaScripts from an asset server
   # config.action_controller.asset_host = "http://assets.example.com"
-  
+
   # Enable Postmark for transactional mail sending
   config.action_mailer.delivery_method          = :simple_postmark
   config.action_mailer.raise_delivery_errors    = true
-  
+
   # Disable delivery errors, bad email addresses will be ignored
   # config.action_mailer.raise_delivery_errors = false
 
@@ -57,10 +57,10 @@ Scprv4::Application.configure do
   # Enable locale fallbacks for I18n (makes lookups for any locale fall back to
   # the I18n.default_locale when a translation can not be found)
   config.i18n.fallbacks = true
-  
+
   # Send deprecation notices to registered listeners
   config.active_support.deprecation = :notify
-  
+
   default_url_options[:host] = "www.scpr.org"
 
   config.scpr.host         = "www.scpr.org"

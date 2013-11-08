@@ -51,5 +51,5 @@ Scprv4::Application.configure do
   config.audio_vision.host      = "http://audiovision.scpr.org"
   config.audio_vision.api_path  = "/api/v1"
 
-  config.node.server       = "http://localhost:13002"
+  config.node.server = "http://localhost:13002"
 end

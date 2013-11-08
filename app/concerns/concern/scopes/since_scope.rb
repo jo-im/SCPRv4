@@ -8,7 +8,7 @@ module Concern
   module Scopes
     module SinceScope
       extend ActiveSupport::Concern
-      
+
       included do
         scope :since, ->(floor) { where("published_at > ?", floor) }
       end
