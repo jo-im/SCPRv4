@@ -10,9 +10,9 @@ module Concern
 
       included do
         has_many :audio,
-          :as               => :content,
-          :order            => "position",
-          :dependent        => :destroy
+          :as           => :content,
+          :order        => "position",
+          :dependent    => :destroy
 
         if self.has_secretary?
           tracks_association :audio
