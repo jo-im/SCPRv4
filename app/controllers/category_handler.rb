@@ -16,7 +16,7 @@ module CategoryHandler
     @latest_articles = @category_articles[1..2]
 
     @resources = @featured_articles[1..4]
-
+    @featured_interactive = @featured_articles[5]
     if @issues = @featured_article.original_object.issues
       @primary_issue = @issues.first
       @special_issue = @issues[1]

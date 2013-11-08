@@ -197,8 +197,8 @@
                 <aside class="featured" style="background-image: url(assets/featured-interactives/intersections.jpg);">
                     <div>
                         <h1>Featured Interactive</h1>
-                        <h2><a href="#">The most dangerous intersections in Los Angeles</a></h2>
-                        <h3>by Chris Keller &amp; Kim Bui</h3>
+                        <h2><%= link_to @featured_interactive.title, @featured_interactive.public_path %></h2>
+                      <h3><%= @featured_interactive.byline %></h3>
                     </div>
                 </aside>
                 <div class="inbrief clearfix">
