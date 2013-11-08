@@ -1,7 +1,7 @@
 <% add_to_page_title @category.title %>
 
     <section class="headline">
-      <h1 class="bound"><span><%= @featured_article.title %></span></h1>
+      <h1 class="bound"><span><%= @featured_article.short_title %></span></h1>
     </section>
 
 
@@ -24,10 +24,11 @@
               <h1 class="tease"><%= @featured_article.teaser %></h1>
               <h2 class="byline"><a href="#"><%= @featured_article.byline %></a></h2>
                 <aside class="more">
-                    <h3>More from <a href="#">Labor</a></h3>
+                  <h3>More from <%= link_to @primary_issue.title, "/issues/#{@primary_issue.slug}" %></h3>
                     <ul>
-                        <li><a href="#">Garcetti promises tough negotiations with DWP labor union</a></li>
-                        <li><a href="#">SEIU airing ads in GOP districts urging path to citizenship</a></li>
+                        <%- @top_two_issue_articles.each do |article| %>
+                          <li><%= link_to article.short_title, article.public_path %></li>
+                        <% end %>
                     </ul>
                 </aside>
             </div><!--/ .supporting -->
@@ -38,46 +39,39 @@
                   <h1>Latest <%= @category.title %> Headlines</h1>
                 </header>
                 <ul>
+                  <%- @latest_articles.each do |article| %>
                     <li>
-                        <a href="#" class="clearfix">
+                      <%= link_to(article.public_path, class: 'clearfix') do %>
                             <div>
-                                <mark>Long Beach language plan includes Spanish and Khmer, but not Tagalog or Vietnamese</mark>
-                                <em>2h ago</em> <span>Sharon McNary</span>
+                              <mark><%= article.short_title %></mark>
+                              <em><%= article.public_datetime.strftime('%l:%M%p') %>
+</em> <span><%= article.byline %></span>
                             </div>
                             <figure class="ratio">
                                 <div class="fill"></div>
-                                <b class="img-contain"><img src="http://placekitten.com/350/400" alt="" /></b>
+                                <b class="img-contain"><%= image_tag(article.asset.lsquare.url, alt: '' ) %></b>
                             </figure>
-                        </a>
+                      <% end %>
                     </li>
-                    <li>
-                        <a href="#" class="clearfix">
-                            <div>
-                                <mark>Former staffer files sexual harassment complaint against Councilman Jose Huizar</mark>
-                                <em>13h ago</em> <span>Alice Walton</span>
-                            </div>
-                            <figure class="ratio">
-                                <div class="fill"></div>
-                                <b class="img-contain"><img src="http://placekitten.com/600/400" alt="" /></b>
-                            </figure>
-                        </a>
-                    </li>
+                  <% end %>
                 </ul>
             </section>
             <section class="event">
                 <header class="clearfix">
                     <h1>Get Involved</h1>
-                    <a href="#">All <span>upcoming</span> events</a>
+                    <%= link_to(events_path) do %>
+                      All <span>upcoming</span> events
+                    <% end %>
                 </header>
                 <div class="details clearfix">
                     <div class="vitals">
-                        <h2><a href="#">Congressman Brad Sherman's Town Hall Meeting (30th District)</a></h2>
-                        <h3>El Camino Real High School</h3>
-                        <h4><a href="#">More details</a></h4>
+                      <h2><%= link_to @latest_event.short_title, @latest_event.public_path %></h2>
+                      <h3><%= @latest_event.original_object.location_name %></h3>
+                        <h4><%= link_to 'More details', @latest_event.public_path %></h4>
                     </div>
                     <aside class="date">
-                        <em>25</em>
-                        <span>Aug</span>
+                      <em><%= @latest_event.public_datetime.day %></em>
+                      <span><%= @latest_event.public_datetime.strftime('%b') %></span>
                     </aside>
                 </div>
             </section>
@@ -85,7 +79,7 @@
                 <header>
                     <h1>Politics Events at KPCC</h1>
                 </header>
-                <p>From our studio in Pasadena, KPCC hosts free events that open dialogue and deepen the understanding of Southern California’s civic landscape. <a href="#">See what we’ve got lined up.</a></p>
+                <p>From our studio in Pasadena, KPCC hosts free events that open dialogue and deepen the understanding of Southern California’s civic landscape. <%= link_to 'See what we’ve got lined up.', events_path %></p>
             </aside>
         </div><!--/ .ataglance -->
     </div><!--/ .welcome -->
@@ -98,42 +92,20 @@
                 <h1><span>Represent Resources</span></h1>
                 <h2>Quick primers on civic life in California.</h2>
                 <h3>All of us at KPCC believe that civic life in Southern California should be understandable, relevant, and libero ante, aliquam congue mattis id, blandit quis risus. Sed iaculis tellus accumsan ipsum porta ultricies.</h3>
-                <h4>Represent Resources is made possible with support from <a href="#">The Robert Day School</a>.</h4>
+                <h4>Represent Resources is made possible with support from <%= link_to 'The Robert Day School', '#' %>.</h4>
             </header>
             <nav>
                 <ul class="clearfix">
+                  <%- @resources.each do |resource| %>
                     <li>
-                        <a href="#">
+                        <%= link_to(resource.public_path) do %>
                             <figure class="clearfix">
-                                <div class="ratio"><div class="fill"></div><b class="img-contain"><img src="http://placekitten.com/600/500" alt="" /></b></div>
-                                <figcaption>How do I find my local and state representatives?</figcaption>
+                              <div class="ratio"><div class="fill"></div><b class="img-contain"><%= image_tag resource.asset.lsquare.url, alt: '' %></b></div>
+                              <figcaption><%= resource.short_title %></figcaption>
                             </figure>
-                        </a>
+                        <% end %>
                     </li>
-                    <li>
-                        <a href="#">
-                            <figure class="clearfix">
-                                <div class="ratio"><div class="fill"></div><b class="img-contain"><img src="http://placekitten.com/600/1200" alt="" /></b></div>
-                                <figcaption>Who do I contact to get a bill introduced?</figcaption>
-                            </figure>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#">
-                            <figure class="clearfix">
-                                <div class="ratio"><div class="fill"></div><b class="img-contain"><img src="http://placekitten.com/600/600" alt="" /></b></div>
-                                <figcaption>I’m not a citizen. How do I become one?</figcaption>
-                            </figure>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#">
-                            <figure class="clearfix">
-                                <div class="ratio"><div class="fill"></div><b class="img-contain"><img src="http://placekitten.com/600/700" alt="" /></b></div>
-                                <figcaption>How do I make sure I’m eligible to vote?</figcaption>
-                            </figure>
-                        </a>
-                    </li>
+                  <% end %>
                 </ul>
             </nav>
         </div>
@@ -146,7 +118,7 @@
             <section class="issues">
                 <header>
                     <h1>Issues We're Tracking</h1>
-                    <h2><a href="#">See all issues</a></h2>
+                    <h2><%= link_to 'See all issues', issues_path %></h2>
                 </header>
                 <div>
                     <header class="special">
