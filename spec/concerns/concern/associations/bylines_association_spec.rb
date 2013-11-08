@@ -39,7 +39,7 @@ describe Concern::Associations::BylinesAssociation do
       story.changed?.should eq true
     end
 
-    it 'makes a version when removing', focus: true do
+    it 'makes a version when removing' do
       story   = build :test_class_story, :published
       byline  = build :byline, content: nil
       story.bylines << byline
