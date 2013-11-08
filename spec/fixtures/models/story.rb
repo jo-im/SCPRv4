@@ -29,6 +29,7 @@ module TestClass
     include Concern::Callbacks::HomepageCachingCallback
     include Concern::Callbacks::CacheExpirationCallback
     include Concern::Callbacks::TouchCallback
+    include Concern::Callbacks::RedisPublishCallback
 
     include Concern::Methods::CommentMethods
     Concern::Methods::CommentMethods::COMMENT_CLASSES.push(self.name)
