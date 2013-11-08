@@ -22,7 +22,6 @@ module CategoryHandler
       @special_issue = @issues[1]
       @other_issues = @issues[2..3]
     end
-    debugger
     @top_two_issue_articles ||= @primary_issue.articles.first(2)
     @top_two_special_issue_articles ||= @special_issue.articles.first(2)
     @latest_event = @category.events.first.to_article
