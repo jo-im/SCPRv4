@@ -59,7 +59,7 @@ describe Category do
       story = create :news_story
       category_article = create :category_article, category: category, article: story
 
-      category.articles.map(&:class).uniq.should eq [Article]
+      category.featured_articles.map(&:class).uniq.should eq [Article]
     end
   end
 
