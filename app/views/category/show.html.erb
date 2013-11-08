@@ -1,7 +1,7 @@
 <% add_to_page_title @category.title %>
 
     <section class="headline">
-      <h1 class="bound"><span><%= @featured_article.short_title %></span></h1>
+      <h1 class="bound"><span><%= @lead_article.short_title %></span></h1>
     </section>
 
 
@@ -21,8 +21,8 @@
                 </figure><!--/ .ratio-pairing -->
             </div><!--/ .photo -->
             <div class="supportive">
-              <h1 class="tease"><%= @featured_article.teaser %></h1>
-              <h2 class="byline"><a href="#"><%= @featured_article.byline %></a></h2>
+              <h1 class="tease"><%= @lead_article.teaser %></h1>
+              <h2 class="byline"><a href="#"><%= @lead_article.byline %></a></h2>
                 <aside class="more">
                   <h3>More from <%= link_to @primary_issue.title, issue_path(@primary_issue.slug) %></h3>
                     <ul>
@@ -133,20 +133,7 @@
                     <nav>
                         <ul>
                           <%- @top_two_special_issue_articles.each do |article| %>
-                              <li>
-                                <%= link_to article.public_path do %>
-                                      <figure class="ratio-pairing clearfix">
-                                          <div class="ratio">
-                                              <div class="fill"></div>
-                                              <b class="img-contain"><%= image_tag(article.asset.lsquare.url) %> /></b>
-                                          </div><!--/ .ratio -->
-                                          <figcaption>
-                                          <p><%= article.short_title %></p>
-                                          <mark><%= article.byline %> <em>with KPCC Wire Services</em></mark> <span>July 25</span>
-                                          </figcaption>
-                                      </figure><!--/ .ratio-pairing -->
-                                <% end %>
-                              </li>
+                            <%= render partial: 'category/issue_list', locals: {article: article} %>
                           <% end %>
                         </ul>
                     </nav>
@@ -155,38 +142,14 @@
                   <div>
                       <header class="slim clearfix">
                         <h1><%= issue.title %></h1>
-                          <h2><a href="#">See all <span>L.A. Money</span></a></h2>
+                        <h2><%= link_to issue_path(issue.slug) do %>
+                          See all <span><%= issue.title %></span><% end %></h2>
                       </header>
                       <nav>
                           <ul>
-                              <li>
-                                  <a href="#">
-                                      <figure class="ratio-pairing clearfix">
-                                          <div class="ratio">
-                                              <div class="fill"></div>
-                                              <b class="img-contain"><img src="http://placekitten.com/800/600" alt="" /></b>
-                                          </div><!--/ .ratio -->
-                                          <figcaption>
-                                              <p>LA City Council rescinds policy of ticketing at broken parking meters</p>
-                                              <mark>Alice Walton</mark> <span>July 31</span>
-                                          </figcaption>
-                                      </figure><!--/ .ratio-pairing -->
-                                  </a>
-                              </li>
-                              <li>
-                                  <a href="#">
-                                      <figure class="ratio-pairing clearfix">
-                                          <div class="ratio">
-                                              <div class="fill"></div>
-                                              <b class="img-contain"><img src="http://placekitten.com/700/500" alt="" /></b>
-                                          </div><!--/ .ratio -->
-                                          <figcaption>
-                                              <p>Central Basin Water District sues vendor as it reviews all finances</p>
-                                              <mark>Alice Walton</mark> <span>July 25</span>
-                                          </figcaption>
-                                      </figure><!--/ .ratio-pairing -->
-                                  </a>
-                              </li>
+                          <%- issue.articles.first(2).each do |article| %>
+                            <%= render partial: 'category/issue_list', locals: {article: article} %>
+                          <% end %>
                           </ul>
                       </nav>
                   </div>

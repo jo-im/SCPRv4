@@ -8,21 +8,25 @@ module CategoryHandler
       :page       => page,
       :per_page   => per_page
     )
-    @featured_articles = @category.articles
-    @featured_article = @featured_articles.first
-    @featured_image = @featured_article.asset
+    @featured_articles = @category.featured_articles
+    @lead_article = @featured_articles.first
+    @featured_image ||= @lead_article.asset
 
     @category_articles = @content.map { |a| a.to_article }
     @latest_articles = @category_articles[1..2]
 
     @resources = @featured_articles[1..4]
     @featured_interactive = @featured_articles[5]
-    if @issues = @featured_article.original_object.issues
+
+    if @issues = @lead_article.original_object.issues
       @primary_issue = @issues.first
-      @special_issue = @issues[1]
-      @other_issues = @issues[2..3]
+      @top_two_issue_articles = @primary_issue.articles.first(2)
     end
-    @top_two_issue_articles ||= @primary_issue.articles.first(2)
+
+    @category_issues = @category.issues
+    @special_issue = @category_issues.first
+    @other_issues = @category_issues[1..2]
+
     @top_two_special_issue_articles ||= @special_issue.articles.first(2)
     @latest_event = @category.events.first.to_article
     @twitter_feeds = @category.bios.map(&:twitter_handle)

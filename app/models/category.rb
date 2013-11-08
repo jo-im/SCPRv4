@@ -43,7 +43,7 @@ class Category < ActiveRecord::Base
     end
   end
 
-  def articles
+  def featured_articles
     @articles ||= self.category_articles.includes(:article).map { |a| a.article.to_article }
   end
 

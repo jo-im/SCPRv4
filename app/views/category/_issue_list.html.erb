@@ -1,0 +1,15 @@
+<li>
+  <%= link_to article.public_path do %>
+    <figure class="ratio-pairing clearfix">
+      <div class="ratio">
+        <div class="fill"></div>
+        <b class="img-contain"><%= image_tag(article.asset.lsquare.url) %> /></b>
+      </div><!--/ .ratio -->
+      <figcaption>
+        <p><%= article.short_title %></p>
+        <mark><%= article.byline %> <em>with KPCC Wire Services</em></mark> <span>July 25</span>
+      </figcaption>
+    </figure><!--/ .ratio-pairing -->
+  <% end %>
+</li>
+
