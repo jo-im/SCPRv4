@@ -52,6 +52,15 @@ GIT
       redis-activesupport (~> 3.2.2)
 
 GIT
+  remote: git://github.com/SCPR/secretary-rails.git
+  revision: 74eb55287c73d7ac8b24477f8315caca76575a10
+  specs:
+    secretary-rails (1.0.0.beta4)
+      activerecord (>= 3.2.0)
+      diffy (~> 3.0.1)
+      railties (>= 3.2.0)
+
+GIT
   remote: git://github.com/amatsuda/kaminari.git
   revision: d5757227d7fafacefeab3d585f41c11933bd46db
   specs:
@@ -82,13 +91,6 @@ GIT
     turbo-sprockets-rails3 (0.3.10)
       railties (> 3.2.8, < 4.0.0)
       sprockets (>= 2.0.0)
-
-PATH
-  remote: /Users/bricker/websites/kpcc/secretary-rails
-  specs:
-    secretary-rails (0.0.1)
-      diffy (~> 3.0.1)
-      rails (>= 3.2.0)
 
 GEM
   remote: https://rubygems.org/

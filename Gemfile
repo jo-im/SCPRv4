@@ -24,7 +24,7 @@ gem 'outpost-aggregator', github: "SCPR/outpost-aggregator"
 #gem 'outpost-aggregator', path: "#{ENV['PROJECT_HOME']}/outpost-aggregator"
 
 # gem 'secretary-rails', github: 'SCPR/secretary-rails'
-gem 'secretary-rails', path: "#{ENV['PROJECT_HOME']}/secretary-rails"
+gem 'secretary-rails', github: "SCPR/secretary-rails"
 
 
 ## Cache
