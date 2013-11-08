@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20131108185143) do
+ActiveRecord::Schema.define(:version => 20131108231657) do
 
   create_table "abstracts", :force => true do |t|
     t.string   "source"
@@ -681,6 +681,20 @@ ActiveRecord::Schema.define(:version => 20131108185143) do
   add_index "programs_kpccprogram", ["missed_it_bucket_id"], :name => "programs_kpccprogram_d12628ce"
   add_index "programs_kpccprogram", ["slug"], :name => "index_programs_kpccprogram_on_slug"
   add_index "programs_kpccprogram", ["title"], :name => "index_programs_kpccprogram_on_title"
+
+  create_table "quotes", :force => true do |t|
+    t.string   "quote"
+    t.string   "source_name"
+    t.string   "source_context"
+    t.integer  "category_id"
+    t.integer  "article_id"
+    t.string   "article_type"
+    t.datetime "created_at",     :null => false
+    t.datetime "updated_at",     :null => false
+  end
+
+  add_index "quotes", ["article_id", "article_type"], :name => "index_quotes_on_article_id_and_article_type"
+  add_index "quotes", ["category_id"], :name => "index_quotes_on_category_id"
 
   create_table "recurring_schedule_rules", :force => true do |t|
     t.text     "schedule_hash", :limit => 16777215
