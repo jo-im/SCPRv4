@@ -10,17 +10,21 @@ module CategoryHandler
     )
     @featured_articles = @category.articles
     @featured_article = @featured_articles.first
-    @resources = @featured_articles[1..4]
     @featured_image = @featured_article.asset
 
     @category_articles = @content.map { |a| a.to_article }
     @latest_articles = @category_articles[1..2]
 
-    if @featured_article.original_object.issues
-      @primary_issue = @featured_article.original_object.issues.first
-    end
+    @resources = @featured_articles[1..4]
 
+    if @issues = @featured_article.original_object.issues
+      @primary_issue = @issues.first
+      @special_issue = @issues[1]
+      @other_issues = @issues[2..3]
+    end
+    debugger
     @top_two_issue_articles ||= @primary_issue.articles.first(2)
+    @top_two_special_issue_articles ||= @special_issue.articles.first(2)
     @latest_event = @category.events.first.to_article
     @twitter_feeds = @category.bios.map(&:twitter_handle)
     respond_with @content, template: "category/show", layout: "vertical"

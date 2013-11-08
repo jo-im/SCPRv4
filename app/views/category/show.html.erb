@@ -24,7 +24,7 @@
               <h1 class="tease"><%= @featured_article.teaser %></h1>
               <h2 class="byline"><a href="#"><%= @featured_article.byline %></a></h2>
                 <aside class="more">
-                  <h3>More from <%= link_to @primary_issue.title, "/issues/#{@primary_issue.slug}" %></h3>
+                  <h3>More from <%= link_to @primary_issue.title, issue_path(@primary_issue.slug) %></h3>
                     <ul>
                         <%- @top_two_issue_articles.each do |article| %>
                           <li><%= link_to article.short_title, article.public_path %></li>
@@ -122,123 +122,75 @@
                 </header>
                 <div>
                     <header class="special">
-                        <h1>Reform</h1>
+                      <h1><%= @special_issue.title %></h1>
                         <h2 class="clearfix">
                             <mark>Special coverage from KPCC</mark>
-                            <a href="#">See all <span>Reform</span></a>
+                            <%= link_to issue_path(@special_issue.slug) do %>
+                              See all <span><%= @special_issue.title  %></span>
+                            <% end %>
                         </h2>
                     </header>
                     <nav>
                         <ul>
-                            <li>
-                                <a href="#">
-                                    <figure class="ratio-pairing clearfix">
-                                        <div class="ratio">
-                                            <div class="fill"></div>
-                                            <b class="img-contain"><img src="http://placekitten.com/500/400" alt="" /></b>
-                                        </div><!--/ .ratio -->
-                                        <figcaption>
-                                            <p>Court finds Palmdale's at-large elections violate Voting Rights Act</p>
-                                            <mark>Alice Walton <em>with KPCC Wire Services</em></mark> <span>July 25</span>
-                                        </figcaption>
-                                    </figure><!--/ .ratio-pairing -->
-                                </a>
-                            </li>
-                            <li>
-                                <a href="#">
-                                    <figure class="ratio-pairing clearfix">
-                                        <div class="ratio">
-                                            <div class="fill"></div>
-                                            <b class="img-contain"><img src="http://placekitten.com/500/500" alt="" /></b>
-                                        </div><!--/ .ratio -->
-                                        <figcaption>
-                                            <p>Redefining LA's city commissions to improve citizen involvement</p>
-                                            <mark>Marc Haefele</mark> <span>July 25</span>
-                                        </figcaption>
-                                    </figure><!--/ .ratio-pairing -->
-                                </a>
-                            </li>
+                          <%- @top_two_special_issue_articles.each do |article| %>
+                              <li>
+                                <%= link_to article.public_path do %>
+                                      <figure class="ratio-pairing clearfix">
+                                          <div class="ratio">
+                                              <div class="fill"></div>
+                                              <b class="img-contain"><%= image_tag(article.asset.lsquare.url) %> /></b>
+                                          </div><!--/ .ratio -->
+                                          <figcaption>
+                                          <p><%= article.short_title %></p>
+                                          <mark><%= article.byline %> <em>with KPCC Wire Services</em></mark> <span>July 25</span>
+                                          </figcaption>
+                                      </figure><!--/ .ratio-pairing -->
+                                <% end %>
+                              </li>
+                          <% end %>
                         </ul>
                     </nav>
                 </div>
-
-                <div>
-                    <header class="slim clearfix">
-                        <h1>L.A. Money</h1>
-                        <h2><a href="#">See all <span>L.A. Money</span></a></h2>
-                    </header>
-                    <nav>
-                        <ul>
-                            <li>
-                                <a href="#">
-                                    <figure class="ratio-pairing clearfix">
-                                        <div class="ratio">
-                                            <div class="fill"></div>
-                                            <b class="img-contain"><img src="http://placekitten.com/800/600" alt="" /></b>
-                                        </div><!--/ .ratio -->
-                                        <figcaption>
-                                            <p>LA City Council rescinds policy of ticketing at broken parking meters</p>
-                                            <mark>Alice Walton</mark> <span>July 31</span>
-                                        </figcaption>
-                                    </figure><!--/ .ratio-pairing -->
-                                </a>
-                            </li>
-                            <li>
-                                <a href="#">
-                                    <figure class="ratio-pairing clearfix">
-                                        <div class="ratio">
-                                            <div class="fill"></div>
-                                            <b class="img-contain"><img src="http://placekitten.com/700/500" alt="" /></b>
-                                        </div><!--/ .ratio -->
-                                        <figcaption>
-                                            <p>Central Basin Water District sues vendor as it reviews all finances</p>
-                                            <mark>Alice Walton</mark> <span>July 25</span>
-                                        </figcaption>
-                                    </figure><!--/ .ratio-pairing -->
-                                </a>
-                            </li>
-                        </ul>
-                    </nav>
-                </div>
-
-                <div>
-                    <header class="slim clearfix">
-                        <h1>Immigration</h1>
-                        <h2><a href="#">See all <span>Immigration</span></a></h2>
-                    </header>
-                    <nav>
-                        <ul>
-                            <li>
-                                <a href="#">
-                                    <figure class="ratio-pairing clearfix">
-                                        <div class="ratio">
-                                            <div class="fill"></div>
-                                            <b class="img-contain"><img src="http://placekitten.com/500/350" alt="" /></b>
-                                        </div><!--/ .ratio -->
-                                        <figcaption>
-                                            <p>'Dream 9' protest: Youth immigration activists' tactics grow riskier</p>
-                                            <mark>Leslie Berestein Rojas</mark> <span>July 25</span>
-                                        </figcaption>
-                                    </figure><!--/ .ratio-pairing -->
-                                </a>
-                            </li>
-                            <li>
-                                <a href="#">
-                                    <figure class="ratio-pairing clearfix">
-                                        <div class="ratio">
-                                            <div class="fill"></div>
-                                            <b class="img-contain"><img src="http://placekitten.com/400/400" alt="" /></b>
-                                        </div><!--/ .ratio -->
-                                        <figcaption>
-                                            <p>DHS to review same-sex couples' green card cases, the fate of immigrants with criminal records, more</p>
-                                            <mark>Leslie Berestein Rojas</mark> <span>July 25</span>
-                                        </figcaption>
-                                    </figure><!--/ .ratio-pairing -->
-                                </a>
-                            </li>
-                        </ul>
-                    </nav>
-                </div>
+                <%- @other_issues.each do |issue| %>
+                  <div>
+                      <header class="slim clearfix">
+                        <h1><%= issue.title %></h1>
+                          <h2><a href="#">See all <span>L.A. Money</span></a></h2>
+                      </header>
+                      <nav>
+                          <ul>
+                              <li>
+                                  <a href="#">
+                                      <figure class="ratio-pairing clearfix">
+                                          <div class="ratio">
+                                              <div class="fill"></div>
+                                              <b class="img-contain"><img src="http://placekitten.com/800/600" alt="" /></b>
+                                          </div><!--/ .ratio -->
+                                          <figcaption>
+                                              <p>LA City Council rescinds policy of ticketing at broken parking meters</p>
+                                              <mark>Alice Walton</mark> <span>July 31</span>
+                                          </figcaption>
+                                      </figure><!--/ .ratio-pairing -->
+                                  </a>
+                              </li>
+                              <li>
+                                  <a href="#">
+                                      <figure class="ratio-pairing clearfix">
+                                          <div class="ratio">
+                                              <div class="fill"></div>
+                                              <b class="img-contain"><img src="http://placekitten.com/700/500" alt="" /></b>
+                                          </div><!--/ .ratio -->
+                                          <figcaption>
+                                              <p>Central Basin Water District sues vendor as it reviews all finances</p>
+                                              <mark>Alice Walton</mark> <span>July 25</span>
+                                          </figcaption>
+                                      </figure><!--/ .ratio-pairing -->
+                                  </a>
+                              </li>
+                          </ul>
+                      </nav>
+                  </div>
+                <% end %>
 
             </section><!--/ .issues -->
             <div class="treats">

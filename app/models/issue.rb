@@ -18,4 +18,8 @@ class Issue < ActiveRecord::Base
     { path: self.persisted_record.slug }
   end
 
+  def articles
+    @articles ||= self.article_issues.includes(:article).map { |a| a.article.to_article }
+  end
+
 end
