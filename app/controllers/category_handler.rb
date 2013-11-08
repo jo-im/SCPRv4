@@ -28,7 +28,9 @@ module CategoryHandler
     @other_issues = @category_issues[1..2]
 
     @top_two_special_issue_articles ||= @special_issue.articles.first(2)
-    @latest_event = @category.events.first.to_article
+    @events = @category.events.published.upcoming
+    @latest_event = @events.first.to_article
+    @upcoming_events = @events[1..3].map { |a| a.to_article }
     @twitter_feeds = @category.bios.map(&:twitter_handle)
     respond_with @content, template: "category/show", layout: "vertical"
   end

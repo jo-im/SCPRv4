@@ -180,42 +180,20 @@
                     <aside class="events">
                         <h1>Upcoming Politics Events</h1>
                         <ul>
+                          <%- @upcoming_events.each do |event| %>
                             <li>
                                 <figure class="clearfix">
                                     <div class="date">
-                                        <b>21</b>
-                                        <span><mark>Jun</mark> 2013</span>
+                                      <b><%= event.public_datetime.day %></b>
+                                      <span><mark><%= event.public_datetime.strftime('%b') %></mark> <%= event.public_datetime.strftime('%Y') %></span>
                                     </div>
                                     <figcaption>
-                                        <b>Los Angeles 2013 Mayoral Runoff Election</b>
-                                        <a href="#">More information</a>
+                                    <b><%= event.short_title %></b>
+                                    <%= link_to 'More information', event.public_path %>
                                     </figcaption>
                                 </figure>
                             </li>
-                            <li>
-                                <figure class="clearfix">
-                                    <div class="date">
-                                        <b>3</b>
-                                        <span><mark>Aug</mark> 2013</span>
-                                    </div>
-                                    <figcaption>
-                                        <b>Los Angeles County Comptroller Debate</b>
-                                        <a href="#">More information</a>
-                                    </figcaption>
-                                </figure>
-                            </li>
-                            <li>
-                                <figure class="clearfix">
-                                    <div class="date">
-                                        <b>18</b>
-                                        <span><mark>Oct</mark> 2013</span>
-                                    </div>
-                                    <figcaption>
-                                        <b>Water &amp; Power Commission Hearing</b>
-                                        <a href="#">More information</a>
-                                    </figcaption>
-                                </figure>
-                            </li>
+                          <% end %>
                         </ul>
                     </aside>
                 </div>
