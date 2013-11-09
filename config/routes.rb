@@ -271,6 +271,10 @@ Scprv4::Application.routes.draw do
       get "search", on: :collection, as: :search
     end
 
+    resources :quotes do
+      get "search", on: :collection, as: :search
+    end
+
     resources :data_points do
       get "search", on: :collection, as: :search
     end

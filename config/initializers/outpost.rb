@@ -29,6 +29,7 @@ Outpost::Config.configure do |config|
     "PijQuery",
     "Podcast",
     "PressRelease",
+    "Quote",
     "RecurringScheduleRule",
     "RemoteArticle",
     "ScheduleOccurrence",

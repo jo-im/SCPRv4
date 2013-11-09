@@ -23,6 +23,10 @@ class Category < ActiveRecord::Base
   has_many :issues, through: :category_issues
   belongs_to :comment_bucket, class_name: "FeaturedCommentBucket"
   has_many :events
+  has_many :quotes,
+    :foreign_key    => "category_id",
+    :order          => "created_at desc"
+
   accepts_json_input_for :category_articles
   #-------------------
   # Validations

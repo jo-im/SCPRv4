@@ -1,0 +1,14 @@
+<%= form_block "Association" do %>
+  <%= f.association :category %>
+  <%= f.input :article_type, collection: Quote.featurable_classes_select_collection %>
+  <%= f.input :article_id, label: "Article ID", input_html: { class: 'thin' } %>
+<% end %>
+
+<%= form_block "Information" do %>
+  <%= f.input :source_name %>
+  <%= f.input :source_context %>
+  <%= f.input :quote, input_html: { class: "tiny" } %>
+<% end %>
+
+<%= f.input :status, collection: Quote.status_select_collection, include_blank: false %>
+
