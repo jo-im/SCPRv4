@@ -4,7 +4,7 @@ describe Event do
   let(:valid_record) { build :event, :published }
   let(:updated_record) { build :event, :published }
   let(:invalid_record) { build :event, :published, headline: "" }
-  
+
   it_behaves_like "managed resource"
   it_behaves_like "save options"
   it_behaves_like "admin routes"

@@ -5,7 +5,7 @@ describe Job::ComputeAudioFileInfo do
     it "finds the audio and finds the duration and size, and saves" do
       audio = create :enco_audio, :live_enco, :live
 
-      # Reset these columns since theoretically 
+      # Reset these columns since theoretically
       # they would have been set already by the callback.
       audio.update_column(:size, nil)
       audio.update_column(:duration, nil)

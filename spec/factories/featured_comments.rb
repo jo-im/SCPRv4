@@ -7,7 +7,7 @@ FactoryGirl.define do
   end
 
   #---------------------------
-  
+
   factory :featured_comment do
     bucket  { |f| f.association :featured_comment_bucket }
     content { |mic| mic.association(:content_shell) }

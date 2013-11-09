@@ -1,7 +1,7 @@
 require "spec_helper"
 
 describe Concern::Associations::AssetAssociation do
-  
+
   #--------------------
 
   describe '#asset_json' do
@@ -25,25 +25,25 @@ describe Concern::Associations::AssetAssociation do
         newrecord.reload.assets.size.should eq 1
       end
     end
-    
+
     it "doesn't do anything if passed-in argument is an empty string" do
       record = create :test_class_story
       record.asset_json = "[{\"id\":32459,\"caption\":\"Caption\",\"position\":12}]"
       record.assets.size.should eq 1
-      
+
       record.asset_json = ""
       record.assets.size.should eq 1
 
       record.asset_json = "[]"
       record.assets.size.should eq 0
     end
-    
+
     it "adds them ordered by position" do
       record = create :test_class_story
       record.asset_json = "[{\"id\":32459,\"caption\":\"Caption\",\"position\":12}, {\"id\":32458,\"caption\":\"Other Caption\",\"position\":0}]"
       record.assets.map(&:position).should eq [0, 12]
     end
-    
+
     context "for new record" do
       it "parses the json and adds the asset" do
         record = build :test_class_story
@@ -52,34 +52,34 @@ describe Concern::Associations::AssetAssociation do
         record.save!
         record.reload.assets.size.should eq 1
       end
-      
+
       it "Doesn't create the association if run in a rollback transaction" do
         record = create :test_class_story
         record.assets.size.should eq 0
-        
+
         record.transaction do
           record.asset_json = "[{\"id\":32459,\"caption\":\"Caption\",\"position\":12}]"
           record.assets.size.should eq 1
           raise ActiveRecord::Rollback
         end
-        
+
         record.reload
         record.assets.size.should eq 0
       end
     end
-    
+
     context "updating assets" do
       it "replaces the collection with the new one" do
         record = create :test_class_story
         record.asset_json = "[{\"id\":32459,\"caption\":\"Caption\",\"position\":12}]"
         record.assets.size.should eq 1
         record.save!
-        
+
         record.asset_json = "[{\"id\":32450,\"caption\":\"Other Caption\",\"position\":1}]"
         record.assets.size.should eq 1
         record.assets.first.caption.should eq "Other Caption"
         record.save!
-        
+
         # Make sure it actually deleted the other asset
         ContentAsset.count.should eq 1
       end

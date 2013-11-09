@@ -124,7 +124,7 @@ describe Api::Public::V3::EventsController do
     describe 'date filtering' do
       before :each do
         Time.stub(:now) { Time.new(2013, 6, 14) }
-        
+
         @way_past     = create :event, :published, starts_at: Time.new(2012, 6, 8)
         @past         = create :event, :published, starts_at: Time.new(2013, 6, 8)
         @future       = create :event, :published, starts_at: Time.new(2013, 6, 20)

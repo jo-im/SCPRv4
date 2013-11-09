@@ -59,7 +59,7 @@ describe Api::Private::V2::ArticlesController do
 
     it "returns only the requested classes" do
       entries = @generated_content.select { |c| c.class == BlogEntry }
-      
+
       ts_retry(2) do
         get :index, { types: "blogs" }.merge(request_params)
         assigns(:articles).should eq entries.map(&:to_article)

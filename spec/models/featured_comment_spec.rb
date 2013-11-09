@@ -16,7 +16,7 @@ describe FeaturedComment do
 
     comment1.should_not be_valid
     comment1.errors.keys.should eq [:content_id]
-    
+
     comment2.should be_valid
   end
 end

@@ -6,7 +6,7 @@ describe Concern::Associations::ContentAlarmAssociation do
       story = build :test_class_story
       story.alarm.should eq nil
 
-      # Is there a better way to test this? 
+      # Is there a better way to test this?
       story.send(:should_reject_alarm?, {"fire_at" => ""}).should eq true
     end
   end

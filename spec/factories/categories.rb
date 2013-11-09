@@ -6,7 +6,7 @@ FactoryGirl.define do
     sequence(:title) { |n| "Local #{n}" }
     is_news true
 
-    trait :is_news do 
+    trait :is_news do
     end
 
     trait :is_not_news do

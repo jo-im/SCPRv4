@@ -14,7 +14,7 @@ describe Article do
 
   describe 'initialization' do
     let(:article) { Article.new }
-    
+
     it 'forces assets into an array' do
       article.assets.should eq []
     end
