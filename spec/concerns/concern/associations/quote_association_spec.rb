@@ -3,12 +3,11 @@ require 'spec_helper'
 describe Concern::Associations::QuoteAssociation do
   before :each do
     @post = create :test_class_post, :published
-    @quote = create :quote, article: @post
+    @quote = create :quote, :published, article: @post
     @quote.article(true).should eq @post
   end
 
   it "destroys the join record on destroy" do
-    debugger
     @post.destroy
     @quote.article(true).should eq nil
   end
