@@ -7,7 +7,7 @@ describe FeatureCandidate::FeaturedComment do
   describe '#content' do
     it "is the first featured comment for the category's bucket" do
       category.comment_bucket = bucket
-      comment = create :featured_comment, :published, bucket: bucket
+      comment = create :featured_comment, bucket: bucket
 
       candidate = FeatureCandidate::FeaturedComment.new(category)
       candidate.content.should eq comment
@@ -27,7 +27,7 @@ describe FeatureCandidate::FeaturedComment do
 
     it "is the calculated score" do
       category.comment_bucket = bucket
-      comment = create :featured_comment, :published, bucket: bucket
+      comment = create :featured_comment, bucket: bucket
 
       candidate = FeatureCandidate::FeaturedComment.new(category)
       candidate.score.should be > 0

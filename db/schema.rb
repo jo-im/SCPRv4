@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20131016224744) do
+ActiveRecord::Schema.define(:version => 20131109033002) do
 
   create_table "abstracts", :force => true do |t|
     t.string   "source"
@@ -194,14 +194,14 @@ ActiveRecord::Schema.define(:version => 20131016224744) do
   add_index "contentbase_contentshell", ["updated_at"], :name => "index_contentbase_contentshell_on_updated_at"
 
   create_table "contentbase_featuredcomment", :force => true do |t|
-    t.integer  "bucket_id",                                         :null => false
+    t.integer  "bucket_id",                          :null => false
     t.integer  "content_id"
-    t.integer  "status",                             :default => 0, :null => false
-    t.string   "username",                                          :null => false
-    t.text     "excerpt",      :limit => 2147483647,                :null => false
+    t.integer  "status",                             :null => false
+    t.string   "username",                           :null => false
+    t.text     "excerpt",      :limit => 2147483647, :null => false
     t.string   "content_type"
-    t.datetime "created_at",                                        :null => false
-    t.datetime "updated_at",                                        :null => false
+    t.datetime "created_at",                         :null => false
+    t.datetime "updated_at",                         :null => false
   end
 
   add_index "contentbase_featuredcomment", ["bucket_id"], :name => "contentbase_featuredcomment_25ef9024"

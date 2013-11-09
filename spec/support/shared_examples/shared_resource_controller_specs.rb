@@ -5,7 +5,10 @@ shared_examples_for "resource controller" do
   render_views
 
   before :each do
-    @object     = create resource
+    @resource_properties = Array(resource)
+    @resource = @resource_properties.first
+
+    @object     = create *@resource_properties
     @admin_user = create :admin_user
     controller.stub(:current_user) { @admin_user }
   end
@@ -46,7 +49,7 @@ shared_examples_for "resource controller" do
       klass = resource.to_s.classify.constantize
 
       count = klass.count
-      post :create, resource => build(resource).attributes
+      post :create, @resource => build(*@resource_properties).attributes
       klass.count.should eq count + 1
 
       response.should be_redirect
@@ -55,7 +58,10 @@ shared_examples_for "resource controller" do
 
   describe "PUT /update" do
     it "gets the record" do
-      put :update, id: @object.id, resource => build(resource).attributes
+      put :update,
+        :id         => @object.id,
+        @resource   => build(*@resource_properties).attributes
+
       assigns(:record).should eq @object
     end
   end
