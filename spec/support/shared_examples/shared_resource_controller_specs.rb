@@ -5,7 +5,10 @@ shared_examples_for "resource controller" do
   render_views
 
   before :each do
-    @object     = create resource
+    @resource_properties = Array(resource)
+    @resource = @resource_properties.first
+
+    @object     = create *@resource_properties
     @admin_user = create :admin_user
     controller.stub(:current_user) { @admin_user }
   end
@@ -43,13 +46,16 @@ shared_examples_for "resource controller" do
 
   describe "POST /create" do
     it "creates the resource" do
-      post :create, resource => build(resource).attributes
+      post :create, @resource => build(*@resource_properties).attributes
     end
   end
 
   describe "PUT /update" do
     it "gets the record" do
-      put :update, id: @object.id, resource => build(resource).attributes
+      put :update,
+        :id         => @object.id,
+        @resource   => build(*@resource_properties).attributes
+
       assigns(:record).should eq @object
     end
   end
