@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20131108231657) do
+ActiveRecord::Schema.define(:version => 20131109002114) do
 
   create_table "abstracts", :force => true do |t|
     t.string   "source"
@@ -691,6 +691,7 @@ ActiveRecord::Schema.define(:version => 20131108231657) do
     t.string   "article_type"
     t.datetime "created_at",     :null => false
     t.datetime "updated_at",     :null => false
+    t.integer  "status"
   end
 
   add_index "quotes", ["article_id", "article_type"], :name => "index_quotes_on_article_id_and_article_type"
