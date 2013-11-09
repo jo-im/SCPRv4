@@ -31,6 +31,10 @@ module CategoryHandler
     @events = @category.events.published.upcoming
     @latest_event = @events.first.to_article
     @upcoming_events = @events[1..3].map { |a| a.to_article }
+
+    @quote = @category.quotes.published.first
+    @quote_article = @quote.article.to_article
+
     @twitter_feeds = @category.bios.map(&:twitter_handle)
     respond_with @content, template: "category/show", layout: "vertical"
   end

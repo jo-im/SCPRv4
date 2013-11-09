@@ -160,21 +160,21 @@
                 <aside class="featured" style="background-image: url(assets/featured-interactives/intersections.jpg);">
                     <div>
                         <h1>Featured Interactive</h1>
-                        <h2><%= link_to @featured_interactive.title, @featured_interactive.public_path %></h2>
+                        <h2><%= link_to @featured_interactive.short_title, @featured_interactive.public_path %></h2>
                       <h3><%= @featured_interactive.byline %></h3>
                     </div>
                 </aside>
                 <div class="inbrief clearfix">
                     <aside class="quote">
                         <blockquote>
-                            <p>We are under a lot of public scrutiny right now because of this well-documented and well-publicized federal investigation of the Calderon family.</p>
+                          <p><%= @quote.quote %></p>
                             <cite>
-                                <mark>Tony Perez</mark>
-                                <span>District General Manager</span>
+                              <mark><%= @quote.source_name %></mark>
+                              <span><%= @quote.source_context %></span>
                             </cite>
                         </blockquote>
                         <footer>
-                            <a href="#" title="Read this quote's source article">Central Basin Water District sues vendor as it reviews all finances</a>
+                          <%= link_to @quote_article.short_title, @quote_article.public_path, title: "Read this quote's source article" %>
                         </footer>
                     </aside>
                     <aside class="events">
