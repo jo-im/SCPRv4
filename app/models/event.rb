@@ -9,6 +9,7 @@ class Event < ActiveRecord::Base
   include Concern::Associations::RelatedLinksAssociation
   include Concern::Associations::RelatedContentAssociation
   include Concern::Associations::FeaturedCommentAssociation
+  include Concern::Associations::QuoteAssociation
   include Concern::Associations::HomepageContentAssociation
   include Concern::Associations::MissedItContentAssociation
   include Concern::Callbacks::GenerateSlugCallback

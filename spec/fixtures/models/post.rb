@@ -5,6 +5,7 @@ module TestClass
     include Concern::Associations::HomepageContentAssociation
     include Concern::Associations::MissedItContentAssociation
     include Concern::Associations::FeaturedCommentAssociation
+    include Concern::Associations::QuoteAssociation
     include Concern::Associations::RelatedContentAssociation
     include Concern::Associations::AssetAssociation
     include Concern::Associations::PolymorphicProgramAssociation
