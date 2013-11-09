@@ -8,15 +8,16 @@ module CategoryHandler
       :page       => page,
       :per_page   => per_page
     )
-    @featured_articles = @category.featured_articles
-    @lead_article = @featured_articles.first
-    @featured_image ||= @lead_article.asset
+    if @featured_articles = @category.featured_articles
+      @lead_article = @featured_articles.first
+      @featured_image ||= @lead_article.asset
+      @resources = @featured_articles[1..4]
+      @featured_interactive = @featured_articles[5]
+    end
 
     @category_articles = @content.map { |a| a.to_article }
     @latest_articles = @category_articles[1..2]
 
-    @resources = @featured_articles[1..4]
-    @featured_interactive = @featured_articles[5]
 
     if @issues = @lead_article.original_object.issues
       @primary_issue = @issues.first
