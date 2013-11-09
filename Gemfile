@@ -86,7 +86,7 @@ end
 
 ## Development Only
 group :development do
-  gem 'capistrano'
+  gem 'capistrano', '~> 2.0'
   gem 'pry'
   gem 'pry-debugger'
 end
