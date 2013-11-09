@@ -1,6 +1,6 @@
 GIT
   remote: git://github.com/SCPR/asset_host_client.git
-  revision: 0fec1d09f7932d3e6b33db72a636f813f5b554c5
+  revision: 9dbdb15a507c7691c4e760c4d418e0c0168930d2
   specs:
     asset_host_client (1.2.0)
       faraday (~> 0.8)
@@ -24,19 +24,19 @@ GIT
 
 GIT
   remote: git://github.com/SCPR/outpost-asset_host.git
-  revision: 085218cabb731d31c516c7c24a8344dadf2461fa
+  revision: 28c723b1024a4737da02f7d6b90626cec6e58224
   specs:
     outpost-asset_host (1.0.0)
 
 GIT
   remote: git://github.com/SCPR/outpost-publishing.git
-  revision: e9ba297fc16fb37a73bb8a34c28ae3500c288a94
+  revision: 3612ce1f4a17f127734c6d006bb3347ce9384850
   specs:
     outpost-publishing (1.0.0)
 
 GIT
   remote: git://github.com/SCPR/outpost.git
-  revision: ab4050ca49197e15c72b170f34b7c4738833672c
+  revision: ead345f587609a415da20d21ef00554e998a0441
   specs:
     outpost-cms (0.0.4)
       bcrypt-ruby (>= 3.0.0)
@@ -70,9 +70,9 @@ GIT
 
 GIT
   remote: git://github.com/bricker/npr.git
-  revision: 8a69eb0cc3999228cc463d954cfa98196d39ac59
+  revision: a6a4fbfd16a3d5165a84008754e3b3c5ba9c3d3b
   specs:
-    npr (2.0.0.beta)
+    npr (2.0.0)
       faraday (>= 0.8.0)
       faraday_middleware (>= 0.9.0)
 
