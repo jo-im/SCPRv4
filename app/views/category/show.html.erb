@@ -44,7 +44,7 @@
                       <%= link_to(article.public_path, class: 'clearfix') do %>
                             <div>
                               <mark><%= article.short_title %></mark>
-                              <em><%= article.public_datetime.strftime('%l:%M%p') %>
+                              <em><%=new_smart_date_js article.public_datetime, tag: "em", "data-window" => "8h", "data-relative" => "2h" %></em>
 </em> <span><%= article.byline %></span>
                             </div>
                             <figure class="ratio">
@@ -212,6 +212,7 @@
                         <div class="graphic">
                             <div class="ratio">
                               <%- if article.issues.any? %>
+
                                 <%= link_to issue_path(article.issues.first.slug), class: 'issue' do %>
                                   <span><%= article.issues.first.title %></span>
                                 <% end %>
@@ -224,7 +225,7 @@
                               <%= content_tag :aside, class: aside_classes do %>
                                 <p>
                                 <b class="author"><a href="#"><%= recent_article.byline %></a></b>
-                                <span><%= recent_article.public_datetime %></span>
+                                <span><%= new_smart_date_js recent_article.public_datetime, tag: 'span' %></span>
                                 </p>
                                 <%- if article.feature_type.present? %>
                                   <%= content_tag(:mark, article.class.name.constantize::FEATURE_TYPE[article.feature_type], class: "trait #{article.class.name.constantize::FEATURE_TYPE[article.feature_type].downcase}") %>
@@ -273,13 +274,13 @@
                         </div>
                         <div class="prose">
                             <aside class="byline">
-                              <p class="author"<%= link_to recent_article.byline, '#' %></p>
+                              <p class="author"><%= render_byline article %></p>
                                 <%- if article.feature_type.present? %>
                                   <%= content_tag(:mark, article.class.name.constantize::FEATURE_TYPE[article.feature_type], class: "trait #{article.class.name.constantize::FEATURE_TYPE[article.feature_type].downcase}") %>
                                 <% end %>
                             </aside>
                             <h1><%= link_to recent_article.short_title, recent_article.public_path %></h1>
-                          <h2 class="date"><%= recent_article.public_datetime %></h2>
+                          <h2 class="date"><%= new_smart_date_js recent_article.public_datetime, tag: 'span' %></h2>
                           <p class="teaser"><%= recent_article.teaser %></p>
                         </div>
                 <% end %>
@@ -303,13 +304,13 @@
                         </div>
                         <div class="prose">
                             <aside class="byline">
-                              <p class="author"<%= link_to recent_article.byline, '#' %></p>
+                              <p class="author"><%= render_byline article %></p>
                                 <%- if article.feature_type.present? %>
                                   <%= content_tag(:mark, article.class.name.constantize::FEATURE_TYPE[article.feature_type], class: "trait #{article.class.name.constantize::FEATURE_TYPE[article.feature_type].downcase}") %>
                                 <% end %>
                             </aside>
                             <h1><%= link_to recent_article.short_title, recent_article.public_path %></h1>
-                          <h2 class="date"><%= recent_article.public_datetime %></h2>
+                          <h2 class="date"><%= new_smart_date_js recent_article.public_datetime, tag: 'span' %></h2>
                           <p class="teaser"><%= recent_article.teaser %></p>
                         </div>
                 <% end %>
@@ -327,7 +328,7 @@
         <div class="inner bound clearfix">
 
             <section class="backlog">
-                <h1>More Politics</h1>
+              <h1>More <%= @category.title %></h1>
 
                 <%- @more_articles.each do |article| %>
                   <article class="clearfix">
@@ -344,8 +345,8 @@
                             <h1><%= link_to article.short_title, article.public_path %></h1>
                               <aside class="byline">
                                   <p>
-                                  <b class="author"><%= link_to article.byline, '#' %></b>
-                                  <span><%= article.public_datetime %></span>
+                                  <b class="author"><%= render_byline article.original_object %></b>
+                                  <span><%= new_smart_date_js article.public_datetime, tag: 'span' %></span>
                                   </p>
                                   <%- if article.original_object.feature_type.present? %>
                                     <%= content_tag(:mark, article.original_object.class.name.constantize::FEATURE_TYPE[article.original_object.feature_type], class: "trait #{article.original_object.class.name.constantize::FEATURE_TYPE[article.original_object.feature_type].downcase}") %>

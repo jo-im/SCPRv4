@@ -7,9 +7,8 @@
       </div><!--/ .ratio -->
       <figcaption>
         <p><%= article.short_title %></p>
-        <mark><%= article.byline %> <em>with KPCC Wire Services</em></mark> <span>July 25</span>
+        <mark><%= article.byline %></mark><%=new_smart_date_js article.public_datetime, tag: 'span' %>
       </figcaption>
     </figure><!--/ .ratio-pairing -->
   <% end %>
 </li>
-

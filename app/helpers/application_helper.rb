@@ -114,6 +114,13 @@ module ApplicationHelper
     }.merge(options.except(:class))
   end
 
+  def new_smart_date_js(datetime, options={})
+    return '' if !datetime.respond_to?(:strftime)
+    content_tag "#{options[:tag]}", nil, {
+      "class" => "#{options[:class]} smart smarttime",
+      "data-unixtime" => datetime.to_i
+    }.merge(options.except(:class,:tag))
+  end
   #----------
   # Render a byline for the passed-in content
   # If links is set to false, and the content has
