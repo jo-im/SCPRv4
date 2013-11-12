@@ -1,0 +1,17 @@
+<% content.each do |tweet| %>
+  <li>
+    <div>
+      <figure>
+        <figcaption>
+        <h1><%= link_to tweet.user.name, "#" %></h1>
+        <h2><%= link_to "@#{tweet.user.screen_name}", "http://twitter.com/#{tweet.user.screen_name}" %></h2>
+      <span><%= link_to format_date(tweet.created_at, with: "%b %e"), "#", title: "Link to tweet" %></span>
+        </figcaption>
+        <blockquote>
+          <p><%= auto_link(tweet.text).html_safe %></p>
+        </blockquote>
+      </figure>
+        <b class="pic"><%= image_tag tweet.user.profile_image_url %></b>
+    </div>
+  </li>
+<% end %>
