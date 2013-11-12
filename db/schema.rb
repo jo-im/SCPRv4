@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20131109015243) do
+ActiveRecord::Schema.define(:version => 20131111235742) do
 
   create_table "abstracts", :force => true do |t|
     t.string   "source"
@@ -229,9 +229,11 @@ ActiveRecord::Schema.define(:version => 20131109015243) do
     t.datetime "created_at",                                        :null => false
     t.datetime "updated_at",                                        :null => false
     t.integer  "category_id"
+    t.integer  "feature_type"
   end
 
   add_index "contentbase_contentshell", ["category_id"], :name => "contentbase_contentshell_42dc49bc"
+  add_index "contentbase_contentshell", ["feature_type"], :name => "index_contentbase_contentshell_on_feature_type"
   add_index "contentbase_contentshell", ["published_at"], :name => "index_contentbase_contentshell_on_published_at"
   add_index "contentbase_contentshell", ["site"], :name => "index_contentbase_contentshell_on_site"
   add_index "contentbase_contentshell", ["status", "published_at"], :name => "index_contentbase_contentshell_on_status_and_published_at"
