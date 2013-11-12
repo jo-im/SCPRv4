@@ -6,6 +6,7 @@
   <div class="row-fluid">
     <div class="span14">
       <h4><%= @episode.title %></h4>
+      <p class="byline"><%= timestamp(@episode.air_date) %></p>
     </div>
     <div class="span10">
       <% if audio = @episode.audio.first %>
