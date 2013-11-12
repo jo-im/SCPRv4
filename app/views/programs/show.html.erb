@@ -28,7 +28,7 @@
       <h2>Recently on <%= @kpcc_program.title %></h2>
       <%= nav if @segments.current_page > 1 %>
 
-      <%= cache ["segment-teasers", @segments] do %>
+      <%= cache ["segment-teasers", @segments.to_a] do %>
         <%= render partial: "/programs/segment_teaser", collection: @segments.map(&:to_article), as: :article %>
       <% end %>
 
@@ -44,7 +44,7 @@
       <h2>Recently on <%= @kpcc_program.title %></h2>
       <%= nav if @episodes.current_page > 1 %>
 
-      <%= cache ["episode-teasers", @episodes] do %>
+      <%= cache ["episode-teasers", @episodes.to_a] do %>
         <%= render partial: "/programs/episode", collection: @episodes %>
       <% end %>
 
