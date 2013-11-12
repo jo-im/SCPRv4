@@ -46,6 +46,14 @@ module Concern
         end
       end
 
+      # This is necessary for content_cache.
+      # So we can pass in whole abstract objects and it'll be able to
+      # use the original object's obj_key for cache expiration.
+      def obj_key
+        if original_object && original_object.respond_to?(:obj_key)
+          original_object.obj_key
+        end
+      end
 
       # Steal the ActiveRecord behavior for object comparison.
       # Compare Article ID with the comparison object's ID

@@ -47,6 +47,22 @@ describe Concern::Methods::AbstractModelMethods do
     end
   end
 
+  describe '#cache_key' do
+    it 'is the original object cache_key' do
+      klass = Struct.new(:obj_key)
+      person = klass.new("person:123")
+      obj = AbstractModel.new(original_object: person)
+      obj.obj_key.should eq person.obj_key
+    end
+
+    it 'is nil if the original object does not have a cache key' do
+      klass = Struct.new(:lolzers)
+      person = klass.new("wat")
+      obj = AbstractModel.new(original_object: person)
+      obj.obj_key.should eq nil
+    end
+  end
+
   describe '#updated_at' do
     it 'is the original object updated_at' do
       klass = Struct.new(:cache_key, :updated_at)
