@@ -11,7 +11,7 @@ module CategoryHandler
     if @category.featured_articles.any?
       @featured_articles = @category.featured_articles
       @lead_article = @featured_articles.first
-      @featured_image ||= @lead_article.asset
+      @featured_image = @lead_article.asset
       @resources = @featured_articles[1..4]
       @featured_interactive = @featured_articles[5]
 
@@ -21,6 +21,12 @@ module CategoryHandler
         @top_two_issue_articles = @primary_issue.articles.first(2)
       end
 
+      if @lead_article.original_object.issues.any?
+
+        @featured_content = {articles: @top_two_issue_articles, type: 'issue'}
+      elsif @lead_article.original_object.related_content.any?
+        @featured_content = {articles: @lead_article.original_object.related_content.first(2), type: 'related'}
+      end
     end
 
     @category_articles = @content.map { |a| a.to_article }

@@ -23,14 +23,20 @@
             <div class="supportive">
               <h1 class="tease"><%= @lead_article.teaser %></h1>
               <h2 class="byline"><a href="#"><%= @lead_article.byline %></a></h2>
+              <% if @featured_content %>
                 <aside class="more">
-                  <h3>More from <%= link_to @primary_issue.title, issue_path(@primary_issue.slug) %></h3>
+                  <% if @featured_content[:type] == 'issue' %>
+                    <h3>More from <%= link_to @primary_issue.title, issue_path(@primary_issue.slug) %></h3>
+                  <% else %>
+                    <h3>More from Related Content </h3>
+                  <% end %>
                     <ul>
-                        <%- @top_two_issue_articles.each do |article| %>
+                        <%- @featured_content[:articles].each do |article| %>
                           <li><%= link_to article.short_title, article.public_path %></li>
                         <% end %>
                     </ul>
                 </aside>
+              <% end %>
             </div><!--/ .supporting -->
         </section><!--/ .curated -->
         <div class="ataglance clearfix">
