@@ -27,7 +27,7 @@ module Job
 
     #---------------
 
-    def initialize(screen_name, partial="/shared/widgets/cached/tweets", options={})
+    def initialize(screen_name, partial="/shared/widgets/cached/vertical_tweets", options={})
       @tweeter     = Tweeter.new("kpccweb")
 
       @screen_name = screen_name
