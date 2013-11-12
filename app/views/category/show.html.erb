@@ -1,10 +1,11 @@
 <% add_to_page_title @category.title %>
 
+<% if @lead_article %>
     <section class="headline">
       <h1 class="bound"><span><%= @lead_article.short_title %></span></h1>
     </section>
 
-
+ <% end %>
 
     <div class="welcome bound clearfix">
         <section class="curated clearfix">
