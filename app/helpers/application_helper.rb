@@ -2,14 +2,14 @@ module ApplicationHelper
   include Twitter::Autolink
 
   HEADSHOTS = [
-    "stoltze.png",
-    "peterson.png",
-    "moore.png",
-    "guzman-lopez.png",
-    "julian.png",
-    "watt.png",
-    "oneil.png",
-    "trujillo.png"
+    "personalities/stoltze.png",
+    "personalities/peterson.png",
+    "personalities/moore.png",
+    "personalities/guzman-lopez.png",
+    "personalities/julian.png",
+    "personalities/watt.png",
+    "personalities/oneil.png",
+    "personalities/trujillo.png"
   ]
 
 
@@ -100,7 +100,7 @@ module ApplicationHelper
   #----------
 
   def random_headshot
-    image_tag "personalities/#{HEADSHOTS.sample}"
+    image_tag HEADSHOTS.sample
   end
 
   #----------
