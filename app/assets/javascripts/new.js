@@ -1,0 +1,2 @@
+//= require smart_time
+
