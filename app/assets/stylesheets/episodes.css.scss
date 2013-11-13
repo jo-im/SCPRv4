@@ -73,6 +73,10 @@ header.episode, .gray-strip {
             color: $nearBlack;
         }
     }
+    .byline {
+        display:block;
+        margin:0 0 8px;
+    }
     p {
         font-size:13px;
         line-height:18px;

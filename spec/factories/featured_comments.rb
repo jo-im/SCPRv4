@@ -15,12 +15,10 @@ FactoryGirl.define do
     username  "bryanricker"
     excerpt   "This is an excerpt of the featured comment"
 
-    trait :published do
-      status 5
-    end
+    status FeaturedComment::STATUS_LIVE
 
     trait :draft do
-      status 0
+      status FeaturedComment::STATUS_DRAFT
     end
   end
 end

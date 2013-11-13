@@ -6,6 +6,7 @@
   <div class="row-fluid">
     <div class="span14">
       <h4><%= @episode.title %></h4>
+      <p class="byline"><%= timestamp(@episode.air_date) %></p>
     </div>
     <div class="span10">
       <% if audio = @episode.audio.first %>
@@ -23,7 +24,7 @@
 
 <section class="show-segments episode">
 <%= any_to_list? @segments, title: "Segments" do %>
-  <%= cache ["segment-teasers", @segments] do %>
+  <%= cache ["segment-teasers", @segments.to_a] do %>
     <%= render partial: '/programs/segment_teaser', collection: @segments, as: :article %>
   <% end %>
 <% end %>

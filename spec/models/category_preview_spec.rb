@@ -136,8 +136,7 @@ describe CategoryPreview do
       # Featured Comment 
       bucket = create :featured_comment_bucket
       category.comment_bucket = bucket
-      comment = create :featured_comment, :published,
-        bucket: bucket, content: segment
+      comment = create :featured_comment, bucket: bucket, content: segment
 
       index_sphinx
 
