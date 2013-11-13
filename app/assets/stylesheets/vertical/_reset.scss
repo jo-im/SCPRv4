@@ -38,6 +38,18 @@ a img { border:none } /* Gets rid of IE's blue borders */
 
 /* **************************************************************************************************************************************** */
 
+html {
+	-webkit-text-size-adjust: none;
+}
+body {
+	background: white;
+	font-size: 100%;
+	font-family: "merriweatherregular", "Baskerville", "Garamond", "Cambria", Georgia, serif;
+	font-weight: normal;
+}
+
+/* **************************************************************************************************************************************** */
+
 .bound {
 	width: 90%;
     max-width: 1300px;

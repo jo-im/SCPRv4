@@ -1,0 +1,459 @@
+// Variables
+$font-freight: "freight-sans-pro", "Avenir Next", "Avenir", "Lucida Grande", "Tahoma", Arial, sans-serif;
+$font-prox: "proxima-nova", "Avenir Next", "Avenir", "Lucida Grande", "Tahoma", Arial, sans-serif;
+$font-proxcond: "proxima-nova-condensed", "Avenir Next Condensed", "Arial Narrow", Arial, sans-serif;
+$font-merri: "merriweatherregular", "Baskerville", "Garamond", "Cambria", Georgia, serif;
+$font-merri-lightital: "merriweatherlight_italic", "Baskerville", "Garamond", "Cambria", Georgia, serif;
+$blue: #31aad3;
+$orange: #f17b21;
+
+// Mixins
+@mixin icon {
+	background: url(i/workbench-icons.png) no-repeat;
+	background-size: 300px 450px;
+}
+@mixin texthide {
+	display: block;
+	white-space: nowrap;
+	text-indent: 100%;
+	overflow: hidden;
+}
+@mixin mask {
+	display: block;
+	width: 100%;
+	height: 100%;
+	white-space: nowrap;
+	text-indent: 100%;
+	overflow: hidden;
+}
+@mixin trait-basics {
+	display: block;
+	position: absolute;
+	text-align: right;
+	font-weight: 700;
+	padding: 12px 44px 11px 0;
+}
+@mixin pane {
+	position: absolute;
+	background: rgba(0,0,0,0.88);
+	box-shadow:
+		inset 0 44px 0 black,
+		inset 0 45px 0 rgba(255,255,255,0.3),
+		0 0 8px rgba(0,0,0,0.6);
+	top: 0; // will be overridden in each case
+	left: 0;
+	width: 100%;
+	margin-left: -5.5%;
+	padding: 53px 5.5% 20px;
+	font-family: $font-prox;
+	border-bottom: 1px solid white;
+}
+@mixin trait-states-white {
+	.trait.slideshow	{ background-position: right 0; }
+	.trait.video		{ background-position: right -47px; }
+	.trait.poll			{ background-position: right -94px; }
+	.trait.map			{ background-position: right -141px; }
+	.trait.audio		{ background-position: right -188px; }
+	.trait.infographic	{ background-position: right -235px; }
+	.trait.taketwo		{ background-position: right -282px; }
+	.trait.airtalk		{ background-position: right -282px; }
+	.trait.offramp		{ background-position: right -282px; }
+}
+@mixin trait-states-orange {
+	.trait.slideshow	{ background-position: right -564px; }
+	.trait.video		{ background-position: right -611px; }
+	.trait.poll			{ background-position: right -658px; }
+	.trait.map			{ background-position: right -705px; }
+	.trait.audio		{ background-position: right -752px; }
+	.trait.infographic	{ background-position: right -799px; }
+	.trait.taketwo		{ background-position: right -846px; }
+	.trait.airtalk		{ background-position: right -846px; }
+	.trait.offramp		{ background-position: right -846px; }
+}
+
+
+
+
+
+
+
+//	################################################################################################
+//	################################################################################################
+//	EPILOGUE
+//	################################################################################################
+//	################################################################################################
+
+.epilogue {
+	background: black;
+	font-family: $font-prox;
+	font-weight: 400;
+	color: #bfbfbf;
+	overflow: hidden;
+	padding-bottom: 60px;
+//	~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+	header {
+		margin-bottom: 15px;
+		box-shadow:
+			inset 0 -1px 0 #3d3d3d,
+			inset 0 -4px 0 black,
+			inset 0 -5px 0 #3d3d3d;
+		.inner {
+			padding: 53px 0 15px;
+			position: relative;
+			h1 {
+				width: 159px;
+				height: 23px;
+				display: inline-block;
+				margin-right: 15px;
+				a {
+					@include mask;
+					background: url(i/logo-kpcc.png) no-repeat;
+					background-size: 100%;
+				}
+			}
+			h2 {
+				display: inline-block;
+				font-size: 0.75em;
+				span {
+					display: inline-block;
+					margin-bottom: 2px;
+					&:first-child {
+						padding-right: 10px;
+						border-right: 1px solid #3d3d3d;
+						margin-right: 6px;
+					}
+				}
+			}
+			.pledge {
+				text-align: right;
+				position: absolute;
+				right: 0;
+				bottom: 15px;
+				color: $blue;
+				font-size: 0.875em; // 14/16
+				a {
+					color: white;
+					font-size: 0.92857142857143em; // 13/14
+					text-shadow: 0 0 3px rgba(0,0,0,0.2);
+					display: inline-block;
+					padding: 2px 7px 2px 23px;
+					margin-left: 3px;
+					border-radius: 4px;
+					@include icon;
+					background-color: $blue;
+					background-position: 4px -390px;
+					letter-spacing: -0.03em;
+					&:hover {
+						box-shadow: 0 0 6px $blue;
+					}
+				}
+			}
+		}
+	}
+//	~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+	.lastwords {
+		position: relative;
+		.partners {
+			position: relative;
+			h1 {
+				color: #5c5c5c;
+				text-transform: uppercase;
+				font-size: 0.6875em;
+				display: inline;
+				position: absolute;
+				top: 5px;
+			}
+			ul {
+				margin: 0 450px 0 88px;
+				padding-top: 3px;
+				overflow: hidden;
+				li {
+					display: inline;
+					a {
+						@include mask;
+						float: left;
+						width: 93px; // default to be overridden
+						height: 18px;
+						background: url(i/partner-logos.png) no-repeat;
+						background-size: 150px 364px;
+						margin: 0 15px 15px 0;
+					}
+					&:last-child a	{ margin-right: 0;									}
+					&.apm a			{ width: 94px;	background-position: 0 0;			}
+					&.npr a			{ width: 51px;	background-position: 0 -28px;		}
+					&.bbc a			{ width: 60px;	background-position: 0 -56px;		}
+					&.pri a			{ width: 76px;	background-position: 0 -84px;			}
+					&.nbc a			{ width: 27px;	background-position: 0 -112px;			}
+					&.pcc a			{ width: 50px;	background-position: 0 -140px;		}
+				}
+			}
+		}
+		.fineprint {
+			position: absolute;
+			top: 0;
+			right: 0;
+			text-align: right;
+			color: #71716c;
+			li {
+				display: inline-block;
+				font-size: 0.6875em;
+				padding-left: 7px;
+				margin-left: 3px;
+				border-left: 1px solid #242424;
+				&:first-child {
+					padding-left: 0;
+					margin-left: 0;
+					border-left: none;
+				}
+			}
+			a:hover {
+				text-decoration: underline;
+				color: white;
+			}
+		}
+	}
+
+//	~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+	.grant {
+		border-bottom: 1px solid #3d3d3d;
+		margin-bottom: 13px;
+		.inner {
+			position: relative;
+			min-height: 27px;
+			padding-bottom: 30px;
+		}
+		p {
+			padding: 11px 0 0 58px;
+			font-family: $font-merri;
+			font-size: 1.0625em;
+			line-height: 1.4;
+			color: white;
+			span { font-style: italic; }
+			@media screen and (max-width: 850px) { font-size: 0.9375em; }
+		}
+		.logo {
+			width: 32px;
+			position: absolute;
+			img {
+				display: block;
+				width: 100%;
+				height: auto;
+			}
+			@media screen and (max-width: 740px) { top: 10px; }
+		}
+	}
+
+//	~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+	.cols {
+		border-bottom: 1px solid #19566a;
+		margin-bottom: 18px;
+		padding-bottom: 30px;
+		text-transform: uppercase;
+		.cols-pair {
+			width: 48.769230769231%; // 634 / 1300
+		}
+		.primary	{ float: left; }
+		.secondary	{ float: right; }
+		nav {
+			width: 47.476340694006%; // 301 / 634
+			&:first-child	{ float: left; }
+			&:last-child	{ float: right; }
+			h1 {
+				color: #828282;
+				font-weight: 300;
+				margin-bottom: 13px;
+			}
+			&.sections h2 {
+				background: #232323;
+				padding: 5px 0 4px 3%;
+				font-size: 0.8125em; // 13
+				margin-bottom: 6px;
+				margin-left: -3%;
+				border-top: 1px solid #3d3d3d;
+			}
+			ul {
+				font-size: 0.6875em; // 11
+				margin-bottom: 15px;
+				li		{ margin-bottom: 6px; }
+				a:hover	{ text-decoration: underline; color: white; }
+			}
+			&.sections ul {
+				-moz-column-count: 2;
+				-webkit-column-count: 2;
+				column-count: 2;
+			}
+			.social {
+				li {
+					margin-bottom: 9px;
+					margin-left: -6px;
+					padding-left: 6px;
+					line-height: 0.9;
+					&:nth-child(1)	{ box-shadow: inset 1px 0 0 #2e62cd; }
+					&:nth-child(2)	{ box-shadow: inset 1px 0 0 #44a9f1; }
+					&:nth-child(3)	{ box-shadow: inset 1px 0 0 #dd4b39; }
+				}
+			}
+			.mobile {
+				text-transform: none;
+				font-size: 0.875em;
+				a {
+					display: block;
+					color: $blue;
+					&:hover { text-decoration: underline; }
+					b { font-weight: 700; }
+				}
+			}
+			.location, .call {
+				text-transform: none;
+			}
+			.location {
+				color: #919191;
+				font-style: italic;
+				font-weight: 300;
+				font-size: 0.75em;
+				margin-bottom: 10px;
+				b { font-weight: 300; display: block; }
+			}
+			.call {
+				@include icon;
+				background-position: 0 -330px;
+				padding: 8px 0 8px 22px;
+				color: white;
+				font-style: italic;
+				font-size: 0.875em;
+			}
+		}
+	}
+}
+
+
+//	----------------------------------------------------------------------------------------------------------------------------------
+
+	@media screen and (max-width: 840px) {
+
+		.epilogue {
+			.lastwords {
+				.partners {
+					ul {
+						margin-right: 230px;
+					}
+				}
+				.fineprint {
+					@media screen and (min-width: 561px) {
+						li {
+							display: block;
+							border-left: none;
+							margin-bottom: 5px;
+						}
+					}
+				}
+			}
+		}
+
+	}
+
+//	----------------------------------------------------------------------------------------------------------------------------------
+
+	@media screen and (max-width: 767px) {
+
+		.epilogue {
+			header {
+				.inner {
+					padding: 53px 0 15px;
+					h1 {
+						display: block;
+						margin: 0 auto 20px auto;
+					}
+					h2 {
+						display: block;
+						text-align: center;
+						margin: 0 auto 30px;
+					}
+					.pledge {
+						text-align: center;
+						position: static;
+						margin: 0 auto 20px;
+					}
+				}
+			}
+			.cols {
+				.cols-pair {
+					width: 45%;
+				}
+				nav {
+					width: 100%;
+					&:first-child	{
+						float: none;
+						padding-bottom: 18px;
+						border-bottom: 1px solid gray;
+						margin-bottom: 18px;
+					}
+					&:last-child	{ float: none; }
+					&.productions ul,
+					&.about ul {
+						-moz-column-count: 2;
+						-webkit-column-count: 2;
+						column-count: 2;
+					}
+				}
+			}
+		}
+
+	}
+
+
+//	----------------------------------------------------------------------------------------------------------------------------------
+
+	@media screen and (max-width: 560px) {
+
+		.epilogue {
+			.lastwords {
+				.partners {
+					padding-bottom: 15px;
+					border-bottom: 1px solid gray;
+					margin-bottom: 15px;
+					ul {
+						margin-right: 0;
+					}
+				}
+				.fineprint {
+					position: static;
+					text-align: left;
+					ul li:last-child {
+						display: block;
+						border-left: none;
+						padding-top: 15px;
+						padding-left: 0;
+						margin-left: 0;
+					}
+				}
+			}
+		}
+
+	}
+
+
+//	----------------------------------------------------------------------------------------------------------------------------------
+
+	@media screen and (max-width: 450px) {
+
+		.epilogue {
+			header {
+				.inner {
+					.pledge {
+						span	{ display: block; }
+						a		{ margin: 10px auto 0 auto; }
+					}
+				}
+			}
+			.cols {
+				.cols-pair	{ width: 100%; }
+				.primary	{ float: none; }
+				.secondary	{ float: none; }
+			}
+		}
+
+	}
+
+
+
