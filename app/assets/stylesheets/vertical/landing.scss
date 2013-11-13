@@ -1067,7 +1067,13 @@ body {
 			.ratio {
 				margin-bottom: 12px;
 				.fill { padding-top: 75%; }
-				.img-contain { outline: 5px solid white; }
+				.img-contain {
+          outline: 5px solid white;
+          img {
+            width: auto;
+            height: 100%;
+          }
+        }
 			}
 			figcaption {
 				font-family: $font-freight;
@@ -2294,11 +2300,13 @@ body {
 				left: 0;
 				display: block;
 				width: 59px;
-				border-bottom: 4px solid $blue;
+				max-height: 59px;
+        overflow: hidden;
+        border-bottom: 4px solid $blue;
 				a	{ display: block; }
 				img	{ width: 100%; height: auto; }
-				@media screen and (min-width: 700px) and (max-width: 900px)	{ width: 45px; }
-				@media screen and (max-width: 420px)						{ width: 45px; }
+				@media screen and (min-width: 700px) and (max-width: 900px)	{ width: 45px; max-height: 45px }
+				@media screen and (max-width: 420px)						{ width: 45px; max-height: 45px }
 			}
 			figure {
 				margin-left: 79px;
