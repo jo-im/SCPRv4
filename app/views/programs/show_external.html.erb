@@ -20,7 +20,7 @@
 
 <h6>Recent Episodes</h6>
 
-<%= cache ["episode-teasers", @episodes] do %>
+<%= cache ["episode-teasers", @episodes.to_a] do %>
 <div class="show-segments">
   <%= render partial: "external_episode", collection: @episodes %>
 </div>
