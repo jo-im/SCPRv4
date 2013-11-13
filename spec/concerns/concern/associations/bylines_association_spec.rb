@@ -56,6 +56,25 @@ describe Concern::Associations::BylinesAssociation do
   end
 
   describe 'form input' do
+    it 'creates a version when adding' do
+      story     = create :test_class_story # 1
+      bio       = create :bio
+
+      # Fake the params.
+      story.update_attributes("bylines_attributes" => [
+        { # This one should stay
+          "user_id"     => bio.id.to_s,
+          "name"        => "",
+          "role"        => "0",
+        }
+      ]) # 2
+
+      story.bylines.count.should eq 1
+      story.versions.count.should eq 2
+
+      story.versions.last.object_changes["bylines"][0].should eq Array.new
+    end
+
     it 'destroys the object if the _destroy flag is set' do
       story     = create :test_class_story # 1
       byline1   = create :byline, content: nil
