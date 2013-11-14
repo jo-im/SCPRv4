@@ -17,13 +17,13 @@
                     </div><!--/ .ratio -->
                     <figcaption>
                     <p><%= @featured_image.caption %></p>
-                    <mark class="credit"><a href="#" title="See more of <%=@featured_image.owner%>'s work"><%= @featured_image.owner %></a></mark>
+                    <mark class="credit"><a href="#" title="See more of <%=@featured_image.owner %>'s work"><%= @featured_image.owner %></a></mark>
                     </figcaption>
                 </figure><!--/ .ratio-pairing -->
             </div><!--/ .photo -->
             <div class="supportive">
               <h1 class="tease"><%= @lead_article.teaser %></h1>
-              <h2 class="byline"><a href="#"><%= @lead_article.byline %></a></h2>
+              <h2 class="byline"><%= link_to render_byline @lead_article.original_object %></h2>
               <% if @featured_content %>
                 <aside class="more">
                   <% if @featured_content[:type] == 'issue' %>
@@ -230,7 +230,7 @@
                               <%- aside_classes << " special" if article.feature_type.present? %>
                               <%= content_tag :aside, class: aside_classes do %>
                                 <p>
-                                <b class="author"><%= link_to render_byline recent_article %></a></b>
+                                <b class="author"><%= link_to render_byline article %></a></b>
                                 <span><%= new_smart_date_js recent_article.public_datetime, tag: 'span' %></span>
                                 </p>
                                 <%- if article.feature_type.present? %>
