@@ -93,7 +93,8 @@ class Abstract < ActiveRecord::Base
       :assets             => self.assets,
       :audio              => self.audio.available,
       :byline             => self.source,
-      :edit_url           => self.admin_edit_url
+      :edit_url           => self.admin_edit_url,
+      :related_issue      => self.issue_in_category
     })
   end
 

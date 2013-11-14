@@ -153,7 +153,8 @@ class ShowSegment < ActiveRecord::Base
       :air_date           => self.published_at,
       :assets             => self.assets,
       :audio              => self.audio,
-      :segments           => Array(self)
+      :segments           => Array(self),
+      :related_issue      => self.issue_in_category
     })
   end
 
