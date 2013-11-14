@@ -51,7 +51,7 @@
                       <%= link_to(article.public_path, class: 'clearfix') do %>
                             <div>
                               <mark><%= article.short_title %></mark>
-                              <em><%=new_smart_date_js article.public_datetime, tag: "em", "data-window" => "8h", "data-relative" => "2h" %></em>
+                              <em><%= new_smart_date_js article.public_datetime, tag: "em", "data-window" => "8h", "data-relative" => "2h" %></em>
 </em> <span><%= article.byline %></span>
                             </div>
                             <figure class="ratio">
@@ -218,10 +218,9 @@
                 <article class="clearfix">
                         <div class="graphic">
                             <div class="ratio">
-                              <%- if article.issues.any? %>
-
-                                <%= link_to issue_path(article.issues.first.slug), class: 'issue' do %>
-                                  <span><%= article.issues.first.title %></span>
+                              <%- unless article.issues.empty? || recent_article.related_issue.blank? %>
+                                <%= link_to issue_path(recent_article.related_issue.slug), class: 'issue' do %>
+                                  <span><%= recent_article.related_issue.title %></span>
                                 <% end %>
                               <% end %>
                                 <div class="fill"></div>
@@ -231,7 +230,7 @@
                               <%- aside_classes << " special" if article.feature_type.present? %>
                               <%= content_tag :aside, class: aside_classes do %>
                                 <p>
-                                <b class="author"><a href="#"><%= recent_article.byline %></a></b>
+                                <b class="author"><%= link_to render_byline recent_article %></a></b>
                                 <span><%= new_smart_date_js recent_article.public_datetime, tag: 'span' %></span>
                                 </p>
                                 <%- if article.feature_type.present? %>
@@ -278,7 +277,7 @@
                         <div class="graphic">
                             <div class="ratio">
                               <%- if article.issues.any? %>
-                                <span class="issue"><%= link_to article.issues.first.title, issue_path(article.issues.first.title) %></span>
+                                <span class="issue"><%= link_to recent_article.related_issue.title,issue_path(recent_article.related_issue.slug) %></span>
                               <% end %>
                                 <div class="fill"></div>
                                 <b class="img-contain"><%= image_tag recent_article.asset.eight.url %></b>
@@ -306,9 +305,9 @@
                 <%- article_class << " has-trait" if article.issues.any? %>
                 <%= content_tag(:article, class: article_class) do %>
                         <div class="graphic">
-                            <div class="ratio">
-                              <%- if article.issues.any? %>
-                                <span class="issue"><%= link_to article.issues.first.title, issue_path(article.issues.first.title) %></span>
+                          <div class="ratio">
+                              <%- unless article.issues.empty? || recent_article.related_issue.blank? %>
+                                <span class="issue"><%= link_to recent_article.related_issue.title, issue_path(recent_article.related_issue.slug) %></span>
                               <% end %>
                                 <div class="fill"></div>
                                 <b class="img-contain"><%= image_tag recent_article.asset.eight.url %></b>
@@ -346,8 +345,8 @@
                   <article class="clearfix">
                           <div class="graphic">
                               <div class="ratio">
-                                <%- if article.original_object.issues.any? %>
-                                  <span class="issue"><%= link_to article.original_object.issues.first.title, issue_path(article.original_object.issues.first.slug) %></span>
+                                <%- unless article.original_object.issues.empty? || article.related_issue.blank? %>
+                                  <span class="issue"><%= link_to article.related_issue.title, issue_path(article.related_issue.slug) %></span>
                                 <% end  %>
                                   <div class="fill"></div>
                                   <b class="img-contain"><%= image_tag article.asset.small.url, alt: '' %></b>
