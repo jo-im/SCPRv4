@@ -13,7 +13,7 @@
                 <li>
                     <%= link_to(resource.public_path) do %>
                         <figure class="clearfix">
-                          <div class="ratio"><div class="fill"></div><b class="img-contain"><%= image_tag resource.asset.lsquare.url, alt: '' %></b></div>
+                          <div class="ratio"><div class="fill"></div><b class="img-contain"><%= image_tag resource.asset.small.url, alt: '' %></b></div>
                           <figcaption><%= resource.short_title %></figcaption>
                         </figure>
                     <% end %>
