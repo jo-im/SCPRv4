@@ -1,0 +1,78 @@
+<div class="waterfall">
+    <div class="inner bound clearfix">
+
+        <section class="backlog">
+          <h1>More <%= @category.title %></h1>
+
+            <%- @more_articles.each do |article| %>
+              <article class="clearfix">
+                      <div class="graphic">
+                          <div class="ratio">
+                            <%- unless article.original_object.issues.empty? || article.related_issue.blank? %>
+                              <span class="issue"><%= link_to article.related_issue.title, issue_path(article.related_issue.slug) %></span>
+                            <% end  %>
+                              <div class="fill"></div>
+                              <b class="img-contain"><%= image_tag article.asset.small.url, alt: '' %></b>
+                          </div><!--/ .ratio -->
+                      </div>
+                      <div class="prose">
+                        <h1><%= link_to article.short_title, article.public_path %></h1>
+                          <aside class="byline">
+                              <p>
+                              <b class="author"><%= render_byline article.original_object %></b>
+                              <span><%= new_smart_date_js article.public_datetime, tag: 'span' %></span>
+                              </p>
+                              <%- if article.original_object.feature_type.present? %>
+                                <%= content_tag(:mark, article.original_object.class.name.constantize::FEATURE_TYPE[article.original_object.feature_type], class: "trait #{article.original_object.class.name.constantize::FEATURE_TYPE[article.original_object.feature_type].downcase}") %>
+                              <% end %>
+                          </aside>
+                          <p class="teaser"><%= article.teaser %></p>
+                      </div>
+                    </article>
+            <% end %>
+
+        </section><!--/ .backlog -->
+
+        <div class="secondary">
+            <section class="reporters">
+                <h1>Our Reporters</h1>
+                <div class="clearfix">
+                  <%- @bios.each do |bio| %>
+                    <figure class="ratio-pairing">
+                          <div class="ratio">
+                              <div class="fill"></div>
+                              <b class="img-contain"><%= link_to bio.public_path do %>
+                                <%= bio.headshot.small.tag %>
+                              <% end %>
+                              </b>
+                          </div><!--/ .ratio -->
+                          <figcaption>
+                          <h1><%= link_to bio.name, bio.public_path %></h1>
+                              <ul class="clearfix">
+                                <li><%= link_to 'Email', bio.email, class: 'email', title: "Email #{bio.name.split[0]}" %></li>
+                                <% if bio.twitter_handle.present? %>
+                                  <li><%= link_to "Twitter", twitter_profile_url(bio.twitter_handle), target: "_blank", class: "twitter", title: "#{bio.name.split[0]} on Twitter" %></li>
+                                <% end %>
+                              </ul>
+                          </figcaption>
+                    </figure>
+                  <% end %>
+
+                </div>
+            </section><!--/ .reporters -->
+            <section class="tweets">
+                <h1>In Brief</h1>
+                <ul>
+                  <%- @twitter_feeds.each do |twitter_handle| %>
+                    <% if @cached_tweets = Rails.cache.fetch("twitter:#{twitter_handle}") %>
+                      <%= @cached_tweets %>
+                    <% end %>
+                  <% end %>
+                </ul>
+            </section><!--/ .tweets -->
+        </div><!--/ .secondary -->
+
+    </div>
+</div><!--/ .waterfall -->
+
+

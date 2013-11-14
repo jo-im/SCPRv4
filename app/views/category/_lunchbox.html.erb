@@ -1,0 +1,89 @@
+<div class="lunchbox">
+    <div class="inner bound clearfix">
+        <section class="issues">
+            <header>
+                <h1>Issues We're Tracking</h1>
+                <h2><%= link_to 'See all issues', issues_path %></h2>
+            </header>
+            <div>
+                <header class="special">
+                  <h1><%= @special_issue.title %></h1>
+                    <h2 class="clearfix">
+                        <mark>Special coverage from KPCC</mark>
+                        <%= link_to issue_path(@special_issue.slug) do %>
+                          See all <span><%= @special_issue.title  %></span>
+                        <% end %>
+                    </h2>
+                </header>
+                <nav>
+                    <ul>
+                      <%- @top_two_special_issue_articles.each do |article| %>
+                        <%= render partial: 'category/issue_list', locals: {article: article} %>
+                      <% end %>
+                    </ul>
+                </nav>
+            </div>
+            <%- @other_issues.each do |issue| %>
+              <div>
+                  <header class="slim clearfix">
+                    <h1><%= issue.title %></h1>
+                    <h2><%= link_to issue_path(issue.slug) do %>
+                      See all <span><%= issue.title %></span><% end %></h2>
+                  </header>
+                  <nav>
+                      <ul>
+                      <%- issue.articles.first(2).each do |article| %>
+                        <%= render partial: 'category/issue_list', locals: {article: article} %>
+                      <% end %>
+                      </ul>
+                  </nav>
+              </div>
+            <% end %>
+
+        </section><!--/ .issues -->
+        <div class="treats">
+            <aside class="featured" style="background-image: url(assets/featured-interactives/intersections.jpg);">
+                <div>
+                    <h1>Featured Interactive</h1>
+                    <h2><%= link_to @featured_interactive.short_title, @featured_interactive.public_path %></h2>
+                  <h3><%= @featured_interactive.byline %></h3>
+                </div>
+            </aside>
+            <div class="inbrief clearfix">
+                <aside class="quote">
+                    <blockquote>
+                      <p><%= @quote.quote %></p>
+                        <cite>
+                          <mark><%= @quote.source_name %></mark>
+                          <span><%= @quote.source_context %></span>
+                        </cite>
+                    </blockquote>
+                    <footer>
+                      <%= link_to @quote_article.short_title, @quote_article.public_path, title: "Read this quote's source article" %>
+                    </footer>
+                </aside>
+                <aside class="events">
+                    <h1>Upcoming Politics Events</h1>
+                    <ul>
+                      <%- @upcoming_events.each do |event| %>
+                        <li>
+                            <figure class="clearfix">
+                                <div class="date">
+                                  <b><%= event.public_datetime.day %></b>
+                                  <span><mark><%= event.public_datetime.strftime('%b') %></mark> <%= event.public_datetime.strftime('%Y') %></span>
+                                </div>
+                                <figcaption>
+                                <b><%= event.short_title %></b>
+                                <%= link_to 'More information', event.public_path %>
+                                </figcaption>
+                            </figure>
+                        </li>
+                      <% end %>
+                    </ul>
+                </aside>
+            </div>
+        </div><!--/ .bites -->
+    </div>
+</div><!--/ .lunchbox -->
+
+
