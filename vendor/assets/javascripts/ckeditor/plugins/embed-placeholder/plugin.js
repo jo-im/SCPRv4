@@ -169,6 +169,7 @@
                   maxheight   = this.getContentElement(
                                   'embed-advanced', 'embedMaxHeight'
                                 ).getValue(),
+
                   placement   = this.getContentElement(
                                   'embed-advanced', 'embedPlacement'
                                 ).getValue(),
