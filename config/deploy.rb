@@ -40,6 +40,7 @@ set :restart_delay, 40
 # --------------
 # Universal Callbacks
 before "deploy:assets:precompile", "deploy:symlink_config"
+before "deploy:restart", "thinking_sphinx:symlink_config"
 after "deploy:update", "deploy:cleanup"
 
 # --------------
@@ -71,7 +72,11 @@ namespace :deploy do
     %w{ database.yml api_config.yml app_config.yml thinking_sphinx.yml newrelic.yml }.each do |file|
       run "ln -nfs #{shared_path}/config/#{file} #{release_path}/config/#{file}"
     end
+  end
+end
 
+namespace :thinking_sphinx do
+  task :symlink_config, roles: :sphinx do
     sphinx_filename = "#{rails_env}.sphinx.conf"
     run "ln -nfs #{shared_path}/db/sphinx/#{sphinx_filename} " \
         "#{release_path}/config/#{sphinx_filename}"
