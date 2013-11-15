@@ -40,8 +40,9 @@ class ContentShell < ActiveRecord::Base
   validates :site, presence: true, if: :should_validate?
 
   #------------------
-  FEATURE_TYPE = ['Slideshow', 'Video', 'Poll', 'Map', 'Audio', 'Infographic', 'taketwo', 'airtalk', 'offramp']
-  FEATURE_SET  = FEATURE_TYPE.each_with_index.map {|x,i| [x,i] }
+  def feature_type_name
+    ContentBase::FEATURE_TYPE[self.feature_type]
+  end
 
   class << self
     def sites_select_collection

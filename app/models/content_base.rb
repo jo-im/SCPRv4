@@ -45,6 +45,8 @@ module ContentBase
     %r{\A/programs/[\w_-]+/\d{4}/\d\d/\d\d/(\d+)/.*}  => 'ShowSegment'
   }
 
+  FEATURE_TYPE = ['Slideshow', 'Video', 'Poll', 'Map', 'Audio', 'Infographic', 'taketwo', 'airtalk', 'offramp']
+  FEATURE_SET  = FEATURE_TYPE.each_with_index.map {|x,i| [x,i] }
 
   def new_obj_key
     "contentbase:new"
@@ -79,7 +81,7 @@ module ContentBase
             Riddle::ResponseError,
             ThinkingSphinx::SphinxError => e
       # In this one scenario, we need to fail gracefully from a Sphinx error,
-      # because otherwise the entire website will be down if media isn't 
+      # because otherwise the entire website will be down if media isn't
       # available, or if we need to stop the searchd daemon for some reason,
       # like a rebuild.
       warn "Caught error in ContentBase.search: #{e}"

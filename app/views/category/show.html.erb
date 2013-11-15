@@ -22,7 +22,6 @@
         <div class="supportive">
           <h1 class="tease"><%= @lead_article.teaser %></h1>
           <h2 class="byline"><%= link_to render_byline @lead_article.original_object %></h2>
-      <% end %>
           <% if @featured_content %>
             <aside class="more">
               <% if @featured_content[:type] == 'issue' %>
@@ -35,7 +34,8 @@
                       <li><%= link_to article.short_title, article.public_path %></li>
                     <% end %>
                 </ul>
-            </aside>
+              </aside>
+          <% end %>
         </div><!--/ .supporting -->
     </section><!--/ .curated -->
   <% end %>
@@ -242,7 +242,7 @@
                               <span><%= new_smart_date_js recent_article.public_datetime, tag: 'span' %></span>
                               </p>
                               <%- if article.feature_type.present? %>
-                                <%= content_tag(:mark, article.class.name.constantize::FEATURE_TYPE[article.feature_type], class: "trait #{article.class.name.constantize::FEATURE_TYPE[article.feature_type].downcase}") %>
+                                <%= content_tag(:mark, article.feature_type_name, class: "trait #{article.feature_type_name.downcase}") %>
                               <% end %>
                             <% end %>
                       </div>
@@ -329,7 +329,7 @@
                         <aside class="byline">
                           <p class="author"><%= render_byline article %></p>
                             <%- if article.feature_type.present? %>
-                              <%= content_tag(:mark, article.class.name.constantize::FEATURE_TYPE[article.feature_type], class: "trait #{article.class.name.constantize::FEATURE_TYPE[article.feature_type].downcase}") %>
+                              <%= content_tag(:mark, article.feature_type_name, class: "trait #{article.feature_type_name.downcase}") %>
                             <% end %>
                         </aside>
                         <h1><%= link_to recent_article.short_title, recent_article.public_path %></h1>
@@ -370,7 +370,7 @@
                               <span><%= new_smart_date_js article.public_datetime, tag: 'span' %></span>
                               </p>
                               <%- if article.original_object.feature_type.present? %>
-                                <%= content_tag(:mark, article.original_object.class.name.constantize::FEATURE_TYPE[article.original_object.feature_type], class: "trait #{article.original_object.class.name.constantize::FEATURE_TYPE[article.original_object.feature_type].downcase}") %>
+                                <%= content_tag(:mark, article.original_object.feature_type_name, class: "trait #{article.original_object.feature_type_name.downcase}") %>
                               <% end %>
                           </aside>
                           <p class="teaser"><%= article.teaser %></p>
