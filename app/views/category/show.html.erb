@@ -85,7 +85,7 @@
         </section>
         <aside class="crawford">
             <header>
-                <h1>Politics Events at KPCC</h1>
+              <h1><%= @category.title %> Events at KPCC</h1>
             </header>
             <p>From our studio in Pasadena, KPCC hosts free events that open dialogue and deepen the understanding of Southern California’s civic landscape. <%= link_to 'See what we’ve got lined up.', events_path %></p>
         </aside>
@@ -189,7 +189,7 @@
                   </aside>
                 <% end %>
                 <aside class="events">
-                    <h1>Upcoming Politics Events</h1>
+                  <h1>Upcoming <%= @category.title %> Events</h1>
                     <% if @upcoming_events.presence %>
                       <ul>
                         <%- @upcoming_events.each do |event| %>
@@ -216,7 +216,7 @@
 
 <section class="triptych">
     <div class="inner bound">
-        <header><h1>Recent Politics Coverage</h1></header>
+      <header><h1>Recent <%= @category.title %> Coverage</h1></header>
         <div class="rail clearfix">
           <%- @three_recent_articles.each do |recent_article| %>
             <%- article = recent_article.original_object %>
