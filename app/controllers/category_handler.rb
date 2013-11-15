@@ -16,14 +16,14 @@ module CategoryHandler
       @featured_interactive = @featured_articles[5]
 
       if @lead_article.original_object.issues.any?
-        @issues = @lead_article.original_object.issues
-        @primary_issue = @issues.first
-        @top_two_issue_articles = @primary_issue.articles.first(2)
+        @primary_issue = @lead_article.original_object.issues.first
+        if @primary_issue.present? && @primary_issue.articles.any?
+          @primary_issue_articles = @primary_issue.articles
+        end
       end
 
-      if @lead_article.original_object.issues.any?
-
-        @featured_content = {articles: @top_two_issue_articles, type: 'issue'}
+      if @primary_issue_articles.presence
+        @featured_content = {articles: @primary_issue_articles.first(2), type: 'issue'}
       elsif @lead_article.original_object.related_content.any?
         @featured_content = {articles: @lead_article.original_object.related_content.first(2), type: 'related'}
       end
