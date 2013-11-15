@@ -40,7 +40,6 @@ set :restart_delay, 40
 # --------------
 # Universal Callbacks
 before "deploy:assets:precompile", "deploy:symlink_config"
-after "deploy:symlink_config", "thinking_sphinx:configure"
 after "deploy:update", "deploy:cleanup"
 
 # --------------
@@ -73,4 +72,10 @@ namespace :deploy do
       run "ln -nfs #{shared_path}/config/#{file} #{release_path}/config/#{file}"
     end
   end
+end
+
+
+task :catchup do
+  puts ">>> Sleeping for 2 seconds to let the filesystem catch up."
+  sleep 2
 end

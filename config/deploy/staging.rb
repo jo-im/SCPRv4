@@ -42,7 +42,7 @@ namespace :thinking_sphinx do
   namespace :staging do
     task :index do
       if [true, 1].include? ts_index
-        ts.index
+        thinking_sphinx.index
       else
         logger.info "SKIPPING thinking_sphinx:index (ts_index set to #{ts_index})"
       end
