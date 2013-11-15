@@ -13,8 +13,10 @@ module Concern
         has_many :issues, through: :article_issues
       end
 
-      def issue_in_category
-       (issues - (issues - category.issues)).first
+      def issues_in_category
+        if issues.presence && category.issues.presence
+          (issues - (issues - category.issues))
+        end
       end
 
     end # IssueArticleAssociation

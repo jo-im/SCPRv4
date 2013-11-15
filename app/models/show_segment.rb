@@ -155,7 +155,7 @@ class ShowSegment < ActiveRecord::Base
       :assets             => self.assets,
       :audio              => self.audio,
       :segments           => Array(self),
-      :related_issue      => self.issue_in_category
+      :related_issue      => self.issues_in_category
     })
   end
 

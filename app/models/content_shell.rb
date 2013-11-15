@@ -89,7 +89,7 @@ class ContentShell < ActiveRecord::Base
       :attributions       => self.bylines,
       :byline             => self.byline,
       :edit_url           => self.admin_edit_url,
-      :related_issue      => self.issue_in_category
+      :related_issue      => self.issues_in_category
     })
   end
 
