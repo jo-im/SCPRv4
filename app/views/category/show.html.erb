@@ -5,8 +5,8 @@
 </section>
 
 <div class="welcome bound clearfix">
+  <% if @lead_article %>
     <section class="curated clearfix">
-      <% if @lead_article %>
         <div class="photo">
             <figure class="ratio-pairing">
                 <div class="ratio">
@@ -36,9 +36,9 @@
                     <% end %>
                 </ul>
             </aside>
-          <% end %>
         </div><!--/ .supporting -->
     </section><!--/ .curated -->
+  <% end %>
     <div class="ataglance clearfix">
         <section class="latest">
             <header>
@@ -190,22 +190,24 @@
                 <% end %>
                 <aside class="events">
                     <h1>Upcoming Politics Events</h1>
-                    <ul>
-                      <%- @upcoming_events.each do |event| %>
-                        <li>
-                            <figure class="clearfix">
-                                <div class="date">
-                                  <b><%= event.public_datetime.day %></b>
-                                  <span><mark><%= event.public_datetime.strftime('%b') %></mark> <%= event.public_datetime.strftime('%Y') %></span>
-                                </div>
-                                <figcaption>
-                                <b><%= event.short_title %></b>
-                                <%= link_to 'More information', event.public_path %>
-                                </figcaption>
-                            </figure>
-                        </li>
-                      <% end %>
-                    </ul>
+                    <% if @upcoming_events.presence %>
+                      <ul>
+                        <%- @upcoming_events.each do |event| %>
+                          <li>
+                              <figure class="clearfix">
+                                  <div class="date">
+                                    <b><%= event.public_datetime.day %></b>
+                                    <span><mark><%= event.public_datetime.strftime('%b') %></mark> <%= event.public_datetime.strftime('%Y') %></span>
+                                  </div>
+                                  <figcaption>
+                                  <b><%= event.short_title %></b>
+                                  <%= link_to 'More information', event.public_path %>
+                                  </figcaption>
+                              </figure>
+                          </li>
+                        <% end %>
+                      </ul>
+                    <% end %>
                 </aside>
             </div>
         </div><!--/ .bites -->
@@ -370,30 +372,31 @@
 
         </section><!--/ .backlog -->
 
+      <% if @bios.presence %>
         <div class="secondary">
             <section class="reporters">
                 <h1>Our Reporters</h1>
                 <div class="clearfix">
-                  <%- @bios.each do |bio| %>
-                    <figure class="ratio-pairing">
-                          <div class="ratio">
-                              <div class="fill"></div>
-                              <b class="img-contain"><%= link_to bio.public_path do %>
-                                <%= bio.headshot.small.tag %>
-                              <% end %>
-                              </b>
-                          </div><!--/ .ratio -->
-                          <figcaption>
-                          <h1><%= link_to bio.name, bio.public_path %></h1>
-                              <ul class="clearfix">
-                                <li><%= link_to 'Email', bio.email, class: 'email', title: "Email #{bio.name.split[0]}" %></li>
-                                <% if bio.twitter_handle.present? %>
-                                  <li><%= link_to "Twitter", twitter_profile_url(bio.twitter_handle), target: "_blank", class: "twitter", title: "#{bio.name.split[0]} on Twitter" %></li>
+                    <%- @bios.each do |bio| %>
+                      <figure class="ratio-pairing">
+                            <div class="ratio">
+                                <div class="fill"></div>
+                                <b class="img-contain"><%= link_to bio.public_path do %>
+                                  <%= bio.headshot.small.tag %>
                                 <% end %>
-                              </ul>
-                          </figcaption>
-                    </figure>
-                  <% end %>
+                                </b>
+                            </div><!--/ .ratio -->
+                            <figcaption>
+                            <h1><%= link_to bio.name, bio.public_path %></h1>
+                                <ul class="clearfix">
+                                  <li><%= link_to 'Email', bio.email, class: 'email', title: "Email #{bio.name.split[0]}" %></li>
+                                  <% if bio.twitter_handle.present? %>
+                                    <li><%= link_to "Twitter", twitter_profile_url(bio.twitter_handle), target: "_blank", class: "twitter", title: "#{bio.name.split[0]} on Twitter" %></li>
+                                  <% end %>
+                                </ul>
+                            </figcaption>
+                      </figure>
+                    <% end %>
 
                 </div>
             </section><!--/ .reporters -->
@@ -408,7 +411,7 @@
                 </ul>
             </section><!--/ .tweets -->
         </div><!--/ .secondary -->
-
+      <% end %>
     </div>
 </div><!--/ .waterfall -->
 
