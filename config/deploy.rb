@@ -71,6 +71,10 @@ namespace :deploy do
     %w{ database.yml api_config.yml app_config.yml thinking_sphinx.yml newrelic.yml }.each do |file|
       run "ln -nfs #{shared_path}/config/#{file} #{release_path}/config/#{file}"
     end
+
+    sphinx_filename = "#{rails_env}.sphinx.conf"
+    run "ln -nfs #{shared_path}/db/sphinx/#{sphinx_filename} " \
+        "#{release_path}/config/#{sphinx_filename}"
   end
 end
 
