@@ -1,14 +1,12 @@
 <% add_to_page_title @category.title %>
 
-<% if @lead_article %>
-    <section class="headline">
-      <h1 class="bound"><span><%= @lead_article.short_title %></span></h1>
-    </section>
-
- <% end %>
+<section class="headline">
+  <h1 class="bound"><span><%= @lead_article.short_title if @lead_article.present? %></span></h1>
+</section>
 
 <div class="welcome bound clearfix">
     <section class="curated clearfix">
+      <% if @lead_article %>
         <div class="photo">
             <figure class="ratio-pairing">
                 <div class="ratio">
@@ -24,6 +22,7 @@
         <div class="supportive">
           <h1 class="tease"><%= @lead_article.teaser %></h1>
           <h2 class="byline"><%= link_to render_byline @lead_article.original_object %></h2>
+      <% end %>
           <% if @featured_content %>
             <aside class="more">
               <% if @featured_content[:type] == 'issue' %>
@@ -70,17 +69,19 @@
                   All <span>upcoming</span> events
                 <% end %>
             </header>
-            <div class="details clearfix">
-                <div class="vitals">
-                  <h2><%= link_to @latest_event.short_title, @latest_event.public_path %></h2>
-                  <h3><%= @latest_event.original_object.location_name %></h3>
-                    <h4><%= link_to 'More details', @latest_event.public_path %></h4>
-                </div>
-                <aside class="date">
-                  <em><%= @latest_event.public_datetime.day %></em>
-                  <span><%= @latest_event.public_datetime.strftime('%b') %></span>
-                </aside>
-            </div>
+            <% if @latest_event %>
+              <div class="details clearfix">
+                  <div class="vitals">
+                    <h2><%= link_to @latest_event.short_title, @latest_event.public_path %></h2>
+                    <h3><%= @latest_event.original_object.location_name %></h3>
+                      <h4><%= link_to 'More details', @latest_event.public_path %></h4>
+                  </div>
+                  <aside class="date">
+                    <em><%= @latest_event.public_datetime.day %></em>
+                    <span><%= @latest_event.public_datetime.strftime('%b') %></span>
+                  </aside>
+              </div>
+            <% end %>
         </section>
         <aside class="crawford">
             <header>
@@ -101,6 +102,7 @@
         </header>
         <nav>
             <ul class="clearfix">
+            <% if @resources.presence %>
               <%- @resources.each do |resource| %>
                 <li>
                     <%= link_to(resource.public_path) do %>
@@ -111,6 +113,7 @@
                     <% end %>
                 </li>
               <% end %>
+            <% end %>
             </ul>
         </nav>
     </div>
@@ -124,6 +127,7 @@
                 <h2><%= link_to 'See all issues', issues_path %></h2>
             </header>
             <div>
+           <% if @category.issues.presence %>
                 <header class="special">
                   <h1><%= @special_issue.title %></h1>
                     <h2 class="clearfix">
@@ -141,45 +145,49 @@
                     </ul>
                 </nav>
             </div>
-            <%- @other_issues.each do |issue| %>
-              <div>
-                  <header class="slim clearfix">
-                    <h1><%= issue.title %></h1>
-                    <h2><%= link_to issue_path(issue.slug) do %>
-                      See all <span><%= issue.title %></span><% end %></h2>
-                  </header>
-                  <nav>
-                      <ul>
-                      <%- issue.articles.first(2).each do |article| %>
-                        <%= render partial: 'category/issue_list', locals: {article: article} %>
-                      <% end %>
-                      </ul>
-                  </nav>
+              <%- @other_issues.each do |issue| %>
+                <div>
+                    <header class="slim clearfix">
+                      <h1><%= issue.title %></h1>
+                      <h2><%= link_to issue_path(issue.slug) do %>
+                        See all <span><%= issue.title %></span><% end %></h2>
+                    </header>
+                    <nav>
+                        <ul>
+                        <%- issue.articles.first(2).each do |article| %>
+                          <%= render partial: 'category/issue_list', locals: {article: article} %>
+                        <% end %>
+                        </ul>
+                    </nav>
+              <% end %>
               </div>
-            <% end %>
-
+           <% end %>
         </section><!--/ .issues -->
         <div class="treats">
             <aside class="featured" style="background-image: url(assets/featured-interactives/intersections.jpg);">
                 <div>
                     <h1>Featured Interactive</h1>
-                    <h2><%= link_to @featured_interactive.short_title, @featured_interactive.public_path %></h2>
-                  <h3><%= @featured_interactive.byline %></h3>
+                    <% if @featured_interactive %>
+                      <h2><%= link_to @featured_interactive.short_title, @featured_interactive.public_path %></h2>
+                      <h3><%= @featured_interactive.byline %></h3>
+                    <% end %>
                 </div>
             </aside>
             <div class="inbrief clearfix">
-                <aside class="quote">
-                    <blockquote>
-                      <p><%= @quote.quote %></p>
-                        <cite>
-                          <mark><%= @quote.source_name %></mark>
-                          <span><%= @quote.source_context %></span>
-                        </cite>
-                    </blockquote>
-                    <footer>
-                      <%= link_to @quote_article.short_title, @quote_article.public_path, title: "Read this quote's source article" %>
-                    </footer>
-                </aside>
+                <% if @quote %>
+                  <aside class="quote">
+                      <blockquote>
+                        <p><%= @quote.quote %></p>
+                          <cite>
+                            <mark><%= @quote.source_name %></mark>
+                            <span><%= @quote.source_context %></span>
+                          </cite>
+                      </blockquote>
+                      <footer>
+                        <%= link_to @quote_article.short_title, @quote_article.public_path, title: "Read this quote's source article" %>
+                      </footer>
+                  </aside>
+                <% end %>
                 <aside class="events">
                     <h1>Upcoming Politics Events</h1>
                     <ul>
