@@ -74,3 +74,9 @@ namespace :deploy do
     end
   end
 end
+
+
+task :catchup do
+  puts ">>> Sleeping for 2 seconds to let the filesystem catch up."
+  sleep 2
+end
