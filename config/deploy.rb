@@ -40,7 +40,6 @@ set :restart_delay, 40
 # --------------
 # Universal Callbacks
 before "deploy:assets:precompile", "deploy:symlink_config"
-after "deploy:symlink_config", "thinking_sphinx:configure"
 after "deploy:update", "deploy:cleanup"
 
 # --------------
