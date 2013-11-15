@@ -45,20 +45,22 @@
               <h1>Latest <%= @category.title %> Headlines</h1>
             </header>
             <ul>
-              <%- @latest_articles.each do |article| %>
-                <li>
-                  <%= link_to(article.public_path, class: 'clearfix') do %>
-                        <div>
-                          <mark><%= article.short_title %></mark>
-                          <em><%= new_smart_date_js article.public_datetime, tag: "em", "data-window" => "8h", "data-relative" => "2h" %></em>
-</em> <span><%= article.byline %></span>
-                        </div>
-                        <figure class="ratio">
-                            <div class="fill"></div>
-                            <b class="img-contain"><%= image_tag(article.asset.lsquare.url, alt: '' ) %></b>
-                        </figure>
-                  <% end %>
-                </li>
+              <% if @latest_articles.presence %>
+                <%- @latest_articles.each do |article| %>
+                  <li>
+                    <%= link_to(article.public_path, class: 'clearfix') do %>
+                          <div>
+                            <mark><%= article.short_title %></mark>
+                            <em><%= new_smart_date_js article.public_datetime, tag: "em", "data-window" => "8h", "data-relative" => "2h" %></em>
+  </em> <span><%= article.byline %></span>
+                          </div>
+                          <figure class="ratio">
+                              <div class="fill"></div>
+                              <b class="img-contain"><%= image_tag(article.asset.lsquare.url, alt: '' ) %></b>
+                          </figure>
+                    <% end %>
+                  </li>
+                <% end %>
               <% end %>
             </ul>
         </section>
@@ -69,7 +71,7 @@
                   All <span>upcoming</span> events
                 <% end %>
             </header>
-            <% if @latest_event %>
+            <% if @latest_event.present? %>
               <div class="details clearfix">
                   <div class="vitals">
                     <h2><%= link_to @latest_event.short_title, @latest_event.public_path %></h2>
@@ -218,36 +220,38 @@
     <div class="inner bound">
       <header><h1>Recent <%= @category.title %> Coverage</h1></header>
         <div class="rail clearfix">
-          <%- @three_recent_articles.each do |recent_article| %>
-            <%- article = recent_article.original_object %>
-            <article class="clearfix">
-                    <div class="graphic">
-                        <div class="ratio">
-                          <%- unless article.issues.empty? || recent_article.related_issue.blank? %>
-                            <%= link_to issue_path(recent_article.related_issue.slug), class: 'issue' do %>
-                              <span><%= recent_article.related_issue.title %></span>
+          <% if @three_recent_articles.presence %>
+            <%- @three_recent_articles.each do |recent_article| %>
+              <%- article = recent_article.original_object %>
+              <article class="clearfix">
+                      <div class="graphic">
+                          <div class="ratio">
+                            <%- unless article.issues.empty? || recent_article.related_issue.blank? %>
+                              <%= link_to issue_path(recent_article.related_issue.slug), class: 'issue' do %>
+                                <span><%= recent_article.related_issue.title %></span>
+                              <% end %>
                             <% end %>
-                          <% end %>
-                            <div class="fill"></div>
-                            <b class="img-contain"><%= image_tag recent_article.asset.eight.url %></b>
-                          </div><!--/ .ratio -->
-                          <%- aside_classes = "byline" %>
-                          <%- aside_classes << " special" if article.feature_type.present? %>
-                          <%= content_tag :aside, class: aside_classes do %>
-                            <p>
-                            <b class="author"><%= link_to render_byline article %></a></b>
-                            <span><%= new_smart_date_js recent_article.public_datetime, tag: 'span' %></span>
-                            </p>
-                            <%- if article.feature_type.present? %>
-                              <%= content_tag(:mark, article.class.name.constantize::FEATURE_TYPE[article.feature_type], class: "trait #{article.class.name.constantize::FEATURE_TYPE[article.feature_type].downcase}") %>
+                              <div class="fill"></div>
+                              <b class="img-contain"><%= image_tag recent_article.asset.eight.url %></b>
+                            </div><!--/ .ratio -->
+                            <%- aside_classes = "byline" %>
+                            <%- aside_classes << " special" if article.feature_type.present? %>
+                            <%= content_tag :aside, class: aside_classes do %>
+                              <p>
+                              <b class="author"><%= link_to render_byline article %></a></b>
+                              <span><%= new_smart_date_js recent_article.public_datetime, tag: 'span' %></span>
+                              </p>
+                              <%- if article.feature_type.present? %>
+                                <%= content_tag(:mark, article.class.name.constantize::FEATURE_TYPE[article.feature_type], class: "trait #{article.class.name.constantize::FEATURE_TYPE[article.feature_type].downcase}") %>
+                              <% end %>
                             <% end %>
-                          <% end %>
-                    </div>
-                    <header>
-                      <h1><%= link_to recent_article.short_title, recent_article.public_path %></h1>
-                      <h2><%= recent_article.teaser %></h2>
-                    </header>
-            </article>
+                      </div>
+                      <header>
+                        <h1><%= link_to recent_article.short_title, recent_article.public_path %></h1>
+                        <h2><%= recent_article.teaser %></h2>
+                      </header>
+              </article>
+            <% end %>
           <% end %>
         </div>
     </div>
@@ -274,37 +278,40 @@
 
           <!--            ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ -->
        <div class="rail clearfix">
-          <%-  @top_half_recent_articles.each do |recent_article| %>
-            <%- article = recent_article.original_object %>
-            <%- article_class = "clearfix" %>
-            <%- article_class << " has-trait" if article.issues.any? %>
-            <%= content_tag(:article, class: article_class) do %>
-                    <div class="graphic">
-                        <div class="ratio">
-                          <%- if article.issues.any? %>
-                            <span class="issue"><%= link_to recent_article.related_issue.title,issue_path(recent_article.related_issue.slug) %></span>
-                          <% end %>
-                            <div class="fill"></div>
-                            <b class="img-contain"><%= image_tag recent_article.asset.eight.url %></b>
-                        </div><!--/ .ratio -->
-                    </div>
-                    <div class="prose">
-                        <aside class="byline">
-                          <p class="author"><%= render_byline article %></p>
-                            <%- if article.feature_type.present? %>
-                              <%= content_tag(:mark, article.class.name.constantize::FEATURE_TYPE[article.feature_type], class: "trait #{article.class.name.constantize::FEATURE_TYPE[article.feature_type].downcase}") %>
+         <% if @top_half_recent_articles.presence %>
+           <%- @top_half_recent_articles.each do |recent_article| %>
+              <%- article = recent_article.original_object %>
+              <%- article_class = "clearfix" %>
+              <%- article_class << " has-trait" if article.issues.any? %>
+              <%= content_tag(:article, class: article_class) do %>
+                      <div class="graphic">
+                          <div class="ratio">
+                            <%- if article.issues.any? %>
+                              <span class="issue"><%= link_to recent_article.related_issue.title,issue_path(recent_article.related_issue.slug) %></span>
                             <% end %>
-                        </aside>
-                        <h1><%= link_to recent_article.short_title, recent_article.public_path %></h1>
-                      <h2 class="date"><%= new_smart_date_js recent_article.public_datetime, tag: 'span' %></h2>
-                      <p class="teaser"><%= recent_article.teaser %></p>
-                    </div>
-            <% end %>
-          <% end %>
+                              <div class="fill"></div>
+                              <b class="img-contain"><%= image_tag recent_article.asset.eight.url %></b>
+                          </div><!--/ .ratio -->
+                      </div>
+                      <div class="prose">
+                          <aside class="byline">
+                            <p class="author"><%= render_byline article %></p>
+                              <%- if article.feature_type.present? %>
+                                <%= content_tag(:mark, article.class.name.constantize::FEATURE_TYPE[article.feature_type], class: "trait #{article.class.name.constantize::FEATURE_TYPE[article.feature_type].downcase}") %>
+                              <% end %>
+                          </aside>
+                          <h1><%= link_to recent_article.short_title, recent_article.public_path %></h1>
+                        <h2 class="date"><%= new_smart_date_js recent_article.public_datetime, tag: 'span' %></h2>
+                        <p class="teaser"><%= recent_article.teaser %></p>
+                      </div>
+              <% end %>
+           <% end %>
+         <% end %>
        </div><!--/ .rail -->
 
        <div class="rail clearfix">
-          <%-  @bottom_half_recent_articles.each do |recent_article| %>
+        <% if @bottom_half_recent_articles.presence %>
+          <%- @bottom_half_recent_articles.each do |recent_article| %>
             <%- article = recent_article.original_object %>
             <%- article_class = "clearfix" %>
             <%- article_class << " has-trait" if article.issues.any? %>
@@ -331,6 +338,7 @@
                     </div>
             <% end %>
           <% end %>
+        <% end %>
        </div><!--/ .rail -->
           <!--            ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ -->
 
@@ -342,7 +350,7 @@
 
         <section class="backlog">
           <h1>More <%= @category.title %></h1>
-
+          <% if @more_articles.presence %>
             <%- @more_articles.each do |article| %>
               <article class="clearfix">
                       <div class="graphic">
@@ -369,7 +377,7 @@
                       </div>
                     </article>
             <% end %>
-
+          <% end %>
         </section><!--/ .backlog -->
 
       <% if @bios.presence %>
