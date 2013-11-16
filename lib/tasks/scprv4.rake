@@ -169,11 +169,11 @@ namespace :scprv4 do
       end
       puts "Finished KPCCForum tweet caching.\n"
 
-      if Rails.env.development?
+      if Rails.env.staging?
         Job::VerticalsTwitter.perform
         puts "Finished Vertical tweet caching.\n"
       else
-        Resque.enqueue(Job::Twitter)
+        Resque.enqueue(Job::VerticalsTwitter)
         puts "Job was placed in queue.\n"
       end
     end
