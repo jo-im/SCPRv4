@@ -14,7 +14,7 @@ shared_examples_for "front-end routes" do
     end
 
     it "returns success when following public_path" do
-        visit valid_record.public_path
+      visit valid_record.public_path
       current_path.should eq valid_record.public_path
     end
   end
