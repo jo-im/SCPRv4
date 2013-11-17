@@ -22,7 +22,7 @@ describe CategoryPreview do
 
       ts_retry(2) do
         preview = CategoryPreview.new(category)
-        preview.articles.should eq [story1].map(&:to_article)
+        preview.articles.should eq story1.to_article
       end
     end
 
@@ -37,7 +37,7 @@ describe CategoryPreview do
         preview = CategoryPreview.new(category, exclude: [story2])
         # We should actually test that story2 is not included, but this
         # tests the same thing plus makes sure it's not a false positive.
-        preview.articles.should eq [story1].map(&:to_article)
+        preview.articles.should eq story1.to_article
       end
     end
 
@@ -49,7 +49,7 @@ describe CategoryPreview do
 
       ts_retry(2) do
         preview = CategoryPreview.new(category, limit: 1)
-        preview.articles.should eq [story1].map(&:to_article)
+        preview.articles.should eq story1.to_article
       end
     end
 
@@ -125,6 +125,8 @@ describe CategoryPreview do
   end
 
   describe '#featured_object' do
+    sphinx_spec
+
     it 'returns the candidate with the highest score' do
       # Slideshow
       story1 = create :news_story, category: category
