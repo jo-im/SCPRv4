@@ -125,6 +125,8 @@ describe CategoryPreview do
   end
 
   describe '#featured_object' do
+    sphinx_spec
+
     it 'returns the candidate with the highest score' do
       # Slideshow
       story1 = create :news_story, category: category
