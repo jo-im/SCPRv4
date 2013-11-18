@@ -16,8 +16,27 @@ describe RootPathController do
         category = create :category_news
 
         get :handle_path, path: category.slug, format: :xml
-        response.should render_template 'category/show'
         response.header['Content-Type'].should match /xml/
+      end
+    end
+    describe "with template" do
+      context 'category is active' do
+        before :each do
+          @active_category = create :category_news, is_active: true
+        end
+        it "renders the new template" do
+          get :handle_path, path: @active_category.slug, format: :html
+          response.should render_template 'category/show'
+        end
+      end
+      context 'category is inactive' do
+        before :each do
+         @inactive_category = create :category_news, is_active: false
+        end
+        it "renders the old template" do
+          get :handle_path, path: @inactive_category.slug, format: :html
+          response.should render_template 'category/simple'
+        end
       end
     end
   end
