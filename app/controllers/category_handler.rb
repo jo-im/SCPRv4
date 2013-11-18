@@ -1,7 +1,7 @@
 module CategoryHandler
   PER_PAGE = 17
 
-  def handle_category
+  def handle_vertical
     page      = params[:page].to_i
     per_page  = PER_PAGE
     @content = @category.content(
@@ -60,4 +60,16 @@ module CategoryHandler
     end
     respond_with @content, template: "category/show", layout: "vertical"
   end
+
+  def handle_category
+    page      = params[:page].to_i
+    per_page  = PER_PAGE
+    @content = @category.content(
+      :page       => page,
+      :per_page   => per_page
+    )
+
+    respond_with @content, template: "category/simple"
+  end
+
 end

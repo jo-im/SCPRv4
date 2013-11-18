@@ -10,7 +10,7 @@ class RootPathController < ApplicationController
       # http://scpr.org/support/members -> support/members
       path = URI.encode(params[:path].to_s)
     rescue ArgumentError
-      # If you don't pass the URI.encode test, 
+      # If you don't pass the URI.encode test,
       # then you get NOTHING.
       # http://www.youtube.com/watch?v=xKG07305CBs
       render status: :bad_request and return
@@ -23,7 +23,11 @@ class RootPathController < ApplicationController
       slug = path.gsub(/\A\/?(.+)\/?\z/, "\\1").downcase
 
       if @category = Category.find_by_slug(slug)
-        handle_category and return
+        if @category.is_active
+          handle_vertical and return
+        else
+          handle_category and return
+        end
       else
         render_error(404, ActionController::RoutingError.new("Not Found")) and return false
       end
