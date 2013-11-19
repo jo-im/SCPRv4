@@ -20,6 +20,7 @@ module AudioVision
       end
     end
 
+
     def api_root
       @api_root ||= Rails.application.config.audio_vision.host + API_PATH
     end

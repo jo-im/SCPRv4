@@ -12,7 +12,6 @@ module AudioVision
         end
       end
 
-      #-----------------
 
       private
 

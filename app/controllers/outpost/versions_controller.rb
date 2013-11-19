@@ -63,8 +63,8 @@ class Outpost::VersionsController < Outpost::BaseController
   private
 
   def set_order_and_direction
-    @order_attribute     = "created_at"
-    @order_direction = DESCENDING
+    @order_attribute  = "created_at"
+    @order_direction  = DESCENDING
   end
 
   #--------------
