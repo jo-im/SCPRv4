@@ -27,6 +27,10 @@ module Concern
           :reject_if        => :should_reject_alarm?,
           :allow_destroy    => true
 
+        if self.has_secretary?
+          tracks_association :alarm
+        end
+
         before_save :destroy_alarm, if: :should_destroy_alarm?
       end
 

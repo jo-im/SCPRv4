@@ -12,6 +12,7 @@ class ContentAlarm < ActiveRecord::Base
   # Association
   belongs_to :content, polymorphic: true
 
+  self.versioned_attributes = ["fire_at"]
 
 
   class << self
