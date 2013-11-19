@@ -53,9 +53,9 @@ GIT
 
 GIT
   remote: git://github.com/SCPR/secretary-rails.git
-  revision: f62e7e22bbf2697ab56461093bf8bbcb38969d6d
+  revision: 0708dee014e0e4b4325dbb8f09ab24fea8827c8a
   specs:
-    secretary-rails (1.0.0.beta5)
+    secretary-rails (1.0.0)
       activerecord (>= 3.2.0)
       diffy (~> 3.0.1)
       railties (>= 3.2.0)
