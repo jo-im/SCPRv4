@@ -1,3 +1,6 @@
+@import "vertical/reset";
+@import "vertical/globals";
+@import "vertical/masthead";
 // Variables
 $font-freight: "freight-sans-pro", "Avenir Next", "Avenir", "Lucida Grande", "Tahoma", Arial, sans-serif;
 $font-prox: "proxima-nova", "Avenir Next", "Avenir", "Lucida Grande", "Tahoma", Arial, sans-serif;
@@ -9,7 +12,7 @@ $orange: #f17b21;
 
 // Mixins
 @mixin icon {
-	background: url(i/workbench-icons.png) no-repeat;
+	background: url(../i/workbench-icons.png) no-repeat;
 	background-size: 300px 450px;
 }
 @mixin texthide {
@@ -98,7 +101,7 @@ body {
 //	################################################################################################
 
 .masthead {
-	background: black url(i/masthead-politics.jpg) no-repeat center top;
+	background: black url(../i/masthead-politics.jpg) no-repeat center top;
 	background-size: auto 100%;
 	color: white;
 	padding-bottom: 58px; // makes room for .headline
@@ -117,7 +120,7 @@ body {
 			margin-bottom: 13px;
 			a {
 				@include mask;
-				background: url(i/logo-represent.png) no-repeat;
+				background: url(../i/logo-represent.png) no-repeat;
 				background-size: 100%;
 			}
 		}
@@ -181,7 +184,7 @@ body {
 			margin-top: 34px;
 			a {
 				@include mask;
-				background: url(i/logo-kpcc.png) no-repeat left center;
+				background: url(../i/logo-kpcc.png) no-repeat left center;
 				background-size: 100%;
 			}
 		}
@@ -285,7 +288,7 @@ body {
 			left: 5%;
 			a {
 				@include mask;
-				background: url(i/logo-kpcc.png) no-repeat left center;
+				background: url(../i/logo-kpcc.png) no-repeat left center;
 				background-size: 100%;
 }
 		}
@@ -296,7 +299,7 @@ body {
 			right: 5%;
 			width: 63px;
 			height: 24px;
-			background: transparent url(i/btn-ledge-close.png) no-repeat;
+			background: transparent url(../i/btn-ledge-close.png) no-repeat;
 			text-indent: 999px;
 			background-size: 100%;
 			cursor: pointer;
@@ -343,7 +346,7 @@ body {
 				right: 0;
 				width: 23px;
 				height: 23px;
-				background: url(i/btn-search-submit.png) no-repeat;
+				background: url(../i/btn-search-submit.png) no-repeat;
 				text-indent: 999px;
 				background-size: 100%;
 				cursor: pointer;
@@ -527,7 +530,7 @@ body {
 					}
 				}
 				.shownav {
-					background: url(i/btn-shownav.png) no-repeat;
+					background: url(../i/btn-shownav.png) no-repeat;
 					background-size: 100%;
 					color: transparent;
 					border: none;
@@ -820,7 +823,7 @@ body {
 	// ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~
 	.crawford {
 		header {
-			background: url(i/hq-exterior.png) no-repeat 97% top;
+			background: url(../i/hq-exterior.png) no-repeat 97% top;
 			background-size: 206px auto;
 			padding-top: 26px;
 			h1 {
@@ -1000,7 +1003,7 @@ body {
 //	################################################################################################
 
 .resources {
-	background: #d1d1d1 url(i/backdrop-palmtrees.jpg) no-repeat center top;
+	background: #d1d1d1 url(../i/backdrop-palmtrees.jpg) no-repeat center top;
 	background-size: auto 100%;
 	@media screen and (min-width: 1900px) { background-size: 100% auto; }
 	box-shadow: inset 0 14px 0 $blue;
@@ -1021,7 +1024,7 @@ body {
 				@include mask;
 				width: 66.966966966967%; // 223 / 333
 				height: 58px;
-				background: url(i/logo-resources.png) no-repeat;
+				background: url(../i/logo-resources.png) no-repeat;
 				background-size: 100%;
 			}
 		}
@@ -1186,18 +1189,18 @@ body {
 	position: relative;
 	z-index: 1;
 	background:
-		url(i/fauxcol-lunchbox-subfloor.png) repeat-y center top,
-		url(i/fauxcol-lunchbox-grayslab.png) repeat-x left top;
+		url(../i/fauxcol-lunchbox-subfloor.png) repeat-y center top,
+		url(../i/fauxcol-lunchbox-grayslab.png) repeat-x left top;
 	box-shadow:
 		inset 0 8px 0 rgba(0,0,0,0.25),
 		inset 0 -6px 0 $orange;
 
 	.inner {
 		background:
-			url(i/fauxcol-lunchbox-or-wht-split-inbrief.png) no-repeat 67.076923076923% bottom,
-			url(i/fauxcol-lunchbox-or-wht-split.png) no-repeat 32.923076923077% bottom,
-			url(i/rule-lightgray.png) repeat-y 67.076923076923% top,
-			url(i/fauxcol-lunchbox-floor.png) repeat-y 32.923076923077% top;
+			url(../i/fauxcol-lunchbox-or-wht-split-inbrief.png) no-repeat 67.076923076923% bottom,
+			url(../i/fauxcol-lunchbox-or-wht-split.png) no-repeat 32.923076923077% bottom,
+			url(../i/rule-lightgray.png) repeat-y 67.076923076923% top,
+			url(../i/fauxcol-lunchbox-floor.png) repeat-y 32.923076923077% top;
 		background-size:
 			1500px 6px,
 			1500px 6px,
@@ -1225,7 +1228,7 @@ body {
 			box-shadow: inset 0 8px 0 rgba(0,0,0,0.25);
 			text-align: right;
 			div {
-				background: url(i/ephemera-lunchbox-ledge.png) no-repeat 50.917431192661% bottom;
+				background: url(../i/ephemera-lunchbox-ledge.png) no-repeat 50.917431192661% bottom;
 				background-size: 1000px 34px;
 				height: 100%;
 				color: white;
@@ -1317,7 +1320,7 @@ body {
 				figure {
 					width: 100%;
 					padding-bottom: 11px;
-					background: url(i/fauxcol-lunchbox-event.png) repeat-y 26.941747572816% top;
+					background: url(../i/fauxcol-lunchbox-event.png) repeat-y 26.941747572816% top;
 					.date {
 						border-top: 3px solid $blue;
 						text-align: center;
@@ -1780,7 +1783,7 @@ body {
 
 		}
 		.byline.special {
-			background: $blue url(i/attribute-ring.png) no-repeat right top;
+			background: $blue url(../i/attribute-ring.png) no-repeat right top;
 			background-size: 47px 23px;
 			p span { color: #166b88; }
 			@media screen and (min-width: 491px) and (max-width: 900px) {
@@ -1987,7 +1990,7 @@ body {
 			inset 0 3px 0 #212121,
 			inset 0 4px 0 #27515f;
 		.prose .byline {
-			background: $blue url(i/attribute-ring.png) no-repeat right -1px;
+			background: $blue url(../i/attribute-ring.png) no-repeat right -1px;
 			background-size: 47px 23px;
 			box-shadow: inset 5px 0 0 #2391b5;
 		}
@@ -2100,14 +2103,14 @@ body {
 
 .waterfall {
 	background:
-		url(i/fauxcol-waterfall-base.png) repeat-y center top,
-		url(i/fauxrow-waterfall-title.png) repeat-x left top;
+		url(../i/fauxcol-waterfall-base.png) repeat-y center top,
+		url(../i/fauxrow-waterfall-title.png) repeat-x left top;
 	background-size:
 		100%,
 		10px 90px;
 
 	.inner {
-		background: url(i/fauxcol-waterfall-inner.png) repeat-y 65.846153846154% top;
+		background: url(../i/fauxcol-waterfall-inner.png) repeat-y 65.846153846154% top;
 		background-size: 1500px 10px;
 		padding-bottom: 65px;
 	}
@@ -2115,7 +2118,7 @@ body {
 		width: 59.769230769231%; // 777 / 1300
 		float: left;
 		padding: 32px 0;
-		background: url(i/fauxrow-waterfall-title.png) repeat-x left top;
+		background: url(../i/fauxrow-waterfall-title.png) repeat-x left top;
 		background-size: 10px 90px;
 		& > h1 {
 			font-family: $font-freight;
@@ -2463,7 +2466,7 @@ body {
 //	################################################################################################
 
 .membership {
-	background: #2ea2cc url(i/backdrop-bluecity.jpg) no-repeat center top;
+	background: #2ea2cc url(../i/backdrop-bluecity.jpg) no-repeat center top;
 	background-size: auto 100%;
 	color: white;
 	box-shadow: 0 -8px 0 rgba(0,0,0,0.13);
@@ -2490,7 +2493,7 @@ body {
 			height: 23px;
 			a {
 				@include mask;
-				background: url(i/logo-kpcc-white.png) no-repeat;
+				background: url(../i/logo-kpcc-white.png) no-repeat;
 				background-size: 100%;
 			}
 		}
@@ -2571,7 +2574,7 @@ body {
 				margin-right: 15px;
 				a {
 					@include mask;
-					background: url(i/logo-kpcc.png) no-repeat;
+					background: url(../i/logo-kpcc.png) no-repeat;
 					background-size: 100%;
 				}
 			}
@@ -2638,7 +2641,7 @@ body {
 						float: left;
 						width: 93px; // default to be overridden
 						height: 18px;
-						background: url(i/partner-logos.png) no-repeat;
+						background: url(../i/partner-logos.png) no-repeat;
 						background-size: 150px 364px;
 						margin: 0 15px 15px 0;
 					}

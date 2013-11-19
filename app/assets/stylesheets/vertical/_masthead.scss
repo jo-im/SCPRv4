@@ -1,6 +1,6 @@
 
 .masthead {
-	background: black url(i/masthead-politics.jpg) no-repeat center top;
+	background: black url(../i/masthead-politics.jpg) no-repeat center top;
 	background-size: auto 100%;
 	color: white;
 	padding-bottom: 58px; // makes room for .headline
@@ -19,7 +19,7 @@
 			margin-bottom: 13px;
 			a {
 				@include mask;
-				background: url(i/logo-represent.png) no-repeat;
+				background: url(../i/logo-represent.png) no-repeat;
 				background-size: 100%;
 			}
 		}
@@ -83,7 +83,7 @@
 			margin-top: 34px;
 			a {
 				@include mask;
-				background: url(i/logo-kpcc.png) no-repeat left center;
+				background: url(../i/logo-kpcc.png) no-repeat left center;
 				background-size: 100%;
 			}
 		}
@@ -187,7 +187,7 @@
 			left: 5%;
 			a {
 				@include mask;
-				background: url(i/logo-kpcc.png) no-repeat left center;
+				background: url(../i/logo-kpcc.png) no-repeat left center;
 				background-size: 100%;
 			}
 		}
@@ -198,7 +198,7 @@
 			right: 5%;
 			width: 63px;
 			height: 24px;
-			background: transparent url(i/btn-ledge-close.png) no-repeat;
+			background: transparent url(../i/btn-ledge-close.png) no-repeat;
 			text-indent: 999px;
 			background-size: 100%;
 			cursor: pointer;
@@ -245,7 +245,7 @@
 				right: 0;
 				width: 23px;
 				height: 23px;
-				background: url(i/btn-search-submit.png) no-repeat;
+				background: url(../i/btn-search-submit.png) no-repeat;
 				text-indent: 999px;
 				background-size: 100%;
 				cursor: pointer;
@@ -427,7 +427,7 @@
 					}
 				}
 				.shownav {
-					background: url(i/btn-shownav.png) no-repeat;
+					background: url(../i/btn-shownav.png) no-repeat;
 					background-size: 100%;
 					color: transparent;
 					border: none;
