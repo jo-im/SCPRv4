@@ -259,6 +259,7 @@ body        { position: relative; z-index: 1; }
         width: 48.769230769231%; // 634 / 1300
         float: right;
         padding-top: 60px;
+        .img-contain { background: #edecec; }
     }
 }
 
@@ -393,6 +394,7 @@ body        { position: relative; z-index: 1; }
                 }
                 .caption {
                     position: absolute;
+                    z-index: 5;
                     top: auto;
                     right: auto;
                     bottom: 0;
@@ -440,7 +442,6 @@ body        { position: relative; z-index: 1; }
     .inner {
         background:
             url(../i/fauxcol-single-report-topper.png) no-repeat 74.352% 0,
-//          url(../i/fauxcol-single-report-base.png) repeat-y 74.384615384615% 0;
             url(../i/fauxcol-single-report-base.png) repeat-y 74.352% 0; // ...goddamn imprecise retina-ipad trial-and-error...
         background-size:
             1500px 4px,
@@ -470,10 +471,12 @@ body        { position: relative; z-index: 1; }
                     font-size: 0.75em;
                     font-weight: 600;
                     color: #6e6e6e;
+                    margin-bottom: 2px;
                 }
                 h2 {
                     color: #1390ba; // darker shade of $blue
                     font-size: 1.125em; // 18 / 16
+                    line-height: 1.2;
                     font-weight: 400;
                     span, mark          { display: block; float: left; }
                     span                { margin-right: 11px; }
@@ -487,24 +490,21 @@ body        { position: relative; z-index: 1; }
                         font-weight: 400;
                         letter-spacing: 0.05em;
                         font-size: 0.55555555555556em; // 10 / 18
-                        padding: 0 4px 0;
+                        padding: 1px 4px 1px;
                         &:hover { background: #1390ba; }
                     }
                 }
             }
             &.audio {
+                header h1 { margin-bottom: 0; }
                 padding: 26px 0 35px;
                 background: #e1f7ff;
                 box-shadow: inset 7px 0 0 #cbf2ff;
                 border-bottom: 1px solid rgba(0,0,0,0.08);
-
-                header {
-                }
                 .audio-trigger {
                     position: relative;
                     border-top: 1px solid rgba(49,170,211,0.35);
                     padding-top: 13px;
-
                     button {
                         position: absolute;
                         top: 13px;
@@ -601,15 +601,14 @@ body        { position: relative; z-index: 1; }
         background: #fdebde;
         width: 47.327044025157%; // 301 / 636
         float: right;
-        margin-right: -17.452830188679%; // 111 / 636
-        padding: 11px 0 20px;
+        margin: 0 -17.452830188679% 20px 25px;
+        padding: 11px 0 21px;
         font-family: $font-freight;
         header {
             background: url(../i/single-report-icons.png) no-repeat;
             background-size: 50px 1930px;
-            margin-left: -13px;
-            padding: 5px 0 5px 13px;
-
+            margin: 0 0 7px -13px;
+            padding: 6px 0 5px 13px;
             h1 {
                 margin-left: 8.571428571429%; // 27 / ~315
                 color: $orange;
@@ -618,8 +617,152 @@ body        { position: relative; z-index: 1; }
                 font-weight: 600;
             }
         }
+
+        nav {
+            margin: 0 5% 0 8.571428571429%; // 27 / ~315
+            ul              { margin-bottom: 0; }
+            li,a,mark,span  { display: block; }
+            li              { margin-bottom: 12px; }
+            li:last-child   { margin-bottom: 0; }
+            mark {
+                color: #656565;
+                line-height: 1.1;
+                padding-bottom: 2px;
+                border-bottom: 1px solid #f6e3d6;
+            }
+            a {
+                padding: 0 0 0 25px;
+                background: url(../i/single-report-icons.png) no-repeat 0 -894px; // all are assumed to be "article" by default
+                background-size: 50px 1930px;
+            }
+
+            .article a      { background-position: 0 -894px; }
+        	.slideshow a    { background-position: 0 -988px; }
+        	.video a		{ background-position: 0 -1082px; }
+        	.poll a			{ background-position: 0 -1176px; }
+        	.map a			{ background-position: 0 -1270px; }
+        	.audio a		{ background-position: 0 -1364px; }
+        	.infographic a	{ background-position: 0 -1458px; }
+        	.taketwo a		{ background-position: 0 -1552px; }
+        	.airtalk a		{ background-position: 0 -1646px; }
+        	.offramp a		{ background-position: 0 -1740px; }
+
+            span {
+                text-transform: uppercase;
+                color: #bca18d;
+                font-weight: 700;
+                font-size: 0.625em;
+            }
+            a:hover mark        { color: black; border-bottom-color: $orange; }
+            a:hover span        { color: #ad6631; }
+        }
     }
 }
+
+
+//  - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+    @media screen and (max-width: 1100px) {
+        .report {
+            .supportive aside {
+                header {
+                    h1          { font-size: 0.6875em; }
+                    h2          { font-size: 1em; }
+                    h2 mark     { margin-top: -1px; }
+                }
+                .previews {
+                    .ratio      { width: 65px; }
+                    figcaption  {
+                        margin-left: 81px;
+                        time    { font-size: 0.625em; }
+                        mark    { font-size: 0.75em; }
+                    }
+                }
+            }
+            .prose {
+                width: 61%; // had been 48.923076923077
+                p:first-child   { width: 100%; }
+            }
+        }
+    }
+
+//  - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+    @media screen and (max-width: 950px) {
+        .report {
+            .supportive aside {
+                header {
+                    padding-left: 17px;
+                    margin-left: -17px;
+                }
+                .previews {
+                    @media screen and (min-width: 731px) {
+                        .ratio          { width: 100%; position: relative; margin-bottom: 6px;}
+                        .ratio .fill    { padding-top: 50%; }
+                        figcaption      { margin: 0 0 0 0; }
+                    }
+                }
+            }
+            .prose                  { width: 67%; }
+            .related {
+                float: none;
+                width: 100%;
+                margin: 0 0 25px 0;
+            }
+        }
+    }
+
+//  - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+    @media screen and (max-width: 730px) {
+        .prologue {
+            margin-bottom: 45px;
+        }
+        .report {
+            .inner {
+                background: none;
+                padding-bottom: 0;
+            }
+            .supportive {
+                width: 100%;
+                float: none;
+                background: #f1f1f1;
+                padding-bottom: 40px;
+                box-shadow:
+                    inset 7px 0 0 rgba(0,0,0,0.05),
+                    inset 0 4px 0 #31aad3;
+                aside       { margin-bottom: 50px; }
+                aside.audio { margin-bottom: 30px; }
+            }
+            .prose {
+                width: 100%;
+                float: none;
+                font-size: 0.875em;
+                .related {
+                    font-size: 110%;
+                }
+            }
+        }
+    }
+
+//  - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+    @media screen and (max-width: 570px) {
+        .report {
+            .prose          { font-size: 0.8125em; }
+            .prose .related { font-size: 120%; }
+        }
+    }
+
+//  - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+    @media screen and (max-width: 470px) {
+        .report {
+            .prose          { font-size: 0.75em; }
+            .prose .related { font-size: 125%; }
+        }
+    }
+
 
 
 
@@ -634,6 +777,7 @@ body        { position: relative; z-index: 1; }
 .triptych {
     margin-top: 25px;
 }
+
 
 
 

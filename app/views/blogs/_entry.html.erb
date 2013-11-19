@@ -1,3 +1,180 @@
+    <section class="prologue">
+        <div class="grating">
+            <div class="inner bound clearfix">
+              <div class="prose">
+                  <h1 class="title"><%= article.short_title %></h1>
+                    <aside class="byline">
+                      <h2 class="author">by <%= render_byline article.original_object %></h2>
+                        <%= smart_date_js article.public_datetime %>
+                    </aside>
+                    <aside class="share">
+                        <ul>
+                            <li><a href="#">Share on Facebook</a></li>
+                            <li><a href="#">Share on Twitter</a></li>
+                            <li><a href="#">Share on Google Plus</a></li>
+                            <li><a href="#">Share via Email</a></li>
+                        </ul>
+                    </aside>
+                    <aside class="caption">
+                      <p><%= @asset.caption if @asset.present? %><mark class="credit"><%= link_to @asset.owner, '#' %></mark></p>
+                    </aside>
+                </div><!--/ .prose -->
+                <div class="asset">
+                    <div class="ratio">
+                        <div class="fill"></div>
+                        <b class="img-contain">
+                          <%= image_tag @asset.eight.url %>
+                        </b>
+                    </div><!--/ .ratio -->
+                </div><!--/ .asset -->
+            </div>
+        </div>
+        <div class="ephemera"><%= image_tag @asset.full.url %></div>
+    </section><!--/ .prologue -->
+
+    <div class="report">
+        <div class="inner bound clearfix">
+            <article class="prose">
+              <%= article.body.html_safe %>
+
+              <% if @related_articles.presence %>
+                <aside class="related">
+                    <header><h1>Related Links</h1></header>
+                    <nav>
+                        <ul>
+                            <% @related_articles.each do |article| %>
+                              <% feature_type = article.original_object.feature_type.present? ? article.original_object.feature_type_name.downcase : 'article' %>
+                              <li class=<%= feature_type %>>
+                                <%= link_to article.public_path do %>
+                                  <mark><%= article.short_title %></mark>
+                                  <span><%= feature_type %></span></a>
+                                <% end %>
+                              </li>
+                            <% end %>
+                        </ul>
+                    </nav>
+                </aside>
+              <% end %>
+              </article>
+            <section class="supportive">
+                <aside class="audio">
+                    <header>
+                        <h1>Play this article's audio</h1>
+                    </header>
+                    <div class="audio-trigger">
+                        <button value="activate">Play audio</button>
+                        <ul class="meta">
+                            <li class="duration">2 min 39 sec</li>
+                            <li class="link"><a href="#">Download</a></li>
+                        </ul>
+                    </div>
+                </aside>
+                <aside class="see-more issue">
+                    <header>
+                        <h1>More from this Issue</h1>
+                        <h2 class="clearfix">
+                            <span><a href="#">Crime &amp; Punishment</a></span>
+                            <mark><a href="#">See All</a></mark>
+                        </h2>
+                    </header>
+                    <ul class="previews">
+                        <li>
+                            <a href="#">
+                                <figure class="ratio-pairing clearfix">
+                                    <div class="ratio">
+                                        <div class="fill"></div>
+                                        <b class="img-contain"><img src="http://a.scpr.org/i/e9de80e8e8144c522e519b3bdefa31bd/68402-eight.jpg" alt="" /></b>
+                                    </div><!--/ .ratio -->
+                                    <figcaption>
+                                        <time datetime="2013-08-20">20 August 2013</time>
+                                        <mark>Ex-LA County sheriff's official to challenge Baca</mark>
+                                    </figcaption>
+                                </figure><!--/ .ratio-pairing -->
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#">
+                                <figure class="ratio-pairing clearfix">
+                                    <div class="ratio">
+                                        <div class="fill"></div>
+                                        <b class="img-contain"><img src="http://a.scpr.org/i/bfe4dffbf1b7071f581467dbec46459f/40054-eight.jpg" alt="" /></b>
+                                    </div><!--/ .ratio -->
+                                    <figcaption>
+                                        <time datetime="2013-08-18">18 August 2013</time>
+                                        <mark>Mayor appoints professor, civic leaders to LA Police Commission</mark>
+                                    </figcaption>
+                                </figure><!--/ .ratio-pairing -->
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#">
+                                <figure class="ratio-pairing clearfix">
+                                    <div class="ratio">
+                                        <div class="fill"></div>
+                                        <b class="img-contain"><img src="http://a.scpr.org/i/5f41da46fb025672971f7e0af72df762/59471-eight.jpg" alt="" /></b>
+                                    </div><!--/ .ratio -->
+                                    <figcaption>
+                                        <time datetime="2013-08-9">9 August 2013</time>
+                                        <mark>4 Irwindale officials charged with embezzlement</mark>
+                                    </figcaption>
+                                </figure><!--/ .ratio-pairing -->
+                            </a>
+                        </li>
+                    </ul>
+                </aside>
+                <aside class="see-more kpcc">
+                    <header>
+                        <h1>Popular now on KPCC</h1>
+                    </header>
+                    <ul class="previews">
+                        <li>
+                            <a href="#">
+                                <figure class="ratio-pairing clearfix">
+                                    <div class="ratio">
+                                        <div class="fill"></div>
+                                        <b class="img-contain"><img src="http://a.scpr.org/i/6e7dc3ab63db2d7b9af4512610d01401/57369-eight.jpg" alt="" /></b>
+                                    </div><!--/ .ratio -->
+                                    <figcaption>
+                                        <time datetime="2013-08-20">20 August 2013</time>
+                                        <mark>World Cup Soccer: If Mexico loses in qualifying match, it could hurt the US economy</mark>
+                                    </figcaption>
+                                </figure><!--/ .ratio-pairing -->
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#">
+                                <figure class="ratio-pairing clearfix">
+                                    <div class="ratio">
+                                        <div class="fill"></div>
+                                        <b class="img-contain"><img src="http://a.scpr.org/i/7b53e47ceb3880bbc08c7c5cfffe5470/67752-eight.jpg" alt="" /></b>
+                                    </div><!--/ .ratio -->
+                                    <figcaption>
+                                        <time datetime="2013-08-18">18 August 2013</time>
+                                        <mark>Cal Worthington, car dealer famous for 'Go See Cal' ads, dead at 92</mark>
+                                    </figcaption>
+                                </figure><!--/ .ratio-pairing -->
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#">
+                                <figure class="ratio-pairing clearfix">
+                                    <div class="ratio">
+                                        <div class="fill"></div>
+                                        <b class="img-contain"><img src="http://a.scpr.org/i/f2087a790f61e2a36bde90fd9d1bc842/67806-eight.jpg" alt="" /></b>
+                                    </div><!--/ .ratio -->
+                                    <figcaption>
+                                        <time datetime="2013-08-9">9 August 2013</time>
+                                        <mark>'The Child Exchange': The underground market of unwanted adopted children</mark>
+                                    </figcaption>
+                                </figure><!--/ .ratio-pairing -->
+                            </a>
+                        </li>
+                    </ul>
+                </aside>
+            </section>
+        </div>
+    </div><!--/ .report -->
+
 
 
 
