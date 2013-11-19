@@ -8,6 +8,14 @@ GIT
       rails (>= 3.0)
 
 GIT
+  remote: git://github.com/SCPR/audio_vision-ruby.git
+  revision: 334e3f26d73527297c693ab4beb17d54bb961a3b
+  specs:
+    audio_vision (1.0.0.rc1)
+      faraday (~> 0.8.8)
+      faraday_middleware (~> 0.9.0)
+
+GIT
   remote: git://github.com/SCPR/embeditor-rails.git
   revision: dccac9a704bf7db549333fc3b9247c06c9c96b27
   specs:
@@ -416,6 +424,7 @@ PLATFORMS
 
 DEPENDENCIES
   asset_host_client!
+  audio_vision!
   bcrypt-ruby (~> 3.0.0)
   bootstrap-sass (~> 2.2)
   capistrano

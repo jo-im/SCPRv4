@@ -70,6 +70,7 @@ gem 'npr', github: "bricker/npr"
 #gem 'npr', path: "#{ENV['PROJECT_HOME']}/npr"
 gem 'asset_host_client', github: "SCPR/asset_host_client"
 #gem 'asset_host_client', path: "#{ENV['PROJECT_HOME']}/asset_host_client"
+gem 'audio_vision', github: 'SCPR/audio_vision-ruby'
 
 
 ## Assets
