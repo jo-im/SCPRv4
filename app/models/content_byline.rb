@@ -25,7 +25,7 @@ class ContentByline < ActiveRecord::Base
   belongs_to :content, polymorphic: true
   belongs_to :user, class_name: "Bio"
 
-  self.versioned_attributes = [:name, :role, :user_id]
+  self.versioned_attributes = ["name", "role", "user_id"]
 
   #-----------------------
 
