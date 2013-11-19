@@ -1,3 +1,5 @@
+<% article = entry.to_article %>
+  <% if @asset.present? %>
     <section class="prologue">
         <div class="grating">
             <div class="inner bound clearfix">
@@ -15,9 +17,9 @@
                             <li><a href="#">Share via Email</a></li>
                         </ul>
                     </aside>
-                    <aside class="caption">
-                      <p><%= @asset.caption if @asset.present? %><mark class="credit"><%= link_to @asset.owner, '#' %></mark></p>
-                    </aside>
+                      <aside class="caption">
+                        <p><%= @asset.caption %><mark class="credit"><%= link_to @asset.owner, '#' %></mark></p>
+                      </aside>
                 </div><!--/ .prose -->
                 <div class="asset">
                     <div class="ratio">
@@ -31,7 +33,7 @@
         </div>
         <div class="ephemera"><%= image_tag @asset.full.url %></div>
     </section><!--/ .prologue -->
-
+   <%end %>
     <div class="report">
         <div class="inner bound clearfix">
             <article class="prose">

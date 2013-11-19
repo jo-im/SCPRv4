@@ -24,9 +24,8 @@ class BlogsController < ApplicationController
 
   def entry
     @entry = BlogEntry.published.includes(:blog).find(params[:id])
-    @article = @entry.to_article
     @blog  = @entry.blog
-    @asset = @article.original_object.asset if @article.asset.present?
+    @asset = @entry.asset if @entry.asset.present?
     @related_articles = @entry.related_content.first(2) if @entry.related_content.presence
     render layout: "vertical"
   end

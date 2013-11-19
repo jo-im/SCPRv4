@@ -1,5 +1,5 @@
-<%= render_content @article, "opengraph" %>
-<% add_to_page_title @article.title %>
+<%= render_content @entry, "opengraph" %>
+<% add_to_page_title @entry.headline %>
 <% content_for :body_class do %>
   <% 'single' %>
 <% end %>
@@ -9,8 +9,8 @@
 
 <%= render 'shared/header/header' %>
 
-<%= cache ["show", "v10", @article] do %>
-  <%= render "/blogs/entry", article: @article, full: true %>
+<%= cache ["show", "v10", @entry] do %>
+  <%= render "/blogs/entry", entry: @entry, full: true %>
 <% end %>
 
 <div class="fold" id="fold">
