@@ -45,8 +45,9 @@
     <meta name="twitter:image:src" content="!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!">
     <link rel="shortcut icon" href="http://media.scpr.org/favicon.ico" type="image/x-icon" />
     <link rel="apple-touch-icon-precomposed" href="!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!" />
-    <%= stylesheet_link_tag "new", media: "all" %>
+    <%= yield(:landing) if content_for :landing %>
     <%= stylesheet_link_tag "fonts", media: "screen" %>
+    <%= stylesheet_link_tag "vertical/partner-mercedes", media: "all" %>
     <%= javascript_include_tag "shared", "application" %>
     <%= javascript_include_tag "new", "application" %>
     <!--[if lt IE 9]>
@@ -61,81 +62,7 @@
 </head>
 
 
-<body class="landing">
-
-
-    <header class="masthead">
-        <div class="inner bound">
-
-            <section class="titling clearfix">
-                <div class="brand">
-                    <h1><a href="#">Represent</a></h1>
-                    <h2>Politics, government and public life for Southern California.</h2>
-                </div>
-                <div class="partner">
-                    <h3><a href="#">
-                        <span>Presented by Mercedes-Benz.</span>
-                        <b class="img"><%= image_tag('sponsor-assets/mercedes-logo.png', alt: 'Mercedes-Benz logo') %></b></a>
-                    </h3>
-                </div>
-            </section><!--/ .titling -->
-
-            <section class="station clearfix">
-                <h4><a href="http://kpcc.org" rel="author">89.3 KPCC</a></h4>
-                <nav class="kpcc-links">
-                    <ul>
-                        <li><a href="#">Listen Live</a></li>
-                        <li><a href="http://www.scpr.org/news/">News</a></li>
-                        <li><a href="http://www.scpr.org/arts-life/">Arts &amp; Life</a></li>
-                        <li><a href="http://www.scpr.org/programs/">Programs</a></li>
-                        <li><a href="http://www.scpr.org/events/">Events</a></li>
-                        <li><a href="http://www.scpr.org/support/">Support Us</a></li>
-                        <li><a href="http://www.scpr.org/about/">About Us</a></li>
-                    </ul>
-                </nav>
-                <ul class="follow-us clearfix">
-                    <li><a href="#" title="Follow KPCC on Twitter" class="tw">KPCC on Twitter</a></li>
-                    <li><a href="#" title="Like KPCC on Facebook" class="fb">KPCC on Facebook</a></li>
-                    <li><a href="#" title="Join with KPCC on Google Plus" class="gp">KPCC on Google+</a></li>
-                </ul>
-                <button class="search-trigger" value="Activate search tool">Search KPCC</button>
-                <h5 class="donate"><a href="https://scprcontribute.publicradio.org/contribute.php">Donate Now</a></h5>
-                <button class="shownav" aria-hidden="true">Show Nav</button>
-            </section><!--/ .station -->
-
-            <nav class="kpcc-ledge pane" aria-hidden="true">
-                <h1><a href="http://kpcc.org" rel="author">89.3 KPCC</a></h1>
-                <button class="close" value="close">Close</button>
-                <ul class="links">
-                    <li><a href="#">Listen Live</a></li>
-                    <li><a href="http://www.scpr.org/news/">News</a></li>
-                    <li><a href="http://www.scpr.org/arts-life/">Arts &amp; Life</a></li>
-                    <li><a href="http://www.scpr.org/programs/">Programs</a></li>
-                    <li><a href="http://www.scpr.org/events/">Events</a></li>
-                    <li><a href="http://www.scpr.org/support/">Support Us</a></li>
-                    <li><a href="http://www.scpr.org/about/">About Us</a></li>
-                </ul>
-                <h2>Follow KPCC</h2>
-                <ul class="follow-us clearfix">
-                    <li><a href="#" title="Follow KPCC on Twitter" class="tw">KPCC on Twitter</a></li>
-                    <li><a href="#" title="Like KPCC on Facebook" class="fb">KPCC on Facebook</a></li>
-                    <li><a href="#" title="Join with KPCC on Google Plus" class="gp">KPCC on Google+</a></li>
-                </ul>
-            </nav><!--/ .kpcc-ledge -->
-
-            <aside class="kpcc-search pane">
-                <h1><a href="http://kpcc.org" rel="author">89.3 KPCC</a></h1>
-                <button class="close" value="close">Close</button>
-                <form method="get" action="/search/">
-                    <label for="q">Search:</label>
-                    <div class="search-wrap"><input class="search" id="q" type="text" placeholder="Search" name="q" /></div>
-                    <input id="submit" class="submit" type="submit" value="">
-                    <input class="toggle-search" type="button">
-                </form>
-            </aside>
-
-        </div>
-    </header><!--/ .masthead -->
+<body class="<%= yield(:body_class) %>">
 
     <%= yield %>
 
