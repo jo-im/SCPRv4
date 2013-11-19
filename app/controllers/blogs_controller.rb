@@ -25,6 +25,7 @@ class BlogsController < ApplicationController
   def entry
     @entry = BlogEntry.published.includes(:blog).find(params[:id])
     @blog  = @entry.blog
+    render layout: "vertical"
   end
 
   #----------

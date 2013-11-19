@@ -1,5 +1,13 @@
 <%= render_content @entry, "opengraph" %>
 <% add_to_page_title @entry.headline %>
+<% content_for :body_class do %>
+  <% 'single' %>
+<% end %>
+<% content_for :landing do %>
+  <%= stylesheet_link_tag "vertical/single", media: "all" %>
+<% end %>
+
+<%= render 'shared/header/header' %>
 
 <%= cache ["show", "v10", @entry] do %>
   <%= render "/blogs/entry", entry: @entry, full: true %>
@@ -37,7 +45,7 @@
   <% end %>
 
   <%= render "shared/related_content_and_links", content: @entry %>
-  
+
   <!-- Comments -->
   <div class="comment-wrap">
     <div class="row-fluid">
