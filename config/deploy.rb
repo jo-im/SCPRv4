@@ -34,7 +34,7 @@ set :force_assets,  false # If assets wouldn't normally be precompiled, force th
 set :skip_assets,   false # If assets are going to be precompiled, force them NOT to be
 set :ts_index,      false # Staging only - Whether or not to run the sphinx index on drop
 set :syncdb,        false # Staging only - Whether or not to run a dbsync to mercer_staging
-set :restart_delay, 40
+set :restart_delay, 60
 
 
 # --------------
