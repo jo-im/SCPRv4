@@ -21,8 +21,8 @@ class ContentEmail
   validates :from_email, :to_email,
     :presence => true,
     :format   => {
-      :with => %r{\A\S+?@\S+?\.\S+\z},
-      :message => "is an invalid e-mail format."
+      :with       => %r{\A\S+?@\S+?\.\S+\z},
+      :message    => "is an invalid e-mail format."
     }
 
   validates :content, presence: true
