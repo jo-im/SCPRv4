@@ -3,7 +3,7 @@ module NewRelic
     def with_manual_agent
       ENV['NEWRELIC_DISPATCHER'] ||= 'passenger'
       ::NewRelic::Agent.manual_start
-      
+
       with_error_logging do
         yield
       end

@@ -1,4 +1,4 @@
-# The point of this is to provide a simple way 
+# The point of this is to provide a simple way
 # to log to Rails.logger and STDOUT with just one method.
 # It will not log to STDOUT in the test environment.
 #
@@ -15,7 +15,7 @@ module LogsAsTask
     include InstanceMethods
     extend ClassMethods
   end
-  
+
   module ClassMethods
     def log(msg)
       msg = ">>> [#{Time.now}] #{self.name}: #{msg}"

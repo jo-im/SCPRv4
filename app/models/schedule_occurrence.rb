@@ -15,7 +15,7 @@ class ScheduleOccurrence < ActiveRecord::Base
   scope :current, -> { at(Time.now) }
 
 
-  scope :between, ->(start_date, end_date) { 
+  scope :between, ->(start_date, end_date) {
     where("starts_at < ? and ends_at > ?", end_date, start_date)
     .order("starts_at")
   }
@@ -105,7 +105,7 @@ class ScheduleOccurrence < ActiveRecord::Base
   end
 
 
-  # Validations will ensure that either the program or the event_title 
+  # Validations will ensure that either the program or the event_title
   # is present.
   def title
     self.event_title.present? ? self.event_title : self.program.title

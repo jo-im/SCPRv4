@@ -1,7 +1,7 @@
 ##
 # Blogs
 #
-FactoryGirl.define do  
+FactoryGirl.define do
   factory :blog do
     sequence(:name) { |n| "Blog #{n}" }
     slug { name.parameterize }
@@ -12,7 +12,7 @@ FactoryGirl.define do
   end
 
   #-------------------------
-  
+
   factory :blog_author do
     blog
     author

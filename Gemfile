@@ -23,7 +23,8 @@ gem 'outpost-asset_host', github: "SCPR/outpost-asset_host"
 gem 'outpost-aggregator', github: "SCPR/outpost-aggregator"
 #gem 'outpost-aggregator', path: "#{ENV['PROJECT_HOME']}/outpost-aggregator"
 
-
+gem 'secretary-rails', github: "SCPR/secretary-rails"
+# gem 'secretary-rails', path: "#{ENV['PROJECT_HOME']}/secretary-rails"
 
 ## Cache
 gem 'redis-content-store', github: "SCPR/redis-content-store"
@@ -39,7 +40,7 @@ gem 'ckeditor_rails', '~> 4.2.0'
 gem 'select2-rails', '3.4.1'
 gem 'twitter-text', "~> 1.5"
 gem 'sanitize', "~> 2.0"
-gem 'escape_utils'
+gem 'escape_utils', '~> 0.3'
 gem 'simple_form', "~> 2.0"
 gem 'jbuilder'
 
@@ -48,7 +49,6 @@ gem 'embeditor-rails', github: 'SCPR/embeditor-rails'
 
 
 ## Utility
-gem "diffy", "~> 2.0"
 gem "carrierwave", "~> 0.6"
 gem "ruby-mp3info", require: 'mp3info'
 gem "ice_cube", "~> 0.11.0"
@@ -87,7 +87,7 @@ end
 
 ## Development Only
 group :development do
-  gem 'capistrano'
+  gem 'capistrano', '~> 2.0'
   gem 'pry'
   gem 'pry-debugger'
 end

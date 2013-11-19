@@ -27,16 +27,18 @@ module Concern
       # If they only changed these attributes, then the homepage
       # doesn't need to be concerned about it.
       IGNORE_ATTRIBUTES = [
-        'headline', 
-        'body', 
-        'slug', 
-        'source', 
-        'news_agency', 
-        'is_from_pij', 
-        'extra_asset_scheme', 
-        'updated_at', 
-        'base', 
-        'outgoing_references'
+        'headline',
+        'body',
+        'slug',
+        'source',
+        'news_agency',
+        'is_from_pij',
+        'extra_asset_scheme',
+        'updated_at',
+        'base',
+        'outgoing_references',
+        'related_links',
+        'audio'
       ]
 
       included do

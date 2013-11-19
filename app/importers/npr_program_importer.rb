@@ -2,12 +2,12 @@
 # information about a given segment than an RSS feed does.
 #
 # A program with its source set to "npr-api" is assumed to have segmented
-# episodes. This might not always be the case with the NPR API, I really 
+# episodes. This might not always be the case with the NPR API, I really
 # don't know, but we'll leave it like this until something breaks. For now
 # we assume that every program has episodes, and every segment has an episode.
 #
 # We are also assuming that all segments in an episode will have audio.
-# 
+#
 # http://www.npr.org/api/mappingCodes.php
 class NprProgramImporter
   include ::NewRelic::Agent::Instrumentation::ControllerInstrumentation
@@ -41,7 +41,7 @@ class NprProgramImporter
     end until response.size < 20
 
     # If there are no segments then forget about it.
-    # Even if an episode is available in the NPR API, its audio may 
+    # Even if an episode is available in the NPR API, its audio may
     # not be available yet. If there is a single story in the response
     # which *doesn't* yet have audio, then we will abort importing and
     # get it next time.
@@ -52,7 +52,7 @@ class NprProgramImporter
     # be a hidden and potentially confusing bug.
     # If an episode with this air date for this program was already
     # imported, then it's safe to assume that we already imported its
-    # segments as well. The NPR API specifies that requesting a 
+    # segments as well. The NPR API specifies that requesting a
     # program with `date=current` will only return COMPLETED episodes.
     #
     # If there are segments with their "stream" permission set to "false",

@@ -19,7 +19,12 @@ module Job
       articles = task.parse(data['rows']).map(&:to_article)
 
       Rails.cache.write("popular/viewed", articles)
-      self.cache(articles, "/shared/widgets/cached/popular", "views/popular/viewed", local: :articles)
+      self.cache(
+        articles,
+        "/shared/widgets/cached/popular",
+        "views/popular/viewed",
+        local: :articles
+      )
     end
 
     #---------------
@@ -104,7 +109,8 @@ module Job
     #---------------
 
     def oauth_token
-      token = OAuth2::AccessToken.new client, @token, refresh_token: @refresh_token
+      token = OAuth2::AccessToken.new(
+        client, @token, refresh_token: @refresh_token)
       token.refresh!
     end
 
@@ -112,7 +118,9 @@ module Job
 
     def connection
       @connection ||= begin
-        Faraday.new API_URL, headers: { "Authorization" => "Bearer #{@oauth_token.token}"} do |builder|
+        Faraday.new API_URL, headers: { 
+          "Authorization" => "Bearer #{@oauth_token.token}"
+        } do |builder|
           builder.use Faraday::Request::UrlEncoded
           builder.use Faraday::Response::Logger
           builder.use FaradayMiddleware::ParseJson, content_type: /\bjson\z/

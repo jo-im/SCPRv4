@@ -7,7 +7,7 @@ FactoryGirl.define do
   end
 
   #-----------------------
-  
+
   factory :missed_it_content do
     missed_it_bucket
     content { |mic| mic.association(:content_shell) }

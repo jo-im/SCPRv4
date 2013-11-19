@@ -40,7 +40,7 @@ describe ChrArticleImporter do
     it 'adds in related links if an HTML link is available' do
       # Our fixture doesn't have an HTML link ... so just stub it.
       NPR::Story.any_instance.should_receive(:link_for).with('html').and_return('http://chr.com/story')
-      
+
       remote_article = create :chr_article
       news_story = ChrArticleImporter.import(remote_article)
       news_story.related_links.should be_present

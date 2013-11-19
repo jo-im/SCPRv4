@@ -48,7 +48,8 @@ module NprArticleImporter
 
         if cached_article.save
           added.push cached_article
-          log "Saved NPR Story ##{npr_story.id} as RemoteArticle ##{cached_article.id}"
+          log "Saved NPR Story ##{npr_story.id} as " \
+              "RemoteArticle ##{cached_article.id}"
         else
           log "Couldn't save NPR Story ##{npr_story.id}"
         end
@@ -136,7 +137,10 @@ module NprArticleImporter
       if image = npr_story.primary_image
         # Try a few different crops to see which one is available.
         # We prefer the largest possible image with the least cropped out.
-        crop = image.enlargement || image.crop("enlargment") || image.crop("standard") || image
+        crop =  image.enlargement ||
+                image.crop("enlargment") ||
+                image.crop("standard") ||
+                image
 
         asset = AssetHost::Asset.create(
           :url     => crop.src,

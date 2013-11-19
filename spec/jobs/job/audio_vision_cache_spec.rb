@@ -41,7 +41,7 @@ describe Job::AudioVisionCache do
 
       # Test that it will change.
       # Do it 10 times so we can be reasonably sure
-      # that it never chooses the same post twice in 
+      # that it never chooses the same post twice in
       # a row.
       10.times do
         Job::AudioVisionCache.perform

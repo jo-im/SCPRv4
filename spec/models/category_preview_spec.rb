@@ -135,7 +135,7 @@ describe CategoryPreview do
       # Segment
       segment = create :show_segment
 
-      # Featured Comment 
+      # Featured Comment
       bucket = create :featured_comment_bucket
       category.comment_bucket = bucket
       comment = create :featured_comment, bucket: bucket, content: segment

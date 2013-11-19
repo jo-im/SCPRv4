@@ -1,16 +1,16 @@
 class EventsController < ApplicationController
   def index
     @scoped_events = Event.upcoming_and_current
-    
+
     if params[:list] == "forum"
       @scoped_events = @scoped_events.forum
     elsif params[:list] == "sponsored"
       @scoped_events = @scoped_events.sponsored
     end
-    
+
     @events = Kaminari.paginate_array(Event.sorted(@scoped_events)).page(params[:page]).per(10)
   end
-  
+
   def archive
     @events = Event.forum.past.page(params[:page]).per(10)
   end
@@ -30,7 +30,7 @@ class EventsController < ApplicationController
 
     @more_events = Event.forum.upcoming.where("id != ?", @event.id).limit(2)
   end
-  
+
   def forum
     @upcoming_events = Event.forum.upcoming_and_current.limit(3)
     @closest_event   = @upcoming_events.first

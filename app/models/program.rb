@@ -80,7 +80,7 @@ class Program
     self
   end
 
-  # Delegate get_link to original object, 
+  # Delegate get_link to original object,
   # just so we don't have to redefine it.
   def get_link(type)
     if self.original_object

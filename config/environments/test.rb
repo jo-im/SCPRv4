@@ -48,5 +48,5 @@ Scprv4::Application.configure do
   config.scpr.media_root   = Rails.root.join("spec/fixtures/media")
   config.scpr.media_url    = "file://#{Rails.root.join("spec/fixtures/media")}"
 
-  config.node.server       = "http://localhost:13002"
+  config.node.server = "http://localhost:13002"
 end

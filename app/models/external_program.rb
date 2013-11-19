@@ -9,7 +9,7 @@
 #    This method should fetch the segments (in an RSS feed these would be the
 #    entries) and save them to our database. But it can do whatever you want.
 #    I'm not here to tell you what to do.
-# 2. Add it to the IMPORTERS hash. The key is the arbitrary text ID for the 
+# 2. Add it to the IMPORTERS hash. The key is the arbitrary text ID for the
 #    importer, and the value is the class name.
 # 3. Set the program to use that importer in the CMS.
 # 4. There's not a 4th step, get to work already.

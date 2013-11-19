@@ -10,7 +10,8 @@ module Concern
           :dependent    => :destroy,
           :as           => :item
 
-        after_save :touch_edition_slots, if: -> { self.changed? }
+        after_save :touch_edition_slots,
+          :if => -> { self.changed? }
       end
 
 

@@ -1,6 +1,6 @@
 require "spec_helper"
 
-describe Blog do  
+describe Blog do
   describe "scopes" do
     describe "::active" do
       it "returns only active blogs" do

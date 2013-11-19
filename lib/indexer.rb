@@ -11,7 +11,7 @@ class Indexer
   include ::NewRelic::Agent::Instrumentation::ControllerInstrumentation
 
   attr_reader :indices, :models
-  
+
   class << self
     #--------------------
     # Enqueue the Index task.
