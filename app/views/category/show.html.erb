@@ -1,5 +1,15 @@
 <% add_to_page_title @category.title %>
 
+<% content_for :body_class do %>
+  <% 'landing' %>
+<% end %>
+
+<% content_for :landing do %>
+  <%= stylesheet_link_tag "vertical/landing", media: "all" %>
+<% end %>
+
+<%= render 'shared/header/header' %>
+
 <section class="headline">
   <h1 class="bound"><span><%= @lead_article.short_title if @lead_article.present? %></span></h1>
 </section>
