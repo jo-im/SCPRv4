@@ -508,7 +508,7 @@ body        { position: relative; z-index: 1; }
                     button {
                         position: absolute;
                         top: 13px;
-                        left: 9.60960960961%;
+                        left: 9.60960960961%;                    
                         width: 41px;
                         height: 41px;
                         @include icon;
@@ -532,7 +532,7 @@ body        { position: relative; z-index: 1; }
                         }
                     }
                 }
-
+                
             }
             &.see-more.issue header     { background-position: 0 -256px; }
             &.see-more.kpcc header      { background-position: 0 -128px; }
@@ -589,13 +589,25 @@ body        { position: relative; z-index: 1; }
         color: #313131;
         font-size: 0.9375em; // 15 / 16
         line-height: 1.73;
-        p,ul,ol,table,dl,blockquote,iframe,img,object   { margin-bottom: 1.73em; }
-        p:first-child {
+        p,ul,ol,table,dl,blockquote,iframe,img,object,h2,h3   { margin-bottom: 1.73em; }
+        p.inaugural {
             font-size: 1.26666666666667em; // 19 / 15
             line-height: 1.63;
             margin-bottom: 1.2em;
             width: 134.591194968553%; // 856 / 636
         }
+        em,i        { font-style: normal; font-family: $font-merri-ital; }
+        strong,b    { font-weight: normal; font-family: $font-merri-bold; }
+        a           { color: $blue; }
+        a:hover     { color: $orange; text-decoration: underline; }
+        ul,ul li    { list-style: disc outside; }
+        ul li       { margin: 0 0 0.7em 1.5em; }
+        ol,ol li    { list-style: decimal outside; }
+        ol li       { margin: 0 0 0.7em 2em; }
+        h2,h3       { font-family: $font-freight; }
+        h2          { color: $orange; font-weight: 600; font-size: 1.3em; }
+        h3          { color: black; font-weight: 700; text-transform: uppercase; font-size: 0.9375em; }
+        blockquote  { font-size: 1.26666666666667em; font-family: $font-merri-lightital; padding: 15px 0 0 25px; margin-left: -10px; background: url(../i/flourish-blockquote.png) no-repeat; background-size: 64px 55px; }
     }
     .related {
         background: #fdebde;
@@ -604,6 +616,7 @@ body        { position: relative; z-index: 1; }
         margin: 0 -17.452830188679% 20px 25px;
         padding: 11px 0 21px;
         font-family: $font-freight;
+        a:hover { text-decoration: none; }
         header {
             background: url(../i/single-report-icons.png) no-repeat;
             background-size: 50px 1930px;
@@ -617,25 +630,25 @@ body        { position: relative; z-index: 1; }
                 font-weight: 600;
             }
         }
-
+        
         nav {
             margin: 0 5% 0 8.571428571429%; // 27 / ~315
-            ul              { margin-bottom: 0; }
-            li,a,mark,span  { display: block; }
-            li              { margin-bottom: 12px; }
-            li:last-child   { margin-bottom: 0; }
+            ul                  { margin-bottom: 0; }
+            li,a,mark,span      { display: block; }
+            ul li               { margin: 0 0 12px 0; }
+            ul li:last-child    { margin-bottom: 0; }
             mark {
                 color: #656565;
                 line-height: 1.1;
                 padding-bottom: 2px;
-                border-bottom: 1px solid #f6e3d6;
+                border-bottom: 1px solid #f6e3d6; 
             }
             a {
                 padding: 0 0 0 25px;
                 background: url(../i/single-report-icons.png) no-repeat 0 -894px; // all are assumed to be "article" by default
                 background-size: 50px 1930px;
             }
-
+            
             .article a      { background-position: 0 -894px; }
         	.slideshow a    { background-position: 0 -988px; }
         	.video a		{ background-position: 0 -1082px; }
@@ -646,7 +659,7 @@ body        { position: relative; z-index: 1; }
         	.taketwo a		{ background-position: 0 -1552px; }
         	.airtalk a		{ background-position: 0 -1646px; }
         	.offramp a		{ background-position: 0 -1740px; }
-
+            
             span {
                 text-transform: uppercase;
                 color: #bca18d;
@@ -658,6 +671,14 @@ body        { position: relative; z-index: 1; }
         }
     }
 }
+
+
+
+//  - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+    @media screen and (max-width: 1290px) {
+        .prologue { margin-bottom: 40px; } // not 70
+    }
 
 
 //  - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -686,6 +707,15 @@ body        { position: relative; z-index: 1; }
         }
     }
 
+
+//  - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+    @media screen and (max-width: 1060px) {
+        .prologue { margin-bottom: 15px; } // not 40
+    }
+
+
+
 //  - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
     @media screen and (max-width: 950px) {
@@ -696,7 +726,7 @@ body        { position: relative; z-index: 1; }
                     margin-left: -17px;
                 }
                 .previews {
-                    @media screen and (min-width: 731px) {
+                    @media screen and (min-width: 871px) {
                         .ratio          { width: 100%; position: relative; margin-bottom: 6px;}
                         .ratio .fill    { padding-top: 50%; }
                         figcaption      { margin: 0 0 0 0; }
@@ -714,7 +744,7 @@ body        { position: relative; z-index: 1; }
 
 //  - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-    @media screen and (max-width: 730px) {
+    @media screen and (max-width: 870px) {
         .prologue {
             margin-bottom: 45px;
         }
@@ -725,19 +755,34 @@ body        { position: relative; z-index: 1; }
             }
             .supportive {
                 width: 100%;
+                max-width: 500px;
+                margin: 0 auto;
                 float: none;
                 background: #f1f1f1;
                 padding-bottom: 40px;
                 box-shadow:
                     inset 7px 0 0 rgba(0,0,0,0.05),
                     inset 0 4px 0 #31aad3;
-                aside       { margin-bottom: 50px; }
-                aside.audio { margin-bottom: 30px; }
+                aside {
+                    margin-bottom: 50px;
+                    &.audio                      { margin-bottom: 30px; }
+                    .previews figcaption mark   { font-size: 0.875em; }
+                }
+
             }
             .prose {
                 width: 100%;
+                max-width: 600px;
                 float: none;
                 font-size: 0.875em;
+                padding-bottom: 45px;
+                margin: 0 auto 60px;
+                background:
+                    url(../i/flourish-donut.png) no-repeat center bottom,
+                    url(../i/flourish-gray-dot.png) repeat-x left 0px bottom 9px;
+                background-size:
+                    26px 19px,
+                    1px 1px;
                 .related {
                     font-size: 110%;
                 }
@@ -756,13 +801,6 @@ body        { position: relative; z-index: 1; }
 
 //  - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-    @media screen and (max-width: 470px) {
-        .report {
-            .prose          { font-size: 0.75em; }
-            .prose .related { font-size: 125%; }
-        }
-    }
-
 
 
 
@@ -776,6 +814,133 @@ body        { position: relative; z-index: 1; }
 
 .triptych {
     margin-top: 25px;
+}
+
+
+//	################################################################################################
+//	################################################################################################
+//	DEBUGGIN'
+//	################################################################################################
+//	################################################################################################
+
+//  .prologue,.partner,.report,.triptych article { display: none; }
+
+
+
+//	################################################################################################
+//	################################################################################################
+//	TOWNHALL
+//	################################################################################################
+//	################################################################################################
+
+.townhall {
+    background: #636363 url(../i/fauxcol-townhall-base.png) repeat-y center top;
+    .inner {
+        padding: 56px 0 210px;
+        background:
+            url(../i/fauxcol-townhall-east.png) repeat-y 84.153846153846% 0,
+            url(../i/fauxcol-townhall-west.png) repeat-y 23.153846153846% 0;
+        background-size:
+            1500px 15px,
+            1500px 15px;
+    }
+    .primary {
+        width: 74.384615384615%; // 967 / 1300
+        float: right;
+    }
+    .tourguide {
+        width: 23.153846153846%; // 301 / 1300
+        padding-top: 87px;
+        float: left;
+        aside {
+            margin-bottom: 65px;
+            color: #7c7c7c;
+            h1 {
+                span { white-space: nowrap; display: block; }
+                font-family: $font-freight;
+                font-weight: 600;
+                font-size: 1.25em; // 20 / 16
+                line-height: 1;
+                color: $blue;
+                background: white;
+                border-top: 1px solid rgba(0,0,0,0.2);
+                padding: 6px 5% 8px 5.31561461794%; // 16 / 301
+                margin: 0 0 18px -5.31561461794%;
+                box-shadow:
+                    inset -1px 0 0 rgba(0,0,0,0.1),
+                    inset -5px 0 0 rgba(0,0,0,0.04);
+            }
+            h2 {
+                color: black;
+                font-family: $font-merri-bold;
+                font-size: 0.75em;
+                margin-bottom: 10px;
+            }
+            p {
+                font-size: 0.75em;
+                line-height: 1.5;
+                margin: 0 10% 1.7em 0;
+            }
+        }
+
+    }
+    .backlog {
+        width: 75.387797311272%; // 729 / 967
+        float: left;
+        & > h1 {
+            font-family: $font-freight;
+            color: black;
+            font-weight: 700;
+            font-size: 1.75em; // 28 / 16
+            margin-bottom: 48px;
+        }
+        
+    }
+    .supportive {
+        width: 21.302998965874%; // 206 / 967
+        float: right;
+        padding-top: 128px;
+        font-family: $font-freight;
+        section {
+            margin-bottom: 70px;
+            &:last-child { margin-bottom: 0; }
+            h1,h2 {
+                font-weight: 600;
+                padding-right: 10px;
+                padding-left: 7.766990291262%; // 16 / 206
+                line-height: 1.0;
+            }
+            h1 {
+                text-transform: uppercase;
+                border-top: 1px solid rgba(0,0,0,0.36);
+                color: #62cef3;
+                font-size: 0.875em; // 14 / 16
+                padding-top: 9px;
+                margin-bottom: 33px;
+            }
+            h2 {
+                background: #8a8a8a;
+                box-shadow: inset 7px 0 0 #6d6d6d;
+                font-size: 1.0625em; // 17 / 16
+                padding-top: 6px;
+                padding-bottom: 7px;
+                color: white;
+                margin-bottom: 12px;
+            }
+            nav {
+                margin: 0 0 26px 7.766990291262%; // 16 / 206                
+                line-height: 1.1;
+                li,mark,time,a      { display: block; }
+                li                  { margin-bottom: 21px; }
+                ul li:last-child    { margin-bottom: 0; }
+                mark                { color: white; font-weight: 600; font-size: 0.8125em; margin-bottom: 3px; }
+                time                { font-size: 0.75em; font-family: $font-prox; color: #ababab; }
+                a:hover mark        { text-decoration: underline; }
+                a:hover time        { color: #ff9849; } // brighter shade of $orange
+            }
+        }
+
+    }
 }
 
 
