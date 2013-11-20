@@ -1,7 +1,8 @@
 class HomepageContent < ActiveRecord::Base
   include Outpost::Aggregator::SimpleJson
 
-  self.table_name =  "layout_homepagecontent"
+  self.table_name = "layout_homepagecontent"
+  self.versioned_attributes = ["content_type", "content_id", "position"]
 
   # FIXME: Can we figure out a way not to reference ContentBase here?
   # The problem is that "content" can be something that does use the

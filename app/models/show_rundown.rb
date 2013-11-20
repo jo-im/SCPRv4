@@ -1,5 +1,6 @@
 class ShowRundown < ActiveRecord::Base
   self.table_name = 'shows_rundown'
+  self.versioned_attributes = ["segment_id", "position"]
 
   belongs_to :episode, class_name: "ShowEpisode"
   belongs_to :segment, class_name: "ShowSegment"

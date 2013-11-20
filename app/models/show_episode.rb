@@ -48,6 +48,7 @@ class ShowEpisode < ActiveRecord::Base
                           :order       => "position"
 
   accepts_json_input_for :rundowns
+  tracks_association :rundowns
 
   #-------------------
   # Validations

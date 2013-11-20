@@ -18,6 +18,10 @@ module Concern
         }
 
         accepts_json_input_for_assets
+
+        if self.has_secretary?
+          tracks_association :assets
+        end
       end
 
       #--------------------

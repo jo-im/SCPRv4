@@ -26,6 +26,10 @@ module Concern
           :if => -> { self.unpublishing? }
 
         accepts_json_input_for :outgoing_references
+
+        if self.has_secretary?
+          tracks_association :outgoing_references
+        end
       end
 
       #-------------------------

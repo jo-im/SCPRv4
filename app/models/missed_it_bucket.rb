@@ -19,6 +19,7 @@ class MissedItBucket < ActiveRecord::Base
   }
 
   accepts_json_input_for :content
+  tracks_association :content
 
   #--------------------
   # Validation
