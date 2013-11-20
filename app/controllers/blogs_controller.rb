@@ -35,6 +35,7 @@ class BlogsController < ApplicationController
     )
     @category_articles = @content.map { |a| a.to_article }
     @three_recent_articles = @category_articles[0..2]
+    @popular_articles = Rails.cache.read("popular/viewed").first(3)
     render layout: "vertical"
   end
 
