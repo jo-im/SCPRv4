@@ -59,71 +59,51 @@
               <% end %>
               </article>
             <section class="supportive">
-                <aside class="audio">
-                    <header>
-                        <h1>Play this article's audio</h1>
-                    </header>
-                    <div class="audio-trigger">
-                        <button value="activate">Play audio</button>
-                        <ul class="meta">
-                            <li class="duration">2 min 39 sec</li>
-                            <li class="link"><a href="#">Download</a></li>
-                        </ul>
-                    </div>
-                </aside>
+              <% if audio = article.audio.first %>
+                    <aside class="audio">
+                      <header>
+                          <h1>Play this article's audio</h1>
+                      </header>
+                      <div class="audio-trigger">
+                        <button value="activate"><%= link_to 'Play audio', audio.url, class: "play-btn audio-toggler" %></button>
+                          <ul class="meta">
+                            <li class="duration"><%= format_duration audio.duration %></li>
+                              <li class="link"><%= link_to 'Download', audio.url %></li>
+                          </ul>
+                      </div>
+                    </aside>
+                  <% end %>
+              <% if issue = article.original_object.issues.first %>
                 <aside class="see-more issue">
                     <header>
                         <h1>More from this Issue</h1>
                         <h2 class="clearfix">
-                            <span><a href="#">Crime &amp; Punishment</a></span>
-                            <mark><a href="#">See All</a></mark>
+                          <span><%= link_to issue.title, issue_path(issue.slug) %></span>
+                            <mark><%= link_to 'See All', issues_path %></mark>
                         </h2>
                     </header>
                     <ul class="previews">
-                        <li>
-                            <a href="#">
+                      <% if issue_articles = issue.articles.first(3) %>
+                        <% issue_articles.each do |article| %>
+                          <li>
+                            <%= link_to article.public_path do %>
                                 <figure class="ratio-pairing clearfix">
                                     <div class="ratio">
                                         <div class="fill"></div>
-                                        <b class="img-contain"><img src="http://a.scpr.org/i/e9de80e8e8144c522e519b3bdefa31bd/68402-eight.jpg" alt="" /></b>
+                                        <b class="img-contain"><%= image_tag article.asset.lsquare.url %></b>
                                     </div><!--/ .ratio -->
                                     <figcaption>
-                                        <time datetime="2013-08-20">20 August 2013</time>
-                                        <mark>Ex-LA County sheriff's official to challenge Baca</mark>
+                                        <%= smart_date_js article.public_datetime %>
+                                        <mark><%= article.short_title %></mark>
                                     </figcaption>
                                 </figure><!--/ .ratio-pairing -->
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#">
-                                <figure class="ratio-pairing clearfix">
-                                    <div class="ratio">
-                                        <div class="fill"></div>
-                                        <b class="img-contain"><img src="http://a.scpr.org/i/bfe4dffbf1b7071f581467dbec46459f/40054-eight.jpg" alt="" /></b>
-                                    </div><!--/ .ratio -->
-                                    <figcaption>
-                                        <time datetime="2013-08-18">18 August 2013</time>
-                                        <mark>Mayor appoints professor, civic leaders to LA Police Commission</mark>
-                                    </figcaption>
-                                </figure><!--/ .ratio-pairing -->
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#">
-                                <figure class="ratio-pairing clearfix">
-                                    <div class="ratio">
-                                        <div class="fill"></div>
-                                        <b class="img-contain"><img src="http://a.scpr.org/i/5f41da46fb025672971f7e0af72df762/59471-eight.jpg" alt="" /></b>
-                                    </div><!--/ .ratio -->
-                                    <figcaption>
-                                        <time datetime="2013-08-9">9 August 2013</time>
-                                        <mark>4 Irwindale officials charged with embezzlement</mark>
-                                    </figcaption>
-                                </figure><!--/ .ratio-pairing -->
-                            </a>
-                        </li>
+                            <% end %>
+                            </li>
+                        <% end %>
+                      <% end %>
                     </ul>
                 </aside>
+              <% end %>
                 <aside class="see-more kpcc">
                     <header>
                         <h1>Popular now on KPCC</h1>
@@ -177,8 +157,7 @@
         </div>
     </div><!--/ .report -->
 
-
-
+    <%= render partial: 'shared/triptych', locals: { category: @category, articles: @three_recent_articles } %>
 
 
 

@@ -27,6 +27,14 @@ class BlogsController < ApplicationController
     @blog  = @entry.blog
     @asset = @entry.asset if @entry.asset.present?
     @related_articles = @entry.related_content.first(2) if @entry.related_content.presence
+    @category = @entry.category
+    page      = params[:page].to_i
+    @content = @category.content(
+      :page       => page,
+      :per_page   => 11
+    )
+    @category_articles = @content.map { |a| a.to_article }
+    @three_recent_articles = @category_articles[0..2]
     render layout: "vertical"
   end
 
