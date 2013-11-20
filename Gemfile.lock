@@ -61,9 +61,9 @@ GIT
 
 GIT
   remote: git://github.com/SCPR/secretary-rails.git
-  revision: 0708dee014e0e4b4325dbb8f09ab24fea8827c8a
+  revision: 98d5c3efcfe73dfd46402c35a16e02ad23bd7f3b
   specs:
-    secretary-rails (1.0.0)
+    secretary-rails (1.0.1)
       activerecord (>= 3.2.0)
       diffy (~> 3.0.1)
       railties (>= 3.2.0)
@@ -131,7 +131,7 @@ GEM
       i18n (~> 0.6, >= 0.6.4)
       multi_json (~> 1.0)
     addressable (2.3.5)
-    arel (3.0.2)
+    arel (3.0.3)
     bcrypt-ruby (3.0.1)
     bootstrap-sass (2.3.2.2)
       sass (~> 3.2)
