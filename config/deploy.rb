@@ -76,6 +76,7 @@ end
 
 
 task :catchup do
-  puts ">>> Sleeping for 2 seconds to let the filesystem catch up."
-  sleep 2
+  seconds = 2
+  puts ">>> Sleeping for #{seconds} seconds to let the filesystem catch up."
+  sleep seconds
 end
