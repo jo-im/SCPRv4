@@ -26,16 +26,18 @@ class BlogsController < ApplicationController
     @entry = BlogEntry.published.includes(:blog).find(params[:id])
     @blog  = @entry.blog
     @asset = @entry.asset if @entry.asset.present?
-    @related_articles = @entry.related_content.first(2) if @entry.related_content.presence
+    @related_articles = @entry.related_content.first(2) unless @entry.related_content.empty?
     @category = @entry.category
     page      = params[:page].to_i
     @content = @category.content(
       :page       => page,
       :per_page   => 11
     )
-    @category_articles = @content.map { |a| a.to_article }
-    @three_recent_articles = @category_articles[0..2]
-    @popular_articles = Rails.cache.read("popular/viewed").first(3)
+    if @content.present?
+      @category_articles = @content.map { |a| a.to_article }
+      @three_recent_articles = @category_articles[0..2]
+    end
+    @popular_articles = Rails.cache.read("popular/viewed").first(3) if Rails.cache.read("popular/viewed").presence
     render layout: "vertical"
   end
 
