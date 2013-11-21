@@ -14,7 +14,7 @@ describe Article do
 
   describe 'initialization' do
     let(:article) { Article.new }
-    
+
     it 'forces assets into an array' do
       article.assets.should eq []
     end
@@ -26,6 +26,11 @@ describe Article do
     it 'forces audio into an array' do
       article.audio.should eq []
     end
+
+    it 'forces related_issue into an array' do
+      article.related_issue.should eq []
+    end
+
   end
 
   describe '#to_article' do

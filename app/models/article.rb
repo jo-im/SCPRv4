@@ -58,7 +58,7 @@ class Article
     @attributions     = Array(attributes[:attributions])
     @byline           = attributes[:byline]
     @edit_url         = attributes[:edit_url]
-    @related_issue    = attributes[:related_issue]
+    @related_issue    = Array(attributes[:related_issue])
   end
 
   def to_article
