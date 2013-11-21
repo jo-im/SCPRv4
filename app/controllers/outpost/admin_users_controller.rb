@@ -23,11 +23,9 @@ class Outpost::AdminUsersController < Outpost::ResourceController
   # Users should always be able to see and update their
   # own profile.
   def authorize_resource
-    if @record
-      if current_user == @record &&
-      %w{show edit update activity}.include?(action_name)
-        return true
-      end
+    if %w{show edit update activity}.include?(action_name)
+      get_record if !@record
+      return true if @record == current_user
     end
 
     super
