@@ -1,5 +1,5 @@
 module CategoryHandler
-  PER_PAGE = 17
+  PER_PAGE = 16
 
   def handle_vertical
     page      = params[:page].to_i
@@ -30,11 +30,11 @@ module CategoryHandler
     end
 
     @category_articles = @content.map { |a| a.to_article }
-    @latest_articles = @category_articles[1..2]
-    @three_recent_articles = @category_articles[3..5]
-    @top_half_recent_articles = @category_articles[6..7]
-    @bottom_half_recent_articles = @category_articles[8..9]
-    @more_articles = @category_articles[10..-1]
+    @latest_articles = @category_articles[0..1]
+    @three_recent_articles = @category_articles[2..4]
+    @top_half_recent_articles = @category_articles[5..6]
+    @bottom_half_recent_articles = @category_articles[7..8]
+    @more_articles = @category_articles[9..-1]
 
     if @category.issues.any?
       @category_issues = @category.issues
