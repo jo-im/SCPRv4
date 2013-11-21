@@ -3,12 +3,12 @@
       <header><h1>Recent <%= category.title %> Coverage</h1></header>
         <div class="rail clearfix">
           <% if articles.presence %>
-            <%- articles.each do |recent_article| %>
-              <%- article = recent_article.original_object %>
+            <% articles.each do |recent_article| %>
+              <% article = recent_article.original_object %>
               <article class="clearfix">
                       <div class="graphic">
                           <div class="ratio">
-                            <%- unless article.issues.empty? || recent_article.related_issue.empty? %>
+                            <% if recent_article.related_issue.any? %>
                               <%= link_to issue_path(recent_article.related_issue.first.slug), class: 'issue' do %>
                                 <span><%= recent_article.related_issue.first.title %></span>
                               <% end %>

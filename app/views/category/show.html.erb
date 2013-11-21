@@ -226,8 +226,8 @@
     </div>
 </div><!--/ .lunchbox -->
 
-<%= render 'shared/mercedes-ad' %>
 <%= render partial: 'shared/triptych', locals: {category: @category, articles: @three_recent_articles} %>
+<%= render 'shared/mercedes-ad' %>
 
 
 <section class="quadrant">
@@ -242,8 +242,8 @@
               <%- article_class << " has-trait" if article.issues.any? %>
               <%= content_tag(:article, class: article_class) do %>
                       <div class="graphic">
-                          <div class="ratio">
-                            <%- if article.issues.any? %>
+                        <div class="ratio">
+                            <%- if recent_article.related_issue.any? %>
                               <span class="issue"><%= link_to recent_article.related_issue.first.title,issue_path(recent_article.related_issue.first.slug) %></span>
                             <% end %>
                               <div class="fill"></div>
@@ -254,7 +254,7 @@
                           <aside class="byline">
                             <p class="author"><%= render_byline article %></p>
                               <%- if article.feature_type.present? %>
-                                <%= content_tag(:mark, article.class.name.constantize::FEATURE_TYPE[article.feature_type], class: "trait #{article.class.name.constantize::FEATURE_TYPE[article.feature_type].downcase}") %>
+                                <%= content_tag(:mark, article.feature_type_name, class: "trait #{article.feature_type_name.downcase}") %>
                               <% end %>
                           </aside>
                           <h1><%= link_to recent_article.short_title, recent_article.public_path %></h1>
@@ -275,7 +275,7 @@
             <%= content_tag(:article, class: article_class) do %>
                     <div class="graphic">
                       <div class="ratio">
-                          <%- unless article.issues.empty? || recent_article.related_issue.empty? %>
+                          <%- unless recent_article.related_issue.empty? %>
                             <span class="issue"><%= link_to recent_article.related_issue.first.title, issue_path(recent_article.related_issue.first.slug) %></span>
                           <% end %>
                             <div class="fill"></div>
