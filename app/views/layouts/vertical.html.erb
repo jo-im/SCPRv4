@@ -45,7 +45,7 @@
     <meta name="twitter:image:src" content="!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!">
     <link rel="shortcut icon" href="http://media.scpr.org/favicon.ico" type="image/x-icon" />
     <link rel="apple-touch-icon-precomposed" href="!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!" />
-    <%= yield(:landing) if content_for :landing %>
+    <%= yield(:layout) if content_for :layout %>
     <%= stylesheet_link_tag "fonts", media: "screen" %>
     <%= stylesheet_link_tag "vertical/partner-mercedes", media: "all" %>
     <%= javascript_include_tag "shared", "application" %>
