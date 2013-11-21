@@ -14,11 +14,8 @@ module Concern
       end
 
       def issues_in_category
-        if category.present?
-          if issues.presence && category.issues.presence
-            (issues - (issues - category.issues))
-          end
-        end
+        return [] if category.blank?
+        (issues - (issues - category.issues))
       end
 
     end # IssueArticleAssociation

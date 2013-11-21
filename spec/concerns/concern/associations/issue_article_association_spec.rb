@@ -42,7 +42,7 @@ describe Concern::Associations::IssueArticleAssociation do
 
     context 'article and category that have no issues at all' do
       it 'returns an empty array' do
-        story.issues_in_category.should eq nil
+        story.issues_in_category.should eq []
       end
     end
 
