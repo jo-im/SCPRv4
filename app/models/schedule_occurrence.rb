@@ -98,7 +98,8 @@ class ScheduleOccurrence < ActiveRecord::Base
   end
 
 
-
+  # Find the occurrence which is coming up next. This assumes that the
+  # current object is currently on.
   def following_occurrence
     between = ScheduleOccurrence.between(Time.now, self.ends_at + 1)
     between.find { |o| o != self }

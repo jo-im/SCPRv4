@@ -37,7 +37,7 @@
 
     <div class="span12">
       <%= render "/events/forum_events" %>
-    </div>  
+    </div>
   </div>
 </div>
 
@@ -53,7 +53,7 @@
       </h6>
       <div class="carousel" data-current-page="1" data-vr-zone="In Case You Missed It"></div>
     </div> <!-- missed-it-bucket -->
-    
+
     <% content_for :footer do %>
       <script>var carousel = new scpr.ContentCarousel({dataUrl: "<%= homepage_missed_it_content_path(@homepage.id) %>"});</script>
     <% end %>
