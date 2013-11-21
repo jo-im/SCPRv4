@@ -14,8 +14,10 @@ module Concern
       end
 
       def issues_in_category
-        if issues.presence && category.issues.presence
-          (issues - (issues - category.issues))
+        if category.present?
+          if issues.presence && category.issues.presence
+            (issues - (issues - category.issues))
+          end
         end
       end
 
