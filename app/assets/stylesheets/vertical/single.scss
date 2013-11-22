@@ -596,18 +596,21 @@ body        { position: relative; z-index: 1; }
             margin-bottom: 1.2em;
             width: 134.591194968553%; // 856 / 636
         }
-        em,i        { font-style: normal; font-family: $font-merri-ital; }
-        strong,b    { font-weight: normal; font-family: $font-merri-bold; }
-        a           { color: $blue; }
-        a:hover     { color: $orange; text-decoration: underline; }
-        ul,ul li    { list-style: disc outside; }
-        ul li       { margin: 0 0 0.7em 1.5em; }
-        ol,ol li    { list-style: decimal outside; }
-        ol li       { margin: 0 0 0.7em 2em; }
-        h2,h3       { font-family: $font-freight; }
-        h2          { color: $orange; font-weight: 600; font-size: 1.3em; }
-        h3          { color: black; font-weight: 700; text-transform: uppercase; font-size: 0.9375em; }
-        blockquote  { font-size: 1.26666666666667em; font-family: $font-merri-lightital; padding: 15px 0 0 25px; margin-left: -10px; background: url(../i/flourish-blockquote.png) no-repeat; background-size: 64px 55px; }
+        em,i            { font-style: normal; font-family: $font-merri-ital; }
+        strong,b        { font-weight: normal; font-family: $font-merri-bold; }
+        a               { color: $blue; }
+        a:hover         { color: $orange; text-decoration: underline; }
+        ul,ul li        { list-style: disc outside; }
+        ul li           { margin: 0 0 0.7em 1.5em; }
+        ol,ol li        { list-style: decimal outside; }
+        ol li           { margin: 0 0 0.7em 2em; }
+        h2,h3           { font-family: $font-freight; }
+        h2              { color: $orange; font-weight: 600; font-size: 1.3em; }
+        h3              { color: black; font-weight: 700; text-transform: uppercase; font-size: 0.9375em; }
+        blockquote      { font-size: 1.26666666666667em; font-family: $font-merri-lightital; padding: 15px 0 0 25px; margin-left: -10px; background: url(../i/flourish-blockquote.png) no-repeat; background-size: 64px 55px; }
+        img             { max-width: 100%; height: auto; margin: 0 auto; }
+//        img.squarish    { max-width: 500px; margin: 0 auto; }
+//        img.skinny      { max-width: 350px; margin: 0 auto; }
     }
     .related {
         background: #fdebde;
@@ -794,8 +797,8 @@ body        { position: relative; z-index: 1; }
 
     @media screen and (max-width: 570px) {
         .report {
-            .prose          { font-size: 0.8125em; }
-            .prose .related { font-size: 120%; }
+            .prose              { font-size: 0.8125em; }
+            .prose .related     { font-size: 120%; }
         }
     }
 

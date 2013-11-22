@@ -41,14 +41,29 @@ jQuery(document).ready(function($) {
 //	================================================
 //	Single: Let's reposition our "Related" box
 //	------------------------------------------------
-//  Thanks to http://stackoverflow.com/questions/2269013/add-li-to-middle-of-the-ul-jquery
-//	------------------------------------------------
     if ($(".report .prose .related").length) {
         var qtyGrafs    = $(".report .prose > p").length;
-        var middle      = Math.ceil(qtyGrafs / 2);
-        alert("out of a total of " + qtyGrafs + " paragraphs, we're looking at a halfway point of: " + middle);
-//      $(".prose .related").insertBefore(".prose > p:nth-child(" + middle + ")");
-        $(".prose > p:nth-child(" + middle + ")").css("outline","3px solid red");
+        var middleInt   = Math.ceil(qtyGrafs / 2);
+        var middleEl    = $($(".prose > p")[middleInt - 1]) // thanks, bryan!
+        $(".prose .related").insertBefore(middleEl);
+    }
+
+
+//	================================================
+//	Single: Figure out the orientation of any images
+//	------------------------------------------------
+    if ($(".report .prose img").length) {
+        $(window).load(function() { // because WebKit browsers need this in order to *definitely* load/assess the images
+            $(".report .prose img").each(function(){
+                var myWidth     = $(this).width();
+                var myHeight    = $(this).height();
+                var myRatio     = myWidth / myHeight;
+                if(myRatio > 1.2)                           { myRatio = "wide"; }
+                if((myRatio <= 1.2) && (myRatio >= 0.9))    { myRatio = "squarish"; }
+                if(myRatio < 0.9)                           { myRatio = "skinny"; }
+                $(this).addClass(myRatio);
+            });
+        });
     }
 
 
