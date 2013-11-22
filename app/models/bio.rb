@@ -79,6 +79,11 @@ class Bio < ActiveRecord::Base
     end
   end
 
+  def first_name
+    if self.name?
+      self.name.split[0]
+    end
+  end
   #---------------------
 
   def json

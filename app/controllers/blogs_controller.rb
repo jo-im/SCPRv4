@@ -47,6 +47,11 @@ class BlogsController < ApplicationController
       @more_articles = @category_articles[3..-1]
     end
     @popular_articles = Rails.cache.read("popular/viewed").first(3) if Rails.cache.read("popular/viewed").presence
+
+    if @category.bios.any?
+      @bios = @category.bios
+      @twitter_feeds = @bios.map(&:twitter_handle)
+    end
     render layout: "vertical"
   end
 

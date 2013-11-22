@@ -159,7 +159,7 @@
                            <h2 class="special"><%= @special_issue.title %></h2>
                               <nav>
                                   <ul>
-                                    <%= render partial: 'category/single_page_issue_list', collection: @top_two_special_issue_articles, as: 'entry' %>
+                                    <%= render partial: 'shared/single_page_issue_list', collection: @top_two_special_issue_articles, as: 'entry' %>
                                   </ul>
                               </nav>
                           <% @other_issues.each do |issue| %>
@@ -167,7 +167,7 @@
                               <nav>
                                 <ul>
                                   <% issue.articles.first(2).each do |entry| %>
-                                    <%= render partial: 'category/single_page_issue_list', locals: {entry: entry} %>
+                                    <%= render partial: 'shared/single_page_issue_list', locals: {entry: entry} %>
                                   <% end %>
                                 </ul>
                               </nav>
@@ -178,105 +178,10 @@
                         </footer>
                     </section>
                     <section>
-                        <h1>Our Reporters</h1>
-                        <div class="rollcall clearfix">
-                        <figure class="reporter clearfix">
-                            <div class="ratio">
-                                <a href="#" title="Sharon McNary">
-                                    <div class="fill"></div>
-                                    <b class="img-contain"><img src="http://a.scpr.org/i/original/38890-small.jpg" alt="" /></b>
-                                </a>
-                            </div>
-                            <figcaption>
-                                <mark><a href="#" title="Sharon McNary">Sharon McNary</a></mark>
-                                <ul class="clearfix">
-                                    <li><a href="#" title="Email Sharon">Email</a></li>
-                                    <li><a href="#" title="Follow Sharon on Twitter">Twitter</a></li>
-                                </ul>
-                            </figcaption>
-                        </figure>
-
-                        <figure class="reporter clearfix">
-                            <div class="ratio">
-                                <a href="#" title="Alice Walton">
-                                    <div class="fill"></div>
-                                    <b class="img-contain"><img src="http://a.scpr.org/i/a4cae951ac602ddb49eb1979342c8805/40615-small.jpg" alt="" /></b>
-                                </a>
-                            </div>
-                            <figcaption>
-                                <mark><a href="#" title="Alice Walton">Alice Walton</a></mark>
-                                <ul class="clearfix">
-                                    <li><a href="#" title="Email Alice">Email</a></li>
-                                    <li><a href="#" title="Follow Alice on Twitter">Twitter</a></li>
-                                </ul>
-                            </figcaption>
-                        </figure>
-
-                        <figure class="reporter clearfix">
-                            <div class="ratio">
-                                <a href="#" title="Kitty Felde">
-                                    <div class="fill"></div>
-                                    <b class="img-contain"><img src="http://a.scpr.org/i/e767b41bd74066df371417277ae6b4ae/44747-small.jpg" alt="" /></b>
-                                </a>
-                            </div>
-                            <figcaption>
-                                <mark><a href="#" title="Kitty Felde">Kitty Felde</a></mark>
-                                <ul class="clearfix">
-                                    <li><a href="#" title="Email Kitty">Email</a></li>
-                                    <li><a href="#" title="Follow Kitty on Twitter">Twitter</a></li>
-                                </ul>
-                            </figcaption>
-                        </figure>
-
-                        <figure class="reporter clearfix">
-                            <div class="ratio">
-                                <a href="#" title="Julie Small">
-                                    <div class="fill"></div>
-                                    <b class="img-contain"><img src="http://a.scpr.org/i/4f6baa0f0d45ab8fac5b74c81dabf882/45567-small.jpg" alt="" /></b>
-                                </a>
-                            </div>
-                            <figcaption>
-                                <mark><a href="#" title="Julie Small">Julie Small</a></mark>
-                                <ul class="clearfix">
-                                    <li><a href="#" title="Email Julie">Email</a></li>
-                                    <li><a href="#" title="Follow Julie on Twitter">Twitter</a></li>
-                                </ul>
-                            </figcaption>
-                        </figure>
-
-                        <figure class="reporter clearfix">
-                            <div class="ratio">
-                                <a href="#" title="Frank Stoltze">
-                                    <div class="fill"></div>
-                                    <b class="img-contain"><img src="http://a.scpr.org/i/e566be16bad65fde503aef46425efbd7/44742-small.jpg" alt="" /></b>
-                                </a>
-                            </div>
-                            <figcaption>
-                                <mark><a href="#" title="Frank Stoltze">Frank Stoltze</a></mark>
-                                <ul class="clearfix">
-                                    <li><a href="#" title="Email Frank">Email</a></li>
-                                    <li><a href="#" title="Follow Frank on Twitter">Twitter</a></li>
-                                </ul>
-                            </figcaption>
-                        </figure>
-
-                        <figure class="reporter clearfix">
-                            <div class="ratio">
-                                <a href="#" title="Oscar Garza">
-                                    <div class="fill"></div>
-                                    <b class="img-contain"><img src="http://a.scpr.org/i/f826f556a6e2ac86aaabaa22a911d7e4/40617-small.jpg" alt="" /></b>
-                                </a>
-                            </div>
-                            <figcaption>
-                                <mark><a href="#" title="Oscar Garza">Oscar Garza</a></mark>
-                                <ul class="clearfix">
-                                    <li><a href="#" title="Email Oscar">Email</a></li>
-                                    <li><a href="#" title="Follow Oscar on Twitter">Twitter</a></li>
-                                </ul>
-                            </figcaption>
-                        </figure>
-
-                    </div>
+                      <h1>Our Reporters</h1>
+                      <div class="rollcall clearfix">
+                        <%= render partial: 'shared/single_page_reporter', collection: @bios, as: 'reporter' %>
+                       </div>
                     </section>
                 </div><!--/ .supportive -->
 
