@@ -155,7 +155,17 @@
                 <div class="supportive">
                     <section>
                         <h1>Issues We're Tracking</h1>
-                        <h2 class="special">Reform</h2>
+                         <% if @category.issues.presence %>
+                           <h2 class="special"><%= @special_issue.title %></h2>
+                              <nav>
+                                  <ul>
+                                    <%- @top_two_special_issue_articles.each do |entry| %>
+                                      <%= render partial: 'category/issue_list', locals: {article: entry } %>
+                                    <% end %>
+                                  </ul>
+                              </nav>
+                         <% end %>
+                            <h2 class="special">Reform</h2>
                         <nav>
                             <ul>
                                 <li><a href="#">

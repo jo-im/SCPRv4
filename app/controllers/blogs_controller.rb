@@ -28,6 +28,14 @@ class BlogsController < ApplicationController
     @asset = @entry.asset if @entry.asset.present?
     @related_articles = @entry.related_content.first(2) unless @entry.related_content.empty?
     @category = @entry.category
+
+    if @category.issues.any?
+      @category_issues = @category.issues
+      @special_issue = @category_issues.first
+      @other_issues = @category_issues[1..2]
+      @top_two_special_issue_articles ||= @special_issue.articles.first(2)
+    end
+
     page      = params[:page].to_i
     @content = @category.content(
       :page       => page,
