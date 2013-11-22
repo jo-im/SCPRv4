@@ -1,12 +1,13 @@
 ENV["RAILS_ENV"] ||= 'test'
 
+require 'simplecov'
+
 if ENV['CIRCLE_ARTIFACTS']
   # https://circleci.com/docs/code-coverage
   dir = File.join("..", "..", "..", ENV['CIRCLE_ARTIFACTS'], "coverage")
   SimpleCov.coverage_dir(dir)
 end
 
-require 'simplecov'
 SimpleCov.start 'rails'
 
 require 'rubygems'
