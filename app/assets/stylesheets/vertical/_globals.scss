@@ -49,6 +49,7 @@ $orange: #f17b21;
 	padding: 53px 5.5% 20px;
 	font-family: $font-prox;
 	border-bottom: 1px solid white;
+	z-index: 2;
 }
 @mixin trait-states-white {
 	.trait.slideshow	{ background-position: right 0; }

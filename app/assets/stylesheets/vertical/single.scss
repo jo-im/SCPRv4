@@ -613,7 +613,7 @@ body        { position: relative; z-index: 1; }
         background: #fdebde;
         width: 47.327044025157%; // 301 / 636
         float: right;
-        margin: 0 -17.452830188679% 20px 25px;
+        margin: 3px -17.452830188679% 20px 25px;
         padding: 11px 0 21px;
         font-family: $font-freight;
         a:hover { text-decoration: none; }
@@ -836,7 +836,8 @@ body        { position: relative; z-index: 1; }
 .townhall {
     background: #636363 url(../i/fauxcol-townhall-base.png) repeat-y center top;
     .inner {
-        padding: 56px 0 210px;
+        padding: 56px 0 120px;
+        box-shadow: inset -2px 0 0 #636363; // Firefox is bad at accurate subpixel clipping.
         background:
             url(../i/fauxcol-townhall-east.png) repeat-y 84.153846153846% 0,
             url(../i/fauxcol-townhall-west.png) repeat-y 23.153846153846% 0;
@@ -850,13 +851,13 @@ body        { position: relative; z-index: 1; }
     }
     .tourguide {
         width: 23.153846153846%; // 301 / 1300
-        padding-top: 87px;
+        padding-top: 86px;
         float: left;
         aside {
             margin-bottom: 65px;
             color: #7c7c7c;
             h1 {
-                span { white-space: nowrap; display: block; }
+                span { display: block; }
                 font-family: $font-freight;
                 font-weight: 600;
                 font-size: 1.25em; // 20 / 16
@@ -881,6 +882,132 @@ body        { position: relative; z-index: 1; }
                 line-height: 1.5;
                 margin: 0 10% 1.7em 0;
             }
+            .resources,
+            footer,
+            .events {
+                margin-right: 5.647840531561%; // 17 / 301
+            }
+            .resources {
+                margin-bottom: 26px;
+                padding-top: 5px;
+                figure {
+                    margin-bottom: 18px;
+                    a                   { display: block; }
+                    .ratio {
+                        width: 39.084507042254%; // 111 / 284
+                        float: left;
+                        .fill           { padding-top: 50%; outline: 1px solid #8e8e8e; }
+                        a:hover .fill   { outline: 2px solid $blue; }
+                        .img-contain    { background: #ececec; }
+                    }
+                    figcaption {
+                        width: 56.338028169014%; // 160 / 284
+                        padding-top: 1px;
+                        float: right;
+                        font-family: $font-freight;
+                        font-weight: 600;
+                        font-size: 0.8125em; // 13 / 16
+                        line-height: 1.1;
+                        color: #333333;
+                        a:hover         { color: black; text-decoration: underline; } 
+                    }
+
+                    //  - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+                        @media screen and (min-width: 525px) and (max-width: 1100px) {
+                            max-width: 170px;                    
+                            .ratio {
+                                width: 100%;
+                                float: none;
+                                margin-bottom: 5px;
+                            }
+                            figcaption {
+                                width: 100%;
+                                float: none;
+                                padding-top: 0;
+                            }
+
+                        }
+
+                    //  - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+
+                }
+            }
+            footer {
+                color: #6e6e6e;
+                padding-top: 8px;
+                border-top: 1px solid #d5d5d5;
+                p       { font-size: 0.625em; } // 10 / 16
+                a       { text-decoration: underline; }
+                a:hover { color: black; }
+            }
+            .events {
+                li {
+                    display: block;
+                    margin-bottom: 18px;
+                }
+                figure {
+                    background: url(../i/fauxcol-townhall-event.png) repeat-y 27.816901408451% 0;
+                    background-size: 1500px 15px;
+                    time {
+                        display: block;
+                        float: left;
+                        width: 27.816901408451%; // 79 / 284
+                        text-align: center;
+                        padding: 12px 0 9px;
+                        b {
+                            font-weight: normal;
+                            display: block;
+                            font-family: "Avenir Next Condensed", "freight-sans-pro", "Avenir Next", "Avenir", "Lucida Grande", "Tahoma", Arial, sans-serif;
+        					font-size: 3.125em; // 50 / 16
+        					font-weight: 300;
+        					line-height: 1;
+                            letter-spacing: -0.03em;
+                            color: $blue;
+                        }
+                        span {
+                            font-size: 0.6875em;
+                            color: #929292;
+                            font-family: $font-prox;
+                            text-transform: uppercase;
+                            mark {
+                                font-weight: 700;
+                                color: #626262;
+                            }
+                        }                    
+                    }
+                    figcaption {
+                        float: right;
+                        width: 65.492957746479%; // 186 / 284
+                        padding-top: 10px;
+                        b {
+                            font-weight: 600;
+                            display: block;
+                            font-family: $font-freight;
+                            color: #535353;
+                            line-height: 1.25;
+                            margin-bottom: 7px;
+                        }
+                        a {
+                            display: inline-block;
+                            font-size: 0.6875em;
+                            color: #a8a8a8;
+                            &:hover { color: $blue; text-decoration: underline; }
+                        }
+                    }
+                    //  - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+                        @media screen and (min-width: 1000px) and (max-width: 1230px) {
+                            figure time b           { font-size: 2.75em; }
+                            figure time span, mark  { display: block; }
+                            figcaption b            { font-size: 0.875em; }
+                        }
+
+                    //  - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+                    
+                }
+            }
         }
 
     }
@@ -894,15 +1021,29 @@ body        { position: relative; z-index: 1; }
             font-size: 1.75em; // 28 / 16
             margin-bottom: 48px;
         }
+        & > footer {
+            padding-top: 24px;
+            color: $blue;
+            font-family: $font-freight;
+            a {
+                display: inline-block;
+                background: url(../i/flourish-caret-left.png) no-repeat left 6px;
+                background-size: 6px 14px;
+                font-size: 1.3125em; // 21 / 16
+                line-height: 1.1;
+                padding: 0 0 1px 18px;
+                &:hover { text-decoration: underline; }
+            }
+        }
         
     }
     .supportive {
         width: 21.302998965874%; // 206 / 967
         float: right;
-        padding-top: 128px;
+        padding-top: 141px;
         font-family: $font-freight;
         section {
-            margin-bottom: 70px;
+            margin-bottom: 72px;
             &:last-child { margin-bottom: 0; }
             h1,h2 {
                 font-weight: 600;
@@ -926,9 +1067,10 @@ body        { position: relative; z-index: 1; }
                 padding-bottom: 7px;
                 color: white;
                 margin-bottom: 12px;
+                &.special { background: $blue; box-shadow: inset 7px 0 0 #2786a6; }
             }
             nav {
-                margin: 0 0 26px 7.766990291262%; // 16 / 206                
+                margin: 0 0 26px 7.766990291262%;
                 line-height: 1.1;
                 li,mark,time,a      { display: block; }
                 li                  { margin-bottom: 21px; }
@@ -938,11 +1080,214 @@ body        { position: relative; z-index: 1; }
                 a:hover mark        { text-decoration: underline; }
                 a:hover time        { color: #ff9849; } // brighter shade of $orange
             }
+            footer {
+                a {
+                    display: inline-block;
+                    color: #bdbdbd;
+                    background: #454545;
+                    padding: 8px 16px;
+                    text-transform: uppercase;
+                    font-family: $font-prox;
+                    font-size: 0.75em;
+                    font-weight: 700;
+                    margin-left: 7.766990291262%;
+                    &:hover { background: black; }
+                }
+            }
         }
-
+        .reporter {
+            margin: 0 0 17px 7.766990291262%;
+            overflow: hidden;
+            .ratio {
+                float: left;
+                width: 36.315789473684%; // 69 / 190
+                border-bottom: 3px solid $blue;
+                a                           { display: block; }
+                .fill                       { padding-top: 117%; }
+            }
+            figcaption {
+                float: right;
+                width: 58.421052631579%; // 111 / 190
+                padding-top: 7px;
+                mark {
+                    display: block;
+                    color: white;
+                    font-size: 0.875em; // 14 / 16
+                    line-height: 1.0;
+                    font-weight: 600;
+                    font-family: $font-freight;
+                    margin-bottom: 9px;
+                    a:hover                 { text-decoration: underline; }
+                }
+                ul {
+                    margin-left: -3px;
+                    li                      { display: inline; }
+                    a {
+                        @include texthide;
+                        width: 24px;
+                        height: 24px;
+                        background: url(../i/townhall-contact-icons.png) no-repeat;
+                        background-size: 68px 68px;
+                        float: left;
+                        margin-right: 8px;
+                    }
+                    li:nth-child(1) a       { background-position: 0 0; }
+                    li:nth-child(1) a:hover { background-position: 0 -34px; }
+                    li:nth-child(2) a       { background-position: -34px 0; margin-right: 0; }
+                    li:nth-child(2) a:hover { background-position: -34px -34px; }
+                }
+            }
+        }
     }
 }
 
 
 
+//  - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+@media screen and (max-width: 999px) {
+
+    .townhall {
+        background: none;
+        .inner {
+            background: none;
+            padding: 0 0 0 0;
+        }
+        .primary {
+            width: 100%;
+            float: none;
+            padding: 45px 5.5% 50px;
+            margin-left: -5.5%;
+            background: url(../i/fauxcol-townhall-primary-interior.png) repeat-y 68% 0;
+            background-size: 1500px 15px;
+            border-bottom: 1px solid black;
+        }
+        .tourguide {
+            width: 100%;
+            float: none;
+            box-shadow: inset 0 8px 0 rgba(0,0,0,0.15);
+            background: #ececec;
+            padding: 45px 5.5% 50px;
+            margin-left: -5.5%;
+            aside {
+                margin-bottom: 40px;
+                h1                      { box-shadow: none; }
+                h1 span                 { display: inline; }
+                .events figure time b   { font-size: 2em; }
+        //      ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~                
+                @media screen and (min-width: 525px) {
+                    .resources          { margin: 0 0 10px 0; }
+                    .resources figure   {
+                        max-width: none;
+                        width: 22%;
+                        float: left;
+                        margin-right: 4%;
+                        &:last-child    { margin-right: 0; float: right; }
+                    }
+                }
+        //      ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~             
+            }
+        }
+        .backlog                        { width: 66.4%; }
+        .supportive                     { width: 30%; padding-top: 139px; }
+    }
+
+}
+
+
+//  - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+@media screen and (max-width: 590px) {
+
+    .townhall {
+        .inner      { box-shadow: none; }
+        .primary {
+            background: none;
+            margin: 0 0 0 0;
+            padding: 0 0 0 0;
+            border-bottom: none;
+        }
+        .backlog {
+            width: 100%;
+            float: none;
+            padding: 30px 0 40px;
+        }
+        .supportive {
+            width: 100%;
+            float: none;
+            background: #636363;
+            border-top: 1px solid black;
+            box-shadow:
+                inset 0 7px 0 rgba(0,0,0,0.2),
+                -1px 0 0 #636363;
+            padding: 35px 0 35px;
+            width: 111%;
+            margin-left: -5.5%;
+            section {
+                h1                      { border-top: none; padding-top: 0; margin-bottom: 28px; padding-left: 5.5%; }
+                h2                      { box-shadow: none; padding-left: 5.5%; }
+                h2.special              { box-shadow: none; }
+                nav                     { margin: 0 5.5% 26px 5.5%; }
+                footer a                { margin-left: 5.5%; }
+            }
+            .rollcall                   { margin: 0 5.5%; }
+            .tourguide                  { border-top: none; }
+            .reporter {
+                margin: 0 0 27px 0;
+                width: 22%;
+                margin-right: 4%;
+                float: left;
+                overflow: hidden;
+                mark                    { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+                &:nth-child(4n)         { margin-right: 0; float: right; }
+                .ratio                  { float: none; width: 100%; }
+                figcaption              { float: none; width: 100%; }
+        //      ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~                
+                @media screen and (max-width: 500px) {
+                    width: 31%;
+                    margin-right: 3.5%;
+                    &:nth-child(4n)     { margin-right: 3.5%; float: left; }
+                    &:nth-child(3n)     { margin-right: 0; float: right; }
+                    figcaption mark     { font-size: 0.75em; margin-bottom: 4px; }
+                }
+        //      ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~                                        
+            }
+        }
+    }
+
+}
+
+//  - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+@media screen and (max-width: 480px) {
+
+    .townhall {
+        .tourguide {
+            aside .events figure {
+                time b           { margin-bottom: 5px; }
+                time span, mark  { display: block; }
+                figcaption       { padding-top: 5px; }
+                figcaption b     { font-size: 0.875em; }          
+            }
+        }
+    }
+
+}
+
+//  - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+@media screen and (max-width: 415px) {
+
+    .townhall .backlog > footer { padding-top: 10px; }
+    .backlog article .prose h1  { font-size: 1em; }
+    .backlog article .prose .byline {
+        margin-bottom: 5px;
+        .author,time            { display: block; }
+        .author                 { padding-right: 0; }
+        time                    { color: black; }
+    }
+
+}
+
+//  - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 

@@ -262,7 +262,7 @@
 			background: rgba(46,237,226,0.4);
 			background: black;
 			box-shadow:
-				0 0 10px black,
+				0 0 10px rgba(0,0,0,0.4),
 				inset 0 39px 0 black,
 				inset 0 40px 0 rgba(255,255,255,0.3);
 			border-right: 1px solid rgba(255,255,255,0.5);
@@ -287,7 +287,7 @@
 			}
 		}
 	}
-
+	
 
 
 //	~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~

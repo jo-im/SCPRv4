@@ -30,6 +30,27 @@ jQuery(document).ready(function($) {
 
     
 
+//	================================================
+//	Single: An article's first paragraph should be magical
+//	------------------------------------------------
+    if ($(".report .prose p").length) {
+        $(".report .prose p:first").addClass("inaugural");
+    }
+
+
+//	================================================
+//	Single: Let's reposition our "Related" box
+//	------------------------------------------------
+//  Thanks to http://stackoverflow.com/questions/2269013/add-li-to-middle-of-the-ul-jquery
+//	------------------------------------------------
+    if ($(".report .prose .related").length) {
+        var qtyGrafs    = $(".report .prose > p").length;
+        var middle      = Math.ceil(qtyGrafs / 2);
+        alert("out of a total of " + qtyGrafs + " paragraphs, we're looking at a halfway point of: " + middle);
+//      $(".prose .related").insertBefore(".prose > p:nth-child(" + middle + ")");
+        $(".prose > p:nth-child(" + middle + ")").css("outline","3px solid red");
+    }
+
 
 
 
