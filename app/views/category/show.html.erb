@@ -138,8 +138,8 @@
                 <h1>Issues We're Tracking</h1>
                 <h2><%= link_to 'See all issues', issues_path %></h2>
             </header>
-            <div>
            <% if @category.issues.presence %>
+            <div>
                 <header class="special">
                   <h1><%= @special_issue.title %></h1>
                     <h2 class="clearfix">
@@ -171,8 +171,8 @@
                         <% end %>
                         </ul>
                     </nav>
+                </div>
               <% end %>
-              </div>
            <% end %>
         </section><!--/ .issues -->
         <div class="treats">
