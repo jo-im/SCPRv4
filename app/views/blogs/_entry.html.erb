@@ -197,55 +197,21 @@
                     <h2>Quick primers on civic life in California.</h2>
                     <p>All of us at KPCC believe that civic life in Southern California should be understandable, relevant, and libero ante, aliquam congue mattis id, blandit quis risus. Sed iaculis tellus accumsan ipsum porta ultricies.</p>
                     <nav class="resources clearfix">
-
-                        <figure class="clearfix">
-                            <div class="ratio">
-                                <a href="#" title="How do I find my local and state representatives?">
-                                    <div class="fill"></div>
-                                    <b class="img-contain"><img src="http://a.scpr.org/i/2d6898221e3b868f2b11d6829dd69f1b/24864-eight.jpg" alt="" /></b>
-                                </a>
-                            </div>
-                            <figcaption>
-                                <a href="#">How do I find my local and state representatives?</a>
-                            </figcaption>
-                        </figure>
-
-                        <figure class="clearfix">
-                            <div class="ratio">
-                                <a href="#" title="Who do I contact to get a bill introduced?">
-                                    <div class="fill"></div>
-                                    <b class="img-contain"><img src="http://a.scpr.org/i/891f1a1d68d340192b5396d009971384/62081-eight.jpg" alt="" /></b>
-                                </a>
-                            </div>
-                            <figcaption>
-                                <a href="#">Who do I contact to get a bill introduced?</a>
-                            </figcaption>
-                        </figure>
-
-                        <figure class="clearfix">
-                            <div class="ratio">
-                                <a href="#" title="I’m not a citizen. How do I become one?">
-                                    <div class="fill"></div>
-                                    <b class="img-contain"><img src="http://a.scpr.org/i/b0c988323dfcba0891d61ed8e232ae1a/65246-full.jpg" alt="" /></b>
-                                </a>
-                            </div>
-                            <figcaption>
-                                <a href="#">I’m not a citizen. How do I become one?</a>
-                            </figcaption>
-                        </figure>
-
-                        <figure class="clearfix">
-                            <div class="ratio">
-                                <a href="#" title="How do I make sure I’m eligible to vote?">
-                                    <div class="fill"></div>
-                                    <b class="img-contain"><img src="http://a.scpr.org/i/5d4a7bd7203c2fe254313c4840f9c7bc/50090-eight.jpg" alt="" /></b>
-                                </a>
-                            </div>
-                            <figcaption>
-                                <a href="#">How do I make sure I’m eligible to vote?</a>
-                            </figcaption>
-                        </figure>
-
+                      <% if @resources.presence %>
+                        <% @resources.each do |resource| %>
+                          <figure class="clearfix">
+                              <div class="ratio">
+                                <%= link_to resource.public_path, title: resource.short_title do %>
+                                      <div class="fill"></div>
+                                      <b class="img-contain"><%= image_tag resource.asset.lsquare.url %></b>
+                                <% end %>
+                              </div>
+                              <figcaption>
+                                <%= link_to resource.short_title, resource.public_path %>
+                              </figcaption>
+                          </figure>
+                        <% end %>
+                      <% end %>
                     </nav>
                     <footer>
                         <p>Represent Resources is made possible with support from <a href="#">The Robert Day School</a>.</p>
