@@ -308,32 +308,7 @@
         <section class="backlog">
           <h1>More <%= @category.title %></h1>
           <% if @more_articles.presence %>
-            <%- @more_articles.each do |article| %>
-              <article class="clearfix">
-                      <div class="graphic">
-                          <div class="ratio">
-                            <%- unless article.original_object.issues.empty? || article.related_issue.empty? %>
-                              <span class="issue"><%= link_to article.related_issue.first.title, issue_path(article.related_issue.first.slug) %></span>
-                            <% end  %>
-                              <div class="fill"></div>
-                              <b class="img-contain"><%= image_tag article.asset.small.url, alt: '' %></b>
-                          </div><!--/ .ratio -->
-                      </div>
-                      <div class="prose">
-                        <h1><%= link_to article.short_title, article.public_path %></h1>
-                          <aside class="byline">
-                              <p>
-                              <b class="author"><%= render_byline article.original_object %></b>
-                              <span><%= new_smart_date_js article.public_datetime, tag: 'span' %></span>
-                              </p>
-                              <%- if article.original_object.feature_type.present? %>
-                                <%= content_tag(:mark, article.original_object.feature_type_name, class: "trait #{article.original_object.feature_type_name.downcase}") %>
-                              <% end %>
-                          </aside>
-                          <p class="teaser"><%= article.teaser %></p>
-                      </div>
-                    </article>
-            <% end %>
+            <%= render partial: 'shared/waterfall_articles', collection: @more_articles, as: 'article' %>
           <% end %>
         </section><!--/ .backlog -->
 
