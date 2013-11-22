@@ -136,8 +136,283 @@
     <%= render 'shared/mercedes-ad' %>
     <%= render partial: 'shared/triptych', locals: {category: entry.category, articles: @three_recent_articles } %>
 
+    <div class="townhall">
+         <div class="inner bound clearfix">
+             <div class="primary clearfix">
 
+                 <section class="backlog">
+                   <h1>More <%= entry.category.title %></h1>
+                   <% if @more_articles.presence %>
+                     <%= render partial: 'shared/waterfall_articles', collection: @more_articles, as: 'article' %>
+                   <% end %>
 
+                     <footer>
+                         <a href="#">More Politics News</a>
+                     </footer>
+
+                 </section><!--/ .backlog -->
+
+                <div class="supportive">
+                    <section>
+                        <h1>Issues We're Tracking</h1>
+                        <h2 class="special">Reform</h2>
+                        <nav>
+                            <ul>
+                                <li><a href="#">
+                                    <mark>Court finds Palmdale's at-large elections violate Voting Rights Act</mark>
+                                    <time datetime="2013-07-25">July 25, 2013</time></a>
+                                </li>
+                                <li><a href="#">
+                                    <mark>Redefining LA's city commissions to improve citizen involvement</mark>
+                                    <time datetime="2013-07-25">July 25, 2013</time></a>
+                                </li>
+                            </ul>
+                        </nav>
+                        <h2>L.A. Money</h2>
+                        <nav>
+                            <ul>
+                                <li><a href="#">
+                                    <mark>LA City Council rescinds policy of ticketing at broken parking meters</mark>
+                                    <time datetime="2013-07-25">July 25, 2013</time></a>
+                                </li>
+                                <li><a href="#">
+                                    <mark>Central Basin Water District sues vendor as it reviews all finances</mark>
+                                    <time datetime="2013-07-25">July 25, 2013</time></a>
+                                </li>
+                            </ul>
+                        </nav>
+                        <h2>Immigration</h2>
+                        <nav>
+                            <ul>
+                                <li><a href="#">
+                                    <mark>'Dream 9' protest: Youth immigration activists' tactics grow riskier</mark>
+                                    <time datetime="2013-07-25">July 25, 2013</time></a>
+                                </li>
+                                <li><a href="#">
+                                    <mark>DHS to review same-sex couples' green card cases, the fate of immigrants with criminal records, more</mark>
+                                    <time datetime="2013-07-25">July 25, 2013</time></a>
+                                </li>
+                            </ul>
+                        </nav>
+                        <footer>
+                            <a href="#">See all issues</a>
+                        </footer>
+                    </section>
+                    <section>
+                        <h1>Our Reporters</h1>
+                        <div class="rollcall clearfix">
+
+                        <figure class="reporter clearfix">
+                            <div class="ratio">
+                                <a href="#" title="Sharon McNary">
+                                    <div class="fill"></div>
+                                    <b class="img-contain"><img src="http://a.scpr.org/i/original/38890-small.jpg" alt="" /></b>
+                                </a>
+                            </div>
+                            <figcaption>
+                                <mark><a href="#" title="Sharon McNary">Sharon McNary</a></mark>
+                                <ul class="clearfix">
+                                    <li><a href="#" title="Email Sharon">Email</a></li>
+                                    <li><a href="#" title="Follow Sharon on Twitter">Twitter</a></li>
+                                </ul>
+                            </figcaption>
+                        </figure>
+
+                        <figure class="reporter clearfix">
+                            <div class="ratio">
+                                <a href="#" title="Alice Walton">
+                                    <div class="fill"></div>
+                                    <b class="img-contain"><img src="http://a.scpr.org/i/a4cae951ac602ddb49eb1979342c8805/40615-small.jpg" alt="" /></b>
+                                </a>
+                            </div>
+                            <figcaption>
+                                <mark><a href="#" title="Alice Walton">Alice Walton</a></mark>
+                                <ul class="clearfix">
+                                    <li><a href="#" title="Email Alice">Email</a></li>
+                                    <li><a href="#" title="Follow Alice on Twitter">Twitter</a></li>
+                                </ul>
+                            </figcaption>
+                        </figure>
+
+                        <figure class="reporter clearfix">
+                            <div class="ratio">
+                                <a href="#" title="Kitty Felde">
+                                    <div class="fill"></div>
+                                    <b class="img-contain"><img src="http://a.scpr.org/i/e767b41bd74066df371417277ae6b4ae/44747-small.jpg" alt="" /></b>
+                                </a>
+                            </div>
+                            <figcaption>
+                                <mark><a href="#" title="Kitty Felde">Kitty Felde</a></mark>
+                                <ul class="clearfix">
+                                    <li><a href="#" title="Email Kitty">Email</a></li>
+                                    <li><a href="#" title="Follow Kitty on Twitter">Twitter</a></li>
+                                </ul>
+                            </figcaption>
+                        </figure>
+
+                        <figure class="reporter clearfix">
+                            <div class="ratio">
+                                <a href="#" title="Julie Small">
+                                    <div class="fill"></div>
+                                    <b class="img-contain"><img src="http://a.scpr.org/i/4f6baa0f0d45ab8fac5b74c81dabf882/45567-small.jpg" alt="" /></b>
+                                </a>
+                            </div>
+                            <figcaption>
+                                <mark><a href="#" title="Julie Small">Julie Small</a></mark>
+                                <ul class="clearfix">
+                                    <li><a href="#" title="Email Julie">Email</a></li>
+                                    <li><a href="#" title="Follow Julie on Twitter">Twitter</a></li>
+                                </ul>
+                            </figcaption>
+                        </figure>
+
+                        <figure class="reporter clearfix">
+                            <div class="ratio">
+                                <a href="#" title="Frank Stoltze">
+                                    <div class="fill"></div>
+                                    <b class="img-contain"><img src="http://a.scpr.org/i/e566be16bad65fde503aef46425efbd7/44742-small.jpg" alt="" /></b>
+                                </a>
+                            </div>
+                            <figcaption>
+                                <mark><a href="#" title="Frank Stoltze">Frank Stoltze</a></mark>
+                                <ul class="clearfix">
+                                    <li><a href="#" title="Email Frank">Email</a></li>
+                                    <li><a href="#" title="Follow Frank on Twitter">Twitter</a></li>
+                                </ul>
+                            </figcaption>
+                        </figure>
+
+                        <figure class="reporter clearfix">
+                            <div class="ratio">
+                                <a href="#" title="Oscar Garza">
+                                    <div class="fill"></div>
+                                    <b class="img-contain"><img src="http://a.scpr.org/i/f826f556a6e2ac86aaabaa22a911d7e4/40617-small.jpg" alt="" /></b>
+                                </a>
+                            </div>
+                            <figcaption>
+                                <mark><a href="#" title="Oscar Garza">Oscar Garza</a></mark>
+                                <ul class="clearfix">
+                                    <li><a href="#" title="Email Oscar">Email</a></li>
+                                    <li><a href="#" title="Follow Oscar on Twitter">Twitter</a></li>
+                                </ul>
+                            </figcaption>
+                        </figure>
+
+                    </div>
+                    </section>
+                </div><!--/ .supportive -->
+
+             </div><!--/ .primary -->
+
+             <div class="tourguide">
+                 <aside>
+                     <h1>Welcome to <span>KPCC's Represent.</span></h1>
+                     <p>We’re a Southern-California-focused team of KPCC reporters who are passionate about bringing you the latest, best, curabitur cursus tincidunt nulla faucibus consectetur. Nullam sed libero id nulla facilisis vehicula non quis nulla. Proin gravida pharetra mattis. Sed vitae mauris sapien, ut eleifend felis. Duis quis augue diam.</p>
+                </aside>
+                <aside>
+                    <h1>Represent Resources</h1>
+                    <h2>Quick primers on civic life in California.</h2>
+                    <p>All of us at KPCC believe that civic life in Southern California should be understandable, relevant, and libero ante, aliquam congue mattis id, blandit quis risus. Sed iaculis tellus accumsan ipsum porta ultricies.</p>
+                    <nav class="resources clearfix">
+
+                        <figure class="clearfix">
+                            <div class="ratio">
+                                <a href="#" title="How do I find my local and state representatives?">
+                                    <div class="fill"></div>
+                                    <b class="img-contain"><img src="http://a.scpr.org/i/2d6898221e3b868f2b11d6829dd69f1b/24864-eight.jpg" alt="" /></b>
+                                </a>
+                            </div>
+                            <figcaption>
+                                <a href="#">How do I find my local and state representatives?</a>
+                            </figcaption>
+                        </figure>
+
+                        <figure class="clearfix">
+                            <div class="ratio">
+                                <a href="#" title="Who do I contact to get a bill introduced?">
+                                    <div class="fill"></div>
+                                    <b class="img-contain"><img src="http://a.scpr.org/i/891f1a1d68d340192b5396d009971384/62081-eight.jpg" alt="" /></b>
+                                </a>
+                            </div>
+                            <figcaption>
+                                <a href="#">Who do I contact to get a bill introduced?</a>
+                            </figcaption>
+                        </figure>
+
+                        <figure class="clearfix">
+                            <div class="ratio">
+                                <a href="#" title="I’m not a citizen. How do I become one?">
+                                    <div class="fill"></div>
+                                    <b class="img-contain"><img src="http://a.scpr.org/i/b0c988323dfcba0891d61ed8e232ae1a/65246-full.jpg" alt="" /></b>
+                                </a>
+                            </div>
+                            <figcaption>
+                                <a href="#">I’m not a citizen. How do I become one?</a>
+                            </figcaption>
+                        </figure>
+
+                        <figure class="clearfix">
+                            <div class="ratio">
+                                <a href="#" title="How do I make sure I’m eligible to vote?">
+                                    <div class="fill"></div>
+                                    <b class="img-contain"><img src="http://a.scpr.org/i/5d4a7bd7203c2fe254313c4840f9c7bc/50090-eight.jpg" alt="" /></b>
+                                </a>
+                            </div>
+                            <figcaption>
+                                <a href="#">How do I make sure I’m eligible to vote?</a>
+                            </figcaption>
+                        </figure>
+
+                    </nav>
+                    <footer>
+                        <p>Represent Resources is made possible with support from <a href="#">The Robert Day School</a>.</p>
+                    </footer>
+                </aside>
+                <aside>
+                    <h1>Get involved.</h1>
+                    <ul class="events">
+                        <li>
+                            <figure class="clearfix">
+                                <time class="date" datetime="2013-06-21">
+                                    <b>21</b>
+                                    <span><mark>Jun</mark> 2013</span>
+                                </time>
+                                <figcaption>
+                                    <b>Los Angeles 2013 Mayoral Runoff Election</b>
+                                    <a href="#">More information</a>
+                                </figcaption>
+                            </figure>
+                        </li>
+                        <li>
+                            <figure class="clearfix">
+                                <time class="date" datetime="2013-08-03">
+                                    <b>3</b>
+                                    <span><mark>Aug</mark> 2013</span>
+                                </time>
+                                <figcaption>
+                                    <b>Los Angeles County Comptroller Debate</b>
+                                    <a href="#">More information</a>
+                                </figcaption>
+                            </figure>
+                        </li>
+                        <li>
+                            <figure class="clearfix">
+                                <time class="date" datetime="2013-10-18">
+                                    <b>18</b>
+                                    <span><mark>Oct</mark> 2013</span>
+                                </time>
+                                <figcaption>
+                                    <b>Water &amp; Power Commission Hearing</b>
+                                    <a href="#">More information</a>
+                                </figcaption>
+                            </figure>
+                        </li>
+                    </ul>
+                </aside>
+             </div><!--/ .tourguide -->
+
+         </div>
+     </div><!--/ .townhall -->
 
 
 

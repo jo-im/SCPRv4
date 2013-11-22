@@ -36,6 +36,7 @@ class BlogsController < ApplicationController
     if @content.present?
       @category_articles = @content.map { |a| a.to_article }
       @three_recent_articles = @category_articles[0..2]
+      @more_articles = @category_articles[3..-1]
     end
     @popular_articles = Rails.cache.read("popular/viewed").first(3) if Rails.cache.read("popular/viewed").presence
     render layout: "vertical"
