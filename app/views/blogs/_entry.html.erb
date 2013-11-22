@@ -147,7 +147,7 @@
                    <% end %>
 
                      <footer>
-                         <a href="#">More Politics News</a>
+                     <%= link_to "More #{entry.category.title} News", entry.category.public_path %>
                      </footer>
 
                  </section><!--/ .backlog -->
