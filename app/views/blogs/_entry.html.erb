@@ -159,59 +159,27 @@
                            <h2 class="special"><%= @special_issue.title %></h2>
                               <nav>
                                   <ul>
-                                    <%- @top_two_special_issue_articles.each do |entry| %>
-                                      <%= render partial: 'category/issue_list', locals: {article: entry } %>
-                                    <% end %>
+                                    <%= render partial: 'category/single_page_issue_list', collection: @top_two_special_issue_articles, as: 'entry' %>
                                   </ul>
                               </nav>
-                         <% end %>
-                            <h2 class="special">Reform</h2>
-                        <nav>
-                            <ul>
-                                <li><a href="#">
-                                    <mark>Court finds Palmdale's at-large elections violate Voting Rights Act</mark>
-                                    <time datetime="2013-07-25">July 25, 2013</time></a>
-                                </li>
-                                <li><a href="#">
-                                    <mark>Redefining LA's city commissions to improve citizen involvement</mark>
-                                    <time datetime="2013-07-25">July 25, 2013</time></a>
-                                </li>
-                            </ul>
-                        </nav>
-                        <h2>L.A. Money</h2>
-                        <nav>
-                            <ul>
-                                <li><a href="#">
-                                    <mark>LA City Council rescinds policy of ticketing at broken parking meters</mark>
-                                    <time datetime="2013-07-25">July 25, 2013</time></a>
-                                </li>
-                                <li><a href="#">
-                                    <mark>Central Basin Water District sues vendor as it reviews all finances</mark>
-                                    <time datetime="2013-07-25">July 25, 2013</time></a>
-                                </li>
-                            </ul>
-                        </nav>
-                        <h2>Immigration</h2>
-                        <nav>
-                            <ul>
-                                <li><a href="#">
-                                    <mark>'Dream 9' protest: Youth immigration activists' tactics grow riskier</mark>
-                                    <time datetime="2013-07-25">July 25, 2013</time></a>
-                                </li>
-                                <li><a href="#">
-                                    <mark>DHS to review same-sex couples' green card cases, the fate of immigrants with criminal records, more</mark>
-                                    <time datetime="2013-07-25">July 25, 2013</time></a>
-                                </li>
-                            </ul>
-                        </nav>
+                          <% @other_issues.each do |issue| %>
+                            <h2><%= issue.title %></h2>
+                              <nav>
+                                <ul>
+                                  <% issue.articles.first(2).each do |entry| %>
+                                    <%= render partial: 'category/single_page_issue_list', locals: {entry: entry} %>
+                                  <% end %>
+                                </ul>
+                              </nav>
+                          <% end %>
+                        <% end %>
                         <footer>
-                            <a href="#">See all issues</a>
+                          <%= link_to 'See all issues', issues_path %>
                         </footer>
                     </section>
                     <section>
                         <h1>Our Reporters</h1>
                         <div class="rollcall clearfix">
-
                         <figure class="reporter clearfix">
                             <div class="ratio">
                                 <a href="#" title="Sharon McNary">
