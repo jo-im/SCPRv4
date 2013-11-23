@@ -16,15 +16,6 @@ GIT
       faraday_middleware (~> 0.9.0)
 
 GIT
-  remote: git://github.com/SCPR/embeditor-rails.git
-  revision: dccac9a704bf7db549333fc3b9247c06c9c96b27
-  specs:
-    embeditor-rails (1.1.0)
-      actionpack (>= 3.2.0)
-      coffee-rails (>= 3.2.0)
-      eco (~> 1.0.0)
-
-GIT
   remote: git://github.com/SCPR/outpost-aggregator.git
   revision: 1ebd19d8139b26e3b3afb73711f74def03885133
   specs:
@@ -99,6 +90,14 @@ GIT
     turbo-sprockets-rails3 (0.3.10)
       railties (> 3.2.8, < 4.0.0)
       sprockets (>= 2.0.0)
+
+PATH
+  remote: /Users/bryan/projects/embeditor-rails
+  specs:
+    embeditor-rails (1.1.1)
+      actionpack (>= 3.2.0)
+      coffee-rails (>= 3.2.0)
+      eco (~> 1.0.0)
 
 GEM
   remote: https://rubygems.org/

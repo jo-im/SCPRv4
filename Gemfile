@@ -26,6 +26,7 @@ gem 'outpost-aggregator', github: "SCPR/outpost-aggregator"
 gem 'secretary-rails', github: "SCPR/secretary-rails"
 # gem 'secretary-rails', path: "#{ENV['PROJECT_HOME']}/secretary-rails"
 
+
 ## Cache
 gem 'redis-content-store', github: "SCPR/redis-content-store"
 # gem 'redis-content-store', path: "#{ENV['PROJECT_HOME']}/redis-content-store"
@@ -34,8 +35,6 @@ gem "resque", "~> 1.25.0.pre"
 
 ## Views
 gem 'kaminari', github: "amatsuda/kaminari"
-#gem 'ckeditor_rails', git: "https://github.com/SCPR/ckeditor-rails"
-#gem 'ckeditor_rails', path: "#{ENV['PROJECT_HOME']}/ckeditor-rails"
 gem 'ckeditor_rails', '~> 4.2.0'
 gem 'select2-rails', '3.4.1'
 gem 'twitter-text', "~> 1.5"
@@ -43,9 +42,8 @@ gem 'sanitize', "~> 2.0"
 gem 'escape_utils', '~> 0.3'
 gem 'simple_form', "~> 2.0"
 gem 'jbuilder'
-
-gem 'embeditor-rails', github: 'SCPR/embeditor-rails'
-#gem 'embeditor-rails', path: "#{ENV['PROJECT_HOME']}/embeditor-rails"
+#gem 'embeditor-rails', github: 'SCPR/embeditor-rails'
+gem 'embeditor-rails', path: "#{ENV['PROJECT_HOME']}/embeditor-rails"
 
 
 ## Utility
@@ -71,9 +69,8 @@ gem 'npr', github: "bricker/npr"
 gem 'asset_host_client', github: "SCPR/asset_host_client"
 #gem 'asset_host_client', path: "#{ENV['PROJECT_HOME']}/asset_host_client"
 gem 'audio_vision', github: 'SCPR/audio_vision-ruby'
+#gem 'audio_vision', path: "#{ENV['PROJECT_HOME']}/audio_vision-ruby"
 
-
-## Assets
 group :assets do
   gem "eco", "~> 1.0"
   gem 'sass-rails', "~> 3.2"
@@ -81,11 +78,12 @@ group :assets do
   gem "compass-rails"
   gem 'coffee-rails', "~> 3.2"
   gem 'uglifier', '>= 1.3'
-  gem 'turbo-sprockets-rails3', github: "bricker/turbo-sprockets-rails3", branch: 'utf8-conversion'
+  gem 'turbo-sprockets-rails3',
+    :github => "bricker/turbo-sprockets-rails3",
+    :branch => 'utf8-conversion'
 end
 
 
-## Development Only
 group :development do
   gem 'capistrano', '~> 2.0'
   gem 'pry'
@@ -93,13 +91,11 @@ group :development do
 end
 
 
-## Development, Staging
 group :development, :staging do
   gem "dbsync"
 end
 
 
-## Test, Development
 group :test, :development do
   gem "rspec-rails", "~> 2.12"
   gem 'rb-fsevent', '~> 0.9'
@@ -111,7 +107,6 @@ group :test, :development do
 end
 
 
-## Test Only
 group :test do
   gem 'simplecov', require: false
   gem "sqlite3"

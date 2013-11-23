@@ -8,11 +8,12 @@
     width: 100% !important;
 }
 
+
 .embed-wrapper {
     overflow: hidden;
     width: 100%;
 
     iframe {
-        width: 100%;
+        max-width: 100%;
     }
 }
