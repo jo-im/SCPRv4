@@ -41,19 +41,28 @@ class BlogsController < ApplicationController
       :page       => page,
       :per_page   => 11
     )
+
     if @content.present?
       @category_articles = @content.map { |a| a.to_article }
       @three_recent_articles = @category_articles[0..2]
       @more_articles = @category_articles[3..-1]
     end
+
     @popular_articles = Rails.cache.read("popular/viewed").first(3) if Rails.cache.read("popular/viewed").presence
+
     if @category.featured_articles.any?
       @resources = @category.featured_articles[1..4]
     end
+
     if @category.bios.any?
       @bios = @category.bios
       @twitter_feeds = @bios.map(&:twitter_handle)
     end
+
+    if @category.events.published.upcoming.any?
+      @events = @category.events.published.upcoming.map(&:to_article)
+    end
+
     render layout: "vertical"
   end
 

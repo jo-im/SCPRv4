@@ -220,42 +220,22 @@
                 <aside>
                     <h1>Get involved.</h1>
                     <ul class="events">
-                        <li>
-                            <figure class="clearfix">
-                                <time class="date" datetime="2013-06-21">
-                                    <b>21</b>
-                                    <span><mark>Jun</mark> 2013</span>
-                                </time>
-                                <figcaption>
-                                    <b>Los Angeles 2013 Mayoral Runoff Election</b>
-                                    <a href="#">More information</a>
-                                </figcaption>
-                            </figure>
-                        </li>
-                        <li>
-                            <figure class="clearfix">
-                                <time class="date" datetime="2013-08-03">
-                                    <b>3</b>
-                                    <span><mark>Aug</mark> 2013</span>
-                                </time>
-                                <figcaption>
-                                    <b>Los Angeles County Comptroller Debate</b>
-                                    <a href="#">More information</a>
-                                </figcaption>
-                            </figure>
-                        </li>
-                        <li>
-                            <figure class="clearfix">
-                                <time class="date" datetime="2013-10-18">
-                                    <b>18</b>
-                                    <span><mark>Oct</mark> 2013</span>
-                                </time>
-                                <figcaption>
-                                    <b>Water &amp; Power Commission Hearing</b>
-                                    <a href="#">More information</a>
-                                </figcaption>
-                            </figure>
-                        </li>
+                      <% if @events.presence %>
+                        <% @events.each do |event| %>
+                          <li>
+                                <figure class="clearfix">
+                                  <%= content_tag :time, datetime: event.public_datetime.strftime('%F') do %>
+                                    <b><%= event.public_datetime.day %></b>
+                                    <span><mark><%= event.public_datetime.strftime('%b') %></mark> <%= event.public_datetime.strftime('%Y') %></span>
+                                  <% end %>
+                                    <figcaption>
+                                      <b><%= event.short_title %></b>
+                                      <%= link_to 'More information', event.public_path %>
+                                    </figcaption>
+                                </figure>
+                          </li>
+                         <% end %>
+                      <% end %>
                     </ul>
                 </aside>
              </div><!--/ .tourguide -->
