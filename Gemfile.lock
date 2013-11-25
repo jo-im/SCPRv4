@@ -32,7 +32,7 @@ GIT
 
 GIT
   remote: git://github.com/SCPR/outpost-asset_host.git
-  revision: 3146129819b36000703ce19f10a7d3f4052eb1c3
+  revision: a239b38588914413dab1b0def05323e383a4bcb8
   specs:
     outpost-asset_host (1.1.0)
 
