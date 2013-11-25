@@ -1,7 +1,6 @@
 //= require modernizr.custom
 //= require jquery.jplayer.min
 //= require moment-strftime
-//= require embedly.jquery
 
 //= require_directory ./t_listen/
 //= require swfobject.min
