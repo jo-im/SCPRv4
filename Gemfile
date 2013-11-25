@@ -42,8 +42,8 @@ gem 'sanitize', "~> 2.0"
 gem 'escape_utils', '~> 0.3'
 gem 'simple_form', "~> 2.0"
 gem 'jbuilder'
-#gem 'embeditor-rails', github: 'SCPR/embeditor-rails'
-gem 'embeditor-rails', path: "#{ENV['PROJECT_HOME']}/embeditor-rails"
+gem 'embeditor-rails', github: 'SCPR/embeditor-rails'
+#gem 'embeditor-rails', path: "#{ENV['PROJECT_HOME']}/embeditor-rails"
 
 
 ## Utility
