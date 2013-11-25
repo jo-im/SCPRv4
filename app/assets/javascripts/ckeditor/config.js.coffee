@@ -1,11 +1,10 @@
 # Change this to force-refresh the JS/CSS files dynamically loaded
 # by CKEditor.
-CKEDITOR.timestamp = '20131114160900'
+CKEDITOR.timestamp = '20131125140627'
 
 # Global Configuration
 CKEDITOR.editorConfig = (config) ->
     config.extraPlugins = [
-        'mediaembed',
         'codemirror',
         'autosave',
         'embed-placeholder',
@@ -38,7 +37,7 @@ CKEDITOR.editorConfig = (config) ->
     config.toolbar = [
         ['Bold', 'Italic', 'Underline', "RemoveFormat"]
         ['NumberedList', 'BulletedList', 'Blockquote']
-        ['Link', 'Unlink', 'Image', 'MediaEmbed', 'EmbedPlaceholder']
+        ['Link', 'Unlink', 'Image', 'EmbedPlaceholder']
         ['Find', 'Paste']
         ['Source', 'Maximize']
     ]
@@ -50,7 +49,7 @@ CKEDITOR.editorConfig = (config) ->
     config.height       = "400px"
     config.width        = "635px"
     config.bodyClass    = 'ckeditor-body'
-    config.contentsCss  = "/assets/application.css?20130920"
+    config.contentsCss  = "/assets/application.css?20131125"
     config.baseHref     = BASE_HREF
 
     config.disableNativeSpellChecker    = false

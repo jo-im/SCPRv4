@@ -50,6 +50,22 @@
       hidpi: true,
       icons: icon,
 
+      findService: function(text) {
+        if (!text) return;
+        var foundService;
+
+        for (var i = 0; i < services.length; i++) {
+          var service = services[i];
+
+          if (text.match(service[2])) {
+            foundService = service[1];
+            break;
+          }
+        }
+
+        return foundService;
+      },
+
       init: function(editor) {
         var plugin = this;
 
@@ -62,7 +78,7 @@
             contents : [
               {
                 id        : 'embed',
-                label     : 'Embed Info',
+                label     : 'Embed via URL',
                 elements  : [
                   {
                     id          : 'embedUrl',
@@ -73,22 +89,16 @@
                     autofocus   : 'autofocus',
 
                     onBlur : function() {
-                      var val = this.getValue().trim();
-                      if (!val) return;
+                      var service = plugin.findService(this.getValue().trim());
 
-                      for (var i = 0; i < services.length; i++) {
-                        var service = services[i];
-
-                        if (val.match(service[2])) {
-                          this.getDialog().getContentElement(
-                            'embed', 'embedService'
-                          ).setValue(service[1]);
-
-                          break;
-                        }
-                      }
+                      this.getDialog().getContentElement(
+                        'embed', 'embedService').setValue(service);
                     },
                     validate : function() {
+                      if (this.getDialog().getContentElement(
+                        'embed-code', 'embedCode').getValue().trim()
+                      ) return true;
+
                       if(!this.getValue()) {
                         alert("URL can't be empty.")
                         return false
@@ -120,7 +130,7 @@
               }, // embed
               {
                 id        : 'embed-advanced',
-                label     : 'Advanced',
+                label     : 'Options',
                 elements  : [
                   {
                     id      : 'embedMaxHeight',
@@ -151,52 +161,88 @@
                       ['Title on Bottom', 'before'],
                       ['No Title', 'replace']
                     ] // items
-                  }, // embedService
-
+                  } // embedPlacement
                 ] // elements
               }, // embed-advanced
+              {
+                id        : 'embed-code',
+                label     : 'Embed via Code',
+                elements  : [
+                  {
+                    id    : 'embedCodeHelp',
+                    type  : 'html',
+                    html  : "If embedding via URL isn't working, you can " +
+                           "still paste in an embed code here."
+                  }, // embedCodeHelp
+                  {
+                    id      : 'embedCode',
+                    type    : 'textarea',
+                    label   : 'Embed Code',
+                    onBlur: function() {
+                      var service = plugin.findService(this.getValue().trim());
+
+                      this.getDialog().getContentElement(
+                        'embed', 'embedService').setValue(service);
+                    }
+                  } // embedCode
+                ] // elements
+              } // embed-code
             ], // contents
 
             onOk: function() {
-              var url         = this.getContentElement(
-                                  'embed', 'embedUrl'
-                                ).getValue().trim(),
+              var p = editor.document.createElement('p');
+              var html;
 
-                  title       = this.getContentElement(
-                                  'embed', 'linkTitle'
-                                ).getValue(),
+              var embedCode = this.getContentElement(
+                'embed-code', 'embedCode').getValue().trim();
 
-                  maxheight   = this.getContentElement(
-                                  'embed-advanced', 'embedMaxHeight'
-                                ).getValue(),
+              if (embedCode) {
+                // Force a wrapper around the embed, for styling.
+                var div = $('<div />', { class: "embed-wrapper" });
+                div.html(embedCode);
+                html = div[0].outerHTML;
 
-                  placement   = this.getContentElement(
-                                  'embed-advanced', 'embedPlacement'
-                                ).getValue(),
+              } else {
 
-                  service     = this.getContentElement(
-                                  'embed', 'embedService'
-                                ).getValue();
+                var url         = this.getContentElement(
+                                    'embed', 'embedUrl'
+                                  ).getValue().trim(),
 
-              if(title === "") title = url;
+                    title       = this.getContentElement(
+                                    'embed', 'linkTitle'
+                                  ).getValue(),
 
-              var p           = editor.document.createElement('p'),
-                  markBegin   = "<!-- EMBED PLACEHOLDER: " + url + " -->",
-                  markEnd     = "<!-- END PLACEHOLDER -->";
+                    maxheight   = this.getContentElement(
+                                    'embed-advanced', 'embedMaxHeight'
+                                  ).getValue(),
 
-              var tagProps = {
-                'href'            : url,
-                'class'           : "embed-placeholder",
-                'title'           : title,
-                'text'            : title,
-                'data-placement'  : placement
+                    placement   = this.getContentElement(
+                                    'embed-advanced', 'embedPlacement'
+                                  ).getValue(),
+
+                    service     = this.getContentElement(
+                                    'embed', 'embedService'
+                                  ).getValue();
+
+                if(title === "") title = url;
+
+                var markBegin   = "<!-- EMBED PLACEHOLDER: " + url + " -->",
+                    markEnd     = "<!-- END PLACEHOLDER -->";
+
+                var tagProps = {
+                  'href'            : url,
+                  'class'           : "embed-placeholder",
+                  'title'           : title,
+                  'text'            : title,
+                  'data-placement'  : placement
+                }
+
+                if(maxheight !== "") tagProps['data-maxheight'] = maxheight;
+                if(service !== "") tagProps['data-service'] = service;
+
+                var tag  = $("<a />", tagProps);
+                html = [markBegin, tag[0].outerHTML, markEnd].join("")
               }
-
-              if(maxheight !== "") tagProps['data-maxheight'] = maxheight;
-              if(service !== "") tagProps['data-service'] = service;
-
-              var tag  = $("<a />", tagProps),
-                  html = [markBegin, tag[0].outerHTML, markEnd].join("")
 
               p.setHtml(html)
               instance.insertElement(p)

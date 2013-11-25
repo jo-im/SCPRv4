@@ -17,9 +17,9 @@ GIT
 
 GIT
   remote: git://github.com/SCPR/embeditor-rails.git
-  revision: 9f35f91bffd438605bfcb36fba1bd668b7e3124e
+  revision: bf00195a731a53bd2ff8c9eff0ae85bfbea494c6
   specs:
-    embeditor-rails (2.0.0)
+    embeditor-rails (2.0.0.beta)
       actionpack (>= 3.2.0)
       coffee-rails (>= 3.2.0)
       eco (~> 1.0.0)
