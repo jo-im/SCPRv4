@@ -145,7 +145,6 @@
 
       // Add the urls the way we like.
       base += '&urls='+ $.map(urls, encodeURIComponent).join(',');
-
       return base;
     },
     // Batch a bunch of URLS up for processing. Will split longer lists out
