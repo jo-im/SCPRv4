@@ -2,7 +2,7 @@
 # Concern::Controller::Searchable
 #
 # Requirements:
-# * This model for this class (`model`) is indexed by Sphinx
+# * The model for this class (`model`) is indexed by Sphinx
 # * This controller has been bootstrapped by Outpost
 #
 module Concern
