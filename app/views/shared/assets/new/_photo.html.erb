@@ -1,0 +1,5 @@
+<% if asset.first.eight.width < asset.first.eight.height %>
+  <%= render_asset article, 'new', 'right' %>
+<% else %>
+  <%= render_asset article, 'new', 'wide' %>
+<% end %>

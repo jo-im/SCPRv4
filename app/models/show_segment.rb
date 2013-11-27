@@ -33,14 +33,6 @@ class ShowSegment < ActiveRecord::Base
   self.disqus_identifier_base = "shows/segment"
   ROUTE_KEY = "segment"
 
-  ASSET_SCHEMES = [
-    ["Top", "wide"],
-    ["Right", "float"],
-    ["Slideshow", "slideshow"],
-    ["Video", "video"],
-    ["Hidden", "hidden"]
-  ]
-
   #-------------------
   # Scopes
 

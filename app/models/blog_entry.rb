@@ -33,14 +33,6 @@ class BlogEntry < ActiveRecord::Base
   self.disqus_identifier_base = "blogs/entry"
   ROUTE_KEY = "blog_entry"
 
-  ASSET_SCHEMES = [
-    ["Top", "wide"],
-    ["Right", "float"],
-    ["Slideshow", "slideshow"],
-    ["Video", "video"],
-    ["Hidden", "hidden"]
-  ]
-
   #------------------
   # Scopes
 

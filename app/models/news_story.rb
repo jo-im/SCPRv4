@@ -45,19 +45,6 @@ class NewsStory < ActiveRecord::Base
     ['Center for Health Reporting', 'chr']
   ]
 
-  ASSET_SCHEMES = [
-    ["Top", "wide"],
-    ["Right", "float"],
-    ["Slideshow", "slideshow"],
-    ["Video", "video"],
-    ["Hidden", "hidden"]
-  ]
-
-  EXTRA_ASSET_SCHEMES = [
-    ["Hidden", "hidden"],
-    ["Sidebar", "sidebar"]
-  ]
-
   #-------------------
   # Scopes
 

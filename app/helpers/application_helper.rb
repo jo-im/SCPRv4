@@ -59,42 +59,45 @@ module ApplicationHelper
     html.html_safe
   end
 
-  #---------------------------
-  # render_asset takes a ContentBase object and a context, and renders using
-  # an optional context_asset_scheme attribute on the object.
+
+  # Render an asset for an article.
   #
-  # For example, given a context of "story", render_asset will check for a
-  # story_asset_scheme attribute on the object.  If found (let's assume with a
-  # value of "wide"), it will try to render:
+  # Arguments:
+  # * content  - An object which responds to `to_article`
+  # * *args    - (Strings) The paths to the partial to render.
+  # * fallback - (Boolean) Whether or not to render a fallback if ther are no
+  #               assets. (default: false)
   #
-  # * shared/assets/story/wide
-  # * shared/assets/default/wide
-  # * shared/assets/story/default
-  # * shared/assets/default/default
-  def render_asset(content, context, fallback=false)
+  # If `context` is specified, that will be rendered. If not, then it will
+  # render the object's `asset_display` attribute. If that is also empty,
+  # then it will render the `asset_display` for the article's feature. If all
+  # of those are empty, then it just renders a default.
+  #
+  # If you are rendering a fallback, you must have a `context_fallback` partial
+  # to render. For example, `thumbnail_fallback`.
+  def render_asset(content, *args)
+    options = args.extract_options!
     article = content.to_article
 
     if article.assets.empty?
-      return fallback ? render("shared/assets/#{context}/fallback", article: article) : ''
+      html = if options[:fallback]
+        render "shared/assets/fallback/#{context}", article: article
+      else
+        ''
+      end
+
+      return html
     end
 
-    # look for a scheme on the content object
-    attribute = "#{context}_asset_scheme"
-    scheme = content.respond_to?(attribute) ? content.send(attribute) : "default"
+    display = article.asset_display ||
+              article.feature.try(:asset_display) ||
+              "photo"
 
-    # set up our template precendence
-    tmplt_opts = [
-      "#{context}/#{scheme}",
-      "default/#{scheme}",
-      "#{context}/default",
-      "default/default"
-    ]
+    context = File.join(*args, display)
 
-    partial = tmplt_opts.find do |template|
-      self.lookup_context.exists?(template, ["shared/assets"], true)
-    end
-
-    render "shared/assets/#{partial}", assets: article.assets, article: article
+    render "shared/assets/#{context}",
+      :assets     => article.assets,
+      :article    => article
   end
 
   #----------
