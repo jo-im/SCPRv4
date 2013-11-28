@@ -24,12 +24,7 @@ ThinkingSphinx::Index.define :blog_entry, with: :active_record do
 
   # For the homepage/category sections
   has category.id, as: :category
-  has "((#{BlogEntry.table_name}.asset_type_id <=> '" \
-      "#{ContentBase::ASSET_TYPES[:slideshow]}') OR " \
-      "(#{BlogEntry.table_name}.asset_type_id IS NULL AND " \
-      "#{BlogEntry.table_name}.feature_type_id <=> '" \
-      "#{ArticleFeature.find_by_key(:slideshow).id}))",
-    :as     => :asset_type
+  has asset_type_id
 
   # For podcasts
   join audio

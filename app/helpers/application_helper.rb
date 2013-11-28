@@ -60,21 +60,19 @@ module ApplicationHelper
   end
 
 
-  # Render an asset for an article.
+  # Render an asset for an article, in the given context.
   #
   # Arguments:
   # * content  - An object which responds to `to_article`
-  # * *args    - (Strings) The paths to the partial to render.
-  # * fallback - (Boolean) Whether or not to render a fallback if ther are no
-  #               assets. (default: false)
+  # * args    - (Strings) The paths to the partial to render. The last argument
+  #             may be a hash of arguments.
+  # * options - (Hash) Whether or not to render a fallback if ther are no
+  #             assets.
   #
   # If `context` is specified, that will be rendered. If not, then it will
   # render the object's `asset_display` attribute. If that is also empty,
   # then it will render the `asset_display` for the article's feature. If all
   # of those are empty, then it just renders a default.
-  #
-  # If you are rendering a fallback, you must have a `context_fallback` partial
-  # to render. For example, `thumbnail_fallback`.
   def render_asset(content, *args)
     options = args.extract_options!
     article = content.to_article
@@ -89,17 +87,46 @@ module ApplicationHelper
       return html
     end
 
-    display = article.asset_display ||
-              article.feature.try(:asset_display) ||
-              "photo"
-
-    context = File.join(*args, display)
-
-    render "shared/assets/#{context}",
+    render File.join("shared", "assets", *args.map(&:to_s)),
       :assets     => article.assets,
       :article    => article
   end
 
+  def render_asset(content, context, options={})
+    article = content.to_article
+
+    if article.assets.empty?
+      html = if options[:fallback]
+        render("shared/assets/#{context}/fallback", article: article)
+      else
+        ''
+      end
+
+      return html
+    end
+
+    scheme = if article.respond_to?(:asset_display)
+      article.asset_display
+    else
+      "default"
+    end
+
+    # set up our template precendence
+    tmplt_opts = [
+      "#{context}/#{scheme}",
+      "default/#{scheme}",
+      "#{context}/default",
+      "default/default"
+    ]
+
+    partial = tmplt_opts.find do |template|
+      self.lookup_context.exists?(template, ["shared/assets"], true)
+    end
+
+    render "shared/assets/#{partial}",
+      :assets     => article.assets,
+      :article    => article
+  end
   #----------
 
   def random_headshot
