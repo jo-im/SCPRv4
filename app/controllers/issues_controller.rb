@@ -3,7 +3,7 @@ class IssuesController < ApplicationController
   respond_to :html, :xml, :rss
 
   def index
-
+    @issues = Issue.active
   end
 
   def show

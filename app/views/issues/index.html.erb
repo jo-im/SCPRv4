@@ -32,14 +32,9 @@
 
       <nav class="terms">
           <ul class="clearfix">
-              <li><a href="#">Reform</a></li>
-              <li><a href="#">Immigration</a></li>
-              <li><a href="#">Mayoral Race 2013</a></li>
-              <li><a href="#">LA Water and Power</a></li>
-              <li><a href="#">Crime</a></li>
-              <li><a href="#">State Budget</a></li>
-              <li><a href="#">State Politics</a></li>
-              <li><a href="#">SoCal Politics</a></li>
+              <% @issues.each do |issue| %>
+                <li><%= link_to issue.title, issue_path(issue.slug) %></li>
+              <% end %>
           </ul>
       </nav>
 
