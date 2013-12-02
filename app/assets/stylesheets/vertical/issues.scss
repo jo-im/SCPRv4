@@ -1,0 +1,291 @@
+@import 'reset';
+@import 'globals';
+@import 'masthead';
+@import 'resourcesrow';
+
+body        { position: relative; z-index: 1; }
+.masthead   { position: relative; z-index: 2; }
+
+
+
+//	################################################################################################
+//	################################################################################################
+//	PARTNER (specific only to its appearance on ISSUES)
+//	################################################################################################
+//	################################################################################################
+
+.partner.mercedes    { margin: 25px 0 40px; }
+
+
+
+
+//	################################################################################################
+//	################################################################################################
+//	PROLOGUE
+//	################################################################################################
+//	################################################################################################
+
+.prologue {
+    margin: 66px 0 42px;
+    .inner  { position: relative; }
+    .title {
+        font-family: $font-prox;
+        text-transform: uppercase;
+        font-size: 1.375em; // 22 / 16
+        font-weight: 700;
+        color: #b6b6b6;
+    }
+    .share {
+        position: absolute;
+        right: 0;
+        top: 3px;
+        li                      { display: inline; float: left; }
+        a                       { @include mask; width: 20px; height: 20px; margin-right: 20px; background: url(../i/single-share-icons.png) no-repeat; background-size: 120px 60px; }
+        li:nth-child(1) a       { background-position: 0 0; }
+        li:nth-child(1) a:hover { background-position: 0 -30px; }
+        li:nth-child(2) a       { background-position: -30px 0px; }
+        li:nth-child(2) a:hover { background-position: -30px -30px; }
+        li:nth-child(3) a       { background-position: -60px 0; }
+        li:nth-child(3) a:hover { background-position: -60px -30px; }
+        li:nth-child(4) a       { background-position: -90px 0; margin-right: 0; }
+        li:nth-child(4) a:hover { background-position: -90px -30px; }
+    }
+}
+
+
+
+
+
+//	################################################################################################
+//	################################################################################################
+//	CATALOG
+//	################################################################################################
+//	################################################################################################
+
+.catalog {
+    background:
+        url(../i/fauxcol-issues-topper.png) no-repeat center top,
+        url(../i/fauxcol-issues-splitflood.png) repeat-y center top;
+    background-size:
+        3000px 4px,
+        3000px 30px;
+    border-bottom: 1px solid #eeeeee;
+    .inner {
+        background:
+            url(../i/fauxcol-issues-inner-topper.png) no-repeat 23.153846153846% top,
+            url(../i/fauxcol-issues-inner.png) repeat-y 23.153846153846% top;
+        background-size:
+            1500px 4px,
+            1500px 15px;
+        padding-bottom: 142px;
+    }
+    .terms {
+        width: 23.153846153846%; // 301 / 1300
+        float: left;
+        color: #494949;
+        font-family: $font-freight;
+        font-weight: 300;
+        font-size: 1.25em; // 20 / 16
+        padding-top: 22px;
+        a {
+            display: block;
+            border-top: 1px solid rgba(0,0,0,0.08);
+            padding: 5px 20px 16px 0;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            &:hover {
+                color: black;
+                padding-left: 5.31561461794%; // 16 / 301
+                margin-left: -5.31561461794%;
+                background: rgba(0,0,0,0.05);
+                box-shadow: 0 1px 0 #cdcdcd;
+            }
+        }
+        .selected a {
+            background: white;
+            color: $blue;
+            font-weight: 400;
+            box-shadow:
+                inset -7px 0 0 #f7f7f7,
+                0 1px 0 #cdcdcd;
+            padding-left: 5.31561461794%; // 16 / 301
+            margin-left: -5.31561461794%;
+        }
+    }
+    .showcase {
+        width: 68.307692307692%; // 888 / 1300
+        float: right;
+        padding-top: 9px;
+        box-shadow: inset 0 1px 0 #e1e1e1;
+        .backlog > footer {
+            padding-top: 18px;
+            a {
+                display: inline-block;
+                background: url(../i/flourish-see-more.png) no-repeat 0 8px;
+                background-size: 15px 100px;
+                color: $blue;
+                font-family: $font-freight;
+                font-size: 1.3125em; // 21 / 16
+                font-weight: 300;
+                padding: 0 0 0 23px;
+                &:hover { color: $orange; background-position: 0 -77px; text-decoration: underline; }
+            }
+        }
+        .preface {
+            margin-bottom: 40px;
+            h1 {
+                font-family: $font-freight;
+                font-weight: 300;
+                font-size: 3em; // 48 / 16
+                line-height: 1.05;
+                margin-bottom: 26px;
+                b { font-weight: inherit; }
+            }
+        }
+        .details {
+            .brief {
+                width: 48.986486486486%; // 435 / 888
+                float: left;
+                font-size: 0.75em;
+                line-height: 1.67;
+                color: #7f7e7e;
+            }
+            .timeline {
+                width: 50%; // 444 / 888
+                float: right;
+                margin-top: 2px;
+                margin-right: -1.801801801802%; // 16 / 888
+                background: #f2f2f2;
+                font-family: $font-prox;
+                h2 {
+                    border-bottom: 1px solid white;
+                    color: #7a7a7a;
+                    font-size: 0.75em;
+                    padding: 11px 3.603603603604% 9px; // 16 / 444
+                    mark        { color: inherit; font-weight: 700; }
+                }
+                .range {
+                    text-transform: uppercase;
+                    font-size: 0.625em; // 10 / 16
+                    margin: 14px 3.603603603604%; // 16 / 444
+                    position: relative;
+                    height: 45px; // arbitrary for now
+                    box-shadow:
+                        inset 0 10px 0 #f2f2f2,
+                        inset 0 11px 0 #d6d6d6;
+                    dl {
+                        position: absolute;
+                        top: 0;
+                        left: 0;
+                        background: url(../i/issues-timeline.png) no-repeat;
+                        background-size: 104px 150px;
+                        width: 104px;
+                        dt          { color: $blue; margin: 4px 0 13px 36px; }
+                        dd          { font-weight: 700; color: #636363; margin-left: 2px; }
+                        &.latest {
+                            background-position: right -130px;
+                            left: auto;
+                            right: 0;
+                            text-align: right;
+                            dt      { color: $orange; margin: 4px 36px 13px 0; }
+                            dd      { margin-left: 0; }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+//	------------------------------------------------------------------------------------------------
+	@media screen and (max-width: 999px) {
+
+        .catalog {
+            .terms                  { font-size: 0.9375em; font-weight: 400; }
+            .terms .selected a      { font-weight: 600; }
+            .showcase .preface h1   { font-size: 2.25em; }
+            .showcase .details      {
+                .brief {
+                    width: 100%;
+                    float: none;
+                    margin-bottom: 20px;
+                }
+                .timeline {
+                    width: 100%;
+                    float: none;
+                    margin: 0 0 0 0;
+                    padding-bottom: 2px;
+                }
+            }
+        }
+
+	}
+//	------------------------------------------------------------------------------------------------
+	@media screen and (max-width: 730px) {
+
+        .prologue {
+            margin-bottom: 25px;
+        }
+        .catalog {
+            background: none;
+            .inner                      { background: none; padding-bottom: 70px; }
+            .terms {
+                background: #f1f1f1;
+                width: 100%;
+                margin: 0 0 30px -5.5%;
+                padding: 30px 5.5% 15px;
+                box-shadow: inset 0 4px 0 $blue;
+                float: none;
+                font-size: 0.875em;
+                font-weight: 600;
+                li                      { display: inline; }
+                a                       { display: inline-block; float: left; margin: 0 10px 8px 0; padding-left: 8px; border-top: 1px solid rgba(0,0,0,0.2); }
+                .selected a             { border-top: 1px solid $blue; box-shadow: none; margin-left: 0; padding-left: 8px; }
+                a:hover                 { border-top: 1px solid black; margin-left: 0; padding-left: 8px; box-shadow: none; }
+            }
+            .showcase {
+                width: 100%;
+                float: none;
+                padding-top: 0;
+                box-shadow: none;
+                .preface h1             { font-size: 1.75em; }
+                .directional b          { display: none; }
+                .directional:before     { content: "above"; }
+            }
+        }
+
+	}
+//	------------------------------------------------------------------------------------------------
+	@media screen and (max-width: 450px) {
+
+        .catalog {
+            .terms {
+                font-size: 0.8125em;
+                padding-bottom: 8px;
+                ul              { -moz-column-count: 2; -webkit-column-count: 2; column-count: 2; }
+                li              { display: block; }
+                a               { display: block; float: none; margin: 0 10px 0 0; padding-left: 5px; }
+                .selected a     { padding-left: 5px; }
+                a:hover         { padding-left: 5px; }
+            }
+            .showcase {
+                .backlog article .prose h1  { font-size: 1em; }
+                .backlog article .prose .byline {
+                    margin-bottom: 5px;
+                    .author,time            { display: block; }
+                    .author                 { padding-right: 0; }
+                    time                    { color: black; }
+                }
+            }
+        }
+
+	}
+//	------------------------------------------------------------------------------------------------
+
+
+
+
+
+
+

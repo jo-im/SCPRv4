@@ -1,15 +1,124 @@
 <% add_to_page_title "Issues" %>
 
-<h1>KPCC Issues</h1>
-<div class="row-fluid">
-  <div class="span12">
-    <div class="directory" id="news">
-      <h6>News</h6>
-    </div>
-  </div>
-  <div class="span12">
-    <div class="directory" id="arts-and-culture">
-    </div>
-  </div> <!-- .span8 -->
-</div> <!-- .row -->
+<% content_for :body_class do %>
+  <% 'interior issues' %>
+<% end %>
+<% content_for :vertical_layout do %>
+  <%= stylesheet_link_tag "vertical/issues", media: "all" %>
+<% end %>
 
+<%= render 'shared/header/header' %>
+
+
+<section class="prologue">
+  <div class="inner bound">
+      <h1 class="title">All Issues</h1>
+      <aside class="share">
+          <ul>
+              <li><a href="#">Share on Facebook</a></li>
+              <li><a href="#">Share on Twitter</a></li>
+              <li><a href="#">Share on Google Plus</a></li>
+              <li><a href="#">Share via Email</a></li>
+          </ul>
+      </aside>
+  </div>
+</section><!--/ .prologue -->
+
+
+
+
+<div class="catalog">
+  <div class="inner bound clearfix">
+
+      <nav class="terms">
+          <ul class="clearfix">
+              <li><a href="#">Reform</a></li>
+              <li><a href="#">Immigration</a></li>
+              <li><a href="#">Mayoral Race 2013</a></li>
+              <li><a href="#">LA Water and Power</a></li>
+              <li><a href="#">Crime</a></li>
+              <li><a href="#">State Budget</a></li>
+              <li><a href="#">State Politics</a></li>
+              <li><a href="#">SoCal Politics</a></li>
+          </ul>
+      </nav>
+
+      <div class="showcase">
+
+          <header class="preface">
+              <h1>Begin by choosing one of the issues <span class="directional"><b>at left</b></span>.</h1>
+          </header>
+
+      </div><!--/ .showcase -->
+
+  </div>
+</div><!--/ .catalog -->
+
+
+
+
+
+
+
+<aside class="partner mercedes">
+  <div class="inner bound">
+      <h1><b><span>Groundbreaking innovation</span> <span>has broken through again.</span></b></h1>
+      <b class="car"><%= image_tag 'sponsor-assets/mercedes-car.png', alt: '' %></b>
+      <p class="teaser">
+          <span>Introducing the redesigned 2014 E-Class Sedan.</span>
+          <span>More aggressive, more eye-catching and more innovative than ever.</span>
+          <mark><a href="#">Discover the E-Class</a></mark>
+      </p>
+      <figure class="logo"><a href="#"><%= image_tag 'sponsor-assets/mercedes-logo-full.png', alt: '' %></a></figure>
+  </div>
+</aside>
+
+
+
+
+<section class="resources-row">
+  <div class="inner bound clearfix">
+      <header>
+          <h1><span>Represent Resources</span></h1>
+          <h2>Quick primers on civic life in California.</h2>
+          <h3>All of us at KPCC believe that civic life in Southern California should be understandable, relevant, and libero ante, aliquam congue mattis id, blandit quis risus. Sed iaculis tellus accumsan ipsum porta ultricies.</h3>
+          <h4>Represent Resources is made possible with support from <a href="#">The Robert Day School</a>.</h4>
+      </header>
+      <nav>
+          <ul class="clearfix">
+              <li>
+                  <a href="#">
+                      <figure class="clearfix">
+                          <div class="ratio"><div class="fill"></div><b class="img-contain"><img src="http://a.scpr.org/i/2d6898221e3b868f2b11d6829dd69f1b/24864-eight.jpg" alt="" /></b></div>
+                          <figcaption>How do I find my local and state representatives?</figcaption>
+                      </figure>
+                  </a>
+              </li>
+              <li>
+                  <a href="#">
+                      <figure class="clearfix">
+                          <div class="ratio"><div class="fill"></div><b class="img-contain"><img src="http://a.scpr.org/i/891f1a1d68d340192b5396d009971384/62081-eight.jpg" alt="" /></b></div>
+                          <figcaption>Who do I contact to get a bill introduced?</figcaption>
+                      </figure>
+                  </a>
+              </li>
+              <li>
+                  <a href="#">
+                      <figure class="clearfix">
+                          <div class="ratio"><div class="fill"></div><b class="img-contain"><img src="http://a.scpr.org/i/b0c988323dfcba0891d61ed8e232ae1a/65246-full.jpg" alt="" /></b></div>
+                          <figcaption>I’m not a citizen. How do I become one?</figcaption>
+                      </figure>
+                  </a>
+              </li>
+              <li>
+                  <a href="#">
+                      <figure class="clearfix">
+                          <div class="ratio"><div class="fill"></div><b class="img-contain"><img src="http://a.scpr.org/i/5d4a7bd7203c2fe254313c4840f9c7bc/50090-eight.jpg" alt="" /></b></div>
+                          <figcaption>How do I make sure I’m eligible to vote?</figcaption>
+                      </figure>
+                  </a>
+              </li>
+          </ul>
+      </nav>
+  </div>
+</section><!--/ .resources-row -->
