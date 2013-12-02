@@ -10,7 +10,7 @@
 <%= render 'shared/header/header' %>
 
 <%= cache ["show", "v10", @entry] do %>
-  <%= render "/blogs/entry", entry: @entry, full: true %>
+  <%= render "/blogs/single", entry: @entry, full: true %>
 <% end %>
 
 

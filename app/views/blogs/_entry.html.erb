@@ -1,248 +1,41 @@
-<% article = entry.to_article %>
-  <% if @asset.present? %>
-    <section class="prologue">
-        <div class="grating">
-            <div class="inner bound clearfix">
-              <div class="prose">
-                  <h1 class="title"><%= article.short_title %></h1>
-                    <aside class="byline">
-                      <h2 class="author">by <%= render_byline article.original_object %></h2>
-                        <%= smart_date_js article.public_datetime %>
-                    </aside>
-                    <aside class="share">
-                        <ul>
-                            <li><a href="#">Share on Facebook</a></li>
-                            <li><a href="#">Share on Twitter</a></li>
-                            <li><a href="#">Share on Google Plus</a></li>
-                            <li><a href="#">Share via Email</a></li>
-                        </ul>
-                    </aside>
-                      <aside class="caption">
-                        <p><%= @asset.caption %><mark class="credit"><%= link_to @asset.owner, '#' %></mark></p>
-                      </aside>
-                </div><!--/ .prose -->
-                <div class="asset">
-                    <div class="ratio">
-                        <div class="fill"></div>
-                        <b class="img-contain">
-                          <%= image_tag @asset.eight.url %>
-                        </b>
-                    </div><!--/ .ratio -->
-                </div><!--/ .asset -->
-            </div>
+<%
+  if !defined?(full)
+    full = params[:id].present?
+  end
+%>
+
+<div class="entry content-block">
+  <div class="row-fluid">
+    <%= content_widget "social_sidebar", entry %>
+
+    <div class="span18 mq-solo-span">
+      <article>
+        <header>
+          <h1 class="story-headline"><%= link_to entry.headline, entry.public_path %></h1>
+          <span class="byline">
+            <%= render_byline entry %> <span class="pipe">|</span> <%= timestamp(entry.published_at) %>
+          </span>
+        </header>
+
+        <div class="story-body">
+          <div class="visible-reader"><%= content_widget "primary_audio", entry %></div>
+
+          <%= render_asset entry, "blog" %>
+          <%= entry.send(full ? :body : :extended_teaser).html_safe %>
         </div>
-        <div class="ephemera"><%= image_tag @asset.full.url %></div>
-    </section><!--/ .prologue -->
-   <%end %>
-    <div class="report">
-        <div class="inner bound clearfix">
-            <article class="prose">
-              <%= article.body.html_safe %>
 
-              <% if @related_articles.presence %>
-                <aside class="related">
-                    <header><h1>Related Links</h1></header>
-                    <nav>
-                        <ul>
-                            <% @related_articles.each do |article| %>
-                              <% feature_type = article.original_object.feature_type.present? ? article.original_object.feature_type_name.downcase : 'article' %>
-                              <li class=<%= feature_type %>>
-                                <%= link_to article.public_path do %>
-                                  <mark><%= article.short_title %></mark>
-                                  <span><%= feature_type %></span></a>
-                                <% end %>
-                              </li>
-                            <% end %>
-                        </ul>
-                    </nav>
-                </aside>
-              <% end %>
-              </article>
-            <section class="supportive">
-              <% if audio = article.audio.first %>
-                    <aside class="audio">
-                      <header>
-                          <h1>Play this article's audio</h1>
-                      </header>
-                      <div class="audio-trigger">
-                        <button value="activate"><%= link_to 'Play audio', audio.url, class: "play-btn audio-toggler" %></button>
-                          <ul class="meta">
-                            <li class="duration"><%= format_duration audio.duration %></li>
-                              <li class="link"><%= link_to 'Download', audio.url %></li>
-                          </ul>
-                      </div>
-                    </aside>
-                  <% end %>
-              <% if issue = article.original_object.issues.first %>
-                <aside class="see-more issue">
-                    <header>
-                        <h1>More from this Issue</h1>
-                        <h2 class="clearfix">
-                          <span><%= link_to issue.title, issue_path(issue.slug) %></span>
-                            <mark><%= link_to 'See All', issues_path %></mark>
-                        </h2>
-                    </header>
-                    <ul class="previews">
-                      <% if issue_articles = issue.articles.first(3) %>
-                        <% issue_articles.each do |article| %>
-                          <li>
-                            <%= link_to article.public_path do %>
-                                <figure class="ratio-pairing clearfix">
-                                    <div class="ratio">
-                                        <div class="fill"></div>
-                                        <b class="img-contain"><%= image_tag article.asset.lsquare.url %></b>
-                                    </div><!--/ .ratio -->
-                                    <figcaption>
-                                        <%= smart_date_js article.public_datetime %>
-                                        <mark><%= article.short_title %></mark>
-                                    </figcaption>
-                                </figure><!--/ .ratio-pairing -->
-                            <% end %>
-                            </li>
-                        <% end %>
-                      <% end %>
-                    </ul>
-                </aside>
-              <% end %>
-                <aside class="see-more kpcc">
-                    <header>
-                        <h1>Popular now on KPCC</h1>
-                    </header>
-                    <ul class="previews">
-                      <% if @popular_articles.presence %>
-                        <% @popular_articles.each do |article| %>
-                          <li>
-                            <%= link_to article.public_path do %>
-                                  <figure class="ratio-pairing clearfix">
-                                      <div class="ratio">
-                                          <div class="fill"></div>
-                                          <b class="img-contain"><%= image_tag article.asset.lsquare.url %></b>
-                                      </div><!--/ .ratio -->
-                                      <figcaption>
-                                          <%= smart_date_js article.public_datetime %>
-                                          <mark><%= article.short_title %></mark>
-                                      </figcaption>
-                                  </figure><!--/ .ratio-pairing -->
-                            <% end %>
-                          </li>
-                        <% end %>
-                      <% end %>
-                    </ul>
-                </aside>
-            </section>
-        </div>
-    </div><!--/ .report -->
+        <footer>
+          <% if full %>
+            <p><i><%= render_contributing_byline entry %></i></p>
+            <div class="visible-reader"><%= content_widget "extra_audio", entry %></div>
 
-    <%= render 'shared/mercedes-ad' %>
-    <%= render partial: 'shared/triptych', locals: {category: entry.category, articles: @three_recent_articles } %>
+            <%= pij_source(entry) %>
+            <%= render partial: "/shared/author_info", collection: entry.grouped_bylines[:primary], as: :byline %>
+          <% end %>
+        </footer>
+      </article>
 
-    <div class="townhall">
-         <div class="inner bound clearfix">
-             <div class="primary clearfix">
-
-                 <section class="backlog">
-                   <h1>More <%= entry.category.title %></h1>
-                   <% if @more_articles.presence %>
-                     <%= render partial: 'shared/waterfall_articles', collection: @more_articles, as: 'article' %>
-                   <% end %>
-
-                     <footer>
-                     <%= link_to "More #{entry.category.title} News", entry.category.public_path %>
-                     </footer>
-
-                 </section><!--/ .backlog -->
-
-                <div class="supportive">
-                    <section>
-                        <h1>Issues We're Tracking</h1>
-                        <% if entry.category.issues.presence %>
-                           <h2 class="special"><%= @special_issue.title %></h2>
-                              <nav>
-                                  <ul>
-                                    <%= render partial: 'shared/single_page_issue_list', collection: @top_two_special_issue_articles, as: 'entry' %>
-                                  </ul>
-                              </nav>
-                          <% @other_issues.each do |issue| %>
-                            <h2><%= issue.title %></h2>
-                              <nav>
-                                <ul>
-                                  <% issue.articles.first(2).each do |entry| %>
-                                    <%= render partial: 'shared/single_page_issue_list', locals: {entry: entry} %>
-                                  <% end %>
-                                </ul>
-                              </nav>
-                          <% end %>
-                        <% end %>
-                        <footer>
-                          <%= link_to 'See all issues', issues_path %>
-                        </footer>
-                    </section>
-                    <section>
-                      <h1>Our Reporters</h1>
-                      <div class="rollcall clearfix">
-                        <%= render partial: 'shared/single_page_reporter', collection: @bios, as: 'reporter' %>
-                       </div>
-                    </section>
-                </div><!--/ .supportive -->
-
-             </div><!--/ .primary -->
-
-             <div class="tourguide">
-                 <aside>
-                     <h1>Welcome to <span>KPCC's Represent.</span></h1>
-                     <p>We’re a Southern-California-focused team of KPCC reporters who are passionate about bringing you the latest, best, curabitur cursus tincidunt nulla faucibus consectetur. Nullam sed libero id nulla facilisis vehicula non quis nulla. Proin gravida pharetra mattis. Sed vitae mauris sapien, ut eleifend felis. Duis quis augue diam.</p>
-                </aside>
-                <aside>
-                    <h1>Represent Resources</h1>
-                    <h2>Quick primers on civic life in California.</h2>
-                    <p>All of us at KPCC believe that civic life in Southern California should be understandable, relevant, and libero ante, aliquam congue mattis id, blandit quis risus. Sed iaculis tellus accumsan ipsum porta ultricies.</p>
-                    <nav class="resources clearfix">
-                      <% if @resources.presence %>
-                        <% @resources.each do |resource| %>
-                          <figure class="clearfix">
-                              <div class="ratio">
-                                <%= link_to resource.public_path, title: resource.short_title do %>
-                                      <div class="fill"></div>
-                                      <b class="img-contain"><%= image_tag resource.asset.lsquare.url %></b>
-                                <% end %>
-                              </div>
-                              <figcaption>
-                                <%= link_to resource.short_title, resource.public_path %>
-                              </figcaption>
-                          </figure>
-                        <% end %>
-                      <% end %>
-                    </nav>
-                    <footer>
-                        <p>Represent Resources is made possible with support from <a href="#">The Robert Day School</a>.</p>
-                    </footer>
-                </aside>
-                <aside>
-                    <h1>Get involved.</h1>
-                    <ul class="events">
-                      <% if @events.presence %>
-                        <% @events.each do |event| %>
-                          <li>
-                                <figure class="clearfix">
-                                  <%= content_tag :time, datetime: event.public_datetime.strftime('%F') do %>
-                                    <b><%= event.public_datetime.day %></b>
-                                    <span><mark><%= event.public_datetime.strftime('%b') %></mark> <%= event.public_datetime.strftime('%Y') %></span>
-                                  <% end %>
-                                    <figcaption>
-                                      <b><%= event.short_title %></b>
-                                      <%= link_to 'More information', event.public_path %>
-                                    </figcaption>
-                                </figure>
-                          </li>
-                         <% end %>
-                      <% end %>
-                    </ul>
-                </aside>
-             </div><!--/ .tourguide -->
-
-         </div>
-     </div><!--/ .townhall -->
-
-
-
-
+      <%= content_widget("social_tools", entry, cssClass: "horizontal bottom") if full %>
+    </div> <!-- span18 -->
+  </div> <!-- row fluid -->
+</div> <!-- entry -->
