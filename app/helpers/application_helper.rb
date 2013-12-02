@@ -73,31 +73,12 @@ module ApplicationHelper
   # render the object's `asset_display` attribute. If that is also empty,
   # then it will render the `asset_display` for the article's feature. If all
   # of those are empty, then it just renders a default.
-  def render_asset(content, *args)
-    options = args.extract_options!
-    article = content.to_article
-
-    if article.assets.empty?
-      html = if options[:fallback]
-        render "shared/assets/fallback/#{context}", article: article
-      else
-        ''
-      end
-
-      return html
-    end
-
-    render File.join("shared", "assets", *args.map(&:to_s)),
-      :assets     => article.assets,
-      :article    => article
-  end
-
   def render_asset(content, context, options={})
     article = content.to_article
 
     if article.assets.empty?
       html = if options[:fallback]
-        render("shared/assets/#{context}/fallback", article: article)
+        render "shared/assets/#{context}/fallback", article: article
       else
         ''
       end
