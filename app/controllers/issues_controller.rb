@@ -15,5 +15,9 @@ class IssuesController < ApplicationController
     @issue = Issue.active.find_by_slug!(params[:slug])
     @issue_articles = @issue.articles.first(8)
     @article_count = @issue.articles.count
+    if Rails.cache.read("popular/viewed").presence
+      @top_popular_articles = Rails.cache.read("popular/viewed")[0..1]
+      @bottom_popular_articles = Rails.cache.read("popular/viewed")[2..3]
+    end
   end
 end

@@ -70,7 +70,7 @@
                 <% end %>
 <!--            ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ -->
                 <footer>
-                    <a href="#">Load more Mayoral Race 2013 stories</a>
+                  <%= link_to "Load more #{@issue.title} stories", issue_path(@issue.slug) %>
                 </footer>
             </section><!--/ .backlog -->
 
@@ -79,3 +79,6 @@
     </div>
 </div><!--/ .catalog -->
 
+<%= render 'shared/kpcc_ipad_ad' %>
+
+<%= render partial: 'shared/quadrant', locals: { top_articles: @top_popular_articles, bottom_articles: @bottom_popular_articles } %>
