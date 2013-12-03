@@ -49,6 +49,7 @@
                     </div>
                     <aside class="timeline">
                       <h2>KPCC has published a total of <mark><%= @article_count %> articles</mark> on <%= @issue.title %></h2>
+                      <% if @issue_articles.presence %>
                         <div class="range">
                             <dl class="began">
                             <dt><%= date_format(@issue_articles.last.public_datetime) %></dt>
@@ -59,6 +60,7 @@
                                 <dd>Latest coverage</dd>
                             </dl>
                         </div>
+                      <% end %>
                     </aside>
                 </div>
             </header>
