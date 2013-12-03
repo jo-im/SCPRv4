@@ -34,7 +34,7 @@
         <nav class="terms">
             <ul class="clearfix">
                 <% @issues.each do |issue| %>
-                  <li><%= link_to issue.title, issue_path(issue.slug) %></li>
+                  <%= issue_link issue, issue_path(issue.slug), @issue %>
                 <% end %>
             </ul>
         </nav>
