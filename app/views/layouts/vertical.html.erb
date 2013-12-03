@@ -47,7 +47,7 @@
     <link rel="apple-touch-icon-precomposed" href="!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!" />
     <%= yield(:vertical_layout) if content_for :vertical_layout %>
     <%= stylesheet_link_tag "fonts", media: "screen" %>
-    <%= stylesheet_link_tag "vertical/partner-mercedes", media: "all" %>
+    <%= stylesheet_link_tag "vertical/partner-kpccforipad", media: "screen" %>
     <%= javascript_include_tag "shared", "application" %>
     <%= javascript_include_tag "new", "application" %>
     <!--[if lt IE 9]>
@@ -178,8 +178,14 @@
         </div><!--/ .cols -->
         <aside class="grant">
             <div class="inner bound">
-                <b class="logo"><%= image_tag "logo-keck.png", alt: "Keck Foundation logo" %></b>
-                <p>KPCC’s <span>Represent!</span> is funded in part by a grant from the W.M. Keck Foundation.</p>
+                <h1>KPCC's <span>Represent!</span> is funded in part by grants from:</h1>
+                <ul>
+                    <li class="ford">Ford Foundation</li>
+                    <li class="irvine">The James Irvine Foundation</li>
+                    <li class="haynes">The John Randolph Haynes and Dora Haynes Foundation</li>
+                    <li class="huh">Jihee and Peter Huh</li>
+                    <li class="dewitt">Sally Graves DeWitt</li>
+                </ul>
             </div>
         </aside>
         <div class="lastwords bound">
