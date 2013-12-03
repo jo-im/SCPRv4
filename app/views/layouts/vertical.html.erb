@@ -104,7 +104,7 @@
                             <li><a href="/crime/">Crime &amp; Safety</a></li>
                             <li><a href="/education/">Education</a></li>
                             <li><a href="/health/">Health</a></li>
-                            <li><a href="/archive/2013/11/11/?section=news">Archive</a></li>
+                            <li><a href="/archive/<%= Time.now.yesterday.strftime("%Y/%m/%d") %>/?section=news">Archive</a></li>
                         </ul>
                         <h2>Arts &amp; Life</h2>
                         <ul>
@@ -125,7 +125,7 @@
                             <li><a href="/programs/offramp">Off-Ramp</a></li>
                             <li><a href="/programs/">Programs A&ndash;Z</a></li>
                             <li><a href="/schedule/">Program Schedule</a></li>
-                            <li><a href="/archive/2013/11/11/?section=programs">Program Archive</a></li>
+                            <li><a href="/archive/<%= Time.now.yesterday.strftime("%Y/%m/%d") %>/?section=programs">Program Archive</a></li>
                         </ul>
                         <h1>Events</h1>
                         <ul>
@@ -206,7 +206,7 @@
                     <li><a href="/terms/">Terms &amp; Conditions</a></li>
                     <li><a href="/privacy/">Privacy</a></li>
                     <li><a href="/web_site_feedback/">Feedback</a></li>
-                    <li>&copy; 2013 <a href="#">Southern California Public Radio</a></li>
+                    <li>&copy; 2013 <a href="http://scpr.org">Southern California Public Radio</a></li>
                 </ul>
             </nav>
         </div>
@@ -216,7 +216,6 @@
     var smartTime;
     $(function() {
       smartTime  = new scpr.SmartTime();
-
     });
   </script>
 
