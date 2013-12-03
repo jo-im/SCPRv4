@@ -1,9 +1,11 @@
 <article class="clearfix">
   <div class="graphic">
       <div class="ratio">
-        <%- unless article.original_object.issues.empty? || article.related_issue.empty? %>
-          <span class="issue"><%= link_to article.related_issue.first.title, issue_path(article.related_issue.first.slug) %></span>
-        <% end  %>
+        <% if issue_tag_exists %>
+          <% unless article.original_object.issues.empty? || article.related_issue.empty? %>
+            <span class="issue"><%= link_to article.related_issue.first.title, issue_path(article.related_issue.first.slug) %></span>
+          <% end  %>
+        <% end %>
           <div class="fill"></div>
           <b class="img-contain"><%= image_tag article.asset.small.url, alt: '' %></b>
       </div><!--/ .ratio -->

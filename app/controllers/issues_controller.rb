@@ -11,7 +11,9 @@ class IssuesController < ApplicationController
   end
 
   def show
+    @issues = Issue.active
     @issue = Issue.active.find_by_slug!(params[:slug])
-    @articles = @issue.article_issues
+    @issue_articles = @issue.articles.first(8)
+    @article_count = @issue.articles.count
   end
 end

@@ -237,7 +237,7 @@
         <section class="backlog">
           <h1>More <%= @category.title %></h1>
           <% if @more_articles.presence %>
-            <%= render partial: 'shared/waterfall_articles', collection: @more_articles, as: 'article' %>
+            <%= render partial: 'shared/waterfall_articles', collection: @more_articles, as: 'article', locals: { issue_tag_exists: true } %>
           <% end %>
         </section><!--/ .backlog -->
 

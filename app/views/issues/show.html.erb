@@ -1,5 +1,81 @@
 <% add_to_page_title @issue.title %>
 
-<div class='issue-page'>
-  <h1><%= @issue.title %></h1>
-</div>
+<% content_for :body_class do %>
+  <% 'interior issues' %>
+<% end %>
+
+<% content_for :vertical_layout do %>
+  <%= stylesheet_link_tag "vertical/issues", media: "all" %>
+<% end %>
+
+<% content_for :quadrant_header do %>
+  Popular Now on KPCC
+<% end %>
+
+<%= render 'shared/header/header' %>
+
+<section class="prologue">
+  <div class="inner bound">
+      <h1 class="title">All Issues</h1>
+      <aside class="share">
+          <ul>
+              <li><a href="#">Share on Facebook</a></li>
+              <li><a href="#">Share on Twitter</a></li>
+              <li><a href="#">Share on Google Plus</a></li>
+              <li><a href="#">Share via Email</a></li>
+          </ul>
+      </aside>
+  </div>
+</section><!--/ .prologue -->
+
+<div class="catalog">
+    <div class="inner bound clearfix">
+
+        <nav class="terms">
+            <ul class="clearfix">
+                <% @issues.each do |issue| %>
+                  <li><%= link_to issue.title, issue_path(issue.slug) %></li>
+                <% end %>
+            </ul>
+        </nav>
+
+        <div class="showcase">
+
+            <header class="preface">
+              <h1><%= @issue.title %></h1>
+                <div class="details clearfix">
+                    <div class="brief">
+                      <p><%= @issue.description %></p>
+                    </div>
+                    <aside class="timeline">
+                      <h2>KPCC has published a total of <mark><%= @article_count %> articles</mark> on <%= @issue.title %></h2>
+                        <div class="range">
+                            <dl class="began">
+                                <dt>24 Feb 2012</dt>
+                                <dd>Coverage began</dd>
+                            </dl>
+                            <dl class="latest">
+                                <dt>10 Jun 2013</dt>
+                                <dd>Latest coverage</dd>
+                            </dl>
+                        </div>
+                    </aside>
+                </div>
+            </header>
+
+            <section class="backlog">
+<!--            ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ -->
+                <% if @issue_articles.presence %>
+                  <%= render partial: 'shared/waterfall_articles', collection: @issue_articles, as: 'article', locals: { issue_tag_exists: false } %>
+                <% end %>
+<!--            ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ -->
+                <footer>
+                    <a href="#">Load more Mayoral Race 2013 stories</a>
+                </footer>
+            </section><!--/ .backlog -->
+
+        </div><!--/ .showcase -->
+
+    </div>
+</div><!--/ .catalog -->
+
