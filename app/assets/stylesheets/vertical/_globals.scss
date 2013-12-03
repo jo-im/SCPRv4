@@ -102,7 +102,7 @@ $orange: #f17b21;
 	article {
 		width: 31.692307692308%; // 412 / 1300
 		float: left;
-		margin-left: 2.461538461538%; // 32 / 1300		
+		margin-left: 2.461538461538%; // 32 / 1300
 		&:first-child	{ margin-left: 0; }
 		&:last-child	{ margin-left: 0; float: right; }
 
@@ -127,7 +127,7 @@ $orange: #f17b21;
 				span	{ display: inline-block; padding-right: 4px; }
 			}
 		}
-		
+
 		.byline {
 			position: relative;
 			z-index: 2;
@@ -538,7 +538,7 @@ $orange: #f17b21;
 
 			}
 		//	------------------------------------------------------------------------------------------------
-		
+
 	}
 	.prose {
 		width: 71.428571428571%; // 555 / 777
@@ -605,7 +605,7 @@ $orange: #f17b21;
 	color: #bfbfbf;
 	overflow: hidden;
 	padding-bottom: 60px;
-//	~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~	
+//	~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 	header {
 		margin-bottom: 15px;
 		box-shadow:
@@ -726,9 +726,9 @@ $orange: #f17b21;
 				color: white;
 			}
 		}
-	}	
+	}
 
-//	~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~	
+//	~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 	.grant {
 		border-bottom: 1px solid #3d3d3d;
 		margin-bottom: 13px;
@@ -745,7 +745,7 @@ $orange: #f17b21;
             span { font-style: italic; }
 	    }
 		li {
-			padding: 6px 0 7px 58px;
+			padding: 4px 0 9px 46px;
 			margin-bottom: 10px;
 			font-family: $font-merri;
 			font-size: 1.0625em;
@@ -754,15 +754,15 @@ $orange: #f17b21;
 			span { font-style: italic; }
 			background-repeat: no-repeat;
 			background-position: 0 0;
-			background-size: 32px;
+			background-size: 24px;
 			@media screen and (max-width: 850px) { font-size: 0.9375em; }
-			&.ford          { background-image: url(../../media/logo-ford.png); }
-			&.irvine        { background-image: url(../../media/logo-irvine.png); }
+			&.ford          { background-image: url(image_path('logo-ford.png')); }
+			&.irvine        { background-image: url(image_path('logo-irvine.png')); }
 		}
-		
+
 	}
 
-//	~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~	
+//	~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 	.cols {
 		border-bottom: 1px solid #19566a;
 		margin-bottom: 18px;
