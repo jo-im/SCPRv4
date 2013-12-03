@@ -42,17 +42,18 @@
     <meta name="twitter:site" content="KPCC"/>
     <meta name="twitter:title" content="Represent"/>
     <meta name="twitter:description" content="Politics, government and public life for Southern California."/>
-    <meta name="twitter:image:src" content="!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!">
+    <meta name="twitter:image:src" content="http://scpr.org<%=image_path('kpcc-twitter-logo.png')%>">
     <link rel="shortcut icon" href="http://media.scpr.org/favicon.ico" type="image/x-icon" />
     <link rel="apple-touch-icon-precomposed" href="!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!" />
     <%= yield(:vertical_layout) if content_for :vertical_layout %>
+
     <%= stylesheet_link_tag "fonts", media: "screen" %>
     <%= stylesheet_link_tag "vertical/partner-kpccforipad", media: "screen" %>
-    <%= javascript_include_tag "shared", "application" %>
-    <%= javascript_include_tag "new", "application" %>
+    <%= javascript_include_tag "shared", "new" %>
+
     <!--[if lt IE 9]>
         <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
-        <script src="selectivizr-min.js" type="text/javascript"></script>
+        <%= javascript_include_tag "selectivizr.min" %>
         <link href="display-ie-6-7-8.css" media="screen" rel="stylesheet" />
     <![endif]-->
 

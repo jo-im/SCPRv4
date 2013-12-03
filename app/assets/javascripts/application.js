@@ -3,7 +3,6 @@
 //= require moment-strftime
 
 //= require_directory ./t_listen/
-//= require_directory ./vertical/
 //= require swfobject.min
 
 //= require_tree ./slideshow/templates
