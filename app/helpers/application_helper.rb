@@ -121,6 +121,10 @@ module ApplicationHelper
       "data-unixtime" => datetime.to_i
     }.merge(options.except(:class,:tag))
   end
+
+  def date_format(datetime)
+    datetime.strftime('%-d %^b %Y')
+  end
   #----------
   # Render a byline for the passed-in content
   # If links is set to false, and the content has

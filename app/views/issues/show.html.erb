@@ -51,11 +51,11 @@
                       <h2>KPCC has published a total of <mark><%= @article_count %> articles</mark> on <%= @issue.title %></h2>
                         <div class="range">
                             <dl class="began">
-                                <dt>24 Feb 2012</dt>
+                            <dt><%= date_format(@issue_articles.last.public_datetime) %></dt>
                                 <dd>Coverage began</dd>
                             </dl>
                             <dl class="latest">
-                                <dt>10 Jun 2013</dt>
+                            <dt><%= date_format(@issue_articles.first.public_datetime) %></dt>
                                 <dd>Latest coverage</dd>
                             </dl>
                         </div>
