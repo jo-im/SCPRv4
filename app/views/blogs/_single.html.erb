@@ -133,7 +133,7 @@
         </div>
     </div><!--/ .report -->
 
-    <%= render 'shared/mercedes-ad' %>
+    <%= render 'shared/kpcc_ipad_ad' %>
     <%= render partial: 'shared/triptych', locals: {category: entry.category, articles: @three_recent_articles } %>
 
     <div class="townhall">
@@ -143,7 +143,7 @@
                  <section class="backlog">
                    <h1>More <%= entry.category.title %></h1>
                    <% if @more_articles.presence %>
-                     <%= render partial: 'shared/waterfall_articles', collection: @more_articles, as: 'article' %>
+                     <%= render partial: 'shared/waterfall_articles', collection: @more_articles, as: 'article', locals: { issue_tag_exists: true } %>
                    <% end %>
 
                      <footer>
