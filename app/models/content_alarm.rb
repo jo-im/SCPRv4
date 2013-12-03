@@ -12,6 +12,7 @@ class ContentAlarm < ActiveRecord::Base
   # Association
   belongs_to :content, polymorphic: true
 
+  self.versioned_attributes = ["fire_at"]
 
 
   class << self
@@ -22,7 +23,7 @@ class ContentAlarm < ActiveRecord::Base
   end
 
 
-  # Fire an alarm. This is *always* destroy the alarm, whether or not
+  # Fire an alarm. This will *always* destroy the alarm, whether or not
   # the content was published or not. The idea is that you should be
   # able to call `fire` on any alarm at any time and have it perform its
   # action. If you want to batch-fire only pending alarms, use ::fire_pending.
@@ -43,7 +44,7 @@ class ContentAlarm < ActiveRecord::Base
           "Not publishing, but will still destroy this alarm."
     end
 
-    # This method shouldn't be called unless you're reading to actually
+    # This method shouldn't be called unless you're ready to actually
     # fire the alarm, so we should always destroy it at this point.
     self.destroy
   end

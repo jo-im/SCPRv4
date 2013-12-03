@@ -2,13 +2,13 @@ require "spec_helper"
 
 describe PodcastsController do
   render_views
-  
+
   describe "GET /index" do
     it "orders by title asc" do
       get :index
       assigns(:podcasts).to_sql.should match /order by title/i
     end
-    
+
     it "only shows listed" do
       unlisted = create :podcast, is_listed: false
       listed   = create :podcast, is_listed: true
@@ -16,7 +16,7 @@ describe PodcastsController do
       assigns(:podcasts).should eq [listed]
     end
   end
-  
+
   #---------------
 
   describe "GET /podcast" do
@@ -25,21 +25,21 @@ describe PodcastsController do
         get :podcast, slug: "nonsense"
       }.should raise_error ActiveRecord::RecordNotFound
     end
-    
+
     it "finds the correct podcast" do
       podcast = create :podcast, slug: "podcast"
       Podcast.any_instance.stub(:content) { [] }
       get :podcast, slug: "podcast"
       assigns(:podcast).should eq podcast
     end
-    
+
     it "redirects to podcast_url if source is ExternalProgram" do
       program = create :external_program, :from_rss
       podcast = create :podcast, source: program
       get :podcast, slug: podcast.slug
       response.should redirect_to podcast.podcast_url
     end
-    
+
     context "sphinx search" do
       before :all do
         setup_sphinx

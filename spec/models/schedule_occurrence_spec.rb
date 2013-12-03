@@ -65,7 +65,7 @@ describe ScheduleOccurrence do
       occurrence_tomorrow  = create :schedule_occurrence, starts_at: Time.now.tomorrow
       occurrence_now       = create :schedule_occurrence, starts_at: Time.now - 1.minute
 
-      ScheduleOccurrence.current.should eq [occurrence_now] 
+      ScheduleOccurrence.current.should eq [occurrence_now]
     end
   end
 
@@ -94,7 +94,7 @@ describe ScheduleOccurrence do
       rule.schedule_occurrences << occurrence
       rule.save!
 
-      ScheduleOccurrence.on_at(occurrence.starts_at).should eq occurrence 
+      ScheduleOccurrence.on_at(occurrence.starts_at).should eq occurrence
     end
   end
 

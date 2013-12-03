@@ -26,7 +26,7 @@ describe Flatpage do
   end
 
   #--------------------
- 
+
   describe "downcase_path" do
     it "runs before validation" do
       flatpage = build :flatpage, path: "HELLO/"

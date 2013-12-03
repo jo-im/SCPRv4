@@ -1,0 +1,28 @@
+{
+  "code": 0,
+  "response": [
+    {
+      "feed": "http://kpcc.disqus.com/x27lyingx27_argues_honesty_is_always_the_best_policy/latest.rss",
+      "category": "1054480",
+      "postsInInterval": 52,
+      "author": "27715743",
+      "forum": "kpcc",
+      "title": "&#x27;Lying&#x27; argues honesty is always the best policy",
+      "userScore": 0,
+      "identifiers": [
+        "shows/segment:34747"
+      ],
+      "dislikes": 0,
+      "createdAt": "2013-11-19T23:23:58",
+      "slug": "x27lyingx27_argues_honesty_is_always_the_best_policy",
+      "isClosed": false,
+      "posts": 52,
+      "userSubscription": false,
+      "link": "http://www.scpr.org/programs/airtalk/2013/11/19/34747/lying-argues-honesty-is-always-the-best-policy/",
+      "likes": 2,
+      "message": "",
+      "id": "1980675718",
+      "isDeleted": false
+    }
+  ]
+}

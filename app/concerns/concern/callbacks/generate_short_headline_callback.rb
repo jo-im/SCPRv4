@@ -7,7 +7,8 @@ module Concern
       extend ActiveSupport::Concern
 
       included do
-        before_validation :generate_short_headline, if: :should_generate_short_headline?
+        before_validation :generate_short_headline,
+          :if => :should_generate_short_headline?
       end
 
       def should_generate_short_headline?

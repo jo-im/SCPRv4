@@ -63,7 +63,7 @@ describe Api::Public::V3::ArticlesController do
     it "returns the cached articles" do
       articles = create_list(:blog_entry, 2).map(&:to_article)
       Rails.cache.write("popular/commented", articles)
-      
+
       get :most_commented, request_params
       assigns(:articles).should eq articles
       response.body.should render_template "index"

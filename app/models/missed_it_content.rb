@@ -2,6 +2,7 @@ class MissedItContent < ActiveRecord::Base
   include Outpost::Aggregator::SimpleJson
 
   self.table_name = "contentbase_misseditcontent"
+  self.versioned_attributes = ["content_type", "content_id", "position"]
 
   # FIXME: Remove reference to ContentBase.
   # See HomepageContent for explanation.

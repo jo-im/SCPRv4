@@ -9,15 +9,25 @@ module Concern
       extend ActiveSupport::Concern
 
       included do
-        has_many :audio, as: :content, order: "position", dependent: :destroy
-        accepts_nested_attributes_for :audio, allow_destroy: true, reject_if: :should_reject_audio?
+        has_many :audio,
+          :as           => :content,
+          :order        => "position",
+          :dependent    => :destroy
+
+        if self.has_secretary?
+          tracks_association :audio
+        end
+
+        accepts_nested_attributes_for :audio,
+          :allow_destroy    => true,
+          :reject_if        => :should_reject_audio?
       end
 
 
       private
 
       # If all of these attributes are blank, reject it,
-      # because obviously they weren't trying to attach
+      # because it means they weren't trying to attach
       # any audio.
       #
       # Otherwise, the person was trying to do something

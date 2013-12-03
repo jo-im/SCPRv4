@@ -1,7 +1,7 @@
 Scprv4::Application.routes.draw do
   # Homepage
   root to: "home#index"
-  match '/homepage/:id/missed-it-content/' => 'home#missed_it_content', as: :homepage_missed_it_content, default: { format: :js }
+  get '/homepage/:id/missed-it-content/' => 'home#missed_it_content', as: :homepage_missed_it_content
 
 
   # Listen Live

@@ -13,7 +13,7 @@ FactoryGirl.define do
   end
 
   #----------------------------
-  
+
   factory :related_link do
     title     "A Related Link"
     url      "http://oncentral.org"

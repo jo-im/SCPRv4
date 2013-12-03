@@ -2,23 +2,29 @@ module Job
   class MostCommented < Base
     @queue = "#{namespace}:rake_tasks"
 
-    def self.perform
-      task = new("kpcc", "3d",
-        Rails.application.config.api['disqus']['api_key'])
+    DISQUS_ROOT           = "https://disqus.com"
+    DISQUS_POPULAR_PATH   = "/api/3.0/threads/listPopular.json"
 
-      comments = task.fetch
-      articles  = task.parse(comments).map(&:to_article)
 
-      Rails.cache.write("popular/commented", articles)
+    class << self
+      def perform
+        task = new("kpcc", "3d",
+          Rails.application.config.api['disqus']['api_key'])
 
-      self.cache(articles,
-        "/shared/widgets/cached/popular",
-        "views/popular/commented",
-        local: :articles
-      )
+        comments  = task.fetch
+        articles  = task.parse(comments).map(&:to_article)
+
+        Rails.cache.write("popular/commented", articles)
+
+        self.cache(articles,
+          "/shared/widgets/cached/popular",
+          "views/popular/commented",
+          local: :articles
+        )
+      end
     end
 
-    #--------------
+
 
     def initialize(forum, interval, api_key)
       @forum    = forum
@@ -26,11 +32,10 @@ module Job
       @api_key  = api_key
     end
 
-    #--------------
 
     def fetch
       response = connection.get do |request|
-        request.url "/api/3.0/threads/listPopular.json", {
+        request.url DISQUS_POPULAR_PATH, {
           :forum    => @forum,
           :interval => @interval,
           :api_key  => @api_key
@@ -42,7 +47,6 @@ module Job
 
     add_transaction_tracer :fetch, category: :task
 
-    #--------------
 
     def parse(response)
       articles = []
@@ -62,8 +66,6 @@ module Job
     add_transaction_tracer :parse, category: :task
 
 
-    #--------------
-
     private
 
     def connection
@@ -74,7 +76,7 @@ module Job
             'User-Agent'    => "SCPR.org"
           },
           :ssl     => { verify: false },
-          :url     => "https://disqus.com"
+          :url     => DISQUS_ROOT
         }
 
         Faraday.new(options) do |builder|

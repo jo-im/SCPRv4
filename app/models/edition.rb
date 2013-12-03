@@ -1,9 +1,9 @@
 # A collection of items, which are meant to be represented
-# as Abstracts (although not all of them will actually be 
+# as Abstracts (although not all of them will actually be
 # an Abstract object).
 #
 # This model was created originally for the mobile application,
-# but there's no reason it couldn't also be presented on the 
+# but there's no reason it couldn't also be presented on the
 # website if there was a place out for it.
 class Edition < ActiveRecord::Base
   outpost_model
@@ -87,7 +87,7 @@ class Edition < ActiveRecord::Base
 
 
   private
-  
+
   def build_slot_association(slot_hash, item)
     if item.published?
       EditionSlot.new(

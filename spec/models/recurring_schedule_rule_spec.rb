@@ -60,7 +60,7 @@ describe RecurringScheduleRule do
   describe 'schedule' do
     let(:t) { Time.new(2013, 7, 1) } # There are 5 mondays in this month
     let(:rule) { build :recurring_schedule_rule }
-    let(:schedule) { 
+    let(:schedule) {
       ScheduleBuilder.build_schedule(
         :interval     => rule.interval,
         :days         => rule.days,
@@ -68,12 +68,12 @@ describe RecurringScheduleRule do
         :end_time     => rule.end_time
       )
     }
-    
+
     it "sets the schedule to the passed-in Schedule object to_hash" do
       rule.schedule = schedule
 
       # We have to check to_s since Schedule doesn't have a custom
-      # comparison method defined and will fail if they're not the 
+      # comparison method defined and will fail if they're not the
       # same object (they won't be sincle #schedule uses Schedule#from_hash)
       rule.schedule.to_s.should eq schedule.to_s
     end
@@ -101,8 +101,8 @@ describe RecurringScheduleRule do
 
   describe '#build_occurrences' do
     let(:t) { Time.new(2013, 7, 1) } # There are 5 mondays in this month
-    let(:rule) { 
-      build :recurring_schedule_rule, 
+    let(:rule) {
+      build :recurring_schedule_rule,
       :days         => [1],
       :start_time   => "0:00",
       :end_time     => "1:00"
@@ -179,7 +179,7 @@ describe RecurringScheduleRule do
     it 'builds occurrences and then saves' do
       Time.stub(:now) { Time.new(2013, 7, 1) }
 
-      rule = create :recurring_schedule_rule, 
+      rule = create :recurring_schedule_rule,
       :days         => [1],
       :start_time   => "0:00",
       :end_time     => "1:00"

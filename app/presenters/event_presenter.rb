@@ -47,7 +47,9 @@ class EventPresenter < ApplicationPresenter
 
   def rsvp_url
     if event.rsvp_url.present? && event.upcoming?
-      h.link_to "RSVP for this event", event.rsvp_url, class: "btn primary", id: "events-rsvp-btn"
+      h.link_to "RSVP for this event", event.rsvp_url,
+        :class    => "btn primary",
+        :id       => "events-rsvp-btn"
     end
   end
 
@@ -77,7 +79,9 @@ class EventPresenter < ApplicationPresenter
         l += " " if event.zip_code.present?
       end
       l += event.zip_code
-    end if event.city.present? || event.state.present? || event.zip_code.present?
+    end if  event.city.present? ||
+            event.state.present? ||
+            event.zip_code.present?
 
     s
   end
@@ -96,7 +100,8 @@ class EventPresenter < ApplicationPresenter
     st = event.starts_at
     en = event.ends_at
 
-    # If one needs minutes, use that format for the other as well, for consistency
+    # If one needs minutes, use that format for the other as well,
+    # for consistency
     timef = "%-l"
     timef += ":%M" unless (st.min == 0 and [0, nil].include?(en.try(:min)))
     datef = "%A, %B %-e"

@@ -1,6 +1,6 @@
 ##
 # TouchCallback
-# 
+#
 # For a record to be updated whenever its before_save
 # is called.
 #

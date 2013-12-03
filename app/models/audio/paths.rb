@@ -9,7 +9,7 @@
 # * filename (for building `path`)
 class Audio
   module Paths
-    # The server path, 
+    # The server path,
     # eg. /home/kpcc/media/audio/features/20121001_features999.mp3
     def full_path
       @full_path ||= File.join(AUDIO_PATH_ROOT, self.path)

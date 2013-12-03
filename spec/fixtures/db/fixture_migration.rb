@@ -12,7 +12,7 @@ class FixtureMigration < ActiveRecord::Migration
       t.string :short_url
       t.timestamps
     end
-    
+
     create_table :test_class_remote_stories, force: true do |t|
       t.string :headline
       t.string :short_headline
@@ -25,7 +25,7 @@ class FixtureMigration < ActiveRecord::Migration
       t.string :remote_url
       t.timestamps
     end
-    
+
     create_table :test_class_posts, force: true do |t|
       t.string :headline
       t.string :short_headline
@@ -47,7 +47,7 @@ class FixtureMigration < ActiveRecord::Migration
       t.integer :content_id
       t.timestamps
     end
-    
+
     create_table :test_class_people, force: true do |t|
       t.string :name
       t.string :slug
@@ -62,7 +62,7 @@ class FixtureMigration < ActiveRecord::Migration
       t.integer :size
     end
   end
-  
+
   def down
   end
 end

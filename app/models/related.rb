@@ -1,5 +1,6 @@
 class Related < ActiveRecord::Base
   self.table_name = 'media_related'
+  self.versioned_attributes = ["related_id", "related_type", "position"]
 
   # FIXME: Remove reference to ContentBase.
   # See HomepageContent for explanation.

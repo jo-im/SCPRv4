@@ -6,7 +6,6 @@
   <title><%= page_title %></title>
 
   <meta id="meta-viewport" name="viewport" content="width=device-width, minimum-scale=1">
-  <meta name="apple-itunes-app" content="app-id=293825085"/>
   <meta http-equiv="X-UA-Compatible" content="IE=9; IE=8; IE=7; IE=EDGE; chrome=1" />
   <meta name="google-site-verification" content="_2mjWERX7nx8aNcwb9P45f6DETmmrldavP79tHOjr0Q" />
   
@@ -25,6 +24,16 @@
   <link rel="publisher" href="https://plus.google.com/108872361044769229886/" />
 
   <%= csrf_meta_tags %>
+
+  <script>
+    // User agent detection to dynamically display the appropriate Apple App Banners to iPads and iPhones 
+    if (navigator.userAgent.match(/iPad/i)) {
+      $('head').append('<meta name="apple-itunes-app" content="app-id=744160424"/>');
+    } 
+    else if (navigator.userAgent.match(/iPhone/i) || navigator.userAgent.match(/iPod/i)) {
+      $('head').append('<meta name="apple-itunes-app" content="app-id=293825085"/>');
+    }
+  </script>
 
   <%= render "/shared/header/ad_scripts" %>
   <%= yield :head_tag %>

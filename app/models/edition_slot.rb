@@ -1,5 +1,5 @@
 # Join model between an Edition and one of its 'Items'.
-# An "Item" is just an object that can be represented 
+# An "Item" is just an object that can be represented
 # as an Abstract.
 #
 # Yes, I know this a terribly-named class.

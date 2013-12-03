@@ -16,9 +16,9 @@ FactoryGirl.define do
       published_at { 2.hours.ago }
     end
   end
-  
+
   #-----------------------
-  
+
   factory :homepage_content do
     homepage
     content { |hc| hc.association(:content_shell) }

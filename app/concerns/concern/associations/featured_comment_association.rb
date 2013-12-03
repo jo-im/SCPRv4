@@ -14,7 +14,8 @@ module Concern
           :as           => :content,
           :dependent    => :destroy
 
-        after_save :_destroy_featured_comments, if: -> { self.unpublishing? }
+        after_save :_destroy_featured_comments,
+          :if => -> { self.unpublishing? }
       end
 
 

@@ -34,13 +34,12 @@ set :force_assets,  false # If assets wouldn't normally be precompiled, force th
 set :skip_assets,   false # If assets are going to be precompiled, force them NOT to be
 set :ts_index,      false # Staging only - Whether or not to run the sphinx index on drop
 set :syncdb,        false # Staging only - Whether or not to run a dbsync to mercer_staging
-set :restart_delay, 40
+set :restart_delay, 60
 
 
 # --------------
 # Universal Callbacks
 before "deploy:assets:precompile", "deploy:symlink_config"
-after "deploy:symlink_config", "thinking_sphinx:configure"
 after "deploy:update", "deploy:cleanup"
 
 # --------------
@@ -73,4 +72,11 @@ namespace :deploy do
       run "ln -nfs #{shared_path}/config/#{file} #{release_path}/config/#{file}"
     end
   end
+end
+
+
+task :catchup do
+  seconds = 2
+  puts ">>> Sleeping for #{seconds} seconds to let the filesystem catch up."
+  sleep seconds
 end

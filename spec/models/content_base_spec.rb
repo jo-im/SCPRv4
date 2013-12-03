@@ -4,7 +4,7 @@ describe ContentBase do
   describe "::search" do
     context "when sphinx is running" do
       sphinx_spec(num: 1, options: { status: ContentBase::STATUS_LIVE })
-    
+
       it "searches across ContentBase classes" do
         ts_retry(2) do
           ContentBase.search.to_a.sort_by { |o| o.class.name }
@@ -62,7 +62,7 @@ describe ContentBase do
         end
       end
     end
-    
+
     context "sphinx is not running" do
       it "has a graceful fallback if sphinx isn't working" do
         [ ThinkingSphinx::SphinxError,
@@ -78,7 +78,7 @@ describe ContentBase do
       end
     end
   end
-  
+
   #---------------
 
   describe '::generate_teaser' do
@@ -91,7 +91,7 @@ describe ContentBase do
       teaser = ContentBase.generate_teaser("#{first}\n And some more!")
       teaser.should eq first
     end
-    
+
     it "creates teaser from long paragraph if not defined" do
       long_body = load_fixture("long_text.txt")
       long_body.should match /\n/
@@ -100,16 +100,16 @@ describe ContentBase do
       teaser.should_not match /\n/
     end
   end
-  
+
   #---------------
-  
+
   describe "::obj_by_url" do
     context "invalid URI" do
       it "returns nil" do
         ContentBase.obj_by_url("$$$$").should eq nil
       end
     end
-    
+
     context "valid URI" do
       let(:article) { create :news_story }
 
@@ -117,12 +117,12 @@ describe ContentBase do
         stub_const("ContentBase::CONTENT_MATCHES", {  %r{\A/news/(\d+)/.*} => 'NewsStory' } )
         @url = "http://something.com/news/123/somethingelse/"
       end
-      
+
       it "sends to obj_by_key if the URI matches" do
         Outpost.should_receive(:obj_by_key).with("news_story-123").and_return(article)
         ContentBase.obj_by_url(@url).should eq article
       end
-  
+
       it "returns nil if the URI doesn't match" do
         ContentBase.obj_by_url("http://nope.com/wrong").should eq nil
       end
