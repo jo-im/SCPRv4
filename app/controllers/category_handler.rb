@@ -56,7 +56,7 @@ module CategoryHandler
 
     if @category.bios.any?
       @bios = @category.bios
-      @twitter_feeds = @bios.map(&:twitter_handle)
+      @twitter_handles = @bios.map(&:twitter_handle)
     end
     respond_with @content, template: "category/show", layout: "vertical"
   end
