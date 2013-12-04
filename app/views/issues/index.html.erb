@@ -1,21 +1,10 @@
 <% add_to_page_title "Issues" %>
-
+<% meta_tags(url: issues_url) %>
 <% content_for :body_class, 'interior issues' %>
-
-<%= render 'shared/header/header' %>
-
 
 <section class="prologue">
   <div class="inner bound">
       <h1 class="title">All Issues</h1>
-      <aside class="share">
-          <ul>
-              <li><a href="#">Share on Facebook</a></li>
-              <li><a href="#">Share on Twitter</a></li>
-              <li><a href="#">Share on Google Plus</a></li>
-              <li><a href="#">Share via Email</a></li>
-          </ul>
-      </aside>
   </div>
 </section><!--/ .prologue -->
 
@@ -43,9 +32,3 @@
 
   </div>
 </div><!--/ .catalog -->
-
-<%= render 'shared/kpcc_ipad_ad' %>
-
-<% if @popular_articles %>
-  <%= render 'shared/quadrant', articles: @popular_articles.first(4), header: 'Popular Now on KPCC' %>
-<% end %>

@@ -1,55 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
 
-<head>
+<%= render "shared/new/header/document_header" %>
 
-    <% add_to_page_title @TITLE_ELEMENTS.present? ? "89.3 KPCC" : "89.3 KPCC - Southern California Public Radio" %>
-
-    <title><%= page_title %></title>
-
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
-    <meta name="apple-mobile-web-app-capable" content="yes" />
-    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
-    <meta name="format-detection" content="telephone=no" />
-    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
-
-    <meta name="description" content="Politics, government and public life for Southern California." />
-    <meta name="keywords" content="Represent, KPCC, politics, California, Southern California, Los Angeles, Pasadena, government, public life, SCPR, Southern California Public Radio" />
-    <meta name="author" content="89.3 KPCC" />
-    <meta property="og:title" content="Represent | 89.3 KPCC" />
-    <meta property="og:site_name" content="Represent" />
-    <meta property="og:type" content="website" />
-    <meta property="og:image" content="http://scpr.org<%=image_path('kpcc-twitter-logo.png')%>" />
-    <meta property="og:url" content="http://www.scpr.org/politics" />
-    <meta property="og:description" content="Politics, government and public life for Southern California." />
-    <meta name="twitter:card" content="summary"/>
-    <meta name="twitter:url" content="http://www.scpr.org/politics" />
-    <meta name="twitter:domain" content="http://www.scpr.org/politics" />
-    <meta name="twitter:site" content="KPCC"/>
-    <meta name="twitter:title" content="Represent"/>
-    <meta name="twitter:description" content="Politics, government and public life for Southern California."/>
-    <meta name="twitter:image:src" content="http://scpr.org<%=image_path('kpcc-twitter-logo.png')%>">
-    <link rel="shortcut icon" href="http://media.scpr.org/favicon.ico" type="image/x-icon" />
-
-    <%= stylesheet_link_tag "new/application", media: "screen" %>
-    <%= javascript_include_tag "new/application" %>
-
-    <!--[if lt IE 9]>
-        <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
-        <%= stylesheet_include_tag "new/ie-lt9", media: "screen" %>
-        <%= javascript_include_tag "new/ie-lt9" %>
-    <![endif]-->
-
-    <script type="text/javascript" src="//use.typekit.net/vtu6xsq.js"></script>
-    <script type="text/javascript">try{Typekit.load();}catch(e){}</script>
-
-</head>
-
-
-<body class="<%= yield(:body_class) %>">
+<body class="<%= content_for(:body_class) %>">
 
     <%= yield %>
+
 
     <aside class="membership">
         <div class="inner bound">
@@ -59,142 +16,9 @@
         </div>
     </aside><!--/ .membership -->
 
-    <footer class="epilogue">
-        <header>
-            <div class="inner bound">
-                <h1><a href="http://scpr.org" title="Southern California Public Radio">89.3 KPCC</a></h1>
-                <h2>
-                    <span>89.1 KUOR</span>
-                    <span>90.3 KVLA</span>
-                </h2>
-                <aside class="pledge">
-                    <p><span>Support the voices you trust!</span> <a href="https://scprcontribute.publicradio.org/contribute.php">Pledge Now</a></p>
-                </aside>
-            </div>
-        </header>
-        <div class="cols">
-            <div class="inner bound clearfix">
-                <div class="cols-pair primary clearfix">
-                    <nav class="sections">
-                        <h1>Sections</h1>
-                        <h2>News</h2>
-                        <ul>
-                            <li><a href="/local/">Local</a></li>
-                            <li><a href="/california/">State</a></li>
-                            <li><a href="/world/">U.S./World</a></li>
-                            <li><a href="/politics/">Politics</a></li>
-                            <li><a href="/environment/">Science</a></li>
-                            <li><a href="/money/">Money</a></li>
-                            <li><a href="/crime/">Crime &amp; Safety</a></li>
-                            <li><a href="/education/">Education</a></li>
-                            <li><a href="/health/">Health</a></li>
-                            <li><a href="/archive/<%= Time.now.yesterday.strftime("%Y/%m/%d") %>/?section=news">Archive</a></li>
-                        </ul>
-                        <h2>Arts &amp; Life</h2>
-                        <ul>
-                            <li><a href="/culture/">Culture</a></li>
-                            <li><a href="/film/">Film</a></li>
-                            <li><a href="/books/">Books</a></li>
-                            <li class="av"><a href="http://audiovision.scpr.org">AudioVision</a></li>
-                            <li><a href="/arts/">Arts</a></li>
-                            <li><a href="/music/">Music</a></li>
-                            <li><a href="/food/">Food</a></li>
-                        </ul>
-                    </nav>
-                    <nav class="productions">
-                        <h1>Programs</h1>
-                        <ul>
-                            <li><a href="/programs/take-two/">Take Two</a></li>
-                            <li><a href="/programs/airtalk">AirTalk</a></li>
-                            <li><a href="/programs/offramp">Off-Ramp</a></li>
-                            <li><a href="/programs/">Programs A&ndash;Z</a></li>
-                            <li><a href="/schedule/">Program Schedule</a></li>
-                            <li><a href="/archive/<%= Time.now.yesterday.strftime("%Y/%m/%d") %>/?section=programs">Program Archive</a></li>
-                        </ul>
-                        <h1>Events</h1>
-                        <ul>
-                            <li><a href="/events/forum">The Crawford Family Forum</a></li>
-                            <li><a href="/events/sponsored">Sponsored Events</a></li>
-                        </ul>
-                    </nav>
-                </div><!--/ .primary -->
-                <div class="cols-pair secondary clearfix">
-                    <nav class="outreach">
-                        <h1>Stay Connected</h1>
-                        <ul class="social">
-                            <li><a href="http://facebook.com/kpcc">Facebook</a></li>
-                            <li><a href="http://twitter.com/kpcc">Twitter</a></li>
-                            <li><a href="https://plus.google.com/108872361044769229886/">Google Plus</a></li>
-                        </ul>
-                        <ul>
-                            <li><a href="/newsletters/">Newsletters</a></li>
-                            <li><a href="/rss/">RSS</a></li>
-                            <li><a href="/podcasts/">Podcasts</a></li>
-                        </ul>
-                        <aside class="mobile">
-                          <a href="/ipad"><span>Get our new</span> <span><b>KPCC for iPad</b> app.</span></a>
-                        </aside>
-                    </nav>
-                    <nav class="about">
-                        <h1>About</h1>
-                        <ul>
-                            <li><a href="/about/">About KPCC</a></li>
-                            <li><a href="/about/people/">Staff</a></li>
-                            <li><a href="/contact/">Contact Us</a></li>
-                            <li><a href="/about/faq/">Help / FAQ</a></li>
-                            <li><a href="/web_site_feedback/">Feeback</a></li>
-                            <li><a href="/about/jobs/">Careers &#64; KPCC</a></li>
-                        </ul>
-                        <div class="vcard location">
-                            <h2 class="org"><b>89.3 KPCC</b> <span>Southern California Public Radio</span><h2>
-                            <div class="adr">
-                                <span class="street-address">474 S. Raymond Ave.</span><br />
-                                <span class="locality">Pasadena</span>,
-                                <span class="region">CA</span>
-                                <span class="postal-code">91105</span>
-                            </div>
-                        </div>
-                        <aside class="call">
-                            <p>Call in: 866-893-5722</p>
-                        </aside>
-                    </nav>
-                </div><!--/ .secondary -->
-            </div><!--/ .inner -->
-        </div><!--/ .cols -->
 
-        <%= render "verticals/sponsors/#{@category.slug}" %>
-
-        <div class="lastwords bound">
-            <aside class="partners">
-                <h1>Our Partners</h1>
-                <ul class="clearfix">
-                    <li class="apm"><a href="http://publicradio.org">American Public Media</a></li>
-                    <li class="npr"><a href="http://npr.org">National Public Radio</a></li>
-                    <li class="bbc"><a href="http://bbc.co.uk">BBC</a></li>
-                    <li class="pri"><a href="http://pri.org">Public Radio International</a></li>
-                    <li class="nbc"><a href="http://nbclosangeles.com">NBC 4</a></li>
-                    <li class="pcc"><a href="http://pasadena.edu">Pasadena City College</a></li>
-                </ul>
-            </aside>
-            <nav class="fineprint">
-                <ul>
-                    <li><a href="/terms/">Terms &amp; Conditions</a></li>
-                    <li><a href="/privacy/">Privacy</a></li>
-                    <li><a href="/web_site_feedback/">Feedback</a></li>
-                    <li>&copy; <%= Time.now.year %> <a href="http://scpr.org">Southern California Public Radio</a></li>
-                </ul>
-            </nav>
-        </div>
-    </footer><!--/ .epilogue -->
-
-  <script type="text/javascript">
-    var smartTime;
-    $(function() {
-      smartTime  = new scpr.SmartTime();
-    });
-  </script>
-
-
+    <%= render 'shared/new/layout_footer' %>
+    <%= render 'shared/new/document_footer' %>
 
 
 </body>

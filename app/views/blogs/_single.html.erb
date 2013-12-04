@@ -133,8 +133,8 @@
         </div>
     </div><!--/ .report -->
 
-    <%= render 'shared/kpcc_ipad_ad' %>
-    <%= render 'shared/triptych', category: entry.category, articles: @category_articles[0..2] %>
+    <%= render 'shared/new/kpcc_ipad_ad' %>
+    <%= render 'shared/new/triptych', category: entry.category, articles: @category_articles[0..2] %>
 
     <div class="townhall">
          <div class="inner bound clearfix">
@@ -142,7 +142,7 @@
 
                  <section class="backlog">
                    <h1>More <%= entry.category.title %></h1>
-                     <%= render 'shared/waterfall_articles', articles: @category_articles[3..-1], issue_tag_exists: true %>
+                     <%= render 'shared/new/waterfall_articles', articles: @category_articles[3..-1], issue_tag_exists: true %>
 
                      <footer>
                      <%= link_to "More #{entry.category.title} News", entry.category.public_path %>
@@ -157,16 +157,14 @@
                            <h2 class="special"><%= @special_issue.title %></h2>
                               <nav>
                                   <ul>
-                                    <%= render partial: 'shared/single_page_issue_list', collection: @top_two_special_issue_articles, as: 'entry' %>
+                                    <%= render 'shared/new/single_page_issue_list', articles: @top_two_special_issue_articles %>
                                   </ul>
                               </nav>
                           <% @other_issues.each do |issue| %>
                             <h2><%= issue.title %></h2>
                               <nav>
                                 <ul>
-                                  <% issue.articles.first(2).each do |entry| %>
-                                    <%= render partial: 'shared/single_page_issue_list', locals: {entry: entry} %>
-                                  <% end %>
+                                  <%= render 'shared/new/single_page_issue_list', articles: issue.articles.first(2) %>
                                 </ul>
                               </nav>
                           <% end %>
@@ -178,8 +176,28 @@
                     <section>
                       <h1>Our Reporters</h1>
                       <div class="rollcall clearfix">
-                        <%= render partial: 'shared/single_page_reporter', collection: @bios, as: 'reporter' %>
-                       </div>
+
+                      <% @bios.each do |reporter| %>
+                        <figure class="reporter clearfix">
+                          <div class="ratio">
+                              <%= link_to reporter.public_path, title: reporter.name do %>
+                                  <div class="fill"></div>
+                                  <b class="img-contain"><%= reporter.headshot.small.tag %></b>
+                              <% end %>
+                          </div>
+                          <figcaption>
+                          <mark><%= link_to reporter.name, reporter.public_path, title: reporter.name %></mark>
+                              <ul class="clearfix">
+                                <li><%= mail_to reporter.email, 'Email', title: "Email #{reporter.name}" %></li>
+                                <% if reporter.twitter_handle.present? %>
+                                  <li><%= link_to "Twitter", twitter_profile_url(reporter.twitter_handle), target: "_blank", title: "Follow #{reporter.first_name} on Twitter" %></li>
+                                <% end %>
+                              </ul>
+                          </figcaption>
+                        </figure>
+                      <% end %>
+
+                      </div>
                     </section>
                 </div><!--/ .supportive -->
 

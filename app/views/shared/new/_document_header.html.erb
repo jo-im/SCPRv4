@@ -1,0 +1,74 @@
+
+<head>
+
+    <% add_to_page_title @TITLE_ELEMENTS.present? ? "89.3 KPCC" : "89.3 KPCC - Southern California Public Radio" %>
+
+    <title><%= page_title %></title>
+
+    <!-- Meta tags which are the same across all pages -->
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <meta name="format-detection" content="telephone=no" />
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta property="fb:app_id" content="129848480405753" />
+    <link rel="publisher" href="https://plus.google.com/108872361044769229886/" />
+
+    <meta property="og:site_name" content="89.3 KPCC" />
+    <meta name="keywords" content="KPCC, California, Southern California, Los Angeles, Pasadena, SCPR, Southern California Public Radio" />
+    <meta name="author" content="89.3 KPCC" />
+
+    <!-- Meta Tags which are always present, but are filled-in by the page we're on, with a fallback -->
+    <%= tag "meta", property: "og:title", content: h(meta_information[:title] || page_title) %>
+    <%= tag "meta", property: "og:type", content: h(meta_information[:type] || "website") %>
+    <%= tag "meta", property: "og:url", content: meta_information[:url] || "http://scpr.org" %>
+
+    <%= tag "meta", name: "description", content: h(meta_information[:description] || "Member-supported public radio for Southern California. Award-winning local news and cultural programming alongside the best of NPR.") %>
+    <%= tag "meta", property: "og:description", content: h(meta_information[:description] || "Member-supported public radio for Southern California. Award-winning local news and cultural programming alongside the best of NPR.") %>
+
+    <%= content_for :extra_meta_tags %>
+
+    <!-- Always provide the logo as a fallback thumbnail option. -->
+    <meta property="og:image" content="http://scpr.org<%=image_path('kpcc-twitter-logo.png')%>" />
+    <%= csrf_meta_tags %>
+
+
+    <meta name="twitter:site" content="KPCC"/>
+    <meta name="twitter:card" content="summary"/>
+    <meta name="twitter:image:src" content="http://scpr.org<%=image_path('kpcc-twitter-logo.png')%>">
+
+    <%= tag "meta", name: "twitter:url", content: meta_information[:url] || "http://scpr.org" %>
+    <%= tag "meta", name: "twitter:domain", content: meta_information[:url] || "http://scpr.org" %>
+    <%= tag "meta", name: "twitter:title", content: h(meta_information[:title] || page_title) %>
+    <%= tag "meta", name: "twitter:description", content: h(meta_information[:description] || "Member-supported public radio for Southern California. Award-winning local news and cultural programming alongside the best of NPR.") %>
+
+    <%= tag "link", rel: "alternate", type: "application/rss+xml", title: "RSS", href: meta_information[:rss_feed] || "http://scpr.org/feeds/all_news" %>
+
+    <link rel="shortcut icon" href="http://media.scpr.org/favicon.ico" type="image/x-icon" />
+
+    <%= stylesheet_link_tag "new/application", media: "screen" %>
+    <%= javascript_include_tag "new/application" %>
+
+    <!--[if lt IE 9]>
+        <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+        <%= stylesheet_include_tag "new/ie-lt9", media: "screen" %>
+        <%= javascript_include_tag "new/ie-lt9" %>
+    <![endif]-->
+
+    <script type="text/javascript" src="//use.typekit.net/vtu6xsq.js"></script>
+    <script type="text/javascript">try{Typekit.load();}catch(e){}</script>
+
+
+    <script>
+      // User agent detection to dynamically display the appropriate Apple App Banners to iPads and iPhones 
+      if (navigator.userAgent.match(/iPad/i)) {
+        $('head').append('<meta name="apple-itunes-app" content="app-id=744160424"/>');
+      } 
+      else if (navigator.userAgent.match(/iPhone/i) || navigator.userAgent.match(/iPod/i)) {
+        $('head').append('<meta name="apple-itunes-app" content="app-id=293825085"/>');
+      }
+    </script>
+
+    <%= content_for :extra_header %>
+</head>

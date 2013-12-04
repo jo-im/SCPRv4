@@ -1,20 +1,10 @@
 <% add_to_page_title @issue.title %>
-
+<% meta_tags(url: @issue.public_url) %>
 <% content_for :body_class, 'interior issues' %>
-
-<%= render 'shared/header/header' %>
 
 <section class="prologue">
   <div class="inner bound">
       <h1 class="title">All Issues</h1>
-      <aside class="share">
-          <ul>
-              <li><a href="#">Share on Facebook</a></li>
-              <li><a href="#">Share on Twitter</a></li>
-              <li><a href="#">Share on Google Plus</a></li>
-              <li><a href="#">Share via Email</a></li>
-          </ul>
-      </aside>
   </div>
 </section><!--/ .prologue -->
 
@@ -23,9 +13,11 @@
 
         <nav class="terms">
             <ul class="clearfix">
-                <% @issues.each do |issue| %>
-                  <%= issue_link issue, issue.public_path, @issue %>
-                <% end %>
+
+            <% @issues.each do |issue| %>
+              <%= issue_link issue, issue.public_path, @issue %>
+            <% end %>
+
             </ul>
         </nav>
 
@@ -33,46 +25,39 @@
 
             <header class="preface">
               <h1><%= @issue.title %></h1>
-                <div class="details clearfix">
-                    <div class="brief">
-                      <p><%= @issue.description %></p>
+              <div class="details clearfix">
+                  <div class="brief">
+                    <p><%= @issue.description %></p>
+                  </div>
+                  <aside class="timeline">
+                    <h2>KPCC has published a total of <mark><%= @article_count %> articles</mark> on <%= @issue.title %></h2>
+                  <% if @issue_articles.present? %>
+                    <div class="range">
+                        <dl class="began">
+                        <dt><%= date_format(@issue_articles.last.public_datetime) %></dt>
+                            <dd>Coverage began</dd>
+                        </dl>
+                        <dl class="latest">
+                        <dt><%= date_format(@issue_articles.first.public_datetime) %></dt>
+                            <dd>Latest coverage</dd>
+                        </dl>
                     </div>
-                    <aside class="timeline">
-                      <h2>KPCC has published a total of <mark><%= @article_count %> articles</mark> on <%= @issue.title %></h2>
-                      <% if @issue_articles.present? %>
-                        <div class="range">
-                            <dl class="began">
-                            <dt><%= date_format(@issue_articles.last.public_datetime) %></dt>
-                                <dd>Coverage began</dd>
-                            </dl>
-                            <dl class="latest">
-                            <dt><%= date_format(@issue_articles.first.public_datetime) %></dt>
-                                <dd>Latest coverage</dd>
-                            </dl>
-                        </div>
-                      <% end %>
-                    </aside>
-                </div>
+                  <% end %>
+                  </aside>
+              </div>
             </header>
 
             <section class="backlog">
-                <% if !@issue_articles.empty? %>
-                  <%= render 'shared/waterfall_articles', articles: @issue_articles, issue_tag_exists: false %>
-                <% end %>
+              <% if !@issue_articles.empty? %>
+                <%= render 'shared/new/waterfall_articles', articles: @issue_articles, issue_tag_exists: false %>
+              <% end %>
 
-                <footer>
-                  <%= link_to "Load more #{@issue.title} stories", @issue.public_path %>
-                </footer>
+              <footer>
+                <%= link_to "Load more #{@issue.title} stories", @issue.public_path %>
+              </footer>
             </section><!--/ .backlog -->
 
         </div><!--/ .showcase -->
 
     </div>
 </div><!--/ .catalog -->
-
-<%= render 'shared/kpcc_ipad_ad' %>
-
-
-<% if @popular_articles %>
-  <%= render 'shared/quadrant', articles: @popular_articles.first(4), header: 'Popular Now on KPCC' %>
-<% end %>

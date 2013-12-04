@@ -21,6 +21,18 @@ module ApplicationHelper
   end
 
 
+  # A hash in which to store meta data for the template META tags.
+  # This is what should be used in the <head> tag to build the META tags.
+  def meta_information
+    @meta_hash ||= {}
+  end
+
+  # Add meta tags to the meta_information hash.
+  def meta_tags(hash)
+    meta_information.merge!(hash)
+  end
+
+
   #---------------------------
   # render_content takes a ContentBase object and a context, and renders
   # using the most specific version of that context it can find.

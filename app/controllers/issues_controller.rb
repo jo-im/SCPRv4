@@ -1,5 +1,5 @@
 class IssuesController < NewApplicationController
-  layout 'new/application'
+  layout 'new/issues'
   respond_to :html, :xml, :rss
 
   before_filter :get_popular_articles
