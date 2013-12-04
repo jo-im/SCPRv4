@@ -1,5 +1,5 @@
 class IssuesController < ApplicationController
-  layout 'vertical'
+  layout 'new/application'
   respond_to :html, :xml, :rss
 
   def index

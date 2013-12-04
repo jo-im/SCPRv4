@@ -58,7 +58,7 @@ module CategoryHandler
       @bios = @category.bios
       @twitter_handles = @bios.map(&:twitter_handle)
     end
-    respond_with @content, template: "category/show", layout: "vertical"
+    respond_with @content, template: "category/show", layout: "new/application"
   end
 
   def handle_category
