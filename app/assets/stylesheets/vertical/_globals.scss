@@ -591,6 +591,17 @@ $orange: #f17b21;
 
 
 
+//	################################################################################################
+//	################################################################################################
+//	DEBUGGIN'
+//	################################################################################################
+//	################################################################################################
+
+//  .prologue,.townhall,.partner,.report,.triptych article { display: none; }
+
+
+
+
 
 //	################################################################################################
 //	################################################################################################
@@ -814,11 +825,19 @@ $orange: #f17b21;
 			}
 			.mobile {
 				text-transform: none;
-				font-size: 0.875em;
+				font-size: 0.8125em;
+                line-height: 1.1;
+				box-shadow:
+                    inset 0 -17px 0 black,
+				    inset 0 -18px 0 $blue;
+                span        { display: block; white-space: nowrap; }
 				a {
+                    padding: 8px 0 23px 48px;
 					display: block;
 					color: $blue;
-					&:hover { text-decoration: underline; }
+					background: url(../i/ephemera-footer-ipad.png) no-repeat;
+					background-size: 42px 54px;
+					&:hover { color: white; }
 					b { font-weight: 700; }
 				}
 			}

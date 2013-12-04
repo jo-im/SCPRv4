@@ -15,23 +15,28 @@ module Job
 
     #---------------
     def self.perform
-      @twitter_handles = Bio.joins(:categories).map(&:twitter_handle).reject! { |v| v.blank? }
-      @twitter_handles.each do |handle|
-        task = new(handle)
-        if tweets = task.fetch
-          self.cache(tweets, task.partial, task.cache_key)
-          true
+      #@twitter_handles = Bio.joins(:categories).map(&:twitter_handle).reject! { |v| v.blank? }
+      Category.all.each do |category|
+        @tweet_list = []
+        @twitter_handles = category.bios.map(&:twitter_handle)
+        @twitter_handles.each do |handle|
+          task = new(handle)
+          if tweets = task.fetch
+            tweets.each_with_object(@tweet_list) { |tweet, list| list.push(tweet) }
+          end
         end
+        @sorted_tweet_list = @tweet_list.sort { |a,b| b.created_at <=> a.created_at }.first(7)
+        self.cache(@sorted_tweet_list, "/shared/widgets/cached/vertical_tweets/", "verticals/#{category.slug}/twitter_feed:#{@twitter_handles}")
       end
+      true
     end
 
     #---------------
 
     def initialize(screen_name, partial="/shared/widgets/cached/vertical_tweets", options={})
       @tweeter     = Tweeter.new("kpccweb")
-
       @screen_name = screen_name
-      @cache_key   = "twitter:#{screen_name}"
+      @cache_key   = "twitter"
       @partial     = partial
       @options     = options.reverse_merge! DEFAULTS
     end

@@ -19,14 +19,16 @@
     <section class="curated clearfix">
         <div class="photo">
             <figure class="ratio-pairing">
+             <%= link_to @lead_article.public_path do %>
                 <div class="ratio">
-                    <div class="fill"></div>
-                    <b class="img-contain"><%= image_tag(@featured_image.eight.url, alt:'') %></b>
+                   <div class="fill"></div>
+                   <b class="img-contain"><%= image_tag(@featured_image.eight.url, alt:'') %></b>
                 </div><!--/ .ratio -->
                 <figcaption>
-                <p><%= @featured_image.caption %></p>
-                <mark class="credit"><a href="#" title="See more of <%=@featured_image.owner %>'s work"><%= @featured_image.owner %></a></mark>
+                  <p><%= @featured_image.caption %></p>
+                  <mark class="credit"><%= @featured_image.owner %></mark>
                 </figcaption>
+             <% end %>
             </figure><!--/ .ratio-pairing -->
         </div><!--/ .photo -->
         <div class="supportive">
@@ -99,7 +101,7 @@
             <header>
               <h1><%= @category.title %> Events at KPCC</h1>
             </header>
-            <p>From our studio in Pasadena, KPCC hosts free events that open dialogue and deepen the understanding of Southern California’s civic landscape. <%= link_to 'See what we’ve got lined up.', events_path %></p>
+            <p>KPCC hosts free events that open dialogue and deepen the understanding of vital issues affecting Southern California. <%= link_to 'See our in-studio events.', forum_events_path %></p>
         </aside>
     </div><!--/ .ataglance -->
 </div><!--/ .welcome -->
@@ -110,7 +112,7 @@
             <h1><span>Represent Resources</span></h1>
             <h2>Quick primers on civic life in California.</h2>
             <h3>All of us at KPCC believe that civic life in Southern California should be understandable, relevant, and libero ante, aliquam congue mattis id, blandit quis risus. Sed iaculis tellus accumsan ipsum porta ultricies.</h3>
-            <h4>Represent Resources is made possible with support from <%= link_to 'The Robert Day School', '#' %>.</h4>
+            <!--<h4>Represent Resources is made possible with support from <%= link_to 'The Robert Day School', '#' %>.</h4> -->
         </header>
         <nav>
             <ul class="clearfix">
@@ -272,10 +274,8 @@
             <section class="tweets">
                 <h1>In Brief</h1>
                 <ul>
-                  <%- @twitter_feeds.each do |twitter_handle| %>
-                    <% if @cached_tweets = Rails.cache.fetch("twitter:#{twitter_handle}") %>
+                  <% if @cached_tweets = Rails.cache.fetch("verticals/#{@category.slug}/twitter_feed:#{@twitter_handles}") %>
                       <%= @cached_tweets %>
-                    <% end %>
                   <% end %>
                 </ul>
             </section><!--/ .tweets -->

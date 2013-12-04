@@ -29,7 +29,6 @@
     <meta name="twitter:description" content="Politics, government and public life for Southern California."/>
     <meta name="twitter:image:src" content="http://scpr.org<%=image_path('kpcc-twitter-logo.png')%>">
     <link rel="shortcut icon" href="http://media.scpr.org/favicon.ico" type="image/x-icon" />
-    <link rel="apple-touch-icon-precomposed" href="!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!" />
     <%= yield(:vertical_layout) if content_for :vertical_layout %>
 
     <%= stylesheet_link_tag "fonts", media: "screen" %>
@@ -55,7 +54,7 @@
     <aside class="membership">
         <div class="inner bound">
             <h1><a href="#">KPCC's Represent! is a Southern California resource provided by member-supported public radio. We can't do it without you.</a></h1>
-            <h2><span>Your contributions power KPCC.</span> <a href="#">Give today.</a></h2>
+            <h2><span>Your contributions power KPCC.</span> <a href="https://scprcontribute.publicradio.org/contribute.php">Give today.</a></h2>
             <h3 class="brand"><a href="http://kpcc.org" title="Southern California Public Radio">89.3 KPCC</a></h3>
         </div>
     </aside><!--/ .membership -->
@@ -133,7 +132,7 @@
                             <li><a href="/podcasts/">Podcasts</a></li>
                         </ul>
                         <aside class="mobile">
-                            <a href="/ipad">Get our new <b>KPCC for iPad</b> app.</a>
+                          <a href="/ipad"><span>Get our new</span> <span><b>KPCC for iPad</b> app.</span></a>
                         </aside>
                     </nav>
                     <nav class="about">
@@ -164,7 +163,7 @@
         </div><!--/ .cols -->
         <aside class="grant">
             <div class="inner bound">
-                <h1>KPCC's <span>Represent!</span> is funded in part by grants from:</h1>
+                <h1>KPCC's <span>Represent!</span> is funded in part by:</h1>
                 <ul>
                     <li class="ford">Ford Foundation</li>
                     <li class="irvine">The James Irvine Foundation</li>
