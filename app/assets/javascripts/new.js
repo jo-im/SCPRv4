@@ -5,4 +5,4 @@
 //= require cms_popup
 //= require reader_bookmarklet
 
-//= require vertical/behaviors
+//= require new/verticals
