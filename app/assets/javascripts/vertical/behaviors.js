@@ -1,15 +1,15 @@
 jQuery(document).ready(function($) {
 
 
-//	================================================
-//	Do we support -webkit-filter?
-//	------------------------------------------------
+//  ================================================
+//  Do we support -webkit-filter?
+//  ------------------------------------------------
 //  Credit & thanks & source: http://stackoverflow.com/questions/18986156/detect-support-for-webkit-filter-with-javascript?lq=1
-//	------------------------------------------------
-//	Which model of "brightness" is being used?
-//	------------------------------------------------
+//  ------------------------------------------------
+//  Which model of "brightness" is being used?
+//  ------------------------------------------------
 //  Credit & thanks & source: http://stackoverflow.com/questions/16303344/brightness-filter-css-safari-vs-chrome
-//	------------------------------------------------
+//  ------------------------------------------------
 
     var e = document.querySelector("img");
     e.style.webkitFilter = "grayscale(1)";
@@ -28,19 +28,19 @@ jQuery(document).ready(function($) {
     }
 
 
-    
 
-//	================================================
-//	Single: An article's first paragraph should be magical
-//	------------------------------------------------
+
+//  ================================================
+//  Single: An article's first paragraph should be magical
+//  ------------------------------------------------
     if ($(".report .prose p").length) {
         $(".report .prose p:first").addClass("inaugural");
     }
 
 
-//	================================================
-//	Single: Let's reposition our "Related" box
-//	------------------------------------------------
+//  ================================================
+//  Single: Let's reposition our "Related" box
+//  ------------------------------------------------
     if ($(".report .prose .related").length) {
         var qtyGrafs    = $(".report .prose > p").length;
         var middleInt   = Math.ceil(qtyGrafs / 2);
@@ -49,9 +49,9 @@ jQuery(document).ready(function($) {
     }
 
 
-//	================================================
-//	Single: Figure out the orientation of any images
-//	------------------------------------------------
+//  ================================================
+//  Single: Figure out the orientation of any images
+//  ------------------------------------------------
     if ($(".report .prose img").length) {
         $(window).load(function() { // because WebKit browsers need this in order to *definitely* load/assess the images
             $(".report .prose img").each(function(){
@@ -70,66 +70,66 @@ jQuery(document).ready(function($) {
 
 
 
-//	================================================
-//	Instatiate FastClick
-//	------------------------------------------------
-	$(function() {
-		FastClick.attach(document.body);
-	});
+//  ================================================
+//  Instatiate FastClick
+//  ------------------------------------------------
+    $(function() {
+        FastClick.attach(document.body);
+    });
 
 
 
-//	================================================
-//	Landing: Check up on the curated title length
-//	------------------------------------------------
-	if($("body").hasClass("landing")){
-		var charcount = $(".headline h1 span").html().length;
+//  ================================================
+//  Landing: Check up on the curated title length
+//  ------------------------------------------------
+    if($("body").hasClass("landing")){
+        var charcount = $(".headline h1 span").html().length;
 
-		if((charcount < 58) && (charcount > 50))		{ $(".headline").addClass("concise"); }
-		if((charcount < 51))							{ $(".headline").addClass("tiny"); }
-	}
-
-
-
-//	================================================
-//	Show/hide the Ledge
-//	------------------------------------------------
-	$(".shownav").click(function(){
-		$(".kpcc-ledge").animate({
-			top: 0
-		}, 300, function() {
-			// Dropdown complete.
-		});
-	});
-//	................................................
-	$(".kpcc-ledge .close").click(function(){
-		$(".kpcc-ledge").animate({
-			top: "-280px"
-		}, 300, function() {
-			// Retraction complete.
-		});
-	});
+        if((charcount < 58) && (charcount > 50))        { $(".headline").addClass("concise"); }
+        if((charcount < 51))                            { $(".headline").addClass("tiny"); }
+    }
 
 
-//	================================================
-//	Show/hide the Search
-//	------------------------------------------------
-	$(".search-trigger").click(function(){
-		$(".kpcc-search").animate({
-			top: 0
-		}, 200, function() {
-			// Dropdown complete.
-		    $("#q").focus();
-		});
-	});
-//	................................................
-	$(".kpcc-search .close").click(function(){
-		$(".kpcc-search").animate({
-			top: "-130px"
-		}, 200, function() {
-			// Retraction complete.
-		});
-	});
+
+//  ================================================
+//  Show/hide the Ledge
+//  ------------------------------------------------
+    $(".shownav").click(function(){
+        $(".kpcc-ledge").animate({
+            top: 0
+        }, 300, function() {
+            // Dropdown complete.
+        });
+    });
+//  ................................................
+    $(".kpcc-ledge .close").click(function(){
+        $(".kpcc-ledge").animate({
+            top: "-280px"
+        }, 300, function() {
+            // Retraction complete.
+        });
+    });
+
+
+//  ================================================
+//  Show/hide the Search
+//  ------------------------------------------------
+    $(".search-trigger").click(function(){
+        $(".kpcc-search").animate({
+            top: 0
+        }, 200, function() {
+            // Dropdown complete.
+            $("#q").focus();
+        });
+    });
+//  ................................................
+    $(".kpcc-search .close").click(function(){
+        $(".kpcc-search").animate({
+            top: "-130px"
+        }, 200, function() {
+            // Retraction complete.
+        });
+    });
 
 
 
