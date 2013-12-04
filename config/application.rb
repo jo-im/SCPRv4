@@ -11,31 +11,44 @@ end
 
 module Scprv4
   class Application < Rails::Application
-    # Settings in config/environments/* take precedence over those specified here.
+    # Settings in config/environments/* take precedence over those
+    # specified here.
     # Application configuration should go into files in config/initializers
     # -- all .rb files in that directory are automatically loaded.
 
     # Custom directories with classes and modules you want to be autoloadable.
-    config.autoload_paths += %W(#{config.root}/lib #{config.root}/lib/validators)
+    config.autoload_paths += [
+      "#{config.root}/lib",
+      "#{config.root}/lib/validators"
+    ]
 
-    # Only load the plugins named here, in the order given (default is alphabetical).
+    # Only load the plugins named here, in the order given
+    # (default is alphabetical).
     # :all can be used as a placeholder for all plugins not explicitly named.
     # config.plugins = [ :exception_notification, :ssl_requirement, :all ]
 
-    # Set Time.zone default to the specified zone and make Active Record auto-convert to this zone.
-    # Run "rake -D time" for a list of tasks for finding time zone names. Default is UTC.
+    # Set Time.zone default to the specified zone and make
+    # Active Record auto-convert to this zone.
+    # Run "rake -D time" for a list of tasks for finding time zone names.
+    # Default is UTC.
     config.time_zone = 'Pacific Time (US & Canada)'
     config.active_record.default_timezone = :local
 
-    # The default locale is :en and all translations from config/locales/*.rb,yml are auto loaded.
-    # config.i18n.load_path += Dir[Rails.root.join('my', 'locales', '*.{rb,yml}').to_s]
+    # The default locale is :en and all translations from
+    # config/locales/*.rb,yml are auto loaded.
+    # config.i18n.load_path +=
+    #   Dir[Rails.root.join('my', 'locales', '*.{rb,yml}').to_s]
     # config.i18n.default_locale = :de
 
     # Configure the default encoding used in templates for Ruby 1.9.
     config.encoding = "utf-8"
 
     # Configure sensitive parameters which will be filtered from the log file.
-    config.filter_parameters += [:password, :unencrypted_password, :auth_token]
+    config.filter_parameters += [
+      :password,
+      :unencrypted_password,
+      :auth_token
+    ]
 
     # Enable the asset pipeline
     config.assets.enabled = true
@@ -44,21 +57,34 @@ module Scprv4
     config.assets.version = '1.0'
 
     # Add fonts folder to asset pipeline
-    config.assets.paths << "#{Rails.root}/app/assets/fonts"
+    config.assets.paths << "#{Rails.root}/vendor/assets/fonts"
 
     # For testing purposes
-    # Precompile additional assets (application.js, application.css, and all non-JS/CSS are already added)
-    config.assets.precompile += %w( shared.js outpost/application.css outpost/application.js new.js base/print.css vertical/landing.css vertical/issues.css vertical/single.css vertical/partner-kpccforipad.css vertical/partner-mercedes.css fonts.css )
+    # Precompile additional assets
+    # (application.js, application.css, and all non-JS/CSS are already added)
+    config.assets.precompile += [
+      "shared.js",
+      "outpost/application.css",
+      "outpost/application.js",
+      "base/print.css",
+      "new.js",
+      "new.css"
+    ]
 
-    config.scpr             = ActiveSupport::OrderedOptions.new
-    config.assethost        = ActiveSupport::OrderedOptions.new
-    config.node             = ActiveSupport::OrderedOptions.new
-    config.dbsync           = ActiveSupport::OrderedOptions.new
+    config.scpr       = ActiveSupport::OrderedOptions.new
+    config.assethost  = ActiveSupport::OrderedOptions.new
+    config.node       = ActiveSupport::OrderedOptions.new
+    config.dbsync     = ActiveSupport::OrderedOptions.new
 
-    config.api     = YAML.load_file("#{Rails.root}/config/api_config.yml")[Rails.env]
+    config.api = YAML.load_file(
+      "#{Rails.root}/config/api_config.yml"
+    )[Rails.env]
+
     config.secrets = YAML.load_file("#{Rails.root}/config/app_config.yml")
 
-    config.action_mailer.simple_postmark_settings = { api_key: config.api['postmark']['api_key'] }
+    config.action_mailer.simple_postmark_settings = {
+      :api_key => config.api['postmark']['api_key']
+    }
 
     config.assethost.server = config.api['assethost']['server']
     config.assethost.prefix = config.api['assethost']['prefix']
