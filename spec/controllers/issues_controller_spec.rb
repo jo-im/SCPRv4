@@ -33,7 +33,7 @@ describe IssuesController do
     end
 
     it "gets the issue's articles" do
-      issue = create :issue, slug: "issue"
+      issue = create :issue, :is_active, slug: "issue"
       article = create :news_story
       article.issues << issue
 
@@ -42,7 +42,7 @@ describe IssuesController do
     end
 
     it "assigns the article count" do
-      issue = create :issue, slug: "issue"
+      issue = create :issue, :is_active, slug: "issue"
       article = create :news_story
       article.issues << issue
 
@@ -51,7 +51,7 @@ describe IssuesController do
     end
 
     it "assigns popular articles" do
-      issue = create :issue, slug: "okay"
+      issue = create :issue, :is_active, slug: "okay"
       get :show, slug: "okay"
       assigns(:popular_articles).should eq Array.new
     end
