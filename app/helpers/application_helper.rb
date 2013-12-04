@@ -122,10 +122,6 @@ module ApplicationHelper
     }.merge(options.except(:class,:tag))
   end
 
-  def date_format(datetime)
-    datetime.strftime('%-d %^b %Y')
-  end
-
   def issue_link(issue, link_path, current_page)
     content_tag(:li, class: ('selected' if issue.slug == current_page.slug)) do
       link_to issue.title, link_path
