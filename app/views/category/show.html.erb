@@ -19,14 +19,16 @@
     <section class="curated clearfix">
         <div class="photo">
             <figure class="ratio-pairing">
+             <%= link_to @lead_article.public_path do %>
                 <div class="ratio">
-                    <div class="fill"></div>
-                    <b class="img-contain"><%= image_tag(@featured_image.eight.url, alt:'') %></b>
+                   <div class="fill"></div>
+                   <b class="img-contain"><%= image_tag(@featured_image.eight.url, alt:'') %></b>
                 </div><!--/ .ratio -->
                 <figcaption>
-                <p><%= @featured_image.caption %></p>
-                <mark class="credit"><a href="#" title="See more of <%=@featured_image.owner %>'s work"><%= @featured_image.owner %></a></mark>
+                  <p><%= @featured_image.caption %></p>
+                  <mark class="credit"><%= @featured_image.owner %></mark>
                 </figcaption>
+             <% end %>
             </figure><!--/ .ratio-pairing -->
         </div><!--/ .photo -->
         <div class="supportive">
