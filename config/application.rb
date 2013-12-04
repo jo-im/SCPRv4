@@ -67,8 +67,10 @@ module Scprv4
       "outpost/application.css",
       "outpost/application.js",
       "base/print.css",
-      "new.js",
-      "new.css"
+      "new/application.js",
+      "new/application.css",
+      "new/ie-lt9.js", # For ie < 9, separate include
+      "new/ie-lt9.css" # For ie < 9, separate include
     ]
 
     config.scpr       = ActiveSupport::OrderedOptions.new

@@ -30,13 +30,13 @@
     <meta name="twitter:image:src" content="http://scpr.org<%=image_path('kpcc-twitter-logo.png')%>">
     <link rel="shortcut icon" href="http://media.scpr.org/favicon.ico" type="image/x-icon" />
 
-    <%= stylesheet_link_tag "new", media: "screen" %>
-    <%= javascript_include_tag "shared", "new" %>
+    <%= stylesheet_link_tag "new/application", media: "screen" %>
+    <%= javascript_include_tag "new/application" %>
 
     <!--[if lt IE 9]>
         <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
-        <%= javascript_include_tag "selectivizr.min" %>
-        <link href="display-ie-6-7-8.css" media="screen" rel="stylesheet" />
+        <%= stylesheet_include_tag "new/ie-lt9", media: "screen" %>
+        <%= javascript_include_tag "new/ie-lt9" %>
     <![endif]-->
 
     <script type="text/javascript" src="//use.typekit.net/vtu6xsq.js"></script>
@@ -188,7 +188,7 @@
                     <li><a href="/terms/">Terms &amp; Conditions</a></li>
                     <li><a href="/privacy/">Privacy</a></li>
                     <li><a href="/web_site_feedback/">Feedback</a></li>
-                    <li>&copy; 2013 <a href="http://scpr.org">Southern California Public Radio</a></li>
+                    <li>&copy; <%= Time.now.year %> <a href="http://scpr.org">Southern California Public Radio</a></li>
                 </ul>
             </nav>
         </div>
