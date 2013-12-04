@@ -11,7 +11,8 @@ class IssuesController < NewApplicationController
 
   def show
     @issue = Issue.active.find_by_slug!(params[:slug])
-    @issue_articles = @issue.articles.first(8)
+    @issue_articles = @issue.articles
+    @paginated_articles = Kaminari.paginate_array(@issue.articles).page(params[:page]).per(8)
     @article_count = @issue.articles.count
   end
 
