@@ -1,12 +1,6 @@
 <% add_to_page_title @category.title %>
 
-<% content_for :body_class do %>
-  <% 'landing' %>
-<% end %>
-
-<% content_for :vertical_layout do %>
-  <%= stylesheet_link_tag "vertical/landing", media: "all" %>
-<% end %>
+<% content_for :body_class, 'landing' %>
 
 <%= render 'shared/header/header' %>
 

@@ -1,15 +1,8 @@
 <% add_to_page_title "Issues" %>
 
-<% content_for :body_class do %>
-  <% 'interior issues' %>
-<% end %>
-<% content_for :vertical_layout do %>
-  <%= stylesheet_link_tag "vertical/issues", media: "all" %>
-<% end %>
+<% content_for :body_class, 'interior issues' %>
+<% content_for :quadrant_header, 'Popular Now on KPCC' %>
 
-<% content_for :quadrant_header do %>
-  Popular Now on KPCC
-<% end %>
 <%= render 'shared/header/header' %>
 
 

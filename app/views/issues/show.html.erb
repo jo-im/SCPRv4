@@ -1,16 +1,7 @@
 <% add_to_page_title @issue.title %>
 
-<% content_for :body_class do %>
-  <% 'interior issues' %>
-<% end %>
-
-<% content_for :vertical_layout do %>
-  <%= stylesheet_link_tag "vertical/issues", media: "all" %>
-<% end %>
-
-<% content_for :quadrant_header do %>
-  Popular Now on KPCC
-<% end %>
+<% content_for :body_class, 'interior issues' %>
+<% content_for :quadrant_header, 'Popular Now on KPCC' %>
 
 <%= render 'shared/header/header' %>
 
@@ -66,11 +57,10 @@
             </header>
 
             <section class="backlog">
-<!--            ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ -->
                 <% if @issue_articles.presence %>
                   <%= render partial: 'shared/waterfall_articles', collection: @issue_articles, as: 'article', locals: { issue_tag_exists: false } %>
                 <% end %>
-<!--            ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ -->
+
                 <footer>
                   <%= link_to "Load more #{@issue.title} stories", issue_path(@issue.slug) %>
                 </footer>
