@@ -28,7 +28,7 @@
           <% if @featured_content %>
             <aside class="more">
               <% if @featured_content[:type] == 'issue' %>
-                <h3>More from <%= link_to @primary_issue.title, @primary_issue.public_path) %></h3>
+                <h3>More from <%= link_to @primary_issue.title, @primary_issue.public_path %></h3>
               <% else %>
                 <h3>More from Related Content </h3>
               <% end %>
@@ -174,41 +174,43 @@
                 </div>
             </aside>
             <div class="inbrief clearfix">
-                <% if @quote %>
-                  <aside class="quote">
-                      <blockquote>
-                        <p><%= @quote.quote %></p>
-                          <cite>
-                            <mark><%= @quote.source_name %></mark>
-                            <span><%= @quote.source_context %></span>
-                          </cite>
-                      </blockquote>
-                      <footer>
-                        <%= link_to @quote_article.short_title, @quote_article.public_path, title: "Read this quote's source article" %>
-                      </footer>
-                  </aside>
-                <% end %>
-                <aside class="events">
-                  <h1>Upcoming <%= @category.title %> Events</h1>
-                    <% if @upcoming_events.present? %>
-                      <ul>
-                        <%- @upcoming_events.each do |event| %>
-                          <li>
-                              <figure class="clearfix">
-                                  <div class="date">
-                                    <b><%= event.public_datetime.day %></b>
-                                    <span><mark><%= event.public_datetime.strftime('%b') %></mark> <%= event.public_datetime.strftime('%Y') %></span>
-                                  </div>
-                                  <figcaption>
-                                  <b><%= event.short_title %></b>
-                                  <%= link_to 'More information', event.public_path %>
-                                  </figcaption>
-                              </figure>
-                          </li>
-                        <% end %>
-                      </ul>
-                    <% end %>
+
+              <% if @quote %>
+                <aside class="quote">
+                    <blockquote>
+                      <p><%= @quote.quote %></p>
+                        <cite>
+                          <mark><%= @quote.source_name %></mark>
+                          <span><%= @quote.source_context %></span>
+                        </cite>
+                    </blockquote>
+                    <footer>
+                      <%= link_to @quote_article.short_title, @quote_article.public_path, title: "Read this quote's source article" %>
+                    </footer>
                 </aside>
+              <% end %>
+
+              <aside class="events">
+                <h1>Upcoming <%= @category.title %> Events</h1>
+                  <% if @upcoming_events.present? %>
+                    <ul>
+                      <%- @upcoming_events.each do |event| %>
+                        <li>
+                            <figure class="clearfix">
+                                <div class="date">
+                                  <b><%= event.public_datetime.day %></b>
+                                  <span><mark><%= event.public_datetime.strftime('%b') %></mark> <%= event.public_datetime.strftime('%Y') %></span>
+                                </div>
+                                <figcaption>
+                                <b><%= event.short_title %></b>
+                                <%= link_to 'More information', event.public_path %>
+                                </figcaption>
+                            </figure>
+                        </li>
+                      <% end %>
+                    </ul>
+                  <% end %>
+              </aside>
             </div>
         </div><!--/ .bites -->
     </div>
@@ -269,4 +271,3 @@
       <% end %>
     </div>
 </div><!--/ .waterfall -->
-
