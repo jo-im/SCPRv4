@@ -14,6 +14,9 @@ FactoryGirl.define do
       is_active false
     end
 
+    factory :active_issue, traits: [:is_active]
+    factory :inactive_issue, traits: [:is_not_active]
+
   end
 
 end
