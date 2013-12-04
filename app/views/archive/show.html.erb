@@ -15,17 +15,17 @@
 </nav>
 
 <div class="tab-content" id="archive_tabs">
-  
+
 <!-- News Stories -->
 <div id="news" class="tab-pane active">
 <%= content_cache "archive:#{@date.to_i}:news_stories" do %>
   <% register_content(NewsStory.new_obj_key) if @date.to_i == Time.now.beginning_of_day %>
   <h2>News</h2>
-  
+
   <%= any_to_list? @news_stories + @content_shells, message: "There was no News published on this date." do %>
     <% (@news_stories + @content_shells).map(&:to_article).each do |article| %>
       <% register_content article.original_object %>
-  
+
       <div class="teaser cbase">
         <div class="row-fluid">
           <% if article.assets.present? %>
@@ -40,11 +40,11 @@
               <h3><%= link_to article.short_title, article.public_url %></h3>
               <span class="byline">
                 <% if article.category %>
-                  <span class="categories"><%= link_to article.category.title, article.category.public_path %></span> 
-                  <span class="pipe">|</span> 
+                  <span class="categories"><%= link_to article.category.title, article.category.public_path %></span>
+                  <span class="pipe">|</span>
                 <% end %>
-                <%= timestamp(article.public_datetime) %> 
-                <span class="pipe">|</span> 
+                <%= timestamp(article.public_datetime) %>
+                <span class="pipe">|</span>
                 <%= render_byline article.original_object %>
               </span>
             </div>
@@ -65,11 +65,11 @@
 <%= content_cache "archive:#{@date.to_i}:blog_entries" do %>
   <% register_content(BlogEntry.new_obj_key) if @date.to_i == Time.now.beginning_of_day %>
   <h2>Blogs</h2>
-  
+
   <%= any_to_list? @blog_entries, message: "There were no blog entries published on this date." do %>
     <% @blog_entries.each do |content| %>
       <% register_content content %>
-    
+
       <div class="teaser cbase">
         <div class="row-fluid">
           <% if content.assets.present? %>
@@ -83,14 +83,14 @@
             <div class="info">
               <h3><%= link_to content.short_headline, content.public_path %></h3>
               <span class="byline">
-                <span class="blog-title"><%= link_to content.blog.name, blog_path(content.blog.slug) %></span> 
-                <span class="pipe">|</span> 
+                <span class="blog-title"><%= link_to content.blog.name, blog_path(content.blog.slug) %></span>
+                <span class="pipe">|</span>
                 <%= timestamp(content.published_at) %>
-                <span class="pipe">|</span> 
+                <span class="pipe">|</span>
                 <%= render_byline content %>
               </span>
             </div>
-            
+
             <%= content.teaser.html_safe %>
           </div> <!-- span18/24 -->
         </div>
@@ -108,7 +108,7 @@
   <% register_content(ShowSegment.new_obj_key) if @date.to_i == Time.now.beginning_of_day %>
   <% register_content(ShowEpisode.new_obj_key) if @date.to_i == Time.now.beginning_of_day %>
   <% grouped = (@show_episodes + @show_segments).group_by { |c| c.show.title } %>
-  
+
   <h2>Programs</h2>
   <div class="jump-nav">
     <ul>
@@ -118,20 +118,20 @@
       <% end %>
       </ul>
   </div> <!-- jump-nav -->
-  
+
   <% grouped.each do |show, contents| %>
     <% type_group = contents.group_by { |c| c.class.name } %>
 
     <div class="program-group">
       <h3 id="<%=show.parameterize%>" class="show-title"><%= show %></h3>
-    
+
       <% if type_group["ShowEpisode"].present? %>
         <% type_group["ShowEpisode"].each do |content| %>
           <% register_content content %>
           <h5>Episode: <%= link_to content.headline, content.public_path %></h5>
         <% end %>
       <% end %>
-    
+
       <% if type_group["ShowSegment"].present? %>
         <% type_group["ShowSegment"].each do |content| %>
           <% register_content content %>
@@ -149,15 +149,15 @@
                   <h3><%= link_to content.short_headline, content.public_path %></h3>
                   <span class="byline">
                     <% if content.category.present? %>
-                      <span class="categories"><%= link_to content.category.title, content.category.public_path %></span> 
+                      <span class="categories"><%= link_to content.category.title, content.category.public_path %></span>
                       <span class="pipe">|</span>
                     <% end %>
-                    <%= timestamp(content.published_at) %> 
-                    <span class="pipe">|</span> 
+                    <%= timestamp(content.published_at) %>
+                    <span class="pipe">|</span>
                     <%= render_byline content %>
                   </span>
                 </div>
-                
+
                 <%= content.teaser.html_safe %>
               </div> <!-- span18/24 -->
             </div> <!-- row fluid -->
@@ -177,10 +177,10 @@
   var query, keyval;
   var params = {};
   query = _(window.location.search.substring(1).split("&")).each(function(pair) { keyval = pair.split("="); params[keyval[0]] = keyval[1]; });
-  
+
   tab = $("#archive_nav a[href='#"+params['section']+"']")
   if(tab) tab.tab('show');
-  
+
   $("#archive_nav a").on({
     click: function(event) {
       target = $(event.target).attr("href").substr(1);

@@ -5,7 +5,7 @@
     background-color: $grayBackground;
     border: 1px solid #bfbfbf;
     padding: 0 0 0 5px;
-    
+
     .inner-container {
         padding: 20px 25px;
     }
@@ -43,7 +43,7 @@
     @include gradient-vertical(#333, #1b1b1b);
     border: 1px solid #4c4c4c;
     margin-top: 14px;
-    
+
     .arrow-up {
         background: url(image_path('icons/dark-modal-arrow.png')) no-repeat;
         width: 28px;
@@ -82,13 +82,13 @@ a.modal-toggler {
     // Add the class `modal-toggler` to whatever you want to toggle the modal.
     //// Optional: modal-toggler can take "data-modal-id" to specify which modal it should toggle. This requires an `id` attribute top be added to the modal-popup.
     // Use a modal-specific class (e.g. `.broadcast-bar-modal`) to position, size, and further style the modal.
-    
+
     // Required attributes for the modal-specific class:
     //// width & height
     //// left, top, right, or bottom (use one or more to position the modal as necessary)
     //// An extra class for generic styling - "light", "dark", etc. (defined below)
     // As you know - Any default attributes (such as the 'left' position of the arrow) can be overridden with an !important flag
-    
+
     // Example:
     /*
          .google-maps {
@@ -104,13 +104,13 @@ a.modal-toggler {
                 }
         }
     */
-    
+
     // Check out the `modal` helper for a quick way to put a modal anywhere
-    
+
     position: absolute;
     display: none;
     z-index: 82;
-    
+
     // Use these classes for positioning, width, height, and any extra options you want on a specific modal (or a group of duplicate modals)
     &.google-maps {
         @include modal-light;
@@ -122,7 +122,7 @@ a.modal-toggler {
         left: -250px;
         top: 26px;
         text-align: center;
-        
+
         h5.address { padding-right: 30px; }
         .arrow-up {
             left: 300px !important; // To overide default arrow position
@@ -141,7 +141,7 @@ a.modal-toggler {
         min-height:300px;
         left:18px;
         top:14px;
-        .arrow-up { 
+        .arrow-up {
             left: 100px;
         }
     } // .episode-guide

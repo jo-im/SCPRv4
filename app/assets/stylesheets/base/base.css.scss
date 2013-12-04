@@ -71,7 +71,7 @@ $fluidGridGutterWidth: percentage($gridGutterWidth / $gridRowWidth);
         margin-left: auto;
         margin-right: 0
     }
-    
+
     .contentasset { text-align: $align; }
 }
 
@@ -324,7 +324,7 @@ a {
             @include btnColor($blue, darken($blueDark, 10%));
         }
       }
-    
+
       &.inverse {
         color: $gray;
         @include btnColor($grayDark, $nearBlack);
@@ -333,7 +333,7 @@ a {
             @include btnColor($grayDark, $nearBlack);
         }
       }
-    
+
       &.success {
         @include btnColor(#62c462, #57a957);
         background-color:#57a957;

@@ -19,10 +19,10 @@
 .asset-block, .cbase .asset-block {
     max-width: 100% !important;
     height: auto !important;
-    
+
     margin-left: auto;
     margin-right: auto;
-    
+
     h4 {
        text-transform: none;
        text-align: right;
@@ -45,10 +45,10 @@
         margin-bottom: $gridGutterWidth;
     }
 
-    &.wide { 
+    &.wide {
         margin-bottom: $gridGutterWidth;
     }
-    
+
     &.multimedia {
         margin-bottom: $baseLineHeight / 2;
     }
@@ -59,8 +59,8 @@
         margin-right: 6px;
     }
 
-    &.sidebar { 
-        margin-bottom: 10px; 
+    &.sidebar {
+        margin-bottom: 10px;
         p { text-align: center; }
     }
 }
@@ -69,7 +69,7 @@
     height: auto;
     position: relative; // to allow video overlays and other fun stuff
     text-align: center;
-    
+
     img {
         max-width: 100% !important;
         height: auto !important;

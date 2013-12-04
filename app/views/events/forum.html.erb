@@ -4,7 +4,7 @@
     <%= image_tag "event-headers/cff-logo.png" %>
   </div>
   <%= render 'nav', navClass: "horizontal" %>
-  
+
   <header id="events-header">
     <div class="slides-wrapper">
       <div class="slide active" id="hero-1">
@@ -13,21 +13,21 @@
           <p></p>
         </div>
       </div>
-    
+
       <div class="slide" id="hero-2">
         <div class="slide-text">
           <h3>Vital voices, important issues</h3>
           <p></p>
         </div>
       </div>
-    
+
       <div class="slide" id="hero-3">
         <div class="slide-text">
           <h3>Be part of the conversation</h3>
           <p></p>
         </div>
       </div>
-    
+
       <div class="slide" id="hero-4">
         <div class="slide-text">
           <h3>Engage your community</h3>
@@ -47,7 +47,7 @@
 <!-- CONTENT -->
 <div class="events">
   <div class="row-fluid">
-  
+
     <!-- LEFT COLUMN -->
     <div id="forum-span-upcoming-events" class="span13">
       <section class="upcoming-events">
@@ -60,7 +60,7 @@
             <%= @closest_event.teaser.html_safe %>
           </div>
         <% end %>
-    
+
         <%= any_to_list? @future_events, title: "Future Events", message: "There are no events planned for the near future. Check back soon!" do %>
           <% @future_events.each do |event| %>
             <div class="event future">
@@ -74,7 +74,7 @@
                   <div class="span24">
                 <% end %>
                   <div class="info">
-                    <%= link_to format_date(event.starts_at, format: :event), event.public_path, class: "event-link" %> 
+                    <%= link_to format_date(event.starts_at, format: :event), event.public_path, class: "event-link" %>
                     <h2 class="story-title"><%= link_to event.headline, event.public_path %></h2>
                     <%= event.teaser.html_safe %>
                   </div>
@@ -86,7 +86,7 @@
         <p><a href="<%= events_path(list: 'forum') %>" class="more">More Upcoming Events</a></p>
       </section> <!-- upcoming-events -->
     </div> <!-- span -->
-  
+
     <!-- MIDDLE COLUMN (social media) -->
     <div id="forum-span-social" class="span11">
       <section class="social">
@@ -95,7 +95,7 @@
           <a href="https://www.facebook.com/pages/KPCCs-Crawford-Family-Forum/172994359388346" class="facebook">Like the Crawford Family Forum on Facebook</a><br />
           <a href="http://twitter.com/KPCCForum" class="twitter">Follow the Crawford Family Forum on Twitter</a>
         </div>
-    
+
         <!-- TWITTER -->
         <% if cached_tweets = Rails.cache.fetch("twitter:KPCCForum") %>
           <a class="twitter-peeker" href="http://twitter.com/KPCCForum"><h3>Tweets from the Crawford Family Forum</h3></a>

@@ -3,7 +3,7 @@
     .head-lead {
         @include vertify;
     }
-    
+
     // Set new widths for main columns in CFF layout
         #forum {
             #forum-span-content { // main content
@@ -12,7 +12,7 @@
             #forum-span-sidebar { // sidebar
                 @include gridFluidSpan(10);
             }
-            
+
             #forum-span-upcoming-events { // upcoming events
                 @include gridFluidSpan(24);
             }

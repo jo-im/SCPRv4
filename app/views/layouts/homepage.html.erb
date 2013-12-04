@@ -24,13 +24,13 @@
             <% if p.is_for_featured_program? %>
               <a href="<%= p.public_url %>" class="headshot <%= p.program_slug %>">&nbsp;</a>
             <% end %>
-        
+
 
               <div class="program-info <%= p.program_slug %>">
                 <a href="<%= p.public_url %>" class="show-title <%= p.modal_class %>" data-modal-id="<%= p.toggler_id %>"><%= p.title %></a>
                 <span class="show-time"><%= p.start_time %> - <%= p.end_time %></span>
               </div> <!-- program-info -->
-      
+
 
             <!-- Modal: For recurring slots with episodes which feature episodes -->
             <% if p.show_modal? && (episode = p.program.episodes.published.first) %>
@@ -96,7 +96,7 @@
           <%= yield %>
           <div class="vert-divider"></div>
         </section>
-        
+
         <div class="span8">
           <div id="sidebar-top">
             <%= render "/shared/ads/oas", ad_id: 'x01' %>
@@ -107,10 +107,10 @@
           </div> <!-- sidebar-top -->
         </div> <!-- span8 -->
       </div> <!-- row-fluid -->
-      
+
       <%= yield :missed_it %>
     </section> <!-- homepage-top -->
-    
+
     <section class="homepage-bottom">
       <div class="row-fluid">
         <div class="span16 relative">
@@ -129,7 +129,7 @@
         </div> <!-- span8 -->
       </div> <!-- row fluid -->
     </section> <!-- homepage-bottom -->
-    
+
   </div> <!-- main container-fluid -->
 
   <%= render "/shared/footer/layout_footer" %>

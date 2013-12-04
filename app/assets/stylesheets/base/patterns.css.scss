@@ -84,7 +84,7 @@ body {
     @include border-radius(0);
   }
   &.error {
-  @include gradientBar(#EE5F5B, #C43C35); 
+  @include gradientBar(#EE5F5B, #C43C35);
   a {
       color:$white;
       font-weight:bold;
@@ -92,20 +92,20 @@ body {
   }
   }
   &.warning {
-    @include gradientBar(lighten(#fceec1, 10%), lighten(#eedc94, 10%)); 
+    @include gradientBar(lighten(#fceec1, 10%), lighten(#eedc94, 10%));
     p, li {color:$grayDark;font-size:13px;text-shadow:none;}
   }
   &.success {
-    @include gradientBar(#62C462, #57a957); 
+    @include gradientBar(#62C462, #57a957);
   }
   &.info {
-    @include gradientBar(#5BC0DE, #339BB9); 
+    @include gradientBar(#5BC0DE, #339BB9);
   }
   &.inverse {
     @include border-radius(0);
     @include box-shadow(none);
     border:0;
-    @include gradientBar($nearBlack, $nearBlack); 
+    @include gradientBar($nearBlack, $nearBlack);
     text-shadow:none;
     a {
         color:$linkColorHover;
@@ -519,7 +519,7 @@ color:$nearBlack;
 .pagination {
   min-height: $baseline * 2;
   margin: 17px 0 3px;
-  
+
   span {
     display: inline-block;
     font-size:12px;
@@ -531,12 +531,12 @@ color:$nearBlack;
       padding: 0 8px;
       text-decoration: none;
     }
-    
+
     a {
       display: block;
     }
-    
-    a:hover, 
+
+    a:hover,
     &.current {
       background-color: lighten($blue, 45%);
     }

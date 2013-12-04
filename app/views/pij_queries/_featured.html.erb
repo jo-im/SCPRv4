@@ -4,7 +4,7 @@
       <% @featured.each do |query| %>
         <div class="card" id="featured_query_<%=query.id%>">
           <div class="row-fluid">
-          
+
             <% if query.assets.present? %>
               <div class="span4">
                 <%= render_asset query, 'thumbnail' %>
@@ -13,7 +13,7 @@
             <% else %>
               <div class="span24">
             <% end %>
-          
+
               <h3><%= link_to query.headline, pij_query_path(query.slug) %></h3>
               <p><%= query.teaser.html_safe %></p>
             </div> <!-- span -->

@@ -8,10 +8,10 @@ class scpr.SmartTime
         timecut:            "36h"
         window:             null
         class:              "sttime"
-            
+
     constructor: (options) ->
         @options = _.defaults options||{}, @DefaultOptions
-        
+
         # build some defaults
         for opt in ['relative','timecut','window']
             if @options[opt]
@@ -22,41 +22,41 @@ class scpr.SmartTime
         @elements = _.compact( new SmartTime.Instance(el,@options) for el in $ @options.finder )
 
     #----------
-    
+
     class SmartTime.Instance
         constructor: (el,options) ->
             @$el = $(el)
             @options = options
-            
+
             @time       = null
             @window     = @options.window
             @relative   = @options.relative
             @timecut    = @options.timecut
-            
+
             # -- find our time -- #
-            
+
             if @$el.attr("data-unixtime")
-                # if there's a data-unixtime attribute, that's our preferred choice 
+                # if there's a data-unixtime attribute, that's our preferred choice
                 # for grabbing a time
                 @time = moment Number(@$el.attr("data-unixtime")) * 1000
-                
+
             else if $(el).attr("datetime")
-                # a datetime value is our next fallback. for now, we'll just let 
+                # a datetime value is our next fallback. for now, we'll just let
                 # moment try to figure it out
                 @time = moment @$el.attr("datetime")
-                
+
             # -- look for display limits -- #
-            
+
             for opt in ['relative','timecut','window']
                 if @$el.attr("data-#{opt}")
                     @[opt] = (@$el.attr("data-#{opt}").match /(\d+)\s?(\w+)/)?[1..2].reverse()
                     @[opt][1] = parseInt(@[opt][1])
             # -- now figure out our display -- #
-                
+
             @update()
-            
+
         #----------
-        
+
         update: ->
             now = moment()
             # Dup the Moment object
@@ -66,7 +66,7 @@ class scpr.SmartTime
             windowLimit   = moment(now).subtract(@window...)   if @window
             relativeLimit = moment(now).subtract(@relative...) if @relative
             timecutLimit  = moment(now).subtract(@timecut...)  if @timecut
-            
+
             # if we have a window, are we inside of it?
             if @time < windowLimit
                 # @time is outside of the windowLimit
@@ -87,7 +87,7 @@ class scpr.SmartTime
             if @time > relativeLimit
                 # @time is inside of the relativeLimit
                 # Show a relative time
-                # eg: 
+                # eg:
                 #   now       = 1:00pm
                 #   @time     = 12:00pm
                 #   @relative = "2h"
@@ -104,7 +104,7 @@ class scpr.SmartTime
                 else
                     # relative formatting
                     @$el.text "" + @options.prefix + @time.fromNow()
-                
+
             else
                 # @time is outside of the relativeLimit
                 # But inside the windowLimit (otherwise it would have returned already)
@@ -140,5 +140,5 @@ class scpr.SmartTime
                     else
                         # use date, time format
                         @$el.text "" + @options.prefix + @time.strftime "#{@options.date_format}, #{@options.time_format}"
-                
+
             @$el.addClass @options.class if @options.class

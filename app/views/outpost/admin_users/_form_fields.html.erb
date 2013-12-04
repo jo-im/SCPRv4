@@ -13,7 +13,7 @@
   <% if current_user.is_superuser? %>
     <%= f.input :can_login, hint: "May this user login to the CMS?" %>
     <%= f.input :is_superuser %>
-  
+
     <%= f.association :permissions,
         hint: "Which resources can this user manage?<br />" \
         "Selecting a resource gives this user the ability to <br />" \

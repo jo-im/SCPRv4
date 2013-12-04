@@ -262,7 +262,7 @@
     .row {
         margin-left: $gridGutterWidth * -1;
         @include clearfix();
-    
+
         > [class*="span"] {
           float: left;
           margin-left: $gridGutterWidth;
@@ -303,7 +303,7 @@
     > [class*="span"] {
       float: left;
       margin-left: $fluidGridGutterWidth * 2;
-      
+
       // To make sure spans don't wrap in IE7 due to pixel/percentage discrepancies
       // Can stay here because it's fine to apply in other browsers as well
       clear: right;

@@ -1,6 +1,6 @@
 <li class="user-badge clearfix" data-id="<%=@user.id%>">
   <img src="<%=@user.headshot or '/assets/kpcc-twitter-logo.png' %>" class="headshot" />
-  
+
   <h5><%= @user.name %></h5>
 
   <% if !_.isEmpty(@user.records): %>

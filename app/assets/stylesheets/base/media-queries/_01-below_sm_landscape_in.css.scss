@@ -1,10 +1,10 @@
 // Phone Landscape and below (Inclusive)
-@media screen and (max-width: $mediaSmallLandscape) {   
+@media screen and (max-width: $mediaSmallLandscape) {
     //reduce container padding when we get small
     .container-fluid {
         padding:0 10px;
     }
-    
+
     // Make all columns even
     .row-fluid > [class*="span"] {
         float: none;
@@ -12,10 +12,10 @@
         width: auto;
         margin: 0;
     }
-    
+
     .hidden-phone { display: none; }
-    
-    // Make Masthead elements smaller 
+
+    // Make Masthead elements smaller
     header#masthead {
         .head-lead-minimal {
             .dark-logo img {
@@ -44,41 +44,41 @@
         display: block;
         line-height: $baseLineHeight;
     }
-    
+
     .show-segments .teaser .info {
         border-right: none !important;
         padding-right: 0;
     }
-    
-    
+
+
     .more-news-content {
         border-right: none !important;
     }
-    
+
     .cbase {
         &.offlead .row-fluid { @include makeFluidRow; } // Assets are thumbnails so these can stay in multiple column format
     }
-    
-    .next-prev .span9 .row-fluid { 
+
+    .next-prev .span9 .row-fluid {
         @include makeFluidRow; // It's just a few words, no need to make it vertical
     }
-    
+
     .related-content {
         border-top: 1px solid $grayLighter;
         padding-top: 10px;
     }
-    
+
     // Hide CFF vertical nav, show horizontal nav
         nav.section-nav.vertical { display: none; }
         nav.section-nav.horizontal { display: block; }
     // end CFF navs
-    
+
     .more-news-content {
         border-right: none;
         padding-right: none;
         margin-bottom: 5px;
     }
-    
+
     .homepage-top {
         .audiovision-block {
             border-bottom: 1px solid $grayLighter;
@@ -89,30 +89,30 @@
         .events-forum {
             border: none !important;
             padding-left: 0 !important;
-            .event > .row-fluid { 
+            .event > .row-fluid {
                 @include makeFluidRow;
                 > .span8 { @include gridFluidSpan(6) }
                 > .span16 { @include gridFluidSpan(18) }
-                
+
             }
         }
-        
+
         .missed-it-bucket { display: none; }
     }
-    
+
     // Fake the "pager"... hide all page number links, just show Previous and Next links.
-        .pagination { 
+        .pagination {
             span {
                 display: none;
-                &.prev { display: inline; float: left; } 
-                &.next { 
+                &.prev { display: inline; float: left; }
+                &.next {
                     display: inline;
                     float: right;
                 }
             }
         }
     // End Pager
-    
+
     // Make content carousel assets 2-columns instead of 1 column, since they're just thumbs
         .content-carousel {
             .row-fluid {
@@ -125,9 +125,9 @@
             }
         }
     // end Content Carousel
-    
+
     .event.content-block .event-details .row-fluid { @include makeFluidRow; } // We can keep this in 2 columns, it's small
-    
+
     #program-external-header { @include makeFluidRow; }
     .sharing-tools.horizontal h5 {
         float: none;
@@ -135,26 +135,26 @@
         width: 100%;
         margin: 0;
     }
-    
+
     .archive-strip {
         > .row-fluid .span8:last-child .event { border-bottom: none; }
-        .event { 
-            border-bottom: 1px solid $grayLighter; 
+        .event {
+            border-bottom: 1px solid $grayLighter;
             .row-fluid { @include makeFluidRow; }
         }
     }
-    
+
     // Make the slideshow target arrows a little smaller here
     .slideview .slides .overlay-nav div.bar {
         &.prev {
             background-image: url(image_path('overlay-prev-dark-sm.png'));
         }
-        
+
         &.next {
             background-image: url(image_path('overlay-next-dark-sm.png'));
         }
     }
-    
+
     // Make Blog Sponsorship fit smaller screens
     .blog-logo {
       &.large {

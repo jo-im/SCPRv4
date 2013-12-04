@@ -3,9 +3,9 @@
   <div class="archive-select" id="archive">
     <p>
       <%= form_tag archive_process_form_path, id: "archive_date_select", class: "archive-date-select" do %>
-        <%= date_select 'archive', 'date', 
-          order: [:month, :day, :year], 
-          start_year: 2002, 
+        <%= date_select 'archive', 'date',
+          order: [:month, :day, :year],
+          start_year: 2002,
           end_year: Time.now.year,
           default: Time.now.yesterday %>
         <%= submit_tag "Go", class: "btn" %>

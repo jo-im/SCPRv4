@@ -1,5 +1,5 @@
 # Just a simplified version of bootstrap-collapse
 $ ->
     $(".collapse-toggle").on
-        click: -> 
+        click: ->
             $($(@).data('target')).toggle()

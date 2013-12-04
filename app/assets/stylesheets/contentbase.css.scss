@@ -14,44 +14,44 @@
         line-height: $baseLineHeight;
         margin-top: 6px;
         text-transform: uppercase;
-    
+
         a {
             color: $gray;
             font-weight: 600;
         }
-        
+
         time.sttime {
             border-left:1px solid $grayLight;
             margin-left:2px;
             padding-left:4px;
         }
     }
-    
+
     a.comment_link {
         @include font-sans-serif(normal, 11px);
         margin-bottom: 10px;
         background: url(image_path('icons/comment-count-sm.png')) no-repeat left 1px;
         padding-left: 14px;
     }
-    
+
     time, .shell-link {
         /* @include ie-inline-block; */
         @include font-sans-serif(normal, 11px);
         color: $orangeDark;
         text-transform: uppercase;
         white-space:nowrap;
-        
+
         &:hover {
             text-decoration:none;
         }
-        
+
     }
 
     .shell-link {
         background:transparent url(image_path('icons/link-offsite.png')) no-repeat right 0;
         padding:1px 15px 0 0;
     }
-    
+
     &.lead, &.lead5 {
         h4 { text-transform: none; }
         h1 {
@@ -60,13 +60,13 @@
           line-height: $baseLineHeight * 1.5;
         }
     }
-    
+
     &.lead {
         border-bottom: 1px solid $grayLighter;
         padding-bottom: 10px;
         margin-bottom: 10px;
     }
-    
+
     &.offlead {
         border-bottom: 1px solid $grayLighter;
         padding-bottom: 10px;
@@ -128,19 +128,19 @@ time.smart {
             color:$nearBlack;
         }
     }
-    
+
     h4 {
         font-weight:normal;
         margin-bottom: 0;
         color: #999;
     }
-    
+
     img {
         display: inline;
         float: left;
         margin: 8px 12px 12px 0;
     }
-    
+
 }
 
 .cbase.thumbnail {
@@ -153,7 +153,7 @@ time.smart {
         margin-bottom: 0;
         color: #999;
     }
-    
+
 }
 #lead-right {
     #lead-right .offleads .offlead:first-child h3.story-headline {

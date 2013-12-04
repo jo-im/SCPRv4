@@ -1,13 +1,13 @@
-/* 
+/*
 * Styles for pages that use the Base Minimal template
  * ---------------------------------------------------------------------------------------- */
 
 body.minimal {
     background-color:darken($white, 2%);
     @include font-sans-serif;
-    p { @include font-sans-serif(200);} 
+    p { @include font-sans-serif(200);}
     .cbase p {
-        @include font-serif(normal, 13px);  
+        @include font-serif(normal, 13px);
     }
 
     header {
@@ -16,7 +16,7 @@ body.minimal {
         @include gradient-vertical(#333, #222);
         $shadow: 0 1px 3px rgba(0,0,0,.25), inset 0 -1px 0 rgba(0,0,0,.1);
         @include box-shadow($shadow);
-    
+
         h3#site-title a {
             background:transparent url(image_path('logo-full-sm.png')) no-repeat left top;
             width:130px;
@@ -24,21 +24,21 @@ body.minimal {
             display:block;text-indent:-9999px;
             float: left;
         }
-        
-        a.home-link { 
+
+        a.home-link {
             float: right;
             color: darken($white, 20%);
-            @include font-shorthand($size: 12px); 
+            @include font-shorthand($size: 12px);
         }
     }
-    
+
     .content-container {
         padding: 100px 0;
         @include gradient-vertical($nearWhite, darken($nearWhite, 5%));
         border-bottom:1px solid $grayLighter;
         margin-bottom: 20px;
     }
-    
+
     .box {
         background-color:$white;
         border:1px solid $grayLighter;
@@ -47,22 +47,22 @@ body.minimal {
         max-width: 580px;
         z-index: 10;
         position: relative;
-        
+
         h3 { margin-bottom: 5px; }
-        
+
         ul li {
             margin-bottom: 18px;
             color: $gray;
             strong { color: $orangeDark; }
         }
     }
-    
+
     p.beta-button {
         text-align: center;
         a#beta-button { font-size: 16px; }
         a { margin-bottom: 5px; }
     }
-        
+
     .floating-shadow {
         background:transparent url(image_path('floating-shadow.png')) no-repeat center bottom;
         height: 100px;
@@ -70,15 +70,15 @@ body.minimal {
         position:relative;
         z-index: 5;
     }
-    
+
     footer {
         text-align: center;
         padding: 10px 0;
         ul {
             margin: 0;
             list-style: none;
-            li, li a { 
-                @include font-shorthand($size: 12px, $lineHeight: 10px); 
+            li, li a {
+                @include font-shorthand($size: 12px, $lineHeight: 10px);
                 color: $grayLight;
             }
             li a:hover { color: $gray; }
@@ -88,7 +88,7 @@ body.minimal {
                 margin: 0 0 0 10px;
                 border-right: 1px solid $grayLight;
                 &:first-child { margin-left: 0; }
-                &:last-child { 
+                &:last-child {
                     padding-right: 0;
                     border-right: none;
                 }
