@@ -165,20 +165,20 @@ describe BlogsController do
         end
       end
 
-      context "for popular articles" do
-        let(:articles) { create_list(:blog_entry, 3).map(&:to_article) }
-
-        before :each do
-          Rails.cache.write("popular/viewed", articles)
-          get :entry, { blog: entry.blog.slug,
-                        id: entry.id,
-                        slug: entry.slug }.merge!(date_path(entry.published_at))
-        end
-
-        it 'assigns @popular_articles' do
-          assigns(:popular_articles).should eq articles
-        end
-      end
+#      context "for popular articles" do
+#        let(:articles) { create_list(:blog_entry, 3).map(&:to_article) }
+#
+#        before :each do
+#          Rails.cache.write("popular/viewed", articles)
+#          get :entry, { blog: entry.blog.slug,
+#                        id: entry.id,
+#                        slug: entry.slug }.merge!(date_path(entry.published_at))
+#        end
+#
+#        it 'assigns @popular_articles' do
+#          assigns(:popular_articles).should eq articles
+#        end
+#      end
     end
   end
 
