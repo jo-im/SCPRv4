@@ -1,7 +1,6 @@
 <% add_to_page_title @issue.title %>
 
 <% content_for :body_class, 'interior issues' %>
-<% content_for :quadrant_header, 'Popular Now on KPCC' %>
 
 <%= render 'shared/header/header' %>
 
@@ -25,7 +24,7 @@
         <nav class="terms">
             <ul class="clearfix">
                 <% @issues.each do |issue| %>
-                  <%= issue_link issue, issue_path(issue.slug), @issue %>
+                  <%= issue_link issue, issue.public_path, @issue %>
                 <% end %>
             </ul>
         </nav>
@@ -40,7 +39,7 @@
                     </div>
                     <aside class="timeline">
                       <h2>KPCC has published a total of <mark><%= @article_count %> articles</mark> on <%= @issue.title %></h2>
-                      <% if @issue_articles.presence %>
+                      <% if @issue_articles.present? %>
                         <div class="range">
                             <dl class="began">
                             <dt><%= date_format(@issue_articles.last.public_datetime) %></dt>
@@ -57,12 +56,12 @@
             </header>
 
             <section class="backlog">
-                <% if @issue_articles.presence %>
-                  <%= render partial: 'shared/waterfall_articles', collection: @issue_articles, as: 'article', locals: { issue_tag_exists: false } %>
+                <% if !@issue_articles.empty? %>
+                  <%= render 'shared/waterfall_articles', articles: @issue_articles, issue_tag_exists: false %>
                 <% end %>
 
                 <footer>
-                  <%= link_to "Load more #{@issue.title} stories", issue_path(@issue.slug) %>
+                  <%= link_to "Load more #{@issue.title} stories", @issue.public_path %>
                 </footer>
             </section><!--/ .backlog -->
 
@@ -73,4 +72,7 @@
 
 <%= render 'shared/kpcc_ipad_ad' %>
 
-<%= render partial: 'shared/quadrant', locals: { top_articles: @top_popular_articles, bottom_articles: @bottom_popular_articles } %>
+
+<% if @popular_articles %>
+  <%= render 'shared/quadrant', articles: @popular_articles.first(4), header: 'Popular Now on KPCC' %>
+<% end %>

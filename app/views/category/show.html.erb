@@ -31,7 +31,7 @@
           <% if @featured_content %>
             <aside class="more">
               <% if @featured_content[:type] == 'issue' %>
-                <h3>More from <%= link_to @primary_issue.title, issue_path(@primary_issue.slug) %></h3>
+                <h3>More from <%= link_to @primary_issue.title, @primary_issue.public_path) %></h3>
               <% else %>
                 <h3>More from Related Content </h3>
               <% end %>
@@ -51,8 +51,7 @@
               <h1>Latest <%= @category.title %> Headlines</h1>
             </header>
             <ul>
-              <% if @latest_articles.presence %>
-                <%- @latest_articles.each do |article| %>
+                <%- @category_articles[0..1].each do |article| %>
                   <li>
                     <%= link_to(article.public_path, class: 'clearfix') do %>
                           <div>
@@ -110,7 +109,7 @@
         </header>
         <nav>
             <ul class="clearfix">
-            <% if @resources.presence %>
+            <% if @resources.present? %>
               <%- @resources.each do |resource| %>
                 <li>
                     <%= link_to(resource.public_path) do %>
@@ -134,13 +133,13 @@
                 <h1>Issues We're Tracking</h1>
                 <h2><%= link_to 'See all issues', issues_path %></h2>
             </header>
-           <% if @category.issues.presence %>
+           <% if @category.issues.present? %>
             <div>
                 <header class="special">
                   <h1><%= @special_issue.title %></h1>
                     <h2 class="clearfix">
                         <mark>Special coverage from KPCC</mark>
-                        <%= link_to issue_path(@special_issue.slug) do %>
+                        <%= link_to @special_issue.public_path do %>
                           See all <span><%= @special_issue.title  %></span>
                         <% end %>
                     </h2>
@@ -157,7 +156,7 @@
                 <div>
                     <header class="slim clearfix">
                       <h1><%= issue.title %></h1>
-                      <h2><%= link_to issue_path(issue.slug) do %>
+                      <h2><%= link_to issue.public_path do %>
                         See all <span><%= issue.title %></span><% end %></h2>
                     </header>
                     <nav>
@@ -198,7 +197,7 @@
                 <% end %>
                 <aside class="events">
                   <h1>Upcoming <%= @category.title %> Events</h1>
-                    <% if @upcoming_events.presence %>
+                    <% if @upcoming_events.present? %>
                       <ul>
                         <%- @upcoming_events.each do |event| %>
                           <li>
@@ -222,22 +221,21 @@
     </div>
 </div><!--/ .lunchbox -->
 
-<%= render partial: 'shared/triptych', locals: {category: @category, articles: @three_recent_articles} %>
+<%= render 'shared/triptych', category: @category, articles: @category_articles[2..4] %>
+
 <%= render 'shared/kpcc_ipad_ad' %>
 
-<%= render partial: 'shared/quadrant', locals: { top_articles: @top_half_recent_articles, bottom_articles: @bottom_half_recent_articles } %>
+<%= render 'shared/quadrant', articles: @category_articles[5..8], header: "" %>
 
 <div class="waterfall">
     <div class="inner bound clearfix">
 
         <section class="backlog">
           <h1>More <%= @category.title %></h1>
-          <% if @more_articles.presence %>
-            <%= render partial: 'shared/waterfall_articles', collection: @more_articles, as: 'article', locals: { issue_tag_exists: true } %>
-          <% end %>
+          <%= render 'shared/waterfall_articles', articles: @category_articles[9..-1], issue_tag_exists: true %>
         </section><!--/ .backlog -->
 
-      <% if @bios.presence %>
+      <% if @bios.present? %>
         <div class="secondary">
             <section class="reporters">
                 <h1>Our Reporters</h1>

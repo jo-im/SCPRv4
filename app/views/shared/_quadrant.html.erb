@@ -1,74 +1,45 @@
 <section class="quadrant">
-    <div class="inner bound">
+  <div class="inner bound">
 
-      <header><h1><%= yield(:quadrant_header) if content_for :quadrant_header %></h1></header>
-          <!--            ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ -->
-       <div class="rail clearfix">
-         <% if top_articles.presence %>
-           <% top_articles.each do |recent_article| %>
-              <%- article = recent_article.original_object %>
-              <%- article_class = "clearfix" %>
-              <%- article_class << " has-trait" if article.issues.any? %>
-              <%= content_tag(:article, class: article_class) do %>
-                      <div class="graphic">
-                        <div class="ratio">
-                            <%- if recent_article.related_issue.any? %>
-                              <span class="issue"><%= link_to recent_article.related_issue.first.title,issue_path(recent_article.related_issue.first.slug) %></span>
-                            <% end %>
-                              <div class="fill"></div>
-                              <b class="img-contain"><%= image_tag recent_article.asset.eight.url %></b>
-                          </div><!--/ .ratio -->
-                      </div>
-                      <div class="prose">
-                          <aside class="byline">
-                            <p class="author"><%= render_byline article %></p>
-                              <%- if article.feature_type.present? %>
-                                <%= content_tag(:mark, article.feature_type_name, class: "trait #{article.feature_type_name.downcase}") %>
-                              <% end %>
-                          </aside>
-                          <h1><%= link_to recent_article.short_title, recent_article.public_path %></h1>
-                        <h2 class="date"><%= new_smart_date_js recent_article.public_datetime, tag: 'span' %></h2>
-                        <p class="teaser"><%= recent_article.teaser %></p>
-                      </div>
-              <% end %>
-           <% end %>
-         <% end %>
-       </div><!--/ .rail -->
+    <header><h1><%= header %></h1></header>
 
-       <div class="rail clearfix">
-        <% if bottom_articles.presence %>
-          <% bottom_articles.each do |recent_article| %>
-            <%- article = recent_article.original_object %>
-            <%- article_class = "clearfix" %>
-            <%- article_class << " has-trait" if article.issues.any? %>
-            <%= content_tag(:article, class: article_class) do %>
-                    <div class="graphic">
-                      <div class="ratio">
-                          <%- unless recent_article.related_issue.empty? %>
-                            <span class="issue"><%= link_to recent_article.related_issue.first.title, issue_path(recent_article.related_issue.first.slug) %></span>
-                          <% end %>
-                            <div class="fill"></div>
-                            <b class="img-contain"><%= image_tag recent_article.asset.eight.url %></b>
-                        </div><!--/ .ratio -->
-                    </div>
-                    <div class="prose">
-                        <aside class="byline">
-                          <p class="author"><%= render_byline article %></p>
-                            <%- if article.feature_type.present? %>
-                              <%= content_tag(:mark, article.feature_type_name, class: "trait #{article.feature_type_name.downcase}") %>
-                            <% end %>
-                        </aside>
-                        <h1><%= link_to recent_article.short_title, recent_article.public_path %></h1>
-                      <h2 class="date"><%= new_smart_date_js recent_article.public_datetime, tag: 'span' %></h2>
-                      <p class="teaser"><%= recent_article.teaser %></p>
-                    </div>
-            <% end %>
+  <% articles.each_slice(2).each do |row| %>
+    <div class="rail clearfix">
+
+    <% row.each do |article| %>
+      <% article = article.original_object %>
+      <article class="clearfix<%= " has-trait" if !article.issues.empty? %>">
+        <div class="graphic">
+          <div class="ratio">
+
+          <%- if !article.related_issue.empty? %>
+            <span class="issue"><%= link_to article.related_issue.first.title,article.related_issue.first.public_path %></span>
           <% end %>
-        <% end %>
-       </div><!--/ .rail -->
-          <!--            ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ -->
 
-    </div><!--/ .inner -->
+            <div class="fill"></div>
+            <b class="img-contain"><%= image_tag article.asset.eight.url %></b>
+          </div><!--/ .ratio -->
+        </div> <!--/ .graphic -->
+
+        <div class="prose">
+          <aside class="byline">
+            <p class="author"><%= render_byline article %></p>
+
+          <%- if article.feature_type.present? %>
+            <mark class="trait <%= article.feature_type_name.downcase %>"><%= article.feature_type_name %></mark>
+          <% end %>
+
+          </aside>
+
+          <h1><%= link_to article.short_title, article.public_path %></h1>
+          <h2 class="date"><%= new_smart_date_js article.public_datetime, tag: 'span' %></h2>
+          <p class="teaser"><%= article.teaser %></p>
+        </div> <!--/ .prose -->
+      </article>
+    <% end %>
+
+    </div><!--/ .rail -->
+  <% end %>
+
+  </div><!--/ .inner -->
 </section><!--/ .quadrant -->
-
-

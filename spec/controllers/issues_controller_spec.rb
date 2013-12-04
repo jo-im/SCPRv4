@@ -12,5 +12,54 @@ describe IssuesController do
       assigns(:issues).count.should eq 3
       assigns(:issues).should_not include(inactive_issue)
     end
+
+    it "assigns popular articles" do
+      get :index
+      assigns(:popular_articles).should eq Array.new
+    end
+  end
+
+  describe 'GET show' do
+    it 'sets issues' do
+      issue = create :issue, :is_active, slug: "whatever"
+      get :show, slug: "whatever"
+      assign(:issues).should eq [issue]
+    end
+
+    it "gets the issue by slug" do
+      issue = create :issue, :is_active, slug: "issue"
+      get :show, slug: "issue"
+      assigns(:issue).should eq issue
+    end
+
+    it "gets the issue's articles" do
+      issue = create :issue, slug: "issue"
+      article = create :news_story
+      article.issues << issue
+
+      get :show, slug: "issue"
+      assigns(:issue_articles).should eq [article]
+    end
+
+    it "assigns the article count" do
+      issue = create :issue, slug: "issue"
+      article = create :news_story
+      article.issues << issue
+
+      get :show, slug: "issue"
+      assigns(:article_count).should eq 1
+    end
+
+    it "assigns popular articles" do
+      issue = create :issue, slug: "okay"
+      get :show, slug: "okay"
+      assigns(:popular_articles).should eq Array.new
+    end
+
+    it "raises an error if the slug isn't found" do
+      -> {
+        get :show, slug: "no"
+      }.should raise_error ActiveRecord::RecordNotFound
+    end
   end
 end

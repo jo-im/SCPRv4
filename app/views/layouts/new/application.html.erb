@@ -3,7 +3,9 @@
 
 <head>
 
-    <title><%= @category.title %> | 89.3 KPCC</title>
+    <% add_to_page_title @TITLE_ELEMENTS.present? ? "89.3 KPCC" : "89.3 KPCC - Southern California Public Radio" %>
+
+    <title><%= page_title %></title>
 
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />

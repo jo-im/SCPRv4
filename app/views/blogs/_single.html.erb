@@ -39,7 +39,7 @@
             <article class="prose">
               <%= article.body.html_safe %>
 
-              <% if @related_articles.presence %>
+              <% if @related_articles.present? %>
                 <aside class="related">
                     <header><h1>Related Links</h1></header>
                     <nav>
@@ -78,7 +78,7 @@
                     <header>
                         <h1>More from this Issue</h1>
                         <h2 class="clearfix">
-                          <span><%= link_to issue.title, issue_path(issue.slug) %></span>
+                          <span><%= link_to issue.title, issue.public_path %></span>
                             <mark><%= link_to 'See All', issues_path %></mark>
                         </h2>
                     </header>
@@ -109,7 +109,7 @@
                         <h1>Popular now on KPCC</h1>
                     </header>
                     <ul class="previews">
-                      <% if @popular_articles.presence %>
+                      <% if @popular_articles.present? %>
                         <% @popular_articles.each do |article| %>
                           <li>
                             <%= link_to article.public_path do %>
@@ -134,7 +134,7 @@
     </div><!--/ .report -->
 
     <%= render 'shared/kpcc_ipad_ad' %>
-    <%= render partial: 'shared/triptych', locals: {category: entry.category, articles: @three_recent_articles } %>
+    <%= render 'shared/triptych', category: entry.category, articles: @category_articles[0..2] %>
 
     <div class="townhall">
          <div class="inner bound clearfix">
@@ -142,9 +142,7 @@
 
                  <section class="backlog">
                    <h1>More <%= entry.category.title %></h1>
-                   <% if @more_articles.presence %>
-                     <%= render partial: 'shared/waterfall_articles', collection: @more_articles, as: 'article', locals: { issue_tag_exists: true } %>
-                   <% end %>
+                     <%= render 'shared/waterfall_articles', articles: @category_articles[3..-1], issue_tag_exists: true %>
 
                      <footer>
                      <%= link_to "More #{entry.category.title} News", entry.category.public_path %>
@@ -155,7 +153,7 @@
                 <div class="supportive">
                     <section>
                         <h1>Issues We're Tracking</h1>
-                        <% if entry.category.issues.presence %>
+                        <% if entry.category.issues.present? %>
                            <h2 class="special"><%= @special_issue.title %></h2>
                               <nav>
                                   <ul>
@@ -197,7 +195,7 @@
                     <h2>Quick primers on civic life in California.</h2>
                     <p>All of us at KPCC believe that civic life in Southern California should be understandable, relevant, and libero ante, aliquam congue mattis id, blandit quis risus. Sed iaculis tellus accumsan ipsum porta ultricies.</p>
                     <nav class="resources clearfix">
-                      <% if @resources.presence %>
+                      <% if @resources.present? %>
                         <% @resources.each do |resource| %>
                           <figure class="clearfix">
                               <div class="ratio">
@@ -220,7 +218,7 @@
                 <aside>
                     <h1>Get involved.</h1>
                     <ul class="events">
-                      <% if @events.presence %>
+                      <% if @events.present? %>
                         <% @events.each do |event| %>
                           <li>
                                 <figure class="clearfix">

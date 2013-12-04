@@ -1,3 +1,7 @@
+# NOTE: This inherits from ApplicationController,
+# so any functionality needed for the NEW templates
+# has to be included manually.
+
 module CategoryHandler
   PER_PAGE = 16
 
@@ -8,7 +12,8 @@ module CategoryHandler
       :page       => page,
       :per_page   => per_page
     )
-    if @category.featured_articles.any?
+
+    if !@category.featured_articles.empty?
       @featured_articles = @category.featured_articles
       @lead_article = @featured_articles.first
       @featured_image = @lead_article.asset
@@ -22,19 +27,14 @@ module CategoryHandler
         end
       end
 
-      if @primary_issue_articles.presence
+      if @primary_issue_articles.present?
         @featured_content = {articles: @primary_issue_articles.first(2), type: 'issue'}
       elsif @lead_article.original_object.related_content.any?
         @featured_content = {articles: @lead_article.original_object.related_content.first(2), type: 'related'}
       end
     end
 
-    @category_articles = @content.map { |a| a.to_article }
-    @latest_articles = @category_articles[0..1]
-    @three_recent_articles = @category_articles[2..4]
-    @top_half_recent_articles = @category_articles[5..6]
-    @bottom_half_recent_articles = @category_articles[7..8]
-    @more_articles = @category_articles[9..-1]
+    @category_articles = @content.map(&:to_article)
 
     if @category.issues.any?
       @category_issues = @category.issues
