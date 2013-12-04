@@ -32,7 +32,7 @@ namespace :scprv4 do
       Job::SyncRemoteArticles.perform
       puts "Finished.\n"
     else
-      Resque.enqueue(Job::SyncRemoteArticles)
+      Job::SyncRemoteArticles.enqueue
       puts "Job was placed in queue.\n"
     end
   end
@@ -46,7 +46,7 @@ namespace :scprv4 do
       Job::SyncExternalPrograms.perform
       puts "Finished.\n"
     else
-      Resque.enqueue(Job::SyncExternalPrograms)
+      Job::SyncExternalPrograms.enqueue
       puts "Job was placed in queue.\n"
     end
   end
@@ -92,7 +92,7 @@ namespace :scprv4 do
         Job::BuildRecurringSchedule.perform
         puts "Finished.\n"
       else
-        Resque.enqueue(Job::BuildRecurringSchedule)
+        Job::BuildRecurringSchedule.enqueue
         puts "Job was placed in queue.\n"
       end
     end
@@ -120,7 +120,7 @@ namespace :scprv4 do
         Job::AudioVisionCache.perform
         puts "Finished.\n"
       else
-        Resque.enqueue(Job::AudioVisionCache)
+        Job::AudioVisionCache.enqueue
         puts "Job was placed in queue.\n"
       end
     end
@@ -135,7 +135,7 @@ namespace :scprv4 do
         Job::MostViewed.perform
         puts "Finished.\n"
       else
-        Resque.enqueue(Job::MostViewed)
+        Job::MostViewed.enqueue
         puts "Job was placed in queue.\n"
       end
     end
@@ -150,7 +150,7 @@ namespace :scprv4 do
         Job::MostCommented.perform
         puts "Finished.\n"
       else
-        Resque.enqueue(Job::MostCommented)
+        Job::MostCommented.enqueue
         puts "Job was placed in queue.\n"
       end
 
@@ -158,22 +158,32 @@ namespace :scprv4 do
 
     #----------
 
-    desc "Cache KPCCForum tweets"
+    desc "Cache twitter feeds"
     task :twitter => [:environment] do
       puts "*** [#{Time.now}] Caching KPCCForum tweets...."
 
-      NewRelic.with_manual_agent do
-        task = CacheTasks::Twitter.new("KPCCForum")
-        task.verbose = true
-        task.run
-      end
-      puts "Finished KPCCForum tweet caching.\n"
+      args = [
+        "KPCCForum",
+        "/shared/widgets/cached/tweets",
+        "twitter:KPCCForum"
+      ]
 
-      if Rails.env.staging?
-        Job::VerticalsTwitter.perform
+      NewRelic.with_manual_agent do
+        if Rails.env.development?
+          Job::TwitterCache.perform(*args)
+          puts "Finished KPCCForum tweet caching.\n"
+        else
+          Job::TwitterCache.enqueue(*args)
+          puts "Job was placed in queue.\n"
+        end
+      end
+
+
+      if Rails.env.development?
+        Job::VerticalsTwitterCache.perform
         puts "Finished Vertical tweet caching.\n"
       else
-        Resque.enqueue(Job::VerticalsTwitter)
+        Job::VerticalsTwitterCache.enqueue
         puts "Job was placed in queue.\n"
       end
     end
@@ -187,7 +197,7 @@ namespace :scprv4 do
         Job::HomepageCache.perform
         puts "Finished.\n"
       else
-        Resque.enqueue(Job::HomepageCache)
+        Job::HomepageCache.enqueue
         puts "Job was placed in queue.\n"
       end
     end
