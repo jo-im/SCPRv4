@@ -1,7 +1,7 @@
 class Issue < ActiveRecord::Base
   outpost_model
   has_secretary
-  attr_accessible :description, :is_active, :slug, :title
+
   include Concern::Validations::SlugValidation
 
   ROUTE_KEY = 'root_slug'
