@@ -3,7 +3,7 @@
 
             <section class="titling clearfix">
                 <div class="brand">
-                    <h1><a href="#">Represent</a></h1>
+                  <h1><%= link_to 'Represent', '/politics' %></h1>
                     <h2>Politics, government and public life for Southern California.</h2>
                 </div>
                 <% if false %>
@@ -20,7 +20,7 @@
                 <h4><a href="http://kpcc.org" rel="author">89.3 KPCC</a></h4>
                 <nav class="kpcc-links">
                     <ul>
-                        <li><a href="#">Listen Live</a></li>
+                        <li><a href="javascript:void(0)" onclick="open_popup('/listen_live/');" id="listen-live">Listen Live</a></li>
                         <li><a href="http://www.scpr.org/news/">News</a></li>
                         <li><a href="http://www.scpr.org/arts-life/">Arts &amp; Life</a></li>
                         <li><a href="http://www.scpr.org/programs/">Programs</a></li>
@@ -43,7 +43,7 @@
                 <h1><a href="http://kpcc.org" rel="author">89.3 KPCC</a></h1>
                 <button class="close" value="close">Close</button>
                 <ul class="links">
-                    <li><a href="#">Listen Live</a></li>
+                    <li><a href="javascript:void(0)" onclick="open_popup('/listen_live/');" id="listen-live">Listen Live</a></li>
                     <li><a href="http://www.scpr.org/news/">News</a></li>
                     <li><a href="http://www.scpr.org/arts-life/">Arts &amp; Life</a></li>
                     <li><a href="http://www.scpr.org/programs/">Programs</a></li>
