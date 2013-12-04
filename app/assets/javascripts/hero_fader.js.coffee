@@ -15,7 +15,7 @@ class scpr.HeroFader
         $(@options.chooser).on
             click: (event) =>
                 @slideSwitch $("#"+$(event.target).attr(@options.slideId))
-        
+
         @fadeQueue()
 
     slideSwitch: (next) ->
@@ -25,11 +25,11 @@ class scpr.HeroFader
         # Figure out which slide is active
         @active = $(@options.slide + "." + @options.activeClass)
         @active = if @active.length then @active else $(@options.slide + ':last')
-        
+
 
         # Figure out which slide is next
         @next = next or (if @active.next().length then @active.next() else $(@options.slide + ':first'))
-        
+
         # Don't do anything if the user clicked on the chooser for the slide that they're already on
         if @next[0] isnt @active[0]
             # Clear the timeout incase we clicked a button in the middle of one
@@ -43,7 +43,7 @@ class scpr.HeroFader
             @active.show()
             .addClass(@options.lastActiveClass)
             .removeClass(@options.activeClass)
-            
+
             @next.hide()
             .addClass(@options.activeClass)
             .fadeIn(@options.fadeSpeed, =>
@@ -55,6 +55,6 @@ class scpr.HeroFader
             @fadeQueue()
 
     fadeQueue: ->
-        @fader = setTimeout (=> 
+        @fader = setTimeout (=>
             @slideSwitch()
         ), @options.fadeInterval

@@ -7,14 +7,14 @@ $footerBackground: #2e2e2e;
     margin-top: $baseline - 1;
     @include font-sans-serif(normal, 11px);
     text-transform:uppercase;
-    
+
     #footer-container {
         background-image: url(image_path('footer-arrow.png'));
         background-repeat: no-repeat;
         background-position: 1045px 0;
         padding-top: $baseline - 1;
     }
-    
+
     h5 {
         color:#5c5c5c;
         @include font-shorthand(normal, 11px);
@@ -22,7 +22,7 @@ $footerBackground: #2e2e2e;
 
     h4 { @include footer-h4; }
     h3 { @include footer-h3; }
-    
+
     h2 {
         color:#00b9f3;
         @include font-shorthand($size: 16px, $weight: 200);
@@ -31,7 +31,7 @@ $footerBackground: #2e2e2e;
         text-shadow:0 1px 0 #000;
         text-transform:none;
     }
-    
+
     .footer-mast {
         border-bottom: 1px solid $grayAlt;
         margin-bottom: 10px;
@@ -42,17 +42,17 @@ $footerBackground: #2e2e2e;
             margin-bottom: 3px;
         }
     }
-    
+
     ul {
         list-style-type: none;
         margin: 0;
-        
+
         li {
-            a { 
-                display: block; 
+            a {
+                display: block;
                 &:hover { text-decoration: none; }
             }
-            
+
             &.bullet {
                 background-position: left 8px;
                 background-repeat: no-repeat;
@@ -65,26 +65,26 @@ $footerBackground: #2e2e2e;
                 }
             }
         }
-        
+
         &.inline li {
             @include ie-inline-block;
             margin-right: 10px;
         }
-        
+
         &.legal {
             color:#717171;
             text-transform:none;
             li {
                 padding: 0 15px;
                 margin: 0;
-                
+
                 // Using border-left because IE7/8 do not support :last-child selector
                 border-left: 1px solid #242424;
                 &:first-child { border-left: none; }
             }
             a { color:#717171; }
         }
-        
+
         &.social-media {
             margin-bottom: 12px;
             li a {
@@ -94,7 +94,7 @@ $footerBackground: #2e2e2e;
                 display: block;
                 width:24px;
                 height:24px;
-            
+
                 &.facebook {
                     background-position: 0 0;
                 }
@@ -106,7 +106,7 @@ $footerBackground: #2e2e2e;
                 }
             }
         }
-        
+
         &.partners {
             li a {
                 background-image: url(image_path('footer-partners.png'));
@@ -142,7 +142,7 @@ $footerBackground: #2e2e2e;
             }
         }
     }
-    
+
     .contribute {
         margin:0;
         text-transform:none;
@@ -153,7 +153,7 @@ $footerBackground: #2e2e2e;
             }
         }
     }
-    
+
     .footer-nav {
         background-image: url(image_path('footer-divider-bg.png'));
         background-repeat: repeat-y;
@@ -162,8 +162,8 @@ $footerBackground: #2e2e2e;
             display: none;
             @include clearfix;
             .contribute { float:left;margin: 10px 15px; }
-            .in-btn { 
-                float: right; 
+            .in-btn {
+                float: right;
                 margin-top: 7px;
                 margin-right:10px;
             }
@@ -196,7 +196,7 @@ $footerBackground: #2e2e2e;
         margin-bottom: 10px;
         li a { color:#bfbfbf; }
         nav { margin-bottom: 10px; }
-        
+
         .section {
             min-height: 260px;
             padding-left: 10px;
@@ -205,7 +205,7 @@ $footerBackground: #2e2e2e;
             }
         }
     }
-    
+
     .mobile-apps {
         width: 100%;
         max-width: 225px;
@@ -216,7 +216,7 @@ $footerBackground: #2e2e2e;
             text-align: center;
         }
     }
-    
+
     address {
         color: #919191;
         @include font-shorthand(normal, 11px, 16px);
@@ -230,7 +230,7 @@ $footerBackground: #2e2e2e;
             text-shadow:0 1px 0 #000;
         }
     }
-        
+
     .bottom-links {
         border-top:1px solid $grayAlt;
         padding-top: 10px;

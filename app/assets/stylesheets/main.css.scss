@@ -36,7 +36,7 @@ body {
     margin-right: auto;
     max-width: $gridRowWidth;
     min-width: $mediaDesktopSmall; // This is so that the fluid grid is basically ignored if media queries aren't seen (IE 7)
-    
+
     &#footer-container {
         position: static; // So we can pop out the footer into the side nav
     }
@@ -45,27 +45,27 @@ body {
 // #Main Body Content
 #main {
     margin-top:1px;
-    
+
     .homepage-top {
         border-bottom:1px solid $grayLighter;
         margin-bottom:$baseline;
-                
+
         .missed-it-bucket {
             .carousel { min-height: 220px; }
-            .row-fluid > hr { 
-                display: none; 
+            .row-fluid > hr {
+                display: none;
                 width: 100%;
                 clear: both;
             }
-            .missed-it-content { 
+            .missed-it-content {
                 text-align: center;
                 margin-bottom: 10px;
             }
         }
-        
+
         .offleads {
             margin-bottom: 10px;
-            
+
             &.split {
                 .cbase.offlead {
                     border-top:none;
@@ -73,7 +73,7 @@ body {
             }
             // Override default .offlead to use border-top
             // because IE7/8 do not support :last-child selector
-            .span8:first-child .cbase.offlead { 
+            .span8:first-child .cbase.offlead {
                 border-top: none;
                 padding-top: 0;
                 margin-top: 0;
@@ -92,9 +92,9 @@ body {
             }
         }
     }
-    
+
     .homepage-bottom { margin:0; padding: 0;}
-    
+
     .events-forum {
         @include assetAlign(left);
         border-left:1px solid $grayLighter;
@@ -147,24 +147,24 @@ body {
     border-top:1px solid $grayBorder;
     border-bottom:1px solid $grayBorder;
     margin-bottom: 25px;
-    
-    &.with-headshot { 
+
+    &.with-headshot {
         margin-top: 15px; // So the host isn't wearing the nav as a tophat
-        .program.current .program-info { 
-            margin-left: 100px; 
+        .program.current .program-info {
+            margin-left: 100px;
             &.brand-martinez, &.take-two {
                 margin-left:150px;
             }
         } // Push the show title link over since we have to absolutely-position the headshot
     }
-    
+
     .bb-inner-container {
         background:$grayBackground;
         border-top:1px solid $white;
         border-bottom:1px solid $white;
         width: 100%;
     }
-    
+
     a.headshot {
         position: absolute; // Since we have to push it up a bit to extend above the bar, and we don't want any extra space below
         bottom: 0;
@@ -175,7 +175,7 @@ body {
             width:147px;
         }
     }
-    
+
     .program-info {
         line-height: $baseLineHeight / 2;
         a.show-title {
@@ -184,7 +184,7 @@ body {
             color:$orangeDark;
             margin-right: 5px; // Leave space for the show time
         }
-        
+
         .show-time {
             @include font-sans-serif($weight:normal, $size:12px);
             color:$gray;
@@ -192,14 +192,14 @@ body {
             white-space: nowrap; // Don't want the time getting split up onto different lines
         }
     }
-    
+
     .program {
         margin-top: 10px;
         background-position: 0 0;
         background-repeat: no-repeat;
         line-height: $baseLineHeight;
         min-height: 36px; // Broadcast bar height minus padding
-            
+
         &.current {
             padding-left: 65px;// Room for the status badge
             float: left;
@@ -219,7 +219,7 @@ body {
             text-align:right;
         }
     }
-    
+
 }
 
 .episode-guide {
@@ -279,22 +279,22 @@ body {
 // Join Conversation
 .join-conversation-container {
     margin:10px 0;
-    
+
     &.home {
         border-top: 1px solid $grayLighter;
         border-bottom: 1px solid $grayLighter;
     }
-    
+
     .join_conversation {
         background-color:$grayBackground;
 
         h6 {
             color:$black;
-            padding:5px 0 0 10px;   
+            padding:5px 0 0 10px;
         }
         blockquote {
             @include font-serif($size:16px, $lineHeight:25px);
-            background:url("join-conversation-blockquote.png") no-repeat scroll 2% 50% transparent;     
+            background:url("join-conversation-blockquote.png") no-repeat scroll 2% 50% transparent;
             border:0 none;
             font-style:italic;
             margin:5px 0 0 0;
@@ -365,7 +365,7 @@ h6.more-news-title {
         .more-news-content {
             padding-right:5px;
             border-right:1px solid $grayLighter;
-            .offlead { /* cbase offlead reset */ 
+            .offlead { /* cbase offlead reset */
                 border-bottom: none;
                 margin-bottom: 0;
             }
@@ -448,10 +448,10 @@ nav.filters {
         float:left;
         list-style-type:none;
         margin-right:3%;
-        
+
         // Won't be seen in IE7, that's okay
         &:last-child { margin: 0; }
-        
+
         &.heading {
             color:#575757;
             margin-right:20px;
@@ -510,7 +510,7 @@ nav.filters {
     margin: 10px 0 5px 0;
     padding-bottom: 5px;
     border-bottom: 1px solid $grayLighter;
-    
+
     ul {
         margin: 0;
         li {

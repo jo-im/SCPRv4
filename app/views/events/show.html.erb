@@ -8,15 +8,15 @@
 
     <script>gmapsLoader = new scpr.GMapsLoader()</script>
   <% end %>
-  
+
   <%# move this... %>
   <%
     expires = nil
     if @event.ends_at.to_i > Time.now.to_i
-      expires = @event.ends_at - Time.now 
+      expires = @event.ends_at - Time.now
     end
   %>
-  
+
   <%# Automagically expire this cache when it ends %>
   <%= cache ["show", "v8", @event], expires_in: expires do %>
     <%= render "/events/event", event: @event %>

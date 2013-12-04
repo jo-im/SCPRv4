@@ -1,6 +1,6 @@
 <div class="cbase offlead" data-vr-contentbox="">
   <h3><%= link_to article.short_title, article.public_url %></h3>
-  
+
   <div class="row-fluid">
     <% if article.assets.present? %>
       <div class="span6">
@@ -16,7 +16,7 @@
           <%= smart_date_js article.public_datetime, "data-window" => "8h", "data-relative" => "2h" %>
         </span>
       <% end %>
-      
+
       <p class="story-content clearfix"><%= article.teaser.html_safe %></p>
     </div> <!-- span -->
   </div> <!-- row -->

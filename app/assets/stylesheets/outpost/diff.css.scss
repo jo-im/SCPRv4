@@ -1,6 +1,6 @@
 .diff {
     overflow:auto;
-    
+
     ul {
         background:#fff;
         overflow:auto;
@@ -15,45 +15,45 @@
         display:block;
         text-decoration:none;
     }
-    
+
     li {
-        padding:0; 
+        padding:0;
         display:table-row;
         margin: 0;
         height:1em;
-        
+
         &.ins {
             background:#dfd; color:#080
         }
-        
+
         &.del {
-            background:#fee; 
+            background:#fee;
             color:#b00
         }
-        
+
         &:hover {
             background:#ffc
         }
-        
-        &.diff-comment { 
-            display: none; 
+
+        &.diff-comment {
+            display: none;
         }
-        
-        &.diff-block-info { 
-            background: none repeat scroll 0 0 gray; 
+
+        &.diff-block-info {
+            background: none repeat scroll 0 0 gray;
         }
     }
-    
+
     .del, .ins, span {
         white-space:pre-wrap;
         font-family:courier;
     }
-    
+
     .del strong {
         font-weight:normal;
         background:#fcc;
     }
-    
+
     .ins strong {
         font-weight:normal;
         background:#9f9;

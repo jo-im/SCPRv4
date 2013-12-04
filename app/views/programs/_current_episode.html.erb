@@ -4,7 +4,7 @@
       <div class="span<%= current_episode.assets.present? ? "12" : "24" %>">
         <h2><%= link_to current_episode.headline, current_episode.public_path %></h2>
         <p class="byline"><%= timestamp(current_episode.air_date) %></p>
-        <%= current_episode.body.html_safe %> 
+        <%= current_episode.body.html_safe %>
       </div>
       <% if current_episode.assets.present? %>
         <div class="span12">

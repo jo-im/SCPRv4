@@ -49,8 +49,8 @@
 <% end %>
 
 <%= f.section "assets" do %>
-  <%= f.input :event_asset_scheme, 
-              :collection    => NewsStory::ASSET_SCHEMES, 
+  <%= f.input :event_asset_scheme,
+              :collection    => NewsStory::ASSET_SCHEMES,
               :include_blank => false,
               :hint          => "Sets up the top-of-story formatting for assets attached through AssetHost. " %>
 <% end %>

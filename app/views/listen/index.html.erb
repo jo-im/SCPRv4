@@ -10,7 +10,7 @@
     <span class="contribute"><a href="https://scprcontribute.publicradio.org/contribute.php?" target="_blank">Donate now</a></span>
     </div>
   </header>
-  
+
   <div id="content">
     <div class="player">
       <div class="wrapper clearfix">
@@ -26,7 +26,7 @@
           </span>
         </div>
       </div> <!-- wrapper -->
-          
+
       <div id="jquery_jplayer_1" class="jp-jplayer"></div>
       <div id="jp_container_1" class="jp-audio">
         <div class="jp-type-single clearfix">
@@ -34,7 +34,7 @@
             <strong>Update Required</strong>
             To play the media you will need to either update your browser to a recent version or update your <a href="http://get.adobe.com/flashplayer/" target="_blank">Flash plugin</a>.
           </div>
-          <!-- put bar-close first so it floats right properly when the widget switches to modal 
+          <!-- put bar-close first so it floats right properly when the widget switches to modal
              On the normal layout, everything here is floated so it still gets pushed to the right properly -->
 
           <div class="section-left">
@@ -78,33 +78,33 @@
       </ul>
     </div> <!-- headlines -->
   <% end %>
-  
+
   <hr />
-  <div class="ad" style="text-align:center; height:80px"> 
+  <div class="ad" style="text-align:center; height:80px">
     <p><small>Sponsors</small></p>
 
-    <!-- OAS AD 'Center1' begin --> 
-    <script> 
-    <!-- 
-    OAS_AD('x61'); 
-    //--> 
-    </script> 
-    <!-- OAS AD 'Center1' end --> 
+    <!-- OAS AD 'Center1' begin -->
+    <script>
+    <!--
+    OAS_AD('x61');
+    //-->
+    </script>
+    <!-- OAS AD 'Center1' end -->
 
-    <!-- OAS AD 'Center1' begin --> 
-    <script> 
-    <!-- 
-    OAS_AD('x62'); 
-    //--> 
-    </script> 
-    <!-- OAS AD 'Center1' end --> 
+    <!-- OAS AD 'Center1' begin -->
+    <script>
+    <!--
+    OAS_AD('x62');
+    //-->
+    </script>
+    <!-- OAS AD 'Center1' end -->
 
-    <!-- OAS AD 'Center1' begin --> 
-    <script> 
-    <!-- 
-    OAS_AD('x63'); 
-    //--> 
-    </script> 
+    <!-- OAS AD 'Center1' begin -->
+    <script>
+    <!--
+    OAS_AD('x63');
+    //-->
+    </script>
     <!-- OAS AD 'Center1' end -->
     <p><small><a href="/support/underwriting/online_sponsorship/">Advertise with us</a></small></p>
   </div> <!-- ad -->
@@ -119,16 +119,16 @@
       </ul>
     </div>
   </footer>
-  
+
 <% content_for :footer do %>
   <script>
     llPlayer = new scpr.ListenLive.CurrentGen({
       schedule:   <%= @schedule.map(&:listen_live_json).to_json.html_safe %>
     })
-    
+
     $("#llcontent a").attr("target","_blank");
   </script>
 <% end %>
 
 <%= render "/shared/footer/document_footer" %>
-  
+

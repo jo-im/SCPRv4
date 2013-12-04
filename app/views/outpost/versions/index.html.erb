@@ -20,7 +20,7 @@
             <%= link_to "View", outpost_version_path(resources: record.class.route_key, resource_id: record.id, version_number: version.version_number), class: "btn" %>
           <% end %>
         </td>
-        
+
         <%= render "/outpost/shared/columns", list: list, record: version %>
       </tr>
     <% end %>

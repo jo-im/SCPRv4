@@ -15,12 +15,12 @@
             }
         }
     // end Support Banner
-    
-    
-    // Basically, if this media query is being read by the browser, 
-    // then we can set a lower min-width than the default to allow 
-    // the responsive design to do its thing. Otherwise (IE7/8), the 
-    // default min-width (set to the $siteWidth) will keep the site 
+
+
+    // Basically, if this media query is being read by the browser,
+    // then we can set a lower min-width than the default to allow
+    // the responsive design to do its thing. Otherwise (IE7/8), the
+    // default min-width (set to the $siteWidth) will keep the site
     // at that width.
     #masthead-right-header-wrapper {
         .contribute, nav.utils {

@@ -7,13 +7,13 @@ class scpr.ContentCarousel
         animationSpeed: 300
 
     #----------
-    
+
     constructor: (options) ->
         @options = _.defaults options||{}, @DefaultOptions
         @carousel = $(".#{@options.carouselWrapperClass} .#{@options.carouselClass}")
-        
+
         @fetchContent()
-        
+
         $(".#{@options.carouselWrapperClass} #{@options.nextBtn}").on
             click: (event) =>
                 event.preventDefault()
@@ -21,7 +21,7 @@ class scpr.ContentCarousel
                     return false
 
                 @fetchContent(parseInt(@carousel.attr("data-current-page"), 10) + 1)
-                
+
         $(".#{@options.carouselWrapperClass} #{@options.prevBtn}").on
             click: (event) =>
                 event.preventDefault()
@@ -34,13 +34,13 @@ class scpr.ContentCarousel
         $.ajax
             type: "GET"
             url: @options.dataUrl
-            data: 
+            data:
                 page: page
             dataType: "script"
             beforeSend: (xhr) =>
                 $(@carousel).spin("large")
                 $(@carousel).css({ opacity: 0.5 })
-            error: (xhr, status, error) => 
+            error: (xhr, status, error) =>
                 $(@carousel).html "Error loading content. Please refresh the page and try again. (#{error})"
-            complete: (xhr, status) => 
+            complete: (xhr, status) =>
                 $(@carousel).spin(false)

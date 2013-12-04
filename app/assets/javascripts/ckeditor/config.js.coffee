@@ -12,7 +12,7 @@ CKEDITOR.editorConfig = (config) ->
     ].join(',')
 
     config.codemirror =
-        # https://github.com/w8tcha/CKEditor-CodeMirror-Plugin 
+        # https://github.com/w8tcha/CKEditor-CodeMirror-Plugin
         theme                   : 'monokai'
         lineNumbers             : true
         lineWrapping            : true

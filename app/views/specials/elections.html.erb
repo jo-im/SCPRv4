@@ -21,7 +21,7 @@
 
       <% if key =~ /_reporting\z/i %>
         <% if data_point.data_value.present? %>
-        
+
           <% race = data_point.title.split(":")[0] %>
           <div class="clearfix"></div>
           <div class="results-block">
@@ -36,7 +36,7 @@
         <% end %>
 
       <% elsif data_point.data_value.present? %>
-        
+
       <section class="initiative local condensed <%= data_point.data_key.split("_")[-1].downcase %>">
         <div class="title">
           <h3><%= data_point.title %></h3>
