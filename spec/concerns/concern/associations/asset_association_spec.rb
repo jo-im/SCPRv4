@@ -2,6 +2,21 @@ require "spec_helper"
 
 describe Concern::Associations::AssetAssociation do
 
+  describe '#asset' do
+    it "gets the article's first asset" do
+      content = create :test_class_story
+      assets = create_list :asset, 2, content: content
+
+      content.asset.should eq assets.first
+    end
+
+    it "uses a fallback if there are no assets" do
+      content = create :test_class_story
+      content.asset.should be_a AssetHost::Asset::Fallback
+    end
+  end
+
+
   #--------------------
 
   describe '#asset_json' do
