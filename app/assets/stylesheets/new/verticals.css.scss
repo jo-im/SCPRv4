@@ -115,7 +115,7 @@
         text-transform: uppercase;
         border-bottom: 1px solid #8b8b8b;
         padding-bottom: 1px;
-        width: 103.603603603604%; // 460 / 444      
+        width: 103.603603603604%; // 460 / 444
         h1 {
             font-weight: 700;
             color: #292929;
@@ -387,7 +387,7 @@
 //  ------------------------------------------------------------------------------------------------
 
 @media screen and (max-width: 950px) {
-    
+
     .welcome {
         .curated {
             float: none;
@@ -559,8 +559,8 @@
                         &:hover { text-decoration: underline; }
                     }
                 }
-            }   
-            
+            }
+
             .events {
                 width: 47.247706422018%; // 412 / 872
                 float: right;
@@ -856,7 +856,7 @@
                         cite mark   { font-size: 0.75em; }
                     }
                     footer a        { font-size: 0.6875em; }
-                }   
+                }
                 .events {
                     width: auto;
                     float: none;
@@ -1188,7 +1188,7 @@
                     figcaption {
                         min-height: 60px;
                         h1 { font-size: 0.8125em; }
-                    }           
+                    }
                 }
             }
         }
