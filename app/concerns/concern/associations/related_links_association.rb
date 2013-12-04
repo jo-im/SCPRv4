@@ -9,8 +9,17 @@ module Concern
       extend ActiveSupport::Concern
 
       included do
-        has_many :related_links, as: :content, dependent: :destroy
-        accepts_nested_attributes_for :related_links, allow_destroy: true, reject_if: :should_reject_related_links?
+        has_many :related_links,
+          :as           => :content,
+          :dependent    => :destroy
+
+        if self.has_secretary?
+          tracks_association :related_links
+        end
+
+        accepts_nested_attributes_for :related_links,
+          :allow_destroy => true,
+          :reject_if     => :should_reject_related_links?
       end
 
 

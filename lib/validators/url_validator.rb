@@ -20,7 +20,9 @@
 # classes. So, if you allow URI::HTTP, then you are also allowing URI::HTTPS.
 #
 class UrlValidator < ActiveModel::EachValidator
-  DEFAULT_MESSAGE = "is not a valid url. Include a valid protocol, such as 'http://'."
+  DEFAULT_MESSAGE = "is not a valid url. Include a valid protocol, " \
+                    "such as 'http://'."
+
   DEFAULT_ALLOWED_CLASSES = [URI::HTTP]
 
   def validate_each(record, attribute, value)

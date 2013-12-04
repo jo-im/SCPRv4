@@ -4,17 +4,17 @@ module Api::Private::V2
 
   class BaseController < ::ActionController::Base
     respond_to :json
-    
+
     before_filter :set_access_control_headers, :authorize
 
     #---------------------------
-    
+
     def options
       head :ok
     end
 
     #---------------------------
-    
+
     private
 
     def authorize
@@ -24,7 +24,7 @@ module Api::Private::V2
     end
 
     #---------------------------
-    
+
     def set_access_control_headers
       response.headers['Access-Control-Allow-Origin']      = request.env['HTTP_ORIGIN'] || "*"
       response.headers['Access-Control-Allow-Methods']     = 'POST, GET, OPTIONS'

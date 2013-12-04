@@ -12,7 +12,7 @@ class Outpost::ResourceController < Outpost::BaseController
   respond_to :html, :json, :js
 
   #-----------------
-  
+
   def extend_breadcrumbs_with_resource_root
     breadcrumb model.to_title.pluralize, model.admin_index_path
   end
@@ -24,7 +24,7 @@ class Outpost::ResourceController < Outpost::BaseController
       params[model.singular_route_key].merge!(logged_user_id: current_user.id)
     end
   end
-  
+
   #-----------------
 
   def set_preview

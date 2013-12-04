@@ -175,7 +175,42 @@ describe ProgramsController do
     end
 
     describe "controller" do
-      pending
+      let(:program) { create :kpcc_program }
+      let(:episode) { create :show_episode, show: program }
+      let(:segment) { create :show_segment }
+
+      let(:params) do
+        {
+          :year     => episode.air_date.year,
+          :month    => episode.air_date.month,
+          :day      => episode.air_date.day,
+          :show     => episode.show.slug,
+          :id       => episode.id
+        }
+      end
+
+      it "redirects if the path is the old one" do
+        get :episode, params.except(:id)
+        response.should redirect_to episode.public_path
+      end
+
+      it "raises an error if the episode isn't found" do
+        -> {
+          get :episode, params.merge(id: 999)
+        }.should raise_error ActiveRecord::RecordNotFound
+      end
+
+      it "gets the requested episode" do
+        get :episode, params
+        assigns(:episode).should eq episode.to_episode
+      end
+
+      it "gets the episode's segments" do
+        episode.rundowns.create(segment: segment)
+        get :episode, params
+
+        assigns(:segments).should eq [segment].map(&:to_article)
+      end
     end
   end
 end

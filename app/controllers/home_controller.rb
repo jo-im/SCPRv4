@@ -26,10 +26,6 @@ class HomeController < ApplicationController
 
   #----------
 
-  def listen
-    render layout: 'application'
-  end
-
   def about_us
     render layout: "app_nosidebar"
   end
@@ -46,6 +42,12 @@ class HomeController < ApplicationController
 
   def missed_it_content
     @homepage = Homepage.includes(:missed_it_bucket).find(params[:id])
+
+    # This action shouldn't be called if there isn't a missed it bucket.
+    # But just in case, to avoid errors...
+    if !@homepage.missed_it_bucket
+      render text: "", status: :not_found and return
+    end
 
     @carousel_contents = @homepage.missed_it_bucket
       .content.includes(:content).page(params[:page]).per(6)

@@ -8,7 +8,7 @@ module Api::Public::V2
     MAX_RESULTS = 12
 
     before_filter \
-      :sanitize_limit, 
+      :sanitize_limit,
       :sanitize_page,
       only: [:index]
 

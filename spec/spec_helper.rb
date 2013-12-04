@@ -1,9 +1,15 @@
 ENV["RAILS_ENV"] ||= 'test'
 
 require 'simplecov'
+
+if ENV['CIRCLE_ARTIFACTS']
+  # https://circleci.com/docs/code-coverage
+  dir = File.join("..", "..", "..", ENV['CIRCLE_ARTIFACTS'], "coverage")
+  SimpleCov.coverage_dir(dir)
+end
+
 SimpleCov.start 'rails'
 
-require 'rubygems'
 require File.expand_path("../../config/environment", __FILE__)
 require 'rspec/rails'
 require 'rspec/autorun'
@@ -14,7 +20,6 @@ require 'capybara/rspec'
 
 Dir[Rails.root.join("spec/support/**/*.rb")].each { |f| require f }
 Dir[Rails.root.join("spec/fixtures/db/*.rb")].each { |f| require f }
-Dir[Rails.root.join("spec/fixtures/models/*.rb")].each { |f| require f }
 
 WebMock.disable_net_connect!
 
@@ -42,8 +47,6 @@ RSpec.configure do |config|
     DatabaseCleaner.clean_with :truncation
     load "#{Rails.root}/db/seeds.rb"
     DatabaseCleaner.strategy = :transaction
-    migration = -> { FixtureMigration.new.up }
-    silence_stream STDOUT, &migration
 
     FileUtils.rm_rf(
       Rails.application.config.scpr.media_root.join("audio/upload")

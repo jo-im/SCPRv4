@@ -2,6 +2,7 @@ class ContentAsset < ActiveRecord::Base
   include Outpost::AssetHost::JoinModelJson
 
   self.table_name =  "assethost_contentasset"
+  self.versioned_attributes = ["position", "asset_id", "caption"]
 
   belongs_to :content, polymorphic: true
 

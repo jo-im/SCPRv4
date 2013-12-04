@@ -6,7 +6,7 @@ FactoryGirl.define do
     sequence(:headline) { |n| "PIJ Query ##{n}"}
     teaser "This a teaser"
     body { "Body: #{teaser}" }
-    slug { headline.parameterize }  
+    slug { headline.parameterize }
     query_type "news"
     pin_query_id '01aa97973688'
     status PijQuery::STATUS_LIVE

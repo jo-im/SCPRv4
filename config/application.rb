@@ -51,7 +51,6 @@ module Scprv4
     config.assets.precompile += %w( shared.js outpost/application.css outpost/application.js new.js base/print.css vertical/landing.css vertical/issues.css vertical/single.css vertical/partner-kpccforipad.css vertical/partner-mercedes.css fonts.css )
 
     config.scpr             = ActiveSupport::OrderedOptions.new
-    config.audio_vision     = ActiveSupport::OrderedOptions.new
     config.assethost        = ActiveSupport::OrderedOptions.new
     config.node             = ActiveSupport::OrderedOptions.new
     config.dbsync           = ActiveSupport::OrderedOptions.new
@@ -64,14 +63,5 @@ module Scprv4
     config.assethost.server = config.api['assethost']['server']
     config.assethost.prefix = config.api['assethost']['prefix']
     config.assethost.token  = config.api['assethost']['token']
-
-
-    config.to_prepare do
-      Dir[File.expand_path(Rails.root.join("lib/audio_vision/*.rb")) ].each do |file|
-        require_dependency file
-      end
-
-      require_dependency 'audio_vision'
-    end
   end
 end

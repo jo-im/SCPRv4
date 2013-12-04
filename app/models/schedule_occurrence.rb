@@ -15,7 +15,7 @@ class ScheduleOccurrence < ActiveRecord::Base
   scope :current, -> { at(Time.now) }
 
 
-  scope :between, ->(start_date, end_date) { 
+  scope :between, ->(start_date, end_date) {
     where("starts_at < ? and ends_at > ?", end_date, start_date)
     .order("starts_at")
   }
@@ -98,14 +98,15 @@ class ScheduleOccurrence < ActiveRecord::Base
   end
 
 
-
+  # Find the occurrence which is coming up next. This assumes that the
+  # current object is currently on.
   def following_occurrence
     between = ScheduleOccurrence.between(Time.now, self.ends_at + 1)
     between.find { |o| o != self }
   end
 
 
-  # Validations will ensure that either the program or the event_title 
+  # Validations will ensure that either the program or the event_title
   # is present.
   def title
     self.event_title.present? ? self.event_title : self.program.title

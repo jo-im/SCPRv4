@@ -10,8 +10,12 @@ module Concern
       extend ActiveSupport::Concern
 
       included do
-        has_many :missed_it_contents, as: :content, dependent: :destroy
-        after_save :_destroy_missed_it_contents, if: -> { self.unpublishing? }
+        has_many :missed_it_contents,
+          :as           => :content,
+          :dependent    => :destroy
+
+        after_save :_destroy_missed_it_contents,
+          :if => -> { self.unpublishing? }
       end
 
 

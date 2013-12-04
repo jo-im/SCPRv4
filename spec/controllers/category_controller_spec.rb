@@ -23,9 +23,11 @@ describe CategoryController do
         story3 = create :news_story, published_at: 1.day.ago, category: category_not_news
 
         index_sphinx
-
         get :news
-        assigns(:top).should eq story2
+
+        ts_retry(2) do
+          assigns(:top).should eq story2
+        end
       end
 
       it 'build sections for the categories, excluding the top article' do
@@ -34,11 +36,13 @@ describe CategoryController do
         story3 = create :news_story, published_at: 1.day.ago, category: category_not_news
 
         index_sphinx
-
         get :news
         sections = assigns(:sections)
-        sections.size.should eq 1
-        sections.first.articles.should eq [story1].map(&:to_article)
+
+        ts_retry(2) do
+          sections.size.should eq 1
+          sections.first.articles.should eq [story1].map(&:to_article)
+        end
       end
     end
 
@@ -51,11 +55,12 @@ describe CategoryController do
         story3 = create :news_story, published_at: 1.day.ago, category: category_not_news
 
         index_sphinx
-
         get :news, format: :xml
 
-        assigns(:content).should eq [story2, story1]
-        response.header['Content-Type'].should match /xml/
+        ts_retry(2) do
+          assigns(:content).should eq [story2, story1]
+          response.header['Content-Type'].should match /xml/
+        end
       end
     end
   end
@@ -77,9 +82,12 @@ describe CategoryController do
         story3 = create :news_story, published_at: 1.day.ago, category: category_news
 
         index_sphinx
-
+        sleep 2
         get :arts
-        assigns(:top).should eq story2
+
+        ts_retry(2) do
+          assigns(:top).should eq story2
+        end
       end
 
       it 'build sections for the categories, excluding the top article' do
@@ -88,11 +96,13 @@ describe CategoryController do
         story3 = create :news_story, published_at: 1.day.ago, category: category_news
 
         index_sphinx
-
         get :arts
         sections = assigns(:sections)
-        sections.size.should eq 1
-        sections.first.articles.should eq [story1].map(&:to_article)
+
+        ts_retry(2) do
+          sections.size.should eq 1
+          sections.first.articles.should eq [story1].map(&:to_article)
+        end
       end
     end
 
@@ -105,11 +115,12 @@ describe CategoryController do
         story3 = create :news_story, published_at: 1.day.ago, category: category_news
 
         index_sphinx
-
         get :arts, format: :xml
 
-        assigns(:content).should eq [story2, story1]
-        response.header['Content-Type'].should match /xml/
+        ts_retry(2) do
+          assigns(:content).should eq [story2, story1]
+          response.header['Content-Type'].should match /xml/
+        end
       end
     end
   end

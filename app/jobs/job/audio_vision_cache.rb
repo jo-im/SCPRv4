@@ -19,16 +19,26 @@ module Job
         # * Otherwise, use a random post that isn't
         #   the currently featured post.
         #
-        if !cached_billboard || current_billboard.updated_at > cached_billboard.updated_at
+        if !cached_billboard ||
+        current_billboard.updated_at > cached_billboard.updated_at
           featured = current_billboard.posts.first
         else
-          featured = current_billboard.posts.select { |p| p.id != current_featured.id }.sample
+          featured = current_billboard.posts.select do |p|
+            p.id != current_featured.id
+          end
+
+          featured = featured.sample
         end
 
         Rails.cache.write(current_billboard_key, current_billboard)
         Rails.cache.write(featured_post_key, featured)
 
-        self.cache(featured, "/home/cached/audiovision", "views/home/audiovision", local: :post)
+        self.cache(
+          featured,
+          "/home/cached/audiovision",
+          "views/home/audiovision",
+          local: :post
+        )
       end
     end
   end

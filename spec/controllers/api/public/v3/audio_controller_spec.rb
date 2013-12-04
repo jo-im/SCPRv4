@@ -28,21 +28,21 @@ describe Api::Public::V3::AudioController do
   describe "GET index" do
     before :each do
       @available   = []
-      
-      3.times do |n| 
-        @available << create(:uploaded_audio, 
-          created_at: Time.now + n.minutes, 
+
+      3.times do |n|
+        @available << create(:uploaded_audio,
+          created_at: Time.now + n.minutes,
           mp3: load_audio_fixture("audio/point1sec-#{n}.mp3")
         )
       end
-      
+
       @unavailable = create_list :enco_audio, 2
     end
 
     after :each do
       purge_uploaded_audio
     end
-    
+
     it "sanitizes the limit" do
       get :index, { limit: "Evil Code" }.merge(request_params)
       assigns(:limit).should eq 0

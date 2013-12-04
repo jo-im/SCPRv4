@@ -1,11 +1,11 @@
 class ScheduleOccurrencePresenter < ApplicationPresenter
   presents :occurrence
   delegate \
-    :title, 
-    :public_url, 
-    :is_distinct?, 
-    :is_recurring?, 
-    :program, 
+    :title,
+    :public_url,
+    :is_distinct?,
+    :is_recurring?,
+    :program,
     to: :occurrence
 
 

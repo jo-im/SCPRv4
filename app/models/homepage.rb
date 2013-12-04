@@ -49,6 +49,7 @@ class Homepage < ActiveRecord::Base
     :dependent    => :destroy
 
   accepts_json_input_for :content
+  tracks_association :content
 
   belongs_to :missed_it_bucket
 

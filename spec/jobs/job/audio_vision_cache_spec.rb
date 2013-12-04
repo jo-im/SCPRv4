@@ -18,7 +18,7 @@ describe Job::AudioVisionCache do
     it "caches the first post if the billboard's updated_timestamp has changed" do
       # Sanity Check
       Job::AudioVisionCache.perform
-      Rails.cache.read("scprv4:homepage:av-featured-post").title.should match /Big Cats/
+      Rails.cache.read("scprv4:homepage:av-featured-post").title.should match /Night Watch/
 
       # Now test that it will change
       stub_request(:get, %r{billboards/current}).to_return({
@@ -27,7 +27,7 @@ describe Job::AudioVisionCache do
       })
 
       Job::AudioVisionCache.perform
-      Rails.cache.read("scprv4:homepage:av-featured-post").title.should match /Color of Space/
+      Rails.cache.read("scprv4:homepage:av-featured-post").title.should match /Thankful For/
     end
 
 
@@ -35,13 +35,13 @@ describe Job::AudioVisionCache do
       Job::AudioVisionCache.perform
       # Sanity Check
       featured = Rails.cache.read("scprv4:homepage:av-featured-post")
-      featured.title.should match /Big Cats/ # First post
+      featured.title.should match /Night Watch/ # First post
 
       last_title = featured.title
 
       # Test that it will change.
       # Do it 10 times so we can be reasonably sure
-      # that it never chooses the same post twice in 
+      # that it never chooses the same post twice in
       # a row.
       10.times do
         Job::AudioVisionCache.perform
@@ -55,7 +55,7 @@ describe Job::AudioVisionCache do
       Rails.cache.read("views/home/audiovision").should eq nil
 
       Job::AudioVisionCache.perform
-      Rails.cache.read("views/home/audiovision").should match /Big Cats/
+      Rails.cache.read("views/home/audiovision").should match /Night Watch/
     end
   end
 end

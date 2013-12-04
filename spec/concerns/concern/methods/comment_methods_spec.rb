@@ -26,7 +26,7 @@ describe Concern::Methods::CommentMethods do
   end
 
   #--------------------
-  
+
   describe "#disqus_shortname" do
     it "returns the globally defined disqus_shortname" do
       Rails.application.config.stub(:api) { { "disqus" => { "shortname" => "blahblah" } } }

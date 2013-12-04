@@ -7,7 +7,7 @@ describe PressRelease do
       press.save!
       press.slug.should eq "hello-hello"
     end
-    
+
     it "doesn't generate slug if it's present" do
       press = build :press_release, slug: "blah-blah-blah"
       press.save!

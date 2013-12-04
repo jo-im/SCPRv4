@@ -125,6 +125,8 @@ describe CategoryPreview do
   end
 
   describe '#featured_object' do
+    sphinx_spec
+
     it 'returns the candidate with the highest score' do
       # Slideshow
       story1 = create :news_story, category: category
@@ -133,7 +135,7 @@ describe CategoryPreview do
       # Segment
       segment = create :show_segment
 
-      # Featured Comment 
+      # Featured Comment
       bucket = create :featured_comment_bucket
       category.comment_bucket = bucket
       comment = create :featured_comment, bucket: bucket, content: segment

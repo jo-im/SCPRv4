@@ -2,7 +2,7 @@
 # CategoryAssociation
 #
 # Defines category association
-# 
+#
 module Concern
   module Associations
     module CategoryAssociation

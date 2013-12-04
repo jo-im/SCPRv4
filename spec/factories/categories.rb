@@ -5,8 +5,9 @@ FactoryGirl.define do
   factory :category do
     sequence(:title) { |n| "Local #{n}" }
 
+    is_news true
+
     trait :is_news do
-      is_news true
     end
 
     trait :is_not_news do

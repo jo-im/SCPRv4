@@ -5,10 +5,10 @@ module Eloqua
   class Client
 
     #-------------------
-    
+
     def initialize(_credentials, options={})
       credentials = _credentials.symbolize_keys
-      
+
       @company  = credentials[:company]
       @user     = credentials[:user]
       @password = credentials[:password]
@@ -16,7 +16,7 @@ module Eloqua
     end
 
     #----------------------
-    
+
     def fetch_url
       @url = api_urls["rest"]["standard"] if api_urls
     end
@@ -77,17 +77,17 @@ module Eloqua
         request.url path
       end
     end
-    
+
     #-----------------
-    
+
     def api
       @api ||= connection(@url)
     end
 
     #-----------------
-    
+
     private
-    
+
     def connection(url)
       Faraday.new url do |conn|
         conn.basic_auth @company + "\\" + @user, @password
@@ -97,7 +97,7 @@ module Eloqua
     end
 
     #-----------------
-    
+
     def api_urls
       @api_urls ||= begin
         response = connection(Eloqua::LOGIN_ROOT).get

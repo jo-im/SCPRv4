@@ -1,3 +1,7 @@
+require File.expand_path('../../fixtures/db/fixture_migration.rb', __FILE__)
+migration = -> { FixtureMigration.new.up }
+silence_stream STDOUT, &migration
+
 Dir[Rails.root.join("spec/fixtures/models/*.rb")].each { |f| require f }
 
 FactoryGirl.define do
