@@ -1,28 +1,24 @@
-@import 'reset';
-@import 'globals';
-@import 'masthead';
-
 body        { position: relative; z-index: 1; }
 .masthead   { position: relative; z-index: 2; }
 
 
 
-//	################################################################################################
-//	################################################################################################
-//	DISQUS
-//	################################################################################################
-//	################################################################################################
+//  ################################################################################################
+//  ################################################################################################
+//  DISQUS
+//  ################################################################################################
+//  ################################################################################################
 
 .interior .comments     { margin-bottom: 30px; }
 
 
 
 
-//	################################################################################################
-//	################################################################################################
-//	PROLOGUE
-//	################################################################################################
-//	################################################################################################
+//  ################################################################################################
+//  ################################################################################################
+//  PROLOGUE
+//  ################################################################################################
+//  ################################################################################################
 
 .supports-filters .prologue .ephemera img { display: block; }
 
@@ -105,7 +101,7 @@ body        { position: relative; z-index: 1; }
     .share {
         position: absolute;
         li                      { display: inline; float: left; }
-        a                       { @include mask; width: 20px; height: 20px; margin-right: 20px; background: url(../i/single-share-icons.png) no-repeat; background-size: 120px 60px; }
+        a                       { @include mask; width: 20px; height: 20px; margin-right: 20px; background: image-url("i/single-share-icons.png") no-repeat; background-size: 120px 60px; }
         li:nth-child(1) a       { background-position: 0 0; }
         li:nth-child(1) a:hover { background-position: 0 -30px; }
         li:nth-child(2) a       { background-position: -30px 0px; }
@@ -309,19 +305,19 @@ body        { position: relative; z-index: 1; }
 
 
 
-//	################################################################################################
-//	################################################################################################
-//	REPORT
-//	################################################################################################
-//	################################################################################################
+//  ################################################################################################
+//  ################################################################################################
+//  REPORT
+//  ################################################################################################
+//  ################################################################################################
 
 .report {
     border-bottom: 1px solid #eeeeee;
     margin-bottom: 30px;
     .inner {
         background:
-            url(../i/fauxcol-single-report-topper.png) no-repeat 74.352% 0,
-            url(../i/fauxcol-single-report-base.png) repeat-y 74.352% 0; // ...goddamn imprecise retina-ipad trial-and-error...
+            image-url("i/fauxcol-single-report-topper.png") no-repeat 74.352% 0,
+            image-url("i/fauxcol-single-report-base.png") repeat-y 74.352% 0; // ...goddamn imprecise retina-ipad trial-and-error...
         background-size:
             1500px 4px,
             1500px 15px;
@@ -341,7 +337,7 @@ body        { position: relative; z-index: 1; }
             }
             header {
                 padding: 6px 5% 13px 13px;
-                background: url(../i/single-report-icons.png) no-repeat;
+                background: image-url("i/single-report-icons.png") no-repeat;
                 background-size: 50px 1930px;
                 margin-left: -13px;
                 h1,h2                   { margin-left: 10.21021021021%; } // 34 / 333
@@ -387,7 +383,7 @@ body        { position: relative; z-index: 1; }
                     button {
                         position: absolute;
                         top: 13px;
-                        left: 9.60960960961%;                    
+                        left: 9.60960960961%;
                         width: 41px;
                         height: 41px;
                         @include icon;
@@ -411,7 +407,7 @@ body        { position: relative; z-index: 1; }
                         }
                     }
                 }
-                
+
             }
             &.see-more.issue header     { background-position: 0 -256px; }
             &.see-more.kpcc header      { background-position: 0 -128px; }
@@ -486,7 +482,7 @@ body        { position: relative; z-index: 1; }
         h2,h3           { font-family: $font-freight; }
         h2              { color: $orange; font-weight: 600; font-size: 1.3em; }
         h3              { color: black; font-weight: 700; text-transform: uppercase; font-size: 0.9375em; }
-        blockquote      { font-size: 1.26666666666667em; font-family: $font-merri-lightital; padding: 15px 0 0 25px; margin-left: -10px; background: url(../i/flourish-blockquote.png) no-repeat; background-size: 64px 55px; }
+        blockquote      { font-size: 1.26666666666667em; font-family: $font-merri-lightital; padding: 15px 0 0 25px; margin-left: -10px; background: image-url("i/flourish-blockquote.png") no-repeat; background-size: 64px 55px; }
         img             { max-width: 100%; height: auto; margin: 0 auto; }
     }
     .asset-inset {
@@ -508,7 +504,7 @@ body        { position: relative; z-index: 1; }
         font-family: $font-freight;
         a:hover { text-decoration: none; }
         header {
-            background: url(../i/single-report-icons.png) no-repeat;
+            background: image-url("i/single-report-icons.png") no-repeat;
             background-size: 50px 1930px;
             margin: 0 0 7px -13px;
             padding: 6px 0 5px 13px;
@@ -520,7 +516,7 @@ body        { position: relative; z-index: 1; }
                 font-weight: 600;
             }
         }
-        
+
         nav {
             margin: 0 5% 0 8.571428571429%; // 27 / ~315
             ul                  { margin-bottom: 0; }
@@ -531,25 +527,25 @@ body        { position: relative; z-index: 1; }
                 color: #656565;
                 line-height: 1.1;
                 padding-bottom: 2px;
-                border-bottom: 1px solid #f6e3d6; 
+                border-bottom: 1px solid #f6e3d6;
             }
             a {
                 padding: 0 0 0 25px;
-                background: url(../i/single-report-icons.png) no-repeat 0 -894px; // all are assumed to be "article" by default
+                background: image-url("i/single-report-icons.png") no-repeat 0 -894px; // all are assumed to be "article" by default
                 background-size: 50px 1930px;
             }
-            
+
             .article a      { background-position: 0 -894px; }
-        	.slideshow a    { background-position: 0 -988px; }
-        	.video a		{ background-position: 0 -1082px; }
-        	.poll a			{ background-position: 0 -1176px; }
-        	.map a			{ background-position: 0 -1270px; }
-        	.audio a		{ background-position: 0 -1364px; }
-        	.infographic a	{ background-position: 0 -1458px; }
-        	.taketwo a		{ background-position: 0 -1552px; }
-        	.airtalk a		{ background-position: 0 -1646px; }
-        	.offramp a		{ background-position: 0 -1740px; }
-            
+            .slideshow a    { background-position: 0 -988px; }
+            .video a        { background-position: 0 -1082px; }
+            .poll a         { background-position: 0 -1176px; }
+            .map a          { background-position: 0 -1270px; }
+            .audio a        { background-position: 0 -1364px; }
+            .infographic a  { background-position: 0 -1458px; }
+            .taketwo a      { background-position: 0 -1552px; }
+            .airtalk a      { background-position: 0 -1646px; }
+            .offramp a      { background-position: 0 -1740px; }
+
             span {
                 text-transform: uppercase;
                 color: #bca18d;
@@ -571,7 +567,7 @@ body        { position: relative; z-index: 1; }
         margin-left: -2.51572327044%; // 16 / 636
         a {
             display: inline-block;
-            background: url(../i/single-comments-balloons.png) no-repeat;
+            background: image-url("i/single-comments-balloons.png") no-repeat;
             background-size: 20px 131px;
             padding: 0 0 5px 37px;
             font-family: $font-freight;
@@ -692,8 +688,8 @@ body        { position: relative; z-index: 1; }
                 padding-bottom: 45px;
                 margin: 0 auto 60px;
                 background:
-                    url(../i/flourish-donut.png) no-repeat center bottom,
-                    url(../i/flourish-gray-dot.png) repeat-x left 0px bottom 9px;
+                    image-url("i/flourish-donut.png") no-repeat center bottom,
+                    image-url("i/flourish-gray-dot.png") repeat-x left 0px bottom 9px;
                 background-size:
                     26px 19px,
                     1px 1px;
@@ -730,11 +726,11 @@ body        { position: relative; z-index: 1; }
 
 
 
-//	################################################################################################
-//	################################################################################################
-//	TRIPTYCH (...extends _globals.scss)
-//	################################################################################################
-//	################################################################################################
+//  ################################################################################################
+//  ################################################################################################
+//  TRIPTYCH (...extends _globals.scss)
+//  ################################################################################################
+//  ################################################################################################
 
 .triptych {
     margin-top: 25px;
@@ -742,20 +738,20 @@ body        { position: relative; z-index: 1; }
 
 
 
-//	################################################################################################
-//	################################################################################################
-//	TOWNHALL
-//	################################################################################################
-//	################################################################################################
+//  ################################################################################################
+//  ################################################################################################
+//  TOWNHALL
+//  ################################################################################################
+//  ################################################################################################
 
 .townhall {
-    background: #636363 url(../i/fauxcol-townhall-base.png) repeat-y center top;
+    background: #636363 image-url("i/fauxcol-townhall-base.png") repeat-y center top;
     .inner {
         padding: 56px 0 120px;
         box-shadow: inset -2px 0 0 #636363; // Firefox is bad at accurate subpixel clipping.
         background:
-            url(../i/fauxcol-townhall-east.png) repeat-y 84.153846153846% 0,
-            url(../i/fauxcol-townhall-west.png) repeat-y 23.153846153846% 0;
+            image-url("i/fauxcol-townhall-east.png") repeat-y 84.153846153846% 0,
+            image-url("i/fauxcol-townhall-west.png") repeat-y 23.153846153846% 0;
         background-size:
             1500px 15px,
             1500px 15px;
@@ -824,13 +820,13 @@ body        { position: relative; z-index: 1; }
                         font-size: 0.8125em; // 13 / 16
                         line-height: 1.1;
                         color: #333333;
-                        a:hover         { color: black; text-decoration: underline; } 
+                        a:hover         { color: black; text-decoration: underline; }
                     }
 
                     //  - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
                         @media screen and (min-width: 525px) and (max-width: 1100px) {
-                            max-width: 170px;                    
+                            max-width: 170px;
                             .ratio {
                                 width: 100%;
                                 float: none;
@@ -863,7 +859,7 @@ body        { position: relative; z-index: 1; }
                     margin-bottom: 18px;
                 }
                 figure {
-                    background: url(../i/fauxcol-townhall-event.png) repeat-y 27.816901408451% 0;
+                    background: image-url("i/fauxcol-townhall-event.png") repeat-y 27.816901408451% 0;
                     background-size: 1500px 15px;
                     time {
                         display: block;
@@ -875,9 +871,9 @@ body        { position: relative; z-index: 1; }
                             font-weight: normal;
                             display: block;
                             font-family: "Avenir Next Condensed", "freight-sans-pro", "Avenir Next", "Avenir", "Lucida Grande", "Tahoma", Arial, sans-serif;
-        					font-size: 3.125em; // 50 / 16
-        					font-weight: 300;
-        					line-height: 1;
+                            font-size: 3.125em; // 50 / 16
+                            font-weight: 300;
+                            line-height: 1;
                             letter-spacing: -0.03em;
                             color: $blue;
                         }
@@ -890,7 +886,7 @@ body        { position: relative; z-index: 1; }
                                 font-weight: 700;
                                 color: #626262;
                             }
-                        }                    
+                        }
                     }
                     figcaption {
                         float: right;
@@ -920,7 +916,7 @@ body        { position: relative; z-index: 1; }
                         }
 
                     //  - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-                    
+
                 }
             }
         }
@@ -942,7 +938,7 @@ body        { position: relative; z-index: 1; }
             font-family: $font-freight;
             a {
                 display: inline-block;
-                background: url(../i/flourish-caret-left.png) no-repeat left 6px;
+                background: image-url("i/flourish-caret-left.png") no-repeat left 6px;
                 background-size: 6px 14px;
                 font-size: 1.3125em; // 21 / 16
                 line-height: 1.1;
@@ -950,7 +946,7 @@ body        { position: relative; z-index: 1; }
                 &:hover { text-decoration: underline; }
             }
         }
-        
+
     }
     .supportive {
         width: 21.302998965874%; // 206 / 967
@@ -1041,7 +1037,7 @@ body        { position: relative; z-index: 1; }
                         @include texthide;
                         width: 24px;
                         height: 24px;
-                        background: url(../i/townhall-contact-icons.png) no-repeat;
+                        background: image-url("i/townhall-contact-icons.png") no-repeat;
                         background-size: 68px 68px;
                         float: left;
                         margin-right: 8px;
@@ -1074,7 +1070,7 @@ body        { position: relative; z-index: 1; }
             float: none;
             padding: 45px 5.5% 50px;
             margin-left: -5.5%;
-            background: url(../i/fauxcol-townhall-primary-interior.png) repeat-y 68% 0;
+            background: image-url("i/fauxcol-townhall-primary-interior.png") repeat-y 68% 0;
             background-size: 1500px 15px;
             border-bottom: 1px solid black;
         }
@@ -1090,7 +1086,7 @@ body        { position: relative; z-index: 1; }
                 h1                      { box-shadow: none; }
                 h1 span                 { display: inline; }
                 .events figure time b   { font-size: 2em; }
-        //      ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~                
+        //      ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~
                 @media screen and (min-width: 525px) {
                     .resources          { margin: 0 0 10px 0; }
                     .resources figure   {
@@ -1101,7 +1097,7 @@ body        { position: relative; z-index: 1; }
                         &:last-child    { margin-right: 0; float: right; }
                     }
                 }
-        //      ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~             
+        //      ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~
             }
         }
         .backlog                        { width: 66.4%; }
@@ -1158,7 +1154,7 @@ body        { position: relative; z-index: 1; }
                 &:nth-child(4n)         { margin-right: 0; float: right; }
                 .ratio                  { float: none; width: 100%; }
                 figcaption              { float: none; width: 100%; }
-        //      ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~                
+        //      ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~
                 @media screen and (max-width: 500px) {
                     width: 31%;
                     margin-right: 3.5%;
@@ -1166,7 +1162,7 @@ body        { position: relative; z-index: 1; }
                     &:nth-child(3n)     { margin-right: 0; float: right; }
                     figcaption mark     { font-size: 0.75em; margin-bottom: 4px; }
                 }
-        //      ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~                                        
+        //      ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~
             }
         }
     }
@@ -1183,7 +1179,7 @@ body        { position: relative; z-index: 1; }
                 time b           { margin-bottom: 5px; }
                 time span, mark  { display: block; }
                 figcaption       { padding-top: 5px; }
-                figcaption b     { font-size: 0.875em; }          
+                figcaption b     { font-size: 0.875em; }
             }
         }
     }

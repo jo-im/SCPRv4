@@ -10,86 +10,86 @@ $orange: #f17b21;
 
 
 
-//	################################################################################################
-//	################################################################################################
-//	PARTNER
-//	################################################################################################
-//	################################################################################################
+//  ################################################################################################
+//  ################################################################################################
+//  PARTNER
+//  ################################################################################################
+//  ################################################################################################
 
 .partner.mercedes {
-	background:
-		url(../sponsor-assets/mercedes-scenery.jpg) no-repeat center -116px,
-		url(../sponsor-assets/mercedes-texture-noise.jpg) repeat;
-	background-size:
-		1600px 500px,
-		100px 100px;
-	.inner {
-		min-height: 234px; // 268
-		position: relative;
-		padding-top: 34px;
-		h1 {
-			background: rgba(55,86,119,0.62);
-			color: white;
-			width: 102.461538461538%;
-			padding: 20px 0 24px 2.461538461538%;
-			margin-left: -2.461538461538%;
-			font-family: $font-prox;
-			font-size: 2.5em; // 40/16
-			line-height: 1.05;
-			letter-spacing: -0.01em;
-			b,span {
-				font-weight: 300;
-				display: block;
-			}
-		}
-		.car {
-			display: block;
-			width: 543px;
-			position: absolute;
-			z-index: 2;
-			top: 13px;
-			right: 44px;
-			img {
-				width: 100%;
-				height: auto;
-			}
-		}
-		.teaser {
-			position: absolute;
-			z-index: 1;
-			background: white;
-			left: 122px;
-			bottom: 0;
-			letter-spacing: -0.015em;
-			padding: 15px 58px 16px 19px;
-			span {
-				font-size: 0.875em;
-				color: #46525d;
-				display: block;
-				line-height: 1.45;
-				&:nth-child(2) {
+    background:
+        image-url("sponsor-assets/mercedes-scenery.jpg") no-repeat center -116px,
+        image-url("sponsor-assets/mercedes-texture-noise.jpg") repeat;
+    background-size:
+        1600px 500px,
+        100px 100px;
+    .inner {
+        min-height: 234px; // 268
+        position: relative;
+        padding-top: 34px;
+        h1 {
+            background: rgba(55,86,119,0.62);
+            color: white;
+            width: 102.461538461538%;
+            padding: 20px 0 24px 2.461538461538%;
+            margin-left: -2.461538461538%;
+            font-family: $font-prox;
+            font-size: 2.5em; // 40/16
+            line-height: 1.05;
+            letter-spacing: -0.01em;
+            b,span {
+                font-weight: 300;
+                display: block;
+            }
+        }
+        .car {
+            display: block;
+            width: 543px;
+            position: absolute;
+            z-index: 2;
+            top: 13px;
+            right: 44px;
+            img {
+                width: 100%;
+                height: auto;
+            }
+        }
+        .teaser {
+            position: absolute;
+            z-index: 1;
+            background: white;
+            left: 122px;
+            bottom: 0;
+            letter-spacing: -0.015em;
+            padding: 15px 58px 16px 19px;
+            span {
+                font-size: 0.875em;
+                color: #46525d;
+                display: block;
+                line-height: 1.45;
+                &:nth-child(2) {
                     margin-bottom: 4px;
-			    }
-			}
-			mark {
-				color: $orange;
-				text-transform: uppercase;
-				font-size: 0.75em;
-				font-family: $font-prox;
-				font-weight: 700;
-				a:after	{ content: " ›"; }
-				a:hover	{ text-decoration: underline; }
-			}
-		}
-		.logo {
-			width: 96px;
-			left: 0;
-			top: 184px;
-			position: absolute;
-			a           { display: block; }
-			img         { width: 100%; height: auto; }
-		}
-	}
+                }
+            }
+            mark {
+                color: $orange;
+                text-transform: uppercase;
+                font-size: 0.75em;
+                font-family: $font-prox;
+                font-weight: 700;
+                a:after { content: " ›"; }
+                a:hover { text-decoration: underline; }
+            }
+        }
+        .logo {
+            width: 96px;
+            left: 0;
+            top: 184px;
+            position: absolute;
+            a           { display: block; }
+            img         { width: 100%; height: auto; }
+        }
+    }
 }
 
 
@@ -100,16 +100,16 @@ $orange: #f17b21;
 
     @media screen and (max-width: 1460px) {
         .partner.mercedes {
-        	background-position:
+            background-position:
                 right -123px top -116px,
                 left top;
-        	.inner {
+            .inner {
                 .car { right: 0; }
                 @media screen and (max-width: 1300px) {
                     .teaser         { left: 110px; padding-top: 18px; }
-        	        .teaser span    { font-size: 0.8125em; }
-    	        }
-    	    }
+                    .teaser span    { font-size: 0.8125em; }
+                }
+            }
         }
     }
 
@@ -117,18 +117,18 @@ $orange: #f17b21;
 
     @media screen and (max-width: 1235px) {
         .partner.mercedes {
-        	background-size:
-        		1280px 400px,
-        		100px 100px;
-    		background-position:
+            background-size:
+                1280px 400px,
+                100px 100px;
+            background-position:
                 right -100px top -83px,
                 left top;
-        	.inner {
+            .inner {
                 .car {
-        			width: 434px;
-        			top: 20px;
+                    width: 434px;
+                    top: 20px;
                 }
-    	    }
+            }
         }
     }
 
@@ -136,7 +136,7 @@ $orange: #f17b21;
 
     @media screen and (max-width: 1010px) {
         .partner.mercedes {
-    	    .inner h1 { font-size: 2em; }
+            .inner h1 { font-size: 2em; }
         }
     }
 
@@ -150,12 +150,12 @@ $orange: #f17b21;
             background-position:
                 right -80px top -60px,
                 left top;
-    	    .inner {
+            .inner {
                 padding-top: 28px;
-    	        h1      { font-size: 1.8em; }
+                h1      { font-size: 1.8em; }
                 .logo   { top: 180px; }
-    	        .car    { width: 347px; top: 22px; }
-	        }
+                .car    { width: 347px; top: 22px; }
+            }
         }
     }
 
@@ -163,13 +163,13 @@ $orange: #f17b21;
 
     @media screen and (max-width: 765px) {
         .partner.mercedes {
-        	background-size:
-        		1600px 500px,
-        		100px 100px;
+            background-size:
+                1600px 500px,
+                100px 100px;
             background-position:
                 left 0 top -20px,
                 left top;
-    	    .inner {
+            .inner {
                 min-height: 0;
                 padding-bottom: 25px;
                 padding-top: 20px;
@@ -201,7 +201,7 @@ $orange: #f17b21;
                     top: auto;
                     margin-top: -23px;
                 }
-	        }
+            }
         }
     }
 
@@ -209,13 +209,13 @@ $orange: #f17b21;
 
     @media screen and (max-width: 450px) {
         .partner.mercedes {
-        	background-size:
-        		1600px 500px,
-        		100px 100px;
+            background-size:
+                1600px 500px,
+                100px 100px;
             background-position:
                 left -280px top -60px,
                 left top;
-    	    .inner {
+            .inner {
                 min-height: 0;
                 padding-bottom: 25px;
                 padding-top: 22px;
@@ -247,7 +247,7 @@ $orange: #f17b21;
                     top: auto;
                     margin-top: -23px;
                 }
-	        }
+            }
         }
     }
 
@@ -256,11 +256,11 @@ $orange: #f17b21;
 
 
 
-//	################################################################################################
-//	################################################################################################
-//	TEMPLATE-SPECIFIC EXCEPTIONS
-//	################################################################################################
-//	################################################################################################
+//  ################################################################################################
+//  ################################################################################################
+//  TEMPLATE-SPECIFIC EXCEPTIONS
+//  ################################################################################################
+//  ################################################################################################
 
 
 body.issues .partner.mercedes .inner .teaser {
