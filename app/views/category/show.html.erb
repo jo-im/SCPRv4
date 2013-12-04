@@ -99,11 +99,11 @@
 <section class="resources-row">
     <div class="inner bound clearfix">
         <header>
-            <h1><span>Represent Resources</span></h1>
-            <h2>Quick primers on civic life in California.</h2>
-            <h3>All of us at KPCC believe that civic life in Southern California should be understandable, relevant, and libero ante, aliquam congue mattis id, blandit quis risus. Sed iaculis tellus accumsan ipsum porta ultricies.</h3>
-            <!--<h4>Represent Resources is made possible with support from <%= link_to 'The Robert Day School', '#' %>.</h4> -->
+          <h1 class="<%=@category.slug%>"><span><%= @category.title %></span></h1>
+          <h2>Tools and guides to help you get informed and engaged.</h2>
+          <h3>KPCC believes that making <%= @category.title %> in Southern California relevant and accessible is an important part of strengthening the civic and cultural bonds that unite the diverse communities of this region.</h3>
         </header>
+
         <nav>
           <ul class="clearfix">
         <% if @resources.present? %>
@@ -143,9 +143,7 @@
                 </header>
                 <nav>
                     <ul>
-                      <%- @top_two_special_issue_articles.each do |article| %>
-                        <%= render partial: 'category/issue_list', locals: {article: article} %>
-                      <% end %>
+                    <%= render 'category/issue_list', articles: @top_two_special_issue_articles %>
                     </ul>
                 </nav>
             </div>
@@ -158,9 +156,7 @@
                     </header>
                     <nav>
                         <ul>
-                        <%- issue.articles.first(2).each do |article| %>
-                          <%= render partial: 'category/issue_list', locals: {article: article} %>
-                        <% end %>
+                        <%= render 'category/issue_list', articles: issue.articles.first(2) %>
                         </ul>
                     </nav>
                 </div>
