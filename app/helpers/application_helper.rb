@@ -71,43 +71,60 @@ module ApplicationHelper
     html.html_safe
   end
 
-  #---------------------------
-  # render_asset takes a ContentBase object and a context, and renders using
-  # an optional context_asset_scheme attribute on the object.
+
+  # Render an asset for an article, in the given context.
   #
-  # For example, given a context of "story", render_asset will check for a
-  # story_asset_scheme attribute on the object.  If found (let's assume with a
-  # value of "wide"), it will try to render:
+  # Arguments:
+  # * content  - An object which responds to `to_article`
+  # * args    - (Strings) The paths to the partial to render. The last argument
+  #             may be a hash of arguments.
+  # * options - (Hash) Whether or not to render a fallback if ther are no
+  #             assets.
   #
-  # * shared/assets/story/wide
-  # * shared/assets/default/wide
-  # * shared/assets/story/default
-  # * shared/assets/default/default
-  def render_asset(content, context, fallback=false)
+  # If `context` is specified, that will be rendered. If not, then it will
+  # render the object's `asset_display` attribute. If that is also empty,
+  # then it will render the `asset_display` for the article's feature. If all
+  # of those are empty, then it just renders a default.
+  def render_asset(content, context, options={})
     article = content.to_article
 
     if article.assets.empty?
-      return fallback ? render("shared/assets/#{context}/fallback", article: article) : ''
+      html = if options[:fallback]
+        render_asset_partial(context, "fallback", article)
+      else
+        ''
+      end
+
+      return html
     end
 
-    # look for a scheme on the content object
-    attribute = "#{context}_asset_scheme"
-    scheme = content.respond_to?(attribute) ? content.send(attribute) : "default"
+    scheme = if article.respond_to?(:asset_display) &&
+    article.asset_display.present?
+      article.asset_display
+    else
+      "default"
+    end
 
-    # set up our template precendence
-    tmplt_opts = [
+    render_asset_partial(context, scheme, article)
+  end
+
+  def render_asset_partial(context, scheme, article)
+    lookup = [
       "#{context}/#{scheme}",
-      "default/#{scheme}",
-      "#{context}/default",
-      "default/default"
+      "default/#{scheme}"
     ]
 
-    partial = tmplt_opts.find do |template|
+    partial = lookup.find do |template|
       self.lookup_context.exists?(template, ["shared/assets"], true)
     end
 
-    render "shared/assets/#{partial}", assets: article.assets, article: article
+    return '' if !partial
+
+    render "shared/assets/#{partial}",
+      :assets     => article.assets,
+      :article    => article
   end
+
 
   #----------
 
@@ -237,7 +254,9 @@ module ApplicationHelper
     options[:class] = "audio-toggler #{options[:class]}"
     options[:title] ||= article.short_title
     options["data-duration"] = article.audio.first.duration
-    content_tag :div, link_to(title, article.audio.first.url, options), class: "story-audio inline"
+
+    content_tag :div, link_to(title, article.audio.first.url, options),
+      :class => "story-audio inline"
   end
 
   #---------------------------
@@ -287,7 +306,13 @@ module ApplicationHelper
   # time tag. Otherwise previewing unpublished content breaks.
   def timestamp(datetime)
     if datetime.respond_to?(:strftime)
-      time_tag datetime, format_date(datetime, format: :full_date, time: true), pubdate: true
+      time_tag(datetime,
+        format_date(datetime,
+          :format   => :full_date,
+          :time     => true
+        ),
+        :pubdate => true
+      )
     end
   end
 
@@ -310,7 +335,9 @@ module ApplicationHelper
     if has_comments?(object)
       options[:class] = "comment_link social_disq #{options[:class]}"
       options["data-objkey"] = object.disqus_identifier
-      link_to("Add your comments", object.public_path(anchor: "comments"), options)
+
+      link_to("Add your comments",
+        object.public_path(anchor: "comments"), options)
     end
   end
 
@@ -322,8 +349,12 @@ module ApplicationHelper
   #----------
 
   def content_widget(partial, object, options={})
-    partial = partial.chars.first == "/" ? partial : "shared/cwidgets/#{partial}"
-    render(partial, { article: object.to_article, cssClass: "" }.merge(options))
+    partial = "shared/cwidgets/#{partial}" if partial.chars.first != "/"
+
+    render(partial, {
+      :article  => object.to_article,
+      :cssClass => ""
+    }.merge(options))
   end
 
   alias_method :widget, :content_widget

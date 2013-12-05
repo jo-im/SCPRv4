@@ -13,10 +13,7 @@
 <%= f.section "publishing" %>
 <%= f.section "bylines" %>
 
-<%= f.section "assets" do %>
-  <%= f.input :segment_asset_scheme, collection: ShowSegment::ASSET_SCHEMES, include_blank: false %>
-<% end %>
-
+<%= f.section "assets" %>
 <%= f.section "audio" %>
 <%= f.section "related_links" %>
 <%= f.section "related_content" %>

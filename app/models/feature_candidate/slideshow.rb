@@ -12,8 +12,8 @@ module FeatureCandidate
         :classes     => [NewsStory, BlogEntry, ShowSegment],
         :limit       => LIMIT,
         :with        => {
-          :category     => @category.id,
-          :is_slideshow => true
+          :category         => @category.id,
+          :asset_type_id    => ContentBase::ASSET_TYPES[:slideshow]
         },
         :without => { obj_key: @excludes.map(&:obj_key_crc32) }
       }).first.try(&:to_article)
