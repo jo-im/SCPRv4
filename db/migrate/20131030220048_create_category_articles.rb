@@ -7,6 +7,7 @@ class CreateCategoryArticles < ActiveRecord::Migration
 
       t.timestamps
     end
+    add_index :category_articles, :position
     add_index :category_articles, :category_id
     add_index :category_articles, [:article_id, :article_type]
   end
