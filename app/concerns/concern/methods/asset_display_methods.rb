@@ -8,25 +8,21 @@
 module Concern
   module Methods
     module AssetDisplayMethods
-      ASSET_DISPLAY_IDS = {
-        :slideshow    => 0,
-        :video        => 1,
-        :photo        => 2,
-        :hidden       => 3
-      }
-
-      ASSET_DISPLAYS = ASSET_DISPLAY_IDS.invert
-
+      class << self
+        def select_collection
+          ContentBase::ASSET_DISPLAYS.map { |k,v| [v.to_s.titleize, k] }
+        end
+      end
 
       # The symbol for the asset display
       def asset_display
-        ASSET_DISPLAYS[self.asset_display_id]
+        ContentBase::ASSET_DISPLAYS[self.asset_display_id]
       end
 
       # Set the asset_display_id.
       # Accepts a symbol
       def asset_display=(value)
-        self.asset_display_id = ASSET_DISPLAY_IDS[value]
+        self.asset_display_id = ContentBase::ASSET_DISPLAY_IDS[value]
       end
     end
   end

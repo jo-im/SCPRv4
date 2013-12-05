@@ -129,7 +129,7 @@
               <div class="row-fluid">
                 <% if event.assets.present? %>
                   <div class="span8">
-                    <%= render_asset event, 'thumbnail', true %>
+                    <%= render_asset event, 'thumbnail', fallback: true %>
                   </div>
                   <div class="span16">
                 <% else %>

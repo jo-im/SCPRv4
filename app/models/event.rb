@@ -19,6 +19,7 @@ class Event < ActiveRecord::Base
   include Concern::Callbacks::TouchCallback
   include Concern::Methods::CommentMethods
   include Concern::Methods::PublishingMethods
+  include Concern::Methods::AssetDisplayMethods
 
   self.disqus_identifier_base = "events"
   ROUTE_KEY = "event"

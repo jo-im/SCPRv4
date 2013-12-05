@@ -3,7 +3,7 @@
   <% contents.map(&:to_article).each do |article| %>
     <div class="span6">
       <div class="carousel-item">
-        <%= render_asset article, 'thumbnail', true %>
+        <%= render_asset article, 'thumbnail', fallback: true %>
         <span class="title"><%= link_to article.short_title, article.public_url %></span>
       </div>
     </div>

@@ -32,7 +32,7 @@ class MigrateAssetSchemeToAssetIds < ActiveRecord::Migration
       elsif story.blog_asset_scheme == "slideshow"
         story.asset_display = :slideshow
 
-      elsif story.story_asset_scheme == "video"
+      elsif story.blog_asset_scheme == "video"
         story.asset_display = :video
       end
     end
@@ -49,7 +49,7 @@ class MigrateAssetSchemeToAssetIds < ActiveRecord::Migration
       elsif story.segment_asset_scheme == "slideshow"
         story.asset_display = :slideshow
 
-      elsif story.story_asset_scheme == "video"
+      elsif story.segment_asset_scheme == "video"
         story.asset_display = :video
       end
     end
@@ -67,11 +67,7 @@ class MigrateAssetSchemeToAssetIds < ActiveRecord::Migration
         story.asset_display = :slideshow
 
       elsif story.event_asset_scheme == "video"
-        if story.extra_asset_scheme == "sidebar"
-          puts ">>> VIDEO + EXTRA ASSETS FOUND. Ignoring. #{story.simple_title}"
-        else
-          story.asset_display = :video
-        end
+        story.asset_display = :video
       end
     end
 

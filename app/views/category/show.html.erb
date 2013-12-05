@@ -2,7 +2,9 @@
 <% content_for :body_class, 'landing' %>
 
 <section class="headline">
-  <h1 class="bound"><span><%= link_to @lead_article.short_title, @lead_article.public_path if @lead_article.present? %></span></h1>
+<% if @lead_article %>
+  <h1 class="bound"><span><%= link_to @lead_article.short_title, @lead_article.public_path %></span></h1>
+<% end %>
 </section>
 
 <div class="welcome bound clearfix">
@@ -10,16 +12,18 @@
     <section class="curated clearfix">
         <div class="photo">
             <figure class="ratio-pairing">
+
              <%= link_to @lead_article.public_path do %>
                 <div class="ratio">
                    <div class="fill"></div>
-                   <b class="img-contain"><%= image_tag(@featured_image.eight.url, alt:'') %></b>
+                   <b class="img-contain"><%= image_tag(@lead_article.asset.eight.url, alt:'') %></b>
                 </div><!--/ .ratio -->
                 <figcaption>
-                  <p><%= @featured_image.caption %></p>
-                  <mark class="credit"><%= @featured_image.owner %></mark>
+                  <p><%= @lead_article.asset.caption %></p>
+                  <mark class="credit"><%= @lead_article.asset.owner %></mark>
                 </figcaption>
              <% end %>
+
             </figure><!--/ .ratio-pairing -->
         </div><!--/ .photo -->
         <div class="supportive">
@@ -167,28 +171,34 @@
             <aside class="featured" style="background-image: url(assets/featured-interactives/intersections.jpg);">
                 <div>
                     <h1>Featured Interactive</h1>
-                    <% if @featured_interactive %>
-                      <h2><%= link_to @featured_interactive.short_title, @featured_interactive.public_path %></h2>
-                      <h3><%= @featured_interactive.byline %></h3>
+
+                    <% if article = @featured_articles[5] %>
+                      <h2><%= link_to article.short_title, article.public_path %></h2>
+                      <h3><%= article.byline %></h3>
                     <% end %>
+
                 </div>
             </aside>
             <div class="inbrief clearfix">
 
-              <% if @quote %>
-                <aside class="quote">
-                    <blockquote>
-                      <p><%= @quote.quote %></p>
-                        <cite>
-                          <mark><%= @quote.source_name %></mark>
-                          <span><%= @quote.source_context %></span>
-                        </cite>
-                    </blockquote>
-                    <footer>
-                      <%= link_to @quote_article.short_title, @quote_article.public_path, title: "Read this quote's source article" %>
-                    </footer>
-                </aside>
-              <% end %>
+            <% if @quote %>
+              <aside class="quote">
+                  <blockquote>
+                    <p><%= @quote.quote %></p>
+                      <cite>
+                        <mark><%= @quote.source_name %></mark>
+                        <span><%= @quote.source_context %></span>
+                      </cite>
+                  </blockquote>
+                  <footer>
+
+                  <% if @quote.article %>
+                    <%= link_to @quote.article.short_title, @quote.article.public_path, title: "Read this quote's source article" %>
+                  <% end %>
+
+                  </footer>
+              </aside>
+            <% end %>
 
               <aside class="events">
                 <h1>Upcoming <%= @category.title %> Events</h1>

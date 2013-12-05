@@ -19,6 +19,7 @@ describe RootPathController do
         response.header['Content-Type'].should match /xml/
       end
     end
+
     describe "with template" do
       context 'category is active' do
         before :each do
@@ -29,6 +30,7 @@ describe RootPathController do
           response.should render_template 'category/show'
         end
       end
+
       context 'category is inactive' do
         before :each do
          @inactive_category = create :category_news, is_active: false
@@ -39,6 +41,13 @@ describe RootPathController do
         end
       end
     end
+  end
+
+
+  describe "vertical" do
+    render_views
+
+    pending
   end
 
   #------------------

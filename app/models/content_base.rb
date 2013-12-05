@@ -45,6 +45,17 @@ module ContentBase
     %r{\A/programs/[\w_-]+/\d{4}/\d\d/\d\d/(\d+)/.*}  => 'ShowSegment'
   }
 
+
+  ASSET_DISPLAY_IDS = {
+    :slideshow    => 0,
+    :video        => 1,
+    :photo        => 2,
+    :hidden       => 3
+  }
+
+  ASSET_DISPLAYS = ASSET_DISPLAY_IDS.invert
+
+
   def new_obj_key
     "contentbase:new"
   end

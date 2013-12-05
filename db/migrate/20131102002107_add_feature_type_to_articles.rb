@@ -1,4 +1,4 @@
-class AddFeatureTypeToNewsStory < ActiveRecord::Migration
+class AddFeatureTypeToArticles < ActiveRecord::Migration
   def change
     add_column :news_story, :feature_type_id, :integer
     add_index :news_story, :feature_type_id
@@ -11,6 +11,5 @@ class AddFeatureTypeToNewsStory < ActiveRecord::Migration
 
     add_column :contentbase_contentshell, :feature_type_id, :integer
     add_index :contentbase_contentshell, :feature_type_id
-
   end
 end

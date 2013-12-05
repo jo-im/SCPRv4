@@ -33,6 +33,7 @@ class NewsStory < ActiveRecord::Base
   include Concern::Methods::ContentStatusMethods
   include Concern::Methods::PublishingMethods
   include Concern::Methods::CommentMethods
+  include Concern::Methods::AssetDisplayMethods
 
   self.disqus_identifier_base = "news/story"
   ROUTE_KEY = "news_story"

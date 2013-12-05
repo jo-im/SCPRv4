@@ -24,7 +24,7 @@ ThinkingSphinx::Index.define :blog_entry, with: :active_record do
 
   # For the homepage/category sections
   has category.id, as: :category
-  has asset_type_id
+  has asset_display_id
 
   # For podcasts
   join audio

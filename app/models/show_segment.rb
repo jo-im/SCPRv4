@@ -33,6 +33,7 @@ class ShowSegment < ActiveRecord::Base
   include Concern::Methods::ContentStatusMethods
   include Concern::Methods::PublishingMethods
   include Concern::Methods::CommentMethods
+  include Concern::Methods::AssetDisplayMethods
 
   self.disqus_identifier_base = "shows/segment"
   ROUTE_KEY = "segment"

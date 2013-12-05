@@ -22,44 +22,22 @@ class Quote < ActiveRecord::Base
   ]
 
 
-  scope :published, -> {
-    where(status: STATUS_LIVE)
-    .order("created_at desc")
-  }
+  scope :published, -> { where(status: STATUS_LIVE).order("created_at desc") }
 
   belongs_to :category
-  belongs_to :article,
-    polymorphic: true,
-    conditions: {status: ContentBase::STATUS_LIVE }
+  belongs_to :content,
+    :polymorphic => true,
+    :conditions  => { status: ContentBase::STATUS_LIVE }
 
   validates \
-    :source_name,
-    :source_context,
     :status,
     :category_id,
     :quote,
-    :article_type,
-    :article_id,
     presence: true
 
   validate :content_exists?, :content_is_published?
 
   #-----------------
-
-  def content_exists?
-    if self.article.nil?
-      errors.add(:article_id, "Article doesn't exist. Check the ID.")
-    end
-  end
-
-  #-----------------
-
-  def content_is_published?
-    if self.article && !self.article.published?
-      errors.add(:article_id,
-        "Article must be published in order to be featured.")
-    end
-  end
 
   class << self
     def status_select_collection
@@ -72,11 +50,33 @@ class Quote < ActiveRecord::Base
   end
 
 
+  def article
+    self.content.try(:to_article)
+  end
+
   def published?
     self.status == STATUS_LIVE
   end
 
   def status_text
     STATUS_TEXT[self.status]
+  end
+
+
+  private
+
+  def content_exists?
+    if self.content_id && self.content_type && !self.content
+      errors.add(:content_id, "Article doesn't exist. Check the ID.")
+    end
+  end
+
+  #-----------------
+
+  def content_is_published?
+    if self.content && !self.content.published?
+      errors.add(:content_id,
+        "Article must be published in order to be featured.")
+    end
   end
 end

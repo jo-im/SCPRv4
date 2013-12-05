@@ -13,7 +13,7 @@ module FeatureCandidate
         :limit       => LIMIT,
         :with        => {
           :category         => @category.id,
-          :asset_type_id    => ContentBase::ASSET_TYPES[:slideshow]
+          :asset_display_id => ContentBase::ASSET_DISPLAY_IDS[:slideshow]
         },
         :without => { obj_key: @excludes.map(&:obj_key_crc32) }
       }).first.try(&:to_article)

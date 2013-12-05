@@ -1,5 +1,5 @@
 <% if asset.first.eight.width < asset.first.eight.height %>
-  <%= render_asset article, 'article', 'right' %>
+  <%= render_asset_partial 'default', 'right', article %>
 <% else %>
-  <%= render_asset article, 'article', 'wide' %>
+  <%= render_asset_partial 'default', 'wide', article %>
 <% end %>

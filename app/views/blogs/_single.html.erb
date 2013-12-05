@@ -212,21 +212,23 @@
                     <h2>Quick primers on civic life in California.</h2>
                     <p>All of us at KPCC believe that civic life in Southern California should be understandable, relevant, and libero ante, aliquam congue mattis id, blandit quis risus. Sed iaculis tellus accumsan ipsum porta ultricies.</p>
                     <nav class="resources clearfix">
-                      <% if @resources.present? %>
-                        <% @resources.each do |resource| %>
-                          <figure class="clearfix">
-                              <div class="ratio">
-                                <%= link_to resource.public_path, title: resource.short_title do %>
-                                      <div class="fill"></div>
-                                      <b class="img-contain"><%= image_tag resource.asset.lsquare.url %></b>
-                                <% end %>
-                              </div>
-                              <figcaption>
-                                <%= link_to resource.short_title, resource.public_path %>
-                              </figcaption>
-                          </figure>
-                        <% end %>
-                      <% end %>
+
+                    <% @featured_articles[1..4].each do |article| %>
+                      <figure class="clearfix">
+                          <div class="ratio">
+
+                            <%= link_to article.public_path, title: article.short_title do %>
+                                  <div class="fill"></div>
+                                  <b class="img-contain"><%= image_tag article.asset.lsquare.url %></b>
+                            <% end %>
+
+                          </div>
+                          <figcaption>
+                            <%= link_to article.short_title, article.public_path %>
+                          </figcaption>
+                      </figure>
+                    <% end %>
+
                     </nav>
                     <footer>
                         <p>Represent Resources is made possible with support from <a href="#">The Robert Day School</a>.</p>

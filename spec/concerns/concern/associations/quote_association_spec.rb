@@ -3,20 +3,24 @@ require 'spec_helper'
 describe Concern::Associations::QuoteAssociation do
   before :each do
     @post = create :test_class_post, :published
-    @quote = create :quote, :published, article: @post
-    @quote.article(true).should eq @post
+    @quote = create :quote, :published, content: @post
+    @quote.content(true).should eq @post
+  end
+
+  it "#article is the content.to_article" do
+    @quote.article.should eq @post.to_article
   end
 
   it "destroys the join record on destroy" do
     @post.destroy
-    @quote.article(true).should eq nil
+    @quote.content(true).should eq nil
   end
 
   it "destroys the join record on unpublish" do
     @post.status = ContentBase::STATUS_PENDING
     @post.save!
 
-    @quote.article(true).should eq nil
+    @quote.content(true).should eq nil
     @post.quotes(true).should eq []
   end
 
@@ -24,7 +28,7 @@ describe Concern::Associations::QuoteAssociation do
     @post.headline = "Updated"
     @post.save!
 
-    @quote.article(true).should eq @post
+    @quote.content(true).should eq @post
     @post.quotes(true).should eq [@quote]
   end
 end

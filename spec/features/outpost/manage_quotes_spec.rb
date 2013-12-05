@@ -3,7 +3,7 @@ require "spec_helper"
 describe Quote do
   let(:valid_record) { build :quote, :published }
   let(:updated_record) { build :quote, :published }
-  let(:invalid_record) { build :quote, :published, source_name: "" }
+  let(:invalid_record) { build :quote, :published, category_id: nil }
 
   it_behaves_like "managed resource"
   it_behaves_like "save options"

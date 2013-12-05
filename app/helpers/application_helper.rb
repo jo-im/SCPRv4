@@ -76,16 +76,12 @@ module ApplicationHelper
   #
   # Arguments:
   # * content  - An object which responds to `to_article`
-  # * args    - (Strings) The paths to the partial to render. The last argument
-  #             may be a hash of arguments.
+  # * context  - The context in which to render the asset(s).
   # * options - (Hash) Whether or not to render a fallback if ther are no
   #             assets.
-  #
-  # If `context` is specified, that will be rendered. If not, then it will
-  # render the object's `asset_display` attribute. If that is also empty,
-  # then it will render the `asset_display` for the article's feature. If all
-  # of those are empty, then it just renders a default.
-  def render_asset(content, context, options={})
+  def render_asset(content, context=nil, options={})
+    context ||= 'default'
+
     article = content.to_article
 
     if article.assets.empty?
@@ -108,6 +104,8 @@ module ApplicationHelper
     render_asset_partial(context, scheme, article)
   end
 
+
+  # Render a partial for a given context and scheme.
   def render_asset_partial(context, scheme, article)
     lookup = [
       "#{context}/#{scheme}",
