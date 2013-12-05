@@ -50,15 +50,17 @@
             </header>
 
             <section class="backlog">
-              <%= paginate @paginated_articles %>
 
             <% if !@issue_articles.empty? %>
               <%= render 'shared/new/waterfall_articles', articles: @paginated_articles, issue_tag_exists: false %>
             <% end %>
 
+              <%= paginate @paginated_articles %>
+
               <footer>
                 <%= link_to "Load more #{@issue.title} stories", @issue.public_path %>
               </footer>
+
             </section><!--/ .backlog -->
 
         </div><!--/ .showcase -->
