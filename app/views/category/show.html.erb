@@ -1,7 +1,7 @@
 <% add_to_page_title @category.title %>
 <% content_for :body_class, 'landing' %>
 
-<section class="headline concise">
+<section class="headline">
   <h1 class="bound"><span><%= link_to @lead_article.short_title, @lead_article.public_path if @lead_article.present? %></span></h1>
 </section>
 
