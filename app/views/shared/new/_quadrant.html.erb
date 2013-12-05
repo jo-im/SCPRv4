@@ -7,13 +7,12 @@
     <div class="rail clearfix">
 
     <% row.each do |article| %>
-      <% article = article.original_object %>
       <article class="clearfix<%= " has-trait" if !article.issues.empty? %>">
         <div class="graphic">
           <div class="ratio">
 
-          <%- if !article.related_issue.empty? %>
-            <span class="issue"><%= link_to article.related_issue.first.title,article.related_issue.first.public_path %></span>
+          <%- if issue = article.issues_in_category.first %>
+            <span class="issue"><%= link_to issue.title, issue.public_path %></span>
           <% end %>
 
             <div class="fill"></div>
@@ -23,7 +22,7 @@
 
         <div class="prose">
           <aside class="byline">
-            <p class="author"><%= render_byline article %></p>
+            <p class="author"><%= render_byline article.original_object %></p>
 
           <%- if article.feature_type.present? %>
             <mark class="trait <%= article.feature_type_name.downcase %>"><%= article.feature_type_name %></mark>

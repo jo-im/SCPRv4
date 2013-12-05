@@ -133,7 +133,8 @@ class ShowSegment < ActiveRecord::Base
       :audio              => self.audio.available,
       :attributions       => self.bylines,
       :byline             => self.byline,
-      :edit_url           => self.admin_edit_url
+      :edit_url           => self.admin_edit_url,
+      :feature_type       => self.feature_type
     })
   end
 
@@ -155,7 +156,7 @@ class ShowSegment < ActiveRecord::Base
       :assets             => self.assets,
       :audio              => self.audio,
       :segments           => Array(self),
-      :related_issue      => self.issues_in_category
+      :issues             => self.issues
     })
   end
 

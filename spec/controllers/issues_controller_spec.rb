@@ -14,8 +14,11 @@ describe IssuesController do
     end
 
     it "assigns popular articles" do
+      article = create(:news_story).to_article
+      Rails.cache.write("popular/viewed", [article])
+
       get :index
-      assigns(:popular_articles).should eq Array.new
+      assigns(:popular_articles).should eq [article]
     end
   end
 
@@ -23,7 +26,7 @@ describe IssuesController do
     it 'sets issues' do
       issue = create :issue, :is_active, slug: "whatever"
       get :show, slug: "whatever"
-      assign(:issues).should eq [issue]
+      assigns(:issues).should eq [issue]
     end
 
     it "gets the issue by slug" do
@@ -38,7 +41,7 @@ describe IssuesController do
       article.issues << issue
 
       get :show, slug: "issue"
-      assigns(:issue_articles).should eq [article]
+      assigns(:issue_articles).should eq [article].map(&:to_article)
     end
 
     it "assigns the article count" do
@@ -51,9 +54,12 @@ describe IssuesController do
     end
 
     it "assigns popular articles" do
+      article = create(:news_story).to_article
+      Rails.cache.write("popular/viewed", [article])
+
       issue = create :issue, :is_active, slug: "okay"
       get :show, slug: "okay"
-      assigns(:popular_articles).should eq Array.new
+      assigns(:popular_articles).should eq [article]
     end
 
     it "raises an error if the slug isn't found" do

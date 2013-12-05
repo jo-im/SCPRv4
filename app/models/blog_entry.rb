@@ -162,7 +162,8 @@ class BlogEntry < ActiveRecord::Base
       :attributions       => self.bylines,
       :byline             => self.byline,
       :edit_url           => self.admin_edit_url,
-      :related_issue      => self.issues_in_category
+      :issues             => self.issues,
+      :feature_type       => self.feature_type
     })
   end
 

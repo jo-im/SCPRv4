@@ -4,15 +4,13 @@
 
     <div class="rail clearfix">
     <% articles.each do |article| %>
-      <% article = article.original_object %>
-
       <article class="clearfix">
         <div class="graphic">
           <div class="ratio">
 
-          <% if !article.related_issue.empty? %>
-            <%= link_to article.related_issue.first.public_path, class: 'issue' do %>
-              <span><%= article.related_issue.first.title %></span>
+          <% if issue = article.issues_in_category.first %>
+            <%= link_to isssue.public_path, class: 'issue' do %>
+              <span><%= issue.title %></span>
             <% end %>
           <% end %>
 
@@ -22,12 +20,12 @@
 
           <aside class="byline<%='special' if article.feature_type.present?%>">
             <p>
-              <b class="author"><%= link_to render_byline(article) %></a></b>
+              <b class="author"><%= render_byline(article.original_object) %></b>
               <span><%= new_smart_date_js article.public_datetime, tag: 'span' %></span>
             </p>
 
           <%- if article.feature_type.present? %>
-            <mark class="trait <%= article.feature_type_name.downcase %>"><%= article.feature_type_name %></mark>
+            <mark class="trait <%= article.feature_type %>"><%= article.feature_type_name %></mark>
           <% end %>
 
           </aside>
@@ -42,5 +40,3 @@
     </div> <!--/ .rail -->
   </div> <!--/ .inner -->
 </section><!--/ .triptych -->
-
-

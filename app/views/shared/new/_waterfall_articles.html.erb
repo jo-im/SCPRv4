@@ -4,8 +4,8 @@
     <div class="ratio">
 
   <% if issue_tag_exists %>
-    <% unless article.original_object.issues.empty? || article.related_issue.empty? %>
-      <span class="issue"><%= link_to article.related_issue.first.title, article.related_issue.first.public_path %></span>
+    <% if issue = article.issues.first %>
+      <span class="issue"><%= link_to issue.title, issue.public_path %></span>
     <% end  %>
   <% end %>
 
@@ -23,8 +23,8 @@
         <b class="author"><%= render_byline article.original_object %></b>
         <span><%= new_smart_date_js article.public_datetime, tag: 'span' %></span>
       </p>
-    <%- if article.original_object.feature_type.present? %>
-      <mark class="trait <%= article.original_object.feature_type_name.downcase %>"><%= article.original_object.feature_type_name %></mark>
+    <%- if article.feature_type.present? %>
+      <mark class="trait <%= article.feature_type.downcase %>"><%= article.original_object.feature_type_name %></mark>
     <% end %>
     </aside>
 
