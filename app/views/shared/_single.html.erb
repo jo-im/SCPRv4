@@ -1,4 +1,4 @@
-<% article = entry.to_article %>
+<% article = article.to_article %>
   <% if @asset.present? %>
     <section class="prologue">
         <div class="grating">
@@ -134,20 +134,20 @@
     </div><!--/ .report -->
 
     <%= render 'shared/kpcc_ipad_ad' %>
-    <%= render partial: 'shared/triptych', locals: {category: entry.category, articles: @three_recent_articles } %>
+    <%= render partial: 'shared/triptych', locals: {category: article.category, articles: @three_recent_articles } %>
 
     <div class="townhall">
          <div class="inner bound clearfix">
              <div class="primary clearfix">
 
                  <section class="backlog">
-                   <h1>More <%= entry.category.title %></h1>
+                   <h1>More <%= article.category.title %></h1>
                    <% if @more_articles.presence %>
                      <%= render partial: 'shared/waterfall_articles', collection: @more_articles, as: 'article', locals: { issue_tag_exists: true } %>
                    <% end %>
 
                      <footer>
-                     <%= link_to "More #{entry.category.title} News", entry.category.public_path %>
+                     <%= link_to "More #{article.category.title} News", article.category.public_path %>
                      </footer>
 
                  </section><!--/ .backlog -->
@@ -155,19 +155,19 @@
                 <div class="supportive">
                     <section>
                         <h1>Issues We're Tracking</h1>
-                        <% if entry.category.issues.presence %>
-                           <h2 class="special"><%= @special_issue.title %></h2>
+                        <% if article.category.issues.presence %>
+                            <h2 class="special"><%= @special_issue.title %></h2>
                               <nav>
                                   <ul>
-                                    <%= render partial: 'shared/single_page_issue_list', collection: @top_two_special_issue_articles, as: 'entry' %>
+                                    <%= render partial: 'shared/single_page_issue_list', collection: @top_two_special_issue_articles, as: 'article' %>
                                   </ul>
                               </nav>
                           <% @other_issues.each do |issue| %>
                             <h2><%= issue.title %></h2>
                               <nav>
                                 <ul>
-                                  <% issue.articles.first(2).each do |entry| %>
-                                    <%= render partial: 'shared/single_page_issue_list', locals: {entry: entry} %>
+                                  <% issue.articles.first(2).each do |article| %>
+                                    <%= render partial: 'shared/single_page_issue_list', locals: {article: article} %>
                                   <% end %>
                                 </ul>
                               </nav>
@@ -218,9 +218,9 @@
                     </footer>
                 </aside>
                 <aside>
-                    <h1>Get involved.</h1>
-                    <ul class="events">
                       <% if @events.presence %>
+                        <h1>Get involved.</h1>
+                        <ul class="events">
                         <% @events.each do |event| %>
                           <li>
                                 <figure class="clearfix">

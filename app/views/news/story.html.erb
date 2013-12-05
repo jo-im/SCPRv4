@@ -1,14 +1,26 @@
 <% add_to_page_title @story.headline %>
 <%= render_content @story, "opengraph" %>
 
-<%= cache ["show", "v11", @story] do %>
-  <%= render "/news/story", story: @story %>
+<% content_for :body_class do %>
+  <% 'interior single' %>
 <% end %>
 
-<div class="fold inline" id="fold">
-  <%= render "shared/related_content_and_links", content: @story %>
-  <%= content_widget 'content_carousel', @story %>
-  <%= comments_for @story %>
-</div>
+<% content_for :header_titling do %>
+  <section class="titling clearfix">
+    <div class="brand">
+      <h1><%= link_to 'Represent', '/politics' %></h1>
+      <h2>Politics, government and public life for Southern California.</h2>
+    </div>
+  </section><!--/ .titling -->
+<% end %>
 
-<%= render 'shared/scripts/embedder' %>
+<% content_for :vertical_layout do %>
+  <%= stylesheet_link_tag "vertical/single", media: "all" %>
+<% end %>
+
+<%= render 'shared/header/header' %>
+
+<%= cache ["show", "v10", @story] do %>
+  <%= render "shared/single", article: @story, full: true %>
+<% end %>
+
