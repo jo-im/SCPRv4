@@ -11,6 +11,8 @@ jQuery(document).ready(function($) {
 //  Credit & thanks & source: http://stackoverflow.com/questions/16303344/brightness-filter-css-safari-vs-chrome
 //	------------------------------------------------
 
+if ($(".prologue .ephemera").length) {
+
     var e = document.querySelector("img");
     e.style.webkitFilter = "grayscale(1)";
     if(window.getComputedStyle(e).webkitFilter == "grayscale(1)"){
@@ -26,6 +28,8 @@ jQuery(document).ready(function($) {
         }
 
     }
+
+}
 
 
     
@@ -83,7 +87,7 @@ jQuery(document).ready(function($) {
 //	Landing: Check up on the curated title length
 //	------------------------------------------------
 	if($("body").hasClass("landing")){
-		var charcount = $(".headline h1 span").html().length;
+		var charcount = $(".headline h1 a").html().length;
 
 		if((charcount < 58) && (charcount > 50))		{ $(".headline").addClass("concise"); }
 		if((charcount < 51))							{ $(".headline").addClass("tiny"); }

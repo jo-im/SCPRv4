@@ -10,8 +10,8 @@
 
 <%= render 'shared/header/header' %>
 
-<section class="headline">
-  <h1 class="bound"><span><%= @lead_article.short_title if @lead_article.present? %></span></h1>
+<section class="headline concise">
+  <h1 class="bound"><span><%= link_to @lead_article.short_title, @lead_article.public_path if @lead_article.present? %></span></h1>
 </section>
 
 <div class="welcome bound clearfix">
@@ -32,7 +32,7 @@
             </figure><!--/ .ratio-pairing -->
         </div><!--/ .photo -->
         <div class="supportive">
-          <h1 class="tease"><%= @lead_article.teaser %></h1>
+          <h1 class="tease"><%= link_to @lead_article.teaser, @lead_article.public_path %></h1>
           <h2 class="byline"><%= link_to render_byline @lead_article.original_object %></h2>
           <% if @featured_content %>
             <aside class="more">
