@@ -72,21 +72,24 @@ module ApplicationHelper
   end
 
 
-  # Render an asset for an article, in the given context.
+  # render_asset takes a ContentBase object and a context, and renders using
+  # an optional asset_display attribute on the object.
   #
-  # Arguments:
-  # * content  - An object which responds to `to_article`
-  # * context  - The context in which to render the asset(s).
-  # * options - (Hash) Whether or not to render a fallback if ther are no
-  #             assets.
-  def render_asset(content, context=nil, options={})
-    context ||= 'default'
-
+  # For example, given a context of "story", render_asset will check for an
+  # asset_display attribute on the object.  If found (let's assume with a
+  # value of "photo"), it will try to render:
+  #
+  # * shared/assets/story/photo
+  # * shared/assets/default/photo
+  # * shared/assets/story/default
+  # * shared/assets/default/default
+  def render_asset(content, options={})
     article = content.to_article
+    context = options[:context] || "default"
 
     if article.assets.empty?
       html = if options[:fallback]
-        render_asset_partial(context, "fallback", article)
+        render("shared/assets/#{context}/fallback", article: article)
       else
         ''
       end
@@ -94,25 +97,25 @@ module ApplicationHelper
       return html
     end
 
-    scheme = if article.respond_to?(:asset_display) &&
-    article.asset_display.present?
-      article.asset_display
+    if options[:template]
+      tmplt_opts = Array(options[:template])
     else
-      "default"
+      display = options[:display]
+      display ||= if article.original_object.respond_to?(:asset_display)
+        content.asset_display
+      else
+        "photo"
+      end
+
+      tmplt_opts = [
+        "#{context}/#{display}",
+        "default/#{display}",
+        "#{context}/photo",
+        "default/photo"
+      ]
     end
 
-    render_asset_partial(context, scheme, article)
-  end
-
-
-  # Render a partial for a given context and scheme.
-  def render_asset_partial(context, scheme, article)
-    lookup = [
-      "#{context}/#{scheme}",
-      "default/#{scheme}"
-    ]
-
-    partial = lookup.find do |template|
+    partial = tmplt_opts.find do |template|
       self.lookup_context.exists?(template, ["shared/assets"], true)
     end
 
@@ -122,7 +125,6 @@ module ApplicationHelper
       :assets     => article.assets,
       :article    => article
   end
-
 
   #----------
 

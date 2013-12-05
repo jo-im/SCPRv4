@@ -20,7 +20,7 @@
         <div class="story-body">
           <div class="visible-reader"><%= content_widget "primary_audio", entry %></div>
 
-          <%= render_asset entry, "article" %>
+          <%= render_asset entry %>
           <%= entry.send(full ? :body : :extended_teaser).html_safe %>
         </div>
 

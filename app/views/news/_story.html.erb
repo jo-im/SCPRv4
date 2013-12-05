@@ -11,7 +11,7 @@
 
     <div class="story-body">
       <div class="visible-reader"><%= content_widget "primary_audio", story %></div>
-      <%= render_asset story, "story" %>
+      <%= render_asset story %>
 
       <div class="storybar">
         <%= comment_widget_for story, cssClass: 'right-side' %>

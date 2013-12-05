@@ -1,5 +1,16 @@
-<% if asset.first.eight.width < asset.first.eight.height %>
-  <%= render_asset_partial 'default', 'right', article %>
+<% if asset.first.small.width < asset.first.small.height %>
+<div class="asset-block right" style="width:<%=assets.first.lsquare.width%>px;">
 <% else %>
-  <%= render_asset_partial 'default', 'wide', article %>
+<div class="asset-block wide">
 <% end %>
+
+  <div class="contentasset">
+    <%= assets.first.small.tag %>
+  </div>
+
+  <h4><%= assets.first.owner %></h4>
+
+  <% if assets.first.caption %>
+    <p><%= assets.first.caption %></p>
+  <% end %>
+</div>
