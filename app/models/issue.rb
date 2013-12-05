@@ -24,6 +24,7 @@ class Issue < ActiveRecord::Base
   end
 
   def articles
-    @articles ||= self.article_issues.select(&:article).map { |a| a.article.to_article }
+    @articles ||= self.article_issues.includes(:article)
+      .select(&:article).map { |a| a.article.to_article }
   end
 end
