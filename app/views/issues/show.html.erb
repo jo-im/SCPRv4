@@ -67,11 +67,12 @@
 
             <section class="backlog">
 <!--            ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ -->
-                <%= paginate @paginated_articles %>
 
                 <% if @issue_articles.presence %>
                   <%= render partial: 'shared/waterfall_articles', collection: @paginated_articles, as: 'article', locals: { issue_tag_exists: false } %>
                 <% end %>
+
+                <%= paginate @paginated_articles %>
 <!--            ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ -->
                 <footer>
                   <%= link_to "Load more #{@issue.title} stories", issue_path(@issue.slug) %>
