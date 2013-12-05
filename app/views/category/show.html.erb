@@ -8,6 +8,15 @@
   <%= stylesheet_link_tag "vertical/landing", media: "all" %>
 <% end %>
 
+<% content_for :header_titling do %>
+  <section class="titling clearfix">
+    <div class="brand">
+      <h1><%= link_to 'Represent', '/politics' %></h1>
+      <h2>Politics, government and public life for Southern California.</h2>
+    </div>
+  </section><!--/ .titling -->
+<% end %>
+
 <%= render 'shared/header/header' %>
 
 <section class="headline">
