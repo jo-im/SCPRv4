@@ -3,6 +3,7 @@ class Quote < ActiveRecord::Base
   has_secretary
 
   include Concern::Methods::PublishingMethods
+  include Concern::Callbacks::SphinxIndexCallback
 
   STATUS_DRAFT = 0
   STATUS_LIVE = 5

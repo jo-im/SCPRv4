@@ -3,6 +3,7 @@ class Issue < ActiveRecord::Base
   has_secretary
 
   include Concern::Validations::SlugValidation
+  include Concern::Callbacks::SphinxIndexCallback
 
   ROUTE_KEY = 'issue'
 
