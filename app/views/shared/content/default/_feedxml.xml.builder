@@ -22,7 +22,7 @@ xml.item do
 
   description = ""
 
-  description << render_asset(article, "feedxml", template: "default/feedxml")
+  description << render_asset(article, template: "default/feedxml")
   description << relaxed_sanitize(article.body)
 
   if article.original_object.is_a? ContentShell
