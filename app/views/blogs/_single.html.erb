@@ -33,7 +33,7 @@
         </div>
         <div class="ephemera"><%= image_tag @asset.full.url %></div>
     </section><!--/ .prologue -->
-   <%end %>
+   <% end %>
     <div class="report">
         <div class="inner bound clearfix">
             <article class="prose">
@@ -45,11 +45,10 @@
                     <nav>
                         <ul>
                             <% @related_articles.each do |article| %>
-                              <% feature_type = article.original_object.feature_type.present? ? article.original_object.feature_type_name.downcase : 'article' %>
-                              <li class=<%= feature_type %>>
+                              <li class="<%= article.feature.try(:key) %>">
                                 <%= link_to article.public_path do %>
                                   <mark><%= article.short_title %></mark>
-                                  <span><%= feature_type %></span></a>
+                                  <span><%= article.feature.try(:name) || "Article" %></span></a>
                                 <% end %>
                               </li>
                             <% end %>

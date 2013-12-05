@@ -11,9 +11,10 @@ class Outpost::QuotesController < Outpost::ResourceController
     l.column :source_context
     l.column :quote
     l.column :status
+
     l.column :created_at,
-      :sortable                   => true,
-      :default_order_direction    => DESCENDING
+      :sortable => true,
+      :default_order_direction => DESCENDING
 
     l.filter :status,
       :collection => -> { ContentBase.status_text_collect }

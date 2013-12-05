@@ -111,7 +111,7 @@ describe Concern::Associations::AssetAssociation do
   describe '#asset_display' do
     it "returns the asset display if specified" do
       record = build :test_class_story,
-        asset_display_id: Concern::Associations::AssetAssociation::ASSET_DISPLAY_IDS[:slideshow]
+        asset_display_id: Concern::Methods::AssetDisplayMethods::ASSET_DISPLAY_IDS[:slideshow]
 
       record.asset_display.should eq :slideshow
     end
@@ -126,7 +126,7 @@ describe Concern::Associations::AssetAssociation do
     it "sets asset_display_id" do
       record = build :test_class_story, asset_display_id: nil
       record.asset_display = :photo
-      record.asset_display_id.should eq Concern::Associations::AssetAssociation::ASSET_DISPLAY_IDS[:photo]
+      record.asset_display_id.should eq Concern::Methods::AssetDisplayMethods::ASSET_DISPLAY_IDS[:photo]
       record.asset_display.should eq :photo
     end
   end

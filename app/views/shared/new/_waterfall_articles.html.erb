@@ -23,8 +23,9 @@
         <b class="author"><%= render_byline article.original_object %></b>
         <span><%= new_smart_date_js article.public_datetime, tag: 'span' %></span>
       </p>
-    <%- if article.feature_type.present? %>
-      <mark class="trait <%= article.feature_type.downcase %>"><%= article.original_object.feature_type_name %></mark>
+
+    <%- if article.feature.present? %>
+      <mark class="trait <%= article.feature.key %>"><%= article.feature.name %></mark>
     <% end %>
     </aside>
 

@@ -21,7 +21,8 @@ module TestClass
     include Concern::Associations::BylinesAssociation
     include Concern::Associations::CategoryAssociation
     include Concern::Associations::CategoryArticleAssociation
-    include Concern::Associations::IssueArticleAssociation
+    include Concern::Associations::IssueAssociation
+    include Concern::Associations::FeatureAssociation
     include Concern::Callbacks::GenerateShortHeadlineCallback
     include Concern::Callbacks::GenerateTeaserCallback
     include Concern::Callbacks::SetPublishedAtCallback

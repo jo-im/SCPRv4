@@ -8,7 +8,7 @@ class ContentShell < ActiveRecord::Base
   include Concern::Associations::ContentAlarmAssociation
   include Concern::Associations::AssetAssociation
   include Concern::Associations::BylinesAssociation
-  include Concern::Associations::IssueArticleAssociation
+  include Concern::Associations::IssueAssociation
   include Concern::Associations::CategoryAssociation
   include Concern::Associations::CategoryArticleAssociation
   include Concern::Associations::HomepageContentAssociation
@@ -40,9 +40,6 @@ class ContentShell < ActiveRecord::Base
   validates :site, presence: true, if: :should_validate?
 
   #------------------
-  def feature_type_name
-    ContentBase::FEATURE_TYPE[self.feature_type]
-  end
 
   class << self
     def sites_select_collection
@@ -89,8 +86,7 @@ class ContentShell < ActiveRecord::Base
       :attributions       => self.bylines,
       :byline             => self.byline,
       :edit_url           => self.admin_edit_url,
-      :issues             => self.issues,
-      :feature_type       => self.feature_type
+      :issues             => self.issues
     })
   end
 

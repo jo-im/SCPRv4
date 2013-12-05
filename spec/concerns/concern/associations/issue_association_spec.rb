@@ -1,6 +1,6 @@
 require "spec_helper"
 
-describe Concern::Associations::IssueArticleAssociation do
+describe Concern::Associations::IssueAssociation do
   describe 'story with many issues' do
     let(:story) { build :test_class_story, :published, category: category }
 

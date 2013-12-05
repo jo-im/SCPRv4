@@ -11,7 +11,8 @@ class ShowSegment < ActiveRecord::Base
   include Concern::Associations::RelatedContentAssociation
   include Concern::Associations::RelatedLinksAssociation
   include Concern::Associations::BylinesAssociation
-  include Concern::Associations::IssueArticleAssociation
+  include Concern::Associations::IssueAssociation
+  include Concern::Associations::FeatureAssociation
   include Concern::Associations::CategoryAssociation
   include Concern::Associations::CategoryArticleAssociation
   include Concern::Associations::HomepageContentAssociation
@@ -124,7 +125,8 @@ class ShowSegment < ActiveRecord::Base
       :attributions       => self.bylines,
       :byline             => self.byline,
       :edit_url           => self.admin_edit_url,
-      :feature_type       => self.feature_type
+      :issues             => self.issues,
+      :feature            => self.feature
     })
   end
 
@@ -145,8 +147,7 @@ class ShowSegment < ActiveRecord::Base
       :air_date           => self.published_at,
       :assets             => self.assets,
       :audio              => self.audio,
-      :segments           => Array(self),
-      :issues             => self.issues
+      :segments           => Array(self)
     })
   end
 

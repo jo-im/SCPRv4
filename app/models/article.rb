@@ -43,7 +43,7 @@ class Article
     :byline,
     :edit_url, # Should this really be an attribute, or should we delegate?
     :issues,
-    :feature_type
+    :feature
 
 
   def initialize(attributes={})
@@ -61,7 +61,7 @@ class Article
     @byline           = attributes[:byline]
     @edit_url         = attributes[:edit_url]
     @issues           = Array(attributes[:issues])
-    @feature_type     = attributes[:feature_type]
+    @feature          = attributes[:feature]
   end
 
 

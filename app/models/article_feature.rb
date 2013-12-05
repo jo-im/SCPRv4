@@ -2,6 +2,10 @@ class ArticleFeature
   DEFAULT_ASSET_DISPLAY = "photo"
 
   class << self
+    def select_collection
+      collection.map { |f| [f.name, f.id] }
+    end
+
     # All the features created.
     def collection
       @collection ||= Array.new
