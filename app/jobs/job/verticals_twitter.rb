@@ -33,11 +33,9 @@ module Job
 
     #---------------
 
-    def initialize(screen_name, partial="/shared/widgets/cached/vertical_tweets", options={})
+    def initialize(screen_name, options={})
       @tweeter     = Tweeter.new("kpccweb")
       @screen_name = screen_name
-      @cache_key   = "twitter"
-      @partial     = partial
       @options     = options.reverse_merge! DEFAULTS
     end
 
