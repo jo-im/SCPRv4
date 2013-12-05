@@ -4,7 +4,7 @@ describe ArticleFeature do
   describe '::find_by_id' do
     it 'retrieves the feature by a given ID' do
       feature = ArticleFeature.new(id: 12345)
-      ArticleFeature.find_by_id(1).should eq feature
+      ArticleFeature.find_by_id(12345).should eq feature
     end
 
     it "is nil if no feature is found" do

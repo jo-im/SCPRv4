@@ -3,7 +3,7 @@
     <header><h1>Recent <%= category.title %> Coverage</h1></header>
 
     <div class="rail clearfix">
-    <% articles.each do |article| %>
+    <% Array(articles).each do |article| %>
       <article class="clearfix">
         <div class="graphic">
           <div class="ratio">

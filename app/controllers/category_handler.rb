@@ -13,10 +13,9 @@ module CategoryHandler
       :per_page   => per_page
     )
 
-    if @category.featured_articles.present?
-      @featured_articles      = @category.featured_articles
-      @lead_article           = @featured_articles.first
+    @featured_articles = @category.featured_articles
 
+    if @lead_article = @featured_articles.first
       if @lead_article.issues.present?
         @primary_issue = @lead_article.issues.first
 

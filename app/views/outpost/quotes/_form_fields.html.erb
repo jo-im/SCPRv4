@@ -1,7 +1,7 @@
 <%= form_block "Association" do %>
   <%= f.association :category %>
-  <%= f.input :article_type, collection: Quote.featurable_classes_select_collection %>
-  <%= f.input :article_id, label: "Article ID", input_html: { class: 'thin' } %>
+  <%= f.input :content_type, collection: Quote.featurable_classes_select_collection %>
+  <%= f.input :content_id, label: "Article ID", input_html: { class: 'thin' } %>
 <% end %>
 
 <%= form_block "Information" do %>

@@ -3,7 +3,7 @@
 
     <header><h1><%= header %></h1></header>
 
-  <% articles.each_slice(2).each do |row| %>
+  <% Array(articles).each_slice(2).each do |row| %>
     <div class="rail clearfix">
 
     <% row.each do |article| %>

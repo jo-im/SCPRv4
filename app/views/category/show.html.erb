@@ -52,22 +52,21 @@
               <h1>Latest <%= @category.title %> Headlines</h1>
             </header>
             <ul>
-                <%- @category_articles[0..1].each do |article| %>
-                  <li>
-                    <%= link_to(article.public_path, class: 'clearfix') do %>
-                          <div>
-                            <mark><%= article.short_title %></mark>
-                            <%= new_smart_date_js article.public_datetime, tag: "em", "data-window" => "8h", "data-relative" => "2h" %>&nbsp;
-                            <span><%= article.byline %></span>
-                          </div>
-                          <figure class="ratio">
-                              <div class="fill"></div>
-                              <b class="img-contain"><%= image_tag(article.asset.lsquare.url, alt: '' ) %></b>
-                          </figure>
-                    <% end %>
-                  </li>
+            <%- Array(@category_articles[0..1]).each do |article| %>
+              <li>
+                <%= link_to(article.public_path, class: 'clearfix') do %>
+                  <div>
+                    <mark><%= article.short_title %></mark>
+                    <%= new_smart_date_js article.public_datetime, tag: "em", "data-window" => "8h", "data-relative" => "2h" %>&nbsp;
+                    <span><%= article.byline %></span>
+                  </div>
+                  <figure class="ratio">
+                      <div class="fill"></div>
+                      <b class="img-contain"><%= image_tag(article.asset.lsquare.url, alt: '' ) %></b>
+                  </figure>
                 <% end %>
-              <% end %>
+              </li>
+            <% end %>
             </ul>
         </section>
         <section class="event">
@@ -110,18 +109,17 @@
 
         <nav>
           <ul class="clearfix">
-        <% if @resources.present? %>
-          <%- @resources.each do |resource| %>
+
+          <%- Array(@featured_articles[1..4]).each do |article| %>
             <li>
-                <%= link_to(resource.public_path) do %>
+                <%= link_to(article.public_path) do %>
                     <figure class="clearfix">
-                      <div class="ratio"><div class="fill"></div><b class="img-contain"><%= image_tag resource.asset.small.url, alt: '' %></b></div>
-                      <figcaption><%= resource.short_title %></figcaption>
+                      <div class="ratio"><div class="fill"></div><b class="img-contain"><%= image_tag article.asset.small.url, alt: '' %></b></div>
+                      <figcaption><%= article.short_title %></figcaption>
                     </figure>
                 <% end %>
             </li>
           <% end %>
-        <% end %>
           </ul>
         </nav>
     </div>
@@ -134,7 +132,7 @@
                 <h1>Issues We're Tracking</h1>
                 <h2><%= link_to 'See all issues', issues_path %></h2>
             </header>
-           <% if @category.issues.present? %>
+          <% if @category.issues.present? %>
             <div>
                 <header class="special">
                   <h1><%= @special_issue.title %></h1>
@@ -165,7 +163,7 @@
                     </nav>
                 </div>
               <% end %>
-           <% end %>
+          <% end %>
         </section><!--/ .issues -->
         <div class="treats">
             <aside class="featured" style="background-image: url(assets/featured-interactives/intersections.jpg);">
