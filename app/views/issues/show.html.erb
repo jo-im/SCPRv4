@@ -55,7 +55,7 @@
               <%= render 'shared/new/waterfall_articles', articles: @paginated_articles, issue_tag_exists: false %>
             <% end %>
 
-              <%= paginate @paginated_articles %>
+              <%= paginate @paginated_articles, theme: 'new' %>
 
               <footer>
                 <%= link_to "Load more #{@issue.title} stories", @issue.public_path %>
