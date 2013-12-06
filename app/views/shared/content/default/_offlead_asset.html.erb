@@ -10,6 +10,9 @@
         <%= render_byline article.original_object %>
         <%= smart_date_js article.public_datetime, "data-window" => "8h", "data-relative" => "2h" %>
       </span>
+
+      <%= render 'shared/feature_trait', article: article %>
+
       <p class="story-content clearfix"><%= article.teaser.html_safe %></p>
     </div> <!-- span -->
   </div> <!-- row -->

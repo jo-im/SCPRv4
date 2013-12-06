@@ -1,5 +1,7 @@
 <li>
-<%= link_to article.short_title, article.public_url %>
-<span class="shell-link">| From <%= article.original_object.site %></span>
-<%= smart_date_js article.public_datetime, "data-window" => "8h", "data-relative" => "2h" %>
+  <%= link_to article.short_title, article.public_url %>
+  <span class="shell-link">| From <%= article.original_object.site %></span>
+  <%= smart_date_js article.public_datetime, "data-window" => "8h", "data-relative" => "2h" %>
+
+  <%= render 'shared/feature_trait', article: article %>
 </li>

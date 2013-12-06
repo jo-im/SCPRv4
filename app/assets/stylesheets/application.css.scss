@@ -35,6 +35,9 @@
 @import "ckeditor";
 @import "audiovision";
 
+// Utilities
+@import "feature_traits";
+
 // May Elections
 // Keep this here to support hard-coded results tables in Flatpages.
 @import 'specials/election';
