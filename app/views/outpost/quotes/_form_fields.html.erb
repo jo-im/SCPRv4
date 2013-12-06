@@ -5,10 +5,10 @@
 <% end %>
 
 <%= form_block "Information" do %>
-  <%= f.input :source_name %>
-  <%= f.input :source_context %>
+  <%= f.input :source_name, hint: "The source of the quote. Example: 'Barack Obama'" %>
+  <%= f.input :source_context, hint: "The context in which the quote was delivered. Example: 'Press Meeting, June 10'" %>
   <%= f.input :quote, input_html: { class: "tiny" } %>
 <% end %>
 
 <%= f.input :status, collection: Quote.status_select_collection, include_blank: false %>
-
+<br /><br /><br /><br /><br /><br />

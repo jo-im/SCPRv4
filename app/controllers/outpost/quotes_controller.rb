@@ -7,8 +7,7 @@ class Outpost::QuotesController < Outpost::ResourceController
 
     l.column :category
     l.column :content
-    l.column :source_name
-    l.column :source_context
+    l.column :source_name, header: "Name"
     l.column :quote
     l.column :status
 
@@ -17,7 +16,7 @@ class Outpost::QuotesController < Outpost::ResourceController
       :default_order_direction => DESCENDING
 
     l.filter :status,
-      :collection => -> { ContentBase.status_text_collect }
+      :collection => -> { Quote.status_select_collection }
   end
 end
 

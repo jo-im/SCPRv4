@@ -14,7 +14,7 @@ class Outpost::IssuesController < Outpost::ResourceController
       :default_order_direction => ASCENDING
 
     l.column :description
-    l.column :is_active
+    l.column :is_active, header: "Active?"
 
     l.column :created_at,
       :sortable => true,
