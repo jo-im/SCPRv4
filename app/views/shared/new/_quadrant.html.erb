@@ -7,7 +7,7 @@
     <div class="rail clearfix">
 
     <% row.each do |article| %>
-      <article class="clearfix<%= " has-trait" if !article.issues.empty? %>">
+      <article class="clearfix<%= " has-trait" if article.issues.present? %>">
         <div class="graphic">
           <div class="ratio">
 
