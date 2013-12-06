@@ -200,7 +200,6 @@ Scprv4::Application.routes.draw do
             get ':obj_key' => 'articles#show'
           end
         end
-        resources :issues, only: [:index]
       end
     end
   end
@@ -238,9 +237,11 @@ Scprv4::Application.routes.draw do
     resources :categories do
       get "search", on: :collection, as: :search
     end
+
     resources :issues do
       get "search", on: :collection, as: :search
     end
+
     resources :missed_it_buckets do
       get "search", on: :collection, as: :search
     end
