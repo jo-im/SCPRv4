@@ -150,11 +150,7 @@ module ApplicationHelper
     }.merge(options)
   end
 
-  def issue_link(issue, link_path, current_page)
-    content_tag(:li, class: ('selected' if issue.slug == current_page.slug)) do
-      link_to issue.title, link_path
-    end
-  end
+
   #----------
   # Render a byline for the passed-in content
   # If links is set to false, and the content has

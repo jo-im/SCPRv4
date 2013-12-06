@@ -14,8 +14,12 @@
         <nav class="terms">
             <ul class="clearfix">
 
-            <% @issues.each do |issue| %>
-              <%= issue_link issue, issue.public_path, @issue %>
+            <%= cache ["issues/show/list", "v1", @issues] do %>
+              <% @issues.each do |issue| %>
+                <li class="<%= 'selected' if @issue == issue %>">
+                  <%= link_to issue.title, issue.public_path %>
+                </li>
+              <% end %>
             <% end %>
 
             </ul>
@@ -23,6 +27,7 @@
 
         <div class="showcase">
 
+          <%= cache ["issues/show", "v1", @issue] do %>
             <header class="preface">
               <h1><%= @issue.title %></h1>
               <div class="details clearfix">
@@ -48,11 +53,12 @@
                   </aside>
               </div>
             </header>
+          <% end %>
 
             <section class="backlog">
 
-            <% if !@issue_articles.empty? %>
-              <%= render 'shared/new/waterfall_articles', articles: @paginated_articles, issue_tag_exists: false %>
+            <%= cache ["issues/list", "v1", @paginated_articles.to_a] do %>
+                <%= render 'shared/new/waterfall_articles', articles: @paginated_articles, issue_tag_exists: false %>
             <% end %>
 
               <%= paginate @paginated_articles, theme: 'new', outer_window: 1 %>
