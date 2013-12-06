@@ -102,7 +102,7 @@
     </div><!--/ .cols -->
 
     <% if @category %>
-        <% if lookup_context.exists?(@category.slug.underscore, ["vertical/sponsors"], true) %>
+        <% if lookup_context.exists?(@category.slug.underscore, ["verticals/sponsors"], true) %>
             <%= render "verticals/sponsors/#{@category.slug.underscore}" %>
         <% end %>
     <% end %>
