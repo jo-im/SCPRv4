@@ -15,7 +15,7 @@ module Concern
 
         has_many :issues, through: :article_issues
 
-        after_save :touch_issues
+        after_commit :touch_issues
       end
 
 
