@@ -137,18 +137,12 @@ module ApplicationHelper
   def smart_date_js(datetime, options={})
     return '' if !datetime.respond_to?(:strftime)
 
-    time_tag datetime, '', {
-      "class"         => "#{options[:class]} smart smarttime",
-      "data-unixtime" => datetime.to_i
-    }.merge(options.except(:class))
-  end
+    options[:tag] ||= 'time'
 
-  def new_smart_date_js(datetime, options={})
-    return '' if !datetime.respond_to?(:strftime)
-    content_tag "#{options[:tag]}", nil, {
-      "class" => "#{options[:class]} smart smarttime",
+    content_tag options.delete(:tag), nil, {
+      "class" => "#{options.delete(:class)} smart smarttime",
       "data-unixtime" => datetime.to_i
-    }.merge(options.except(:class,:tag))
+    }.merge(options)
   end
 
   def issue_link(issue, link_path, current_page)

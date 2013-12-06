@@ -162,7 +162,7 @@ describe ApplicationHelper do
       tag.should match /#{time.to_i.to_s}/
     end
 
-    it "returns nil if passed-in object can't respond to strftime" do
+    it "returns empty string if passed-in object can't respond to strftime" do
       helper.smart_date_js("invalid").should eq ''
     end
 
@@ -179,6 +179,10 @@ describe ApplicationHelper do
     it "merges a passed-in class with the required smarttime class" do
       time = Time.now
       helper.smart_date_js(time, class: "newClass").should match "newClass smart smarttime"
+    end
+
+    it "uses the specified tag" do
+      helper.smart_date_js(Time.now, tag: "span").should match /<span/
     end
   end
 
