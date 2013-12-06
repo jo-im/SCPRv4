@@ -29,6 +29,8 @@ class BlogsController < ApplicationController
     @asset = @entry.asset if @entry.asset.present?
     @related_articles = @entry.related_content.first(2) if @entry.related_content.present?
 
+    @popular_articles = Rails.cache.read("popular/viewed").first(3) if Rails.cache.read("popular/viewed").presence
+
     if @category = @entry.category
       if @category.issues.present?
         @category_issues = @category.issues
@@ -49,8 +51,6 @@ class BlogsController < ApplicationController
         @more_articles = @category_articles[3..-1]
       end
 
-      @popular_articles = Rails.cache.read("popular/viewed").first(3) if Rails.cache.read("popular/viewed").presence
-
       if @category.featured_articles.present?
         @resources = @category.featured_articles[1..4]
       end
@@ -64,7 +64,8 @@ class BlogsController < ApplicationController
         @events = @category.events.published.upcoming.map(&:to_article)
       end
     end
-    render layout: "vertical"
+
+   render layout: "vertical"
   end
 
   #----------
