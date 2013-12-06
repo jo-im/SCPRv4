@@ -3,16 +3,16 @@ class MigrateAssetSchemeToAssetIds < ActiveRecord::Migration
     NewsStory.find_each do |story|
       if %w[wide float].include?(story.story_asset_scheme) ||
       story.story_asset_scheme.blank?
-        story.update_column(:asset_display_id, :photo)
+        story.update_column(:asset_display_id, ContentBase::ASSET_DISPLAY_IDS[:photo])
 
       elsif story.story_asset_scheme == "hidden"
-        story.update_column(:asset_display_id, :hidden)
+        story.update_column(:asset_display_id, ContentBase::ASSET_DISPLAY_IDS[:hidden])
 
       elsif story.story_asset_scheme == "slideshow"
-        story.update_column(:asset_display_id, :slideshow)
+        story.update_column(:asset_display_id, ContentBase::ASSET_DISPLAY_IDS[:slideshow])
 
       elsif story.story_asset_scheme == "video"
-        story.update_column(:asset_display_id, :video)
+        story.update_column(:asset_display_id, ContentBase::ASSET_DISPLAY_IDS[:video])
 
         if story.extra_asset_scheme == "sidebar"
           puts ">>> VIDEO + EXTRA ASSETS FOUND. #{story.simple_title}"
@@ -24,16 +24,16 @@ class MigrateAssetSchemeToAssetIds < ActiveRecord::Migration
     BlogEntry.find_each do |story|
       if %w[wide float].include?(story.blog_asset_scheme) ||
       story.blog_asset_scheme.blank?
-        story.update_column(:asset_display_id, :photo)
+        story.update_column(:asset_display_id, ContentBase::ASSET_DISPLAY_IDS[:photo])
 
       elsif story.blog_asset_scheme == "hidden"
-        story.update_column(:asset_display_id, :hidden)
+        story.update_column(:asset_display_id, ContentBase::ASSET_DISPLAY_IDS[:hidden])
 
       elsif story.blog_asset_scheme == "slideshow"
-        story.update_column(:asset_display_id, :slideshow)
+        story.update_column(:asset_display_id, ContentBase::ASSET_DISPLAY_IDS[:slideshow])
 
       elsif story.blog_asset_scheme == "video"
-        story.update_column(:asset_display_id, :video)
+        story.update_column(:asset_display_id, ContentBase::ASSET_DISPLAY_IDS[:video])
       end
     end
 
@@ -41,16 +41,16 @@ class MigrateAssetSchemeToAssetIds < ActiveRecord::Migration
     ShowSegment.find_each do |story|
       if %w[wide float].include?(story.segment_asset_scheme) ||
       story.segment_asset_scheme.blank?
-        story.update_column(:asset_display_id, :photo)
+        story.update_column(:asset_display_id, ContentBase::ASSET_DISPLAY_IDS[:photo])
 
       elsif story.segment_asset_scheme == "hidden"
-        story.update_column(:asset_display_id, :hidden)
+        story.update_column(:asset_display_id, ContentBase::ASSET_DISPLAY_IDS[:hidden])
 
       elsif story.segment_asset_scheme == "slideshow"
-        story.update_column(:asset_display_id, :slideshow)
+        story.update_column(:asset_display_id, ContentBase::ASSET_DISPLAY_IDS[:slideshow])
 
       elsif story.segment_asset_scheme == "video"
-        story.update_column(:asset_display_id, :video)
+        story.update_column(:asset_display_id, ContentBase::ASSET_DISPLAY_IDS[:video])
       end
     end
 
@@ -58,16 +58,16 @@ class MigrateAssetSchemeToAssetIds < ActiveRecord::Migration
     Event.find_each do |story|
       if %w[wide float].include?(story.event_asset_scheme) ||
       story.event_asset_scheme.blank?
-        story.update_column(:asset_display_id, :photo)
+        story.update_column(:asset_display_id, ContentBase::ASSET_DISPLAY_IDS[:photo])
 
       elsif story.event_asset_scheme == "hidden"
-        story.update_column(:asset_display_id, :hidden)
+        story.update_column(:asset_display_id, ContentBase::ASSET_DISPLAY_IDS[:hidden])
 
       elsif story.event_asset_scheme == "slideshow"
-        story.update_column(:asset_display_id, :slideshow)
+        story.update_column(:asset_display_id, ContentBase::ASSET_DISPLAY_IDS[:slideshow])
 
       elsif story.event_asset_scheme == "video"
-        story.update_column(:asset_display_id, :video)
+        story.update_column(:asset_display_id, ContentBase::ASSET_DISPLAY_IDS[:video])
       end
     end
 
