@@ -1,3 +1,7 @@
+# Fake persistence.
+# I know it's bad.
+FEATURES = []
+
 [
     {
       :id               => 1,

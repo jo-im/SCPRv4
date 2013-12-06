@@ -3,7 +3,7 @@ require 'spec_helper'
 describe ArticleFeature do
   describe '::find_by_id' do
     it 'retrieves the feature by a given ID' do
-      feature = ArticleFeature.new(id: 12345)
+      feature = ArticleFeature.new(id: 12345, key: :lasagna)
       ArticleFeature.find_by_id(12345).should eq feature
     end
 
@@ -26,7 +26,7 @@ describe ArticleFeature do
 
   describe 'attributes' do
     it "sets id" do
-      ArticleFeature.new(id: 1).id.should eq 1
+      ArticleFeature.new(id: 1, key: :lasagna).id.should eq 1
     end
 
     it "sets key" do
@@ -34,11 +34,12 @@ describe ArticleFeature do
     end
 
     it "sets name" do
-      ArticleFeature.new(name: "Hi").name.should eq "Hi"
+      ArticleFeature.new(name: "Hi", key: :lasagna).name.should eq "Hi"
     end
 
     it "sets asset display" do
-      ArticleFeature.new(asset_display: "hidden").asset_display.should eq "hidden"
+      ArticleFeature.new(asset_display: "hidden", key: :lasagna)
+        .asset_display.should eq "hidden"
     end
 
     it "adds the feature to the collection" do
@@ -49,12 +50,12 @@ describe ArticleFeature do
 
   describe '#==' do
     it "compares integers" do
-      feature = ArticleFeature.new(id: 123)
+      feature = ArticleFeature.new(id: 123, key: :lasagna)
       (feature == 123).should be_true
     end
 
     it "compares article features" do
-      feature = ArticleFeature.new(id: 456)
+      feature = ArticleFeature.new(id: 456, key: :lasagna)
       (feature == feature).should be_true
     end
 

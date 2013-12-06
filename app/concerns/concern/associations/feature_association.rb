@@ -21,6 +21,8 @@ module Concern
             ArticleFeature.find_by_key(value.to_sym).try(:id)
         when Integer
           self.feature_type_id = value
+        when NilClass
+          self.feature_type_id = nil
         end
       end
     end
