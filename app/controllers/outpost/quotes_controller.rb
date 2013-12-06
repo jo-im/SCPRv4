@@ -19,4 +19,3 @@ class Outpost::QuotesController < Outpost::ResourceController
       :collection => -> { Quote.status_select_collection }
   end
 end
-
