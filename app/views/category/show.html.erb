@@ -64,7 +64,7 @@
                 <%= link_to(article.public_path, class: 'clearfix') do %>
                   <div>
                     <mark><%= article.short_title %></mark>
-                    <%= new_smart_date_js article.public_datetime, tag: "em", "data-window" => "8h", "data-relative" => "2h" %>&nbsp;
+                    <%= smart_date_js article.public_datetime, tag: "em", "data-window" => "8h", "data-relative" => "2h" %>&nbsp;
                     <span><%= article.byline %></span>
                   </div>
                   <figure class="ratio">

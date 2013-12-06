@@ -9,7 +9,7 @@
       </div><!--/ .ratio -->
       <figcaption>
         <p><%= article.short_title %></p>
-        <mark><%= article.byline %></mark>&nbsp;<%=new_smart_date_js article.public_datetime, tag: 'span' %>
+        <mark><%= article.byline %></mark>&nbsp;<%=smart_date_js article.public_datetime, tag: 'span' %>
       </figcaption>
     </figure><!--/ .ratio-pairing -->
   <% end %>

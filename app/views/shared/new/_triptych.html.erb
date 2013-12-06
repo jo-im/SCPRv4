@@ -22,7 +22,7 @@
                     <aside class="byline<%='special' if article.feature.present?%>">
                         <p>
                             <b class="author"><%= render_byline(article.original_object) %></b>
-                            <span><%= new_smart_date_js article.public_datetime, tag: 'span' %></span>
+                            <%= smart_date_js article.public_datetime, tag: 'span' %>
                         </p>
 
                     <%- if article.feature.present? %>
