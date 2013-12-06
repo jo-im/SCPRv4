@@ -2,10 +2,6 @@ require 'spec_helper'
 
 describe Concern::Associations::FeatureAssociation do
   describe '#feature' do
-    after :each do
-      ArticleFeature.collection = FEATURES
-    end
-
     it "gets the aricle's feature" do
       feature = ArticleFeature.new(id: 999, key: :lasagna)
       ArticleFeature.collection << feature
@@ -13,6 +9,7 @@ describe Concern::Associations::FeatureAssociation do
       story = create :test_class_story, feature_type_id: 999
 
       story.feature.should eq feature
+      ArticleFeature.collection = FEATURES
     end
 
     it "is nil if it doesn't have a feature" do
@@ -26,57 +23,59 @@ describe Concern::Associations::FeatureAssociation do
   describe '#feature=' do
     let(:feature) { ArticleFeature.new(id: 999, key: :lasagna) }
 
-    before do
-      ArticleFeature.collection << feature
-    end
-
-    after :each do
-      ArticleFeature.collection = FEATURES
-    end
-
     context 'with ArticleFeature' do
       it 'assigns the feature' do
+        ArticleFeature.collection << feature
         story = create :test_class_story, feature_type_id: nil
 
         story.feature = feature
         story.feature_type_id.should eq 999
+        ArticleFeature.collection = FEATURES
       end
     end
 
     context 'with String' do
       it 'assigns the feature' do
+        ArticleFeature.collection << feature
         story = create :test_class_story, feature_type_id: nil
 
         story.feature = "lasagna"
         story.feature_type_id.should eq 999
+        ArticleFeature.collection = FEATURES
       end
     end
 
     context 'with Symbol' do
       it 'assigns the feature' do
+        ArticleFeature.collection << feature
         story = create :test_class_story, feature_type_id: nil
 
         story.feature = :lasagna
         story.feature_type_id.should eq 999
+        ArticleFeature.collection = FEATURES
       end
     end
 
     context 'with Integer' do
       it 'assigns the feature' do
+        ArticleFeature.collection << feature
         story = create :test_class_story, feature_type_id: nil
 
         story.feature = 999
         story.feature_type_id.should eq 999
+        ArticleFeature.collection = FEATURES
       end
     end
 
     context 'with NilClass' do
       it 'unassigns the feature' do
+        ArticleFeature.collection << feature
         story = create :test_class_story, feature_type_id: 999
 
         story.feature.should eq feature
         story.feature = nil
         story.feature_type_id.should be_nil
+        ArticleFeature.collection = FEATURES
       end
     end
   end
