@@ -3,7 +3,7 @@
 <% content_for :body_class, 'interior issues' %>
 
 
-<%= cache ["issues/show", "v1", @issue] do %>
+<%= cache ["issues/show", "meta", "v1", @issue] do %>
 
 <header class="preface">
     <h1><%= @issue.title %></h1>
@@ -36,7 +36,7 @@
 
 <section class="backlog">
 
-<%= cache ["issues/list", "v1", @paginated_articles.to_a] do %>
+<%= cache ["issues/show", "list", "v1", @paginated_articles.to_a] do %>
     <%= render 'shared/new/waterfall_articles', articles: @paginated_articles, issue_tag_exists: false %>
 <% end %>
 

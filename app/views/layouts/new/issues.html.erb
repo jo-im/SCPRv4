@@ -20,13 +20,11 @@
             <nav class="terms">
                 <ul class="clearfix">
 
-            <%= cache ["issues/show/list", "v1", @issues] do %>
                 <% @issues.each do |issue| %>
                     <li class="<%= 'selected' if @issue == issue %>">
                         <%= link_to issue.title, issue.public_path %>
                     </li>
                 <% end %>
-            <% end %>
 
                 </ul>
             </nav>
@@ -44,7 +42,9 @@
     <%= render 'shared/new/kpcc_ipad_ad' %>
 
     <% if @popular_articles %>
-      <%= render 'shared/new/quadrant', articles: @popular_articles.first(4), header: 'Popular Now on KPCC' %>
+      <%= render 'shared/new/quadrant',
+        articles: @popular_articles.first(4),
+        header: 'Popular Now on KPCC' %>
     <% end %>
 
 
