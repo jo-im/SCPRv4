@@ -114,7 +114,10 @@ class VerticalSeed < ActiveRecord::Migration
   end
 
   def down
-    Category.find(5).update_attributes(is_active: false)
+    category = Category.find(5)
+    category.update_attributes(is_active: false)
+    category.category_articles.clear
+    category.bios.clear
     Issue.destroy_all
     Quote.destroy_all
     Event.update_all(category_id: nil)
