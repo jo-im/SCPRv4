@@ -31,4 +31,9 @@ FactoryGirl.define do
     category
     issue
   end
+
+  factory :category_reporter do
+    bio
+    category
+  end
 end

@@ -16,4 +16,10 @@ FactoryGirl.define do
     factory :active_issue, traits: [:is_active]
     factory :inactive_issue, traits: [:is_not_active]
   end
+
+
+  factory :article_issue do
+    article { |f| f.association :content_shell }
+    issue
+  end
 end
