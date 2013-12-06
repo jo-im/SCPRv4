@@ -133,7 +133,12 @@ module ApplicationHelper
   end
 
   #----------
-
+  # Render the tag necessary for the Smart Date JS to pick it up.
+  # Arguments:
+  # * datetime - An object that response to strftime
+  # * options  -  * tag - The tag to use (default: 'time')
+  #               * class - Any class to prepend to the defaults
+  #               * Anything else gets merged into the tag as attributes.
   def smart_date_js(datetime, options={})
     return '' if !datetime.respond_to?(:strftime)
 

@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe CategoryIssue do
-  subject { create :category_issue }
+  subject { build :category_issue }
 
   it { should belong_to :category }
   it { should belong_to :issue }

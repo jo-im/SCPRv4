@@ -1,7 +1,7 @@
 require "spec_helper"
 
 describe Concern::Associations::CategoryArticleAssociation do
-  subject { create :test_class_story }
+  subject { build :test_class_story }
   it { should have_many(:category_articles) }
 
   describe 'destroying on unpublish' do

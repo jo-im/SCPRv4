@@ -1,7 +1,7 @@
 require "spec_helper"
 
 describe Concern::Validations::ContentValidation do
-  subject { TestClass::Story.new }
+  subject { build :test_class_story }
 
   context "should validate" do
     before :each do
