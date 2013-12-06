@@ -3,7 +3,8 @@
 
   <% if record.respond_to?(:asset_display_id) %>
     <%= f.input :asset_display_id,
-      collection: Concern::Methods::AssetDisplayMethods.select_collection %>
+      collection: Concern::Methods::AssetDisplayMethods.select_collection,
+      include_blank: true %>
   <% end %>
 
 
