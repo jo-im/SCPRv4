@@ -4,6 +4,8 @@ class NewsController < ApplicationController
     @asset = @story.asset if @story.asset.present?
     @related_articles = @story.related_content.first(2) unless @story.related_content.empty?
 
+    @popular_articles = Rails.cache.read("popular/viewed").first(3) if Rails.cache.read("popular/viewed").presence
+
     if @category = @story.category
       if @category.issues.present?
         @category_issues = @category.issues
@@ -23,8 +25,6 @@ class NewsController < ApplicationController
         @three_recent_articles = @category_articles[0..2]
         @more_articles = @category_articles[3..-1]
       end
-
-      @popular_articles = Rails.cache.read("popular/viewed").first(3) if Rails.cache.read("popular/viewed").presence
 
       if @category.featured_articles.present?
         @resources = @category.featured_articles[1..4]
