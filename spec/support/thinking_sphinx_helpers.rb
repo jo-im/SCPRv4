@@ -136,6 +136,12 @@ module ThinkingSphinxHelpers
       end
 
       after :all do
+        # Force-clear the index.
+        # This isn't ideal but there's some thinking sphinx (I think) bug
+        # that causes a StaleIdsException that I can't figure out.
+        # https://github.com/bricker/ts_error_test
+        # By this point the database should be cleared out.
+        index_sphinx
         teardown_sphinx
       end
     end

@@ -50,10 +50,10 @@ describe RootPathController do
     describe "rendering articles with issues" do
       sphinx_spec
 
-      let(:category) { create :category, is_active: true }
-      let(:issues) { create_list :issue, 3, :is_active }
-
       it "renders articles and issues" do
+        category = create :category, is_active: true
+        issues = create_list :issue, 3, :is_active
+
         category.issues = issues
         articles = create_list :news_story, 6, :published, category: category
         articles.each { |a| a.issues = issues }
