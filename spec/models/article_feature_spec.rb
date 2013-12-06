@@ -3,10 +3,7 @@ require 'spec_helper'
 describe ArticleFeature do
   describe '::find_by_id' do
     it 'retrieves the feature by a given ID' do
-      feature = ArticleFeature.new(id: 12345, key: :lasagna)
-      ArticleFeature.collection << feature
-      ArticleFeature.find_by_id(12345).should eq feature
-      ArticleFeature.collection = FEATURES
+      ArticleFeature.find_by_id(1).key.should eq :slideshow
     end
 
     it "is nil if no feature is found" do
@@ -15,11 +12,8 @@ describe ArticleFeature do
   end
 
   describe '::find_by_key' do
-    it 'retrieves the feature by a given ID' do
-      feature = ArticleFeature.new(key: :test_feature)
-      ArticleFeature.collection << feature
-      ArticleFeature.find_by_key(:test_feature).should eq feature
-      ArticleFeature.collection = FEATURES
+    it 'retrieves the feature by a given key' do
+      ArticleFeature.find_by_key(:slideshow).id.should eq 1
     end
 
     it "is nil if no feature is found" do

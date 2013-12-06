@@ -53,4 +53,4 @@ FEATURES = [
       :name             => "Off-Ramp",
       :asset_display    => "photo"
     }
-  ].map { |attributes| ArticleFeature.new(attributes) }
+  ].map { |attributes| ArticleFeature.new(attributes) }.freeze
