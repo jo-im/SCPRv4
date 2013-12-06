@@ -1,4 +1,5 @@
 <% add_to_page_title @category.title %>
+<% meta_tags(url: @category.public_url) %>
 <% content_for :body_class, 'landing' %>
 
 <section class="headline">
