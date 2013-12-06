@@ -1,0 +1,44 @@
+<section class="triptych">
+    <div class="inner bound">
+        <header><h1>Recent <%= category.title %> Coverage</h1></header>
+
+        <div class="rail clearfix">
+
+        <% Array(articles).each do |article| %>
+            <article class="clearfix">
+                <div class="graphic">
+                    <div class="ratio">
+
+                    <% if issue = article.issues_in_category.first %>
+                        <%= link_to issue.public_path, class: 'issue' do %>
+                          <span><%= issue.title %></span>
+                        <% end %>
+                    <% end %>
+
+                        <div class="fill"></div>
+                        <b class="img-contain"><%= image_tag article.asset.eight.url %></b>
+                    </div><!--/ .ratio -->
+
+                    <aside class="byline<%='special' if article.feature.present?%>">
+                        <p>
+                            <b class="author"><%= render_byline(article.original_object) %></b>
+                            <%= smart_date_js article.public_datetime, tag: 'span' %>
+                        </p>
+
+                    <%- if article.feature.present? %>
+                        <mark class="trait <%= article.feature.key %>"><%= article.feature.name %></mark>
+                    <% end %>
+
+                    </aside>
+                </div> <!--/ .graphic -->
+
+                <header>
+                    <h1><%= link_to article.short_title, article.public_path %></h1>
+                    <h2><%= article.teaser %></h2>
+                </header>
+            </article>
+        <% end %>
+
+        </div> <!--/ .rail -->
+    </div> <!--/ .inner -->
+</section><!--/ .triptych -->

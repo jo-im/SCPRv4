@@ -1,11 +1,13 @@
 <div class="cbase lead5" data-vr-contentbox="">
-  <%= render_asset article, "large" %>
+  <%= render_asset article, display: "large" %>
 
   <h1 class="story-headline"><%= link_to article.short_title, article.public_url %></h1>
   <span class="byline">
     <%= render_byline article.original_object %>
     <%= smart_date_js article.public_datetime, "data-window" => "8h", "data-relative" => "2h" %>
   </span>
+
+  <%= render 'shared/feature_trait', article: article %>
 
   <p><%= article.teaser.html_safe %></p>
   <%= comment_count_for article.original_object %>

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20131109033002) do
+ActiveRecord::Schema.define(:version => 20131206035929) do
 
   create_table "abstracts", :force => true do |t|
     t.string   "source"
@@ -28,6 +28,17 @@ ActiveRecord::Schema.define(:version => 20131109033002) do
   add_index "abstracts", ["category_id"], :name => "index_abstracts_on_category_id"
   add_index "abstracts", ["source"], :name => "index_abstracts_on_source"
   add_index "abstracts", ["updated_at"], :name => "index_abstracts_on_updated_at"
+
+  create_table "article_issues", :force => true do |t|
+    t.integer  "issue_id"
+    t.integer  "article_id"
+    t.string   "article_type"
+    t.datetime "created_at",   :null => false
+    t.datetime "updated_at",   :null => false
+  end
+
+  add_index "article_issues", ["article_id", "article_type"], :name => "index_article_issues_on_article_id_and_article_type"
+  add_index "article_issues", ["issue_id"], :name => "index_article_issues_on_issue_id"
 
   create_table "assethost_contentasset", :force => true do |t|
     t.integer "content_id"
@@ -113,28 +124,64 @@ ActiveRecord::Schema.define(:version => 20131109033002) do
 
   create_table "blogs_entry", :force => true do |t|
     t.string   "headline"
-    t.string   "slug",              :limit => 50
-    t.text     "body",              :limit => 2147483647
+    t.string   "slug",             :limit => 50
+    t.text     "body",             :limit => 2147483647
     t.integer  "blog_id"
     t.datetime "published_at"
-    t.integer  "status",                                                     :null => false
-    t.string   "blog_asset_scheme"
+    t.integer  "status",                                                    :null => false
     t.string   "short_headline"
-    t.text     "teaser",            :limit => 2147483647
+    t.text     "teaser",           :limit => 2147483647
     t.integer  "wp_id"
     t.integer  "dsq_thread_id"
-    t.datetime "created_at",                                                 :null => false
-    t.datetime "updated_at",                                                 :null => false
+    t.datetime "created_at",                                                :null => false
+    t.datetime "updated_at",                                                :null => false
     t.integer  "category_id"
-    t.boolean  "is_from_pij",                             :default => false, :null => false
+    t.boolean  "is_from_pij",                            :default => false, :null => false
+    t.integer  "feature_type_id"
+    t.integer  "asset_display_id"
   end
 
+  add_index "blogs_entry", ["asset_display_id"], :name => "index_blogs_entry_on_asset_display_id"
   add_index "blogs_entry", ["blog_id"], :name => "blogs_entry_blog_id"
   add_index "blogs_entry", ["category_id"], :name => "blogs_entry_42dc49bc"
+  add_index "blogs_entry", ["feature_type_id"], :name => "index_blogs_entry_on_feature_type_id"
   add_index "blogs_entry", ["published_at"], :name => "index_blogs_entry_on_published_at"
   add_index "blogs_entry", ["status", "published_at"], :name => "index_blogs_entry_on_status_and_published_at"
   add_index "blogs_entry", ["status"], :name => "index_blogs_entry_on_status"
   add_index "blogs_entry", ["updated_at"], :name => "index_blogs_entry_on_updated_at"
+
+  create_table "category_articles", :force => true do |t|
+    t.integer  "position"
+    t.integer  "category_id"
+    t.integer  "article_id"
+    t.string   "article_type"
+    t.datetime "created_at",   :null => false
+    t.datetime "updated_at",   :null => false
+  end
+
+  add_index "category_articles", ["article_id", "article_type"], :name => "index_category_articles_on_article_id_and_article_type"
+  add_index "category_articles", ["category_id"], :name => "index_category_articles_on_category_id"
+  add_index "category_articles", ["position"], :name => "index_category_articles_on_position"
+
+  create_table "category_issues", :force => true do |t|
+    t.integer  "category_id"
+    t.integer  "issue_id"
+    t.datetime "created_at",  :null => false
+    t.datetime "updated_at",  :null => false
+  end
+
+  add_index "category_issues", ["category_id"], :name => "index_category_issues_on_category_id"
+  add_index "category_issues", ["issue_id"], :name => "index_category_issues_on_issue_id"
+
+  create_table "category_reporters", :force => true do |t|
+    t.integer  "category_id"
+    t.integer  "bio_id"
+    t.datetime "created_at",  :null => false
+    t.datetime "updated_at",  :null => false
+  end
+
+  add_index "category_reporters", ["bio_id"], :name => "index_category_reporters_on_bio_id"
+  add_index "category_reporters", ["category_id"], :name => "index_category_reporters_on_category_id"
 
   create_table "contentbase_category", :force => true do |t|
     t.string   "title"
@@ -143,9 +190,12 @@ ActiveRecord::Schema.define(:version => 20131109033002) do
     t.integer  "comment_bucket_id"
     t.datetime "created_at",                                        :null => false
     t.datetime "updated_at",                                        :null => false
+    t.boolean  "is_active"
+    t.string   "description"
   end
 
   add_index "contentbase_category", ["comment_bucket_id"], :name => "contentbase_category_36c0cbca"
+  add_index "contentbase_category", ["is_active"], :name => "index_contentbase_category_on_is_active"
   add_index "contentbase_category", ["is_news"], :name => "index_contentbase_category_on_is_news"
   add_index "contentbase_category", ["slug"], :name => "contentbase_category_a951d5d6"
   add_index "contentbase_category", ["title"], :name => "index_contentbase_category_on_title"
@@ -177,16 +227,18 @@ ActiveRecord::Schema.define(:version => 20131109033002) do
   create_table "contentbase_contentshell", :force => true do |t|
     t.string   "headline"
     t.string   "site"
-    t.text     "body",         :limit => 2147483647,                :null => false
+    t.text     "body",            :limit => 2147483647,                :null => false
     t.string   "url"
-    t.integer  "status",                             :default => 0, :null => false
+    t.integer  "status",                                :default => 0, :null => false
     t.datetime "published_at"
-    t.datetime "created_at",                                        :null => false
-    t.datetime "updated_at",                                        :null => false
+    t.datetime "created_at",                                           :null => false
+    t.datetime "updated_at",                                           :null => false
     t.integer  "category_id"
+    t.integer  "feature_type_id"
   end
 
   add_index "contentbase_contentshell", ["category_id"], :name => "contentbase_contentshell_42dc49bc"
+  add_index "contentbase_contentshell", ["feature_type_id"], :name => "index_contentbase_contentshell_on_feature_type_id"
   add_index "contentbase_contentshell", ["published_at"], :name => "index_contentbase_contentshell_on_published_at"
   add_index "contentbase_contentshell", ["site"], :name => "index_contentbase_contentshell_on_site"
   add_index "contentbase_contentshell", ["status", "published_at"], :name => "index_contentbase_contentshell_on_status_and_published_at"
@@ -303,13 +355,16 @@ ActiveRecord::Schema.define(:version => 20131109033002) do
     t.boolean  "is_kpcc_event",                             :default => false, :null => false
     t.text     "archive_description", :limit => 2147483647
     t.text     "teaser",              :limit => 2147483647
-    t.string   "event_asset_scheme"
     t.integer  "kpcc_program_id"
     t.integer  "status",                                                       :null => false
     t.boolean  "is_from_pij"
     t.string   "hashtag"
+    t.integer  "category_id"
+    t.integer  "asset_display_id"
   end
 
+  add_index "events", ["asset_display_id"], :name => "index_events_on_asset_display_id"
+  add_index "events", ["category_id"], :name => "index_events_on_category_id"
   add_index "events", ["event_type"], :name => "index_events_event_on_etype"
   add_index "events", ["is_kpcc_event"], :name => "index_events_on_is_kpcc_event"
   add_index "events", ["kpcc_program_id"], :name => "events_event_7666a8c6"
@@ -396,6 +451,20 @@ ActiveRecord::Schema.define(:version => 20131109033002) do
   add_index "flatpages_flatpage", ["is_public"], :name => "index_flatpages_flatpage_on_is_public"
   add_index "flatpages_flatpage", ["path"], :name => "django_flatpage_url"
   add_index "flatpages_flatpage", ["updated_at"], :name => "index_flatpages_flatpage_on_updated_at"
+
+  create_table "issues", :force => true do |t|
+    t.string   "title"
+    t.string   "slug"
+    t.text     "description"
+    t.boolean  "is_active"
+    t.datetime "created_at",  :null => false
+    t.datetime "updated_at",  :null => false
+  end
+
+  add_index "issues", ["created_at"], :name => "index_issues_on_created_at"
+  add_index "issues", ["is_active"], :name => "index_issues_on_is_active"
+  add_index "issues", ["slug"], :name => "index_issues_on_slug"
+  add_index "issues", ["title"], :name => "index_issues_on_title"
 
   create_table "layout_breakingnewsalert", :force => true do |t|
     t.string   "headline",                                                          :null => false
@@ -503,23 +572,25 @@ ActiveRecord::Schema.define(:version => 20131109033002) do
 
   create_table "news_story", :force => true do |t|
     t.string   "headline"
-    t.string   "slug",               :limit => 50
+    t.string   "slug",             :limit => 50
     t.string   "news_agency"
-    t.text     "teaser",             :limit => 2147483647
-    t.text     "body",               :limit => 2147483647
+    t.text     "teaser",           :limit => 2147483647
+    t.text     "body",             :limit => 2147483647
     t.datetime "published_at"
     t.string   "source"
-    t.string   "story_asset_scheme"
-    t.string   "extra_asset_scheme"
-    t.integer  "status",                                                      :null => false
+    t.integer  "status",                                                    :null => false
     t.string   "short_headline"
-    t.datetime "created_at",                                                  :null => false
-    t.datetime "updated_at",                                                  :null => false
+    t.datetime "created_at",                                                :null => false
+    t.datetime "updated_at",                                                :null => false
     t.integer  "category_id"
-    t.boolean  "is_from_pij",                              :default => false, :null => false
+    t.boolean  "is_from_pij",                            :default => false, :null => false
+    t.integer  "feature_type_id"
+    t.integer  "asset_display_id"
   end
 
+  add_index "news_story", ["asset_display_id"], :name => "index_news_story_on_asset_display_id"
   add_index "news_story", ["category_id"], :name => "news_story_42dc49bc"
+  add_index "news_story", ["feature_type_id"], :name => "index_news_story_on_feature_type_id"
   add_index "news_story", ["published_at"], :name => "news_story_published_at"
   add_index "news_story", ["status", "published_at"], :name => "index_news_story_on_status_and_published_at"
   add_index "news_story", ["status"], :name => "index_news_story_on_status"
@@ -619,6 +690,23 @@ ActiveRecord::Schema.define(:version => 20131109033002) do
   add_index "programs_kpccprogram", ["slug"], :name => "index_programs_kpccprogram_on_slug"
   add_index "programs_kpccprogram", ["title"], :name => "index_programs_kpccprogram_on_title"
 
+  create_table "quotes", :force => true do |t|
+    t.text     "quote"
+    t.string   "source_name"
+    t.string   "source_context"
+    t.integer  "category_id"
+    t.integer  "content_id"
+    t.string   "content_type"
+    t.integer  "status"
+    t.datetime "created_at",     :null => false
+    t.datetime "updated_at",     :null => false
+  end
+
+  add_index "quotes", ["category_id"], :name => "index_quotes_on_category_id"
+  add_index "quotes", ["content_id", "content_type"], :name => "index_quotes_on_content_id_and_content_type"
+  add_index "quotes", ["created_at"], :name => "index_quotes_on_created_at"
+  add_index "quotes", ["status"], :name => "index_quotes_on_status"
+
   create_table "recurring_schedule_rules", :force => true do |t|
     t.text     "schedule_hash", :limit => 16777215
     t.integer  "interval"
@@ -708,22 +796,25 @@ ActiveRecord::Schema.define(:version => 20131109033002) do
   add_index "shows_rundown", ["segment_id"], :name => "shows_rundown_segment_id"
 
   create_table "shows_segment", :force => true do |t|
-    t.integer  "show_id",                                    :null => false
+    t.integer  "show_id",                                :null => false
     t.string   "headline"
-    t.string   "slug",                 :limit => 50
-    t.text     "teaser",               :limit => 2147483647
-    t.text     "body",                 :limit => 2147483647
-    t.datetime "created_at",                                 :null => false
-    t.integer  "status",                                     :null => false
-    t.string   "segment_asset_scheme"
+    t.string   "slug",             :limit => 50
+    t.text     "teaser",           :limit => 2147483647
+    t.text     "body",             :limit => 2147483647
+    t.datetime "created_at",                             :null => false
+    t.integer  "status",                                 :null => false
     t.string   "short_headline"
     t.datetime "published_at"
-    t.datetime "updated_at",                                 :null => false
+    t.datetime "updated_at",                             :null => false
     t.integer  "category_id"
     t.boolean  "is_from_pij"
+    t.integer  "feature_type_id"
+    t.integer  "asset_display_id"
   end
 
+  add_index "shows_segment", ["asset_display_id"], :name => "index_shows_segment_on_asset_display_id"
   add_index "shows_segment", ["category_id"], :name => "shows_segment_42dc49bc"
+  add_index "shows_segment", ["feature_type_id"], :name => "index_shows_segment_on_feature_type_id"
   add_index "shows_segment", ["published_at"], :name => "index_shows_segment_on_published_at"
   add_index "shows_segment", ["show_id"], :name => "shows_segment_show_id"
   add_index "shows_segment", ["slug"], :name => "shows_segment_slug"

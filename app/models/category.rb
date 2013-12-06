@@ -1,4 +1,5 @@
 class Category < ActiveRecord::Base
+
   self.table_name = 'contentbase_category'
   outpost_model
   has_secretary
@@ -15,7 +16,18 @@ class Category < ActiveRecord::Base
 
   #-------------------
   # Associations
+  has_many :category_articles, order: 'position', dependent: :destroy
+  has_many :category_reporters, dependent: :destroy
+  has_many :bios, through: :category_reporters
+  has_many :category_issues, dependent: :destroy
+  has_many :issues, through: :category_issues
   belongs_to :comment_bucket, class_name: "FeaturedCommentBucket"
+  has_many :events
+  has_many :quotes,
+    :foreign_key    => "category_id",
+    :order          => "created_at desc"
+
+  accepts_json_input_for :category_articles
 
   #-------------------
   # Validations
@@ -36,6 +48,11 @@ class Category < ActiveRecord::Base
     end
   end
 
+  def featured_articles
+    @articles ||= self.category_articles
+      .includes(:article).select(&:article)
+      .map { |a| a.article.to_article }
+  end
 
   def content(options={})
     page      = options[:page] || DEFAULTS[:page]
@@ -69,5 +86,18 @@ class Category < ActiveRecord::Base
 
   def preview(options={})
     @preview ||= CategoryPreview.new(self, options)
+  end
+
+
+  private
+
+  def build_category_article_association(category_article_hash, article)
+    if article.published?
+      CategoryArticle.new(
+        :position   => category_article_hash["position"].to_i,
+        :article    => article,
+        :category   => self
+      )
+    end
   end
 end

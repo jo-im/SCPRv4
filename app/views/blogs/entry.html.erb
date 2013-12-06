@@ -9,6 +9,7 @@
   <!-- Next/Previous Entries -->
   <%= content_cache "next_prev/v1/#{@entry.obj_key}" do %>
     <% register_content @entry %>
+
     <div class="next-prev" id="article-next-prev">
       <div class="row-fluid">
         <div class="span6 row-title">
@@ -18,14 +19,14 @@
           <div class="row-fluid">
             <div class="span12 left">
               <% if @entry.previous.present? %>
-                <% register_content @entry.previous %>
+                  <% register_content @entry.previous %>
                 <div class="arrow">&larr;</div>
                 <%= link_to @entry.previous.short_headline, @entry.previous.public_path %>
               <% end %>
             </div>
             <div class="span12 right">
               <% if @entry.next.present? %>
-                <% register_content @entry.next %>
+                  <% register_content @entry.next %>
                 <div class="arrow">&rarr;</div>
                 <%= link_to @entry.next.short_headline, @entry.next.public_path %>
               <% end %>
@@ -33,7 +34,7 @@
           </div> <!-- row fluid -->
         </div> <!-- span -->
       </div> <!-- row fluid -->
-    </div>
+    </div> <!-- next-prev -->
   <% end %>
 
   <%= render "shared/related_content_and_links", content: @entry %>
@@ -48,7 +49,7 @@
         <%= comments_for @entry, header: false %>
       </div>
     </div> <!-- row-fluid -->
-  </div>
+  </div> <!-- comment-wrap -->
 </div> <!-- fold -->
 
 <%= render 'shared/scripts/embedder' %>

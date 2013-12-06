@@ -1,0 +1,18 @@
+<% articles.each do |article| %>
+
+<li>
+  <%= link_to article.public_path do %>
+    <figure class="ratio-pairing clearfix">
+      <div class="ratio">
+        <div class="fill"></div>
+        <b class="img-contain"><%= image_tag(article.asset.lsquare.url) %> /></b>
+      </div><!--/ .ratio -->
+      <figcaption>
+        <p><%= article.short_title %></p>
+        <mark><%= article.byline %></mark>&nbsp;<%=smart_date_js article.public_datetime, tag: 'span' %>
+      </figcaption>
+    </figure><!--/ .ratio-pairing -->
+  <% end %>
+</li>
+
+<% end %>

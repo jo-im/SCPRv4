@@ -31,7 +31,6 @@ Scprv4::Application.routes.draw do
   get '/blogs/:blog/'                                  => 'blogs#show',                   as: :blog
   get '/blogs/'                                        => 'blogs#index',                  as: :blogs
 
-
   # News Stories
   get '/news/:year/:month/:day/:id/:slug/'  => 'news#story',      as: :news_story,  constraints: { year: /\d{4}/, month: /\d{2}/, day: /\d{2}/, id: /\d+/, slug: /[\w_-]+/}
 
@@ -58,6 +57,11 @@ Scprv4::Application.routes.draw do
 
   # Legacy route
   get '/events/:year/:month/:day/:slug/'  => 'events#show', constraints: { year: /\d{4}/, month: /\d{2}/, day: /\d{2}/, slug: /[\w_-]+/}
+
+
+  # Issues
+  get 'issues/:slug' => 'issues#show', as: :issue
+  get '/issues' => 'issues#index'
 
 
   # Search
@@ -234,6 +238,10 @@ Scprv4::Application.routes.draw do
       get "search", on: :collection, as: :search
     end
 
+    resources :issues do
+      get "search", on: :collection, as: :search
+    end
+
     resources :missed_it_buckets do
       get "search", on: :collection, as: :search
     end
@@ -263,6 +271,10 @@ Scprv4::Application.routes.draw do
     end
 
     resources :featured_comments do
+      get "search", on: :collection, as: :search
+    end
+
+    resources :quotes do
       get "search", on: :collection, as: :search
     end
 

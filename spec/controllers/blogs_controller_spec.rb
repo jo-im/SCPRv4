@@ -101,7 +101,8 @@ describe BlogsController do
   describe "load_blog" do
     before :each do
       @blog = create :blog
-      entry_published = create :blog_entry, blog: @blog
+      @category = create :category
+      entry_published = create :blog_entry, blog: @blog, category: @category
       p = entry_published.published_at
       @entry_attr = { blog: @blog.slug,
                       id: entry_published.id,
@@ -129,7 +130,8 @@ describe BlogsController do
       render_views
 
       it "renders the view" do
-        entry = create :blog_entry
+        @category = create :category
+        entry = create :blog_entry, category: @category
         get :entry, { blog: entry.blog.slug,
                       id: entry.id,
                       slug: entry.slug }.merge!(date_path(entry.published_at))
@@ -137,9 +139,11 @@ describe BlogsController do
     end
 
     describe "controller" do
+      let(:category) { create :category }
+      let(:entry) { create :blog_entry, category: category }
+
       context "for invalid entry" do
         it "raises a routing error for invalid ID" do
-          entry = create :blog_entry
           -> {
             get :entry, { blog: entry.blog.slug,
                           id: "999999",
@@ -149,7 +153,6 @@ describe BlogsController do
       end
 
       context "for valid entry" do
-        let(:entry) { create :blog_entry }
 
         before :each do
           get :entry, { blog: entry.blog.slug,
@@ -161,6 +164,21 @@ describe BlogsController do
           assigns(:entry).should eq entry
         end
       end
+
+#      context "for popular articles" do
+#        let(:articles) { create_list(:blog_entry, 3).map(&:to_article) }
+#
+#        before :each do
+#          Rails.cache.write("popular/viewed", articles)
+#          get :entry, { blog: entry.blog.slug,
+#                        id: entry.id,
+#                        slug: entry.slug }.merge!(date_path(entry.published_at))
+#        end
+#
+#        it 'assigns @popular_articles' do
+#          assigns(:popular_articles).should eq articles
+#        end
+#      end
     end
   end
 

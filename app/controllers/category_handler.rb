@@ -1,15 +1,34 @@
+# NOTE: This inherits from ApplicationController,
+# so any functionality needed for the NEW templates
+# has to be included manually.
+
 module CategoryHandler
-  PER_PAGE = 15
+  PER_PAGE = 16
 
-  def handle_category
-    page      = params[:page].to_i
-    per_page  = PER_PAGE
-
+  def handle_vertical
     @content = @category.content(
-      :page       => page,
-      :per_page   => per_page
+      :page       => params[:page].to_i,
+      :per_page   => PER_PAGE
     )
 
-    respond_with @content, template: "category/show"
+    @category_articles  = @content.map(&:to_article)
+    @featured_articles  = @category.featured_articles
+    @lead_article       = @featured_articles.first
+    @events             = @category.events.published.upcoming
+    @quote              = @category.quotes.published.first
+
+    respond_with @content,
+      :template => "category/show",
+      :layout   => "new/vertical"
+  end
+
+
+  def handle_category
+    @content = @category.content(
+      :page       => params[:page].to_i,
+      :per_page   => PER_PAGE
+    )
+
+    respond_with @content, template: "category/simple"
   end
 end

@@ -1,6 +1,42 @@
 <%= form_block "Details" do %>
   <%= f.input :title, input_html: { class: "sluggable" } %>
   <%= f.input :slug %>
+  <%= f.input :description, label: "Tagline" %>
+
   <%= f.input :is_news %>
+  <%= f.input :is_active, hint: "Should this category be treated as a Vertical?" %>
+<% end %>
+
+
+<%= form_block "Associations" do %>
   <%= f.association :comment_bucket %>
+  <%= f.association :issues %>
+  <%= f.association :bios %>
+<% end %>
+
+
+<%= form_block "Content" do %>
+  <div id="aggregator" class="aggregator"></div>
+  <%= f.input :category_articles_json, as: :hidden, input_html: { id: "category_articles_json" } %>
+<% end %>
+
+
+<% content_for :footer do %>
+  <script>
+    aggregator = new outpost.Aggregator(
+      "#aggregator", "#category_articles_json",
+      <%= render_json("api/private/v2/articles/collection", articles: record.category_articles.includes(:article).map {|a| a.article.to_article}) %>,
+      {
+        apiType: "private",
+        params: {
+          limit: 20,
+          types: 'news,blogs,segments,shells,queries',
+          token: "<%= Rails.application.config.api['kpcc']['private']['api_token'] %>",
+          order: "public_datetime"
+          sort_mode: "desc",
+          with: { is_live: "1" }
+        }
+      }
+    );
+  </script>
 <% end %>

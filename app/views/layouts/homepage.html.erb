@@ -38,7 +38,7 @@
 
               <%= modal("episode-guide", modal_id: "episode-guide") do %>
                 <h6><%= link_to episode.headline, episode.public_path, :class => 'track-event', :data => {'ga-category' => 'Broadcast Bar', 'ga-action' => 'Episode Guide', 'ga-label' => 'Current Episode'} %></h6>
-                <%= render_asset episode, 'thumbnail' %>
+                <%= render_asset episode, display: 'thumbnail' %>
 
                 <!-- Segments -->
                 <ul class="cbase">

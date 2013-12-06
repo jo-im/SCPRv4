@@ -1,6 +1,12 @@
 <%= form_block "Asset Management" do %>
   <%= extra %>
 
+  <% if record.respond_to?(:asset_display_id) %>
+    <%= f.input :asset_display_id,
+      collection: Concern::Methods::AssetDisplayMethods.select_collection %>
+  <% end %>
+
+
   <div id="asset_bucket" class="clearfix"></div>
   <%= f.input :asset_json, as: :hidden, input_html: { id: "asset_json" } %>
 

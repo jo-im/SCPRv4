@@ -9,14 +9,13 @@
       </span>
     </header>
 
-    <div class="story-body <%= story.story_asset_scheme.present? ? "storycenter" : "storyleft" %>">
+    <div class="story-body">
       <div class="visible-reader"><%= content_widget "primary_audio", story %></div>
-      <%= render_asset story, "story" %>
+      <%= render_asset story %>
 
       <div class="storybar">
         <%= comment_widget_for story, cssClass: 'right-side' %>
         <div class="hidden-reader"><%= content_widget "audio", story %></div>
-        <%= render_asset(story, "extra") if story.extra_asset_scheme == "sidebar" %>
       </div>
 
       <%= story.body.html_safe %>

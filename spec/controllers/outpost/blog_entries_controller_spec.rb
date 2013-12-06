@@ -10,12 +10,13 @@ describe Outpost::BlogEntriesController do
 
     before :each do
       @current_user = create :admin_user
+      @category = create :category
       controller.stub(:current_user) { @current_user }
     end
 
     context "existing object" do
       it "builds the object from existing attributes and assigns new ones" do
-        entry = create :blog_entry, :published, headline: "This is a blog entry"
+        entry = create :blog_entry, :published, headline: "This is a blog entry", category: @category
         put :preview, id: entry.id, obj_key: entry.obj_key, blog_entry: entry.attributes.merge(headline: "Updated")
         assigns(:entry).should eq entry
         assigns(:entry).headline.should eq "Updated"
@@ -29,7 +30,7 @@ describe Outpost::BlogEntriesController do
       end
 
       it "renders properly for unpublished content" do
-        entry = create :blog_entry, :draft, headline: "This is a blog entry"
+        entry = create :blog_entry, :draft, headline: "This is a blog entry", category: @category
         put :preview, id: entry.id, obj_key: entry.obj_key, blog_entry: entry.attributes
         response.should render_template "/blogs/_entry"
       end
@@ -37,7 +38,7 @@ describe Outpost::BlogEntriesController do
 
     context "new object" do
       it "builds a new object and assigns the attributes" do
-        entry = build :blog_entry, headline: "This is a blog entry"
+        entry = build :blog_entry, headline: "This is a blog entry", category: @category
         post :preview, obj_key: entry.obj_key, blog_entry: entry.attributes
         assigns(:entry).headline.should eq "This is a blog entry"
         response.should render_template "/blogs/_entry"

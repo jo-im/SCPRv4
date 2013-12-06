@@ -30,7 +30,7 @@
         <div class="row-fluid">
           <% if article.assets.present? %>
             <div class="span4">
-              <%= render_asset article, 'thumbnail' %>
+              <%= render_asset article, display: 'thumbnail' %>
             </div>
             <div class="span20">
           <% else %>
@@ -74,7 +74,7 @@
         <div class="row-fluid">
           <% if content.assets.present? %>
             <div class="span4">
-              <%= render_asset content, 'thumbnail' %>
+              <%= render_asset content, display: 'thumbnail' %>
             </div>
             <div class="span20">
           <% else %>
@@ -139,7 +139,7 @@
             <div class="row-fluid">
               <% if content.assets.present? %>
                 <div class="span4">
-                  <%= render_asset content, 'thumbnail' %>
+                  <%= render_asset content, display: 'thumbnail' %>
                 </div>
                 <div class="span20">
               <% else %>

@@ -1,4 +1,5 @@
 <div class="cbase thumbnail">
   <h3 class="story-headline"><%= link_to article.short_title, article.public_url %></h3>
+  <%= render 'shared/feature_trait', article: article %>
   <%= comment_count_for article.original_object %>
 </div>

@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<%= render "shared/new/document_header" %>
+
+
+<body class="<%= content_for(:body_class) %>">
+
+    <%= render 'shared/new/layout_header' %>
+
+    <section class="prologue">
+        <div class="inner bound">
+            <h1 class="title">All Issues</h1>
+        </div>
+    </section><!--/ .prologue -->
+
+    <div class="catalog">
+        <div class="inner bound clearfix">
+
+            <nav class="terms">
+                <ul class="clearfix">
+
+                <% @issues.each do |issue| %>
+                    <li class="<%= 'selected' if @issue == issue %>">
+                        <%= link_to issue.title, issue.public_path %>
+                    </li>
+                <% end %>
+
+                </ul>
+            </nav>
+
+            <div class="showcase">
+
+                <%= yield %>
+
+            </div><!--/ .showcase -->
+
+        </div> <!--/ .inner.bound -->
+    </div><!--/ .catalog -->
+
+
+    <%= render 'shared/new/kpcc_ipad_ad' %>
+
+    <% if @popular_articles %>
+      <%= render 'shared/new/quadrant',
+        articles: @popular_articles.first(4),
+        header: 'Popular Now on KPCC' %>
+    <% end %>
+
+
+    <%= render 'shared/new/layout_footer' %>
+    <%= render 'shared/new/document_footer' %>
+
+
+</body>
+</html>

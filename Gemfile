@@ -51,7 +51,6 @@ gem "carrierwave", "~> 0.6"
 gem "ruby-mp3info", require: 'mp3info'
 gem "ice_cube", "~> 0.11.0"
 
-
 ## HTTP
 gem "faraday", "~> 0.8"
 gem "faraday_middleware", "~> 0.8"

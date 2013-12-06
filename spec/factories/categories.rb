@@ -4,13 +4,13 @@
 FactoryGirl.define do
   factory :category do
     sequence(:title) { |n| "Local #{n}" }
+
     is_news true
 
     trait :is_news do
     end
 
     trait :is_not_news do
-      sequence(:title) { |n| "Culture #{n}" }
       is_news false
     end
 
@@ -18,5 +18,22 @@ FactoryGirl.define do
 
     factory :category_news, traits: [:is_news]
     factory :category_not_news, traits: [:is_not_news]
+
+  end
+
+  factory :category_article do
+    category
+    article { |f| f.association(:news_story) }
+    position 0
+  end
+
+  factory :category_issue do
+    category
+    issue
+  end
+
+  factory :category_reporter do
+    bio
+    category
   end
 end

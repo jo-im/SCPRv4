@@ -23,7 +23,11 @@ class RootPathController < ApplicationController
       slug = path.gsub(/\A\/?(.+)\/?\z/, "\\1").downcase
 
       if @category = Category.find_by_slug(slug)
-        handle_category and return
+        if @category.is_active
+          handle_vertical and return
+        else
+          handle_category and return
+        end
       else
         render_error(404, ActionController::RoutingError.new("Not Found")) and return false
       end

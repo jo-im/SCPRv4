@@ -1,0 +1,18 @@
+<% asset = assets.first %>
+
+<% if asset.small.width < asset.small.height %>
+<div class="asset-block right" style="width:<%=asset.lsquare.width%>px;">
+<% else %>
+<div class="asset-block wide">
+<% end %>
+
+  <div class="contentasset">
+    <%= asset.eight.tag %>
+  </div>
+
+  <h4><%= asset.owner %></h4>
+
+  <% if asset.caption %>
+    <p><%= asset.caption %></p>
+  <% end %>
+</div>

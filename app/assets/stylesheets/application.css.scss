@@ -10,11 +10,9 @@
 @import "base/patterns";
 @import "base/forms";
 @import "base/tables";
-
 // Layouts
 @import "base/minimal";
 @import "base/dark";
-
 // Section-Specific Stylesheets
 @import "main";
 @import "masthead";
@@ -36,6 +34,9 @@
 @import "slideshow";
 @import "ckeditor";
 @import "audiovision";
+
+// Utilities
+@import "feature_traits";
 
 // May Elections
 // Keep this here to support hard-coded results tables in Flatpages.

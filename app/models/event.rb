@@ -5,9 +5,11 @@ class Event < ActiveRecord::Base
   include Concern::Validations::SlugValidation
   include Concern::Associations::AudioAssociation
   include Concern::Associations::AssetAssociation
+  include Concern::Associations::CategoryAssociation
   include Concern::Associations::RelatedLinksAssociation
   include Concern::Associations::RelatedContentAssociation
   include Concern::Associations::FeaturedCommentAssociation
+  include Concern::Associations::QuoteAssociation
   include Concern::Associations::HomepageContentAssociation
   include Concern::Associations::MissedItContentAssociation
   include Concern::Callbacks::GenerateSlugCallback
@@ -17,6 +19,7 @@ class Event < ActiveRecord::Base
   include Concern::Callbacks::TouchCallback
   include Concern::Methods::CommentMethods
   include Concern::Methods::PublishingMethods
+  include Concern::Methods::AssetDisplayMethods
 
   self.disqus_identifier_base = "events"
   ROUTE_KEY = "event"

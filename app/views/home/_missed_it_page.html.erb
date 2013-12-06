@@ -6,8 +6,11 @@
         <% register_content article.original_object %>
         <div class="span4">
           <div class="carousel-item" data-vr-contentbox="">
-            <%= render_asset article, "thumbnail", true %>
+            <%= render_asset article, display: "thumbnail", fallback: true %>
             <span class="title"><%= link_to article.short_title, article.public_url %></span>
+
+            <%= render 'shared/feature_trait', article: article %>
+
           </div>
         </div> <!-- span -->
         <hr />

@@ -46,6 +46,18 @@ module ContentBase
   }
 
 
+  # Don't set any of these to 0, because ThinkingSphinx will
+  # convert NULL to 0 and return incorrect results.
+  ASSET_DISPLAY_IDS = {
+    :slideshow    => 1,
+    :video        => 2,
+    :photo        => 3,
+    :hidden       => 4
+  }
+
+  ASSET_DISPLAYS = ASSET_DISPLAY_IDS.invert
+
+
   def new_obj_key
     "contentbase:new"
   end
@@ -142,7 +154,7 @@ module ContentBase
   #---------------------
   # obj_by_url or raise
   def obj_by_url!(url)
-    obj_by_url(url) or raise ActiveRecord::RecordNotFound
+    obj_by_url(url) or raise ActiveRecord::RecordNotFound, url
   end
 
 

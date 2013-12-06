@@ -1,8 +1,20 @@
 require "spec_helper"
 
 describe Concern::Associations::AssetAssociation do
+  describe '#asset' do
+    it "gets the article's first asset" do
+      content = create :test_class_story
+      assets = create_list :asset, 2, content: content
 
-  #--------------------
+      content.asset.should eq assets.first
+    end
+
+    it "uses a fallback if there are no assets" do
+      content = create :test_class_story
+      content.asset.should be_a AssetHost::Asset::Fallback
+    end
+  end
+
 
   describe '#asset_json' do
     it "uses simple_json for the asset" do
@@ -93,6 +105,29 @@ describe Concern::Associations::AssetAssociation do
         record.should_not_receive :assets=
         record.asset_json = original_json
       end
+    end
+  end
+
+  describe '#asset_display' do
+    it "returns the asset display if specified" do
+      record = build :test_class_story,
+        asset_display_id: ContentBase::ASSET_DISPLAY_IDS[:slideshow]
+
+      record.asset_display.should eq :slideshow
+    end
+
+    it "returns nil if asset display not specified" do
+      record = build :test_class_story, asset_display_id: nil
+      record.asset_display.should eq nil
+    end
+  end
+
+  describe '#asset_display=' do
+    it "sets asset_display_id" do
+      record = build :test_class_story, asset_display_id: nil
+      record.asset_display = :photo
+      record.asset_display_id.should eq ContentBase::ASSET_DISPLAY_IDS[:photo]
+      record.asset_display.should eq :photo
     end
   end
 end

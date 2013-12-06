@@ -7,7 +7,8 @@ describe FeatureCandidate::Slideshow do
     sphinx_spec
 
     it "returns the latest slideshow article in this category" do
-      story1 = create :news_story, category: category, story_asset_scheme: "slideshow"
+      story1 = create :news_story,
+        category: category, asset_display: :slideshow
 
       index_sphinx
 
@@ -18,10 +19,10 @@ describe FeatureCandidate::Slideshow do
 
     it "excludes passed-in articles" do
       story1 = create :news_story,
-        category: category, story_asset_scheme: "slideshow", published_at: 1.week.ago
+        category: category, asset_display: :slideshow, published_at: 1.week.ago
 
       story2 = create :news_story,
-        category: category, story_asset_scheme: "slideshow", published_at: 1.month.ago
+        category: category, asset_display: :slideshow, published_at: 1.month.ago
 
       index_sphinx
 
@@ -40,7 +41,8 @@ describe FeatureCandidate::Slideshow do
     sphinx_spec
 
     it 'is the calculated score' do
-      story1 = create :news_story, category: category, story_asset_scheme: "slideshow"
+      story1 = create :news_story,
+        category: category, asset_display: :slideshow
 
       index_sphinx
 
@@ -50,7 +52,8 @@ describe FeatureCandidate::Slideshow do
     end
 
     it "is higher if there are more slides" do
-      story1 = create :news_story, category: category, story_asset_scheme: "slideshow"
+      story1 = create :news_story,
+        category: category, asset_display: :slideshow
       create :asset, content: story1
 
       # bleh
@@ -63,7 +66,8 @@ describe FeatureCandidate::Slideshow do
 
       story1.destroy
 
-      story2 = create :news_story, category: category, story_asset_scheme: "slideshow"
+      story2 = create :news_story,
+        category: category, asset_display: :slideshow
       create_list :asset, 2, content: story2
 
       index_sphinx

@@ -11,7 +11,7 @@
         <% if event.assets.present? %>
           <div class="span6">
             <a href="<%= event.public_path %>">
-              <%= render_asset event, 'small' %>
+              <%= render_asset event, display: 'small' %>
             </a>
           </div>
           <div class="span18">

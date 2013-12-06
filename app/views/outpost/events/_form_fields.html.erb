@@ -1,6 +1,7 @@
 <%= form_block "Details" do %>
   <%= f.input :headline, label: "Title", input_html: { class: 'wide sluggable' } %>
   <%= f.input :event_type, label: "Type", collection: Event.event_types_select_collection, include_blank: false %>
+  <%= f.section "category" %>
   <%= f.input :status, collection: Event.status_select_collection, include_blank: false %>
 
   <%= f.input :body, input_html: { class: 'cke-editor-restrictive' } %>
@@ -48,13 +49,7 @@
   <%= f.input :archive_description, input_html: { class: "cke-editor-restrictive" }, hint: "Description to display after the event has happened" %>
 <% end %>
 
-<%= f.section "assets" do %>
-  <%= f.input :event_asset_scheme,
-              :collection    => NewsStory::ASSET_SCHEMES,
-              :include_blank => false,
-              :hint          => "Sets up the top-of-story formatting for assets attached through AssetHost. " %>
-<% end %>
-
+<%= f.section "assets"%>
 <%= f.section "audio" %>
 <%= f.section "related_links" %>
 <%= f.section "related_content" %>

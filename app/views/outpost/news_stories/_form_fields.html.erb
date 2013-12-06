@@ -4,17 +4,16 @@
 <%= f.section "bylines" %>
 
 <%= form_block "Meta" do %>
+  <%= f.section "category" %>
+  <%= f.section "feature" %>
+  <%= f.association :issues %>
+
   <%= f.input :source, collection: NewsStory::SOURCES, include_blank: false %>
   <%= f.input :news_agency %>
-  <%= f.section "category" %>
   <%= f.input :is_from_pij, hint: "Was this story informed by PIJ Sources?" %>
 <% end %>
 
-<%= f.section "assets" do %>
-  <%= f.input :story_asset_scheme, collection: NewsStory::ASSET_SCHEMES, include_blank: false %>
-  <%= f.input :extra_asset_scheme, collection: NewsStory::EXTRA_ASSET_SCHEMES, include_blank: false, hint: "Where to show any extra assets." %>
-<% end %>
-
+<%= f.section "assets" %>
 <%= f.section "audio" %>
 <%= f.section "related_links" %>
 <%= f.section "related_content" %>

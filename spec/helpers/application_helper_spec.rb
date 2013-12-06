@@ -36,19 +36,58 @@ describe ApplicationHelper do
     it "should render a fallback image if there are no assets and fallback is true" do
       content = build :content_shell
       content.stub(:assets) { [] }
-      helper.render_asset(content, 'thumbnail', true).should match "fallback"
+
+      helper.render_asset(content, display: 'thumbnail', fallback: true)
+        .should match "fallback"
     end
 
     it "should move on to render_asset if there are assets" do
       content = build :content_shell
       content.stub(:assets) { [1, 2, 3] }
       view.stub(:render) { "asset rendered" }
-      helper.render_asset(content, 'thumbnail', true).should match "asset rendered"
+
+      helper.render_asset(content, display: 'thumbnail', fallback: true)
+        .should match "asset rendered"
     end
 
     it "should return a blank string if object does not have assets and no fallback is requested" do
       content = create :content_shell
-      helper.render_asset(content, 'thumbnail', false).should eq ''
+
+      helper.render_asset(content, display: 'thumbnail', fallback: false)
+        .should eq ''
+    end
+
+    it "renders the specified template" do
+      content = create :content_shell
+      asset = create :asset, content: content
+
+      # Use a real template name here so it passes the lookup context check
+      helper.render_asset(content, template: "default/video")
+        .should render_template "shared/assets/default/_video"
+    end
+
+    it "renders with specified display" do
+      content = create :content_shell
+      asset = create :asset, content: content
+
+      helper.render_asset(content, display: "small")
+        .should render_template "shared/assets/default/_small"
+    end
+
+    it "renders with specified context" do
+      content = create :content_shell
+      asset = create :asset, content: content
+
+      helper.render_asset(content, context: "pij_query")
+        .should render_template "shared/assets/pij_query/_photo"
+    end
+
+    it "uses the object's asset_display_id to figure out display" do
+      content = create :news_story, asset_display: :slideshow
+      asset = create :asset, content: content
+
+      helper.render_asset(content)
+        .should render_template "shared/assets/default/_slideshow"
     end
   end
 
@@ -123,7 +162,7 @@ describe ApplicationHelper do
       tag.should match /#{time.to_i.to_s}/
     end
 
-    it "returns nil if passed-in object can't respond to strftime" do
+    it "returns empty string if passed-in object can't respond to strftime" do
       helper.smart_date_js("invalid").should eq ''
     end
 
@@ -140,6 +179,10 @@ describe ApplicationHelper do
     it "merges a passed-in class with the required smarttime class" do
       time = Time.now
       helper.smart_date_js(time, class: "newClass").should match "newClass smart smarttime"
+    end
+
+    it "uses the specified tag" do
+      helper.smart_date_js(Time.now, tag: "span").should match /<span/
     end
   end
 

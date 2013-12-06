@@ -11,9 +11,13 @@ class ShowSegment < ActiveRecord::Base
   include Concern::Associations::RelatedContentAssociation
   include Concern::Associations::RelatedLinksAssociation
   include Concern::Associations::BylinesAssociation
+  include Concern::Associations::IssueAssociation
+  include Concern::Associations::FeatureAssociation
   include Concern::Associations::CategoryAssociation
+  include Concern::Associations::CategoryArticleAssociation
   include Concern::Associations::HomepageContentAssociation
   include Concern::Associations::FeaturedCommentAssociation
+  include Concern::Associations::QuoteAssociation
   include Concern::Associations::MissedItContentAssociation
   include Concern::Associations::EditionsAssociation
   include Concern::Validations::ContentValidation
@@ -29,17 +33,11 @@ class ShowSegment < ActiveRecord::Base
   include Concern::Methods::ContentStatusMethods
   include Concern::Methods::PublishingMethods
   include Concern::Methods::CommentMethods
+  include Concern::Methods::AssetDisplayMethods
 
   self.disqus_identifier_base = "shows/segment"
   ROUTE_KEY = "segment"
 
-  ASSET_SCHEMES = [
-    ["Top", "wide"],
-    ["Right", "float"],
-    ["Slideshow", "slideshow"],
-    ["Video", "video"],
-    ["Hidden", "hidden"]
-  ]
 
   #-------------------
   # Scopes
@@ -127,7 +125,9 @@ class ShowSegment < ActiveRecord::Base
       :audio              => self.audio.available,
       :attributions       => self.bylines,
       :byline             => self.byline,
-      :edit_url           => self.admin_edit_url
+      :edit_url           => self.admin_edit_url,
+      :issues             => self.issues,
+      :feature            => self.feature
     })
   end
 
