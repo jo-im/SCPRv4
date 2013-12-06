@@ -261,7 +261,9 @@
                         <figcaption>
                           <h1><%= link_to bio.name, bio.public_path %></h1>
                           <ul class="clearfix">
-                            <li><%= link_to 'Email', bio.email, class: 'email', title: "Email #{bio.first_name}" %></li>
+                          <% if bio.email.present? %>
+                            <li><%= link_to 'Email', "mailto:#{bio.email}", class: 'email', title: "Email #{bio.first_name}" %></li>
+                          <% end %>
 
                           <% if bio.twitter_handle.present? %>
                             <li><%= link_to "Twitter", twitter_profile_url(bio.twitter_handle), target: "_blank", class: "twitter", title: "#{bio.first_name} on Twitter" %></li>
