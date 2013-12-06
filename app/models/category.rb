@@ -88,17 +88,16 @@ class Category < ActiveRecord::Base
     @preview ||= CategoryPreview.new(self, options)
   end
 
+
   private
 
   def build_category_article_association(category_article_hash, article)
-
     if article.published?
       CategoryArticle.new(
-        :position                   => category_article_hash["position"].to_i,
-        :article                    => article,
-        :category                   => self
+        :position   => category_article_hash["position"].to_i,
+        :article    => article,
+        :category   => self
       )
     end
   end
-
 end
