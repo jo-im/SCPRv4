@@ -2,33 +2,6 @@
 <% meta_tags(url: issues_url) %>
 <% content_for :body_class, 'interior issues' %>
 
-<section class="prologue">
-  <div class="inner bound">
-      <h1 class="title">All Issues</h1>
-  </div>
-</section><!--/ .prologue -->
-
-
-
-
-<div class="catalog">
-  <div class="inner bound clearfix">
-
-      <nav class="terms">
-          <ul class="clearfix">
-              <% @issues.each do |issue| %>
-                <li><%= link_to issue.title, issue.public_path %></li>
-              <% end %>
-          </ul>
-      </nav>
-
-      <div class="showcase">
-
-          <header class="preface">
-              <h1>Begin by choosing one of the issues <span class="directional"><b>at left</b></span>.</h1>
-          </header>
-
-      </div><!--/ .showcase -->
-
-  </div>
-</div><!--/ .catalog -->
+<header class="preface">
+    <h1>Begin by choosing one of the issues <span class="directional"><b>at left</b></span>.</h1>
+</header>

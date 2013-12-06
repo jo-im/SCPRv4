@@ -2,69 +2,44 @@
 <% meta_tags(url: @issue.public_url) %>
 <% content_for :body_class, 'interior issues' %>
 
-<section class="prologue">
-  <div class="inner bound">
-      <h1 class="title">All Issues</h1>
-  </div>
-</section><!--/ .prologue -->
 
-<div class="catalog">
-    <div class="inner bound clearfix">
+<%= cache ["issues/show", "v1", @issue] do %>
 
-        <nav class="terms">
-            <ul class="clearfix">
+<header class="preface">
+    <h1><%= @issue.title %></h1>
+    <div class="details clearfix">
+        <div class="brief">
+            <p><%= @issue.description %></p>
+        </div>
+        <aside class="timeline">
+            <h2>KPCC has published a total of <mark><%= @issue.articles.size %> articles</mark> on <%= @issue.title %></h2>
 
-            <%= cache ["issues/show/list", "v1", @issues] do %>
-              <% @issues.each do |issue| %>
-                <li class="<%= 'selected' if @issue == issue %>">
-                  <%= link_to issue.title, issue.public_path %>
-                </li>
-              <% end %>
-            <% end %>
+        <% if @issue.articles.present? %>
+            <div class="range">
+                <dl class="began">
+                    <dt><%= format_date(@issue.articles.last.public_datetime, with: '%-d %^b %Y') %></dt>
+                    <dd>Coverage began</dd>
+                </dl>
+                <dl class="latest">
+                    <dt><%= format_date(@issue.articles.first.public_datetime, with: '%-d %^b %Y') %></dt>
+                    <dd>Latest coverage</dd>
+                </dl>
+            </div>
+        <% end %>
 
-            </ul>
-        </nav>
+        </aside>
+    </div> <!--/ .details -->
+</header>
 
-        <div class="showcase">
+<% end %>
 
-          <%= cache ["issues/show", "v1", @issue] do %>
-            <header class="preface">
-              <h1><%= @issue.title %></h1>
-              <div class="details clearfix">
-                  <div class="brief">
-                    <p><%= @issue.description %></p>
-                  </div>
-                  <aside class="timeline">
-                    <h2>KPCC has published a total of <mark><%= @issue.articles.size %> articles</mark> on <%= @issue.title %></h2>
 
-                  <% if @issue.articles.present? %>
-                    <div class="range">
-                        <dl class="began">
-                        <dt><%= format_date(@issue.articles.last.public_datetime, with: '%-d %^b %Y') %></dt>
-                            <dd>Coverage began</dd>
-                        </dl>
-                        <dl class="latest">
-                        <dt><%= format_date(@issue.articles.first.public_datetime, with: '%-d %^b %Y') %></dt>
-                            <dd>Latest coverage</dd>
-                        </dl>
-                    </div>
-                  <% end %>
+<section class="backlog">
 
-                  </aside>
-              </div>
-            </header>
-          <% end %>
+<%= cache ["issues/list", "v1", @paginated_articles.to_a] do %>
+    <%= render 'shared/new/waterfall_articles', articles: @paginated_articles, issue_tag_exists: false %>
+<% end %>
 
-            <section class="backlog">
+<%= paginate @paginated_articles, theme: 'new', outer_window: 1 %>
 
-            <%= cache ["issues/list", "v1", @paginated_articles.to_a] do %>
-                <%= render 'shared/new/waterfall_articles', articles: @paginated_articles, issue_tag_exists: false %>
-            <% end %>
-
-              <%= paginate @paginated_articles, theme: 'new', outer_window: 1 %>
-            </section><!--/ .backlog -->
-
-        </div><!--/ .showcase -->
-
-    </div>
-</div><!--/ .catalog -->
+</section><!--/ .backlog -->
