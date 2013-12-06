@@ -2,8 +2,13 @@ require 'spec_helper'
 
 describe Concern::Associations::FeatureAssociation do
   describe '#feature' do
+    after :each do
+      ArticleFeature.collection = FEATURES
+    end
+
     it "gets the aricle's feature" do
       feature = ArticleFeature.new(id: 999, key: :lasagna)
+      ArticleFeature.collection << feature
 
       story = create :test_class_story, feature_type_id: 999
 
@@ -20,6 +25,14 @@ describe Concern::Associations::FeatureAssociation do
 
   describe '#feature=' do
     let(:feature) { ArticleFeature.new(id: 999, key: :lasagna) }
+
+    before do
+      ArticleFeature.collection << feature
+    end
+
+    after :each do
+      ArticleFeature.collection = FEATURES
+    end
 
     context 'with ArticleFeature' do
       it 'assigns the feature' do

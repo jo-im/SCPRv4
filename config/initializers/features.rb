@@ -1,8 +1,4 @@
-# Fake persistence.
-# I know it's bad.
-FEATURES = []
-
-[
+FEATURES = [
     {
       :id               => 1,
       :key              => :slideshow,

@@ -15,8 +15,10 @@ class ArticleFeature
     # way in development with Rails' auto-loading modules, so
     # instead we're just storing it in a dumb ol' constant.
     def collection
-      FEATURES
+      @collection ||= FEATURES
     end
+
+    attr_writer :collection
 
     # Retrieve the correct Feature based on ID or key
     # Features[:slideshow] # => 
@@ -42,10 +44,6 @@ class ArticleFeature
     @key            = attributes[:key].to_sym
     @name           = attributes[:name].to_s
     @asset_display  = attributes[:asset_display].to_s
-
-    # This is disgusting, maybe we should just persist
-    # these in the database.
-    FEATURES << self
   end
 
   # To check equality of a feature.
@@ -56,8 +54,8 @@ class ArticleFeature
       value.id == self.id
     when Integer
       value == self.id
-    when Symbol
-      value == self.key
+    when Symbol, String
+      value.to_sym == self.key
     else
       false
     end

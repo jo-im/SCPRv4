@@ -2,8 +2,13 @@ require 'spec_helper'
 
 describe ArticleFeature do
   describe '::find_by_id' do
+    after :each do
+      ArticleFeature.collection = FEATURES
+    end
+
     it 'retrieves the feature by a given ID' do
       feature = ArticleFeature.new(id: 12345, key: :lasagna)
+      ArticleFeature.collection << feature
       ArticleFeature.find_by_id(12345).should eq feature
     end
 
@@ -13,8 +18,13 @@ describe ArticleFeature do
   end
 
   describe '::find_by_key' do
+    after :each do
+      ArticleFeature.collection = FEATURES
+    end
+
     it 'retrieves the feature by a given ID' do
       feature = ArticleFeature.new(key: :test_feature)
+      ArticleFeature.collection << feature
       ArticleFeature.find_by_key(:test_feature).should eq feature
     end
 
@@ -40,11 +50,6 @@ describe ArticleFeature do
     it "sets asset display" do
       ArticleFeature.new(asset_display: "hidden", key: :lasagna)
         .asset_display.should eq "hidden"
-    end
-
-    it "adds the feature to the collection" do
-      feature = ArticleFeature.new(key: :hello)
-      ArticleFeature.collection.find { |f| f == feature }.should be_true
     end
   end
 
