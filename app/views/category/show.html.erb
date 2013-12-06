@@ -28,7 +28,7 @@
         </div><!--/ .photo -->
         <div class="supportive">
           <h1 class="tease"><%= link_to @lead_article.teaser, @lead_article.public_path %></h1>
-          <h2 class="byline"><%= link_to render_byline @lead_article.original_object %></h2>
+          <h2 class="byline"><%= render_byline @lead_article.original_object %></h2>
           <% if @featured_content %>
             <aside class="more">
               <% if @featured_content[:type] == 'issue' %>
