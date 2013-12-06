@@ -1,6 +1,7 @@
+# This is in spec/models so that it gets run as a unit test.
+
 require "spec_helper"
 
-# This is in spec/models so that it gets run as a unit test.
 describe CacheController do
   describe "#cache" do
     it "writes to cache" do

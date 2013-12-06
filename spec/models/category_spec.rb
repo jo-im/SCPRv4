@@ -53,13 +53,24 @@ describe Category do
     end
   end
 
-  describe '#articles' do
+  describe '#featured_articles' do
     it 'turns all of the items into articles' do
       category = create :category_news
       story = create :news_story
       category_article = create :category_article, category: category, article: story
 
       category.featured_articles.map(&:class).uniq.should eq [Article]
+    end
+
+    it "only gets published articles" do
+      category = create :category_news
+      story_published = create :news_story, :published
+      story_unpublished = create :news_story, :draft
+
+      category.category_articles.create(article: story_published)
+      category.category_articles.create(article: story_unpublished)
+
+      category.featured_articles.should eq [story_published].map(&:to_article)
     end
   end
 

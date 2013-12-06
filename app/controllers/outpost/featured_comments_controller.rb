@@ -18,6 +18,6 @@ class Outpost::FeaturedCommentsController < Outpost::ResourceController
       :collection => -> { FeaturedCommentBucket.select_collection }
 
     l.filter :status,
-      :collection => -> { ContentBase.status_text_collect }
+      :collection => -> { FeaturedComment.status_select_collection }
   end
 end

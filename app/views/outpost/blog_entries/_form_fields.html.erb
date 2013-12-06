@@ -6,18 +6,15 @@
 
 <%= f.section "short_details" do %>
   <%= f.section "category" %>
+  <%= f.section "feature" %>
   <%= f.association :issues %>
-  <%= f.input :feature_type, collection: ContentBase::FEATURE_SET %>
   <%= f.input :is_from_pij, hint: "Was this story informed by PIJ Sources?" %>
 <% end %>
 
 <%= f.section "publishing" %>
 <%= f.section "bylines" %>
 
-<%= f.section "assets" do %>
-  <%= f.input :blog_asset_scheme, collection: BlogEntry::ASSET_SCHEMES, include_blank: false %>
-<% end %>
-
+<%= f.section "assets" %>
 <%= f.section "audio" %>
 <%= f.section "related_links" %>
 <%= f.section "related_content" %>

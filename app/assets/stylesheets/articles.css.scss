@@ -60,12 +60,12 @@
             border:none;
         }
     }
-    
+
     ul li {
         @include font-headline($weight: normal);
         a { color: $black; }
     }
-    
+
     &.inline {
         h6 { text-align: left; }
     }
@@ -75,8 +75,8 @@ article {
     img, object, iframe, embed, .pds-box {
         max-width: 100%;
     }
-    
-    .pds-box { 
+
+    .pds-box {
         width: 95% !important;
     }
 }

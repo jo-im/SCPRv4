@@ -8,23 +8,23 @@ class scpr.Presentation
         choosersEl: ".pager-nav"
         chooser:    ".chooser"
         nextprev:   true
-        cardId:     "data-card"        
+        cardId:     "data-card"
         interval:   "10000"
         fadeSpeed:  "1000"
         wait:       true # Fade Out, then Fade in vs. Fade in on top
-        
+
     #------------
-        
+
     constructor: (options) ->
         @options  = _(_({}).extend(@DefaultOptions)).extend options || {}
-        
+
         @activeClass     = @extractName @options.active
         @lastActiveClass = @extractName @options.lastActive
-        
+
         @interval  = @options.interval
         @fadeSpeed = @options.fadeSpeed
         @cardId    = @options.cardId
-        
+
         $ =>
             @el         = $ @options.el
             @cardsEl    = @el.find(@options.cardsEl)
@@ -58,7 +58,7 @@ class scpr.Presentation
                 @choosersEl.prepend @prevChooser
                 @choosersEl.append  @nextChooser
                 @chooser = @choosersEl.find(@options.chooser)
-                
+
                 @switchTo @active
 
                 # Register click event for choosers
@@ -68,7 +68,7 @@ class scpr.Presentation
                         if !$(event.target).hasClass("disabled")
                             cardId = $(event.target).attr(@cardId)
                             @switchTo($ "##{cardId}")
-    
+
     extractName: (str) ->
         if str.substring(0,1) in ['.', '#']
             str.substring 1
@@ -78,15 +78,15 @@ class scpr.Presentation
     #------------
 
     queue: ->
-        @timer = setTimeout => 
+        @timer = setTimeout =>
             @switchTo @findNext()
         , @interval
 
     #------------
-    
+
     findNext: ->
         if @active.next().length then @active.next() else @cards.first()
-        
+
     #------------
 
     setActiveChooser: (el) ->
@@ -102,22 +102,22 @@ class scpr.Presentation
                 nav.addClass("disabled")
             else
                 nav.removeClass("disabled")
-        
+
     #------------
 
     pushBack: (active) ->
         active.show()
         .addClass(@lastActiveClass)
         .removeClass(@activeClass)
-    
-    
+
+
     _fadeIn: (next) ->
         next.hide()
         .addClass(@activeClass)
         .fadeIn @fadeSpeed, =>
             @active.hide().removeClass(@lastActiveClass)
             @active = next
-    
+
     #------------
 
     switchTo: (cardEl) ->
@@ -125,10 +125,10 @@ class scpr.Presentation
         @next = cardEl
         clearTimeout @timer
         @setActiveChooser @next
-        
+
         if @next[0] isnt @active[0]
             @pushBack @active
-            
+
             if @options.wait
                 @active.fadeOut @fadeSpeed, => @_fadeIn(@next)
             else

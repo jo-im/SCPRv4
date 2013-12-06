@@ -1,10 +1,15 @@
 <%= form_block "Details" do %>
   <%= f.input :title, input_html: { class: "sluggable" } %>
   <%= f.input :slug %>
+  <%= f.input :description, label: "Tagline" %>
+
   <%= f.input :is_news %>
+  <%= f.input :is_active, hint: "Should this category be treated as a Vertical?" %>
+<% end %>
+
+<%= form_block "Associations" do %>
   <%= f.association :comment_bucket %>
   <%= f.association :issues %>
-  <%= f.input :is_active %>
 <% end %>
 
 <%= form_block "Content" do %>

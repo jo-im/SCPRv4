@@ -42,7 +42,9 @@ class Article
     :attributions,
     :byline,
     :edit_url, # Should this really be an attribute, or should we delegate?
-    :related_issue
+    :issues,
+    :feature
+
 
   def initialize(attributes={})
     @original_object  = attributes[:original_object]
@@ -58,12 +60,15 @@ class Article
     @attributions     = Array(attributes[:attributions])
     @byline           = attributes[:byline]
     @edit_url         = attributes[:edit_url]
-    @related_issue    = Array(attributes[:related_issue])
+    @issues           = Array(attributes[:issues])
+    @feature          = attributes[:feature]
   end
+
 
   def to_article
     self
   end
+
 
   def to_abstract
     @to_abstract ||= Abstract.new({
@@ -79,11 +84,18 @@ class Article
     })
   end
 
+
   def asset
-    @asset ||= self.assets.first
+    @asset ||= self.assets.first || AssetHost::Asset::Fallback.new
   end
+
 
   def obj_key_crc32
     @obj_key_crc32 ||= self.id.to_crc32
+  end
+
+  def issues_in_category
+    return [] if self.category.blank?
+    self.issues & self.category.issues
   end
 end

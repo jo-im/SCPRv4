@@ -24,9 +24,7 @@ ThinkingSphinx::Index.define :blog_entry, with: :active_record do
 
   # For the homepage/category sections
   has category.id, as: :category
-  has "(#{BlogEntry.table_name}.blog_asset_scheme <=> 'slideshow')",
-    :type   => :boolean,
-    :as     => :is_slideshow
+  has asset_display_id
 
   # For podcasts
   join audio

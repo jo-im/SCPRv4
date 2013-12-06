@@ -28,6 +28,7 @@ class Category < ActiveRecord::Base
     :order          => "created_at desc"
 
   accepts_json_input_for :category_articles
+
   #-------------------
   # Validations
   validates :title, presence: true
@@ -48,7 +49,9 @@ class Category < ActiveRecord::Base
   end
 
   def featured_articles
-    @articles ||= self.category_articles.includes(:article).map { |a| a.article.to_article }
+    @articles ||= self.category_articles
+      .includes(:article).select(&:article)
+      .map { |a| a.article.to_article }
   end
 
   def content(options={})

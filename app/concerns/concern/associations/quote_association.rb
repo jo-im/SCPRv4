@@ -1,5 +1,5 @@
 ##
-# Reverse-Association with FeaturedComment.
+# Reverse-Association with Quote.
 #
 # For registering callbacks for deleting/unpublishing.
 # Requires: [:unpublishing?]
@@ -11,7 +11,7 @@ module Concern
 
       included do
         has_many :quotes,
-          :as           => :article,
+          :as           => :content,
           :dependent    => :destroy
 
         after_save :_destroy_quotes, if: -> { self.unpublishing? }

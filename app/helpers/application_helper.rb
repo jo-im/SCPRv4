@@ -21,6 +21,18 @@ module ApplicationHelper
   end
 
 
+  # A hash in which to store meta data for the template META tags.
+  # This is what should be used in the <head> tag to build the META tags.
+  def meta_information
+    @meta_hash ||= {}
+  end
+
+  # Add meta tags to the meta_information hash.
+  def meta_tags(hash)
+    meta_information.merge!(hash)
+  end
+
+
   #---------------------------
   # render_content takes a ContentBase object and a context, and renders
   # using the most specific version of that context it can find.
@@ -59,42 +71,59 @@ module ApplicationHelper
     html.html_safe
   end
 
-  #---------------------------
+
   # render_asset takes a ContentBase object and a context, and renders using
-  # an optional context_asset_scheme attribute on the object.
+  # an optional asset_display attribute on the object.
   #
-  # For example, given a context of "story", render_asset will check for a
-  # story_asset_scheme attribute on the object.  If found (let's assume with a
-  # value of "wide"), it will try to render:
+  # For example, given a context of "story", render_asset will check for an
+  # asset_display attribute on the object.  If found (let's assume with a
+  # value of "photo"), it will try to render:
   #
-  # * shared/assets/story/wide
-  # * shared/assets/default/wide
+  # * shared/assets/story/photo
+  # * shared/assets/default/photo
   # * shared/assets/story/default
   # * shared/assets/default/default
-  def render_asset(content, context, fallback=false)
+  def render_asset(content, options={})
     article = content.to_article
+    context = options[:context] || "default"
 
     if article.assets.empty?
-      return fallback ? render("shared/assets/#{context}/fallback", article: article) : ''
+      html = if options[:fallback]
+        render("shared/assets/#{context}/fallback", article: article)
+      else
+        ''
+      end
+
+      return html
     end
 
-    # look for a scheme on the content object
-    attribute = "#{context}_asset_scheme"
-    scheme = content.respond_to?(attribute) ? content.send(attribute) : "default"
+    if options[:template]
+      tmplt_opts = Array(options[:template])
+    else
+      display = options[:display]
+      display ||= if article.original_object.respond_to?(:asset_display)
+        content.asset_display
+      else
+        "photo"
+      end
 
-    # set up our template precendence
-    tmplt_opts = [
-      "#{context}/#{scheme}",
-      "default/#{scheme}",
-      "#{context}/default",
-      "default/default"
-    ]
+      tmplt_opts = [
+        "#{context}/#{display}",
+        "default/#{display}",
+        "#{context}/photo",
+        "default/photo"
+      ]
+    end
 
     partial = tmplt_opts.find do |template|
       self.lookup_context.exists?(template, ["shared/assets"], true)
     end
 
-    render "shared/assets/#{partial}", assets: article.assets, article: article
+    return '' if !partial
+
+    render "shared/assets/#{partial}",
+      :assets     => article.assets,
+      :article    => article
   end
 
   #----------
@@ -221,7 +250,9 @@ module ApplicationHelper
     options[:class] = "audio-toggler #{options[:class]}"
     options[:title] ||= article.short_title
     options["data-duration"] = article.audio.first.duration
-    content_tag :div, link_to(title, article.audio.first.url, options), class: "story-audio inline"
+
+    content_tag :div, link_to(title, article.audio.first.url, options),
+      :class => "story-audio inline"
   end
 
   #---------------------------
@@ -271,7 +302,13 @@ module ApplicationHelper
   # time tag. Otherwise previewing unpublished content breaks.
   def timestamp(datetime)
     if datetime.respond_to?(:strftime)
-      time_tag datetime, format_date(datetime, format: :full_date, time: true), pubdate: true
+      time_tag(datetime,
+        format_date(datetime,
+          :format   => :full_date,
+          :time     => true
+        ),
+        :pubdate => true
+      )
     end
   end
 
@@ -294,7 +331,9 @@ module ApplicationHelper
     if has_comments?(object)
       options[:class] = "comment_link social_disq #{options[:class]}"
       options["data-objkey"] = object.disqus_identifier
-      link_to("Add your comments", object.public_path(anchor: "comments"), options)
+
+      link_to("Add your comments",
+        object.public_path(anchor: "comments"), options)
     end
   end
 
@@ -306,8 +345,12 @@ module ApplicationHelper
   #----------
 
   def content_widget(partial, object, options={})
-    partial = partial.chars.first == "/" ? partial : "shared/cwidgets/#{partial}"
-    render(partial, { article: object.to_article, cssClass: "" }.merge(options))
+    partial = "shared/cwidgets/#{partial}" if partial.chars.first != "/"
+
+    render(partial, {
+      :article  => object.to_article,
+      :cssClass => ""
+    }.merge(options))
   end
 
   alias_method :widget, :content_widget

@@ -25,7 +25,6 @@ class BlogsController < ApplicationController
   def entry
 
     @entry = BlogEntry.published.includes(:blog).find(params[:id])
-    @blog  = @entry.blog
     @asset = @entry.asset if @entry.asset.present?
     @related_articles = @entry.related_content.first(2) if @entry.related_content.present?
 

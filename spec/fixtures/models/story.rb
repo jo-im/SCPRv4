@@ -21,7 +21,8 @@ module TestClass
     include Concern::Associations::BylinesAssociation
     include Concern::Associations::CategoryAssociation
     include Concern::Associations::CategoryArticleAssociation
-    include Concern::Associations::IssueArticleAssociation
+    include Concern::Associations::IssueAssociation
+    include Concern::Associations::FeatureAssociation
     include Concern::Callbacks::GenerateShortHeadlineCallback
     include Concern::Callbacks::GenerateTeaserCallback
     include Concern::Callbacks::SetPublishedAtCallback
@@ -31,13 +32,14 @@ module TestClass
     include Concern::Callbacks::CacheExpirationCallback
     include Concern::Callbacks::TouchCallback
     include Concern::Callbacks::RedisPublishCallback
-
     include Concern::Methods::CommentMethods
+
     Concern::Methods::CommentMethods::COMMENT_CLASSES.push(self.name)
     self.disqus_identifier_base = "test/class/story"
 
     include Concern::Methods::PublishingMethods
     include Concern::Methods::ContentStatusMethods
+    include Concern::Methods::AssetDisplayMethods
 
     include Concern::Validations::ContentValidation
 

@@ -41,7 +41,7 @@ $headShotWidth: 90px;
     @include font-serif;
     li {
         &:hover { background-color: $nearWhite; }
-        a { 
+        a {
             display: block;
             padding: 5px;
         }
@@ -75,8 +75,8 @@ $headShotWidth: 90px;
     &.offramp {
         background-image: url(image_path('broadcast-bar/headshots/offramp.png'));
     }
-    
-    &.program-info { 
+
+    &.program-info {
         height: $headShotHeight;
         min-height: $headShotHeight;
         padding-right: $headShotWidth;
@@ -88,14 +88,14 @@ $headShotWidth: 90px;
     border-bottom: 1px solid $grayLighter;
     margin-bottom: $baseline / 2;
     padding-bottom: 10px;
-    
+
     .program-info {
         display: table-cell;
         width: 700px; // table-cell needs pixels, but with max-width set it's fluid
         max-width: 100%;
         vertical-align: bottom;
-    
-        h1 { 
+
+        h1 {
             float: left;
             margin: 0;
         }
@@ -104,9 +104,9 @@ $headShotWidth: 90px;
             text-align: right;
             float: right;
         }
-        
+
     }
-    
+
     .support {
         display: table;
         height: 55px;
@@ -132,7 +132,7 @@ $headShotWidth: 90px;
         border-bottom: 1px solid $grayLight;
         padding-bottom: 5px;
         margin-bottom: 5px;
-        
+
         // Not supported by IE7/8, but that's okay
         &:last-child {
             border: none;
@@ -166,19 +166,19 @@ header.episode {
 }
 
 .program-external-header {
-    p { 
+    p {
         border-right: 1px solid $grayLighter;
         padding-right: 5px;
         margin: 0;
     }
-    .connect { 
+    .connect {
         border-right: none;
-        min-height: 0px; 
+        min-height: 0px;
     }
 }
 
 .teaser.program-external {
-    // scoping span18/span24 here for different style if there is audio (span18) or not (span24) 
+    // scoping span18/span24 here for different style if there is audio (span18) or not (span24)
     .span18 .info { min-height: 100px; }
     .span24 .info { border-right: none; }
 }

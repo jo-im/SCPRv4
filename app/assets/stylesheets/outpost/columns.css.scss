@@ -4,7 +4,7 @@ $booleanWidth: 60px;
 $integerWidth: 50px;
 $statusWidth: 105px;
 
-@mixin url-cell { 
+@mixin url-cell {
     width: 250px;
     word-break: break-all;
 }
@@ -24,7 +24,7 @@ table {
     .column-audio {
         width: $statusWidth;
     }
-    
+
     .column-datetime, .column-date {
         width: $datetimeWidth;
     }
@@ -153,11 +153,23 @@ table {
     }
 
     ///////////////////
+    // ExternalProgram
+    &.list-external_programs {
+        .column-title { // external_program.title
+            width: 250px;
+        }
+
+        .column-air_status { // external_program.air_status
+            width: 150px;
+        }
+    }
+
+    ///////////////////
     // FeaturedCommentBucket
     &.list-featured_comment_buckets {
         td, th {
             width: auto;
-        } 
+        }
     }
 
     ///////////////////
@@ -177,14 +189,18 @@ table {
     }
 
     ///////////////////
-    // ExternalProgram
-    &.list-external_programs {
-        .column-title { // external_program.title
-            width: 250px;
+    // Issue
+    &.list-issues {
+        .column-title { // issue.headline
+            width: 200px;
         }
 
-        .column-air_status { // external_program.air_status
+        .column-slug { // issue.slug
             width: 150px;
+        }
+
+        .column-description { // issue.description
+            width: 450px;
         }
     }
 
@@ -205,6 +221,26 @@ table {
 
         .column-podcast_url { // podcast.podcast_url
             @include url-cell;
+        }
+    }
+
+    ///////////////////
+    // Quotes
+    &.list-quotes {
+        .column-category { // quote.category
+            width: 100px;
+        }
+
+        .column-content { // quote.content
+            width: 250px;
+        }
+
+        .column-quote { // quote.quote
+            width: 350px;
+        }
+
+        .column-source_name { // quote.source_name
+            width: 200px;
         }
     }
 

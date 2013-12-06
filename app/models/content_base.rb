@@ -45,8 +45,18 @@ module ContentBase
     %r{\A/programs/[\w_-]+/\d{4}/\d\d/\d\d/(\d+)/.*}  => 'ShowSegment'
   }
 
-  FEATURE_TYPE = ['Slideshow', 'Video', 'Poll', 'Map', 'Audio', 'Infographic', 'taketwo', 'airtalk', 'offramp']
-  FEATURE_SET  = FEATURE_TYPE.each_with_index.map {|x,i| [x,i] }
+
+  # Don't set any of these to 0, because ThinkingSphinx will
+  # convert NULL to 0 and return incorrect results.
+  ASSET_DISPLAY_IDS = {
+    :slideshow    => 1,
+    :video        => 2,
+    :photo        => 3,
+    :hidden       => 4
+  }
+
+  ASSET_DISPLAYS = ASSET_DISPLAY_IDS.invert
+
 
   def new_obj_key
     "contentbase:new"

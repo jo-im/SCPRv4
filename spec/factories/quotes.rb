@@ -7,7 +7,7 @@ FactoryGirl.define do
 
   factory :quote do
     category  { |f| f.association :category }
-    article { |mic| mic.association(:content_shell) }
+    content { |mic| mic.association(:content_shell) }
 
     source_name  "jhoffing"
     source_context "Shark Hunting Specialist"

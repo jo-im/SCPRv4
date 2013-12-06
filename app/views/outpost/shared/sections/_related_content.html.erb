@@ -6,7 +6,7 @@
 <% content_for :footer do %>
   <script>
     aggregator = new outpost.Aggregator(
-      "#aggregator", "#outgoing_references_json", 
+      "#aggregator", "#outgoing_references_json",
       <%= render_json('api/private/v2/articles/collection', articles: record.outgoing_references.includes(:related).map(&:related).map(&:to_article)) %>,
       {
         view: { active: 'search' },

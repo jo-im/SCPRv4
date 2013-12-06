@@ -10,6 +10,7 @@ class FixtureMigration < ActiveRecord::Migration
       t.integer :status
       t.integer :category_id
       t.string :short_url
+      t.integer :asset_display_id
       t.timestamps
     end
 

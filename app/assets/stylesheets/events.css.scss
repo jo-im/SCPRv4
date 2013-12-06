@@ -28,29 +28,29 @@ span.fake-link {
             color: #000;
         }
     }
-        
+
     h1.story-title {
         @include font-headline($weight: 600);
         font-size:22px;
         margin: 4px 0;
     }
-    
+
     h2.story-title {
         @include font-headline($weight: 600);
         font-size:18px;
         margin: 10px 0;
     }
-    
+
     h3 {
         @include font-slab-headings($size: 15px, $lineHeight: 18px);
         text-transform: uppercase;
     }
-    
+
     h4.story-title {
         @include font-headline($weight: 600);
         font-size:15px;
     }
-    
+
     h6.upcoming {
         @include font-slab-headings($size: 18px, $lineHeight: 18px);
         text-transform: uppercase;
@@ -62,7 +62,7 @@ span.fake-link {
 
 .event {
     @include event-headers;
-    
+
     &.future {
         margin: 10px 0;
         @include font-serif($size: 13px);
@@ -71,15 +71,15 @@ span.fake-link {
             a { color:$nearBlack; }
         }
     }
-    
+
     &.past {
         padding: 15px 0;
         .byline {
             @include font-serif($size: 12px);
         }
     }
-    
-    
+
+
     .story-headline.event-headline {
         margin-bottom: 10px;
     }
@@ -146,11 +146,11 @@ span.fake-link {
 .more-events {
     border-bottom:1px solid $grayLight;
     margin-bottom: 10px;
-    
-    .event { 
+
+    .event {
         margin-bottom: 10px;
     }
-    
+
     h5 a {
         color: $nearBlack;
         @include font-headline($weight: 600);
@@ -160,7 +160,7 @@ span.fake-link {
 }
 
 .events-fold {
-    .comments, .comment-count { 
+    .comments, .comment-count {
         border-top: none;
         padding-top: none;
     }
@@ -189,17 +189,17 @@ span.fake-link {
                 min-height: 30px;
                 background-repeat: no-repeat;
                 background-position: left 50%;
-                &.facebook { 
-                    background-image: url(image_path("facebook/facebook-icon.png")); 
+                &.facebook {
+                    background-image: url(image_path("facebook/facebook-icon.png"));
                     color: $facebookBlue;
                 }
                 &.twitter {
-                    background-image: url(image_path("facebook/twitter-icon.png")); 
+                    background-image: url(image_path("facebook/twitter-icon.png"));
                     color: $twitterBlue;
                 }
             }
         }
-        
+
         .twitter-peeker {
             color:$nearBlack;
             display: block;
@@ -209,20 +209,20 @@ span.fake-link {
             margin: 15px 0 10px 0;
             padding: 10px 80px 10px 5px;
             background: #f5f5f5 url(image_path("facebook/twitter-peek.png")) no-repeat right bottom;
-            
+
             color: inherit;
             &:hover {
                 text-decoration: none;
             }
         }
-        
+
         .tweet {
             margin: 12px 0 8px 0;
             border-bottom: 1px solid $grayLighter;
             padding-bottom: 10px;
             @include font-serif($size: 12px, $lineHeight: 15px);
             @include clearfix;
-            
+
             img.tweet-image {
                 float: left;
                 vertical-align: top;
@@ -235,7 +235,7 @@ span.fake-link {
                 margin-top:-5px;
                 a { color:$nearBlack; }
             }
-            
+
             .byline { font-size: 10px; }
         }
     }
@@ -254,7 +254,7 @@ span.fake-link {
 .events-list {
     .teaser {
         padding:18px 0;
-        
+
         .event-details {
             span.event-location {
                 @include font-sans-serif(normal, 11px);
@@ -288,7 +288,7 @@ nav.section-nav {
             }
         }
     }
-    
+
     &.horizontal {
         display: none;
         @include clearfix;
@@ -304,7 +304,7 @@ nav.section-nav {
             width: 50%; // We don't want the gutter width so we won't use the grid here
             padding: 5px 0;
             border-bottom: 1px solid $this_borderColor;
-                        
+
             // Will not work in IE7/8
             &:nth-child(even) { @include box-shadow(1px 0 $this_borderColor inset); } // Fake border between columns
             &:nth-last-child(-n+2) { border-bottom: none; } // no border on the last two
@@ -316,7 +316,7 @@ nav.section-nav {
     margin-bottom:10px;
 }
 
-#main nav.section-nav.vertical { 
+#main nav.section-nav.vertical {
     margin-top: -21px;
 }
 
@@ -333,7 +333,7 @@ nav.section-nav {
     @include box-shadow($smallHeaderShadow);
     margin-bottom: 20px;
     margin-top: -22px;
-    img { 
+    img {
         max-width: 95%;
         margin: 10px 10px 5px 10px;
     }
@@ -348,7 +348,7 @@ nav.section-nav {
     width:100%;
     overflow: hidden;
     z-index: 20;
-    
+
     .choosers {
         position: absolute;
         width: 100%;
@@ -376,7 +376,7 @@ nav.section-nav {
             }
         }
     }
-    
+
     .slides-wrapper {
         position: relative;
         max-width: 1500px;
@@ -435,7 +435,7 @@ nav.section-nav {
                     text-shadow:0 1px 0 rgba(0,0,0,0.75);
                 }
             }
-        
+
             &.active {
                 visibility: visible;
                 z-index: 10;
@@ -451,7 +451,7 @@ nav.section-nav {
 .filters.events {
     border-top:none;
     margin-top:-20px;
-    a.active { 
+    a.active {
         position:relative;
         span {
             background:url(image_path('icons/filter-arrow.png')) no-repeat left top;
@@ -476,30 +476,30 @@ h3.section-nav-header {
 .forum #sidebar {
     .widget {
         display: block;
-        p { 
+        p {
             margin:20px 0 24px;
             @include font-navigation($size: 14px, $lineHeight: 16px);
         }
     }
-    
+
     #getting-there {
         background: url(image_path("cff-building.png")) no-repeat right 98%;
         h3 {
             background: url(image_path("icons/forum-directions.png")) no-repeat left top;
             padding-left:46px;
         }
-        p { 
+        p {
             padding-right: 115px;
         }
     }
-    
+
     #community-partnerships {
         h3 {
             background: url(image_path("icons/forum-partnerships.png")) no-repeat left top;
             height:26px;
             padding-left:46px;
         }
-        p { 
+        p {
             margin:14px 0;
         }
     }

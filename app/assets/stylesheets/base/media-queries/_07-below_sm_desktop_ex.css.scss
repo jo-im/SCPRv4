@@ -15,7 +15,7 @@
                 margin-bottom: 5px;
             }
         }
-        
+
         &.lead-right {
             .offleads .span8:last-child .offlead { border-bottom: 1px solid $grayLighter; }
             .lead5 {
@@ -24,7 +24,7 @@
             }
         }
     }
-        
+
     // Contribute Banner to Button & hide form
         #masthead {
             .nav-primary.search-takeover {
@@ -37,7 +37,7 @@
                             opacity:1;
                         }
                     }
-                }   
+                }
                 .search-form {
                     display:block;
                     width:79%;
@@ -54,12 +54,12 @@
                     }
                 }
             }
-            
+
             .search-form {
                 width:3%;
                 form {
-                    .search, .submit { 
-                        display: none; 
+                    .search, .submit {
+                        display: none;
                     }
                     .toggle-search {
                         cursor:pointer;
@@ -69,13 +69,13 @@
             }
             .nav-primary .sections { width: 96%; }
 
-            #masthead-left-header-wrapper { @include gridFluidSpan(12); }           
+            #masthead-left-header-wrapper { @include gridFluidSpan(12); }
             #masthead-right-header-wrapper { @include gridFluidSpan(12); }
-            
+
             #masthead-mid-header-wrapper { display: none; }
         }
     // end Contribute Banner to Button
-    
+
     // Adjust signup call-to-action in Breaking News Alerts
     .live-update {
       background-color:$black;
@@ -113,8 +113,8 @@
         border-top:0;
       }
     }
-    
-    // Adjust Featured Programs in Megamenu 
+
+    // Adjust Featured Programs in Megamenu
     .megamenu {
         #programs-mega {
             .program {
@@ -124,7 +124,7 @@
             }
         }
     }
-    
+
     // Modals
       .modal.wide {
         position: absolute;
@@ -139,5 +139,5 @@
             height:235px !important;
         }
       }
-    
+
 }

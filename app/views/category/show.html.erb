@@ -1,43 +1,40 @@
 <% add_to_page_title @category.title %>
-
-<% content_for :body_class do %>
-  <% 'landing' %>
-<% end %>
-
-<% content_for :vertical_layout do %>
-  <%= stylesheet_link_tag "vertical/landing", media: "all" %>
-<% end %>
-
-<%= render 'shared/header/header', header_titling: true %>
+<% content_for :body_class, 'landing' %>
 
 <section class="headline">
-  <h1 class="bound"><span><%= link_to @lead_article.short_title, @lead_article.public_path if @lead_article.present? %></span></h1>
+<% if @lead_article %>
+  <h1 class="bound"><span><%= link_to @lead_article.short_title, @lead_article.public_path %></span></h1>
+<% end %>
 </section>
 
 <div class="welcome bound clearfix">
+
   <% if @lead_article %>
     <section class="curated clearfix">
         <div class="photo">
             <figure class="ratio-pairing">
+
              <%= link_to @lead_article.public_path do %>
                 <div class="ratio">
                    <div class="fill"></div>
-                   <b class="img-contain"><%= image_tag(@featured_image.eight.url, alt:'') %></b>
+                   <b class="img-contain"><%= image_tag(@lead_article.asset.eight.url, alt:'') %></b>
                 </div><!--/ .ratio -->
                 <figcaption>
-                  <p><%= @featured_image.caption %></p>
-                  <mark class="credit"><%= @featured_image.owner %></mark>
+                  <p><%= @lead_article.asset.caption %></p>
+                  <mark class="credit"><%= @lead_article.asset.owner %></mark>
                 </figcaption>
              <% end %>
+
             </figure><!--/ .ratio-pairing -->
         </div><!--/ .photo -->
         <div class="supportive">
           <h1 class="tease"><%= link_to @lead_article.teaser, @lead_article.public_path %></h1>
-          <h2 class="byline"><%= link_to render_byline @lead_article.original_object %></h2>
+          <h2 class="byline"><%= render_byline @lead_article.original_object %></h2>
+
           <% if @featured_content %>
             <aside class="more">
               <% if @featured_content[:type] == 'issue' %>
-                <h3>More from <%= link_to @primary_issue.title, issue_path(@primary_issue.slug) %></h3>
+                <h3>More from <%= link_to @primary_issue.title, @primary_issue.public_path %></h3>
               <% else %>
                 <h3>More from Related Content </h3>
               <% end %>
@@ -48,32 +45,32 @@
                 </ul>
               </aside>
           <% end %>
+
         </div><!--/ .supporting -->
     </section><!--/ .curated -->
   <% end %>
+
     <div class="ataglance clearfix">
         <section class="latest">
             <header>
               <h1>Latest <%= @category.title %> Headlines</h1>
             </header>
             <ul>
-              <% if @latest_articles.presence %>
-                <%- @latest_articles.each do |article| %>
-                  <li>
-                    <%= link_to(article.public_path, class: 'clearfix') do %>
-                          <div>
-                            <mark><%= article.short_title %></mark>
-                            <%= new_smart_date_js article.public_datetime, tag: "em", "data-window" => "8h", "data-relative" => "2h" %>&nbsp;
-                            <span><%= article.byline %></span>
-                          </div>
-                          <figure class="ratio">
-                              <div class="fill"></div>
-                              <b class="img-contain"><%= image_tag(article.asset.lsquare.url, alt: '' ) %></b>
-                          </figure>
-                    <% end %>
-                  </li>
+            <%- Array(@category_articles[0..1]).each do |article| %>
+              <li>
+                <%= link_to(article.public_path, class: 'clearfix') do %>
+                  <div>
+                    <mark><%= article.short_title %></mark>
+                    <%= new_smart_date_js article.public_datetime, tag: "em", "data-window" => "8h", "data-relative" => "2h" %>&nbsp;
+                    <span><%= article.byline %></span>
+                  </div>
+                  <figure class="ratio">
+                      <div class="fill"></div>
+                      <b class="img-contain"><%= image_tag(article.asset.lsquare.url, alt: '' ) %></b>
+                  </figure>
                 <% end %>
-              <% end %>
+              </li>
+            <% end %>
             </ul>
         </section>
         <section class="event">
@@ -109,26 +106,25 @@
 <section class="resources-row">
     <div class="inner bound clearfix">
         <header>
-            <h1><span>Represent Resources</span></h1>
-            <h2>Quick primers on civic life in California.</h2>
-            <h3>All of us at KPCC believe that civic life in Southern California should be understandable, relevant, and libero ante, aliquam congue mattis id, blandit quis risus. Sed iaculis tellus accumsan ipsum porta ultricies.</h3>
-            <!--<h4>Represent Resources is made possible with support from <%= link_to 'The Robert Day School', '#' %>.</h4> -->
+          <h1 class="<%=@category.slug%>"><span><%= @category.title %></span></h1>
+          <h2>Tools and guides to help you get informed and engaged.</h2>
+          <h3>KPCC believes that making <%= @category.title %> in Southern California relevant and accessible is an important part of strengthening the civic and cultural bonds that unite the diverse communities of this region.</h3>
         </header>
+
         <nav>
-            <ul class="clearfix">
-            <% if @resources.presence %>
-              <%- @resources.each do |resource| %>
-                <li>
-                    <%= link_to(resource.public_path) do %>
-                        <figure class="clearfix">
-                          <div class="ratio"><div class="fill"></div><b class="img-contain"><%= image_tag resource.asset.small.url, alt: '' %></b></div>
-                          <figcaption><%= resource.short_title %></figcaption>
-                        </figure>
-                    <% end %>
-                </li>
-              <% end %>
-            <% end %>
-            </ul>
+          <ul class="clearfix">
+
+          <%- Array(@featured_articles[1..4]).each do |article| %>
+            <li>
+                <%= link_to(article.public_path) do %>
+                    <figure class="clearfix">
+                      <div class="ratio"><div class="fill"></div><b class="img-contain"><%= image_tag article.asset.small.url, alt: '' %></b></div>
+                      <figcaption><%= article.short_title %></figcaption>
+                    </figure>
+                <% end %>
+            </li>
+          <% end %>
+          </ul>
         </nav>
     </div>
 </section><!--/ .resources-row -->
@@ -140,22 +136,20 @@
                 <h1>Issues We're Tracking</h1>
                 <h2><%= link_to 'See all issues', issues_path %></h2>
             </header>
-           <% if @category.issues.presence %>
+          <% if @category.issues.present? %>
             <div>
                 <header class="special">
                   <h1><%= @special_issue.title %></h1>
                     <h2 class="clearfix">
                         <mark>Special coverage from KPCC</mark>
-                        <%= link_to issue_path(@special_issue.slug) do %>
+                        <%= link_to @special_issue.public_path do %>
                           See all <span><%= @special_issue.title  %></span>
                         <% end %>
                     </h2>
                 </header>
                 <nav>
                     <ul>
-                      <%- @top_two_special_issue_articles.each do |article| %>
-                        <%= render partial: 'category/issue_list', locals: {article: article} %>
-                      <% end %>
+                    <%= render 'category/issue_list', articles: @top_two_special_issue_articles %>
                     </ul>
                 </nav>
             </div>
@@ -163,124 +157,130 @@
                 <div>
                     <header class="slim clearfix">
                       <h1><%= issue.title %></h1>
-                      <h2><%= link_to issue_path(issue.slug) do %>
+                      <h2><%= link_to issue.public_path do %>
                         See all <span><%= issue.title %></span><% end %></h2>
                     </header>
                     <nav>
                         <ul>
-                        <%- issue.articles.first(2).each do |article| %>
-                          <%= render partial: 'category/issue_list', locals: {article: article} %>
-                        <% end %>
+                        <%= render 'category/issue_list', articles: issue.articles.first(2) %>
                         </ul>
                     </nav>
                 </div>
               <% end %>
-           <% end %>
+          <% end %>
         </section><!--/ .issues -->
         <div class="treats">
             <aside class="featured" style="background-image: url(assets/featured-interactives/intersections.jpg);">
                 <div>
                     <h1>Featured Interactive</h1>
-                    <% if @featured_interactive %>
-                      <h2><%= link_to @featured_interactive.short_title, @featured_interactive.public_path %></h2>
-                      <h3><%= @featured_interactive.byline %></h3>
+
+                    <% if article = @featured_articles[5] %>
+                      <h2><%= link_to article.short_title, article.public_path %></h2>
+                      <h3><%= article.byline %></h3>
                     <% end %>
+
                 </div>
             </aside>
             <div class="inbrief clearfix">
-                <% if @quote %>
-                  <aside class="quote">
-                      <blockquote>
-                        <p><%= @quote.quote %></p>
-                          <cite>
-                            <mark><%= @quote.source_name %></mark>
-                            <span><%= @quote.source_context %></span>
-                          </cite>
-                      </blockquote>
-                      <footer>
-                        <%= link_to @quote_article.short_title, @quote_article.public_path, title: "Read this quote's source article" %>
-                      </footer>
-                  </aside>
-                <% end %>
-                <aside class="events">
-                  <h1>Upcoming <%= @category.title %> Events</h1>
-                    <% if @upcoming_events.presence %>
-                      <ul>
-                        <%- @upcoming_events.each do |event| %>
-                          <li>
-                              <figure class="clearfix">
-                                  <div class="date">
-                                    <b><%= event.public_datetime.day %></b>
-                                    <span><mark><%= event.public_datetime.strftime('%b') %></mark> <%= event.public_datetime.strftime('%Y') %></span>
-                                  </div>
-                                  <figcaption>
-                                  <b><%= event.short_title %></b>
-                                  <%= link_to 'More information', event.public_path %>
-                                  </figcaption>
-                              </figure>
-                          </li>
-                        <% end %>
-                      </ul>
-                    <% end %>
-                </aside>
+
+            <% if @quote %>
+              <aside class="quote">
+                  <blockquote>
+                    <p><%= @quote.quote %></p>
+                      <cite>
+                        <mark><%= @quote.source_name %></mark>
+                        <span><%= @quote.source_context %></span>
+                      </cite>
+                  </blockquote>
+                  <footer>
+
+                  <% if @quote.article %>
+                    <%= link_to @quote.article.short_title, @quote.article.public_path, title: "Read this quote's source article" %>
+                  <% end %>
+
+                  </footer>
+              </aside>
+            <% end %>
+
+              <aside class="events">
+                <h1>Upcoming <%= @category.title %> Events</h1>
+                  <% if @upcoming_events.present? %>
+                    <ul>
+                      <%- @upcoming_events.each do |event| %>
+                        <li>
+                            <figure class="clearfix">
+                                <div class="date">
+                                  <b><%= event.public_datetime.day %></b>
+                                  <span><mark><%= event.public_datetime.strftime('%b') %></mark> <%= event.public_datetime.strftime('%Y') %></span>
+                                </div>
+                                <figcaption>
+                                <b><%= event.short_title %></b>
+                                <%= link_to 'More information', event.public_path %>
+                                </figcaption>
+                            </figure>
+                        </li>
+                      <% end %>
+                    </ul>
+                  <% end %>
+              </aside>
             </div>
         </div><!--/ .bites -->
     </div>
 </div><!--/ .lunchbox -->
 
-<%= render partial: 'shared/triptych', locals: {category: @category, articles: @three_recent_articles} %>
-<%= render 'shared/kpcc_ipad_ad' %>
+<%= render 'shared/new/triptych', category: @category, articles: @category_articles[2..4] %>
 
-<%= render partial: 'shared/quadrant', locals: { top_articles: @top_half_recent_articles, bottom_articles: @bottom_half_recent_articles } %>
+<%= render 'shared/new/kpcc_ipad_ad' %>
+
+<%= render 'shared/new/quadrant', articles: @category_articles[5..8], header: "" %>
 
 <div class="waterfall">
     <div class="inner bound clearfix">
 
         <section class="backlog">
           <h1>More <%= @category.title %></h1>
-          <% if @more_articles.presence %>
-            <%= render partial: 'shared/waterfall_articles', collection: @more_articles, as: 'article', locals: { issue_tag_exists: true } %>
-          <% end %>
+          <%= render 'shared/new/waterfall_articles', articles: @category_articles[9..-1], issue_tag_exists: true %>
         </section><!--/ .backlog -->
 
-      <% if @bios.presence %>
+      <% if @bios.present? %>
         <div class="secondary">
             <section class="reporters">
                 <h1>Our Reporters</h1>
                 <div class="clearfix">
-                    <%- @bios.each do |bio| %>
-                      <figure class="ratio-pairing">
-                            <div class="ratio">
-                                <div class="fill"></div>
-                                <b class="img-contain"><%= link_to bio.public_path do %>
-                                  <%= bio.headshot.small.tag %>
-                                <% end %>
-                                </b>
-                            </div><!--/ .ratio -->
-                            <figcaption>
-                            <h1><%= link_to bio.name, bio.public_path %></h1>
-                                <ul class="clearfix">
-                                  <li><%= link_to 'Email', bio.email, class: 'email', title: "Email #{bio.first_name}" %></li>
-                                  <% if bio.twitter_handle.present? %>
-                                    <li><%= link_to "Twitter", twitter_profile_url(bio.twitter_handle), target: "_blank", class: "twitter", title: "#{bio.first_name} on Twitter" %></li>
-                                  <% end %>
-                                </ul>
-                            </figcaption>
-                      </figure>
-                    <% end %>
+
+                <%- @bios.each do |bio| %>
+                  <figure class="ratio-pairing">
+                        <div class="ratio">
+                            <div class="fill"></div>
+                            <b class="img-contain"><a href="<%=bio.public_path%>"><img src="<%= bio.headshot.small.url %>"></a>
+                            </b>
+                        </div><!--/ .ratio -->
+                        <figcaption>
+                          <h1><%= link_to bio.name, bio.public_path %></h1>
+                          <ul class="clearfix">
+                            <li><%= link_to 'Email', bio.email, class: 'email', title: "Email #{bio.first_name}" %></li>
+
+                          <% if bio.twitter_handle.present? %>
+                            <li><%= link_to "Twitter", twitter_profile_url(bio.twitter_handle), target: "_blank", class: "twitter", title: "#{bio.first_name} on Twitter" %></li>
+                          <% end %>
+
+                          </ul>
+                        </figcaption>
+                  </figure>
+                <% end %>
 
                 </div>
             </section><!--/ .reporters -->
             <section class="tweets">
                 <h1>In Brief</h1>
                 <ul>
-                  <% if @cached_tweets = Rails.cache.fetch("verticals/#{@category.slug}/twitter_feed:#{@twitter_handles}") %>
-                      <%= @cached_tweets %>
+                  <% if cached_tweets = Rails.cache.fetch("verticals/#{@category.slug}/twitter_feed") %>
+                      <%= cached_tweets %>
                   <% end %>
                 </ul>
             </section><!--/ .tweets -->
         </div><!--/ .secondary -->
       <% end %>
+
     </div>
 </div><!--/ .waterfall -->
-

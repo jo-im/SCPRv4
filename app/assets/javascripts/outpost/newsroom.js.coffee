@@ -8,7 +8,7 @@ class scpr.Newsroom
 
     @templates:
         badge: JST["outpost/templates/badge"]
-    
+
     @fail: ->
         window.newsroomFailed = true
         queued.fail() for queued in Newsroom.queue
@@ -25,7 +25,7 @@ class scpr.Newsroom
         class @Empty extends outpost.Notification
             constructor: (el) ->
                 super el, "info", "There is nobody else here."
-    
+
         #-----------------
         # When there is an error reaching the Node server
         class @Offline extends outpost.Notification
@@ -39,8 +39,8 @@ class scpr.Newsroom
     class @JobListener
         constructor: ->
             $("#spinner").spin()
-            
-            @alerts  = 
+
+            @alerts  =
                 offline: new Newsroom.Alert.Offline($("#work_status"))
 
             if window.newsroomReady then @load() else @enqueue()
@@ -72,16 +72,16 @@ class scpr.Newsroom
             $("#spinner").spin(false)
             $("#work_status").html()
             @alerts['offline'].render()
-    
+
     #-----------------
-    
+
     constructor: (@roomId, @userJson, options={}) ->
         @el = $ options.el
         @el.spin()
 
         @record  = options.record
-        
-        @alerts  = 
+
+        @alerts  =
             offline: new Newsroom.Alert.Offline($("*[id*='newsroom']"))
             empty:   new Newsroom.Alert.Empty(@el)
 
@@ -104,7 +104,7 @@ class scpr.Newsroom
                 return
 
             @socket  = io.connect scpr.NEWSROOM, 'connect timeout': 5000
-            
+
             # Outgoing messages
             @socket.emit 'entered', @roomId, @userJson, recordJson: @record
 
@@ -128,6 +128,6 @@ class scpr.Newsroom
         for id, user of users
             badge = $ scpr.Newsroom.templates.badge(user: user)
             ul.append badge
-                
+
         @el.html ul
 

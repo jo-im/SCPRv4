@@ -8,7 +8,7 @@ ThinkingSphinx::Index.define :content_shell, with: :active_record do
   has updated_at
   has "CRC32(CONCAT('#{ContentShell.content_key}" \
       "#{Outpost::Model::Identifier::OBJ_KEY_SEPARATOR}'," \
-      "#{ContentShell.table_name}.id))", 
+      "#{ContentShell.table_name}.id))",
     :type   => :integer,
     :as     => :obj_key
 
@@ -26,7 +26,7 @@ ThinkingSphinx::Index.define :content_shell, with: :active_record do
 
   # Required attributes for ContentBase.search
   has published_at, as: :public_datetime
-  has "#{ContentShell.table_name}.status = #{ContentBase::STATUS_LIVE}", 
+  has "#{ContentShell.table_name}.status = #{ContentBase::STATUS_LIVE}",
     :type   => :boolean,
     :as     => :is_live
 end

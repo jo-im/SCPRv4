@@ -27,7 +27,7 @@ module Concern
       #--------------------
 
       def asset
-        @asset ||= self.assets.first
+        @asset ||= (self.assets.first || AssetHost::Asset::Fallback.new)
       end
     end # AssetAssociation
   end # Associations

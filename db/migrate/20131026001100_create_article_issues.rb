@@ -7,6 +7,6 @@ class CreateArticleIssues < ActiveRecord::Migration
       t.timestamps
     end
     add_index :article_issues, :issue_id
-    add_index :article_issues, [:article_id, :article_type]   
+    add_index :article_issues, [:article_id, :article_type]
   end
 end

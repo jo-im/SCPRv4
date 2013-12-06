@@ -19,6 +19,7 @@ describe RootPathController do
         response.header['Content-Type'].should match /xml/
       end
     end
+
     describe "with template" do
       context 'category is active' do
         before :each do
@@ -29,6 +30,7 @@ describe RootPathController do
           response.should render_template 'category/show'
         end
       end
+
       context 'category is inactive' do
         before :each do
          @inactive_category = create :category_news, is_active: false
@@ -36,6 +38,32 @@ describe RootPathController do
         it "renders the old template" do
           get :handle_path, path: @inactive_category.slug, format: :html
           response.should render_template 'category/simple'
+        end
+      end
+    end
+  end
+
+
+  describe "vertical" do
+    render_views
+
+    describe "rendering articles with issues" do
+      sphinx_spec
+
+      it "renders articles and issues" do
+        category = create :category, is_active: true
+        issues = create_list :issue, 3, :is_active
+
+        category.issues = issues
+        articles = create_list :news_story, 6, :published, category: category
+        articles.each { |a| a.issues = issues }
+
+        index_sphinx
+
+        ts_retry(2) do
+          get :handle_path, path: category.slug, format: :html
+          assigns(:content).sort.should eq articles.sort
+          response.should be_success
         end
       end
     end

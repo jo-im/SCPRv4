@@ -25,6 +25,11 @@ module Job
         end
       end
 
+
+      def enqueue(*args)
+        Resque.enqueue(self, *args)
+      end
+
       #---------------
 
       def cache(*args)

@@ -31,9 +31,6 @@ Scprv4::Application.routes.draw do
   get '/blogs/:blog/'                                  => 'blogs#show',                   as: :blog
   get '/blogs/'                                        => 'blogs#index',                  as: :blogs
 
-  # Issues
-  get 'issues/:slug' => 'issues#show', as: :issue
-  get '/issues' => 'issues#index'
   # News Stories
   get '/news/:year/:month/:day/:id/:slug/'  => 'news#story',      as: :news_story,  constraints: { year: /\d{4}/, month: /\d{2}/, day: /\d{2}/, id: /\d+/, slug: /[\w_-]+/}
 
@@ -60,6 +57,11 @@ Scprv4::Application.routes.draw do
 
   # Legacy route
   get '/events/:year/:month/:day/:slug/'  => 'events#show', constraints: { year: /\d{4}/, month: /\d{2}/, day: /\d{2}/, slug: /[\w_-]+/}
+
+
+  # Issues
+  get 'issues/:slug' => 'issues#show', as: :issue
+  get '/issues' => 'issues#index'
 
 
   # Search

@@ -5,7 +5,6 @@ FactoryGirl.define do
     slug                { title.parameterize }
     description          "This is a very important issue."
 
-
     trait :is_active do
       is_active true
     end
@@ -16,7 +15,5 @@ FactoryGirl.define do
 
     factory :active_issue, traits: [:is_active]
     factory :inactive_issue, traits: [:is_not_active]
-
   end
-
 end

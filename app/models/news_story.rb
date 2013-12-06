@@ -11,7 +11,8 @@ class NewsStory < ActiveRecord::Base
   include Concern::Associations::RelatedContentAssociation
   include Concern::Associations::RelatedLinksAssociation
   include Concern::Associations::BylinesAssociation
-  include Concern::Associations::IssueArticleAssociation
+  include Concern::Associations::IssueAssociation
+  include Concern::Associations::FeatureAssociation
   include Concern::Associations::CategoryAssociation
   include Concern::Associations::CategoryArticleAssociation
   include Concern::Associations::HomepageContentAssociation
@@ -32,6 +33,7 @@ class NewsStory < ActiveRecord::Base
   include Concern::Methods::ContentStatusMethods
   include Concern::Methods::PublishingMethods
   include Concern::Methods::CommentMethods
+  include Concern::Methods::AssetDisplayMethods
 
   self.disqus_identifier_base = "news/story"
   ROUTE_KEY = "news_story"
@@ -48,22 +50,6 @@ class NewsStory < ActiveRecord::Base
     ['Center for Health Reporting', 'chr']
   ]
 
-  ASSET_SCHEMES = [
-    ["Top", "wide"],
-    ["Right", "float"],
-    ["Slideshow", "slideshow"],
-    ["Video", "video"],
-    ["Hidden", "hidden"]
-  ]
-
-  EXTRA_ASSET_SCHEMES = [
-    ["Hidden", "hidden"],
-    ["Sidebar", "sidebar"]
-  ]
-
-  def feature_type_name
-    ContentBase::FEATURE_TYPE[self.feature_type]
-  end
 
   #-------------------
   # Scopes
@@ -116,7 +102,8 @@ class NewsStory < ActiveRecord::Base
       :attributions       => self.bylines,
       :byline             => self.byline,
       :edit_url           => self.admin_edit_url,
-      :related_issue      => self.issues_in_category
+      :issues             => self.issues,
+      :feature            => self.feature
     })
   end
 

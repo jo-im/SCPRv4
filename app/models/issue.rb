@@ -1,10 +1,11 @@
 class Issue < ActiveRecord::Base
   outpost_model
   has_secretary
-  attr_accessible :description, :is_active, :slug, :title
-  include Concern::Validations::SlugValidation
 
-  ROUTE_KEY = 'root_slug'
+  include Concern::Validations::SlugValidation
+  include Concern::Callbacks::SphinxIndexCallback
+
+  ROUTE_KEY = 'issue'
 
   scope :active, -> { where(is_active: true) }
 
@@ -16,13 +17,14 @@ class Issue < ActiveRecord::Base
   validates :slug, uniqueness: true
   validates :description, presence: true
 
+
   def route_hash
     return {} if !self.persisted?
-    { path: self.persisted_record.slug }
+    { slug: self.persisted_record.slug }
   end
 
   def articles
-    @articles ||= self.article_issues.select(&:article).map { |a| a.article.to_article }
+    @articles ||= self.article_issues.includes(:article)
+      .select(&:article).map { |a| a.article.to_article }
   end
-
 end

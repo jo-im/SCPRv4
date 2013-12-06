@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<%= render "shared/new/document_header" %>
+
+
+<body class="<%= content_for(:body_class) %>">
+
+    <%= render 'shared/new/layout_header' %>
+
+    <%= yield %>
+
+
+    <%= render 'shared/new/kpcc_ipad_ad' %>
+
+    <% if @popular_articles %>
+      <%= render 'shared/new/quadrant', articles: @popular_articles.first(4), header: 'Popular Now on KPCC' %>
+    <% end %>
+
+
+    <%= render 'shared/new/layout_footer' %>
+    <%= render 'shared/new/document_footer' %>
+
+
+</body>
+</html>

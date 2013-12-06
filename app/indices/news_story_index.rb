@@ -17,9 +17,7 @@ ThinkingSphinx::Index.define :news_story, with: :active_record do
 
   # For category/homepage building
   has category.id, as: :category
-  has "(#{NewsStory.table_name}.story_asset_scheme <=> 'slideshow')",
-    :type   => :boolean,
-    :as     => :is_slideshow
+  has asset_display_id
 
   # For RSS Feed
   has "(#{NewsStory.table_name}.source <=> 'kpcc')",

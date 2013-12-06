@@ -11,7 +11,8 @@ class ShowSegment < ActiveRecord::Base
   include Concern::Associations::RelatedContentAssociation
   include Concern::Associations::RelatedLinksAssociation
   include Concern::Associations::BylinesAssociation
-  include Concern::Associations::IssueArticleAssociation
+  include Concern::Associations::IssueAssociation
+  include Concern::Associations::FeatureAssociation
   include Concern::Associations::CategoryAssociation
   include Concern::Associations::CategoryArticleAssociation
   include Concern::Associations::HomepageContentAssociation
@@ -32,21 +33,12 @@ class ShowSegment < ActiveRecord::Base
   include Concern::Methods::ContentStatusMethods
   include Concern::Methods::PublishingMethods
   include Concern::Methods::CommentMethods
+  include Concern::Methods::AssetDisplayMethods
 
   self.disqus_identifier_base = "shows/segment"
   ROUTE_KEY = "segment"
 
-  ASSET_SCHEMES = [
-    ["Top", "wide"],
-    ["Right", "float"],
-    ["Slideshow", "slideshow"],
-    ["Video", "video"],
-    ["Hidden", "hidden"]
-  ]
 
-  def feature_type_name
-    ContentBase::FEATURE_TYPE[self.feature_type]
-  end
   #-------------------
   # Scopes
 
@@ -133,7 +125,9 @@ class ShowSegment < ActiveRecord::Base
       :audio              => self.audio.available,
       :attributions       => self.bylines,
       :byline             => self.byline,
-      :edit_url           => self.admin_edit_url
+      :edit_url           => self.admin_edit_url,
+      :issues             => self.issues,
+      :feature            => self.feature
     })
   end
 
@@ -154,8 +148,7 @@ class ShowSegment < ActiveRecord::Base
       :air_date           => self.published_at,
       :assets             => self.assets,
       :audio              => self.audio,
-      :segments           => Array(self),
-      :related_issue      => self.issues_in_category
+      :segments           => Array(self)
     })
   end
 

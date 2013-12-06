@@ -1,0 +1,69 @@
+
+<header class="masthead">
+    <div class="inner bound">
+
+    <% if @category %>
+        <section class="titling clearfix">
+            <div class="brand">
+              <h1><%= link_to @category.title, @category.public_path %></h1>
+              <h2><%= @category.description %></h2>
+            </div>
+        </section><!--/ .titling -->
+    <% end %>
+
+        <section class="station clearfix">
+            <h4><a href="http://kpcc.org" rel="author">89.3 KPCC</a></h4>
+            <nav class="kpcc-links">
+                <ul>
+                    <li><a href="javascript:void(0)" onclick="open_popup('/listen_live/');" id="listen-live">Listen Live</a></li>
+                    <li><a href="http://www.scpr.org/news/">News</a></li>
+                    <li><a href="http://www.scpr.org/arts-life/">Arts &amp; Life</a></li>
+                    <li><a href="http://www.scpr.org/programs/">Programs</a></li>
+                    <li><a href="http://www.scpr.org/events/">Events</a></li>
+                    <li><a href="http://www.scpr.org/support/">Support Us</a></li>
+                    <li><a href="http://www.scpr.org/about/">About Us</a></li>
+                </ul>
+            </nav>
+            <ul class="follow-us clearfix">
+                <li><a href="http://twitter.com/kpcc" title="Follow KPCC on Twitter" class="tw">KPCC on Twitter</a></li>
+                <li><a href="http://facebook.com/kpcc" title="Like KPCC on Facebook" class="fb">KPCC on Facebook</a></li>
+                <li><a href="https://plus.google.com/108872361044769229886/" title="Join with KPCC on Google Plus" class="gp">KPCC on Google+</a></li>
+            </ul>
+            <button class="search-trigger" value="Activate search tool">Search KPCC</button>
+            <h5 class="donate"><a href="https://scprcontribute.publicradio.org/contribute.php">Donate Now</a></h5>
+            <button class="shownav" aria-hidden="true">Show Nav</button>
+        </section><!--/ .station -->
+
+        <nav class="kpcc-ledge pane" aria-hidden="true">
+            <h1><a href="http://kpcc.org" rel="author">89.3 KPCC</a></h1>
+            <button class="close" value="close">Close</button>
+            <ul class="links">
+                <li><a href="javascript:void(0)" onclick="open_popup('/listen_live/');" id="listen-live">Listen Live</a></li>
+                <li><a href="http://www.scpr.org/news/">News</a></li>
+                <li><a href="http://www.scpr.org/arts-life/">Arts &amp; Life</a></li>
+                <li><a href="http://www.scpr.org/programs/">Programs</a></li>
+                <li><a href="http://www.scpr.org/events/">Events</a></li>
+                <li><a href="http://www.scpr.org/support/">Support Us</a></li>
+                <li><a href="http://www.scpr.org/about/">About Us</a></li>
+            </ul>
+            <h2>Follow KPCC</h2>
+            <ul class="follow-us clearfix">
+                <li><a href="http://twitter.com/kpcc" title="Follow KPCC on Twitter" class="tw">KPCC on Twitter</a></li>
+                <li><a href="http://facebook.com/kpcc" title="Like KPCC on Facebook" class="fb">KPCC on Facebook</a></li>
+                <li><a href="https://plus.google.com/108872361044769229886/" title="Join with KPCC on Google Plus" class="gp">KPCC on Google+</a></li>
+            </ul>
+        </nav><!--/ .kpcc-ledge -->
+
+        <aside class="kpcc-search pane">
+            <h1><a href="http://kpcc.org" rel="author">89.3 KPCC</a></h1>
+            <button class="close" value="close">Close</button>
+            <form method="get" action="/search/">
+                <label for="q">Search:</label>
+                <div class="search-wrap"><input class="search" id="q" type="text" placeholder="Search" name="q" /></div>
+                <input id="submit" class="submit" type="submit" value="">
+                <input class="toggle-search" type="button">
+            </form>
+        </aside>
+
+    </div>
+</header><!--/ .masthead -->

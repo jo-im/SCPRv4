@@ -1,14 +1,14 @@
 <%= form_block "Association" do %>
   <%= f.association :category %>
-  <%= f.input :article_type, collection: Quote.featurable_classes_select_collection %>
-  <%= f.input :article_id, label: "Article ID", input_html: { class: 'thin' } %>
+  <%= f.input :content_type, collection: Quote.featurable_classes_select_collection %>
+  <%= f.input :content_id, label: "Article ID", input_html: { class: 'thin' } %>
 <% end %>
 
 <%= form_block "Information" do %>
-  <%= f.input :source_name %>
-  <%= f.input :source_context %>
+  <%= f.input :source_name, hint: "The source of the quote. Example: 'Barack Obama'" %>
+  <%= f.input :source_context, hint: "The context in which the quote was delivered. Example: 'Press Meeting, June 10'" %>
   <%= f.input :quote, input_html: { class: "tiny" } %>
 <% end %>
 
 <%= f.input :status, collection: Quote.status_select_collection, include_blank: false %>
-
+<br /><br /><br /><br /><br /><br />

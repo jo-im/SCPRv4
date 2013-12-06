@@ -4,10 +4,10 @@
     <% register_content BlogEntry.new_obj_key %>
     <% blog.entries.published.first(5).each do |entry| %>
       <% register_content entry %>
-    
+
       <div class="row-fluid">
         <div class="span7">
-          <%= render_asset entry, 'thumbnail' %>
+          <%= render_asset entry, display: 'thumbnail' %>
         </div>
         <div class="span17">
           <p>
@@ -16,7 +16,7 @@
           </p>
         </div>
       </div> <!-- row-fluid -->
-      
+
     <% end %>
     <p class="more"><%= link_to "More from #{blog.name}", blog_path(blog.slug) %></p>
   <% end %>

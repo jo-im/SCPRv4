@@ -7,11 +7,8 @@ class Outpost::CategoriesController < Outpost::ResourceController
 
     l.column :title, sortable: true
     l.column :slug, sortable: true
-    l.column :is_news
+    l.column :is_news, header: "News?"
+    l.column :is_active, header: "Vertical?"
     l.column :comment_bucket
-
-    l.filter :is_news,
-      :title        => "News?",
-      :collection   => :boolean
   end
 end

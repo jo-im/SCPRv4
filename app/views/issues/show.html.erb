@@ -1,30 +1,10 @@
 <% add_to_page_title @issue.title %>
-
-<% content_for :body_class do %>
-  <% 'interior issues' %>
-<% end %>
-
-<% content_for :vertical_layout do %>
-  <%= stylesheet_link_tag "vertical/issues", media: "all" %>
-<% end %>
-
-<% content_for :quadrant_header do %>
-  Popular Now on KPCC
-<% end %>
-
-<%= render 'shared/header/header' %>
+<% meta_tags(url: @issue.public_url) %>
+<% content_for :body_class, 'interior issues' %>
 
 <section class="prologue">
   <div class="inner bound">
       <h1 class="title">All Issues</h1>
-      <aside class="share">
-          <ul>
-              <li><a href="#">Share on Facebook</a></li>
-              <li><a href="#">Share on Twitter</a></li>
-              <li><a href="#">Share on Google Plus</a></li>
-              <li><a href="#">Share via Email</a></li>
-          </ul>
-      </aside>
   </div>
 </section><!--/ .prologue -->
 
@@ -33,9 +13,11 @@
 
         <nav class="terms">
             <ul class="clearfix">
-                <% @issues.each do |issue| %>
-                  <%= issue_link issue, issue_path(issue.slug), @issue %>
-                <% end %>
+
+            <% @issues.each do |issue| %>
+              <%= issue_link issue, issue.public_path, @issue %>
+            <% end %>
+
             </ul>
         </nav>
 
@@ -43,47 +25,40 @@
 
             <header class="preface">
               <h1><%= @issue.title %></h1>
-                <div class="details clearfix">
-                    <div class="brief">
-                      <p><%= @issue.description %></p>
+              <div class="details clearfix">
+                  <div class="brief">
+                    <p><%= @issue.description %></p>
+                  </div>
+                  <aside class="timeline">
+                    <h2>KPCC has published a total of <mark><%= @article_count %> articles</mark> on <%= @issue.title %></h2>
+
+                  <% if @issue_articles.present? %>
+                    <div class="range">
+                        <dl class="began">
+                        <dt><%= format_date(@issue_articles.last.public_datetime, with: '%-d %^b %Y') %></dt>
+                            <dd>Coverage began</dd>
+                        </dl>
+                        <dl class="latest">
+                        <dt><%= format_date(@issue_articles.first.public_datetime, with: '%-d %^b %Y') %></dt>
+                            <dd>Latest coverage</dd>
+                        </dl>
                     </div>
-                    <aside class="timeline">
-                      <h2>KPCC has published a total of <mark><%= @article_count %> articles</mark> on <%= @issue.title %></h2>
-                      <% if @issue_articles.presence %>
-                        <div class="range">
-                            <dl class="began">
-                            <dt><%= format_date(@issue_articles.last.public_datetime, with: '%-d %^b %Y' ) %></dt>
-                                <dd>Coverage began</dd>
-                            </dl>
-                            <dl class="latest">
-                            <dt><%= format_date(@issue_articles.first.public_datetime, with: '%-d %^b %Y' ) %></dt>
-                                <dd>Latest coverage</dd>
-                            </dl>
-                        </div>
-                      <% end %>
-                    </aside>
-                </div>
+                  <% end %>
+
+                  </aside>
+              </div>
             </header>
 
             <section class="backlog">
-<!--            ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ -->
 
-                <% if @issue_articles.presence %>
-                  <%= render partial: 'shared/waterfall_articles', collection: @paginated_articles, as: 'article', locals: { issue_tag_exists: false } %>
-                <% end %>
+            <% if !@issue_articles.empty? %>
+              <%= render 'shared/new/waterfall_articles', articles: @paginated_articles, issue_tag_exists: false %>
+            <% end %>
 
-                <%= paginate @paginated_articles %>
-<!--            ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ -->
-                <footer>
-                  <%= link_to "Load more #{@issue.title} stories", issue_path(@issue.slug) %>
-                </footer>
+              <%= paginate @paginated_articles, theme: 'new', outer_window: 1 %>
             </section><!--/ .backlog -->
 
         </div><!--/ .showcase -->
 
     </div>
 </div><!--/ .catalog -->
-
-<%= render 'shared/kpcc_ipad_ad' %>
-
-<%= render partial: 'shared/quadrant', locals: { top_articles: @top_popular_articles, bottom_articles: @bottom_popular_articles } %>

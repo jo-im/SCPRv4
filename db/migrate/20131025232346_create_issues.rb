@@ -8,9 +8,10 @@ class CreateIssues < ActiveRecord::Migration
 
       t.timestamps
     end
+
     add_index :issues, :title
     add_index :issues, :slug
     add_index :issues, :is_active
-    add_index :issues, :updated_at
+    add_index :issues, :created_at
   end
 end

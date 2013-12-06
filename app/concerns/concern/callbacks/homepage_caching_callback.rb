@@ -33,7 +33,7 @@ module Concern
         'source',
         'news_agency',
         'is_from_pij',
-        'extra_asset_scheme',
+        'asset_type',
         'updated_at',
         'base',
         'outgoing_references',

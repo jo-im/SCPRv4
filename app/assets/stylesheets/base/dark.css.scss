@@ -3,7 +3,7 @@
     h1, h2, h3, h4, h5, h6, h7 {
         color: $gray;
     }
-    
+
     .pagination {
       span {
         a:hover, &.current {
@@ -11,7 +11,7 @@
         }
       }
     }
-    
+
     // DEFINE FOCUS TRANSITIONS
     .muted {
         @include transition(opacity linear 0.2s);
@@ -20,10 +20,10 @@
     }
 
     @include gradient-vertical(lighten($black, 13%), $black);
-    background-color: $black; // override since the disqus comments load after the gradient has already been calculated 
+    background-color: $black; // override since the disqus comments load after the gradient has already been calculated
     background-repeat: no-repeat;
     color:$gray;
-    
+
     .alert-message.warning {
         @include gradient-vertical(lighten($nearBlack, 13%), $nearBlack);
         border:none;
@@ -31,7 +31,7 @@
         border-bottom:1px solid $black;
         p { color:$grayLighter; }
     }
-    
+
     #masthead {
         #masthead-left-header-wrapper {
             .logo a.logo-img {
@@ -40,7 +40,7 @@
         }
 
         #masthead-mid-header-wrapper {
-            //Contribute Promo 
+            //Contribute Promo
             .kpcc-personalities {
                 background:transparent;
                 img {
@@ -78,9 +78,9 @@
                 }
             }
         }
-    
+
         .sections ul li {
-            a { 
+            a {
                 color:$gray;
                 &:hover, &.hover {
                     color:$white;
@@ -96,7 +96,7 @@
                 }
             }
         }
-    
+
         .search-form form {
             input.search {
                 background-color:$nearBlack;
@@ -122,10 +122,10 @@
         h6 { color: $white; }
         a, .featured h4 a, ul.cbase li h4 a { color: $gray; }
         .blog-title a { color: $grayLight; }
-        
-        ul.cbase li, 
-        .section, 
-        ul.content-types li, 
+
+        ul.cbase li,
+        .section,
+        ul.content-types li,
         #about-mega #about-hero,
         &#programs-mega .program a {
             h4 {
@@ -133,8 +133,8 @@
             }
             p { color: $gray; }
         }
-        
-        
+
+
         &#support-mega .section .contribute a { color: $white; }
     }
     .megamenu #about-mega {
@@ -147,22 +147,22 @@
             }
         }
     }
-    
-    
+
+
     // MAIN BODY
     // Headlines & Body Copy
     .story-headline { color:$grayLight; }
 
-    
+
     // Comments
     .comments {
         border-top:1px solid $nearBlack;
-        
+
         .dsq-comment-header, .dsq-comment-text {
             color: $grayLight;
         }
-        .dsq-mobile { 
-            background-color: $nearBlack !important; 
+        .dsq-mobile {
+            background-color: $nearBlack !important;
             #dsq-topbar, #dsq-comments { background-color: $nearBlack !important; }
             #dsq-comments {
                 .dsq-comment, .dsq-comment-body, .dsq-comment-message, .dsq-comment-text { color: $white; }
@@ -176,7 +176,7 @@
         }
         .dsq-brlink {display:none;}
     }
-    
+
     //FOOTER
     #page-footer footer #footer-container { background-image: url(image_path('footer-arrow-dark.png')); }
 }

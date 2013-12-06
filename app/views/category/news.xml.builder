@@ -9,7 +9,7 @@ xml.rss(RSS_SPEC) do
 
     xml.description "Features and interviews from KPCC's " \
                     "award-winning news team."
-  
+
     xml << render_content(@content, "feedxml")
   end
 end

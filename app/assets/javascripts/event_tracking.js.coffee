@@ -19,9 +19,9 @@ class scpr.EventTrackingLink
         @label    = @el.attr(@attributes.label)
 
         @nonInteraction = @el.attr(@attributes.nonInteraction) || @defaults.nonInteraction
-        
+
         # Setup click event
         @el.on click: => @_gapush()
-    
+
     _gapush: ->
         _gaq.push ["_trackEvent", @category, @action, @label, @nonInteraction]
