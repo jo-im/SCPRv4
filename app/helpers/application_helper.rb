@@ -252,7 +252,7 @@ module ApplicationHelper
   #---------------------------
 
   def twitter_profile_url(handle)
-    "http://twitter.com/#{handle.parameterize}"
+    "https://twitter.com/#{handle.parameterize}"
   end
 
   #---------------------------
