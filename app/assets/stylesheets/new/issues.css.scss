@@ -154,7 +154,7 @@ body.issues {
             float: right;
             padding-top: 9px;
             box-shadow: inset 0 1px 0 #e1e1e1;
-            .backlog > footer {
+            .load-more {
                 padding-top: 18px;
                 a {
                     display: inline-block;
@@ -234,6 +234,62 @@ body.issues {
         }
     }
 
+
+    // Pagination
+    .paging {
+        width: 100%;
+        margin-top: 80px;
+        position: relative;
+        color: gray;
+        font-family: $font-prox;
+        font-weight: 700;
+        box-shadow:
+            inset 0 18px 0 white,
+            inset 0 19px 0 rgba(0,172,209,0.3);
+            
+        @media screen and (max-width: 950px) {
+            box-shadow: inset 0 14px 0 white, inset 0 15px 0 rgba(0,172,209,0.3);
+            font-size: 0.8125em;
+        }
+
+        a                   { color: $blue; }
+        a:hover             { text-decoration: underline; }
+        .jumps {
+            position: absolute;
+            top: 5px;
+            background: white;
+            &.future        { left: 0; padding-right: 10px; border-right: 1px solid rgba(0,172,209,0.3);}
+            &.past          { right: 0; text-align: right; padding-left: 10px; border-left: 1px solid rgba(0,172,209,0.3); }
+            span            { display: inline-block; padding: 3px 0; }
+            @media screen and (max-width: 950px) {
+                top: 3px;
+                &.future    { padding-right: 6px; }
+                &.past      { padding-left: 6px; }
+            }
+        }
+        ul {
+            text-align: center;
+            margin: 0 60px;
+
+            li      { display: inline; }
+            a,span  {
+                white-space: nowrap;
+                display: inline-block;
+                background: lime;
+                padding: 5px 7px;
+                @media screen and (max-width: 950px) { padding: 3px 5px; }
+                border: 3px solid rgba(0,172,209,0.3);
+                border-radius: 30px;
+                background: white;
+            }
+            .gap span       { border-color: rgba(0,0,0,0.2); }
+            .current span   { color: $orange; border-color: $orange; }
+            a:hover         { border-color: $blue; }
+        }
+    }
+
+
+
     //  ------------------------------------------------------------------------------------------------
         @media screen and (max-width: 999px) {
 
@@ -292,6 +348,31 @@ body.issues {
             }
 
         }
+
+
+//        ------------------------------------------------------------------------------------------------
+
+    @media screen and (max-width: 575px) {
+
+        .catalog .paging {
+            box-shadow: none;
+            .jumps {
+                position: relative;
+                width: 100%;
+                &.future    { border-bottom: 1px solid rgba(0,172,209,0.3); }
+                &.past      { border-top: 1px solid rgba(0,172,209,0.3); }
+            }
+            ul {
+                margin: 12px 0 7px;
+                @media screen and (max-width: 400px) {
+                    a,span      { padding: 2px 3px; }
+                }
+            }
+        }
+
+    }
+
+
     //  ------------------------------------------------------------------------------------------------
         @media screen and (max-width: 450px) {
 
