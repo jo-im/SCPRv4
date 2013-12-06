@@ -9,8 +9,12 @@ module Concern
       extend ActiveSupport::Concern
 
       included do
-        has_many :category_articles, as: :article, dependent: :destroy
-        after_save :_destroy_category_articles, if: -> { self.unpublishing? }
+        has_many :category_articles,
+          :as           => :article,
+          :dependent    => :destroy
+
+        after_save :_destroy_category_articles,
+          :if => -> { self.unpublishing? }
       end
 
 
