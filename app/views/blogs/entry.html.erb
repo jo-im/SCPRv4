@@ -53,27 +53,3 @@
 </div> <!-- fold -->
 
 <%= render 'shared/scripts/embedder' %>
-
-
-
-
-
-
-
-
-
-<%# Temporarily hidden until new Article pages are launched %>
-<% if false %>
-
-<%= render_content @entry, "opengraph" %>
-<% add_to_page_title @entry.headline %>
-<% content_for :body_class, 'single'%>
-
-<%= render 'shared/header/header' %>
-
-<%= cache ["show", "v10", @entry] do %>
-  <%= render "/blogs/single", entry: @entry, full: true %>
-<% end %>
-
-<% end %>
-<%# end new article page block %>
