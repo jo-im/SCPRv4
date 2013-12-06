@@ -3,7 +3,6 @@ class VerticalSeed < ActiveRecord::Migration
   def up
     category = Category.find(5)
 
-
     issue1 = Issue.create! is_active: true, slug: "reform", title: "Reform", description: "There are many organizations and individuals dedicated to making government at all levels more responsive and transparent. Governments themselves sometimes initiate these efforts."
     issue2 = Issue.create! is_active: true, slug: "money", title: "Money", description: "The axiom “Follow the money” applies to all levels of government and elections. We’ll track spending and donations."
     issue3 = Issue.create! is_active: true, slug: "immigration", title: "Immigration", description: "The U.S. Congress continues to consider legislation to amend the nation’s immigration laws."
@@ -110,9 +109,12 @@ class VerticalSeed < ActiveRecord::Migration
       "http://www.scpr.org/blogs/politics/2013/11/15/15198/talk-to-city-council-from-the-comfort-of-your-couc/",
       "http://www.scpr.org/blogs/politics/2013/11/06/15129/would-be-candidates-get-a-boost-onto-the-political/"
     ].each { |u| ContentBase.obj_by_url!(u).issues << issue7 }
+
+    category.update_attributes(is_active: true)
   end
 
   def down
+    Category.find(5).update_attributes(is_active: false)
     Issue.destroy_all
     Quote.destroy_all
     Event.update_all(category_id: nil)
