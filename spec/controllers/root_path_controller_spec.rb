@@ -47,7 +47,26 @@ describe RootPathController do
   describe "vertical" do
     render_views
 
-    pending
+    describe "rendering articles with issues", focus: true do
+      sphinx_spec
+
+      let(:category) { create :category, is_active: true }
+      let(:issues) { create_list :issue, 3, :is_active }
+
+      it "renders articles and issues" do
+        category.issues = issues
+        articles = create_list :news_story, 6, :published, category: category
+        articles.each { |a| a.issues = issues }
+
+        index_sphinx
+
+        ts_retry(2) do
+          get :handle_path, path: category.slug, format: :html
+          assigns(:content).sort.should eq articles.sort
+          response.should be_success
+        end
+      end
+    end
   end
 
   #------------------

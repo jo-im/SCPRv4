@@ -8,6 +8,7 @@ module CategoryHandler
   def handle_vertical
     page      = params[:page].to_i
     per_page  = PER_PAGE
+
     @content = @category.content(
       :page       => page,
       :per_page   => per_page
