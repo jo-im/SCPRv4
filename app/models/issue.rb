@@ -9,8 +9,8 @@ class Issue < ActiveRecord::Base
 
   scope :active, -> { where(is_active: true) }
 
-  has_many :article_issues
-  has_many :category_issues
+  has_many :article_issues, dependent: :destroy
+  has_many :category_issues, dependent: :destroy
   has_many :categories, through: :category_issues
 
   validates :title, presence: true
