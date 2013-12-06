@@ -101,7 +101,7 @@ module ApplicationHelper
       tmplt_opts = Array(options[:template])
     else
       display = options[:display]
-      display ||= if article.original_object.respond_to?(:asset_display)
+      display ||= if content.respond_to?(:asset_display)
         content.asset_display
       else
         "photo"
@@ -119,7 +119,7 @@ module ApplicationHelper
       self.lookup_context.exists?(template, ["shared/assets"], true)
     end
 
-    return '' if !partial
+    partial ||= tmplt_opts.last
 
     render "shared/assets/#{partial}",
       :assets     => article.assets,
