@@ -133,8 +133,8 @@
         </div>
     </div><!--/ .report -->
 
-    <%= render 'shared/kpcc_ipad_ad' %>
-    <%= render partial: 'shared/triptych', locals: {category: article.category, articles: @three_recent_articles } unless article.category.blank? %>
+    <%= render 'shared/new/kpcc_ipad_ad' %>
+    <%= render partial: 'shared/new/triptych', locals: {category: article.category, articles: @three_recent_articles } unless article.category.blank? %>
     <% unless article.category.blank? %>
     <div class="townhall">
         <div class="inner bound clearfix">
@@ -143,7 +143,7 @@
                 <section class="backlog">
                     <h1>More <%= article.category.title %></h1>
                     <% if @more_articles.presence %>
-                    <%= render partial: 'shared/waterfall_articles', collection: @more_articles, as: 'article', locals: { issue_tag_exists: true } %>
+                    <%= render 'shared/new/waterfall_articles', articles: @more_articles[3..-1], issue_tag_exists: true %>
                     <% end %>
 
                     <footer>
@@ -180,7 +180,25 @@
                     <section>
                         <h1>Our Reporters</h1>
                         <div class="rollcall clearfix">
-                            <%= render partial: 'shared/single_page_reporter', collection: @bios, as: 'reporter' %>
+                            <% @bios.each do |reporter| %>
+                            <figure class="reporter clearfix">
+                                <div class="ratio">
+                                    <%= link_to reporter.public_path, title: reporter.name do %>
+                                        <div class="fill"></div>
+                                            <b class="img-contain"><%= reporter.headshot.small.tag %></b>
+                                    <% end %>
+                                </div>
+                                <figcaption>
+                                    <mark><%= link_to reporter.name, reporter.public_path, title: reporter.name %></mark>
+                                        <ul class="clearfix">
+                                            <li><%= mail_to reporter.email, 'Email', title: "Email #{reporter.name}" %></li>
+                                            <% if reporter.twitter_handle.present? %>
+                                                <li><%= link_to "Twitter", twitter_profile_url(reporter.twitter_handle), target: "_blank", title: "Follow #{reporter.first_name} on Twitter" %></li>
+                                            <% end %>
+                                        </ul>
+                                </figcaption>
+                            </figure>
+                            <% end %>
                         </div>
                     </section>
                 </div><!--/ .supportive -->

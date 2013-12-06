@@ -47,7 +47,7 @@ class BlogsController < ApplicationController
       if @content.present?
         @category_articles = @content.map { |a| a.to_article }
         @three_recent_articles = @category_articles[0..2]
-        @more_articles = @category_articles[3..-1]
+        @more_articles = @category_articles
       end
 
       if @category.featured_articles.present?
@@ -64,7 +64,7 @@ class BlogsController < ApplicationController
       end
     end
 
-   render layout: "vertical"
+   render layout: "new/single"
   end
 
   #----------

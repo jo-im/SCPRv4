@@ -1,14 +1,12 @@
 <%= render_content @entry, "opengraph" %>
 <% add_to_page_title @entry.headline %>
-<% content_for :body_class do %>
-  <% 'interior single' %>
-<% end %>
+<% content_for :body_class, 'interior single' %>
 
+<body class="<%= content_for(:body_class) %>">
 <% content_for :vertical_layout do %>
   <%= stylesheet_link_tag "vertical/single", media: "all" %>
 <% end %>
 
-<%= render 'shared/header/header', header_titling: true %>
 
 <%= cache ["show", "v10", @entry] do %>
   <%= render "shared/single", article: @entry, full: true %>
