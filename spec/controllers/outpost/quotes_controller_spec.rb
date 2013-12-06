@@ -1,5 +1,7 @@
 require 'spec_helper'
 
 describe Outpost::QuotesController do
-  pending
+  it_behaves_like "resource controller" do
+    let(:resource) { :quote }
+  end
 end

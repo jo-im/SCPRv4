@@ -11,4 +11,14 @@ describe CategoryArticle do
       json["position"].should eq 0
     end
   end
+
+  it "only gets published articles" do
+    article_unpublished = create :news_story, :draft
+    category = create :category
+
+    category_article = create :category_article,
+      category: category, article: article_unpublished
+
+    category_article.article(true).should eq nil
+  end
 end

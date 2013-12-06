@@ -20,10 +20,15 @@ FactoryGirl.define do
     factory :category_not_news, traits: [:is_not_news]
 
   end
-   factory :category_article do
-     category
-     article {|f| f.association(:news_story) }
-     position 0
-   end
 
+  factory :category_article do
+    category
+    article { |f| f.association(:news_story) }
+    position 0
+  end
+
+  factory :category_issue do
+    category
+    issue
+  end
 end
