@@ -46,7 +46,6 @@ class Abstract < ActiveRecord::Base
   has_secretary
 
   include Concern::Associations::AssetAssociation
-  include Concern::Associations::IssueAssociation
   include Concern::Associations::CategoryAssociation
   include Concern::Associations::CategoryArticleAssociation
   include Concern::Associations::AudioAssociation
@@ -93,8 +92,7 @@ class Abstract < ActiveRecord::Base
       :assets             => self.assets,
       :audio              => self.audio.available,
       :byline             => self.source,
-      :edit_url           => self.admin_edit_url,
-      :issues             => self.issues
+      :edit_url           => self.admin_edit_url
     })
   end
 
