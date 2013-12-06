@@ -1,6 +1,6 @@
 # --------------
 # Variables
-set :branch, "features/verticals"
+set :branch, "master"
 set :rails_env, "staging"
 
 # --------------
