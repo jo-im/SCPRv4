@@ -30,16 +30,16 @@
                     <p><%= @issue.description %></p>
                   </div>
                   <aside class="timeline">
-                    <h2>KPCC has published a total of <mark><%= @article_count %> articles</mark> on <%= @issue.title %></h2>
+                    <h2>KPCC has published a total of <mark><%= @issue.articles.size %> articles</mark> on <%= @issue.title %></h2>
 
-                  <% if @issue_articles.present? %>
+                  <% if @issue.articles.present? %>
                     <div class="range">
                         <dl class="began">
-                        <dt><%= format_date(@issue_articles.last.public_datetime, with: '%-d %^b %Y') %></dt>
+                        <dt><%= format_date(@issue.articles.last.public_datetime, with: '%-d %^b %Y') %></dt>
                             <dd>Coverage began</dd>
                         </dl>
                         <dl class="latest">
-                        <dt><%= format_date(@issue_articles.first.public_datetime, with: '%-d %^b %Y') %></dt>
+                        <dt><%= format_date(@issue.articles.first.public_datetime, with: '%-d %^b %Y') %></dt>
                             <dd>Latest coverage</dd>
                         </dl>
                     </div>
