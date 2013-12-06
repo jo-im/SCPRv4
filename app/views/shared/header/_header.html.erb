@@ -1,6 +1,14 @@
     <header class="masthead">
         <div class="inner bound">
-          <%= yield(:header_titling) if content_for :header_titling %>
+            <% if local_assigns.has_key? :header_titling %>
+            <section class="titling clearfix">
+                <div class="brand">
+                    <h1><%= link_to 'Represent', '/politics' %></h1>
+                    <h2>Politics, government and public life for Southern California.</h2>
+                </div>
+            </section><!--/ .titling -->
+            <% end %>
+
             <section class="station clearfix">
                 <h4><a href="http://kpcc.org" rel="author">89.3 KPCC</a></h4>
                 <nav class="kpcc-links">

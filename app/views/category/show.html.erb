@@ -8,7 +8,7 @@
   <%= stylesheet_link_tag "vertical/landing", media: "all" %>
 <% end %>
 
-<%= render 'shared/header/header' %>
+<%= render 'shared/header/header', header_titling: true %>
 
 <section class="headline">
   <h1 class="bound"><span><%= link_to @lead_article.short_title, @lead_article.public_path if @lead_article.present? %></span></h1>

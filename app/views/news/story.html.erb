@@ -5,20 +5,11 @@
   <% 'interior single' %>
 <% end %>
 
-<% content_for :header_titling do %>
-  <section class="titling clearfix">
-    <div class="brand">
-      <h1><%= link_to 'Represent', '/politics' %></h1>
-      <h2>Politics, government and public life for Southern California.</h2>
-    </div>
-  </section><!--/ .titling -->
-<% end %>
-
 <% content_for :vertical_layout do %>
   <%= stylesheet_link_tag "vertical/single", media: "all" %>
 <% end %>
 
-<%= render 'shared/header/header' %>
+<%= render 'shared/header/header', header_titling: true %>
 
 <%= cache ["show", "v10", @story] do %>
   <%= render "shared/single", article: @story, full: true %>
