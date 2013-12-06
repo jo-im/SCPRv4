@@ -17,7 +17,8 @@ module Concern
         when ArticleFeature
           self.feature_type_id = value.id
         when Symbol, String
-          self.feature_type_id = ArticleFeature.find_by_key(value.to_sym).try(:id)
+          self.feature_type_id =
+            ArticleFeature.find_by_key(value.to_sym).try(:id)
         when Integer
           self.feature_type_id = value
         end
