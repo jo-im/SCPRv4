@@ -47,7 +47,7 @@ describe RootPathController do
   describe "vertical" do
     render_views
 
-    describe "rendering articles with issues", focus: true do
+    describe "rendering articles with issues" do
       sphinx_spec
 
       let(:category) { create :category, is_active: true }
