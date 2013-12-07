@@ -82,7 +82,11 @@ describe RootPathController do
 
         ts_retry(2) do
           get :handle_path, path: category.slug, format: :html
-          assigns(:content).sort.should_not include(category.featured_articles.first.original_object)
+          exclude = category.featured_articles.first.original_object
+
+          # Make sure the other articles are there
+          assigns(:content).sort.should eq articles.tap { |a| a.delete(exclude) }.sort
+          assigns(:content).sort.should_not include(exclude)
         end
       end
     end
