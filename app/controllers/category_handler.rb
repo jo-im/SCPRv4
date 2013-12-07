@@ -14,9 +14,9 @@ module CategoryHandler
       per_page:     PER_PAGE
     }
 
-    content_params[:exclude] = @lead_article.original_object if @lead_article.present?
+    content_params[:exclude] = @lead_article if @lead_article.present?
 
-    @content = @category.content(content_params)
+    @content            = @category.content(content_params)
     @category_articles  = @content.map(&:to_article)
     @events             = @category.events.published.upcoming
     @quote              = @category.quotes.published.first
