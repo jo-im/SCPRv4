@@ -6,14 +6,18 @@ module CategoryHandler
   PER_PAGE = 16
 
   def handle_vertical
-    @content = @category.content(
-      :page       => params[:page].to_i,
-      :per_page   => PER_PAGE
-    )
-
-    @category_articles  = @content.map(&:to_article)
     @featured_articles  = @category.featured_articles
     @lead_article       = @featured_articles.first
+
+    content_params = {
+      page:         params[:page].to_i,
+      per_page:     PER_PAGE
+    }
+
+    content_params[:exclude] = @lead_article if @lead_article.present?
+
+    @content            = @category.content(content_params)
+    @category_articles  = @content.map(&:to_article)
     @events             = @category.events.published.upcoming
     @quote              = @category.quotes.published.first
 
