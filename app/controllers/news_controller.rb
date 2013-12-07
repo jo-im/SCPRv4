@@ -1,7 +1,11 @@
-class NewsController < ApplicationController
+class NewsController < NewApplicationController
+  layout 'new/single'
+  respond_to :html, :xml, :rss
+
+  before_filter :get_popular_articles
+
   def story
-    @story = NewsStory.published.find(params[:id])
-    @asset = @story.asset if @story.asset.present?
+    @story = NewsStory.published.find_by_slug!(params[:slug])
     @related_articles = @story.related_content.first(2) unless @story.related_content.empty?
 
     @popular_articles = Rails.cache.read("popular/viewed").first(3) if Rails.cache.read("popular/viewed").presence
@@ -43,6 +47,6 @@ class NewsController < ApplicationController
     if ( request.env['PATH_INFO'] =~ /\/\z/ ? request.env['PATH_INFO'] : "#{request.env['PATH_INFO']}/" ) != @story.public_path
       redirect_to @story.public_path and return
     end
-    render layout: "vertical"
+    respond_with template: "news/story"
   end
 end
