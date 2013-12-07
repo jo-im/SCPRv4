@@ -13,15 +13,6 @@ class Quote < ActiveRecord::Base
     STATUS_LIVE  => "Live"
   }
 
-  FEATUREABLE_CLASSES = [
-    "NewsStory",
-    "BlogEntry",
-    "ContentShell",
-    "ShowSegment",
-    "Event"
-  ]
-
-
   scope :published, -> { where(status: STATUS_LIVE).order("created_at desc") }
 
   belongs_to :category
@@ -44,10 +35,6 @@ class Quote < ActiveRecord::Base
   class << self
     def status_select_collection
       STATUS_TEXT.map { |k, v| [v, k] }
-    end
-
-    def featurable_classes_select_collection
-      FEATUREABLE_CLASSES.map { |c| [c.titleize, c] }
     end
   end
 

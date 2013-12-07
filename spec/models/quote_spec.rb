@@ -17,12 +17,6 @@ describe Quote do
     end
   end
 
-  describe '::featurable_classes_select_collection' do
-    it "is an array of featureable classes" do
-      Quote.featurable_classes_select_collection.should be_a Array
-    end
-  end
-
   describe 'validations' do
     it "validates that the content exists" do
       quote = build :quote, :published, content_type: "Event", content_id: "999"
