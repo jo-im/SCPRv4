@@ -1,8 +1,34 @@
 <%= form_block "Association" do %>
   <%= f.association :bucket %>
-  <%= f.input :content_type, collection: FeaturedComment.featurable_classes_select_collection %>
-  <%= f.input :content_id, label: "Content ID", input_html: { class: 'thin' } %>
+
+  <div id="aggregator" class="aggregator short"></div>
+  <%= f.input :content_json, as: :hidden, input_html: { id: "content_json" } %>
 <% end %>
+
+<% content_for :footer do %>
+  <script>
+    aggregator = new outpost.Aggregator(
+      "#aggregator", "#content_json",
+      <%= render_json("api/private/v2/articles/collection", articles: Array(record.article)) %>,
+      {
+        apiType: "private",
+        view : {
+          dropLimit: 1,
+          active: "search"
+        },
+        params: {
+          limit: 20,
+          types: 'news,blogs,segments,shells,events',
+          token: "<%= Rails.application.config.api['kpcc']['private']['api_token'] %>",
+          order: "public_datetime",
+          sort_mode: "desc",
+          with: { is_live: "1" }
+        }
+      }
+    );
+  </script>
+<% end %>
+
 
 <%= form_block "Information" do %>
   <%= f.input :username %>

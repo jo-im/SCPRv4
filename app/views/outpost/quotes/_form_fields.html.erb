@@ -2,13 +2,13 @@
   <%= f.association :category %>
 
   <div id="aggregator" class="aggregator short"></div>
-  <%= f.input :content_json, as: :hidden, input_html: { id: "article_json" } %>
+  <%= f.input :content_json, as: :hidden, input_html: { id: "content_json" } %>
 <% end %>
 
 <% content_for :footer do %>
   <script>
     aggregator = new outpost.Aggregator(
-      "#aggregator", "#article_json",
+      "#aggregator", "#content_json",
       <%= render_json("api/private/v2/articles/collection", articles: Array(record.article)) %>,
       {
         apiType: "private",
