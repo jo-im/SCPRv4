@@ -1,286 +1,362 @@
 <% add_to_page_title @category.title %>
+<% meta_tags(url: @category.public_url) %>
 <% content_for :body_class, 'landing' %>
 
 <section class="headline">
 <% if @lead_article %>
-  <h1 class="bound"><span><%= link_to @lead_article.short_title, @lead_article.public_path %></span></h1>
+    <h1 class="bound"><span><%= link_to @lead_article.short_title, @lead_article.public_path %></span></h1>
 <% end %>
 </section>
 
 <div class="welcome bound clearfix">
 
-  <% if @lead_article %>
+<% if @lead_article %>
     <section class="curated clearfix">
         <div class="photo">
             <figure class="ratio-pairing">
 
-             <%= link_to @lead_article.public_path do %>
+            <%= link_to @lead_article.public_path do %>
                 <div class="ratio">
-                   <div class="fill"></div>
-                   <b class="img-contain"><%= image_tag(@lead_article.asset.eight.url, alt:'') %></b>
+                    <div class="fill"></div>
+                    <b class="img-contain"><%= image_tag(@lead_article.asset.eight.url, alt:'') %></b>
                 </div><!--/ .ratio -->
                 <figcaption>
-                  <p><%= @lead_article.asset.caption %></p>
-                  <mark class="credit"><%= @lead_article.asset.owner %></mark>
+                    <p><%= @lead_article.asset.caption %></p>
+                    <mark class="credit"><%= @lead_article.asset.owner %></mark>
                 </figcaption>
-             <% end %>
+            <% end %>
 
             </figure><!--/ .ratio-pairing -->
         </div><!--/ .photo -->
-        <div class="supportive">
-          <h1 class="tease"><%= link_to @lead_article.teaser, @lead_article.public_path %></h1>
-          <h2 class="byline"><%= render_byline @lead_article.original_object %></h2>
 
-          <% if @featured_content %>
+        <div class="supportive">
+            <h1 class="tease"><%= link_to @lead_article.teaser, @lead_article.public_path %></h1>
+            <h2 class="byline"><%= render_byline @lead_article.original_object %></h2>
+
             <aside class="more">
-              <% if @featured_content[:type] == 'issue' %>
-                <h3>More from <%= link_to @primary_issue.title, @primary_issue.public_path %></h3>
-              <% else %>
-                <h3>More from Related Content </h3>
-              <% end %>
+
+        <% issue = @lead_article.issues.first %>
+        <% related = @lead_article.original_object.related_content.first(2) %>
+        <%= cache ["categories/show", "more-featured", "v1", issue, related] do %>
+            <% if issue %>
+                <h3>More from <%= link_to issue.title, issue.public_path %></h3>
                 <ul>
-                    <%- @featured_content[:articles].each do |article| %>
-                      <li><%= link_to article.short_title, article.public_path %></li>
-                    <% end %>
+
+                <%- issue.articles.first(2).each do |article| %>
+                    <li><%= link_to article.short_title, article.public_path %></li>
+                <% end %>
+
                 </ul>
-              </aside>
-          <% end %>
+
+            <% else %>
+                <h3>More from Related Content</h3>
+                <ul>
+
+                <%- related.each do |article| %>
+                    <li><%= link_to article.short_title, article.public_path %></li>
+                <% end %>
+
+                </ul>
+
+                </aside>
+            <% end %>
+        <% end %>
 
         </div><!--/ .supporting -->
     </section><!--/ .curated -->
-  <% end %>
+<% end %>
 
     <div class="ataglance clearfix">
         <section class="latest">
             <header>
-              <h1>Latest <%= @category.title %> Headlines</h1>
+                <h1>Latest <%= @category.title %> Headlines</h1>
             </header>
+
+        <% articles = @category_articles[0..1] %>
+        <%= cache ["categories/show", "latest-headlines", "v1", articles] do %>
             <ul>
-            <%- Array(@category_articles[0..1]).each do |article| %>
-              <li>
-                <%= link_to(article.public_path, class: 'clearfix') do %>
-                  <div>
-                    <mark><%= article.short_title %></mark>
-                    <%= new_smart_date_js article.public_datetime, tag: "em", "data-window" => "8h", "data-relative" => "2h" %>&nbsp;
-                    <span><%= article.byline %></span>
-                  </div>
-                  <figure class="ratio">
-                      <div class="fill"></div>
-                      <b class="img-contain"><%= image_tag(article.asset.lsquare.url, alt: '' ) %></b>
-                  </figure>
-                <% end %>
-              </li>
+
+            <%- Array(articles).each do |article| %>
+                <li>
+                    <%= link_to(article.public_path, class: 'clearfix') do %>
+                        <div>
+                            <mark><%= article.short_title %></mark>
+                            <%= smart_date_js article.public_datetime, tag: "em", "data-window" => "8h", "data-relative" => "2h" %>&nbsp;
+                            <span><%= article.byline %></span>
+                        </div>
+                        <figure class="ratio">
+                            <div class="fill"></div>
+                            <b class="img-contain"><%= image_tag(article.asset.lsquare.url, alt: '' ) %></b>
+                        </figure>
+                    <% end %>
+                </li>
             <% end %>
+
             </ul>
+
+        <% end %>
+
         </section>
+
+    <% event = @events.first %>
+    <%= cache ["categories/show", "latest-events", "v1", event] do %>
         <section class="event">
             <header class="clearfix">
                 <h1>Get Involved</h1>
                 <%= link_to(events_path) do %>
-                  All <span>upcoming</span> events
+                    All <span>upcoming</span> events
                 <% end %>
             </header>
-            <% if @latest_event.present? %>
-              <div class="details clearfix">
-                  <div class="vitals">
-                    <h2><%= link_to @latest_event.short_title, @latest_event.public_path %></h2>
-                    <h3><%= @latest_event.original_object.location_name %></h3>
-                      <h4><%= link_to 'More details', @latest_event.public_path %></h4>
-                  </div>
-                  <aside class="date">
-                    <em><%= @latest_event.public_datetime.day %></em>
-                    <span><%= @latest_event.public_datetime.strftime('%b') %></span>
-                  </aside>
-              </div>
+
+            <% if event.present? %>
+                <div class="details clearfix">
+                    <div class="vitals">
+                        <h2><%= link_to event.headline, event.public_path %></h2>
+                        <h3><%= event.location_name %></h3>
+                        <h4><%= link_to 'More details', event.public_path %></h4>
+                    </div>
+                    <aside class="date">
+                        <em><%= event.starts_at.day %></em>
+                        <span><%= event.starts_at.strftime('%b') %></span>
+                    </aside>
+                </div>
             <% end %>
         </section>
+    <% end %>
+
         <aside class="crawford">
             <header>
-              <h1><%= @category.title %> Events at KPCC</h1>
+                <h1><%= @category.title %> Events at KPCC</h1>
             </header>
             <p>KPCC hosts free events that open dialogue and deepen the understanding of vital issues affecting Southern California. <%= link_to 'See our in-studio events.', forum_events_path %></p>
         </aside>
     </div><!--/ .ataglance -->
 </div><!--/ .welcome -->
 
+
 <section class="resources-row">
     <div class="inner bound clearfix">
         <header>
-          <h1 class="<%=@category.slug%>"><span><%= @category.title %></span></h1>
-          <h2>Tools and guides to help you get informed and engaged.</h2>
-          <h3>KPCC believes that making <%= @category.title %> in Southern California relevant and accessible is an important part of strengthening the civic and cultural bonds that unite the diverse communities of this region.</h3>
+            <h1 class="<%=@category.slug%>"><span><%= @category.title %></span></h1>
+            <h2>Tools and guides to help you get informed and engaged.</h2>
+            <h3>KPCC believes that making <%= @category.title %> in Southern California relevant and accessible is an important part of strengthening the civic and cultural bonds that unite the diverse communities of this region.</h3>
         </header>
 
         <nav>
-          <ul class="clearfix">
+            <ul class="clearfix">
 
-          <%- Array(@featured_articles[1..4]).each do |article| %>
-            <li>
-                <%= link_to(article.public_path) do %>
-                    <figure class="clearfix">
-                      <div class="ratio"><div class="fill"></div><b class="img-contain"><%= image_tag article.asset.small.url, alt: '' %></b></div>
-                      <figcaption><%= article.short_title %></figcaption>
-                    </figure>
-                <% end %>
-            </li>
-          <% end %>
-          </ul>
+        <% articles = @featured_articles[1..4] %>
+        <%= cache ["categories/show", "resources", "v1", articles] do %>
+            <%- Array(articles).each do |article| %>
+                <li>
+                    <%= link_to(article.public_path) do %>
+                        <figure class="clearfix">
+                            <div class="ratio"><div class="fill"></div><b class="img-contain"><%= image_tag article.asset.small.url, alt: '' %></b></div>
+                            <figcaption><%= article.short_title %></figcaption>
+                        </figure>
+                    <% end %>
+                </li>
+            <% end %>
+        <% end %>
+
+            </ul>
         </nav>
     </div>
 </section><!--/ .resources-row -->
 
+
 <div class="lunchbox">
     <div class="inner bound clearfix">
+
+<%= cache ["categories/show", "issues", "v1", @category.issues] do %>
+    <% if @category.issues.present? %>
         <section class="issues">
             <header>
                 <h1>Issues We're Tracking</h1>
                 <h2><%= link_to 'See all issues', issues_path %></h2>
             </header>
-          <% if @category.issues.present? %>
+
+        <% if issue = @category.issues.first %>
             <div>
                 <header class="special">
-                  <h1><%= @special_issue.title %></h1>
+                    <h1><%= issue.title %></h1>
                     <h2 class="clearfix">
                         <mark>Special coverage from KPCC</mark>
-                        <%= link_to @special_issue.public_path do %>
-                          See all <span><%= @special_issue.title  %></span>
+                        <%= link_to issue.public_path do %>
+                            See all <span><%= issue.title  %></span>
                         <% end %>
                     </h2>
                 </header>
                 <nav>
                     <ul>
-                    <%= render 'category/issue_list', articles: @top_two_special_issue_articles %>
+                    <%= render 'category/issue_list', articles: issue.articles.first(2) %>
                     </ul>
                 </nav>
             </div>
-              <%- @other_issues.each do |issue| %>
-                <div>
-                    <header class="slim clearfix">
-                      <h1><%= issue.title %></h1>
-                      <h2><%= link_to issue.public_path do %>
-                        See all <span><%= issue.title %></span><% end %></h2>
-                    </header>
-                    <nav>
-                        <ul>
-                        <%= render 'category/issue_list', articles: issue.articles.first(2) %>
-                        </ul>
-                    </nav>
-                </div>
-              <% end %>
-          <% end %>
+        <% end %>
+
+        <%- Array(@category.issues[1..2]).each do |issue| %>
+            <div>
+                <header class="slim clearfix">
+                    <h1><%= issue.title %></h1>
+                    <h2><%= link_to issue.public_path do %>See all <span><%= issue.title %></span><% end %></h2>
+                </header>
+                <nav>
+                    <ul>
+                    <%= render 'category/issue_list', articles: issue.articles.first(2) %>
+                    </ul>
+                </nav>
+            </div>
+        <% end %>
+
         </section><!--/ .issues -->
+    <% end %> <%# issues? %>
+<% end %> <%# cache %>
+
+
         <div class="treats">
-            <aside class="featured" style="background-image: url(assets/featured-interactives/intersections.jpg);">
+
+    <% article = @featured_articles[5] %>
+    <%= cache ["categories/show", "interactive", "v1", article] do %>
+        <% if article %>
+            <aside class="featured">
                 <div>
                     <h1>Featured Interactive</h1>
 
-                    <% if article = @featured_articles[5] %>
-                      <h2><%= link_to article.short_title, article.public_path %></h2>
-                      <h3><%= article.byline %></h3>
-                    <% end %>
+                    <h2><%= link_to article.short_title, article.public_path %></h2>
+                    <h3><%= article.byline %></h3>
 
                 </div>
             </aside>
+        <% end %>
+    <% end %>
+
             <div class="inbrief clearfix">
 
+        <%= cache ["categories/show", "quote", "v1", @quote] do %>
             <% if @quote %>
-              <aside class="quote">
-                  <blockquote>
-                    <p><%= @quote.quote %></p>
-                      <cite>
-                        <mark><%= @quote.source_name %></mark>
-                        <span><%= @quote.source_context %></span>
-                      </cite>
-                  </blockquote>
-                  <footer>
+                <aside class="quote">
+                    <blockquote>
+                        <p><%= @quote.quote %></p>
+                            <cite>
+                                <mark><%= @quote.source_name %></mark>
+                                <span><%= @quote.source_context %></span>
+                            </cite>
+                    </blockquote>
+                    <footer>
 
-                  <% if @quote.article %>
-                    <%= link_to @quote.article.short_title, @quote.article.public_path, title: "Read this quote's source article" %>
-                  <% end %>
+                    <% if @quote.article %>
+                        <%= link_to @quote.article.short_title, @quote.article.public_path, title: "Read this quote's source article" %>
+                    <% end %>
 
-                  </footer>
-              </aside>
+                    </footer>
+                </aside>
             <% end %>
+        <% end %>
 
-              <aside class="events">
-                <h1>Upcoming <%= @category.title %> Events</h1>
-                  <% if @upcoming_events.present? %>
+                <aside class="events">
+                    <h1>Upcoming <%= @category.title %> Events</h1>
+
+                <% events = @events[1..3] %>
+                <%= cache ["categories/show", "upcoming-events", "v1", events] do %>
                     <ul>
-                      <%- @upcoming_events.each do |event| %>
+
+                    <%- Array(events).each do |event| %>
                         <li>
                             <figure class="clearfix">
                                 <div class="date">
-                                  <b><%= event.public_datetime.day %></b>
-                                  <span><mark><%= event.public_datetime.strftime('%b') %></mark> <%= event.public_datetime.strftime('%Y') %></span>
+                                    <b><%= event.starts_at.day %></b>
+                                    <span><mark><%= event.starts_at.strftime('%b') %></mark> <%= event.starts_at.strftime('%Y') %></span>
                                 </div>
                                 <figcaption>
-                                <b><%= event.short_title %></b>
-                                <%= link_to 'More information', event.public_path %>
+                                    <b><%= event.headline %></b>
+                                    <%= link_to 'More information', event.public_path %>
                                 </figcaption>
                             </figure>
                         </li>
-                      <% end %>
+                    <% end %>
+
                     </ul>
-                  <% end %>
-              </aside>
+                <% end %>
+                </aside>
             </div>
         </div><!--/ .bites -->
-    </div>
+    </div> <!--/ .inner.bound -->
 </div><!--/ .lunchbox -->
 
-<%= render 'shared/new/triptych', category: @category, articles: @category_articles[2..4] %>
+<% articles = @category_articles[2..4] %>
+<%= cache ["categories/show", "recent-coverage", "v1", Array(articles)] do %>
+<%= render 'shared/new/triptych', category: @category, articles: articles %>
+<% end %>
 
 <%= render 'shared/new/kpcc_ipad_ad' %>
 
-<%= render 'shared/new/quadrant', articles: @category_articles[5..8], header: "" %>
+
+<% articles = @category_articles[5..8] %>
+<%= cache ["categories/show", "mid-quad", "v1", Array(articles)] do %>
+<%= render 'shared/new/quadrant', articles: articles, header: "" %>
+<% end %>
+
 
 <div class="waterfall">
     <div class="inner bound clearfix">
 
         <section class="backlog">
-          <h1>More <%= @category.title %></h1>
-          <%= render 'shared/new/waterfall_articles', articles: @category_articles[9..-1], issue_tag_exists: true %>
+            <h1>More <%= @category.title %></h1>
+
+            <% articles = @category_articles[9..-1] %>
+            <%= cache ["categories/show", "more", "v1", Array(articles)] do %>
+                <%= render 'shared/new/waterfall_articles', articles: articles, issue_tag_exists: true %>
+            <% end %>
+
         </section><!--/ .backlog -->
 
-      <% if @bios.present? %>
+    <% if @category.bios.present? %>
         <div class="secondary">
+
+        <%= cache ["categories/show", "bios", "v1", @category.bios.to_a] do %>
             <section class="reporters">
                 <h1>Our Reporters</h1>
                 <div class="clearfix">
 
-                <%- @bios.each do |bio| %>
-                  <figure class="ratio-pairing">
+                <%- @category.bios.each do |bio| %>
+                    <figure class="ratio-pairing">
                         <div class="ratio">
                             <div class="fill"></div>
-                            <b class="img-contain"><a href="<%=bio.public_path%>"><img src="<%= bio.headshot.small.url %>"></a>
-                            </b>
+                            <b class="img-contain"><a href="<%=bio.public_path%>"><img src="<%= bio.headshot.small.url %>"></a></b>
                         </div><!--/ .ratio -->
                         <figcaption>
-                          <h1><%= link_to bio.name, bio.public_path %></h1>
-                          <ul class="clearfix">
-                            <li><%= link_to 'Email', bio.email, class: 'email', title: "Email #{bio.first_name}" %></li>
+                            <h1><%= link_to bio.name, bio.public_path %></h1>
+                            <ul class="clearfix">
 
-                          <% if bio.twitter_handle.present? %>
-                            <li><%= link_to "Twitter", twitter_profile_url(bio.twitter_handle), target: "_blank", class: "twitter", title: "#{bio.first_name} on Twitter" %></li>
-                          <% end %>
+                            <% if bio.email.present? %>
+                                <li><%= link_to 'Email', "mailto:#{bio.email}", class: 'email', title: "Email #{bio.first_name}" %></li>
+                            <% end %>
 
-                          </ul>
+                            <% if bio.twitter_handle.present? %>
+                                <li><%= link_to "Twitter", twitter_profile_url(bio.twitter_handle), target: "_blank", class: "twitter", title: "#{bio.first_name} on Twitter" %></li>
+                            <% end %>
+
+                            </ul>
                         </figcaption>
-                  </figure>
+                    </figure>
                 <% end %>
 
                 </div>
             </section><!--/ .reporters -->
+        <% end %>
+
+        <% if cached_tweets = Rails.cache.fetch("verticals/#{@category.slug}/twitter_feed") %>
             <section class="tweets">
                 <h1>In Brief</h1>
                 <ul>
-                  <% if cached_tweets = Rails.cache.fetch("verticals/#{@category.slug}/twitter_feed") %>
-                      <%= cached_tweets %>
-                  <% end %>
+                    <%= cached_tweets %>
                 </ul>
             </section><!--/ .tweets -->
+        <% end %>
+
         </div><!--/ .secondary -->
-      <% end %>
+    <% end %>
 
     </div>
 </div><!--/ .waterfall -->

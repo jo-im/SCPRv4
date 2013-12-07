@@ -101,7 +101,7 @@ module ApplicationHelper
       tmplt_opts = Array(options[:template])
     else
       display = options[:display]
-      display ||= if article.original_object.respond_to?(:asset_display)
+      display ||= if content.respond_to?(:asset_display)
         content.asset_display
       else
         "photo"
@@ -119,7 +119,7 @@ module ApplicationHelper
       self.lookup_context.exists?(template, ["shared/assets"], true)
     end
 
-    return '' if !partial
+    partial ||= tmplt_opts.last
 
     render "shared/assets/#{partial}",
       :assets     => article.assets,
@@ -133,29 +133,24 @@ module ApplicationHelper
   end
 
   #----------
-
+  # Render the tag necessary for the Smart Date JS to pick it up.
+  # Arguments:
+  # * datetime - An object that response to strftime
+  # * options  -  * tag - The tag to use (default: 'time')
+  #               * class - Any class to prepend to the defaults
+  #               * Anything else gets merged into the tag as attributes.
   def smart_date_js(datetime, options={})
     return '' if !datetime.respond_to?(:strftime)
 
-    time_tag datetime, '', {
-      "class"         => "#{options[:class]} smart smarttime",
+    options[:tag] ||= 'time'
+
+    content_tag options.delete(:tag), nil, {
+      "class" => "#{options.delete(:class)} smart smarttime",
       "data-unixtime" => datetime.to_i
-    }.merge(options.except(:class))
+    }.merge(options)
   end
 
-  def new_smart_date_js(datetime, options={})
-    return '' if !datetime.respond_to?(:strftime)
-    content_tag "#{options[:tag]}", nil, {
-      "class" => "#{options[:class]} smart smarttime",
-      "data-unixtime" => datetime.to_i
-    }.merge(options.except(:class,:tag))
-  end
 
-  def issue_link(issue, link_path, current_page)
-    content_tag(:li, class: ('selected' if issue.slug == current_page.slug)) do
-      link_to issue.title, link_path
-    end
-  end
   #----------
   # Render a byline for the passed-in content
   # If links is set to false, and the content has
@@ -258,7 +253,7 @@ module ApplicationHelper
   #---------------------------
 
   def twitter_profile_url(handle)
-    "http://twitter.com/#{handle.parameterize}"
+    "https://twitter.com/#{handle.parameterize}"
   end
 
   #---------------------------

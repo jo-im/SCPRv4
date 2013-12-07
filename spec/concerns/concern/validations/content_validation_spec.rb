@@ -1,6 +1,8 @@
 require "spec_helper"
 
 describe Concern::Validations::ContentValidation do
+  # Don't use a factory here because it fills in attributes that we don't want
+  # it to. We don't want the Generate* callbacks to be run.
   subject { TestClass::Story.new }
 
   context "should validate" do
@@ -10,7 +12,12 @@ describe Concern::Validations::ContentValidation do
 
     it { should validate_presence_of(:status) }
     it { should validate_presence_of(:headline) }
-    it { should validate_presence_of(:body).with_message(Concern::Validations::ContentValidation::BODY_MESSAGE) }
+
+    it {
+      should validate_presence_of(:body)
+        .with_message(Concern::Validations::ContentValidation::BODY_MESSAGE)
+    }
+
     it { should validate_presence_of :short_headline }
     it { should validate_presence_of :teaser }
   end

@@ -1,7 +1,7 @@
 require "spec_helper"
 
 describe Concern::Associations::BylinesAssociation do
-  subject { TestClass::Story.new }
+  subject { build :test_class_story }
 
   describe 'versioning' do
     it 'makes the object dirty when adding' do

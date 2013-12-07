@@ -11,6 +11,7 @@ class FixtureMigration < ActiveRecord::Migration
       t.integer :category_id
       t.string :short_url
       t.integer :asset_display_id
+      t.integer :feature_type_id
       t.timestamps
     end
 

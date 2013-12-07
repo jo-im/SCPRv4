@@ -26,4 +26,3 @@ class Outpost::IssuesController < Outpost::ResourceController
       :collection   => :boolean
   end
 end
-

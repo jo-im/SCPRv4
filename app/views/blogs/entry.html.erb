@@ -7,7 +7,6 @@
   <%= stylesheet_link_tag "vertical/single", media: "all" %>
 <% end %>
 
-
 <%= cache ["show", "v10", @entry] do %>
   <%= render "shared/single", article: @entry, full: true %>
 <% end %>

@@ -47,7 +47,6 @@ class Abstract < ActiveRecord::Base
 
   include Concern::Associations::AssetAssociation
   include Concern::Associations::CategoryAssociation
-  include Concern::Associations::CategoryArticleAssociation
   include Concern::Associations::AudioAssociation
   include Concern::Associations::EditionsAssociation
   include Concern::Callbacks::SphinxIndexCallback

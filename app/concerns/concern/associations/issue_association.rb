@@ -9,8 +9,20 @@ module Concern
       extend ActiveSupport::Concern
 
       included do
-        has_many :article_issues, as: :article
+        has_many :article_issues,
+          :as           => :article,
+          :dependent    => :destroy
+
         has_many :issues, through: :article_issues
+
+        after_commit :touch_issues
+      end
+
+
+      private
+
+      def touch_issues
+        self.issues.each { |i| i.touch }
       end
     end # IssueAssociation
   end # Associations

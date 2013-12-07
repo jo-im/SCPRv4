@@ -3,8 +3,7 @@ require 'spec_helper'
 describe ArticleFeature do
   describe '::find_by_id' do
     it 'retrieves the feature by a given ID' do
-      feature = ArticleFeature.new(id: 12345)
-      ArticleFeature.find_by_id(12345).should eq feature
+      ArticleFeature.find_by_id(1).key.should eq :slideshow
     end
 
     it "is nil if no feature is found" do
@@ -13,20 +12,18 @@ describe ArticleFeature do
   end
 
   describe '::find_by_key' do
-    it 'retrieves the feature by a given ID' do
-      feature = ArticleFeature.new(key: :test_feature)
-      ArticleFeature.find_by_key(:test_feature).should eq feature
+    it 'retrieves the feature by a given key' do
+      ArticleFeature.find_by_key(:slideshow).id.should eq 1
     end
 
     it "is nil if no feature is found" do
       ArticleFeature.find_by_key(:watwatwatwatwat).should be_nil
     end
-
   end
 
   describe 'attributes' do
     it "sets id" do
-      ArticleFeature.new(id: 1).id.should eq 1
+      ArticleFeature.new(id: 1, key: :lasagna).id.should eq 1
     end
 
     it "sets key" do
@@ -34,27 +31,23 @@ describe ArticleFeature do
     end
 
     it "sets name" do
-      ArticleFeature.new(name: "Hi").name.should eq "Hi"
+      ArticleFeature.new(name: "Hi", key: :lasagna).name.should eq "Hi"
     end
 
     it "sets asset display" do
-      ArticleFeature.new(asset_display: "hidden").asset_display.should eq "hidden"
-    end
-
-    it "adds the feature to the collection" do
-      feature = ArticleFeature.new(key: :hello)
-      ArticleFeature.collection.find { |f| f == feature }.should be_true
+      ArticleFeature.new(asset_display: "hidden", key: :lasagna)
+        .asset_display.should eq "hidden"
     end
   end
 
   describe '#==' do
     it "compares integers" do
-      feature = ArticleFeature.new(id: 123)
+      feature = ArticleFeature.new(id: 123, key: :lasagna)
       (feature == 123).should be_true
     end
 
     it "compares article features" do
-      feature = ArticleFeature.new(id: 456)
+      feature = ArticleFeature.new(id: 456, key: :lasagna)
       (feature == feature).should be_true
     end
 

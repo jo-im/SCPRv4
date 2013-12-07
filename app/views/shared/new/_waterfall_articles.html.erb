@@ -1,35 +1,38 @@
 <% Array(articles).each do |article| %>
+
 <article class="clearfix">
-  <div class="graphic">
-    <div class="ratio">
+    <div class="graphic">
+        <div class="ratio">
 
-  <% if issue_tag_exists %>
-    <% if issue = article.issues.first %>
-      <span class="issue"><%= link_to issue.title, issue.public_path %></span>
-    <% end  %>
-  <% end %>
-
-      <div class="fill"></div>
-      <b class="img-contain"><%= image_tag article.asset.small.url, alt: '' %></b>
-
-    </div><!--/ .ratio -->
-  </div><!--/ .graphic -->
-
-  <div class="prose">
-    <h1><%= link_to article.short_title, article.public_path %></h1>
-
-    <aside class="byline">
-      <p>
-        <b class="author"><%= render_byline article.original_object %></b>
-        <span><%= new_smart_date_js article.public_datetime, tag: 'span' %></span>
-      </p>
-
-    <%- if article.feature.present? %>
-      <mark class="trait <%= article.feature.key %>"><%= article.feature.name %></mark>
+    <% if issue_tag_exists %>
+        <% if issue = article.issues.first %>
+            <span class="issue"><%= link_to issue.title, issue.public_path %></span>
+        <% end  %>
     <% end %>
-    </aside>
 
-    <p class="teaser"><%= article.teaser %></p>
-  </div><!--/ .prose -->
+            <div class="fill"></div>
+            <b class="img-contain"><%= image_tag article.asset.small.url, alt: '' %></b>
+
+        </div><!--/ .ratio -->
+    </div><!--/ .graphic -->
+
+    <div class="prose">
+        <h1><%= link_to article.short_title, article.public_path %></h1>
+
+        <aside class="byline">
+            <p>
+                <b class="author"><%= render_byline article.original_object %></b>
+                <%= smart_date_js article.public_datetime, tag: 'span' %>
+            </p>
+
+        <%- if article.feature.present? %>
+            <mark class="trait <%= article.feature.key %>"><%= article.feature.name %></mark>
+        <% end %>
+
+        </aside>
+
+        <p class="teaser"><%= article.teaser %></p>
+    </div><!--/ .prose -->
 </article>
+
 <% end %>

@@ -2,4 +2,6 @@
   <%= render_asset article, display: "small" %>
 
   <span class="caption"><%= link_to article.short_title, article.public_url %></span>
+
+  <%= render 'shared/feature_trait', article: article %>
 </div>
