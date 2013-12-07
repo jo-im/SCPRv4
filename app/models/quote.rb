@@ -29,6 +29,8 @@ class Quote < ActiveRecord::Base
     :polymorphic => true,
     :conditions  => { status: ContentBase::STATUS_LIVE }
 
+  accepts_json_input_for :content
+
   validates \
     :status,
     :category_id,
@@ -77,6 +79,13 @@ class Quote < ActiveRecord::Base
     if self.content && !self.content.published?
       errors.add(:content_id,
         "Article must be published in order to be featured.")
+    end
+  end
+
+
+  def build_content_association(content_hash, content)
+    if content.published?
+      self.content = content
     end
   end
 end
