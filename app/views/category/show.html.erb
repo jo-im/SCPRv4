@@ -299,7 +299,9 @@
 </div><!--/ .lunchbox -->
 
 <% articles = Array(vertical_articles[2..-1]) %>
-<%= cache ["categories/show", "recent-coverage", cache_version, @category, articles] do %>
+<%# We add category.title to the cache key since that's the only category-specific
+information we depend on inside of this cache block. %>
+<%= cache ["categories/show", "recent-coverage", cache_version, @category.title, articles] do %>
     <%= render 'shared/new/triptych', articles: articles[0..2], header: "Recent #{@category.title} Coverage" %>
     <%= render 'shared/new/kpcc_ipad_ad' %>
     <%= render 'shared/new/quadrant', articles: articles[3..6], header: "" %>
