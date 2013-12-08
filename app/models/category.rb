@@ -48,11 +48,18 @@ class Category < ActiveRecord::Base
     end
   end
 
+
   def featured_articles
     @articles ||= self.category_articles
       .includes(:article).select(&:article)
       .map { |a| a.article.to_article }
   end
+
+
+  def articles(options={})
+    content(options).map(&:to_article)
+  end
+
 
   def content(options={})
     page      = options[:page] || DEFAULTS[:page]

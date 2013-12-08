@@ -1,6 +1,10 @@
 require 'spec_helper'
 
 describe Abstract do
+  subject { build :abstract}
+
+  it { should belong_to :category }
+
   describe '#to_abstract' do
     it 'is itself' do
       abstract = create :abstract

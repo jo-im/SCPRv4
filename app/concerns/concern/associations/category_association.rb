@@ -9,7 +9,7 @@ module Concern
       extend ActiveSupport::Concern
 
       included do
-        belongs_to :category
+        belongs_to :category, touch: true
       end
     end # CategoryAssociation
   end # Associations

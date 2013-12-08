@@ -1,11 +1,15 @@
+<% cache_version = "v1" %>
+
 <% add_to_page_title @category.title %>
 <% meta_tags(url: @category.public_url) %>
 <% content_for :body_class, 'landing' %>
 
+<%= cache ["categories/show", cache_version, @category] do %>
+
 <section class="headline">
 
-<% if @lead_article %>
-    <h1 class="bound"><span><%= link_to @lead_article.short_title, @lead_article.public_path %></span></h1>
+<% if lead_article %>
+    <h1 class="bound"><span><%= link_to lead_article.short_title, lead_article.public_path %></span></h1>
 <% end %>
 
 </section>
@@ -13,19 +17,19 @@
 
 <div class="welcome bound clearfix">
 
-<% if @lead_article %>
+<% if lead_article %>
     <section class="curated clearfix">
         <div class="photo">
             <figure class="ratio-pairing">
 
-            <%= link_to @lead_article.public_path do %>
+            <%= link_to lead_article.public_path do %>
                 <div class="ratio">
                     <div class="fill"></div>
-                    <b class="img-contain"><%= image_tag(@lead_article.asset.eight.url, alt:'') %></b>
+                    <b class="img-contain"><%= image_tag(lead_article.asset.eight.url, alt:'') %></b>
                 </div><!--/ .ratio -->
                 <figcaption>
-                    <p><%= @lead_article.asset.caption %></p>
-                    <mark class="credit"><%= @lead_article.asset.owner %></mark>
+                    <p><%= lead_article.asset.caption %></p>
+                    <mark class="credit"><%= lead_article.asset.owner %></mark>
                 </figcaption>
             <% end %>
 
@@ -33,14 +37,14 @@
         </div><!--/ .photo -->
 
         <div class="supportive">
-            <h1 class="tease"><%= link_to @lead_article.teaser, @lead_article.public_path %></h1>
-            <h2 class="byline"><%= render_byline @lead_article.original_object %></h2>
+            <h1 class="tease"><%= link_to lead_article.teaser, lead_article.public_path %></h1>
+            <h2 class="byline"><%= render_byline lead_article.original_object %></h2>
 
             <aside class="more">
 
-        <% issue = @lead_article.issues.first %>
-        <% related = @lead_article.original_object.related_content.first(2) %>
-        <%= cache ["categories/show", "more-featured", "v1", issue, related] do %>
+        <% issue = lead_article.issues.first %>
+        <% related = lead_article.original_object.related_content.first(2) %>
+        <%= cache ["categories/show", "more-featured", cache_version, issue, related] do %>
             <% if issue %>
                 <h3>More from <%= link_to issue.title, issue.public_path %></h3>
                 <ul>
@@ -52,6 +56,12 @@
                 </ul>
 
             <% else %>
+                <%# Bug: There is nothing in here that is breaking the
+                category cache, so if one of the related articles gets
+                their headline or something changed, it's possible that
+                it won't get updated on this page right away. We could
+                fix this by touching all related articles when an article
+                is saved, but I'm not sure this is worth the overhead. %>
                 <h3>More from Related Content</h3>
                 <ul>
 
@@ -75,8 +85,8 @@
                 <h1>Latest <%= @category.title %> Headlines</h1>
             </header>
 
-        <% articles = @category_articles[0..1] %>
-        <%= cache ["categories/show", "latest-headlines", "v1", articles] do %>
+        <% articles = vertical_articles[0..1] %>
+        <%= cache ["categories/show", "latest-headlines", cache_version, articles] do %>
             <ul>
 
             <%- Array(articles).each do |article| %>
@@ -102,7 +112,7 @@
         </section>
 
     <% event = @events.first %>
-    <%= cache ["categories/show", "latest-events", "v1", event] do %>
+    <%= cache ["categories/show", "latest-events", cache_version, event] do %>
         <section class="event">
             <header class="clearfix">
                 <h1>Get Involved</h1>
@@ -148,8 +158,8 @@
         <nav>
             <ul class="clearfix">
 
-        <% articles = @featured_articles[1..4] %>
-        <%= cache ["categories/show", "resources", "v1", articles] do %>
+        <% articles = featured_articles[1..4] %>
+        <%= cache ["categories/show", "resources", cache_version, articles] do %>
             <%- Array(articles).each do |article| %>
                 <li>
                     <%= link_to(article.public_path) do %>
@@ -171,7 +181,7 @@
 <div class="lunchbox">
     <div class="inner bound clearfix">
 
-<%= cache ["categories/show", "issues", "v1", @category.issues] do %>
+<%= cache ["categories/show", "issues", cache_version, @category.issues] do %>
     <% if @category.issues.present? %>
         <section class="issues">
             <header>
@@ -219,8 +229,8 @@
 
         <div class="treats">
 
-    <% article = @featured_articles[5] %>
-    <%= cache ["categories/show", "interactive", "v1", article] do %>
+    <% article = featured_articles[5] %>
+    <%= cache ["categories/show", "interactive", cache_version, article] do %>
         <% if article %>
             <aside class="featured">
                 <div>
@@ -236,20 +246,21 @@
 
             <div class="inbrief clearfix">
 
-        <%= cache ["categories/show", "quote", "v1", @quote] do %>
-            <% if @quote %>
+        <% quote = @quotes.first %>
+        <%= cache ["categories/show", "quote", cache_version, quote] do %>
+            <% if quote %>
                 <aside class="quote">
                     <blockquote>
-                        <p><%= @quote.quote %></p>
+                        <p><%= quote.quote %></p>
                             <cite>
-                                <mark><%= @quote.source_name %></mark>
-                                <span><%= @quote.source_context %></span>
+                                <mark><%= quote.source_name %></mark>
+                                <span><%= quote.source_context %></span>
                             </cite>
                     </blockquote>
                     <footer>
 
-                    <% if @quote.article %>
-                        <%= link_to @quote.article.short_title, @quote.article.public_path, title: "Read this quote's source article" %>
+                    <% if quote.article %>
+                        <%= link_to quote.article.short_title, quote.article.public_path, title: "Read this quote's source article" %>
                     <% end %>
 
                     </footer>
@@ -261,7 +272,7 @@
                     <h1>Upcoming <%= @category.title %> Events</h1>
 
                 <% events = @events[1..3] %>
-                <%= cache ["categories/show", "upcoming-events", "v1", events] do %>
+                <%= cache ["categories/show", "upcoming-events", cache_version, events] do %>
                     <ul>
 
                     <%- Array(events).each do |event| %>
@@ -287,18 +298,11 @@
     </div> <!--/ .inner.bound -->
 </div><!--/ .lunchbox -->
 
-<% articles = @category_articles[2..4] %>
-<%= cache ["categories/show", "recent-coverage", "v1", Array(articles)] do %>
-<%= render 'shared/new/triptych', category: @category, articles: articles %>
-<% end %>
-
-<%= render 'shared/new/kpcc_ipad_ad' %>
-
-
-<% articles = @category_articles[5..8] %>
-<%= cache ["categories/show", "mid-quad", "v1", Array(articles)] do %>
-<%= render 'shared/new/quadrant', articles: articles, header: "" %>
-<% end %>
+<% articles = Array(vertical_articles[2..-1]) %>
+<%= cache ["categories/show", "recent-coverage", cache_version, @category, articles] do %>
+    <%= render 'shared/new/triptych', articles: articles[0..2], header: "Recent #{@category.title} Coverage" %>
+    <%= render 'shared/new/kpcc_ipad_ad' %>
+    <%= render 'shared/new/quadrant', articles: articles[3..6], header: "" %>
 
 
 <div class="waterfall">
@@ -307,22 +311,22 @@
         <section class="backlog">
             <h1>More <%= @category.title %></h1>
 
-            <% articles = @category_articles[9..-1] %>
-            <%= cache ["categories/show", "more", "v1", Array(articles)] do %>
-                <%= render 'shared/new/waterfall_articles', articles: articles, issue_tag_exists: true %>
-            <% end %>
+                <%= render 'shared/new/waterfall_articles', articles: articles[7..-1], issue_tag_exists: true %>
 
         </section><!--/ .backlog -->
+<% end %> <%# cache %>
 
-    <% if @category.bios.present? %>
+
+    <% bios = @category.bios %>
+    <% if bios.present? %>
         <div class="secondary">
 
-        <%= cache ["categories/show", "bios", "v1", @category.bios.to_a] do %>
+        <%= cache ["categories/show", "bios", cache_version, bios.to_a] do %>
             <section class="reporters">
                 <h1>Our Reporters</h1>
                 <div class="clearfix">
 
-                <%- @category.bios.each do |bio| %>
+                <%- bios.each do |bio| %>
                     <figure class="ratio-pairing">
                         <div class="ratio">
                             <div class="fill"></div>
@@ -363,3 +367,5 @@
 
     </div>
 </div><!--/ .waterfall -->
+
+<% end %>

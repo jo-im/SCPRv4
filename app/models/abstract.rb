@@ -46,11 +46,14 @@ class Abstract < ActiveRecord::Base
   has_secretary
 
   include Concern::Associations::AssetAssociation
-  include Concern::Associations::CategoryAssociation
   include Concern::Associations::AudioAssociation
   include Concern::Associations::EditionsAssociation
   include Concern::Callbacks::SphinxIndexCallback
   include Concern::Callbacks::TouchCallback
+
+  # We're not using the CategoryAssociation concern here because we don't
+  # need Abstracts to touch the Category on save.
+  belongs_to :category
 
   validates :source, presence: true
   validates :url, presence: true, url: true

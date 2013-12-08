@@ -22,7 +22,7 @@ module Concern
       private
 
       def touch_issues
-        self.issues.each { |i| i.touch }
+        self.issues.each(&:touch)
       end
     end # IssueAssociation
   end # Associations

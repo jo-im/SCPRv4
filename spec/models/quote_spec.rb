@@ -1,6 +1,9 @@
 require 'spec_helper'
 
 describe Quote do
+  subject { build :quote }
+  it { should belong_to(:category) }
+
   describe '::published' do
     it "gets published quotes ordered in reverse chron" do
       quote1 = create :quote, :published, created_at: 1.month.ago

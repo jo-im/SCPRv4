@@ -2,6 +2,7 @@ class Quote < ActiveRecord::Base
   outpost_model
   has_secretary
 
+  include Concern::Associations::CategoryAssociation
   include Concern::Methods::PublishingMethods
   include Concern::Callbacks::SphinxIndexCallback
 
@@ -24,7 +25,6 @@ class Quote < ActiveRecord::Base
 
   scope :published, -> { where(status: STATUS_LIVE).order("created_at desc") }
 
-  belongs_to :category
   belongs_to :content,
     :polymorphic => true,
     :conditions  => { status: ContentBase::STATUS_LIVE }
