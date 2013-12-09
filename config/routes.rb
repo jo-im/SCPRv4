@@ -316,7 +316,9 @@ Scprv4::Application.routes.draw do
       get 'search', on: :collection, as: :search
     end
 
-    resources :editions
+    resources :editions do
+      get 'search', on: :collection, as: :search
+    end
 
     resources :show_segments do
       get "search", on: :collection, as: :search
