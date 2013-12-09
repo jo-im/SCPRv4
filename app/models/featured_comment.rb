@@ -93,6 +93,9 @@ class FeaturedComment < ActiveRecord::Base
     "Featured Comment (for #{content.obj_key})"
   end
 
+  def article
+    self.content.try(:to_article)
+  end
 
   def published?
     self.status == STATUS_LIVE
@@ -101,4 +104,14 @@ class FeaturedComment < ActiveRecord::Base
   def status_text
     STATUS_TEXT[self.status]
   end
+
+
+  private
+
+  def build_content_association(content_hash, content)
+    if content.published?
+      self.content = content
+    end
+  end
+
 end
