@@ -25,6 +25,12 @@ GIT
       eco (~> 1.0.0)
 
 GIT
+  remote: git://github.com/SCPR/outpost-aggregator.git
+  revision: 0dba789f79e2bc7a4d6e980bf17a827715a39bb3
+  specs:
+    outpost-aggregator (1.1.2)
+
+GIT
   remote: git://github.com/SCPR/outpost-asset_host.git
   revision: a239b38588914413dab1b0def05323e383a4bcb8
   specs:
@@ -93,11 +99,6 @@ GIT
     turbo-sprockets-rails3 (0.3.10)
       railties (> 3.2.8, < 4.0.0)
       sprockets (>= 2.0.0)
-
-PATH
-  remote: /Users/bricker/websites/kpcc/outpost-aggregator
-  specs:
-    outpost-aggregator (1.1.2)
 
 GEM
   remote: https://rubygems.org/
