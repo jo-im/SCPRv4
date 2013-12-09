@@ -38,6 +38,8 @@ class FeaturedComment < ActiveRecord::Base
     :polymorphic    => true,
     :conditions     => { status: ContentBase::STATUS_LIVE }
 
+  accepts_json_input_for :content
+
   belongs_to :bucket, class_name: "FeaturedCommentBucket"
 
   #----------------
