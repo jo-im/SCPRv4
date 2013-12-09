@@ -9,7 +9,7 @@ shared_examples_for "versioned model" do
       updated_record
     end
 
-    context "new record" do
+    context "new record", focus: true do
       it "saves an initial version" do
         visit described_class.admin_new_path
         fill_required_fields(valid_record)

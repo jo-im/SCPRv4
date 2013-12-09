@@ -28,8 +28,6 @@ class Quote < ActiveRecord::Base
     :quote,
     presence: true
 
-  validate :content_exists?, :content_is_published?
-
   #-----------------
 
   class << self
@@ -53,22 +51,6 @@ class Quote < ActiveRecord::Base
 
 
   private
-
-  def content_exists?
-    if self.content_id && self.content_type && !self.content
-      errors.add(:content_id, "Article doesn't exist. Check the ID.")
-    end
-  end
-
-  #-----------------
-
-  def content_is_published?
-    if self.content && !self.content.published?
-      errors.add(:content_id,
-        "Article must be published in order to be featured.")
-    end
-  end
-
 
   def build_content_association(content_hash, content)
     if content.published?

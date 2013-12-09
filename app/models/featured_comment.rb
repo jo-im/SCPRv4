@@ -15,14 +15,6 @@ class FeaturedComment < ActiveRecord::Base
     STATUS_LIVE  => "Live"
   }
 
-  FEATUREABLE_CLASSES = [
-    "NewsStory",
-    "BlogEntry",
-    "ContentShell",
-    "ShowSegment",
-    "Event"
-  ]
-
   #----------------
   # Scopes
   scope :published, -> {
@@ -49,28 +41,8 @@ class FeaturedComment < ActiveRecord::Base
     :status,
     :excerpt,
     :bucket_id,
-    :content_type,
-    :content_id,
+    :content,
     presence: true
-
-  validate :content_exists?, :content_is_published?
-
-  #-----------------
-
-  def content_exists?
-    if self.content.nil?
-      errors.add(:content_id, "Content doesn't exist. Check the ID.")
-    end
-  end
-
-  #-----------------
-
-  def content_is_published?
-    if self.content && !self.content.published?
-      errors.add(:content_id,
-        "Content must be published in order to be featured.")
-    end
-  end
 
   #----------------
   # Callbacks
@@ -81,17 +53,8 @@ class FeaturedComment < ActiveRecord::Base
     def status_select_collection
       STATUS_TEXT.map { |k, v| [v, k] }
     end
-
-    def featurable_classes_select_collection
-      FEATUREABLE_CLASSES.map { |c| [c.titleize, c] }
-    end
   end
 
-  #----------------
-
-  def title
-    "Featured Comment (for #{content.obj_key})"
-  end
 
   def article
     self.content.try(:to_article)
@@ -113,5 +76,4 @@ class FeaturedComment < ActiveRecord::Base
       self.content = content
     end
   end
-
 end

@@ -1,22 +1,46 @@
 require "spec_helper"
 
 describe FeaturedComment do
-  it "validates that the content exists" do
-    comment = build :featured_comment, content_type: "Event", content_id: "999"
-    comment.should_not be_valid
-    comment.errors.keys.should eq [:content_id]
+  describe '::published' do
+    it "gets published comments ordered in reverse chron" do
+      comment1 = create :featured_comment, :published, created_at: 1.month.ago
+      comment2 = create :featured_comment, :published, created_at: 1.week.ago
+      comment3 = create :featured_comment, :draft
+
+      FeaturedComment.published.should eq [comment2, comment1]
+    end
   end
 
-  it "validates that the content is published" do
-    story = create :news_story, :draft
-    entry = create :blog_entry, :published
+  describe '::status_select_collection' do
+    it "is an array of statuses" do
+      FeaturedComment.status_select_collection.should be_a Array
+    end
+  end
 
-    comment1 = build :featured_comment, content: story
-    comment2 = build :featured_comment, content: entry
+  describe '#article' do
+    it "is the content to_article" do
+      story = build :news_story, :published
+      comment = build :featured_comment, content: story
+      comment.article.should eq story.to_article
+    end
+  end
 
-    comment1.should_not be_valid
-    comment1.errors.keys.should eq [:content_id]
+  describe '#published?' do
+    it 'is true if the status is published' do
+      comment = build :featured_comment, :published
+      comment.published?.should eq true
+    end
 
-    comment2.should be_valid
+    it 'is false if the status is not published' do
+      comment = build :featured_comment, :draft
+      comment.published?.should eq false
+    end
+  end
+
+  describe '#status_text' do
+    it "is the name of the status" do
+      comment = build :featured_comment, :published
+      comment.status_text.should eq FeaturedComment::STATUS_TEXT[FeaturedComment::STATUS_LIVE]
+    end
   end
 end

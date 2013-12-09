@@ -30,10 +30,19 @@ module FormFillers
 
   def fill_field(record, attribute, options={})
     if record.class.reflect_on_association(attribute)
-      attribute = "#{attribute}_id"
+      if record.respond_to?("#{attribute}_json=")
+        # We're using an aggregator
+        attribute = :"#{attribute}_json"
+        # This assumes that the HTML ID of the field is the same
+        # as the attribute name. It won't be, necessarily.
+        fill_field(record, attribute, attribute => attribute)
+        return
+      else
+        attribute = "#{attribute}_id"
+      end
     end
 
-    field_id  = options[attribute] ||
+    field_id = options[attribute] ||
       "#{record.class.singular_route_key}_#{attribute}"
 
     value = record.send(attribute)
