@@ -2,7 +2,7 @@ require "spec_helper"
 
 describe Edition do
   let(:valid_record) { build :edition, :unpublished }
-  let(:invalid_record) { nil } # Can't make an invalid edition in outpost.
+  let(:invalid_record) { build :edition, :published, title: "" }
   let(:updated_record) { build :edition, :published }
 
   it_behaves_like "managed resource"

@@ -1,6 +1,15 @@
 require 'spec_helper'
 
 describe Edition do
+  describe '::titles_collection' do
+    it "is an array of all the titles" do
+      create :edition, title: "Abracadabra"
+      create :edition, title: "Zealot"
+
+      Edition.titles_collection.should eq ["Abracadabra", "Zealot"]
+    end
+  end
+
   describe '#title' do
     it "validates title when the edition is pending" do
       edition = build :edition, :pending, title: nil
