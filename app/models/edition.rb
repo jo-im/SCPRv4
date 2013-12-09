@@ -40,7 +40,8 @@ class Edition < ActiveRecord::Base
   }
 
 
-  validates :status, presence: true
+  before_validation :derive_title, if: -> { self.title.blank? }
+  validates :status, :title, presence: true
 
 
   class << self
@@ -87,6 +88,11 @@ class Edition < ActiveRecord::Base
 
 
   private
+
+  def derive_title
+    self.title = "The Short List for " \
+      "#{self.published_at.strftime("%B %-d, %Y")}}"
+  end
 
   def build_slot_association(slot_hash, item)
     if item.published?

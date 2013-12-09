@@ -5,6 +5,8 @@ class Outpost::EditionsController < Outpost::ResourceController
     l.default_order_attribute   = "updated_at"
     l.default_order_direction   = DESCENDING
 
+    l.column :title
+
     l.column :published_at,
       :sortable                   => true,
       :default_order_direction    => DESCENDING

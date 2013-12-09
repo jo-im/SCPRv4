@@ -4,6 +4,7 @@
 FactoryGirl.define do
   factory :edition do
     status 5
+    title "Cool Edition"
 
     trait :published do
       sequence(:published_at) { |n| Time.now + n.hours }

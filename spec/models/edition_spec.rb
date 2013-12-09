@@ -21,6 +21,20 @@ describe Edition do
     end
   end
 
+  describe '#title' do
+    it 'generates the title if it is blank' do
+      edition = build :edition, title: nil
+      edition.save!
+      edition.title.should_not be_blank
+    end
+
+    it "uses the user-specified title if available" do
+      edition = build :edition, :published, title: "Edition"
+      edition.save!
+      edition.title.should eq "Edition"
+    end
+  end
+
   describe '::status_select_collection' do
     it 'is an array of status texts' do
       Edition.status_select_collection.first[1].should eq Edition::STATUS_DRAFT

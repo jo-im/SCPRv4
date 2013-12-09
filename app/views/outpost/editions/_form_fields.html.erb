@@ -1,3 +1,7 @@
+<%= form_block "Information" do %>
+  <%= f.input :title, hint: "This will be automatically generated on save if left blank" %>
+<% end %>
+
 <%= form_block "Publishing" do %>
   <%= f.input :status, collection: Edition.status_select_collection, include_blank: false, input_html: { id: "status-select" } %>
   <%= f.section 'content_alarm' %>
