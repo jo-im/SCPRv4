@@ -1,6 +1,25 @@
 require 'spec_helper'
 
 describe Edition do
+  describe '#title' do
+    it "validates title when the edition is pending" do
+      edition = build :edition, :pending, title: nil
+      edition.should_not be_valid
+      edition.errors.keys.should eq [:title]
+    end
+
+    it "validates title when the edition is published" do
+      edition = build :edition, :published, title: nil
+      edition.should_not be_valid
+      edition.errors.keys.should eq [:title]
+    end
+
+    it "doesn't validate title when the edition is draft" do
+      edition = build :edition, :unpublished, title: nil
+      edition.should be_valid
+    end
+  end
+
   describe '#abstracts' do
     it 'turns all of the items into abstracts' do
       edition   = create :edition, :published
@@ -18,20 +37,6 @@ describe Edition do
       slot      = create :edition_slot, edition: edition, item: story
 
       edition.articles.map(&:class).uniq.should eq [Article]
-    end
-  end
-
-  describe '#title' do
-    it 'generates the title if it is blank' do
-      edition = build :edition, title: nil
-      edition.save!
-      edition.title.should_not be_blank
-    end
-
-    it "uses the user-specified title if available" do
-      edition = build :edition, :published, title: "Edition"
-      edition.save!
-      edition.title.should eq "Edition"
     end
   end
 
