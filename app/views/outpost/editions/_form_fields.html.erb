@@ -1,3 +1,7 @@
+<%= form_block "Information" do %>
+  <%= f.input :title, input_html: { autocomplete: "off", data: { provide: "typeahead", source: Edition.titles_collection } } %>
+<% end %>
+
 <%= form_block "Publishing" do %>
   <%= f.input :status, collection: Edition.status_select_collection, include_blank: false, input_html: { id: "status-select" } %>
   <%= f.section 'content_alarm' %>

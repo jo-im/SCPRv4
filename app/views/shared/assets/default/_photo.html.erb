@@ -1,6 +1,6 @@
 <% asset = assets.first %>
 
-<% if asset.small.width < asset.small.height %>
+<% if asset.small.width.to_i < asset.small.height.to_i %>
 <div class="asset-block right" style="width:<%=asset.lsquare.width%>px;">
 <% else %>
 <div class="asset-block wide">

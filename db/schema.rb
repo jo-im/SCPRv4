@@ -11,7 +11,11 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
+<<<<<<< HEAD
 ActiveRecord::Schema.define(:version => 20131204230119) do
+=======
+ActiveRecord::Schema.define(:version => 20131209224408) do
+>>>>>>> master
 
   create_table "abstracts", :force => true do |t|
     t.string   "source"
@@ -324,6 +328,7 @@ ActiveRecord::Schema.define(:version => 20131204230119) do
     t.datetime "published_at"
     t.datetime "created_at",   :null => false
     t.datetime "updated_at",   :null => false
+    t.string   "title"
   end
 
   add_index "editions", ["published_at"], :name => "index_editions_on_published_at"

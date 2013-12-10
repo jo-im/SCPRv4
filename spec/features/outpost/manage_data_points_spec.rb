@@ -3,7 +3,9 @@ require "spec_helper"
 describe DataPoint do
   let(:valid_record) { build :data_point }
   let(:updated_record) { build :data_point }
-  let(:invalid_record) { build :data_point, title: "Cool Data Point", data_key: nil }
+  let(:invalid_record) {
+    build :data_point, title: "Cool Data Point", data_key: nil
+  }
 
   it_behaves_like "managed resource create"
   it_behaves_like "managed resource destroy"
@@ -13,6 +15,9 @@ describe DataPoint do
 
   #------------------------
 
+  # It's currently impossible to update a record to be invalid in Outpost,
+  # because the data_key field is disabled, so we're overwriting this bit
+  # to remove the "invalid" test.
   describe "Update" do
     before :each do
       login
