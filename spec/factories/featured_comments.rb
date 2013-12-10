@@ -18,7 +18,7 @@ FactoryGirl.define do
     status FeaturedComment::STATUS_LIVE
 
     # Since it's a required field, we need to populate the content_json
-    # request specs in Outpost.
+    # field for request specs in Outpost.
     content_json { [content.simple_json].to_json }
 
     trait :published do

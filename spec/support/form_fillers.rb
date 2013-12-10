@@ -51,34 +51,38 @@ module FormFillers
     if record.class
     .serialized_attributes[attribute.to_s].try(:object_class) == Array
       record.send(attribute).each do |v|
-        interact(field_id + "_#{v}", value)
+        field = first(field_id + "_#{v}")
+        interact(field, value)
       end
     else
-      interact(field_id, value)
+      if field = find_by_id(field_id)
+        interact(field, value)
+      end
     end
   end
 
   #----------------
 
-  def interact(field_id, value)
-    field = first('#' + field_id)
-    return if !field || field[:disabled]
+  def interact(field, value)
+    # If the field is disabled, leave it alone.
+    return if field[:disabled]
 
     case field.tag_name
     when "select"
-      text = find("##{field_id} option[value='#{value}']").text
-      select text, from: field_id
+      field = find("##{field[:id]} option[value='#{value}']")
+      field.select_option
 
     when "textarea"
-      fill_in field_id, with: value
+      field.set(value)
 
     when "input"
       case field[:type]
       when "checkbox"
-        check(field_id)
-
+        field.click
+      when "hidden"
+        field.set(value)
       else
-        fill_in field_id, with: value
+        field.set(value)
       end
 
     else
