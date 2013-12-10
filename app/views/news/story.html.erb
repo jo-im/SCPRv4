@@ -1,13 +1,7 @@
 <% add_to_page_title @story.headline %>
 <%= render_content @story, "opengraph" %>
 
-<% content_for :body_class do %>
-  <% 'interior single' %>
-<% end %>
-
-<% content_for :vertical_layout do %>
-  <%= stylesheet_link_tag "vertical/single", media: "all" %>
-<% end %>
+<% content_for :body_class, 'interior single' %>
 
 <%= cache ["show", "v10", @story] do %>
   <%= render "shared/new/single", article: @story, full: true %>

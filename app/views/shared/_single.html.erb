@@ -1,5 +1,5 @@
 <% article = article.to_article %>
-    <% if @asset.present? %>
+    <% if article.asset.present? %>
     <section class="prologue">
         <div class="grating">
             <div class="inner bound clearfix">
@@ -155,24 +155,28 @@
                 <div class="supportive">
                     <section>
                         <h1>Issues We're Tracking</h1>
-                            <% if article.category.issues.presence %>
-                                <h2 class="special"><%= @special_issue.title %></h2>
-                                    <nav>
-                                        <ul>
-                                            <%= render partial: 'shared/single_page_issue_list', collection: @top_two_special_issue_articles, as: 'article' %>
-                                        </ul>
-                                    </nav>
-                                <% @other_issues.each do |issue| %>
-                                <h2><%= issue.title %></h2>
-                                    <nav>
-                                        <ul>
-                                            <% issue.articles.first(2).each do |article| %>
-                                                <%= render partial: 'shared/single_page_issue_list', locals: {article: article} %>
-                                            <% end %>
-                                        </ul>
-                                    </nav>
-                                <% end %>
+                        <% if article.category.issues.present? %>
+                            <% main_issue = article.category.issues.first %>
+                            <% other_issues = article.category.issues[1..2] %>
+                            <h2 class="special"><%= main_issue.title %></h2>
+                                <nav>
+                                    <ul>
+                                        <% main_issue.articles.each do |article | %>
+                                            <%= render partial: 'shared/single_page_issue_list', locals: { article: article }, as: 'article' %>
+                                        <% end %>
+                                    </ul>
+                                </nav>
+                            <% other_issues.each do |issue| %>
+                            <h2><%= issue.title %></h2>
+                                <nav>
+                                    <ul>
+                                        <% issue.articles.first(2).each do |article| %>
+                                            <%= render partial: 'shared/single_page_issue_list', locals: { article: article } %>
+                                        <% end %>
+                                    </ul>
+                                </nav>
                             <% end %>
+                        <% end %>
                         <footer>
                             <%= link_to 'See all issues', issues_path %>
                         </footer>
