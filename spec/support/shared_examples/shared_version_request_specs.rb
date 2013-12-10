@@ -1,4 +1,4 @@
-shared_examples_for "versioned model" do
+shared_examples_for "versioned model" do |options|
   describe "Versions" do
     before :each do
       login
@@ -7,12 +7,14 @@ shared_examples_for "versioned model" do
       # touch records to created associated objects
       valid_record
       updated_record
+
+      @field_options = options ? options.fetch(:field_options, {}) : {}
     end
 
     context "new record", focus: true do
       it "saves an initial version" do
         visit described_class.admin_new_path
-        fill_required_fields(valid_record)
+        fill_required_fields(valid_record, @field_options)
         click_button "edit"
         described_class.count.should eq 1
         new_record = described_class.first
@@ -26,7 +28,7 @@ shared_examples_for "versioned model" do
       it "saves a new version" do
         valid_record.save!
         visit valid_record.admin_edit_path
-        fill_required_fields(updated_record)
+        fill_required_fields(updated_record, @field_options)
         click_button "edit"
         updated = described_class.find(valid_record.id)
         updated.versions.size.should eq 2
