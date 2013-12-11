@@ -1,7 +1,7 @@
 <% add_to_page_title @category.title %>
 <% meta_tags(url: @category.public_url) %>
 <% content_for :body_class, 'landing' %>
-
+<% content_for :membership_copy, @category.title %>
 <section class="headline">
 <% if @lead_article %>
     <h1 class="bound"><span><%= link_to @lead_article.short_title, @lead_article.public_path %></span></h1>

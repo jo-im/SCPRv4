@@ -1,6 +1,6 @@
 <% add_to_page_title @story.headline %>
 <%= render_content @story, "opengraph" %>
-
+<% content_for :membership_copy, @category.present? ? @category.title : 'Lorem Ipsum' %>
 <% content_for :body_class, 'interior single' %>
 
 <%= cache ["show", "v10", @story] do %>

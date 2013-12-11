@@ -3,6 +3,7 @@
 
 <%= render "shared/new/document_header" %>
 
+<% content_for :membership_copy, @category.present? ? @category.title : 'Lorem Ipsum' %>
 
 <body class="<%= content_for(:body_class) %>">
 
