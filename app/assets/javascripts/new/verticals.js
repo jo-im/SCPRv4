@@ -1,23 +1,29 @@
 jQuery(document).ready(function($) {
 
 
-//  ================================================
-//  Do we support -webkit-filter?
-//  ------------------------------------------------
+//	================================================
+//	Do we support -webkit-filter?
+//	------------------------------------------------
 //  Credit & thanks & source: http://stackoverflow.com/questions/18986156/detect-support-for-webkit-filter-with-javascript?lq=1
-//  ------------------------------------------------
-//  Which model of "brightness" is being used?
-//  ------------------------------------------------
+//	------------------------------------------------
+//	Which model of "brightness" is being used?
+//	------------------------------------------------
 //  Credit & thanks & source: http://stackoverflow.com/questions/16303344/brightness-filter-css-safari-vs-chrome
-//  ------------------------------------------------
+//	------------------------------------------------
 
 if ($(".prologue .ephemera").length) {
 
-    var e = document.querySelector("img");
+//    var e = document.querySelector("img");
+    var e = $(".prologue .ephemera img")[0];
     e.style.webkitFilter = "grayscale(1)";
     if(window.getComputedStyle(e).webkitFilter == "grayscale(1)"){
 
+        // Okay, we're off to the races.
         $("body").addClass("supports-filters");
+
+        // But first, clean up our little test station.
+        e.style.webkitFilter = "";
+
 
         var oldBrightnessModel = $("<div/>").css("-webkit-filter","brightness(101%)").css("-webkit-filter")==""?true:false;
 
@@ -70,6 +76,33 @@ if ($(".prologue .ephemera").length) {
     }
 
 
+//	================================================
+//	Single: Audio-trigger stuff
+//	------------------------------------------------
+    if ($("body").hasClass("single") && $(".audio-trigger").length) {
+
+        // Okay, the page just loaded. Right now, should it live?
+        if ($(".report .supportive").css("float") == "none" ){
+            $("aside.audio").prependTo(".cubbyhole");
+        }
+
+        // Move it around based on screen width
+        $(window).resize(function(){
+            if ($(".report .supportive").css("float") == "none" ){
+                $("aside.audio").prependTo(".cubbyhole");
+            } else {
+                $("aside.audio").prependTo(".report .supportive");
+            }
+        });
+
+        // Make it do something
+        $(".audio-trigger button").click(function(){
+            alert("Wow, you must really want to listen to audio!");
+        });
+
+
+    }
+
 
 
 
@@ -94,46 +127,45 @@ if ($(".prologue .ephemera").length) {
 
 
 
-//  ================================================
-//  Show/hide the Ledge
-//  ------------------------------------------------
-    $(".shownav").click(function(){
-        $(".kpcc-ledge").animate({
-            top: 0
-        }, 300, function() {
-            // Dropdown complete.
-        });
-    });
-//  ................................................
-    $(".kpcc-ledge .close").click(function(){
-        $(".kpcc-ledge").animate({
-            top: "-280px"
-        }, 300, function() {
-            // Retraction complete.
-        });
-    });
+//	================================================
+//	Show/hide the Ledge
+//	------------------------------------------------
+	$(".shownav").click(function(){
+		$(".kpcc-ledge").animate({
+			top: 0
+		}, 300, function() {
+			// Dropdown complete.
+		});
+	});
+//	................................................
+	$(".kpcc-ledge .close").click(function(){
+		$(".kpcc-ledge").animate({
+			top: "-280px"
+		}, 300, function() {
+			// Retraction complete.
+		});
+	});
 
 
-//  ================================================
-//  Show/hide the Search
-//  ------------------------------------------------
-    $(".search-trigger").click(function(){
-        $(".kpcc-search").animate({
-            top: 0
-        }, 200, function() {
-            // Dropdown complete.
-            $("#q").focus();
-        });
-    });
-//  ................................................
-    $(".kpcc-search .close").click(function(){
-        $(".kpcc-search").animate({
-            top: "-130px"
-        }, 200, function() {
-            // Retraction complete.
-        });
-    });
-
+//	================================================
+//	Show/hide the Search
+//	------------------------------------------------
+	$(".search-trigger").click(function(){
+		$(".kpcc-search").animate({
+			top: 0
+		}, 200, function() {
+			// Dropdown complete.
+		    $("#q").focus();
+		});
+	});
+//	................................................
+	$(".kpcc-search .close").click(function(){
+		$(".kpcc-search").animate({
+			top: "-130px"
+		}, 200, function() {
+			// Retraction complete.
+		});
+	});
 
 
 
