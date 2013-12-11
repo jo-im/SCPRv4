@@ -1,7 +1,13 @@
 class BlogsController < ApplicationController
-  before_filter :load_blog, except: [:index, :entry]
+  include GetPopularArticles
+  layout 'new/single'
+
   respond_to :html, :xml, :rss
 
+  before_filter :load_blog, except: [:index, :entry]
+  before_filter :get_popular_articles
+
+  PER_PAGE = 11
   #----------
 
   def index
@@ -25,46 +31,23 @@ class BlogsController < ApplicationController
   def entry
 
     @entry = BlogEntry.published.includes(:blog).find(params[:id])
-    @asset = @entry.asset if @entry.asset.present?
-    @related_articles = @entry.related_content.first(2) if @entry.related_content.present?
+    @blog = @entry.blog
 
-    @popular_articles = Rails.cache.read("popular/viewed").first(3) if Rails.cache.read("popular/viewed").presence
+    content_params = {
+      page:       params[:page].to_i,
+      per_page:   PER_PAGE
+    }
+
+    content_params[:exclude] = @story
 
     if @category = @entry.category
-      if @category.issues.present?
-        @category_issues = @category.issues
-        @special_issue = @category_issues.first
-        @other_issues = @category_issues[1..2]
-        @top_two_special_issue_articles ||= @special_issue.articles.first(2)
-      end
-
-      page      = params[:page].to_i
-      @content = @category.content(
-        :page       => page,
-        :per_page   => 11
-      )
-
-      if @content.present?
-        @category_articles = @content.map { |a| a.to_article }
-        @three_recent_articles = @category_articles[0..2]
-        @more_articles = @category_articles
-      end
-
-      if @category.featured_articles.present?
-        @resources = @category.featured_articles[1..4]
-      end
-
-      if @category.bios.present?
-        @bios = @category.bios
-        @twitter_feeds = @bios.map(&:twitter_handle)
-      end
-
-      if @category.events.published.upcoming.present?
-        @events = @category.events.published.upcoming.map(&:to_article)
-      end
+      @featured_articles = @category.featured_articles
+      @content = @category.content(content_params)
+      @category_articles = @content.map { |a| a.to_article }
+      @events = @category.events.published.upcoming
     end
 
-   render layout: "new/single"
+    respond_with template: "blogs/entry"
   end
 
   #----------
