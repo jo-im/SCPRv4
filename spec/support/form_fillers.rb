@@ -51,13 +51,12 @@ module FormFillers
     if record.class
     .serialized_attributes[attribute.to_s].try(:object_class) == Array
       record.send(attribute).each do |v|
-        field = first(field_id + "_#{v}")
-        interact(field, value)
+        field = find_by_id(field_id + "_#{v}")
+        interact(field, v)
       end
     else
-      if field = find_by_id(field_id)
-        interact(field, value)
-      end
+      field = find_by_id(field_id)
+      interact(field, value)
     end
   end
 
@@ -72,20 +71,8 @@ module FormFillers
       field = find("##{field[:id]} option[value='#{value}']")
       field.select_option
 
-    when "textarea"
-      field.set(value)
-
-    when "input"
-      case field[:type]
-      when "checkbox"
-        field.click
-
-      else
-        field.set(value)
-      end
-
     else
-      raise StandardError, "Unexpected field tag_name: #{field.tag_name}"
+      field.set(value)
     end
   end
 end
