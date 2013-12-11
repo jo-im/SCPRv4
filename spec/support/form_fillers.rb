@@ -35,7 +35,7 @@ module FormFillers
         attribute = :"#{attribute}_json"
         # This assumes that the HTML ID of the field is the same
         # as the attribute name. It won't be, necessarily.
-        fill_field(record, attribute, attribute => attribute)
+        fill_field(record, attribute, attribute => attribute.to_s)
         return
       else
         attribute = "#{attribute}_id"
@@ -61,24 +61,24 @@ module FormFillers
   #----------------
 
   def interact(field_id, value)
-    field = first('#' + field_id)
+    field = first("##{field_id}")
     return if !field || field[:disabled]
 
     case field.tag_name
     when "select"
-      text = find("##{field_id} option[value='#{value}']").text
-      select text, from: field_id
+      option = find("##{field_id} option[value='#{value}']")
+      option.select_option
 
     when "textarea"
-      fill_in field_id, with: value
+      field.set(value)
 
     when "input"
       case field[:type]
       when "checkbox"
-        check(field_id)
+        field.click
 
       else
-        fill_in field_id, with: value
+        field.set(value)
       end
 
     else

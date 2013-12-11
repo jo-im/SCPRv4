@@ -11,7 +11,7 @@ shared_examples_for "versioned model" do |options|
       @field_options = options ? options.fetch(:field_options, {}) : {}
     end
 
-    context "new record", focus: true do
+    context "new record" do
       it "saves an initial version" do
         visit described_class.admin_new_path
         fill_required_fields(valid_record, @field_options)
