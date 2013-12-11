@@ -12,7 +12,7 @@ class Edition < ActiveRecord::Base
   include Concern::Associations::ContentAlarmAssociation
   include Concern::Callbacks::SetPublishedAtCallback
   include Concern::Callbacks::TouchCallback
-
+  include Concern::Callbacks::SphinxIndexCallback
 
   STATUS_DRAFT    = 0
   STATUS_PENDING  = 3
@@ -41,11 +41,19 @@ class Edition < ActiveRecord::Base
 
 
   validates :status, presence: true
+  validates :title,
+    :presence   => true,
+    :if         => :should_validate?
 
 
   class << self
     def status_select_collection
       STATUS_TEXT.map { |k, v| [v, k] }
+    end
+
+    def titles_collection
+      self.where(status: STATUS_LIVE)
+      .select('distinct title').order('title').map(&:title)
     end
   end
 
@@ -87,6 +95,10 @@ class Edition < ActiveRecord::Base
 
 
   private
+
+  def needs_validation?
+    self.pending? || self.published?
+  end
 
   def build_slot_association(slot_hash, item)
     if item.published?

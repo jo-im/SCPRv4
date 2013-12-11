@@ -1,19 +1,21 @@
 ##
 # Shared examples for managed resources
 #
-shared_examples_for "managed resource" do
-  it_behaves_like "managed resource create"
-  it_behaves_like "managed resource update"
-  it_behaves_like "managed resource destroy"
+shared_examples_for "managed resource" do |options|
+  it_behaves_like "managed resource create", options
+  it_behaves_like "managed resource update", options
+  it_behaves_like "managed resource destroy", options
 end
 
-shared_examples_for "managed resource create" do
+
+shared_examples_for "managed resource create" do |options|
   before :each do
     login
     # Touch them so their associations get created
     valid_record
     invalid_record
     updated_record
+    @field_options = options ? options.fetch(:field_options, {}) : {}
   end
 
   #------------------------
@@ -26,7 +28,7 @@ shared_examples_for "managed resource create" do
     context "invalid" do
       it "shows validation errors" do
         if invalid_record
-          fill_required_fields(invalid_record, status: "status-select")
+          fill_required_fields(invalid_record, @field_options)
           click_button "edit"
           current_path.should eq described_class.admin_index_path
           described_class.count.should eq 0
@@ -39,7 +41,7 @@ shared_examples_for "managed resource create" do
 
     context "valid" do
       it "is created" do
-        fill_required_fields(valid_record)
+        fill_required_fields(valid_record, @field_options)
         click_button "edit"
         described_class.count.should eq 1
         valid = described_class.first
@@ -55,13 +57,14 @@ end
 
 #------------------------
 
-shared_examples_for "managed resource update" do
+shared_examples_for "managed resource update" do |options|
   before :each do
     login
     # Touch them so their associations get created
     valid_record
     invalid_record
     updated_record
+    @field_options = options ? options.fetch(:field_options, {}) : {}
   end
 
   #------------------------
@@ -75,7 +78,7 @@ shared_examples_for "managed resource update" do
     context "invalid" do
       it "shows validation error" do
         if invalid_record
-          fill_required_fields(invalid_record)
+          fill_required_fields(invalid_record, @field_options)
           click_button "edit"
           page.should have_css ".alert-error"
           current_path.should eq valid_record.admin_show_path # Technically "#update" but this'll do
@@ -85,7 +88,7 @@ shared_examples_for "managed resource update" do
 
     context "valid" do
       it "updates attributes" do
-        fill_required_fields(updated_record)
+        fill_required_fields(updated_record, @field_options)
         click_button "edit"
         page.should have_css ".alert-success"
         current_path.should eq valid_record.admin_edit_path
@@ -96,7 +99,7 @@ end
 
 #------------------------
 
-shared_examples_for "managed resource destroy" do
+shared_examples_for "managed resource destroy" do |options|
   before :each do
     login
     # Touch them so their associations get created
@@ -122,7 +125,7 @@ end
 
 #------------------------
 
-shared_examples_for "save options" do
+shared_examples_for "save options" do |options|
   describe "Save options" do
     before :each do
       login

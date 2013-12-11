@@ -54,16 +54,15 @@ module FormFillers
         interact(field_id + "_#{v}", value)
       end
     else
-      if page.has_field? field_id
-        interact(field_id, value)
-      end
+      interact(field_id, value)
     end
   end
 
   #----------------
 
   def interact(field_id, value)
-    field = find_field(field_id)
+    field = first('#' + field_id)
+    return if !field || field[:disabled]
 
     case field.tag_name
     when "select"
