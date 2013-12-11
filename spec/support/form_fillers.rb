@@ -68,6 +68,8 @@ module FormFillers
 
     case field.tag_name
     when "select"
+      # For select tags, we want to assert that the value we're
+      # trying to select is actually an option in the drop-down.
       field = find("##{field[:id]} option[value='#{value}']")
       field.select_option
 
