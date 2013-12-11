@@ -11,11 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-<<<<<<< HEAD
-ActiveRecord::Schema.define(:version => 20131204230119) do
-=======
 ActiveRecord::Schema.define(:version => 20131209224408) do
->>>>>>> master
 
   create_table "abstracts", :force => true do |t|
     t.string   "source"
