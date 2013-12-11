@@ -52,7 +52,8 @@ class Edition < ActiveRecord::Base
     end
 
     def titles_collection
-      self.select('distinct title').order('title').map(&:title)
+      self.where(status: STATUS_LIVE)
+      .select('distinct title').order('title').map(&:title)
     end
   end
 

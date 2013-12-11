@@ -135,6 +135,12 @@ table {
     ///////////////////
     // Edition
     &.list-editions {
+        .column-title { // edition.title
+
+        }
+        .column-datetime { // edition.published_at, edition.updated_at
+            width: 200px;
+        }
     }
 
     ///////////////////

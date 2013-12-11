@@ -35,7 +35,7 @@ module FormFillers
         attribute = :"#{attribute}_json"
         # This assumes that the HTML ID of the field is the same
         # as the attribute name. It won't be, necessarily.
-        fill_field(record, attribute, attribute => attribute)
+        fill_field(record, attribute, attribute => attribute.to_s)
         return
       else
         attribute = "#{attribute}_id"
@@ -79,8 +79,7 @@ module FormFillers
       case field[:type]
       when "checkbox"
         field.click
-      when "hidden"
-        field.set(value)
+
       else
         field.set(value)
       end

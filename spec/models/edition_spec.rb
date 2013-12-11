@@ -2,9 +2,10 @@ require 'spec_helper'
 
 describe Edition do
   describe '::titles_collection' do
-    it "is an array of all the titles" do
-      create :edition, title: "Abracadabra"
-      create :edition, title: "Zealot"
+    it "is an array of all the published titles" do
+      create :edition, :published, title: "Abracadabra"
+      create :edition, :unpublished, title: "Marmalade"
+      create :edition, :published, title: "Zealot"
 
       Edition.titles_collection.should eq ["Abracadabra", "Zealot"]
     end
