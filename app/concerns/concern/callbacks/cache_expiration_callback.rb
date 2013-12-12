@@ -2,7 +2,7 @@
 # CacheExpirationCallback
 #
 # Expires cache
-# Requires the methods defined in PublishingMethods
+# Requires the methods defined in StatusMethods
 #
 # We have to set the "promises" before save so that we still have
 # access to the object's dirty attributes (status). Otherwise we
@@ -18,7 +18,8 @@ module Concern
       extend ActiveSupport::Concern
 
       included do
-        include Concern::Methods::PublishingMethods
+        include Concern::Methods::StatusMethods
+
         after_save :check_if_should_expire_dependencies
         after_destroy :promise_to_expire_depencies_on_self
         after_commit :expire_cache

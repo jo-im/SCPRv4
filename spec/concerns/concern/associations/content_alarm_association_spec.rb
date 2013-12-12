@@ -103,7 +103,7 @@ describe Concern::Associations::ContentAlarmAssociation do
       story.save!
 
       story.reload.alarm.should be_present
-      story.update_attribute(:status, ContentBase::STATUS_LIVE)
+      story.update_attribute(:status, story.class.status_id(:live))
       story.reload.alarm.should eq nil
     end
 

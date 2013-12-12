@@ -8,7 +8,9 @@ module AdminListHelper
 
   # For a polymorphic content association - requires headline and obj_key
   def display_content(content)
-    if content && content.respond_to?(:headline) && content.respond_to?(:obj_key)
+    if content &&
+    content.respond_to?(:headline) &&
+    content.respond_to?(:obj_key)
       s = content.headline
       s += " (" + link_to(content.obj_key, content.admin_edit_path) + ")"
       s.html_safe
@@ -19,7 +21,9 @@ module AdminListHelper
   # Attribute Helpers
 
   def display_status(status)
-    content_tag :div, ContentBase::STATUS_TEXT[status], class: status_bootstrap_map[status]
+    content_tag :div, ContentBase::STATUS_TEXT[status], {
+      :class => status_bootstrap_map[status]
+    }
   end
 
 
@@ -30,7 +34,9 @@ module AdminListHelper
   def display_audio(audio)
     return audio if !audio.is_a? Array
     status = audio.first.try(:status)
-    content_tag :div, Audio::STATUS_TEXT[status], class: audio_bootstrap_map[status]
+    content_tag :div, Audio::STATUS_TEXT[status], {
+      :class => audio_bootstrap_map[status]
+    }
   end
 
   #-------------

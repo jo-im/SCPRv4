@@ -3,6 +3,7 @@ class BlogEntry < ActiveRecord::Base
   outpost_model
   has_secretary
 
+
   include Concern::Scopes::SinceScope
   include Concern::Scopes::PublishedScope
   include Concern::Associations::ContentAlarmAssociation
@@ -30,8 +31,8 @@ class BlogEntry < ActiveRecord::Base
   include Concern::Callbacks::SphinxIndexCallback
   include Concern::Callbacks::HomepageCachingCallback
   include Concern::Callbacks::TouchCallback
-  include Concern::Methods::ContentStatusMethods
-  include Concern::Methods::PublishingMethods
+  include Concern::Methods::ArticleStatuses
+  include Concern::Methods::StatusMethods
   include Concern::Methods::CommentMethods
   include Concern::Methods::AssetDisplayMethods
 
@@ -40,6 +41,7 @@ class BlogEntry < ActiveRecord::Base
 
 
   belongs_to :blog
+
   has_many :tagged,
     :class_name   => "TaggedContent",
     :as           => :content

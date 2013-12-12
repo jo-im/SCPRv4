@@ -1,7 +1,8 @@
 class ContentShell < ActiveRecord::Base
-  self.table_name =  "contentbase_contentshell"
+  self.table_name = "contentbase_contentshell"
   outpost_model
   has_secretary
+
 
   include Concern::Scopes::SinceScope
   include Concern::Scopes::PublishedScope
@@ -23,8 +24,8 @@ class ContentShell < ActiveRecord::Base
   include Concern::Callbacks::SphinxIndexCallback
   include Concern::Callbacks::HomepageCachingCallback
   include Concern::Callbacks::TouchCallback
-  include Concern::Methods::ContentStatusMethods
-  include Concern::Methods::PublishingMethods
+  include Concern::Methods::ArticleStatuses
+  include Concern::Methods::StatusMethods
 
 
   validates :status, presence: true

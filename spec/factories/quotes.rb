@@ -11,11 +11,11 @@ FactoryGirl.define do
     text "This is an excerpt of the quote"
 
     trait :published do
-      status Quote::STATUS_LIVE
+      status Quote.status_id(:live)
     end
 
     trait :draft do
-      status Quote::STATUS_DRAFT
+      status Quote.status_id(:draft)
     end
   end
 end

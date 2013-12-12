@@ -2,14 +2,14 @@
 # RedisPublishCallback
 #
 # Sends message to Redis pub/sub
-# Requires the methods defined in PublishingMethods
+# Requires the methods defined in StatusMethods
 module Concern
   module Callbacks
     module RedisPublishCallback
       extend ActiveSupport::Concern
 
       included do
-        include Concern::Methods::PublishingMethods
+        include Concern::Methods::StatusMethods
         after_save :publish_to_redis
       end
 

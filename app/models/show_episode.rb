@@ -2,6 +2,8 @@ class ShowEpisode < ActiveRecord::Base
   self.table_name = "shows_episode"
   outpost_model
   has_secretary
+  has_status
+
 
   include Concern::Scopes::SinceScope
   include Concern::Associations::ContentAlarmAssociation
@@ -12,20 +14,43 @@ class ShowEpisode < ActiveRecord::Base
   include Concern::Callbacks::RedisPublishCallback
   include Concern::Callbacks::SphinxIndexCallback
   include Concern::Callbacks::TouchCallback
-  include Concern::Methods::ContentStatusMethods
-  include Concern::Methods::PublishingMethods
+  include Concern::Methods::StatusMethods
 
   ROUTE_KEY = "episode"
 
-  #-------------------
-  # Scopes
+
+  status :killed do |s|
+    s.id = -1
+    s.text = "Killed"
+    s.unpublished!
+  end
+
+  status :draft do |s|
+    s.id = 0
+    s.text = "Draft"
+    s.unpublished!
+  end
+
+  status :pending do |s|
+    s.id = 3
+    s.text = "Pending"
+    s.pending!
+  end
+
+  status :live do |s|
+    s.id = 5
+    s.text = "Published"
+    s.published!
+  end
+
+
   scope :published, -> {
-    where(status: ContentBase::STATUS_LIVE)
+    where(status: self.status_id(:live))
     .order("air_date desc, published_at desc")
   }
 
   scope :upcoming, -> {
-    where(status: ContentBase::STATUS_PENDING)
+    where(status: self.status_id(:pending))
     .where("air_date >= ?", Date.today)
     .order("air_date asc")
   }
@@ -71,6 +96,11 @@ class ShowEpisode < ActiveRecord::Base
 
   def needs_validation?
     self.pending? || self.published?
+  end
+
+
+  def publish
+    self.update_attributes(status: self.class.status_id(:live))
   end
 
 

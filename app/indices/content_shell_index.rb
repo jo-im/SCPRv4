@@ -26,7 +26,7 @@ ThinkingSphinx::Index.define :content_shell, with: :active_record do
 
   # Required attributes for ContentBase.search
   has published_at, as: :public_datetime
-  has "#{ContentShell.table_name}.status = #{ContentBase::STATUS_LIVE}",
+  has "#{ContentShell.table_name}.status = #{ContentShell.status_id(:live)}",
     :type   => :boolean,
     :as     => :is_live
 end

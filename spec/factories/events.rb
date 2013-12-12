@@ -11,13 +11,14 @@ FactoryGirl.define do
     event_type "comm"
 
 
-    status Event::STATUS_HIDDEN
+    status Event.status_id(:hidden)
 
     trait :hidden do
+      status Event.status_id(:hidden)
     end
 
     trait :published do
-      status Event::STATUS_LIVE
+      status Event.status_id(:live)
     end
 
     trait :with_address do

@@ -64,7 +64,7 @@ module ChrArticleImporter
     #----------------------------
 
     def import(remote_article, options={})
-      import_to_class = options[:import_to_class] || "NewsStory"
+      klass = (options[:import_to_class] || "NewsStory").constantize
 
       client = NPR::API::Client.new(url: API_ROOT)
       response = client.query(
@@ -92,8 +92,8 @@ module ChrArticleImporter
 
       #-------------------
       # Build the NewsStory from the API response
-      article = import_to_class.constantize.new(
-        :status         => ContentBase::STATUS_DRAFT,
+      article = klass.new(
+        :status         => klass.status_id(:draft),
         :headline       => npr_story.title,
         :teaser         => npr_story.teaser,
         :short_headline => npr_story.shortTitle.present? ? npr_story.shortTitle : npr_story.title,

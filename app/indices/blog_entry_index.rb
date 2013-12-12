@@ -34,7 +34,7 @@ ThinkingSphinx::Index.define :blog_entry, with: :active_record do
 
   # Required attributes for ContentBase.search
   has published_at, as: :public_datetime
-  has "#{BlogEntry.table_name}.status = #{ContentBase::STATUS_LIVE}",
+  has "#{BlogEntry.table_name}.status = #{BlogEntry.status_id(:live)}",
     :type   => :boolean,
     :as     => :is_live
 end

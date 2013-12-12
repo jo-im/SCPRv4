@@ -1,6 +1,8 @@
 class Event < ActiveRecord::Base
   outpost_model
   has_secretary
+  has_status
+
 
   include Concern::Validations::SlugValidation
   include Concern::Associations::AudioAssociation
@@ -18,7 +20,7 @@ class Event < ActiveRecord::Base
   include Concern::Callbacks::CacheExpirationCallback
   include Concern::Callbacks::TouchCallback
   include Concern::Methods::CommentMethods
-  include Concern::Methods::PublishingMethods
+  include Concern::Methods::StatusMethods
   include Concern::Methods::AssetDisplayMethods
 
   self.disqus_identifier_base = "events"
@@ -38,17 +40,21 @@ class Event < ActiveRecord::Base
     'pick' => 'Staff Picks'
   }
 
-  STATUS_HIDDEN = ContentBase::STATUS_DRAFT
-  STATUS_LIVE   = ContentBase::STATUS_LIVE
 
-  STATUS_TEXT = {
-    STATUS_HIDDEN => "Hidden",
-    STATUS_LIVE   => "Live"
-  }
+  status :hidden do |s|
+    s.id = 0
+    s.text = "Hidden"
+    s.unpublished!
+  end
 
-  #-------------------
-  # Scopes
-  scope :published, -> { where(status: STATUS_LIVE) }
+  status :live do |s|
+    s.id = 5
+    s.text = "Live"
+    s.published!
+  end
+
+
+  scope :published, -> { where(status: self.status_id(:live)) }
   scope :forum,     -> { published.where("event_type IN (?)", ForumTypes) }
   scope :sponsored, -> { published.where("event_type = ?", "spon") }
 
@@ -96,18 +102,9 @@ class Event < ActiveRecord::Base
   end
 
 
-  def published?
-    self.status == STATUS_LIVE
-  end
-
-
   class << self
     def event_types_select_collection
       EVENT_TYPES.map { |k,v| [v, k] }
-    end
-
-    def status_select_collection
-      STATUS_TEXT.map { |k, v| [v, k] }
     end
 
     def sorted(events, direction=:asc)

@@ -1,14 +1,18 @@
+# This made more sense when all the Article models were
+# referencing the same status definition.
+# Now it's just *likely* that they're all going to be
+# the same, but any of them could change at any time.
 FactoryGirl.define do
   trait :pending do
-    status ContentBase::STATUS_PENDING
+    status 3 # possibly
   end
 
   trait :published do
-    status ContentBase::STATUS_LIVE
+    status 5 # perhaps
     sequence(:published_at) { |n| Time.now - n.hours }
   end
 
   trait :draft do
-    status ContentBase::STATUS_DRAFT
+    status 0 # probably
   end
 end

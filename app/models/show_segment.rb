@@ -3,6 +3,7 @@ class ShowSegment < ActiveRecord::Base
   outpost_model
   has_secretary
 
+
   include Concern::Scopes::SinceScope
   include Concern::Scopes::PublishedScope
   include Concern::Associations::ContentAlarmAssociation
@@ -30,8 +31,8 @@ class ShowSegment < ActiveRecord::Base
   include Concern::Callbacks::SphinxIndexCallback
   include Concern::Callbacks::HomepageCachingCallback
   include Concern::Callbacks::TouchCallback
-  include Concern::Methods::ContentStatusMethods
-  include Concern::Methods::PublishingMethods
+  include Concern::Methods::ArticleStatuses
+  include Concern::Methods::StatusMethods
   include Concern::Methods::CommentMethods
   include Concern::Methods::AssetDisplayMethods
 
@@ -70,9 +71,11 @@ class ShowSegment < ActiveRecord::Base
   def sister_segments
     @sister_segments ||= begin
       if episodes.present?
-        episode.segments.published.where("shows_segment.id != ?", self.id)
+        episode.segments.published
+          .where("shows_segment.id != ?", self.id)
       else
-        show.segments.published.where("shows_segment.id != ?", self.id).limit(5)
+        show.segments.published
+          .where("shows_segment.id != ?", self.id).limit(5)
       end
     end
   end

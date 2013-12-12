@@ -18,7 +18,7 @@ ThinkingSphinx::Index.define :show_episode, with: :active_record do
   # For ShowEpisode, this is needed just for the
   # podcast feed.
   has air_date, as: :public_datetime
-  has "#{ShowEpisode.table_name}.status = #{ContentBase::STATUS_LIVE}",
+  has "#{ShowEpisode.table_name}.status = #{ShowEpisode.status_id(:live)}",
     :type   => :boolean,
     :as     => :is_live
 end

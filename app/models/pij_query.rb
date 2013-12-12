@@ -2,6 +2,8 @@ class PijQuery < ActiveRecord::Base
   self.table_name = 'pij_query'
   outpost_model
   has_secretary
+  has_status
+
 
   include Concern::Scopes::SinceScope
   include Concern::Scopes::PublishedScope
@@ -17,70 +19,47 @@ class PijQuery < ActiveRecord::Base
   include Concern::Callbacks::SetPublishedAtCallback
   include Concern::Callbacks::CacheExpirationCallback
   include Concern::Callbacks::TouchCallback
-  include Concern::Methods::PublishingMethods
+  include Concern::Methods::StatusMethods
 
 
   ROUTE_KEY = "pij_query"
 
   QUERY_TYPES = [
-    ["Evergreen",             "evergreen"],
-    ["News",                  "news"],
+    ["Evergreen", "evergreen"],
+    ["News", "news"],
     ["Internal (not listed)", "utility"]
   ]
 
-  # We need to keep the statuses mapped to the
-  # ContentBase ones, since these are referenced
-  # directly in HomepageContent, etc.
-  STATUS_HIDDEN   = ContentBase::STATUS_DRAFT
-  STATUS_PENDING  = ContentBase::STATUS_PENDING
-  STATUS_LIVE     = ContentBase::STATUS_LIVE
 
-  STATUS_TEXT = {
-      STATUS_HIDDEN   => "Hidden",
-      STATUS_PENDING  => "Pending",
-      STATUS_LIVE     => "Live"
-  }
+  status :draft do |s|
+    s.id = 0
+    s.text = "Draft"
+    s.unpublished!
+  end
 
-  #------------
-  # Scopes
+  status :pending do |s|
+    s.id = 3
+    s.text = "Pending"
+    s.pending!
+  end
 
-  #------------
-  # Association
+  status :live do |s|
+    s.id = 5
+    s.text = "Live"
+    s.published!
+  end
 
-  #------------
-  # Validation
-  validates :slug,        uniqueness: true
-  validates :headline,    presence: true
-  validates :teaser,      presence: true
-  validates :body,        presence: true
-  validates :query_type,  presence: true
+
+  validates :slug, uniqueness: true
+  validates :headline, presence: true
+  validates :teaser, presence: true
+  validates :body, presence: true
+  validates :query_type, presence: true
   validates :pin_query_id, presence: true
 
-  #------------
-  # Callbacks
-
-
-  class << self
-    def status_select_collection
-      STATUS_TEXT.map { |k, v| [v, k] }
-    end
-  end
-
-
-  def pending?
-    self.status == STATUS_PENDING
-  end
-
-  def published?
-    self.status == STATUS_LIVE
-  end
 
   def publish
-    self.update_attributes(status: STATUS_LIVE)
-  end
-
-  def status_text
-    STATUS_TEXT[self.status]
+    self.update_attributes(status: self.class.status_id(:live))
   end
 
 
