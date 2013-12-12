@@ -102,7 +102,7 @@ body.single {
         .share {
             position: absolute;
             li                      { display: inline; float: left; }
-            a                       { @include mask; width: 20px; height: 20px; margin-right: 20px; background: url(../i/single-share-icons.png) no-repeat; background-size: 120px 60px; }
+            a                       { @include mask; width: 20px; height: 20px; margin-right: 20px; background: image-url("i/single-share-icons.png") no-repeat; background-size: 120px 60px; }
             li:nth-child(1) a       { background-position: 0 0; }
             li:nth-child(1) a:hover { background-position: 0 -30px; }
             li:nth-child(2) a       { background-position: -30px 0px; }
@@ -318,8 +318,8 @@ body.single {
         .cubbyhole                          { display: none; }
         .inner {
             background:
-                url(../i/fauxcol-single-report-topper.png) no-repeat 74.352% 0,
-                url(../i/fauxcol-single-report-base.png) repeat-y 74.352% 0; // ...goddamn imprecise retina-ipad trial-and-error...
+                image-url("i/fauxcol-single-report-topper.png") no-repeat 74.352% 0,
+                image-url("i/fauxcol-single-report-base.png") repeat-y 74.352% 0; // ...goddamn imprecise retina-ipad trial-and-error...
             background-size:
                 1500px 4px,
                 1500px 15px;
@@ -339,7 +339,7 @@ body.single {
                 }
                 header {
                     padding: 6px 5% 13px 13px;
-                    background: url(../i/single-report-icons.png) no-repeat;
+                    background: image-url("i/single-report-icons.png") no-repeat;
                     background-size: 50px 1930px;
                     margin-left: -13px;
                     h1,h2                   { margin-left: 10.21021021021%; } // 34 / 333
@@ -486,7 +486,7 @@ body.single {
             h2,h3           { font-family: $font-freight; }
             h2              { color: $orange; font-weight: 600; font-size: 1.3em; }
             h3              { color: black; font-weight: 700; text-transform: uppercase; font-size: 0.9375em; }
-            blockquote      { font-size: 1.26666666666667em; font-family: $font-merri-lightital; padding: 15px 0 0 25px; margin-left: -10px; background: url(../i/flourish-blockquote.png) no-repeat; background-size: 64px 55px; }
+            blockquote      { font-size: 1.26666666666667em; font-family: $font-merri-lightital; padding: 15px 0 0 25px; margin-left: -10px; background: image-url("i/flourish-blockquote.png") no-repeat; background-size: 64px 55px; }
             img             { max-width: 100%; height: auto; margin: 0 auto; }
         }
         .asset-inset {
@@ -508,7 +508,7 @@ body.single {
             font-family: $font-freight;
             a:hover { text-decoration: none; }
             header {
-                background: url(../i/single-report-icons.png) no-repeat;
+                background: image-url("i/single-report-icons.png") no-repeat;
                 background-size: 50px 1930px;
                 margin: 0 0 7px -13px;
                 padding: 6px 0 5px 13px;
@@ -535,7 +535,7 @@ body.single {
                 }
                 a {
                     padding: 0 0 0 25px;
-                    background: url(../i/single-report-icons.png) no-repeat 0 -894px; // all are assumed to be "article" by default
+                    background: image-url("i/single-report-icons.png") no-repeat 0 -894px; // all are assumed to be "article" by default
                     background-size: 50px 1930px;
                 }
 
@@ -571,7 +571,7 @@ body.single {
             margin-left: -2.51572327044%; // 16 / 636
             a {
                 display: inline-block;
-                background: url(../i/single-comments-balloons.png) no-repeat;
+                background: image-url("i/single-comments-balloons.png") no-repeat;
                 background-size: 20px 131px;
                 padding: 0 0 5px 37px;
                 font-family: $font-freight;
@@ -729,8 +729,8 @@ body.single {
                     padding-bottom: 45px;
                     margin: 0 auto 60px;
                     background:
-                        url(../i/flourish-donut.png) no-repeat center bottom,
-                        url(../i/flourish-gray-dot.png) repeat-x left 0px bottom 9px;
+                        image-url("i/flourish-donut.png") no-repeat center bottom,
+                        image-url("i/flourish-gray-dot.png") repeat-x left 0px bottom 9px;
                     background-size:
                         26px 19px,
                         1px 1px;
@@ -810,13 +810,13 @@ body.single {
     //	################################################################################################
 
     .townhall {
-        background: #636363 url(../i/fauxcol-townhall-base.png) repeat-y center top;
+        background: #636363 image-url("i/fauxcol-townhall-base.png") repeat-y center top;
         .inner {
             padding: 56px 0 120px;
             box-shadow: inset -2px 0 0 #636363; // Firefox is bad at accurate subpixel clipping.
             background:
-                url(../i/fauxcol-townhall-east.png) repeat-y 84.153846153846% 0,
-                url(../i/fauxcol-townhall-west.png) repeat-y 23.153846153846% 0;
+                image-url("i/fauxcol-townhall-east.png") repeat-y 84.153846153846% 0,
+                image-url("i/fauxcol-townhall-west.png") repeat-y 23.153846153846% 0;
             background-size:
                 1500px 15px,
                 1500px 15px;
@@ -924,7 +924,7 @@ body.single {
                         margin-bottom: 18px;
                     }
                     figure {
-                        background: url(../i/fauxcol-townhall-event.png) repeat-y 27.816901408451% 0;
+                        background: image-url("i/fauxcol-townhall-event.png") repeat-y 27.816901408451% 0;
                         background-size: 1500px 15px;
                         time {
                             display: block;
@@ -1003,7 +1003,7 @@ body.single {
                 font-family: $font-freight;
                 a {
                     display: inline-block;
-                    background: url(../i/flourish-caret-left.png) no-repeat left 6px;
+                    background: image-url("i/flourish-caret-left.png") no-repeat left 6px;
                     background-size: 6px 14px;
                     font-size: 1.3125em; // 21 / 16
                     line-height: 1.1;
@@ -1102,7 +1102,7 @@ body.single {
                             @include texthide;
                             width: 24px;
                             height: 24px;
-                            background: url(../i/townhall-contact-icons.png) no-repeat;
+                            background: image-url("i/townhall-contact-icons.png") no-repeat;
                             background-size: 68px 68px;
                             float: left;
                             margin-right: 8px;
@@ -1135,7 +1135,7 @@ body.single {
                 float: none;
                 padding: 45px 5.5% 50px;
                 margin-left: -5.5%;
-                background: url(../i/fauxcol-townhall-primary-interior.png) repeat-y 68% 0;
+                background: image-url("i/fauxcol-townhall-primary-interior.png") repeat-y 68% 0;
                 background-size: 1500px 15px;
                 border-bottom: 1px solid black;
             }
