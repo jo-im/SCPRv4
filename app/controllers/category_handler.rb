@@ -7,10 +7,7 @@ module CategoryHandler
 
   included do
     # Help with lazy loading
-    helper_method \
-      :vertical_articles,
-      :featured_articles,
-      :lead_article
+    helper_method :vertical_articles
   end
 
 
@@ -58,17 +55,6 @@ module CategoryHandler
   end
 
 
-  # Get the hand-curated featured articles for the category
-  def featured_articles
-    @featured_articles ||= @category.featured_articles
-  end
-
-
-  def lead_article
-    @lead_article ||= featured_articles.first
-  end
-
-
   # Get any content with this category, excluding the lead article,
   # and map them to articles
   def vertical_articles
@@ -78,7 +64,7 @@ module CategoryHandler
         :per_page   => PER_PAGE
       }
 
-      content_params[:exclude] = lead_article
+      content_params[:exclude] = @category.featured_articles.first
       @category.articles(content_params)
     end
   end

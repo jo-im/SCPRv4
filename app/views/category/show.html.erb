@@ -8,6 +8,7 @@
 
 <section class="headline">
 
+<% lead_article = @category.featured_articles.first %>
 <% if lead_article %>
     <h1 class="bound"><span><%= link_to lead_article.short_title, lead_article.public_path %></span></h1>
 <% end %>
@@ -158,7 +159,7 @@
         <nav>
             <ul class="clearfix">
 
-        <% articles = featured_articles[1..4] %>
+        <% articles = @category.featured_articles[1..4] %>
         <%= cache ["categories/show", "resources", cache_version, articles] do %>
             <%- Array(articles).each do |article| %>
                 <li>
@@ -229,7 +230,7 @@
 
         <div class="treats">
 
-    <% article = featured_articles[5] %>
+    <% article = @category.featured_articles[5] %>
     <%= cache ["categories/show", "interactive", cache_version, article] do %>
         <% if article %>
             <aside class="featured">
@@ -302,9 +303,9 @@
 <%# We add category.title to the cache key since that's the only category-specific
 information we depend on inside of this cache block. %>
 <%= cache ["categories/show", "recent-coverage", cache_version, @category.title, articles] do %>
-    <%= render 'shared/new/triptych', articles: articles[0..2], header: "Recent #{@category.title} Coverage" %>
+    <%= render 'shared/new/triptych', articles: Array(articles[0..2]), header: "Recent #{@category.title} Coverage" %>
     <%= render 'shared/new/kpcc_ipad_ad' %>
-    <%= render 'shared/new/quadrant', articles: articles[3..6], header: "" %>
+    <%= render 'shared/new/quadrant', articles: Array(articles[3..6]), header: "" %>
 
 
 <div class="waterfall">
@@ -313,7 +314,7 @@ information we depend on inside of this cache block. %>
         <section class="backlog">
             <h1>More <%= @category.title %></h1>
 
-                <%= render 'shared/new/waterfall_articles', articles: articles[7..-1], issue_tag_exists: true %>
+                <%= render 'shared/new/waterfall_articles', articles: Array(articles[7..-1]), issue_tag_exists: true %>
 
         </section><!--/ .backlog -->
 <% end %> <%# cache %>

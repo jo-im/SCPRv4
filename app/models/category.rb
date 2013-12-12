@@ -55,7 +55,7 @@ class Category < ActiveRecord::Base
   # This category's hand-picked content,
   # converted to articles.
   def featured_articles
-    @articles ||= self.category_articles
+    @featured_articles ||= self.category_articles
       .includes(:article).select(&:article)
       .map { |a| a.article.to_article }
   end
