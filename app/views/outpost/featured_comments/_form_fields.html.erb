@@ -1,6 +1,7 @@
 <%= form_block "Association" do %>
   <%= f.association :bucket %>
 
+  <%= f.full_errors :content %>
   <div id="aggregator" class="aggregator short"></div>
   <%= f.input :content_json, as: :hidden, input_html: { id: "content_json" } %>
 <% end %>
@@ -13,7 +14,9 @@
       {
         apiType: "private",
         view : {
-          dropLimit: 1,
+          dropMaxLimit: 1,
+          dropMinLimit: 1,
+          dropRejectOverflow: true,
           active: "search"
         },
         params: {
