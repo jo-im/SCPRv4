@@ -15,14 +15,6 @@ class FeaturedComment < ActiveRecord::Base
     STATUS_LIVE  => "Live"
   }
 
-  FEATUREABLE_CLASSES = [
-    "NewsStory",
-    "BlogEntry",
-    "ContentShell",
-    "ShowSegment",
-    "Event"
-  ]
-
   #----------------
   # Scopes
   scope :published, -> {
@@ -38,6 +30,8 @@ class FeaturedComment < ActiveRecord::Base
     :polymorphic    => true,
     :conditions     => { status: ContentBase::STATUS_LIVE }
 
+  accepts_json_input_for :content
+
   belongs_to :bucket, class_name: "FeaturedCommentBucket"
 
   #----------------
@@ -47,28 +41,8 @@ class FeaturedComment < ActiveRecord::Base
     :status,
     :excerpt,
     :bucket_id,
-    :content_type,
-    :content_id,
+    :content,
     presence: true
-
-  validate :content_exists?, :content_is_published?
-
-  #-----------------
-
-  def content_exists?
-    if self.content.nil?
-      errors.add(:content_id, "Content doesn't exist. Check the ID.")
-    end
-  end
-
-  #-----------------
-
-  def content_is_published?
-    if self.content && !self.content.published?
-      errors.add(:content_id,
-        "Content must be published in order to be featured.")
-    end
-  end
 
   #----------------
   # Callbacks
@@ -79,18 +53,12 @@ class FeaturedComment < ActiveRecord::Base
     def status_select_collection
       STATUS_TEXT.map { |k, v| [v, k] }
     end
-
-    def featurable_classes_select_collection
-      FEATUREABLE_CLASSES.map { |c| [c.titleize, c] }
-    end
   end
 
-  #----------------
 
-  def title
-    "Featured Comment (for #{content.obj_key})"
+  def article
+    self.content.try(:to_article)
   end
-
 
   def published?
     self.status == STATUS_LIVE
@@ -98,5 +66,14 @@ class FeaturedComment < ActiveRecord::Base
 
   def status_text
     STATUS_TEXT[self.status]
+  end
+
+
+  private
+
+  def build_content_association(content_hash, content)
+    if content.published?
+      self.content = content
+    end
   end
 end

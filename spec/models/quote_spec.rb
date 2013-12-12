@@ -17,33 +17,6 @@ describe Quote do
     end
   end
 
-  describe '::featurable_classes_select_collection' do
-    it "is an array of featureable classes" do
-      Quote.featurable_classes_select_collection.should be_a Array
-    end
-  end
-
-  describe 'validations' do
-    it "validates that the content exists" do
-      quote = build :quote, :published, content_type: "Event", content_id: "999"
-      quote.should_not be_valid
-      quote.errors.keys.should eq [:content_id]
-    end
-
-    it "validates that the content is published" do
-      story = build :news_story, :draft
-      entry = build :blog_entry, :published
-
-      quote1 = build :quote, :published, content: story
-      quote2 = build :quote, :published, content: entry
-
-      quote1.should_not be_valid
-      quote1.errors.keys.should eq [:content_id]
-
-      quote2.should be_valid
-    end
-  end
-
   describe '#article' do
     it "is the content to_article" do
       story = build :news_story, :published
