@@ -25,7 +25,7 @@ class Quote < ActiveRecord::Base
   validates \
     :status,
     :category_id,
-    :quote,
+    :text,
     presence: true
 
   #-----------------

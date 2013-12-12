@@ -1,5 +1,5 @@
 ThinkingSphinx::Index.define :quote, with: :active_record do
-  indexes quote
+  indexes text
   indexes source_name
   indexes source_context
 

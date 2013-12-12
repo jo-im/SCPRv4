@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20131209224408) do
+ActiveRecord::Schema.define(:version => 20131212034927) do
 
   create_table "abstracts", :force => true do |t|
     t.string   "source"
@@ -692,7 +692,7 @@ ActiveRecord::Schema.define(:version => 20131209224408) do
   add_index "programs_kpccprogram", ["title"], :name => "index_programs_kpccprogram_on_title"
 
   create_table "quotes", :force => true do |t|
-    t.text     "quote"
+    t.text     "text"
     t.string   "source_name"
     t.string   "source_context"
     t.integer  "category_id"
