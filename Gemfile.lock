@@ -26,9 +26,9 @@ GIT
 
 GIT
   remote: git://github.com/SCPR/outpost-aggregator.git
-  revision: 1ebd19d8139b26e3b3afb73711f74def03885133
+  revision: 55df2f010728f678927597d06ba96a0b583037c9
   specs:
-    outpost-aggregator (1.1.0)
+    outpost-aggregator (1.1.3)
 
 GIT
   remote: git://github.com/SCPR/outpost-asset_host.git
@@ -44,7 +44,7 @@ GIT
 
 GIT
   remote: git://github.com/SCPR/outpost.git
-  revision: ead345f587609a415da20d21ef00554e998a0441
+  revision: 06765e01ab60b651da43e7a2cc4af12439535f1c
   specs:
     outpost-cms (0.0.4)
       bcrypt-ruby (>= 3.0.0)

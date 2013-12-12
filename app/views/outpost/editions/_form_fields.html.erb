@@ -21,6 +21,9 @@
       <%= render_json("api/private/v2/articles/collection", articles: record.articles) %>,
       {
         apiType: "private",
+        view: {
+          dropMinLimit: 1
+        },
         params: {
           limit: 20,
           types: 'news,blogs,segments,shells,abstracts',

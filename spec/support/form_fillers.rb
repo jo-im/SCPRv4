@@ -30,10 +30,19 @@ module FormFillers
 
   def fill_field(record, attribute, options={})
     if record.class.reflect_on_association(attribute)
-      attribute = "#{attribute}_id"
+      if record.respond_to?("#{attribute}_json=")
+        # We're using an aggregator
+        attribute = :"#{attribute}_json"
+        # This assumes that the HTML ID of the field is the same
+        # as the attribute name. It won't be, necessarily.
+        fill_field(record, attribute, attribute => attribute.to_s)
+        return
+      else
+        attribute = "#{attribute}_id"
+      end
     end
 
-    field_id  = options[attribute] ||
+    field_id = options[attribute] ||
       "#{record.class.singular_route_key}_#{attribute}"
 
     value = record.send(attribute)
@@ -42,38 +51,30 @@ module FormFillers
     if record.class
     .serialized_attributes[attribute.to_s].try(:object_class) == Array
       record.send(attribute).each do |v|
-        interact(field_id + "_#{v}", value)
+        field = find_by_id(field_id + "_#{v}")
+        interact(field, v)
       end
     else
-      interact(field_id, value)
+      field = find_by_id(field_id)
+      interact(field, value)
     end
   end
 
   #----------------
 
-  def interact(field_id, value)
-    field = first('#' + field_id)
-    return if !field || field[:disabled]
+  def interact(field, value)
+    # If the field is disabled, leave it alone.
+    return if field[:disabled]
 
     case field.tag_name
     when "select"
-      text = find("##{field_id} option[value='#{value}']").text
-      select text, from: field_id
-
-    when "textarea"
-      fill_in field_id, with: value
-
-    when "input"
-      case field[:type]
-      when "checkbox"
-        check(field_id)
-
-      else
-        fill_in field_id, with: value
-      end
+      # For select tags, we want to assert that the value we're
+      # trying to select is actually an option in the drop-down.
+      field = find("##{field[:id]} option[value='#{value}']")
+      field.select_option
 
     else
-      raise StandardError, "Unexpected field tag_name: #{field.tag_name}"
+      field.set(value)
     end
   end
 end

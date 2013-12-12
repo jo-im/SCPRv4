@@ -137,6 +137,9 @@ module Api::Private::V2
     # get converted to actual Ruby boolean values.
     # Use "1" and "0". Thinking Sphinx or ActiveRecord
     # will convert them accordingly.
+    #
+    # If that's not the case, make sure your sphinx index
+    # is up-to-date.
     def sanitize_conditions
       @conditions = params[:with]
     end

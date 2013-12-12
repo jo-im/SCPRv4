@@ -14,20 +14,13 @@ class Quote < ActiveRecord::Base
     STATUS_LIVE  => "Live"
   }
 
-  FEATUREABLE_CLASSES = [
-    "NewsStory",
-    "BlogEntry",
-    "ContentShell",
-    "ShowSegment",
-    "Event"
-  ]
-
-
   scope :published, -> { where(status: STATUS_LIVE).order("created_at desc") }
 
   belongs_to :content,
     :polymorphic => true,
     :conditions  => { status: ContentBase::STATUS_LIVE }
+
+  accepts_json_input_for :content
 
   validates \
     :status,
@@ -35,17 +28,11 @@ class Quote < ActiveRecord::Base
     :quote,
     presence: true
 
-  validate :content_exists?, :content_is_published?
-
   #-----------------
 
   class << self
     def status_select_collection
       STATUS_TEXT.map { |k, v| [v, k] }
-    end
-
-    def featurable_classes_select_collection
-      FEATUREABLE_CLASSES.map { |c| [c.titleize, c] }
     end
   end
 
@@ -65,18 +52,9 @@ class Quote < ActiveRecord::Base
 
   private
 
-  def content_exists?
-    if self.content_id && self.content_type && !self.content
-      errors.add(:content_id, "Article doesn't exist. Check the ID.")
-    end
-  end
-
-  #-----------------
-
-  def content_is_published?
-    if self.content && !self.content.published?
-      errors.add(:content_id,
-        "Article must be published in order to be featured.")
+  def build_content_association(content_hash, content)
+    if content.published?
+      self.content = content
     end
   end
 end
