@@ -20,6 +20,8 @@ module CategoryHandler
     # Let Rails lazily load these if necessary.
     # For the other stuff like content and featured
     # articles, those will get populated instantly,
+    # so we need to defer their loading until they're
+    # actually needed in the template.
     @quotes = @category.quotes.published
     @events = @category.events.published.upcoming
 

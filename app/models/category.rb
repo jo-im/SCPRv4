@@ -1,5 +1,4 @@
 class Category < ActiveRecord::Base
-
   self.table_name = 'contentbase_category'
   outpost_model
   has_secretary
@@ -33,7 +32,11 @@ class Category < ActiveRecord::Base
   # Validations
   validates :title, presence: true
 
+
   class << self
+    # Get all Category previews which have articles,
+    # ordered reverse-chronologically by first
+    # article timestamp.
     def previews(options={})
       categories = options.delete(:categories) || self.all
 
@@ -49,6 +52,8 @@ class Category < ActiveRecord::Base
   end
 
 
+  # This category's hand-picked content,
+  # converted to articles.
   def featured_articles
     @articles ||= self.category_articles
       .includes(:article).select(&:article)
@@ -56,11 +61,13 @@ class Category < ActiveRecord::Base
   end
 
 
+  # This category's content converted to Articles.
   def articles(options={})
     content(options).map(&:to_article)
   end
 
 
+  # All content associated to this category.
   def content(options={})
     page      = options[:page] || DEFAULTS[:page]
     per_page  = options[:per_page] || DEFAULTS[:per_page]
@@ -91,6 +98,7 @@ class Category < ActiveRecord::Base
   end
 
 
+  # The Preview for this category.
   def preview(options={})
     @preview ||= CategoryPreview.new(self, options)
   end

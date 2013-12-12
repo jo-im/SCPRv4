@@ -3,16 +3,21 @@
 #
 FactoryGirl.define do
   factory :event do
-    sequence(:headline)   { |n| "A Very Special Event #{n}" }
+    sequence(:headline)   { |n| "A Very Special Event #{n}!" }
     sequence(:starts_at)  { |n| Time.now + 60*60*24*n }
 
-    slug                { headline.parameterize }
-    body                "This is a very special event."
-    event_type          "comm"
-    status 0
+    slug { headline.parameterize }
+    body "This is a very special event."
+    event_type "comm"
+
+
+    status Event::STATUS_HIDDEN
+
+    trait :hidden do
+    end
 
     trait :published do
-      status 5
+      status Event::STATUS_LIVE
     end
 
     trait :with_address do
