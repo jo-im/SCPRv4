@@ -34,24 +34,27 @@ class ShowEpisode < ActiveRecord::Base
     where("DATE(air_date) = DATE(?)", date_or_time)
   }
 
-  #-------------------
-  # Association
-  belongs_to  :show,      :class_name  => "KpccProgram", touch: true
 
-  has_many    :rundowns,  :class_name  => "ShowRundown",
-                          :foreign_key => "episode_id",
-                          :dependent   => :destroy
+  belongs_to :show,
+    :class_name  => "KpccProgram",
+    :touch       => true
 
-  has_many    :segments,  :class_name  => "ShowSegment",
-                          :foreign_key => "segment_id",
-                          :through     => :rundowns,
-                          :order       => "position"
+  has_many :rundowns,
+    :class_name     => "ShowRundown",
+    :foreign_key    => "episode_id",
+    :dependent      => :destroy
+
+  has_many :segments,
+    :class_name     => "ShowSegment",
+    :foreign_key    => "segment_id",
+    :through        => :rundowns,
+    :order          => "position"
+
 
   accepts_json_input_for :rundowns
   tracks_association :rundowns
 
-  #-------------------
-  # Validations
+
   validates :show, presence: true
   validates :status, presence: true
   validates :air_date, presence: true, if: :should_validate?
@@ -61,22 +64,15 @@ class ShowEpisode < ActiveRecord::Base
     :if      => :should_validate?
   }
 
+
+  before_save :generate_headline,
+    :if => -> { self.headline.blank? }
+
+
   def needs_validation?
     self.pending? || self.published?
   end
 
-  #-------------------
-  # Callbacks
-  before_save :generate_headline, if: -> { self.headline.blank? }
-
-  def generate_headline
-    if self.air_date.present? && self.show.present?
-      self.headline = "#{self.show.title} for " \
-        "#{self.air_date.strftime("%B %-d, %Y")}"
-    end
-  end
-
-  #----------
 
   # For podcasts
   def to_article
@@ -124,6 +120,13 @@ class ShowEpisode < ActiveRecord::Base
 
 
   private
+
+  def generate_headline
+    if self.air_date.present? && self.show.present?
+      self.headline = "#{self.show.title} for " \
+        "#{self.air_date.strftime("%B %-d, %Y")}"
+    end
+  end
 
   def build_rundown_association(rundown_hash, segment)
     if segment.is_a? ShowSegment

@@ -39,11 +39,6 @@ class ShowSegment < ActiveRecord::Base
   ROUTE_KEY = "segment"
 
 
-  #-------------------
-  # Scopes
-
-  #-------------------
-  # Associations
   belongs_to :show,
     :class_name   => "KpccProgram",
     :touch        => true
@@ -59,24 +54,18 @@ class ShowSegment < ActiveRecord::Base
     :order      => "air_date asc",
     :autosave   => true
 
-  #-------------------
-  # Validations
+
   validates :show, presence: true
 
   def needs_validation?
     self.pending? || self.published?
   end
 
-  #-------------------
-  # Callbacks
-
-  #----------
 
   def episode
     @episode ||= episodes.first
   end
 
-  #----------
 
   def sister_segments
     @sister_segments ||= begin
@@ -88,13 +77,11 @@ class ShowSegment < ActiveRecord::Base
     end
   end
 
-  #----------
 
   def byline_extras
     [self.show.title]
   end
 
-  #----------
 
   def route_hash
     return {} if !self.persisted? || !self.persisted_record.published?
@@ -109,7 +96,6 @@ class ShowSegment < ActiveRecord::Base
     }
   end
 
-  #-------------------
 
   def to_article
     @to_article ||= Article.new({
@@ -130,6 +116,7 @@ class ShowSegment < ActiveRecord::Base
       :feature            => self.feature
     })
   end
+
 
   # This is a total hack, but unfortunately a necessary one
   # until we can fix the workflow of programs like filmweek:
@@ -152,7 +139,6 @@ class ShowSegment < ActiveRecord::Base
     })
   end
 
-  #-------------------
 
   def to_abstract
     @to_abstract ||= Abstract.new({

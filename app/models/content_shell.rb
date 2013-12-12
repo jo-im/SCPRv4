@@ -27,20 +27,12 @@ class ContentShell < ActiveRecord::Base
   include Concern::Methods::PublishingMethods
 
 
-  #-------------------
-  # Scopes
-  #------------------
-  # Association
-
-  #------------------
-  # Validation
   validates :status, presence: true
   validates :headline, presence: true # always
   validates :body, presence: true, if: :should_validate?
   validates :url, url: true, presence: true, if: :should_validate?
   validates :site, presence: true, if: :should_validate?
 
-  #------------------
 
   class << self
     def sites_select_collection
@@ -48,14 +40,10 @@ class ContentShell < ActiveRecord::Base
     end
   end
 
-  #------------------
 
   def needs_validation?
     self.pending? || self.published?
   end
-
-  #------------------
-  # Callbacks
 
 
   # Override Outpost's routing methods for these

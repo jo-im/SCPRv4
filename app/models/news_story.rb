@@ -51,21 +51,11 @@ class NewsStory < ActiveRecord::Base
   ]
 
 
-  #-------------------
-  # Scopes
-  #-------------------
-  # Association
 
-  #------------------
-  # Validation
   def needs_validation?
     self.pending? || self.published?
   end
 
-  #------------------
-  # Callbacks
-
-  #----------
 
   def route_hash
     return {} if !self.persisted? || !self.persisted_record.published?
@@ -79,13 +69,11 @@ class NewsStory < ActiveRecord::Base
     }
   end
 
-  #----------
 
   def byline_extras
     Array(self.news_agency)
   end
 
-  #-------------------
 
   def to_article
     @to_article ||= Article.new({
@@ -107,7 +95,6 @@ class NewsStory < ActiveRecord::Base
     })
   end
 
-  #-------------------
 
   def to_abstract
     @to_abstract ||= Abstract.new({

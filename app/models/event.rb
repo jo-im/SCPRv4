@@ -70,19 +70,18 @@ class Event < ActiveRecord::Base
     .order("starts_at desc")
   }
 
-  #-------------------
-  # Associations
+
   belongs_to :kpcc_program
 
-  #-------------------
-  # Validations
+
   validates :headline, :status, presence: true
+
   validates \
     :event_type,
     :starts_at,
     :body,
     presence: true,
-    if: :should_validate?
+    :if => :should_validate?
 
   validates :location_url, :sponsor_url, url: { allow_blank: true }
 
@@ -91,18 +90,16 @@ class Event < ActiveRecord::Base
     :allowed        => [URI::HTTP, URI::MailTo]
   }
 
+
   def needs_validation?
     self.published?
   end
+
 
   def published?
     self.status == STATUS_LIVE
   end
 
-  #-------------------
-  # Callbacks
-
-  # -------------------
 
   class << self
     def event_types_select_collection
@@ -127,21 +124,21 @@ class Event < ActiveRecord::Base
     end
   end
 
-  # -------------------
 
   def sorter
     ongoing? ? ends_at : starts_at
   end
 
-  # -------------------
 
   def ongoing?
     multiple_days? && current?
   end
 
+
   def multiple_days?
     minutes > 24*60
   end
+
 
   def minutes
     if self.ends_at.present?
@@ -153,12 +150,12 @@ class Event < ActiveRecord::Base
     ((endt - starts_at) / 60).floor
   end
 
-  # -------------------
 
   # Still display maps, details, etc. if the event is currently happening
   def upcoming?
     starts_at > Time.now
   end
+
 
   def current?
     if ends_at.present?
@@ -168,7 +165,6 @@ class Event < ActiveRecord::Base
     end
   end
 
-  #----------
 
   def is_forum_event?
     ForumTypes.include? self.event_type
@@ -191,8 +187,6 @@ class Event < ActiveRecord::Base
     })
   end
 
-
-  #----------
 
   def route_hash
     return {} if !self.persisted? || !self.persisted_record.published?
