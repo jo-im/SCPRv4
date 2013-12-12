@@ -74,35 +74,37 @@
             </aside>
             <% end %>
             <% if issue = article.original_object.issues.first %>
-            <aside class="see-more issue">
-                <header>
-                    <h1>More from this Issue</h1>
-                    <h2 class="clearfix">
-                        <span><%= link_to issue.title, issue.public_path %></span>
-                        <mark><%= link_to 'See All', issues_path %></mark>
-                    </h2>
-                </header>
-                <ul class="previews">
-                  <% if issue_articles = issue.articles.first(3) %>
-                    <% issue_articles.each do |article| %>
-                      <li>
-                        <%= link_to article.public_path do %>
-                            <figure class="ratio-pairing clearfix">
-                                <div class="ratio">
-                                    <div class="fill"></div>
-                                    <b class="img-contain"><%= image_tag article.asset.lsquare.url %></b>
-                                </div><!--/ .ratio -->
-                                <figcaption>
-                                    <%= smart_date_js article.public_datetime %>
-                                    <mark><%= article.short_title %></mark>
-                                </figcaption>
-                            </figure><!--/ .ratio-pairing -->
-                        <% end %>
-                        </li>
-                    <% end %>
-                  <% end %>
-                </ul>
-            </aside>
+                <% cache ["single/article", "more-issues", "v1", issue] do %>
+                    <aside class="see-more issue">
+                        <header>
+                            <h1>More from this Issue</h1>
+                            <h2 class="clearfix">
+                                <span><%= link_to issue.title, issue.public_path %></span>
+                                <mark><%= link_to 'See All', issues_path %></mark>
+                            </h2>
+                        </header>
+                        <ul class="previews">
+                          <% if issue_articles = issue.articles.first(3) %>
+                            <% issue_articles.each do |article| %>
+                              <li>
+                                <%= link_to article.public_path do %>
+                                    <figure class="ratio-pairing clearfix">
+                                        <div class="ratio">
+                                            <div class="fill"></div>
+                                            <b class="img-contain"><%= image_tag article.asset.lsquare.url %></b>
+                                        </div><!--/ .ratio -->
+                                        <figcaption>
+                                            <%= smart_date_js article.public_datetime %>
+                                            <mark><%= article.short_title %></mark>
+                                        </figcaption>
+                                    </figure><!--/ .ratio-pairing -->
+                                <% end %>
+                                </li>
+                            <% end %>
+                          <% end %>
+                        </ul>
+                    </aside>
+                <% end %>
           <% end %>
             <aside class="see-more kpcc">
                 <header>

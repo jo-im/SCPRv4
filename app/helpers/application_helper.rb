@@ -150,6 +150,10 @@ module ApplicationHelper
     }.merge(options)
   end
 
+  def below_standard_ratio(options={})
+    ratio = (2.0/3.0)
+    return options[:height]/options[:width] <= ratio
+  end
 
   #----------
   # Render a byline for the passed-in content
