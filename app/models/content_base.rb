@@ -7,23 +7,18 @@
 module ContentBase
   extend self
 
-  #--------------------
-  # Status definitions
-  STATUS_KILLED   = -1
-  STATUS_DRAFT    = 0
-  STATUS_REWORK   = 1
-  STATUS_EDIT     = 2
-  STATUS_PENDING  = 3
-  STATUS_LIVE     = 5
+  # This is dumb
+  # I'm keeping it here because currently we don't have a way
+  # to know for sure in the database if an article is published or
+  # not, without checking it against the record's model.
+  # So we have to assume that anything we're looking up in the
+  # database that we want to be published uses the value of
+  # ContentBase::STATUS_LIVE as its "published" status.
+  # This should not and will not always be the case.
+  # I think we just need to add a "published?" boolean to the
+  # database so we can search against that.
+  STATUS_LIVE = 5
 
-  STATUS_TEXT = {
-      STATUS_KILLED   => "Killed",
-      STATUS_DRAFT    => "Draft",
-      STATUS_REWORK   => "Awaiting Rework",
-      STATUS_EDIT     => "Awaiting Edits",
-      STATUS_PENDING  => "Pending",
-      STATUS_LIVE     => "Published"
-  }
 
   #--------------------
   # This used the be the array of "classes that are content",
@@ -102,8 +97,10 @@ module ContentBase
   #--------------------
   # Generate a teaser from the passed-in text.
   # If the text is blank, return an empty string.
-  # If the first paragraph is <= target length, return the first paragraph.
-  # Otherwise get everything up to the target length, the up to the next period.
+  # If the first paragraph is <= target length, return
+  # the first paragraph.
+  # Otherwise get everything up to the target length,
+  # the up to the next period.
   def generate_teaser(text, length=180)
     return '' if text.blank?
     teaser = ''
@@ -155,12 +152,5 @@ module ContentBase
   # obj_by_url or raise
   def obj_by_url!(url)
     obj_by_url(url) or raise ActiveRecord::RecordNotFound, url
-  end
-
-
-  #--------------------
-  # For drop-down menus in the CMS
-  def status_text_collect
-    STATUS_TEXT.map { |k, v| [v, k] }
   end
 end # ContentBase

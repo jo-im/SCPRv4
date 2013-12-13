@@ -29,13 +29,8 @@ class Bio < ActiveRecord::Base
   #--------------
   # Callbacks
   before_validation :set_last_name, if: -> { self.last_name.blank? }
-  def set_last_name
-    if self.name.present?
-      self.last_name = self.name.split(" ").last
-    end
-  end
+  after_commit :touch_categories
 
-  #----------
 
   class << self
     # Maps all records to an array of arrays, to be
@@ -79,12 +74,13 @@ class Bio < ActiveRecord::Base
     end
   end
 
+
   def first_name
     if self.name?
       self.name.split[0]
     end
   end
-  #---------------------
+
 
   def json
     { asset: self.headshot }
@@ -95,5 +91,18 @@ class Bio < ActiveRecord::Base
   def route_hash
     return {} if !self.persisted? || !self.persisted_record.is_public?
     { slug: self.persisted_record.slug }
+  end
+
+
+  private
+
+  def set_last_name
+    if self.name.present?
+      self.last_name = self.name.split(" ").last
+    end
+  end
+
+  def touch_categories
+    self.categories.each(&:touch)
   end
 end

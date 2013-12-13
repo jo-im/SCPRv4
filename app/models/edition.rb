@@ -8,21 +8,34 @@
 class Edition < ActiveRecord::Base
   outpost_model
   has_secretary
+  has_status
+
 
   include Concern::Associations::ContentAlarmAssociation
   include Concern::Callbacks::SetPublishedAtCallback
   include Concern::Callbacks::TouchCallback
   include Concern::Callbacks::SphinxIndexCallback
+  include Concern::Scopes::PublishedScope
+  include Concern::Methods::StatusMethods
 
-  STATUS_DRAFT    = 0
-  STATUS_PENDING  = 3
-  STATUS_LIVE     = 5
 
-  STATUS_TEXT = {
-    STATUS_DRAFT      => "Draft",
-    STATUS_PENDING    => "Pending",
-    STATUS_LIVE       => "Live"
-  }
+  status :draft do |s|
+    s.id = 0
+    s.text = "Draft"
+    s.unpublished!
+  end
+
+  status :pending do |s|
+    s.id = 3
+    s.text = "Pending"
+    s.pending!
+  end
+
+  status :live do |s|
+    s.id = 5
+    s.text = "Live"
+    s.published!
+  end
 
 
   has_many :slots,
@@ -32,13 +45,6 @@ class Edition < ActiveRecord::Base
 
   accepts_json_input_for :slots
 
-  # We don't want to use ContentBase::STATUS_LIVE, so just manually define
-  # this scope here (as opposed to using the PublishScope module).
-  scope :published, -> {
-    where(status: STATUS_LIVE)
-    .order("published_at desc")
-  }
-
 
   validates :status, presence: true
   validates :title,
@@ -47,14 +53,15 @@ class Edition < ActiveRecord::Base
 
 
   class << self
-    def status_select_collection
-      STATUS_TEXT.map { |k, v| [v, k] }
-    end
-
     def titles_collection
-      self.where(status: STATUS_LIVE)
+      self.where(status: self.status_id(:live))
       .select('distinct title').order('title').map(&:title)
     end
+  end
+
+
+  def needs_validation?
+    self.pending? || self.published?
   end
 
 
@@ -73,32 +80,12 @@ class Edition < ActiveRecord::Base
   end
 
 
-  # Determine whether this edition is published.
-  def published?
-    self.status == STATUS_LIVE
-  end
-
-  # Determine whether this edition is pending.
-  # Necessary for ContentAlarms.
-  def pending?
-    self.status == STATUS_PENDING
-  end
-
   def publish
-    self.update_attributes(status: STATUS_LIVE)
-  end
-
-  # Return the descriptive status text for this edition.
-  def status_text
-    STATUS_TEXT[self.status]
+    self.update_attributes(status: self.class.status_id(:live))
   end
 
 
   private
-
-  def needs_validation?
-    self.pending? || self.published?
-  end
 
   def build_slot_association(slot_hash, item)
     if item.published?

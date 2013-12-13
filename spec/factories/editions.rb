@@ -3,7 +3,7 @@
 #
 FactoryGirl.define do
   factory :edition do
-    status Edition::STATUS_LIVE
+    status Edition.status_id(:live)
     sequence(:title) { |n| "Cool Edition #{n}" }
 
     trait :published do
@@ -11,11 +11,11 @@ FactoryGirl.define do
     end
 
     trait :pending do
-      status Edition::STATUS_PENDING
+      status Edition.status_id(:pending)
     end
 
     trait :unpublished do
-      status Edition::STATUS_DRAFT
+      status Edition.status_id(:draft)
     end
   end
 

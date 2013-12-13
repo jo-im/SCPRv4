@@ -13,6 +13,8 @@ class Issue < ActiveRecord::Base
   has_many :category_issues, dependent: :destroy
   has_many :categories, through: :category_issues
 
+  after_commit :touch_categories
+
   validates :title, presence: true
   validates :slug, uniqueness: true
   validates :description, presence: true
@@ -27,5 +29,12 @@ class Issue < ActiveRecord::Base
     @articles ||= self.article_issues.includes(:article)
       .select(&:article).map { |a| a.article.to_article }
       .sort { |a, b| b.public_datetime <=> a.public_datetime }
+  end
+
+
+  private
+
+  def touch_categories
+    self.categories.each(&:touch)
   end
 end

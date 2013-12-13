@@ -2,6 +2,8 @@ class ShowEpisode < ActiveRecord::Base
   self.table_name = "shows_episode"
   outpost_model
   has_secretary
+  has_status
+
 
   include Concern::Scopes::SinceScope
   include Concern::Associations::ContentAlarmAssociation
@@ -12,20 +14,43 @@ class ShowEpisode < ActiveRecord::Base
   include Concern::Callbacks::RedisPublishCallback
   include Concern::Callbacks::SphinxIndexCallback
   include Concern::Callbacks::TouchCallback
-  include Concern::Methods::ContentStatusMethods
-  include Concern::Methods::PublishingMethods
+  include Concern::Methods::StatusMethods
 
   ROUTE_KEY = "episode"
 
-  #-------------------
-  # Scopes
+
+  status :killed do |s|
+    s.id = -1
+    s.text = "Killed"
+    s.unpublished!
+  end
+
+  status :draft do |s|
+    s.id = 0
+    s.text = "Draft"
+    s.unpublished!
+  end
+
+  status :pending do |s|
+    s.id = 3
+    s.text = "Pending"
+    s.pending!
+  end
+
+  status :live do |s|
+    s.id = 5
+    s.text = "Published"
+    s.published!
+  end
+
+
   scope :published, -> {
-    where(status: ContentBase::STATUS_LIVE)
+    where(status: self.status_id(:live))
     .order("air_date desc, published_at desc")
   }
 
   scope :upcoming, -> {
-    where(status: ContentBase::STATUS_PENDING)
+    where(status: self.status_id(:pending))
     .where("air_date >= ?", Date.today)
     .order("air_date asc")
   }
@@ -34,24 +59,27 @@ class ShowEpisode < ActiveRecord::Base
     where("DATE(air_date) = DATE(?)", date_or_time)
   }
 
-  #-------------------
-  # Association
-  belongs_to  :show,      :class_name  => "KpccProgram", touch: true
 
-  has_many    :rundowns,  :class_name  => "ShowRundown",
-                          :foreign_key => "episode_id",
-                          :dependent   => :destroy
+  belongs_to :show,
+    :class_name  => "KpccProgram",
+    :touch       => true
 
-  has_many    :segments,  :class_name  => "ShowSegment",
-                          :foreign_key => "segment_id",
-                          :through     => :rundowns,
-                          :order       => "position"
+  has_many :rundowns,
+    :class_name     => "ShowRundown",
+    :foreign_key    => "episode_id",
+    :dependent      => :destroy
+
+  has_many :segments,
+    :class_name     => "ShowSegment",
+    :foreign_key    => "segment_id",
+    :through        => :rundowns,
+    :order          => "position"
+
 
   accepts_json_input_for :rundowns
   tracks_association :rundowns
 
-  #-------------------
-  # Validations
+
   validates :show, presence: true
   validates :status, presence: true
   validates :air_date, presence: true, if: :should_validate?
@@ -61,22 +89,20 @@ class ShowEpisode < ActiveRecord::Base
     :if      => :should_validate?
   }
 
+
+  before_save :generate_headline,
+    :if => -> { self.headline.blank? }
+
+
   def needs_validation?
     self.pending? || self.published?
   end
 
-  #-------------------
-  # Callbacks
-  before_save :generate_headline, if: -> { self.headline.blank? }
 
-  def generate_headline
-    if self.air_date.present? && self.show.present?
-      self.headline = "#{self.show.title} for " \
-        "#{self.air_date.strftime("%B %-d, %Y")}"
-    end
+  def publish
+    self.update_attributes(status: self.class.status_id(:live))
   end
 
-  #----------
 
   # For podcasts
   def to_article
@@ -124,6 +150,13 @@ class ShowEpisode < ActiveRecord::Base
 
 
   private
+
+  def generate_headline
+    if self.air_date.present? && self.show.present?
+      self.headline = "#{self.show.title} for " \
+        "#{self.air_date.strftime("%B %-d, %Y")}"
+    end
+  end
 
   def build_rundown_association(rundown_hash, segment)
     if segment.is_a? ShowSegment

@@ -11,15 +11,19 @@ FactoryGirl.define do
     body "Cool Body"
     teaser "Cool Teaser"
     slug { headline.parameterize }
-    status ContentBase::STATUS_LIVE
+    status TestClass::Story.status_id(:live)
     short_url "http://bit.ly/kpcc"
 
     trait :published do
-      status ContentBase::STATUS_LIVE
+      status TestClass::Story.status_id(:live)
     end
 
     trait :pending do
-      status ContentBase::STATUS_PENDING
+      status TestClass::Story.status_id(:pending)
+    end
+
+    trait :unpublished do
+      status TestClass::Story.status_id(:draft)
     end
   end
 
@@ -29,7 +33,7 @@ FactoryGirl.define do
     body "Cool Remote Body"
     teaser "Cool Remote Teaser"
     slug { headline.parameterize }
-    status ContentBase::STATUS_LIVE
+    status TestClass::Story.status_id(:live)
     published_at { Time.now }
     remote_url "http://kpcc.org"
   end
@@ -40,15 +44,15 @@ FactoryGirl.define do
     body "Cool Asset Body"
     teaser "Cool Asset Teaser"
     slug { headline.parameterize }
-    status ContentBase::STATUS_LIVE
+    status TestClass::Story.status_id(:live)
     published_at { Time.now }
 
     trait :published do
-      status ContentBase::STATUS_LIVE
+      status TestClass::Story.status_id(:live)
     end
 
     trait :pending do
-      status ContentBase::STATUS_PENDING
+      status TestClass::Story.status_id(:pending)
     end
   end
 

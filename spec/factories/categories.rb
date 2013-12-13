@@ -18,7 +18,6 @@ FactoryGirl.define do
 
     factory :category_news, traits: [:is_news]
     factory :category_not_news, traits: [:is_not_news]
-
   end
 
   factory :category_article do

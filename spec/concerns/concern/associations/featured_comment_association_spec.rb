@@ -13,7 +13,7 @@ describe Concern::Associations::FeaturedCommentAssociation do
   end
 
   it "destroys the join record on unpublish" do
-    @post.status = ContentBase::STATUS_PENDING
+    @post.status = @post.class.status_id(:pending)
     @post.save!
 
     @comment.content(true).should eq nil

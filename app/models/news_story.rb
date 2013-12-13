@@ -3,6 +3,7 @@ class NewsStory < ActiveRecord::Base
   outpost_model
   has_secretary
 
+
   include Concern::Scopes::SinceScope
   include Concern::Scopes::PublishedScope
   include Concern::Associations::ContentAlarmAssociation
@@ -30,8 +31,8 @@ class NewsStory < ActiveRecord::Base
   include Concern::Callbacks::SphinxIndexCallback
   include Concern::Callbacks::HomepageCachingCallback
   include Concern::Callbacks::TouchCallback
-  include Concern::Methods::ContentStatusMethods
-  include Concern::Methods::PublishingMethods
+  include Concern::Methods::ArticleStatuses
+  include Concern::Methods::StatusMethods
   include Concern::Methods::CommentMethods
   include Concern::Methods::AssetDisplayMethods
 
@@ -51,21 +52,11 @@ class NewsStory < ActiveRecord::Base
   ]
 
 
-  #-------------------
-  # Scopes
-  #-------------------
-  # Association
 
-  #------------------
-  # Validation
   def needs_validation?
     self.pending? || self.published?
   end
 
-  #------------------
-  # Callbacks
-
-  #----------
 
   def route_hash
     return {} if !self.persisted? || !self.persisted_record.published?
@@ -79,13 +70,11 @@ class NewsStory < ActiveRecord::Base
     }
   end
 
-  #----------
 
   def byline_extras
     Array(self.news_agency)
   end
 
-  #-------------------
 
   def to_article
     @to_article ||= Article.new({
@@ -107,7 +96,6 @@ class NewsStory < ActiveRecord::Base
     })
   end
 
-  #-------------------
 
   def to_abstract
     @to_abstract ||= Abstract.new({

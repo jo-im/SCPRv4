@@ -17,7 +17,7 @@ describe Concern::Associations::QuoteAssociation do
   end
 
   it "destroys the join record on unpublish" do
-    @post.status = ContentBase::STATUS_PENDING
+    @post.status = @post.class.status_id(:pending)
     @post.save!
 
     @quote.content(true).should eq nil

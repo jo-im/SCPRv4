@@ -1,10 +1,12 @@
+<%# articles must be an array of Articles %>
+
 <section class="triptych">
     <div class="inner bound">
-        <header><h1>Recent <%= category.title %> Coverage</h1></header>
+        <header><h1><%= header %></h1></header>
 
         <div class="rail clearfix">
 
-        <% Array(articles).each do |article| %>
+        <% articles.each do |article| %>
             <article class="clearfix">
                 <div class="graphic">
                     <div class="ratio">

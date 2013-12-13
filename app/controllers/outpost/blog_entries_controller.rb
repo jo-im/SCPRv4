@@ -12,7 +12,7 @@ class Outpost::BlogEntriesController < Outpost::ResourceController
       :sortable                   => true,
       :default_order_direction    => DESCENDING
 
-    l.column :status
+    l.column :status, display: :display_article_status
     l.column :updated_at,
       :header                     => "Last Updated",
       :sortable                   => true,
@@ -20,7 +20,7 @@ class Outpost::BlogEntriesController < Outpost::ResourceController
 
     l.filter :blog_id, collection: -> { Blog.select_collection }
     l.filter :bylines, collection: -> { Bio.select_collection }
-    l.filter :status, collection: -> { ContentBase.status_text_collect }
+    l.filter :status, collection: -> { BlogEntry.status_select_collection }
   end
 
   #----------------

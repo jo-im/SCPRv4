@@ -1,9 +1,11 @@
+<%# articles must be an array of Articles %>
+
 <section class="quadrant">
     <div class="inner bound">
 
         <header><h1><%= header %></h1></header>
 
-        <% Array(articles).each_slice(2).each do |row| %>
+        <% articles.each_slice(2).each do |row| %>
             <div class="rail clearfix">
 
             <% row.each do |article| %>

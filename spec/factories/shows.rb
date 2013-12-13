@@ -18,7 +18,20 @@ FactoryGirl.define do
     sequence(:air_date) { |n| Time.now + 60*60*24*n }
 
     show { |r| r.association(:kpcc_program) }
-    published
+
+    status ShowEpisode.status_id(:live)
+
+    trait :published do
+      status ShowEpisode.status_id(:live)
+    end
+
+    trait :pending do
+      status ShowEpisode.status_id(:pending)
+    end
+
+    trait :unpublished do
+      status ShowEpisode.status_id(:draft)
+    end
   end
 
   factory :show_rundown do

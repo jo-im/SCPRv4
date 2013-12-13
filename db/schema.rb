@@ -692,7 +692,7 @@ ActiveRecord::Schema.define(:version => 20131212051828) do
   add_index "programs_kpccprogram", ["title"], :name => "index_programs_kpccprogram_on_title"
 
   create_table "quotes", :force => true do |t|
-    t.text     "quote"
+    t.text     "text"
     t.string   "source_name"
     t.string   "source_context"
     t.integer  "category_id"

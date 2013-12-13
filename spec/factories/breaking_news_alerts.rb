@@ -8,7 +8,7 @@ FactoryGirl.define do
     alert_type    "break"
     alert_url    "http://scpr.org/"
     visible       true
-    status BreakingNewsAlert::STATUS_PUBLISHED
+    status BreakingNewsAlert.status_id(:published)
 
     send_email    false
     email_sent    false
@@ -17,12 +17,16 @@ FactoryGirl.define do
     mobile_notification_sent false
 
     trait :published do
-      status BreakingNewsAlert::STATUS_PUBLISHED
+      status BreakingNewsAlert.status_id(:published)
       sequence(:published_at) { |n| Time.now + n.minutes }
     end
 
     trait :pending do
-      status BreakingNewsAlert::STATUS_PENDING
+      status BreakingNewsAlert.status_id(:pending)
+    end
+
+    trait :unpublished do
+      status BreakingNewsAlert.status_id(:draft)
     end
 
     trait :email do

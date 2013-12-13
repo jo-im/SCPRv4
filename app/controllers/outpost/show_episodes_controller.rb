@@ -17,6 +17,6 @@ class Outpost::ShowEpisodesController < Outpost::ResourceController
       :default_order_direction    => DESCENDING
 
     l.filter :show_id, collection: -> { KpccProgram.select_collection }
-    l.filter :status, collection: -> { ContentBase.status_text_collect }
+    l.filter :status, collection: -> { ShowEpisode.status_select_collection }
   end
 end

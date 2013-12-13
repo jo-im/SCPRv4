@@ -10,8 +10,8 @@ module TestClass
     include Concern::Associations::AssetAssociation
     include Concern::Associations::PolymorphicProgramAssociation
     include Concern::Associations::EditionsAssociation
-    include Concern::Methods::PublishingMethods
-    include Concern::Methods::ContentStatusMethods
+    include Concern::Methods::StatusMethods
+    include Concern::Methods::ArticleStatuses
 
     has_many :content,
       :class_name   => "::TestClass::PostContent",
@@ -45,6 +45,9 @@ module TestClass
         :article_published_at   => self.published_at
       })
     end
+
+
+    private
 
     def build_content_association(content_hash, content)
       if content.published?

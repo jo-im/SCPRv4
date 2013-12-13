@@ -152,7 +152,10 @@ describe Api::Private::V2::ArticlesController do
       index_sphinx
 
       ts_retry(2) do
-        get :index, { with: { status: ContentBase::STATUS_DRAFT, is_live: ["1", "0"] } }.merge(request_params)
+        get :index, {
+          with: { status: entry.class.status_id(:draft), is_live: ["1", "0"] }
+        }.merge(request_params)
+
         assigns(:articles).should eq [entry].map(&:to_article)
       end
     end

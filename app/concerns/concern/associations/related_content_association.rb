@@ -32,29 +32,31 @@ module Concern
         end
       end
 
+
       #-------------------------
       # Return any content which this content references,
       # or which is referencing this content
       def related_content
-        content = []
+        @related_content ||= begin
+          content = []
 
-        # Outgoing references: Where `content` is this object
-        # So we want to grab `related`
-        self.outgoing_references.each do |reference|
-          content.push reference.related
+          # Outgoing references: Where `content` is this object
+          # So we want to grab `related`
+          self.outgoing_references.includes(:related).each do |reference|
+            content.push reference.related.try(:to_article)
+          end
+
+          # Incoming references: Where `related` is this object
+          # So we want to grab `content`
+          self.incoming_references.includes(:content).each do |reference|
+            content.push reference.content.try(:to_article)
+          end
+
+          # Compact to make sure no nil records get through - those would
+          # be unpublished content.
+          content.compact.uniq
+            .sort { |a, b| b.public_datetime <=> a.public_datetime }
         end
-
-        # Incoming references: Where `related` is this object
-        # So we want to grab `content`
-        self.incoming_references.each do |reference|
-          content.push reference.content
-        end
-
-        # Compact to make sure no nil records get through - those would
-        # be unpublished content.
-        content.compact.uniq
-          .map(&:to_article)
-          .sort { |a, b| b.public_datetime <=> a.public_datetime }
       end
 
 

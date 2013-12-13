@@ -3,6 +3,7 @@ class BlogEntry < ActiveRecord::Base
   outpost_model
   has_secretary
 
+
   include Concern::Scopes::SinceScope
   include Concern::Scopes::PublishedScope
   include Concern::Associations::ContentAlarmAssociation
@@ -30,35 +31,34 @@ class BlogEntry < ActiveRecord::Base
   include Concern::Callbacks::SphinxIndexCallback
   include Concern::Callbacks::HomepageCachingCallback
   include Concern::Callbacks::TouchCallback
-  include Concern::Methods::ContentStatusMethods
-  include Concern::Methods::PublishingMethods
+  include Concern::Methods::ArticleStatuses
+  include Concern::Methods::StatusMethods
   include Concern::Methods::CommentMethods
   include Concern::Methods::AssetDisplayMethods
 
   self.disqus_identifier_base = "blogs/entry"
   ROUTE_KEY = "blog_entry"
 
-  #------------------
-  # Scopes
 
-  #------------------
-  # Association
   belongs_to :blog
-  has_many :tagged, class_name: "TaggedContent", as: :content
-  has_many :tags, through: :tagged, dependent: :destroy
 
-  #------------------
-  # Validation
+  has_many :tagged,
+    :class_name   => "TaggedContent",
+    :as           => :content
+
+  has_many :tags,
+    :through      => :tagged,
+    :dependent    => :destroy
+
+
   validates_presence_of :blog, if: :should_validate?
+
 
   def needs_validation?
     self.pending? || self.published?
   end
 
-  #------------------
-  # Callbacks
 
-  #-------------------
   # Need to work around multi-american until we can figure
   # out how to merge those comments in with kpcc
   def disqus_identifier
@@ -69,7 +69,6 @@ class BlogEntry < ActiveRecord::Base
     end
   end
 
-  #-------------------
 
   def disqus_shortname
     if dsq_thread_id.present? && wp_id.present?
@@ -79,7 +78,7 @@ class BlogEntry < ActiveRecord::Base
     end
   end
 
-  #-------------------
+
   # Blog Entries don't need the "KPCC" credit,
   # so override the default +byline_extras+
   # behavior to return empty array
@@ -87,19 +86,23 @@ class BlogEntry < ActiveRecord::Base
     []
   end
 
-  #-------------------
 
   def previous
-    self.class.published.where("published_at < ? and blog_id = ?", self.published_at, self.blog_id).first
+    self.class.published
+      .where(
+        "published_at < ? and blog_id = ?", self.published_at, self.blog_id
+      ).first
   end
 
-  #-------------------
 
   def next
-    self.class.published.where("published_at > ? and blog_id = ?", self.published_at, self.blog_id).first
+    self.class.published
+      .where(
+        "published_at > ? and blog_id = ?", self.published_at, self.blog_id
+      ).first
   end
 
-  #-------------------
+
   # This was made for the blog list pages - showing the full body
   # was too long, but just the teaser was too short.
   #
@@ -113,15 +116,20 @@ class BlogEntry < ActiveRecord::Base
     extended_teaser = Nokogiri::HTML::DocumentFragment.parse(nil)
 
     content.children.each do |child|
-      break if (child.attributes["class"].to_s == break_class) || (extended_teaser.content.length >= target)
+      if (child.attributes["class"].to_s == break_class) ||
+      (extended_teaser.content.length >= target)
+        break
+      end
+
       extended_teaser.add_child child
     end
 
-    extended_teaser.add_child "<p><a href=\"#{self.public_path}\">#{more_text}</a></p>"
+    extended_teaser.add_child(
+      "<p><a href=\"#{self.public_path}\">#{more_text}</a></p>")
+
     return extended_teaser.to_html
   end
 
-  #-------------------
 
   def route_hash
     return {} if !self.persisted? || !self.persisted_record.published?
@@ -136,7 +144,6 @@ class BlogEntry < ActiveRecord::Base
     }
   end
 
-  #-------------------
 
   def to_article
     @to_article ||= Article.new({
@@ -158,7 +165,6 @@ class BlogEntry < ActiveRecord::Base
     })
   end
 
-  #-------------------
 
   def to_abstract
     @to_abstract ||= Abstract.new({

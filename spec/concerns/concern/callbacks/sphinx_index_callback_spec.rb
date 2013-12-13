@@ -1,6 +1,13 @@
 require 'spec_helper'
 
 describe Concern::Callbacks::SphinxIndexCallback do
+  describe '::enqueue_sphinx_index' do
+    it "enqueues a sphinx index for this class" do
+      Indexer.should_receive(:enqueue).with("TestClass::Story")
+      TestClass::Story.enqueue_sphinx_index
+    end
+  end
+
   it "enqueues the index after save if attributes are changed" do
     story = build :test_class_story
     story.changed?.should eq true

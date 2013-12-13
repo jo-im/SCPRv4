@@ -9,10 +9,11 @@ module TestClass
     self.table_name = "test_class_stories"
 
     has_secretary
+    has_status
+
 
     include Concern::Scopes::SinceScope
     include Concern::Scopes::PublishedScope
-
     include Concern::Associations::AssetAssociation
     include Concern::Associations::AudioAssociation
     include Concern::Associations::ContentAlarmAssociation
@@ -32,18 +33,20 @@ module TestClass
     include Concern::Callbacks::CacheExpirationCallback
     include Concern::Callbacks::TouchCallback
     include Concern::Callbacks::RedisPublishCallback
+    include Concern::Methods::StatusMethods
+    include Concern::Methods::ArticleStatuses
+    include Concern::Methods::AssetDisplayMethods
+    include Concern::Validations::ContentValidation
     include Concern::Methods::CommentMethods
 
     Concern::Methods::CommentMethods::COMMENT_CLASSES.push(self.name)
     self.disqus_identifier_base = "test/class/story"
 
-    include Concern::Methods::PublishingMethods
-    include Concern::Methods::ContentStatusMethods
-    include Concern::Methods::AssetDisplayMethods
 
-    include Concern::Validations::ContentValidation
+    validates :short_url, :url => {
+        allow_blank: true, allowed: [URI::HTTP, URI::FTP]
+    }
 
-    validates :short_url, url: { allow_blank: true, allowed: [URI::HTTP, URI::FTP] }
 
     def to_article
       @to_article ||= Article.new({
@@ -61,6 +64,7 @@ module TestClass
         :byline             => self.byline
       })
     end
+
 
     # Don't want to define these routes anywhere
     # Because I'm lazy.

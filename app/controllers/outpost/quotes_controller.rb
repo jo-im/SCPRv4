@@ -8,7 +8,7 @@ class Outpost::QuotesController < Outpost::ResourceController
     l.column :category
     l.column :content
     l.column :source_name, header: "Name"
-    l.column :quote
+    l.column :text
     l.column :status
 
     l.column :created_at,
