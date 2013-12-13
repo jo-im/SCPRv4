@@ -55,6 +55,11 @@ module Concern
         end
       end
 
+      # For comparison methods that use hash.
+      def hash
+        self.id.hash
+      end
+
       # Steal the ActiveRecord behavior for object comparison.
       # Compare Article ID with the comparison object's ID
       def ==(comparison_object)
