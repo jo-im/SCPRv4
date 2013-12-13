@@ -41,6 +41,7 @@ class Article
     :audio,
     :attributions,
     :byline,
+    :related_articles,
     :edit_url, # Should this really be an attribute, or should we delegate?
     :issues,
     :feature
@@ -55,13 +56,15 @@ class Article
     @teaser           = attributes[:teaser]
     @body             = attributes[:body]
     @category         = attributes[:category]
+    @byline           = attributes[:byline]
+    @edit_url         = attributes[:edit_url]
+    @feature          = attributes[:feature]
+
     @assets           = Array(attributes[:assets])
     @audio            = Array(attributes[:audio])
     @attributions     = Array(attributes[:attributions])
-    @byline           = attributes[:byline]
-    @edit_url         = attributes[:edit_url]
+    @related_articles = Array(attributes[:related_articles])
     @issues           = Array(attributes[:issues])
-    @feature          = attributes[:feature]
   end
 
 

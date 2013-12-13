@@ -41,6 +41,21 @@ describe Concern::Associations::RelatedContentAssociation do
     end
   end
 
+
+  describe '#outgoing_articles' do
+    it "is the outgoing content mapped to article and sorted by descending timestamp" do
+      story1 = create :test_class_story
+      story2 = create :test_class_story, :published, published_at: 1.month.ago
+      story3 = create :test_class_story, :published, published_at: 1.week.ago
+
+      story1.outgoing_references.create(related: story2)
+      story1.outgoing_references.create(related: story3)
+
+      story1.outgoing_articles.should eq [story3, story2].map(&:to_article)
+    end
+  end
+
+
   describe "#related_content" do
     before :each do
       @object  = create :test_class_story

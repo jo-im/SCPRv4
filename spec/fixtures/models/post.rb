@@ -30,7 +30,8 @@ module TestClass
         :teaser             => self.teaser,
         :body               => self.body,
         :assets             => self.assets,
-        :byline             => "KPCC"
+        :byline             => "KPCC",
+        :related_articles   => self.outgoing_articles,
       })
     end
 

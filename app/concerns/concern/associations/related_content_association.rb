@@ -32,29 +32,41 @@ module Concern
         end
       end
 
+
+      # Only the outgoing references, mapped to articles and sorted.
+      def outgoing_articles
+        @outgoing_articles ||= self.outgoing_references
+          .map(&:related)
+          .map(&:to_article)
+          .sort { |a, b| b.public_datetime <=> a.public_datetime }
+      end
+
+
       #-------------------------
       # Return any content which this content references,
       # or which is referencing this content
       def related_content
-        content = []
+        @related_content ||= begin
+          content = []
 
-        # Outgoing references: Where `content` is this object
-        # So we want to grab `related`
-        self.outgoing_references.each do |reference|
-          content.push reference.related
+          # Outgoing references: Where `content` is this object
+          # So we want to grab `related`
+          self.outgoing_references.each do |reference|
+            content.push reference.related
+          end
+
+          # Incoming references: Where `related` is this object
+          # So we want to grab `content`
+          self.incoming_references.each do |reference|
+            content.push reference.content
+          end
+
+          # Compact to make sure no nil records get through - those would
+          # be unpublished content.
+          content.compact.uniq
+            .map(&:to_article)
+            .sort { |a, b| b.public_datetime <=> a.public_datetime }
         end
-
-        # Incoming references: Where `related` is this object
-        # So we want to grab `content`
-        self.incoming_references.each do |reference|
-          content.push reference.content
-        end
-
-        # Compact to make sure no nil records get through - those would
-        # be unpublished content.
-        content.compact.uniq
-          .map(&:to_article)
-          .sort { |a, b| b.public_datetime <=> a.public_datetime }
       end
 
 

@@ -44,7 +44,7 @@
             <aside class="more">
 
         <% issue = lead_article.issues.first %>
-        <% related = lead_article.original_object.related_content.first(2) %>
+        <% related = lead_article.related_articles.first(2) %>
         <%= cache ["categories/show", "more-featured", cache_version, issue, related] do %>
             <% if issue %>
                 <h3>More from <%= link_to issue.title, issue.public_path %></h3>
@@ -56,7 +56,7 @@
 
                 </ul>
 
-            <% else %>
+            <% elsif related.present? %>
                 <%# Bug: There is nothing in here that is breaking the
                 category cache, so if one of the related articles gets
                 their headline or something changed, it's possible that

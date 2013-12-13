@@ -61,6 +61,7 @@ module TestClass
         :assets             => self.assets,
         :audio              => self.audio.available,
         :attributions       => self.bylines,
+        :related_articles   => self.outgoing_articles,
         :byline             => self.byline
       })
     end

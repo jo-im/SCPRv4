@@ -23,6 +23,20 @@ describe "Vertical page" do
         page.should have_content category.featured_articles.first.short_title, count: 1
       end
     end
+
+    # This spec is here becase an error occurred when a content shell
+    # without issues was the lead article, since content shells don't have
+    # related content.
+    it "can have a content shell as the lead article with no issues" do
+      category = create :category, is_active: true
+      shell = create :content_shell, :published
+
+      category.category_articles.create(article: shell)
+
+      visit category.public_path
+      page.should have_content shell.headline
+      page.should_not have_content "More from Related Content"
+    end
   end
 
   describe 'rendering events' do

@@ -92,6 +92,7 @@ class NewsStory < ActiveRecord::Base
       :byline             => self.byline,
       :edit_url           => self.admin_edit_url,
       :issues             => self.issues,
+      :related_articles   => self.outgoing_articles,
       :feature            => self.feature
     })
   end
