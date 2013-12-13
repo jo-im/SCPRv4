@@ -1,10 +1,66 @@
 <% article = article.to_article %>
-<% if article.asset.present? %>
-<section class="prologue">
-    <div class="grating">
-        <div class="inner bound clearfix">
-            <div class="prose">
+
+<% if article.assets.present? %>
+    <% if below_standard_ratio(width: article.asset.eight.width, height: article.asset.eight.height) %>
+        <section class="prologue">
+            <div class="grating">
+                <div class="inner bound clearfix">
+                    <div class="prose">
+                        <h1 class="title"><%= article.short_title %></h1>
+                        <aside class="byline">
+                            <h2 class="author">by <%= render_byline article.original_object %></h2>
+                            <%= smart_date_js article.public_datetime %>
+                        </aside>
+                        <aside class="share">
+                            <ul>
+                                <li><a href="#">Share on Facebook</a></li>
+                                <li><a href="#">Share on Twitter</a></li>
+                                <li><a href="#">Share on Google Plus</a></li>
+                                <li><a href="#">Share via Email</a></li>
+                            </ul>
+                        </aside>
+                        <aside class="caption">
+                            <p><%= article.asset.caption %><mark class="credit"><%= link_to article.asset.owner, '#' %></mark></p>
+                        </aside>
+                    </div><!--/ .prose -->
+                    <div class="asset">
+                        <div class="ratio">
+                            <div class="fill"></div>
+                            <b class="img-contain">
+                                <%= image_tag article.asset.eight.url %>
+                            </b>
+                        </div><!--/ .ratio -->
+                    </div><!--/ .asset -->
+                </div>
+            </div>
+            <div class="ephemera"><%= image_tag article.asset.full.url %></div>
+        </section><!--/ .prologue -->
+    <% else %>
+        <section class="prologue austere">
+            <div class="inner bound clearfix">
                 <h1 class="title"><%= article.short_title %></h1>
+                <div class="meta">
+                    <aside class="byline">
+                        <h2 class="author">by <%= render_byline article.original_object %></h2>
+                        <%= smart_date_js article.public_datetime %>
+                    </aside>
+                    <aside class="share">
+                        <ul>
+                            <li><a href="#">Share on Facebook</a></li>
+                            <li><a href="#">Share on Twitter</a></li>
+                            <li><a href="#">Share on Google Plus</a></li>
+                            <li><a href="#">Share via Email</a></li>
+                        </ul>
+                    </aside>
+                </div><!--/ .meta -->
+            </div>
+        </section><!--/ .prologue -->
+    <% end %>
+<% else %>
+    <section class="prologue austere">
+        <div class="inner bound clearfix">
+            <h1 class="title"><%= article.short_title %></h1>
+            <div class="meta">
                 <aside class="byline">
                     <h2 class="author">by <%= render_byline article.original_object %></h2>
                     <%= smart_date_js article.public_datetime %>
@@ -17,27 +73,26 @@
                         <li><a href="#">Share via Email</a></li>
                     </ul>
                 </aside>
-                <aside class="caption">
-                    <p><%= article.asset.caption %><mark class="credit"><%= link_to article.asset.owner, '#' %></mark></p>
-                </aside>
-            </div><!--/ .prose -->
-            <div class="asset">
-                <div class="ratio">
-                    <div class="fill"></div>
-                    <b class="img-contain">
-                      <%= image_tag article.asset.eight.url %>
-                    </b>
-                </div><!--/ .ratio -->
-            </div><!--/ .asset -->
+            </div><!--/ .meta -->
         </div>
-    </div>
-    <div class="ephemera"><%= image_tag article.asset.full.url %></div>
-</section><!--/ .prologue -->
+    </section><!--/ .prologue -->
 <% end %>
 
 <div class="report">
+    <% if below_standard_ratio(width: article.asset.eight.width, height: article.asset.eight.height) %>
+        <div class='cubbyhole' aria-hidden="true"></div>
+    <% end %>
     <div class="inner bound clearfix">
         <article class="prose">
+        <% unless below_standard_ratio(width: article.asset.eight.width, height: article.asset.eight.height) %>
+            <figure class="asset-inset">
+            <b class="pic"><%= image_tag article.asset.eight.url, alt: "" %></b>
+                <figcaption>
+                <span><%= article.asset.caption %><mark> <%= link_to article.asset.owner, '#' %></mark></span>
+                </figcaption>
+            </figure>
+        <% end %>
+
             <%= article.body.html_safe %>
             <% related = article.original_object.related_content.first(2) %>
             <% if related.present? %>
@@ -56,7 +111,13 @@
                     </ul>
                 </nav>
             </aside>
-            <% end %>
+        <% end %>
+
+        <footer class="comments-trigger">
+            <a href="#">This article currently has no comments. Click here to start the discussion.</a>
+        </footer>
+
+
           </article>
         <section class="supportive">
             <% if audio = article.audio.first %>
@@ -267,8 +328,6 @@
      </div>
  </div><!--/ .townhall -->
 <% end %>
-
-
 
 
 
