@@ -13,23 +13,28 @@ class Category < ActiveRecord::Base
     :per_page   => 10
   }
 
-  #-------------------
-  # Associations
+
   has_many :category_articles, order: 'position', dependent: :destroy
+  accepts_json_input_for :category_articles
+  tracks_association :category_articles
+
   has_many :category_reporters, dependent: :destroy
   has_many :bios, through: :category_reporters
+  tracks_association :bios
+
   has_many :category_issues, dependent: :destroy
   has_many :issues, through: :category_issues
+  tracks_association :issues
+
   belongs_to :comment_bucket, class_name: "FeaturedCommentBucket"
+
   has_many :events
   has_many :quotes,
     :foreign_key    => "category_id",
     :order          => "created_at desc"
 
-  accepts_json_input_for :category_articles
 
-  #-------------------
-  # Validations
+
   validates :title, presence: true
 
 
