@@ -24,7 +24,7 @@ module AdminListHelper
       }
     }
 
-  def display_link(link, record)
+  def display_link(link)
     link_to content_tag(:i, nil, class: "icon-share-alt"), link, class: "btn"
   end
 
@@ -32,7 +32,7 @@ module AdminListHelper
   # Associations
 
   # For a polymorphic content association - requires headline and obj_key
-  def display_content(content, record)
+  def display_content(content)
     if content &&
     content.respond_to?(:headline) &&
     content.respond_to?(:obj_key)
@@ -63,11 +63,11 @@ module AdminListHelper
   end
 
 
-  def display_air_status(air_status, record)
+  def display_air_status(air_status)
     KpccProgram::PROGRAM_STATUS[air_status]
   end
 
-  def display_audio(audio, record)
+  def display_audio(audio)
     return audio if !audio.is_a? Array
     status = audio.first.try(:status)
     content_tag :div, Audio::STATUS_TEXT[status], {
