@@ -183,7 +183,6 @@ class Event < ActiveRecord::Base
       :assets             => self.assets,
       :audio              => self.audio.available,
       :byline             => "KPCC",
-      :related_articles   => self.outgoing_articles,
       :edit_url           => self.admin_edit_url
     })
   end

@@ -30,10 +30,6 @@ describe Article do
     it 'forces issues into an array' do
       article.issues.should eq []
     end
-
-    it "forces related_articles into an array" do
-      article.related_articles.should eq []
-    end
   end
 
   describe '#to_article' do

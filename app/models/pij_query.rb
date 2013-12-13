@@ -75,7 +75,6 @@ class PijQuery < ActiveRecord::Base
       :body               => self.body,
       :assets             => self.assets,
       :byline             => "KPCC",
-      :related_articles   => self.outgoing_articles,
       :edit_url           => self.admin_edit_url
     })
   end

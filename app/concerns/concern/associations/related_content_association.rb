@@ -33,15 +33,6 @@ module Concern
       end
 
 
-      # Only the outgoing references, mapped to articles and sorted.
-      def outgoing_articles
-        @outgoing_articles ||= self.outgoing_references
-          .map(&:related)
-          .map(&:to_article)
-          .sort { |a, b| b.public_datetime <=> a.public_datetime }
-      end
-
-
       #-------------------------
       # Return any content which this content references,
       # or which is referencing this content
