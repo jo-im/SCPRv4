@@ -168,7 +168,7 @@
 <div class="lunchbox">
     <div class="inner bound clearfix">
 
-<%= cache ["categories/show", "issues", "v1", @category.issues] do %>
+<%= cache ["categories/show", "issues", "v2", @category.issues] do %>
     <% if @category.issues.present? %>
         <section class="issues">
             <header>
@@ -285,7 +285,7 @@
 </div><!--/ .lunchbox -->
 
 <% articles = @category_articles[2..4] %>
-<%= cache ["categories/show", "recent-coverage", "v1", Array(articles)] do %>
+<%= cache ["categories/show", "recent-coverage", "v2", Array(articles)] do %>
 <%= render 'shared/new/triptych', category: @category, articles: articles %>
 <% end %>
 

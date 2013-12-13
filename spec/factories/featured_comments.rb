@@ -9,13 +9,20 @@ FactoryGirl.define do
   #---------------------------
 
   factory :featured_comment do
-    bucket  { |f| f.association :featured_comment_bucket }
-    content { |mic| mic.association(:content_shell) }
+    bucket { |f| f.association :featured_comment_bucket }
+    content { |f| f.association(:content_shell) }
 
-    username  "bryanricker"
-    excerpt   "This is an excerpt of the featured comment"
+    username "bryanricker"
+    excerpt "This is an excerpt of the featured comment"
 
     status FeaturedComment::STATUS_LIVE
+
+    # Since it's a required field, we need to populate the content_json
+    # field for request specs in Outpost.
+    content_json { [content.simple_json].to_json }
+
+    trait :published do
+    end
 
     trait :draft do
       status FeaturedComment::STATUS_DRAFT

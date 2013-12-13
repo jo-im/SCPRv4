@@ -10,6 +10,6 @@ FactoryGirl.define do
 
   factory :missed_it_content do
     missed_it_bucket
-    content { |mic| mic.association(:content_shell) }
+    content { |f| f.association(:content_shell) }
   end
 end
