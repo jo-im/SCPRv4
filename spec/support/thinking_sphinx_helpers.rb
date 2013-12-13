@@ -35,7 +35,8 @@
 #      DatabaseCleaner.strategy = :transaction
 #    end
 #
-# `make_content` assigns @generated_content for you, available for using in your specs.
+# `make_content` assigns @generated_content for you,
+# available for using in your specs.
 
 module ThinkingSphinxHelpers
   extend ActiveSupport::Concern
