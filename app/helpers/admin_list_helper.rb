@@ -74,4 +74,8 @@ module AdminListHelper
       :class => STATUS_BOOTSTRAP_MAP[:audio][status]
     }
   end
+
+  def status_bootstrap_map
+    STATUS_BOOSTRAP_MAP
+  end
 end
