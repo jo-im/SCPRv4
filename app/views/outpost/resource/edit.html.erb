@@ -13,8 +13,8 @@
 
 <% content_for :sidebar do %>
   <ul class="story-status unstyled">
-    <h5>Status</h5>
     <% if @record.respond_to? :status_text %>
+      <h5>Status</h5>
       <li>
         <%= display_status(@record.status, @record) %>
 
