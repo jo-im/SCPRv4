@@ -28,6 +28,7 @@ class Issue < ActiveRecord::Base
   def articles
     @articles ||= self.article_issues.includes(:article)
       .select(&:article).map { |a| a.article.to_article }
+      .sort { |a, b| b.public_datetime <=> a.public_datetime }
   end
 
 

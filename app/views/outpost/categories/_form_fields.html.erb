@@ -17,7 +17,11 @@
 <% end %>
 
 
-<%= form_block "Content" do %>
+<%= form_block "Landing Page Featured Content" do %>
+  <div class="alert alert-info">
+    Choose the <strong>SIX Featured Articles</strong> for the Landing Page. Click "Help: Verticals" for more information.
+  </div>
+
   <div class="pull-right">
     <%= modal_toggle title: "Help: Verticals", id: "verticals-help-modal" do %>
       <h4>Featured Content</h4>
