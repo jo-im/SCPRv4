@@ -11,8 +11,8 @@ gem 'thinking-sphinx', '~> 3.0.5'
 gem 'riddle', github: 'bricker/riddle', branch: 'fix-empty-array-filter'
 
 ## Outpost
-#gem 'outpost-cms', github: 'SCPR/outpost'
-gem 'outpost-cms', path: "#{ENV['PROJECT_HOME']}/outpost"
+gem 'outpost-cms', github: 'SCPR/outpost'
+#gem 'outpost-cms', path: "#{ENV['PROJECT_HOME']}/outpost"
 
 gem 'outpost-publishing', github: "SCPR/outpost-publishing"
 #gem 'outpost-publishing', path: "#{ENV['PROJECT_HOME']}/outpost-publishing"
