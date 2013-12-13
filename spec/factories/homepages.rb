@@ -12,7 +12,7 @@ FactoryGirl.define do
     end
 
     trait :published do
-      status Homepage.status_id(:published)
+      status Homepage.status_id(:live)
       published_at { 2.hours.ago }
     end
   end
