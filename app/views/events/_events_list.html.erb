@@ -21,11 +21,13 @@
 
           <div class="event-details">
             <div class="row-fluid">
-              <div class="span8">
+              <div class="span24">
                 <% text = event.ongoing? ? "Through " : "" %>
-                <%= link_to text + format_date(event.sorter, format: :event), event.public_path, class: "event-link" %>
+                <%= link_to text + format_date(event.sorter, format: :event, time: true), event.public_path, class: "event-link" %>
               </div>
-              <div class="span16">
+            </div>
+            <div class="row-fluid">
+              <div class="span24">
                 <% if event.location_name.present? %>
                   <span class="event-location<%= " forum" if event.is_forum_event? %>"><%= event.location_name %></span>
                 <% end %>
