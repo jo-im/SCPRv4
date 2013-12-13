@@ -56,8 +56,12 @@ class BreakingNewsAlert < ActiveRecord::Base
 
   #-------------------
   # Validations
-  validates :headline, presence: true
-  validates :alert_type, presence: true
+  validates \
+    :headline,
+    :alert_type,
+    :status,
+    presence: true
+
   validates :alert_url, url: { allow_blank: true }
 
   #-------------------
@@ -96,7 +100,7 @@ class BreakingNewsAlert < ActiveRecord::Base
 
   # Callbacks will handle the email/push notification
   def publish
-    self.update_attributes(status: self.class.status_id(:live))
+    self.update_attributes(status: self.class.status_id(:published))
   end
 
 
