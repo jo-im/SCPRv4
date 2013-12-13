@@ -222,11 +222,11 @@
             <aside class="featured">
                 <div>
                     <h1>Featured Interactive</h1>
-
                     <h2><%= link_to article.short_title, article.public_path %></h2>
                     <h3><%= article.byline %></h3>
-
                 </div>
+                    <span class="overlay"></span>
+                    <b class="underlying-photo"><%= image_tag article.asset.eight.url %></b>
             </aside>
         <% end %>
     <% end %>
