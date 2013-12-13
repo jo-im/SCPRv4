@@ -31,9 +31,9 @@ class PijQuery < ActiveRecord::Base
   ]
 
 
-  status :draft do |s|
+  status :hidden do |s|
     s.id = 0
-    s.text = "Draft"
+    s.text = "Hidden"
     s.unpublished!
   end
 
@@ -56,6 +56,7 @@ class PijQuery < ActiveRecord::Base
   validates :body, presence: true
   validates :query_type, presence: true
   validates :pin_query_id, presence: true
+  validates :status, presence: true
 
 
   def publish

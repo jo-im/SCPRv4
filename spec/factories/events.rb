@@ -13,12 +13,12 @@ FactoryGirl.define do
 
     status Event.status_id(:hidden)
 
-    trait :hidden do
-      status Event.status_id(:hidden)
-    end
-
     trait :published do
       status Event.status_id(:live)
+    end
+
+    trait :unpublished do
+      status Event.status_id(:hidden)
     end
 
     trait :with_address do

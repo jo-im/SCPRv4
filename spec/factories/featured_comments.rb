@@ -25,8 +25,8 @@ FactoryGirl.define do
       status FeaturedComment.status_id(:live)
     end
 
-    trait :draft do
-      status FeaturedComment.status_id(:hidden)
+    trait :unpublished do
+      status FeaturedComment.status_id(:draft)
     end
   end
 end

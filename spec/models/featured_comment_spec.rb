@@ -5,7 +5,7 @@ describe FeaturedComment do
     it "gets published comments ordered in reverse chron" do
       comment1 = create :featured_comment, :published, created_at: 1.month.ago
       comment2 = create :featured_comment, :published, created_at: 1.week.ago
-      comment3 = create :featured_comment, :draft
+      comment3 = create :featured_comment, :unpublished
 
       FeaturedComment.published.should eq [comment2, comment1]
     end

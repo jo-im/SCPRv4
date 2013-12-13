@@ -25,6 +25,10 @@ FactoryGirl.define do
       status BreakingNewsAlert.status_id(:pending)
     end
 
+    trait :unpublished do
+      status BreakingNewsAlert.status_id(:draft)
+    end
+
     trait :email do
       send_email true
     end

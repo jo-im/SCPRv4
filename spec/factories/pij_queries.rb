@@ -22,5 +22,9 @@ FactoryGirl.define do
     trait :pending do
       status PijQuery.status_id(:pending)
     end
+
+    trait :unpublished do
+      status PijQuery.status_id(:hidden)
+    end
   end
 end
