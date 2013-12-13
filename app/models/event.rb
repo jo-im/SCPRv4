@@ -80,7 +80,10 @@ class Event < ActiveRecord::Base
   belongs_to :kpcc_program
 
 
-  validates :headline, :status, presence: true
+  validates \
+    :headline,
+    :status,
+    presence: true
 
   validates \
     :event_type,

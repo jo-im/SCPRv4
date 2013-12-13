@@ -54,7 +54,10 @@ class Homepage < ActiveRecord::Base
   belongs_to :missed_it_bucket
 
 
-  validates :base, :status, presence: true
+  validates \
+    :base,
+    :status,
+    presence: true
 
 
   after_commit :expire_cache
