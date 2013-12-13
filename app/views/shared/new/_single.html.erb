@@ -245,9 +245,9 @@
                     <% end %>
                 </section>
                 <section>
+                    <% if @category.bios.present? %>
                     <h1>Our Reporters</h1>
                     <div class="rollcall clearfix">
-                        <% if @category.bios.present? %>
                         <% @category.bios.each do |reporter| %>
                             <figure class="reporter clearfix">
                                 <div class="ratio">
@@ -267,8 +267,8 @@
                                 </figcaption>
                             </figure>
                         <% end %>
-                        <% end %>
                     </div>
+                    <% end %>
                 </section>
             </div><!--/ .supportive -->
 
