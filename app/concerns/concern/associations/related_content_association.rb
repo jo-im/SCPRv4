@@ -42,20 +42,19 @@ module Concern
 
           # Outgoing references: Where `content` is this object
           # So we want to grab `related`
-          self.outgoing_references.each do |reference|
-            content.push reference.related
+          self.outgoing_references.includes(:related).each do |reference|
+            content.push reference.related.try(:to_article)
           end
 
           # Incoming references: Where `related` is this object
           # So we want to grab `content`
-          self.incoming_references.each do |reference|
-            content.push reference.content
+          self.incoming_references.includes(:content).each do |reference|
+            content.push reference.content.try(:to_article)
           end
 
           # Compact to make sure no nil records get through - those would
           # be unpublished content.
           content.compact.uniq
-            .map(&:to_article)
             .sort { |a, b| b.public_datetime <=> a.public_datetime }
         end
       end
