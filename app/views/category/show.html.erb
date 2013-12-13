@@ -299,6 +299,7 @@
     </div> <!--/ .inner.bound -->
 </div><!--/ .lunchbox -->
 
+
 <% articles = Array(vertical_articles[2..-1]) %>
 <%# We add category.title to the cache key since that's the only category-specific
 information we depend on inside of this cache block. %>
@@ -306,7 +307,6 @@ information we depend on inside of this cache block. %>
     <%= render 'shared/new/triptych', articles: Array(articles[0..2]), header: "Recent #{@category.title} Coverage" %>
     <%= render 'shared/new/kpcc_ipad_ad' %>
     <%= render 'shared/new/quadrant', articles: Array(articles[3..6]), header: "" %>
-
 
 <div class="waterfall">
     <div class="inner bound clearfix">
