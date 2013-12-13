@@ -288,7 +288,7 @@
 </div><!--/ .lunchbox -->
 
 <% articles = @category_articles[2..4] %>
-<%= cache ["categories/show", "recent-coverage", "v1", Array(articles)] do %>
+<%= cache ["categories/show", "recent-coverage", "v2", Array(articles)] do %>
 <%= render 'shared/new/triptych', category: @category, articles: articles %>
 <% end %>
 
