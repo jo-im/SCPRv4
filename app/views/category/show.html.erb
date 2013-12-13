@@ -219,14 +219,12 @@
     <% article = @featured_articles[5] %>
     <%= cache ["categories/show", "interactive", "v1", article] do %>
         <% if article %>
-            <aside class="featured">
+            <aside class="featured"><%-# If someone specifies a desired Featured Intearctive Background Graphic, then insert a space after "featured" and toss in its approprirate decorative value (e.g.: beams | traffic | palmtrees | map ) -%>
                 <div>
                     <h1>Featured Interactive</h1>
                     <h2><%= link_to article.short_title, article.public_path %></h2>
                     <h3><%= article.byline %></h3>
                 </div>
-                    <span class="overlay"></span>
-                    <b class="underlying-photo"><%= image_tag article.asset.eight.url %></b>
             </aside>
         <% end %>
     <% end %>
