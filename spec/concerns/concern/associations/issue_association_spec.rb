@@ -11,23 +11,63 @@ describe Concern::Associations::IssueAssociation do
     end
   end
 
-  describe "touching" do
-    it "touches the article's issues on save" do
-      story = create :test_class_story
-      issue1 = create :issue
-      issue2 = create :issue
+  describe 'touching' do
+    let(:old_time) { 1.week.ago }
+    let(:issues) { create_list :issue, 2, :is_active }
 
-      ts1 = issue1.updated_at
-      ts2 = issue2.updated_at
+    before do
+      issues.each { |i| i.update_column :updated_at, old_time }
+    end
 
-      # I got 99 problems but a microsecond ain't one
-      sleep 1
-
-      story.issues = [issue1, issue2]
+    it "touches the issues if the article is published" do
+      story = create :test_class_story, :published
+      story.issues = issues
       story.save!
 
-      issue1.reload.updated_at.should be > ts1
-      issue2.reload.updated_at.should be > ts2
+      issues.each do |issue|
+        issue.updated_at.should be > 10.seconds.ago
+      end
+    end
+
+    it "does not touch the issues if the article is not published" do
+      story = create :test_class_story, :unpublished
+      story.issues = issues
+      story.save!
+
+      issues.each do |issue|
+        issue.updated_at.should eq old_time
+      end
+    end
+
+    it "touches the issues when going unpublished -> published" do
+      story = create :test_class_story, :unpublished
+      story.issues = issues
+      story.save!
+
+      issues.each do |issue|
+        issue.updated_at.should eq old_time
+      end
+
+      story.publish
+
+      issues.each do |issue|
+        issue.updated_at.should be > 10.seconds.ago
+      end
+    end
+
+    it "touches the issues when going published -> unpublished" do
+      story = create :test_class_story, :published
+      story.issues = issues
+      story.save!
+
+      # Reset the issues timestamp
+      issues.each { |i| i.update_column :updated_at, old_time }
+
+      story.update_attributes(status: TestClass::Story.status_id(:draft))
+
+      issues.each do |issue|
+        issue.updated_at.should be > 10.seconds.ago
+      end
     end
   end
 end

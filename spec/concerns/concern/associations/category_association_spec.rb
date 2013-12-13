@@ -19,12 +19,12 @@ describe Concern::Associations::CategoryAssociation do
   end
 
   it "does not touch the category if the article is not published" do
-    story = create :test_class_story, :draft, category: category
+    story = create :test_class_story, :unpublished, category: category
     category.updated_at.should eq old_time
   end
 
   it "touches the category when going unpublished -> published" do
-    story = create :test_class_story, :draft, category: category
+    story = create :test_class_story, :unpublished, category: category
     story.publish
 
     category.updated_at.should be > 10.seconds.ago
