@@ -175,7 +175,7 @@ describe Event do
     describe "published" do
       it "only selects published content" do
         published   = create :event, :published
-        unpublished = create :event, status: Event::STATUS_HIDDEN
+        unpublished = create :event, :hidden
         Event.published.should eq [published]
       end
     end
