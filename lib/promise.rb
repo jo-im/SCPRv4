@@ -18,17 +18,13 @@ module Promise
 
   module ClassMethods
     # Promise to perform an action in an after_commit hook.
-    # By default the callback will promise to run on `after_save`
-    # and on `after_destroy`. You can skip either one of these by
-    # passing `skip_on_save` or `skip_on_destroy` in the options.
+    # The callback will promise to run on `after_save`
+    # and on `after_destroy`.
     #
     # Arguments
     #
     # * method  - (Symbol) The method to run
     # * options - (Hash) A hash of options to pass to the callbacks.
-    #             Additional options:
-    #             * skip_on_save    - (Boolean) Skip the callback on save.
-    #             * skip_on_destroy - (Boolean) Skip the callback on destroy.
     #             (default: {})
     #
     # Example
@@ -63,13 +59,8 @@ module Promise
         end
       EOE
 
-      if !options.delete(:skip_on_save)
-        after_save promise, options
-      end
-
-      if !options.delete(:skip_on_destroy)
-        after_destroy promise, options
-      end
+      after_save promise, options
+      after_destroy promise, options
 
       # These get run in the reverse order that they're defined.
       # I don't know why.
