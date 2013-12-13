@@ -1,28 +1,29 @@
 module AdminListHelper
   STATUS_BOOTSTRAP_MAP = {
-      :default => "list-status label",
+    :default => "list-status label",
 
-      :article => {
-        NewsStory.status_id(:killed)            => "list-status label label-important",
-        NewsStory.status_id(:draft)             => "list-status label",
-        NewsStory.status_id(:awaiting_rework)   => "list-status label label-info",
-        NewsStory.status_id(:awaiting_edits)    => "list-status label label-inverse",
-        NewsStory.status_id(:pending)           => "list-status label label-warning",
-        NewsStory.status_id(:live)              => "list-status label label-success"
-      },
+    :article => {
+      NewsStory.status_id(:killed)            => "list-status label label-important",
+      NewsStory.status_id(:draft)             => "list-status label",
+      NewsStory.status_id(:awaiting_rework)   => "list-status label label-info",
+      NewsStory.status_id(:awaiting_edits)    => "list-status label label-inverse",
+      NewsStory.status_id(:pending)           => "list-status label label-warning",
+      NewsStory.status_id(:live)              => "list-status label label-success"
+    },
 
-      :types => {
-        :published => "list-status label label-success",
-        :pending => "list-status label label-warning",
-        :unpublished => "list-status label"
-      },
+    :types => {
+      :published      => "list-status label label-success",
+      :pending        => "list-status label label-warning",
+      :unpublished    => "list-status label"
+    },
 
-      :audio => {
-        nil                => "list-status label",
-        Audio::STATUS_WAIT => "list-status label label-warning",
-        Audio::STATUS_LIVE => "list-status label label-success"
-      }
+    :audio => {
+      nil                => "list-status label",
+      Audio::STATUS_WAIT => "list-status label label-warning",
+      Audio::STATUS_LIVE => "list-status label label-success"
     }
+  }
+
 
   def display_link(link)
     link_to content_tag(:i, nil, class: "icon-share-alt"), link, class: "btn"
@@ -68,14 +69,14 @@ module AdminListHelper
   end
 
   def display_audio(audio)
-    return audio if !audio.is_a? Array
-    status = audio.first.try(:status)
+    status = Array(audio).first.try(:status)
+
     content_tag :div, Audio::STATUS_TEXT[status], {
       :class => STATUS_BOOTSTRAP_MAP[:audio][status]
     }
   end
 
   def status_bootstrap_map
-    STATUS_BOOSTRAP_MAP
+    STATUS_BOOTSTRAP_MAP
   end
 end
