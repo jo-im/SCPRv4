@@ -16,11 +16,7 @@ module Concern
       included do
         belongs_to :category
 
-        after_save :promise_to_touch_category,
-          :if => :should_touch_category?
-
-        after_commit :touch_category,
-          :if => :promised_to_touch_category?
+        promise_to :touch_category, :if => :should_touch_category?
       end
 
 
@@ -30,16 +26,7 @@ module Concern
         self.category.present? && (self.published? || self.unpublishing?)
       end
 
-      def promise_to_touch_category
-        @promise_to_touch_category = true
-      end
-
-      def promised_to_touch_category?
-        !!@promise_to_touch_category
-      end
-
       def touch_category
-        @promise_to_touch_category = nil
         self.category.try(:touch)
       end
     end # CategoryAssociation
