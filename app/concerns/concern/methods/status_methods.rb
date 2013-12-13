@@ -7,8 +7,36 @@ module Concern
 
       module ClassMethods
         def status_select_collection
-          self.statuses.map { |s| [s.text, s.id] }
+          @status_select_collection ||=
+            self.statuses.map { |s| [s.text, s.id] }
         end
+      end
+
+
+      # Get the current status type
+      #
+      # Example
+      #
+      #   article.status = self.class.find_status_by_key(:live).id
+      #   article.status_type => :published
+      #
+      # Returns Symbol
+      def status_type
+        self.class.find_status_by_id(self.status).try(:type)
+      end
+
+
+      # Get what the status type was
+      #
+      # Example
+      #
+      #   article.status #=> 0 (:draft)
+      #   article.status = self.class.find_status_by_key(:live).id
+      #   article.status_type_was => :draft
+      #
+      # Returns Symbol
+      def status_type_was
+        self.class.find_status_by_id(self.status_was).try(:type)
       end
 
 
@@ -16,12 +44,12 @@ module Concern
       #
       # Example
       #
-      #   @article.status = self.class.find_status_by_key(:live).id
-      #   self.status_is?(:live) #=> true
+      #   article.status = self.class.find_status_by_key(:live).id
+      #   article.status_is?(:live) #=> true
       #
       # Returns Boolean
       def status_is?(key)
-        self.class.find_status_by_key(key).map(&:id).include?(self.status)
+        self.class.find_status_by_key(key).try(:id) == self.status
       end
 
 
@@ -29,13 +57,13 @@ module Concern
       #
       # Example
       #
-      #   @article.status #=> 0 (:draft)
-      #   @article.status = self.class.find_status_by_key(:live).id
-      #   self.status_was?(:draft) #=> true
+      #   article.status #=> 0 (:draft)
+      #   article.status = self.class.find_status_by_key(:live).id
+      #   article.status_was?(:draft) #=> true
       #
       # Returns Boolean
       def status_was?(key)
-        self.class.find_status_by_key(key).map(&:id).include?(self.status_was)
+        self.class.find_status_by_key(key).try(:id) == self.status_was
       end
 
 
@@ -48,7 +76,7 @@ module Concern
       #
       # Returns Boolean
       def status_type_is?(type)
-        self.class.find_status_by_type(type).map(&:id).include?(self.status)
+        self.status_type == type
       end
 
 
@@ -62,7 +90,7 @@ module Concern
       #
       # Returns Boolean
       def status_type_was?(type)
-        self.class.find_status_by_type(type).map(&:id).include?(self.status_was)
+        self.status_type_was == type
       end
 
 

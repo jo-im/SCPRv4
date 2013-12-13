@@ -113,7 +113,7 @@ describe Concern::Associations::ContentAlarmAssociation do
       story.save!
 
       story.reload.alarm.should be_present
-      story.update_attribute(:status, ContentBase::STATUS_PENDING)
+      story.update_attribute(:status, story.class.status_id(:pending))
       story.reload.alarm.should be_present
     end
 

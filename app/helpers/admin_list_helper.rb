@@ -1,5 +1,30 @@
 module AdminListHelper
-  def display_link(link)
+  STATUS_BOOTSTRAP_MAP = {
+      :default => "list-status label",
+
+      :article => {
+        NewsStory.status_id(:killed)            => "list-status label label-important",
+        NewsStory.status_id(:draft)             => "list-status label",
+        NewsStory.status_id(:awaiting_rework)   => "list-status label label-info",
+        NewsStory.status_id(:awaiting_edits)    => "list-status label label-inverse",
+        NewsStory.status_id(:pending)           => "list-status label label-warning",
+        NewsStory.status_id(:live)              => "list-status label label-success"
+      },
+
+      :types => {
+        :published => "list-status label label-success",
+        :pending => "list-status label label-warning",
+        :unpublished => "list-status label"
+      },
+
+      :audio => {
+        nil                => "list-status label",
+        Audio::STATUS_WAIT => "list-status label label-warning",
+        Audio::STATUS_LIVE => "list-status label label-success"
+      }
+    }
+
+  def display_link(link, record)
     link_to content_tag(:i, nil, class: "icon-share-alt"), link, class: "btn"
   end
 
@@ -7,7 +32,7 @@ module AdminListHelper
   # Associations
 
   # For a polymorphic content association - requires headline and obj_key
-  def display_content(content)
+  def display_content(content, record)
     if content &&
     content.respond_to?(:headline) &&
     content.respond_to?(:obj_key)
@@ -20,44 +45,33 @@ module AdminListHelper
   #-------------
   # Attribute Helpers
 
-  def display_status(status)
-    content_tag :div, ContentBase::STATUS_TEXT[status], {
-      :class => status_bootstrap_map[status]
+  # Display the status based on the status's TYPE
+  # (eg. published, unpublished, pending...)
+  def display_status(status, record)
+    content_tag :div, record.status_text, {
+      :class => STATUS_BOOTSTRAP_MAP[:types][record.status_type] ||
+                STATUS_BOOTSTRAP_MAP[:default]
+    }
+  end
+
+  # Special helper for displaying Article statuses, which
+  # have different colors for each status.
+  def display_article_status(status, record)
+    content_tag :div, record.status_text, {
+      :class => STATUS_BOOTSTRAP_MAP[:article][status]
     }
   end
 
 
-  def display_air_status(air_status)
+  def display_air_status(air_status, record)
     KpccProgram::PROGRAM_STATUS[air_status]
   end
 
-  def display_audio(audio)
+  def display_audio(audio, record)
     return audio if !audio.is_a? Array
     status = audio.first.try(:status)
     content_tag :div, Audio::STATUS_TEXT[status], {
-      :class => audio_bootstrap_map[status]
-    }
-  end
-
-  #-------------
-  # Maps
-
-  def status_bootstrap_map
-    {
-      ContentBase::STATUS_KILLED  => "list-status label label-important",
-      ContentBase::STATUS_DRAFT   => "list-status label",
-      ContentBase::STATUS_REWORK  => "list-status label label-info",
-      ContentBase::STATUS_EDIT    => "list-status label label-inverse",
-      ContentBase::STATUS_PENDING => "list-status label label-warning",
-      ContentBase::STATUS_LIVE    => "list-status label label-success"
-    }
-  end
-
-  def audio_bootstrap_map
-    {
-      nil                => "list-status label",
-      Audio::STATUS_WAIT => "list-status label label-warning",
-      Audio::STATUS_LIVE => "list-status label label-success"
+      :class => STATUS_BOOTSTRAP_MAP[:audio][status]
     }
   end
 end

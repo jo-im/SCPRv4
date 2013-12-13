@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20131212034927) do
+ActiveRecord::Schema.define(:version => 20131212051828) do
 
   create_table "abstracts", :force => true do |t|
     t.string   "source"
@@ -186,11 +186,11 @@ ActiveRecord::Schema.define(:version => 20131212034927) do
   create_table "contentbase_category", :force => true do |t|
     t.string   "title"
     t.string   "slug",              :limit => 50
-    t.boolean  "is_news",                         :default => true, :null => false
+    t.boolean  "is_news",                         :default => true,  :null => false
     t.integer  "comment_bucket_id"
-    t.datetime "created_at",                                        :null => false
-    t.datetime "updated_at",                                        :null => false
-    t.boolean  "is_active"
+    t.datetime "created_at",                                         :null => false
+    t.datetime "updated_at",                                         :null => false
+    t.boolean  "is_active",                       :default => false, :null => false
     t.string   "description"
   end
 

@@ -12,12 +12,12 @@ class Outpost::NewsStoriesController < Outpost::ResourceController
       :sortable                   => true,
       :default_order_direction    => DESCENDING
 
-    l.column :status
+    l.column :status, display: :display_article_status
     l.column :updated_at,
       :sortable                   => true,
       :default_order_direction    => DESCENDING
 
-    l.filter :status, collection: -> { ContentBase.status_text_collect }
+    l.filter :status, collection: -> { NewsStory.status_select_collection }
     l.filter :bylines, collection: -> { Bio.select_collection }
   end
 

@@ -1,1 +1,1 @@
-<%= f.input :status, collection: ContentBase.status_text_collect, selected: record.status || record.class.status_id(:draft), include_blank: false, input_html: { id: "status-select" } %>
+<%= f.input :status, collection: record.class.status_select_collection, selected: record.status || record.class.status_id(:draft), include_blank: false, input_html: { id: "status-select" } %>

@@ -21,6 +21,10 @@ FactoryGirl.define do
     trait :pending do
       status TestClass::Story.status_id(:pending)
     end
+
+    trait :unpublished do
+      status TestClass::Story.status_id(:draft)
+    end
   end
 
   factory :test_class_remote_story, class: TestClass::RemoteStory do

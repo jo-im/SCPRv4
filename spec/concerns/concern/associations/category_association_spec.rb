@@ -18,7 +18,7 @@ describe Concern::Associations::CategoryAssociation do
     category.updated_at.should be > 10.seconds.ago
   end
 
-  it "does not touch the category if the article is not published", focus: true do
+  it "does not touch the category if the article is not published" do
     story = create :test_class_story, :draft, category: category
     category.updated_at.should eq old_time
   end
