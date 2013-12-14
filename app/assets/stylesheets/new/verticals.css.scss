@@ -491,15 +491,15 @@ body.landing{
 
 		.featured {
             height: 273px;
-            background-image: image-url("../../images/featured-interactives/default.jpg");
+            background-image: image-url("featured-interactives/default.jpg");
             background-repeat: no-repeat;
             background-position: right top;
             box-shadow: inset 0 8px 0 rgba(0,0,0,0.25);
             text-align: right;
-            &.beams         { background-image: image-url("../../images/featured-interactives/beams.jpg");         }
-            &.traffic       { background-image: image-url("../../images/featured-interactives/traffic.jpg");       }
-            &.map           { background-image: image-url("../../images/featured-interactives/map.jpg");           }
-            &.palmtrees     { background-image: image-url("../../images/featured-interactives/palmtrees.jpg");     }
+            &.beams         { background-image: image-url("featured-interactives/beams.jpg");         }
+            &.traffic       { background-image: image-url("featured-interactives/traffic.jpg");       }
+            &.map           { background-image: image-url("featured-interactives/map.jpg");           }
+            &.palmtrees     { background-image: image-url("featured-interactives/palmtrees.jpg");     }
 
 			div {
 				background: image-url("i/ephemera-lunchbox-ledge.png") no-repeat 50.917431192661% 240px; // imprecise subpixel-rendering rounding-error bullsh*t

@@ -14,6 +14,14 @@ class Category < ActiveRecord::Base
     :per_page   => 10
   }
 
+  FEATURED_INTERACTIVE_STYLE = [
+    'beams',
+    'traffic',
+    'palmtrees',
+    'map'
+  ]
+  FEATURED_INTERACTIVE_SET = FEATURED_INTERACTIVE_STYLE.each_with_index.map { |x,i| [x,i] }
+
   #-------------------
   # Associations
   has_many :category_articles, order: 'position', dependent: :destroy

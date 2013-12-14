@@ -219,7 +219,7 @@
     <% article = @featured_articles[5] %>
     <%= cache ["categories/show", "interactive", "v1", article] do %>
         <% if article %>
-            <aside class="featured">
+            <aside class="featured <%= Category::FEATURED_INTERACTIVE_STYLE[@category.featured_interactive_style] %>">
                 <div>
                     <h1>Featured Interactive</h1>
                     <h2><%= link_to article.short_title, article.public_path %></h2>
