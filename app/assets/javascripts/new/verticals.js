@@ -105,6 +105,22 @@ if ($(".prologue .ephemera").length) {
 
 
 
+//	================================================
+//	Let's wrap text on hyphens
+//	------------------------------------------------
+
+    var re = /(.+?)-(.+?)/gi
+    var reporters = $(".reporters figure h1 a")
+
+    reporters.each(function() {
+        var el = $(this)
+        var text = el.html()
+        var fixedText = $("<div />").html(text.replace(re, "$1-&#8203;$2")).text()
+        el.html(fixedText)
+    })
+
+
+
 
 //  ================================================
 //  Instatiate FastClick
