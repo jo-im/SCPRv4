@@ -1,6 +1,6 @@
-body.single {
-    body        { position: relative; z-index: 1; }
-    .masthead   { position: relative; z-index: 2; }
+
+    body.interior                   { position: relative; z-index: 1; }
+    body.interior .masthead         { position: relative; z-index: 2; }
 
 
 
@@ -10,7 +10,7 @@ body.single {
     //	################################################################################################
     //	################################################################################################
 
-    .interior .comments     { margin-bottom: 30px; }
+    body.single .comments     { margin-bottom: 30px; }
 
 
 
@@ -773,7 +773,7 @@ body.single {
     //	################################################################################################
     //	################################################################################################
 
-    .triptych {
+    body.single .triptych {
         margin-top: 25px;
     }
 
@@ -1265,6 +1265,6 @@ body.single {
         }
 
     }
-}
+
 //  - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
