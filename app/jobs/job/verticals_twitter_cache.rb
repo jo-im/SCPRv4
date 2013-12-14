@@ -10,8 +10,9 @@ module Job
         Category.where(is_active: true).each do |category|
           tweet_list = []
 
-          category.bios.map(&:twitter_handle).each do |handle|
-            task = Job::TwitterCache.new(handle)
+          category.bios
+          .select { |b| b.twitter_handle.present? }.each do |bio|
+            task = Job::TwitterCache.new(bio.twitter_handle)
 
             if tweets = task.fetch
               tweet_list += tweets
