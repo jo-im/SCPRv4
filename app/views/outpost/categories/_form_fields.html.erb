@@ -43,7 +43,7 @@
   </div>
 
   <h4>Featured Interactive Style</h4>
-  <%= f.input :featured_interactive_style, collection: Category::FEATURED_INTERACTIVE_SET, label: "Background Image Style", include_blank: false  %>
+  <%= f.input :featured_interactive_style_id, collection: Category::FEATURED_INTERACTIVE_STYLES.invert, label: "Background Image Style", include_blank: false  %>
 
   <div id="aggregator" class="aggregator"></div>
   <%= f.input :category_articles_json, as: :hidden, input_html: { id: "category_articles_json" } %>
