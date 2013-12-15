@@ -14,13 +14,12 @@ class Category < ActiveRecord::Base
     :per_page   => 10
   }
 
-  FEATURED_INTERACTIVE_STYLE = [
-    'beams',
-    'traffic',
-    'palmtrees',
-    'map'
-  ]
-  FEATURED_INTERACTIVE_SET = FEATURED_INTERACTIVE_STYLE.each_with_index.map { |x,i| [x,i] }
+  FEATURED_INTERACTIVE_STYLES = {
+    0 => 'beams',
+    1 =>  'traffic',
+    2 => 'palmtrees',
+    3 =>  'map'
+  }
 
   #-------------------
   # Associations
@@ -96,6 +95,9 @@ class Category < ActiveRecord::Base
     @preview ||= CategoryPreview.new(self, options)
   end
 
+  def featured_interactive_style
+    FEATURED_INTERACTIVE_STYLES[self.featured_interactive_style_id]
+  end
 
   private
 
@@ -108,4 +110,5 @@ class Category < ActiveRecord::Base
       )
     end
   end
+
 end
