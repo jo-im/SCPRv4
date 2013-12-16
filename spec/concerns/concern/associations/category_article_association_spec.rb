@@ -12,7 +12,7 @@ describe Concern::Associations::CategoryArticleAssociation do
       category.category_articles.create(article: story)
 
       category.category_articles.count.should eq 1
-      story.update_attributes(status: ContentBase::STATUS_DRAFT)
+      story.update_attributes(status: story.class.status_id(:draft))
       category.category_articles.count.should eq 0
     end
   end

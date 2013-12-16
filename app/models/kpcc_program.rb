@@ -18,7 +18,7 @@ class KpccProgram < ActiveRecord::Base
     "hidden"     => "Not visible on site"
   }
 
-  AIR_STATUS = PROGRAM_STATUS.map { |k, v| [v, k] }
+  AIR_STATUS = PROGRAM_STATUS.invert
 
   #-------------------
   # Scopes

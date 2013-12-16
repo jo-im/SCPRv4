@@ -9,18 +9,22 @@ FactoryGirl.define do
     slug { headline.parameterize }
     query_type "news"
     pin_query_id '01aa97973688'
-    status PijQuery::STATUS_LIVE
+    status PijQuery.status_id(:live)
 
     trait :featured do
       is_featured true
     end
 
     trait :published do
-      status PijQuery::STATUS_LIVE
+      status PijQuery.status_id(:live)
     end
 
     trait :pending do
-      status PijQuery::STATUS_PENDING
+      status PijQuery.status_id(:pending)
+    end
+
+    trait :unpublished do
+      status PijQuery.status_id(:hidden)
     end
   end
 end

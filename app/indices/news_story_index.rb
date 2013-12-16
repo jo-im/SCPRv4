@@ -32,7 +32,7 @@ ThinkingSphinx::Index.define :news_story, with: :active_record do
 
   # Required attributes for ContentBase.search
   has published_at, as: :public_datetime
-  has "#{NewsStory.table_name}.status = #{ContentBase::STATUS_LIVE}",
+  has "#{NewsStory.table_name}.status = #{NewsStory.status_id(:live)}",
     :type   => :boolean,
     :as     => :is_live
 end

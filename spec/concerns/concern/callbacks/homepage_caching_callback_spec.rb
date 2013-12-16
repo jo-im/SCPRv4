@@ -4,13 +4,13 @@ describe Concern::Callbacks::HomepageCachingCallback do
   describe '#should_enqueue_homepage_cache?' do
     it "is true if story is unpublishing" do
       story = create :test_class_story, :published
-      story.status = ContentBase::STATUS_PENDING
+      story.status = story.class.status_id(:pending)
       story.should_enqueue_homepage_cache?.should eq true
     end
 
     it "is true if publishing" do
       story = create :test_class_story, :pending
-      story.status = ContentBase::STATUS_LIVE
+      story.status = story.class.status_id(:live)
       story.should_enqueue_homepage_cache?.should eq true
     end
 

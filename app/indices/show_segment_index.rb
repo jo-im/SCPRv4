@@ -34,7 +34,7 @@ ThinkingSphinx::Index.define :show_segment, with: :active_record do
 
   # Required attributes for ContentBase.search
   has published_at, as: :public_datetime
-  has "#{ShowSegment.table_name}.status = #{ContentBase::STATUS_LIVE}",
+  has "#{ShowSegment.table_name}.status = #{ShowSegment.status_id(:live)}",
     :type   => :boolean,
     :as     => :is_live
 end

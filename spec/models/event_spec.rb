@@ -175,7 +175,7 @@ describe Event do
     describe "published" do
       it "only selects published content" do
         published   = create :event, :published
-        unpublished = create :event, status: Event::STATUS_HIDDEN
+        unpublished = create :event, :unpublished
         Event.published.should eq [published]
       end
     end
@@ -249,6 +249,13 @@ describe Event do
     it "is false if event is something else" do
       event = build :event, event_type: "spon"
       event.is_forum_event?.should be_false
+    end
+  end
+
+  describe '#to_article' do
+    it "turns the event into an article" do
+      event = build :event
+      event.to_article.should be_a Article
     end
   end
 end

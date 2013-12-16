@@ -1,5 +1,4 @@
 class Category < ActiveRecord::Base
-
   self.table_name = 'contentbase_category'
   outpost_model
   has_secretary
@@ -14,33 +13,43 @@ class Category < ActiveRecord::Base
     :per_page   => 10
   }
 
+
   FEATURED_INTERACTIVE_STYLES = {
     0 => 'beams',
-    1 =>  'traffic',
+    1 => 'traffic',
     2 => 'palmtrees',
-    3 =>  'map'
+    3 => 'map'
   }
 
-  #-------------------
-  # Associations
+
   has_many :category_articles, order: 'position', dependent: :destroy
+  accepts_json_input_for :category_articles
+  tracks_association :category_articles
+
   has_many :category_reporters, dependent: :destroy
   has_many :bios, through: :category_reporters
+  tracks_association :bios
+
   has_many :category_issues, dependent: :destroy
   has_many :issues, through: :category_issues
+  tracks_association :issues
+
   belongs_to :comment_bucket, class_name: "FeaturedCommentBucket"
+
   has_many :events
   has_many :quotes,
     :foreign_key    => "category_id",
     :order          => "created_at desc"
 
-  accepts_json_input_for :category_articles
 
-  #-------------------
-  # Validations
+
   validates :title, presence: true
 
+
   class << self
+    # Get all Category previews which have articles,
+    # ordered reverse-chronologically by first
+    # article timestamp.
     def previews(options={})
       categories = options.delete(:categories) || self.all
 
@@ -55,12 +64,23 @@ class Category < ActiveRecord::Base
     end
   end
 
+
+  # This category's hand-picked content,
+  # converted to articles.
   def featured_articles
-    @articles ||= self.category_articles
+    @featured_articles ||= self.category_articles
       .includes(:article).select(&:article)
       .map { |a| a.article.to_article }
   end
 
+
+  # This category's content converted to Articles.
+  def articles(options={})
+    content(options).map(&:to_article)
+  end
+
+
+  # All content associated to this category.
   def content(options={})
     page      = options[:page] || DEFAULTS[:page]
     per_page  = options[:per_page] || DEFAULTS[:per_page]
@@ -91,6 +111,7 @@ class Category < ActiveRecord::Base
   end
 
 
+  # The Preview for this category.
   def preview(options={})
     @preview ||= CategoryPreview.new(self, options)
   end
@@ -98,6 +119,7 @@ class Category < ActiveRecord::Base
   def featured_interactive_style
     FEATURED_INTERACTIVE_STYLES[self.featured_interactive_style_id]
   end
+
 
   private
 
@@ -110,5 +132,4 @@ class Category < ActiveRecord::Base
       )
     end
   end
-
 end

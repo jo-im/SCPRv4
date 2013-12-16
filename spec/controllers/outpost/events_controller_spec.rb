@@ -29,7 +29,7 @@ describe Outpost::EventsController do
       end
 
       it "renders for hidden events" do
-        event = create :event, status: Event::STATUS_HIDDEN, headline: "This is a story"
+        event = create :event, :unpublished, headline: "This is a story"
         put :preview, id: event.id, obj_key: event.obj_key, event: event.attributes
         response.should render_template "/events/_event"
       end

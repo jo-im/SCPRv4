@@ -11,7 +11,7 @@ describe Concern::Callbacks::CacheExpirationCallback do
     $redis.sadd(set, fragment_key)
 
     $redis.get(fragment_key).should eq "harry potter"
-    story.update_attributes(status: ContentBase::STATUS_LIVE)
+    story.update_attributes(status: story.class.status_id(:live))
     $redis.get(fragment_key).should eq nil
   end
 
@@ -25,7 +25,7 @@ describe Concern::Callbacks::CacheExpirationCallback do
     $redis.sadd(set, fragment_key)
 
     $redis.get(fragment_key).should eq "harry potter"
-    story.update_attributes(status: ContentBase::STATUS_PENDING)
+    story.update_attributes(status: story.class.status_id(:pending))
     $redis.get(fragment_key).should eq nil
   end
 
@@ -45,7 +45,7 @@ describe Concern::Callbacks::CacheExpirationCallback do
 
     $redis.get(fragment_key1).should eq "delicious"
     $redis.get(fragment_key2).should eq "extra-delicious"
-    story.update_attributes(status: ContentBase::STATUS_LIVE)
+    story.update_attributes(status: story.class.status_id(:live))
     $redis.get(fragment_key1).should eq nil
     $redis.get(fragment_key2).should eq nil
   end

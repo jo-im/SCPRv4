@@ -55,13 +55,14 @@ class Article
     @teaser           = attributes[:teaser]
     @body             = attributes[:body]
     @category         = attributes[:category]
+    @byline           = attributes[:byline]
+    @edit_url         = attributes[:edit_url]
+    @feature          = attributes[:feature]
+
     @assets           = Array(attributes[:assets])
     @audio            = Array(attributes[:audio])
     @attributions     = Array(attributes[:attributions])
-    @byline           = attributes[:byline]
-    @edit_url         = attributes[:edit_url]
     @issues           = Array(attributes[:issues])
-    @feature          = attributes[:feature]
   end
 
 

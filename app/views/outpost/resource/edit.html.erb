@@ -13,10 +13,10 @@
 
 <% content_for :sidebar do %>
   <ul class="story-status unstyled">
-    <h5>Status</h5>
     <% if @record.respond_to? :status_text %>
+      <h5>Status</h5>
       <li>
-        <span class="<%=status_bootstrap_map[@record.status]%>"><%= @record.status_text %></span>
+        <%= display_status(@record.status, @record) %>
 
         <% if @record.respond_to?(:published_at) && @record.respond_to?(:published?) && @record.published? %>
           on <strong><%= format_date @record.published_at, time: true %></strong>

@@ -42,6 +42,17 @@ describe ShowEpisode do
 
   #------------------
 
+  describe '#publish' do
+    it "published the episode" do
+      episode = create :show_episode, :unpublished
+      episode.published?.should eq false
+
+      episode.publish
+      episode.published?.should eq true
+    end
+  end
+
+
   describe '#rundowns_json' do
     it "uses simple_json for the join model" do
       episode = create :show_episode

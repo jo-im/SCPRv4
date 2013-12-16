@@ -43,7 +43,8 @@ module Concern
       ]
 
       included do
-        after_save :enqueue_homepage_cache, if: :should_enqueue_homepage_cache?
+        after_save :enqueue_homepage_cache,
+          :if => :should_enqueue_homepage_cache?
       end
 
       def should_enqueue_homepage_cache?

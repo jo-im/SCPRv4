@@ -31,9 +31,8 @@ module Concern
         }
 
 
-        after_save :promise_to_index_bylines, if: -> { self.changed? }
-        after_destroy :promise_to_index_bylines
-        after_commit :enqueue_sphinx_index_for_bylines
+        promise_to :enqueue_sphinx_index_for_bylines,
+          :if => :should_enqueue_sphinx_index_for_bylines?
       end
 
       #-------------------
@@ -100,20 +99,12 @@ module Concern
 
       private
 
-      def promise_to_index_bylines
-        @_will_index_bylines = true
-      end
-
-      def reset_byline_index_promises
-        @_will_index_bylines = nil
+      def should_enqueue_sphinx_index_for_bylines?
+        self.changed? || self.destroyed?
       end
 
       def enqueue_sphinx_index_for_bylines
-        if @_will_index_bylines
-          Indexer.enqueue("ContentByline")
-        end
-
-        reset_byline_index_promises
+        Indexer.enqueue("ContentByline")
       end
 
       #-------------------

@@ -22,6 +22,22 @@ describe Concern::Methods::AbstractModelMethods do
     end
   end
 
+  describe '#hash' do
+    it "is the id hash" do
+      obj1 = AbstractModel.new(id: "hello")
+      obj2 = AbstractModel.new(id: "hello")
+
+      obj1.hash.should eq obj2.hash
+    end
+
+    it "is used for comparison" do
+      obj1 = AbstractModel.new(id: "hello")
+      obj2 = AbstractModel.new(id: "hello")
+
+      [obj1, obj2].uniq.should eq [obj1]
+    end
+  end
+
   describe '#<=>' do
     it "compares the ids" do
       obj1 = AbstractModel.new(id: 1)

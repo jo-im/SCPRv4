@@ -2,10 +2,14 @@ class BreakingNewsAlert < ActiveRecord::Base
   self.table_name = 'layout_breakingnewsalert'
   outpost_model
   has_secretary
+  has_status
+
 
   include Concern::Callbacks::SphinxIndexCallback
   include Concern::Callbacks::SetPublishedAtCallback
   include Concern::Associations::ContentAlarmAssociation
+  include Concern::Methods::StatusMethods
+
   include ::NewRelic::Agent::Instrumentation::ControllerInstrumentation
 
   ALERT_TYPES = {
@@ -14,35 +18,50 @@ class BreakingNewsAlert < ActiveRecord::Base
     "now"     => "Happening Now"
   }
 
-  STATUS_DRAFT      = 0
-  STATUS_PENDING    = 3
-  STATUS_PUBLISHED  = 5
 
-  STATUS_TEXT = {
-    STATUS_DRAFT        => "Draft",
-    STATUS_PENDING      => "Pending",
-    STATUS_PUBLISHED    => "Published"
-  }
+  status :draft do |s|
+    s.id = 0
+    s.text = "Draft"
+    s.unpublished!
+  end
+
+  status :pending do |s|
+    s.id = 3
+    s.text = "Pending"
+    s.pending!
+  end
+
+  status :published do |s|
+    s.id = 5
+    s.text = "Published"
+    s.published!
+  end
+
 
   PARSE_CHANNEL         = "breakingNews"
   FRAGMENT_EXPIRE_KEY   = "layout/breaking_news_alert"
 
-  #-------------------
-  # Scopes
+
+  # Don't use PublishedScope because this model
+  # uses :published instead of :live
   scope :published, -> {
-    where(status: STATUS_PUBLISHED)
+    where(status: self.status_id(:published))
     .order("published_at desc")
   }
 
-  scope :visible,   -> { where(visible: true) }
+  scope :visible, -> { where(visible: true) }
 
   #-------------------
   # Associations
 
   #-------------------
   # Validations
-  validates :headline, presence: true
-  validates :alert_type, presence: true
+  validates \
+    :headline,
+    :alert_type,
+    :status,
+    presence: true
+
   validates :alert_url, url: { allow_blank: true }
 
   #-------------------
@@ -69,10 +88,6 @@ class BreakingNewsAlert < ActiveRecord::Base
       ALERT_TYPES.map { |k, v| [v, k] }
     end
 
-    def status_select_collection
-      STATUS_TEXT.map { |k, v| [v, k] }
-    end
-
     def eloqua_config
       @eloqua_config ||= Rails.application.config.api['eloqua']['attributes']
     end
@@ -82,23 +97,10 @@ class BreakingNewsAlert < ActiveRecord::Base
     end
   end
 
-  #-------------------
-
-  def published?
-    self.status == STATUS_PUBLISHED
-  end
-
-  def pending?
-    self.status == STATUS_PENDING
-  end
-
-  def status_text
-    STATUS_TEXT[self.status]
-  end
 
   # Callbacks will handle the email/push notification
   def publish
-    self.update_attributes(status: STATUS_PUBLISHED)
+    self.update_attributes(status: self.class.status_id(:published))
   end
 
 

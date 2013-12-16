@@ -1,21 +1,33 @@
 class Quote < ActiveRecord::Base
   outpost_model
   has_secretary
+  has_status
 
-  include Concern::Methods::PublishingMethods
+
+  include Concern::Associations::CategoryAssociation
+  include Concern::Methods::StatusMethods
   include Concern::Callbacks::SphinxIndexCallback
 
-  STATUS_DRAFT = 0
-  STATUS_LIVE = 5
 
-  STATUS_TEXT = {
-    STATUS_DRAFT => "Draft",
-    STATUS_LIVE  => "Live"
+  status :draft do |s|
+    s.id = 0
+    s.text = "Draft"
+    s.unpublished!
+  end
+
+  status :live do |s|
+    s.id = 5
+    s.text = "Live"
+    s.published!
+  end
+
+
+  # This uses created_at for sorting, not published_at,
+  # so we can't use the PublishedScope concern.
+  scope :published, -> {
+    where(status: self.status_id(:live)).order("created_at desc")
   }
 
-  scope :published, -> { where(status: STATUS_LIVE).order("created_at desc") }
-
-  belongs_to :category
   belongs_to :content,
     :polymorphic => true,
     :conditions  => { status: ContentBase::STATUS_LIVE }
@@ -25,28 +37,12 @@ class Quote < ActiveRecord::Base
   validates \
     :status,
     :category_id,
-    :quote,
+    :text,
     presence: true
-
-  #-----------------
-
-  class << self
-    def status_select_collection
-      STATUS_TEXT.map { |k, v| [v, k] }
-    end
-  end
 
 
   def article
     self.content.try(:to_article)
-  end
-
-  def published?
-    self.status == STATUS_LIVE
-  end
-
-  def status_text
-    STATUS_TEXT[self.status]
   end
 
 

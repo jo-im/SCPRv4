@@ -3,6 +3,7 @@ class ShowSegment < ActiveRecord::Base
   outpost_model
   has_secretary
 
+
   include Concern::Scopes::SinceScope
   include Concern::Scopes::PublishedScope
   include Concern::Associations::ContentAlarmAssociation
@@ -30,8 +31,8 @@ class ShowSegment < ActiveRecord::Base
   include Concern::Callbacks::SphinxIndexCallback
   include Concern::Callbacks::HomepageCachingCallback
   include Concern::Callbacks::TouchCallback
-  include Concern::Methods::ContentStatusMethods
-  include Concern::Methods::PublishingMethods
+  include Concern::Methods::ArticleStatuses
+  include Concern::Methods::StatusMethods
   include Concern::Methods::CommentMethods
   include Concern::Methods::AssetDisplayMethods
 
@@ -39,11 +40,6 @@ class ShowSegment < ActiveRecord::Base
   ROUTE_KEY = "segment"
 
 
-  #-------------------
-  # Scopes
-
-  #-------------------
-  # Associations
   belongs_to :show,
     :class_name   => "KpccProgram",
     :touch        => true
@@ -59,42 +55,36 @@ class ShowSegment < ActiveRecord::Base
     :order      => "air_date asc",
     :autosave   => true
 
-  #-------------------
-  # Validations
+
   validates :show, presence: true
 
   def needs_validation?
     self.pending? || self.published?
   end
 
-  #-------------------
-  # Callbacks
-
-  #----------
 
   def episode
     @episode ||= episodes.first
   end
 
-  #----------
 
   def sister_segments
     @sister_segments ||= begin
       if episodes.present?
-        episode.segments.published.where("shows_segment.id != ?", self.id)
+        episode.segments.published
+          .where("shows_segment.id != ?", self.id)
       else
-        show.segments.published.where("shows_segment.id != ?", self.id).limit(5)
+        show.segments.published
+          .where("shows_segment.id != ?", self.id).limit(5)
       end
     end
   end
 
-  #----------
 
   def byline_extras
     [self.show.title]
   end
 
-  #----------
 
   def route_hash
     return {} if !self.persisted? || !self.persisted_record.published?
@@ -109,7 +99,6 @@ class ShowSegment < ActiveRecord::Base
     }
   end
 
-  #-------------------
 
   def to_article
     @to_article ||= Article.new({
@@ -130,6 +119,7 @@ class ShowSegment < ActiveRecord::Base
       :feature            => self.feature
     })
   end
+
 
   # This is a total hack, but unfortunately a necessary one
   # until we can fix the workflow of programs like filmweek:
@@ -152,7 +142,6 @@ class ShowSegment < ActiveRecord::Base
     })
   end
 
-  #-------------------
 
   def to_abstract
     @to_abstract ||= Abstract.new({

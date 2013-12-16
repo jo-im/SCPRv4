@@ -128,7 +128,7 @@ describe ContentBase do
       end
 
       it 'returns nil if the article is not published' do
-        article.update_attribute(:status, ContentBase::STATUS_DRAFT)
+        article.update_attribute(:status, article.class.status_id(:draft))
         Outpost.should_receive(:obj_by_key).with("news_story-123").and_return(article)
         ContentBase.obj_by_url(@url).should eq nil
       end

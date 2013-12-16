@@ -25,6 +25,10 @@ module Job
             "/shared/widgets/cached/vertical_tweets",
             "verticals/#{category.slug}/twitter_feed"
           )
+
+          # Refresh the cache on the vertical page
+          # so the new tweets show up.
+          category.touch
         end
 
         true

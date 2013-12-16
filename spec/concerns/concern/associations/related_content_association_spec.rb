@@ -20,7 +20,7 @@ describe Concern::Associations::RelatedContentAssociation do
     end
 
     it "destroys the incoming references on unpublish" do
-      @story.status = ContentBase::STATUS_PENDING
+      @story.status = @story.class.status_id(:pending)
       @story.save!
 
       @story.incoming_references(true).should eq []
@@ -34,12 +34,13 @@ describe Concern::Associations::RelatedContentAssociation do
     end
 
     it "doesn't destroy outgoing references on unpublish" do
-      @post.status = ContentBase::STATUS_PENDING
+      @post.status = @post.class.status_id(:pending)
       @post.save!
 
       @post.outgoing_references(true).should eq [@related]
     end
   end
+
 
   describe "#related_content" do
     before :each do

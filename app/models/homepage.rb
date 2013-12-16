@@ -2,6 +2,8 @@ class Homepage < ActiveRecord::Base
   self.table_name = "layout_homepage"
   outpost_model
   has_secretary
+  has_status
+
 
   include Concern::Scopes::PublishedScope
   include Concern::Associations::ContentAlarmAssociation
@@ -10,7 +12,7 @@ class Homepage < ActiveRecord::Base
   include Concern::Callbacks::SphinxIndexCallback
   include Concern::Callbacks::HomepageCachingCallback
   include Concern::Callbacks::TouchCallback
-  include Concern::Methods::PublishingMethods
+  include Concern::Methods::StatusMethods
 
 
   TEMPLATES = {
@@ -19,30 +21,28 @@ class Homepage < ActiveRecord::Base
     "wide"       => "Large Visual Top"
   }
 
-  TEMPLATE_OPTIONS = TEMPLATES.map { |k, v| [v, k] }
+  TEMPLATE_OPTIONS = TEMPLATES.invert
 
 
-  STATUS_DRAFT    = 0
-  STATUS_PENDING  = 3
-  STATUS_LIVE     = 5
-
-  STATUS_TEXT = {
-    STATUS_DRAFT      => "Draft",
-    STATUS_PENDING    => "Pending",
-    STATUS_LIVE       => "Live"
-  }
-
-  class << self
-    def status_select_collection
-      STATUS_TEXT.map { |k, v| [v, k] }
-    end
+  status :draft do |s|
+    s.id = 0
+    s.text = "Draft"
+    s.unpublished!
   end
 
-  #-------------------
-  # Scopes
+  status :pending do |s|
+    s.id = 3
+    s.text = "Pending"
+    s.pending!
+  end
 
-  #-------------------
-  # Associations
+  status :live do |s|
+    s.id = 5
+    s.text = "Live"
+    s.published!
+  end
+
+
   has_many :content,
     :class_name   => "HomepageContent",
     :order        => "position",
@@ -53,33 +53,18 @@ class Homepage < ActiveRecord::Base
 
   belongs_to :missed_it_bucket
 
-  #-------------------
-  # Validations
-  validates :base, :status, presence: true
 
-  #-------------------
-  # Callbacks
+  validates \
+    :base,
+    :status,
+    presence: true
+
+
   after_commit :expire_cache
 
-  def expire_cache
-    Rails.cache.expire_obj(self)
-  end
-
-
-  def published?
-    self.status == STATUS_LIVE
-  end
-
-  def pending?
-    self.status == STATUS_PENDING
-  end
-
-  def status_text
-    STATUS_TEXT[self.status]
-  end
 
   def publish
-    self.update_attributes(status: STATUS_LIVE)
+    self.update_attributes(status: self.class.status_id(:live))
   end
 
 
@@ -96,10 +81,13 @@ class Homepage < ActiveRecord::Base
     end
   end
 
-  #---------------------
-
 
   private
+
+  def expire_cache
+    Rails.cache.expire_obj(self)
+  end
+
 
   def build_content_association(content_hash, content)
     if content.published?

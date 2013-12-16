@@ -9,31 +9,27 @@ module Concern
       extend ActiveSupport::Concern
 
       included do
-        after_save :promise_class_index,
-          :if => -> { self.changed? }
+        promise_to :enqueue_sphinx_index_for_class,
+          :if => :should_enqueue_sphinx_index_for_class?
+      end
 
-        after_destroy :promise_class_index
-        after_commit :enqueue_sphinx_index_for_class
+
+      module ClassMethods
+        def enqueue_sphinx_index
+          Indexer.enqueue(self.name)
+        end
       end
 
 
       private
 
-      def promise_class_index
-        @_will_index_class = true
-      end
-
-      def reset_index_promises
-        @_will_index_class = nil
+      def should_enqueue_sphinx_index_for_class?
+        self.changed? || self.destroyed?
       end
 
       # Enqueue a sphinx index for this model
       def enqueue_sphinx_index_for_class
-        if @_will_index_class
-          Indexer.enqueue(self.class.name)
-        end
-
-        reset_index_promises
+        self.class.enqueue_sphinx_index
       end
     end
   end

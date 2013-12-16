@@ -1,14 +1,18 @@
 ENV["RAILS_ENV"] ||= 'test'
 
-require 'simplecov'
+# Generate coverage report on CI server
+if ENV['CI']
+  require 'simplecov'
 
-if ENV['CIRCLE_ARTIFACTS']
-  # https://circleci.com/docs/code-coverage
-  dir = File.join("..", "..", "..", ENV['CIRCLE_ARTIFACTS'], "coverage")
-  SimpleCov.coverage_dir(dir)
+  if ENV['CIRCLE_ARTIFACTS']
+    # https://circleci.com/docs/code-coverage
+    dir = File.join("..", "..", "..", ENV['CIRCLE_ARTIFACTS'], "coverage")
+    SimpleCov.coverage_dir(dir)
+  end
+
+  SimpleCov.start 'rails'
 end
 
-SimpleCov.start 'rails'
 
 require File.expand_path("../../config/environment", __FILE__)
 require 'rspec/rails'

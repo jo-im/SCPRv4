@@ -15,6 +15,16 @@ describe BreakingNewsAlert do
     end
   end
 
+  describe '#publish' do
+    it "published the alert" do
+      alert = create :breaking_news_alert, :unpublished
+      alert.published?.should eq false
+
+      alert.publish
+      alert.published?.should eq true
+    end
+  end
+
   describe "#publish_email" do
     before :each do
       stub_request(:post, %r|assets/email|).to_return({

@@ -62,31 +62,7 @@ describe RootPathController do
 
         ts_retry(2) do
           get :handle_path, path: category.slug, format: :html
-          assigns(:content).sort.should eq articles.sort
           response.should be_success
-        end
-      end
-    end
-
-    describe "rendering featured articles" do
-      sphinx_spec
-
-      it "does not return the top story in the reverse chronological article sections" do
-        category = create :category, is_active: true
-        articles = create_list :news_story, 6, :published, category: category
-        articles.each do |article|
-          category.category_articles.create( article: article )
-        end
-
-        index_sphinx
-
-        ts_retry(2) do
-          get :handle_path, path: category.slug, format: :html
-          exclude = category.featured_articles.first.original_object
-
-          # Make sure the other articles are there
-          assigns(:content).sort.should eq articles.tap { |a| a.delete(exclude) }.sort
-          assigns(:content).sort.should_not include(exclude)
         end
       end
     end
