@@ -13,4 +13,7 @@
 //= require cms_popup
 //= require reader_bookmarklet
 
+//= require new/behaviors
+//= require new/layout
 //= require new/verticals
+//= require new/single

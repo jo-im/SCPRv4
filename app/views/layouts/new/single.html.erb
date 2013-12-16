@@ -10,6 +10,12 @@
 
     <%= yield %>
 
+    <% content_for :extra_footer do %>
+    <script>
+        scpr.Behaviors.loadBehaviors(['Layout', 'Single']);
+    </script>
+    <% end %>
+
     <%= render 'shared/new/layout_footer' %>
     <%= render 'shared/new/document_footer' %>
 
