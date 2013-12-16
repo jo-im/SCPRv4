@@ -20,6 +20,6 @@ class IssuesController < NewApplicationController
   private
 
   def get_issues
-    @issues = Issue.active
+    @issues = Issue.active.order("title")
   end
 end
