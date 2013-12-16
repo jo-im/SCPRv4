@@ -34,12 +34,19 @@
         <li><strong>1.</strong> The top article on the page.</li>
         <li><strong>2, 3, 4, 5.</strong> The "Resources" section.</li>
         <li><strong>6.</strong> Featured Interactive</li>
-      </ul>
+    </ul>
+    <h4>Featured Interactive Style</h4>
+    To choose a background image for the Featured Interactive article (Article #6),
+    select an image style from the Background Image Style dropdown.
     <% end %>
   </div>
 
+  <h4>Featured Interactive Style</h4>
+  <%= f.input :featured_interactive_style_id, collection: Category::FEATURED_INTERACTIVE_STYLES.invert, label: "Background Image Style", include_blank: false  %>
+
   <div id="aggregator" class="aggregator"></div>
   <%= f.input :category_articles_json, as: :hidden, input_html: { id: "category_articles_json" } %>
+
 <% end %>
 
 

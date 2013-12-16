@@ -3,18 +3,16 @@
 <% add_to_page_title @category.title %>
 <% meta_tags(url: @category.public_url) %>
 <% content_for :body_class, 'landing' %>
+<% content_for :membership_copy, @category.title %>
 
 <%= cache ["categories/show", cache_version, @category] do %>
 
 <section class="headline">
-
 <% lead_article = @category.featured_articles.first %>
 <% if lead_article %>
     <h1 class="bound"><span><%= link_to lead_article.short_title, lead_article.public_path %></span></h1>
 <% end %>
-
 </section>
-
 
 <div class="welcome bound clearfix">
 
@@ -233,13 +231,11 @@
     <% article = @category.featured_articles[5] %>
     <%= cache ["categories/show", "interactive", cache_version, article] do %>
         <% if article %>
-            <aside class="featured">
+            <aside class="featured <%= @category.featured_interactive_style %>">
                 <div>
                     <h1>Featured Interactive</h1>
-
                     <h2><%= link_to article.short_title, article.public_path %></h2>
                     <h3><%= article.byline %></h3>
-
                 </div>
             </aside>
         <% end %>

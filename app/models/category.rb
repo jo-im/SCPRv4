@@ -14,6 +14,14 @@ class Category < ActiveRecord::Base
   }
 
 
+  FEATURED_INTERACTIVE_STYLES = {
+    0 => 'beams',
+    1 => 'traffic',
+    2 => 'palmtrees',
+    3 => 'map'
+  }
+
+
   has_many :category_articles, order: 'position', dependent: :destroy
   accepts_json_input_for :category_articles
   tracks_association :category_articles
@@ -106,6 +114,10 @@ class Category < ActiveRecord::Base
   # The Preview for this category.
   def preview(options={})
     @preview ||= CategoryPreview.new(self, options)
+  end
+
+  def featured_interactive_style
+    FEATURED_INTERACTIVE_STYLES[self.featured_interactive_style_id]
   end
 
 

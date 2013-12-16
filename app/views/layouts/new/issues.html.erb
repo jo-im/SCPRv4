@@ -3,6 +3,7 @@
 
 <%= render "shared/new/document_header" %>
 
+<% content_for :membership_copy, @category.present? ? @category.title : 'Lorem Ipsum' %>
 
 <body class="<%= content_for(:body_class) %>">
 
@@ -47,6 +48,12 @@
         header: 'Popular Now on KPCC' %>
     <% end %>
 
+
+    <% content_for :extra_footer do %>
+    <script>
+        scpr.Behaviors.loadBehaviors(['Layout']);
+    </script>
+    <% end %>
 
     <%= render 'shared/new/layout_footer' %>
     <%= render 'shared/new/document_footer' %>
