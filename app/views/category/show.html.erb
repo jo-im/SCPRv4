@@ -3,7 +3,6 @@
 <% add_to_page_title @category.title %>
 <% meta_tags(url: @category.public_url) %>
 <% content_for :body_class, 'landing' %>
-<% content_for :membership_copy, @category.title %>
 
 <%= cache ["categories/show", cache_version, @category] do %>
 
