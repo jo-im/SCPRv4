@@ -7,9 +7,6 @@ module TestClass
     # Just allows any valid URL
     validates :twitter_url, url: { allow_blank: true, message: "bad url" }
 
-    attr_accessor :kittens
-    alias :kittens? :kittens
-
     promise_to :touch_associated, :if => :should_touch_associated?
     promise_to :update_index, :if => :should_update_index?
 

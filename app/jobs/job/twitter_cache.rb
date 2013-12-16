@@ -48,5 +48,5 @@ module Job
     end
 
     add_transaction_tracer :fetch, category: :task
-  end # Twitter
-end # CacheTasks
+  end # TwitterCache
+end # Job
