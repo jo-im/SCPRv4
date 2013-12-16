@@ -306,22 +306,25 @@
             </aside>
             <aside>
                 <h1>Get involved.</h1>
-                <ul class="events">
-                    <% @events[0..2].each do |event| %>
-                      <li>
-                            <figure class="clearfix">
-                              <%= content_tag :time, datetime: event.public_datetime.strftime('%F') do %>
-                                <b><%= event.public_datetime.day %></b>
-                                <span><mark><%= event.public_datetime.strftime('%b') %></mark> <%= event.public_datetime.strftime('%Y') %></span>
-                              <% end %>
-                                <figcaption>
-                                  <b><%= event.short_title %></b>
-                                  <%= link_to 'More information', event.public_path %>
-                                </figcaption>
-                            </figure>
-                      </li>
-                     <% end %>
-                </ul>
+                <% events = @events[0..2] %>
+                <%= cache ["articles/show", "upcoming-events", "v1", events] do %>
+                    <ul class="events">
+                        <% Array(events).each do |event| %>
+                          <li>
+                                <figure class="clearfix">
+                                  <%= content_tag :time, datetime: event.starts_at.strftime('%F') do %>
+                                    <b><%= event.starts_at.day %></b>
+                                    <span><mark><%= event.starts_at.strftime('%b') %></mark> <%= event.starts_at.strftime('%Y') %></span>
+                                  <% end %>
+                                    <figcaption>
+                                      <b><%= event.headline %></b>
+                                      <%= link_to 'More information', event.public_path %>
+                                    </figcaption>
+                                </figure>
+                          </li>
+                         <% end %>
+                     </ul>
+                 <% end %>
             </aside>
          </div><!--/ .tourguide -->
 
