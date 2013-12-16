@@ -10,7 +10,7 @@ class IssuesController < NewApplicationController
   end
 
   def show
-    @issue = Issue.active.find_by_slug!(params[:slug])
+    @issue = Issue.find_by_slug!(params[:slug])
 
     @paginated_articles = Kaminari.paginate_array(@issue.articles)
       .page(params[:page]).per(8)
