@@ -198,7 +198,7 @@
 
 <%= render 'shared/new/kpcc_ipad_ad' %>
 <% if @category.present? %>
-<%= render 'shared/new/triptych', category: @category, articles: @category_articles[0..2] %>
+<%= render 'shared/new/triptych', category: @category, articles: @category_articles[0..2], header: "More from #{@category.title}" %>
 <% elsif @popular_articles %>
 <%= render 'shared/new/quadrant',
     articles: @popular_articles.first(3),
