@@ -133,6 +133,11 @@ describe Concern::Associations::BylinesAssociation do
     end
 
     it "should enqueue an index of ContentByline after save if destroying" do
+      # There is a Thinking Sphinx bug that throws an error in the destroy
+      # callback if the record isn't persisted, so we need to save it first.
+      # https://github.com/pat/thinking-sphinx/issues/673
+      story.save!
+
       Indexer.should_receive(:enqueue).with("ContentByline")
       Indexer.should_receive(:enqueue).with("TestClass::Story")
 

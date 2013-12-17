@@ -3,7 +3,7 @@
 <h3><%= @show.start_time %> - <%= @show.end_time %></h3>
 
 <div class="progress" id="llBuffProgress">
-	<div id="llBuffBar" class="bar" style="width:100%"></div>
+  <div id="llBuffBar" class="bar" style="width:100%"></div>
 </div>
 
 <p><b>Server Time:</b> <span id="llServerTime"></span></p>

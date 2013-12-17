@@ -32,6 +32,26 @@ module ApplicationHelper
   end
 
 
+  # Safely render a partial, without having to worry about whether it exists
+  # or not. This should only be used when rendering partials based on user
+  # input, and only when it is expected that sometimes there may not be
+  # a partial to render. This is useful for conditionally rendering chunks
+  # of a page based on a nesting hierarchy such as category or blog.
+  #
+  # This has the same signature as `render` *in the variable args form*.
+  # It won't work with the hash form.
+  #
+  # Example
+  #
+  #   <%= safe_render "category/#{@category.slug.underscore}" %>
+  def safe_render(*args)
+    partial = args.first
+
+    if lookup_context.exists?(partial, [], true)
+      render *args
+    end
+  end
+
   #---------------------------
   # render_content takes a ContentBase object and a context, and renders
   # using the most specific version of that context it can find.

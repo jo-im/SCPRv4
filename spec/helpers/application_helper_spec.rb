@@ -1,6 +1,18 @@
 require 'spec_helper'
 
 describe ApplicationHelper do
+
+  describe '#safe_render' do
+    it "renders the partial if it exists" do
+      helper.safe_render('verticals/politics/footer_sponsors')
+        .should match /Politics/
+    end
+
+    it "returns nil if the partial does not exist" do
+      helper.safe_render('nope/nope/doublenope').should be_nil
+    end
+  end
+
   describe "sphinx category searches" do
     let(:category_news) { create :category, :is_news }
     let(:category_not_news) { create :category, :is_not_news }

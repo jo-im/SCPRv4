@@ -1,0 +1,29 @@
+
+//  ################################################################################################
+//  ################################################################################################
+//  EDUCATION
+//  ################################################################################################
+//  ################################################################################################
+
+
+
+
+body.education {
+    .masthead .titling h1 a         { background-image: image-url("i/logo-education.png"); }
+    &.landing .masthead {
+        background-image: image-url("i/masthead-education.jpg");
+        .titling h2                 { background: none; text-shadow: 0 0 8px black; }
+    }
+    .resources-row header h1 span   { background-image: image-url("i/logo-resources-education.png"); }
+}
+
+
+body.politics {
+    .masthead .titling h1 a         { background-image: image-url("i/logo-represent.png"); }
+    &.landing .masthead {
+        background-image: image-url("i/masthead-politics.jpg");
+        .titling h2                 { background: none; text-shadow: 0 0 8px black; }
+    }
+    .resources-row header h1 span   { background-image: image-url("i/logo-resources-represent.png"); }
+
+}

@@ -55,7 +55,6 @@ module StatusBuilder
       self.find_status_by_key(key).try(:id)
     end
 
-
     # Find a status in this collection by its id
     #
     # Arguments
