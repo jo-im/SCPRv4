@@ -4,7 +4,8 @@ describe ApplicationHelper do
 
   describe '#safe_render' do
     it "renders the partial if it exists" do
-      helper.safe_render('verticals/sponsors/politics').should match /Politics/
+      helper.safe_render('verticals/politics/footer_sponsors')
+        .should match /Politics/
     end
 
     it "returns nil if the partial does not exist" do
