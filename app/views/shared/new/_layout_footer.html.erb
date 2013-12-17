@@ -110,7 +110,7 @@
     </div><!--/ .cols -->
 
     <% if @category %>
-    <%= safe_render "verticals/sponsors/#{@category.slug.underscore}" %>
+    <%= safe_render "verticals/#{@category.slug.underscore}/footer_sponsors" %>
     <% end %>
 
     <div class="lastwords bound">

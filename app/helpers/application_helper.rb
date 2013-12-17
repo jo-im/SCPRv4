@@ -44,7 +44,7 @@ module ApplicationHelper
   #
   # Example
   #
-  #   <%= safe_render "category/#{@category.slug}" %>
+  #   <%= safe_render "category/#{@category.slug.underscore}" %>
   def safe_render(*args)
     partial = args.first
 

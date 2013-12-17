@@ -300,7 +300,7 @@
 information we depend on inside of this cache block. %>
 <%= cache ["categories/show", "recent-coverage", cache_version, @category.title, articles] do %>
     <%= render 'shared/new/triptych', articles: Array(articles[0..2]), header: "Recent #{@category.title} Coverage" %>
-    <%= render 'shared/new/kpcc_ipad_ad' %>
+    <%= safe_render("verticals/#{@category.slug.underscore}/middle_ad") || render('shared/new/kpcc_ipad_ad') %>
     <%= render 'shared/new/quadrant', articles: Array(articles[3..6]), header: "" %>
 
 <div class="waterfall">

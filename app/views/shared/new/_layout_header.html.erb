@@ -7,6 +7,8 @@
               <h1><%= link_to @category.title, @category.public_path %></h1>
               <h2><%= @category.description %></h2>
             </div>
+
+            <%= safe_render("verticals/#{@category.slug.underscore}/masthead_ad") %>
         </section><!--/ .titling -->
     <% end %>
 
