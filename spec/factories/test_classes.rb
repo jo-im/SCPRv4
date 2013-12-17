@@ -3,6 +3,7 @@ migration = -> { FixtureMigration.new.up }
 silence_stream STDOUT, &migration
 
 Dir[Rails.root.join("spec/fixtures/models/*.rb")].each { |f| require f }
+Dir[Rails.root.join("spec/fixtures/indices/*.rb")].each { |f| require f }
 
 FactoryGirl.define do
   factory :test_class_story, class: TestClass::Story do

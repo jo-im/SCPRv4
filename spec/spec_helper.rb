@@ -22,13 +22,13 @@ require 'database_cleaner'
 require 'webmock/rspec'
 require 'capybara/rspec'
 
-Dir[Rails.root.join("spec/support/**/*.rb")].each { |f| require f }
-Dir[Rails.root.join("spec/fixtures/db/*.rb")].each { |f| require f }
-Dir[Rails.root.join("spec/fixtures/indices/*.rb")].each { |f| require f }
-
 # Test-class migrations get run in factories/test_classes.rb, since that's
 # the first place the needs them and those files get loaded automatically.
-# Test classes also get loaded from that file.
+# Test classes and test indices also get loaded from that file.
+Dir[Rails.root.join("spec/support/**/*.rb")].each { |f| require f }
+Dir[Rails.root.join("spec/fixtures/db/*.rb")].each { |f| require f }
+
+
 WebMock.disable_net_connect!
 
 RSpec.configure do |config|
