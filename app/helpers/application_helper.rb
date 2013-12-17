@@ -4,7 +4,6 @@ module ApplicationHelper
   HEADSHOTS = [
     "personalities/stoltze.png",
     "personalities/peterson.png",
-    "personalities/moore.png",
     "personalities/guzman-lopez.png",
     "personalities/julian.png",
     "personalities/watt.png",
