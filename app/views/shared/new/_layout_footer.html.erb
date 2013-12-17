@@ -110,9 +110,7 @@
     </div><!--/ .cols -->
 
     <% if @category %>
-        <% if lookup_context.exists?(@category.slug.underscore, ["verticals/sponsors"], true) %>
-            <%= render "verticals/sponsors/#{@category.slug.underscore}" %>
-        <% end %>
+    <%= safe_render "verticals/sponsors/#{@category.slug.underscore}" %>
     <% end %>
 
     <div class="lastwords bound">
