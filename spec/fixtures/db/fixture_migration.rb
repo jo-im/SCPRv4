@@ -1,5 +1,5 @@
 class FixtureMigration < ActiveRecord::Migration
-  def up
+  def change
     create_table :test_class_stories, force: true do |t|
       t.string :headline
       t.string :short_headline
@@ -63,8 +63,5 @@ class FixtureMigration < ActiveRecord::Migration
       t.integer :duration
       t.integer :size
     end
-  end
-
-  def down
   end
 end
