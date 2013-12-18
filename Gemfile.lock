@@ -77,6 +77,15 @@ GIT
       activesupport (>= 3.0.0)
 
 GIT
+  remote: git://github.com/bricker/dbsync.git
+  revision: de7a3cd9df49ff93d267b95a20cd79a3e5c03e8a
+  specs:
+    dbsync (0.2.0)
+      activerecord (>= 3.2.8)
+      cocaine (~> 0.5.3)
+      railties (>= 3.2.8)
+
+GIT
   remote: git://github.com/bricker/npr.git
   revision: a6a4fbfd16a3d5165a84008754e3b3c5ba9c3d3b
   specs:
@@ -155,6 +164,10 @@ GEM
     chunky_png (1.2.9)
     ckeditor_rails (4.2.2)
       railties (>= 3.0)
+    climate_control (0.0.3)
+      activesupport (>= 3.0)
+    cocaine (0.5.3)
+      climate_control (>= 0.0.3, < 1.0)
     coderay (1.0.9)
     coffee-rails (3.2.2)
       coffee-script (>= 2.2.0)
@@ -173,10 +186,6 @@ GEM
     crack (0.4.1)
       safe_yaml (~> 0.9.0)
     database_cleaner (1.2.0)
-    dbsync (0.1.2)
-      activerecord (>= 3.2.8)
-      activesupport (>= 3.2.8)
-      railties (>= 3.2.8)
     debugger (1.6.2)
       columnize (>= 0.3.1)
       debugger-linecache (~> 1.2.0)
@@ -443,7 +452,7 @@ DEPENDENCIES
   coffee-rails (~> 3.2)
   compass-rails
   database_cleaner
-  dbsync
+  dbsync!
   eco (~> 1.0)
   embeditor-rails!
   escape_utils (~> 0.3)

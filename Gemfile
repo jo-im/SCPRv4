@@ -91,7 +91,8 @@ end
 
 
 group :development, :staging do
-  gem "dbsync"
+  gem "dbsync", github: "bricker/dbsync"
+  #gem 'dbsync', path: "#{ENV['PROJECT_HOME']}/gems/dbsync"
 end
 
 
