@@ -19,7 +19,7 @@
 
   <%# Automagically expire this cache when it ends %>
   <%= cache ["show", "v8", @event], expires_in: expires do %>
-    <%= render "/events/event", event: @event %>
+    <%= render "events/event", event: @event %>
   <% end %>
 
   <div class="fold events-fold" id="fold">

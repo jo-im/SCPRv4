@@ -30,6 +30,7 @@ describe RecurringScheduleRule do
 
   describe 'changing the program' do
     it "changes all the occurrence's program as well" do
+      warn "Reminder to come back to this."
       rule = create :recurring_schedule_rule
       rule.schedule_occurrences.first.program.should eq rule.program
 

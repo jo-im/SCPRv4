@@ -99,7 +99,7 @@ describe EventPresenter do
       event = build :event, rsvp_url: "scpr.org"
       event.stub(:upcoming?) { true }
       p = presenter(event)
-      p.rsvp_url.should match /a href/
+      p.rsvp_url.should match /\A<a /
       p.rsvp_url.should match /scpr\.org/
       p.rsvp_url.should match /RSVP/
     end
@@ -111,7 +111,7 @@ describe EventPresenter do
     it "contains a link if location_url is present" do
       event = build :event, location_name: "Forum", location_url: "scpr.org/forum"
       p = presenter(event)
-      p.location_name.should match /a href/
+      p.location_name.should match /\A<a /
       p.location_name.should match /scpr\.org/
       p.location_name.should match /Forum/
     end
@@ -119,7 +119,7 @@ describe EventPresenter do
     it "returns the location name plain if location_url not present" do
       event = build :event, location_name: "Forum", location_url: nil
       p = presenter(event)
-      p.location_name.should_not match /a href/
+      p.location_name.should_not match /\A<a /
       p.location_name.should match /Forum/
     end
   end

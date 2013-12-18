@@ -33,7 +33,7 @@ class Outpost::BlogEntriesController < Outpost::ResourceController
 
       if @entry.unconditionally_valid?
         @title = @entry.to_title
-        render "/blogs/_entry",
+        render "blogs/_entry",
           :layout => "outpost/preview/application",
           :locals => {
             :entry => @entry,

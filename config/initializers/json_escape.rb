@@ -1,4 +1,5 @@
-# Fix json_escape to properly escape 
+# Fix json_escape to properly escape
+# https://github.com/rails/rails/pull/6094
 class ActionView::Base
   def json_escape(s)
     result = s.to_s.gsub('/', '\/')

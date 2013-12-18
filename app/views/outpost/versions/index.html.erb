@@ -8,7 +8,7 @@
 <%= list_table @versions, model do %>
   <thead>
     <tr>
-      <%= render "/outpost/shared/headers", list: list %>
+      <%= render "outpost/shared/headers", list: list %>
     </tr>
   </thead>
   <tbody class="list">
@@ -21,7 +21,7 @@
           <% end %>
         </td>
 
-        <%= render "/outpost/shared/columns", list: list, record: version %>
+        <%= render "outpost/shared/columns", list: list, record: version %>
       </tr>
     <% end %>
   </tbody>

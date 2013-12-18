@@ -1,14 +1,14 @@
 source 'https://rubygems.org'
 
 ## Core
-gem 'rails', "~> 3.2"
-gem 'mysql2'
-gem 'jquery-rails'
-gem "bcrypt-ruby", "~> 3.0.0"
-
+gem 'rails', "~> 4.0.0"
+gem 'mysql2', '~> 0.3.14'
+gem 'jquery-rails', '~> 3.0.0'
+gem "bcrypt-ruby", "~> 3.1.0"
 gem 'thinking-sphinx', '~> 3.0.5'
 # https://github.com/pat/riddle/pull/75
 gem 'riddle', github: 'bricker/riddle', branch: 'fix-empty-array-filter'
+
 
 ## Outpost
 gem 'outpost-cms', github: 'SCPR/outpost'
@@ -30,26 +30,27 @@ gem 'secretary-rails', github: "SCPR/secretary-rails"
 ## Cache
 gem 'redis-content-store', github: "SCPR/redis-content-store"
 # gem 'redis-content-store', path: "#{ENV['PROJECT_HOME']}/redis-content-store"
-gem "resque", "~> 1.25.0.pre"
+gem "resque", "~> 1.25.0"
 
 
 ## Views
-gem 'kaminari', github: "amatsuda/kaminari"
+gem 'kaminari', '~> 0.15.0'
 gem 'ckeditor_rails', '~> 4.2.0'
 gem 'select2-rails', '3.4.1'
 gem 'twitter-text', "~> 1.5"
 gem 'sanitize', "~> 2.0"
 gem 'escape_utils', '~> 0.3'
-gem 'simple_form', "~> 2.0"
-gem 'jbuilder'
+gem 'simple_form', "~> 3.0.0"
+gem 'jbuilder', '~> 1.5.3'
 gem 'embeditor-rails', github: 'SCPR/embeditor-rails'
 #gem 'embeditor-rails', path: "#{ENV['PROJECT_HOME']}/embeditor-rails"
 
 
 ## Utility
 gem "carrierwave", "~> 0.6"
-gem "ruby-mp3info", require: 'mp3info'
+gem "ruby-mp3info", '~> 0.8.2', require: 'mp3info'
 gem "ice_cube", "~> 0.11.0"
+
 
 ## HTTP
 gem "faraday", "~> 0.8"
@@ -61,7 +62,7 @@ gem "hashie", "~> 1.2.0"
 gem "twitter", "~> 4.1"
 gem "oauth2", "~> 0.8"
 gem 'simple_postmark', "~> 0.5"
-gem 'newrelic_rpm'
+gem 'newrelic_rpm', '~> 3.7'
 gem 'parse-ruby-client', '~> 0.1.15'
 gem 'npr', github: "bricker/npr"
 #gem 'npr', path: "#{ENV['PROJECT_HOME']}/npr"
@@ -70,17 +71,14 @@ gem 'asset_host_client', github: "SCPR/asset_host_client"
 gem 'audio_vision', github: 'SCPR/audio_vision-ruby'
 #gem 'audio_vision', path: "#{ENV['PROJECT_HOME']}/audio_vision-ruby"
 
-group :assets do
-  gem "eco", "~> 1.0"
-  gem 'sass-rails', "~> 3.2"
-  gem 'bootstrap-sass', '~> 2.2'
-  gem "compass-rails"
-  gem 'coffee-rails', "~> 3.2"
-  gem 'uglifier', '>= 1.3'
-  gem 'turbo-sprockets-rails3',
-    :github => "bricker/turbo-sprockets-rails3",
-    :branch => 'utf8-conversion'
-end
+
+# Assets
+gem "eco", "~> 1.0"
+gem 'sass-rails', "~> 4.0.0"
+gem 'bootstrap-sass', '~> 2.2'
+gem "compass-rails", '~> 1.1.2'
+gem 'coffee-rails', "~> 4.0.0"
+gem 'uglifier', '>= 1.3'
 
 
 group :development do

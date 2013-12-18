@@ -33,17 +33,9 @@ class RecurringScheduleRule < ActiveRecord::Base
   ]
 
 
-  #--------------
-  # Scopes
-
-
-  #--------------
-  # Associations
   has_many :schedule_occurrences, dependent: :destroy
 
 
-  #--------------
-  # Validations
   validate :program_is_present
 
   validates :interval, presence: true
@@ -54,12 +46,16 @@ class RecurringScheduleRule < ActiveRecord::Base
   validate :time_fields_are_present
 
 
-  #--------------
-  # Callbacks
   before_save :build_schedule, if: :rule_changed?
   before_create :build_occurrences, if: -> { self.schedule_occurrences.blank? }
   before_update :rebuild_occurrences, if: :rule_changed?
-  before_save :update_occurrence_program, if: :program_changed?
+
+  # If they only updated the program, but not the rule, then we should fire
+  # the callback to update all of the occurrence's programs.
+  # If the rule was changed, then the occurrences are going to rebuilt
+  # anyways, so the program will be updated from that.
+  before_update :update_occurrence_program,
+    :if => -> { program_changed? && !rule_changed? }
 
 
   class << self
@@ -216,7 +212,11 @@ class RecurringScheduleRule < ActiveRecord::Base
 
 
   def update_occurrence_program
-    self.schedule_occurrences.update_all(
+    # There is something wrong with using `update_all` on
+    # an association. https://gist.github.com/bricker/8019939
+    # So for now this is how we need to do this.
+    ScheduleOccurrence.where(recurring_schedule_rule_id: self.id)
+    .update_all(
       :program_id   => self.program_id,
       :program_type => self.program_type
     )

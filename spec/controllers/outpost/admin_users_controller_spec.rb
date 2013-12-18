@@ -118,7 +118,7 @@ describe Outpost::AdminUsersController do
         klass = @resource.to_s.classify.constantize
 
         expect {
-          post :create, @resource => build(*@resource_properties).attributes
+          post :create, @resource => build_attributes(*@resource_properties)
             .merge(password: "c-krit")
         }.to change { klass.count }.by(1)
 

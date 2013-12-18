@@ -14,8 +14,8 @@ module TestClass
     include Concern::Methods::ArticleStatuses
 
     has_many :content,
+      -> { order('position') },
       :class_name   => "::TestClass::PostContent",
-      :order        => "position",
       :dependent    => :destroy
 
     accepts_json_input_for :content

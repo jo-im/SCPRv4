@@ -26,7 +26,7 @@ describe Concern::Controller::Searchable, type: :controller do
 
     ts_retry(2) do
       get :search, query: "tinker tailor"
-      assigns(:records).should eq [article]
+      assigns(:records).to_a.should eq [article]
     end
   end
 end

@@ -44,8 +44,8 @@ class Homepage < ActiveRecord::Base
 
 
   has_many :content,
+    -> { order('position') },
     :class_name   => "HomepageContent",
-    :order        => "position",
     :dependent    => :destroy
 
   accepts_json_input_for :content

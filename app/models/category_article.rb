@@ -1,8 +1,10 @@
 class CategoryArticle < ActiveRecord::Base
   belongs_to :category
+
   belongs_to :article,
-    :polymorphic    => true,
-    :conditions     => { status: ContentBase::STATUS_LIVE }
+    -> { where(status: ContentBase::STATUS_LIVE) },
+    :polymorphic    => true
+
 
   def simple_json
     @simple_json ||= {

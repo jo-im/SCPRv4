@@ -2,7 +2,7 @@
 <%= render_content @story, "opengraph" %>
 
 <%= cache ["show", "v11", @story] do %>
-  <%= render "/news/story", story: @story %>
+  <%= render "news/story", story: @story %>
 <% end %>
 
 <div class="fold inline" id="fold">

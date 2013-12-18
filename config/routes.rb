@@ -9,18 +9,18 @@ Scprv4::Application.routes.draw do
 
 
   # Sections
-  match '/category/carousel-content/:object_class/:id' => 'category#carousel_content',  as: :category_carousel, defaults: { format: :js }
+  get '/category/carousel-content/:object_class/:id' => 'category#carousel_content',  as: :category_carousel, defaults: { format: :js }
   get '/news/'                                       => 'category#news',              as: :latest_news
   get '/arts-life/'                                  => 'category#arts',              as: :latest_arts
 
   # RSS
-  match '/feeds/all_news' => 'feeds#all_news', as: :all_news_feed
-  match '/feeds/*feed_path', to: redirect { |params, request| "/#{params[:feed_path]}.xml" }
+  get '/feeds/all_news' => 'feeds#all_news', as: :all_news_feed
+  get '/feeds/*feed_path', to: redirect { |params, request| "/#{params[:feed_path]}.xml" }
 
 
   # Podcasts
-  match '/podcasts/:slug/' => 'podcasts#podcast', as: :podcast, defaults: { format: :xml }
-  match '/podcasts/'       => 'podcasts#index',   as: :podcasts
+  get '/podcasts/:slug/' => 'podcasts#podcast', as: :podcast, defaults: { format: :xml }
+  get '/podcasts/'       => 'podcasts#index',   as: :podcasts
 
 
   # Blogs / Entries
@@ -82,7 +82,7 @@ Scprv4::Application.routes.draw do
 
 
   # Article Email Sharing
-  get   '/content/share' => 'content_email#new',    :as => :content_email
+  get   '/content/share' => 'content_email#new',    :as => :new_content_email
   post  '/content/share' => 'content_email#create', :as => :content_email
 
 
@@ -107,7 +107,7 @@ Scprv4::Application.routes.draw do
     scope module: "public" do
       # V2
       namespace :v2 do
-        match '/' => "articles#options", constraints: { method: 'OPTIONS' }
+        match '/' => "articles#options", via: :options, constraints: { method: 'OPTIONS' }
 
         # Old paths
         get '/content'                  => 'articles#index'
@@ -149,7 +149,7 @@ Scprv4::Application.routes.draw do
 
       # V3
       namespace :v3 do
-        match '/' => "articles#options", constraints: { method: 'OPTIONS' }
+        match '/' => "articles#options", via: :options, constraints: { method: 'OPTIONS' }
 
         resources :articles, only: [:index] do
           collection do
@@ -187,7 +187,7 @@ Scprv4::Application.routes.draw do
     namespace :private do
       # V2
       namespace :v2 do
-        match '/' => "articles#options", constraints: { method: 'OPTIONS' }
+        match '/' => "articles#options", via: :options, constraints: { method: 'OPTIONS' }
 
         post '/utility/notify'   => 'utility#notify'
 

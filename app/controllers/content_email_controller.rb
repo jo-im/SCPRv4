@@ -6,6 +6,7 @@ class ContentEmailController < ApplicationController
     @message = ContentEmail.new
   end
 
+
   def create
     @message = ContentEmail.new(params[:content_email])
     @message.content = @content

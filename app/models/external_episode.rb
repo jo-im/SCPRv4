@@ -9,11 +9,13 @@ class ExternalEpisode < ActiveRecord::Base
   ROUTE_KEY = "episode"
 
   belongs_to :external_program
-  has_many :external_episode_segments, order: "position"
+
+  has_many :external_episode_segments,
+    -> { order('position') }
 
   has_many :external_segments,
-    :through => :external_episode_segments,
-    :order   => "position"
+    -> { order("position") },
+    :through => :external_episode_segments
 
 
   scope :for_air_date, ->(date_or_time) {

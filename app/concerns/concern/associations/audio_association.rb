@@ -10,8 +10,8 @@ module Concern
 
       included do
         has_many :audio,
+          -> { order('position') },
           :as           => :content,
-          :order        => "position",
           :dependent    => :destroy
 
         if self.has_secretary?

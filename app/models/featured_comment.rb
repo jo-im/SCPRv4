@@ -33,8 +33,8 @@ class FeaturedComment < ActiveRecord::Base
   # FIXME: Remove reference to ContentBase.
   # See HomepageContent for explanation.
   belongs_to :content,
-    :polymorphic    => true,
-    :conditions     => { status: ContentBase::STATUS_LIVE }
+    -> { where(status: ContentBase::STATUS_LIVE) },
+    :polymorphic    => true
 
   accepts_json_input_for :content
 

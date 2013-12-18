@@ -2,7 +2,7 @@
 <!-- breaking news -->
 <% content_cache "breaking_news" do %>
   <% register_content "layout/breaking_news_alert" %>
-  <%= render "/breaking_news/breaking_news_alert" %>
+  <%= render "breaking_news/breaking_news_alert" %>
 <% end %>
 <header id="masthead">
   <div class="container-fluid">
@@ -77,22 +77,22 @@
 <!-- menu section (hidden) -->
 <div id="offscreen-header" style="position:absolute; top:-10000px; width:0px; height:0px;">
   <nav id="news-mega" class="section-mega clearfix" style="display:none;">
-    <%= render "/shared/masthead/news" %>
+    <%= render "shared/masthead/news" %>
   </nav>
   <nav id="arts-mega" class="section-mega clearfix" style="display:none;">
-    <%= render "/shared/masthead/arts" %>
+    <%= render "shared/masthead/arts" %>
   </nav>
   <nav id="programs-mega" class="section-mega clearfix" style="display:none;">
-    <%= render "/shared/masthead/programs" %>
+    <%= render "shared/masthead/programs" %>
   </nav>
   <nav id="events-mega" class="section-mega clearfix" style="display:none;">
-    <%= render "/shared/masthead/events" %>
+    <%= render "shared/masthead/events" %>
   </nav>
   <nav id="support-mega" class="section-mega clearfix" style="display:none;">
-    <%= render "/shared/masthead/support" %>
+    <%= render "shared/masthead/support" %>
   </nav>
   <nav id="about-mega" class="section-mega clearfix" style="display:none;">
-    <%= render "/shared/masthead/about" %>
+    <%= render "shared/masthead/about" %>
   </nav>
 </div>
 

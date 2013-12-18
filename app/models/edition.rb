@@ -39,8 +39,8 @@ class Edition < ActiveRecord::Base
 
 
   has_many :slots,
+    -> { order('position') },
     :class_name   => "EditionSlot",
-    :order        => "position",
     :dependent    => :destroy
 
   accepts_json_input_for :slots
