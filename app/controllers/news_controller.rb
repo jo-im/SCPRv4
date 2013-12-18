@@ -10,8 +10,6 @@ class NewsController < NewApplicationController
   def story
     @story = NewsStory.published.find_by_slug!(params[:slug])
 
-    @news_category = @story.category
-
     content_params = {
       page:         params[:page].to_i,
       per_page:     PER_PAGE
