@@ -185,12 +185,12 @@ ActiveRecord::Schema.define(:version => 20131215012447) do
 
   create_table "contentbase_category", :force => true do |t|
     t.string   "title"
-    t.string   "slug",              :limit => 50
-    t.boolean  "is_news",                         :default => true,  :null => false
+    t.string   "slug",                          :limit => 50
+    t.boolean  "is_news",                                     :default => true,  :null => false
     t.integer  "comment_bucket_id"
-    t.datetime "created_at",                                         :null => false
-    t.datetime "updated_at",                                         :null => false
-    t.boolean  "is_active",                       :default => false, :null => false
+    t.datetime "created_at",                                                     :null => false
+    t.datetime "updated_at",                                                     :null => false
+    t.boolean  "is_active",                                   :default => false, :null => false
     t.string   "description"
     t.integer  "featured_interactive_style_id"
   end
