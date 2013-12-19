@@ -68,14 +68,17 @@ class Podcast < ActiveRecord::Base
     end
   end
 
-  #-------------
+
+  def itunes_category
+    ITUNES_CATEGORIES[self.itunes_category_id]
+  end
+
 
   def route_hash
     return {} if !self.persisted?
     { slug: self.slug }
   end
 
-  #-------------
 
   private
 
