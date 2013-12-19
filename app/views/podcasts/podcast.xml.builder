@@ -6,12 +6,11 @@ cache ["v1", @podcast], expires_in: 1.hour do # Podcasts will refresh every hour
   ) do
     xml.channel do
       xml.title             @podcast.title
-      xml.link              @podcast.url || "http://www.scpr.org"
+      xml.link              @podcast.url || root_url
 
       xml.atom :link,
-        :href => @podcast.url || "http://www.scpr.org",
-        :rel  => "self",
-        :type => "application/rss+xml"
+        :href => @podcast.url || root_url,
+        :rel  => "alternate"
 
       xml.language          "en-us"
       xml.description       h(@podcast.description)
@@ -19,7 +18,7 @@ cache ["v1", @podcast], expires_in: 1.hour do # Podcasts will refresh every hour
       xml.itunes :summary,  h(@podcast.description)
 
       xml.itunes :category,
-        text: @podcast.itunes_category || "News &amp; Politics"
+        text: @podcast.itunes_category || "News & Politics"
 
       xml.itunes :owner do
         xml.itunes :name,  "KPCC 89.3 | Southern California Public Radio"
