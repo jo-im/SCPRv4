@@ -12,6 +12,11 @@ cache ["v1", @podcast], expires_in: 1.hour do # Podcasts will refresh every hour
         :href => @podcast.url || root_url,
         :rel  => "alternate"
 
+      xml.atom :link,
+        :href   => @podcast.public_url,
+        :rel    => "self",
+        :type   => "application/rss+xml"
+
       xml.language          "en-us"
       xml.description       h(@podcast.description)
       xml.itunes :author,   @podcast.author
