@@ -13,6 +13,26 @@
 
 ActiveRecord::Schema.define(:version => 20131219205651) do
 
+  create_table "about_town_feature", :force => true do |t|
+    t.string   "slug",          :limit => 50,         :null => false
+    t.string   "title",         :limit => 140,        :null => false
+    t.text     "body",          :limit => 2147483647, :null => false
+    t.string   "thumbnail",     :limit => 100,        :null => false
+    t.string   "author",        :limit => 80,         :null => false
+    t.string   "author_link",   :limit => 200,        :null => false
+    t.string   "categories",    :limit => 180,        :null => false
+    t.string   "location_name", :limit => 140,        :null => false
+    t.string   "location_link", :limit => 200,        :null => false
+    t.string   "address_1",     :limit => 140,        :null => false
+    t.string   "address_2",     :limit => 140,        :null => false
+    t.string   "city",          :limit => 140,        :null => false
+    t.string   "state",         :limit => 2,          :null => false
+    t.integer  "zip_code",                            :null => false
+    t.datetime "published_at",                        :null => false
+  end
+
+  add_index "about_town_feature", ["slug"], :name => "about_town_feature_slug"
+
   create_table "abstracts", :force => true do |t|
     t.string   "source"
     t.string   "url"
@@ -29,6 +49,16 @@ ActiveRecord::Schema.define(:version => 20131219205651) do
   add_index "abstracts", ["source"], :name => "index_abstracts_on_source"
   add_index "abstracts", ["updated_at"], :name => "index_abstracts_on_updated_at"
 
+  create_table "admin_user_permissions", :force => true do |t|
+    t.integer  "admin_user_id"
+    t.integer  "permission_id"
+    t.datetime "created_at",    :null => false
+    t.datetime "updated_at",    :null => false
+  end
+
+  add_index "admin_user_permissions", ["admin_user_id"], :name => "index_admin_user_permissions_on_admin_user_id"
+  add_index "admin_user_permissions", ["permission_id"], :name => "index_admin_user_permissions_on_permission_id"
+
   create_table "article_issues", :force => true do |t|
     t.integer  "issue_id"
     t.integer  "article_id"
@@ -40,6 +70,17 @@ ActiveRecord::Schema.define(:version => 20131219205651) do
   add_index "article_issues", ["article_id", "article_type"], :name => "index_article_issues_on_article_id_and_article_type"
   add_index "article_issues", ["issue_id"], :name => "index_article_issues_on_issue_id"
 
+  create_table "ascertainment_ascertainmentrecord", :force => true do |t|
+    t.integer "django_content_type_id"
+    t.integer "content_id",                            :null => false
+    t.string  "locations",              :limit => 200
+    t.string  "asc_types",              :limit => 200
+    t.string  "verticals",              :limit => 200
+    t.string  "content_type",           :limit => 20
+  end
+
+  add_index "ascertainment_ascertainmentrecord", ["django_content_type_id"], :name => "ascertainment_ascertainmentrecord_e4470c6e"
+
   create_table "assethost_contentasset", :force => true do |t|
     t.integer "content_id"
     t.integer "position",                           :default => 99
@@ -50,6 +91,36 @@ ActiveRecord::Schema.define(:version => 20131219205651) do
 
   add_index "assethost_contentasset", ["content_type", "content_id"], :name => "index_assethost_contentasset_on_content_type_and_content_id"
   add_index "assethost_contentasset", ["position"], :name => "index_assethost_contentasset_on_asset_order"
+
+  create_table "auth_group", :force => true do |t|
+    t.string "name", :limit => 80, :null => false
+  end
+
+  add_index "auth_group", ["name"], :name => "name", :unique => true
+
+  create_table "auth_group_permissions", :force => true do |t|
+    t.integer "group_id",      :null => false
+    t.integer "permission_id", :null => false
+  end
+
+  add_index "auth_group_permissions", ["group_id", "permission_id"], :name => "group_id", :unique => true
+  add_index "auth_group_permissions", ["permission_id"], :name => "permission_id_refs_id_4de83ca7792de1"
+
+  create_table "auth_message", :force => true do |t|
+    t.integer "user_id",                       :null => false
+    t.text    "message", :limit => 2147483647, :null => false
+  end
+
+  add_index "auth_message", ["user_id"], :name => "auth_message_user_id"
+
+  create_table "auth_permission", :force => true do |t|
+    t.string  "name",            :limit => 50,  :null => false
+    t.integer "content_type_id",                :null => false
+    t.string  "codename",        :limit => 100, :null => false
+  end
+
+  add_index "auth_permission", ["content_type_id", "codename"], :name => "content_type_id", :unique => true
+  add_index "auth_permission", ["content_type_id"], :name => "auth_permission_content_type_id"
 
   create_table "auth_user", :force => true do |t|
     t.string   "username"
@@ -68,6 +139,22 @@ ActiveRecord::Schema.define(:version => 20131219205651) do
   add_index "auth_user", ["is_superuser"], :name => "index_auth_user_on_is_superuser"
   add_index "auth_user", ["name"], :name => "index_auth_user_on_name"
   add_index "auth_user", ["username", "can_login"], :name => "index_auth_user_on_username_and_can_login"
+
+  create_table "auth_user_groups", :force => true do |t|
+    t.integer "user_id",  :null => false
+    t.integer "group_id", :null => false
+  end
+
+  add_index "auth_user_groups", ["group_id"], :name => "group_id_refs_id_321a8efef0ee9890"
+  add_index "auth_user_groups", ["user_id", "group_id"], :name => "user_id", :unique => true
+
+  create_table "auth_user_user_permissions", :force => true do |t|
+    t.integer "user_id",       :null => false
+    t.integer "permission_id", :null => false
+  end
+
+  add_index "auth_user_user_permissions", ["permission_id"], :name => "permission_id_refs_id_6d7fb3c2067e79cb"
+  add_index "auth_user_user_permissions", ["user_id", "permission_id"], :name => "user_id", :unique => true
 
   create_table "bios_bio", :force => true do |t|
     t.integer  "user_id"
@@ -122,6 +209,18 @@ ActiveRecord::Schema.define(:version => 20131219205651) do
   add_index "blogs_blogauthor", ["blog_id", "author_id"], :name => "blogs_blog_authors_blog_id_579f20695740dd5e_uniq", :unique => true
   add_index "blogs_blogauthor", ["blog_id"], :name => "blogs_blog_authors_472bc96c"
 
+  create_table "blogs_blogcategory", :force => true do |t|
+    t.integer  "blog_id",                                                     :null => false
+    t.string   "title"
+    t.string   "slug",       :limit => 50
+    t.datetime "created_at",               :default => '2012-06-08 02:03:41', :null => false
+    t.datetime "updated_at",               :default => '2012-06-08 02:03:41', :null => false
+    t.integer  "wp_id"
+  end
+
+  add_index "blogs_blogcategory", ["blog_id"], :name => "blogs_blogcategory_472bc96c"
+  add_index "blogs_blogcategory", ["slug"], :name => "blogs_blogcategory_a951d5d6"
+
   create_table "blogs_entry", :force => true do |t|
     t.string   "headline"
     t.string   "slug",             :limit => 50
@@ -149,6 +248,26 @@ ActiveRecord::Schema.define(:version => 20131219205651) do
   add_index "blogs_entry", ["status", "published_at"], :name => "index_blogs_entry_on_status_and_published_at"
   add_index "blogs_entry", ["status"], :name => "index_blogs_entry_on_status"
   add_index "blogs_entry", ["updated_at"], :name => "index_blogs_entry_on_updated_at"
+
+  create_table "blogs_entryblogcategory", :force => true do |t|
+    t.integer  "entry_id",                                            :null => false
+    t.integer  "blog_category_id",                                    :null => false
+    t.boolean  "is_primary",       :default => false,                 :null => false
+    t.datetime "created_at",       :default => '2012-06-08 02:03:41', :null => false
+    t.datetime "updated_at",       :default => '2012-06-08 02:03:41', :null => false
+  end
+
+  add_index "blogs_entryblogcategory", ["blog_category_id"], :name => "blogs_entryblogcategory_c81f43a6"
+  add_index "blogs_entryblogcategory", ["entry_id"], :name => "blogs_entryblogcategory_38a62041"
+
+  create_table "blogs_entrycategories", :force => true do |t|
+    t.integer "entry_id",    :null => false
+    t.integer "category_id", :null => false
+    t.boolean "is_primary",  :null => false
+  end
+
+  add_index "blogs_entrycategories", ["category_id"], :name => "blogs_entrycategories_category_id"
+  add_index "blogs_entrycategories", ["entry_id"], :name => "blogs_entrycategories_entry_id"
 
   create_table "category_articles", :force => true do |t|
     t.integer  "position"
@@ -225,6 +344,21 @@ ActiveRecord::Schema.define(:version => 20131219205651) do
   add_index "contentbase_contentbyline", ["content_type", "content_id"], :name => "index_contentbase_contentbyline_on_content_type_and_content_id"
   add_index "contentbase_contentbyline", ["user_id"], :name => "contentbase_contentbyline_fbfc09f1"
 
+  create_table "contentbase_contentcategory", :force => true do |t|
+    t.integer  "category_id",                          :null => false
+    t.integer  "django_content_type_id"
+    t.integer  "content_id",                           :null => false
+    t.string   "content_type",           :limit => 20
+    t.datetime "created_at",                           :null => false
+    t.datetime "updated_at",                           :null => false
+  end
+
+  add_index "contentbase_contentcategory", ["category_id"], :name => "contentbase_contentcategory_42dc49bc"
+  add_index "contentbase_contentcategory", ["content_id"], :name => "index_contentbase_contentcategory_on_content_id"
+  add_index "contentbase_contentcategory", ["content_type", "content_id"], :name => "index_contentbase_contentcategory_on_content_type_and_content_id"
+  add_index "contentbase_contentcategory", ["django_content_type_id", "content_id"], :name => "content_key", :unique => true
+  add_index "contentbase_contentcategory", ["django_content_type_id"], :name => "contentbase_contentcategory_e4470c6e"
+
   create_table "contentbase_contentshell", :force => true do |t|
     t.string   "headline"
     t.string   "site"
@@ -293,6 +427,19 @@ ActiveRecord::Schema.define(:version => 20131219205651) do
   add_index "contentbase_misseditcontent", ["bucket_id"], :name => "contentbase_misseditcontent_25ef9024"
   add_index "contentbase_misseditcontent", ["content_type", "content_id"], :name => "index_contentbase_misseditcontent_on_content_type_and_content_id"
 
+  create_table "contentbase_videoshell", :force => true do |t|
+    t.string   "headline",     :limit => 200,                                           :null => false
+    t.text     "body",         :limit => 2147483647,                                    :null => false
+    t.integer  "status",                             :default => 0,                     :null => false
+    t.datetime "published_at",                       :default => '2012-03-02 15:14:07', :null => false
+    t.string   "slug",         :limit => 50,                                            :null => false
+    t.datetime "created_at",                                                            :null => false
+    t.datetime "updated_at",                                                            :null => false
+  end
+
+  add_index "contentbase_videoshell", ["slug"], :name => "contentbase_videoshell_a951d5d6"
+  add_index "contentbase_videoshell", ["status", "published_at"], :name => "index_contentbase_videoshell_on_status_and_published_at"
+
   create_table "data_points", :force => true do |t|
     t.string   "group_name"
     t.string   "data_key"
@@ -306,6 +453,44 @@ ActiveRecord::Schema.define(:version => 20131219205651) do
   add_index "data_points", ["data_key"], :name => "index_data_points_on_data_key"
   add_index "data_points", ["group_name"], :name => "index_data_points_on_group"
   add_index "data_points", ["updated_at"], :name => "index_data_points_on_updated_at"
+
+  create_table "distinct_schedule_slots", :force => true do |t|
+    t.string   "title"
+    t.string   "info_url"
+    t.datetime "starts_at"
+    t.datetime "ends_at"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  add_index "distinct_schedule_slots", ["ends_at"], :name => "index_distinct_schedule_slots_on_ends_at"
+  add_index "distinct_schedule_slots", ["starts_at"], :name => "index_distinct_schedule_slots_on_starts_at"
+
+  create_table "django_admin_log", :force => true do |t|
+    t.datetime "action_time",                           :null => false
+    t.integer  "user_id",                               :null => false
+    t.integer  "content_type_id"
+    t.text     "object_id",       :limit => 2147483647
+    t.string   "object_repr",     :limit => 200,        :null => false
+    t.integer  "action_flag",     :limit => 2,          :null => false
+    t.text     "change_message",  :limit => 2147483647, :null => false
+  end
+
+  add_index "django_admin_log", ["content_type_id"], :name => "django_admin_log_content_type_id"
+  add_index "django_admin_log", ["user_id"], :name => "django_admin_log_user_id"
+
+  create_table "django_content_type", :force => true do |t|
+    t.string "name",      :limit => 100, :null => false
+    t.string "app_label", :limit => 100, :null => false
+    t.string "model",     :limit => 100, :null => false
+  end
+
+  add_index "django_content_type", ["app_label", "model"], :name => "app_label", :unique => true
+
+  create_table "django_session", :primary_key => "session_key", :force => true do |t|
+    t.text     "session_data", :limit => 2147483647, :null => false
+    t.datetime "expire_date",                        :null => false
+  end
 
   create_table "edition_slots", :force => true do |t|
     t.string   "item_type"
@@ -374,6 +559,42 @@ ActiveRecord::Schema.define(:version => 20131219205651) do
   add_index "events", ["starts_at", "ends_at"], :name => "index_events_event_on_starts_at_and_ends_at"
   add_index "events", ["starts_at"], :name => "index_events_on_starts_at"
   add_index "events", ["status"], :name => "index_events_on_status"
+
+  create_table "events_event", :force => true do |t|
+    t.string   "headline"
+    t.string   "slug",                :limit => 50
+    t.text     "body",                :limit => 2147483647
+    t.string   "etype"
+    t.string   "sponsor"
+    t.string   "sponsor_link",        :limit => 200
+    t.datetime "starts_at"
+    t.datetime "ends_at"
+    t.boolean  "is_all_day",                                :default => false, :null => false
+    t.string   "location_name"
+    t.string   "location_link",       :limit => 200
+    t.string   "rsvp_link",           :limit => 200
+    t.boolean  "show_map",                                  :default => true,  :null => false
+    t.string   "address_1"
+    t.string   "address_2"
+    t.string   "city"
+    t.string   "state"
+    t.string   "zip_code"
+    t.datetime "created_at",                                                   :null => false
+    t.datetime "updated_at",                                                   :null => false
+    t.boolean  "kpcc_event",                                :default => false, :null => false
+    t.text     "archive_description", :limit => 2147483647
+    t.string   "old_audio",           :limit => 100
+    t.boolean  "is_published",                              :default => false, :null => false
+    t.boolean  "show_comments",                             :default => false, :null => false
+    t.text     "teaser",              :limit => 2147483647
+    t.string   "event_asset_scheme"
+    t.integer  "kpcc_program_id"
+  end
+
+  add_index "events_event", ["etype"], :name => "index_events_event_on_etype"
+  add_index "events_event", ["kpcc_program_id"], :name => "events_event_7666a8c6"
+  add_index "events_event", ["slug"], :name => "events_event_slug"
+  add_index "events_event", ["starts_at", "ends_at"], :name => "index_events_event_on_starts_at_and_ends_at"
 
   create_table "external_episode_segments", :force => true do |t|
     t.integer  "external_episode_id"
@@ -468,6 +689,24 @@ ActiveRecord::Schema.define(:version => 20131219205651) do
   add_index "issues", ["slug"], :name => "index_issues_on_slug"
   add_index "issues", ["title"], :name => "index_issues_on_title"
 
+  create_table "jobs_department", :force => true do |t|
+    t.string "slug",       :limit => 150, :null => false
+    t.string "name",       :limit => 150, :null => false
+    t.float  "dept_total",                :null => false
+  end
+
+  add_index "jobs_department", ["slug"], :name => "slug", :unique => true
+
+  create_table "jobs_employee", :force => true do |t|
+    t.string  "job_title",     :limit => 150, :null => false
+    t.float   "salary",                       :null => false
+    t.integer "department_id",                :null => false
+    t.string  "dept_name",     :limit => 150, :null => false
+    t.string  "dept_slug",     :limit => 150, :null => false
+  end
+
+  add_index "jobs_employee", ["department_id"], :name => "jobs_employee_2ae7390"
+
   create_table "layout_breakingnewsalert", :force => true do |t|
     t.string   "headline",                                                          :null => false
     t.string   "alert_type",                                                        :null => false
@@ -515,6 +754,26 @@ ActiveRecord::Schema.define(:version => 20131219205651) do
   add_index "layout_homepagecontent", ["content_type", "content_id"], :name => "index_layout_homepagecontent_on_content_type_and_content_id"
   add_index "layout_homepagecontent", ["homepage_id"], :name => "layout_homepagecontent_35da0e60"
 
+  create_table "letters_letter", :force => true do |t|
+    t.integer "letter_number",                                :null => false
+    t.integer "original_letter_number",                       :null => false
+    t.text    "description",            :limit => 2147483647, :null => false
+    t.integer "total_pages"
+  end
+
+  create_table "letters_page", :force => true do |t|
+    t.integer "letter_id",                    :null => false
+    t.integer "letter_number",                :null => false
+    t.integer "total_letters",                :null => false
+    t.integer "page_number",                  :null => false
+    t.integer "total_pages"
+    t.string  "full_url",      :limit => 350, :null => false
+    t.string  "viewer_url",    :limit => 350, :null => false
+    t.string  "thumb_url",     :limit => 350, :null => false
+  end
+
+  add_index "letters_page", ["letter_id"], :name => "letters_page_letter_id"
+
   create_table "media_audio", :force => true do |t|
     t.integer  "size"
     t.integer  "duration"
@@ -561,6 +820,22 @@ ActiveRecord::Schema.define(:version => 20131219205651) do
 
   add_index "media_imageinstance", ["instance_of_id"], :name => "media_imageinstance_29b6bd08"
 
+  create_table "media_link", :force => true do |t|
+    t.string  "title",                  :limit => 150, :default => "", :null => false
+    t.string  "link",                   :limit => 300,                 :null => false
+    t.string  "link_type",              :limit => 10,                  :null => false
+    t.string  "sort_order",             :limit => 2,   :default => "", :null => false
+    t.integer "django_content_type_id"
+    t.integer "content_id",                                            :null => false
+    t.string  "content_type",           :limit => 20
+  end
+
+  add_index "media_link", ["content_id"], :name => "index_media_link_on_content_id"
+  add_index "media_link", ["content_type", "content_id"], :name => "index_media_link_on_content_type_and_content_id"
+  add_index "media_link", ["django_content_type_id", "content_id"], :name => "media_link_content_type_id_41947a9a86b99b7a"
+  add_index "media_link", ["django_content_type_id"], :name => "media_link_content_type_id"
+  add_index "media_link", ["sort_order"], :name => "index_media_link_on_sort_order"
+
   create_table "media_related", :force => true do |t|
     t.integer "content_id",                  :null => false
     t.integer "related_id",                  :null => false
@@ -597,6 +872,15 @@ ActiveRecord::Schema.define(:version => 20131219205651) do
   add_index "news_story", ["status", "published_at"], :name => "index_news_story_on_status_and_published_at"
   add_index "news_story", ["status"], :name => "index_news_story_on_status"
   add_index "news_story", ["updated_at"], :name => "index_news_story_on_updated_at"
+
+  create_table "npr_npr_story", :force => true do |t|
+    t.string   "headline",     :limit => 140,        :null => false
+    t.text     "teaser",       :limit => 2147483647, :null => false
+    t.datetime "published_at",                       :null => false
+    t.string   "link",         :limit => 200,        :null => false
+    t.string   "npr_id",       :limit => 20,         :null => false
+    t.boolean  "new",                                :null => false
+  end
 
   create_table "permissions", :force => true do |t|
     t.string   "resource"
@@ -693,6 +977,35 @@ ActiveRecord::Schema.define(:version => 20131219205651) do
   add_index "programs_kpccprogram", ["slug"], :name => "index_programs_kpccprogram_on_slug"
   add_index "programs_kpccprogram", ["title"], :name => "index_programs_kpccprogram_on_title"
 
+  create_table "programs_otherprogram", :force => true do |t|
+    t.string   "slug",        :limit => 40,         :null => false
+    t.string   "title",       :limit => 60,         :null => false
+    t.text     "teaser",      :limit => 2147483647
+    t.text     "description", :limit => 2147483647
+    t.string   "host",        :limit => 150
+    t.string   "produced_by", :limit => 50
+    t.string   "airtime",     :limit => 300
+    t.string   "air_status",  :limit => 10,         :null => false
+    t.string   "web_url",     :limit => 200
+    t.string   "podcast_url", :limit => 200
+    t.string   "rss_url",     :limit => 200
+    t.text     "sidebar",     :limit => 2147483647
+    t.datetime "created_at",                        :null => false
+    t.datetime "updated_at",                        :null => false
+  end
+
+  add_index "programs_otherprogram", ["air_status"], :name => "index_programs_otherprogram_on_air_status"
+  add_index "programs_otherprogram", ["slug"], :name => "slug", :unique => true
+  add_index "programs_otherprogram", ["title"], :name => "title", :unique => true
+
+  create_table "promotions", :force => true do |t|
+    t.string   "title"
+    t.string   "url"
+    t.integer  "asset_id"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
   create_table "quotes", :force => true do |t|
     t.text     "text"
     t.string   "source_name"
@@ -710,6 +1023,11 @@ ActiveRecord::Schema.define(:version => 20131219205651) do
   add_index "quotes", ["created_at"], :name => "index_quotes_on_created_at"
   add_index "quotes", ["status"], :name => "index_quotes_on_status"
 
+  create_table "rails_content_map", :id => false, :force => true do |t|
+    t.integer "django_content_type_id", :null => false
+    t.string  "rails_class_name",       :null => false
+  end
+
   create_table "recurring_schedule_rules", :force => true do |t|
     t.text     "schedule_hash", :limit => 16777215
     t.integer  "interval"
@@ -723,6 +1041,18 @@ ActiveRecord::Schema.define(:version => 20131219205651) do
   end
 
   add_index "recurring_schedule_rules", ["program_type", "program_id"], :name => "index_recurring_schedule_rules_on_program_type_and_program_id"
+
+  create_table "recurring_schedule_slots", :force => true do |t|
+    t.integer  "program_id"
+    t.string   "program_type"
+    t.integer  "start_time"
+    t.integer  "end_time"
+    t.datetime "created_at",   :null => false
+    t.datetime "updated_at",   :null => false
+  end
+
+  add_index "recurring_schedule_slots", ["program_id", "program_type"], :name => "index_recurring_schedule_slots_on_program_id_and_program_type"
+  add_index "recurring_schedule_slots", ["start_time", "end_time"], :name => "index_recurring_schedule_slots_on_start_time_and_end_time"
 
   create_table "related_links", :force => true do |t|
     t.string   "title",        :default => ""
@@ -770,6 +1100,62 @@ ActiveRecord::Schema.define(:version => 20131219205651) do
   add_index "schedule_occurrences", ["starts_at", "ends_at"], :name => "index_schedule_occurrences_on_starts_at_and_ends_at"
   add_index "schedule_occurrences", ["starts_at"], :name => "index_schedule_occurrences_on_starts_at"
   add_index "schedule_occurrences", ["updated_at"], :name => "index_schedule_occurrences_on_updated_at"
+
+  create_table "schedule_program", :force => true do |t|
+    t.integer  "day",                             :null => false
+    t.integer  "kpcc_program_id"
+    t.integer  "other_program_id"
+    t.string   "program",          :limit => 150, :null => false
+    t.string   "url",              :limit => 200, :null => false
+    t.time     "start_time",                      :null => false
+    t.time     "end_time",                        :null => false
+    t.datetime "created_at",                      :null => false
+    t.datetime "updated_at",                      :null => false
+  end
+
+  add_index "schedule_program", ["day", "start_time", "end_time"], :name => "index_schedule_program_on_day_and_start_time_and_end_time"
+  add_index "schedule_program", ["kpcc_program_id"], :name => "schedule_program_kpcc_program_id"
+  add_index "schedule_program", ["other_program_id"], :name => "schedule_program_other_program_id"
+
+  create_table "section_blogs", :force => true do |t|
+    t.integer  "section_id"
+    t.integer  "blog_id"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  add_index "section_blogs", ["blog_id"], :name => "index_section_blogs_on_blog_id"
+  add_index "section_blogs", ["section_id"], :name => "index_section_blogs_on_section_id"
+
+  create_table "section_categories", :force => true do |t|
+    t.integer  "section_id"
+    t.integer  "category_id"
+    t.datetime "created_at",  :null => false
+    t.datetime "updated_at",  :null => false
+  end
+
+  add_index "section_categories", ["category_id"], :name => "index_section_categories_on_category_id"
+  add_index "section_categories", ["section_id"], :name => "index_section_categories_on_section_id"
+
+  create_table "section_promotions", :force => true do |t|
+    t.integer  "section_id"
+    t.integer  "promotion_id"
+    t.datetime "created_at",   :null => false
+    t.datetime "updated_at",   :null => false
+  end
+
+  add_index "section_promotions", ["promotion_id"], :name => "index_section_promotions_on_promotion_id"
+  add_index "section_promotions", ["section_id"], :name => "index_section_promotions_on_section_id"
+
+  create_table "sections", :force => true do |t|
+    t.string   "title"
+    t.string   "slug"
+    t.datetime "created_at",          :null => false
+    t.datetime "updated_at",          :null => false
+    t.integer  "missed_it_bucket_id"
+  end
+
+  add_index "sections", ["missed_it_bucket_id"], :name => "index_sections_on_missed_it_bucket_id"
 
   create_table "shows_episode", :force => true do |t|
     t.integer  "show_id",                            :null => false
@@ -824,6 +1210,12 @@ ActiveRecord::Schema.define(:version => 20131219205651) do
   add_index "shows_segment", ["status", "published_at"], :name => "index_shows_segment_on_status_and_published_at"
   add_index "shows_segment", ["status"], :name => "index_shows_segment_on_status"
   add_index "shows_segment", ["updated_at"], :name => "index_shows_segment_on_updated_at"
+
+  create_table "south_migrationhistory", :force => true do |t|
+    t.string   "app_name",  :null => false
+    t.string   "migration", :null => false
+    t.datetime "applied",   :null => false
+  end
 
   create_table "taggit_tag", :force => true do |t|
     t.string  "name",  :limit => 100, :null => false
