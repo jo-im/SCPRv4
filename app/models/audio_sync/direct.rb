@@ -6,8 +6,8 @@ require 'timeout'
 #
 # Given an arbitrary URL to an mp3
 #
-class Audio
-  class DirectAudio < Audio
+module AudioSync
+  class DirectAudio < Base
     include Audio::FileInfo
 
     TIMEOUT = 60
@@ -62,5 +62,5 @@ class Audio
     def set_path
       self.path = nil
     end
-  end # DirectAudio
-end # Audio
+  end
+end

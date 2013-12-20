@@ -52,7 +52,7 @@ class RssProgramImporter
       # Since we're grabbing the audio file already, we're
       # also going to just compute its information (duration and size) now,
       # instead of having to fetch it again later in a background task.
-      if !audio.mp3_file.present?
+      if !audio.file.present?
         log "Audio file couldn't be reached. This item won't be imported. " \
             "(#{item.enclosure.url})"
 

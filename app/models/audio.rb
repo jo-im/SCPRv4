@@ -1,3 +1,4 @@
+require 'open-uri'
 ##
 # Audio
 #
@@ -18,7 +19,6 @@
 # The public API for an audio object should basically be:
 # * mp3_file
 # * url
-# * podcast_url
 # * duration
 # * size
 # * byline
@@ -38,38 +38,49 @@
 class Audio < ActiveRecord::Base
   self.table_name = "media_audio"
   logs_as_task
+  has_status
 
-  # Server path root - /home/media/kpcc/audio
-  AUDIO_PATH_ROOT = File.join(
-    Rails.application.config.scpr.media_root, "audio")
 
   # Public URL root - http://media.scpr.org/audio
   AUDIO_URL_ROOT = File.join(
     Rails.application.config.scpr.media_url, "audio")
 
-  PODCAST_URL_ROOT = File.join(
-    Rails.application.config.scpr.media_url, "podcasts")
+  TIMEOUT = 60
+
+  SOURCES = {
+    1 => :upload,
+    2 => :direct,
+    3 => :enco,
+    4 => :program
+  }
+
 
   # The NONE Status is just so we can use Audio::STATUS_TEXT for
   # render the Audio columns in the CMS.
-  STATUS_NONE = nil
-  STATUS_WAIT = 1
-  STATUS_LIVE = 2
+  status :none do
+    s.id = nil
+    s.text = "None"
+    s.unpublished!
+  end
 
-  STATUS_TEXT = {
-    STATUS_NONE => "None",
-    STATUS_WAIT => "Awaiting Audio",
-    STATUS_LIVE => "Live"
-  }
+  status :waiting do
+    s.id = 1
+    s.text = "Awaiting Audio"
+    s.pending!
+  end
 
-  #------------
-  # Association
-  belongs_to :content, polymorphic: true, touch: true
-  mount_uploader :mp3, AudioUploader
+  status :live do
+    s.id = 2
+    s.text = "Live"
+    s.published!
+  end
 
 
-  #------------
-  # Validation
+  belongs_to :content,
+    :polymorphic    => true,
+    :touch          => true
+
+
   validate :audio_source_is_provided
   validate :enco_info_is_present_together
 
@@ -77,37 +88,19 @@ class Audio < ActiveRecord::Base
     self.new_record? && self.type == "Audio::UploadedAudio"
   }
 
-  validates :external_url, url: { allow_blank: true }
+  validates :url, url: { allow_blank: true }
 
-  #------------
-  # Callbacks
-
-  # It's important to set the type before validation,
-  # so that we can run type-specific validation.
-  before_validation :set_type, if: -> { self.type.blank? }
-
-  before_save :set_default_status, if: -> { self.status.blank? }
-
-  # For ENCO, it would be beneficial to set this every save.
-  # This would let us update the enco number/date without
-  # having to also update the path. Currently, if we updated
-  # the ENCO info and saved, the path would be wrong.
-  # Would it hurt to remove the condition? I am way too lazy
-  # to find out.
-  before_save :set_path, if: -> { self.path.blank? }
-
-  # Check if persisted so this doesn't get queued on destroy
-  after_commit :async_compute_file_info, if: -> {
-    self.persisted? &&
-    (self.size.blank? || self.duration.blank?)
-  }
+  after_save :async_fetch_audio, if: -> { self.url.present? }
 
 
-  #------------
-  # Scopes
-  scope :available,      -> { where(status: STATUS_LIVE) }
-  scope :awaiting_audio, -> { where(status: STATUS_WAIT) }
+  scope :available,      -> { where(status: Audio.status_id(:live)) }
+  scope :awaiting_audio, -> { where(status: Audio.status_id(:waiting)) }
 
+
+  attr_accessor \
+    :mp3,
+    :enco_number,
+    :enco_date
 
 
   class << self
@@ -119,98 +112,97 @@ class Audio < ActiveRecord::Base
     def enqueue_sync
       Resque.enqueue(Job::SyncAudio, self.name)
     end
-  end
 
-
-
-  def status_text
-    STATUS_TEXT[self.status]
-  end
-
-  def live?
-    self.status == STATUS_LIVE
-  end
-
-
-
-  # The following group of methods are necessary in case we need
-  # some of this information before the object has been typecast
-  # by rails (when pulling it out of the database).
-  def full_path
-    typecast_clone.full_path
-  end
-
-  def url
-    typecast_clone.url
-  end
-
-  def podcast_url
-    typecast_clone.podcast_url
-  end
-
-  def filename
-    if self.mp3.present?
-      self.mp3.filename
-    else
-      typecast_clone.filename
+    # Compile the full URL to an audio file.
+    #
+    # Arguments
+    # * parts (Strings) - A variable number of strings to build the URL.
+    #
+    # Example
+    #
+    #   Audio.url("taketwo", "someaudio.mp3")
+    #     #=> http://media.scpr.org/audio/taketwo/someaudio.mp3
+    #
+    # Returns String
+    def url(*parts)
+      File.join(AUDIO_URL_ROOT, *parts)
     end
   end
 
-  def store_dir
-    typecast_clone.store_dir
+
+  # Temporary proxy
+  def live?
+    published?
   end
 
-  def mp3_file
-    typecast_clone.mp3_file
-  end
 
-
-  # Queue the computation jobs
+  # Queue the computation jobs for this audio.
+  #
+  # Returns nothing.
   def async_compute_file_info
     Resque.enqueue(Job::ComputeAudioFileInfo, self.id)
   end
 
 
-  def type_class
-    self.type.constantize
+  # Compute the duration and size of the audio file.
+  #
+  # Returns nothing.
+  def compute_file_info
+    compute_duration
+    compute_size
+    self
   end
 
+
+  # Compute duration via Mp3Info.
+  # Sets duration to 0 if something goes wrong
+  # so it's not considered "blank".
+  #
+  # Returns nothing.
+  def compute_duration
+    return false if !file
+
+    Mp3Info.open(file) do |file|
+      self.duration = file.length
+    end
+
+    self.duration ||= 0
+  end
+
+
+  # Compute the size via Carrierwave
+  # Sets the value to 0 if something goes wrong
+  # so that size won't be "blank".
+  #
+  # Returns nothing.
+  def compute_size
+    return false if self.url.blank?
+    self.size = file.size || 0
+  end
+
+
+  # Get the actual file via open-uri.
+  #
+  # Returns Tempfile or nil.
+  def file
+    return if self.url.blank?
+
+    @file ||= begin
+      open(self.url, read_timeout: TIMEOUT)
+    rescue OpenURI::HTTPError, Timeout::Error
+      nil
+    end
+  end
 
 
   private
 
-  #------------
-  # Set audio type based on conditions
-  # This only gets run if self.type is blank,
-  # which won't be true for ProgramAudio, since
-  # it gets created through the subclass,
-  # so if we're here and the mp3 is present,
-  # we can safely assume it's uploaded audio
-  def set_type
-    if self.mp3.present?
-      self.type = "Audio::UploadedAudio"
-
-    elsif self.enco_number.present? && self.enco_date.present?
-      self.type = "Audio::EncoAudio"
-
-    elsif self.external_url.present?
-      self.type = "Audio::DirectAudio"
-
-    end
+  # Set the status based on the presence of the file.
+  #
+  # Returns Integer
+  def set_status
+    audio.status = Audio.status_id(audio.file.present? ? :live : :waiting)
   end
-
-  # For uploaded, direct, and program audio, when it gets created
-  # we can immediately assume that it's live.
-  # For ENCO audio, when it gets created we set it to "awaiting",
-  # and its status will get bumped to Live when it gets synced.
-  def set_default_status
-    self.status = self.type_class.default_status
-  end
-
-  def set_path
-    typecast_clone.set_path
-  end
-
 
 
   def enco_info_is_present_together
@@ -234,7 +226,7 @@ class Audio < ActiveRecord::Base
   # #mp3_exists will catch that with a more helpful
   # error message.
   def audio_source_is_provided
-    if self.external_url.blank? &&
+    if self.url.blank? &&
     self.mp3.file.nil? &&
     self.enco_number.blank? &&
     self.enco_date.blank?
@@ -242,6 +234,7 @@ class Audio < ActiveRecord::Base
         "Audio must have a source (upload, enco, or URL)")
     end
   end
+
 
   # Make sure the audio file has a unique name.
   def path_is_unique
@@ -263,15 +256,6 @@ class Audio < ActiveRecord::Base
         "please rename your local audio file and try again. " \
         "If you are trying to replace the audio file, first delete the " \
         "old audio.")
-    end
-  end
-
-  def typecast_clone
-    if self.class.name != self.type
-      write_attribute(:mp3, self.mp3.filename)
-      self.becomes(self.type_class)
-    else
-      self
     end
   end
 end

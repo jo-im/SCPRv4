@@ -19,8 +19,8 @@ module AdminListHelper
 
     :audio => {
       nil                => "list-status label",
-      Audio::STATUS_WAIT => "list-status label label-warning",
-      Audio::STATUS_LIVE => "list-status label label-success"
+      Audio.status_id(:wait) => "list-status label label-warning",
+      Audio.status_id(:live) => "list-status label label-success"
     }
   }
 
@@ -69,9 +69,11 @@ module AdminListHelper
   end
 
   def display_audio(audio)
-    status = Array(audio).first.try(:status)
+    audio   = Array(audio).first
+    status  = audio.try(:status)
+    text    = audio.try(:status_text)
 
-    content_tag :div, Audio::STATUS_TEXT[status], {
+    content_tag :div, text, {
       :class => STATUS_BOOTSTRAP_MAP[:audio][status]
     }
   end

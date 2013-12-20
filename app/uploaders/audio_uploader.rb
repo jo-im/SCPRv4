@@ -22,14 +22,14 @@ class AudioUploader < CarrierWave::Uploader::Base
   #--------------
 
   def store_dir
-    File.join(
-      Rails.application.config.scpr.media_root, "audio", model.store_dir)
-  end
+    time = model.created_at || Time.now
 
-  #--------------
-
-  def raw_value
-    model.read_attribute mounted_as
+    File.join \
+      Rails.application.config.scpr.media_root,
+      "audio",
+      time.strftime("%Y"),
+      time.strftime("%m"),
+      time.strftime("%d")
   end
 
   #--------------
