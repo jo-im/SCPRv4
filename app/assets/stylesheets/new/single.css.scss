@@ -1268,3 +1268,144 @@
 
 //  - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
+
+
+
+
+
+//	################################################################################################
+//	################################################################################################
+//	AUDIO PLAYER
+//	################################################################################################
+//	################################################################################################
+
+.audio-player {
+    border-top: 1px solid rgba(0,0,0,0.2);
+    position: fixed;
+    width: 100%;
+    bottom: 0;
+    left: 0;
+    background: rgba(236,236,236,0.93);
+    box-shadow: 0 -2px 7px rgba(0,0,0,0.13);
+    z-index: 10;
+    .inner {
+        position: relative;
+        height: 60px;
+        overflow: hidden;
+    }
+    button {
+        @include mask;
+        position: absolute;
+        background: image-url("i/audio-player-utilities.png") no-repeat;
+        background-size: 200px 500px;
+        cursor: pointer;
+        border: none;
+    }
+    .controls {
+        border-right: 1px solid rgba(0,0,0,0.2);
+        height: 100%;
+        width: 49px;
+        position: absolute;
+        top: 0;
+        left: 0;
+        button {
+            top: 11px;
+            width: 35px;
+            height: 35px;
+            &.jp-play           { background-position: 0 0;         }
+            &.jp-play:hover     { background-position: 0 -45px;     }
+            &.jp-pause          { background-position: 0 -90px;     }
+            &.jp-pause:hover    { background-position: 0 -135px;    }
+        }
+    }
+    .vitals {
+        margin: 9px 111px 0 70px;
+        overflow: hidden;
+        header {
+            font-family: $font-freight;
+            font-size: 0.8125em; // 13 / 16
+            line-height: 1.3;
+            font-weight: 600;
+            white-space: nowrap;
+            width: 100%;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            margin-bottom: 6px;
+        }
+        .timeline {
+            width: 100%;
+            max-width: 637px;
+            position: relative;
+            height: 9px; // 15
+            padding-top: 6px;
+            .ticker {
+                position: absolute;
+                font-family: $font-proxcond;
+                font-size: 0.6875em; // 11 / 16
+                color: #6f6f6f;
+                top: 0;
+                left: 0;
+                &.jp-duration       { text-align: right; left: auto; right: 0; color: black; }
+            }
+            .meter {
+                background: white;
+                height: 3px;
+                margin: 0 48px 0;
+                position: relative;
+                z-index: 1;
+                div {
+                    height: 100%;
+                    position: absolute;
+                    left: 0;
+                    top: 0;
+                    &.jp-seek-bar   { background: #c7c7c7; width: 100%; z-index: 2; }
+                    &.jp-play-bar   { background: $blue; z-index: 3;                }
+                }
+            }
+        }
+    }
+    .incidentals {
+        width: 73px;
+        position: absolute;
+        right: 0;
+        top: 11px;
+        .aural {
+            width: 27px;
+            height: 27px;
+            left: 0;
+            top: 5px;
+            &.jp-mute           { background-position: 0 -270px;    }
+            &.jp-mute:hover     { background-position: 0 -307px;    }
+            &.jp-unmute         { background-position: 0 -344px;    }
+            &.jp-unmute:hover   { background-position: 0 -381px;    }
+        }
+        .collapse {
+            width: 35px;
+            height: 35px;
+            right: 0;
+            background-position: 0 -180px;
+            &:hover             { background-position: 0 -225px;    }
+        }
+    }
+
+
+    //  - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+    @media screen and (max-width: 450px) {
+
+        box-shadow:
+            inset 0 -50px 0 #ededed,
+            inset 0 -51px 0 rgba(0,0,0,0.3);
+        .inner              { height: 100px; }
+        .vitals             { margin: 5px 0 0 0; }
+        .controls           { border-right: none; }
+        .controls button    { top: 57px; }
+        .incidentals        { top: 57px; }
+
+    }
+
+    //  - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+}
+
+
