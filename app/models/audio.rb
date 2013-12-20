@@ -267,11 +267,13 @@ class Audio < ActiveRecord::Base
   end
 
   def typecast_clone
-    if self.class.name != self.type
-      write_attribute(:mp3, self.mp3.filename)
-      self.becomes(self.type_class)
-    else
-      self
+    @typecast_clone ||= begin
+      if self.class.name != self.type
+        write_attribute(:mp3, self.mp3.filename)
+        self.becomes(self.type_class)
+      else
+        self
+      end
     end
   end
 end
