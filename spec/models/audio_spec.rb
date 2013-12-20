@@ -36,19 +36,32 @@ describe Audio do
       end
 
       it "is valid if only external_url present" do
-        audio = build :audio, :direct, enco_number: nil, enco_date: nil, mp3: nil
+        audio = build :audio, :direct,
+          :enco_number    => nil,
+          :enco_date      => nil,
+          :mp3            => nil
+
         audio.should be_valid
       end
 
       it "is valid if only mp3 present" do
-        audio = build :audio, :uploaded, external_url: nil, enco_number: nil, enco_date: nil
+        audio = build :audio, :uploaded,
+          :external_url   => nil,
+          :enco_number    => nil,
+          :enco_date      => nil
+
         audio.should be_valid
 
         purge_uploaded_audio
       end
 
       it "is invalid if everything is blank" do
-        audio = build :audio, mp3: nil, external_url: nil, enco_number: nil, enco_date: nil
+        audio = build :audio,
+          :mp3            => nil,
+          :external_url   => nil,
+          :enco_number    => nil,
+          :enco_date      => nil
+
         audio.should_not be_valid
         audio.errors.keys.should eq [:base]
       end
@@ -134,17 +147,17 @@ describe Audio do
       audio.save!
     end
 
-    it "receives async_compute_file_fields if duration is present but not size" do
+    it "runs async_compute_file_fields if duration present but not size" do
       Audio.any_instance.should_receive(:async_compute_file_info)
       create :audio, :uploaded, duration: 999, size: nil
     end
 
-    it "receives async_compute_file_fields if size is present but not duration" do
+    it "runs async_compute_file_fields if size present but not duration" do
       Audio.any_instance.should_receive(:async_compute_file_info)
       create :audio, :uploaded, duration: 999, size: nil
     end
 
-    it "doesn't receive async_compute_file_fields if duration and size are present" do
+    it "doesn't run async_compute_file_fields if duration/size are present" do
       Audio.any_instance.should_not_receive(:async_compute_file_info)
       create :audio, :uploaded, duration: 999, size: 8000
     end
@@ -181,6 +194,7 @@ describe Audio do
       audio.path.should eq nil
       audio.save!
 
+      audio.reload
       audio.path.should eq File.join(audio.store_dir, audio.filename)
     end
 
