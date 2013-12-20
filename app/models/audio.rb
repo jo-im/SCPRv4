@@ -47,13 +47,6 @@ class Audio < ActiveRecord::Base
 
   TIMEOUT = 60
 
-  SOURCES = {
-    1 => :upload,
-    2 => :direct,
-    3 => :enco,
-    4 => :program
-  }
-
 
   # The NONE Status is just so we can use Audio::STATUS_TEXT for
   # render the Audio columns in the CMS.
@@ -90,8 +83,7 @@ class Audio < ActiveRecord::Base
 
   validates :url, url: { allow_blank: true }
 
-  after_save :async_fetch_audio, if: -> { self.url.present? }
-
+  before_save :determine_source
 
   scope :available,      -> { where(status: Audio.status_id(:live)) }
   scope :awaiting_audio, -> { where(status: Audio.status_id(:waiting)) }
@@ -100,19 +92,11 @@ class Audio < ActiveRecord::Base
   attr_accessor \
     :mp3,
     :enco_number,
-    :enco_date
+    :enco_date,
+    :source
 
 
   class << self
-    def enqueue_all
-      [Audio::ProgramAudio, Audio::EncoAudio].each(&:enqueue_sync)
-    end
-
-    # Enqueue the audio sync
-    def enqueue_sync
-      Resque.enqueue(Job::SyncAudio, self.name)
-    end
-
     # Compile the full URL to an audio file.
     #
     # Arguments
@@ -197,11 +181,38 @@ class Audio < ActiveRecord::Base
 
   private
 
-  # Set the status based on the presence of the file.
-  #
-  # Returns Integer
-  def set_status
-    audio.status = Audio.status_id(audio.file.present? ? :live : :waiting)
+  def determine_source
+    if self.enco_number.present? && self.enco_date.present?
+      # Enco is Awaiting by default.
+      # If the audio file already exists on the server,
+      # then it will be picked up by the background job
+      # and the status will be updated.
+      self.source = :enco
+      self.status = Audio.status_id(:waiting)
+
+      date = self.enco_date.strftime("%Y%m%d")
+      filename = "#{date}_features#{self.enco_number}.mp3"
+
+      self.url = Audio.url("features", filename)
+
+    elsif self.mp3.present?
+      # We can assume that if they just uploaded the file,
+      # it is available and live.
+      self.source = :upload
+      self.status = Audio.status_id(:live)
+
+      uploder = AudioUploader.new(self)
+      uploader.store!(self.mp3)
+
+      self.url = uploader.url
+
+    elsif self.url.present?
+      # Checking for URL should come last so that we can override
+      # the existing URL by uploading an mp3 or inputting ENCO info.
+      # Let's trust the user to input a correct URL.
+      self.source = :direct
+      self.status = Audio.status_id(:live)
+    end
   end
 
 
