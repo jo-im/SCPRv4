@@ -4,6 +4,21 @@
 
 <%= form_block "Publishing" do %>
   <%= f.input :status, collection: Edition.status_select_collection, include_blank: false, input_html: { id: "status-select" } %>
+  <!-- EMAIL -->
+  <% if record.email_sent? %>
+    <div class="alert alert-info">
+      An e-mail has been sent for this alert.
+    </div>
+  <% else %>
+    <% if record.published? && record.send_email? %>
+      <div class="alert alert-warning">
+        An e-mail will be sent for this alert, but hasn't fired yet.
+      </div>
+    <% else %>
+      <%= f.input :send_email, hint: "Send out an e-mail to everybody subscribed." %>
+    <% end %>
+  <% end %>
+
   <%= f.section 'content_alarm' %>
   <%= f.section 'auto_published_at' %>
   <div id="scheduled_status" class="notification block"></div>

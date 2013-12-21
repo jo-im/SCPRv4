@@ -59,4 +59,63 @@ describe Edition do
       edition.reload.published?.should eq true
     end
   end
+
+  describe "#publish_email" do
+    before :each do
+      stub_request(:post, %r|assets/email|).to_return({
+        :content_type   => "application/json",
+        :body           => load_fixture("api/eloqua/email.json")
+      })
+
+      stub_request(:post, %r|assets/campaign/active|).to_return({
+        :content_type   => "application/json",
+        :body           => load_fixture("api/eloqua/campaign_activated.json")
+      })
+
+      stub_request(:post, %r|assets/campaign\z|).to_return({
+        :content_type   => "application/json",
+        :body           => load_fixture("api/eloqua/email.json")
+      })
+    end
+
+    it 'sends the e-mail and sets email_sent? to true' do
+      story = create :news_story
+      edition = create :edition, :email, :published
+      slot = create :edition_slot, edition: edition, item: story
+
+      edition.email_sent?.should eq false
+
+      edition.publish_email
+      edition.reload.email_sent?.should eq true
+    end
+
+    it 'returns false and does not send the email if not published' do
+      story = create :news_story
+      edition = create :edition, :email, :draft
+      slot = create :edition_slot, edition: edition, item: story
+
+      edition.publish_email.should eq false
+      edition.reload.email_sent?.should eq false
+    end
+
+    it 'returns false and does not send the email if not emailized' do
+      story = create :news_story
+      edition = create :edition, :published
+      slot = create :edition_slot, edition: edition, item: story
+
+      edition.publish_email.should eq false
+      edition.reload.email_sent?.should eq false
+    end
+  end
+
+  describe '#async_send_email' do
+    it 'enqueues the job' do
+      edition = create :edition
+
+      Resque.should_receive(:enqueue).with(
+        Job::SendShortListEmail, edition.id)
+
+      edition.async_send_email
+    end
+  end
 end
