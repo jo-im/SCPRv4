@@ -326,7 +326,7 @@ ActiveRecord::Schema.define(:version => 20131219235740) do
     t.datetime "created_at",                      :null => false
     t.datetime "updated_at",                      :null => false
     t.string   "title"
-    t.boolean  "send_email",   :default => false
+    t.boolean  "send_email",   :default => true
     t.boolean  "email_sent",   :default => false
   end
 
