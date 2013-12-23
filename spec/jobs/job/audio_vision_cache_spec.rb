@@ -30,6 +30,18 @@ describe Job::AudioVisionCache do
       Rails.cache.read("scprv4:homepage:av-featured-post").title.should match /Thankful For/
     end
 
+    it "caches the only post if there is only one post" do
+      stub_request(:get, %r{billboards/current}).to_return({
+        :content_type => 'application/json',
+        :body => load_fixture('api/audiovision/billboard1_one-post_v1.json')
+      })
+
+      # Run it 5 times to be reasonably sure that it keeps choosing the same one.
+      10.times do
+        Job::AudioVisionCache.perform
+        Rails.cache.read("scprv4:homepage:av-featured-post").title.should match /Bristlecones/
+      end
+    end
 
     it "caches a different post if the updated timestamp has not changed" do
       Job::AudioVisionCache.perform
