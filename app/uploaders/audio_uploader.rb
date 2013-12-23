@@ -32,6 +32,20 @@ class AudioUploader < CarrierWave::Uploader::Base
       time.strftime("%d")
   end
 
+
+  def filename
+    name = file.filename
+    i = 0
+
+    while File.exists?(file.path)
+      i += 1
+      name = "#{file.filename}-#{i}"
+    end
+
+    name
+  end
+
+
   #--------------
   # Only allow mp3's
   def extension_white_list

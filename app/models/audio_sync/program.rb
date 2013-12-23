@@ -11,8 +11,10 @@
 # the audio exists.
 #
 module AudioSync
-  class Program < Base
+  module Program
     logs_as_task
+
+    THESHOLD = 2.weeks
 
     # 20121001_mbrand.mp3
     FILENAME_REGEX =
@@ -21,7 +23,6 @@ module AudioSync
 
     class << self
       include ::NewRelic::Agent::Instrumentation::ControllerInstrumentation
-
 
       #------------
       # TODO This could be broken up into smaller units
@@ -40,13 +41,13 @@ module AudioSync
               #    To keep this process quick, only
               #    worry about files less than 14 days old
               file_date = File.mtime(absolute_mp3_path)
-              next if file_date < 14.days.ago
+              next if file_date < THESHOLD.ago
 
-              # 1. File already exists (program audio only needs to
+              # 2. File already exists (program audio only needs to
               # exist once in the DB)
               next if existing[File.join(program.audio_dir, file)]
 
-              # 2. The filename doesn't match our regex
+              # 3. The filename doesn't match our regex
               # (won't be able to get date)
               match = file.match(FILENAME_REGEX)
               next if !match
@@ -56,24 +57,40 @@ module AudioSync
               # if the content for that date exists.
               date = Time.new(match[:year], match[:month], match[:day])
 
+              # Figure out what type of content we should attach the audio to.
               if program.display_episodes?
-                content = program.episodes.for_air_date(date).first
+                content = program.episodes.for_air_date(date)
               else
                 content = program.segments.where(
-                  published_at: date..date.end_of_day).first
+                  published_at: date..date.end_of_day)
               end
 
-              if content
-                audio = Audio.new(
-                  :content     => content,
-                  :url         => Audio.url(program.audio_dir, file.filename),
-                  :description => content.headline
-                )
+              content = content.includes(:audio).first
 
-                synced << audio if audio.save!
-                self.log  "Saved ProgramAudio ##{audio.id} for " \
-                          "#{content.simple_title}"
-              end
+              # Compile the URL for this audio
+              url = Audio.url(program.audio_dir, file.filename)
+
+              # If there is nothing to attach the audio too, or
+              # if the content already has this audio attached to it,
+              # then move on.
+              next if !content || content.audio.any? { |a| a.url == url }
+
+              # Build the audio
+              audio = Audio.new(
+                :content     => content,
+                :url         => url,
+                :description => content.headline
+              )
+
+              # Even though we could, I'd rather not set the
+              # file info here. I feel it's better to let the
+              # ComputeAudioFileInfo job always handle that.
+
+              # Saving will trigger the file info job.
+              synced << audio if audio.save!
+
+              self.log  "Saved ProgramAudio ##{audio.id} for " \
+                        "#{content.simple_title}"
             end # Dir
 
           rescue => e
@@ -92,17 +109,6 @@ module AudioSync
       #------------
 
       private
-
-      #------------
-      # Setup a hash to search so we only have to
-      # perform one query to check for existance
-      def existing
-        @existing ||= begin
-          existing_hash = {}
-          Audio::ProgramAudio.all.each { |a| existing_hash[a.path] = true }
-          existing_hash
-        end
-      end
 
       #------------------------
       # An array of what got synced
