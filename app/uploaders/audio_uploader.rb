@@ -12,11 +12,11 @@ class AudioUploader < CarrierWave::Uploader::Base
   # Don't do it in test environment so
   # the fixtures stay in place.
   def move_to_cache
-    Rails.env == 'test' ? false : true
+    Rails.env != 'test'
   end
 
   def move_to_store
-    Rails.env == 'test' ? false : true
+    Rails.env != 'test'
   end
 
   #--------------
