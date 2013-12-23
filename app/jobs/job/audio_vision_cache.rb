@@ -24,7 +24,7 @@ module Job
         #   the currently featured post.
         #
         if !cached_billboard ||
-        current_bilboard.posts.size == 1 ||
+        current_billboard.posts.size == 1 ||
         current_billboard.updated_at > cached_billboard.updated_at
           featured = current_billboard.posts.first
         else
