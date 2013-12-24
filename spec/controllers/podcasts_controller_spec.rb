@@ -67,7 +67,7 @@ describe PodcastsController do
         purge_uploaded_audio
       end
 
-      it "assigns the content for episode", focus: true do
+      it "assigns the content for episode" do
         episode   = create :show_episode
         audio     = create :audio, :uploaded, content: episode
         index_sphinx

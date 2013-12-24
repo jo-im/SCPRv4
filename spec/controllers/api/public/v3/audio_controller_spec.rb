@@ -36,7 +36,7 @@ describe Api::Public::V3::AudioController do
         )
       end
 
-      @unavailable = create_list :audio, :enco, 2
+      @unavailable = create_list :audio, 2, :enco
     end
 
     after :each do

@@ -1,5 +1,5 @@
 ##
-# ProgramAudio
+# Program Audio sync
 #
 # Created automatically
 # when the file appears on the filesystem
@@ -62,7 +62,7 @@ module AudioSync
               content = content.includes(:audio).first
 
               # Compile the URL for this audio
-              url = Audio.url(program.audio_dir, file.filename)
+              url = Audio.url(program.audio_dir, file)
 
               # If there is nothing to attach the audio to, or
               # if the content already has this audio attached to it,
@@ -70,7 +70,7 @@ module AudioSync
               next if !content || content.audio.any? { |a| a.url == url }
 
               # Build the audio
-              content.audio.build(
+              audio = content.audio.build(
                 :url         => url,
                 :description => content.headline
               )
@@ -84,7 +84,7 @@ module AudioSync
               content.save!
               synced += 1
 
-              self.log  "Saved ProgramAudio ##{audio.id} for " \
+              self.log  "Saved Audio ##{audio.id} for " \
                         "#{content.simple_title}"
             end # Dir
 
@@ -96,7 +96,7 @@ module AudioSync
           end
         end # KpccProgram
 
-        self.log "Finished syncing ProgramAudio. Total synced: #{synced}"
+        self.log "Finished syncing Audio. Total synced: #{synced}"
       end # bulk_sync
 
       add_transaction_tracer :bulk_sync, category: :task
