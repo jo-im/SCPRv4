@@ -626,19 +626,18 @@ ActiveRecord::Schema.define(:version => 20131223185459) do
     t.string   "url"
     t.string   "podcast_url"
     t.string   "itunes_url"
-    t.text     "description",        :limit => 16777215
+    t.text     "description", :limit => 16777215
     t.string   "image_url"
     t.string   "author"
     t.string   "keywords"
     t.string   "duration"
-    t.boolean  "is_listed",                              :default => false, :null => false
+    t.boolean  "is_listed",                       :default => false, :null => false
     t.integer  "source_id"
     t.integer  "category_id"
     t.string   "item_type"
-    t.datetime "created_at",                                                :null => false
-    t.datetime "updated_at",                                                :null => false
+    t.datetime "created_at",                                         :null => false
+    t.datetime "updated_at",                                         :null => false
     t.string   "source_type"
-    t.integer  "itunes_category_id"
   end
 
   add_index "podcasts", ["category_id"], :name => "podcasts_podcast_42dc49bc"

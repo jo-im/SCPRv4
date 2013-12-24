@@ -4,11 +4,11 @@ module AudioSync
 
     class << self
       def bulk_sync
-        time_limit = THRESHOLD.ago
+        limit = THRESHOLD.ago
 
-        Audio.awaiting.where('created_at > ?', time_limit).each do |audio|
+        Audio.awaiting.where('created_at > ?', limit).each do |audio|
           if audio.file.present?
-            # Publishing will trigger the file info job.
+            # Publishing will trigger callbacks.
             audio.publish
           end # W
         end # E

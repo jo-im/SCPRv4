@@ -78,8 +78,15 @@ namespace :scprv4 do
   desc "Sync all Audio types"
   task :sync_audio => [:environment] do
     puts "*** [#{Time.now}] Enqueueing audio sync tasks into Resque..."
-    Audio.enqueue_all
-    puts "Finished."
+    args = ["AudioSync::Pending", "AudioSync::Program"]
+
+    if Rails.env.development?
+      Job::SyncAudio.perform(*args)
+      puts "Finished.\n"
+    else
+      Job::SyncAudio.enqueue(*args)
+      puts "Job was placed in queue.\n"
+    end
   end
 
 

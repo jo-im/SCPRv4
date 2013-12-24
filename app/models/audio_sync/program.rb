@@ -5,17 +5,12 @@
 # when the file appears on the filesystem
 # It belongs to a ShowEpisode or ShowSegment
 # for a KpccProgram
-#
-# Doesn't need an instance `#sync` method,
-# because an instance is only created if
-# the audio exists.
-#
 module AudioSync
   module Program
     extend LogsAsTask
     logs_as_task
 
-    THESHOLD = 2.weeks
+    THRESHOLD = 2.weeks
 
     # 20121001_mbrand.mp3
     FILENAME_REGEX =
@@ -30,6 +25,8 @@ module AudioSync
       # Since this is run as a task, we need some informative
       # logging in case of failure, hence the begin/rescue block.
       def bulk_sync
+        synced = 0
+
         # Each KpccProgram with episodes and which can sync audio
         KpccProgram.can_sync_audio.each do |program|
           begin
@@ -44,20 +41,14 @@ module AudioSync
               #    To keep this process quick, only
               #    worry about files less than 14 days old
               file_date = File.mtime(absolute_mp3_path)
-              next if file_date < THESHOLD.ago
+              next if file_date < THRESHOLD.ago
 
-              # 2. File already exists (program audio only needs to
-              # exist once in the DB)
-              next if existing[File.join(program.audio_dir, file)]
-
-              # 3. The filename doesn't match our regex
+              # 2. The filename doesn't match our regex
               # (won't be able to get date)
               match = file.match(FILENAME_REGEX)
               next if !match
 
-              # Get the date for this episode/segment based on the filename,
-              # find that episode/segment, and create the audio / association
-              # if the content for that date exists.
+              # Get the date for this episode/segment based on the filename
               date = Time.new(match[:year], match[:month], match[:day])
 
               # Figure out what type of content we should attach the audio to.
@@ -73,14 +64,13 @@ module AudioSync
               # Compile the URL for this audio
               url = Audio.url(program.audio_dir, file.filename)
 
-              # If there is nothing to attach the audio too, or
+              # If there is nothing to attach the audio to, or
               # if the content already has this audio attached to it,
               # then move on.
               next if !content || content.audio.any? { |a| a.url == url }
 
               # Build the audio
-              audio = Audio.new(
-                :content     => content,
+              content.audio.build(
                 :url         => url,
                 :description => content.headline
               )
@@ -89,8 +79,10 @@ module AudioSync
               # file info here. I feel it's better to let the
               # ComputeAudioFileInfo job always handle that.
 
-              # Saving will trigger the file info job.
-              synced << audio if audio.save!
+              # Save the content to touch its timestamp.
+              # This will also save the audio and fire its callbacks.
+              content.save!
+              synced += 1
 
               self.log  "Saved ProgramAudio ##{audio.id} for " \
                         "#{content.simple_title}"
@@ -103,21 +95,10 @@ module AudioSync
           end
         end # KpccProgram
 
-        self.log "Finished syncing ProgramAudio. Total synced: #{synced.size}"
-        synced
+        self.log "Finished syncing ProgramAudio. Total synced: #{synced}"
       end # bulk_sync
 
       add_transaction_tracer :bulk_sync, category: :task
-
-      #------------
-
-      private
-
-      #------------------------
-      # An array of what got synced
-      def synced
-        @synced ||= []
-      end
     end
   end
 end

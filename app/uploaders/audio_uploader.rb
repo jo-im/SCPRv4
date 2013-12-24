@@ -1,5 +1,7 @@
 # encoding: utf-8
 
+require 'securerandom'
+
 ##
 # AudioUploader
 #
@@ -22,27 +24,34 @@ class AudioUploader < CarrierWave::Uploader::Base
   #--------------
 
   def store_dir
-    time = model.created_at || Time.now
+    File.join Audio::AUDIO_PATH_ROOT, relative_dir
+  end
 
-    File.join \
-      Rails.application.config.scpr.media_root,
-      "audio",
-      time.strftime("%Y"),
-      time.strftime("%m"),
-      time.strftime("%d")
+
+  # Not part of the Uploader API.
+  # This is just so we can share this path between store_dir
+  # and URL.
+  def relative_dir
+    @relative_dir ||= begin
+      time = Time.now
+
+      File.join \
+        Audio::UPLOAD_DIR,
+        time.strftime("%Y"),
+        time.strftime("%m"),
+        time.strftime("%d")
+    end
   end
 
 
   def filename
-    name = file.filename
-    i = 0
+    @filename ||= begin
+      basename  = File.basename(file.filename, ".*")
+      random    = SecureRandom.urlsafe_base64(4)
+      extname   = File.extname(file.filename)
 
-    while File.exists?(file.path)
-      i += 1
-      name = "#{file.filename}-#{i}"
+      "#{basename}-#{random}#{extname}"
     end
-
-    name
   end
 
 

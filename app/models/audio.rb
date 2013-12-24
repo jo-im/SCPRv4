@@ -66,11 +66,13 @@ class Audio < ActiveRecord::Base
   AUDIO_URL_ROOT = File.join(
     Rails.application.config.scpr.media_url, "audio")
 
+  ENCO_DIR    = "features"
+  UPLOAD_DIR  = "upload"
+
   TIMEOUT = 60
 
 
-  # The NONE Status is just so we can use Audio::STATUS_TEXT for
-  # render the Audio columns in the CMS.
+  # The NONE Status is so we can show "None" text in Outpost
   status :none do |s|
     s.id = nil
     s.text = "None"
@@ -105,9 +107,11 @@ class Audio < ActiveRecord::Base
     self.published? && (self.duration.blank? || self.size.blank?)
   }
 
+  after_commit :clear_source_info
 
-  scope :available,      -> { where(status: Audio.status_id(:live)) }
-  scope :awaiting_audio, -> { where(status: Audio.status_id(:waiting)) }
+
+  scope :available, -> { where(status: Audio.status_id(:live)) }
+  scope :awaiting,  -> { where(status: Audio.status_id(:waiting)) }
 
 
   # Different ways to get audio into the system.
@@ -135,12 +139,6 @@ class Audio < ActiveRecord::Base
   end
 
 
-  # Temporary proxy
-  def live?
-    published?
-  end
-
-
   # Publish the audio.
   #
   # Returns Audio.
@@ -153,6 +151,7 @@ class Audio < ActiveRecord::Base
   #
   # Returns nothing.
   def async_compute_file_info
+    return false if !self.persisted?
     Resque.enqueue(Job::ComputeAudioFileInfo, self.id)
   end
 
@@ -163,7 +162,6 @@ class Audio < ActiveRecord::Base
   def compute_file_info
     compute_duration
     compute_size
-    self
   end
 
 
@@ -173,10 +171,10 @@ class Audio < ActiveRecord::Base
   #
   # Returns nothing.
   def compute_duration
-    return false if !file
+    return false if !self.file
 
-    Mp3Info.open(file) do |file|
-      self.duration = file.length
+    Mp3Info.open(self.file) do |mp3|
+      self.duration = mp3.length
     end
 
     self.duration ||= 0
@@ -189,12 +187,10 @@ class Audio < ActiveRecord::Base
   #
   # Returns nothing.
   def compute_size
-    return false if self.url.blank?
-    self.size = file.size || 0
+    return false if !self.file
+    self.size = self.file.size || 0
   end
 
-
-  attr_writer :file
 
   # Get the actual file via open-uri.
   # We want to return right away if URL is blank so that
@@ -223,15 +219,31 @@ class Audio < ActiveRecord::Base
 
   private
 
-  # Check if the source of the audio has changed
-  def audio_source_changed?
-    self.enco_number_changed? ||
-    self.enco_date_changed? ||
-    self.url_changed? ||
-    self.mp3_changed?
+  # Clear the source information so audio_source_changed? will work
+  # without reloading the object.
+  def clear_source_info
+    @enco_number  = nil
+    @enco_date    = nil
+    @mp3          = nil
   end
 
 
+  # Check if the source of the audio has changed
+  # Normally we'd use `enco_number_changed?`, etc here, but since
+  # we aren't persisting those values, it's enough to just
+  # check if a value was passed into them.
+  def audio_source_changed?
+    self.enco_number.present? ||
+    self.enco_date.present? ||
+    self.mp3.present? ||
+    self.url_changed?
+  end
+
+
+  # Figure out what the URL and status should be based on the given
+  # information. I'd like to break this out into separate modules
+  # or something... I don't like having it all crammed into one
+  # method.
   def determine_source
     if self.enco_number.present? && self.enco_date.present?
       date = self.enco_date.strftime("%Y%m%d")
@@ -241,7 +253,7 @@ class Audio < ActiveRecord::Base
       # existence of this audio, but even if it exists,
       # we wouldn't want to compute the file info right now.
       # So we'll leave it up to our hero, the background worker.
-      self.url = Audio.url("features", filename)
+      self.url = Audio.url(ENCO_DIR, filename)
 
       # Enco is Awaiting by default.
       # Once the audio file exists on the server,
@@ -253,7 +265,7 @@ class Audio < ActiveRecord::Base
       # Since we don't want or need to persist the mp3 information,
       # we just handle audio uploading manually (via Carrierwave),
       # instead of using Carrierwave's "mount" feature.
-      uploder = AudioUploader.new(self)
+      uploader = AudioUploader.new(self)
       uploader.store!(self.mp3)
 
       # Even though we have the file in memory, we don't want to
@@ -262,7 +274,8 @@ class Audio < ActiveRecord::Base
       # can take a while for big files. So we'll just set the
       # URL and let the background workers handle the file info
       # as normal.
-      self.url = uploader.url
+      # uploader.path will include the UPLOAD_DIR directory already.
+      self.url = Audio.url(uploader.relative_dir, uploader.filename)
 
       # We can assume that if they just uploaded the file,
       # it is available and live.

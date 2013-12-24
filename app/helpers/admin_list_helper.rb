@@ -18,9 +18,9 @@ module AdminListHelper
     },
 
     :audio => {
-      nil                => "list-status label",
-      Audio.status_id(:wait) => "list-status label label-warning",
-      Audio.status_id(:live) => "list-status label label-success"
+      Audio.status_id(:none)      => "list-status label",
+      Audio.status_id(:waiting)   => "list-status label label-warning",
+      Audio.status_id(:live)      => "list-status label label-success"
     }
   }
 
