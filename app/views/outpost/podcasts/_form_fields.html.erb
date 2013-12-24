@@ -8,6 +8,7 @@
 <%= form_block "Meta Info" do %>
  <%= f.input :author %>
  <%= f.input :keywords, hint: "Comma-seperated keywords" %>
+ <%= f.input :itunes_category_id, collection: ITUNES_CATEGORIES.invert %>
  <%= f.input :image_url %>
  <%= f.input :duration, hint: "Average episode duration, as either <em>H:MM:SS</em> or <em>MM:SS</em>".html_safe %>
 <% end %>

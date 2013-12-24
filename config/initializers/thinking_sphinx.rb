@@ -18,3 +18,11 @@ end
 
 ThinkingSphinx::SphinxQL.functions!
 ThinkingSphinx::Middlewares::DEFAULT.delete ThinkingSphinx::Middlewares::UTF8
+
+ThinkingSphinx::Configuration.instance.searchd.binlog_path =
+  case Rails.env
+  when 'test', 'development'
+    Rails.root.join "log"
+  when 'staging', 'production'
+    '/web/scprv4/shared/log/'
+  end
