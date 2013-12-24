@@ -3,7 +3,7 @@ require "spec_helper"
 describe Job::ComputeAudioFileInfo do
   describe "::perform" do
     it "finds the audio and finds the duration and size, and saves" do
-      audio = create :enco_audio, :live_enco, :live
+      audio = create :audio, :enco, :live_enco, :live
 
       # Reset these columns since theoretically
       # they would have been set already by the callback.
@@ -21,7 +21,7 @@ describe Job::ComputeAudioFileInfo do
     end
 
     it "doesn't save if the mp3_file is blank" do
-      audio = create :enco_audio
+      audio = create :audio, :enco
       Audio::EncoAudio.any_instance.should_not_receive(:save!)
 
       Job::ComputeAudioFileInfo.perform(audio.id)

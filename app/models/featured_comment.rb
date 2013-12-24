@@ -7,7 +7,6 @@ class FeaturedComment < ActiveRecord::Base
 
   include Concern::Callbacks::SphinxIndexCallback
   include Concern::Callbacks::HomepageCachingCallback
-  include Concern::Methods::StatusMethods
 
 
   status :draft do |s|

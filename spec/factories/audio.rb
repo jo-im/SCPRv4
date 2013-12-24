@@ -4,11 +4,11 @@
 FactoryGirl.define do
   factory :audio do
     trait :awaiting do
-      status Audio::STATUS_WAIT
+      status Audio.status_id(:waiting)
     end
 
     trait :live do
-      status Audio::STATUS_LIVE
+      status Audio.status_id(:live)
     end
 
     trait :uploaded do
@@ -33,36 +33,12 @@ FactoryGirl.define do
       external_url "http://media.scpr.org/audio/events/2012/10/02/SomeCoolEvent.mp3"
     end
 
-    trait :program do
-      type "Audio::ProgramAudio" # Typecast this object since Audio#set_type doesn't do it for ProgramAudio
-      mp3 File.open(File.join(Audio::AUDIO_PATH_ROOT, "mbrand/20121002_mbrand.mp3"))
-    end
-
     trait :for_episode do
       content { |a| a.association :show_episode }
     end
 
     trait :for_segment do
       content { |a| a.association :show_segment }
-    end
-
-    #---------
-
-    factory :program_audio, class: "Audio::ProgramAudio" do
-      for_episode
-      program
-    end
-
-    factory :enco_audio, class: "Audio::EncoAudio" do
-      enco
-    end
-
-    factory :direct_audio, class: "Audio::DirectAudio" do
-      direct
-    end
-
-    factory :uploaded_audio, class: "Audio::UploadedAudio" do
-      uploaded
     end
   end
 end

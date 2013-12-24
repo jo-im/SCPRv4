@@ -1,8 +1,8 @@
 class MoveAudioInfoIntoUrlColumn < ActiveRecord::Migration
   def up
-    Audio.where(url: nil).find_each do |audio|
+    Audio.where("url is null or url = ?", "").find_each do |audio|
       if audio.path.present?
-        url = Audio.url(audio.path)
+        url = "http://media.scpr.org/audio/#{audio.path}"
         audio.update_column(:url, url)
       end
     end

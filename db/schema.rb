@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20131215012447) do
+ActiveRecord::Schema.define(:version => 20131223185459) do
 
   create_table "abstracts", :force => true do |t|
     t.string   "source"
@@ -518,8 +518,6 @@ ActiveRecord::Schema.define(:version => 20131215012447) do
   create_table "media_audio", :force => true do |t|
     t.integer  "size"
     t.integer  "duration"
-    t.string   "enco_number"
-    t.date     "enco_date"
     t.integer  "content_id"
     t.text     "description",  :limit => 2147483647
     t.string   "byline"
@@ -527,17 +525,13 @@ ActiveRecord::Schema.define(:version => 20131215012447) do
     t.string   "content_type"
     t.datetime "created_at",                                        :null => false
     t.datetime "updated_at",                                        :null => false
-    t.string   "external_url"
-    t.string   "type"
-    t.string   "mp3"
+    t.string   "url"
     t.integer  "status"
-    t.string   "path"
   end
 
   add_index "media_audio", ["content_type", "content_id"], :name => "index_media_audio_on_content_type_and_content_id"
   add_index "media_audio", ["position"], :name => "index_media_audio_on_position"
   add_index "media_audio", ["status"], :name => "index_media_audio_on_status"
-  add_index "media_audio", ["type"], :name => "index_media_audio_on_type"
 
   create_table "media_document", :force => true do |t|
     t.string   "document_file", :limit => 100,        :null => false
@@ -632,18 +626,19 @@ ActiveRecord::Schema.define(:version => 20131215012447) do
     t.string   "url"
     t.string   "podcast_url"
     t.string   "itunes_url"
-    t.text     "description", :limit => 16777215
+    t.text     "description",        :limit => 16777215
     t.string   "image_url"
     t.string   "author"
     t.string   "keywords"
     t.string   "duration"
-    t.boolean  "is_listed",                       :default => false, :null => false
+    t.boolean  "is_listed",                              :default => false, :null => false
     t.integer  "source_id"
     t.integer  "category_id"
     t.string   "item_type"
-    t.datetime "created_at",                                         :null => false
-    t.datetime "updated_at",                                         :null => false
+    t.datetime "created_at",                                                :null => false
+    t.datetime "updated_at",                                                :null => false
     t.string   "source_type"
+    t.integer  "itunes_category_id"
   end
 
   add_index "podcasts", ["category_id"], :name => "podcasts_podcast_42dc49bc"

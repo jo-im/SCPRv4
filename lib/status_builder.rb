@@ -7,7 +7,7 @@ module StatusBuilder
     # Activate the status methods for a class.
     def has_status
       extend ClassMethodsOnActivation
-      include InvstandMethodsOnActivation
+      include InstanceMethodsOnActivation
     end
   end
 

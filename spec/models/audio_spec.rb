@@ -119,7 +119,7 @@ describe Audio do
 
       it 'only runs on UploadedAudio' do
         Audio.any_instance.should_not_receive(:path_is_unique)
-        audio = create :direct_audio
+        audio = create :audio, :direct
       end
     end
   end
@@ -135,7 +135,7 @@ describe Audio do
       end
 
       it "selects only live status" do
-        available   = create :uploaded_audio, :uploaded
+        available   = create :audio, :uploaded, :uploaded
         unavailable = create :audio, :enco # mp3 is blank
         Audio.available.should eq [available]
       end
@@ -149,7 +149,7 @@ describe Audio do
       end
 
       it "selects audio where mp3 is null" do
-        null_mp3 = create :enco_audio
+        null_mp3 = create :audio, :enco
         live     = create :audio, :uploaded
 
         null_mp3.mp3.should be_blank
@@ -226,7 +226,7 @@ describe Audio do
     end
 
     it 'does it for typecasted things too... great description bro' do
-      audio = build :enco_audio
+      audio = build :audio, :enco
       audio.path.should eq nil
       audio.save!
 

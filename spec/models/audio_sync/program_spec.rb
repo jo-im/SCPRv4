@@ -6,7 +6,7 @@ describe Audio::ProgramAudio do
       let(:content) { create :show_episode, headline: "Cool Episode, Bro", show: create(:kpcc_program, audio_dir: "coolshow") }
 
       it "sets description to content's headline before create if description is blank" do
-        audio = create :program_audio, description: nil, content: content
+        audio = create :audio, :direct, description: nil, content: content
         audio.description.should eq "Cool Episode, Bro"
 
         # Make sure it doesn't happen on subsequent saves
@@ -16,7 +16,7 @@ describe Audio::ProgramAudio do
       end
 
       it "doesn't run if the description was given" do
-        audio = create :program_audio, description: "Cool Audio, Bro", content: content
+        audio = create :audio, :direct, description: "Cool Audio, Bro", content: content
         audio.description.should eq "Cool Audio, Bro"
       end
     end
@@ -43,7 +43,7 @@ describe Audio::ProgramAudio do
 
   describe '#mp3_file' do
     it 'is the actual mp3 file' do
-      audio = build :program_audio
+      audio = build :audio, :direct
       audio.mp3_file.should eq audio.mp3.file.file
     end
   end
@@ -51,7 +51,7 @@ describe Audio::ProgramAudio do
 
   describe 'computing file info' do
     it 'computes the duration' do
-      audio = build :program_audio, mp3: File.open(File.join(Audio::AUDIO_PATH_ROOT, "2sec.mp3"))
+      audio = build :audio, :direct, mp3: File.open(File.join(Audio::AUDIO_PATH_ROOT, "2sec.mp3"))
       audio.duration.should eq nil
 
       audio.compute_duration
@@ -59,7 +59,7 @@ describe Audio::ProgramAudio do
     end
 
     it 'computes the file size' do
-      audio = build :program_audio, mp3: File.open(File.join(Audio::AUDIO_PATH_ROOT, "2sec.mp3"))
+      audio = build :audio, :direct, mp3: File.open(File.join(Audio::AUDIO_PATH_ROOT, "2sec.mp3"))
       audio.size.should eq nil
 
       audio.compute_size
@@ -111,7 +111,7 @@ describe Audio::ProgramAudio do
       Dir.should_receive(:foreach).with(program.absolute_audio_path).and_return(["20121002_mbrand.mp3"]) # Filename matches
       File.should_receive(:mtime).with(File.join Audio::AUDIO_PATH_ROOT, "coolshowbro/20121002_mbrand.mp3").and_return(Time.now) # File new
 
-      audio = build :program_audio, content: program.episodes.first
+      audio = build :audio, :direct, content: program.episodes.first
       Audio::ProgramAudio.should_receive(:new).and_return(audio)
       Audio::ProgramAudio.bulk_sync.should eq [audio]
     end
@@ -121,7 +121,7 @@ describe Audio::ProgramAudio do
       Dir.should_receive(:foreach).with(program.absolute_audio_path).and_return(["20121002_mbrand.mp3"]) # Filename matches
       File.should_receive(:mtime).with(File.join Audio::AUDIO_PATH_ROOT, "coolshowbro/20121002_mbrand.mp3").and_return(Time.now) # File new
 
-      audio = build :program_audio, content: program.segments.first
+      audio = build :audio, :direct, content: program.segments.first
       Audio::ProgramAudio.should_receive(:new).and_return(audio)
       Audio::ProgramAudio.bulk_sync.should eq [audio]
     end

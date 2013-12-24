@@ -2,7 +2,7 @@
 # CacheExpirationCallback
 #
 # Expires cache
-# Requires the methods defined in StatusMethods
+# Requires StatusBuilder methods
 #
 # We have to set the "promises" before save so that we still have
 # access to the object's dirty attributes (status). Otherwise we
@@ -18,8 +18,6 @@ module Concern
       extend ActiveSupport::Concern
 
       included do
-        include Concern::Methods::StatusMethods
-
         promise_to :expire_dependencies_on_self,
           :if => :should_expire_dependencies_on_self?
 

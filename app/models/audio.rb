@@ -58,6 +58,10 @@ class Audio < ActiveRecord::Base
   has_status
 
 
+  # Server path root - /home/media/kpcc/audio
+  AUDIO_PATH_ROOT = File.join(
+    Rails.application.config.scpr.media_root, "audio")
+
   # Public URL root - http://media.scpr.org/audio
   AUDIO_URL_ROOT = File.join(
     Rails.application.config.scpr.media_url, "audio")
@@ -67,19 +71,19 @@ class Audio < ActiveRecord::Base
 
   # The NONE Status is just so we can use Audio::STATUS_TEXT for
   # render the Audio columns in the CMS.
-  status :none do
+  status :none do |s|
     s.id = nil
     s.text = "None"
     s.unpublished!
   end
 
-  status :waiting do
+  status :waiting do |s|
     s.id = 1
     s.text = "Awaiting Audio"
     s.pending!
   end
 
-  status :live do
+  status :live do |s|
     s.id = 2
     s.text = "Live"
     s.published!

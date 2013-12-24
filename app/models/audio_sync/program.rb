@@ -12,6 +12,7 @@
 #
 module AudioSync
   module Program
+    extend LogsAsTask
     logs_as_task
 
     THESHOLD = 2.weeks
@@ -32,9 +33,11 @@ module AudioSync
         # Each KpccProgram with episodes and which can sync audio
         KpccProgram.can_sync_audio.each do |program|
           begin
+            audio_path = File.join(Audio::AUDIO_PATH_ROOT, program.audio_dir)
+
             # Each file in this program's audio directory
-            Dir.foreach(program.absolute_audio_path).each do |file|
-              absolute_mp3_path = File.join(program.absolute_audio_path, file)
+            Dir.foreach(audio_path).each do |file|
+              absolute_mp3_path = File.join(audio_path, file)
 
               # Move on if:
               # 1. The file is too old -
