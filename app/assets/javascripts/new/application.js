@@ -4,6 +4,7 @@
 //= require moment
 //= require moment-strftime
 //= require jquery_ujs
+//= require jquery.jplayer.min
 
 //= require fastclick
 

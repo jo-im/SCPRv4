@@ -110,11 +110,6 @@ scpr.Behaviors.Single = {
                 }
             });
 
-            // Make it do something
-            $(".audio-trigger button").click(function(){
-                alert("Wow, you must really want to listen to audio!");
-            });
-
         }
 
     } // loadBehaviors

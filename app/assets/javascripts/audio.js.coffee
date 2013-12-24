@@ -16,7 +16,6 @@ class scpr.Audio
             wmode:    "window"
 
         @audiobar = $(@options.audioBar)
-
         @widgets = []
         @playing = false
         @active = null
@@ -34,7 +33,6 @@ class scpr.Audio
 
                 # take the URL out of the href
                 $(btn).attr "href", "javascript:void(0);"
-
                 widget = new Audio.PlayWidget
                     player:     @
                     widget:     el
@@ -47,11 +45,11 @@ class scpr.Audio
 
 
         # register listener to close audio bar
-        $("#{@options.audioBar} .bar-close, #opaque-cover").click => @closeAndStop()
+        $("#{@options.audioBar} .jp-stop, #opaque-cover").click => @closeAndStop()
 
         # Hide the modal if the Esc key is pressed
         $(document).keyup (event) =>
-            @closeAndStop() if event.keyCode is 27 and @audiobar.is(":visible")
+          $("#{@options.audioBar} .jp-stop, #opaque-cover").click() if event.keyCode is 27 and @audiobar.is(":visible")
 
     #----------
 
@@ -59,8 +57,6 @@ class scpr.Audio
         @audiobar.animate { bottom: @audiobar.height() * -1 }, 300, =>
             @audiobar.removeClass('active')
             $("body").removeClass("with-audio-bar") # which also hides the opaque-cover
-
-        @player.jPlayer "stop"
 
         @playing = false
         @active = null
@@ -99,9 +95,7 @@ class scpr.Audio
         # animate the bar
         @audiobar.addClass("active")
         $("body").addClass("with-audio-bar")
-
         @audiobar.animate { bottom: 0 }, 1000
-
         # and hit play
         @player.jPlayer "play", 0
         @player.jPlayer "play" # Need the second one for IE 9...
@@ -125,9 +119,8 @@ class scpr.Audio
         constructor: (options) ->
             @options = options
             @player = @options.player
-
             # register click handler on play button
-            @options.playBtn.on "click", (e) =>
+            @options.playBtn.parent().on "click", (e) =>
                 @player.play @
                 return false
 

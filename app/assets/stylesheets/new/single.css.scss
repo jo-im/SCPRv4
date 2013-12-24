@@ -1283,11 +1283,15 @@
     border-top: 1px solid rgba(0,0,0,0.2);
     position: fixed;
     width: 100%;
-    bottom: 0;
+    bottom:-60px;
+    visibility: hidden;
     left: 0;
     background: rgba(236,236,236,0.93);
     box-shadow: 0 -2px 7px rgba(0,0,0,0.13);
     z-index: 10;
+    &.active {
+        visibility: visible;
+    }
     .inner {
         position: relative;
         height: 60px;

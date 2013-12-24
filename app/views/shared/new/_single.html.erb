@@ -126,7 +126,7 @@
                     <h1>Play this article's audio</h1>
                 </header>
                     <div class="audio-trigger">
-                        <button value="activate"><%= link_to 'Play audio', audio.url, class: "play-btn audio-toggler" %></button>
+                        <button value="activate"><%= link_to 'Play audio', audio.url, class: "play-btn audio-toggler", title: h(article.short_title), "data-duration" => audio.duration %></button>
                         <ul class="meta">
                             <li class="duration"><%= format_duration audio.duration %></li>
                             <li class="link"><%= link_to 'Download', audio.url %></li>
