@@ -1,5 +1,5 @@
 class NewsController < NewApplicationController
-  include GetPopularArticles
+  include Concern::Controller::GetPopularArticles
   layout 'new/single'
   respond_to :html, :xml, :rss
 
