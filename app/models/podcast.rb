@@ -20,16 +20,12 @@ class Podcast < ActiveRecord::Base
     BlogEntry
   ]
 
-  #-------------
-  # Scopes
 
-  #-------------
-  # Association
+
   belongs_to :source, polymorphic: true
   belongs_to :category
 
-  #-------------
-  # Validation
+
   validates :slug, uniqueness: true, presence: true
   validates :title, presence: true
 
@@ -38,10 +34,7 @@ class Podcast < ActiveRecord::Base
   validates :itunes_url, url: { allow_blank: true }
   validates :image_url, url: { allow_blank: true }
 
-  #-------------
-  # Callbacks
 
-  #-------------
 
   def content(limit=25)
     @content ||= begin
@@ -65,7 +58,9 @@ class Podcast < ActiveRecord::Base
         klasses.push BlogEntry
 
       else
-        klasses = [NewsStory, BlogEntry, ShowSegment, ShowEpisode] if item_type == "content"
+        if item_type == "content"
+          klasses = [NewsStory, BlogEntry, ShowSegment, ShowEpisode]
+        end
       end
 
       results = content_query(limit, klasses, conditions)
@@ -73,14 +68,17 @@ class Podcast < ActiveRecord::Base
     end
   end
 
-  #-------------
+
+  def itunes_category
+    ITUNES_CATEGORIES[self.itunes_category_id]
+  end
+
 
   def route_hash
     return {} if !self.persisted?
     { slug: self.slug }
   end
 
-  #-------------
 
   private
 
