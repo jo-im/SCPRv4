@@ -1,3 +1,14 @@
+ignore([
+  %r{^\.sass-cache/*},
+  %r{^bin/*},
+  %r{^db/*},
+  %r{^log/*},
+  %r{^public/*},
+  %r{^script/*},
+  %r{^tmp/*},
+  %r{^vendor/*},
+])
+
 guard :resque, task: 'environment resque:work', environment: 'development' do
   watch(%r{^app/models/(.+)\.rb$})
   watch(%r{^app/jobs/.+\.rb$})
