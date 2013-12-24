@@ -63,9 +63,28 @@ describe AudioSync::Program do
         expect { AudioSync::Program.bulk_sync }.to change { Audio.count }.by(1)
       end
 
-      it "adds the audio to the segment" do
+      it "adds the audio to the episode" do
         expect { AudioSync::Program.bulk_sync }
         .to change { program.episodes.first.audio.count }.by(1)
+      end
+
+      it "sets the audio description to the episode title" do
+        AudioSync::Program.bulk_sync
+        episode = program.episodes.first
+        episode.audio.first.description.should eq episode.headline
+      end
+
+      it "sets the audio byline to the program title" do
+        AudioSync::Program.bulk_sync
+        program.episodes.first.audio.first.byline.should eq program.title
+      end
+
+      it "doesn't sync if the audio already exists for this episode" do
+        program.episodes.first.audio.create(
+          url: Audio.url("coolshowbro/20121002_mbrand.mp3"))
+
+        expect { AudioSync::Program.bulk_sync }
+        .not_to change { Audio.count }
       end
     end
 

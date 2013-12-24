@@ -72,6 +72,7 @@ module AudioSync
               # Build the audio
               audio = content.audio.build(
                 :url         => url,
+                :byline      => program.title,
                 :description => content.headline
               )
 
