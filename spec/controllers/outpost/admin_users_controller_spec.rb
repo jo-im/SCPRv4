@@ -119,7 +119,11 @@ describe Outpost::AdminUsersController do
 
         expect {
           post :create, @resource => build_attributes(*@resource_properties)
-            .merge(password: "c-krit")
+            .except("password_digest")
+            .merge(
+              "password" => "secret",
+              "password_confirmation" => "secret"
+            )
         }.to change { klass.count }.by(1)
 
         # Redirect to index path because there is no commit_action parameter,

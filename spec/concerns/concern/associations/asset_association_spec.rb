@@ -69,7 +69,7 @@ describe Concern::Associations::AssetAssociation do
         record = create :test_class_story
         record.assets.size.should eq 0
 
-        record.transaction do
+        record.transaction(requires_new: true) do
           record.asset_json = "[{\"id\":32459,\"caption\":\"Caption\",\"position\":12}]"
           record.assets.size.should eq 1
           raise ActiveRecord::Rollback

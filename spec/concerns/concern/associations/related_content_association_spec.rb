@@ -134,7 +134,7 @@ describe Concern::Associations::RelatedContentAssociation do
       it "rollsback properly in a transaction/rollback" do
         post.outgoing_references.size.should eq 0
 
-        post.transaction do
+        post.transaction(requires_new: true) do
           post.outgoing_references_json = "[{\"id\": \"#{story1.obj_key}\", \"position\": 0 }, { \"id\": \"#{story2.obj_key}\", \"position\": 1 }]"
           post.outgoing_references.size.should eq 2
           raise ActiveRecord::Rollback
