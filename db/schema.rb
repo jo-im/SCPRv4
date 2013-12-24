@@ -518,6 +518,8 @@ ActiveRecord::Schema.define(:version => 20131224172924) do
   create_table "media_audio", :force => true do |t|
     t.integer  "size"
     t.integer  "duration"
+    t.string   "enco_number"
+    t.date     "enco_date"
     t.integer  "content_id"
     t.text     "description",  :limit => 2147483647
     t.string   "byline"
@@ -525,13 +527,17 @@ ActiveRecord::Schema.define(:version => 20131224172924) do
     t.string   "content_type"
     t.datetime "created_at",                                        :null => false
     t.datetime "updated_at",                                        :null => false
-    t.string   "url"
+    t.string   "external_url"
+    t.string   "type"
+    t.string   "mp3"
     t.integer  "status"
+    t.string   "path"
   end
 
   add_index "media_audio", ["content_type", "content_id"], :name => "index_media_audio_on_content_type_and_content_id"
   add_index "media_audio", ["position"], :name => "index_media_audio_on_position"
   add_index "media_audio", ["status"], :name => "index_media_audio_on_status"
+  add_index "media_audio", ["type"], :name => "index_media_audio_on_type"
 
   create_table "media_document", :force => true do |t|
     t.string   "document_file", :limit => 100,        :null => false
