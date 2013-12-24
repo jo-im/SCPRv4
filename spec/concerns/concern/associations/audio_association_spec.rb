@@ -39,7 +39,7 @@ describe Concern::Associations::AudioAssociation do
   describe 'versioning' do
     it 'makes the object doity' do
       story = create :test_class_story
-      audio1 = build :direct_audio, content: nil
+      audio1 = build :audio, :direct, content: nil
 
       story.changed?.should eq false
       story.audio << audio1
@@ -48,8 +48,8 @@ describe Concern::Associations::AudioAssociation do
 
     it 'adds a version when adding to the collection' do
       story = create :test_class_story
-      audio1 = build :direct_audio, content: nil
-      audio2 = build :direct_audio, content: nil
+      audio1 = build :audio, :direct, content: nil
+      audio2 = build :audio, :direct, content: nil
       story.audio = [audio1, audio2]
       story.save!
 
@@ -62,8 +62,8 @@ describe Concern::Associations::AudioAssociation do
 
     it "adds a version when removing from the collection" do
       story = create :test_class_story
-      audio1 = build :direct_audio, content: nil
-      audio2 = build :direct_audio, content: nil
+      audio1 = build :audio, :direct, content: nil
+      audio2 = build :audio, :direct, content: nil
       story.audio = [audio1, audio2]
       story.save!
 

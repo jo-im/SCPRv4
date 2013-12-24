@@ -7,5 +7,5 @@ json.cache! [Api::Public::V3::VERSION, "v1", audio] do
   json.position         audio.position
   json.duration         audio.duration
   json.filesize         audio.size
-  json.article_obj_key  audio.content.obj_key
+  json.article_obj_key  audio.content.try(:obj_key)
 end

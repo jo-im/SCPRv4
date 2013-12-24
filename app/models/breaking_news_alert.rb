@@ -8,7 +8,6 @@ class BreakingNewsAlert < ActiveRecord::Base
   include Concern::Callbacks::SphinxIndexCallback
   include Concern::Callbacks::SetPublishedAtCallback
   include Concern::Associations::ContentAlarmAssociation
-  include Concern::Methods::StatusMethods
 
   include ::NewRelic::Agent::Instrumentation::ControllerInstrumentation
 

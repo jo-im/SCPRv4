@@ -2,11 +2,11 @@
 # Job::SyncAudio
 module Job
   class SyncAudio < Base
-    @queue = "#{namespace}:rake_tasks"
+    @queue = "#{namespace}:sync_audio"
 
     class << self
-      def perform(klass)
-        klass.constantize.bulk_sync
+      def perform(*klasses)
+        klasses.each { |k| k.constantize.bulk_sync }
       end
     end # singleton
   end # SyncAudio

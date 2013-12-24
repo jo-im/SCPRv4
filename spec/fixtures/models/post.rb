@@ -10,7 +10,6 @@ module TestClass
     include Concern::Associations::AssetAssociation
     include Concern::Associations::PolymorphicProgramAssociation
     include Concern::Associations::EditionsAssociation
-    include Concern::Methods::StatusMethods
     include Concern::Methods::ArticleStatuses
 
     has_many :content,

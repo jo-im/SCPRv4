@@ -16,7 +16,6 @@ class Edition < ActiveRecord::Base
   include Concern::Callbacks::TouchCallback
   include Concern::Callbacks::SphinxIndexCallback
   include Concern::Scopes::PublishedScope
-  include Concern::Methods::StatusMethods
 
 
   status :draft do |s|

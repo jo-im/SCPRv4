@@ -13,7 +13,7 @@ module Job
       def perform(id)
         audio = Audio.find(id)
 
-        if audio.mp3_file.present?
+        if audio.file.present?
           audio.compute_duration if audio.duration.blank?
           audio.compute_size     if audio.size.blank?
           audio.save!

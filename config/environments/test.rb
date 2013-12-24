@@ -33,7 +33,7 @@ Scprv4::Application.configure do
   config.scpr.host         = "www.scpr.org"
   config.scpr.resque_queue = :scprv4
   config.scpr.media_root   = Rails.root.join("spec/fixtures/media")
-  config.scpr.media_url    = "file://#{Rails.root.join("spec/fixtures/media")}"
+  config.scpr.media_url    = "http://media.scpr.org"
 
   config.node.server = "http://localhost:13002"
 end

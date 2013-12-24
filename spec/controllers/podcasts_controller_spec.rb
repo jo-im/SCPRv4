@@ -70,10 +70,12 @@ describe PodcastsController do
       it "assigns the content for episode" do
         episode   = create :show_episode
         audio     = create :audio, :uploaded, content: episode
-
         index_sphinx
 
-        podcast = create :podcast, slug: "podcast", source: episode.show, item_type: "episodes"
+        podcast = create :podcast,
+          :slug         => "podcast",
+          :source       => episode.show,
+          :item_type    => "episodes"
 
         ts_retry(2) do
           get :podcast, slug: "podcast"

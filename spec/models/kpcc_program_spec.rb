@@ -14,19 +14,6 @@ describe KpccProgram do
     end
   end
 
-  describe "#absolute_audio_path" do
-    it "is Audio::AUDIO_ROOT_PATH joined with the program's audio_dir" do
-      stub_const("Audio::AUDIO_PATH_ROOT", "/home/path/to/audio")
-      program = create :kpcc_program, audio_dir: "someshow"
-      program.absolute_audio_path.should eq "/home/path/to/audio/someshow"
-    end
-
-    it "is nil if audio_dir is present" do
-      program = create :kpcc_program, audio_dir: nil
-      program.absolute_audio_path.should eq nil
-    end
-  end
-
   describe '#to_program' do
     it 'turns it into a program' do
       program = build :kpcc_program

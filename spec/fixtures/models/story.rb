@@ -33,7 +33,6 @@ module TestClass
     include Concern::Callbacks::CacheExpirationCallback
     include Concern::Callbacks::TouchCallback
     include Concern::Callbacks::RedisPublishCallback
-    include Concern::Methods::StatusMethods
     include Concern::Methods::ArticleStatuses
     include Concern::Methods::AssetDisplayMethods
     include Concern::Validations::ContentValidation
