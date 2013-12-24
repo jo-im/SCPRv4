@@ -32,6 +32,17 @@ describe Audio do
   end
 
 
+  describe '#podcast_url' do
+    it "returns the podcast URL" do
+      audio = build :audio,
+        url: "http://media.scpr.org/audio/airtalk/cool.mp3"
+
+      audio.podcast_url.should eq(
+        "http://media.scpr.org/podcasts/airtalk/cool.mp3")
+    end
+  end
+
+
   describe '#publish' do
     it "updates the status to live" do
       audio = create :audio, :enco

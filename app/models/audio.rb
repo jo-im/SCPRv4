@@ -66,6 +66,11 @@ class Audio < ActiveRecord::Base
   AUDIO_URL_ROOT = File.join(
     Rails.application.config.scpr.media_url, "audio")
 
+  # Podcast URL root for preroll - http://media.scpr.org/podcasts
+  PODCAST_URL_ROOT = File.join(
+    Rails.application.config.scpr.media_url, "podcasts")
+
+
   ENCO_DIR    = "features"
   UPLOAD_DIR  = "upload"
 
@@ -136,6 +141,17 @@ class Audio < ActiveRecord::Base
     def url(*parts)
       File.join(AUDIO_URL_ROOT, *parts)
     end
+  end
+
+
+  # Convert the URL into the podcast URL.
+  # For in-house content being accessed via podcast,
+  # we want to re-route the audio through the podcast
+  # server so that we can deliver preroll.
+  # If the audio doesn't come from our servers (i.e. doesn't contain
+  # the AUDIO_URL_ROOT), then just leave it as-is
+  def podcast_url
+    self.url.gsub(AUDIO_URL_ROOT, PODCAST_URL_ROOT)
   end
 
 
