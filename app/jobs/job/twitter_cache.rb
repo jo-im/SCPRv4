@@ -42,6 +42,7 @@ module Job
         tweets = @tweeter.user_timeline(@screen_name, @options)
         tweets
       rescue => e
+        warn "Error caught in TwitterCache#fetch: #{e}"
         self.log "Error: \n #{e}"
         false
       end

@@ -89,7 +89,8 @@ module AudioSync
             end # Dir
 
           rescue => e
-            self.log "Could not save ProgramAudio: #{e}"
+            warn "Error caught in AudioSync::Program.bulk_sync: #{e}"
+            self.log "Could not save Audio: #{e}"
             NewRelic.log_error(e)
             next
           end
