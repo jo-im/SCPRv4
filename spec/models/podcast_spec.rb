@@ -78,4 +78,11 @@ describe Podcast do
       end
     end
   end
+
+  describe '#itunes_category' do
+    it "Returns the text for the itunes category" do
+      podcast = build :podcast, itunes_category_id: 1
+      podcast.itunes_category.should eq "Arts"
+    end
+  end
 end

@@ -1,6 +1,6 @@
 class NewApplicationController < ActionController::Base
   include Outpost::Controller::CustomErrors
-  include GetPopularArticles
+  include Concern::Controller::GetPopularArticles
 
   protect_from_forgery
   before_filter :add_params_for_newrelic

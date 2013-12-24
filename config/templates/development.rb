@@ -62,10 +62,12 @@ Scprv4::Application.configure do
     :enable_starttls_auto => true
   }
 
-  config.dbsync.filename    = "mercer.dump"
-  config.dbsync.local_dir   = "#{Rails.root}/../dbsync" # No trailing slash
-  config.dbsync.remote_host = "scprdb@66.226.4.229"
-  config.dbsync.remote_dir  = "~scprdb"
+  config.dbsync = {
+    :filename    => "mercer.dump",
+    :local_dir   => "#{Rails.root}/../dbsync/",
+    :remote_host => "scprdb@66.226.4.229",
+    :remote_dir  => "~scprdb"
+  }
 
   default_url_options[:host] = "localhost:3000"
 
