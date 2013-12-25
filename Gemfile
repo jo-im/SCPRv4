@@ -28,6 +28,7 @@ gem 'secretary-rails', github: "SCPR/secretary-rails"
 
 
 ## Cache
+gem 'redis-rails', '~> 4.0.0'
 gem 'redis-content-store', github: "SCPR/redis-content-store"
 # gem 'redis-content-store', path: "#{ENV['PROJECT_HOME']}/redis-content-store"
 gem "resque", "~> 1.25.0"
@@ -35,7 +36,7 @@ gem "resque", "~> 1.25.0"
 
 ## Views
 gem 'kaminari', '~> 0.15.0'
-gem 'ckeditor_rails', '~> 4.2.0'
+gem 'ckeditor_rails', '~> 4.3.1'
 gem 'select2-rails', '3.4.1'
 gem 'twitter-text', "~> 1.5"
 gem 'sanitize', "~> 2.0"
@@ -95,7 +96,7 @@ end
 
 
 group :test, :development do
-  gem "rspec-rails", "~> 2.12"
+  gem "rspec-rails", "~> 2.14.0"
   gem 'rb-fsevent', '~> 0.9'
   gem 'launchy'
   gem 'guard', '~> 1.5'
