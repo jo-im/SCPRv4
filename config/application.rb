@@ -11,7 +11,6 @@ module Scprv4
       "#{config.root}/lib/validators"
     ]
 
-    config.assets.enabled = true
     config.assets.version = '1.0'
     config.assets.paths << "#{Rails.root}/vendor/assets/fonts"
     config.assets.precompile += [
