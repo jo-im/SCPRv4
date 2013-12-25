@@ -1,7 +1,7 @@
 # --------------
 # Variables
-set :branch, "master"
-set :rails_env, "rails4"
+set :branch, "rails4"
+set :rails_env, "staging"
 
 # --------------
 # Roles
