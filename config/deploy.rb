@@ -3,7 +3,6 @@
 set :thinking_sphinx_roles, :sphinx
 
 require "bundler/capistrano"
-require 'thinking_sphinx/capistrano'
 
 set :stages, %w{ production staging }
 set :default_stage, "production"
