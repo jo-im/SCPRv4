@@ -19,6 +19,7 @@ Scprv4::Application.configure do
   config.assets.debug         = false
   config.serve_static_assets  = false
   config.assets.digest        = true
+  config.assets.compile       = false
 
   # Specifies the header that your server uses for sending files
   config.action_dispatch.x_sendfile_header = 'X-Accel-Redirect' # for nginx

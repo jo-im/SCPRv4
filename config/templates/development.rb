@@ -28,8 +28,9 @@ Scprv4::Application.configure do
   # Print deprecation notices to the Rails logger
   config.active_support.deprecation = :log
 
-  config.assets.debug = true # Expand?
-  config.serve_static_assets = true # Serve from public/?
+  config.assets.debug         = true # Expand
+  config.serve_static_assets  = true # Serve from public/
+  config.assets.compile       = true # Fallback
 
   # Gmail
   config.action_mailer.delivery_method       = :smtp

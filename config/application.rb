@@ -1,10 +1,7 @@
 require File.expand_path('../boot', __FILE__)
-
 require 'rails/all'
 
-if defined?(Bundler)
-  Bundler.require(:default, Rails.env)
-end
+Bundler.require(:default, Rails.env)
 
 module Scprv4
   class Application < Rails::Application
@@ -29,7 +26,6 @@ module Scprv4
     ]
     config.assets.js_compressor  = :uglifier
     config.assets.css_compressor = :sass
-    config.assets.compile = false # Fallback?
 
     config.time_zone = 'Pacific Time (US & Canada)'
     config.active_record.default_timezone = :local
