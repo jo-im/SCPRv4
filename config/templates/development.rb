@@ -73,7 +73,13 @@ Scprv4::Application.configure do
 
   config.scpr.host         = "localhost:3000"
   config.scpr.media_root   = "/Users/bryan/projects/media"
-  config.scpr.media_url    = "file:///Users/bryan/projects/media"
+
+  config.scpr.media_url    = "http://media.scpr.org"
+  # Use this if you are testing upload/playback of files
+  # that don't exist on media.scpr.org.
+  #
+  # config.scpr.media_url    = "file://"
+
   config.scpr.resque_queue = :scprv4
 
   config.node.server = "http://localhost:8888"
