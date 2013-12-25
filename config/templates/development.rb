@@ -25,12 +25,13 @@ Scprv4::Application.configure do
   config.cache_store = :redis_content_store, "redis://localhost:6379/5"
   config.action_controller.action_on_unpermitted_parameters = :raise
 
+  config.assets.debug         = true  # Expand
+  config.serve_static_assets  = true  # Serve from public/
+  config.assets.compile       = true  # Fallback
+  config.assets.digest        = false # Add asset fingerprints
+
   # Print deprecation notices to the Rails logger
   config.active_support.deprecation = :log
-
-  config.assets.debug         = true # Expand
-  config.serve_static_assets  = true # Serve from public/
-  config.assets.compile       = true # Fallback
 
   # Gmail
   config.action_mailer.delivery_method       = :smtp
@@ -63,6 +64,7 @@ Scprv4::Application.configure do
   #
   # config.scpr.media_url    = "file://"
 
+  # Job queue namespace.
   config.scpr.resque_queue = :scprv4
 
   config.node.server = "http://localhost:8888"
