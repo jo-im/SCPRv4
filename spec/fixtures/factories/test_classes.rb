@@ -1,5 +1,3 @@
-Dir[Rails.root.join("spec/fixtures/models/*.rb")].each { |f| require f }
-
 FactoryGirl.define do
   factory :test_class_story, class: TestClass::Story do
     sequence(:headline) { |n| "Cool Headline #{n}" }
