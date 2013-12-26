@@ -49,7 +49,7 @@ class scpr.Audio
 
         # Hide the modal if the Esc key is pressed
         $(document).keyup (event) =>
-          $("#{@options.audioBar} .jp-stop, #opaque-cover").click() if event.keyCode is 27 and @audiobar.is(":visible")
+          @closeAndStop() if event.keyCode is 27 and @audiobar.is(":visible")
 
     #----------
 
@@ -57,7 +57,7 @@ class scpr.Audio
         @audiobar.animate { bottom: @audiobar.height() * -1 }, 300, =>
             @audiobar.removeClass('active')
             $("body").removeClass("with-audio-bar") # which also hides the opaque-cover
-
+        @player.jPlayer "stop"
         @playing = false
         @active = null
 
