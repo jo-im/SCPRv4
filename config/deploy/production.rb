@@ -56,6 +56,5 @@ end
 
 # --------------
 # Callbacks
-before "deploy:assets:update_asset_mtimes", "catchup"
 before "deploy:update_code", "deploy:notify"
 after "deploy:restart", "newrelic:notice_deployment"

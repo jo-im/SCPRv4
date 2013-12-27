@@ -3,7 +3,6 @@
 set :thinking_sphinx_roles, :sphinx
 
 require "bundler/capistrano"
-require 'thinking_sphinx/capistrano'
 
 set :stages, %w{ production staging }
 set :default_stage, "production"
@@ -72,11 +71,4 @@ namespace :deploy do
       run "ln -nfs #{shared_path}/config/#{file} #{release_path}/config/#{file}"
     end
   end
-end
-
-
-task :catchup do
-  seconds = 2
-  puts ">>> Sleeping for #{seconds} seconds to let the filesystem catch up."
-  sleep seconds
 end
