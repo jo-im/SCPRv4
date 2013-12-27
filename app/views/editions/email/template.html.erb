@@ -65,16 +65,32 @@
 <!--// BEGIN BODY-->
                   <table border="0" cellpadding="0" cellspacing="0" id="bodyContentBlock" width="100%" style="border-collapse: collapse; mso-table-lspace: 0pt; mso-table-rspace: 0pt; font-family: Georgia, serif; border-top-color: #cccccc; border-right-color: #cccccc; border-bottom-color: #cccccc; border-left-color: #cccccc; border-top-style: solid; border-right-style: solid; border-bottom-style: solid; border-left-style: solid; border-top-width: 1px; border-right-width: 1px; border-bottom-width: 1px; border-left-width: 1px; background-color: white;" bgcolor="white">
                     <tr style="font-family: Georgia, serif;">
-                      <td class="bodyContentInner" valign="top" style="border-collapse: collapse; mso-table-lspace: 0pt; mso-table-rspace: 0pt; font-family: Georgia, serif; padding-top: 18px; padding-right: 18px; padding-bottom: 18px; padding-left: 18px;">
-                          <h3 class="section-heading" style="font-family: Georgia, serif; line-height: 1.1; margin-bottom: 15px; margin-top: 10px; color: #b24401 !important; font-weight: 400; font-size: 20px; text-transform: uppercase;"><%= edition.title %></h3>
-                        <% edition.abstracts.each do |abstract| %>
-                            <div class="content-block" style="font-family: Georgia, serif;">
-                              <h4 style="font-family: Georgia, serif; line-height: 1.1; margin-bottom: 15px; margin-top: 10px; color: black !important; font-weight: 400; font-size: 18px;">
-                                  <a href="<%= abstract.url %>" style="font-family: Georgia, serif; color: black !important; text-decoration: none;"><%= abstract.headline %></a>
-                              </h4>
-                              <p style="font-family: Georgia, serif; color: #3d3d3d; font-weight: normal; font-size: 15px; line-height: 24px; margin-top: 14px; margin-right: 0; margin-bottom: 18px; margin-left: 0;"><%= abstract.summary %></p>
-                            </div>
-                        <% end %>
+                        <td class="bodyContentInner" valign="top" style="border-collapse: collapse; mso-table-lspace: 0pt; mso-table-rspace: 0pt; font-family: Georgia, serif; padding-top: 18px; padding-right: 18px; padding-bottom: 18px; padding-left: 18px;">
+                            <h3 class="section-heading" style="font-family: Georgia, serif; line-height: 1.1; margin-bottom: 15px; margin-top: 10px; color: #b24401 !important; font-weight: 400; font-size: 20px; text-transform: uppercase;"><%= edition.title %></h3>
+                            <hr style="font-family: Georgia, serif; border-bottom-color: #cccccc; border-bottom-style: solid; border-top-color: #cccccc; border-top-style: solid; height: 3px; margin-bottom: 18px; border-top-width: 1px; border-right-width: 0; border-bottom-width: 1px; border-left-width: 0; background-color: white;" />
+
+                            <h2 style="font-family: Georgia, serif; line-height: 42px; margin-bottom: 15px; margin-top: 10px; color: black !important; font-weight: 400; font-size: 32px;">
+                                <a href="<%= edition.abstracts.first.url %>" style="font-family: Georgia, serif; color: black !important; text-decoration: none;"><%= edition.abstracts.first.headline %></a>
+                            </h2>
+                            <img src="<%= edition.abstracts.first.asset.eight.url %>" style="height: auto; line-height: 100%; max-width: 100%; outline: none; text-decoration: none; font-family: Georgia, serif; border-top-width: 0; border-right-width: 0; border-bottom-width: 0; border-left-width: 0;" />
+                            <p style="font-family: Georgia, serif; color: #3d3d3d; font-weight: normal; font-size: 15px; line-height: 24px; margin-top: 14px; margin-right: 0; margin-bottom: 18px; margin-left: 0;"><%= raw edition.abstracts.first.summary %></p>
+                            <hr style="font-family: Georgia, serif; border-bottom-color: #cccccc; border-bottom-style: solid; border-top-color: #cccccc; border-top-style: solid; height: 3px; margin-bottom: 18px; border-top-width: 1px; border-right-width: 0; border-bottom-width: 1px; border-left-width: 0; background-color: white;" />
+                            <table border="0" cellpadding="0" cellspacing="0" class="content-img-floatleft" style="border-collapse: collapse; mso-table-lspace: 0pt; mso-table-rspace: 0pt; font-family: Georgia, serif;">
+                                <% edition.abstracts[1..-1].each do |abstract| %>
+                                    <tr style="font-family: Georgia, serif;">
+                                        <td class="figure" valign="top" width="33%" style="border-collapse: collapse; mso-table-lspace: 0pt; mso-table-rspace: 0pt; font-family: Georgia, serif; border-bottom-width: 0; padding-bottom: 18px; padding-top: 18px; border-bottom-color: #ebebeb; border-bottom-style: solid;">
+                                            <img src="<%= abstract.asset.lsquare.url %>" style="height: auto; line-height: 100%; max-width: 100%; outline: none; text-decoration: none; font-family: Georgia, serif; border-top-width: 0; border-right-width: 0; border-bottom-width: 0; border-left-width: 0;" />
+                                        </td>
+                                        <td class="content-block" width="67%" style="border-collapse: collapse; mso-table-lspace: 0pt; mso-table-rspace: 0pt; font-family: Georgia, serif; border-bottom-width: 0; border-bottom-color: #ebebeb; border-bottom-style: solid; padding-top: 18px; padding-right: 0; padding-bottom: 18px; padding-left: 14px;">
+                                            <h4 style="font-family: Georgia, serif; line-height: 1.1; margin-bottom: 15px; margin-top: 0; color: black !important; font-weight: 400; font-size: 18px;">
+                                                <a href="<%= abstract.url %>" style="font-family: Georgia, serif; color: black !important; text-decoration: none;"><%= abstract.headline %></a>
+                                            </h4>
+                                            <p style="font-family: Georgia, serif; color: #3d3d3d; font-weight: normal; font-size: 15px; line-height: 24px; margin-top: 14px; margin-right: 0; margin-bottom: 18px; margin-left: 0;"><%= raw abstract.summary %></p>
+                                        </td>
+                                    </tr>
+                                <% end %>
+                            </table>
+
 <!--Pledge & Social-->
                         <div class="social-wrapper" style="font-family: Georgia, serif; border-bottom-style: solid; border-bottom-color: #cccccc; border-bottom-width: 1px; border-top-width: 1px; border-top-color: #cccccc; border-top-style: solid; padding-top: 3px; padding-right: 0; padding-bottom: 3px; padding-left: 0;">
                           <table bgcolor="#EBEBEB" class="social" width="100%" style="border-collapse: collapse; mso-table-lspace: 0pt; mso-table-rspace: 0pt; font-family: Georgia, serif; border-bottom-color: #cccccc; border-bottom-width: 1px; border-bottom-style: solid; border-top-color: #cccccc; border-top-width: 1px; border-top-style: solid; background-color: #ebebeb;">
@@ -143,44 +159,6 @@
         </tr>
       </table>
     </center>
-<!--// BEGIN FOOTER-->
-    <center style="font-family: Georgia, serif;">
-      <table border="0" cellpadding="0" cellspacing="0" id="templateContainer" width="600" style="border-collapse: collapse; mso-table-lspace: 0pt; mso-table-rspace: 0pt; font-family: Georgia, serif;">
-        <tr style="font-family: Georgia, serif;">
-          <td align="center" valign="top" style="border-collapse: collapse; mso-table-lspace: 0pt; mso-table-rspace: 0pt; font-family: Georgia, serif;">
-            <table border="0" cellpadding="0" cellspacing="0" id="templateFooter" width="100%" style="border-collapse: collapse; mso-table-lspace: 0pt; mso-table-rspace: 0pt; font-family: Georgia, serif; border-top-width: 0;">
-              <tr style="font-family: Georgia, serif;">
-                <td align="center" style="border-collapse: collapse; mso-table-lspace: 0pt; mso-table-rspace: 0pt; font-family: Georgia, serif; padding-top: 16px; padding-right: 15px; padding-bottom: 40px; padding-left: 15px;" valign="top">
-                  <table border="0" cellpadding="0" cellspacing="0" width="100%" style="border-collapse: collapse; mso-table-lspace: 0pt; mso-table-rspace: 0pt; font-family: Georgia, serif;">
-                    <tr style="font-family: Georgia, serif;">
-                      <td class="footerContent" valign="top" style="border-collapse: collapse; mso-table-lspace: 0pt; mso-table-rspace: 0pt; font-family: Helvetica; color: #808080; font-size: 10px; text-align: left;" align="left">
-                        <p style="font-family: Georgia, serif; color: #3d3d3d; font-weight: normal; font-size: 15px; line-height: 24px; margin-top: 0; margin-right: 0; margin-bottom: 0; margin-left: 0;">
-                          <a href="http://www.scpr.org/terms/" style="font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; color: #888888; font-size: 12px; font-weight: bold; text-decoration: none; white-space: nowrap;">Terms</a>
-                          <span style="font-family: Georgia, serif; color: #b2b2b2; display: inline-block; font-size: 15px; padding-top: 0; padding-right: 6px; padding-bottom: 0; padding-left: 6px;">|</span>
-                          <a href="http://www.scpr.org/privacy/" style="font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; color: #888888; font-size: 12px; font-weight: bold; text-decoration: none; white-space: nowrap;">Privacy</a>
-                          <span style="font-family: Georgia, serif; color: #b2b2b2; display: inline-block; font-size: 15px; padding-top: 0; padding-right: 6px; padding-bottom: 0; padding-left: 6px;">|</span>
-                          <a href="http://info.americanpublicmediagroup.org/LP=179?elq=~~eloqua..type--emailfield..syntax--recipientid~~&amp;elqCampaignId=~~eloqua..type--campaign..campaignid--0..fieldname--id~~" style="font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; color: #888888; font-size: 12px; font-weight: bold; text-decoration: none; white-space: nowrap;">Update subscriptions</a>
-                          <span style="font-family: Georgia, serif; color: #b2b2b2; display: inline-block; font-size: 15px; padding-top: 0; padding-right: 6px; padding-bottom: 0; padding-left: 6px;">|</span>
-                          <a href="http://info.americanpublicmediagroup.org/LP=180?elq=~~eloqua..type--emailfield..syntax--recipientid~~&amp;elqCampaignId=~~eloqua..type--campaign..campaignid--0..fieldname--id~~" style="font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; color: #888888; font-size: 12px; font-weight: bold; text-decoration: none; white-space: nowrap;">Unsubscribe from all emails </a>
-                        </p>
-                      </td>
-                    </tr>
-                    <tr style="font-family: Georgia, serif;">
-                      <td class="footerContent" colspan="3" style="padding-top: 20px; border-collapse: collapse; mso-table-lspace: 0pt; mso-table-rspace: 0pt; font-family: Helvetica; color: #808080; font-size: 10px; text-align: left;" valign="top" align="left">
-                        <p class="colophon" style="font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; color: #888888; font-weight: normal; font-size: 10px; line-height: 14px; margin-top: 0; margin-right: 0; margin-bottom: 0; margin-left: 0;">© 2013 Southern California Public Radio</p>
-                        <p class="colophon" style="font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; color: #888888; font-weight: normal; font-size: 10px; line-height: 14px; margin-top: 0; margin-right: 0; margin-bottom: 0; margin-left: 0;">474 S. Raymond Ave.</p>
-                        <p class="colophon" style="font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; color: #888888; font-weight: normal; font-size: 10px; line-height: 14px; margin-top: 0; margin-right: 0; margin-bottom: 0; margin-left: 0;">Pasadena, CA 91105</p>
-                      </td>
-                    </tr>
-                  </table>
-                </td>
-              </tr>
-            </table>
-          </td>
-        </tr>
-      </table>
-    </center>
-<!--END FOOTER \\-->
   </body>
 </html>
 
