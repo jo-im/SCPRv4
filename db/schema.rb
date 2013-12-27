@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20131219235740) do
+ActiveRecord::Schema.define(:version => 20131224172924) do
 
   create_table "abstracts", :force => true do |t|
     t.string   "source"
@@ -685,7 +685,6 @@ ActiveRecord::Schema.define(:version => 20131219235740) do
     t.integer  "missed_it_bucket_id"
     t.datetime "created_at",                                                 :null => false
     t.datetime "updated_at",                                                 :null => false
-    t.string   "image"
     t.boolean  "is_featured",                             :default => false, :null => false
   end
 
