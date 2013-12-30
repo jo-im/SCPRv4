@@ -100,8 +100,8 @@ body.single, body.issues, body.landing {
 
 /* ########################################################################################################################## */
 
-body.education .masthead .titling h1 a                  { background-image: image-url("i/1x/logo-education.png"); }
-body.education .resources-row header h1 span            { background-image: image-url("i/1x/logo-resources-education.png"); }
+body.landing.education .masthead .titling h1 a                  { background-image: image-url("i/1x/logo-education.png"); }
+body.landing.education .resources-row header h1 span            { background-image: image-url("i/1x/logo-resources-education.png"); }
 body.education.interior .masthead .titling h1 a         { background-image: image-url("i/1x/logo-education-interior-fitted.png"); }
 
 /* ########################################################################################################################## */
