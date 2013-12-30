@@ -59,7 +59,7 @@ class Podcast < ActiveRecord::Base
 
       else
         if item_type == "content"
-          klasses = [NewsStory, BlogEntry, ShowSegment, ShowEpisode]
+          klasses = [NewsStory, BlogEntry, ShowSegment]
         end
       end
 
