@@ -79,9 +79,29 @@ body.single, body.issues, body.landing {
     .interior .report .prose blockquote                 { background-image: image-url("i/1x/flourish-blockquote.png"); }
     .report .comments-trigger a                         { background-image: image-url("i/1x/single-comments-balloons.png"); }
 
+    .partner.mercedes                                   { background-color: #dcdcdc; }
+
     .interior .townhall .inner                          { background: image-url("i/1x/fauxcol-townhall-ie8-triage.png") repeat-y center top; }
     .townhall .supportive .reporter figcaption ul a     { background-image: image-url("i/1x/townhall-contact-icons.png"); }
     .townhall .backlog footer a                         { color: #31AAD3; }
     .townhall .backlog footer a:hover                   { text-decoration: underline; }
 
+    .partner.kpccforipad a:hover .inner .action         { background: #f17b21; }
+    .partner.kpccforipad a:hover .inner .action mark    { color: white; }
+
+    .epilogue .cols nav .mobile a                       { background: none; padding: 0 0 0 0; display: inline-block; }
+    .epilogue .grant li                                 { background: none !important; }
+
+    .audio-player                                       { background: #ececec; border-top: 1px solid gray; }
+    .audio-player button                                { background-image: image-url("i/1x/audio-player-utilities.png"); }
+
 } // body
+
+
+/* ########################################################################################################################## */
+
+body.education .masthead .titling h1 a                  { background-image: image-url("i/1x/logo-education.png"); }
+body.education .resources-row header h1 span            { background-image: image-url("i/1x/logo-resources-education.png"); }
+body.education.interior .masthead .titling h1 a         { background-image: image-url("i/1x/logo-education-interior-fitted.png"); }
+
+/* ########################################################################################################################## */
