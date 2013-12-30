@@ -1,1 +1,1 @@
-//= require selectivizr.min
+//= require selectivizr
