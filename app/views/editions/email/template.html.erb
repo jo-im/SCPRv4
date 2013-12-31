@@ -76,7 +76,7 @@
 
                         <% edition.abstracts[1..-1].each do |abstract| %>
                             <hr style="font-family: Georgia, serif; border-bottom-color: #cccccc; border-bottom-style: solid; border-top-color: #cccccc; border-top-style: solid; height: 3px; margin-bottom: 18px; border-top-width: 1px; border-right-width: 0; border-bottom-width: 1px; border-left-width: 0; background-color: white;" />
-                            <h5 class="super-heading" style="font-family: Georgia, serif; line-height: 1.1; margin-bottom: 0 !important; margin-top: 10px; color: #b24401 !important; font-weight: 400; font-size: 12px; text-transform: uppercase;"><%= abstract.category %></h5>
+                            <h5 class="super-heading" style="font-family: Georgia, serif; line-height: 1.1; margin-bottom: 0 !important; margin-top: 10px; color: #b24401 !important; font-weight: 400; font-size: 12px; text-transform: uppercase;"><%= abstract.category.title %></h5>
                             <h2 style="font-family: Georgia, serif; line-height: 42px; margin-bottom: 15px; margin-top: 4px; color: black !important; font-weight: 400; font-size: 32px;">
                               <a href="<%= abstract.url %>" style="font-family: Georgia, serif; color: black !important; text-decoration: none;"><%= abstract.headline %></a>
                             </h2>
