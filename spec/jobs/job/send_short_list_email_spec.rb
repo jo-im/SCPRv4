@@ -28,6 +28,19 @@ describe Job::SendShortListEmail do
       Job::SendShortListEmail.perform(edition.id)
       edition.reload.email_sent?.should eq true
     end
+
+    it "sends the e-mail if any of the abstracts doesn't have a category" do
+      edition = create :edition, :email, :published
+      abstract1 = create :abstract, category: nil
+      abstract2 = create :abstract, category: nil
+
+      create :edition_slot, edition: edition, item: abstract1
+      create :edition_slot, edition: edition, item: abstract2
+      edition.email_sent?.should be_false
+
+      Job::SendShortListEmail.perform(edition.id)
+      edition.reload.email_sent?.should be_true
+    end
   end
 end
 
