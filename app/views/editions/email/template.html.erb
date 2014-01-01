@@ -69,10 +69,14 @@
                         <h5 class="timestamp-heading center" style="font-family: Georgia, serif; line-height: 1.1; margin-bottom: 15px; margin-top: 0 !important; color: #b24401 !important; font-weight: 400; font-size: 16px; text-align: center;" align="center"><%= time_tag edition.published_at %> • <%= edition.title %></h5>
                         <img src="<%= edition.abstracts.first.asset.eight.url %>" style="height: auto; line-height: 100%; max-width: 100%; outline: none; text-decoration: none; font-family: Georgia, serif; border-top-width: 0; border-right-width: 0; border-bottom-width: 0; border-left-width: 0;" />
                         <h1 style="font-family: Georgia, serif; line-height: 50px; margin-bottom: 15px; margin-top: 10px; color: black !important; font-weight: 400; font-size: 42px;"><a href="<%= edition.abstracts.first.url %>" style="font-family: Georgia, serif; color: black !important; text-decoration: none;"><%= edition.abstracts.first.headline %></a></h1>
-                        <p style="font-family: Georgia, serif; color: #3d3d3d; font-weight: normal; font-size: 15px; line-height: 24px; margin-top: 14px; margin-right: 0; margin-bottom: 18px; margin-left: 0;"><%= raw edition.abstracts.first.summary %></p>
-                        <p style="font-family: Georgia, serif; color: #3d3d3d; font-weight: normal; font-size: 15px; line-height: 24px; margin-top: 14px; margin-right: 0; margin-bottom: 18px; margin-left: 0;">
-                          <a href="<%= edition.abstracts.first.url %>" style="font-family: Georgia, serif; color: #007fa6; text-decoration: none;">Read more at <%= edition.abstracts.first.source %> »</a>
-                        </p>
+                        <div class="content-block" style="font-family: Georgia, serif; color: #3d3d3d; font-weight: normal; font-size: 15px; line-height: 24px; margin-top: 14px; margin-right: 0; margin-bottom: 18px; margin-left: 0;">
+                            <p style="font-family: Georgia, serif; color: #3d3d3d; font-weight: normal; font-size: 15px; line-height: 24px; margin-top: 14px; margin-right: 0; margin-bottom: 18px; margin-left: 0;">
+                                <%= raw edition.abstracts.first.summary %>
+                            </p>
+                            <p style="font-family: Georgia, serif; color: #3d3d3d; font-weight: normal; font-size: 15px; line-height: 24px; margin-top: 14px; margin-right: 0; margin-bottom: 18px; margin-left: 0;">
+                                <a href="<%= edition.abstracts.first.url %>" style="font-family: Georgia, serif; color: #007fa6; text-decoration: none;">Read more at <%= edition.abstracts.first.source %> »</a>
+                            </p>
+                        </div>
 
                         <% edition.abstracts[1..-1].each do |abstract| %>
                             <hr style="font-family: Georgia, serif; border-bottom-color: #cccccc; border-bottom-style: solid; border-top-color: #cccccc; border-top-style: solid; height: 3px; margin-bottom: 18px; border-top-width: 1px; border-right-width: 0; border-bottom-width: 1px; border-left-width: 0; background-color: white;" />
@@ -80,10 +84,14 @@
                             <h2 style="font-family: Georgia, serif; line-height: 42px; margin-bottom: 15px; margin-top: 4px; color: black !important; font-weight: 400; font-size: 32px;">
                               <a href="<%= abstract.url %>" style="font-family: Georgia, serif; color: black !important; text-decoration: none;"><%= abstract.headline %></a>
                             </h2>
-                            <p style="font-family: Georgia, serif; color: #3d3d3d; font-weight: normal; font-size: 15px; line-height: 24px; margin-top: 14px; margin-right: 0; margin-bottom: 18px; margin-left: 0;"><%= raw abstract.summary %></p>
-                            <p style="font-family: Georgia, serif; color: #3d3d3d; font-weight: normal; font-size: 15px; line-height: 24px; margin-top: 14px; margin-right: 0; margin-bottom: 18px; margin-left: 0;">
-                              <a href="<%= abstract.url %>" style="font-family: Georgia, serif; color: #007fa6; text-decoration: none;">Read more at <%= abstract.source %> »</a>
-                            </p>
+                            <div class="content-block" style="font-family: Georgia, serif; color: #3d3d3d; font-weight: normal; font-size: 15px; line-height: 24px; margin-top: 14px; margin-right: 0; margin-bottom: 18px; margin-left: 0;">
+                                <p style="font-family: Georgia, serif; color: #3d3d3d; font-weight: normal; font-size: 15px; line-height: 24px; margin-top: 14px; margin-right: 0; margin-bottom: 18px; margin-left: 0;">
+                                    <%= raw abstract.summary %>
+                                </p>
+                                <p style="font-family: Georgia, serif; color: #3d3d3d; font-weight: normal; font-size: 15px; line-height: 24px; margin-top: 14px; margin-right: 0; margin-bottom: 18px; margin-left: 0;">
+                                    <a href="<%= abstract.url %>" style="font-family: Georgia, serif; color: #007fa6; text-decoration: none;">Read more at <%= abstract.source %> »</a>
+                                </p>
+                            </div>
                         <% end %>
 
 <!--Pledge & Social-->
