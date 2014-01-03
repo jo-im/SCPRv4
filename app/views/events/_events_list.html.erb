@@ -5,7 +5,9 @@
 <h2><%= title %></h2>
 <%= any_to_list? events, title: title do %>
 <section class="events-list <%= cssClass %>">
-  <% Event.sorted(events, direction).each do |event| %>
+
+<% Event.sorted(events, direction).each do |event| %>
+  <% present event do |p| %>
       <div class="cbase event teaser">
       <div class="row-fluid">
         <% if event.assets.present? %>
@@ -19,11 +21,11 @@
           <div class="span24">
         <% end %>
 
+
           <div class="event-details">
             <div class="row-fluid">
               <div class="span24">
-                <% text = event.ongoing? ? "Through " : "" %>
-                <%= link_to text + format_date(event.sorter, format: :event, time: true), event.public_path, class: "event-link" %>
+                <%= p.date_link %>
               </div>
             </div>
             <div class="row-fluid">
@@ -40,6 +42,8 @@
       </div> <!-- row fluid -->
     </div>
   <% end %>
+<% end %>
+
 </section>
 <% end %>
 <%= paginate events %>
