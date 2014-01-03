@@ -2,16 +2,18 @@
 -----------------------------------
 <%= edition.published_at.strftime("%B %d, %Y") %> • <%= edition.title %>
 -----------------------------------
+<%= "\r\n" %>
 <%= edition.abstracts.first.headline %>
-<%= strip_tags edition.abstracts.first.summary.strip %>
-<%= add_ga_tracking_to edition.abstracts.first.url %>
+<%= "#{strip_tags edition.abstracts.first.summary.strip}\n" %>
+<%= "#{add_ga_tracking_to edition.abstracts.first.url}\n" %>
 -----------------------------------
+<%= "\r\n" %>
 <% edition.abstracts[1..-1].each do |abstract| %>
 <% if abstract.category.present? %>
 <%= abstract.category.title %>
 <% end %>
 <%= abstract.headline %>
-<%= strip_tags "#{abstract.summary.gsub(/\s+/," ").strip}\n" %>
-<%= "#{abstract.url}\n" %>
+<%= "#{strip_tags abstract.summary.gsub(/\s+/," ").strip}\n" %>
+<%= "#{add_ga_tracking_to abstract.url}\n" %>
 <% end %>
 
