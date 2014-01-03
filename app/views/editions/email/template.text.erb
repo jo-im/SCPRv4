@@ -1,6 +1,17 @@
-<%= edition.email_subject %>
+89.3 KPCC | The Short List
 -----------------------------------
-<%= edition.abstracts.first.summary %>
+<%= edition.published_at.strftime("%B %d, %Y") %> • <%= edition.title %>
 -----------------------------------
-Unsubscribe from Breaking News Alerts: http://www.scpr.org/newsletters/breaking_news_unsubscribe/?e=%%EMAIL_ADDRESS%%
+<%= edition.abstracts.first.headline %>
+<%= strip_tags edition.abstracts.first.summary.strip %>
+<%= add_ga_tracking_to edition.abstracts.first.url %>
+-----------------------------------
+<% edition.abstracts[1..-1].each do |abstract| %>
+<% if abstract.category.present? %>
+<%= abstract.category.title %>
+<% end %>
+<%= abstract.headline %>
+<%= strip_tags "#{abstract.summary.gsub(/\s+/," ").strip}\n" %>
+<%= "#{abstract.url}\n" %>
+<% end %>
 
