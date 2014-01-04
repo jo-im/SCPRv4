@@ -92,34 +92,25 @@ class Edition < ActiveRecord::Base
   # use it (in the templates). We probably should, but trying to send out an
   # edition without any abstracts would be a mistake, so errors are okay now.
   # Maybe we should just validate that at least one item slot is present.
-  def email_html_body
-    @email_html_body ||= view.render_view(
-      :template   => "/editions/email/template",
-      :formats    => [:html],
-      :locals     => { edition: self }
-    ).to_s
-  end
+  def as_eloqua_email
+    subject = "#{self.title}: #{self.abstracts.first.headline}"
 
-  def email_plain_text_body
-    @email_plain_text_body ||= view.render_view(
-      :template   => "/editions/email/template",
-      :formats    => [:text],
-      :locals     => { edition: self }
-    ).to_s
-  end
+    {
+      :html_body => view.render_view(
+        :template   => "/editions/email/template",
+        :formats    => [:html],
+        :locals     => { edition: self }).to_s,
 
-  def email_name
-    @email_name ||= "[scpr-edition] #{self.title[0..30]}"
-  end
+      :plain_text_body => view.render_view(
+        :template   => "/editions/email/template",
+        :formats    => [:text],
+        :locals     => { edition: self }).to_s,
 
-  def email_description
-    @email_description ||=
-      "SCPR Short List\n" \
-      "Sent: #{Time.now}\nSubject: #{email_subject}"
-  end
-
-  def email_subject
-    @email_subject ||= "#{self.title}: #{self.abstracts.first.headline}"
+      :name        => "[scpr-edition] #{self.title[0..30]}",
+      :description => "SCPR Short List\n" \
+                      "Sent: #{Time.now}\nSubject: #{subject}",
+      :subject     => subject
+    }
   end
 
   def should_send_email?

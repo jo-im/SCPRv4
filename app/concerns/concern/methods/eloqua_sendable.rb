@@ -4,17 +4,18 @@
 # Note that this module does *not* include the ActiveRecord callbacks for
 # firing the e-mail.
 #
-# Your class must implement the following methods:
+# Your class must implement an `as_eloqua_email` method,
+# which returns a Hash containing the following keys:
+# * :html_body - (String) The HTML form of the e-mail body.
+# * :plain_text_body - (String) The plaintext form of the e-mail body.
+# * :name - (String) Internal name for this email (for Eloqua lists).
+# * :description - (String) Internal description for this Email.
+# * :subject - (String] The subject of the e-mail.
 #
-# * email_html_body (String)
-# * email_plain_text_body (String)
-# * email_name (String) - Internal name for this email (for Eloqua lists)
-# * email_description (String) - Internal description for this Email
-# * email_subject (String)
-# * should_send_email? (Boolean)
+# You must also include:
+# * should_send_email? - (Boolean) Whether or not an e-mail should be sent.
 #
 # The schema for this class must include:
-#
 # * email_sent (Boolean)
 #
 #
@@ -80,7 +81,8 @@ module Concern
       def publish_email
         return if !should_send_email?
 
-        config = self.class.eloqua_config
+        config        = self.class.eloqua_config
+        email_object  = self.as_eloqua_email
 
         # Create the e-mail.
         email = Eloqua::Email.create(
@@ -91,15 +93,15 @@ module Concern
           :replyToName         => "89.3 KPCC",
           :replyToEmail        => "no-reply@kpcc.org",
           :isTracked           => true,
-          :name                => email_name,
-          :description         => email_description,
-          :subject             => email_subject,
+          :name                => email_object[:name],
+          :description         => email_object[:description],
+          :subject             => email_object[:subject],
           :isPlainTextEditable => true,
-          :plainText           => email_plain_text_body,
+          :plainText           => email_object[:plain_text_body],
 
           :htmlContent => {
             :type => "RawHtmlContent",
-            :html => email_html_body
+            :html => email_object[:html_body]
           }
         )
 
@@ -109,8 +111,8 @@ module Concern
         campaign = Eloqua::Campaign.create(
           {
             :folderId    => config['campaign_folder_id'],
-            :name        => email_name,
-            :description => email_description,
+            :name        => email_object[:name],
+            :description => email_object[:description],
             :startAt     => Time.now.yesterday.to_i,
             :endAt       => Time.now.tomorrow.to_i,
             :elements    => [
@@ -150,7 +152,7 @@ module Concern
         )
 
         # Activate the campaign. If we get a OK response from the server,
-        # the update the `email_sent` boolean on this object, to prevent
+        # then update the `email_sent` boolean on this object, to prevent
         # an e-mail from being sent twice for the same object.
         if campaign.activate
           self.update_column(:email_sent, true)

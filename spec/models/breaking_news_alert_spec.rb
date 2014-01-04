@@ -115,42 +115,45 @@ describe BreakingNewsAlert do
     end
   end
 
-  describe '#email_html_body' do
-    it 'is a string containing some html' do
-      alert = build :breaking_news_alert
-      alert.email_html_body.should match /<html/
+  describe '#as_eloqua_email' do
+    let(:alert) {
+      build :breaking_news_alert,
+        headline: "Hundreds Die in Fire; Grep Proops Unharmed"
+    }
+
+    describe 'html_body' do
+      it 'is a string containing some html' do
+        alert.as_eloqua_email[:html_body].should match /<html/
+      end
+    end
+
+    describe 'plain_text_body' do
+      it 'is a string containing some text' do
+        alert.as_eloqua_email[:plain_text_body].should match alert.headline
+      end
+    end
+
+    describe 'name' do
+      it 'is a string with part of the headline in it' do
+        alert.as_eloqua_email[:name]
+          .should eq "[scpr-alert] #{alert.headline[0..30]}"
+      end
+    end
+
+    describe 'description' do
+      it 'has the subject and some descriptive stuff and junk' do
+        alert.as_eloqua_email[:description].should match alert.headline
+      end
+    end
+
+    describe 'subject' do
+      it 'has the subject and some descriptive stuff and junk' do
+        subject = alert.as_eloqua_email[:subject]
+        subject.should match alert.break_type
+        subject.should match alert.headline
+      end
     end
   end
-
-  describe '#email_plain_text_body' do
-    it 'is a string containing some text' do
-      alert = build :breaking_news_alert
-      alert.email_plain_text_body.should match alert.headline
-    end
-  end
-
-  describe '#email_name' do
-    it 'is a string with part of the headline in it' do
-      alert = build :breaking_news_alert, headline: "some important news"
-      alert.email_name.should match /some important news/
-    end
-  end
-
-  describe '#email_description' do
-    it 'has the subject and some descriptive stuff and junk' do
-      alert = build :breaking_news_alert, headline: "Hundreds Die in Fire; Grep Proops Unharmed"
-      alert.email_description.should match alert.headline
-    end
-  end
-
-  describe '#email_subject' do
-    it 'has the subject and some descriptive stuff and junk' do
-      alert = build :breaking_news_alert, headline: "Hundreds Die in Fire; Grep Proops Unharmed"
-      alert.email_subject.should match alert.break_type
-      alert.email_subject.should match alert.headline
-    end
-  end
-
 
   #-----------------------
 

@@ -43,7 +43,7 @@ test:
       user: xxx
       password: xxx
     attributes:
-      test_class_alert:
+      test_class/alert:
         email_group_id: xx
         segment_id: xxx
         campaign_folder_id: xxxx

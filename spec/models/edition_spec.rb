@@ -101,60 +101,53 @@ describe Edition do
     end
   end
 
-  describe "email bodies" do
-    let(:edition) { build :edition }
+
+  describe '#as_eloqua_email' do
+    let(:edition) {
+      build :edition, title: "Hundreds Die in Fire; Grep Proops Unharmed"
+    }
+
+    let(:abstract) { build :abstract }
 
     before do
-      abstract1 = build :abstract
-      abstract2 = build :abstract
-
-      edition.slots.build(item: abstract1)
-      edition.slots.build(item: abstract2)
-
+      edition.slots.build(item: abstract)
       edition.save!
     end
 
-    describe '#email_html_body' do
+
+    describe 'html_body' do
       it 'is a string containing some html' do
-        edition.email_html_body.should match /<html/
+        edition.as_eloqua_email[:html_body].should match /<html/
       end
     end
 
-    describe '#email_plain_text_body' do
+    describe 'plain_text_body' do
       it 'is a string containing some text' do
-        edition.email_plain_text_body.should match edition.title
+        edition.as_eloqua_email[:plain_text_body].should match edition.title
       end
     end
-  end
 
-
-  describe '#email_name' do
-    it 'is a string with part of the title in it' do
-      edition = build :edition, title: "some important news that goes pretty long"
-      edition.email_name.should match edition.title[0..30]
+    describe 'name' do
+      it 'is a string with part of the title in it' do
+        edition.as_eloqua_email[:name]
+          .should eq "[scpr-edition] #{edition.title[0..30]}"
+      end
     end
-  end
 
-  describe '#email_description' do
-    it 'has the subject and some descriptive stuff and junk' do
-      edition = build :edition, title: "Hundreds Die in Fire; Grep Proops Unharmed"
-      abstract = build :abstract
-      edition.slots.build(item: abstract)
-      edition.save!
-
-      edition.email_description.should match edition.title
+    describe 'description' do
+      it 'has the title and abstract title' do
+        description = edition.as_eloqua_email[:description]
+        description.should match edition.title
+        description.should match abstract.headline
+      end
     end
-  end
 
-  describe '#email_subject' do
-    it 'has the edition title and abstract headline' do
-      edition = build :edition, title: "Hundreds Die in Fire; Grep Proops Unharmed"
-      abstract = build :abstract
-      edition.slots.build(item: abstract)
-      edition.save!
-
-      edition.email_subject.should match edition.title
-      edition.email_subject.should match abstract.headline
+    describe 'subject' do
+      it 'has the title and abstract title' do
+        subject = edition.as_eloqua_email[:subject]
+        subject.should match edition.title
+        subject.should match abstract.headline
+      end
     end
   end
 end

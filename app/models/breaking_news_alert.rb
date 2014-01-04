@@ -112,7 +112,7 @@ class BreakingNewsAlert < ActiveRecord::Base
 
     push = Parse::Push.new({
       :title      => "KPCC - #{self.break_type}",
-      :alert      => self.email_subject,
+      :alert      => alert_subject,
       :badge      => "Increment",
       :alertId    => self.id
     }, PARSE_CHANNEL)
@@ -135,36 +135,27 @@ class BreakingNewsAlert < ActiveRecord::Base
 
 
 
-  ### EloquaSendable interface implementation
+  # EloquaSendable interface implementation
+  # This isn't memoized because if we update the BreakingNewsAlert
+  # object, we want those changes to be reflected here as well, without
+  # having to reload the object.
+  def as_eloqua_email
+    {
+      :html_body => view.render_view(
+        :template   => "/breaking_news/email/template",
+        :formats    => [:html],
+        :locals     => { alert: self }).to_s,
 
-  def email_html_body
-    @email_html_body ||= view.render_view(
-      :template   => "/breaking_news/email/template",
-      :formats    => [:html],
-      :locals     => { alert: self }
-    ).to_s
-  end
+      :plain_text_body => view.render_view(
+        :template   => "/breaking_news/email/template",
+        :formats    => [:text],
+        :locals     => { alert: self }).to_s,
 
-  def email_plain_text_body
-    @email_plain_text_body ||= view.render_view(
-      :template   => "/breaking_news/email/template",
-      :formats    => [:text],
-      :locals     => { alert: self }
-    ).to_s
-  end
-
-  def email_name
-    @email_name ||= "[scpr-alert] #{self.headline[0..30]}"
-  end
-
-  def email_description
-    @email_description ||=
-      "SCPR Breaking News Alert\n" \
-      "Sent: #{Time.now}\nSubject: #{email_subject}"
-  end
-
-  def email_subject
-    @email_subject ||= "#{break_type}: #{headline}"
+      :name        => "[scpr-alert] #{self.headline[0..30]}",
+      :description => "SCPR Breaking News Alert\n" \
+                      "Sent: #{Time.now}\nSubject: #{alert_subject}",
+      :subject     => alert_subject
+    }
   end
 
   def should_send_email?
@@ -175,6 +166,12 @@ class BreakingNewsAlert < ActiveRecord::Base
 
 
   private
+
+  # Since we use this same text for mobile notifications and
+  # Eloqua e-mails, define it here.
+  def alert_subject
+    "#{break_type}: #{headline}"
+  end
 
   def should_send_mobile_notification?
     self.published? &&
