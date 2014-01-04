@@ -1,6 +1,9 @@
 require 'spec_helper'
 
-describe Job::BatchEmail do
+describe Job::SendEmailNotification do
+  subject { described_class }
+  its(:queue) { should eq "scprv4:mid_priority" }
+
   before :each do
     stub_request(:post, %r|assets/email|).to_return({
       :content_type   => "application/json",
@@ -24,7 +27,7 @@ describe Job::BatchEmail do
         alert = create :breaking_news_alert, :email, :published
         alert.email_sent?.should eq false
 
-        Job::BatchEmail.perform("BreakingNewsAlert", alert.id)
+        Job::SendEmailNotification.perform("BreakingNewsAlert", alert.id)
         alert.reload.email_sent?.should eq true
       end
     end
@@ -38,7 +41,7 @@ describe Job::BatchEmail do
         slot = create :edition_slot, edition: edition, item: story
         edition.email_sent?.should eq false
 
-        Job::BatchEmail.perform("Edition", edition.id)
+        Job::SendEmailNotification.perform("Edition", edition.id)
         edition.reload.email_sent?.should eq true
       end
 
@@ -51,7 +54,7 @@ describe Job::BatchEmail do
         create :edition_slot, edition: edition, item: abstract2
         edition.email_sent?.should be_false
 
-        Job::BatchEmail.perform("Edition", edition.id)
+        Job::SendEmailNotification.perform("Edition", edition.id)
         edition.reload.email_sent?.should be_true
       end
     end

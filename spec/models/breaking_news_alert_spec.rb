@@ -59,7 +59,7 @@ describe BreakingNewsAlert do
       alert = create :breaking_news_alert
 
       Resque.should_receive(:enqueue).with(
-        Job::SendBreakingNewsMobileNotification, alert.id)
+        Job::SendMobileNotification, "BreakingNewsAlert", alert.id)
 
       alert.async_send_mobile_notification
     end

@@ -70,7 +70,7 @@ module Concern
       #
       # Returns nothing.
       def async_send_email
-        Resque.enqueue(Job::BatchEmail, self.class.name, self.id)
+        Resque.enqueue(Job::SendEmailNotification, self.class.name, self.id)
       end
 
 

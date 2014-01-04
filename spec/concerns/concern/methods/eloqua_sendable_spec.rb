@@ -57,7 +57,7 @@ describe Concern::Methods::EloquaSendable do
       alert.id = 999
 
       Resque.should_receive(:enqueue).with(
-        Job::BatchEmail, "TestClass::Alert", 999)
+        Job::SendEmailNotification, "TestClass::Alert", 999)
 
       alert.async_send_email
     end

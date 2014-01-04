@@ -3,8 +3,7 @@
 
 module Job
   class TwitterCache < Base
-    @queue = "#{namespace}:rake_tasks"
-
+    @priority = :low
 
     DEFAULTS = {
       :count            => 6, 

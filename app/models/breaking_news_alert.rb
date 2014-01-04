@@ -102,7 +102,7 @@ class BreakingNewsAlert < ActiveRecord::Base
 
 
   def async_send_mobile_notification
-    Resque.enqueue(Job::SendBreakingNewsMobileNotification, self.id)
+    Resque.enqueue(Job::SendMobileNotification, self.class.name, self.id)
   end
 
 

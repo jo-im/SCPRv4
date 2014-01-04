@@ -1,10 +1,8 @@
-##
 # Send batch e-mails.
-# The passed-in object just needs to response to `#publish_email`
-#
+# Object must respond to `#publish_email`
 module Job
-  class BatchEmail < Base
-    @queue = "#{namespace}:batch_email"
+  class SendEmailNotification < Base
+    @priority = :mid
 
     class << self
       def perform(klass, id)

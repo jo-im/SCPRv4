@@ -5,11 +5,13 @@
 #
 module Job
   class Index < Base
-    @queue = "#{namespace}:sphinx"
+    class << self
+      def queue; QUEUES[:sphinx]; end
 
-    def self.perform(models)
-      Indexer.new(*models.map(&:constantize)).index
-      self.log "Successfully indexed: #{models.present? ? models : "all"}"
+      def perform(models)
+        Indexer.new(*models.map(&:constantize)).index
+        self.log "Successfully indexed: #{models.present? ? models : "all"}"
+      end
     end
   end
 end
