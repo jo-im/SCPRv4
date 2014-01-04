@@ -60,62 +60,101 @@ describe Edition do
     end
   end
 
-  describe "#publish_email" do
-    before :each do
-      stub_request(:post, %r|assets/email|).to_return({
-        :content_type   => "application/json",
-        :body           => load_fixture("api/eloqua/email.json")
-      })
 
-      stub_request(:post, %r|assets/campaign/active|).to_return({
-        :content_type   => "application/json",
-        :body           => load_fixture("api/eloqua/campaign_activated.json")
-      })
+  describe "sending the e-mail callback" do
+    it "queues the job when email should be published" do
+      edition = build :edition, :published, send_email: true
+      edition.should_send_email?.should eq true
 
-      stub_request(:post, %r|assets/campaign\z|).to_return({
-        :content_type   => "application/json",
-        :body           => load_fixture("api/eloqua/email.json")
-      })
+      edition.should_receive(:async_send_email)
+      edition.save!
     end
 
-    it 'sends the e-mail and sets email_sent? to true' do
-      story = create :news_story
-      edition = create :edition, :email, :published
-      slot = create :edition_slot, edition: edition, item: story
+    it "doesn't queue the job if the email shouldn't be sent" do
+      edition = build :edition, :published, send_email: false
+      edition.should_send_email?.should eq false
 
-      edition.email_sent?.should eq false
-
-      edition.publish_email
-      edition.reload.email_sent?.should eq true
-    end
-
-    it 'returns false and does not send the email if not published' do
-      story = create :news_story
-      edition = create :edition, :email, :draft
-      slot = create :edition_slot, edition: edition, item: story
-
-      edition.publish_email.should eq false
-      edition.reload.email_sent?.should eq false
-    end
-
-    it 'returns false and does not send the email if not emailized' do
-      story = create :news_story
-      edition = create :edition, :published
-      slot = create :edition_slot, edition: edition, item: story
-
-      edition.publish_email.should eq false
-      edition.reload.email_sent?.should eq false
+      edition.should_not_receive(:async_send_email)
+      edition.save!
     end
   end
 
-  describe '#async_send_email' do
-    it 'enqueues the job' do
-      edition = create :edition
+  describe '#should_send_email?' do
+    it "is true if published, we want to send, and the e-mail hasn't been sent" do
+      edition = build :edition, :published, send_email: true, email_sent: false
+      edition.should_send_email?.should eq true
+    end
 
-      Resque.should_receive(:enqueue).with(
-        Job::SendShortListEmail, edition.id)
+    it "is false if the email has already been sent" do
+      edition = build :edition, :published, send_email: true, email_sent: true
+      edition.should_send_email?.should eq false
+    end
 
-      edition.async_send_email
+    it "is false if an e-mail isn't requested" do
+      edition = build :edition, :published, send_email: false
+      edition.should_send_email?.should eq false
+    end
+
+    it "is false if unpublished" do
+      edition = build :edition, :unpublished, send_email: true
+      edition.should_send_email?.should eq false
+    end
+  end
+
+  describe "email bodies" do
+    let(:edition) { build :edition }
+
+    before do
+      abstract1 = build :abstract
+      abstract2 = build :abstract
+
+      edition.slots.build(item: abstract1)
+      edition.slots.build(item: abstract2)
+
+      edition.save!
+    end
+
+    describe '#email_html_body' do
+      it 'is a string containing some html' do
+        edition.email_html_body.should match /<html/
+      end
+    end
+
+    describe '#email_plain_text_body' do
+      it 'is a string containing some text' do
+        edition.email_plain_text_body.should match edition.title
+      end
+    end
+  end
+
+
+  describe '#email_name' do
+    it 'is a string with part of the title in it' do
+      edition = build :edition, title: "some important news that goes pretty long"
+      edition.email_name.should match edition.title[0..30]
+    end
+  end
+
+  describe '#email_description' do
+    it 'has the subject and some descriptive stuff and junk' do
+      edition = build :edition, title: "Hundreds Die in Fire; Grep Proops Unharmed"
+      abstract = build :abstract
+      edition.slots.build(item: abstract)
+      edition.save!
+
+      edition.email_description.should match edition.title
+    end
+  end
+
+  describe '#email_subject' do
+    it 'has the edition title and abstract headline' do
+      edition = build :edition, title: "Hundreds Die in Fire; Grep Proops Unharmed"
+      abstract = build :abstract
+      edition.slots.build(item: abstract)
+      edition.save!
+
+      edition.email_subject.should match edition.title
+      edition.email_subject.should match abstract.headline
     end
   end
 end

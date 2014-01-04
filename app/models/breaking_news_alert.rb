@@ -9,6 +9,7 @@ class BreakingNewsAlert < ActiveRecord::Base
   include Concern::Callbacks::SetPublishedAtCallback
   include Concern::Associations::ContentAlarmAssociation
   include Concern::Methods::StatusMethods
+  include Concern::Methods::EloquaSendable
 
   include ::NewRelic::Agent::Instrumentation::ControllerInstrumentation
 
@@ -88,10 +89,6 @@ class BreakingNewsAlert < ActiveRecord::Base
       ALERT_TYPES.map { |k, v| [v, k] }
     end
 
-    def eloqua_config
-      @eloqua_config ||= Rails.application.config.api['eloqua']['attributes']
-    end
-
     def expire_alert_fragment
       Rails.cache.expire_obj(FRAGMENT_EXPIRE_KEY)
     end
@@ -103,14 +100,6 @@ class BreakingNewsAlert < ActiveRecord::Base
     self.update_attributes(status: self.class.status_id(:published))
   end
 
-
-
-  #-------------------
-  # Queue the e-mail sending task so that it doesn't have to
-  # occur during an HTTP request.
-  def async_send_email
-    Resque.enqueue(Job::SendBreakingNewsEmail, self.id)
-  end
 
   def async_send_mobile_notification
     Resque.enqueue(Job::SendBreakingNewsMobileNotification, self.id)
@@ -140,87 +129,13 @@ class BreakingNewsAlert < ActiveRecord::Base
   add_transaction_tracer :publish_mobile_notification, category: :task
 
 
-  #-------------------
-  # Send the e-mail
-  def publish_email
-    return false if !should_send_email?
-
-    email = Eloqua::Email.create(
-      :folderId         => self.class.eloqua_config['email_folder_id'],
-      :emailGroupId     => self.class.eloqua_config['email_group_id'],
-      :senderName       => "89.3 KPCC",
-      :senderEmail      => "no-reply@kpcc.org",
-      :replyToName      => "89.3 KPCC",
-      :replyToEmail     => "no-reply@kpcc.org",
-      :isTracked        => true,
-      :name             => email_name,
-      :description      => email_description,
-      :subject          => email_subject,
-      :isPlainTextEditable => true,
-      :plainText        => email_plain_text_body,
-      :htmlContent      => {
-        :type => "RawHtmlContent",
-        :html => email_html_body
-      }
-    )
-
-    campaign = Eloqua::Campaign.create(
-      {
-        :folderId         => self.class.eloqua_config['campaign_folder_id'],
-        :name             => email_name,
-        :description      => email_description,
-        :startAt          => Time.now.yesterday.to_i,
-        :endAt            => Time.now.tomorrow.to_i,
-        :elements         => [
-          {
-            :type           => "CampaignSegment",
-            :id             => "-980",
-            :name           => "Segment Members",
-            :segmentId      => self.class.eloqua_config['segment_id'],
-            :position       => {
-              :type => "Position",
-              :x    => 17,
-              :y    => 14
-            },
-            :outputTerminals => [
-              {
-                :type          => "CampaignOutputTerminal",
-                :id            => "-981",
-                :connectedId   => "-990",
-                :connectedType => "CampaignEmail",
-                :terminalType  => "out"
-              }
-            ]
-          },
-          {
-            :type             => "CampaignEmail",
-            :id               => "-990",
-            :emailId          => email.id,
-            :sendTimePeriod   => "sendAllEmailAtOnce",
-            :position       => {
-              :type => "Position",
-              :x    => 17,
-              :y    => 120
-            },
-          }
-        ]
-      }
-    )
-
-    if campaign.activate
-      self.update_column(:email_sent, true)
-    end
-  end
-
-  add_transaction_tracer :publish_email, category: :task
-
-  #-------------------
-
   def break_type
     ALERT_TYPES[alert_type]
   end
 
-  #-------------------
+
+
+  ### EloquaSendable interface implementation
 
   def email_html_body
     @email_html_body ||= view.render_view(
@@ -243,20 +158,13 @@ class BreakingNewsAlert < ActiveRecord::Base
   end
 
   def email_description
-    @email_description ||= "SCPR Breaking News Alert\n" \
-                           "Sent: #{Time.now}\nSubject: #{email_subject}"
+    @email_description ||=
+      "SCPR Breaking News Alert\n" \
+      "Sent: #{Time.now}\nSubject: #{email_subject}"
   end
 
   def email_subject
     @email_subject ||= "#{break_type}: #{headline}"
-  end
-
-
-
-  private
-
-  def view
-    @view ||= CacheController.new
   end
 
   def should_send_email?
@@ -264,6 +172,9 @@ class BreakingNewsAlert < ActiveRecord::Base
     self.send_email? &&
     !self.email_sent?
   end
+
+
+  private
 
   def should_send_mobile_notification?
     self.published? &&

@@ -25,44 +25,6 @@ describe BreakingNewsAlert do
     end
   end
 
-  describe "#publish_email" do
-    before :each do
-      stub_request(:post, %r|assets/email|).to_return({
-        :content_type   => "application/json",
-        :body           => load_fixture("api/eloqua/email.json")
-      })
-
-      stub_request(:post, %r|assets/campaign/active|).to_return({
-        :content_type   => "application/json",
-        :body           => load_fixture("api/eloqua/campaign_activated.json")
-      })
-
-      stub_request(:post, %r|assets/campaign\z|).to_return({
-        :content_type   => "application/json",
-        :body           => load_fixture("api/eloqua/email.json")
-      })
-    end
-
-    it 'sends the e-mail and sets email_sent? to true' do
-      alert = create :breaking_news_alert, :email
-      alert.email_sent?.should eq false
-
-      alert.publish_email
-      alert.reload.email_sent?.should eq true
-    end
-
-    it 'returns false and does not send the email if not published' do
-      alert = create :breaking_news_alert, :email, :draft
-      alert.publish_email.should eq false
-      alert.reload.email_sent?.should eq false
-    end
-
-    it 'returns false and does not send the email if not emailized' do
-      alert = create :breaking_news_alert, :published
-      alert.publish_email.should eq false
-      alert.reload.email_sent?.should eq false
-    end
-  end
 
   describe '#publish_mobile_notification' do
     before :each do
@@ -91,16 +53,6 @@ describe BreakingNewsAlert do
     end
   end
 
-  describe '#async_send_email' do
-    it 'enqueues the job' do
-      alert = create :breaking_news_alert
-
-      Resque.should_receive(:enqueue).with(
-        Job::SendBreakingNewsEmail, alert.id)
-
-      alert.async_send_email
-    end
-  end
 
   describe '#async_send_mobile_notification' do
     it 'enqueues the job' do
@@ -115,22 +67,51 @@ describe BreakingNewsAlert do
 
   #-----------------------
 
+  describe "sending the e-mail callback" do
+    it "queues the job when email should be published" do
+      alert = build :breaking_news_alert, :published, send_email: true
+      alert.should_send_email?.should eq true
+
+      alert.should_receive(:async_send_email)
+      alert.save!
+    end
+
+    it "doesn't queue the job if the email shouldn't be sent" do
+      alert = build :breaking_news_alert, :published, send_email: false
+      alert.should_send_email?.should eq false
+
+      alert.should_not_receive(:async_send_email)
+      alert.save!
+    end
+  end
+
+  describe '#should_send_email?' do
+    it "is true if published, we want to send, and the e-mail hasn't been sent" do
+      alert = build :breaking_news_alert, :published, send_email: true, email_sent: false
+      alert.should_send_email?.should eq true
+    end
+
+    it "is false if the email has already been sent" do
+      alert = build :breaking_news_alert, :published, send_email: true, email_sent: true
+      alert.should_send_email?.should eq false
+    end
+
+    it "is false if an e-mail isn't requested" do
+      alert = build :breaking_news_alert, :published, send_email: false
+      alert.should_send_email?.should eq false
+    end
+
+    it "is false if unpublished" do
+      alert = build :breaking_news_alert, :unpublished, send_email: true
+      alert.should_send_email?.should eq false
+    end
+  end
+
+
   describe '#break_type' do
     it 'gets the human-friendly alert type' do
       alert = build :breaking_news_alert
       alert.break_type.should eq "Breaking News"
-    end
-  end
-
-  describe '#email_subject' do
-    it "contains break-type" do
-      alert = build :breaking_news_alert
-      alert.email_subject.should match alert.break_type
-    end
-
-    it "contains headline" do
-      alert = build :breaking_news_alert
-      alert.email_subject.should match alert.headline
     end
   end
 
