@@ -61,7 +61,7 @@ describe PodcastsController do
 
         ts_retry(2) do
           get :podcast, slug: "podcast"
-          assigns(:articles).should eq [entry.to_article]
+          response.body.should match entry.headline
         end
 
         purge_uploaded_audio
@@ -73,11 +73,14 @@ describe PodcastsController do
 
         index_sphinx
 
-        podcast = create :podcast, slug: "podcast", source: episode.show, item_type: "episodes"
+        podcast = create :podcast,
+          :slug      => "podcast",
+          :source    => episode.show,
+          :item_type => "episodes"
 
         ts_retry(2) do
           get :podcast, slug: "podcast"
-          assigns(:articles).should eq [episode.to_article]
+          response.body.should match episode.headline
         end
 
         purge_uploaded_audio
