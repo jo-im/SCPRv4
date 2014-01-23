@@ -28,14 +28,16 @@
 
 <!-- OAS SETUP -->
 <script>
-   <!--//configuration
-   OAS_url = 'http://oascentral.publicradio.org/RealMedia/ads/';
+  <!--//configuration
+  OAS_url = 'http://oascentral.publicradio.org/RealMedia/ads/';
+  OAS_sitepage = 'scpr.org'; // Default. This may be overridden by a special ad target.
 
-   if(window.location.pathname.match(/^\/education/) || window.location.pathname.match(/^\/blogs\/education/)) {
-        OAS_sitepage = 'scpr.org' + window.location.pathname;
-      } else {
-        OAS_sitepage = 'scpr.org';
-      }
+  var specials = [
+    new RegExp("^/education/"),
+    new RegExp("^/blogs/education"),
+    new RegExp("^/health"),
+    new RegExp("^/obamacare")
+  ];
 
    OAS_listpos = "<%= content_for?(:oas_listpos) ? yield(:oas_listpos) : 'x01,x02,x03,x13' %>";
    OAS_query = '';
