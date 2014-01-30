@@ -8,6 +8,7 @@ module CategoryHandler
   included do
     # Help with lazy loading
     helper_method :vertical_articles
+    helper_method :vertical_blog_articles
   end
 
 
@@ -63,7 +64,19 @@ module CategoryHandler
         :page       => params[:page].to_i,
         :per_page   => PER_PAGE
       }
+      content_params[:exclude] = vertical_blog_articles << @category.featured_articles.first
+      @category.articles(content_params)
+    end
+  end
 
+  def vertical_blog_articles
+    @blog_articles ||= begin
+      content_params = {
+        classes:    [BlogEntry],
+           with:    { blog: @category.blog.id },
+           page:    1,
+       per_page:    2
+      }
       content_params[:exclude] = @category.featured_articles.first
       @category.articles(content_params)
     end
