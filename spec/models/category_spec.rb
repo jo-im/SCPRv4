@@ -102,6 +102,18 @@ describe Category do
       end
     end
 
+    it "excludes an array of passed-in objects" do
+      story1 = create :news_story, category: category
+      story2 = create :news_story, category: category
+      story3 = create :news_story, category: category
+      index_sphinx
+
+      ts_retry(2) do
+        category.content(page: 1, per_page: 10, exclude: [story2,story3]).to_a
+        .should eq [story1]
+      end
+    end
+
     it "returns an empty array if the page * per_page is greater than Thinking Sphinx's max_matches" do
       category.content(page: 101).should be_blank
     end

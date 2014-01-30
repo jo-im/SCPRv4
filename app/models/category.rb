@@ -90,12 +90,14 @@ class Category < ActiveRecord::Base
     if (page.to_i * per_page.to_i > SPHINX_MAX_MATCHES) || page.to_i < 1
       page = 1
     end
+
     args = {
       classes:    classes,
       page:       page,
       per_page:   per_page,
       with:       { category: self.id }.merge(with)
     }
+
     if exclude.present?
       if exclude.kind_of?(Array)
         excluded_articles = exclude.select { |article| article.respond_to?(:obj_key_crc32) }
