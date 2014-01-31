@@ -79,12 +79,16 @@
 
     <div class="ataglance clearfix">
         <section class="latest">
-            <header>
+            <header class="clearfix">
                 <% if vertical_blog_articles.present? %>
                     <h1>Latest from the <%= @category.blog.display_name %> blog</h1>
+                    <%= link_to(@category.blog.public_path) do %>
+                        Visit <span>the</span> blog
+                    <% end %>
                 <% else %>
                     <h1>Latest <%= @category.title %> Headlines</h1>
                 <% end %>
+
             </header>
 
         <% articles = vertical_blog_articles.present? ? vertical_blog_articles : vertical_articles[0..1] %>
