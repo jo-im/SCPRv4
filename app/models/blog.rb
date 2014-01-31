@@ -41,16 +41,6 @@ class Blog < ActiveRecord::Base
   end
 
   #-------------------
-
-  def display_name
-    if self.name?
-      blog_name = self.name.downcase
-      blog_name.slice! "the"
-      blog_name.strip
-    end
-  end
-
-  #-------------------
   def route_hash
     return {} if !self.persisted? || !self.persisted_record.is_active?
     { :blog => self.persisted_record.slug }
