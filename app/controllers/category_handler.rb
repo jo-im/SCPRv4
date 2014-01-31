@@ -31,8 +31,8 @@ module CategoryHandler
     # meaningless for an XML feed.
     if request.format.html?
       respond_with @category,
-        :template => "category/show",
-        :layout   => "new/vertical"
+        template:  "category/show",
+          layout:  "new/vertical"
     else
       respond_with category_content
     end
@@ -50,8 +50,8 @@ module CategoryHandler
   # All the content for this category, no excludes.
   def category_content
     @category_content ||= @category.content(
-      :page       => params[:page].to_i,
-      :per_page   => PER_PAGE
+          page:      params[:page].to_i,
+      per_page:      PER_PAGE
     )
   end
 
@@ -61,8 +61,8 @@ module CategoryHandler
   def vertical_articles
     @category_content ||= begin
       content_params = {
-        :page       => params[:page].to_i,
-        :per_page   => PER_PAGE
+            page:      params[:page].to_i,
+        per_page:      PER_PAGE
       }
       content_params[:exclude] = [@category.featured_articles.first]
       content_params[:exclude].concat(vertical_blog_articles) if @category.featured_blog.present?
