@@ -21,7 +21,7 @@ class Category < ActiveRecord::Base
     3 => 'map'
   }
 
-
+  belongs_to :featured_blog, class_name: 'Blog', foreign_key: 'blog_id'
   has_many :category_articles, order: 'position', dependent: :destroy
   accepts_json_input_for :category_articles
   tracks_association :category_articles
@@ -82,25 +82,30 @@ class Category < ActiveRecord::Base
 
   # All content associated to this category.
   def content(options={})
+    classes   = options[:classes] || [NewsStory, ContentShell, BlogEntry, ShowSegment]
     page      = options[:page] || DEFAULTS[:page]
     per_page  = options[:per_page] || DEFAULTS[:per_page]
     exclude   = options[:exclude]
-
+    with      = options[:with] || {}
     if (page.to_i * per_page.to_i > SPHINX_MAX_MATCHES) || page.to_i < 1
       page = 1
     end
 
     args = {
-      :classes  => [NewsStory, ContentShell, BlogEntry, ShowSegment],
-      :page     => page,
-      :per_page => per_page,
-      :with     => { category: self.id }
+      classes:    classes,
+      page:       page,
+      per_page:   per_page,
+      with:       { category: self.id }.merge(with)
     }
 
-    if exclude && exclude.respond_to?(:obj_key_crc32)
-      args[:without] = { obj_key: exclude.obj_key_crc32 }
+    if exclude.present?
+      if exclude.kind_of?(Array)
+        excluded_articles = exclude.select { |article| article.respond_to?(:obj_key_crc32) }
+        args[:without] = { obj_key: excluded_articles.map(&:obj_key_crc32) }
+      elsif exclude.respond_to?(:obj_key_crc32)
+        args[:without] = { obj_key: exclude.obj_key_crc32 }
+      end
     end
-
     ContentBase.search(args)
   end
 
