@@ -21,7 +21,7 @@ class Category < ActiveRecord::Base
     3 => 'map'
   }
 
-  belongs_to :blog
+  belongs_to :featured_blog, class_name: 'Blog', foreign_key: 'blog_id'
   has_many :category_articles, order: 'position', dependent: :destroy
   accepts_json_input_for :category_articles
   tracks_association :category_articles

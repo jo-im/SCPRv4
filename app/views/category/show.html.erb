@@ -81,8 +81,8 @@
         <section class="latest">
             <header class="clearfix">
                 <% if vertical_blog_articles.present? %>
-                    <h1>Latest from <%= @category.blog.name %></h1>
-                    <%= link_to(@category.blog.public_path) do %>
+                    <h1>Latest from <%= @category.featured_blog.name %></h1>
+                    <%= link_to(@category.featured_blog.public_path) do %>
                         Visit <span>the</span> blog
                     <% end %>
                 <% else %>

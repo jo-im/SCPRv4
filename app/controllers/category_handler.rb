@@ -65,17 +65,17 @@ module CategoryHandler
         :per_page   => PER_PAGE
       }
       content_params[:exclude] = [@category.featured_articles.first]
-      content_params[:exclude].concat(vertical_blog_articles) if @category.blog.present?
+      content_params[:exclude].concat(vertical_blog_articles) if @category.featured_blog.present?
       @category.articles(content_params)
     end
   end
 
   def vertical_blog_articles
-    return unless @category.blog.present?
+    return unless @category.featured_blog.present?
     @blog_articles ||= begin
       content_params = {
         classes:    [BlogEntry],
-           with:    { blog: @category.blog.id },
+           with:    { blog: @category.featured_blog.id },
            page:    1,
        per_page:    2
       }
