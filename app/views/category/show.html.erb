@@ -302,7 +302,7 @@
     </div> <!--/ .inner.bound -->
 </div><!--/ .lunchbox -->
 
-<% articles = vertical_blog_articles.present? ? Array(vertical_articles[0..-1]) : Array(vertical_articles[2..-1]) %>
+<% articles = vertical_blog_articles.present? ? Array(vertical_articles) : Array(vertical_articles[2..-1]) %>
 <%# We add category.title to the cache key since that's the only category-specific
 information we depend on inside of this cache block. %>
 <%= cache ["categories/show", "recent-coverage", cache_version, @category.title, articles] do %>
