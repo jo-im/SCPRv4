@@ -10,7 +10,8 @@ class Category < ActiveRecord::Base
 
   DEFAULTS = {
     :page       => 1,
-    :per_page   => 10
+    :per_page   => 10,
+    :classes    => [NewsStory, ContentShell, BlogEntry, ShowSegment]
   }
 
 
@@ -82,25 +83,29 @@ class Category < ActiveRecord::Base
 
   # All content associated to this category.
   def content(options={})
-    classes   = options[:classes] || [NewsStory, ContentShell, BlogEntry, ShowSegment]
+    classes   = options[:classes] || DEFAULTS[:classes]
     page      = options[:page] || DEFAULTS[:page]
     per_page  = options[:per_page] || DEFAULTS[:per_page]
     exclude   = options[:exclude]
     with      = options[:with] || {}
+
     if (page.to_i * per_page.to_i > SPHINX_MAX_MATCHES) || page.to_i < 1
       page = 1
     end
 
     args = {
-      classes:    classes,
-      page:       page,
-      per_page:   per_page,
-      with:       { category: self.id }.merge(with)
+      :classes    => classes,
+      :page       => page,
+      :per_page   => per_page,
+      :with       => { category: self.id }.merge(with)
     }
 
     if exclude.present?
       if exclude.kind_of?(Array)
-        excluded_articles = exclude.select { |article| article.respond_to?(:obj_key_crc32) }
+        excluded_articles = exclude.select do |article|
+          article.respond_to?(:obj_key_crc32)
+        end
+
         args[:without] = { obj_key: excluded_articles.map(&:obj_key_crc32) }
       elsif exclude.respond_to?(:obj_key_crc32)
         args[:without] = { obj_key: exclude.obj_key_crc32 }
