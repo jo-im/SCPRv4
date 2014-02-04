@@ -7,16 +7,12 @@
   <!-- EMAIL -->
   <% if record.email_sent? %>
     <div class="alert alert-info">
-      An e-mail has been sent for this alert.
+      An e-mail draft has been created in Eloqua for this alert.
     </div>
-  <% else %>
-    <% if record.published? && record.send_email? %>
-      <div class="alert alert-warning">
-        An e-mail will be sent for this alert, but hasn't fired yet.
-      </div>
-    <% else %>
-      <%= f.input :send_email, hint: "Send out an e-mail to everybody subscribed." %>
-    <% end %>
+  <% elsif record.published? %>
+    <div class="alert alert-warning">
+        An e-mail draft will be created in Eloqua for this alert, but hasn't fired yet.
+    </div>
   <% end %>
 
   <%= f.section 'content_alarm' %>

@@ -159,7 +159,7 @@ class Edition < ActiveRecord::Base
       }
     )
 
-    if campaign.activate
+    if campaign
       self.update_column(:email_sent, true)
     end
   end
@@ -205,9 +205,7 @@ class Edition < ActiveRecord::Base
   end
 
   def should_send_email?
-    self.published? &&
-    self.send_email? &&
-    !self.email_sent?
+    self.published? && !self.email_sent?
   end
 
   def build_slot_association(slot_hash, item)

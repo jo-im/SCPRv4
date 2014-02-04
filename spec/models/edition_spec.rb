@@ -67,11 +67,6 @@ describe Edition do
         :body           => load_fixture("api/eloqua/email.json")
       })
 
-      stub_request(:post, %r|assets/campaign/active|).to_return({
-        :content_type   => "application/json",
-        :body           => load_fixture("api/eloqua/campaign_activated.json")
-      })
-
       stub_request(:post, %r|assets/campaign\z|).to_return({
         :content_type   => "application/json",
         :body           => load_fixture("api/eloqua/email.json")
@@ -92,15 +87,6 @@ describe Edition do
     it 'returns false and does not send the email if not published' do
       story = create :news_story
       edition = create :edition, :email, :draft
-      slot = create :edition_slot, edition: edition, item: story
-
-      edition.publish_email.should eq false
-      edition.reload.email_sent?.should eq false
-    end
-
-    it 'returns false and does not send the email if not emailized' do
-      story = create :news_story
-      edition = create :edition, :published
       slot = create :edition_slot, edition: edition, item: story
 
       edition.publish_email.should eq false
