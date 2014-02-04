@@ -158,14 +158,21 @@ class BreakingNewsAlert < ActiveRecord::Base
     }
   end
 
+
+  private
+
   def should_send_email?
     self.published? &&
     self.send_email? &&
     !self.email_sent?
   end
 
+  def update_email_status(email, campaign)
+    if campaign.activate
+      self.update_column(:email_sent, true)
+    end
+  end
 
-  private
 
   # Since we use this same text for mobile notifications and
   # Eloqua e-mails, define it here.

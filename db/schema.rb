@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20131224172924) do
+ActiveRecord::Schema.define(:version => 20140204193814) do
 
   create_table "abstracts", :force => true do |t|
     t.string   "source"
@@ -193,8 +193,10 @@ ActiveRecord::Schema.define(:version => 20131224172924) do
     t.boolean  "is_active",                                   :default => false, :null => false
     t.string   "description"
     t.integer  "featured_interactive_style_id"
+    t.integer  "blog_id"
   end
 
+  add_index "contentbase_category", ["blog_id"], :name => "index_contentbase_category_on_blog_id"
   add_index "contentbase_category", ["comment_bucket_id"], :name => "contentbase_category_36c0cbca"
   add_index "contentbase_category", ["is_active"], :name => "index_contentbase_category_on_is_active"
   add_index "contentbase_category", ["is_news"], :name => "index_contentbase_category_on_is_news"
@@ -326,7 +328,6 @@ ActiveRecord::Schema.define(:version => 20131224172924) do
     t.datetime "created_at",                      :null => false
     t.datetime "updated_at",                      :null => false
     t.string   "title"
-    t.boolean  "send_email",   :default => true
     t.boolean  "email_sent",   :default => false
   end
 

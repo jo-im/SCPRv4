@@ -17,9 +17,15 @@ module TestClass
     end
 
 
+    private
+
     def should_send_email?
       self.send_email? &&
       !self.email_sent?
+    end
+
+    def update_email_status(email, campaign)
+      self.update_column(:email_sent, true)
     end
   end
 end

@@ -4,20 +4,13 @@
 # Note that this module does *not* include the ActiveRecord callbacks for
 # firing the e-mail.
 #
-# Your class must implement an `as_eloqua_email` method,
-# which returns a Hash containing the following keys:
-# * :html_body - (String) The HTML form of the e-mail body.
-# * :plain_text_body - (String) The plaintext form of the e-mail body.
-# * :name - (String) Internal name for this email (for Eloqua lists).
-# * :description - (String) Internal description for this Email.
-# * :subject - (String] The subject of the e-mail.
-#
-# You must also include:
-# * should_send_email? - (Boolean) Whether or not an e-mail should be sent.
+# Your class must implement:
+# * `as_eloqua_email`
+# * `should_send_email?`
+# * `update_email_status`
 #
 # The schema for this class must include:
 # * email_sent (Boolean)
-#
 #
 # You must also add an Eloqua configuration for the class with the key being
 # the underscored class name. See the documentation for `::eloqua_config` for
@@ -78,7 +71,7 @@ module Concern
       # Publish an e-mail for this object to the Eloqua API.
       #
       # Returns nothing.
-      def publish_email
+      def publish_email(options={})
         return if !should_send_email?
 
         config        = self.class.eloqua_config
@@ -151,18 +144,41 @@ module Concern
           }
         )
 
-        # Activate the campaign. If we get a OK response from the server,
-        # then update the `email_sent` boolean on this object, to prevent
-        # an e-mail from being sent twice for the same object.
-        if campaign.activate
-          self.update_column(:email_sent, true)
-        end
+        update_email_status(email, campaign)
       end
 
       add_transaction_tracer :publish_email, category: :task
 
 
+      # This object as an eloqua e-mail.
+      #
+      # Must contain the following keys:
+      # * :html_body - (String) The HTML form of the e-mail body.
+      # * :plain_text_body - (String) The plaintext form of the e-mail body.
+      # * :name - (String) Internal name for this email (for Eloqua lists).
+      # * :description - (String) Internal description for this Email.
+      # * :subject - (String] The subject of the e-mail.
+      #
+      # Returns Hash.
+      def as_eloqua_email
+        raise NotImplementedError
+      end
+
+
       private
+
+      # Update the email_sent status for this object.
+      # Returns boolean.
+      def update_email_status(email, campaign)
+        raise NotImplementedError
+      end
+
+      # Whether or not to create the data in Eloqua.
+      # Returns boolean.
+      def should_send_email?
+        raise NotImplementedError
+      end
+
 
       # Controller for rendering templates into strings that
       # we can send to the API.

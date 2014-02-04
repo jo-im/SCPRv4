@@ -113,14 +113,17 @@ class Edition < ActiveRecord::Base
     }
   end
 
-  def should_send_email?
-    self.published? &&
-    self.send_email? &&
-    !self.email_sent?
-  end
-
 
   private
+
+  def should_send_email?
+    self.published? && !self.email_sent?
+  end
+
+  def update_email_status(email, campaign)
+    self.update_column(:email_sent, true)
+  end
+
 
   def build_slot_association(slot_hash, item)
     if item.published?
