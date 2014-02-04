@@ -75,7 +75,7 @@ describe Edition do
 
     it 'sends the e-mail and sets email_sent? to true' do
       story = create :news_story
-      edition = create :edition, :email, :published
+      edition = create :edition, :published
       slot = create :edition_slot, edition: edition, item: story
 
       edition.email_sent?.should eq false
@@ -86,7 +86,7 @@ describe Edition do
 
     it 'returns false and does not send the email if not published' do
       story = create :news_story
-      edition = create :edition, :email, :draft
+      edition = create :edition, :draft
       slot = create :edition_slot, edition: edition, item: story
 
       edition.publish_email.should eq false
