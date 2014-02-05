@@ -4,16 +4,6 @@
 
 <%= form_block "Publishing" do %>
   <%= f.input :status, collection: Edition.status_select_collection, include_blank: false, input_html: { id: "status-select" } %>
-  <!-- EMAIL -->
-  <% if record.email_sent? %>
-    <div class="alert alert-info">
-      An e-mail draft has been created in Eloqua for this alert.
-    </div>
-  <% elsif record.published? %>
-    <div class="alert alert-warning">
-        An e-mail draft will be created in Eloqua for this alert, but hasn't fired yet.
-    </div>
-  <% end %>
 
   <%= f.section 'content_alarm' %>
   <%= f.section 'auto_published_at' %>

@@ -19,6 +19,10 @@ FactoryGirl.define do
     trait :unpublished do
       status Edition.status_id(:draft)
     end
+
+    trait :with_abstract do
+      slots { |f| [f.association(:edition_slot)] }
+    end
   end
 
   factory :edition_slot do

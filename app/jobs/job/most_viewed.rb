@@ -2,7 +2,7 @@ require 'oauth2'
 
 module Job
   class MostViewed < Base
-    @queue = "#{namespace}:rake_tasks"
+    @priority = :low
 
     TOKEN_URL = "https://accounts.google.com/o/oauth2/token"
     AUTH_URL  = "https://accounts.google.com/o/oauth2/auth"
