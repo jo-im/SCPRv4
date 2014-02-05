@@ -116,6 +116,8 @@ class Edition < ActiveRecord::Base
 
   private
 
+  # We can't use `publishing?` here because this gets checked in
+  # a background worker.
   def should_send_email?
     self.published? && !self.email_sent?
   end

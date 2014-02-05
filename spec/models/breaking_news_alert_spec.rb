@@ -67,46 +67,73 @@ describe BreakingNewsAlert do
 
   #-----------------------
 
-  describe "sending the e-mail callback" do
-    it "queues the job when email should be published" do
-      alert = build :breaking_news_alert, :published, send_email: true
-      alert.should_send_email?.should eq true
+  describe "sending the e-mail" do
+    describe "job queue" do
+      it "queues the job when email should be published" do
+        alert = build :breaking_news_alert, :published, send_email: true
 
-      alert.should_receive(:async_send_email)
-      alert.save!
+        alert.should_receive(:async_send_email)
+        alert.save!
+      end
+
+      it "doesn't queue the job if the email shouldn't be sent" do
+        alert = build :breaking_news_alert, :published, send_email: false
+
+        alert.should_not_receive(:async_send_email)
+        alert.save!
+      end
     end
 
-    it "doesn't queue the job if the email shouldn't be sent" do
-      alert = build :breaking_news_alert, :published, send_email: false
-      alert.should_send_email?.should eq false
+    describe '#publish_email' do
+      before do
+        stub_request(:post, %r|assets/email|).to_return({
+          :content_type   => "application/json",
+          :body           => load_fixture("api/eloqua/email.json")
+        })
 
-      alert.should_not_receive(:async_send_email)
-      alert.save!
+        stub_request(:post, %r|assets/campaign/active|).to_return({
+          :content_type   => "application/json",
+          :body           => load_fixture("api/eloqua/campaign_activated.json")
+        })
+
+        stub_request(:post, %r|assets/campaign\z|).to_return({
+          :content_type   => "application/json",
+          :body           => load_fixture("api/eloqua/email.json")
+        })
+
+        # Just incase, we don't want this method queueing anything
+        # since we're testing the publish method directly.
+        BreakingNewsAlert.any_instance.stub(:async_send_email)
+      end
+
+      it "sends an e-mail if the alert is published" do
+        alert = create :breaking_news_alert, :published, send_email: true
+        alert.publish_email
+        alert.email_sent?.should eq true
+      end
+
+      it "doesn't send an e-mail if the alert is not published" do
+        alert = create :breaking_news_alert, :draft, send_email: true
+        alert.publish_email
+        alert.email_sent?.should eq false
+      end
+
+      it "doesn't send an e-mail if send_email is false" do
+        alert = create :breaking_news_alert, :published, send_email: false
+        alert.publish_email
+        alert.email_sent?.should eq false
+      end
+
+      it "doesn't send an e-mail if one has already been sent" do
+        alert = create :breaking_news_alert, :published,
+          :email_sent => true,
+          :send_email => true
+
+        alert.should_not_receive(:update_column).with(:email_sent, true)
+        alert.publish_email
+      end
     end
   end
-
-  describe '#should_send_email?' do
-    it "is true if published, we want to send, and the e-mail hasn't been sent" do
-      alert = build :breaking_news_alert, :published, send_email: true, email_sent: false
-      alert.should_send_email?.should eq true
-    end
-
-    it "is false if the email has already been sent" do
-      alert = build :breaking_news_alert, :published, send_email: true, email_sent: true
-      alert.should_send_email?.should eq false
-    end
-
-    it "is false if an e-mail isn't requested" do
-      alert = build :breaking_news_alert, :published, send_email: false
-      alert.should_send_email?.should eq false
-    end
-
-    it "is false if unpublished" do
-      alert = build :breaking_news_alert, :unpublished, send_email: true
-      alert.should_send_email?.should eq false
-    end
-  end
-
 
   describe '#break_type' do
     it 'gets the human-friendly alert type' do

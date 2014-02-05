@@ -37,7 +37,7 @@ describe Job::SendEmailNotification do
     describe '::perform' do
       it 'sends the email' do
         story = create :news_story
-        edition = create :edition, :email, :published
+        edition = create :edition, :published
         slot = create :edition_slot, edition: edition, item: story
         edition.email_sent?.should eq false
 
@@ -46,7 +46,7 @@ describe Job::SendEmailNotification do
       end
 
       it "sends the e-mail if any of the abstracts doesn't have a category" do
-        edition = create :edition, :email, :published
+        edition = create :edition, :published
         abstract1 = create :abstract, category: nil
         abstract2 = create :abstract, category: nil
 
