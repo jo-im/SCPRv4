@@ -2,7 +2,7 @@
 # Job::SyncAudio
 module Job
   class SyncAudio < Base
-    @queue = "#{namespace}:rake_tasks"
+    @priority = :low
 
     class << self
       def perform(klass)
