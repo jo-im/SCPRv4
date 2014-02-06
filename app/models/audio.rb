@@ -290,7 +290,7 @@ class Audio < ActiveRecord::Base
       # can take a while for big files. So we'll just set the
       # URL and let the background workers handle the file info
       # as normal.
-      # uploader.path will include the UPLOAD_DIR directory already.
+      # uploader.relative_dir will include the UPLOAD_DIR directory already.
       self.url = Audio.url(uploader.relative_dir, uploader.filename)
 
       # We can assume that if they just uploaded the file,
