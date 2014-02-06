@@ -1,13 +1,9 @@
-##
-# ImportRemoteArticle
-#
 # Import a remote article
-#
 module Job
   class ImportRemoteArticle < Base
-    @queue = "#{namespace}:remote_articles"
-
-    #---------------------
+    # This is high priority because an editor has to wait for the story
+    # to import before he can continue to work.
+    @priority = :high
 
     class << self
       def perform(id, import_to_class)

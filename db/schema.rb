@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140128231825) do
+ActiveRecord::Schema.define(:version => 20140204193814) do
 
   create_table "abstracts", :force => true do |t|
     t.string   "source"
@@ -325,11 +325,13 @@ ActiveRecord::Schema.define(:version => 20140128231825) do
   create_table "editions", :force => true do |t|
     t.integer  "status"
     t.datetime "published_at"
-    t.datetime "created_at",   :null => false
-    t.datetime "updated_at",   :null => false
+    t.datetime "created_at",                      :null => false
+    t.datetime "updated_at",                      :null => false
     t.string   "title"
+    t.boolean  "email_sent",   :default => false
   end
 
+  add_index "editions", ["email_sent"], :name => "index_editions_on_email_sent"
   add_index "editions", ["published_at"], :name => "index_editions_on_published_at"
   add_index "editions", ["status", "published_at"], :name => "index_editions_on_status_and_published_at"
   add_index "editions", ["status"], :name => "index_editions_on_status"

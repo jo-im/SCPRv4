@@ -7,7 +7,9 @@
 # make sure they're defined in each subclass.
 module Job
   class ComputeAudioFileInfo < Base
-    @queue = "#{namespace}:compute_audio_file_info"
+    # Mid priority because this information is important but the task
+    # takes a while so we don't want to block the high_priority queue.
+    @priority = :mid
 
     class << self
       def perform(id)

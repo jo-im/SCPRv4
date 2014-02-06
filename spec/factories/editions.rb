@@ -6,6 +6,8 @@ FactoryGirl.define do
     status Edition.status_id(:live)
     sequence(:title) { |n| "Cool Edition #{n}" }
 
+    email_sent false
+
     trait :published do
       sequence(:published_at) { |n| Time.now + n.hours }
     end
@@ -16,6 +18,10 @@ FactoryGirl.define do
 
     trait :unpublished do
       status Edition.status_id(:draft)
+    end
+
+    trait :with_abstract do
+      slots { |f| [f.association(:edition_slot)] }
     end
   end
 

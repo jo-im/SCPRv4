@@ -1,6 +1,6 @@
 module Job
   class MostCommented < Base
-    @queue = "#{namespace}:rake_tasks"
+    @priority = :low
 
     DISQUS_ROOT           = "https://disqus.com"
     DISQUS_POPULAR_PATH   = "/api/3.0/threads/listPopular.json"
