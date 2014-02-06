@@ -28,7 +28,7 @@ module Job
       end
 
       def on_failure(exception, id)
-        log "Couldn't save audio file info for #{audio.class.name} ##{id}: " \
+        log "Couldn't save audio file info for Audio ##{id}: " \
             "(#{exception.class}) #{exception}\n"
       end
     end # singleton
