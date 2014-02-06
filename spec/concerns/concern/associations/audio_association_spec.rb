@@ -9,12 +9,12 @@ describe Concern::Associations::AudioAssociation do
   describe "#should_reject_audio?" do
     it "is true if all of the attributes are blank" do
       attributes = {
-        'mp3'          => '',
-        'enco_number'  => '',
-        'enco_date'    => '',
-        'external_url' => '',
-        'description'  => '',
-        'byline'       => ''
+        'mp3'           => '',
+        'enco_number'   => '',
+        'enco_date'     => '',
+        'url'           => '',
+        'description'   => '',
+        'byline'        => ''
       }
 
       story = build :test_class_story
@@ -23,12 +23,29 @@ describe Concern::Associations::AudioAssociation do
 
     it "is false if any of the attributes are present" do
       attributes = {
-        'mp3'          => '',
-        'enco_number'  => '999',
-        'enco_date'    => '',
-        'external_url' => '',
-        'description'  => 'Cool Audio',
-        'byline'       => ''
+        'mp3'           => '',
+        'enco_number'   => '999',
+        'enco_date'     => '',
+        'url'           => '',
+        'description'   => 'Cool Audio',
+        'byline'        => ''
+      }
+
+      story = build :test_class_story
+      story.send(:should_reject_audio?, attributes).should eq false
+    end
+
+    # external_url was renamed to url but it wasn't updated in
+    # the reject method, and no test caught it, so now this test
+    # exists.
+    it "is false if url is present" do
+      attributes = {
+        'mp3'           => '',
+        'enco_number'   => '',
+        'enco_date'     => '',
+        'url'           => 'blahblahblah.mp3',
+        'description'   => '',
+        'byline'        => ''
       }
 
       story = build :test_class_story

@@ -39,7 +39,7 @@ module Concern
         attributes['mp3'].blank? &&
         attributes['enco_number'].blank? &&
         attributes['enco_date'].blank? &&
-        attributes['external_url'].blank? &&
+        attributes['url'].blank? &&
         attributes['description'].blank? &&
         attributes['byline'].blank?
       end
