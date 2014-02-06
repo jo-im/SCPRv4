@@ -219,7 +219,7 @@ class Audio < ActiveRecord::Base
 
     @file ||= begin
       open(self.url, read_timeout: TIMEOUT)
-    rescue OpenURI::HTTPError, Timeout::Error
+    rescue OpenURI::HTTPError, Timeout::Error, Errno::ENOENT
       nil
     end
   end
