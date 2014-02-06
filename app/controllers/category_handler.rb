@@ -8,6 +8,7 @@ module CategoryHandler
   included do
     # Help with lazy loading
     helper_method :vertical_articles
+    helper_method :vertical_blog_articles
   end
 
 
@@ -30,8 +31,8 @@ module CategoryHandler
     # meaningless for an XML feed.
     if request.format.html?
       respond_with @category,
-        :template => "category/show",
-        :layout   => "new/vertical"
+        :template   => "category/show",
+        :layout     => "new/vertical"
     else
       respond_with category_content
     end
@@ -62,6 +63,27 @@ module CategoryHandler
       content_params = {
         :page       => params[:page].to_i,
         :per_page   => PER_PAGE
+      }
+
+      content_params[:exclude] = [@category.featured_articles.first]
+
+      if @category.featured_blog.present?
+        content_params[:exclude].concat(vertical_blog_articles)
+      end
+
+      @category.articles(content_params)
+    end
+  end
+
+  def vertical_blog_articles
+    return unless @category.featured_blog.present?
+
+    @blog_articles ||= begin
+      content_params = {
+        :classes    => [BlogEntry],
+        :with       => { blog: @category.featured_blog.id },
+        :page       => 1,
+        :per_page   => 2
       }
 
       content_params[:exclude] = @category.featured_articles.first

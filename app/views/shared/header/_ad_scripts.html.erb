@@ -28,47 +28,62 @@
 
 <!-- OAS SETUP -->
 <script>
-   <!--//configuration
-   OAS_url = 'http://oascentral.publicradio.org/RealMedia/ads/';
+  <!--//configuration
+  OAS_url = 'http://oascentral.publicradio.org/RealMedia/ads/';
+  OAS_sitepage = 'scpr.org'; // Default. This may be overridden by a special ad target.
 
-   if(window.location.pathname.match(/^\/education/) || window.location.pathname.match(/^\/blogs\/education/)) {
-        OAS_sitepage = 'scpr.org' + window.location.pathname;
-      } else {
-        OAS_sitepage = 'scpr.org';
-      }
+  var specials = [
+    new RegExp("^/education/"),
+    new RegExp("^/blogs/education"),
+    new RegExp("^/health"),
+    new RegExp("^/obamacare")
+  ];
 
-   OAS_listpos = "<%= content_for?(:oas_listpos) ? yield(:oas_listpos) : 'x01,x02,x03,x13' %>";
-   OAS_query = '';
-   OAS_target = '_top';
-   //end of configuration
-   OAS_version = 10;
-   OAS_rn = '001234567890'; OAS_rns = '1234567890';
-   OAS_rn = new String (Math.random()); OAS_rns = OAS_rn.substring (2, 11);
-   function OAS_NORMAL(pos) {
-     document.write('<a href="' + OAS_url + 'click_nx.ads/' + OAS_sitepage + '/1' + OAS_rns + '@' + OAS_listpos + '!' + pos + '?' + OAS_query + '" target=' + OAS_target + '>');
-     document.write('<img src="' + OAS_url + 'adstream_nx.ads/' + OAS_sitepage + '/1' + OAS_rns + '@' + OAS_listpos + '!' + pos + '?' + OAS_query + '" border="0" /></a>');
-   }
-   //-->
+  // Run through the special ad targeting to see if there's a match.
+  for (var i=0; i < specials.length; i++) {
+    if (window.location.pathname.match(specials[i])) {
+      OAS_sitepage += window.location.pathname;
+      break;
+    }
+  }
+
+  OAS_listpos = "<%= content_for?(:oas_listpos) ? yield(:oas_listpos) : 'x01,x02,x03,x13' %>";
+  OAS_query = '';
+  OAS_target = '_top';
+  //end of configuration
+  OAS_version = 10;
+  OAS_rn = '001234567890'; OAS_rns = '1234567890';
+  OAS_rn = new String (Math.random()); OAS_rns = OAS_rn.substring (2, 11);
+  function OAS_NORMAL(pos) {
+    document.write('<a href="' + OAS_url + 'click_nx.ads/' + OAS_sitepage + '/1' + OAS_rns + '@' + OAS_listpos + '!' + pos + '?' + OAS_query + '" target=' + OAS_target + '>');
+    document.write('<img src="' + OAS_url + 'adstream_nx.ads/' + OAS_sitepage + '/1' + OAS_rns + '@' + OAS_listpos + '!' + pos + '?' + OAS_query + '" border="0" /></a>');
+  }
+  //-->
 </script>
+
 <script>
-   <!--
-   OAS_version = 11;
-   if ((navigator.userAgent.indexOf('Mozilla/3') != -1) || (navigator.userAgent.indexOf('Mozilla/4.0 WebTV') != -1))
-     OAS_version = 10;
-   if (OAS_version >= 11)
-     document.write('<SCR' + 'IPT LANGUAGE=JavaScript1.1 SRC="' + OAS_url + 'adstream_mjx.ads/' + OAS_sitepage + '/1' + OAS_rns + '@' + OAS_listpos + '?' + OAS_query + '"><\/SCRIPT>');//-->
+  <!--
+  OAS_version = 11;
+  if ((navigator.userAgent.indexOf('Mozilla/3') != -1) || (navigator.userAgent.indexOf('Mozilla/4.0 WebTV') != -1)) {
+    OAS_version = 10;
+  }
+  if (OAS_version >= 11) {
+    document.write('<SCR' + 'IPT LANGUAGE=JavaScript1.1 SRC="' + OAS_url + 'adstream_mjx.ads/' + OAS_sitepage + '/1' + OAS_rns + '@' + OAS_listpos + '?' + OAS_query + '"><\/SCRIPT>');
+  }
+  //-->
 </script>
 
 <script>
-   <!--
-   document.write('');
-   function OAS_AD(pos) {
-     if (OAS_version >= 11)
-       OAS_RICH(pos);
-     else
-       OAS_NORMAL(pos);
-   }
-   //-->
+  <!--
+  document.write('');
+  function OAS_AD(pos) {
+    if (OAS_version >= 11) {
+      OAS_RICH(pos);
+    } else {
+      OAS_NORMAL(pos);
+    }
+  }
+  //-->
 </script>
 
 <!-- chartbeat timing for load start -->

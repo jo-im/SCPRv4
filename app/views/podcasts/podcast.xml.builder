@@ -35,7 +35,7 @@ cache ["v1", @podcast], expires_in: 1.hour do # Podcasts will refresh every hour
       xml.itunes :image, :href => @podcast.image_url
       xml.itunes :explicit, "no"
 
-      @articles.select { |c| c.audio.present? }.first(15).each do |article|
+      @podcast.content.select { |c| c.audio.present? }.first(15).each do |article|
         audio = article.audio.first
 
         xml.item do |item|

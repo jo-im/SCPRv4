@@ -41,7 +41,6 @@ class Blog < ActiveRecord::Base
   end
 
   #-------------------
-
   def route_hash
     return {} if !self.persisted? || !self.persisted_record.is_active?
     { :blog => self.persisted_record.slug }
