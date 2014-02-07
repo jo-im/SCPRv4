@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20131224172924) do
+ActiveRecord::Schema.define(version: 20140204193814) do
 
   create_table "abstracts", force: true do |t|
     t.string   "source"
@@ -193,8 +193,10 @@ ActiveRecord::Schema.define(version: 20131224172924) do
     t.boolean  "is_active",                                default: false, null: false
     t.string   "description"
     t.integer  "featured_interactive_style_id"
+    t.integer  "blog_id"
   end
 
+  add_index "contentbase_category", ["blog_id"], name: "index_contentbase_category_on_blog_id", using: :btree
   add_index "contentbase_category", ["comment_bucket_id"], name: "contentbase_category_36c0cbca", using: :btree
   add_index "contentbase_category", ["is_active"], name: "index_contentbase_category_on_is_active", using: :btree
   add_index "contentbase_category", ["is_news"], name: "index_contentbase_category_on_is_news", using: :btree
@@ -323,11 +325,13 @@ ActiveRecord::Schema.define(version: 20131224172924) do
   create_table "editions", force: true do |t|
     t.integer  "status"
     t.datetime "published_at"
-    t.datetime "created_at",   null: false
-    t.datetime "updated_at",   null: false
+    t.datetime "created_at",                   null: false
+    t.datetime "updated_at",                   null: false
     t.string   "title"
+    t.boolean  "email_sent",   default: false
   end
 
+  add_index "editions", ["email_sent"], name: "index_editions_on_email_sent", using: :btree
   add_index "editions", ["published_at"], name: "index_editions_on_published_at", using: :btree
   add_index "editions", ["status", "published_at"], name: "index_editions_on_status_and_published_at", using: :btree
   add_index "editions", ["status"], name: "index_editions_on_status", using: :btree

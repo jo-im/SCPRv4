@@ -11,6 +11,10 @@ module ApplicationHelper
     "personalities/trujillo.png"
   ]
 
+  def add_ga_tracking_to(url)
+    analytics_params = "?utm_source=kpcc&utm_medium=email&utm_campaign=short-list"
+    url =~ /scpr\.org/ ? url + analytics_params : url
+  end
 
   def present(object, klass=nil)
     klass ||= "#{object.class}Presenter".constantize

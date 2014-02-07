@@ -14,6 +14,7 @@ class Outpost::BreakingNewsAlertsController < Outpost::ResourceController
     l.column :visible, header: "Visible?"
     l.column :email_sent, header: "Emailed?"
     l.column :mobile_notification_sent, header: "Pushed?"
+
     l.column :published_at,
       :sortable                   => true,
       :default_order_direction    => DESCENDING

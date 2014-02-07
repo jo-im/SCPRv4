@@ -6,7 +6,7 @@
 # can be triggered from the CMS.
 module Job
   class SyncRemoteArticles < Base
-    @queue = "#{namespace}:remote_articles"
+    @priority = :mid
 
     class << self
       def perform

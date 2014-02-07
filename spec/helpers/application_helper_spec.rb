@@ -367,4 +367,20 @@ describe ApplicationHelper do
       helper.random_headshot.should match /<img /
     end
   end
+
+  describe '#add_ga_tracking_to' do
+    context 'given a url containing scpr.org' do
+      url = 'www.scpr.org'
+      it 'renders a link with google analytics params if the given url contains scpr.org' do
+        helper.add_ga_tracking_to(url).should eq 'www.scpr.org?utm_source=kpcc&utm_medium=email&utm_campaign=short-list'
+      end
+    end
+    context 'given a url that does not contain scpr.org' do
+      url = 'www.npr.org'
+      it 'renders the original link' do
+        helper.add_ga_tracking_to(url).should_not eq 'www.npr.org?utm_source=kpcc&utm_medium=email&utm_campaign=short-list'
+        helper.add_ga_tracking_to(url).should eq 'www.npr.org'
+      end
+    end
+  end
 end

@@ -2,7 +2,7 @@
 # Job::SyncAudio
 module Job
   class SyncAudio < Base
-    @queue = "#{namespace}:sync_audio"
+    @priority = :low
 
     class << self
       def perform(*klasses)

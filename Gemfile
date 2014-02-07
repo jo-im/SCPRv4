@@ -31,10 +31,10 @@ gem 'secretary-rails', github: "SCPR/secretary-rails"
 gem 'redis-rails', '~> 4.0.0'
 gem 'redis-content-store', github: "SCPR/redis-content-store"
 # gem 'redis-content-store', path: "#{ENV['PROJECT_HOME']}/redis-content-store"
-gem "resque", "~> 1.25.0"
 
 
 ## Views
+gem "resque", "~> 1.26.pre.0"
 gem 'kaminari', '~> 0.15.0'
 gem 'ckeditor_rails', '~> 4.3.1'
 gem 'select2-rails', '3.4.1'

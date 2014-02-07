@@ -45,12 +45,11 @@ class AudioUploader < CarrierWave::Uploader::Base
 
 
   def filename
-    @filename ||= begin
+    @random_filename ||= begin
       basename  = File.basename(file.filename, ".*")
-      random    = SecureRandom.urlsafe_base64(4)
-      extname   = File.extname(file.filename)
+      random    = SecureRandom.hex(4)
 
-      "#{basename}-#{random}#{extname}"
+      "#{basename}-#{random}.#{file.extension}"
     end
   end
 

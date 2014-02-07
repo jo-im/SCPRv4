@@ -1,4 +1,11 @@
 FactoryGirl.define do
+  factory :test_class_alert, class: TestClass::Alert do
+    title "Thousands dead; One Wounded."
+    email_sent false
+    send_email true
+  end
+
+
   factory :test_class_story, class: TestClass::Story do
     sequence(:headline) { |n| "Cool Headline #{n}" }
     short_headline { "Short #{headline}" }

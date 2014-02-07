@@ -43,10 +43,21 @@ test:
       user: xxx
       password: xxx
     attributes:
-      email_group_id: xx
-      segment_id: xxx
-      campaign_folder_id: xxxx
-      email_folder_id: xxxx
+      test_class/alert:
+        email_group_id: xx
+        segment_id: xxx
+        campaign_folder_id: xxxx
+        email_folder_id: xxxx
+      breaking_news_alert:
+        email_group_id: xx
+        segment_id: xxx
+        campaign_folder_id: xxxx
+        email_folder_id: xxxx
+      edition:
+        email_group_id: xx
+        segment_id: xxx
+        campaign_folder_id: xxxx
+        email_folder_id: xxxx
 
   postmark:
     api_key: xxx

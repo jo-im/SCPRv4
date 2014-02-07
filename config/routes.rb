@@ -91,10 +91,6 @@ Scprv4::Application.routes.draw do
   get '/archive(/:year/:month/:day)/'   => "archive#show",          as: :archive,                 constraints: { year: /\d{4}/, month: /\d{2}/, day: /\d{2}/ }
 
 
-  # Extra (internal stuff)
-  get '/breaking_email'   => 'breaking_news#show'
-
-
   # Sitemaps
   get '/sitemap' => "sitemaps#index", as: :sitemaps,  defaults: { format: :xml }
   get '/sitemap/:action',             as: :sitemap,   defaults: { format: :xml }, controller: "sitemaps"

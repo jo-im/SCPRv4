@@ -24,6 +24,17 @@ describe EventPresenter do
     end
   end
 
+  describe '#date_link' do
+    it "is the range date as a link" do
+      event = create :event, :published, starts_at: Time.new(2014, 1, 1)
+      p = presenter(event)
+
+      date_link = p.date_link
+      date_link.should match /^<a /
+      date_link.should match /January/
+    end
+  end
+
   #-------------------
 
   describe "#sponsor" do

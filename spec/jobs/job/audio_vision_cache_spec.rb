@@ -1,6 +1,9 @@
 require 'spec_helper'
 
 describe Job::AudioVisionCache do
+  subject { described_class }
+  its(:queue) { should eq "scprv4:low_priority" }
+
   describe '::perform' do
     before :each do
       stub_request(:get, %r{billboards/current}).to_return({
