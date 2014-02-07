@@ -72,11 +72,10 @@ Scprv4::Application.configure do
   default_url_options[:host] = "localhost:3000"
 
   config.scpr.host         = "localhost:3000"
-  config.scpr.media_root   = "/Users/bryan/projects/media"
+  config.scpr.media_root   = "/Users/bricker/media"
   config.scpr.media_url    = "http://media.scpr.org"
   # If you need to test uploading/serving files locally,
-  # start a Rack server from the directory where your media
-  # lives:
+  # start a Rack server from the `media_root` directory:
   #
   #   ruby -run -e httpd /Users/bricker/media/ -p 5000
   #
