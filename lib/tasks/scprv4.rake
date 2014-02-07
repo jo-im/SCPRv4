@@ -77,7 +77,7 @@ namespace :scprv4 do
 
   desc "Sync all Audio types"
   task :sync_audio => [:environment] do
-    puts "*** [#{Time.now}] Enqueueing audio sync tasks into Resque..."
+    puts "*** [#{Time.now}] Syncing Audio..."
     args = ["AudioSync::Pending", "AudioSync::Program"]
 
     if Rails.env.development?
@@ -93,7 +93,7 @@ namespace :scprv4 do
   namespace :schedule do
     desc "Build the recurring schedule occurrences"
     task :build => [:environment] do
-      puts "*** [#{Time.now} Building recurring schedule..."
+      puts "*** [#{Time.now}] Building recurring schedule..."
 
       if Rails.env.development?
         Job::BuildRecurringSchedule.perform
