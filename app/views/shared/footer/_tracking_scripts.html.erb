@@ -72,19 +72,15 @@ el.parentNode.insertBefore(s, el);
 <script type="text/javascript">
 
     var _gaq = _gaq || [];
-    _gaq.push(['_setAccount', 'UA-624724-1']);
-    _gaq.push(['_setDomainName', 'scpr.org']);
-    _gaq.push(['_trackPageview']);
-    _gaq.push(['t2.setAccount', 'UA-18188937-11']);
-    _gaq.push(['t2.setDomainName', 'scpr.org']);
-    _gaq.push(['t2._trackPageview']);
-    _gaq.push(['_setCustomVar', 6, 'Station', 'Southern California Public Radio', 2]);
-    (function() {
-        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-        ga.src = ('https:' == document.location.protocol ? 'https://' : 'http://') + 'stats.g.doubleclick.net/dc.js';
-        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-    })();
-
+    _gaq.push(
+        ['_setAccount', 'UA-624724-1'],
+        ['_setDomainName', 'scpr.org'],
+        ['_trackPageview'],
+        ['b._setAccount', 'UA-18188937-11'],
+        ['b._setDomainName', 'scpr.org'],
+        ['b._trackPageview'],
+        ['_setCustomVar', 6, 'Station', 'Southern California Public Radio', 2]
+    );
     var currentPath = window.location.pathname
     var pathToMatch = currentPath.split('/')[1];
     var pageType = null;
@@ -110,5 +106,11 @@ el.parentNode.insertBefore(s, el);
         pageType = "People";
     }
     _gaq.push(['_setCustomVar', 7, 'PageType', pageType, 3]);
+
+    (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://' : 'http://') + 'stats.g.doubleclick.net/dc.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
 </script>
 <!-- /Google Analytics -->
