@@ -15,7 +15,6 @@ class Edition < ActiveRecord::Base
   include Concern::Callbacks::TouchCallback
   include Concern::Callbacks::SphinxIndexCallback
   include Concern::Scopes::PublishedScope
-  include Concern::Methods::StatusMethods
   include Concern::Methods::EloquaSendable
 
 

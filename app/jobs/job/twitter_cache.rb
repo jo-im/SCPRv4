@@ -18,9 +18,10 @@ module Job
       def perform(screenname, partial, key, options={})
         job = new(screenname, options)
 
-        if tweets = job.fetch
+        tweets = job.fetch
+
+        if tweets.present?
           self.cache(tweets, partial, key)
-          true
         end
       end
     end
@@ -38,9 +39,9 @@ module Job
         self.log  "Fetching the latest #{@options[:count]} tweets " \
                   "for #{@screen_name}..."
 
-        tweets = @tweeter.user_timeline(@screen_name, @options)
-        tweets
+        @tweeter.user_timeline(@screen_name, @options)
       rescue => e
+        warn "Error caught in TwitterCache#fetch: #{e}"
         self.log "Error: \n #{e}"
         false
       end

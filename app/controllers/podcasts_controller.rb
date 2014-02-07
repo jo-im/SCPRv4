@@ -38,7 +38,8 @@ class PodcastsController < ApplicationController
         rangeEnd      = match[2].to_i
         rangeLength   = (rangeEnd - rangeStart).to_i
 
-        response.headers["Content-Range"]  = "bytes #{rangeStart}-#{rangeEnd == 0 ? "" : rangeEnd}/*"
+        response.headers["Content-Range"] =
+          "bytes #{rangeStart}-#{rangeEnd == 0 ? "" : rangeEnd}/*"
       end
     end
   end

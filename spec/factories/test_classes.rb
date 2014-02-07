@@ -72,16 +72,4 @@ FactoryGirl.define do
     name "Bryan"
     slug { name.parameterize }
   end
-
-  factory :test_class_fake_audio, class: TestClass::FakeAudio do
-    path { File.join(self.store_dir, self.filename) }
-
-    trait :live do
-      status Audio::STATUS_LIVE
-    end
-
-    trait :pending do
-      status Audio::STATUS_WAIT
-    end
-  end
 end

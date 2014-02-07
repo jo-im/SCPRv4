@@ -20,7 +20,6 @@ class Event < ActiveRecord::Base
   include Concern::Callbacks::CacheExpirationCallback
   include Concern::Callbacks::TouchCallback
   include Concern::Methods::CommentMethods
-  include Concern::Methods::StatusMethods
   include Concern::Methods::AssetDisplayMethods
 
   self.disqus_identifier_base = "events"

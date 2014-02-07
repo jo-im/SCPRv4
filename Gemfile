@@ -30,7 +30,7 @@ gem 'secretary-rails', github: "SCPR/secretary-rails"
 ## Cache
 gem 'redis-content-store', github: "SCPR/redis-content-store"
 # gem 'redis-content-store', path: "#{ENV['PROJECT_HOME']}/redis-content-store"
-gem "resque", "~> 1.25.0.pre"
+gem "resque", "~> 1.26.pre.0"
 
 
 ## Views

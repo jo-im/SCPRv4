@@ -6,8 +6,6 @@
 # * category_id
 # * published?
 # * unpublishing?
-#
-# I recommend including StatusMethods into your class if possible.
 module Concern
   module Associations
     module CategoryAssociation

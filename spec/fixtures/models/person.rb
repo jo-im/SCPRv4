@@ -7,25 +7,13 @@ module TestClass
     # Just allows any valid URL
     validates :twitter_url, url: { allow_blank: true, message: "bad url" }
 
-    promise_to :touch_associated, :if => :should_touch_associated?
     promise_to :update_index, :if => :should_update_index?
 
 
     private
 
-    # Test on save
-    def should_touch_associated?
-      self.persisted?
-    end
-
-    # Test on destroy
     def should_update_index?
-      self.destroyed?
-    end
-
-    def touch_associated
-      # Touch associated object (stub me)
-      true
+      self.changed? || self.destroyed?
     end
 
     def update_index

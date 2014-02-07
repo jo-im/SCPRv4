@@ -5,8 +5,8 @@ module Job
     @priority = :low
 
     class << self
-      def perform(klass)
-        klass.constantize.bulk_sync
+      def perform(*klasses)
+        klasses.each { |k| k.constantize.bulk_sync }
       end
     end # singleton
   end # SyncAudio
