@@ -1,7 +1,3 @@
-<!-- google analytics (via NPR Digital Services Station Analytics [http://analytics.nprstations.org/]) -->
-<script type="text/javascript">(function() {var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;ga.src = '//stream.publicbroadcasting.net/analytics/abf7.js';var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);})();</script>
-<!-- /Google Analytics -->
-
 <!-- Stats: WebTrends -->
 <script src="http://media.scpr.org/assets/scripts/webtrends.v2.js"></script>
 <script>
@@ -54,3 +50,65 @@ el.parentNode.insertBefore(s, el);
     })(document, 'script');
 </script>
 <!-- /Visual Revenue -->
+
+<!-- ChartBeat -->
+<script type="text/javascript">
+    var _sf_async_config = { uid: 33583, domain: 'scpr.org', useCanonical:true };
+    (function() {
+        function loadChartbeat() {
+            window._sf_endpt = (new Date()).getTime();
+            var e = document.createElement('script');
+            e.setAttribute('language', 'javascript');
+            e.setAttribute('type', 'text/javascript');
+            e.setAttribute('src','//static.chartbeat.com/js/chartbeat.js');
+            document.body.appendChild(e);
+        };
+        var oldonload = window.onload;
+        window.onload = (typeof window.onload != 'function') ? loadChartbeat : function() { oldonload(); loadChartbeat(); };
+    })();
+</script>
+<! -- /ChartBeat -->
+<!-- Google Analytics -->
+<script type="text/javascript">
+
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-624724-1']);
+    _gaq.push(['_setDomainName', 'scpr.org']);
+    _gaq.push(['_trackPageview']);
+    _gaq.push(['t2.setAccount', 'UA-18188937-11']);
+    _gaq.push(['t2.setDomainName', 'scpr.org']);
+    _gaq.push(['t2._trackPageview']);
+    _gaq.push(['_setCustomVar', 6, 'Station', 'Southern California Public Radio', 2]);
+    (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://' : 'http://') + 'stats.g.doubleclick.net/dc.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+
+    var currentPath = window.location.pathname
+    var pathToMatch = currentPath.split('/')[1];
+    var pageType = null;
+
+    _.each(scpr.PAGE_MAPPING, function(v,k) {
+        _.each(v, function(page) {
+            if (pathToMatch.match(new RegExp(page))) {
+                pageType = k;
+            }
+        });
+    });
+    // These are route exceptions to the mappings in scpr.PAGE_MAPPING that require a specific GA page type
+    //  '/news/:year/:month/:day/:id/:slug/' and '/blogs/:blog/:year/:month/:day/:id/:slug/'
+    if (currentPath.match(/^\/news\/\d{4}/) || currentPath.match(/^\/blogs\/[a-z-]+\/\d{4}/)) {
+        pageType = "Story";
+    }
+    // get '/about/press/'
+    else if (currentPath.match(/^\/about\/press\/?/)) {
+        pageType = "About";
+    }
+    // get '/about/people/'
+    else if (currentPath.match(/^\/about\/people\/?/)) {
+        pageType = "People";
+    }
+    _gaq.push(['_setCustomVar', 7, 'PageType', pageType, 3]);
+</script>
+<!-- /Google Analytics -->

@@ -37,3 +37,4 @@
 //= require collapse
 //= require cms_popup
 //= require reader_bookmarklet
+//= require page_mapping
