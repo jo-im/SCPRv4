@@ -74,7 +74,7 @@ el.parentNode.insertBefore(s, el);
     var pathToMatch = currentPath.split('/')[1];
     var pageType = null;
     var found = false;
-    $.each(scpr.PAGE_MAPPING, function(k,v) {
+    _.find(scpr.PAGE_MAPPING, function(v,k) {
         if (found) { return false; }
         _.find(v, function(page) {
             if (currentPath.match(new RegExp(page))) {
