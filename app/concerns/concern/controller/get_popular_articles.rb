@@ -18,6 +18,7 @@ module Concern
           # If we already tried to load this class but couldn't,
           # give up.
           if klass == prev_klass
+            warn "Error caught: Couldn't deserialize popular articles: #{e}"
             @popular_articles = nil
             return
           end

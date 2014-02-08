@@ -30,12 +30,12 @@ gem 'secretary-rails', github: "SCPR/secretary-rails"
 ## Cache
 gem 'redis-content-store', github: "SCPR/redis-content-store"
 # gem 'redis-content-store', path: "#{ENV['PROJECT_HOME']}/redis-content-store"
-gem "resque", "~> 1.25.0.pre"
+gem "resque", "~> 1.26.pre.0"
 
 
 ## Views
 gem 'kaminari', github: "amatsuda/kaminari"
-gem 'ckeditor_rails', '~> 4.2.0'
+gem 'ckeditor_rails', '~> 4.3.0'
 gem 'select2-rails', '3.4.1'
 gem 'twitter-text', "~> 1.5"
 gem 'sanitize', "~> 2.0"

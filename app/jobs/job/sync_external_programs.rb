@@ -5,7 +5,7 @@
 #
 module Job
   class SyncExternalPrograms < Base
-    @queue = "#{namespace}:rake_tasks"
+    @priority = :low
 
     class << self
       def perform

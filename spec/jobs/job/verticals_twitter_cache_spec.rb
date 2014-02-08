@@ -1,6 +1,9 @@
 require "spec_helper"
 
 describe Job::VerticalsTwitterCache do
+  subject { described_class }
+  its(:queue) { should eq "scprv4:low_priority" }
+
   describe '::perform' do
     it 'caches the tweet block' do
       bio = create :bio, twitter_handle: "kpcc"

@@ -25,7 +25,6 @@ class ContentShell < ActiveRecord::Base
   include Concern::Callbacks::HomepageCachingCallback
   include Concern::Callbacks::TouchCallback
   include Concern::Methods::ArticleStatuses
-  include Concern::Methods::StatusMethods
 
 
   validates :status, presence: true

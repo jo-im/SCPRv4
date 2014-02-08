@@ -25,44 +25,6 @@ describe BreakingNewsAlert do
     end
   end
 
-  describe "#publish_email" do
-    before :each do
-      stub_request(:post, %r|assets/email|).to_return({
-        :content_type   => "application/json",
-        :body           => load_fixture("api/eloqua/email.json")
-      })
-
-      stub_request(:post, %r|assets/campaign/active|).to_return({
-        :content_type   => "application/json",
-        :body           => load_fixture("api/eloqua/campaign_activated.json")
-      })
-
-      stub_request(:post, %r|assets/campaign\z|).to_return({
-        :content_type   => "application/json",
-        :body           => load_fixture("api/eloqua/email.json")
-      })
-    end
-
-    it 'sends the e-mail and sets email_sent? to true' do
-      alert = create :breaking_news_alert, :email
-      alert.email_sent?.should eq false
-
-      alert.publish_email
-      alert.reload.email_sent?.should eq true
-    end
-
-    it 'returns false and does not send the email if not published' do
-      alert = create :breaking_news_alert, :email, :draft
-      alert.publish_email.should eq false
-      alert.reload.email_sent?.should eq false
-    end
-
-    it 'returns false and does not send the email if not emailized' do
-      alert = create :breaking_news_alert, :published
-      alert.publish_email.should eq false
-      alert.reload.email_sent?.should eq false
-    end
-  end
 
   describe '#publish_mobile_notification' do
     before :each do
@@ -91,29 +53,87 @@ describe BreakingNewsAlert do
     end
   end
 
-  describe '#async_send_email' do
-    it 'enqueues the job' do
-      alert = create :breaking_news_alert
-
-      Resque.should_receive(:enqueue).with(
-        Job::SendBreakingNewsEmail, alert.id)
-
-      alert.async_send_email
-    end
-  end
 
   describe '#async_send_mobile_notification' do
     it 'enqueues the job' do
       alert = create :breaking_news_alert
 
       Resque.should_receive(:enqueue).with(
-        Job::SendBreakingNewsMobileNotification, alert.id)
+        Job::SendMobileNotification, "BreakingNewsAlert", alert.id)
 
       alert.async_send_mobile_notification
     end
   end
 
   #-----------------------
+
+  describe "sending the e-mail" do
+    describe "job queue" do
+      it "queues the job when email should be published" do
+        alert = build :breaking_news_alert, :published, send_email: true
+
+        alert.should_receive(:async_send_email)
+        alert.save!
+      end
+
+      it "doesn't queue the job if the email shouldn't be sent" do
+        alert = build :breaking_news_alert, :published, send_email: false
+
+        alert.should_not_receive(:async_send_email)
+        alert.save!
+      end
+    end
+
+    describe '#publish_email' do
+      before do
+        stub_request(:post, %r|assets/email|).to_return({
+          :content_type   => "application/json",
+          :body           => load_fixture("api/eloqua/email.json")
+        })
+
+        stub_request(:post, %r|assets/campaign/active|).to_return({
+          :content_type   => "application/json",
+          :body           => load_fixture("api/eloqua/campaign_activated.json")
+        })
+
+        stub_request(:post, %r|assets/campaign\z|).to_return({
+          :content_type   => "application/json",
+          :body           => load_fixture("api/eloqua/email.json")
+        })
+
+        # Just incase, we don't want this method queueing anything
+        # since we're testing the publish method directly.
+        BreakingNewsAlert.any_instance.stub(:async_send_email)
+      end
+
+      it "sends an e-mail if the alert is published" do
+        alert = create :breaking_news_alert, :published, send_email: true
+        alert.publish_email
+        alert.email_sent?.should eq true
+      end
+
+      it "doesn't send an e-mail if the alert is not published" do
+        alert = create :breaking_news_alert, :draft, send_email: true
+        alert.publish_email
+        alert.email_sent?.should eq false
+      end
+
+      it "doesn't send an e-mail if send_email is false" do
+        alert = create :breaking_news_alert, :published, send_email: false
+        alert.publish_email
+        alert.email_sent?.should eq false
+      end
+
+      it "doesn't send an e-mail if one has already been sent" do
+        alert = create :breaking_news_alert, :published,
+          :email_sent => true,
+          :send_email => true
+
+        alert.should_not_receive(:update_column).with(:email_sent, true)
+        alert.publish_email
+      end
+    end
+  end
 
   describe '#break_type' do
     it 'gets the human-friendly alert type' do
@@ -122,54 +142,45 @@ describe BreakingNewsAlert do
     end
   end
 
-  describe '#email_subject' do
-    it "contains break-type" do
-      alert = build :breaking_news_alert
-      alert.email_subject.should match alert.break_type
+  describe '#as_eloqua_email' do
+    let(:alert) {
+      build :breaking_news_alert,
+        headline: "Hundreds Die in Fire; Grep Proops Unharmed"
+    }
+
+    describe 'html_body' do
+      it 'is a string containing some html' do
+        alert.as_eloqua_email[:html_body].should match /<html/
+      end
     end
 
-    it "contains headline" do
-      alert = build :breaking_news_alert
-      alert.email_subject.should match alert.headline
+    describe 'plain_text_body' do
+      it 'is a string containing some text' do
+        alert.as_eloqua_email[:plain_text_body].should match alert.headline
+      end
     end
-  end
 
-  describe '#email_html_body' do
-    it 'is a string containing some html' do
-      alert = build :breaking_news_alert
-      alert.email_html_body.should match /<html/
+    describe 'name' do
+      it 'is a string with part of the headline in it' do
+        alert.as_eloqua_email[:name]
+          .should eq "[scpr-alert] #{alert.headline[0..30]}"
+      end
     end
-  end
 
-  describe '#email_plain_text_body' do
-    it 'is a string containing some text' do
-      alert = build :breaking_news_alert
-      alert.email_plain_text_body.should match alert.headline
+    describe 'description' do
+      it 'has the subject and some descriptive stuff and junk' do
+        alert.as_eloqua_email[:description].should match alert.headline
+      end
     end
-  end
 
-  describe '#email_name' do
-    it 'is a string with part of the headline in it' do
-      alert = build :breaking_news_alert, headline: "some important news"
-      alert.email_name.should match /some important news/
-    end
-  end
-
-  describe '#email_description' do
-    it 'has the subject and some descriptive stuff and junk' do
-      alert = build :breaking_news_alert, headline: "Hundreds Die in Fire; Grep Proops Unharmed"
-      alert.email_description.should match alert.headline
-    end
-  end
-
-  describe '#email_subject' do
-    it 'has the subject and some descriptive stuff and junk' do
-      alert = build :breaking_news_alert, headline: "Hundreds Die in Fire; Grep Proops Unharmed"
-      alert.email_subject.should match alert.break_type
-      alert.email_subject.should match alert.headline
+    describe 'subject' do
+      it 'has the subject and some descriptive stuff and junk' do
+        subject = alert.as_eloqua_email[:subject]
+        subject.should match alert.break_type
+        subject.should match alert.headline
+      end
     end
   end
-
 
   #-----------------------
 

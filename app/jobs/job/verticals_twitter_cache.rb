@@ -3,7 +3,7 @@
 
 module Job
   class VerticalsTwitterCache < Base
-    @queue = "#{namespace}:rake_tasks"
+    @priority = :low
 
     class << self
       def perform

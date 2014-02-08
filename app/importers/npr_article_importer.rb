@@ -117,8 +117,8 @@ module NprArticleImporter
       npr_story.audio.select { |a| a.permissions.stream? }
       .each_with_index do |remote_audio, i|
         if mp3 = remote_audio.formats.mp3s.find { |m| m.type == "mp3" }
-          local_audio = Audio::DirectAudio.new(
-            :external_url   => mp3.content,
+          article.audio.build(
+            :url            => mp3.content,
             :duration       => remote_audio.duration,
             :description    => remote_audio.description ||
                                remote_audio.title ||
@@ -126,8 +126,6 @@ module NprArticleImporter
             :byline         => remote_audio.rightsHolder || "NPR",
             :position       => i
           )
-
-          article.audio << local_audio
         end
       end
 

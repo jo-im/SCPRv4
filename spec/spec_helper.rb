@@ -15,6 +15,9 @@ end
 
 
 require File.expand_path("../../config/environment", __FILE__)
+Dir[Rails.root.join("spec/fixtures/db/*.rb")].each { |f| require f }
+silence_stream(STDOUT) { FixtureMigration.new.up }
+
 require 'rspec/rails'
 require 'rspec/autorun'
 require 'thinking_sphinx/test'
@@ -22,12 +25,12 @@ require 'database_cleaner'
 require 'webmock/rspec'
 require 'capybara/rspec'
 
-# Test-class migrations get run in factories/test_classes.rb, since that's
-# the first place the needs them and those files get loaded automatically.
-# Test classes and test indices also get loaded from that file.
 Dir[Rails.root.join("spec/support/**/*.rb")].each { |f| require f }
-Dir[Rails.root.join("spec/fixtures/db/*.rb")].each { |f| require f }
 
+# Load all of our test classes, their indices, and their factories.
+Dir[Rails.root.join("spec/fixtures/indices/*.rb")].each { |f| require f }
+Dir[Rails.root.join("spec/fixtures/models/*.rb")].each { |f| require f }
+Dir[Rails.root.join("spec/fixtures/factories/*.rb")].each { |f| require f }
 
 WebMock.disable_net_connect!
 
@@ -49,7 +52,7 @@ RSpec.configure do |config|
   config.include AudioCleanup
   config.include FormFillers,           type: :feature
   config.include AuthenticationHelper,  type: :feature
-
+  config.include FactoryAttributesBuilder
 
   config.before :suite do
     DatabaseCleaner.clean_with :truncation
