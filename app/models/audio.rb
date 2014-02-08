@@ -122,8 +122,22 @@ class Audio < ActiveRecord::Base
   # Different ways to get audio into the system.
   attr_accessor \
     :mp3,
-    :enco_number,
-    :enco_date
+    :enco_number
+
+  attr_reader :enco_date
+
+  def enco_date=(date)
+    @enco_date = case date
+    when String
+      begin
+        Time.parse(date)
+      rescue ArgumentError
+        nil
+      end
+    else
+      date
+    end
+  end
 
 
   class << self
