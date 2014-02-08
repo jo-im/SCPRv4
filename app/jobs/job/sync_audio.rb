@@ -5,7 +5,7 @@ module Job
     @priority = :low
 
     class << self
-      def perform(*klasses)
+      def perform(klasses)
         klasses.each { |k| k.constantize.bulk_sync }
       end
     end # singleton

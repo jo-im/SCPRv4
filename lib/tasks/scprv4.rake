@@ -81,10 +81,10 @@ namespace :scprv4 do
     args = ["AudioSync::Pending", "AudioSync::Program"]
 
     if Rails.env.development?
-      Job::SyncAudio.perform(*args)
+      Job::SyncAudio.perform(args)
       puts "Finished.\n"
     else
-      Job::SyncAudio.enqueue(*args)
+      Job::SyncAudio.enqueue(args)
       puts "Job was placed in queue.\n"
     end
   end
