@@ -73,7 +73,7 @@ module AdminListHelper
     status  = audio.try(:status)
     text    = audio.try(:status_text)
 
-    content_tag :div, text, {
+    content_tag :div, text || "None", {
       :class => STATUS_BOOTSTRAP_MAP[:audio][status]
     }
   end
