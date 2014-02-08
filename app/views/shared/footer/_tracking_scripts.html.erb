@@ -73,26 +73,16 @@ el.parentNode.insertBefore(s, el);
     var currentPath = window.location.pathname
     var pathToMatch = currentPath.split('/')[1];
     var pageType = null;
-    _.each(scpr.PAGE_MAPPING, function(v,k) {
-        _.each(v, function(page) {
-            if (pathToMatch.match(new RegExp(page))) {
+    var found = false;
+    $.each(scpr.PAGE_MAPPING, function(k,v) {
+        if (found) { return false; }
+        _.find(v, function(page) {
+            if (currentPath.match(new RegExp(page))) {
                 pageType = k;
+                found = true;
             }
         });
     });
-    // These are route exceptions to the mappings in scpr.PAGE_MAPPING that require a specific GA page type
-    //  '/news/:year/:month/:day/:id/:slug/' and '/blogs/:blog/:year/:month/:day/:id/:slug/'
-    if (currentPath.match(/^\/news\/\d{4}/) || currentPath.match(/^\/blogs\/[a-z-]+\/\d{4}/)) {
-        pageType = "Story";
-    }
-    // get '/about/press/'
-    else if (currentPath.match(/^\/about\/press\/?/)) {
-        pageType = "About";
-    }
-    // get '/about/people/'
-    else if (currentPath.match(/^\/about\/people\/?/)) {
-        pageType = "People";
-    }
     var _gaq = _gaq || [];
     _gaq.push(
         ['_setAccount', 'UA-624724-1'],
