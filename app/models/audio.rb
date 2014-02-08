@@ -129,7 +129,11 @@ class Audio < ActiveRecord::Base
   def enco_date=(date)
     @enco_date = case date
     when String
-      Time.parse(date)
+      begin
+        Time.parse(date)
+      rescue ArgumentError
+        nil
+      end
     else
       date
     end
