@@ -16,3 +16,4 @@
 //= require new/behaviors
 //= require new/layout
 //= require new/verticals
+//= require page_mapping
