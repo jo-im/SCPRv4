@@ -71,18 +71,12 @@ el.parentNode.insertBefore(s, el);
 
 <!-- Google Analytics -->
 <script type="text/javascript">
-    var currentPath = window.location.pathname
-    var pageType = null;
-    var found = false;
-    _.find(scpr.PAGE_MAPPING, function(v,k) {
-        if (found) { return false; }
-        _.find(v, function(page) {
-            if (currentPath.match(new RegExp(page))) {
-                pageType = k;
-                found = true;
-            }
-        });
+    var currentPath = window.location.pathname;
+
+    var pageType = _.find(scpr.GA_PAGE_MAPPING, function(v, k) {
+        return currentPath.match(new RegExp(k)) !== null;
     });
+
     var _gaq = _gaq || [];
     _gaq.push(
         ['_setAccount', 'UA-624724-1'],
