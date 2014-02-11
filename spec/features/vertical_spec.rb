@@ -1,5 +1,4 @@
 require 'spec_helper'
-require 'ruby-debug'
 describe "Vertical page" do
   describe "rendering featured articles" do
     sphinx_spec
