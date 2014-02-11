@@ -40,7 +40,7 @@ gem 'ckeditor_rails', '~> 4.3.1'
 gem 'select2-rails', '3.4.1'
 gem 'twitter-text', "~> 1.5"
 gem 'sanitize', "~> 2.0"
-gem 'escape_utils', '~> 0.3'
+gem 'escape_utils', '~> 1.0.0'
 gem 'simple_form', "~> 3.0.0"
 gem 'jbuilder', '~> 1.5.3'
 gem 'embeditor-rails', github: 'SCPR/embeditor-rails'
@@ -85,7 +85,6 @@ gem 'uglifier', '>= 1.3'
 group :development do
   gem 'capistrano', '~> 2.0'
   gem 'pry'
-  gem 'pry-debugger'
 end
 
 
