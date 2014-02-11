@@ -1,5 +1,5 @@
 require 'spec_helper'
-
+require 'ruby-debug'
 describe "Vertical page" do
   describe "rendering featured articles" do
     sphinx_spec
@@ -15,7 +15,6 @@ describe "Vertical page" do
       end
 
       index_sphinx
-
       ts_retry(2) do
         visit category.public_path
 
@@ -24,6 +23,31 @@ describe "Vertical page" do
       end
     end
 
+    it "does not return the top story in the promoted issues section" do
+      issue = create :active_issue
+      category = create :category, is_active: true
+      category_issue = create :category_issue, category: category, issue: issue
+      featured_story = create :news_story, :published, category: category
+      category.category_articles.create(article: featured_story)
+      other_articles = create_list :news_story, 10, :published
+      #assign issue to featured article and other articles
+      featured_article_issue = create :article_issue, article: featured_story, issue: issue
+      other_articles.each do |article|
+        create :article_issue, article: article, issue: issue
+      end
+      index_sphinx
+      ts_retry(2) do
+        visit category.public_path
+        within("aside.more") do
+          #make sure top story doesn't show up in the promoted 'more from this issue' section
+          page.should_not have_content category.featured_articles.first.short_title
+        end
+        within("section.issues") do
+          #make sure top story will still show up in the Issues We're Tracking section
+          page.should have_content category.featured_articles.first.short_title, count: 1
+        end
+      end
+    end
     # This spec is here becase an error occurred when a content shell
     # without issues was the lead article, since content shells don't have
     # related content.
