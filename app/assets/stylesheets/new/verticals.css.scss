@@ -398,6 +398,7 @@
             li {
                 list-style: disc outside;
                 margin-bottom: 7px;
+                @media screen and (max-width: 515px) { list-style:none; }
             }
 
         }
