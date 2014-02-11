@@ -46,8 +46,8 @@
             <% if issue %>
                 <h3>More from <%= link_to issue.title, issue.public_path %></h3>
                 <ul>
-
-                <%- issue.articles.first(2).each do |article| %>
+                <% issue_articles = issue.articles - Array(lead_article) %>
+                <% issue_articles.first(2).each do |article| %>
                     <li><%= link_to article.short_title, article.public_path %></li>
                 <% end %>
 
