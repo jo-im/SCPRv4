@@ -440,7 +440,7 @@ DEPENDENCIES
   dbsync!
   eco (~> 1.0)
   embeditor-rails!
-  escape_utils (~> 1.0.0)
+  escape_utils (~> 1.0.1)
   factory_girl_rails
   faraday (~> 0.8)
   faraday_middleware (~> 0.8)

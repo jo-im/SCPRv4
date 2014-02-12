@@ -40,7 +40,7 @@ gem 'ckeditor_rails', '~> 4.3.1'
 gem 'select2-rails', '3.4.1'
 gem 'twitter-text', "~> 1.5"
 gem 'sanitize', "~> 2.0"
-gem 'escape_utils', '~> 1.0.0'
+gem 'escape_utils', '~> 1.0.1'
 gem 'simple_form', "~> 3.0.0"
 gem 'jbuilder', '~> 1.5.3'
 gem 'embeditor-rails', github: 'SCPR/embeditor-rails'
