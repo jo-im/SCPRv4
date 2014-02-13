@@ -100,15 +100,6 @@ GIT
   specs:
     riddle (1.5.9)
 
-GIT
-  remote: git://github.com/bricker/turbo-sprockets-rails3.git
-  revision: 5102c06677f80aeb9f9cf77fdd6f39b439420e70
-  branch: utf8-conversion
-  specs:
-    turbo-sprockets-rails3 (0.3.10)
-      railties (> 3.2.8, < 4.0.0)
-      sprockets (>= 2.0.0)
-
 GEM
   remote: https://rubygems.org/
   specs:
@@ -487,7 +478,6 @@ DEPENDENCIES
   sqlite3
   test_after_commit
   thinking-sphinx (~> 3.0.5)
-  turbo-sprockets-rails3!
   twitter (~> 4.1)
   twitter-text (~> 1.5)
   uglifier (>= 1.3)
