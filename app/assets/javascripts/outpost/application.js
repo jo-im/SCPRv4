@@ -8,12 +8,11 @@
 //= require bootstrap-typeahead
 //= require bootstrap-datepicker
 
-//= require ckeditor-jquery
-//= require ckeditor/custom-configs
-
 //= require outpost/base
 //= require outpost/asset_host/assethostbase
 //= require outpost/content_api
+
+//= require outpost/ckeditor/custom-config
 
 //= require_tree ./templates/
 //= require outpost/templates

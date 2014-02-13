@@ -36,7 +36,6 @@ gem 'redis-content-store', github: "SCPR/redis-content-store"
 ## Views
 gem "resque", "~> 1.26.pre.0"
 gem 'kaminari', '~> 0.15.0'
-gem 'ckeditor_rails', '~> 4.3.1'
 gem 'select2-rails', '3.4.1'
 gem 'twitter-text', "~> 1.5"
 gem 'sanitize', "~> 2.0"

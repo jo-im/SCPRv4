@@ -6,10 +6,15 @@
   <%= stylesheet_link_tag "outpost/application" %>
 
   <script>
-    BASE_HREF = "http://<%= Rails.application.default_url_options[:host]%>"
+    BASE_HREF         = "http://<%= Rails.application.default_url_options[:host]%>"
+    CKEDITOR_BASEPATH = '/ckeditor/';
+    APPLICATION_CSS   = '<%= asset_path("application.css") %>';
   </script>
 
   <%= javascript_include_tag "shared", "outpost/application" %>
+
+  <script src="/ckeditor/ckeditor-4.2.js" type="text/javascript"></script>
+  <script src="/ckeditor/adapters/jquery.js" type="text/javascript"></script>
 
   <link rel="shortcut icon" href="http://media.scpr.org/favicon.ico" />
   <%= csrf_meta_tags %>

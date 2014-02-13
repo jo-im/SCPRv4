@@ -11,7 +11,7 @@ module Scprv4
       "#{config.root}/lib/validators"
     ]
 
-    config.assets.version = '1.0'
+    config.assets.version = '2.0'
     config.assets.paths << "#{Rails.root}/vendor/assets/fonts"
     config.assets.precompile += [
       "shared.js",
