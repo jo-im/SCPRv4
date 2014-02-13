@@ -25,7 +25,7 @@ Scprv4::Application.configure do
   config.cache_store = :redis_content_store, "redis://localhost:6379/5"
   config.action_controller.action_on_unpermitted_parameters = :raise
 
-  config.assets.debug         = true  # Expand
+  config.assets.debug         = false  # Expand
   config.serve_static_assets  = true  # Serve from public/
   config.assets.compile       = true  # Fallback
   config.assets.digest        = false # Add asset fingerprints
