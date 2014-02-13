@@ -383,4 +383,17 @@ describe ApplicationHelper do
       end
     end
   end
+
+
+  describe '#url_with_params' do
+    it "adds params if there aren't any" do
+      url = helper.url_with_params("http://google.com", context: "kpcc")
+      url.should eq "http://google.com?context=kpcc"
+    end
+
+    it "apprends to params if they already exist" do
+      url = helper.url_with_params("http://google.com?from=kpcc", context: "podcast")
+      url.should eq "http://google.com?from=kpcc&context=podcast"
+    end
+  end
 end
