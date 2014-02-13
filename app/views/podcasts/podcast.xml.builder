@@ -48,7 +48,7 @@ cache ["v1", @podcast], expires_in: 1.hour do # Podcasts will refresh every hour
           item.itunes :keywords,  raw(@podcast.keywords)
           item.link               article.public_url
 
-          item.enclosure          :url    => audio.podcast_url,
+          item.enclosure          :url    => url_with_params(audio.podcast_url, context: @podcast.slug)
                                   :length => audio.size,
                                   :type   => "audio/mpeg"
 
