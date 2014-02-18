@@ -72,7 +72,7 @@ gem 'audio_vision', github: 'SCPR/audio_vision-ruby'
 #gem 'audio_vision', path: "#{ENV['PROJECT_HOME']}/audio_vision-ruby"
 
 
-# Assets
+## Assets
 gem "eco", "~> 1.0"
 gem 'sass-rails', "~> 4.0.0"
 gem 'bootstrap-sass', '~> 2.2'
