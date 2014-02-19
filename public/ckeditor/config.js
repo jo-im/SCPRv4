@@ -11,7 +11,6 @@ CKEDITOR.editorConfig = function(config) {
   ];
 
   config.extraPlugins = [
-    'codemirror',
     'image', // This plugin has custom changes so we didn't include it in the build
     'autosave',
     'embed-placeholder',
