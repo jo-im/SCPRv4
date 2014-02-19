@@ -1,4 +1,4 @@
-CKEDITOR.timestamp = '20140205121936';
+CKEDITOR.timestamp = '20140219';
 
 CKEDITOR.editorConfig = function(config) {
 
