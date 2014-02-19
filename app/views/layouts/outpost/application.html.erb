@@ -13,7 +13,7 @@
 
   <%= javascript_include_tag "shared", "outpost/application" %>
 
-  <script src="/ckeditor/ckeditor-4.2.js" type="text/javascript"></script>
+  <script src="/ckeditor/ckeditor.js?456" type="text/javascript"></script>
   <script src="/ckeditor/adapters/jquery.js" type="text/javascript"></script>
 
   <link rel="shortcut icon" href="http://media.scpr.org/favicon.ico" />
@@ -24,7 +24,7 @@
 <div class="navbar navbar-fixed-top navbar-inverse">
   <div class="navbar-inner"<%if Rails.env=="development"%> style="background-color:#ff0000;background-image:none;"<%end%>>
     <div class="container">
-      <a href="<%=outpost_root_path%>" class="brand"><img src="/assets/outpost/outpost-kpcc.png" alt="Outpost KPCC"></a>
+      <a href="<%=outpost_root_path%>" class="brand"><%= image_tag("outpost/outpost-kpcc.png", alt: "Outpost KPCC") %></a>
 
       <% if current_user %>
         <ul class="nav">

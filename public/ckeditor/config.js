@@ -12,6 +12,7 @@ CKEDITOR.editorConfig = function(config) {
 
   config.extraPlugins = [
     'codemirror',
+    'image', // This plugin has custom changes so we didn't include it in the build
     'autosave',
     'embed-placeholder',
     'webkit-span-fix'
@@ -19,23 +20,29 @@ CKEDITOR.editorConfig = function(config) {
 
   config.codemirror = {
     theme                   : 'monokai',
+    mode                    : 'htmlmixed',
+    useBeautify             : false,
+    autoCloseBrackets       : true,
+    autoCloseTags           : true,
+    autoFormatOnStart       : false,
+    autoFormatOnUncomment   : false,
+    continueComments        : false,
+    enableCodeFolding       : true,
+    enableCodeFormatting    : true,
+    enableSearchTools       : true,
+    highlightActiveLine     : false,
+    highlightMatches        : false,
+    indentWithTabs          : false,
     lineNumbers             : true,
     lineWrapping            : true,
     matchBrackets           : true,
     matchTags               : true,
-    autoCloseTags           : false,
-    enableSearchTools       : false,
-    showSearchButton        : false,
-    enableCodeFolding       : true,
-    enableCodeFormatting    : true,
-    autoFormatOnStart       : false,
-    autoFormatOnUncomment   : false,
-    highlightActiveLine     : false,
-    highlightMatches        : false,
-    showTabs                : false,
-    showFormatButton        : false,
+    showAutoCompleteButton  : true,
     showCommentButton       : false,
-    showUncommentButton     : false
+    showUncommentButton     : false,
+    showFormatButton        : false,
+    showSearchButton        : false,
+    showTrailingSpace       : false
   };
 
   config.autosave_SaveKey           = "autosave-" + window.location.pathname;
