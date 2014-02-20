@@ -14,8 +14,9 @@
 
 //= require outpost/ckeditor/custom-config
 
-//= require_tree ./templates/
 //= require outpost/templates
+//= require_tree ./templates/
+
 
 //= require outpost/publishing
 //= require outpost/content_alarm
