@@ -36,8 +36,8 @@ class RssProgramImporter
       #    the feed is reporting.
       # 2. Radiolab sets all of the enclosure lengths to '0' because of its
       #    ad software. Kim knows more. Ask Kim. I'm just a dumb comment.
-      audio = Audio::DirectAudio.new(
-        :external_url   => item.enclosure.url,
+      audio = Audio.new(
+        :url            => item.enclosure.url,
         :description    => item.title,
         :byline         => @external_program.title,
         :position       => 0
@@ -48,18 +48,12 @@ class RssProgramImporter
       # with Radiolab where the audio file couldn't be reached, which resulted
       # in some missing duration/size information. So now we want to ping the
       # file before saving.
-      #
-      # Since we're grabbing the audio file already, we're
-      # also going to just compute its information (duration and size) now,
-      # instead of having to fetch it again later in a background task.
-      if !audio.mp3_file.present?
+      if !audio.file.present?
         log "Audio file couldn't be reached. This item won't be imported. " \
             "(#{item.enclosure.url})"
 
         next
       end
-
-      audio.compute_file_info
 
       # No need to build the episode unless the audio is available, so we're
       # waiting until after the audio presence check to build it.

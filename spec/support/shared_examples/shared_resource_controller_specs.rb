@@ -101,7 +101,7 @@ shared_examples_for "resource controller" do
         klass = @resource.to_s.classify.constantize
 
         expect {
-          post :create, @resource => build(*@resource_properties).attributes
+          post :create, @resource => build_attributes(*@resource_properties)
         }.to change { klass.count }.by(1)
 
         # Redirect to index path because there is no commit_action parameter,
@@ -117,7 +117,7 @@ shared_examples_for "resource controller" do
         expect {
           put :update,
             :id         => @object.id,
-            @resource   => build(*@resource_properties).attributes
+            @resource   =>  build_attributes(*@resource_properties)
         }.to change { @object.reload.updated_at }
 
         assigns(:record).should eq @object

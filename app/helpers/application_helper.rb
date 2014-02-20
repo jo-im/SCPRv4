@@ -11,6 +11,10 @@ module ApplicationHelper
     "personalities/trujillo.png"
   ]
 
+  def add_ga_tracking_to(url)
+    analytics_params = "?utm_source=kpcc&utm_medium=email&utm_campaign=short-list"
+    url =~ /scpr\.org/ ? url + analytics_params : url
+  end
 
   def present(object, klass=nil)
     klass ||= "#{object.class}Presenter".constantize
@@ -380,4 +384,26 @@ module ApplicationHelper
     EscapeUtils.escape_url(s.to_s).html_safe
   end
   alias_method :u, :url_encode
+
+
+  # Safely add parameters to any URL
+  #
+  # Examples
+  #
+  #   url_with_params("http://google.com", something: "cool")
+  #   # => "http://google.com?something=cool"
+  #
+  #  url_with_params("http://google.com?cool=thing", another: "params")
+  #  # => "http://google.com?cool=thing&another=params"
+  #
+  # Returns String
+  def url_with_params(url, params={})
+    uri     = URI.parse(url)
+    query   = URI.decode_www_form(uri.query.to_s)
+
+    params.each { |k, v| query << [k.to_s, v.to_s] }
+
+    uri.query = URI.encode_www_form(query)
+    uri.to_s
+  end
 end

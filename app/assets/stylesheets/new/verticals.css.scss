@@ -180,7 +180,27 @@
         }
         header {
             border-bottom-color: $orange;
-            h1 { color: $orange; }
+            h1 {
+                color: $orange;
+                float: left;
+            }
+            a {
+                display: inline-block;
+                text-align: right;
+                float: right;
+                font-family: $font-prox;
+                font-weight: 700;
+                font-size: 0.625em; // 10 / 16
+                margin-right: 3.478260869565%; // 16 / 460
+                text-transform: uppercase;
+                color: #b9b9b9;
+                &:after { content: " \25B8"; }
+                &:hover { color: $blue; }
+                @media screen and (max-width: 950px) {
+                    margin-right: 0;
+                    span { display: none; }
+                }
+            }
             margin-bottom: 8px;
         }
     }
@@ -378,6 +398,7 @@
             li {
                 list-style: disc outside;
                 margin-bottom: 7px;
+                @media screen and (max-width: 515px) { list-style:none; }
             }
 
         }

@@ -1,4 +1,4 @@
-<% cache_version = "v3" %>
+<% cache_version = "v4" %>
 
 <% add_to_page_title @category.title %>
 <% meta_tags(url: @category.public_url) %>
@@ -46,8 +46,8 @@
             <% if issue %>
                 <h3>More from <%= link_to issue.title, issue.public_path %></h3>
                 <ul>
-
-                <%- issue.articles.first(2).each do |article| %>
+                <% issue_articles = issue.articles - Array(lead_article) %>
+                <% issue_articles.first(2).each do |article| %>
                     <li><%= link_to article.short_title, article.public_path %></li>
                 <% end %>
 
@@ -79,11 +79,19 @@
 
     <div class="ataglance clearfix">
         <section class="latest">
-            <header>
-                <h1>Latest <%= @category.title %> Headlines</h1>
+            <header class="clearfix">
+                <% if vertical_blog_articles.present? %>
+                    <h1>Latest from <%= @category.featured_blog.name %></h1>
+                    <%= link_to(@category.featured_blog.public_path) do %>
+                        Visit <span>the</span> blog
+                    <% end %>
+                <% else %>
+                    <h1>Latest <%= @category.title %> Headlines</h1>
+                <% end %>
+
             </header>
 
-        <% articles = vertical_articles[0..1] %>
+        <% articles = vertical_blog_articles.present? ? vertical_blog_articles : vertical_articles[0..1] %>
         <%= cache ["categories/show", "latest-headlines", cache_version, articles] do %>
             <ul>
 
@@ -294,8 +302,7 @@
     </div> <!--/ .inner.bound -->
 </div><!--/ .lunchbox -->
 
-
-<% articles = Array(vertical_articles[2..-1]) %>
+<% articles = vertical_blog_articles.present? ? Array(vertical_articles) : Array(vertical_articles[2..-1]) %>
 <%# We add category.title to the cache key since that's the only category-specific
 information we depend on inside of this cache block. %>
 <%= cache ["categories/show", "recent-coverage", cache_version, @category.title, articles] do %>

@@ -5,7 +5,6 @@ class Quote < ActiveRecord::Base
 
 
   include Concern::Associations::CategoryAssociation
-  include Concern::Methods::StatusMethods
   include Concern::Callbacks::SphinxIndexCallback
 
 

@@ -19,7 +19,6 @@ class PijQuery < ActiveRecord::Base
   include Concern::Callbacks::SetPublishedAtCallback
   include Concern::Callbacks::CacheExpirationCallback
   include Concern::Callbacks::TouchCallback
-  include Concern::Methods::StatusMethods
 
 
   ROUTE_KEY = "pij_query"

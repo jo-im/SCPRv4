@@ -1,5 +1,4 @@
 require 'spec_helper'
-
 describe "Vertical page" do
   describe "rendering featured articles" do
     sphinx_spec
@@ -15,12 +14,44 @@ describe "Vertical page" do
       end
 
       index_sphinx
-
       ts_retry(2) do
         visit category.public_path
 
         # Make sure the top article only shows up once on the page
         page.should have_content category.featured_articles.first.short_title, count: 1
+      end
+    end
+
+    it "does not return the top story in the promoted issues section" do
+      issue           = create :active_issue
+      category        = create :category, is_active: true
+      featured_story  = create :news_story, :published, category: category
+
+      category.category_issues.create(issue: issue)
+      featured_story.article_issues.create(issue: issue)
+      category.category_articles.create(article: featured_story)
+
+      other_articles = create_list :news_story, 2, :published
+
+      # assign issue to featured article and other articles
+      other_articles.each do |article|
+        article.article_issues.create(issue: issue)
+      end
+
+      index_sphinx
+
+      ts_retry(2) do
+        visit category.public_path
+
+        within("aside.more") do
+          # make sure top story doesn't show up in the promoted 'more from this issue' section
+          page.should_not have_content category.featured_articles.first.short_title
+        end
+
+        within("section.issues") do
+          # make sure top story will still show up in the Issues We're Tracking section
+          page.should have_content category.featured_articles.first.short_title, count: 1
+        end
       end
     end
 

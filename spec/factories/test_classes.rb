@@ -6,6 +6,13 @@ Dir[Rails.root.join("spec/fixtures/models/*.rb")].each { |f| require f }
 Dir[Rails.root.join("spec/fixtures/indices/*.rb")].each { |f| require f }
 
 FactoryGirl.define do
+  factory :test_class_alert, class: TestClass::Alert do
+    title "Thousands dead; One Wounded."
+    email_sent false
+    send_email true
+  end
+
+
   factory :test_class_story, class: TestClass::Story do
     sequence(:headline) { |n| "Cool Headline #{n}" }
     short_headline { "Short #{headline}" }
@@ -64,17 +71,5 @@ FactoryGirl.define do
   factory :test_class_person, class: TestClass::Person do
     name "Bryan"
     slug { name.parameterize }
-  end
-
-  factory :test_class_fake_audio, class: TestClass::FakeAudio do
-    path { File.join(self.store_dir, self.filename) }
-
-    trait :live do
-      status Audio::STATUS_LIVE
-    end
-
-    trait :pending do
-      status Audio::STATUS_WAIT
-    end
   end
 end

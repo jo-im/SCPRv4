@@ -30,16 +30,16 @@ gem 'secretary-rails', github: "SCPR/secretary-rails"
 ## Cache
 gem 'redis-content-store', github: "SCPR/redis-content-store"
 # gem 'redis-content-store', path: "#{ENV['PROJECT_HOME']}/redis-content-store"
-gem "resque", "~> 1.25.0.pre"
+gem "resque", "~> 1.26.pre.0"
 
 
 ## Views
 gem 'kaminari', github: "amatsuda/kaminari"
-gem 'ckeditor_rails', '~> 4.2.0'
+gem 'ckeditor_rails', '~> 4.3.0'
 gem 'select2-rails', '3.4.1'
 gem 'twitter-text', "~> 1.5"
 gem 'sanitize', "~> 2.0"
-gem 'escape_utils', '~> 0.3'
+gem 'escape_utils', '~> 1.0.1'
 gem 'simple_form', "~> 2.0"
 gem 'jbuilder'
 gem 'embeditor-rails', github: 'SCPR/embeditor-rails'
@@ -50,6 +50,7 @@ gem 'embeditor-rails', github: 'SCPR/embeditor-rails'
 gem "carrierwave", "~> 0.6"
 gem "ruby-mp3info", require: 'mp3info'
 gem "ice_cube", "~> 0.11.0"
+
 
 ## HTTP
 gem "faraday", "~> 0.8"
@@ -78,16 +79,12 @@ group :assets do
   gem "compass-rails"
   gem 'coffee-rails', "~> 3.2"
   gem 'uglifier', '>= 1.3'
-  gem 'turbo-sprockets-rails3',
-    :github => "bricker/turbo-sprockets-rails3",
-    :branch => 'utf8-conversion'
 end
 
 
 group :development do
   gem 'capistrano', '~> 2.0'
   gem 'pry'
-  gem 'pry-debugger'
 end
 
 

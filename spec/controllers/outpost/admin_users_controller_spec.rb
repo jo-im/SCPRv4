@@ -118,8 +118,12 @@ describe Outpost::AdminUsersController do
         klass = @resource.to_s.classify.constantize
 
         expect {
-          post :create, @resource => build(*@resource_properties).attributes
-            .merge(password: "c-krit")
+          post :create, @resource => build_attributes(*@resource_properties)
+            .except("password_digest")
+            .merge(
+              "password" => "secret",
+              "password_confirmation" => "secret"
+            )
         }.to change { klass.count }.by(1)
 
         # Redirect to index path because there is no commit_action parameter,

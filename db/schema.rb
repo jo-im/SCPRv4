@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20131224172924) do
+ActiveRecord::Schema.define(:version => 20140204193814) do
 
   create_table "abstracts", :force => true do |t|
     t.string   "source"
@@ -193,8 +193,10 @@ ActiveRecord::Schema.define(:version => 20131224172924) do
     t.boolean  "is_active",                                   :default => false, :null => false
     t.string   "description"
     t.integer  "featured_interactive_style_id"
+    t.integer  "blog_id"
   end
 
+  add_index "contentbase_category", ["blog_id"], :name => "index_contentbase_category_on_blog_id"
   add_index "contentbase_category", ["comment_bucket_id"], :name => "contentbase_category_36c0cbca"
   add_index "contentbase_category", ["is_active"], :name => "index_contentbase_category_on_is_active"
   add_index "contentbase_category", ["is_news"], :name => "index_contentbase_category_on_is_news"
@@ -323,11 +325,13 @@ ActiveRecord::Schema.define(:version => 20131224172924) do
   create_table "editions", :force => true do |t|
     t.integer  "status"
     t.datetime "published_at"
-    t.datetime "created_at",   :null => false
-    t.datetime "updated_at",   :null => false
+    t.datetime "created_at",                      :null => false
+    t.datetime "updated_at",                      :null => false
     t.string   "title"
+    t.boolean  "email_sent",   :default => false
   end
 
+  add_index "editions", ["email_sent"], :name => "index_editions_on_email_sent"
   add_index "editions", ["published_at"], :name => "index_editions_on_published_at"
   add_index "editions", ["status", "published_at"], :name => "index_editions_on_status_and_published_at"
   add_index "editions", ["status"], :name => "index_editions_on_status"
@@ -518,8 +522,6 @@ ActiveRecord::Schema.define(:version => 20131224172924) do
   create_table "media_audio", :force => true do |t|
     t.integer  "size"
     t.integer  "duration"
-    t.string   "enco_number"
-    t.date     "enco_date"
     t.integer  "content_id"
     t.text     "description",  :limit => 2147483647
     t.string   "byline"
@@ -527,17 +529,13 @@ ActiveRecord::Schema.define(:version => 20131224172924) do
     t.string   "content_type"
     t.datetime "created_at",                                        :null => false
     t.datetime "updated_at",                                        :null => false
-    t.string   "external_url"
-    t.string   "type"
-    t.string   "mp3"
+    t.string   "url"
     t.integer  "status"
-    t.string   "path"
   end
 
   add_index "media_audio", ["content_type", "content_id"], :name => "index_media_audio_on_content_type_and_content_id"
   add_index "media_audio", ["position"], :name => "index_media_audio_on_position"
   add_index "media_audio", ["status"], :name => "index_media_audio_on_status"
-  add_index "media_audio", ["type"], :name => "index_media_audio_on_type"
 
   create_table "media_document", :force => true do |t|
     t.string   "document_file", :limit => 100,        :null => false

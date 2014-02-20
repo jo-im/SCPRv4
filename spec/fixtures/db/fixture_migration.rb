@@ -1,5 +1,12 @@
 class FixtureMigration < ActiveRecord::Migration
   def up
+    create_table :test_class_alerts, force: true do |t|
+      t.string :title
+      t.boolean :email_sent
+      t.boolean :send_email
+      t.timestamps
+    end
+
     create_table :test_class_stories, force: true do |t|
       t.string :headline
       t.string :short_headline

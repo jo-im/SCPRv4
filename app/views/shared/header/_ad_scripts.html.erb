@@ -20,6 +20,7 @@
     googletag.defineSlot('/127204706/<%=ad_key%>', <%=ad[:size]%>, '<%=ad[:id]%>').addService(googletag.pubads());
 <% end %>
     googletag.pubads().enableSingleRequest();
+    googletag.pubads().collapseEmptyDivs();
     googletag.enableServices();
 
   });

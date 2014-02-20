@@ -72,6 +72,10 @@ describe AdminListHelper do
       status.should match /Live/
       status.should match /label-success/
     end
+
+    it "shows None if there is no audio" do
+      helper.display_audio([]).should match /None/
+    end
   end
 
   describe '#status_bootstrap_map' do
