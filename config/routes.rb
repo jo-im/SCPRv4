@@ -205,149 +205,57 @@ Scprv4::Application.routes.draw do
   namespace :outpost do
     root to: 'home#index'
 
-    resources :recurring_schedule_rules do
+    concern :preview do
+      put "preview", on: :member
+      patch "preview", on: :member
+      post "preview", on: :collection
+    end
+
+    concern :search do
       get "search", on: :collection, as: :search
     end
 
-    resources :schedule_occurrences do
-      get "search", on: :collection, as: :search
-    end
 
-    resources :admin_users do
-      get "search", on: :collection, as: :search
+    resources :admin_users, concerns: [:search] do
       get "activity", on: :member, as: :activity
     end
 
-    resources :podcasts do
-      get "search", on: :collection, as: :search
-    end
+    resources :recurring_schedule_rules, concerns: [:search]
+    resources :schedule_occurrences, concerns: [:search]
+    resources :podcasts, concerns: [:search]
+    resources :breaking_news_alerts, concerns: [:search]
+    resources :featured_comment_buckets, concerns: [:search]
+    resources :categories, concerns: [:search]
+    resources :issues, concerns: [:search]
+    resources :missed_it_buckets, concerns: [:search]
+    resources :external_programs, concerns: [:search]
+    resources :kpcc_programs, concerns: [:search]
+    resources :blogs, concerns: [:search]
+    resources :content_shells, concerns: [:search]
+    resources :featured_comments, concerns: [:search]
+    resources :quotes, concerns: [:search]
+    resources :data_points, concerns: [:search]
+    resources :show_episodes, concerns: [:search]
+    resources :bios, concerns: [:search]
+    resources :press_releases, concerns: [:search]
+    resources :abstracts, concerns: [:search]
+    resources :editions, concerns: [:search]
 
-    resources :breaking_news_alerts do
-      get "search", on: :collection, as: :search
-    end
+    resources :homepages, concerns: [:preview, :search]
+    resources :pij_queries, concerns: [:preview, :search]
+    resources :flatpages, concerns: [:preview, :search]
+    resources :show_segments, concerns: [:preview, :search]
+    resources :news_stories, concerns: [:preview, :search]
+    resources :blog_entries, concerns: [:preview, :search]
+    resources :events, concerns: [:preview, :search]
 
-    resources :featured_comment_buckets do
-      get "search", on: :collection, as: :search
-    end
-
-    resources :categories do
-      get "search", on: :collection, as: :search
-    end
-
-    resources :issues do
-      get "search", on: :collection, as: :search
-    end
-
-    resources :missed_it_buckets do
-      get "search", on: :collection, as: :search
-    end
-
-    resources :promotions do
-      get "search", on: :collection, as: :search
-    end
-
-    resources :sections do
-      get "search", on: :collection, as: :search
-    end
-
-    resources :external_programs do
-      get "search", on: :collection, as: :search
-    end
-
-    resources :kpcc_programs do
-      get "search", on: :collection, as: :search
-    end
-
-    resources :blogs do
-      get "search", on: :collection, as: :search
-    end
-
-    resources :content_shells do
-      get "search", on: :collection, as: :search
-    end
-
-    resources :featured_comments do
-      get "search", on: :collection, as: :search
-    end
-
-    resources :quotes do
-      get "search", on: :collection, as: :search
-    end
-
-    resources :data_points do
-      get "search", on: :collection, as: :search
-    end
-
-    resources :show_episodes do
-      get "search", on: :collection, as: :search
-    end
-
-    resources :bios do
-      get "search", on: :collection, as: :search
-    end
-
-    resources :press_releases do
-      get "search", on: :collection, as: :search
-    end
-
-    resources :homepages do
-      get "search", on: :collection, as: :search
-      put "preview", on: :member
-      post "preview", on: :collection
-    end
-
-    resources :pij_queries do
-      get "search", on: :collection, as: :search
-      put "preview", on: :member
-      post "preview", on: :collection
-    end
-
-    resources :flatpages do
-      get "search", on: :collection, as: :search
-      put "preview", on: :member
-      post "preview", on: :collection
-    end
-
-    resources :abstracts do
-      get 'search', on: :collection, as: :search
-    end
-
-    resources :editions do
-      get 'search', on: :collection, as: :search
-    end
-
-    resources :show_segments do
-      get "search", on: :collection, as: :search
-      put "preview", on: :member
-      post "preview", on: :collection
-    end
-
-    resources :news_stories do
-      get "search", on: :collection, as: :search
-      put "preview", on: :member
-      post "preview", on: :collection
-    end
-
-    resources :blog_entries do
-      get "search", on: :collection, as: :search
-      put "preview", on: :member
-      post "preview", on: :collection
-    end
-
-    resources :events do
-      get "search", on: :collection, as: :search
-      put "preview", on: :member
-      post "preview", on: :collection
-    end
-
-    resources :remote_articles, only: [:index] do
+    resources :remote_articles, only: [:index], concerns: [:search] do
       member do
         post "import", as: :import
         put "skip", as: :skip
       end
 
       collection do
-        get "search", as: :search
         post "sync", as: :sync
       end
     end
