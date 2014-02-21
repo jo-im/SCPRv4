@@ -1,14 +1,19 @@
 module PmpArticleImporter
   extend LogsAsTask::ClassMethods
 
-  SOURCE = "pmp"
-  ENDPOINT = "https://api-sandbox.pmp.io/"
+  SOURCE    = "pmp"
+  ENDPOINT  = "https://api-sandbox.pmp.io/"
+  TAG       = "marketplace"
+  PROFILE   = "story"
 
   class << self
     include ::NewRelic::Agent::Instrumentation::ControllerInstrumentation
 
     def sync
-      stories = pmp.root.query['urn:collectiondoc:query:docs'].retrieve.items
+      stories = pmp.root.query['urn:collectiondoc:query:docs']
+        .where(tag: TAG, profile: PROFILE)
+        .retrieve.items
+
       log "#{stories.size} PMP stories found"
 
       added = []
@@ -44,33 +49,93 @@ module PmpArticleImporter
     def import(remote_article, options={})
       klass = (options[:import_to_class] || "NewsStory").constantize
 
-      story = pmp.root.query['urn:collectiondoc:query:docs']
-        .where(guid: remote_article.article_id)
-        .retrieve.items.first
+      pmp_story = pmp.root.query['urn:collectiondoc:query:docs']
+        .where(guid: remote_article.article_id, profile: PROFILE)
+        .retrieve
 
-      return false if !story
+      return false if !pmp_story
 
-      # Build the NewsStory from the API response
+      # Build the Article from the API response
       article = klass.new(
         :status         => klass.status_id(:draft),
-        :headline       => story.title,
-        :teaser         => story.teaser,
-        :short_headline => story.title,
-        :body           => story.contentencoded # is this right?
+        :headline       => pmp_story.title,
+        :teaser         => pmp_story.teaser,
+        :short_headline => pmp_story.title,
+        :body           => pmp_story.contentencoded,
       )
 
-      if article.is_a? NewsStory
-        article.news_agency   = ""
-        article.source        = ""
+      # Bylines
+      name = pmp_story.byline
+      if name.present?
+        byline = ContentByline.new(name: name)
+        article.bylines.push byline
       end
 
-      # Bylines
-
       # Related Link
+      # Is "alternate" always going to be a usable link?
+      # I guess we'll find out eventually.
+      # For now it seems that it's used to point to the live article.
+      link = pmp_story.alternate
+      if link && link.href
+        related_link = RelatedLink.new(
+          :link_type    => "website",
+          :title        => "View the original story",
+          :url          => link.href
+        )
 
-      # Audio
+        article.related_links.push related_link
+      end
 
-      # Asset?
+      # If we have an enclosure node, extract audio and assets from it.
+      # Sometimes it's an array and sometimes it's not.
+      # We're using Array.wrap here because it doesn't work with just Array()
+      enclosure = Array.wrap(pmp_story.items.first.enclosure)
+      if !enclosure.empty?
+        # Audio
+        audio = enclosure.select do |e|
+          e.type.match /audio/
+        end
+
+        audio.each_with_index do |remote_audio, i|
+          url = remote_audio.href.gsub(
+            "apm-audio:", "http://download.publicradio.org/podcast")
+
+          article.audio.build(
+            :url            => url,
+            :description    => pmp_story.title,
+            :byline         => "APM",
+            :position       => i
+          )
+        end
+
+        # Asset
+        images = enclosure.select do |e|
+          e.type.match(/image/)
+        end
+
+        # Get the image designated as "primary". If none exists,
+        # then get the widest one.
+        primary_image = images.find { |i| i.meta["crop"] == "primary" } ||
+          images.max { |a, b| a.meta["width"].to_i <=> b.meta["width"].to_i }
+
+        if primary_image
+          asset = AssetHost::Asset.create(
+            :url     => primary_image.href,
+            :title   => pmp_story.title,
+            :owner   => "Marketplace",
+            :note    => "Imported from PMP: #{pmp_story.guid}"
+          )
+
+          if asset && asset.id
+            content_asset = ContentAsset.new(
+              :position   => 0,
+              :asset_id   => asset.id
+            )
+
+            article.assets << content_asset
+          end
+        end
+      end # /enclosure
 
       # Save the news story (including all associations),
       # set the RemoteArticle to `:is_new => false`,
@@ -91,7 +156,7 @@ module PmpArticleImporter
 
         client = PMP::Client.new({
           :client_id        => config['client_id'],
-          :client_secret    => config['client_secret']
+          :client_secret    => config['client_secret'],
           :endpoint         => ENDPOINT
         })
 
