@@ -100,7 +100,6 @@ group :test, :development do
   gem 'guard', '~> 1.5'
   gem 'guard-resque'
   gem 'guard-rspec'
-  gem 'rb-readline', '~> 0.4.2'
 end
 
 
