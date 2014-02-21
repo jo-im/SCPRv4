@@ -14,6 +14,18 @@ describe RemoteArticle do
       })
     end
 
+    PMP::CollectionDocument.any_instance.stub(:oauth_token) { "token" }
+
+    stub_request(:get, %r|pmp\.io/?$|).to_return({
+      :content_type => "application/json",
+      :body => load_fixture('api/pmp/root.json')
+    })
+
+    stub_request(:get, %r|pmp\.io/docs|).to_return({
+      :content_type => "application/json",
+      :body => load_fixture('api/pmp/marketplace_stories.json')
+    })
+
     it "syncs using each of the importers" do
       RemoteArticle.count.should eq 0
       RemoteArticle.sync
