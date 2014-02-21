@@ -32,7 +32,7 @@ describe Api::Public::V2::AudioController do
       3.times do |n|
          @available << create(:audio, :uploaded,
           created_at: Time.now + n.minutes,
-          mp3: load_audio_fixture("audio/point1sec-#{n}.mp3")
+          mp3: load_audio_fixture("point1sec-#{n}.mp3")
         )
       end
 
