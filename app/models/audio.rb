@@ -347,7 +347,15 @@ class Audio < ActiveRecord::Base
 
   def audio_file_is_mp3
     if self.mp3.present?
-      ext = File.extname(self.mp3.original_filename)
+
+      path = if self.mp3.respond_to?(:original_filename)
+        self.mp3.original_filename
+        else
+          File.basename(self.mp3.path)
+        end
+
+      ext = File.extname(path)
+
       if ext !~ /mp3/
         errors.add(:mp3, "only .mp3 files are allowed. (File type was #{ext})")
       end
