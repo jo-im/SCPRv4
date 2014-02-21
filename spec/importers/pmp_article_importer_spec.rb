@@ -22,6 +22,11 @@ describe PmpArticleImporter do
       RemoteArticle.count.should eq 2 # Two stories in the JSON fixture
       added.first.headline.should match /billions and billions/
     end
+
+    it "sets the url for the stories" do
+      added = PmpArticleImporter.sync
+      added.first.url.should match /marketplace\.org/
+    end
   end
 
   describe '#import' do

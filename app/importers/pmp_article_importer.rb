@@ -28,7 +28,7 @@ module PmpArticleImporter
           :headline     => story.title,
           :teaser       => story.teaser,
           :published_at => Time.parse(story.published),
-          :url          => nil,
+          :url          => story.alternate.try(:href),
           :is_new       => true
         )
 
