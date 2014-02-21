@@ -69,3 +69,7 @@ test:
   parse:
     application_id: xxx
     api_key: xxx
+
+  pmp:
+    client_id: xxx
+    client_secret: xxx
