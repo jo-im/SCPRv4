@@ -104,6 +104,7 @@ class Audio < ActiveRecord::Base
 
   validate :audio_source_is_provided
   validate :enco_info_is_present_together
+  validate :audio_file_is_mp3
   validates :url, url: { allow_blank: true }
 
 
@@ -341,6 +342,15 @@ class Audio < ActiveRecord::Base
     self.enco_date.blank?
       self.errors.add(:base,
         "Audio must have a source (upload, enco, or URL)")
+    end
+  end
+
+  def audio_file_is_mp3
+    if self.mp3.present?
+      ext = File.extname(self.mp3.original_filename)
+      if ext !~ /mp3/
+        errors.add(:mp3, "only .mp3 files are allowed. (File type was #{ext})")
+      end
     end
   end
 end
