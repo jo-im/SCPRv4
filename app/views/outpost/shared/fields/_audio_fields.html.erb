@@ -45,6 +45,9 @@
               </div> <!-- enco -->
 
               <div class="tab-pane <%= "active" if f.object.errors[:mp3].present? %>" id="audio-new-upload-<%=index%>">
+                <div class="alert alert-info">
+                  <span class="label label-success">mp3</span> files only. Maximum file size <span class="label label-warning">70mb</strong>
+                </div>
                 <%= f.input :mp3, as: :file, wrapper_html: { class: "vertical" } %>
               </div> <!-- upload -->
 
