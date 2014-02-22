@@ -6,7 +6,7 @@ class Related < ActiveRecord::Base
   # See HomepageContent for explanation.
   belongs_to :content,
     -> { where(status: ContentBase::STATUS_LIVE) },
-    :polymorphic    => true
+    :polymorphic => true
 
   # Since we only build related content through the OWNER (i.e. incoming
   # references can't be managed through their article), we want to touch
