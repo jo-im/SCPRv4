@@ -71,5 +71,7 @@ test:
     api_key: xxx
 
   pmp:
+    api_user: xxx
+    api_password: xxx
     client_id: xxx
     client_secret: xxx
