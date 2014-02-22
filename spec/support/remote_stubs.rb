@@ -5,7 +5,7 @@ module RemoteStubs
   end
 
   def load_audio_fixture(name)
-    path = File.open(Rails.application.config.scpr.media_root.join(name))
+    path = Rails.application.config.scpr.media_root.join("audio", name)
     File.open(path)
   end
 end

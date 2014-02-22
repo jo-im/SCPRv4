@@ -296,7 +296,6 @@ GEM
       ffi (>= 0.5.0)
     rb-kqueue (0.2.0)
       ffi (>= 0.5.0)
-    rb-readline (0.4.2)
     redis (3.0.7)
     redis-actionpack (4.0.0)
       actionpack (~> 4)
@@ -462,7 +461,6 @@ DEPENDENCIES
   pry
   rails (~> 4.0.0)
   rb-fsevent (~> 0.9)
-  rb-readline (~> 0.4.2)
   redis-content-store!
   redis-rails (~> 4.0.0)
   resque (~> 1.26.pre.0)
