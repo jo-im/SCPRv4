@@ -56,6 +56,9 @@ class AudioUploader < CarrierWave::Uploader::Base
 
   #--------------
   # Only allow mp3's
+  # This is checked by Carrierwave, but there is also a validation on the
+  # Audio model that will prevent anything except mp3 files from being
+  # uploaded, so this white list is just here for safety.
   def extension_white_list
     %w{ mp3 }
   end

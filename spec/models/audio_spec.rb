@@ -288,4 +288,17 @@ describe Audio do
       end
     end
   end
+
+  context "validating file extension" do
+    it "doesn't allow wav files" do
+      audio = build :audio, :uploaded, mp3: load_audio_fixture("reallybig.wav")
+      audio.should_not be_valid
+      audio.errors.keys.should include :mp3
+    end
+
+    it "allows mp3 files" do
+      audio = build :audio, :uploaded, mp3: load_audio_fixture("point1sec.mp3")
+      audio.should be_valid
+    end
+  end
 end
