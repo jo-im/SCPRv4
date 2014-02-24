@@ -9,7 +9,10 @@ xml.item do
 
   if options[:enclosure_type] == :image
     if asset = article.assets.first
-      xml.enclosure url: asset.full.url, type: "image/jpeg", length: asset.image_file_size.to_i / 100
+      xml.enclosure
+        :url      => asset.full.url,
+        :type     => "image/jpeg",
+        :length   => asset.image_file_size.to_i / 100
     end
   else
     if audio = article.audio.first
