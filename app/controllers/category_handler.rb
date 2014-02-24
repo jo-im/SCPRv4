@@ -15,14 +15,6 @@ module CategoryHandler
   PER_PAGE = 16
 
   def handle_vertical
-    # Let Rails lazily load these if necessary.
-    # For the other stuff like content and featured
-    # articles, those will get populated instantly,
-    # so we need to defer their loading until they're
-    # actually needed in the template.
-    @quotes = @category.quotes.published
-    @events = @category.events.published.upcoming
-
     # For HTML requests, we don't want to load the content prematurely
     # (i.e. outside of the cache), and we don't need to respond with
     # the content since a template is being rendered.
@@ -30,18 +22,30 @@ module CategoryHandler
     # because vertical_content excludes the lead article, which is
     # meaningless for an XML feed.
     if request.format.html?
+      # Let Rails lazily load these if necessary.
+      # For the other stuff like content and featured
+      # articles, those will get populated instantly,
+      # so we need to defer their loading until they're
+      # actually needed in the template.
+      @quotes = @category.quotes.published
+      @events = @category.events.published.upcoming
+
       respond_with @category,
         :template   => "category/show",
         :layout     => "new/vertical"
     else
-      respond_with category_content
+      handle_category
     end
   end
 
 
   def handle_category
     @content = category_content
-    respond_with @content, template: "category/simple"
+
+    respond_with @content do |format|
+      format.html { render 'category/simple' }
+      format.xml { render 'category/feed' }
+    end
   end
 
 
