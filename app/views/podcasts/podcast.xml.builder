@@ -5,8 +5,8 @@ cache ["v2", @podcast], expires_in: 1.hour do # Podcasts will refresh every hour
     'xmlns:itunes'    => "http://www.itunes.com/dtds/podcast-1.0.dtd"
   ) do
     xml.channel do
-      xml.title             @podcast.title
-      xml.link              @podcast.url || root_url
+      xml.title @podcast.title
+      xml.link  @podcast.url || root_url
 
       xml.atom :link,
         :href => @podcast.url || root_url,
@@ -29,8 +29,6 @@ cache ["v2", @podcast], expires_in: 1.hour do # Podcasts will refresh every hour
         xml.itunes :name,  "KPCC 89.3 | Southern California Public Radio"
         xml.itunes :email, "contact@kpcc.org"
       end
-
-      # need category
 
       xml.itunes :image, :href => @podcast.image_url
       xml.itunes :explicit, "no"

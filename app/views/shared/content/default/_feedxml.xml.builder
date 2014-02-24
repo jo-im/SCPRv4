@@ -26,7 +26,12 @@ xml.item do
   description << relaxed_sanitize(article.body)
 
   if article.original_object.is_a? ContentShell
-    description << content_tag(:p, link_to("Read the full article at #{article.original_object.site}".html_safe, article.public_url))
+    description << content_tag(:p,
+      link_to(
+        "Read the full article at #{article.original_object.site}".html_safe,
+        article.public_url
+      )
+    )
   end
 
 
