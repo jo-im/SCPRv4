@@ -16,7 +16,10 @@ describe RootPathController do
         category = create :category_news
 
         get :handle_path, path: category.slug, format: :xml
+
+        response.should render_template 'category/feed'
         response.header['Content-Type'].should match /xml/
+        response.body.should match RSS_SPEC['xmlns:atom']
       end
     end
 
@@ -64,6 +67,18 @@ describe RootPathController do
           get :handle_path, path: category.slug, format: :html
           response.should be_success
         end
+      end
+    end
+
+    describe "with XML" do
+      it "renders xml template when requested" do
+        category = create :category_news, is_active: true
+
+        get :handle_path, path: category.slug, format: :xml
+
+        response.should render_template 'category/feed'
+        response.header['Content-Type'].should match /xml/
+        response.body.should match RSS_SPEC['xmlns:atom']
       end
     end
   end
