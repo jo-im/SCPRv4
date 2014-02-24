@@ -395,5 +395,15 @@ describe ApplicationHelper do
       url = helper.url_with_params("http://google.com?from=kpcc", context: "podcast")
       url.should eq "http://google.com?from=kpcc&context=podcast"
     end
+
+    it "ignores params if the value is falsey" do
+      url = helper.url_with_params("http://google.com", from: 'kpcc', context: nil)
+      url.should eq "http://google.com?from=kpcc"
+    end
+
+    it "doesn't leave a trailing ? if there are no params" do
+      url = helper.url_with_params("http://google.com")
+      url.should_not match /\?/
+    end
   end
 end

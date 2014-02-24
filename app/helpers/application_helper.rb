@@ -391,17 +391,26 @@ module ApplicationHelper
   #   url_with_params("http://google.com", something: "cool")
   #   # => "http://google.com?something=cool"
   #
-  #  url_with_params("http://google.com?cool=thing", another: "params")
-  #  # => "http://google.com?cool=thing&another=params"
+  #   url_with_params("http://google.com?cool=thing", another: "params")
+  #   # => "http://google.com?cool=thing&another=params"
+  #
+  # Falsey values will not be added to the parameters. If you want
+  # an empty parameter, pass an empty string.
+  #
+  #   url_with_params("http://google.com", something: nil)
+  #   # => "http://google.com"
+  #
+  #   url_with_params("http://google.com", something: "")
+  #   # => "http://google.com?something="
   #
   # Returns String
   def url_with_params(url, params={})
     uri     = URI.parse(url)
     query   = URI.decode_www_form(uri.query.to_s)
 
-    params.each { |k, v| query << [k.to_s, v.to_s] }
+    params.each { |k, v| query << [k.to_s, v.to_s] if v }
 
     uri.query = URI.encode_www_form(query)
-    uri.to_s
+    uri.to_s.chomp("?")
   end
 end
