@@ -59,7 +59,10 @@ describe CategoryController do
 
         ts_retry(2) do
           assigns(:content).should eq [story2, story1]
+
+          response.should render_template 'category/news'
           response.header['Content-Type'].should match /xml/
+          response.body.should match RSS_SPEC['xmlns:atom']
         end
       end
     end
@@ -119,7 +122,10 @@ describe CategoryController do
 
         ts_retry(2) do
           assigns(:content).should eq [story2, story1]
+
+          response.should render_template 'category/arts'
           response.header['Content-Type'].should match /xml/
+          response.body.should match RSS_SPEC['xmlns:atom']
         end
       end
     end
