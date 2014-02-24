@@ -16,7 +16,7 @@
     </div> <!-- span -->
 
     <div class="span6">
-      <%= content_widget "primary_audio", external_episode %>
+      <%= content_widget "primary_audio", external_episode, context: external_episode.external_program.slug %>
     </div> <!-- span -->
   </div> <!-- row-fluid -->
 </article>
