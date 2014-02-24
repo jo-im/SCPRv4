@@ -12,10 +12,11 @@ cache ["v2", @podcast], expires_in: 1.hour do # Podcasts will refresh every hour
         :href => @podcast.url || root_url,
         :rel  => "alternate"
 
-      xml.atom :link,
+      xml.atom :link, {
         :href   => @podcast.public_url,
         :rel    => "self",
         :type   => "application/rss+xml"
+      }
 
       xml.language          "en-us"
       xml.description       h(@podcast.description)
@@ -46,14 +47,14 @@ cache ["v2", @podcast], expires_in: 1.hour do # Podcasts will refresh every hour
           item.itunes :keywords,  raw(@podcast.keywords)
           item.link               article.public_url
 
-          item.enclosure {
+          item.enclosure({
             :url => url_with_params(audio.podcast_url, {
               :context    => @podcast.slug,
               :via        => "podcast"
             }),
             :length => audio.size,
             :type   => "audio/mpeg"
-          }
+          })
 
           item.itunes :duration,  audio.duration
         end # xml

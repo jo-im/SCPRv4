@@ -9,20 +9,22 @@ xml.item do
 
   if options[:enclosure_type] == :image
     if asset = article.assets.first
-      xml.enclosure
+      xml.enclosure({
         :url      => asset.full.url,
         :type     => "image/jpeg",
         :length   => asset.image_file_size.to_i / 100
+      })
     end
   else
     if audio = article.audio.first
-      xml.enclosure
+      xml.enclosure({
         :url => url_with_params(audio.url, {
           :context    => options[:context],
           :via        => 'rss'
         }),
         :type   => "audio/mpeg",
         :length => audio.size.present? ? audio.size : "0"
+      })
     end
   end
 
