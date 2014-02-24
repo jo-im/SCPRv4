@@ -371,8 +371,6 @@ module ApplicationHelper
     })
   end
 
-  alias_method :widget, :content_widget
-
   #---------------
   # These two methods are taken from EscapeUtils
   def html_escape(string)
