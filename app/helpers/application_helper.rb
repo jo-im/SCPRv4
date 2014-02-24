@@ -367,8 +367,8 @@ module ApplicationHelper
 
     render(partial, {
       :article  => object.to_article,
-      :cssClass => ""
-    }.merge(options))
+      :options  => options
+    })
   end
 
   alias_method :widget, :content_widget
