@@ -11,7 +11,7 @@ xml.rss(RSS_SPEC) do
     }
 
     xml << render_content(@scoped_entries.first(15), "feedxml", {
-      context: @blog.slug
+      :context => @blog.slug
     })
   end
 end
