@@ -45,8 +45,12 @@ Scprv4::Application.configure do
   # config.action_controller.asset_host = "http://assets.example.com"
 
   # Enable Postmark for transactional mail sending
-  config.action_mailer.delivery_method          = :simple_postmark
+  config.action_mailer.delivery_method          = :postmark
   config.action_mailer.raise_delivery_errors    = true
+  config.action_mailer.postmark_settings = {
+    :api_key => config.api['postmark']['api_key']
+  }
+
 
   # Disable delivery errors, bad email addresses will be ignored
   # config.action_mailer.raise_delivery_errors = false
