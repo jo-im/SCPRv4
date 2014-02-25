@@ -22,14 +22,14 @@
         </header>
 
         <div class="story-body">
-          <div class="visible-reader"><%= content_widget "primary_audio", segment %></div>
+          <div class="visible-reader"><%= content_widget "primary_audio", segment, context: segment.show.slug %></div>
           <%= render_asset segment %>
           <%= segment.body.html_safe %>
           <br style="clear: both"/>
         </div>
 
         <footer>
-          <div class="visible-reader"><%= content_widget "extra_audio", segment %></div>
+          <div class="visible-reader"><%= content_widget "extra_audio", segment, context: segment.show.slug %></div>
 
           <%= pij_source(segment) %>
         </footer>

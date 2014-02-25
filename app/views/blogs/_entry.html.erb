@@ -18,7 +18,7 @@
         </header>
 
         <div class="story-body">
-          <div class="visible-reader"><%= content_widget "primary_audio", entry %></div>
+          <div class="visible-reader"><%= content_widget "primary_audio", entry, context: entry.blog.slug %></div>
 
           <%= render_asset entry %>
           <%= entry.send(full ? :body : :extended_teaser).html_safe %>
@@ -27,7 +27,7 @@
         <footer>
           <% if full %>
             <p><i><%= render_contributing_byline entry %></i></p>
-            <div class="visible-reader"><%= content_widget "extra_audio", entry %></div>
+            <div class="visible-reader"><%= content_widget "extra_audio", entry, context: entry.blog.slug %></div>
 
             <%= pij_source(entry) %>
             <%= render partial: "/shared/author_info", collection: entry.grouped_bylines[:primary], as: :byline %>
