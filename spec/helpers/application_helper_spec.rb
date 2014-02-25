@@ -9,6 +9,26 @@ describe ApplicationHelper do
         xml = helper.render_content(entry, 'feedxml')
         xml.should match entry.headline
       end
+
+      it "renders audio enclosure if asked" do
+        entry = build :blog_entry
+        audio = create :audio, :direct, :live, content: entry
+        entry.save!
+        entry.reload
+
+        xml = helper.render_content(entry, 'feedxml', enclosure_type: :audio)
+        xml.should match audio.url
+      end
+
+      it "renders image enclosure if asked" do
+        entry = build :blog_entry
+        asset = create :asset, content: entry
+        entry.save!
+        entry.reload
+
+        xml = helper.render_content(entry, 'feedxml', enclosure_type: :image)
+        xml.should match asset.full.url
+      end
     end
   end
 
