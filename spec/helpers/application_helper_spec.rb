@@ -2,6 +2,17 @@ require 'spec_helper'
 
 describe ApplicationHelper do
 
+  describe '#render_content', focus: true do
+    describe 'feedxml' do
+      it "renders XML for the article(s)" do
+        entry = build :blog_entry
+        xml = helper.render_content(entry, 'feedxml')
+        xml.should match entry.headline
+      end
+    end
+  end
+
+
   describe '#safe_render' do
     it "renders the partial if it exists" do
       helper.safe_render('verticals/politics/footer_sponsors')
