@@ -19,19 +19,6 @@ module ContentBase
   # database so we can search against that.
   STATUS_LIVE = 5
 
-
-  #--------------------
-  # This used the be the array of "classes that are content",
-  # but we've since moved away from that concept.
-  # Don't use it - just be explicit about which classes you
-  # want to search across.
-  CONTENT_CLASSES = [
-    NewsStory,
-    ShowSegment,
-    BlogEntry,
-    ContentShell
-  ]
-
   # Classes which are safe to fetch on the frontend.
   # This was added to make ContentMailer more safe.
   SAFE_CLASSES = [
@@ -79,7 +66,7 @@ module ContentBase
     query       = args[0].to_s
 
     options.reverse_merge!({
-      :classes     => CONTENT_CLASSES,
+      :classes     => [NewsStory, ShowSegment, BlogEntry, ContentShell],
       :page        => 1,
       :order       => "public_datetime #{DESCENDING}",
       :retry_stale => true,
