@@ -10,7 +10,7 @@ class ContentMailer < ActionMailer::Base
 
     mail({
       :to       => @msg.to_email,
-      :from     => "scprweb@scpr.org",
+      :from     => @msg.from_email,
       :subject  => "#{@msg.from} " \
                    "has shared an article with you from 89.3 KPCC",
       :reply_to => @msg.from_email
