@@ -22,13 +22,13 @@ module ContentBase
   # Classes which are safe to fetch on the frontend.
   # This was added to make ContentMailer more safe.
   SAFE_CLASSES = [
-    NewsStory,
-    ShowSegment,
-    BlogEntry,
-    ContentShell,
-    Event,
-    PijQuery,
-    ShowEpisode
+    "NewsStory",
+    "ShowSegment",
+    "BlogEntry",
+    "ContentShell",
+    "Event",
+    "PijQuery",
+    "ShowEpisode"
   ]
 
 
@@ -144,9 +144,9 @@ module ContentBase
   #   ContentBase.safe_obj_by_key("blog_entry-999") #=> #<BlogEntry...>
   #   ContentBase.safe_obj_by_key("admin_user-12") #=> nil
   def safe_obj_by_key(obj_key)
-    obj = Outpost::obj_by_key(obj_key)
+    obj = Outpost.obj_by_key(obj_key)
 
-    if !obj || !SAFE_CLASSES.include?(obj.class) || !obj.published?
+    if !obj || !SAFE_CLASSES.include?(obj.class.name) || !obj.published?
       return nil
     end
 

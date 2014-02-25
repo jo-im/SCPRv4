@@ -1,9 +1,9 @@
 A message from 89.3 KPCC
 ========================
 
-<%= @message.from %> shared an article with you.
-<% if @message.body.present? %>
-A personal message from <%= @message.from %>: <%= @message.body %>
+<%= @msg.from %> shared an article with you.
+<% if @msg.body.present? %>
+A personal message from <%= @msg.from %>: <%= @msg.body %>
 <% end %>
 ========================
 
