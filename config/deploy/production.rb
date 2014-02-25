@@ -20,6 +20,14 @@ role :db,       web2, :primary => true
 role :sphinx,   media
 
 namespace :deploy do
+  namespace :assets do
+    if ENV['SKIP_PRECOMPILE']
+      task :precompile, roles: [:app] do
+        # noop
+      end
+    end
+  end
+
   desc "Restart Application"
   task :restart, roles: [:app, :workers] do
     restart_file = "#{current_release}/tmp/restart.txt"
