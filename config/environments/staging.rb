@@ -26,8 +26,11 @@ Scprv4::Application.configure do
   config.action_dispatch.x_sendfile_header = 'X-Accel-Redirect' # for nginx
 
   # Enable Postmark for transactional mail sending
-  config.action_mailer.delivery_method          = :simple_postmark
+  config.action_mailer.delivery_method          = :postmark
   config.action_mailer.raise_delivery_errors    = true
+  config.action_mailer.postmark_settings = {
+    :api_key => config.api['postmark']['api_key']
+  }
 
   # Enable locale fallbacks for I18n (makes lookups for any locale fall back to
   # the I18n.default_locale when a translation can not be found)

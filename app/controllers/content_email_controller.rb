@@ -9,7 +9,7 @@ class ContentEmailController < ApplicationController
 
   def create
     @message = ContentEmail.new(params[:content_email])
-    @message.content = @content
+    @message.content_key = @content.obj_key
 
     if @message.save
       render :success
@@ -23,6 +23,6 @@ class ContentEmailController < ApplicationController
   private
 
   def get_content
-    @content = Outpost.obj_by_key!(params[:obj_key])
+    @content = ContentBase.safe_obj_by_key!(params[:obj_key])
   end
 end

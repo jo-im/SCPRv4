@@ -4,7 +4,7 @@ Scprv4::Application.configure do
   config.consider_all_requests_local       = false
   config.action_controller.perform_caching = true
   config.cache_store = :redis_content_store, "redis://10.226.4.234:6379/6"
-#  config.cache_store = :redis_content_store, "redis://localhost:6379/5"
+  # config.cache_store = :redis_content_store, "redis://localhost:6379/5"
   config.action_controller.action_on_unpermitted_parameters = :log
 
   config.assets.debug         = false
@@ -16,8 +16,12 @@ Scprv4::Application.configure do
   config.action_dispatch.x_sendfile_header = 'X-Accel-Redirect' # for nginx
 
   # Enable Postmark for transactional mail sending
-  config.action_mailer.delivery_method          = :simple_postmark
+  config.action_mailer.delivery_method          = :postmark
   config.action_mailer.raise_delivery_errors    = true
+  config.action_mailer.postmark_settings = {
+    :api_key => config.api['postmark']['api_key']
+  }
+
 
   # Enable locale fallbacks for I18n (makes lookups for any locale fall back to
   # the I18n.default_locale when a translation can not be found)

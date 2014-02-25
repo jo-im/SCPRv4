@@ -61,7 +61,7 @@ gem "hashie", "~> 1.2.0"
 ## APIs
 gem "twitter", "~> 4.1"
 gem "oauth2", "~> 0.8"
-gem 'simple_postmark', "~> 0.5"
+gem 'postmark-rails', "~> 0.6.0"
 gem 'newrelic_rpm', '~> 3.7'
 gem 'parse-ruby-client', '~> 0.1.15'
 gem 'npr', github: "bricker/npr"

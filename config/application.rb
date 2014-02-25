@@ -52,10 +52,6 @@ module Scprv4
 
     config.secrets = YAML.load_file("#{Rails.root}/config/app_config.yml")
 
-    config.action_mailer.simple_postmark_settings = {
-      :api_key => config.api['postmark']['api_key']
-    }
-
     config.assethost.server = config.api['assethost']['server']
     config.assethost.prefix = config.api['assethost']['prefix']
     config.assethost.token  = config.api['assethost']['token']
