@@ -15,7 +15,7 @@
 # You must also add an Eloqua configuration for the class with the key being
 # the underscored class name. See the documentation for `::eloqua_config` for
 # more details.
-# 
+#
 module Concern
   module Methods
     module EloquaSendable

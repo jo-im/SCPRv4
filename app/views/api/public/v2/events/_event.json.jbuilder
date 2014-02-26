@@ -1,4 +1,4 @@
-json.cache! [Api::Public::V2::VERSION, "v1", event] do
+json.cache! [Api::Public::V2::VERSION, "v2", event] do
   json.id         event.id
   json.title      event.headline
   json.public_url event.public_url

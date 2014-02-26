@@ -21,7 +21,6 @@ class ArticleFeature
     attr_writer :collection
 
     # Retrieve the correct Feature based on ID or key
-    # Features[:slideshow] # => 
     def find_by_id(id)
       collection.find { |f| f.id == id.to_i }
     end

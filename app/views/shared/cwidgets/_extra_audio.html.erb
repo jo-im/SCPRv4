@@ -1,16 +1,18 @@
 <% if article.audio.size > 1 %>
   <% article.audio[1..-1].each do |audio| %>
+    <% url = url_with_params(audio.url, context: options[:context], via: 'website') %>
+
     <aside class="story-audio">
       <div class="inner-container clearfix">
         <div class="audio-content">
           <h4>Extra Audio</h4>
           <p><%= audio.description %></p>
         </div>
-        <a href="<%= audio.url %>" class="play-btn audio-toggler" title="<%= h(audio.description) %>" data-duration="<%= audio.duration %>"></a>
+        <a href="<%= url %>" class="play-btn audio-toggler" title="<%= h(audio.description) %>" data-duration="<%= audio.duration %>"></a>
         <span class="duration">[<%= format_duration(audio.duration) %>]</span -->
         <ul class="audio-tools">
           <li>
-            <a href="<%= audio.url %>">Download</a>
+            <a href="<%= url %>">Download</a>
           </li>
         </ul>
       </div>

@@ -21,7 +21,7 @@
     </div> <!-- span12/9 -->
     <div class="span6">
       <div class="interact">
-        <%= content_widget "primary_audio", article %>
+        <%= content_widget "primary_audio", article, context: article.original_object.show.slug %>
         <%= comment_count_for article.original_object, class: "inline" %>
       </div>
     </div>

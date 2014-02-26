@@ -1,8 +1,8 @@
 <% unless @PREVIEW %>
   <div id="comments" class="comments">
-    <% if header %><h3 class="head">Comments</h3><% end %>
+    <% if options[:header] %><h3 class="head">Comments</h3><% end %>
     <!-- disqus comments -->
-    <div id="disqus_thread" class="<%= cssClass %>"></div>
+    <div id="disqus_thread" class="<%= options[:cssClass] %>"></div>
     <script type="text/javascript">
         /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
         var disqus_shortname = '<%= article.original_object.disqus_shortname %>'; // required: replace example with your forum shortname

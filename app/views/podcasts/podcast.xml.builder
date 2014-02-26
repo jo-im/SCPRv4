@@ -5,17 +5,18 @@ cache ["v2", @podcast], expires_in: 1.hour do # Podcasts will refresh every hour
     'xmlns:itunes'    => "http://www.itunes.com/dtds/podcast-1.0.dtd"
   ) do
     xml.channel do
-      xml.title             @podcast.title
-      xml.link              @podcast.url || root_url
+      xml.title @podcast.title
+      xml.link  @podcast.url || root_url
 
       xml.atom :link,
         :href => @podcast.url || root_url,
         :rel  => "alternate"
 
-      xml.atom :link,
+      xml.atom :link, {
         :href   => @podcast.public_url,
         :rel    => "self",
         :type   => "application/rss+xml"
+      }
 
       xml.language          "en-us"
       xml.description       h(@podcast.description)
@@ -29,8 +30,6 @@ cache ["v2", @podcast], expires_in: 1.hour do # Podcasts will refresh every hour
         xml.itunes :name,  "KPCC 89.3 | Southern California Public Radio"
         xml.itunes :email, "contact@kpcc.org"
       end
-
-      # need category
 
       xml.itunes :image, :href => @podcast.image_url
       xml.itunes :explicit, "no"
@@ -48,9 +47,14 @@ cache ["v2", @podcast], expires_in: 1.hour do # Podcasts will refresh every hour
           item.itunes :keywords,  raw(@podcast.keywords)
           item.link               article.public_url
 
-          item.enclosure          :url    => url_with_params(audio.podcast_url, context: @podcast.slug),
-                                  :length => audio.size,
-                                  :type   => "audio/mpeg"
+          item.enclosure({
+            :url => url_with_params(audio.podcast_url, {
+              :context    => @podcast.slug,
+              :via        => "podcast"
+            }),
+            :length => audio.size,
+            :type   => "audio/mpeg"
+          })
 
           item.itunes :duration,  audio.duration
         end # xml
