@@ -1,7 +1,7 @@
 @segments = ShowSegment.all
 @dups = []
 
-@segments.each do |segment| 
+@segments.each do |segment|
   dup = ShowSegment.where("slug = ? and DATE(published_at) = ? and id != ?", segment.slug, segment.published_at.strftime("%Y-%m-%d"), segment.id).first
   @dups << dup if dup.present?
 end

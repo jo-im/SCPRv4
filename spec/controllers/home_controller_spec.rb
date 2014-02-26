@@ -31,7 +31,7 @@ describe HomeController do
     end
 
     context "with a current schedule item" do
-      let(:schedule_current) { 
+      let(:schedule_current) {
         create :schedule_occurrence,
           :starts_at => 1.hour.ago,
           :ends_at   => 1.hour.from_now

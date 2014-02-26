@@ -1,4 +1,4 @@
-# See the Twitter API docs for more available options: 
+# See the Twitter API docs for more available options:
 # https://dev.twitter.com/docs/api/1/get/statuses/user_timeline
 
 module Job
@@ -6,10 +6,10 @@ module Job
     @priority = :low
 
     DEFAULTS = {
-      :count            => 6, 
-      :trim_user        => 0, 
-      :include_rts      => 1, 
-      :exclude_replies  => 1, 
+      :count            => 6,
+      :trim_user        => 0,
+      :include_rts      => 1,
+      :exclude_replies  => 1,
       :include_entities => 0
     }
 

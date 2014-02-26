@@ -1,7 +1,7 @@
 ##
 # Time extension
 #
-# Add some methods to help calculate 
+# Add some methods to help calculate
 # weekly recurring events
 #
 # Requires ActiveSupport
