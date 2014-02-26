@@ -35,7 +35,7 @@ module PmpArticleImporter
 
         if cached_article.save
           added.push cached_article
-          log "Saved PMP Story ##{story.guid} as " \
+          log "Saved PMP Story #{story.guid} as " \
               "RemoteArticle ##{cached_article.id}"
         else
           log "Couldn't save PMP Story ##{story.id}"
