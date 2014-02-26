@@ -5,13 +5,14 @@ module PmpArticleImporter
   ENDPOINT  = "https://api-sandbox.pmp.io/"
   TAG       = "marketplace"
   PROFILE   = "story"
+  LIMIT     = 10
 
   class << self
     include ::NewRelic::Agent::Instrumentation::ControllerInstrumentation
 
     def sync
       stories = pmp.root.query['urn:collectiondoc:query:docs']
-        .where(tag: TAG, profile: PROFILE)
+        .where(tag: TAG, profile: PROFILE, limit: LIMIT)
         .retrieve.items
 
       log "#{stories.size} PMP stories found"
@@ -63,6 +64,15 @@ module PmpArticleImporter
         :short_headline => pmp_story.title,
         :body           => pmp_story.contentencoded,
       )
+
+      # Set the source
+      if article.is_a?(NewsStory)
+        # TODO: This is temporary, at some point we'll need to figure out
+        # how to determine the "source" of an article from PMP.
+        # Right now we're only pulling in Marketplace stories.
+        article.source        = "marketplace"
+        article.news_agency   = "Marketplace"
+      end
 
       # Bylines
       name = pmp_story.byline

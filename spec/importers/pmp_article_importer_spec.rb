@@ -46,6 +46,13 @@ describe PmpArticleImporter do
         })
       end
 
+      it 'sets the source and news agency' do
+        remote_article = create :pmp_article
+        news_story = PmpArticleImporter.import(remote_article)
+        news_story.source.should eq "marketplace"
+        news_story.news_agency.should eq 'Marketplace'
+      end
+
       it 'imports the bylines' do
         remote_article = create :pmp_article
         news_story = PmpArticleImporter.import(remote_article)
