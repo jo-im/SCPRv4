@@ -7,7 +7,7 @@
     if (!supportsLocalStorage()) {
         return;
     }
-   
+
     CKEDITOR.plugins.add("autosave", {
         lang: ['de', 'en', 'zh', 'zh-cn'],
         init: function (editor) {
@@ -20,7 +20,7 @@
 
                 var autoSavedContent = localStorage.getItem(autoSaveKey);
                 var editorLoadedContent = editor.getData();
-                
+
                 // check if the loaded editor content is the same as the autosaved content
                 if (editorLoadedContent == autoSavedContent) {
                     console.log('[ckeditor-autosave] content matches, removing key');
@@ -76,7 +76,7 @@
             localStorage.setItem(autoSaveKey, editor.getData());
 
             savingActive = false;
-        } 
+        }
     };
 
     // localStorage detection

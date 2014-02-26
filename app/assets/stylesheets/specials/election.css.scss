@@ -459,95 +459,95 @@ div.results-block + .initiative {
   border-top:0 !important;
 }
 @media screen and (min-width: 769px) and (max-width: 960px) {
-  
+
   .hero-election {
     font-size: 11px;
   }
-  
+
   .hero-election .results .results-block .candidate, .hero-election .results .results-block .initiative {
     padding-right: 4px;
     padding-left: 4px;
   }
-  
+
   .hero-election .results .results-block .initiative.local .title {
     width: 100px;
   }
-  
+
   .hero-election .results .results-block .initiative .result {
     width: 110px;
   }
-  
+
   .hero-election .results .results-block .initiative .result .yes, .hero-election .results .results-block .initiative .result .no {
     width: 52px;
   }
-  
+
   .hero-election .results .results-block .initiative .result .vert-divider {
     display: none;
   }
-  
+
   .hero-election .results .results-block .candidate {
     background-image: none !important;
   }
-  
+
   .hero-election .results .results-block .candidate h4 {
     font-size: 1.6em;
     padding-left: 0;
   }
 }
 @media screen and (max-width: 768px) {
-  
+
   .hero-election {
     font-size: 13px;
   }
-  
+
   .hero-election .election-header {
     float: none;
   }
-  
+
   .hero-election .election-header h1 {
     font-size: 1.230769231em;
     padding-left: 10px;
     padding-top: 7px;
     text-align: left;
   }
-  
+
   .hero-election .election-header .share-link {
     width: 20px;
     height: 20px;
     padding-left: 0;
   }
-  
+
   .hero-election .election-header .share-link span {
     display: none;
   }
-  
+
   .hero-election .header-well .visible-mobile {
     display: block;
   }
-  
+
   .hero-election .header-well .tweets {
     display: none;
   }
-  
+
   .hero-election .span8 {
     float: none;
     margin-left: 0;
     width: 100%;
   }
-  
+
   .hero-election .results.president-only .results-block header h2 {
     text-align: left;
   }
-  
+
   .hero-election .results.president-only .results-block header aside {
     margin-left: 10px;
     text-align: left;
   }
-  
+
   .hero-election .results .results-block {
     min-height: 0;
   }
-  
+
   .hero-election .results .results-block header {
     margin-right: 0;
     margin-left: 0;
