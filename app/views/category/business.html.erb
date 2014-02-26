@@ -4,7 +4,7 @@
 <% meta_tags(url: @category.public_url) %>
 <% content_for :body_class, "landing #{@category.slug}" %>
 
-<%= cache ["categories/show", cache_version, @category] do %>
+<%= cache ["business", cache_version, @category] do %>
 
 <section class="headline">
 <% lead_article = @category.featured_articles.first %>
@@ -26,7 +26,6 @@
                         Visit <span>the</span> blog
                     <% end %>
                 <% end %>
-
             </header>
 
         <% blog_articles = vertical_blog_articles %>
@@ -41,13 +40,11 @@
                     <%= link_to('http://www.marketplace.org') do %>
                         More Marketplace
                     <% end %>
-
             </header>
 
         <% marketplace_articles = vertical_marketplace_articles %>
         <%= cache ["business", "latest-headlines", cache_version, marketplace_articles] do %>
             <%= render 'shared/new/latest_headlines', articles: marketplace_articles %>
-
         <% end %>
 
         </section>
@@ -70,6 +67,3 @@ information we depend on inside of this cache block. %>
 <% end %> <%# cache %>
 
 <% end %>
-
-
-
