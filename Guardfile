@@ -2,6 +2,7 @@ guard :resque, task: 'environment resque:work', environment: 'development' do
   watch(%r{^app/models/(.+)\.rb$})
   watch(%r{^app/jobs/.+\.rb$})
   watch(%r{^app/concerns/(.+)\.rb$})
+  watch(%r{^app/importers/(.+)\.rb$})
   watch(%r{^lib/(.+)\.rb$})
 
   watch(%r{^config/(.+)\.rb$})
