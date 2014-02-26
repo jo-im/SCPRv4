@@ -18,12 +18,6 @@ class AdminUser < ActiveRecord::Base
     :if => -> { self.username.blank? }
 
   # ----------------
-  # Validation
-
-  # ----------------
-  # Scopes
-
-  # ----------------
   # Association
   has_many :activities,
     :class_name     => "Secretary::Version",
