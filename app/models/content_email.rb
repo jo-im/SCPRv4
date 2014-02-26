@@ -12,10 +12,9 @@ class ContentEmail
     :from_name,
     :from_email,
     :to_email,
-    :subject,
     :body,
     :lname,
-    :content
+    :content_key
 
 
   validates :from_email, :to_email,
@@ -25,15 +24,23 @@ class ContentEmail
       :message    => "is an invalid e-mail format."
     }
 
-  validates :content, presence: true
+  validates :content_key, presence: true
+  validate :content_is_allowed
   validates :lname, length: { maximum: 0 }
 
   #---------------
 
+  # Don't use symbolize_keys! here, since we're passing in
+  # form fields directly to this initializer, that would open
+  # us to DDoS attacks.
   def initialize(attributes = {})
-    attributes.each do |name, value|
-      send("#{name}=", value)
-    end
+    attributes = attributes.with_indifferent_access
+
+    @to_email     = attributes[:to_email]
+    @from_email   = attributes[:from_email]
+    @from_name    = attributes[:from_name]
+    @body         = attributes[:body]
+    @lname        = attributes[:lname] # robo-diversion
   end
 
   #---------------
@@ -47,13 +54,20 @@ class ContentEmail
   def save
     return false unless self.valid?
 
-    begin
-      ContentMailer.email_content(self).deliver
-      self
-    rescue SimplePostmark::APIError => e
-      self.errors.add(:base, e.message)
-      false
-    end
+    Job::DelayedMailer.enqueue("ContentMailer", :email_content,
+      [self.to_json, self.content_key])
+
+    self
+  end
+
+
+  def to_json
+    {
+      :to_email     => self.to_email,
+      :from_email   => self.from_email,
+      :from_name    => self.from_name,
+      :body         => self.body
+    }
   end
 
   #---------------
@@ -63,6 +77,18 @@ class ContentEmail
       self.from_name
     else
       self.from_email
+    end
+  end
+
+
+  private
+
+  # We want to keep the validation message intentionally obtuse for
+  # potential attackers.
+  # Yes, I realize that this comment is publicly visible.
+  def content_is_allowed
+    if !ContentBase.safe_obj_by_key(self.content_key)
+      errors.add(:base, "Invalid Message")
     end
   end
 end

@@ -17,6 +17,7 @@ class BlogsController < ApplicationController
     # Only want to paginate for HTML response
     @scoped_entries = @blog.entries.published
     @entries = @scoped_entries.page(params[:page]).per(5)
+
     respond_with @scoped_entries
   end
 

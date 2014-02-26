@@ -1,4 +1,4 @@
-json.cache! [Api::Public::V3::VERSION, "v1", edition] do
+json.cache! [Api::Public::V3::VERSION, "v2", edition] do
   json.id           edition.id
   json.title        edition.title
   json.published_at edition.published_at
@@ -11,16 +11,19 @@ json.cache! [Api::Public::V3::VERSION, "v1", edition] do
     json.article_published_at   abstract.article_published_at
 
     json.assets do |asset|
-      json.partial! api_view_path("assets", "collection"), assets: abstract.assets
+      json.partial! api_view_path("assets", "collection"),
+        assets: abstract.assets
     end
 
     json.audio do
-      json.partial! api_view_path("audio", "collection"), audio: abstract.audio
+      json.partial! api_view_path("audio", "collection"),
+        audio: abstract.audio
     end
 
     if abstract.category.present?
       json.category do
-        json.partial! api_view_path("categories", "category"), category: abstract.category
+        json.partial! api_view_path("categories", "category"),
+          category: abstract.category
       end
     end
   end

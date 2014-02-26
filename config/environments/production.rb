@@ -8,7 +8,7 @@ Scprv4::Application.configure do
   config.consider_all_requests_local       = false
   config.action_controller.perform_caching = true
   config.cache_store = :redis_content_store, "redis://10.226.4.234:6379/6"
-#  config.cache_store = :redis_content_store, "redis://localhost:6379/5"
+  # config.cache_store = :redis_content_store, "redis://localhost:6379/5"
 
   # Disable Rails's static asset server (Apache or nginx will already do this)
   config.serve_static_assets = false
@@ -45,8 +45,12 @@ Scprv4::Application.configure do
   # config.action_controller.asset_host = "http://assets.example.com"
 
   # Enable Postmark for transactional mail sending
-  config.action_mailer.delivery_method          = :simple_postmark
+  config.action_mailer.delivery_method          = :postmark
   config.action_mailer.raise_delivery_errors    = true
+  config.action_mailer.postmark_settings = {
+    :api_key => config.api['postmark']['api_key']
+  }
+
 
   # Disable delivery errors, bad email addresses will be ignored
   # config.action_mailer.raise_delivery_errors = false

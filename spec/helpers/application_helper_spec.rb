@@ -2,6 +2,37 @@ require 'spec_helper'
 
 describe ApplicationHelper do
 
+  describe '#render_content' do
+    describe 'feedxml' do
+      it "renders XML for the article(s)" do
+        entry = build :blog_entry
+        xml = helper.render_content(entry, 'feedxml')
+        xml.should match entry.headline
+      end
+
+      it "renders audio enclosure if asked" do
+        entry = build :blog_entry
+        audio = create :audio, :direct, :live, content: entry
+        entry.save!
+        entry.reload
+
+        xml = helper.render_content(entry, 'feedxml', enclosure_type: :audio)
+        xml.should match audio.url
+      end
+
+      it "renders image enclosure if asked" do
+        entry = build :blog_entry
+        asset = create :asset, content: entry
+        entry.save!
+        entry.reload
+
+        xml = helper.render_content(entry, 'feedxml', enclosure_type: :image)
+        xml.should match asset.full.url
+      end
+    end
+  end
+
+
   describe '#safe_render' do
     it "renders the partial if it exists" do
       helper.safe_render('verticals/politics/footer_sponsors')
@@ -394,6 +425,16 @@ describe ApplicationHelper do
     it "apprends to params if they already exist" do
       url = helper.url_with_params("http://google.com?from=kpcc", context: "podcast")
       url.should eq "http://google.com?from=kpcc&context=podcast"
+    end
+
+    it "ignores params if the value is falsey" do
+      url = helper.url_with_params("http://google.com", from: 'kpcc', context: nil)
+      url.should eq "http://google.com?from=kpcc"
+    end
+
+    it "doesn't leave a trailing ? if there are no params" do
+      url = helper.url_with_params("http://google.com")
+      url.should_not match /\?/
     end
   end
 end

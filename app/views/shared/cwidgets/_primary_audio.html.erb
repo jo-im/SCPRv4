@@ -1,14 +1,16 @@
 <% if audio = article.audio.first %>
-  <aside class="story-audio <%= cssClass %>">
+  <% url = url_with_params(audio.url, context: options[:context], via: 'website') %>
+
+  <aside class="story-audio <%= options[:cssClass] %>">
     <div class="inner-container clearfix">
       <div class="audio-content">
         <h4>Listen Now</h4>
       </div>
-      <a href="<%= audio.url %>" class="play-btn audio-toggler" title="<%= h(article.short_title) %>" data-duration="<%= audio.duration %>"></a>
+      <a href="<%= url %>" class="play-btn audio-toggler" title="<%= h(article.short_title) %>" data-duration="<%= audio.duration %>"></a>
       <span class="duration">[<%= format_duration audio.duration %>]</span>
       <ul class="audio-tools">
         <li>
-          <a href="<%= audio.url %>">Download</a>
+          <a href="<%= url %>">Download</a>
         </li>
       </ul>
     </div>

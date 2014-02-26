@@ -47,7 +47,8 @@ class NewsStory < ActiveRecord::Base
     ['NPR & wire services',         'npr_wire'],
     ['New America Media',           'new_america'],
     ['NPR & KPCC',                  'npr_kpcc'],
-    ['Center for Health Reporting', 'chr']
+    ['Center for Health Reporting', 'chr'],
+    ['Marketplace',                 'marketplace']
   ]
 
 
