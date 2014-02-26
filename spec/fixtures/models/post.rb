@@ -1,6 +1,7 @@
 module TestClass
   class Post < ActiveRecord::Base
     self.table_name = "test_class_posts"
+    has_secretary on: ["program_id"]
 
     include Concern::Associations::HomepageContentAssociation
     include Concern::Associations::MissedItContentAssociation

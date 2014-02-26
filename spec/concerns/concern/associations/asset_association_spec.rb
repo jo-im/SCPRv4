@@ -1,6 +1,21 @@
 require "spec_helper"
 
 describe Concern::Associations::AssetAssociation do
+  describe '#assets' do
+    it "orders by position" do
+      content = build :test_class_story
+      content.assets.to_sql.should match /order by position/i
+    end
+
+    it "tracks assets" do
+      content = create :test_class_story
+      asset = create :asset
+      content.assets << asset
+      content.save!
+      content.versions.last.description.should match /Assets/
+    end
+  end
+
   describe '#asset' do
     it "gets the article's first asset" do
       content = create :test_class_story

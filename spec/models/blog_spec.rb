@@ -1,6 +1,13 @@
 require "spec_helper"
 
 describe Blog do
+  describe '#entries' do
+    it 'orders by published_at desc' do
+      blog = build :blog
+      blog.entries.to_sql.should match /order by published_at desc/i
+    end
+  end
+
   describe "scopes" do
     describe "::active" do
       it "returns only active blogs" do

@@ -1,6 +1,21 @@
 require "spec_helper"
 
 describe Concern::Associations::RelatedContentAssociation do
+  describe '#outgoing_references' do
+    it "orders by position" do
+      story = build :test_class_story
+      story.outgoing_references.to_sql.should match /order by position/i
+    end
+  end
+
+  describe '#incoming_references' do
+    it "orders by position" do
+      story = build :test_class_story
+      story.incoming_references.to_sql.should match /order by position/i
+    end
+  end
+
+
   describe "destroying or unpublishing" do
     before :each do
       @post     = create :test_class_post, :published
