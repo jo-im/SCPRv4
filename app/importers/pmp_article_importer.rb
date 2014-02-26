@@ -96,56 +96,58 @@ module PmpArticleImporter
         article.related_links.push related_link
       end
 
-      # If we have an enclosure node, extract audio and assets from it.
-      # Sometimes it's an array and sometimes it's not.
-      # We're using Array.wrap here because it doesn't work with just Array()
-      enclosure = Array.wrap(pmp_story.items.first.enclosure)
-      if !enclosure.empty?
-        # Audio
-        audio = enclosure.select do |e|
-          e.type.match /audio/
-        end
+      if pmp_story.items.present?
+        # If we have an enclosure node, extract audio and assets from it.
+        # Sometimes it's an array and sometimes it's not.
+        # We're using Array.wrap here because it doesn't work with just Array()
+        enclosure = Array.wrap(pmp_story.items.first.enclosure)
+        if !enclosure.empty?
+          # Audio
+          audio = enclosure.select do |e|
+            e.type.match /audio/
+          end
 
-        audio.each_with_index do |remote_audio, i|
-          url = remote_audio.href.gsub(
-            "apm-audio:", "http://download.publicradio.org/podcast")
+          audio.each_with_index do |remote_audio, i|
+            url = remote_audio.href.gsub(
+              "apm-audio:", "http://download.publicradio.org/podcast")
 
-          article.audio.build(
-            :url            => url,
-            :description    => pmp_story.title,
-            :byline         => "APM",
-            :position       => i
-          )
-        end
+            article.audio.build(
+              :url            => url,
+              :description    => pmp_story.title,
+              :byline         => "APM",
+              :position       => i
+            )
+          end
 
-        # Asset
-        images = enclosure.select do |e|
-          e.type.match(/image/)
-        end
+          # Asset
+          images = enclosure.select do |e|
+            e.type.match(/image/)
+          end
 
-        # Get the image designated as "primary". If none exists,
-        # then get the widest one.
-        primary_image = images.find { |i| i.meta["crop"] == "primary" } ||
-          images.max { |a, b| a.meta["width"].to_i <=> b.meta["width"].to_i }
+          # Get the image designated as "primary". If none exists,
+          # then get the widest one.
+          primary_image = images.find { |i| i.meta["crop"] == "primary" } ||
+            images.max { |a, b| a.meta["width"].to_i <=> b.meta["width"].to_i }
 
-        if primary_image
-          asset = AssetHost::Asset.create(
-            :url     => primary_image.href,
-            :title   => pmp_story.title,
-            :owner   => "Marketplace",
-            :note    => "Imported from PMP: #{pmp_story.guid}"
-          )
-
-          if asset && asset.id
-            content_asset = ContentAsset.new(
-              :position   => 0,
-              :asset_id   => asset.id
+          if primary_image
+            asset = AssetHost::Asset.create(
+              :url     => primary_image.href,
+              :title   => pmp_story.title,
+              :owner   => "Marketplace",
+              :note    => "Imported from PMP: #{pmp_story.guid}"
             )
 
-            article.assets << content_asset
+            if asset && asset.id
+              content_asset = ContentAsset.new(
+                :position   => 0,
+                :asset_id   => asset.id
+              )
+
+              article.assets << content_asset
+            end
           end
-        end
-      end # /enclosure
+        end # /enclosure
+      end # / pmp.items
 
       # Save the news story (including all associations),
       # set the RemoteArticle to `:is_new => false`,

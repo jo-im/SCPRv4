@@ -1,15 +1,18 @@
 require 'spec_helper'
 
 describe PmpArticleImporter do
+  before do
+    # We don't care about, or need, the oauth token for these tests.
+    PMP::CollectionDocument.any_instance.stub(:oauth_token) { "token" }
+
+    stub_request(:get, %r|pmp\.io/?$|).to_return({
+      :content_type => "application/json",
+      :body => load_fixture('api/pmp/root.json')
+    })
+  end
+
   describe '::sync' do
-    before :each do
-      PMP::CollectionDocument.any_instance.stub(:oauth_token) { "token" }
-
-      stub_request(:get, %r|pmp\.io/?$|).to_return({
-        :content_type => "application/json",
-        :body => load_fixture('api/pmp/root.json')
-      })
-
+    before do
       stub_request(:get, %r|pmp\.io/docs|).to_return({
         :content_type => "application/json",
         :body => load_fixture('api/pmp/marketplace_stories.json')
@@ -32,14 +35,6 @@ describe PmpArticleImporter do
   describe '#import' do
     context "multiple enclosures" do
       before :each do
-        # We don't care about, or need, the oauth token for these tests.
-        PMP::CollectionDocument.any_instance.stub(:oauth_token) { "token" }
-
-        stub_request(:get, %r|pmp\.io/?$|).to_return({
-          :content_type => "application/json",
-          :body => load_fixture('api/pmp/root.json')
-        })
-
         stub_request(:get, %r|pmp\.io/docs\?guid=.+|).to_return({
           :content_type => "application/json",
           :body => load_fixture('api/pmp/story.json')
@@ -89,14 +84,6 @@ describe PmpArticleImporter do
 
     context "single enclosure" do
       before :each do
-        # We don't care about, or need, the oauth token for these tests.
-        PMP::CollectionDocument.any_instance.stub(:oauth_token) { "token" }
-
-        stub_request(:get, %r|pmp\.io/?$|).to_return({
-          :content_type => "application/json",
-          :body => load_fixture('api/pmp/root.json')
-        })
-
         stub_request(:get, %r|pmp\.io/docs\?guid=.+|).to_return({
           :content_type => "application/json",
           :body => load_fixture('api/pmp/story_single_enclosure.json')
@@ -110,6 +97,23 @@ describe PmpArticleImporter do
         news_story.audio.size.should eq 1
         news_story.audio.first.url.should eq(
           "http://download.publicradio.org/podcast/marketplace/morning_report/2013/09/30/marketplace_morning_report_full_20130930_64.mp3")
+      end
+    end
+
+    context "No items" do
+      before do
+        stub_request(:get, %r|pmp\.io/docs\?guid=.+|).to_return({
+          :content_type => "application/json",
+          :body => load_fixture('api/pmp/story_no_items.json')
+        })
+      end
+
+      it "doesn't try to import audio and assets if no items are available" do
+        remote_article = create :pmp_article
+        news_story = PmpArticleImporter.import(remote_article)
+
+        news_story.audio.should be_empty
+        news_story.assets.should be_empty
       end
     end
   end
