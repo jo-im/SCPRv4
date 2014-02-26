@@ -1,0 +1,373 @@
+{
+  "version": "1.0",
+  "href": "https://api-sandbox.pmp.io/docs?guid=fe111285-92c5-f5de-7b34-8a720d5fc750&profile=story",
+  "attributes": {
+    "valid": {
+      "from": "2013-09-30T13:45:56+00:00",
+      "to": "3013-09-30T13:45:56+00:00"
+    },
+    "created": "2014-01-30T05:27:00+00:00",
+    "modified": "2014-01-30T05:27:00+00:00",
+    "contenttemplated": "<p>Lawmakers are running out of options to avoid a possible government shutdown, but a <a href=\"http://www.marketplace.org/topics/economy/medical-device-tax-could-play-role-spending-negotiations\" target=\"_blank\">once obscure tax</a> could now play an important role in negotiations.</p>\n<p>The office established as the temporary oversight agency for Iraq reconstruction will <a href=\"http://www.marketplace.org/topics/world/iraq-who-watched-watchers\" target=\"_blank\">cease operations</a>.</p>\n<p>If Congress doesn't&nbsp;strike a budget deal&nbsp;by Monday night, what have been deemed 'non-essential' parts of the federal government will close down.&nbsp;Turns out, this <a href=\"http://www.marketplace.org/topics/economy/government-shutdown-will-affect-jobs-and-jobs-numbers\" target=\"_blank\">includes the statisticians</a> who are calculating what is arguably the most market-sensitive government report of the week: &nbsp;Friday's scheduled employment and unemployment report.</p>",
+    "guid": "fe111285-92c5-f5de-7b34-8a720d5fc750",
+    "teaser": "An obscure tax could play an big role in government shutdown negotiations. How effective was the U.S. Special Inspector General's office for Iraq at eliminating abuse and fraud? And if Congress doesn't strike a deal it will impact jobs -- and the jobs report this Friday.",
+    "contentencoded": "<p>Lawmakers are running out of options to avoid a possible government shutdown, but a <a href=\"http://www.marketplace.org/topics/economy/medical-device-tax-could-play-role-spending-negotiations\" target=\"_blank\">once obscure tax</a> could now play an important role in negotiations.</p>\n<p>The office established as the temporary oversight agency for Iraq reconstruction will <a href=\"http://www.marketplace.org/topics/world/iraq-who-watched-watchers\" target=\"_blank\">cease operations</a>.</p>\n<p>If Congress doesn't&nbsp;strike a budget deal&nbsp;by Monday night, what have been deemed 'non-essential' parts of the federal government will close down.&nbsp;Turns out, this <a href=\"http://www.marketplace.org/topics/economy/government-shutdown-will-affect-jobs-and-jobs-numbers\" target=\"_blank\">includes the statisticians</a> who are calculating what is arguably the most market-sensitive government report of the week: &nbsp;Friday's scheduled employment and unemployment report.</p>",
+    "byline": "Brancaccio, David",
+    "hreflang": "en",
+    "description": "An obscure tax could play an big role in government shutdown negotiations. How effective was the U.S. Special Inspector General's office for Iraq at eliminating abuse and fraud? And if Congress doesn't strike a deal it will impact jobs -- and the jobs report this Friday.",
+    "tags": [
+      "APM_TESTING",
+      "PMP:Marketplace_PMP",
+      "Mid-day Update",
+      "fe11128592c5f5de7b348a720d5fc750",
+      "Marketplace Morning Report for Monday, September 30, 2013",
+      "Marketplace",
+      "Marketplace Morning Report",
+      "Economy"
+    ],
+    "published": "2013-09-30T13:45:56+00:00",
+    "title": "PODCAST: Looming government shutdown"
+  },
+  "links": {
+    "profile": [
+      {
+        "href": "https://api-sandbox.pmp.io/profiles/story",
+        "title": "APMStory"
+      }
+    ],
+    "distributor": [],
+    "copyright": [
+      {
+        "href": "http://www.publicradio.org/terms",
+        "title": "Copyright (C) 2013 American Public Media Group"
+      }
+    ],
+    "item": [
+      {
+        "href": "https://api-sandbox.pmp.io/docs/feb529b6-832e-a4c7-3408-3717545f9a37"
+      }
+    ],
+    "collection": [
+      {
+        "href": "https://api-sandbox.pmp.io/docs/36d4a0dd-34da-4ce3-a31e-112fd9d8d91c",
+        "title": "Marketplace"
+      },
+      {
+        "href": "https://api-sandbox.pmp.io/docs/df9a7bdb-c650-42c1-8691-55a154f07322",
+        "title": "Marketplace Morning Report"
+      },
+      {
+        "href": "https://api-sandbox.pmp.io/docs/0146d22c-0f12-c066-bbec-85c82737d546",
+        "title": "Marketplace Morning Report for Monday, September 30, 2013"
+      }
+    ],
+    "alternate": [
+      {
+        "href": "http://www.marketplace.org/topics/economy/mid-day-update/podcast-looming-government-shutdown",
+        "type": "text/html"
+      }
+    ],
+    "creator": [
+      {
+        "href": "https://api-sandbox.pmp.io/docs/98bf597a-2a6f-446c-9b7e-d8ae60122f0d"
+      }
+    ],
+    "navigation": [
+      {
+        "href": "https://api-sandbox.pmp.io/docs?guid=fe111285-92c5-f5de-7b34-8a720d5fc750&profile=b9ce545e-01a2-44d0-9a15-a73da4ed304b",
+        "rels": [
+          "self"
+        ],
+        "totalitems": 1,
+        "totalpages": 1,
+        "pagenum": 1
+      }
+    ],
+    "query": [
+      {
+        "href-template": "https://api-sandbox.pmp.io/users{?limit,offset,tag,collection,text,searchsort,has}",
+        "title": "Query for users",
+        "rels": [
+          "urn:collectiondoc:query:users"
+        ],
+        "href-vars": {
+          "limit": "http://docs.pmp.io/wiki/Content-Retrieval",
+          "offset": "http://docs.pmp.io/wiki/Content-Retrieval",
+          "tag": "http://docs.pmp.io/wiki/Content-Retrieval",
+          "collection": "http://docs.pmp.io/wiki/Content-Retrieval",
+          "text": "http://docs.pmp.io/wiki/Content-Retrieval",
+          "searchsort": "http://docs.pmp.io/wiki/Content-Retrieval",
+          "has": "http://docs.pmp.io/wiki/Content-Retrieval"
+        },
+        "hints": {
+          "allow": [
+            "GET"
+          ]
+        }
+      },
+      {
+        "href-template": "https://api-sandbox.pmp.io/groups{?limit,offset,tag,collection,text,searchsort,has}",
+        "title": "Query for groups",
+        "rels": [
+          "urn:collectiondoc:query:groups"
+        ],
+        "href-vars": {
+          "limit": "http://docs.pmp.io/wiki/Content-Retrieval",
+          "offset": "http://docs.pmp.io/wiki/Content-Retrieval",
+          "tag": "http://docs.pmp.io/wiki/Content-Retrieval",
+          "collection": "http://docs.pmp.io/wiki/Content-Retrieval",
+          "text": "http://docs.pmp.io/wiki/Content-Retrieval",
+          "searchsort": "http://docs.pmp.io/wiki/Content-Retrieval"
+        },
+        "hints": {
+          "allow": [
+            "GET"
+          ]
+        }
+      },
+      {
+        "href-template": "https://api-sandbox.pmp.io/profiles{/guid}",
+        "title": "Access profiles",
+        "rels": [
+          "urn:collectiondoc:hreftpl:profiles"
+        ],
+        "href-vars": {
+          "guid": "http://docs.pmp.io/wiki/Content-Retrieval"
+        },
+        "hints": {
+          "allow": [
+            "GET"
+          ]
+        }
+      },
+      {
+        "href-template": "https://api-sandbox.pmp.io/profiles{?limit,offset,tag,collection,text,searchsort,has}",
+        "title": "Query for profiles",
+        "rels": [
+          "urn:collectiondoc:query:profiles"
+        ],
+        "href-vars": {
+          "limit": "http://docs.pmp.io/wiki/Content-Retrieval",
+          "offset": "http://docs.pmp.io/wiki/Content-Retrieval",
+          "tag": "http://docs.pmp.io/wiki/Content-Retrieval",
+          "collection": "http://docs.pmp.io/wiki/Content-Retrieval",
+          "text": "http://docs.pmp.io/wiki/Content-Retrieval",
+          "searchsort": "http://docs.pmp.io/wiki/Content-Retrieval",
+          "has": "http://docs.pmp.io/wiki/Content-Retrieval"
+        },
+        "hints": {
+          "allow": [
+            "GET"
+          ]
+        }
+      },
+      {
+        "href-template": "https://api-sandbox.pmp.io/schemas{/guid}",
+        "title": "Access schemas",
+        "rels": [
+          "urn:collectiondoc:hreftpl:schemas"
+        ],
+        "href-vars": {
+          "guid": "http://docs.pmp.io/wiki/Content-Retrieval"
+        },
+        "hints": {
+          "allow": [
+            "GET"
+          ]
+        }
+      },
+      {
+        "href-template": "https://api-sandbox.pmp.io/users{?limit,offset,tag,collection,text,searchsort,has}",
+        "title": "Query for schemas",
+        "rels": [
+          "urn:collectiondoc:query:schemas"
+        ],
+        "href-vars": {
+          "limit": "http://docs.pmp.io/wiki/Content-Retrieval",
+          "offset": "http://docs.pmp.io/wiki/Content-Retrieval",
+          "tag": "http://docs.pmp.io/wiki/Content-Retrieval",
+          "collection": "http://docs.pmp.io/wiki/Content-Retrieval",
+          "text": "http://docs.pmp.io/wiki/Content-Retrieval",
+          "searchsort": "http://docs.pmp.io/wiki/Content-Retrieval",
+          "has": "http://docs.pmp.io/wiki/Content-Retrieval"
+        },
+        "hints": {
+          "allow": [
+            "GET"
+          ]
+        }
+      },
+      {
+        "href-template": "https://api-sandbox.pmp.io/docs{/guid}{?limit,offset}",
+        "title": "Access documents",
+        "rels": [
+          "urn:collectiondoc:hreftpl:docs"
+        ],
+        "href-vars": {
+          "guid": "http://docs.pmp.io/wiki/Content-Retrieval",
+          "limit": "http://docs.pmp.io/wiki/Content-Retrieval",
+          "offset": "http://docs.pmp.io/wiki/Content-Retrieval"
+        },
+        "hints": {
+          "allow": [
+            "GET"
+          ]
+        }
+      },
+      {
+        "href-template": "https://api-sandbox.pmp.io/docs{?guid,limit,offset,tag,collection,text,searchsort,has,author,distributor,distributorgroup,startdate,enddate,profile,language}",
+        "title": "Query for documents",
+        "rels": [
+          "urn:collectiondoc:query:docs"
+        ],
+        "href-vars": {
+          "guid": "http://docs.pmp.io/wiki/Content-Retrieval",
+          "limit": "http://docs.pmp.io/wiki/Content-Retrieval",
+          "offset": "http://docs.pmp.io/wiki/Content-Retrieval",
+          "tag": "http://docs.pmp.io/wiki/Content-Retrieval",
+          "collection": "http://docs.pmp.io/wiki/Content-Retrieval",
+          "text": "http://docs.pmp.io/wiki/Content-Retrieval",
+          "searchsort": "http://docs.pmp.io/wiki/Content-Retrieval",
+          "has": "http://docs.pmp.io/wiki/Content-Retrieval",
+          "author": "http://docs.pmp.io/wiki/Content-Retrieval",
+          "distributor": "http://docs.pmp.io/wiki/Content-Retrieval",
+          "distributorgroup": "http://docs.pmp.io/wiki/Content-Retrieval",
+          "startdate": "http://docs.pmp.io/wiki/Content-Retrieval",
+          "enddate": "http://docs.pmp.io/wiki/Content-Retrieval",
+          "profile": "http://docs.pmp.io/wiki/Content-Retrieval",
+          "language": "http://docs.pmp.io/wiki/Content-Retrieval"
+        },
+        "hints": {
+          "allow": [
+            "GET"
+          ]
+        }
+      },
+      {
+        "href": "https://api-sandbox.pmp.io/guids",
+        "title": "Generate guids",
+        "rels": [
+          "urn:collectiondoc:query:guids"
+        ],
+        "hints": {
+          "allow": [
+            "POST"
+          ],
+          "accept-post": [
+            "application/x-www-form-urlencoded"
+          ]
+        },
+        "type": "application/json"
+      }
+    ],
+    "edit": [
+      {
+        "href-template": "https://publish-sandbox.pmp.io/docs{/guid}",
+        "title": "Document Save",
+        "rels": [
+          "urn:collectiondoc:form:documentsave"
+        ],
+        "href-vars": {
+          "guid": "http://docs.pmp.io/wiki/Globaly-Unique-Identifiers-for-PMP-Documents"
+        },
+        "hints": {
+          "formats": [
+            "application/vnd.collection.doc+json"
+          ],
+          "allow": [
+            "PUT",
+            "DELETE"
+          ],
+          "docs": "http://docs.pmp.io/wiki/Collection.doc-JSON-Media-Type"
+        }
+      },
+      {
+        "href-template": "https://publish-sandbox.pmp.io/profiles{/guid}",
+        "title": "Profile Save",
+        "rels": [
+          "urn:collectiondoc:form:profilesave"
+        ],
+        "href-vars": {
+          "guid": "http://docs.pmp.io/wiki/Globaly-Unique-Identifiers-for-PMP-Documents"
+        },
+        "hints": {
+          "formats": [
+            "application/vnd.collection.doc+json"
+          ],
+          "allow": [
+            "PUT",
+            "DELETE"
+          ],
+          "docs": "http://docs.pmp.io/wiki/Profile-profile"
+        }
+      },
+      {
+        "href-template": "https://publish-sandbox.pmp.io/schemas{/guid}",
+        "title": "Schema Save",
+        "rels": [
+          "urn:collectiondoc:form:schemasave"
+        ],
+        "href-vars": {
+          "guid": "http://docs.pmp.io/wiki/Globaly-Unique-Identifiers-for-PMP-Documents"
+        },
+        "hints": {
+          "formats": [
+            "application/vnd.collection.doc+json"
+          ],
+          "allow": [
+            "PUT",
+            "DELETE"
+          ],
+          "docs": "http://docs.pmp.io/wiki/Schema-profile"
+        }
+      },
+      {
+        "href": "https://publish-sandbox.pmp.io/files",
+        "title": "Upload a rich media file",
+        "rels": [
+          "urn:collectiondoc:form:mediaupload"
+        ],
+        "href-vars": {
+          "submission": "http://docs.pmp.io/wiki/Media-File-Upload"
+        },
+        "hints": {
+          "allow": [
+            "POST"
+          ],
+          "accept-post": [
+            "multipart/form-data"
+          ]
+        }
+      }
+    ],
+    "auth": [
+      {
+        "href": "https://api-sandbox.pmp.io/auth/access_token",
+        "title": "Issue OAuth2 Token",
+        "rels": [
+          "urn:collectiondoc:form:issuetoken"
+        ],
+        "hints": {
+          "allow": [
+            "POST"
+          ],
+          "docs": "http://docs.pmp.io/wiki/Authentication-Model#token-management"
+        }
+      },
+      {
+        "href": "https://publish-sandbox.pmp.io/auth/access_token",
+        "title": "Revoke OAuth2 Token",
+        "rels": [
+          "urn:collectiondoc:form:revoketoken"
+        ],
+        "hints": {
+          "allow": [
+            "DELETE"
+          ],
+          "docs": "http://docs.pmp.io/wiki/Authentication-Model#revoke-a-token"
+        }
+      }
+    ]
+  },
+  "items": []
+}
