@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140204193814) do
+ActiveRecord::Schema.define(:version => 20140225220750) do
 
   create_table "abstracts", :force => true do |t|
     t.string   "source"
@@ -592,6 +592,7 @@ ActiveRecord::Schema.define(:version => 20140204193814) do
   add_index "news_story", ["category_id"], :name => "news_story_42dc49bc"
   add_index "news_story", ["feature_type_id"], :name => "index_news_story_on_feature_type_id"
   add_index "news_story", ["published_at"], :name => "news_story_published_at"
+  add_index "news_story", ["source", "published_at"], :name => "index_news_story_on_source_and_published_at"
   add_index "news_story", ["status", "published_at"], :name => "index_news_story_on_status_and_published_at"
   add_index "news_story", ["status"], :name => "index_news_story_on_status"
   add_index "news_story", ["updated_at"], :name => "index_news_story_on_updated_at"
