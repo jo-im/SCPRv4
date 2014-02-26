@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe ApplicationHelper do
 
-  describe '#render_content', focus: true do
+  describe '#render_content' do
     describe 'feedxml' do
       it "renders XML for the article(s)" do
         entry = build :blog_entry
