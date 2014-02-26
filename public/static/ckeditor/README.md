@@ -10,3 +10,4 @@ See build-config for how this custom CKEditor package was configured.
 * Copy adapters/jquery.js
 * Copy any updated plugins
 * Non-bundled plugins should remain as-is. Double-check that they still work when updating CKEditor version.
+* Please remove any unused files: unused languages, documentation files, etc.
