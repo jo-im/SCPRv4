@@ -43,6 +43,16 @@ describe RootPathController do
           response.should render_template 'category/simple'
         end
       end
+
+      context 'category is business' do
+        before do
+          @business_category = create :category_news, slug: 'business', is_active: true
+        end
+        it "renders the new business template" do
+          get :handle_path, path: @business_category.slug, format: :html
+          response.should render_template 'category/business'
+        end
+      end
     end
   end
 

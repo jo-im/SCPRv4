@@ -9,6 +9,7 @@ module CategoryHandler
     # Help with lazy loading
     helper_method :vertical_articles
     helper_method :vertical_blog_articles
+    helper_method :vertical_marketplace_articles
   end
 
 
@@ -31,7 +32,7 @@ module CategoryHandler
       @events = @category.events.published.upcoming
 
       respond_with @category,
-        :template   => "category/show",
+        :template   => vertical_template(category: @category.slug),
         :layout     => "new/vertical"
     else
       handle_category
@@ -92,6 +93,19 @@ module CategoryHandler
 
       content_params[:exclude] = @category.featured_articles.first
       @category.articles(content_params)
+    end
+  end
+
+  def vertical_marketplace_articles
+    NewsStory.where("source = ?", 'marketplace').published.first(2).map(&:to_article)
+  end
+
+  def vertical_template(options={})
+    case options[:category]
+    when 'business'
+      'category/business'
+    else
+      'category/show'
     end
   end
 end
