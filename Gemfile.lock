@@ -78,13 +78,6 @@ GIT
       railties (>= 3.2.8)
 
 GIT
-  remote: git://github.com/bricker/diffy.git
-  revision: 7f5d486d99f7b432e181d6c908447ebdae4af54a
-  branch: valid-html
-  specs:
-    diffy (3.0.1)
-
-GIT
   remote: git://github.com/bricker/npr.git
   revision: a6a4fbfd16a3d5165a84008754e3b3c5ba9c3d3b
   specs:
@@ -98,6 +91,13 @@ GIT
   branch: fix-empty-array-filter
   specs:
     riddle (1.5.9)
+
+GIT
+  remote: git://github.com/samg/diffy.git
+  revision: 6c89c4489d9ac97b78a5e3a2cf77df39ee28fb52
+  ref: 6c89c4489d9ac97b78a5e3a2cf77df39ee28fb52
+  specs:
+    diffy (3.0.1)
 
 GEM
   remote: https://rubygems.org/
