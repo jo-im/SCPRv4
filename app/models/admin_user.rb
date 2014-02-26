@@ -45,7 +45,10 @@ class AdminUser < ActiveRecord::Base
     }
   end
 
-  # Private: Generate a username based on real name
+
+  private
+
+  # Generate a username based on real name
   #
   # Returns String of the username
   def generate_username
@@ -62,34 +65,5 @@ class AdminUser < ActiveRecord::Base
     end
 
     self.username = dirty_name
-  end
-
-  # ----------------
-  # Override has_secure_password, so we can authenticate
-  # with legacy password if necessary.
-  def authenticate(unencrypted_password)
-    if self.password_digest.present?
-      super
-    else
-      authenticate_legacy(unencrypted_password)
-    end
-  end
-
-  # ----------------
-
-  private
-
-  # ----------------
-  # Authenticate using the django-style password.
-  # Save the new password on success.
-  def authenticate_legacy(unencrypted_password)
-    algorithm, salt, hash = self.old_password.split('$')
-    if hash.to_s == Digest::SHA1.hexdigest(salt.to_s + unencrypted_password)
-      self.password = unencrypted_password
-      self.save
-      self
-    else
-      false
-    end
   end
 end
