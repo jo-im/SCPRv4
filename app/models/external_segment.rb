@@ -3,6 +3,7 @@ class ExternalSegment < ActiveRecord::Base
   include Concern::Associations::AudioAssociation
 
   belongs_to :external_program
+
   has_many :external_episode_segments
 
   has_many :external_episodes,
@@ -27,5 +28,10 @@ class ExternalSegment < ActiveRecord::Base
 
   def public_url
     self.external_url
+  end
+
+  # Temporary work-around
+  def show
+    self.external_program
   end
 end
