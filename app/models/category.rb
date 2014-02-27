@@ -101,16 +101,13 @@ class Category < ActiveRecord::Base
     }
 
     if exclude.present?
-      if exclude.kind_of?(Array)
-        excluded_articles = exclude.select do |article|
-          article.respond_to?(:obj_key_crc32)
-        end
-
-        args[:without] = { obj_key: excluded_articles.map(&:obj_key_crc32) }
-      elsif exclude.respond_to?(:obj_key_crc32)
-        args[:without] = { obj_key: exclude.obj_key_crc32 }
+      exclude = Array(exclude).select do |article|
+        article.respond_to?(:obj_key_crc32)
       end
+
+      args[:without] = { obj_key: exclude.map(&:obj_key_crc32) }
     end
+
     ContentBase.search(args)
   end
 
