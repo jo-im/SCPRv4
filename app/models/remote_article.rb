@@ -14,7 +14,8 @@ class RemoteArticle < ActiveRecord::Base
 
   IMPORTERS = {
     "npr" => "NprArticleImporter",
-    "chr" => "ChrArticleImporter"
+    "chr" => "ChrArticleImporter",
+    "pmp" => "PmpArticleImporter"
   }
 
   #---------------

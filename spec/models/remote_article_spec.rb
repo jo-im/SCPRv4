@@ -12,6 +12,18 @@ describe RemoteArticle do
         :content_type => "application/json",
         :body => load_fixture('api/chr/stories.json')
       })
+
+      PMP::CollectionDocument.any_instance.stub(:oauth_token) { "token" }
+
+      stub_request(:get, %r|pmp\.io/?$|).to_return({
+        :content_type => "application/json",
+        :body => load_fixture('api/pmp/root.json')
+      })
+
+      stub_request(:get, %r|pmp\.io/docs|).to_return({
+        :content_type => "application/json",
+        :body => load_fixture('api/pmp/marketplace_stories.json')
+      })
     end
 
     it "syncs using each of the importers" do

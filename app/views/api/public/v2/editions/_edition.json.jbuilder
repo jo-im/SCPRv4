@@ -1,4 +1,4 @@
-json.cache! [Api::Public::V2::VERSION, "v1", edition] do
+json.cache! [Api::Public::V2::VERSION, "v2", edition] do
   json.id           edition.id
   json.title        edition.title
   json.published_at edition.published_at

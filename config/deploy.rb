@@ -27,7 +27,7 @@ set :group_writable, false
 set :maintenance_template_path, "public/maintenance.erb"
 set :maintenance_basename, "maintenance"
 
-# Pass these in with -s to override: 
+# Pass these in with -s to override:
 #    cap deploy -s force_assets=true
 set :force_assets,  false # If assets wouldn't normally be precompiled, force them to be
 set :skip_assets,   false # If assets are going to be precompiled, force them NOT to be

@@ -5,7 +5,7 @@
 # then just use IceCube::Schedule directly.
 #
 # This was originally built to handle and process the form inputs
-# (like start_time "11:00"), but can also be useful in tests or 
+# (like start_time "11:00"), but can also be useful in tests or
 # in callbacks.
 class ScheduleBuilder
   DEFAULT_SECOND_OF_MINUTE = 0
