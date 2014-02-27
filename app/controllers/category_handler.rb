@@ -5,6 +5,21 @@
 module CategoryHandler
   extend ActiveSupport::Concern
 
+  # Simple category handler.
+  # This gets called when the category isn't "activated"
+  def handle_category
+    @content = @category.content(
+      :page       => params[:page].to_i,
+      :per_page   => PER_PAGE
+    )
+
+    respond_with @content do |format|
+      format.html { render 'category/simple' }
+      format.xml { render 'category/feed' }
+    end
+  end
+
+
   included do
     # Help with lazy loading
     helper_method :vertical_articles
@@ -22,44 +37,25 @@ module CategoryHandler
     # For XML, RSS, JSON, etc, we should respond with category_content,
     # because vertical_content excludes the lead article, which is
     # meaningless for an XML feed.
-    if request.format.html?
-      # Let Rails lazily load these if necessary.
-      # For the other stuff like content and featured
-      # articles, those will get populated instantly,
-      # so we need to defer their loading until they're
-      # actually needed in the template.
-      @quotes = @category.quotes.published
-      @events = @category.events.published.upcoming
-
-      respond_with @category,
-        :template   => vertical_template(category: @category.slug),
-        :layout     => "new/vertical"
-    else
-      handle_category
+    if !request.format.html?
+      handle_category and return
     end
-  end
 
+    # Let Rails lazily load these if necessary.
+    # For the other stuff like content and featured
+    # articles, those will get populated instantly,
+    # so we need to defer their loading until they're
+    # actually needed in the template.
+    @quotes = @category.quotes.published
+    @events = @category.events.published.upcoming
 
-  def handle_category
-    @content = category_content
-
-    respond_with @content do |format|
-      format.html { render 'category/simple' }
-      format.xml { render 'category/feed' }
-    end
+    respond_with @category,
+      :template   => vertical_template(category: @category.slug),
+      :layout     => "new/vertical"
   end
 
 
   private
-
-  # All the content for this category, no excludes.
-  def category_content
-    @category_content ||= @category.content(
-      :page       => params[:page].to_i,
-      :per_page   => PER_PAGE
-    )
-  end
-
 
   # Get any content with this category, excluding the lead article,
   # and map them to articles
@@ -80,13 +76,15 @@ module CategoryHandler
     end
   end
 
+
+  # Get the featured blog's latest posts
   def vertical_blog_articles
-    return unless @category.featured_blog.present?
+    return unless @category.blog_id.present?
 
     @blog_articles ||= begin
       content_params = {
         :classes    => [BlogEntry],
-        :with       => { blog: @category.featured_blog.id },
+        :with       => { blog: @category.blog_id },
         :page       => 1,
         :per_page   => 2
       }
@@ -96,9 +94,11 @@ module CategoryHandler
     end
   end
 
+
   def vertical_marketplace_articles
-    NewsStory.where("source = ?", 'marketplace').published.first(2).map(&:to_article)
+    NewsStory.where(source: 'marketplace').published.first(2).map(&:to_article)
   end
+
 
   def vertical_template(options={})
     case options[:category]
