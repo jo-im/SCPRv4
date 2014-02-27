@@ -1,0 +1,87 @@
+<% cache_version = "v4" %>
+
+<% add_to_page_title @category.title %>
+<% meta_tags(url: @category.public_url) %>
+<% content_for :body_class, "landing #{@category.slug}" %>
+
+<%= cache ["categories/show", cache_version, @category] do %>
+
+<section class="headline">
+<% lead_article = @category.featured_articles.first %>
+<% if lead_article %>
+    <h1 class="bound"><span><%= link_to lead_article.short_title, lead_article.public_path %></span></h1>
+<% end %>
+</section>
+
+<div class="welcome bound clearfix">
+
+    <%= render 'shared/new/headline_content', lead_article: lead_article, cache_version: cache_version %>
+
+    <div class="ataglance clearfix affiliated">
+        <section class="latest">
+            <header class="clearfix">
+                <% if vertical_blog_articles.present? %>
+                    <h1>Latest from <%= @category.featured_blog.name %></h1>
+                    <%= link_to(@category.featured_blog.public_path) do %>
+                        Visit <span>the</span> blog
+                    <% end %>
+                <% end %>
+            </header>
+
+        <% articles = vertical_blog_articles %>
+        <%= cache ["categories/show", "latest-headlines", cache_version, articles] do %>
+            <%= render 'shared/new/latest_headlines', articles: articles %>
+        <% end %>
+
+        </section>
+
+    <% event = @events.first %>
+    <%= cache ["categories/show", "latest-events", cache_version, event] do %>
+        <section class="event">
+            <header class="clearfix">
+                <h1>Get Involved</h1>
+                <%= link_to(events_path) do %>
+                    All <span>upcoming</span> events
+                <% end %>
+            </header>
+
+            <% if event.present? %>
+                <div class="details clearfix">
+                    <div class="vitals">
+                        <h2><%= link_to event.headline, event.public_path %></h2>
+                        <h3><%= event.location_name %></h3>
+                        <h4><%= link_to 'More details', event.public_path %></h4>
+                    </div>
+                    <aside class="date">
+                        <em><%= event.starts_at.day %></em>
+                        <span><%= event.starts_at.strftime('%b') %></span>
+                    </aside>
+                </div>
+            <% end %>
+        </section>
+    <% end %>
+
+        <aside class="crawford">
+            <header>
+                <h1><%= @category.title %> Events at KPCC</h1>
+            </header>
+            <p>KPCC hosts free events that open dialogue and deepen the understanding of vital issues affecting Southern California. <%= link_to 'See our in-studio events.', forum_events_path %></p>
+        </aside>
+    </div><!--/ .ataglance -->
+</div><!--/ .welcome -->
+
+
+<%= render 'shared/new/resources', category: @category, cache_version: cache_version %>
+<%= render 'shared/new/lunchbox', category: @category, cache_version: cache_version, quotes: @quotes, events: @events %>
+
+<% articles = Array(vertical_articles) %>
+<%# We add category.title to the cache key since that's the only category-specific
+information we depend on inside of this cache block. %>
+<%= cache ["categories/show", "recent-coverage", cache_version, @category.title, articles] do %>
+    <%= render 'shared/new/triptych', articles: Array(articles[0..2]), header: "Recent #{@category.title} Coverage" %>
+    <%= safe_render("verticals/#{@category.slug.underscore}/middle_ad") || render('shared/new/kpcc_ipad_ad') %>
+    <%= render 'shared/new/quadrant', articles: Array(articles[3..6]), header: "" %>
+    <%= render 'shared/new/waterfall', category: @category, cache_version: cache_version, articles: articles %>
+<% end %> <%# cache %>
+
+<% end %>

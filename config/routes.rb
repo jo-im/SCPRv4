@@ -13,6 +13,14 @@ Scprv4::Application.routes.draw do
   get '/news/'                                       => 'category#news',              as: :latest_news
   get '/arts-life/'                                  => 'category#arts',              as: :latest_arts
 
+  # Special root-level Verticals
+  # Verticals will still work if they're not here,
+  # they'll just get the default behavior
+  get 'politics' => 'verticals#politics'
+  get 'education' => 'verticals#education'
+  get 'business' => 'verticals#business'
+
+
   # RSS
   match '/feeds/all_news' => 'feeds#all_news', as: :all_news_feed
   match '/feeds/*feed_path', to: redirect { |params, request| "/#{params[:feed_path]}.xml" }
