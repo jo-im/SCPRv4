@@ -9,9 +9,8 @@
         <nav>
             <ul class="clearfix">
 
-        <% articles = category.featured_articles[1..4] %>
-        <%= cache ["categories/show", "resources", cache_version, articles] do %>
-            <%- Array(articles).each do |article| %>
+        <%= cache ["categories/show", "resources", 'v1', articles] do %>
+            <% articles.each do |article| %>
                 <li>
                     <%= link_to(article.public_path) do %>
                         <figure class="clearfix">

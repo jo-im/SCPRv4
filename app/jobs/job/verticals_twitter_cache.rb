@@ -7,7 +7,7 @@ module Job
 
     class << self
       def perform
-        Category.where(is_active: true).each do |category|
+        Category.where(slug: Category::VERTICALS).each do |category|
           tweet_list = []
 
           category.bios

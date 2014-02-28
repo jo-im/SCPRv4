@@ -14,12 +14,9 @@ Scprv4::Application.routes.draw do
   get '/arts-life/'                                  => 'category#arts',              as: :latest_arts
 
   # Special root-level Verticals
-  # Verticals will still work if they're not here,
-  # they'll just get the default behavior
-  get 'politics' => 'verticals#politics'
-  get 'education' => 'verticals#education'
-  get 'business' => 'verticals#business'
-
+  Category::VERTICALS.each do |slug|
+    get slug => "verticals##{slug}"
+  end
 
   # RSS
   match '/feeds/all_news' => 'feeds#all_news', as: :all_news_feed

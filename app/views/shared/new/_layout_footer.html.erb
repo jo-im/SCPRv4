@@ -109,9 +109,7 @@
         </div><!--/ .inner -->
     </div><!--/ .cols -->
 
-    <% if @category %>
-    <%= safe_render "verticals/#{@category.slug.underscore}/footer_sponsors" %>
-    <% end %>
+    <%= content_for :footer_sponsors %>
 
     <div class="lastwords bound">
         <aside class="partners">

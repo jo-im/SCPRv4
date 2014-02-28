@@ -1,1 +1,57 @@
-<%= render template: 'show' %>
+<% content_for :footer_sponsors do %>
+<aside class="grant">
+    <div class="inner bound">
+        <h1>KPCC's education coverage is funded in part by:</h1>
+        <ul>
+            <li class="cpb">Corporation for Public Broadcasting</li>
+            <li>Rosenthal Family Foundation</li>
+            <li>The Atlas Family Foundation</li>
+            <li>Baby Futures Fund of the California Community Foundation</li>
+            <li>The Carl and Roberta Deutsch Foundation</li>
+            <li>Tikun Olam Foundation</li>
+        </ul>
+    </div>
+</aside>
+<% end %>
+
+
+
+<% content_for :masthead_ad do %>
+<div class="partner">
+    <h3><a href="http://laup.net/" title="Los Angeles Universal Preschool">
+        <span>Presented by Los Angeles Universal Preschool.</span>
+        <b class="img"><img src="<%= image_path('sponsor-assets/laup-logo.png') %>" alt="LAUP logo" /></b></a>
+    </h3>
+</div>
+<% end %>
+
+
+
+<% content_for :middle_ad do %>
+<aside class="interstitial laup">
+    <header class="disclaimer">
+        <p class="bound">Sponsor</p>
+    </header>
+    <div class="message">
+        <div class="inner bound">
+            <a href="http://laup.net" title="Los Angeles Universal Preschool">
+                <h1>We believe all children deserve the best start in life, and a quality preschool education provides all children the springboard to success.</h1>
+                <figure class="secondary">
+                    <b class="logo"><img src="<%= image_path('sponsor-assets/laup-logo-full.png') %>" alt="LAUP logo" /></b>
+                    <figcaption>LAUP is a non-profit organization providing high-quality preschool education to the children of Los Angeles County.</figcaption>
+                </figure>
+                <figure class="photo">
+                    <img src="<%= image_path('sponsor-assets/laup-photo-headphones.png') %>" alt="Photograph of LAUP student with teacher" />
+                </figure>
+                <mark class="outbound"><span>Learn More</span></mark>
+            </a>
+        </div>
+    </div>
+    <footer class="plug">
+        <p class="bound"><a href="/support/underwriting/">Become a KPCC sponsor.</a></p>
+    </footer>
+</aside><!--/ .interstitial -->
+<% end %>
+
+
+<%= render template: 'verticals/default' %>
