@@ -18,7 +18,7 @@ class RecurringScheduleRule < ActiveRecord::Base
   include Concern::Callbacks::SphinxIndexCallback
 
   DEFAULT_DURATION          = 1.month
-  DEFAULT_PURGE_THRESHOLD   = 1.month.ago
+  DEFAULT_PURGE_THRESHOLD   = 1.month
   DEFAULT_INTERVAL          = 1
 
   # Define a custom DAYS array so we can control the order.
@@ -109,7 +109,7 @@ class RecurringScheduleRule < ActiveRecord::Base
 
 
   def purge_past_occurrences(threshold = nil)
-    threshold ||= DEFAULT_PURGE_THRESHOLD
+    threshold ||= DEFAULT_PURGE_THRESHOLD.ago
     self.schedule_occurrences.before(threshold).destroy_all
   end
 
