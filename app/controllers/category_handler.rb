@@ -1,6 +1,8 @@
 module CategoryHandler
   extend ActiveSupport::Concern
 
+  PER_PAGE = 16
+
   # Simple category handler.
   def handle_category
     @content = @category.content(
