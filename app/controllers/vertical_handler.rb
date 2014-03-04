@@ -3,40 +3,52 @@
 # To enable a vertical, add its slug to Category::VERTICALS
 
 class VerticalsController < NewApplicationController
-  layout 'new/vertical'
-
   PER_PAGE = 16
 
-
   # /politics
-  def politics
-    @category   = Category.find_by_slug!('politics')
+  def handle_vertical_politics
+    @category   = Category.find_by_slug('politics')
     @blog       = Blog.find_by_slug('politics')
-    @quotes     = @category.quotes.published
+    @quote      = @vertical.quote
     @events     = @category.events.published.upcoming
+
+    render(
+      :layout     => 'news/verticals',
+      :template   => 'verticals/politics'
+    )
   end
 
 
   # /education
-  def education
+  def handle_vertical_education
     @category   = Category.find_by_slug!('education')
     @blog       = Blog.find_by_slug('education')
-    @quotes     = @category.quotes.published
-    @events     = @category.events.published.upcoming
+    @quotes     = @vertical.quotes.published
+    @events     = @vertical.events.published.upcoming
+
+    render(
+      :layout     => 'news/verticals',
+      :template   => 'verticals/education'
+    )
   end
 
 
   # /business
-  def business
+  def handle_vertical_business
     @category   = Category.find_by_slug!('money')
     @blog       = Blog.find_by_slug('economy')
-    @quotes     = @category.quotes.published
-    @events     = @category.events.published.upcoming
+    @quotes     = @vertical.quotes.published
+    @events     = @vertical.events.published.upcoming
 
     # Business vertical needs to also show Marketplace stories,
     # but we don't have a marketplace blog or anything like that,
     # so we'll just pull in news stories with the "marketplace" source.
     @marketplace_articles = NewsStory.where(source: 'marketplace').published
+
+    render(
+      :layout     => 'news/verticals',
+      :template   => 'verticals/business'
+    )
   end
 
 

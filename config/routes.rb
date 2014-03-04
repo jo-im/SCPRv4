@@ -13,11 +13,6 @@ Scprv4::Application.routes.draw do
   get '/news/'                                       => 'category#news',              as: :latest_news
   get '/arts-life/'                                  => 'category#arts',              as: :latest_arts
 
-  # Special root-level Verticals
-  Category::VERTICALS.each do |slug|
-    get slug => "verticals##{slug}"
-  end
-
   # RSS
   match '/feeds/all_news' => 'feeds#all_news', as: :all_news_feed
   match '/feeds/*feed_path', to: redirect { |params, request| "/#{params[:feed_path]}.xml" }

@@ -1,5 +1,6 @@
 class RootPathController < ApplicationController
   include FlatpageHandler
+  include VerticalHandler
   include CategoryHandler
 
   respond_to :html, :xml, :rss
@@ -22,6 +23,10 @@ class RootPathController < ApplicationController
 
     # Only do the gsubbing if necessary
     slug = path.gsub(/\A\/?(.+)\/?\z/, "\\1").downcase
+
+    if @vertical = Vertical.find_by_slug(slug)
+      send("handle_vertical_#{slug}") and return
+    end
 
     if @category = Category.find_by_slug(slug)
       handle_category and return
