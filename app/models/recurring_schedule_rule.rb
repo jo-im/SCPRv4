@@ -17,9 +17,7 @@ class RecurringScheduleRule < ActiveRecord::Base
   include Concern::Associations::PolymorphicProgramAssociation
   include Concern::Callbacks::SphinxIndexCallback
 
-  DEFAULT_DURATION          = 1.month
-  DEFAULT_PURGE_THRESHOLD   = 1.month.ago
-  DEFAULT_INTERVAL          = 1
+  DEFAULT_INTERVAL = 1
 
   # Define a custom DAYS array so we can control the order.
   DAYS = [
@@ -47,7 +45,9 @@ class RecurringScheduleRule < ActiveRecord::Base
 
 
   before_save :build_schedule, if: :rule_changed?
-  before_create :build_occurrences, if: -> { self.schedule_occurrences.blank? }
+
+  before_create :build_occurrences_through_next_month,
+    :if => -> { self.schedule_occurrences.blank? }
   before_update :rebuild_occurrences, if: :rule_changed?
 
   # If they only updated the program, but not the rule, then we should fire
@@ -107,21 +107,13 @@ class RecurringScheduleRule < ActiveRecord::Base
   end
 
 
-  def purge_past_occurrences(threshold = nil)
-    threshold ||= DEFAULT_PURGE_THRESHOLD
-    self.schedule_occurrences.before(threshold).destroy_all
-  end
-
-
   # Build a block of occurrences of this rule.
   # This denormalization allows us to easily query for blocks of
   # schedule.
   #
   # Options:
-  # * start_date - the date to start building
-  #                default: now
-  # * end_date   - the date to end building.
-  #                default: start_date + 1 month
+  # * start_date - the date to start building (required)
+  # * end_date   - the date to end building (required)
   #
   # Building events should be staggered.
   # You should build a month's worth of schedule,
@@ -141,23 +133,12 @@ class RecurringScheduleRule < ActiveRecord::Base
   # or lazily if you're feeling ambitious.
   #
   # By default (with no options passed in), this will build
-  # a month worth of schedule starting at the occurrence following
-  # the last one built (or now if none exist).
+  # a month worth of schedule starting now.
   #
   # Changing past occurrences is not recommneded. But, do whatever you
   # want. I'm just some words in a file. You don't have to listen to me.
-  def build_occurrences(options = {})
-    start_date  = options[:start_date] || Time.now
-    end_date    = options[:end_date] || (start_date + DEFAULT_DURATION)
-
+  def build_occurrences(start_date:, end_date:)
     existing = existing_occurrences_between(start_date, end_date)
-
-    # Destroy existing occurrences inside the range
-    # if a rebuild was requested.
-    if options[:rebuild]
-      existing.each_value { |o| o.destroy }
-      existing = {}
-    end
 
     # We don't want to duplicate occurrences that already exist
     # for this rule.
@@ -175,30 +156,60 @@ class RecurringScheduleRule < ActiveRecord::Base
     self.schedule_occurrences
   end
 
-
-  # Convenience methods for building/creating
-
   # Build and save
-  def create_occurrences(options = {})
-    build_occurrences(options)
+  def create_occurrences(args={})
+    build_occurrences(args)
     self.save
   end
 
-  # Rebuild, but do not save
-  def rebuild_occurrences(options = {})
-    options[:rebuild] = true
-    build_occurrences(options)
-  end
-
   # Rebuild and save
-  def recreate_occurrences(options = {})
-    options[:rebuild] = true
-    create_occurrences(options)
+  def recreate_occurrences(args={})
+    rebuild_occurrences(args)
+    self.save
   end
-
 
 
   private
+
+  # When a rule changes, we should just ditch all future occurrences of this
+  # rule, and then rebuild from scratch. If a rule is changed
+  # in the middle of a month, build_occurrences will only update a month's
+  # worth of schedule occurrences, but we're building 2 months ahead of
+  # time, so there will be some lingering occurrences that are no longer valid.
+  #
+  # For example (this actually happened):
+  # On February 1st, the schedule is automatically populated for March by
+  # a rake task. On Februrary 3rd, Colin changes the start time for a recurring
+  # rule. This causes all occurrences between February 3rd and
+  # March 3rd (1 month, the default duration) to be wiped out to make room
+  # for the updated occurrences. But now March 3rd-March 31st still have these
+  # incorrect occurrences. Even worse, they won't get fixed by the rake rask,
+  # because the rake task no longer cares about March... the next time it runs
+  # it will be for April.
+  #
+  # Now, unfortunately we have to keep the full schedule in sync with the
+  # cron job that gets run monthly. On the first of each month, it builds
+  # next month's schedule. If we destroy all future occurrences, and then
+  # rebuild a month's worth from NOW, then come the middle of next month,
+  # this rule will disappear from the schedule.
+  #
+  # How could we fix this hacky circumstance?
+  # Lazily build the schedule, instead of building via cron job. This would
+  # pretty much let us just delete all future occurrences whenever a rule
+  # is changed, and let it be rebuilt as necessary. In some ways it's more
+  # simple, but in many ways it's far more complicated.
+  def rebuild_occurrences(args={})
+    self.schedule_occurrences.future.destroy_all
+    build_occurrences_through_next_month(args)
+  end
+
+  def build_occurrences_through_next_month(args={})
+    args[:start_date] = Time.now
+    args[:end_date]   = 1.month.from_now.end_of_month
+
+    build_occurrences(args)
+  end
+
 
   # For the form...
   def program_is_present
