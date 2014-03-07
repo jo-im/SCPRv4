@@ -81,7 +81,7 @@ module ContentBase
     options[:with].reverse_merge!(is_live: true)
 
     begin
-      ThinkingSphinx.search(query, options)
+      ThinkingSphinx.search(Riddle::Query.escape(query), options)
     rescue  Riddle::ConnectionError,
             Riddle::ResponseError,
             ThinkingSphinx::SphinxError => e

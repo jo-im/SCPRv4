@@ -12,7 +12,7 @@ module Concern
       def search
         breadcrumb "Search"
 
-        @records = model.search(params[:query], {
+        @records = model.search(Riddle::Query.escape(params[:query].to_s), {
           :page     => params[:page] || 1,
           :per_page => 50
           }.merge(search_params)
