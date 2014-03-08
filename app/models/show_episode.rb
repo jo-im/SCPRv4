@@ -68,13 +68,6 @@ class ShowEpisode < ActiveRecord::Base
     :foreign_key    => "episode_id",
     :dependent      => :destroy
 
-  has_many :segments,
-    :class_name     => "ShowSegment",
-    :foreign_key    => "segment_id",
-    :through        => :rundowns,
-    :order          => "position"
-
-
   accepts_json_input_for :rundowns
   tracks_association :rundowns
 
@@ -100,6 +93,15 @@ class ShowEpisode < ActiveRecord::Base
 
   def publish
     self.update_attributes(status: self.class.status_id(:live))
+  end
+
+
+  def content
+    self.rundowns.map(&:content)
+  end
+
+  def articles
+    self.rundowns.map { |r| r.content.to_article }
   end
 
 
@@ -143,7 +145,7 @@ class ShowEpisode < ActiveRecord::Base
       :assets             => self.assets,
       :audio              => self.audio.available,
       :program            => self.show.to_program,
-      :segments           => self.segments.published.map(&:to_article)
+      :segments           => self.articles
     })
   end
 
@@ -157,12 +159,10 @@ class ShowEpisode < ActiveRecord::Base
     end
   end
 
-  def build_rundown_association(rundown_hash, segment)
-    if segment.is_a? ShowSegment
-      ShowRundown.new(
-        :position => rundown_hash["position"].to_i,
-        :segment  => segment
-      )
-    end
+  def build_rundown_association(rundown_hash, content)
+    ShowRundown.new(
+      :position => rundown_hash["position"].to_i,
+      :content  => content
+    )
   end
 end

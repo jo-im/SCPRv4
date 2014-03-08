@@ -45,7 +45,7 @@ class ShowSegment < ActiveRecord::Base
 
   has_many :rundowns,
     :class_name     => "ShowRundown",
-    :foreign_key    => "segment_id",
+    :as             => :content,
     :dependent      => :destroy
 
   has_many :episodes,
@@ -64,19 +64,6 @@ class ShowSegment < ActiveRecord::Base
 
   def episode
     @episode ||= episodes.first
-  end
-
-
-  def sister_segments
-    @sister_segments ||= begin
-      if episodes.present?
-        episode.segments.published
-          .where("shows_segment.id != ?", self.id)
-      else
-        show.segments.published
-          .where("shows_segment.id != ?", self.id).limit(5)
-      end
-    end
   end
 
 

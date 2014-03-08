@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140204193814) do
+ActiveRecord::Schema.define(:version => 20140307200121) do
 
   create_table "abstracts", :force => true do |t|
     t.string   "source"
@@ -786,14 +786,15 @@ ActiveRecord::Schema.define(:version => 20140204193814) do
   add_index "shows_episode", ["status"], :name => "index_shows_episode_on_status"
 
   create_table "shows_rundown", :force => true do |t|
-    t.integer "episode_id", :null => false
-    t.integer "segment_id", :null => false
-    t.integer "position",   :null => false
+    t.integer "episode_id",   :null => false
+    t.integer "content_id",   :null => false
+    t.integer "position",     :null => false
+    t.string  "content_type"
   end
 
+  add_index "shows_rundown", ["content_type", "content_id"], :name => "index_shows_rundown_on_content_type_and_content_id"
   add_index "shows_rundown", ["episode_id"], :name => "shows_rundown_episode_id"
   add_index "shows_rundown", ["position"], :name => "index_shows_rundown_on_segment_order"
-  add_index "shows_rundown", ["segment_id"], :name => "shows_rundown_segment_id"
 
   create_table "shows_segment", :force => true do |t|
     t.integer  "show_id",                                :null => false
