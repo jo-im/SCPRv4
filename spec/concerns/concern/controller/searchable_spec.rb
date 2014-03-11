@@ -29,4 +29,14 @@ describe Concern::Controller::Searchable, type: :controller do
       assigns(:records).to_a.should eq [article]
     end
   end
+
+  it 'allows special characters' do
+    article = create :test_class_story, body: "tinker / tailor"
+    index_sphinx("test_class_story_core")
+
+    ts_retry(2) do
+      get :search, query: "tinker / tailor"
+      assigns(:records).should eq [article]
+    end
+  end
 end
