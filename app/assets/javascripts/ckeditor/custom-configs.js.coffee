@@ -14,7 +14,7 @@ $ ->
             "strong", "em", "small",
             "u", "s", "i", "b",
             "blockquote",
-            "div[data-href]", # data-href is for facebook embeds
+            "div[*]",
             "ul", "ol", "li",
             "hr",
             "h1", "h2", "h3", "h4", "h5", "h6",
