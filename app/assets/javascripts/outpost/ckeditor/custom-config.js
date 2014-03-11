@@ -18,7 +18,7 @@ $(function() {
       "i",
       "b",
       "blockquote",
-      "div[data-href]",
+      "div[*]",
       "ul",
       "ol",
       "li",
