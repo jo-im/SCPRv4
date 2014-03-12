@@ -1,4 +1,19 @@
 GIT
+  remote: git://github.com/PRX/pmp.git
+  revision: 7166b324911b1d3d57a7058e6bc77d1b27078e39
+  ref: 7166b324911b1d3d57a7058e6bc77d1b27078e39
+  specs:
+    pmp (0.2.4)
+      activesupport
+      excon
+      faraday
+      faraday_middleware
+      hashie
+      multi_json
+      oauth2
+      uri_template
+
+GIT
   remote: git://github.com/SCPR/asset_host_client.git
   revision: 8b54cd1ea506ceddc42cea835b672ecb97e0891c
   specs:
@@ -186,7 +201,7 @@ GEM
     eco-source (1.1.0.rc.1)
     erubis (2.7.0)
     escape_utils (1.0.1)
-    excon (0.31.0)
+    excon (0.32.0)
     execjs (2.0.2)
     factory_girl (4.4.0)
       activesupport (>= 3.0.0)
@@ -273,15 +288,6 @@ GEM
       iron_mq
       patron
     patron (0.4.18)
-    pmp (0.2.4)
-      activesupport
-      excon
-      faraday
-      faraday_middleware
-      hashie
-      multi_json
-      oauth2
-      uri_template
     polyglot (0.3.4)
     postmark (1.1.0)
       json
@@ -467,7 +473,7 @@ DEPENDENCIES
   outpost-cms!
   outpost-publishing!
   parse-ruby-client (~> 0.1.15)
-  pmp (~> 0.2.4)
+  pmp!
   postmark-rails (~> 0.6.0)
   pry
   rails (~> 3.2)
