@@ -97,7 +97,7 @@ RSpec.configure do |config|
       :content_type => "application/json"
     })
 
-    stub_request(:get, %r{scpr\.org/.+/\.mp3\z}).to_return({
+    stub_request(:get, %r|scpr\.org/.+\.mp3\z|).to_return({
       :content_type => 'audio/mpeg',
       :body         => load_fixture('media/audio/2sec.mp3')
     })
