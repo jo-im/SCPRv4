@@ -156,6 +156,13 @@ $(document).ready(function(){
       $('#homepageModal').modal();
     }
   }, 1000);
+
+  var visualCampaign = new scpr.VisualCampaign({
+    endpoint: "http://127.0.0.1:3001/api/v1/visual_campaigns",
+    key: "pledge"
+  });
+
+  visualCampaign.fetch();
 });
 </script>
 <% end %>

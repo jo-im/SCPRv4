@@ -32,6 +32,7 @@
 //= require megamenu
 //= require smart_time
 //= require event_tracking
+//= require visual_campaign
 //= require open_popup
 //= require utilities
 //= require collapse
