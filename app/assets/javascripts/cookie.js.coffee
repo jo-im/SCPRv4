@@ -11,4 +11,4 @@ class scpr.Cookie
 
     @get: (name) ->
         match = document.cookie.match(new RegExp("#{name}=([^;]+)"))
-        return m[1] if (match)
+        return match[1] if (match)
