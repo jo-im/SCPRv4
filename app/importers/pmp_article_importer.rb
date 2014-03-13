@@ -132,7 +132,7 @@ module PmpArticleImporter
                 #   Marketplace to ship off to Slacker and other distributors"
                 article.audio.build(
                   :url            => meta['http_file_path'],
-                  :duration       => meta['duration'],
+                  :duration       => meta['duration'].to_i / 1000,
                   :description    => meta['title'],
                   :byline         => "APM",
                   :position       => i
