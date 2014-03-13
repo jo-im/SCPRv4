@@ -3,6 +3,8 @@
 <body>
 
 <div class="viewport">
+  <div id="pledge-pushdown"></div>
+
   <!-- MASTHEAD-->
   <%= render "/shared/masthead/layout_header" %>
 
@@ -157,12 +159,19 @@ $(document).ready(function(){
     }
   }, 1000);
 
-  var visualCampaign = new scpr.VisualCampaign({
-    endpoint: "http://127.0.0.1:3001/api/v1/visual_campaigns",
-    key: "pledge"
-  });
+  // Load pledge pushdown
+  if (scpr.Cookie.get('adClosed') == null) {
+    var visualCampaign = new scpr.VisualCampaign({
+      endpoint: "http://adhost.scpr.org:3001/api/v1/visual_campaigns",
+      key: "pledge",
+      success: function(markup) {
+        $("#pledge-pushdown").html(markup)
+      }
+    });
 
-  visualCampaign.fetch();
+    visualCampaign.fetch();
+  }
+
 });
 </script>
 <% end %>

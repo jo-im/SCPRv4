@@ -3,10 +3,12 @@ class scpr.VisualCampaign
         return
 
     fetch: ->
+        return if scpr.Cookie.get("adClosed") == "1"
+
         $.ajax
             type        : "GET"
             url         : @options.endpoint + "/" + @options.key
             dataType    : "json"
 
-            complete: (xhr, status) ->
-                console.log "got it: ", status
+            success: (data, textStatus, jqXHR) =>
+                @options.success(data['visual_campaign']['markup'])
