@@ -7,6 +7,11 @@ module PmpArticleImporter
   PROFILE   = "story"
   LIMIT     = 10
 
+  PROFILES = {
+    :image => "APMImage",
+    :audio => "APMAudio"
+  }
+
   class << self
     include ::NewRelic::Agent::Instrumentation::ControllerInstrumentation
 
@@ -29,7 +34,7 @@ module PmpArticleImporter
           :headline     => story.title,
           :teaser       => story.teaser,
           :published_at => Time.parse(story.published),
-          :url          => story.alternate.try(:href),
+          :url          => story.alternate.first.try(:href),
           :is_new       => true
         )
 
@@ -85,7 +90,7 @@ module PmpArticleImporter
       # Is "alternate" always going to be a usable link?
       # I guess we'll find out eventually.
       # For now it seems that it's used to point to the live article.
-      link = pmp_story.alternate
+      link = pmp_story.alternate.first
       if link && link.href
         related_link = RelatedLink.new(
           :link_type    => "website",
@@ -97,57 +102,83 @@ module PmpArticleImporter
       end
 
       if pmp_story.items.present?
+        image = pmp_story.items.find do |i|
+          i.profile.first.title == PROFILES[:image]
+        end
+
+        audio = pmp_story.items.find do |i|
+          i.profile.first.title == PROFILES[:audio]
+        end
+
         # If we have an enclosure node, extract audio and assets from it.
-        # Sometimes it's an array and sometimes it's not.
-        # We're using Array.wrap here because it doesn't work with just Array()
-        enclosure = Array.wrap(pmp_story.items.first.enclosure)
-        if !enclosure.empty?
-          # Audio
-          audio = enclosure.select do |e|
-            e.type.match /audio/
-          end
+        # Import Audio
+        if audio
+          audios = Array(audio.enclosure)
 
-          audio.each_with_index do |remote_audio, i|
-            url = remote_audio.href.gsub(
-              "apm-audio:", "http://download.publicradio.org/podcast")
+          if !audios.empty?
+            audios.each_with_index do |remote_audio, i|
+              href    = remote_audio.href
+              api_url = remote_audio.meta['api']['href']
 
-            article.audio.build(
-              :url            => url,
-              :description    => pmp_story.title,
-              :byline         => "APM",
-              :position       => i
-            )
-          end
+              audio_data = JSON.parse(open(api_url).read)
 
-          # Asset
-          images = enclosure.select do |e|
-            e.type.match(/image/)
-          end
+              # Podcast audio isn't always available. In this case we
+              # should just not import any audio.
+              if meta = audio_data[href]['podcast']
+                # Using "title" for description here because the "description"
+                # property seems to be an internal description, like:
+                #
+                #   "A 'show' containing all the individual segments for
+                #   Marketplace to ship off to Slacker and other distributors"
+                article.audio.build(
+                  :url            => meta['http_file_path'],
+                  :duration       => meta['duration'].to_i / 1000,
+                  :description    => meta['title'],
+                  :byline         => "APM",
+                  :position       => i
+                )
+              end
+            end
+          end # audios
+        end # audio
 
-          # Get the image designated as "primary". If none exists,
-          # then get the widest one.
-          primary_image = images.find { |i| i.meta["crop"] == "primary" } ||
-            images.max { |a, b| a.meta["width"].to_i <=> b.meta["width"].to_i }
+        # Import Primary Image
+        # We're doing this last since it hits an external API... we don't
+        # want the images to be uploaded and saved if the story isn't going
+        # to be imported all the way (due to error).
+        if image
+          images = Array(image.enclosure)
 
-          if primary_image
-            asset = AssetHost::Asset.create(
-              :url     => primary_image.href,
-              :title   => pmp_story.title,
-              :owner   => "Marketplace",
-              :note    => "Imported from PMP: #{pmp_story.guid}"
-            )
+          if !images.empty?
+            # Get the image designated as "primary". If none exists,
+            # then get the widest one.
+            primary_image = images.find { |i| i.meta["crop"] == "primary" }
+            primary_image ||= images.max do |a, b|
+              a.meta["width"].to_i <=> b.meta["width"].to_i
+            end
 
-            if asset && asset.id
-              content_asset = ContentAsset.new(
-                :position   => 0,
-                :asset_id   => asset.id,
-                :caption => "" # To avoid 'doesn't have a default value' err
+            if primary_image
+              asset = AssetHost::Asset.create(
+                :url     => primary_image.href,
+                :title   => pmp_story.title,
+                :owner   => "Marketplace",
+                :note    => "Imported from PMP: #{pmp_story.guid}"
               )
 
-              article.assets << content_asset
-            end
-          end
-        end # /enclosure
+              if asset && asset.id
+                content_asset = ContentAsset.new(
+                  :position   => 0,
+                  :asset_id   => asset.id,
+                  :caption => "" # To avoid 'doesn't have a default value' err
+                )
+
+                article.assets << content_asset
+              end
+            end # primary_image
+
+          end # images
+        end # image
+
       end # / pmp.items
 
       # Save the news story (including all associations),

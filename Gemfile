@@ -64,7 +64,7 @@ gem "oauth2", "~> 0.8"
 gem 'postmark-rails', "~> 0.6.0"
 gem 'newrelic_rpm', '~> 3.7'
 gem 'parse-ruby-client', '~> 0.1.15'
-gem 'pmp', '~> 0.2.4'
+gem 'pmp', github: "PRX/pmp", ref: "7166b324911b1d3d57a7058e6bc77d1b27078e39"
 gem 'npr', github: "bricker/npr"
 #gem 'npr', path: "#{ENV['PROJECT_HOME']}/npr"
 gem 'asset_host_client', github: "SCPR/asset_host_client"
