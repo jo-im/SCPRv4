@@ -121,20 +121,23 @@ module PmpArticleImporter
               api_url = remote_audio.meta['api']['href']
 
               audio_data = JSON.parse(open(api_url).read)
-              meta = audio_data[href]['podcast']
 
-              # Using "title" for description here because the "description"
-              # property seems to be an internal description, like:
-              #
-              #   "A 'show' containing all the individual segments for
-              #   Marketplace to ship off to Slacker and other distributors"
-              article.audio.build(
-                :url            => meta['http_file_path'],
-                :duration       => meta['duration'],
-                :description    => meta['title'],
-                :byline         => "APM",
-                :position       => i
-              )
+              # Podcast audio isn't always available. In this case we
+              # should just not import any audio.
+              if meta = audio_data[href]['podcast']
+                # Using "title" for description here because the "description"
+                # property seems to be an internal description, like:
+                #
+                #   "A 'show' containing all the individual segments for
+                #   Marketplace to ship off to Slacker and other distributors"
+                article.audio.build(
+                  :url            => meta['http_file_path'],
+                  :duration       => meta['duration'],
+                  :description    => meta['title'],
+                  :byline         => "APM",
+                  :position       => i
+                )
+              end
             end
           end # audios
         end # audio
