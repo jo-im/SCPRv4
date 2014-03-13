@@ -165,13 +165,19 @@ $(document).ready(function(){
       endpoint: "http://adhost.scpr.org:3001/api/v1/visual_campaigns",
       key: "pledge",
       success: function(markup) {
-        $("#pledge-pushdown").html(markup)
+        $("#pledge-pushdown").prepend(markup)
+
+        $("#pledge-hide").on({
+          click: function(evt){
+            $('#pledge-pushdown').hide();
+            scpr.Cookie.set("adClosed", "1", 60*60*24)
+          }
+        });
       }
     });
 
     visualCampaign.fetch();
   }
-
 });
 </script>
 <% end %>
