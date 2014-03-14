@@ -162,7 +162,7 @@ $(document).ready(function(){
   // Load pledge pushdown
   if (scpr.Cookie.get('adClosed') == null) {
     var visualCampaign = new scpr.VisualCampaign({
-      endpoint: "http://adhost.scpr.org:3001/api/v1/visual_campaigns",
+      endpoint: "http://audiobox.scprdev.org/api/v1/visual_campaigns",
       key: "pledge",
       success: function(markup) {
         $("#pledge-pushdown").prepend(markup)
