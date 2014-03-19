@@ -11,23 +11,9 @@ class AdminUser < ActiveRecord::Base
 
   self.unversioned_attributes = ['password_digest']
 
-  # ----------------
-  # Callbacks
   before_validation :generate_username,
     :on => :create,
     :if => -> { self.username.blank? }
-
-  # ----------------
-  # Validation
-
-  # ----------------
-  # Scopes
-
-  # ----------------
-  # Association
-  has_many :activities,
-    :class_name     => "Secretary::Version",
-    :foreign_key    => "user_id"
 
   has_one  :bio, foreign_key: "user_id"
 

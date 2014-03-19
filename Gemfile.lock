@@ -58,12 +58,21 @@ GIT
     outpost-publishing (1.0.0)
 
 GIT
+  remote: git://github.com/SCPR/outpost-secretary.git
+  revision: 52e3b5ce299961bb82b712ea1670ad1f995a7ff8
+  specs:
+    outpost-secretary (0.0.1)
+      outpost-cms
+      secretary-rails
+
+GIT
   remote: git://github.com/SCPR/outpost.git
-  revision: fcbd66798e4c5938741b6c837ead393028fef3a3
+  revision: feb460d874b2d9d5b8218bb9557478b1f0c49f3f
   specs:
     outpost-cms (0.0.5)
       bcrypt-ruby (>= 3.0.0, < 4)
       jquery-rails (~> 3.0)
+      kaminari (~> 0.15.1)
       rails (>= 3.2, < 5)
       select2-rails (= 3.4.1)
 
@@ -262,7 +271,7 @@ GEM
     mime-types (1.25.1)
     mini_portile (0.5.2)
     mono_logger (1.1.0)
-    multi_json (1.8.4)
+    multi_json (1.9.1)
     multi_xml (0.5.5)
     multipart-post (1.2.0)
     mysql2 (0.3.15)
@@ -370,7 +379,7 @@ GEM
     safe_yaml (1.0.1)
     sanitize (2.1.0)
       nokogiri (>= 1.4.4)
-    sass (3.2.14)
+    sass (3.3.3)
     sass-rails (3.2.6)
       railties (~> 3.2.0)
       sass (>= 3.1.10)
@@ -417,7 +426,7 @@ GEM
       simple_oauth (~> 0.2)
     twitter-text (1.7.0)
       unf (~> 0.1.0)
-    tzinfo (0.3.38)
+    tzinfo (0.3.39)
     uglifier (2.4.0)
       execjs (>= 0.3.0)
       json (>= 1.8.0)
@@ -472,6 +481,7 @@ DEPENDENCIES
   outpost-asset_host!
   outpost-cms!
   outpost-publishing!
+  outpost-secretary!
   parse-ruby-client (~> 0.1.15)
   pmp!
   postmark-rails (~> 0.6.0)

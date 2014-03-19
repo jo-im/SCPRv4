@@ -26,6 +26,9 @@ gem 'outpost-aggregator', github: "SCPR/outpost-aggregator"
 gem 'secretary-rails', github: "SCPR/secretary-rails"
 # gem 'secretary-rails', path: "#{ENV['PROJECT_HOME']}/secretary-rails"
 
+gem 'outpost-secretary', github: "SCPR/outpost-secretary"
+# gem 'outpost-secretary', path: "#{ENV['PROJECT_HOME']}/outpost-secretary"
+
 
 ## Cache
 gem 'redis-content-store', github: "SCPR/redis-content-store"
