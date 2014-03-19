@@ -79,7 +79,6 @@ group :assets do
   gem "eco", "~> 1.0"
   gem 'sass-rails', "~> 3.2"
   gem 'bootstrap-sass', '~> 2.2'
-  gem "compass-rails"
   gem 'coffee-rails', "~> 3.2"
   gem 'uglifier', '>= 1.3'
 end

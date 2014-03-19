@@ -59,7 +59,7 @@ GIT
 
 GIT
   remote: git://github.com/SCPR/outpost-secretary.git
-  revision: 52e3b5ce299961bb82b712ea1670ad1f995a7ff8
+  revision: 1519c0064c65d1f12afd7771a9479e6be6e39408
   specs:
     outpost-secretary (0.0.1)
       outpost-cms
@@ -176,7 +176,6 @@ GEM
       activemodel (>= 3.2.0)
       activesupport (>= 3.2.0)
       json (>= 1.7)
-    chunky_png (1.3.0)
     ckeditor_rails (4.3.1)
       railties (>= 3.0)
     climate_control (0.0.3)
@@ -191,12 +190,6 @@ GEM
       coffee-script-source
       execjs
     coffee-script-source (1.7.0)
-    compass (0.12.2)
-      chunky_png (~> 1.2)
-      fssm (>= 0.2.7)
-      sass (~> 3.1)
-    compass-rails (1.1.3)
-      compass (>= 0.12.2)
     crack (0.4.2)
       safe_yaml (~> 1.0.0)
     database_cleaner (1.2.0)
@@ -223,7 +216,6 @@ GEM
       faraday (>= 0.7.4, < 0.9)
     ffi (1.9.3)
     formatador (0.2.4)
-    fssm (0.2.10)
     guard (1.8.3)
       formatador (>= 0.2.4)
       listen (~> 1.3)
@@ -379,7 +371,7 @@ GEM
     safe_yaml (1.0.1)
     sanitize (2.1.0)
       nokogiri (>= 1.4.4)
-    sass (3.3.3)
+    sass (3.2.14)
     sass-rails (3.2.6)
       railties (~> 3.2.0)
       sass (>= 3.1.10)
@@ -455,7 +447,6 @@ DEPENDENCIES
   carrierwave (~> 0.6)
   ckeditor_rails (~> 4.3.0)
   coffee-rails (~> 3.2)
-  compass-rails
   database_cleaner
   dbsync!
   eco (~> 1.0)
