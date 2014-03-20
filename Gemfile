@@ -1,5 +1,7 @@
 source 'https://rubygems.org'
 
+gem 'thread_safe', '~> 0.2.0'
+
 ## Core
 gem 'rails', "~> 4.0.0"
 gem 'mysql2', '~> 0.3.14'
@@ -53,7 +55,6 @@ gem 'embeditor-rails', github: 'SCPR/embeditor-rails'
 gem "carrierwave", "~> 0.6"
 gem "ruby-mp3info", '~> 0.8.2', require: 'mp3info'
 gem "ice_cube", "~> 0.11.0"
-gem 'diffy', github: 'samg/diffy', ref: '6c89c4489d9ac97b78a5e3a2cf77df39ee28fb52'
 
 ## HTTP
 gem "faraday", "~> 0.8"
