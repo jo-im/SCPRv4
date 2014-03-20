@@ -1,6 +1,20 @@
 require "spec_helper"
 
 describe Category do
+  describe '#category_articles' do
+    it 'orders by position' do
+      category = build :category
+      category.category_articles.to_sql.should match /order by position/i
+    end
+  end
+
+  describe '#quotes' do
+    it 'orders by created_at desc' do
+      category = build :category
+      category.quotes.to_sql.should match /order by created_at desc/i
+    end
+  end
+
   describe '::previews' do
     let(:category) { create :category_news }
     let(:other_category) { create :category_not_news }

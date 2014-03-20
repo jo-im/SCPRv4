@@ -6,33 +6,21 @@ class MissedItBucket < ActiveRecord::Base
   include Concern::Callbacks::SphinxIndexCallback
   include Concern::Callbacks::TouchCallback
 
-  #--------------------
-  # Scopes
-
-  #--------------------
-  # Association
-  has_many :content, {
+  has_many :content,
+    -> { order('position') },
     :class_name     => "MissedItContent",
     :foreign_key    => "bucket_id",
-    :order          => "position asc",
     :dependent      => :destroy
-  }
 
   accepts_json_input_for :content
   tracks_association :content
 
-  #--------------------
-  # Validation
+
   validates :title, :slug, presence: true
 
-  #--------------------
-  # Callbacks
+
   before_validation :generate_slug, if: -> { self.slug.blank? }
   after_commit :expire_cache
-
-  def expire_cache
-    Rails.cache.expire_obj(self)
-  end
 
 
   def articles(limit=nil)
@@ -43,6 +31,10 @@ class MissedItBucket < ActiveRecord::Base
 
 
   private
+
+  def expire_cache
+    Rails.cache.expire_obj(self)
+  end
 
   def generate_slug
     if self.title.present?

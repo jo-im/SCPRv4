@@ -31,13 +31,9 @@ class RecurringScheduleRule < ActiveRecord::Base
   ]
 
 
-  #--------------
-  # Associations
   has_many :schedule_occurrences, dependent: :destroy
 
 
-  #--------------
-  # Validations
   validate :program_is_present
 
   validates :interval, presence: true
@@ -48,15 +44,18 @@ class RecurringScheduleRule < ActiveRecord::Base
   validate :time_fields_are_present
 
 
-  #--------------
-  # Callbacks
   before_save :build_schedule, if: :rule_changed?
 
   before_create :build_occurrences_through_next_month,
     :if => -> { self.schedule_occurrences.blank? }
   before_update :rebuild_occurrences, if: :rule_changed?
 
-  before_save :update_occurrence_program, if: :program_changed?
+  # If they only updated the program, but not the rule, then we should fire
+  # the callback to update all of the occurrence's programs.
+  # If the rule was changed, then the occurrences are going to rebuilt
+  # anyways, so the program will be updated from that.
+  before_update :update_occurrence_program,
+    :if => -> { self.program_changed? && !rule_changed? }
 
 
   class << self
@@ -81,8 +80,11 @@ class RecurringScheduleRule < ActiveRecord::Base
 
   def duration
     @duration ||= begin
-      start_time_seconds = calculate_seconds(parse_time_string(self.start_time))
-      end_time_seconds   = calculate_seconds(parse_time_string(self.end_time))
+      start_time_seconds =
+        calculate_seconds(parse_time_string(self.start_time))
+
+      end_time_seconds =
+        calculate_seconds(parse_time_string(self.end_time))
 
       return 0 unless start_time_seconds && end_time_seconds
 
@@ -224,7 +226,11 @@ class RecurringScheduleRule < ActiveRecord::Base
 
 
   def update_occurrence_program
-    self.schedule_occurrences.update_all(
+    # There is something wrong with using `update_all` on
+    # an association. https://gist.github.com/bricker/8019939
+    # So for now this is how we need to do this.
+    self.schedule_occurrences
+    .update_all(
       :program_id   => self.program_id,
       :program_type => self.program_type
     )
@@ -253,10 +259,6 @@ class RecurringScheduleRule < ActiveRecord::Base
     self.end_time_changed?
   end
 
-  def program_changed?
-    self.program_id_changed? || self.program_type_changed?
-  end
-
 
   def rule_hash
     @rule_hash ||= self.schedule.recurrence_rules.first.try(:to_hash) || {}
@@ -265,7 +267,8 @@ class RecurringScheduleRule < ActiveRecord::Base
   def existing_occurrences_between(start_date, end_date)
     existing = {}
 
-    self.schedule_occurrences.between(start_date, end_date).each do |occurrence|
+    self.schedule_occurrences
+    .between(start_date, end_date).each do |occurrence|
       existing[occurrence.starts_at] = occurrence
     end
 

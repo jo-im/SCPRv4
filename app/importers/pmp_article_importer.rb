@@ -168,7 +168,8 @@ module PmpArticleImporter
               if asset && asset.id
                 content_asset = ContentAsset.new(
                   :position   => 0,
-                  :asset_id   => asset.id
+                  :asset_id   => asset.id,
+                  :caption => "" # To avoid 'doesn't have a default value' err
                 )
 
                 article.assets << content_asset

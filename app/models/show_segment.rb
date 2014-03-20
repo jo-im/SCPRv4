@@ -49,9 +49,9 @@ class ShowSegment < ActiveRecord::Base
     :dependent      => :destroy
 
   has_many :episodes,
+    -> { order('air_date') },
     :through    => :rundowns,
     :source     => :episode,
-    :order      => "air_date asc",
     :autosave   => true
 
 

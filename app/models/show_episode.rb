@@ -69,10 +69,10 @@ class ShowEpisode < ActiveRecord::Base
     :dependent      => :destroy
 
   has_many :segments,
+    -> { order('position') },
     :class_name     => "ShowSegment",
     :foreign_key    => "segment_id",
-    :through        => :rundowns,
-    :order          => "position"
+    :through        => :rundowns
 
 
   accepts_json_input_for :rundowns

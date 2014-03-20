@@ -5,6 +5,10 @@ module Concern
 
       included do
         belongs_to :program, polymorphic: true
+
+        if self.has_secretary?
+          tracks_association :program
+        end
       end
 
 

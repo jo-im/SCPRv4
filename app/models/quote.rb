@@ -28,10 +28,11 @@ class Quote < ActiveRecord::Base
   }
 
   belongs_to :content,
-    :polymorphic => true,
-    :conditions  => { status: ContentBase::STATUS_LIVE }
+    -> { where(status: ContentBase::STATUS_LIVE) },
+    :polymorphic => true
 
   accepts_json_input_for :content
+
 
   validates \
     :status,

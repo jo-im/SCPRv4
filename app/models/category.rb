@@ -22,10 +22,17 @@ class Category < ActiveRecord::Base
     3 => 'map'
   }
 
-  belongs_to :featured_blog, class_name: 'Blog', foreign_key: 'blog_id'
-  has_many :category_articles, order: 'position', dependent: :destroy
+
+  has_many :category_articles,
+    -> { order('position') },
+    :dependent => :destroy
+
   accepts_json_input_for :category_articles
   tracks_association :category_articles
+
+  belongs_to :featured_blog,
+    :class_name     => 'Blog',
+    :foreign_key    => 'blog_id'
 
   has_many :category_reporters, dependent: :destroy
   has_many :bios, through: :category_reporters
@@ -39,8 +46,8 @@ class Category < ActiveRecord::Base
 
   has_many :events
   has_many :quotes,
-    :foreign_key    => "category_id",
-    :order          => "created_at desc"
+    -> { order("created_at desc") },
+    :foreign_key    => "category_id"
 
 
 

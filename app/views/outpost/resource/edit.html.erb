@@ -4,7 +4,7 @@
   <%= render 'errors', f: f %>
   <%= render 'form_fields', record: @record, f: f %>
   <%= render 'extra_fields', f: f %>
-  <%= render "/outpost/shared/submit_row", record: @record %>
+  <%= render "outpost/shared/submit_row", record: @record %>
 
   <% content_for :footer do %>
     <script>outpost.Utilities.preventEnterFromSubmittingForm("#<%=f.options[:html][:id]%>");</script>
@@ -39,7 +39,7 @@
 
   <div id="fixed-sidebar" data-spy="affix" data-offset-top="140">
     <!-- Be sure to change the data-offset-top attribute on this element if you move it vertically -->
-    <%= render "/outpost/shared/form_nav" %>
+    <%= render "outpost/shared/form_nav" %>
 
     <h5>Currently Editing on This Page</h5>
     <div id="newsroom-edit_user-list" class="viewers"></div>

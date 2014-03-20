@@ -12,8 +12,8 @@ class HomepageContent < ActiveRecord::Base
   # if someone changes one of those status numbers on another class then
   # that class won't show up on the Homepage, Missed it bucket, etc.
   belongs_to :content,
-    :polymorphic    => true,
-    :conditions     => { status: ContentBase::STATUS_LIVE }
+    -> { where(status: ContentBase::STATUS_LIVE) },
+    :polymorphic    => true
 
   belongs_to :homepage
 end

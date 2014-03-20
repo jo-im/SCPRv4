@@ -27,7 +27,7 @@ describe Concern::Associations::RelatedLinksAssociation do
       story.related_links = [link1, link2]
       story.save!
 
-      versions = story.versions
+      versions = story.versions.reload
       versions.size.should eq 2
 
       versions.last.object_changes["related_links"][0].should be_empty
