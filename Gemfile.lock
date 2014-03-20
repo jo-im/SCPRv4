@@ -85,7 +85,7 @@ GIT
 
 GIT
   remote: git://github.com/SCPR/secretary-rails.git
-  revision: 7b5a0ad569fcaba3601274b1ccc807898bbcf7fc
+  revision: f3cbd1fdcf7d01ebd8fe7177012e86a26b9eca98
   specs:
     secretary-rails (1.0.1)
       activerecord (>= 3.2.0)
@@ -194,7 +194,7 @@ GEM
       safe_yaml (~> 1.0.0)
     database_cleaner (1.2.0)
     diff-lcs (1.2.5)
-    diffy (3.0.1)
+    diffy (3.0.3)
     docile (1.1.3)
     eco (1.0.0)
       coffee-script
@@ -263,7 +263,7 @@ GEM
     mime-types (1.25.1)
     mini_portile (0.5.2)
     mono_logger (1.1.0)
-    multi_json (1.9.1)
+    multi_json (1.9.2)
     multi_xml (0.5.5)
     multipart-post (1.2.0)
     mysql2 (0.3.15)
