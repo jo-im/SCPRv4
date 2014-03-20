@@ -1,8 +1,5 @@
 // Global Stylesheet Imports
-@import "compass/css3/opacity";
-@import "compass/css3/images";
-@import "compass/utilities/sprites/base";
-
+@import "base/compass";
 @import "base/reset";
 @import "base/bootstrap/mixins";
 @import "base/base";

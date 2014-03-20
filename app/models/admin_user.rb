@@ -11,21 +11,12 @@ class AdminUser < ActiveRecord::Base
 
   self.unversioned_attributes = ['password_digest']
 
-  # ----------------
-  # Callbacks
   before_validation :generate_username,
     :on => :create,
     :if => -> { self.username.blank? }
 
-  # ----------------
-  # Association
-  has_many :activities,
-    :class_name     => "Secretary::Version",
-    :foreign_key    => "user_id"
-
   has_one  :bio, foreign_key: "user_id"
 
-  # ----------------
 
   class << self
     def select_collection
@@ -33,7 +24,6 @@ class AdminUser < ActiveRecord::Base
     end
   end
 
-  # ----------------
 
   def json
     {

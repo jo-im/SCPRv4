@@ -26,6 +26,9 @@ gem 'outpost-aggregator', github: "SCPR/outpost-aggregator"
 gem 'secretary-rails', github: "SCPR/secretary-rails"
 # gem 'secretary-rails', path: "#{ENV['PROJECT_HOME']}/secretary-rails"
 
+gem 'outpost-secretary', github: "SCPR/outpost-secretary"
+# gem 'outpost-secretary', path: "#{ENV['PROJECT_HOME']}/outpost-secretary"
+
 
 ## Cache
 gem 'redis-rails', '~> 4.0.0'
@@ -77,7 +80,6 @@ gem 'audio_vision', github: 'SCPR/audio_vision-ruby'
 gem "eco", "~> 1.0"
 gem 'sass-rails', "~> 4.0.0"
 gem 'bootstrap-sass', '~> 2.2'
-gem "compass-rails", '~> 1.1.2'
 gem 'coffee-rails', "~> 4.0.0"
 gem 'uglifier', '>= 1.3'
 
