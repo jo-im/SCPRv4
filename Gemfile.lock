@@ -85,7 +85,7 @@ GIT
 
 GIT
   remote: git://github.com/SCPR/secretary-rails.git
-  revision: 6dec7f17ddcdd109deb02132c616a57cec31e495
+  revision: 610533b7997aff9d2151c26e9c717ecaece37ab6
   specs:
     secretary-rails (1.0.1)
       activerecord (>= 3.2.0)
@@ -94,7 +94,7 @@ GIT
 
 GIT
   remote: git://github.com/amatsuda/kaminari.git
-  revision: 705d93a2a329772046612d29a0d8983697532d27
+  revision: 1f577d9af0c7cef2a3f1d5476488cc1f63882cff
   specs:
     kaminari (0.15.1)
       actionpack (>= 3.0.0)
@@ -371,7 +371,7 @@ GEM
     safe_yaml (1.0.1)
     sanitize (2.1.0)
       nokogiri (>= 1.4.4)
-    sass (3.2.14)
+    sass (3.3.3)
     sass-rails (3.2.6)
       railties (~> 3.2.0)
       sass (>= 3.1.10)
