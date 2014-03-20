@@ -59,7 +59,7 @@ GIT
 
 GIT
   remote: git://github.com/SCPR/outpost-secretary.git
-  revision: 271dbaead38ecae7b5ec579f06a94378e14e0f3d
+  revision: 1f7e81c5ceec7308e45eff99d820582c24e28c5a
   specs:
     outpost-secretary (0.0.1)
       outpost-cms
@@ -67,7 +67,7 @@ GIT
 
 GIT
   remote: git://github.com/SCPR/outpost.git
-  revision: feb460d874b2d9d5b8218bb9557478b1f0c49f3f
+  revision: 731cbd6959d29ef9c29ebc4389b2641aea1327e2
   specs:
     outpost-cms (0.0.5)
       bcrypt-ruby (>= 3.0.0, < 4)
@@ -85,9 +85,9 @@ GIT
 
 GIT
   remote: git://github.com/SCPR/secretary-rails.git
-  revision: 610533b7997aff9d2151c26e9c717ecaece37ab6
+  revision: c6f4819689b92663e9f1db2c66f6e586c30962b5
   specs:
-    secretary-rails (1.0.1)
+    secretary-rails (1.1.0)
       activerecord (>= 3.2.0)
       diffy (~> 3.0.1)
       railties (>= 3.2.0)
