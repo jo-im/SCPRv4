@@ -7,7 +7,7 @@ class KpccProgram < ActiveRecord::Base
   include Concern::Associations::RelatedLinksAssociation
   include Concern::Callbacks::SphinxIndexCallback
 
-  ROUTE_KEY = "program"
+  self.public_route_key = "program"
 
   PROGRAM_STATUS = {
     "onair"      => "Currently Airing",

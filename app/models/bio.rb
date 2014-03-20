@@ -7,7 +7,7 @@ class Bio < ActiveRecord::Base
   include Concern::Associations::RelatedLinksAssociation
   include Concern::Callbacks::SphinxIndexCallback
 
-  ROUTE_KEY = "bio"
+  self.public_route_key = "bio"
 
   #--------------
   # Scopes

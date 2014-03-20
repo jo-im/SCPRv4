@@ -27,7 +27,7 @@ class ExternalProgram < ActiveRecord::Base
   include Concern::Associations::RelatedLinksAssociation
   include Concern::Callbacks::SphinxIndexCallback
 
-  ROUTE_KEY = "program"
+  self.public_route_key = "program"
 
   # "source" => "Importer module name"
   IMPORTERS = {

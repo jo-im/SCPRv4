@@ -6,7 +6,7 @@ class ExternalEpisode < ActiveRecord::Base
   include Outpost::Model::Identifier
 
   include Concern::Associations::AudioAssociation
-  ROUTE_KEY = "episode"
+  self.public_route_key = "episode"
 
   belongs_to :external_program
 

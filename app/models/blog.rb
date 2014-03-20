@@ -7,7 +7,7 @@ class Blog < ActiveRecord::Base
   include Concern::Callbacks::SphinxIndexCallback
   include Concern::Associations::RelatedLinksAssociation
 
-  ROUTE_KEY = "blog"
+  self.public_route_key = "blog"
 
 
   scope :active, -> { where(is_active: true) }
