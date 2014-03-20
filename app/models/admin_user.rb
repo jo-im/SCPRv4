@@ -1,5 +1,3 @@
-require 'digest/sha1'
-
 class AdminUser < ActiveRecord::Base
   self.table_name = 'auth_user'
   outpost_model
