@@ -405,8 +405,17 @@ module ApplicationHelper
   #
   # Returns String
   def url_with_params(url, params={})
-    uri     = URI.parse(url)
-    query   = URI.decode_www_form(uri.query.to_s)
+    begin
+      uri = URI.parse(url)
+    rescue URI::InvalidURIError => e
+      # We want to know about these invalid URIs so we can fix them,
+      # but it shouldn't prevent the entire page from loading if there's
+      # one bad URL.
+      NewRelic::Agent.agent.error_collector.notice_error(e)
+      return url
+    end
+
+    query = URI.decode_www_form(uri.query.to_s)
 
     params.each { |k, v| query << [k.to_s, v.to_s] if v }
 

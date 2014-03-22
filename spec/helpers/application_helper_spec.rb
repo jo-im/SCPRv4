@@ -436,5 +436,10 @@ describe ApplicationHelper do
       url = helper.url_with_params("http://google.com")
       url.should_not match /\?/
     end
+
+    it "Returns the url if it's an invalid URI" do
+      url = helper.url_with_params("nope nope nope")
+      url.should eq "nope nope nope"
+    end
   end
 end
