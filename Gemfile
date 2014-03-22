@@ -33,7 +33,6 @@ gem 'outpost-secretary', github: "SCPR/outpost-secretary"
 
 
 ## Cache
-gem 'redis-rails', '~> 4.0.0'
 gem 'redis-content-store', github: "SCPR/redis-content-store"
 # gem 'redis-content-store', path: "#{ENV['PROJECT_HOME']}/redis-content-store"
 gem "resque", "~> 1.26.pre.0"
