@@ -1,7 +1,7 @@
 class ApplicationController < ActionController::Base
   include Outpost::Controller::CustomErrors
 
-#  protect_from_forgery
+  protect_from_forgery
   before_filter :get_content_for_masthead
   before_filter :add_params_for_newrelic
 
