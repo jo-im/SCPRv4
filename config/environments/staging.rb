@@ -1,7 +1,7 @@
 Scprv4::Application.configure do
   config.cache_classes  = true
-  config.eager_load     = false
-  config.consider_all_requests_local = true
+  config.eager_load     = true
+  config.consider_all_requests_local = false
 
   # There's nothing expiring the cache on staging so don't use it
   # If you change this to true, manually expire the cache
@@ -15,7 +15,7 @@ Scprv4::Application.configure do
 
   config.action_controller.perform_caching = true
   config.cache_store = :redis_content_store, "redis://localhost:6379/6"
-  config.action_controller.action_on_unpermitted_parameters = :raise
+  config.action_controller.action_on_unpermitted_parameters = :log
 
   config.assets.debug         = false
   config.serve_static_assets  = false
