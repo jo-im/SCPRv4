@@ -411,7 +411,7 @@ module ApplicationHelper
       # We want to know about these invalid URIs so we can fix them,
       # but it shouldn't prevent the entire page from loading if there's
       # one bad URL.
-      NewRelic::Agent.agent.error_collector.notice_error(e)
+      NewRelic.log_error(e)
       return url
     end
 
