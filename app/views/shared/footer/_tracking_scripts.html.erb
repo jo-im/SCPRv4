@@ -71,10 +71,8 @@ el.parentNode.insertBefore(s, el);
 
 <!-- Google Analytics -->
 <script type="text/javascript">
-    var currentPath = window.location.pathname;
-
-    var pageType = _.find(scpr.GA_PAGE_MAPPING, function(v, k) {
-        return currentPath.match(new RegExp(k)) !== null;
+    var _gaq_pageType = _.find(scpr.GA_PAGE_MAPPING, function(v, k) {
+        return window.location.pathname.match(new RegExp(k)) !== null;
     });
 
     var _gaq = _gaq || [];
@@ -82,12 +80,12 @@ el.parentNode.insertBefore(s, el);
         ['_setAccount', 'UA-624724-1'],
         ['_setDomainName', 'scpr.org'],
         ['_setCustomVar', 6, 'Station', 'Southern California Public Radio', 2],
-        ['_setCustomVar', 7, 'PageType', pageType, 3],
+        ['_setCustomVar', 7, 'PageType', _gaq_pageType, 3],
         ['_trackPageview'],
         ['b._setAccount', 'UA-18188937-11'],
         ['b._setDomainName', 'scpr.org'],
         ['b._setCustomVar', 6, 'Station', 'Southern California Public Radio', 2],
-        ['b._setCustomVar', 7, 'PageType', pageType, 3],
+        ['b._setCustomVar', 7, 'PageType', _gaq_pageType, 3],
         ['b._trackPageview']
     );
     (function() {
