@@ -33,21 +33,29 @@
   OAS_url = 'http://oascentral.publicradio.org/RealMedia/ads/';
   OAS_sitepage = 'scpr.org'; // Default. This may be overridden by a special ad target.
 
-  var specials = [
-    new RegExp("^/education/"),
-    new RegExp("^/blogs/education"),
-    new RegExp("^/health"),
-    new RegExp("^/obamacare"),
-    new RegExp("^/$") // Homepage only
-  ];
+  (function() {
+    // The regexp to match against the current pathname.
+    // If you pass a sitepage property, it will be used to set OAS_sitepage.
+    // If there is no sitepage property for the matched path, it will use
+    // window.location.pathname.
+    var specials = [
+      { re: new RegExp("^/education/") },
+      { re: new RegExp("^/blogs/education") },
+      { re: new RegExp("^/health") },
+      { re: new RegExp("^/obamacare") },
+      { re: new RegExp("^/$"), sitepage: "/homepage" }
+    ];
 
-  // Run through the special ad targeting to see if there's a match.
-  for (var i=0; i < specials.length; i++) {
-    if (window.location.pathname.match(specials[i])) {
-      OAS_sitepage += window.location.pathname;
-      break;
+    // Run through the special ad targeting to see if there's a match.
+    for (var i=0; i < specials.length; i++) {
+      var special = specials[i];
+
+      if (window.location.pathname.match(special.re)) {
+        OAS_sitepage += special.sitepage || window.location.pathname;
+        break;
+      }
     }
-  }
+  }());
 
   OAS_listpos = "<%= content_for?(:oas_listpos) ? yield(:oas_listpos) : 'x01,x02,x03,x13' %>";
   OAS_query = '';
