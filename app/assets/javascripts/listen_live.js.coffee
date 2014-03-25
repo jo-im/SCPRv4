@@ -227,7 +227,7 @@ class scpr.ListenLive
 
     class @CurrentGen
         DefaultOptions:
-            url:                "http://205.144.162.151:8020/kpcclive?ua=SCPRWEB"
+            url:                "http://live.scpr.org/kpcclive?ua=SCPRWEB"
             player:             "#jquery_jplayer_1"
             swf_path:           "/assets-flash"
             pause_timeout:      300
