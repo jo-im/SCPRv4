@@ -77,11 +77,9 @@ class BreakingNewsAlert < ActiveRecord::Base
   #-------------------
 
   class << self
-    # Get the latest published alert, whether visible or not,
-    # and check if it's visible.
-    def latest_alert
-      alert = self.published.first
-      alert.try(:visible?) ? alert : nil
+    # Get the latest published and visible alert.
+    def latest_visible_alert
+      self.published.visible.first
     end
 
     def types_select_collection
