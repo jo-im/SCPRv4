@@ -34,14 +34,8 @@ GIT
       secretary-rails
 
 GIT
-  remote: git://github.com/SCPR/redis-content-store.git
-  revision: a8bb4368588df8f13b0f427c5cef39f68fa36b64
-  specs:
-    redis-content-store (0.2.0)
-      redis-activesupport (>= 3.2.0, < 5)
-
-PATH
-  remote: /Users/bricker/websites/kpcc/outpost
+  remote: git://github.com/SCPR/outpost.git
+  revision: 2b9435b6951ffe1777a6c7ca86a2662e7273cc17
   specs:
     outpost-cms (0.0.5)
       bcrypt-ruby (>= 3.0.0, < 4)
@@ -49,6 +43,13 @@ PATH
       kaminari (~> 0.15.1)
       rails (>= 3.2, < 5)
       select2-rails (= 3.4.1)
+
+GIT
+  remote: git://github.com/SCPR/redis-content-store.git
+  revision: a8bb4368588df8f13b0f427c5cef39f68fa36b64
+  specs:
+    redis-content-store (0.2.0)
+      redis-activesupport (>= 3.2.0, < 5)
 
 GEM
   remote: https://rubygems.org/
@@ -271,7 +272,7 @@ GEM
       activesupport (= 4.0.4)
       rake (>= 0.8.7)
       thor (>= 0.18.1, < 2.0)
-    rake (10.1.1)
+    rake (10.2.2)
     rb-fsevent (0.9.4)
     rb-inotify (0.9.3)
       ffi (>= 0.5.0)
@@ -363,7 +364,7 @@ GEM
       joiner (>= 0.2.0)
       middleware (>= 0.1.0)
       riddle (>= 1.5.10)
-    thor (0.19.0)
+    thor (0.19.1)
     thread_safe (0.3.1)
       atomic (>= 1.1.7, < 2)
     tilt (1.4.1)
