@@ -34,8 +34,14 @@ GIT
       secretary-rails
 
 GIT
-  remote: git://github.com/SCPR/outpost.git
-  revision: 731cbd6959d29ef9c29ebc4389b2641aea1327e2
+  remote: git://github.com/SCPR/redis-content-store.git
+  revision: a8bb4368588df8f13b0f427c5cef39f68fa36b64
+  specs:
+    redis-content-store (0.2.0)
+      redis-activesupport (>= 3.2.0, < 5)
+
+PATH
+  remote: /Users/bricker/websites/kpcc/outpost
   specs:
     outpost-cms (0.0.5)
       bcrypt-ruby (>= 3.0.0, < 4)
@@ -43,13 +49,6 @@ GIT
       kaminari (~> 0.15.1)
       rails (>= 3.2, < 5)
       select2-rails (= 3.4.1)
-
-GIT
-  remote: git://github.com/SCPR/redis-content-store.git
-  revision: a8bb4368588df8f13b0f427c5cef39f68fa36b64
-  specs:
-    redis-content-store (0.2.0)
-      redis-activesupport (>= 3.2.0, < 5)
 
 GEM
   remote: https://rubygems.org/

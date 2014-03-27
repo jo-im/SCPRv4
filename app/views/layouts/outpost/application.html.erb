@@ -24,7 +24,7 @@
 <div class="navbar navbar-fixed-top navbar-inverse">
   <div class="navbar-inner"<%if Rails.env=="development"%> style="background-color:#ff0000;background-image:none;"<%end%>>
     <div class="container">
-      <a href="<%=outpost_root_path%>" class="brand"><%= image_tag("outpost/outpost-kpcc.png", alt: "Outpost KPCC") %></a>
+      <a href="<%=outpost.root_path%>" class="brand"><%= image_tag("outpost/outpost-kpcc.png", alt: "Outpost KPCC") %></a>
 
       <% if current_user %>
         <ul class="nav">
@@ -101,13 +101,13 @@
               <% if current_user.bio.present? %>
                 <li><%= link_to "Edit Bio", current_user.bio.admin_edit_path %></li>
               <% end %>
-              <li><%= link_to "Logout", outpost_logout_path, id: "logout" %></li>
+              <li><%= link_to "Logout", outpost.logout_path, id: "logout" %></li>
             </ul>
           </li>
         </ul>
       <% else %>
         <ul class="nav pull-right">
-          <li><%= link_to "Login", outpost_login_path %></li>
+          <li><%= link_to "Login", outpost.login_path %></li>
         </ul>
       <% end %>
     </div>

@@ -202,9 +202,9 @@ Scprv4::Application.routes.draw do
 
   #------------------
 
-  namespace :outpost do
-    root to: 'home#index'
+  mount Outpost::Engine, at: '/outpost'
 
+  namespace :outpost do
     concern :preview do
       put "preview", on: :member
       patch "preview", on: :member
@@ -260,16 +260,12 @@ Scprv4::Application.routes.draw do
       end
     end
 
-    resources :sessions, only: [:create, :destroy]
-    get 'login'  => "sessions#new", as: :login
-    get 'logout' => "sessions#destroy", as: :logout
-
     get "/activity"                                        => "versions#activity",  as: :activity
     get "/:resources/:resource_id/history"                 => "versions#index",     as: :history
     get "/:resources/:resource_id/history/:version_number" => "versions#show",      as: :version
 
     get "trigger_error" => 'home#trigger_error'
-    get "*path" => 'home#not_found'
+    get "*path" => 'errors#not_found'
   end
 
   get "trigger_error" => 'home#trigger_error'

@@ -1,6 +1,6 @@
 class Outpost::HomeController < Outpost::BaseController
-  def index
-    breadcrumb "Dashboard", outpost_root_path
+  def dashboard
+    breadcrumb "Dashboard", outpost.root_path
 
     # Get the latest activity
     @current_user_activities = current_user.activities
@@ -10,11 +10,6 @@ class Outpost::HomeController < Outpost::BaseController
       .where("user_id != ?", current_user.id).limit(10)
   end
 
-  #------------------------
-
-  def not_found
-    render_error(404, ActionController::RoutingError.new("Not Found"))
-  end
 
   def trigger_error
     raise StandardError, "This is a test error. It works (or does it?)"
