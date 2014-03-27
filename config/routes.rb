@@ -202,7 +202,7 @@ Scprv4::Application.routes.draw do
 
   #------------------
 
-  mount Outpost::Engine, at: '/outpost'
+  mount Outpost::Engine, at: 'outpost'
 
   namespace :outpost do
     concern :preview do
