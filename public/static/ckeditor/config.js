@@ -21,8 +21,8 @@ CKEDITOR.editorConfig = function(config) {
     theme                   : 'monokai',
     mode                    : 'htmlmixed',
     useBeautify             : false,
-    autoCloseBrackets       : true,
-    autoCloseTags           : true,
+    autoCloseBrackets       : false,
+    autoCloseTags           : false,
     autoFormatOnStart       : false,
     autoFormatOnUncomment   : false,
     continueComments        : false,
@@ -30,18 +30,18 @@ CKEDITOR.editorConfig = function(config) {
     enableCodeFormatting    : true,
     enableSearchTools       : true,
     highlightActiveLine     : false,
-    highlightMatches        : false,
+    highlightMatches        : true,
     indentWithTabs          : false,
     lineNumbers             : true,
     lineWrapping            : true,
     matchBrackets           : true,
     matchTags               : true,
-    showAutoCompleteButton  : true,
+    showTrailingSpace       : false,
+    showAutoCompleteButton  : false,
     showCommentButton       : false,
     showUncommentButton     : false,
     showFormatButton        : false,
-    showSearchButton        : false,
-    showTrailingSpace       : false
+    showSearchButton        : false
   };
 
   config.autosave_SaveKey           = "autosave-" + window.location.pathname;
