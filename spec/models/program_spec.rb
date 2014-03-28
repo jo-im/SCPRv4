@@ -36,6 +36,15 @@ describe Program do
     end
   end
 
+  describe '::find_by_air_status' do
+    it 'finds an array of program(s) by their air_status if available' do
+      kpcc = create :kpcc_program, air_status: 'online'
+      external = create :external_program, air_status: 'onair'
+      another_program = create :kpcc_program, air_status: 'nope'
+      Program.find_by_air_status([kpcc.air_status, external.air_status]).should =~ [kpcc.to_program, external.to_program]
+    end
+  end
+
   describe '#uses_segments_as_episodes?' do
     it 'is false if it shows episodes' do
       program = Program.new({

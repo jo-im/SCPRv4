@@ -39,6 +39,9 @@ class ExternalProgram < ActiveRecord::Base
   #-------------------
   # Scopes
   scope :active, -> { where(air_status: ['onair', 'online']) }
+  scope :find_by_air_status, ->(statuses) {
+    where(air_status: statuses)
+  }
 
 
   #-------------------

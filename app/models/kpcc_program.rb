@@ -26,6 +26,9 @@ class KpccProgram < ActiveRecord::Base
     .where("audio_dir is not null")
     .where("audio_dir != ?", "")
   }
+  scope :find_by_air_status, ->(statuses) {
+    where(air_status: statuses)
+  }
 
   #-------------------
   # Associations
