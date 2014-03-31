@@ -21,8 +21,9 @@ class Program
       find_by_slug(slug) or raise ActiveRecord::RecordNotFound
     end
 
-    def find_by_air_status(statuses)
-      (KpccProgram.find_by_air_status(statuses) + ExternalProgram.find_by_air_status(statuses)).map(&:to_program)
+    def where(conditions)
+      (KpccProgram.where(conditions) + ExternalProgram.where(conditions))
+      .map(&:to_program)
     end
   end
 

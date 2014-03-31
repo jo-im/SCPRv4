@@ -24,17 +24,11 @@ describe Api::Public::V3::ProgramsController do
 
   describe "GET index" do
     context "with the air_status parameter" do
-      it "can take a comma-separated list of air statuses" do
-        get :index, { air_status: "onair,online" }.merge(request_params)
-        assigns(:statuses).any? { |c|
-          !%w{onair online}.include?(c)
-        }.should eq false
-      end
-
       it "only selects programs with the requested air statuses" do
         kpcc_program = create :kpcc_program, air_status: "archive"
         external_program = create :external_program, air_status: "online"
         another_program = create :kpcc_program, air_status: "onair"
+
         get :index, { air_status: "archive,online" }.merge(request_params)
         assigns(:programs).should eq [kpcc_program, external_program].map(&:to_program)
       end
@@ -49,6 +43,5 @@ describe Api::Public::V3::ProgramsController do
         assigns(:programs).should eq [kpcc_program, external_program].map(&:to_program)
       end
     end
-
   end
 end

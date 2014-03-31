@@ -8,15 +8,12 @@ module Api::Public::V3
       "hidden"
     ]
 
+    before_filter :set_conditions, only: [:index]
     before_filter :sanitize_slug, only: [:show]
     before_filter :sanitize_air_status, only: [:index]
 
     def index
-      if @statuses
-        @programs = Program.find_by_air_status(@statuses)
-      else
-        @programs = Program.all
-      end
+      @programs = Program.where(@conditions)
       respond_with @programs
     end
 
@@ -31,18 +28,18 @@ module Api::Public::V3
       respond_with @program
     end
 
+
     private
+
+    def set_conditions
+      @conditions = {}
+    end
 
     def sanitize_air_status
       return true if !params[:air_status]
-      @statuses = []
-      statuses = params[:air_status].to_s.split(',').uniq.each do |status|
-        if AIR_STATUSES.include?(status)
-          @statuses.push(status)
-        end
-      end
-      @statuses
-    end
 
+      @conditions[:air_status] = params[:air_status].to_s.split(',').uniq
+      .select { |s| AIR_STATUSES.include?(s) }
+    end
   end
 end

@@ -20,15 +20,14 @@ class KpccProgram < ActiveRecord::Base
 
   #-------------------
   # Scopes
-  scope :active,         -> { where(air_status: ['onair','online']) }
+  scope :active, -> { where(air_status: ['onair','online']) }
+
   scope :can_sync_audio, -> {
     where(air_status: "onair")
     .where("audio_dir is not null")
     .where("audio_dir != ?", "")
   }
-  scope :find_by_air_status, ->(statuses) {
-    where(air_status: statuses)
-  }
+
 
   #-------------------
   # Associations
