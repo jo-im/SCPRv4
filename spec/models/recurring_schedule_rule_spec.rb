@@ -30,14 +30,13 @@ describe RecurringScheduleRule do
 
   describe 'changing the program' do
     it "changes all the occurrence's program as well" do
-      warn ">>>>> REMINDER: Come back to this. (#{__FILE__}:#{__LINE__})"
       rule = create :recurring_schedule_rule
       rule.schedule_occurrences.first.program.should eq rule.program
 
-      # Why do we need to reload here?
-      # Passing `true` to the association should be enough.
+      # Reload to clear out cached associations
       rule.reload
-      another_program = create :kpcc_program
+
+      another_program = create :kpcc_program, title: "Updated Program"
       rule.program = another_program
       rule.save!
       rule.schedule_occurrences.first.program.should eq another_program
