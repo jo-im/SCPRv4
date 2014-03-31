@@ -18,7 +18,7 @@ describe Outpost::RemoteArticlesController do
     describe 'GET /index' do
       it "redirects to outpost root" do
         get :index
-         response.should redirect_to "/outpost/"
+        response.should redirect_to "/outpost/"
       end
     end
 
