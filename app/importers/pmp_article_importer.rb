@@ -36,13 +36,16 @@ module PmpArticleImporter
           Time.now
         end
 
+        # Get the URL for this story
+        url = story.alternate.first.href if story.alternate.present?
+
         cached_article = RemoteArticle.new(
           :source       => SOURCE,
           :article_id   => story.guid,
           :headline     => story.title,
           :teaser       => story.teaser,
           :published_at => published,
-          :url          => story.alternate.first.try(:href),
+          :url          => url,
           :is_new       => true
         )
 
