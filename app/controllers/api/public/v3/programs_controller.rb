@@ -1,10 +1,19 @@
 module Api::Public::V3
   class ProgramsController < BaseController
 
+    AIR_STATUSES = [
+      "onair",
+      "online",
+      "archive",
+      "hidden"
+    ]
+
+    before_filter :set_conditions, only: [:index]
     before_filter :sanitize_slug, only: [:show]
+    before_filter :sanitize_air_status, only: [:index]
 
     def index
-      @programs = Program.all
+      @programs = Program.where(@conditions)
       respond_with @programs
     end
 
@@ -17,6 +26,20 @@ module Api::Public::V3
       end
 
       respond_with @program
+    end
+
+
+    private
+
+    def set_conditions
+      @conditions = {}
+    end
+
+    def sanitize_air_status
+      return true if !params[:air_status]
+
+      @conditions[:air_status] = params[:air_status].to_s.split(',').uniq
+      .select { |s| AIR_STATUSES.include?(s) }
     end
   end
 end

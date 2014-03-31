@@ -40,7 +40,6 @@ class ExternalProgram < ActiveRecord::Base
   # Scopes
   scope :active, -> { where(air_status: ['onair', 'online']) }
 
-
   #-------------------
   # Associations
   has_many :recurring_schedule_rules, as: :program, dependent: :destroy
