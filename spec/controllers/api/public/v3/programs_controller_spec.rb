@@ -23,12 +23,25 @@ describe Api::Public::V3::ProgramsController do
   end
 
   describe "GET index" do
-    it "returns all KPCC programs and Other Programs combined" do
-      kpcc_program       = create :kpcc_program
-      external_program   = create :external_program
+    context "with the air_status parameter" do
+      it "only selects programs with the requested air statuses" do
+        kpcc_program = create :kpcc_program, air_status: "archive"
+        external_program = create :external_program, air_status: "online"
+        another_program = create :kpcc_program, air_status: "onair"
 
-      get :index, request_params
-      assigns(:programs).should eq [kpcc_program, external_program].map(&:to_program)
+        get :index, { air_status: "archive,online" }.merge(request_params)
+        assigns(:programs).should eq [kpcc_program, external_program].map(&:to_program)
+      end
+    end
+
+    context "without the air_status parameter" do
+      it "returns all KPCC programs and Other Programs combined" do
+        kpcc_program       = create :kpcc_program
+        external_program   = create :external_program
+
+        get :index, request_params
+        assigns(:programs).should eq [kpcc_program, external_program].map(&:to_program)
+      end
     end
   end
 end

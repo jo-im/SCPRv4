@@ -226,11 +226,7 @@ class RecurringScheduleRule < ActiveRecord::Base
 
 
   def update_occurrence_program
-    # There is something wrong with using `update_all` on
-    # an association. https://gist.github.com/bricker/8019939
-    # So for now this is how we need to do this.
-    self.schedule_occurrences
-    .update_all(
+    self.schedule_occurrences.update_all(
       :program_id   => self.program_id,
       :program_type => self.program_type
     )

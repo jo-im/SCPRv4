@@ -28,13 +28,24 @@ module PmpArticleImporter
         RemoteArticle.exists?(source: SOURCE, article_id: s.guid)
       }.each do |story|
 
+        # The PMP API is returning stories with an empty Publish timestamp,
+        # so we need to protect against it.
+        published  = begin
+          Time.parse(story.published.to_s)
+        rescue ArgumentError
+          Time.now
+        end
+
+        # Get the URL for this story
+        url = story.alternate.first.href if story.alternate.present?
+
         cached_article = RemoteArticle.new(
           :source       => SOURCE,
           :article_id   => story.guid,
           :headline     => story.title,
           :teaser       => story.teaser,
-          :published_at => Time.parse(story.published),
-          :url          => story.alternate.first.try(:href),
+          :published_at => published,
+          :url          => url,
           :is_new       => true
         )
 
@@ -194,20 +205,20 @@ module PmpArticleImporter
 
     private
 
+    # This isn't memoized so that we get a fresh API result each time.
+    # Just be careful not to call this more than once in a method.
     def pmp
-      @client ||= begin
-        config = Rails.application.config.api['pmp']
+      config = Rails.application.config.api['pmp']
 
-        client = PMP::Client.new({
-          :client_id        => config['client_id'],
-          :client_secret    => config['client_secret'],
-          :endpoint         => ENDPOINT
-        })
+      client = PMP::Client.new({
+        :client_id        => config['client_id'],
+        :client_secret    => config['client_secret'],
+        :endpoint         => ENDPOINT
+      })
 
-        # Load the root document
-        client.root.load
-        client
-      end
+      # Load the root document
+      client.root.load
+      client
     end
   end
 end
