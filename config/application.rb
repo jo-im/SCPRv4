@@ -12,7 +12,6 @@ module Scprv4
     ]
 
     config.assets.version = '2.0'
-    config.assets.paths << "#{Rails.root}/vendor/assets/fonts"
     config.assets.precompile += [
       "shared.js",
       "outpost/application.css",
