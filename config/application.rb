@@ -20,8 +20,9 @@ module Scprv4
       "base/print.css",
       "new/application.js",
       "new/application.css",
-      "new/ie-lt9.js", # For ie < 9, separate include
-      "new/ie-lt9.css" # For ie < 9, separate include
+      "new/ie-lt9.js",  # For ie < 9, separate include
+      "new/ie-lt9.css", # For ie < 9, separate include
+      "*.eot", "*.ttf", "*.woff" # Font files
     ]
     config.assets.js_compressor  = :uglifier
     config.assets.css_compressor = :sass
