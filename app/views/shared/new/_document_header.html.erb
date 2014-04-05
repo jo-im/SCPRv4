@@ -44,7 +44,7 @@
 
     <%= tag "link", rel: "alternate", type: "application/rss+xml", title: "RSS", href: meta_information[:rss_feed] || "http://scpr.org/feeds/all_news" %>
 
-    <link rel="shortcut icon" href="http://media.scpr.org/favicon.ico" type="image/x-icon" />
+    <%= favicon_link_tag '/assets/icons/favicon.ico' %>
 
     <%= stylesheet_link_tag "new/application", media: "screen" %>
     <%= javascript_include_tag "new/application" %>
