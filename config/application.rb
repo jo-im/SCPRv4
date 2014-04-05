@@ -18,7 +18,6 @@ module Scprv4
       "outpost/application.css",
       "outpost/application.js",
       "base/print.css",
-      "base/print.css",
       "new/application.js",
       "new/application.css",
       "new/ie-lt9.js",  # For ie < 9, separate include
