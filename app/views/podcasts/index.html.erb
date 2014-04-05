@@ -17,21 +17,19 @@
         </div>
         <div class="span20">
           <p><%= p.description %></p>
-          <p>
+          <ul>
             <% if p.itunes_url.present? %>
-              <a href="<%= p.itunes_url %>">
-                <img src="http://media.scpr.org/assets/images/png-tool-icons/podcasts.png">
-                Subscribe via iTunes™
-              </a><br />
+              <li>
+                <a href="<%= p.itunes_url %>">Subscribe via iTunes™</a>
+              <li>
             <% end %>
 
             <% if p.podcast_url.present? %>
-              <a href="<%= p.podcast_url %>">
-                <img src="http://media.scpr.org/assets/images/png-tool-icons/rss.png">
-                <%= p.podcast_url %>
-              </a>
+              <li>
+                <a href="<%= p.podcast_url %>"><%= p.podcast_url %></a>
+              </li>
             <% end %>
-          </p>
+          </ul>
         </div>
       </div>
     <% end %>
