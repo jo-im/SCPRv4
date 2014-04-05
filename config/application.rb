@@ -13,9 +13,11 @@ module Scprv4
 
     config.assets.version = '2.0'
     config.assets.precompile += [
+      %w( webtrends.v2.js ),
       "shared.js",
       "outpost/application.css",
       "outpost/application.js",
+      "base/print.css",
       "base/print.css",
       "new/application.js",
       "new/application.css",
