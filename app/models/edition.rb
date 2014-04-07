@@ -121,7 +121,7 @@ class Edition < ActiveRecord::Base
     self.published? && !self.email_sent?
   end
 
-  def update_email_status(email, campaign)
+  def update_email_status(campaign)
     self.update_column(:email_sent, true)
   end
 

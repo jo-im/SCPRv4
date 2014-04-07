@@ -144,7 +144,7 @@ module Concern
           }
         )
 
-        update_email_status(email, campaign)
+        update_email_status(campaign)
       end
 
       add_transaction_tracer :publish_email, category: :task
@@ -169,7 +169,7 @@ module Concern
 
       # Update the email_sent status for this object.
       # Returns boolean.
-      def update_email_status(email, campaign)
+      def update_email_status(campaign)
         raise NotImplementedError
       end
 
