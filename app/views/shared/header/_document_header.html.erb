@@ -18,8 +18,8 @@
 
   <meta property="og:image" content="http://scpr.org<%=image_path('kpcc-twitter-logo.png')%>" />
 
-  <%= favicon_link_tag '/assets/icons/favicon.ico' %>
-  <link rel="apple-touch-icon-precomposed" href="/assets/icons/apple-touch-icon.png" />
+  <%= favicon_link_tag '/favicon.ico' %>
+  <%= favicon_link_tag 'icons/apple-touch-icon.png', rel: 'apple-touch-icon-precomposed', type: 'image/png' %>
   <link rel="publisher" href="https://plus.google.com/108872361044769229886/" />
 
   <%= csrf_meta_tags %>
