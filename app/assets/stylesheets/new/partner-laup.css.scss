@@ -165,17 +165,17 @@
             /* W3C */
             filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#043156', endColorstr='#0d5077',GradientType=0 );
             /* IE6-9 */ 
-            box-shadow: inset 0 -100px 0 #0D5077, inset 0 -101px 0 #2D8BC2;
         }
     }
 
     @media screen and (max-width: 650px) {
-        .interstitial.laup.telescope .message {
+        &.telescope .message {
             box-shadow: inset 0 -100px 0 #0d5077, inset 0 -101px 0 #2d8bc2; 
         } 
     }
 
 }
+
 
 
 
