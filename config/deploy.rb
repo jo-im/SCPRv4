@@ -1,4 +1,4 @@
-DEPLOY_SERVERS = YAML.load_file(File.expand_path("../deploy_config.yml", __FILE__))
+DEPLOY_CONFIG = YAML.load_file(File.expand_path("../deploy_config.yml", __FILE__))
 
 # --------------
 # Requires and Multistage setup
