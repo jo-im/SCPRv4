@@ -11,6 +11,7 @@
 /config/app_config.yml
 /config/sphinx.yml
 /config/thinking_sphinx.yml
+/config/deploy_config.yml
 
 /config/environments/development.rb
 /db/*.sqlite3

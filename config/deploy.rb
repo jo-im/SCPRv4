@@ -1,3 +1,5 @@
+DEPLOY_SERVERS = YAML.load_file(File.expand_path("../servers.yml", __FILE__))
+
 # --------------
 # Requires and Multistage setup
 set :thinking_sphinx_roles, :sphinx
