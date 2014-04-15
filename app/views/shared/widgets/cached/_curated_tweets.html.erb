@@ -1,0 +1,18 @@
+<% content.each do |tweet| %>
+  <li>
+    <div>
+      <figure>
+        <figcaption>
+          <h1><%= link_to tweet.user.name, "https://twitter.com/#{tweet.user.screen_name}" %></h1>
+          <time datetime=<%= format_date tweet.created_at, with: "%m-%d-%y" %>>
+            <%= link_to smart_date_js(tweet.created_at, "data-window" => "8h", "data-relative" => "2h"), "https://twitter.com/#{tweet.user.screen_name}/status/#{tweet.id}" %>
+          </time>
+        </figcaption>
+        <blockquote>
+          <p><%= auto_link(tweet.text).html_safe %></p>
+        </blockquote>
+      </figure>
+        <b class="pic"><%= link_to image_tag(tweet.user.profile_image_url), "https://twitter.com/#{tweet.user.screen_name}", alt: tweet.user.name %></b>
+    </div>
+  </li>
+<% end %>
