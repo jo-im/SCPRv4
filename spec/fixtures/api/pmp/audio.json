@@ -1,0 +1,25 @@
+{
+  "apm-audio:/marketplace/segments/2014/03/12/marketplace_segment09_20140312_64.mp3": {
+    "stream": {
+      "title": "Marketplace Segment 9 for March 12, 2014",
+      "description": "A \"show\" containing all the individual segments for Marketplace to ship off to Slacker and other distributors",
+      "pub_date": "2014-03-12",
+      "end_date": null,
+      "duration_time": "00:01:20",
+      "auinl_aqtl_id": "8",
+      "filename": "/marketplace/segments/2014/03/12/marketplace_segment09_20140312_64.mp3",
+      "duration": 80000
+    },
+    "podcast": {
+      "title": "Marketplace Segment 9 for March 12, 2014",
+      "description": "A \"show\" containing all the individual segments for Marketplace to ship off to Slacker and other distributors",
+      "pub_date": "2014-03-12",
+      "end_date": null,
+      "duration_time": "00:01:20",
+      "auinl_aqtl_id": "4",
+      "filename": "/marketplace/segments/2014/03/12/marketplace_segment09_20140312_64.mp3",
+      "duration": 80000,
+      "http_file_path": "http://play.publicradio.org/pmp/d/podcast/marketplace/segments/2014/03/12/marketplace_segment09_20140312_64.mp3"
+    }
+  }
+}

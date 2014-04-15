@@ -9,13 +9,12 @@ module Concern
       extend ActiveSupport::Concern
 
       included do
-        has_many :assets, {
+        has_many :assets,
+          -> { order('position') },
           :class_name => "ContentAsset",
           :as         => :content,
-          :order      => "position",
           :dependent  => :destroy,
           :autosave   => true
-        }
 
         accepts_json_input_for_assets
 

@@ -4,7 +4,7 @@ module Job
 
     class << self
       def perform
-        next_month = Time.now.next_month
+        next_month = 1.month.from_now
         start_date = next_month.beginning_of_month
         end_date   = next_month.end_of_month
 

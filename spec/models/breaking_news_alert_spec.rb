@@ -206,25 +206,26 @@ describe BreakingNewsAlert do
 
   #-----------------------
 
-  describe "::latest_alert" do
-    it "returns the first alert if it is published and visible" do
-      alert = create :breaking_news_alert, :published, visible: true
-      BreakingNewsAlert.latest_alert.should eq alert
+  describe "::latest_visible_alert" do
+    it "returns the most recent published and visible alert" do
+      alert = create :breaking_news_alert, :published,
+        :visible        => true,
+        :published_at   => 1.day.ago
+
+      alert2 = create :breaking_news_alert, :published,
+        :visible        => true,
+        :published_at   => 1.hour.ago
+
+      alert3 = create :breaking_news_alert, :published,
+        :visible        => false,
+        :published_at   => Time.now
+
+      BreakingNewsAlert.latest_visible_alert.should eq alert2
     end
 
     it "returns nil if there are no alerts" do
       BreakingNewsAlert.count.should eq 0
-      BreakingNewsAlert.latest_alert.should be_nil
-    end
-
-    it "returns nil if the first alert is not visible" do
-      # Older alert, visible
-      older = create :breaking_news_alert, created_at: Time.now.yesterday, visible: true
-      # Latest alert, invisible
-      latest = create :breaking_news_alert, created_at: Time.now, visible: false
-
-      # Only looking at the latest alert
-      BreakingNewsAlert.latest_alert.should be_nil
+      BreakingNewsAlert.latest_visible_alert.should be_nil
     end
   end
 end

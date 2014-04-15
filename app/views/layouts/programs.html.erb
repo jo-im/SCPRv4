@@ -1,4 +1,3 @@
-<!-- This layout should only be used for KPCC Programs. -->
 
 <% content_for :title_bar do %>
 <div class="page-header program-masthead">
@@ -54,11 +53,11 @@
   <% end %>
 
   <% if bucket = @program.missed_it_bucket %>
-    <%= render("/shared/widgets/missed_it_bucket", bucket: bucket) %>
+    <%= render("shared/widgets/missed_it_bucket", bucket: bucket) %>
   <% end %>
 
   <% if blog = @program.blog %>
-    <%= render('/blogs/recent_posts', blog: blog, title: "From the Blog: #{blog.name}") %>
+    <%= render('blogs/recent_posts', blog: blog, title: "From the Blog: #{blog.name}") %>
   <% end %>
 <% end %>
 

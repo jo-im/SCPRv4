@@ -4,9 +4,9 @@ class FeaturedCommentBucket < ActiveRecord::Base
   has_secretary
 
   has_many :comments,
+    -> { order("created_at desc") },
     :class_name     => "FeaturedComment",
-    :foreign_key    => "bucket_id",
-    :order          => "created_at desc"
+    :foreign_key    => "bucket_id"
 
   validates :title, presence: true
 

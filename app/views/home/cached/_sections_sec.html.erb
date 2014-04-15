@@ -18,7 +18,7 @@
       <div class="related-content" data-vr-zone="Homepage Section - <%= section.category.title %> - Featured Content">
         <% if feature = section.featured_object %>
           <% if feature.is_a? FeaturedComment %>
-            <%= render '/shared/featured_comment/sec_right', comment: feature %>
+            <%= render 'shared/featured_comment/sec_right', comment: feature %>
           <% else %>
             <%= render_content feature, "sec_right" %>
           <% end %>

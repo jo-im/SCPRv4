@@ -147,9 +147,35 @@
     }
 
 
+    &.telescope {
+        .message {
+            background: #043156;
+            /* Old browsers */
+            background: -moz-linear-gradient(top, #043156 0%, #0d5077 100%);
+            /* FF3.6+ */
+            background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #043156), color-stop(100%, #0d5077));
+            /* Chrome,Safari4+ */
+            background: -webkit-linear-gradient(top, #043156 0%, #0d5077 100%);
+            /* Chrome10+,Safari5.1+ */
+            background: -o-linear-gradient(top, #043156 0%, #0d5077 100%);
+            /* Opera 11.10+ */
+            background: -ms-linear-gradient(top, #043156 0%, #0d5077 100%);
+            /* IE10+ */
+            background: linear-gradient(to bottom, #043156 0%, #0d5077 100%);
+            /* W3C */
+            filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#043156', endColorstr='#0d5077',GradientType=0 );
+            /* IE6-9 */ 
+        }
+    }
 
+    @media screen and (max-width: 650px) {
+        &.telescope .message {
+            box-shadow: inset 0 -100px 0 #0d5077, inset 0 -101px 0 #2d8bc2; 
+        } 
+    }
 
 }
+
 
 
 

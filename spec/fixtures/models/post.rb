@@ -1,6 +1,7 @@
 module TestClass
   class Post < ActiveRecord::Base
     self.table_name = "test_class_posts"
+    has_secretary on: ["program_id"]
 
     include Concern::Associations::HomepageContentAssociation
     include Concern::Associations::MissedItContentAssociation
@@ -13,8 +14,8 @@ module TestClass
     include Concern::Methods::ArticleStatuses
 
     has_many :content,
+      -> { order('position') },
       :class_name   => "::TestClass::PostContent",
-      :order        => "position",
       :dependent    => :destroy
 
     accepts_json_input_for :content

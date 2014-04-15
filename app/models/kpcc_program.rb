@@ -7,7 +7,7 @@ class KpccProgram < ActiveRecord::Base
   include Concern::Associations::RelatedLinksAssociation
   include Concern::Callbacks::SphinxIndexCallback
 
-  ROUTE_KEY = "program"
+  self.public_route_key = "program"
 
   PROGRAM_STATUS = {
     "onair"      => "Currently Airing",
@@ -20,12 +20,14 @@ class KpccProgram < ActiveRecord::Base
 
   #-------------------
   # Scopes
-  scope :active,         -> { where(air_status: ['onair','online']) }
+  scope :active, -> { where(air_status: ['onair','online']) }
+
   scope :can_sync_audio, -> {
     where(air_status: "onair")
     .where("audio_dir is not null")
     .where("audio_dir != ?", "")
   }
+
 
   #-------------------
   # Associations

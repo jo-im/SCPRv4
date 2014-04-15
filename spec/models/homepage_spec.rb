@@ -1,6 +1,13 @@
 require "spec_helper"
 
 describe Homepage do
+  describe '#content' do
+    it 'orders by position' do
+      homepage = build :homepage
+      homepage.content.to_sql.should match /order by position/i
+    end
+  end
+
   describe '#publish' do
     it 'sets the status to published' do
       homepage = create :homepage, :pending

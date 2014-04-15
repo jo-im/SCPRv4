@@ -20,6 +20,11 @@ class Program
     def find_by_slug!(slug)
       find_by_slug(slug) or raise ActiveRecord::RecordNotFound
     end
+
+    def where(conditions)
+      (KpccProgram.where(conditions) + ExternalProgram.where(conditions))
+      .map(&:to_program)
+    end
   end
 
 

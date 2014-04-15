@@ -36,7 +36,7 @@ class BlogEntry < ActiveRecord::Base
   include Concern::Methods::AssetDisplayMethods
 
   self.disqus_identifier_base = "blogs/entry"
-  ROUTE_KEY = "blog_entry"
+  self.public_route_key = "blog_entry"
 
 
   belongs_to :blog

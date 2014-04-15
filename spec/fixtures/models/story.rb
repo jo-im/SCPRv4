@@ -4,7 +4,7 @@ module TestClass
     include Outpost::Model::Routing
     include Outpost::Model::Identifier
 
-    ROUTE_KEY = "news_story"
+    self.public_route_key = "news_story"
 
     self.table_name = "test_class_stories"
 

@@ -109,7 +109,11 @@ class Audio < ActiveRecord::Base
 
 
   before_save :determine_source, if: :audio_source_changed?
-  after_save :async_compute_file_info, if: -> {
+
+  # We were seeing occassional "RecordNotFound" errors coming from inside
+  # the ComputeAudioFileInfo job, possibly because the job was being
+  # queued and then run before the database transaction had been committed.
+  promise_to :async_compute_file_info, if: -> {
     self.published? && (self.duration.blank? || self.size.blank?)
   }
 

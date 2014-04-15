@@ -23,7 +23,7 @@ class Event < ActiveRecord::Base
   include Concern::Methods::AssetDisplayMethods
 
   self.disqus_identifier_base = "events"
-  ROUTE_KEY = "event"
+  self.public_route_key = "event"
 
   ForumTypes = [
     "comm",

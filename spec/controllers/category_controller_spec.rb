@@ -58,7 +58,7 @@ describe CategoryController do
         get :news, format: :xml
 
         ts_retry(2) do
-          assigns(:content).should eq [story2, story1]
+          assigns(:content).to_a.should eq [story2, story1]
 
           response.should render_template 'category/news'
           response.header['Content-Type'].should match /xml/
@@ -121,7 +121,7 @@ describe CategoryController do
         get :arts, format: :xml
 
         ts_retry(2) do
-          assigns(:content).should eq [story2, story1]
+          assigns(:content).to_a.should eq [story2, story1]
 
           response.should render_template 'category/arts'
           response.header['Content-Type'].should match /xml/

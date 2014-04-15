@@ -1,3 +1,5 @@
+require 'zlib'
+
 # An article is an abstract object, which is not persisted,
 # but rather meant to be built manually from the attributes
 # of another object.
@@ -92,7 +94,7 @@ class Article
 
 
   def obj_key_crc32
-    @obj_key_crc32 ||= self.id.to_crc32
+    @obj_key_crc32 ||= Zlib.crc32(self.id)
   end
 
   def issues_in_category

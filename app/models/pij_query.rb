@@ -21,7 +21,7 @@ class PijQuery < ActiveRecord::Base
   include Concern::Callbacks::TouchCallback
 
 
-  ROUTE_KEY = "pij_query"
+  self.public_route_key = "pij_query"
 
   QUERY_TYPES = [
     ["Evergreen", "evergreen"],

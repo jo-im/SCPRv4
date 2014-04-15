@@ -77,11 +77,9 @@ class BreakingNewsAlert < ActiveRecord::Base
   #-------------------
 
   class << self
-    # Get the latest published alert, whether visible or not,
-    # and check if it's visible.
-    def latest_alert
-      alert = self.published.first
-      alert.try(:visible?) ? alert : nil
+    # Get the latest published and visible alert.
+    def latest_visible_alert
+      self.published.visible.first
     end
 
     def types_select_collection
@@ -166,7 +164,7 @@ class BreakingNewsAlert < ActiveRecord::Base
     !self.email_sent?
   end
 
-  def update_email_status(email, campaign)
+  def update_email_status(campaign)
     if campaign.activate
       self.update_column(:email_sent, true)
     end

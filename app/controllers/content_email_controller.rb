@@ -6,8 +6,9 @@ class ContentEmailController < ApplicationController
     @message = ContentEmail.new
   end
 
+
   def create
-    @message = ContentEmail.new(params[:content_email])
+    @message = ContentEmail.new(form_params)
     @message.content_key = @content.obj_key
 
     if @message.save
@@ -23,5 +24,10 @@ class ContentEmailController < ApplicationController
 
   def get_content
     @content = ContentBase.safe_obj_by_key!(params[:obj_key])
+  end
+
+  def form_params
+    params.require(:content_email).permit(
+      :to_email, :from_name, :from_email, :body, :lname)
   end
 end

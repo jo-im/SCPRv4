@@ -1,4 +1,4 @@
-<% if alert = BreakingNewsAlert.latest_alert %>
+<% if alert = BreakingNewsAlert.latest_visible_alert %>
   <div id="breaking-news">
       <div class="live-update <%= alert.alert_type %>">
         <div class="container-fluid">

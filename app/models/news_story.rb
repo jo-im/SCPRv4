@@ -36,7 +36,7 @@ class NewsStory < ActiveRecord::Base
   include Concern::Methods::AssetDisplayMethods
 
   self.disqus_identifier_base = "news/story"
-  ROUTE_KEY = "news_story"
+  self.public_route_key = "news_story"
 
   SOURCES = [
     ['KPCC',                        'kpcc'],

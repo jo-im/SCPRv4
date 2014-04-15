@@ -7,7 +7,7 @@ class Bio < ActiveRecord::Base
   include Concern::Associations::RelatedLinksAssociation
   include Concern::Callbacks::SphinxIndexCallback
 
-  ROUTE_KEY = "bio"
+  self.public_route_key = "bio"
 
   #--------------
   # Scopes
@@ -47,7 +47,7 @@ class Bio < ActiveRecord::Base
     # of pages of Bylines, we have to fallback to an actual SQL query if the offset is
     # too high. Run some Ruby methods on the byines to mimic SQL's order and conditions.
     if page.to_i > (SPHINX_MAX_MATCHES / per_page.to_i)
-      bylines = self.bylines.includes(:content).all
+      bylines = self.bylines.includes(:content)
 
       Kaminari.paginate_array(bylines.select { |b| b.content.published? }
              .sort_by { |b| b.content.published_at }

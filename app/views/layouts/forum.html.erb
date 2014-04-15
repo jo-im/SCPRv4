@@ -1,10 +1,10 @@
 <% add_to_page_title "The Crawford Family Forum" %>
 
-<%= render '/shared/header/document_header' %>
+<%= render 'shared/header/document_header' %>
 
 <body class="forum">
 <div class="viewport">
-  <%= render "/shared/masthead/layout_header" %>
+  <%= render "shared/masthead/layout_header" %>
   <%= yield :masthead %>
 
   <div id="forum" class="container-fluid main-content">
@@ -19,7 +19,7 @@
           <% if content_for?(:sidebar) %>
             <%= yield :sidebar %>
           <% else %>
-            <%= render '/events/nav', navClass: "vertical" %>
+            <%= render 'events/nav', navClass: "vertical" %>
 
             <div class="mq-row-fluid">
               <div class="span8">
@@ -51,10 +51,10 @@
     </div> <!-- row fluid -->
 
     <%= yield :bottom %>
-    <%= render "/shared/audio/inpage_audio_player" %>
+    <%= render "shared/audio/inpage_audio_player" %>
   </div> <!-- container-fluid forum -->
 
-  <%= render "/shared/footer/layout_footer" %>
+  <%= render "shared/footer/layout_footer" %>
 </div> <!-- viewport -->
 
-<%= render "/shared/footer/document_footer" %>
+<%= render "shared/footer/document_footer" %>

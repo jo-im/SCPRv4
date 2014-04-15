@@ -7,8 +7,8 @@ class MissedItContent < ActiveRecord::Base
   # FIXME: Remove reference to ContentBase.
   # See HomepageContent for explanation.
   belongs_to :content,
-    :polymorphic    => true,
-    :conditions     => { status: ContentBase::STATUS_LIVE }
+    -> { where(status: ContentBase::STATUS_LIVE) },
+    :polymorphic    => true
 
   belongs_to :missed_it_bucket, foreign_key: "bucket_id"
 end

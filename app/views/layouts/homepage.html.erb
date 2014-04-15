@@ -1,12 +1,14 @@
-<%= render '/shared/header/document_header' %>
+<%= render 'shared/header/document_header' %>
 
 <body>
 
 <div class="viewport">
-  <!-- MASTHEAD-->
-  <%= render "/shared/masthead/layout_header" %>
+  <div id="pledge-pushdown"></div>
 
-  <%= render "/shared/ads/dfp", ad_key: :membership_leaderboard %>
+  <!-- MASTHEAD-->
+  <%= render "shared/masthead/layout_header" %>
+
+  <%= render "shared/ads/dfp", ad_key: :membership_leaderboard %>
 
   <!-- BROADCAST BAR -->
 <% if @schedule_current.present? %>
@@ -99,11 +101,11 @@
 
         <div class="span8">
           <div id="sidebar-top">
-            <%= render "/shared/ads/oas", ad_id: 'x01' %>
-            <%= render "/shared/ads/dfp", ad_key: :membership_sidebar %>
-            <%= render "/shared/widgets/newsletter_subscribe" %>
-            <%= render "/shared/widgets/most_popular" %>
-            <%= render "/shared/ads/dfp", ad_key: :homepage_house_promo %>
+            <%= render "shared/ads/oas", ad_id: 'x01' %>
+            <%= render "shared/ads/dfp", ad_key: :membership_sidebar %>
+            <%= render "shared/widgets/newsletter_subscribe" %>
+            <%= render "shared/widgets/most_popular" %>
+            <%= render "shared/ads/dfp", ad_key: :homepage_house_promo %>
           </div> <!-- sidebar-top -->
         </div> <!-- span8 -->
       </div> <!-- row-fluid -->
@@ -121,10 +123,10 @@
         </div> <!-- span16 -->
         <div class="span8">
           <div id="sidebar-bottom">
-            <%= render "/shared/ads/oas", ad_id: "x02" %>
-            <%= render "/shared/ads/dfp", ad_key: :sidebar_house_promo %>
-            <%= render "/shared/ads/oas", ad_id: "x03" %>
-            <%= render "/shared/widgets/archive" %>
+            <%= render "shared/ads/oas", ad_id: "x02" %>
+            <%= render "shared/ads/dfp", ad_key: :sidebar_house_promo %>
+            <%= render "shared/ads/oas", ad_id: "x03" %>
+            <%= render "shared/widgets/archive" %>
           </div> <!-- sidebar bottom -->
         </div> <!-- span8 -->
       </div> <!-- row fluid -->
@@ -132,13 +134,13 @@
 
   </div> <!-- main container-fluid -->
 
-  <%= render "/shared/footer/layout_footer" %>
+  <%= render "shared/footer/layout_footer" %>
 
 
 
   <div class="modal wide hide" id="homepageModal">
     <div class="modal-body">
-      <%= render "/shared/ads/dfp", ad_key: :membership_lightbox, widget: false %>
+      <%= render "shared/ads/dfp", ad_key: :membership_lightbox, widget: false %>
     </div>
 
     <div class="modal-footer">
@@ -156,10 +158,30 @@ $(document).ready(function(){
       $('#homepageModal').modal();
     }
   }, 1000);
+
+  // Load pledge pushdown
+  if (scpr.Cookie.get('adClosed') == null) {
+    var visualCampaign = new scpr.VisualCampaign({
+      endpoint: "http://audiobox.scprdev.org/api/v1/visual_campaigns",
+      key: "pledge",
+      success: function(markup) {
+        $("#pledge-pushdown").prepend(markup)
+
+        $("#pledge-hide").on({
+          click: function(evt){
+            $('#pledge-pushdown').hide();
+            scpr.Cookie.set("adClosed", "1", 60*60*24)
+          }
+        });
+      }
+    });
+
+    visualCampaign.fetch();
+  }
 });
 </script>
 <% end %>
 
 </div> <!-- viewport -->
 
-<%= render "/shared/footer/document_footer" %>
+<%= render "shared/footer/document_footer" %>

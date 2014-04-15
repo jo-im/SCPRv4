@@ -18,36 +18,20 @@
 # modify the `config.dbsync.local_dir` configuration.
 #
 Scprv4::Application.configure do
-  # Settings specified here will take precedence over those in config/application.rb
-
-  # In the development environment your application's code is reloaded on
-  # every request.  This slows down response time but is perfect for development
-  # since you don't have to restart the web server when you make code changes.
-  config.cache_classes = false
-
-  # Log error messages when you accidentally call methods on nil.
-  config.whiny_nils = true
-
-  # Show full error reports and disable caching
+  config.cache_classes  = false
+  config.eager_load     = false
   config.consider_all_requests_local = true
-
   config.action_controller.perform_caching = false
   config.cache_store = :redis_content_store, "redis://localhost:6379/5"
+  config.action_controller.action_on_unpermitted_parameters = :raise
+
+  config.assets.debug         = false  # Expand
+  config.serve_static_assets  = true  # Serve from public/
+  config.assets.compile       = true  # Fallback
+  config.assets.digest        = false # Add asset fingerprints
 
   # Print deprecation notices to the Rails logger
   config.active_support.deprecation = :log
-
-  # Only use best-standards-support built into browsers
-  config.action_dispatch.best_standards_support = :builtin
-
-  # Do not compress assets
-  config.assets.compress = false
-
-  # Expands the lines which load the assets
-  config.assets.debug = true
-
-  # Serve files from public/
-  config.serve_static_assets = true
 
   # Gmail
   config.action_mailer.delivery_method       = :smtp
@@ -63,10 +47,8 @@ Scprv4::Application.configure do
   }
 
   config.dbsync = {
-    :filename    => "mercer.dump",
-    :local_dir   => "#{Rails.root}/../dbsync/",
-    :remote_host => "scprdb@66.226.4.229",
-    :remote_dir  => "~scprdb"
+    :local   => "#{Rails.root}/../dbdumps/mercer.dump",
+    :remote  => "scprdb@66.226.4.229:~scprdb/mercer.dump"
   }
 
   default_url_options[:host] = "localhost:3000"
@@ -82,6 +64,7 @@ Scprv4::Application.configure do
   # Then you can use this configuration:
   # config.scpr.media_url    = "http://localhost:5000"
 
+  # Job queue namespace.
   config.scpr.resque_queue = :scprv4
 
   config.node.server = "http://localhost:8888"
