@@ -41,7 +41,7 @@ Scprv4::Application.configure do
 
   config.dbsync = {
     :filename    => "mercer.dump",
-    :local_dir   => "/web/scprv4/dbsync",
+    :local_dir   => "/scpr/dbsync",
     :remote_host => "scprdb@66.226.4.229",
     :remote_dir  => "~scprdb"
   }
