@@ -26,15 +26,7 @@
 
 <div class="more-content">
   <div class="row-fluid">
-    <div class="span12 audiovision-block">
-
-      <a class="logo" href="http://audiovision.scpr.org">
-        <h6>AudioVision</h6>
-      </a>
-
-      <%= raw Rails.cache.read("views/home/audiovision") %>
-    </div> <!-- .audiovision -->
-
+    <%= render "shared/widgets/most_popular" %>
     <div class="span12">
       <%= render "events/forum_events" %>
     </div>
