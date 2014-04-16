@@ -112,28 +112,12 @@ namespace :scprv4 do
     Rake::Task["scprv4:cache:homepage"].invoke
     Rake::Task["scprv4:cache:most_viewed"].invoke
     Rake::Task["scprv4:cache:most_commented"].invoke
-    Rake::Task["scprv4:cache:audiovision"].invoke
     Rake::Task["scprv4:cache:twitter"].invoke
   end
 
   #----------
 
   namespace :cache do
-    desc "Cache Audiovision Homepage Module"
-    task :audiovision => [:environment] do
-      puts "*** [#{Time.now}] Caching AudioVision for homepage..."
-
-      if Rails.env.development?
-        Job::AudioVisionCache.perform
-        puts "Finished.\n"
-      else
-        Job::AudioVisionCache.enqueue
-        puts "Job was placed in queue.\n"
-      end
-    end
-
-    #----------
-
     desc "Cache Most Viewed"
     task :most_viewed => [:environment] do
       puts "*** [#{Time.now}] Caching most viewed..."
