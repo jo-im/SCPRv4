@@ -84,7 +84,7 @@ end
 
 
 group :development, :staging do
-  gem "dbsync", '~> 0.2.0'
+  gem "dbsync", '~> 0.3.0'
 end
 
 
