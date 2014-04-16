@@ -7,7 +7,7 @@ module Job
 
     class << self
       def perform
-        Vertical.each do |vertical|
+        Vertical.all.each do |vertical|
           tweet_list = []
 
           vertical.reporters

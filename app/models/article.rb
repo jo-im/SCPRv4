@@ -96,9 +96,4 @@ class Article
   def obj_key_crc32
     @obj_key_crc32 ||= Zlib.crc32(self.id)
   end
-
-  def issues_in_category
-    return [] if self.category.blank?
-    self.issues & self.category.issues
-  end
 end

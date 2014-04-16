@@ -108,6 +108,7 @@ RSpec.configure do |config|
   config.after :each do
     DatabaseCleaner.clean
     Rails.cache.clear
+    ActionMailer::Base.deliveries.clear
   end
 
   config.after :all do

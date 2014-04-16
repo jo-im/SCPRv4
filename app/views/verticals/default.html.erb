@@ -1,13 +1,12 @@
-<% add_to_page_title @category.title %>
-<% meta_tags(url: @category.public_url) %>
-<% content_for :body_class, "landing #{@category.slug}" %>
+<% add_to_page_title @vertical.title %>
+<% meta_tags(url: @vertical.public_url) %>
+<% content_for :body_class, "landing #{@vertical.slug}" %>
 
-<%= cache ["vertical", 'v1', @category] do %>
+<%= cache ["vertical", 'v1', @vertical] do %>
 
-<%= fallback_render 'lead', ["verticals", @category.slug.underscore] %>
+<% lead_article = @vertical.featured_articles.first %>
 
 <section class="headline">
-<% lead_article = @category.featured_articles.first %>
 <% if lead_article %>
     <h1 class="bound"><span><%= link_to lead_article.short_title, lead_article.public_path %></span></h1>
 <% end %>
@@ -16,7 +15,7 @@
 <div class="welcome bound clearfix">
 
     <% if lead_article %>
-        <%= render 'verticals/shared/headline_content', lead_article: lead_article %>
+        <%= render 'verticals/shared/lead', lead_article: lead_article %>
     <% end %>
 
     <div class="ataglance clearfix affiliated">
@@ -66,7 +65,7 @@
 
         <aside class="crawford">
             <header>
-                <h1><%= @category.title %> Events at KPCC</h1>
+                <h1><%= @vertical.title %> Events at KPCC</h1>
             </header>
             <p>KPCC hosts free events that open dialogue and deepen the understanding of vital issues affecting Southern California. <%= link_to 'See our in-studio events.', forum_events_path %></p>
         </aside>
@@ -75,17 +74,17 @@
 </div><!--/ .welcome -->
 
 
-<%= render 'verticals/shared/resources', category: @category, articles: Array(@category.featured_articles[1..4]) %>
-<%= render 'verticals/shared/lunchbox', category: @category, quotes: @quotes, events: @events %>
+<%= render 'verticals/shared/resources', vertical: @vertical, articles: Array(@vertical.featured_articles[1..4]) %>
+<%= render 'verticals/shared/lunchbox', vertical: @vertical, quote: @quote, events: @events %>
 
 <% articles = Array(vertical_articles) %>
-<%= cache ["categories/show", "recent-coverage", 'v1', @category, articles] do %>
-    <%= render 'shared/new/triptych', articles: Array(articles[0..2]), header: "Recent #{@category.title} Coverage" %>
+<%= cache ["categories/show", "recent-coverage", 'v1', @vertical, articles] do %>
+    <%= render 'shared/new/triptych', articles: Array(articles[0..2]), header: "Recent #{@vertical.title} Coverage" %>
 
     <%= content_for?(:middle_ad) ? content_for(:middle_ad) : render('shared/new/kpcc_ipad_ad') %>
 
-    <%= render 'shared/new/quadrant', articles: Array(articles[3..6]), header: "" %>
-    <%= render 'shared/new/waterfall', category: @category, articles: articles %>
+    <%= render 'shared/new/quadrant', vertical: @vertical, articles: Array(articles[3..6]), header: "" %>
+    <%= render 'shared/new/waterfall', vertical: @vertical, articles: articles %>
 <% end %> <%# cache %>
 
 <% end %>

@@ -2,6 +2,8 @@ FactoryGirl.define do
   factory :vertical do
     sequence(:title) { |n| "Local #{n}" }
     slug { title.parameterize }
+
+    category
   end
 
   factory :vertical_article do

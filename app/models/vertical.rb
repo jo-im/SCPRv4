@@ -14,8 +14,8 @@ class Vertical < ActiveRecord::Base
     3 => 'map'
   }
 
-  has_many :events
   belongs_to :quote
+  belongs_to :category
 
   has_many :vertical_issues, dependent: :destroy
   has_many :issues, through: :vertical_issues
@@ -36,7 +36,7 @@ class Vertical < ActiveRecord::Base
   tracks_association :vertical_articles
 
 
-  validates :title, :slug, presence: true
+  validates :title, :slug, :category_id, presence: true
 
 
   # This category's hand-picked content,

@@ -25,7 +25,16 @@ class RootPathController < ApplicationController
     slug = path.gsub(/\A\/?(.+)\/?\z/, "\\1").downcase
 
     if @vertical = Vertical.find_by_slug(slug)
-      send("handle_vertical_#{slug}") and return
+      if request.format.html?
+        # Still not entirely convinced by this...
+        action = "handle_vertical_#{slug}"
+        action_methods.include?(action) ? send(action) : handle_vertical_default
+      else
+        @category = @vertical.category
+        handle_category
+      end
+
+      return
     end
 
     if @category = Category.find_by_slug(slug)

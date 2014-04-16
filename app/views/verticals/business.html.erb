@@ -1,10 +1,10 @@
-<% add_to_page_title @category.title %>
-<% meta_tags(url: @category.public_url) %>
-<% content_for :body_class, "landing #{@category.slug}" %>
+<% add_to_page_title @vertical.title %>
+<% meta_tags(url: @vertical.public_url) %>
+<% content_for :body_class, "landing #{@vertical.slug}" %>
 
-<%= cache ["vertical", 'v1', @category] do %>
+<%= cache ["vertical", 'v1', @vertical] do %>
 
-<% lead_article = @category.featured_articles.first %>
+<% lead_article = @vertical.featured_articles.first %>
 
 <% if lead_article %>
 <%= render 'verticals/shared/headline', article: lead_article %>
@@ -47,17 +47,17 @@
 </div><!--/ .welcome -->
 
 
-<%= render 'verticals/shared/resources', category: @category, articles: Array(@category.featured_articles[1..4]) %>
-<%= render 'verticals/shared/lunchbox', category: @category, quotes: @quotes, events: @events %>
+<%= render 'verticals/shared/resources', vertical: @vertical, articles: Array(@vertical.featured_articles[1..4]) %>
+<%= render 'verticals/shared/lunchbox', vertical: @vertical, quotes: @quotes, events: @events %>
 
 <% articles = Array(vertical_articles) %>
-<%# We add category.title to the cache key since that's the only category-specific
+<%# We add vertical.title to the cache key since that's the only vertical-specific
 information we depend on inside of this cache block. %>
-<%= cache ["vertical", "recent-coverage", 'v1', @category.title, articles] do %>
-    <%= render 'shared/new/triptych', articles: Array(articles[0..2]), header: "Recent #{@category.title} Coverage" %>
+<%= cache ["vertical", "recent-coverage", 'v1', @vertical.title, articles] do %>
+    <%= render 'shared/new/triptych', articles: Array(articles[0..2]), header: "Recent #{@vertical.title} Coverage" %>
     <%= render 'shared/new/kpcc_ipad_ad' %>
-    <%= render 'shared/new/quadrant', articles: Array(articles[3..6]), header: "" %>
-    <%= render 'shared/new/waterfall', category: @category, articles: articles %>
+    <%= render 'shared/new/quadrant', vertical: @vertical, articles: Array(articles[3..6]), header: "" %>
+    <%= render 'shared/new/waterfall', vertical: @vertical, articles: articles %>
 <% end %> <%# cache %>
 
 <% end %>

@@ -13,10 +13,10 @@ module VerticalHandler
     @category   = Category.find_by_slug('politics')
     @blog       = Blog.find_by_slug('politics')
     @quote      = @vertical.quote
-    @events     = @category.events.published.upcoming
+    @events     = @vertical.category.events.published.upcoming
 
     render(
-      :layout     => 'news/verticals',
+      :layout     => 'new/vertical',
       :template   => 'verticals/politics'
     )
   end
@@ -26,11 +26,11 @@ module VerticalHandler
   def handle_vertical_education
     @category   = Category.find_by_slug('education')
     @blog       = Blog.find_by_slug('education')
-    @quotes     = @vertical.quotes.published
-    @events     = @vertical.events.published.upcoming
+    @quote      = @vertical.quote
+    @events     = @vertical.category.events.published.upcoming
 
     render(
-      :layout     => 'news/verticals',
+      :layout     => 'new/vertical',
       :template   => 'verticals/education'
     )
   end
@@ -40,8 +40,8 @@ module VerticalHandler
   def handle_vertical_business
     @category   = Category.find_by_slug('money')
     @blog       = Blog.find_by_slug('economy')
-    @quotes     = @vertical.quotes.published
-    @events     = @vertical.events.published.upcoming
+    @quote      = @vertical.quote
+    @events     = @vertical.category.events.published.upcoming
 
     # Business vertical needs to also show Marketplace stories,
     # but we don't have a marketplace blog or anything like that,
@@ -49,15 +49,25 @@ module VerticalHandler
     @marketplace_articles = NewsStory.where(source: 'marketplace').published
 
     render(
-      :layout     => 'news/verticals',
+      :layout     => 'new/vertical',
       :template   => 'verticals/business'
     )
   end
 
 
+  def handle_vertical_default
+    @category   = @vertical.category
+    @quote      = @vertical.quote
+    @events     = @vertical.category.events.published.upcoming
+
+    render(
+      :layout     => 'new/vertical',
+      :template   => 'verticals/default'
+    )
+  end
+
 
   private
-
 
   # Get any content with this category, excluding the lead article,
   # and map them to articles

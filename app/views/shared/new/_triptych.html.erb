@@ -11,7 +11,7 @@
                 <div class="graphic">
                     <div class="ratio">
 
-                    <% if issue = article.issues_in_category.first %>
+                    <% if issue = (article.issues & @vertical.issues).first %>
                         <%= link_to issue.public_path, class: 'issue' do %>
                           <span><%= issue.title %></span>
                         <% end %>

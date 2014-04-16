@@ -1,35 +1,36 @@
 require 'spec_helper'
+
 describe "Vertical page" do
   describe "rendering featured articles" do
     sphinx_spec
 
     it "does not return the top story in the reverse chronological article sections" do
-      category = create :category, is_active: true
-      articles = create_list :news_story, 6, :published, category: category
-      other_articles = create_list :news_story, 10, :published, category: category
+      vertical = create :vertical
+      articles = create_list :news_story, 6, :published, category: vertical.category
+      other_articles = create_list :news_story, 10, :published, category: vertical.category
 
       articles.each do |article|
         # Featured articles
-        category.category_articles.create(article: article)
+        vertical.vertical_articles.create(article: article)
       end
 
       index_sphinx
       ts_retry(2) do
-        visit category.public_path
+        visit vertical.public_path
 
         # Make sure the top article only shows up once on the page
-        page.should have_content category.featured_articles.first.short_title, count: 1
+        page.should have_content vertical.featured_articles.first.short_title, count: 1
       end
     end
 
     it "does not return the top story in the promoted issues section" do
       issue           = create :active_issue
-      category        = create :category, is_active: true
-      featured_story  = create :news_story, :published, category: category
+      vertical        = create :vertical
+      featured_story  = create :news_story, :published, category: vertical.category
 
-      category.category_issues.create(issue: issue)
+      vertical.vertical_issues.create(issue: issue)
       featured_story.article_issues.create(issue: issue)
-      category.category_articles.create(article: featured_story)
+      vertical.vertical_articles.create(article: featured_story)
 
       other_articles = create_list :news_story, 2, :published
 
@@ -41,16 +42,17 @@ describe "Vertical page" do
       index_sphinx
 
       ts_retry(2) do
-        visit category.public_path
+        visit vertical.public_path
 
-        within("aside.more") do
-          # make sure top story doesn't show up in the promoted 'more from this issue' section
-          page.should_not have_content category.featured_articles.first.short_title
+        within(".supportive aside.more") do
+          # make sure top story doesn't show up in the promoted
+          # 'more from this issue' section
+          page.should_not have_content vertical.featured_articles.first.short_title
         end
 
         within("section.issues") do
           # make sure top story will still show up in the Issues We're Tracking section
-          page.should have_content category.featured_articles.first.short_title, count: 1
+          page.should have_content vertical.featured_articles.first.short_title, count: 1
         end
       end
     end
@@ -59,12 +61,12 @@ describe "Vertical page" do
     # without issues was the lead article, since content shells don't have
     # related content.
     it "can have a content shell as the lead article with no issues" do
-      category = create :category, is_active: true
+      vertical = create :vertical
       shell = create :content_shell, :published
 
-      category.category_articles.create(article: shell)
+      vertical.vertical_articles.create(article: shell)
 
-      visit category.public_path
+      visit vertical.public_path
       page.should have_content shell.headline
       page.should_not have_content "More from Related Content"
     end
@@ -72,10 +74,10 @@ describe "Vertical page" do
 
   describe 'rendering events' do
     it "renders each event once" do
-      category = create :category, is_active: true
-      events = create_list :event, 4, :published, category: category
+      vertical = create :vertical
+      events = create_list :event, 4, :published, category: vertical.category
 
-      visit category.public_path
+      visit vertical.public_path
 
       events.each do |event|
         page.should have_content event.headline, count: 1
@@ -84,20 +86,12 @@ describe "Vertical page" do
   end
 
   describe 'rendering quote' do
-    it 'renders the latest published quote' do
-      category = create :category, is_active: true
+    it 'renders the quote' do
+      quote = create :quote, text: "xxxThis is a quotexxx"
+      vertical = create :vertical, quote: quote
+      visit vertical.public_path
 
-      quote1 = create :quote, :published, category: category
-      quote2 = create :quote, :published, category: category, text: "COOL QUOTE!!!"
-      quote3 = create :quote, :draft, category: category
-
-      quote1.update_column(:created_at, 1.month.ago)
-      quote2.update_column(:created_at, 1.week.ago)
-      quote3.update_column(:created_at, 1.day.ago)
-
-      visit category.public_path
-
-      page.should have_content "COOL QUOTE!!!"
+      page.should have_content "xxxThis is a quotexxx"
     end
   end
 end
