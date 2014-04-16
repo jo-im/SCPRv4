@@ -175,7 +175,7 @@ namespace :scprv4 do
         ],
         [
           "kpcc",
-          "/shared/widgets/cached/curated_tweets",
+          "/shared/widgets/cached/sidebar_tweets",
           "twitter:kpcc"
         ]
       ]
