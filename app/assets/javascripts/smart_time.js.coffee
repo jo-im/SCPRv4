@@ -66,7 +66,10 @@ class scpr.SmartTime
             windowLimit   = moment(now).subtract(@window...)   if @window
             relativeLimit = moment(now).subtract(@relative...) if @relative
             timecutLimit  = moment(now).subtract(@timecut...)  if @timecut
-
+            # use the moment-twitter extension to format the timestamp
+            if @$el.attr("twitter-format")
+              @$el.text "" + @options.prefix + @time.twitterShort()
+              return true
             # if we have a window, are we inside of it?
             if @time < windowLimit
                 # @time is outside of the windowLimit
