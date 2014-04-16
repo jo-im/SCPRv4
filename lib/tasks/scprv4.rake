@@ -166,7 +166,7 @@ namespace :scprv4 do
 
       NewRelic.with_manual_agent do
         feeds.each do |feed|
-          puts "*** [#{Time.now}] Caching #{args.first} twitter feed..."
+          puts "*** [#{Time.now}] Caching #{feed.first} twitter feed..."
 
           if Rails.env.development?
             Job::TwitterCache.perform(*feed)
