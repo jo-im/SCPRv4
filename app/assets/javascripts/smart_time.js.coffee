@@ -45,15 +45,22 @@ class scpr.SmartTime
                 # moment try to figure it out
                 @time = moment @$el.attr("datetime")
 
-            # -- look for display limits -- #
+            # If this is a twitter-formatted timestamp, no need to look at
+            # any other attributes. Format it twitter-style and return.
+            # We'll leave off Prefix too, since it would break the twitter
+            # format.
+            if @$el.attr("twitter-format")
+              @$el.text @time.twitterShort()
 
-            for opt in ['relative','timecut','window']
-                if @$el.attr("data-#{opt}")
-                    @[opt] = (@$el.attr("data-#{opt}").match /(\d+)\s?(\w+)/)?[1..2].reverse()
-                    @[opt][1] = parseInt(@[opt][1])
-            # -- now figure out our display -- #
+            else
+                # -- look for display limits -- #
+                for opt in ['relative','timecut','window']
+                    if @$el.attr("data-#{opt}")
+                        @[opt] = (@$el.attr("data-#{opt}").match /(\d+)\s?(\w+)/)?[1..2].reverse()
+                        @[opt][1] = parseInt(@[opt][1])
+                # -- now figure out our display -- #
 
-            @update()
+                @update()
 
         #----------
 
@@ -66,10 +73,7 @@ class scpr.SmartTime
             windowLimit   = moment(now).subtract(@window...)   if @window
             relativeLimit = moment(now).subtract(@relative...) if @relative
             timecutLimit  = moment(now).subtract(@timecut...)  if @timecut
-            # use the moment-twitter extension to format the timestamp
-            if @$el.attr("twitter-format")
-              @$el.text "" + @options.prefix + @time.twitterShort()
-              return true
+
             # if we have a window, are we inside of it?
             if @time < windowLimit
                 # @time is outside of the windowLimit

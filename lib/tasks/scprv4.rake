@@ -167,37 +167,38 @@ namespace :scprv4 do
 
     desc "Cache twitter feeds"
     task :twitter => [:environment] do
-
-      args = [
-       [
-        "KPCCForum",
-        "/shared/widgets/cached/tweets",
-        "twitter:KPCCForum"
-       ],
-       [
-        "kpcc",
-        "/shared/widgets/cached/curated_tweets",
-        "twitter:kpcc"
-       ]
+      feeds = [
+        [
+          "KPCCForum",
+          "/shared/widgets/cached/tweets",
+          "twitter:KPCCForum"
+        ],
+        [
+          "kpcc",
+          "/shared/widgets/cached/curated_tweets",
+          "twitter:kpcc"
+        ]
       ]
 
       NewRelic.with_manual_agent do
-        args.each do |arg|
-          puts "*** [#{Time.now}] Caching #{arg.first} tweets...."
+        feeds.each do |feed|
+          puts "*** [#{Time.now}] Caching #{args.first} twitter feed..."
+
           if Rails.env.development?
-            Job::TwitterCache.perform(*arg)
-            puts "Finished KPCCForum tweet caching.\n"
+            Job::TwitterCache.perform(*feed)
+            puts "Finished.\n"
           else
-            Job::TwitterCache.enqueue(*arg)
+            Job::TwitterCache.enqueue(*feed)
             puts "Job was placed in queue.\n"
           end
         end
       end
 
+      puts "*** [#{Time.now}] Caching Vertical twtiter feeds..."
 
       if Rails.env.development?
         Job::VerticalsTwitterCache.perform
-        puts "Finished Vertical tweet caching.\n"
+        puts "Finished.\n"
       else
         Job::VerticalsTwitterCache.enqueue
         puts "Job was placed in queue.\n"

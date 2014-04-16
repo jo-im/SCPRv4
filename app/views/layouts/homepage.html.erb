@@ -104,6 +104,7 @@
             <%= render "shared/ads/oas", ad_id: 'x01' %>
             <%= render "shared/ads/dfp", ad_key: :membership_sidebar %>
             <%= render "shared/widgets/newsletter_subscribe" %>
+
             <!-- TWITTER -->
             <% if cached_tweets = Rails.cache.fetch("twitter:kpcc") %>
               <aside class="curated-tweets widget">
@@ -116,6 +117,7 @@
                 </ul>
               </aside>
             <% end %>
+
             <%= render "shared/ads/dfp", ad_key: :homepage_house_promo %>
           </div> <!-- sidebar-top -->
         </div> <!-- span8 -->

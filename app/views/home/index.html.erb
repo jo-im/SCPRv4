@@ -26,7 +26,15 @@
 
 <div class="more-content">
   <div class="row-fluid">
-    <%= render "shared/widgets/homepage_most_popular" %>
+    <div id="most-popular" class="span12">
+      <h6>Most Popular</h6>
+      <div class="tab-content">
+        <div class="tab-pane active popular" id="pop_tab1" data-vr-zone="Most Popular">
+          <%= raw Rails.cache.read("views/popular/viewed") %>
+        </div>
+      </div>
+    </div>
+
     <div class="span12">
       <%= render "events/forum_events" %>
     </div>
