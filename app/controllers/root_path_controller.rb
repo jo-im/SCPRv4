@@ -1,5 +1,6 @@
 class RootPathController < ApplicationController
   include FlatpageHandler
+  include VerticalHandler
   include CategoryHandler
 
   respond_to :html, :xml, :rss
@@ -18,19 +19,21 @@ class RootPathController < ApplicationController
 
     if @flatpage = Flatpage.visible.find_by_path(path.downcase)
       handle_flatpage and return
-    else
-      # Only do the gsubbing if necessary
-      slug = path.gsub(/\A\/?(.+)\/?\z/, "\\1").downcase
-
-      if @category = Category.find_by_slug(slug)
-        if @category.is_active
-          handle_vertical and return
-        else
-          handle_category and return
-        end
-      else
-        render_error(404, ActionController::RoutingError.new("Not Found")) and return false
-      end
     end
+
+    # Only do the gsubbing if necessary
+    slug = path.gsub(/\A\/?(.+)\/?\z/, "\\1").downcase
+
+    if @vertical = Vertical.find_by_slug(slug)
+      send("handle_vertical_#{slug}") and return
+    end
+
+    if @category = Category.find_by_slug(slug)
+      handle_category and return
+    end
+
+    # If we haven't returned by now, then render a 404.
+    render_error(404, ActionController::RoutingError.new("Not Found"))
+    return false
   end
 end

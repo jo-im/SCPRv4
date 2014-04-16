@@ -56,6 +56,7 @@ module ApplicationHelper
     end
   end
 
+
   #---------------------------
   # render_content takes a ContentBase object and a context, and renders
   # using the most specific version of that context it can find.
@@ -307,7 +308,7 @@ module ApplicationHelper
     message = options[:message] || "This story was informed by KPCC listeners."
 
     if content.is_from_pij?
-      render '/shared/pij_notice', message: message
+      render 'shared/pij_notice', message: message
     end
   end
 
@@ -405,8 +406,17 @@ module ApplicationHelper
   #
   # Returns String
   def url_with_params(url, params={})
-    uri     = URI.parse(url)
-    query   = URI.decode_www_form(uri.query.to_s)
+    begin
+      uri = URI.parse(url)
+    rescue URI::InvalidURIError => e
+      # We want to know about these invalid URIs so we can fix them,
+      # but it shouldn't prevent the entire page from loading if there's
+      # one bad URL.
+      NewRelic.log_error(e)
+      return url
+    end
+
+    query = URI.decode_www_form(uri.query.to_s)
 
     params.each { |k, v| query << [k.to_s, v.to_s] if v }
 

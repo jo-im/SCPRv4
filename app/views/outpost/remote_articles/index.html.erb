@@ -1,7 +1,7 @@
 <% add_to_page_title model.to_title.pluralize %>
 
 <div class="index-header clearfix">
-  <%= render "/outpost/shared/filters" %>
+  <%= render "outpost/shared/filters" %>
   <%= render "outpost/shared/search_form" %>
 
   <div class="pull-right">
@@ -12,7 +12,7 @@
 <%= list_table @records, model do %>
   <thead>
     <tr>
-      <%= render "/outpost/shared/headers", list: list %>
+      <%= render "outpost/shared/headers", list: list %>
     </tr>
   </thead>
   <tbody class="list">
@@ -34,7 +34,7 @@
             data: { confirm: "Click OK to hide this Remote Article.\nClick CANCEL to return to the list." } %>
         </td>
 
-        <%= render "/outpost/shared/columns", list: list, record: record %>
+        <%= render "outpost/shared/columns", list: list, record: record %>
       </tr>
     <% end %>
   </tbody>

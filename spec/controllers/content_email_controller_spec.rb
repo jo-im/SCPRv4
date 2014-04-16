@@ -50,7 +50,8 @@ describe ContentEmailController do
           :content_email => {
             :from_name    => "Bryan",
             :from_email   => "bricker@scpr.org",
-            :to_email     => "bricker@kpcc.org"
+            :to_email     => "bricker@kpcc.org",
+            :body         => "Wat Wat"
           }
       end
 
@@ -60,10 +61,11 @@ describe ContentEmailController do
 
       it "initializes a new ContentEmail with the form params" do
         message = assigns(:message)
-        message.should be_a ContentEmail
-        message.from_name.should eq   "Bryan"
-        message.from_email.should eq  "bricker@scpr.org"
-        message.to_email.should eq    "bricker@kpcc.org"
+
+        message.from_name.should eq "Bryan"
+        message.from_email.should eq "bricker@scpr.org"
+        message.to_email.should eq "bricker@kpcc.org"
+        message.body.should eq "Wat Wat"
       end
 
       it "sets @message.content to @content" do

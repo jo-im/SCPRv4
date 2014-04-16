@@ -4,7 +4,7 @@ module TestClass
     include Outpost::Model::Routing
     include Outpost::Model::Identifier
 
-    ROUTE_KEY = "news_story"
+    self.public_route_key = "news_story"
 
     self.table_name = "test_class_stories"
 
@@ -21,9 +21,9 @@ module TestClass
     include Concern::Associations::RelatedLinksAssociation
     include Concern::Associations::BylinesAssociation
     include Concern::Associations::CategoryAssociation
-    include Concern::Associations::CategoryArticleAssociation
     include Concern::Associations::IssueAssociation
     include Concern::Associations::FeatureAssociation
+    include Concern::Associations::VerticalArticleAssociation
     include Concern::Callbacks::GenerateShortHeadlineCallback
     include Concern::Callbacks::GenerateTeaserCallback
     include Concern::Callbacks::SetPublishedAtCallback

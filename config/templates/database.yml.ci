@@ -3,7 +3,3 @@ test: &test
   database: mercer_test
   username: root
   password: 
-
-isolated:
-  adapter: sqlite3
-  database: ":memory:"

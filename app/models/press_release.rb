@@ -5,7 +5,7 @@ class PressRelease < ActiveRecord::Base
   include Concern::Validations::SlugValidation
   include Concern::Callbacks::SphinxIndexCallback
 
-  ROUTE_KEY = "press_release"
+  self.public_route_key = "press_release"
 
   #-------------
   # Scopes

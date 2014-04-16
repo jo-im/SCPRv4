@@ -38,8 +38,8 @@ class Edition < ActiveRecord::Base
 
 
   has_many :slots,
+    -> { order('position') },
     :class_name   => "EditionSlot",
-    :order        => "position",
     :dependent    => :destroy
 
   accepts_json_input_for :slots
@@ -86,6 +86,153 @@ class Edition < ActiveRecord::Base
   end
 
 
+  # Override this temporarily while we need custom split behavior.
+  def publish_email(options={})
+    return if !should_send_email?
+
+    config        = self.class.eloqua_config
+    email_object  = self.as_eloqua_email
+
+    # Create the e-mail.
+    email1 = Eloqua::Email.create(
+      :folderId            => config['email_folder_id'],
+      :emailGroupId        => config['email_group_id'],
+      :senderName          => "89.3 KPCC",
+      :senderEmail         => "theshortlist@scpr.org",
+      :replyToName         => "89.3 KPCC",
+      :replyToEmail        => "theshortlist@scpr.org",
+      :isTracked           => true,
+      :name                => email_object[:name] + " AUTOMATED",
+      :description         => email_object[:description],
+      :subject             => email_object[:subject],
+      :isPlainTextEditable => true,
+      :plainText           => email_object[:plain_text_body],
+
+      :htmlContent => {
+        :type => "RawHtmlContent",
+        :html => email_object[:html_body]
+      }
+    )
+
+    email2 = Eloqua::Email.create(
+      :folderId            => config['email_folder_id'],
+      :emailGroupId        => config['email_group_id'],
+      :senderName          => "89.3 KPCC",
+      :senderEmail         => "theshortlist@scpr.org",
+      :replyToName         => "89.3 KPCC",
+      :replyToEmail        => "theshortlist@scpr.org",
+      :isTracked           => true,
+      :name                => email_object[:name] + " EDITED",
+      :description         => email_object[:description],
+      :subject             => email_object[:subject],
+      :isPlainTextEditable => true,
+      :plainText           => email_object[:plain_text_body],
+
+      :htmlContent => {
+        :type => "RawHtmlContent",
+        :html => email_object[:html_body]
+      }
+    )
+
+    # Create the Campaign, passing in the
+    # ID for the e-mail we just created, as well as the
+    # application-configured segment ID.
+
+    campaign = Eloqua::Campaign.create(
+      {
+        :folderId    => config['campaign_folder_id'],
+        :name        => email_object[:name],
+        :description => email_object[:description],
+        :startAt     => Time.now.yesterday.to_i,
+        :endAt       => Time.now.tomorrow.to_i,
+        :elements    => [
+
+          # Segment
+          {
+            :type      => "CampaignSegment",
+            :id        => "-970",
+            :name      => "Segment Members",
+            :segmentId => config['segment_id'],
+            :position  => {
+              :type => "Position",
+              :x    => 240,
+              :y    => 26
+            },
+            :outputTerminals => [
+              {
+                :type          => "CampaignOutputTerminal",
+                :id            => "-980",
+                :connectedId   => "-971", # Filter rule
+                :connectedType => "CampaignContactFilterMembershipRule",
+                :terminalType  => "out"
+              }
+            ]
+          },
+
+          # Filter
+          {
+            :type       => "CampaignContactFilterMembershipRule",
+            :id         => "-971",
+            :name       => "Shared Filter Member?",
+            :filterId   => "100636", # SCPR 50/50 Split
+            :outputTerminals => [
+              {
+                :type             => "CampaignOutputTerminal",
+                :id               => "-981",
+                :connectedId      => "-990", # Email 1
+                :connectedType    => "CampaignEmail",
+                :terminalType     => "no"
+              },
+              {
+                :type             => "CampaignOutputTerminal",
+                :id               => "-982",
+                :connectedId      => "-991", # Email 2
+                :connectedType    => "CampaignEmail",
+                :terminalType     => "yes"
+              }
+            ],
+            :position => {
+              :type   => "Position",
+              :x      => "240",
+              :y      => "159"
+            }
+          },
+
+          # First e-mail
+          {
+            :type           => "CampaignEmail",
+            :id             => "-990",
+            :emailId        => email1.id,
+            :name           => "AUTOMATED",
+            :sendTimePeriod => "sendAllEmailAtOnce",
+            :position       => {
+              :type => "Position",
+              :x    => 80,
+              :y    => 320
+            },
+          },
+
+          # Second e-mail
+          {
+            :type           => "CampaignEmail",
+            :id             => "-991",
+            :emailId        => email2.id,
+            :name           => "EDITED",
+            :sendTimePeriod => "sendAllEmailAtOnce",
+            :position       => {
+              :type => "Position",
+              :x    => 397,
+              :y    => 320
+            },
+          }
+        ]
+      }
+    )
+
+    update_email_status(campaign)
+  end
+
+
   ### EloquaSendable interface implementation
   # Note that we don't check for presence of first Abstract before trying to
   # use it (in the templates). We probably should, but trying to send out an
@@ -121,7 +268,7 @@ class Edition < ActiveRecord::Base
     self.published? && !self.email_sent?
   end
 
-  def update_email_status(email, campaign)
+  def update_email_status(campaign)
     self.update_column(:email_sent, true)
   end
 

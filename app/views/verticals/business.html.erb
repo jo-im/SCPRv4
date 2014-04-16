@@ -1,0 +1,63 @@
+<% add_to_page_title @category.title %>
+<% meta_tags(url: @category.public_url) %>
+<% content_for :body_class, "landing #{@category.slug}" %>
+
+<%= cache ["vertical", 'v1', @category] do %>
+
+<% lead_article = @category.featured_articles.first %>
+
+<% if lead_article %>
+<%= render 'verticals/shared/headline', article: lead_article %>
+<% end %>
+
+<div class="welcome bound clearfix">
+
+    <% if lead_article %>
+        <%= render 'verticals/shared/lead', lead_article: lead_article%>
+    <% end %>
+
+    <div class="ataglance clearfix affiliated">
+        <section class="latest">
+            <header class="clearfix">
+            <% if vertical_blog_articles.present? %>
+                <h1>Latest from <%= @blog.name %></h1>
+                <a href="<%=@blog.public_path%>">Visit <span>the</span> blog</a>
+            <% end %>
+            </header>
+
+        <%= cache ["business", "latest-headlines", 'v1', vertical_blog_articles] do %>
+            <%= render 'verticals/shared/headlines', articles: vertical_blog_articles %>
+        <% end %>
+
+        </section>
+        <section class="latest affiliate">
+            <header class="clearfix">
+                <h1>Latest from Marketplace</h1>
+                <a href="http://www.marketplace.org">More Marketplace</a>
+            </header>
+
+        <% articles = @marketplace_articles.first(2) %>
+        <%= cache ["business", "latest-headlines", 'v1', ] do %>
+            <%= render 'verticals/shared/headlines', articles: articles %>
+        <% end %>
+
+        </section>
+
+    </div><!--/ .ataglance -->
+</div><!--/ .welcome -->
+
+
+<%= render 'verticals/shared/resources', category: @category, articles: Array(@category.featured_articles[1..4]) %>
+<%= render 'verticals/shared/lunchbox', category: @category, quotes: @quotes, events: @events %>
+
+<% articles = Array(vertical_articles) %>
+<%# We add category.title to the cache key since that's the only category-specific
+information we depend on inside of this cache block. %>
+<%= cache ["vertical", "recent-coverage", 'v1', @category.title, articles] do %>
+    <%= render 'shared/new/triptych', articles: Array(articles[0..2]), header: "Recent #{@category.title} Coverage" %>
+    <%= render 'shared/new/kpcc_ipad_ad' %>
+    <%= render 'shared/new/quadrant', articles: Array(articles[3..6]), header: "" %>
+    <%= render 'shared/new/waterfall', category: @category, articles: articles %>
+<% end %> <%# cache %>
+
+<% end %>

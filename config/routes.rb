@@ -9,18 +9,18 @@ Scprv4::Application.routes.draw do
 
 
   # Sections
-  match '/category/carousel-content/:object_class/:id' => 'category#carousel_content',  as: :category_carousel, defaults: { format: :js }
+  get '/category/carousel-content/:object_class/:id' => 'category#carousel_content',  as: :category_carousel, defaults: { format: :js }
   get '/news/'                                       => 'category#news',              as: :latest_news
   get '/arts-life/'                                  => 'category#arts',              as: :latest_arts
 
   # RSS
-  match '/feeds/all_news' => 'feeds#all_news', as: :all_news_feed
-  match '/feeds/*feed_path', to: redirect { |params, request| "/#{params[:feed_path]}.xml" }
+  get '/feeds/all_news' => 'feeds#all_news', as: :all_news_feed
+  get '/feeds/*feed_path', to: redirect { |params, request| "/#{params[:feed_path]}.xml" }
 
 
   # Podcasts
-  match '/podcasts/:slug/' => 'podcasts#podcast', as: :podcast, defaults: { format: :xml }
-  match '/podcasts/'       => 'podcasts#index',   as: :podcasts
+  get '/podcasts/:slug/' => 'podcasts#podcast', as: :podcast, defaults: { format: :xml }
+  get '/podcasts/'       => 'podcasts#index',   as: :podcasts
 
 
   # Blogs / Entries
@@ -82,7 +82,7 @@ Scprv4::Application.routes.draw do
 
 
   # Article Email Sharing
-  get   '/content/share' => 'content_email#new',    :as => :content_email
+  get   '/content/share' => 'content_email#new',    :as => :new_content_email
   post  '/content/share' => 'content_email#create', :as => :content_email
 
 
@@ -103,7 +103,7 @@ Scprv4::Application.routes.draw do
     scope module: "public" do
       # V2
       namespace :v2 do
-        match '/' => "articles#options", constraints: { method: 'OPTIONS' }
+        match '/' => "articles#options", via: :options, constraints: { method: 'OPTIONS' }
 
         # Old paths
         get '/content'                  => 'articles#index'
@@ -145,7 +145,7 @@ Scprv4::Application.routes.draw do
 
       # V3
       namespace :v3 do
-        match '/' => "articles#options", constraints: { method: 'OPTIONS' }
+        match '/' => "articles#options", via: :options, constraints: { method: 'OPTIONS' }
 
         resources :articles, only: [:index] do
           collection do
@@ -183,7 +183,7 @@ Scprv4::Application.routes.draw do
     namespace :private do
       # V2
       namespace :v2 do
-        match '/' => "articles#options", constraints: { method: 'OPTIONS' }
+        match '/' => "articles#options", via: :options, constraints: { method: 'OPTIONS' }
 
         post '/utility/notify'   => 'utility#notify'
 
@@ -205,149 +205,58 @@ Scprv4::Application.routes.draw do
   namespace :outpost do
     root to: 'home#index'
 
-    resources :recurring_schedule_rules do
+    concern :preview do
+      put "preview", on: :member
+      patch "preview", on: :member
+      post "preview", on: :collection
+    end
+
+    concern :search do
       get "search", on: :collection, as: :search
     end
 
-    resources :schedule_occurrences do
-      get "search", on: :collection, as: :search
-    end
 
-    resources :admin_users do
-      get "search", on: :collection, as: :search
+    resources :admin_users, concerns: [:search] do
       get "activity", on: :member, as: :activity
     end
 
-    resources :podcasts do
-      get "search", on: :collection, as: :search
-    end
+    resources :recurring_schedule_rules, concerns: [:search]
+    resources :schedule_occurrences, concerns: [:search]
+    resources :podcasts, concerns: [:search]
+    resources :breaking_news_alerts, concerns: [:search]
+    resources :featured_comment_buckets, concerns: [:search]
+    resources :categories, concerns: [:search]
+    resources :issues, concerns: [:search]
+    resources :missed_it_buckets, concerns: [:search]
+    resources :external_programs, concerns: [:search]
+    resources :kpcc_programs, concerns: [:search]
+    resources :blogs, concerns: [:search]
+    resources :content_shells, concerns: [:search]
+    resources :featured_comments, concerns: [:search]
+    resources :quotes, concerns: [:search]
+    resources :data_points, concerns: [:search]
+    resources :show_episodes, concerns: [:search]
+    resources :bios, concerns: [:search]
+    resources :press_releases, concerns: [:search]
+    resources :abstracts, concerns: [:search]
+    resources :editions, concerns: [:search]
+    resources :verticals, concerns: [:search]
 
-    resources :breaking_news_alerts do
-      get "search", on: :collection, as: :search
-    end
+    resources :homepages, concerns: [:preview, :search]
+    resources :pij_queries, concerns: [:preview, :search]
+    resources :flatpages, concerns: [:preview, :search]
+    resources :show_segments, concerns: [:preview, :search]
+    resources :news_stories, concerns: [:preview, :search]
+    resources :blog_entries, concerns: [:preview, :search]
+    resources :events, concerns: [:preview, :search]
 
-    resources :featured_comment_buckets do
-      get "search", on: :collection, as: :search
-    end
-
-    resources :categories do
-      get "search", on: :collection, as: :search
-    end
-
-    resources :issues do
-      get "search", on: :collection, as: :search
-    end
-
-    resources :missed_it_buckets do
-      get "search", on: :collection, as: :search
-    end
-
-    resources :promotions do
-      get "search", on: :collection, as: :search
-    end
-
-    resources :sections do
-      get "search", on: :collection, as: :search
-    end
-
-    resources :external_programs do
-      get "search", on: :collection, as: :search
-    end
-
-    resources :kpcc_programs do
-      get "search", on: :collection, as: :search
-    end
-
-    resources :blogs do
-      get "search", on: :collection, as: :search
-    end
-
-    resources :content_shells do
-      get "search", on: :collection, as: :search
-    end
-
-    resources :featured_comments do
-      get "search", on: :collection, as: :search
-    end
-
-    resources :quotes do
-      get "search", on: :collection, as: :search
-    end
-
-    resources :data_points do
-      get "search", on: :collection, as: :search
-    end
-
-    resources :show_episodes do
-      get "search", on: :collection, as: :search
-    end
-
-    resources :bios do
-      get "search", on: :collection, as: :search
-    end
-
-    resources :press_releases do
-      get "search", on: :collection, as: :search
-    end
-
-    resources :homepages do
-      get "search", on: :collection, as: :search
-      put "preview", on: :member
-      post "preview", on: :collection
-    end
-
-    resources :pij_queries do
-      get "search", on: :collection, as: :search
-      put "preview", on: :member
-      post "preview", on: :collection
-    end
-
-    resources :flatpages do
-      get "search", on: :collection, as: :search
-      put "preview", on: :member
-      post "preview", on: :collection
-    end
-
-    resources :abstracts do
-      get 'search', on: :collection, as: :search
-    end
-
-    resources :editions do
-      get 'search', on: :collection, as: :search
-    end
-
-    resources :show_segments do
-      get "search", on: :collection, as: :search
-      put "preview", on: :member
-      post "preview", on: :collection
-    end
-
-    resources :news_stories do
-      get "search", on: :collection, as: :search
-      put "preview", on: :member
-      post "preview", on: :collection
-    end
-
-    resources :blog_entries do
-      get "search", on: :collection, as: :search
-      put "preview", on: :member
-      post "preview", on: :collection
-    end
-
-    resources :events do
-      get "search", on: :collection, as: :search
-      put "preview", on: :member
-      post "preview", on: :collection
-    end
-
-    resources :remote_articles, only: [:index] do
+    resources :remote_articles, only: [:index], concerns: [:search] do
       member do
         post "import", as: :import
         put "skip", as: :skip
       end
 
       collection do
-        get "search", as: :search
         post "sync", as: :sync
       end
     end

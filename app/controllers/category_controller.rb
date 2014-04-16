@@ -4,14 +4,14 @@ class CategoryController < ApplicationController
   DEFAULT_LIMIT = 15
 
   def news
-    @categories = Category.where(is_news: true).all
+    @categories = Category.where(is_news: true)
     respond_by_format
   end
 
   #----------
 
   def arts
-    @categories = Category.where(is_news: false).all
+    @categories = Category.where(is_news: false)
     respond_by_format
   end
 

@@ -1,5 +1,5 @@
 <%= form_block "Publishing" do %>
-  <%= render '/outpost/shared/help_blocks/publishing' %>
+  <%= render 'outpost/shared/help_blocks/publishing' %>
   <%= f.section 'status' %>
   <%= f.section('content_alarm') if record.respond_to?(:alarm) %>
   <%= f.section 'auto_published_at' %>

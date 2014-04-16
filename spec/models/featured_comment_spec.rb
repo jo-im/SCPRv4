@@ -1,6 +1,26 @@
 require "spec_helper"
 
 describe FeaturedComment do
+  describe '#content' do
+    it "doesn't get unpublished content" do
+      comment = build :featured_comment, :published
+      story = create :news_story, :draft
+
+      comment.content = story
+      comment.save!
+      comment.content(true).should be_nil
+    end
+
+    it "gets published content" do
+      comment = build :featured_comment, :published
+      story = create :news_story, :published
+
+      comment.content = story
+      comment.save!
+      comment.content(true).should eq story
+    end
+  end
+
   describe '::published' do
     it "gets published comments ordered in reverse chron" do
       comment1 = create :featured_comment, :published, created_at: 1.month.ago

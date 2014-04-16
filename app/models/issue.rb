@@ -5,7 +5,7 @@ class Issue < ActiveRecord::Base
   include Concern::Validations::SlugValidation
   include Concern::Callbacks::SphinxIndexCallback
 
-  ROUTE_KEY = 'issue'
+  self.public_route_key = 'issue'
 
   scope :active, -> { where(is_active: true) }
 

@@ -17,7 +17,7 @@ describe RootPathController do
 
         get :handle_path, path: category.slug, format: :xml
 
-        response.should render_template 'category/feed'
+        response.should render_template 'category/show'
         response.header['Content-Type'].should match /xml/
         response.body.should match RSS_SPEC['xmlns:atom']
       end
@@ -86,7 +86,7 @@ describe RootPathController do
 
         get :handle_path, path: category.slug, format: :xml
 
-        response.should render_template 'category/feed'
+        response.should render_template 'category/show'
         response.header['Content-Type'].should match /xml/
         response.body.should match RSS_SPEC['xmlns:atom']
       end

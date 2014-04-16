@@ -1,3 +1,7 @@
+DEPLOY_CONFIG = YAML.load_file(
+  File.expand_path("../deploy_config.yml", __FILE__)
+)
+
 # --------------
 # Requires and Multistage setup
 set :thinking_sphinx_roles, :sphinx

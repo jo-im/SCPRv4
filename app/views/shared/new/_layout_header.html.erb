@@ -8,7 +8,7 @@
               <h2><%= @category.description %></h2>
             </div>
 
-            <%= safe_render("verticals/#{@category.slug.underscore}/masthead_ad") %>
+            <%= content_for :masthead_ad %>
         </section><!--/ .titling -->
     <% end %>
 

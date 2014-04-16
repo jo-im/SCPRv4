@@ -20,7 +20,7 @@
 
 <% if @featured_comment %>
   <div class="join-conversation-container home">
-    <%= render '/shared/featured_comment/home', comment: @featured_comment %>
+    <%= render 'shared/featured_comment/home', comment: @featured_comment %>
   </div>
 <% end %>
 
@@ -36,7 +36,7 @@
     </div> <!-- .audiovision -->
 
     <div class="span12">
-      <%= render "/events/forum_events" %>
+      <%= render "events/forum_events" %>
     </div>
   </div>
 </div>

@@ -2,22 +2,22 @@
     <div class="inner bound clearfix">
 
         <section class="backlog">
-            <h1>More <%= @category.title %></h1>
-                <%= cache ["categories/show", "waterfall-articles", cache_version, articles] do %>
+            <h1>More <%= category.title %></h1>
+                <%= cache ["categories/show", "waterfall-articles", 'v1', articles] do %>
                     <%= render 'shared/new/waterfall_articles', articles: Array(articles[7..-1]), issue_tag_exists: true %>
                 <% end %>
         </section><!--/ .backlog -->
 
-    <% bios = @category.bios %>
+    <% bios = category.bios %>
     <% if bios.present? %>
         <div class="secondary">
 
-        <%= cache ["categories/show", "bios", cache_version, bios.to_a] do %>
+        <%= cache ["categories/show", "bios", 'v1', bios.to_a] do %>
             <section class="reporters">
                 <h1>Our Reporters</h1>
                 <div class="clearfix">
 
-                <%- bios.each do |bio| %>
+                <% bios.each do |bio| %>
                     <figure class="ratio-pairing">
                         <div class="ratio">
                             <div class="fill"></div>
@@ -44,7 +44,7 @@
             </section><!--/ .reporters -->
         <% end %>
 
-        <% if cached_tweets = Rails.cache.fetch("verticals/#{@category.slug}/twitter_feed") %>
+        <% if cached_tweets = Rails.cache.fetch("verticals/#{category.slug}/twitter_feed") %>
             <section class="tweets">
                 <h1>In Brief</h1>
                 <ul>

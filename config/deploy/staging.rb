@@ -5,7 +5,9 @@ set :rails_env, "staging"
 
 # --------------
 # Roles
-scprdev = "66.226.4.241"
+scprdev = DEPLOY_CONFIG['staging']['host']
+set :deploy_to, DEPLOY_CONFIG['staging']['deploy_to']
+
 role :app,      scprdev
 role :web,      scprdev
 role :workers,  scprdev
@@ -42,9 +44,10 @@ namespace :thinking_sphinx do
   namespace :staging do
     task :index do
       if [true, 1].include? ts_index
-        thinking_sphinx.index
+        run "cd #{latest_release} && #{rake} RAILS_ENV=#{rails_env} ts:index"
       else
-        logger.info "SKIPPING thinking_sphinx:index (ts_index set to #{ts_index})"
+        logger.info "SKIPPING thinking_sphinx:index " \
+                    "(ts_index set to #{ts_index})"
       end
     end
   end

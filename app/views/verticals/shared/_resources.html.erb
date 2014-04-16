@@ -1,0 +1,28 @@
+<section class="resources-row">
+    <div class="inner bound clearfix">
+        <header>
+            <h1 class="<%= category.slug%>"><span><%= category.title %></span></h1>
+            <h2>Tools and guides to help you get informed and engaged.</h2>
+            <h3>KPCC believes that making <%= category.title %> in Southern California relevant and accessible is an important part of strengthening the civic and cultural bonds that unite the diverse communities of this region.</h3>
+        </header>
+
+        <nav>
+            <ul class="clearfix">
+
+        <%= cache ["categories/show", "resources", 'v1', articles] do %>
+            <% articles.each do |article| %>
+                <li>
+                    <%= link_to(article.public_path) do %>
+                        <figure class="clearfix">
+                            <div class="ratio"><div class="fill"></div><b class="img-contain"><%= image_tag article.asset.small.url, alt: '' %></b></div>
+                            <figcaption><%= article.short_title %></figcaption>
+                        </figure>
+                    <% end %>
+                </li>
+            <% end %>
+        <% end %>
+
+            </ul>
+        </nav>
+    </div>
+</section><!--/ .resources-row -->

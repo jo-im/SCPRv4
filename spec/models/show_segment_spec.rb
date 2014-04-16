@@ -1,6 +1,13 @@
 require "spec_helper"
 
 describe ShowSegment do
+  describe '#episodes' do
+    it 'orders by air_date' do
+      segment = build :show_segment
+      segment.episodes.to_sql.should match /order by air_date/i
+    end
+  end
+
   describe "#episode" do
     it "uses the first episode the segment is associated with" do
       segment = create :show_segment

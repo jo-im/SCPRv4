@@ -10,16 +10,16 @@ module Concern
       included do
         # This should be "referrer" and "referee"
         has_many :outgoing_references,
+          -> { order('position') },
           :as           => :content,
           :class_name   => "Related",
-          :dependent    => :destroy,
-          :order        => "position"
+          :dependent    => :destroy
 
         has_many :incoming_references,
+          -> { order('position') },
           :as           => :related,
           :class_name   => "Related",
-          :dependent    => :destroy,
-          :order        => "position"
+          :dependent    => :destroy
 
 
         after_save :_destroy_incoming_references,
