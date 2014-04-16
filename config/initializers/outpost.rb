@@ -31,12 +31,12 @@ Outpost::Config.configure do |config|
     "PijQuery",
     "Podcast",
     "PressRelease",
-    "Quote",
     "RecurringScheduleRule",
     "RemoteArticle",
     "ScheduleOccurrence",
     "ShowEpisode",
-    "ShowSegment"
+    "ShowSegment",
+    "Vertical"
   ]
 
   config.user_class                   = "AdminUser"

@@ -10,6 +10,6 @@ module CategoryHandler
       :per_page   => PER_PAGE
     )
 
-    respond_with @content
+    respond_with @content, template: 'category/show'
   end
 end

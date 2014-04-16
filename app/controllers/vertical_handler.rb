@@ -1,8 +1,11 @@
-# Verticals controller gives us manual control over our verticals,
-# instead of trying to cram everything into unrelated database columns.
-# To enable a vertical, add its slug to Category::VERTICALS
+module VerticalHandler
+  extend ActiveSupport::Concern
 
-class VerticalsController < NewApplicationController
+  included do
+    helper_method :vertical_blog_articles
+    helper_method :vertical_articles
+  end
+
   PER_PAGE = 16
 
   # /politics
@@ -21,7 +24,7 @@ class VerticalsController < NewApplicationController
 
   # /education
   def handle_vertical_education
-    @category   = Category.find_by_slug!('education')
+    @category   = Category.find_by_slug('education')
     @blog       = Blog.find_by_slug('education')
     @quotes     = @vertical.quotes.published
     @events     = @vertical.events.published.upcoming
@@ -35,7 +38,7 @@ class VerticalsController < NewApplicationController
 
   # /business
   def handle_vertical_business
-    @category   = Category.find_by_slug!('money')
+    @category   = Category.find_by_slug('money')
     @blog       = Blog.find_by_slug('economy')
     @quotes     = @vertical.quotes.published
     @events     = @vertical.events.published.upcoming
@@ -66,7 +69,7 @@ class VerticalsController < NewApplicationController
       :per_page   => PER_PAGE
     }
 
-    content_params[:exclude] = [@category.featured_articles.first]
+    content_params[:exclude] = [@vertical.featured_articles.first]
 
     if @blog
       content_params[:exclude].concat(vertical_blog_articles)
@@ -74,9 +77,6 @@ class VerticalsController < NewApplicationController
 
     @category_content = @category.articles(content_params)
   end
-
-  helper_method :vertical_articles
-
 
   # Get the featured blog's latest posts
   def vertical_blog_articles
@@ -93,6 +93,4 @@ class VerticalsController < NewApplicationController
     content_params[:exclude] = @category.featured_articles.first
     @blog_articles = @category.articles(content_params)
   end
-
-  helper_method :vertical_blog_articles
 end

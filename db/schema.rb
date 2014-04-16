@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140204193814) do
+ActiveRecord::Schema.define(version: 20140415230749) do
 
   create_table "abstracts", force: true do |t|
     t.string   "source"
@@ -157,31 +157,37 @@ ActiveRecord::Schema.define(version: 20140204193814) do
     t.string   "article_type"
     t.datetime "created_at",   null: false
     t.datetime "updated_at",   null: false
+    t.integer  "vertical_id"
   end
 
   add_index "category_articles", ["article_id", "article_type"], name: "index_category_articles_on_article_id_and_article_type", using: :btree
   add_index "category_articles", ["category_id"], name: "index_category_articles_on_category_id", using: :btree
   add_index "category_articles", ["position"], name: "index_category_articles_on_position", using: :btree
+  add_index "category_articles", ["vertical_id"], name: "index_category_articles_on_vertical_id", using: :btree
 
   create_table "category_issues", force: true do |t|
     t.integer  "category_id"
     t.integer  "issue_id"
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
+    t.integer  "vertical_id"
   end
 
   add_index "category_issues", ["category_id"], name: "index_category_issues_on_category_id", using: :btree
   add_index "category_issues", ["issue_id"], name: "index_category_issues_on_issue_id", using: :btree
+  add_index "category_issues", ["vertical_id"], name: "index_category_issues_on_vertical_id", using: :btree
 
   create_table "category_reporters", force: true do |t|
     t.integer  "category_id"
     t.integer  "bio_id"
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
+    t.integer  "vertical_id"
   end
 
   add_index "category_reporters", ["bio_id"], name: "index_category_reporters_on_bio_id", using: :btree
   add_index "category_reporters", ["category_id"], name: "index_category_reporters_on_category_id", using: :btree
+  add_index "category_reporters", ["vertical_id"], name: "index_category_reporters_on_vertical_id", using: :btree
 
   create_table "contentbase_category", force: true do |t|
     t.string   "title"
@@ -592,6 +598,7 @@ ActiveRecord::Schema.define(version: 20140204193814) do
   add_index "news_story", ["category_id"], name: "news_story_42dc49bc", using: :btree
   add_index "news_story", ["feature_type_id"], name: "index_news_story_on_feature_type_id", using: :btree
   add_index "news_story", ["published_at"], name: "news_story_published_at", using: :btree
+  add_index "news_story", ["source"], name: "index_news_story_on_source", using: :btree
   add_index "news_story", ["status", "published_at"], name: "index_news_story_on_status_and_published_at", using: :btree
   add_index "news_story", ["status"], name: "index_news_story_on_status", using: :btree
   add_index "news_story", ["updated_at"], name: "index_news_story_on_updated_at", using: :btree
@@ -881,5 +888,22 @@ ActiveRecord::Schema.define(version: 20140204193814) do
   add_index "versions", ["user_id"], name: "index_versions_on_user_id", using: :btree
   add_index "versions", ["version_number"], name: "index_versions_on_version_number", using: :btree
   add_index "versions", ["versioned_type", "versioned_id"], name: "index_versions_on_versioned_type_and_versioned_id", using: :btree
+
+  create_table "verticals", force: true do |t|
+    t.string   "slug"
+    t.integer  "category_id"
+    t.string   "title"
+    t.text     "description"
+    t.integer  "featured_interactive_style_id"
+    t.integer  "blog_id"
+    t.integer  "quote_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "verticals", ["blog_id"], name: "index_verticals_on_blog_id", using: :btree
+  add_index "verticals", ["category_id"], name: "index_verticals_on_category_id", using: :btree
+  add_index "verticals", ["quote_id"], name: "index_verticals_on_quote_id", using: :btree
+  add_index "verticals", ["slug"], name: "index_verticals_on_slug", using: :btree
 
 end

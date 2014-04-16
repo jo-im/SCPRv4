@@ -7,10 +7,10 @@ module Job
 
     class << self
       def perform
-        Category.where(slug: Category::VERTICALS).each do |category|
+        Vertical.each do |vertical|
           tweet_list = []
 
-          category.bios
+          vertical.reporters
           .select { |b| b.twitter_handle.present? }.each do |bio|
             task = Job::TwitterCache.new(bio.twitter_handle)
 
@@ -24,12 +24,12 @@ module Job
           self.cache(
             tweets.first(7),
             "/shared/widgets/cached/vertical_tweets",
-            "verticals/#{category.slug}/twitter_feed"
+            "verticals/#{vertical.slug}/twitter_feed"
           )
 
           # Refresh the cache on the vertical page
           # so the new tweets show up.
-          category.touch
+          vertical.touch
         end
 
         true

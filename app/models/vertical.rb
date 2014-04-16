@@ -5,7 +5,7 @@ class Vertical < ActiveRecord::Base
   include Concern::Validations::SlugValidation
   include Concern::Callbacks::SphinxIndexCallback
 
-  ROUTE_KEY = 'root_slug'
+  self.public_route_key = 'root_slug'
 
   FEATURED_INTERACTIVE_STYLES = {
     0 => 'beams',
@@ -15,23 +15,28 @@ class Vertical < ActiveRecord::Base
   }
 
   has_many :events
-  has_many :quotes,
-    :order => "created_at desc"
+  belongs_to :quote
 
   has_many :vertical_issues, dependent: :destroy
   has_many :issues, through: :vertical_issues
   tracks_association :issues
 
   has_many :vertical_reporters, dependent: :destroy
-  has_many :reporters, through: :vertical_reporters
+  has_many :reporters,
+    :through => :vertical_reporters,
+    :source  => :bio
   tracks_association :reporters
 
   has_many :vertical_articles,
-    :order        => 'position',
-    :dependent    => :destroy
+    -> { order('position') },
+    :class_name => "VerticalArticle",
+    :dependent  => :destroy
 
   accepts_json_input_for :vertical_articles
   tracks_association :vertical_articles
+
+
+  validates :title, :slug, presence: true
 
 
   # This category's hand-picked content,
