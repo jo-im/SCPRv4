@@ -104,8 +104,20 @@
             <%= render "shared/ads/oas", ad_id: 'x01' %>
             <%= render "shared/ads/dfp", ad_key: :membership_sidebar %>
             <%= render "shared/widgets/newsletter_subscribe" %>
-            <%= render "shared/widgets/most_popular" %>
-            <%= render "shared/ads/dfp", ad_key: :homepage_house_promo %>
+
+            <!-- TWITTER -->
+            <% if cached_tweets = Rails.cache.fetch("twitter:kpcc") %>
+              <aside class="curated-tweets widget">
+                <header>
+                  <h1>The latest from Twitter</h1>
+                    <p>For more SoCal photos, breaking news, traffic updates and community coverage, <a href="http://twitter.com/kpcc">follow @KPCC</a>.</p>
+                </header>
+                <ul class="timeline">
+                  <%= cached_tweets %>
+                </ul>
+              </aside>
+            <% end %>
+
           </div> <!-- sidebar-top -->
         </div> <!-- span8 -->
       </div> <!-- row-fluid -->
