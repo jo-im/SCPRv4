@@ -5,7 +5,16 @@ class Outpost::VerticalsController < Outpost::ResourceController
     l.default_order_attribute   = "title"
     l.default_order_direction   = ASCENDING
 
-    l.column :title, sortable: true
-    l.column :slug, sortable: true
+    l.column :title
+    l.column :slug
+    l.column :category
+  end
+
+
+  private
+
+  # FIXME Need a better way to ignore the search action in
+  # a controller.
+  def search
   end
 end
