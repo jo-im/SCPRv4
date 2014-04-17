@@ -1,3 +1,9 @@
+<% if vertical = Vertical.find_by(category_id: record.id) %>
+  <div class="alert alert-info">
+    <strong>Looking for Vertical management?</strong> We've moved it to <a href="/outpost/verticals">a separate section in Outpost</a>. You can get to it from the navigation menu. <a href="<%=vertical.admin_edit_path%>">Click Here</a> to manage the <%= vertical.title %> vertical.
+  </div>
+<% end %>
+
 <%= form_block "Details" do %>
   <%= f.input :title, input_html: { class: "sluggable" } %>
   <%= f.input :slug %>
