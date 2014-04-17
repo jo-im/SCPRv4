@@ -160,7 +160,8 @@ namespace :scprv4 do
         [
           "kpcc",
           "/shared/widgets/cached/sidebar_tweets",
-          "twitter:kpcc"
+          "twitter:kpcc",
+          { count: 4 }
         ]
       ]
 
