@@ -32,4 +32,3 @@ describe Concern::Associations::QuoteAssociation do
     @post.quotes(true).should eq [@quote]
   end
 end
-

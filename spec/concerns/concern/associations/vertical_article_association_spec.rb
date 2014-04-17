@@ -17,5 +17,3 @@ describe Concern::Associations::VerticalArticleAssociation do
     end
   end
 end
-
-

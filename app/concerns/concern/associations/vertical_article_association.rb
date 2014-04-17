@@ -27,5 +27,3 @@ module Concern
     end # VerticalArticleAssociation
   end # Associations
 end # Concern
-
-
