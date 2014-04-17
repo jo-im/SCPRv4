@@ -52,7 +52,7 @@ describe Vertical do
 
       click_button "edit"
 
-      find_field("vertical_quote_attributes_source_name").value.should be_empty
+      find_field("vertical_quote_attributes_source_name").value.should be_blank
     end
   end
 end
