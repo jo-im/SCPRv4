@@ -1,0 +1,98 @@
+.curated-tweets {
+
+    // Container basics
+    padding-bottom: 30px;
+    background: #f7f7f7;
+    & > header {
+        background: #f2e5dc url(twitter-module-bird.png) no-repeat;
+        background-size: 110px 95px; // 220 190
+        padding: 15px 10px 10px;
+        box-shadow: inset 0 -5px 0 rgba(172,64,0,0.05);
+        margin-bottom: 3px;
+        h1 {
+            font-family: "proxima-nova", "Helvetica Neue", Helvetica, Arial, sans-serif;
+            font-size: 14px;
+            font-weight: 700;
+            line-height: 1;
+            color: #B24401;
+            text-transform: uppercase;
+            margin: 0 0 7px;
+        }
+        p {
+            color: #967a6a;
+            font-size: 0.92857142857143em; // 13 / 14
+            line-height: 1.25;
+            margin: 0;
+            a   {
+                color: #843101;
+                border-bottom: 1px solid #e5955e;
+                line-height: 0.9;
+                display: inline-block;
+                text-decoration: none;
+                white-space: nowrap;
+                &:hover { border-bottom-color: #967a6a; }
+            }
+        }
+    }
+
+    // Reset the default SCPR styles
+    h1,ul,li,h2,time,blockquote,p,img {
+        display: block;
+        margin: 0;
+        padding: 0;
+        font-size: 100%;
+        line-height: 1.2;
+        border: 0;
+    }
+
+    // The timeline
+    .timeline > li {
+        border-bottom: 1px solid #dedede;
+        padding: 13px 0 9px;
+        overflow: hidden;
+        & > div {
+            position: relative;
+            margin: 0 11px;
+            padding-left: 50px;
+            &:last-child    { margin-bottom: 0; }
+            .pic {
+                position: absolute;
+                width: 40px;
+                height: 40px;
+                overflow: hidden;
+                top: 0;
+                left: 0;
+                img {
+                    width: 100%;
+                    height: auto;
+                }
+            }
+            figure {
+                figcaption {
+                    margin-bottom: 4px;
+                    font-family: "proxima-nova", "Helvetica Neue", Helvetica, Arial, sans-serif;
+                    font-size: 0.78571428571429em; // 11 / 14
+                    h1,time         { display: inline-block; white-space: nowrap; }
+                    h1              { padding-right: 0.5em; }
+                    time            {
+                      text-transform: none; color: #5a5a5a;
+                      &:hover {
+                        color: black; text-decoration: underline;
+                      }
+                    }
+                    h1 a            { color: #5a5a5a; }
+                    time a          { color: #8c8c8c; }
+                    h1 a:hover,
+                    time a:hover    { color: black; }
+                }
+                blockquote p {
+                    font-family: "proxima-nova-condensed", "Helvetica Neue", Helvetica, Arial, sans-serif;
+                    a               { color: #007eaa; }
+                }
+            }
+        }
+        &:last-child                { padding-bottom: 0; border-bottom: none; }
+    }
+
+}
+
