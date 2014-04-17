@@ -294,7 +294,7 @@ body {
         }
         blockquote {
             @include font-serif($size:16px, $lineHeight:25px);
-            background:url("join-conversation-blockquote.png") no-repeat scroll 2% 50% transparent;
+            background:image-url("join-conversation-blockquote.png") no-repeat scroll 2% 50% transparent;
             border:0 none;
             font-style:italic;
             margin:5px 0 0 0;
@@ -316,7 +316,7 @@ body {
 // More Headlines
 .headlines {
     ul {
-        list-style-image:url("more-headlines-li.png");
+        list-style-image:image-url("more-headlines-li.png");
         li {
             margin:5px 0 0 -10px;
             a {
@@ -345,7 +345,7 @@ p.more a {
 
 // More News
 h6.more-news-title {
-    background:url("section-headline-background.png") repeat-x 0 0;
+    background:image-url("section-headline-background.png") repeat-x 0 0;
     @include font-shorthand($weight: bold, $size: 18px, $lineHeight: 35px);
     color:$grayAlt;
     padding-left:8px;
@@ -383,7 +383,7 @@ h6.more-news-title {
             }
             ul {
                 margin: 0 0 0 14px; /* Keep the bullets inside the box but wrap properly */
-                list-style: none url("more-headlines-li.png");
+                list-style: none image-url("more-headlines-li.png");
                 li {
                     margin:5px 0 0 0;
                     a {
@@ -422,7 +422,7 @@ h6.more-news-title {
             }
             .comments-quotee {
                 @include font-sans-serif($size: 12px);
-                background:url("more-news-quotee-icon.png") no-repeat left top;
+                background:image-url("more-news-quotee-icon.png") no-repeat left top;
                 color:$grayLight;
                 height:35px;
                 padding:20px 0 0 60px;
