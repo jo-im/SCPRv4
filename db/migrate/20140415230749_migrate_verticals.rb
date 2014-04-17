@@ -31,5 +31,12 @@ class MigrateVerticals < ActiveRecord::Migration
 
       vertical.save!
     end
+
+    vp = Permission.create(resource: "Vertical")
+    cp = Permission.find_by_resource("Category")
+
+    cp.user_permissions.each do |up|
+      UserPermission.create(admin_user_id: up.admin_user_id, permission_id: vp.id)
+    end
   end
 end
