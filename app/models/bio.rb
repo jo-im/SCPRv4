@@ -18,6 +18,9 @@ class Bio < ActiveRecord::Base
   belongs_to :user, class_name: "AdminUser"
   has_many :bylines, class_name: "ContentByline",  foreign_key: :user_id
 
+  # Just in case a bio is deleted, remove its vertical association.
+  has_many :vertical_reporters, dependent: :destroy
+
   #--------------
   # Validation
   validates :slug, uniqueness: true
