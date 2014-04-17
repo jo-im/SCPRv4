@@ -73,6 +73,10 @@
 
 
 <%= form_block "Quote" do %>
+  <div class="alert alert-info">
+    This Quote is <strong>optional</strong> — all of the fields can be left blank, and no quote will show on the Vertical page. If you want to show a quote, you must fill in at least the "Text" field.
+  </div>
+
   <%= f.simple_fields_for :quote, record.quote || record.build_quote do |qf| %>
     <%= qf.input :source_name, hint: "The source of the quote. Example: 'Barack Obama'" %>
     <%= qf.input :source_context, hint: "The context in which the quote was delivered. Example: 'Press Meeting, June 10'" %>
