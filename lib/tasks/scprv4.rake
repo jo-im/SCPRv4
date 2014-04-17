@@ -179,7 +179,7 @@ namespace :scprv4 do
         end
       end
 
-      puts "*** [#{Time.now}] Caching Vertical twtiter feeds..."
+      puts "*** [#{Time.now}] Caching Vertical twitter feeds..."
 
       if Rails.env.development?
         Job::VerticalsTwitterCache.perform
