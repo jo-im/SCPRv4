@@ -30,7 +30,7 @@
     a.comment_link {
         @include font-sans-serif(normal, 11px);
         margin-bottom: 10px;
-        background: url(image_path('icons/comment-count-sm.png')) no-repeat left 1px;
+        background: image-url('icons/comment-count-sm.png') no-repeat left 1px;
         padding-left: 14px;
     }
 
@@ -48,7 +48,7 @@
     }
 
     .shell-link {
-        background:transparent url(image_path('icons/link-offsite.png')) no-repeat right 0;
+        background:transparent image-url('icons/link-offsite.png') no-repeat right 0;
         padding:1px 15px 0 0;
     }
 

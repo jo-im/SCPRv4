@@ -14,7 +14,7 @@ header#masthead {
         @include clearfix;
 
         a.antenna, span.condensed-nav-link {
-            background: url(image_path("icons/antenna-dark.png")) no-repeat 8px 3px;
+            background: image-url("icons/antenna-dark.png") no-repeat 8px 3px;
             color: #b8b8b8;
             cursor: pointer;
             @include font-heading(600, 14px);
@@ -38,7 +38,7 @@ header#masthead {
         }
         span.condensed-nav-link {
             float: left;
-            background: url(image_path("icons/menu-icon.png")) no-repeat 8px 10px;
+            background: image-url("icons/menu-icon.png") no-repeat 8px 10px;
             margin-left:-8px;
             text-align: text-top;
         }
@@ -58,7 +58,7 @@ header#masthead {
     }
 
     a.logo-img {
-        background-image: url(image_path('logo-masthead.png'));
+        background-image: image-url('logo-masthead.png');
         background-repeat: no-repeat;
         background-position: 0 0;
         text-decoration: none;
@@ -74,7 +74,7 @@ header#masthead {
 // Contribute
 .kpcc-personalities {
     @include ie-inline-block;
-    background: transparent url(image_path("contribute-container-bg.jpg")) no-repeat bottom;
+    background: transparent image-url("contribute-container-bg.jpg") no-repeat bottom;
     height:73px;
     max-height: 73px;
     overflow: hidden;
@@ -137,7 +137,7 @@ nav.utils {
     @include font-heading(600, 13px);
     @include ie-inline-block();
     a {
-        background:transparent url(image_path('icons/contribute-heart.png')) no-repeat 7px 2px;
+        background:transparent image-url('icons/contribute-heart.png') no-repeat 7px 2px;
         color:$white;
         @include ie-inline-block();
         padding:1px 8px 1px 34px;
@@ -182,7 +182,7 @@ $navHeight: 36px;
                         @include gradient-vertical(#cb5f1d, #9b4816);
                     }
                     a {
-                        background:url(image_path('icons/antenna.png')) no-repeat 8px 4px;
+                        background:image-url('icons/antenna.png') no-repeat 8px 4px;
                         color:$white;
                         padding-left:33px;
                         padding-right:22px;
@@ -243,7 +243,7 @@ $navHeight: 36px;
                 }
             }
             input.submit, .toggle-search {
-                background:transparent url(image_path('icons/search-btn.png')) no-repeat 50%;
+                background:transparent image-url('icons/search-btn.png') no-repeat 50%;
                 min-width:20px;
                 height:20px;
                 text-indent:-9999px;
@@ -396,7 +396,7 @@ $navHeight: 36px;
 
     #support-mega {
         #support-hero {
-            background:url(image_path('about/menu-hero-bg.png')) no-repeat right bottom;
+            background:image-url('about/menu-hero-bg.png') no-repeat right bottom;
             border-right:1px solid $grayLighter;
             height:210px;
             margin-right:-4%;
@@ -409,7 +409,7 @@ $navHeight: 36px;
                 line-height:36px;
             }
             a.learn-more {
-                background:url(image_path('icons/bullet-donut.png')) no-repeat 0 2px;
+                background:image-url('icons/bullet-donut.png') no-repeat 0 2px;
                 padding-left:16px;
                 color:$nearBlack;
                 @include font-heading();
@@ -427,7 +427,7 @@ $navHeight: 36px;
                     text-shadow:0 -1px 0 rgba(0,0,0,0.69);
                 }
                 span {
-                    background:url(image_path('icons/contribute-heart-large.png')) no-repeat 0 6px;
+                    background:image-url('icons/contribute-heart-large.png') no-repeat 0 6px;
                     display:block;
                     padding:6px 0 6px 35px;
                 }
@@ -439,7 +439,7 @@ $navHeight: 36px;
             z-index:1;
             &.heading-leadership {
                 &:before {
-                    background:url(image_path('icons/menu-support-leadership.png')) no-repeat 0 0;
+                    background:image-url('icons/menu-support-leadership.png') no-repeat 0 0;
                     content:"";
                     position:absolute;
                     z-index:-1;
@@ -451,7 +451,7 @@ $navHeight: 36px;
             }
             &.heading-members {
                 &:before {
-                    background:url(image_path('icons/menu-support-members.png')) no-repeat 0 0;
+                    background:image-url('icons/menu-support-members.png') no-repeat 0 0;
                     content:"";
                     position:absolute;
                     z-index:-1;
@@ -463,7 +463,7 @@ $navHeight: 36px;
             }
             &.heading-moreways {
                 &:before {
-                    background:url(image_path('icons/menu-support-moreways.png')) no-repeat 0 0;
+                    background:image-url('icons/menu-support-moreways.png') no-repeat 0 0;
                     content:"";
                     position:absolute;
                     z-index:-1;
@@ -475,7 +475,7 @@ $navHeight: 36px;
             }
             &.heading-partnerships {
                 &:before {
-                    background:url(image_path('icons/menu-support-partnerships.png')) no-repeat 0 0;
+                    background:image-url('icons/menu-support-partnerships.png') no-repeat 0 0;
                     content:"";
                     position:absolute;
                     z-index:-1;
@@ -496,7 +496,7 @@ $navHeight: 36px;
 
     #about-mega {
         #about-hero {
-            background:url(image_path('about/menu-hero-bg.png')) no-repeat right bottom;
+            background:image-url('about/menu-hero-bg.png') no-repeat right bottom;
             border-right:1px solid $grayLighter;
             height:210px;
             margin-right:-4%;
@@ -512,7 +512,7 @@ $navHeight: 36px;
                 color:$orangeDark;
                 font-size:16px;
                 &.learn-more {
-                    background:url(image_path('icons/bullet-donut.png')) no-repeat 0 2px;
+                    background:image-url('icons/bullet-donut.png') no-repeat 0 2px;
                     padding-left:18px;
                 }
             }
@@ -523,7 +523,7 @@ $navHeight: 36px;
                 position:relative;
                 z-index:1;
                 &:before {
-                    background:url(image_path('icons/menu-about-kpcc.png')) no-repeat 0 0;
+                    background:image-url('icons/menu-about-kpcc.png') no-repeat 0 0;
                     content:"";
                     position:absolute;
                     z-index:-1;
@@ -538,7 +538,7 @@ $navHeight: 36px;
                 position:relative;
                 z-index:1;
                 &:before {
-                    background:url(image_path('icons/menu-about-connect.png')) no-repeat 0 0;
+                    background:image-url('icons/menu-about-connect.png') no-repeat 0 0;
                     content:"";
                     position:absolute;
                     z-index:-1;
@@ -553,7 +553,7 @@ $navHeight: 36px;
                 position:relative;
                 z-index:1;
                 &:before {
-                    background:url(image_path('icons/menu-about-people.png')) no-repeat 0 0;
+                    background:image-url('icons/menu-about-people.png') no-repeat 0 0;
                     content:"";
                     position:absolute;
                     z-index:-1;
@@ -584,13 +584,13 @@ $navHeight: 36px;
                 margin:0 -30px 0 0;
                 padding-top:69px;
                 &.take-two {
-                    background-image:url(image_path('broadcast-bar/taketwo-sm.png'));
+                    background-image:image-url('broadcast-bar/taketwo-sm.png');
                 }
                 &.airtalk {
-                    background-image:url(image_path('broadcast-bar/larry-airtalk-sm.png'));
+                    background-image:image-url('broadcast-bar/larry-airtalk-sm.png');
                 }
                 &.offramp {
-                    background-image:url(image_path('broadcast-bar/john-offramp-sm.png'));
+                    background-image:image-url('broadcast-bar/john-offramp-sm.png');
                 }
                 h4 {
                     border-top:1px solid $grayLighter;
@@ -642,7 +642,7 @@ $navHeight: 36px;
             vertical-align:top;
         }
         .newsletter-sign-up {
-          background:url(image_path('icons/newsletter-subscribe-white.png')) no-repeat 4px 3px;
+          background:image-url('icons/newsletter-subscribe-white.png') no-repeat 4px 3px;
           @include font-heading();
           display:inline-block;
           float:right;

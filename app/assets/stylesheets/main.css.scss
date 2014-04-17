@@ -203,9 +203,9 @@ body {
         &.current {
             padding-left: 65px;// Room for the status badge
             float: left;
-            background-image: url(image_path("broadcast-bar/onair.png"));
+            background-image: image-url("broadcast-bar/onair.png");
             a.modal-toggler {
-                background:url(image_path('broadcast-bar/episode-arrow-invitation.png')) no-repeat right 10px;
+                background:image-url('broadcast-bar/episode-arrow-invitation.png') no-repeat right 10px;
                 padding-right:15px;
                 &:hover {
                     background-position:right -34px;
@@ -214,7 +214,7 @@ body {
         }
         &.next {
             float: right;
-            background-image: url(image_path("broadcast-bar/upnext.png"));
+            background-image: image-url("broadcast-bar/upnext.png");
             padding-left: 75px;
             text-align:right;
         }
@@ -233,7 +233,7 @@ body {
     ul.cbase {
         li {
             display:block;
-            list-style-image:url(image_path('mega-divider.png'));
+            list-style-image:image-url('mega-divider.png');
             margin-bottom:$baseline / 2;
             &.lead {
                 list-style-image:none;
@@ -241,7 +241,7 @@ body {
             &.more {
                 margin-bottom:0;
                 a {
-                    background:url(image_path('broadcast-bar/episode-more-icon.png')) no-repeat right 1px;
+                    background:image-url('broadcast-bar/episode-more-icon.png') no-repeat right 1px;
                     font-size:11px;
                     padding-bottom:2px;
                     padding-right:17px;

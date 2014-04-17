@@ -41,7 +41,7 @@
             margin: 0 10px;
             width: 88px;
             height: 22px;
-            background: transparent url(image_path('thumbnails-btn.png')) no-repeat 0 0;
+            background: transparent image-url('thumbnails-btn.png') no-repeat 0 0;
             vertical-align: middle;
 
             &:hover, &.active {
@@ -72,12 +72,12 @@
 
             &.prev {
                 left: 0;
-                background-image: url(image_path('overlay-prev-dark-sm.png'));
+                background-image: image-url('overlay-prev-dark-sm.png');
                 border-right: 1px solid $grayLight;
             }
             &.next {
                 right: 0;
-                background-image: url(image_path('overlay-next-dark-sm.png'));
+                background-image: image-url('overlay-next-dark-sm.png');
                 border-left: 1px solid $grayLight;
             }
 
@@ -162,14 +162,14 @@
                     left: 0;
                     width: 30%;
                     background-position: 6% 48%;
-                    background-image: url(image_path('overlay-prev-dark.png'));
+                    background-image: image-url('overlay-prev-dark.png');
                 }
 
                 &.next {
                     right: 0;
                     width: 70%;
                     background-position: 98% 48%;
-                    background-image: url(image_path('overlay-next-dark.png'));
+                    background-image: image-url('overlay-next-dark.png');
                 }
 
                 &.disabled {

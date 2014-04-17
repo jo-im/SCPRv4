@@ -105,7 +105,7 @@ body.listen {
       list-style-type: none;
       padding: 0 6px; }
   .player .jp-play, .player .jp-pause, .player .jp-rw, .player .jp-ff, .player .jp-mute, .player .jp-unmute, .player .jp-volume-max {
-    background-image: url(image_path('audio-controls.png'));
+    background-image: image-url('audio-controls.png');
     background-repeat: no-repeat;
     display: block;
     text-indent: -9999px; }
