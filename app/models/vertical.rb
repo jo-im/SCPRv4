@@ -15,7 +15,9 @@ class Vertical < ActiveRecord::Base
   }
 
   belongs_to :quote
-  accepts_nested_attributes_for :quote
+  accepts_nested_attributes_for :quote,
+    :reject_if => :should_reject_quote,
+    :allow_destroy => true
   tracks_association :quote
 
   belongs_to :category
@@ -64,6 +66,12 @@ class Vertical < ActiveRecord::Base
 
 
   private
+
+  def should_reject_quote(attributes)
+    attributes["source_name"].blank? &&
+    attributes["source_context"].blank? &&
+    attributes["source_text"].blank?
+  end
 
   def build_vertical_article_association(vertical_article_hash, article)
     if article.published?

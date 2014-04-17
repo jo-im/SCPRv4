@@ -77,6 +77,7 @@
     <%= qf.input :source_name, hint: "The source of the quote. Example: 'Barack Obama'" %>
     <%= qf.input :source_context, hint: "The context in which the quote was delivered. Example: 'Press Meeting, June 10'" %>
     <%= qf.input :text, hint: "The actual text of the quote.", input_html: { class: "tiny" } %>
+    <%= qf.input :_destroy, as: :boolean, label: "Clear this Quote" %>
 
     <div class="alert alert-info">
       Choose the source article for the <strong>Featured Quote</strong>, if applicable.
