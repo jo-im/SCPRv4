@@ -6,27 +6,31 @@
 
 <% lead_article = @vertical.featured_articles.first %>
 
+<section class="headline">
 <% if lead_article %>
-<%= render 'verticals/shared/headline', article: lead_article %>
+    <h1 class="bound"><span><%= link_to lead_article.short_title, lead_article.public_path %></span></h1>
 <% end %>
+</section>
 
 <div class="welcome bound clearfix">
 
     <% if lead_article %>
-        <%= render 'verticals/shared/lead', lead_article: lead_article%>
+        <%= render 'verticals/shared/lead', lead_article: lead_article %>
     <% end %>
 
     <div class="ataglance clearfix affiliated">
         <section class="latest">
             <header class="clearfix">
-            <% if vertical_blog_articles.present? %>
+            <% blog_articles = vertical_blog_articles %>
+
+            <% if @blog && blog_articles.present? %>
                 <h1>Latest from <%= @blog.name %></h1>
                 <a href="<%=@blog.public_path%>">Visit <span>the</span> blog</a>
             <% end %>
             </header>
 
-        <%= cache ["business", "latest-headlines", 'v1', vertical_blog_articles] do %>
-            <%= render 'verticals/shared/headlines', articles: vertical_blog_articles %>
+        <%= cache ["categories/show", "latest-headlines", 'v1', blog_articles] do %>
+            <%= render 'verticals/shared/headlines', articles: blog_articles %>
         <% end %>
 
         </section>
@@ -37,7 +41,7 @@
             </header>
 
         <% articles = @marketplace_articles.first(2) %>
-        <%= cache ["business", "latest-headlines", 'v1', ] do %>
+        <%= cache ["categories/show", "marketplace-articles", 'v1', articles] do %>
             <%= render 'verticals/shared/headlines', articles: articles %>
         <% end %>
 
@@ -48,14 +52,14 @@
 
 
 <%= render 'verticals/shared/resources', vertical: @vertical, articles: Array(@vertical.featured_articles[1..4]) %>
-<%= render 'verticals/shared/lunchbox', vertical: @vertical, quotes: @quotes, events: @events %>
+<%= render 'verticals/shared/lunchbox', vertical: @vertical, quote: @quote, events: @events %>
 
 <% articles = Array(vertical_articles) %>
-<%# We add vertical.title to the cache key since that's the only vertical-specific
-information we depend on inside of this cache block. %>
-<%= cache ["vertical", "recent-coverage", 'v1', @vertical.title, articles] do %>
+<%= cache ["categories/show", "recent-coverage", 'v1', @vertical, articles] do %>
     <%= render 'shared/new/triptych', articles: Array(articles[0..2]), header: "Recent #{@vertical.title} Coverage" %>
+
     <%= render 'shared/new/kpcc_ipad_ad' %>
+
     <%= render 'shared/new/quadrant', vertical: @vertical, articles: Array(articles[3..6]), header: "" %>
     <%= render 'shared/new/waterfall', vertical: @vertical, articles: articles %>
 <% end %> <%# cache %>

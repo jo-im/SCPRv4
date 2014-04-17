@@ -10,8 +10,6 @@ class Quote < ActiveRecord::Base
 
   accepts_json_input_for :content
 
-  validates :text, presence: true
-
 
   def article
     self.content.try(:to_article)

@@ -21,17 +21,16 @@
     <div class="ataglance clearfix affiliated">
         <section class="latest">
             <header class="clearfix">
-            <% if @blog && vertical_blog_articles.present? %>
+            <% blog_articles = vertical_blog_articles %>
+
+            <% if @blog && blog_articles.present? %>
                 <h1>Latest from <%= @blog.name %></h1>
-                <a href="<%= @blog.public_path %>">
-                    Visit <span>the</span> blog
-                </a>
+                <a href="<%=@blog.public_path%>">Visit <span>the</span> blog</a>
             <% end %>
             </header>
 
-        <% articles = vertical_blog_articles %>
-        <%= cache ["categories/show", "latest-headlines", 'v1', articles] do %>
-            <%= render 'verticals/shared/headlines', articles: articles %>
+        <%= cache ["categories/show", "latest-headlines", 'v1', blog_articles] do %>
+            <%= render 'verticals/shared/headlines', articles: blog_articles %>
         <% end %>
 
         </section>

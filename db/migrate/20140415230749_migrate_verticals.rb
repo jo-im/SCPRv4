@@ -10,7 +10,7 @@ class MigrateVerticals < ActiveRecord::Migration
         :blog_id => category.blog_id
       })
 
-      if quote = Quote.where(category_id: category.id).first
+      if quote = Quote.where(category_id: category.id).order('created_at desc').first
         vertical.quote = quote
       end
 

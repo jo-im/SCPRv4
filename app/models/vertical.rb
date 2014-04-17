@@ -15,7 +15,11 @@ class Vertical < ActiveRecord::Base
   }
 
   belongs_to :quote
+  accepts_nested_attributes_for :quote
+  tracks_association :quote
+
   belongs_to :category
+  belongs_to :blog
 
   has_many :vertical_issues, dependent: :destroy
   has_many :issues, through: :vertical_issues
