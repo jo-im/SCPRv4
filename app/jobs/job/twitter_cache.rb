@@ -15,6 +15,7 @@ module Job
 
     class << self
       def perform(screenname, partial, key, options={})
+        options.symbolize_keys!
         options = options.reverse_merge(DEFAULTS)
 
         job = new(screenname)
