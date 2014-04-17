@@ -4,7 +4,7 @@
     padding-bottom: 30px;
     background: #f7f7f7;
     & > header {
-        background: #f2e5dc url(twitter-module-bird.png) no-repeat;
+        background: #f2e5dc image-url('twitter-module-bird.png') no-repeat;
         background-size: 110px 95px; // 220 190
         padding: 15px 10px 10px;
         box-shadow: inset 0 -5px 0 rgba(172,64,0,0.05);
