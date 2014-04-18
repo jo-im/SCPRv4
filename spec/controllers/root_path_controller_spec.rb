@@ -24,14 +24,12 @@ describe RootPathController do
     end
 
     describe "with template" do
-      context 'category is active' do
-        before :each do
-          @active_category = create :category_news, is_active: true
-        end
-        it "renders the new template" do
-          get :handle_path, path: @active_category.slug, format: :html
-          response.should render_template 'category/show'
-        end
+      before :each do
+        @category = create :category_news
+      end
+      it "renders the new template" do
+        get :handle_path, path: @category.slug, format: :html
+        response.should render_template 'category/show'
       end
     end
   end
