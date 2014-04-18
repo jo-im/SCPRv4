@@ -35,8 +35,11 @@ describe ApplicationHelper do
 
   describe '#safe_render' do
     it "renders the partial if it exists" do
-      helper.safe_render('verticals/politics/footer_sponsors')
-        .should match /Politics/
+      helper.lookup_context.stub(:exists?) { true }
+      helper.stub(:render) { "hello" }
+
+      helper.safe_render('path/to/existing/partial')
+        .should match /hello/
     end
 
     it "returns nil if the partial does not exist" do
@@ -435,6 +438,11 @@ describe ApplicationHelper do
     it "doesn't leave a trailing ? if there are no params" do
       url = helper.url_with_params("http://google.com")
       url.should_not match /\?/
+    end
+
+    it "Returns the url if it's an invalid URI" do
+      url = helper.url_with_params("nope nope nope")
+      url.should eq "nope nope nope"
     end
   end
 end

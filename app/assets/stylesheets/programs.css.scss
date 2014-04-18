@@ -53,13 +53,13 @@ $headShotWidth: 90px;
     background-repeat: no-repeat;
     background-position: 0 0;
     &.brand-martinez {
-        background-image: url(image_path('broadcast-bar/headshots/brand-martinez.png'));
+        background-image: image-url('broadcast-bar/headshots/brand-martinez.png');
         &.program-info {
             padding-right:150px;
         }
     }
     &.take-two {
-        background-image: url(image_path('broadcast-bar/headshots/taketwo.png'));
+        background-image: image-url('broadcast-bar/headshots/taketwo.png');
         &.program-info {
             padding-right:150px;
         }
@@ -70,10 +70,10 @@ $headShotWidth: 90px;
         }
     }
     &.airtalk {
-        background-image: url(image_path('broadcast-bar/headshots/airtalk.png'));
+        background-image: image-url('broadcast-bar/headshots/airtalk.png');
     }
     &.offramp {
-        background-image: url(image_path('broadcast-bar/headshots/offramp.png'));
+        background-image: image-url('broadcast-bar/headshots/offramp.png');
     }
 
     &.program-info {
@@ -110,7 +110,7 @@ $headShotWidth: 90px;
     .support {
         display: table;
         height: 55px;
-        background: url(image_path('support-banner.png')) no-repeat left top;
+        background: image-url('support-banner.png') no-repeat left top;
         padding: 0 5px 0 63px;
         width: 246px;
         overflow: hidden;

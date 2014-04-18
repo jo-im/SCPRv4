@@ -19,19 +19,19 @@ describe Outpost::PijQueriesController do
         put :preview, id: pij_query.id, obj_key: pij_query.obj_key, pij_query: pij_query.attributes.merge(headline: "Updated")
         assigns(:query).should eq pij_query
         assigns(:query).headline.should eq "Updated"
-        response.should render_template "/pij_queries/_pij_query"
+        response.should render_template "pij_queries/_pij_query"
       end
 
       it "renders validation errors if the object is not unconditionally valid" do
         pij_query = create :pij_query, headline: "Okay"
         put :preview, id: pij_query.id, obj_key: pij_query.obj_key, pij_query: pij_query.attributes.merge(headline: "")
-        response.should render_template "/outpost/shared/_preview_errors"
+        response.should render_template "outpost/shared/_preview_errors"
       end
 
       it "renders for unpublished queries" do
         pij_query = create :pij_query, :draft, headline: "This is a story"
         put :preview, id: pij_query.id, obj_key: pij_query.obj_key, pij_query: pij_query.attributes
-        response.should render_template "/pij_queries/_pij_query"
+        response.should render_template "pij_queries/_pij_query"
       end
     end
 
@@ -40,13 +40,13 @@ describe Outpost::PijQueriesController do
         pij_query = build :pij_query, headline: "This is a story"
         post :preview, obj_key: pij_query.obj_key, pij_query: pij_query.attributes
         assigns(:query).headline.should eq "This is a story"
-        response.should render_template "/pij_queries/_pij_query"
+        response.should render_template "pij_queries/_pij_query"
       end
 
       it "renders validation errors if the object is not unconditionally valid" do
         pij_query = build :pij_query, headline: "okay"
         post :preview, obj_key: pij_query.obj_key, pij_query: pij_query.attributes.merge(headline: "")
-        response.should render_template "/outpost/shared/_preview_errors"
+        response.should render_template "outpost/shared/_preview_errors"
       end
     end
   end

@@ -1,6 +1,13 @@
 require "spec_helper"
 
 describe ShowEpisode do
+  describe '#segments' do
+    it 'orders by position' do
+      episode = build :show_episode
+      episode.segments.to_sql.should match /order by position/i
+    end
+  end
+
   describe "callbacks" do
     describe "generate_headline" do
       let(:program) { build :kpcc_program, title: "Cool Show" }

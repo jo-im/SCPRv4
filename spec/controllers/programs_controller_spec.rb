@@ -7,20 +7,40 @@ describe ProgramsController do
 
       it "renders the view" do
         episode = create :show_episode, air_date: Time.new(2012, 3, 22)
-        post :archive, show: episode.show.slug, archive: { "date(1i)" => episode.air_date.year, "date(2i)" => episode.air_date.month, "date(3i)" => episode.air_date.day }
+        post :archive,
+          :show    => episode.show.slug,
+          :archive => {
+            "date(1i)" => episode.air_date.year,
+            "date(2i)" => episode.air_date.month,
+            "date(3i)" => episode.air_date.day
+          }
       end
     end
 
     describe "controller" do
       it "finds the episode for the program on the given date" do
         episode = create :show_episode, air_date: Time.new(2012, 3, 22)
-        post :archive, show: episode.show.slug, archive: { "date(1i)" => episode.air_date.year, "date(2i)" => episode.air_date.month, "date(3i)" => episode.air_date.day }
+        post :archive,
+          :show    => episode.show.slug,
+          :archive => {
+            "date(1i)" => episode.air_date.year,
+            "date(2i)" => episode.air_date.month,
+            "date(3i)" => episode.air_date.day
+          }
+
         assigns(:episode).should eq episode
       end
 
       it "assigns @date if date is given" do
         episode = create :show_episode, air_date: Time.new(2012, 3, 22)
-        post :archive, show: episode.show.slug, archive: { "date(1i)" => episode.air_date.year, "date(2i)" => episode.air_date.month, "date(3i)" => episode.air_date.day }
+        post :archive,
+          :show    => episode.show.slug,
+          :archive => {
+            "date(1i)" => episode.air_date.year,
+            "date(2i)" => episode.air_date.month,
+            "date(3i)" => episode.air_date.day
+          }
+
         date = assigns(:date)
         date.should be_a Time
         date.beginning_of_day.should eq episode.air_date.beginning_of_day
@@ -53,9 +73,12 @@ describe ProgramsController do
 
     describe "controller" do
       it "assigns @schedule_occurrences to this week's schedule" do
-        create :schedule_occurrence, starts_at: Time.now.beginning_of_week
-        create :schedule_occurrence, starts_at: Time.now.beginning_of_week + 1.day
-        create :schedule_occurrence, starts_at: Time.now.beginning_of_week + 2.days
+        create :schedule_occurrence,
+          starts_at: Time.now.beginning_of_week
+        create :schedule_occurrence,
+          starts_at: Time.now.beginning_of_week + 1.day
+        create :schedule_occurrence,
+          starts_at: Time.now.beginning_of_week + 2.days
 
         get :schedule
         assigns(:schedule_occurrences).should eq ScheduleOccurrence.all
@@ -149,7 +172,12 @@ describe ProgramsController do
         it "raises error for invalid id" do
           segment = create :show_segment
           -> {
-            get :segment, { show: segment.show.slug, id: "9999999", slug: segment.slug }.merge!(date_path(segment.published_at))
+            get :segment, {
+              :show   => segment.show.slug,
+              :id     => "9999999",
+              :slug   => segment.slug
+            }.merge!(date_path(segment.published_at))
+
           }.should raise_error ActiveRecord::RecordNotFound
         end
       end
@@ -180,13 +208,7 @@ describe ProgramsController do
       let(:segment) { create :show_segment }
 
       let(:params) do
-        {
-          :year     => episode.air_date.year,
-          :month    => episode.air_date.month,
-          :day      => episode.air_date.day,
-          :show     => episode.show.slug,
-          :id       => episode.id
-        }
+        episode.route_hash
       end
 
       it "redirects if the path is the old one" do

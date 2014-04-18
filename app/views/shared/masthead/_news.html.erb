@@ -16,7 +16,7 @@
             </div>
             <div class="span12">
               <ul>
-                <li><a href="/money/" class="track-event" data-ga-category="MegaMenu" data-ga-action="Category" data-ga-label="News">Money</a></li>
+                <li><a href="/business/" class="track-event" data-ga-category="MegaMenu" data-ga-action="Category" data-ga-label="News">Business</a></li>
                 <li><a href="/crime/" class="track-event" data-ga-category="MegaMenu" data-ga-action="Category" data-ga-label="News">Crime &amp; Safety</a></li>
                 <li><a href="/education/" class="track-event" data-ga-category="MegaMenu" data-ga-action="Category" data-ga-label="News">Education</a></li>
                 <li><a href="/health/" class="track-event" data-ga-category="MegaMenu" data-ga-action="Category" data-ga-label="News">Health</a></li>
@@ -37,7 +37,7 @@
         <h6>Latest News</h6>
         <% content_cache("mega_news_latest") do %>
           <% register_content(ContentBase.new_obj_key) %>
-          <%= render "/shared/masthead/featured", articles: latest_news(2) %>
+          <%= render "shared/masthead/featured", articles: latest_news(2) %>
         <% end %>
       </div> <!-- section -->
     </div> <!-- span -->
@@ -47,7 +47,7 @@
         <h6>From Our Blogs</h6>
         <% content_cache("mega_news_blogs") do %>
           <% register_content(BlogEntry.new_obj_key) %>
-          <%= render "/shared/masthead/from_our_blogs", entries: @latest_blogs_news %>
+          <%= render "shared/masthead/from_our_blogs", entries: @latest_blogs_news %>
         <% end %>
       </div> <!-- section -->
     </div> <!-- span -->

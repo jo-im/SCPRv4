@@ -1,4 +1,4 @@
-<%= form_for @message, url: content_email_path(obj_key: @content.obj_key) do |f| %>
+<%= form_for @message, url: content_email_path(obj_key: @content.obj_key), method: :post do |f| %>
   <h6>Email this to a friend:</h6>
   <hr />
   <div class="cbase">

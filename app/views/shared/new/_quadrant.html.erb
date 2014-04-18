@@ -13,7 +13,7 @@
                     <div class="graphic">
                         <div class="ratio">
 
-                        <%- if issue = article.issues_in_category.first %>
+                        <% if vertical && (issue = (article.issues & vertical.issues).first) %>
                             <span class="issue"><%= link_to issue.title, issue.public_path %></span>
                         <% end %>
 

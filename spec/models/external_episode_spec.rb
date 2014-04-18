@@ -1,6 +1,20 @@
 require 'spec_helper'
 
 describe ExternalEpisode do
+  describe '#external_episode_segments' do
+    it 'orders by position' do
+      episode = build :external_episode
+      episode.external_episode_segments.to_sql.should match /order by position/i
+    end
+  end
+
+  describe '#external_segments' do
+    it 'orders by position' do
+      episode = build :external_episode
+      episode.external_segments.to_sql.should match /order by position/i
+    end
+  end
+
   describe '::for_air_date' do
     it 'matches the dates' do
       t = Time.now.yesterday

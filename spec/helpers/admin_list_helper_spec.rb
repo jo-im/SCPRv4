@@ -5,7 +5,7 @@ describe AdminListHelper do
     it "returns a pretty link" do
       link = helper.display_link("http://kpcc.org")
       link.should match /kpcc\.org/
-      link.should match /<a href/
+      link.should match /\A<a /
     end
   end
 

@@ -31,4 +31,3 @@ module Concern
     end # IssueAssociation
   end # Associations
 end # Concern
-

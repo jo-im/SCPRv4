@@ -25,7 +25,7 @@ module Concern
       end
 
       def touch_category
-        self.category.try(:touch)
+        self.category.touch
       end
     end # CategoryAssociation
   end # Associations

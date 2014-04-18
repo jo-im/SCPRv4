@@ -1,4 +1,6 @@
 class NewsController < ApplicationController
+  caches_action :story, if: -> { params[:id].to_i == 43547 }, expires_in: 10.minutes
+
   def story
     @story = NewsStory.published.find(params[:id])
 

@@ -1,9 +1,22 @@
 require "spec_helper"
 
 describe Concern::Associations::AudioAssociation do
-  it "orders properly" do
-    story = build :test_class_story
-    story.audio.to_sql.should match /order by position/i
+  describe '#audio' do
+    it "orders properly" do
+      story = build :test_class_story
+      story.audio.to_sql.should match /order by position/i
+    end
+
+    it "tracks the association" do
+      # We need to create because the initial version description
+      # it always just "Created Story ..."
+      story = create :test_class_story
+      audio = create :audio, :live, :direct
+      story.audio << audio
+      story.save!
+
+      story.versions.last.description.should match /Audio/
+    end
   end
 
   describe "#should_reject_audio?" do

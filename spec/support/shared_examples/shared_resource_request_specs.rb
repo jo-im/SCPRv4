@@ -2,11 +2,31 @@
 # Shared examples for managed resources
 #
 shared_examples_for "managed resource" do |options|
+  it_behaves_like "managed resource index", options
   it_behaves_like "managed resource create", options
   it_behaves_like "managed resource update", options
   it_behaves_like "managed resource destroy", options
 end
 
+shared_examples_for "managed resource index" do |options|
+  before :each do
+    login
+    valid_record.save!
+  end
+
+  describe "Index" do
+    it "shows a list of records" do
+      visit described_class.admin_index_path
+
+      within('table.index-list') do
+        page.should have_css "a.btn"
+        first('a.btn').click
+
+        current_path.should eq valid_record.admin_edit_path
+      end
+    end
+  end
+end
 
 shared_examples_for "managed resource create" do |options|
   before :each do

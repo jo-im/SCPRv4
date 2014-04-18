@@ -33,10 +33,13 @@ describe RecurringScheduleRule do
       rule = create :recurring_schedule_rule
       rule.schedule_occurrences.first.program.should eq rule.program
 
-      another_program = create :kpcc_program
+      # Reload to clear out cached associations
+      rule.reload
+
+      another_program = create :kpcc_program, title: "Updated Program"
       rule.program = another_program
       rule.save!
-      rule.schedule_occurrences(true).first.program.should eq another_program
+      rule.schedule_occurrences.first.program.should eq another_program
     end
   end
 

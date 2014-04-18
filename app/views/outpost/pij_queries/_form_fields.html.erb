@@ -13,7 +13,7 @@
 <% end %>
 
 <%= form_block "Publishing" do %>
-  <%= render '/outpost/shared/help_blocks/publishing' %>
+  <%= render 'outpost/shared/help_blocks/publishing' %>
   <%= f.input :status, collection: PijQuery.status_select_collection, selected: record.status || PijQuery.status_id(:hidden), include_blank: false, input_html: { id: "status-select" } %>
 
   <%= f.section 'content_alarm' %>

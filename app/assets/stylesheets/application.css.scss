@@ -1,8 +1,5 @@
 // Global Stylesheet Imports
-@import "compass/css3/opacity";
-@import "compass/css3/images";
-@import "compass/utilities/sprites/base";
-
+@import "base/compass";
 @import "base/reset";
 @import "base/bootstrap/mixins";
 @import "base/base";
@@ -12,7 +9,6 @@
 @import "base/tables";
 // Layouts
 @import "base/minimal";
-@import "base/dark";
 // Section-Specific Stylesheets
 @import "main";
 @import "masthead";
@@ -33,8 +29,7 @@
 @import "modals";
 @import "slideshow";
 @import "ckeditor";
-@import "audiovision";
-
+@import "sidebar_tweets";
 // Utilities
 @import "feature_traits";
 

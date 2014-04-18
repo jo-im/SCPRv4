@@ -15,12 +15,12 @@ class ShowSegment < ActiveRecord::Base
   include Concern::Associations::IssueAssociation
   include Concern::Associations::FeatureAssociation
   include Concern::Associations::CategoryAssociation
-  include Concern::Associations::CategoryArticleAssociation
   include Concern::Associations::HomepageContentAssociation
   include Concern::Associations::FeaturedCommentAssociation
   include Concern::Associations::QuoteAssociation
   include Concern::Associations::MissedItContentAssociation
   include Concern::Associations::EditionsAssociation
+  include Concern::Associations::VerticalArticleAssociation
   include Concern::Validations::ContentValidation
   include Concern::Callbacks::SetPublishedAtCallback
   include Concern::Callbacks::GenerateSlugCallback
@@ -36,7 +36,7 @@ class ShowSegment < ActiveRecord::Base
   include Concern::Methods::AssetDisplayMethods
 
   self.disqus_identifier_base = "shows/segment"
-  ROUTE_KEY = "segment"
+  self.public_route_key = "segment"
 
 
   belongs_to :show,
@@ -49,9 +49,9 @@ class ShowSegment < ActiveRecord::Base
     :dependent      => :destroy
 
   has_many :episodes,
+    -> { order('air_date') },
     :through    => :rundowns,
     :source     => :episode,
-    :order      => "air_date asc",
     :autosave   => true
 
 

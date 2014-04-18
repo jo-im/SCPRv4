@@ -7,6 +7,7 @@ describe DataPoint do
     build :data_point, title: "Cool Data Point", data_key: nil
   }
 
+  it_behaves_like "managed resource index"
   it_behaves_like "managed resource create"
   it_behaves_like "managed resource destroy"
   it_behaves_like "save options"

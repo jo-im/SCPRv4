@@ -1,6 +1,13 @@
 require 'spec_helper'
 
 describe Edition do
+  describe '#slots' do
+    it 'orders by position' do
+      edition = build :edition
+      edition.slots.to_sql.should match /order by position/i
+    end
+  end
+
   describe '::titles_collection' do
     it "is an array of all the published titles" do
       create :edition, :published, title: "Abracadabra"

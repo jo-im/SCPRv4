@@ -1,70 +1,68 @@
 {
   "version": "1.0",
-  "href": "https://api-sandbox.pmp.io/docs?guid=fe111285-92c5-f5de-7b34-8a720d5fc750&profile=story",
+  "href": "https://api-sandbox.pmp.io/docs/92dbabbf-fa82-b580-7240-e3bddb6310ff",
   "attributes": {
     "valid": {
-      "from": "2013-09-30T13:45:56+00:00",
-      "to": "3013-09-30T13:45:56+00:00"
+      "from": "2014-03-12T14:44:30+00:00",
+      "to": "3014-03-12T14:44:30+00:00"
     },
-    "created": "2014-01-30T05:27:00+00:00",
-    "modified": "2014-01-30T05:27:00+00:00",
-    "contenttemplated": "<p>Lawmakers are running out of options to avoid a possible government shutdown, but a <a href=\"http://www.marketplace.org/topics/economy/medical-device-tax-could-play-role-spending-negotiations\" target=\"_blank\">once obscure tax</a> could now play an important role in negotiations.</p>\n<p>The office established as the temporary oversight agency for Iraq reconstruction will <a href=\"http://www.marketplace.org/topics/world/iraq-who-watched-watchers\" target=\"_blank\">cease operations</a>.</p>\n<p>If Congress doesn't&nbsp;strike a budget deal&nbsp;by Monday night, what have been deemed 'non-essential' parts of the federal government will close down.&nbsp;Turns out, this <a href=\"http://www.marketplace.org/topics/economy/government-shutdown-will-affect-jobs-and-jobs-numbers\" target=\"_blank\">includes the statisticians</a> who are calculating what is arguably the most market-sensitive government report of the week: &nbsp;Friday's scheduled employment and unemployment report.</p>",
-    "guid": "fe111285-92c5-f5de-7b34-8a720d5fc750",
-    "teaser": "An obscure tax could play an big role in government shutdown negotiations. How effective was the U.S. Special Inspector General's office for Iraq at eliminating abuse and fraud? And if Congress doesn't strike a deal it will impact jobs -- and the jobs report this Friday.",
-    "contentencoded": "<p>Lawmakers are running out of options to avoid a possible government shutdown, but a <a href=\"http://www.marketplace.org/topics/economy/medical-device-tax-could-play-role-spending-negotiations\" target=\"_blank\">once obscure tax</a> could now play an important role in negotiations.</p>\n<p>The office established as the temporary oversight agency for Iraq reconstruction will <a href=\"http://www.marketplace.org/topics/world/iraq-who-watched-watchers\" target=\"_blank\">cease operations</a>.</p>\n<p>If Congress doesn't&nbsp;strike a budget deal&nbsp;by Monday night, what have been deemed 'non-essential' parts of the federal government will close down.&nbsp;Turns out, this <a href=\"http://www.marketplace.org/topics/economy/government-shutdown-will-affect-jobs-and-jobs-numbers\" target=\"_blank\">includes the statisticians</a> who are calculating what is arguably the most market-sensitive government report of the week: &nbsp;Friday's scheduled employment and unemployment report.</p>",
-    "byline": "Brancaccio, David",
+    "created": "2014-03-12T18:01:18+00:00",
+    "modified": "2014-03-12T18:01:18+00:00",
+    "description": "The president seeks to change overtime pay rules via executive powers.",
     "hreflang": "en",
-    "description": "An obscure tax could play an big role in government shutdown negotiations. How effective was the U.S. Special Inspector General's office for Iraq at eliminating abuse and fraud? And if Congress doesn't strike a deal it will impact jobs -- and the jobs report this Friday.",
+    "contenttemplated": "[{\"type\":\"text/html\",\"content\":\"The White House wants to make more Americans eligible for overtime pay. Currently, because of what is referred to as the Fair Labor Standards Actâs â<a style=\\\"line-height: 1.42em; font-size: 14px;\\\" href=\\\"http://www.dol.gov/whd/regs/compliance/fairpay/fs17a_overview.pdf\\\">white collar exemption</a>,â many salaried professionals are not entitled to extra pay if they work more than 40 hours per week.\"},{\"content\":\"Later this week, the president intends to use his executive authority to change those rules. For 2014, which he is calling a âyear of action,â he has promised to pursue policy changes that do not involve congress.\",\"type\":\"text/html\"},{\"content\":\"So whom would this change affect? âPeople who are defined as âsupervisors,ââ says Gary Burtless, an economist at The Brookings Institution. âThey have responsibility over other people besides themselves, a certain amount of independence.â\",\"type\":\"text/html\"},{\"type\":\"text/html\",\"content\":\"The economic recovery, Burtless argues, âhas been better for profits than wages.â âThe government is trying to put its thumb on the scale, helping workers,â he says.\"},{\"content\":\"Economist Jared Bernstein, a senior fellow with the liberal Center on Budget and Policy Priorities, has pushed for this change for more than a decade, since President George W. Bush expanded the exemption in 2004:&nbsp;\",\"type\":\"text/html\"},{\"type\":\"text/html\",\"content\":\"âWeâre talking about millions of workers who would be newly eligible for overtime pay,â he says.\"},{\"type\":\"text/html\",\"content\":\"Critics argue changing the exemption would make it harder for businesses to hire new employees, and it could motivate them to trim their payrolls. In the long run, employers could simply reduce a white-collar supervisorâs base pay, so there would be no difference to his overall salary.\"},{\"content\":\"Bill Kilberg, a partner with the law firm Gibson, Dunn &amp; Crutcher, says he âdoesnât know if it is a good idea.â Kilberg suspects the courts will be asked to decide whether or not a rule change would be constitutional. âThey can give it deference or not give it deference.â\",\"type\":\"text/html\"}]",
+    "title": "Obama seeks expanded overtime pay",
+    "byline": "Gura, David",
+    "published": "2014-03-12T14:44:30+00:00",
+    "guid": "92dbabbf-fa82-b580-7240-e3bddb6310ff",
     "tags": [
+      "Marketplace Morning Report for Wednesday, March 12, 2014",
       "APM_TESTING",
-      "PMP:Marketplace_PMP",
-      "Mid-day Update",
-      "fe11128592c5f5de7b348a720d5fc750",
-      "Marketplace Morning Report for Monday, September 30, 2013",
-      "Marketplace",
+      "92dbabbffa82b5807240e3bddb6310ff",
       "Marketplace Morning Report",
-      "Economy"
+      "PMP:Marketplace_PMP",
+      "Business",
+      "Marketplace"
     ],
-    "published": "2013-09-30T13:45:56+00:00",
-    "title": "PODCAST: Looming government shutdown"
+    "teaser": "The president seeks to change overtime pay rules via executive powers.",
+    "contentencoded": "<p>The White House wants to make more Americans eligible for overtime pay. Currently, because of what is referred to as the Fair Labor Standards Act’s “<a style=\"line-height: 1.42em; font-size: 14px;\" href=\"http://www.dol.gov/whd/regs/compliance/fairpay/fs17a_overview.pdf\">white collar exemption</a>,” many salaried professionals are not entitled to extra pay if they work more than 40 hours per week.</p>\n<p>Later this week, the president intends to use his executive authority to change those rules. For 2014, which he is calling a “year of action,” he has promised to pursue policy changes that do not involve congress.</p>\n<p>So whom would this change affect? “People who are defined as ‘supervisors,’” says Gary Burtless, an economist at The Brookings Institution. “They have responsibility over other people besides themselves, a certain amount of independence.”</p>\n<p>The economic recovery, Burtless argues, “has been better for profits than wages.” “The government is trying to put its thumb on the scale, helping workers,” he says.</p>\n<p>Economist Jared Bernstein, a senior fellow with the liberal Center on Budget and Policy Priorities, has pushed for this change for more than a decade, since President George W. Bush expanded the exemption in 2004:&nbsp;</p>\n<p>“We’re talking about millions of workers who would be newly eligible for overtime pay,” he says.</p>\n<p>Critics argue changing the exemption would make it harder for businesses to hire new employees, and it could motivate them to trim their payrolls. In the long run, employers could simply reduce a white-collar supervisor’s base pay, so there would be no difference to his overall salary.</p>\n<p>Bill Kilberg, a partner with the law firm Gibson, Dunn &amp; Crutcher, says he “doesn’t know if it is a good idea.” Kilberg suspects the courts will be asked to decide whether or not a rule change would be constitutional. “They can give it deference or not give it deference.”</p>"
   },
   "links": {
     "profile": [
       {
-        "href": "https://api-sandbox.pmp.io/profiles/story",
-        "title": "APMStory"
+        "title": "APMStory",
+        "href": "https://api.pmp.io/profiles/story"
+      }
+    ],
+    "alternate": [
+      {
+        "type": "text/html",
+        "href": "http://www.marketplace.org/topics/business/obama-seeks-expanded-overtime-pay"
+      }
+    ],
+    "item": [
+      {
+        "href": "https://api-sandbox.pmp.io/docs/1dc81410-d86d-3c03-6fcc-39f77f0b0301"
+      },
+      {
+        "href": "https://api-sandbox.pmp.io/docs/0ee06f8c-b86b-b0c9-87e3-e8c17d59b132"
+      }
+    ],
+    "collection": [
+      {
+        "title": "Marketplace",
+        "href": "https://api-sandbox.pmp.io/docs/36d4a0dd-34da-4ce3-a31e-112fd9d8d91c"
+      },
+      {
+        "href": "https://api-sandbox.pmp.io/docs/df9a7bdb-c650-42c1-8691-55a154f07322",
+        "title": "Marketplace Morning Report"
       }
     ],
     "distributor": [],
     "copyright": [
       {
-        "href": "http://www.publicradio.org/terms",
-        "title": "Copyright (C) 2013 American Public Media Group"
-      }
-    ],
-    "item": [
-      {
-        "href": "https://api-sandbox.pmp.io/docs/feb529b6-832e-a4c7-3408-3717545f9a37"
-      }
-    ],
-    "collection": [
-      {
-        "href": "https://api-sandbox.pmp.io/docs/36d4a0dd-34da-4ce3-a31e-112fd9d8d91c",
-        "title": "Marketplace"
-      },
-      {
-        "href": "https://api-sandbox.pmp.io/docs/df9a7bdb-c650-42c1-8691-55a154f07322",
-        "title": "Marketplace Morning Report"
-      },
-      {
-        "href": "https://api-sandbox.pmp.io/docs/0146d22c-0f12-c066-bbec-85c82737d546",
-        "title": "Marketplace Morning Report for Monday, September 30, 2013"
-      }
-    ],
-    "alternate": [
-      {
-        "href": "http://www.marketplace.org/topics/economy/mid-day-update/podcast-looming-government-shutdown",
-        "type": "text/html"
+        "title": "Copyright (C) 2014 American Public Media Group",
+        "href": "http://www.publicradio.org/terms"
       }
     ],
     "creator": [
@@ -74,11 +72,11 @@
     ],
     "navigation": [
       {
-        "href": "https://api-sandbox.pmp.io/docs?guid=fe111285-92c5-f5de-7b34-8a720d5fc750&profile=b9ce545e-01a2-44d0-9a15-a73da4ed304b",
+        "href": "https://api-sandbox.pmp.io/docs?guid=92dbabbf-fa82-b580-7240-e3bddb6310ff",
         "rels": [
           "self"
         ],
-        "totalitems": 1,
+        "totalitems": 2,
         "totalpages": 1,
         "pagenum": 1
       }
@@ -372,73 +370,112 @@
   "items": [
     {
       "version": "1.0",
-      "href": "https://api-sandbox.pmp.io/docs/feb529b6-832e-a4c7-3408-3717545f9a37",
+      "href": "https://api-sandbox.pmp.io/docs/1dc81410-d86d-3c03-6fcc-39f77f0b0301",
       "attributes": {
         "valid": {
-          "from": "2013-09-30T15:39:55+00:00",
-          "to": "3013-09-30T15:39:55+00:00"
+          "from": "2014-03-12T14:44:30+00:00",
+          "to": "3014-03-12T14:44:30+00:00"
         },
-        "created": "2014-01-30T05:26:42+00:00",
-        "modified": "2014-01-30T05:26:43+00:00",
-        "byline": "Brancaccio, David",
-        "hreflang": "en",
-        "description": "",
+        "created": "2014-03-12T18:01:17+00:00",
+        "modified": "2014-03-12T18:01:17+00:00",
+        "byline": "Gura, David",
+        "title": "111348788_1.jpg",
+        "guid": "1dc81410-d86d-3c03-6fcc-39f77f0b0301",
         "tags": [
+          "Marketplace Morning Report for Wednesday, March 12, 2014",
           "APM_TESTING",
-          "PMP:Marketplace_PMP",
-          "Mid-day Update",
-          "Marketplace Morning Report for Monday, September 30, 2013",
-          "feb529b6832ea4c734083717545f9a37",
-          "Marketplace",
           "Marketplace Morning Report",
-          "Economy"
+          "PMP:Marketplace_PMP",
+          "1dc81410d86d3c036fcc39f77f0b0301",
+          "Marketplace",
+          "Business"
         ],
-        "published": "2013-09-30T13:45:56+00:00",
-        "guid": "feb529b6-832e-a4c7-3408-3717545f9a37",
-        "title": "marketplace_morning_report_full_20130930_64.mp3"
+        "hreflang": "en",
+        "description": "The president seeks to change overtime pay rules via executive powers.",
+        "published": "2014-03-12T14:44:30+00:00"
       },
       "links": {
         "profile": [
           {
-            "href": "https://api-sandbox.pmp.io/profiles/audio",
-            "title": "APMAudio"
+            "href": "https://api.pmp.io/profiles/image",
+            "title": "APMImage"
           }
         ],
+        "copyright": [
+          {
+            "href": "http://www.publicradio.org/terms",
+            "title": "Copyright (C) 2014 American Public Media Group"
+          }
+        ],
+        "distributor": [],
         "enclosure": [
           {
-            "href": "apm-audio:/marketplace/morning_report/2013/09/30/marketplace_morning_report_full_20130930_64.mp3",
-            "type": "audio/mpeg",
-            "meta": {
-              "api": {
-                "href": "http://api.publicradio.org/audio/v2?id=apm-audio:/marketplace/morning_report/2013/09/30/marketplace_morning_report_full_20130930_64.mp3",
-                "type": "application/json"
-              }
-            }
-          },
-          {
-            "href": "http://www.marketplace.org/sites/default/files/styles/primary-image-610x340/public/McDonald's%20Drive%20Thru%20with%20cancelled%20Angus%20burgers%202.jpg",
             "type": "image/jpeg",
             "meta": {
               "width": "610",
               "crop": "primary",
               "height": "340"
-            }
-          },
-          {
-            "href": "http://www.marketplace.org/sites/default/files/styles/square_thumbnail/public/McDonald's%20Drive%20Thru%20with%20cancelled%20Angus%20burgers%202.jpg",
-            "type": "image/jpeg",
-            "meta": {
-              "width": 180,
-              "crop": "small",
-              "height": 180
-            }
+            },
+            "href": "http://www.marketplace.org/sites/default/files/styles/primary-image-610x340/public/111348788_1.jpg?itok=UfS-D_BL"
           }
         ],
-        "distributor": [],
-        "copyright": [
+        "collection": [
           {
-            "href": "http://www.publicradio.org/terms",
-            "title": "Copyright (C) 2013 American Public Media Group"
+            "title": "Marketplace",
+            "href": "https://api-sandbox.pmp.io/docs/36d4a0dd-34da-4ce3-a31e-112fd9d8d91c"
+          },
+          {
+            "title": "Marketplace Morning Report",
+            "href": "https://api-sandbox.pmp.io/docs/df9a7bdb-c650-42c1-8691-55a154f07322"
+          }
+        ],
+        "creator": [
+          {
+            "href": "https://api-sandbox.pmp.io/docs/98bf597a-2a6f-446c-9b7e-d8ae60122f0d"
+          }
+        ],
+        "item": [],
+        "navigation": [
+          {
+            "href": "https://api-sandbox.pmp.io/docs?guid=1dc81410-d86d-3c03-6fcc-39f77f0b0301",
+            "rels": [
+              "self"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "version": "1.0",
+      "href": "https://api-sandbox.pmp.io/docs/0ee06f8c-b86b-b0c9-87e3-e8c17d59b132",
+      "attributes": {
+        "valid": {
+          "from": "2014-03-12T14:44:30+00:00",
+          "to": "3014-03-12T14:44:30+00:00"
+        },
+        "created": "2014-03-12T17:59:41+00:00",
+        "modified": "2014-03-12T17:59:41+00:00",
+        "byline": "Gura, David",
+        "title": "Obama seeks expanded overtime pay",
+        "hreflang": "en",
+        "description": "The president seeks to change overtime pay rules via executive powers.",
+        "guid": "0ee06f8c-b86b-b0c9-87e3-e8c17d59b132",
+        "tags": [
+          "Marketplace",
+          "Business",
+          "PMP:Marketplace_PMP",
+          "Marketplace Morning Report",
+          "APM_TESTING",
+          "Marketplace Morning Report for Wednesday, March 12, 2014",
+          "0ee06f8cb86bb0c987e3e8c17d59b132"
+        ],
+        "published": "2014-03-12T14:44:30+00:00"
+      },
+      "links": {
+        "profile": [
+          {
+            "href": "https://api.pmp.io/profiles/audio",
+            "title": "APMAudio"
           }
         ],
         "collection": [
@@ -451,6 +488,35 @@
             "title": "Marketplace Morning Report"
           }
         ],
+        "enclosure": [
+          {
+            "href": "apm-audio:/marketplace/segments/2014/03/12/marketplace_segment09_20140312_64.mp3",
+            "type": "audio/mpeg",
+            "meta": {
+              "api": {
+                "href": "http://api.publicradio.org/audio/v2?ref=pmp&id=apm-audio:/marketplace/segments/2014/03/12/marketplace_segment09_20140312_64.mp3",
+                "type": "application/json"
+              }
+            }
+          },
+          {
+            "href": "apm-audio:/marketplace/segments/2014/03/12/marketplace_segment09_20140312_64.mp3",
+            "type": "audio/mpeg",
+            "meta": {
+              "api": {
+                "href": "http://api.publicradio.org/audio/v2?ref=pmp&id=apm-audio:/marketplace/segments/2014/03/12/marketplace_segment09_20140312_64.mp3",
+                "type": "application/json"
+              }
+            }
+          }
+        ],
+        "copyright": [
+          {
+            "href": "http://www.publicradio.org/terms",
+            "title": "Copyright (C) 2014 American Public Media Group"
+          }
+        ],
+        "distributor": [],
         "creator": [
           {
             "href": "https://api-sandbox.pmp.io/docs/98bf597a-2a6f-446c-9b7e-d8ae60122f0d"
@@ -459,7 +525,7 @@
         "item": [],
         "navigation": [
           {
-            "href": "https://api-sandbox.pmp.io/docs?guid=feb529b6-832e-a4c7-3408-3717545f9a37",
+            "href": "https://api-sandbox.pmp.io/docs?guid=0ee06f8c-b86b-b0c9-87e3-e8c17d59b132",
             "rels": [
               "self"
             ]

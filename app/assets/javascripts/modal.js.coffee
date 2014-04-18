@@ -34,4 +34,3 @@ class scpr.Modal
                 if event.keyCode is 27 and $(@options.modal).is(":visible")
                     $(@options.modal).hide()
                     $("body").removeClass("with-audio-bar")
-

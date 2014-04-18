@@ -42,6 +42,7 @@
 
     <% if @popular_articles %>
       <%= render 'shared/new/quadrant',
+        vertical: nil,
         articles: @popular_articles.first(4),
         header: 'Popular Now on KPCC' %>
     <% end %>

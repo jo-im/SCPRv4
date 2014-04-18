@@ -30,7 +30,7 @@ class Outpost::HomepagesController < Outpost::ResourceController
       if @homepage.unconditionally_valid?
         @title = @homepage.to_title
 
-        render "/home/_#{@homepage.base}",
+        render "home/_#{@homepage.base}",
           :layout => "outpost/preview/application",
           :locals => { homepage: @homepage }
 

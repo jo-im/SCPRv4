@@ -1,6 +1,18 @@
 require 'spec_helper'
 
 describe Concern::Associations::PolymorphicProgramAssociation do
+  describe '#program' do
+    it "tracks the association" do
+      program = create :kpcc_program
+      post = create :test_class_post
+
+      post.program = program
+      post.save!
+      post.versions.last.description.should match /Program/
+    end
+  end
+
+
   describe '#program_obj_key=' do
     it 'sets the program based on the program_obj_key' do
       program   = create :kpcc_program

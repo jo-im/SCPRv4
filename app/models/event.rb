@@ -14,6 +14,7 @@ class Event < ActiveRecord::Base
   include Concern::Associations::QuoteAssociation
   include Concern::Associations::HomepageContentAssociation
   include Concern::Associations::MissedItContentAssociation
+  include Concern::Associations::VerticalArticleAssociation
   include Concern::Callbacks::GenerateSlugCallback
   include Concern::Callbacks::GenerateTeaserCallback
   include Concern::Callbacks::SphinxIndexCallback
@@ -23,7 +24,7 @@ class Event < ActiveRecord::Base
   include Concern::Methods::AssetDisplayMethods
 
   self.disqus_identifier_base = "events"
-  ROUTE_KEY = "event"
+  self.public_route_key = "event"
 
   ForumTypes = [
     "comm",

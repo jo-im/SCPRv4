@@ -2,6 +2,6 @@ class ArticleIssue < ActiveRecord::Base
   belongs_to :issue
 
   belongs_to :article,
-    :polymorphic => true,
-    :conditions  => { status: ContentBase::STATUS_LIVE }
+    -> { where(status: ContentBase::STATUS_LIVE) },
+    :polymorphic => true
 end

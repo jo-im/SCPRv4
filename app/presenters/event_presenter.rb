@@ -97,7 +97,7 @@ class EventPresenter < ApplicationPresenter
 
   def map
     if event.show_map && (event.upcoming? || event.current?)
-      h.render '/events/map/map', p: self
+      h.render 'events/map/map', p: self
     end
   end
 

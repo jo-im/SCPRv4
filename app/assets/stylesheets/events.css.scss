@@ -3,7 +3,7 @@ a.event-link {
     @include ie-inline-block;
     padding-left: 25px;
     min-height: 19px;
-    background: url(image_path("icons/calendar-icon.png")) no-repeat left top;
+    background: image-url("icons/calendar-icon.png") no-repeat left top;
 }
 
 span.fake-link {
@@ -101,14 +101,14 @@ span.fake-link {
                 margin: 5px 0;
             }
             .upcoming-date {
-                background: url(image_path('icons/calendar-icon-orange.png')) no-repeat left 5px;
+                background: image-url('icons/calendar-icon-orange.png') no-repeat left 5px;
                 color:$orangeDark;
                 @include font-heading($size: 13px, $weight: 600, $lineHeight: 16px);
                 min-height:25px;
                 padding:3px 0 0 26px;
             }
             .past-date {
-                background: url(image_path('icons/calendar-icon-black.png')) no-repeat left 5px;
+                background: image-url('icons/calendar-icon-black.png') no-repeat left 5px;
                 @include font-heading($size: 12px);
                 padding-left: 26px;
             }
@@ -133,7 +133,7 @@ span.fake-link {
                 }
             }
             .map-link {
-                background:url(image_path('broadcast-bar/episode-arrow-invitation.png')) no-repeat right 6px;
+                background:image-url('broadcast-bar/episode-arrow-invitation.png') no-repeat right 6px;
                 padding-right:15px;
                 &:hover {
                     background-position:right -38px;
@@ -190,11 +190,11 @@ span.fake-link {
                 background-repeat: no-repeat;
                 background-position: left 50%;
                 &.facebook {
-                    background-image: url(image_path("facebook/facebook-icon.png"));
+                    background-image: image-url("facebook/facebook-icon.png");
                     color: $facebookBlue;
                 }
                 &.twitter {
-                    background-image: url(image_path("facebook/twitter-icon.png"));
+                    background-image: image-url("facebook/twitter-icon.png");
                     color: $twitterBlue;
                 }
             }
@@ -208,7 +208,7 @@ span.fake-link {
             min-height: 41px;
             margin: 15px 0 10px 0;
             padding: 10px 80px 10px 5px;
-            background: #f5f5f5 url(image_path("facebook/twitter-peek.png")) no-repeat right bottom;
+            background: #f5f5f5 image-url("facebook/twitter-peek.png") no-repeat right bottom;
 
             color: inherit;
             &:hover {
@@ -391,18 +391,18 @@ nav.section-nav {
             position: relative; // to make opacity happy in IE
             height:468px;
             &#hero-1 {
-              background-image:url(image_path("event-headers/hero-1.jpg"));
+              background-image:image-url("event-headers/hero-1.jpg");
             }
             &#hero-2 {
-              background-image:url(image_path("event-headers/hero-2.jpg"));
+              background-image:image-url("event-headers/hero-2.jpg");
               margin-top:-468px;
             }
             &#hero-3 {
-              background-image: url(image_path("event-headers/hero-3.jpg"));
+              background-image: image-url("event-headers/hero-3.jpg");
               margin-top:-468px;
             }
             &#hero-4 {
-              background-image: url(image_path("event-headers/hero-4.jpg"));
+              background-image: image-url("event-headers/hero-4.jpg");
               margin-top:-468px;
             }
             img {
@@ -419,7 +419,7 @@ nav.section-nav {
                 width: 523px;
                 text-align: left;
                 padding: 35px 0 0 37px;
-                background: url(image_path("event-headers/cff-logo.png")) no-repeat left top;
+                background: image-url("event-headers/cff-logo.png") no-repeat left top;
                 h3 {
                     color:#00b9f3;
                     font:34px/48px "Museo Slab", sans-serif;
@@ -454,7 +454,7 @@ nav.section-nav {
     a.active {
         position:relative;
         span {
-            background:url(image_path('icons/filter-arrow.png')) no-repeat left top;
+            background:image-url('icons/filter-arrow.png') no-repeat left top;
             position:absolute;
             display:block;
             width:19px;
@@ -483,9 +483,9 @@ h3.section-nav-header {
     }
 
     #getting-there {
-        background: url(image_path("cff-building.png")) no-repeat right 98%;
+        background: image-url("cff-building.png") no-repeat right 98%;
         h3 {
-            background: url(image_path("icons/forum-directions.png")) no-repeat left top;
+            background: image-url("icons/forum-directions.png") no-repeat left top;
             padding-left:46px;
         }
         p {
@@ -495,7 +495,7 @@ h3.section-nav-header {
 
     #community-partnerships {
         h3 {
-            background: url(image_path("icons/forum-partnerships.png")) no-repeat left top;
+            background: image-url("icons/forum-partnerships.png") no-repeat left top;
             height:26px;
             padding-left:46px;
         }

@@ -130,4 +130,3 @@ class scpr.Newsroom
             ul.append badge
 
         @el.html ul
-
