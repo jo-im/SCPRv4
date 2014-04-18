@@ -1,0 +1,89 @@
+<% add_to_page_title @vertical.title %>
+<% meta_tags(url: @vertical.public_url) %>
+<% content_for :body_class, "landing #{@vertical.slug}" %>
+
+<%= cache ["vertical", @vertical] do %>
+
+<% lead_article = @vertical.featured_articles.first %>
+
+<section class="headline">
+<% if lead_article %>
+    <h1 class="bound"><span><%= link_to lead_article.short_title, lead_article.public_path %></span></h1>
+<% end %>
+</section>
+
+<div class="welcome bound clearfix">
+
+    <% if lead_article %>
+        <%= render 'verticals/shared/lead', lead_article: lead_article %>
+    <% end %>
+
+    <div class="ataglance clearfix affiliated">
+        <section class="latest">
+            <header class="clearfix">
+            <% blog_articles = vertical_blog_articles %>
+
+            <% if @blog && blog_articles.present? %>
+                <h1>Latest from <%= @blog.name %></h1>
+                <a href="<%=@blog.public_path%>">Visit <span>the</span> blog</a>
+            <% end %>
+            </header>
+
+        <%= cache ["vertical", "latest-headlines", blog_articles] do %>
+            <%= render 'verticals/shared/headlines', articles: blog_articles %>
+        <% end %>
+
+        </section>
+
+    <% event = @events.first %>
+    <%= cache ["vertical", "latest-events", event] do %>
+        <section class="event">
+            <header class="clearfix">
+                <h1>Get Involved</h1>
+                <a href="<%= events_path %>">
+                    All <span>upcoming</span> events
+                </a>
+            </header>
+
+        <% if event.present? %>
+            <div class="details clearfix">
+                <div class="vitals">
+                    <h2><%= link_to event.headline, event.public_path %></h2>
+                    <h3><%= event.location_name %></h3>
+                    <h4><%= link_to 'More details', event.public_path %></h4>
+                </div>
+                <aside class="date">
+                    <em><%= event.starts_at.day %></em>
+                    <span><%= event.starts_at.strftime('%b') %></span>
+                </aside>
+            </div>
+        <% end %>
+
+        </section>
+    <% end %>
+
+        <aside class="crawford">
+            <header>
+                <h1><%= @vertical.title %> Events at KPCC</h1>
+            </header>
+            <p>KPCC hosts free events that open dialogue and deepen the understanding of vital issues affecting Southern California. <%= link_to 'See our in-studio events.', forum_events_path %></p>
+        </aside>
+
+    </div><!--/ .ataglance -->
+</div><!--/ .welcome -->
+
+
+<%= render 'verticals/shared/resources', vertical: @vertical, articles: Array(@vertical.featured_articles[1..4]) %>
+<%= render 'verticals/shared/lunchbox', vertical: @vertical, quote: @quote, events: @events %>
+
+<% articles = Array(vertical_articles) %>
+<%= cache ["vertical", "recent-coverage", @vertical, articles] do %>
+    <%= render 'shared/new/triptych', articles: Array(articles[0..2]), header: "Recent #{@vertical.title} Coverage" %>
+
+    <%= content_for?(:middle_ad) ? content_for(:middle_ad) : render('shared/new/kpcc_ipad_ad') %>
+
+    <%= render 'shared/new/quadrant', vertical: @vertical, articles: Array(articles[3..6]), header: "" %>
+    <%= render 'shared/new/waterfall', vertical: @vertical, articles: articles %>
+<% end %> <%# cache %>
+
+<% end %>

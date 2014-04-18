@@ -1,20 +1,6 @@
 require "spec_helper"
 
 describe Category do
-  describe '#category_articles' do
-    it 'orders by position' do
-      category = build :category
-      category.category_articles.to_sql.should match /order by position/i
-    end
-  end
-
-  describe '#quotes' do
-    it 'orders by created_at desc' do
-      category = build :category
-      category.quotes.to_sql.should match /order by created_at desc/i
-    end
-  end
-
   describe '::previews' do
     let(:category) { create :category_news }
     let(:other_category) { create :category_not_news }
@@ -64,27 +50,6 @@ describe Category do
       ts_retry(2) do
         Category.previews.first.category.should eq other_category
       end
-    end
-  end
-
-  describe '#featured_articles' do
-    it 'turns all of the items into articles' do
-      category = create :category_news
-      story = create :news_story
-      category_article = create :category_article, category: category, article: story
-
-      category.featured_articles.map(&:class).uniq.should eq [Article]
-    end
-
-    it "only gets published articles" do
-      category = create :category_news
-      story_published = create :news_story, :published
-      story_unpublished = create :news_story, :draft
-
-      category.category_articles.create(article: story_published)
-      category.category_articles.create(article: story_unpublished)
-
-      category.featured_articles.should eq [story_published].map(&:to_article)
     end
   end
 

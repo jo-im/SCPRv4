@@ -3,7 +3,7 @@ require 'spec_helper'
 describe Concern::Associations::QuoteAssociation do
   before :each do
     @post = create :test_class_post, :published
-    @quote = create :quote, :published, content: @post
+    @quote = create :quote, content: @post
     @quote.content(true).should eq @post
   end
 
@@ -32,4 +32,3 @@ describe Concern::Associations::QuoteAssociation do
     @post.quotes(true).should eq [@quote]
   end
 end
-

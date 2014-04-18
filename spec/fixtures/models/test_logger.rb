@@ -4,4 +4,3 @@ module TestClass
     logs_as_task
   end
 end
-

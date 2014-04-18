@@ -56,6 +56,7 @@ module ApplicationHelper
     end
   end
 
+
   #---------------------------
   # render_content takes a ContentBase object and a context, and renders
   # using the most specific version of that context it can find.
