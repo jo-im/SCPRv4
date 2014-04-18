@@ -2,7 +2,7 @@
 <% meta_tags(url: @vertical.public_url) %>
 <% content_for :body_class, "landing #{@vertical.slug}" %>
 
-<%= cache ["vertical", @vertical] do %>
+<%= cache ["vertical", @vertical, @category] do %>
 
 <% lead_article = @vertical.featured_articles.first %>
 
@@ -77,7 +77,7 @@
 <%= render 'verticals/shared/lunchbox', vertical: @vertical, quote: @quote, events: @events %>
 
 <% articles = Array(vertical_articles) %>
-<%= cache ["vertical", "recent-coverage", @vertical, articles] do %>
+<%= cache ["vertical", "recent-coverage", @vertical, @category, articles] do %>
     <%= render 'shared/new/triptych', articles: Array(articles[0..2]), header: "Recent #{@vertical.title} Coverage" %>
 
     <%= content_for?(:middle_ad) ? content_for(:middle_ad) : render('shared/new/kpcc_ipad_ad') %>
