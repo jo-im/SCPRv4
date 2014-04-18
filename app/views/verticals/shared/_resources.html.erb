@@ -9,7 +9,7 @@
         <nav>
             <ul class="clearfix">
 
-        <%= cache ["categories/show", "resources", 'v1', articles] do %>
+        <%= cache ["vertical", "resources", articles] do %>
             <% articles.each do |article| %>
                 <li>
                     <%= link_to(article.public_path) do %>

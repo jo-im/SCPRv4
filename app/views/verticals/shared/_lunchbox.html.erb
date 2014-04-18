@@ -50,7 +50,7 @@
         <div class="treats">
 
     <% article = vertical.featured_articles[5] %>
-    <%= cache ["categories/show", "interactive", 'v1', vertical, article] do %>
+    <%= cache ["vertical", "interactive", vertical, article] do %>
         <% if article %>
             <aside class="featured <%= vertical.featured_interactive_style %>">
                 <div>
@@ -64,7 +64,7 @@
 
             <div class="inbrief clearfix">
 
-        <%= cache ["categories/show", "quote", 'v1', quote] do %>
+        <%= cache ["vertical", "quote", quote] do %>
             <% if quote %>
                 <aside class="quote">
                     <blockquote>
@@ -89,7 +89,7 @@
                    <h1>Upcoming <%= vertical.title %> Events</h1>
 
                 <% events = events[1..3] %>
-                <%= cache ["categories/show", "upcoming-events", 'v1', events] do %>
+                <%= cache ["vertical", "upcoming-events", events] do %>
                     <ul>
 
                     <% Array(events).each do |event| %>
