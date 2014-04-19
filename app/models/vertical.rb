@@ -1,6 +1,6 @@
 class Vertical < ActiveRecord::Base
   outpost_model
-  has_secretary
+  has_secretary except: ["quote_id"] # Quote is versioned separately
 
   include Concern::Validations::SlugValidation
   include Concern::Callbacks::SphinxIndexCallback
