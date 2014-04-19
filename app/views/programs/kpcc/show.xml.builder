@@ -10,7 +10,7 @@ xml.rss(RSS_SPEC) do
     }
 
     xml.description strip_tags(@program.description)
-    xml << render_content(@segments_scoped.first(15), "feedxml", {
+    xml << render_content(@segments.first(15), "feedxml", {
       :context => @program.slug
     })
   end

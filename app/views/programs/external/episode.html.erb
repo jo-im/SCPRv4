@@ -1,5 +1,3 @@
-<!-- Episode Page (KPCC or External) -->
-
 <% add_to_page_title @episode.title %>
 
 <header class="episode">
@@ -25,9 +23,29 @@
 <section class="show-segments episode">
 <%= any_to_list? @segments, title: "Segments" do %>
   <%= cache ["segment-teasers", @segments.to_a] do %>
-    <%= render partial: '/programs/segment_teaser', collection: @segments.map(&:to_article), as: :article %>
+    <% @segments.each do |segment| %>
+      <div class="teaser cbase">
+        <div class="row-fluid">
+          <div class="span18">
+            <div class="info">
+              <h3><%= link_to segment.title, segment.external_url  %></h3>
+              <span class="byline">
+                <%= timestamp(segment.published_at) %> <span class="pipe">|</span> <%= render_byline segment %>
+              </span>
+            </div>
+
+            <%= segment.teaser.html_safe %>
+          </div> <!-- span12/9 -->
+          <div class="span6">
+            <div class="interact">
+              <%= content_widget "primary_audio", segment, context: segment.external_program.slug %>
+            </div>
+          </div>
+        </div>
+      </div>
+    <% end %>
   <% end %>
 <% end %>
 </section>
 
-<%= render "programs/archive_select", program: @program %>
+<%= render "programs/shared/archive_select", program: @program %>
