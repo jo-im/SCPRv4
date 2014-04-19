@@ -8,10 +8,10 @@
   <%= f.input :body, label: "Teaser", input_html: { class: "tiny" }, wrapper_html: { class: "field-counter", data: { target: 145, fuzziness: 20 } } %>
 <% end %>
 
-<%= form_block "Content" do %>
+<%= form_block "Segments" do %>
   <div class="pull-right">
     <%= modal_toggle title: "Info", id: "segment-aggregator-help-modal" do %>
-      This content builder shows content of ANY publishing status (except "Killed"), ordered by the LAST UPDATED timestamp (descending).
+      This content builder only shows Segments, of ANY publishing status (except "Killed"), ordered by the LAST UPDATED timestamp (descending).
     <% end %>
   </div>
 
@@ -22,13 +22,13 @@
     <script>
       aggregator = new outpost.Aggregator(
         "#aggregator", "#rundowns_json",
-        <%= render_json('api/private/v2/articles/collection', articles: record.articles) %>,
+        <%= render_json('api/private/v2/articles/collection', articles: record.segments.map(&:to_article)) %>,
         {
           apiType: "private",
           params: {
             limit: 20,
             token: "<%= Rails.application.config.api['kpcc']['private']['api_token'] %>",
-            types: "news,blogs,segments",
+            types: "segments",
             order: "updated_at", // Don't use published_at - we're finding unpublished content too.
             sort_mode: "desc",
             with: {

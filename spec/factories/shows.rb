@@ -36,6 +36,6 @@ FactoryGirl.define do
 
   factory :show_rundown do
     episode { |r| r.association(:show_episode) }
-    content { |r| r.association(:show_segment) }
+    segment { |r| r.association(:show_segment) }
   end
 end

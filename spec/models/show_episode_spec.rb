@@ -64,11 +64,11 @@ describe ShowEpisode do
     it "uses simple_json for the join model" do
       episode = create :show_episode
       segment = create :show_segment
-      rundown = episode.rundowns.build(content: segment, position: 0)
+      rundown = episode.rundowns.build(segment: segment, position: 0)
       rundown.save!
 
       episode.rundowns_json.should eq [rundown.simple_json].to_json
-      episode.content.should eq [segment]
+      episode.segments.should eq [segment]
     end
   end
 
@@ -82,25 +82,25 @@ describe ShowEpisode do
 
     it "adds them ordered by position" do
       episode.rundowns_json = "[{ \"id\": \"#{segment2.obj_key}\", \"position\": 1 }, {\"id\": \"#{segment1.obj_key}\", \"position\": 0 }]"
-      episode.content.should eq [segment1, segment2]
+      episode.segments.should eq [segment1, segment2]
     end
 
     it "parses the json and sets the content" do
-      episode.content.should be_empty
+      episode.segments.should be_empty
       episode.rundowns_json = "[{\"id\": \"#{segment1.obj_key}\", \"position\": 0 }, { \"id\": \"#{segment2.obj_key}\", \"position\": 1 }]"
-      episode.content.should eq [segment1, segment2]
+      episode.segments.should eq [segment1, segment2]
     end
 
     it 'does not do anything if json is an empty string' do
-      episode.content.should be_empty
+      episode.segments.should be_empty
       episode.rundowns_json = "[{\"id\": \"#{segment1.obj_key}\", \"position\": 0 }, { \"id\": \"#{segment2.obj_key}\", \"position\": 1 }]"
-      episode.content.should_not be_empty
+      episode.segments.should_not be_empty
 
       episode.rundowns_json = ""
-      episode.content.should_not be_empty
+      episode.segments.should_not be_empty
 
       episode.rundowns_json = "[]"
-      episode.content.should be_empty
+      episode.segments.should be_empty
     end
 
     context "when no content has changed" do
