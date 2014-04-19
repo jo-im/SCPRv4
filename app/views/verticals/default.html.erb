@@ -74,7 +74,7 @@
 
 
 <%= render 'verticals/shared/resources', vertical: @vertical, articles: Array(@vertical.featured_articles[1..4]) %>
-<%= render 'verticals/shared/lunchbox', vertical: @vertical, quote: @quote, events: @events %>
+<%= render 'verticals/shared/lunchbox', vertical: @vertical, quote: @quote, issues: @vertical.issues, featured_interactive: @vertical.featured_articles[5], events: @events[1..3] %>
 
 <% articles = Array(vertical_articles) %>
 <%= cache ["vertical", "recent-coverage", @vertical, @category, articles] do %>
