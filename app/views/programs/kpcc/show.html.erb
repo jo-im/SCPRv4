@@ -1,6 +1,6 @@
-<% if @kpcc_program.display_episodes? %>
+<% if @program.display_episodes? %>
   <section class="show-feature">
-    <% if current_episode = @kpcc_program.episodes.published.first %>
+    <% if current_episode = @program.episodes.published.first %>
       <div class="current-episode">
         <div class="episode">
           <div class="row-fluid">
@@ -31,7 +31,7 @@
       </div>
     <% end %>
 
-    <% if upcoming = @kpcc_program.episodes.upcoming.first %>
+    <% if upcoming = @program.episodes.upcoming.first %>
       <div class="upcoming-episode">
         <h3><b>Coming Up:</b> <%= upcoming.headline %></h3>
         <p><%= upcoming.body %></p>
@@ -39,18 +39,18 @@
     <% end %>
   </section>
 
-  <%= render "programs/shared/archive_select", program: @kpcc_program %>
+  <%= render "programs/shared/archive_select", program: @program %>
   <% if flash[:alert] %>
     <h4 style="color:#f00;"><%= flash[:alert] %></h4>
   <% end %>
 <% end %>
 
-<% if @kpcc_program.display_segments? %>
+<% if @program.display_segments? %>
   <% nav = paginate @segments, params: { anchor: "archive"} %>
 
   <section class="show-segments">
     <%= any_to_list? @segments, title: "Segments" do %>
-      <h2>Recently on <%= @kpcc_program.title %></h2>
+      <h2>Recently on <%= @program.title %></h2>
       <%= nav if @segments.current_page > 1 %>
 
       <%= cache ["segment-teasers", @segments.to_a] do %>
@@ -61,12 +61,12 @@
     <% end %>
   </section>
 
-<% elsif @kpcc_program.display_episodes? %>
+<% elsif @program.display_episodes? %>
   <% nav = paginate @episodes, params: { anchor: "archive"} %>
 
   <section class="show-episodes">
     <%= any_to_list? @episodes, title: "Episodes" do %>
-      <h2>Recently on <%= @kpcc_program.title %></h2>
+      <h2>Recently on <%= @program.title %></h2>
       <%= nav if @episodes.current_page > 1 %>
 
       <%= cache ["episode-teasers", @episodes.to_a] do %>

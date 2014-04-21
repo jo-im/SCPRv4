@@ -27,9 +27,8 @@ class ProgramsController < ApplicationController
           if @program.display_episodes? && (@current_episode = @episodes.first)
             @episodes = @episodes.where.not(id: @current_episode.id)
 
-            if segments = @current_episode.segments.published.to_a
-              @segments = @segments.where.not(id: segments.map(&:id))
-            end
+            segments = @current_episode.segments.published.to_a
+            @segments = @segments.where.not(id: segments.map(&:id))
           end
 
           @segments = @segments.page(params[:page]).per(10)
@@ -66,6 +65,8 @@ class ProgramsController < ApplicationController
     if ( request.env['PATH_INFO'] =~ /\/\z/ ? request.env['PATH_INFO'] : "#{request.env['PATH_INFO']}/" ) != @segment.public_path
       redirect_to @segment.public_path and return
     end
+
+    render 'programs/kpcc/segment' and return
   end
 
 
