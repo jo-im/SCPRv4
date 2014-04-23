@@ -1,7 +1,5 @@
 source 'https://rubygems.org'
 
-gem 'actionpack-action_caching'
-
 ## Core
 gem 'rails', "~> 4.0.0"
 gem 'mysql2', '~> 0.3.14'
