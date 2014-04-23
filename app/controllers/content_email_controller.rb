@@ -28,6 +28,6 @@ class ContentEmailController < ApplicationController
 
   def form_params
     params.require(:content_email).permit(
-      :to_email, :from_name, :from_email, :body, :lname)
+      :to_email, :from_name, :from_email, :body)
   end
 end

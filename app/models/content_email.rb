@@ -13,7 +13,6 @@ class ContentEmail
     :from_email,
     :to_email,
     :body,
-    :lname,
     :content_key
 
 
@@ -26,7 +25,6 @@ class ContentEmail
 
   validates :content_key, presence: true
   validate :content_is_allowed
-  validates :lname, length: { maximum: 0 }
 
   #---------------
 
@@ -40,7 +38,6 @@ class ContentEmail
     @from_email   = attributes[:from_email]
     @from_name    = attributes[:from_name]
     @body         = attributes[:body]
-    @lname        = attributes[:lname] # robo-diversion
   end
 
   #---------------
