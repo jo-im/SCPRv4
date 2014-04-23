@@ -12,7 +12,7 @@ class ContentEmailController < ApplicationController
     @message.content_key = @content.obj_key
 
     if verify_recaptcha(
-      :model => @message,
+      :model   => @message,
       :message => "Verification failed, try again."
     ) && @message.save
       render :success
