@@ -11,7 +11,10 @@ class ContentEmailController < ApplicationController
     @message = ContentEmail.new(form_params)
     @message.content_key = @content.obj_key
 
-    if verify_recaptcha(model: @message, message: "Invalid reCAPTCHA!") && @message.save
+    if verify_recaptcha(
+      :model => @message,
+      :message => "Verification failed, try again."
+    ) && @message.save
       render :success
     else
       render :new
