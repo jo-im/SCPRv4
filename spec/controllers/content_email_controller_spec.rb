@@ -54,22 +54,26 @@ describe ContentEmailController do
             :body         => "Wat Wat"
           }
       end
+      context "invalid recaptcha" do
+        before :each do
+          controller.stub(:verify_recaptcha) { false }
+        end
+        it "renders the success template" do
+          response.should render_template "success"
+        end
 
-      it "renders the success template" do
-        response.should render_template "success"
-      end
+        it "initializes a new ContentEmail with the form params" do
+          message = assigns(:message)
 
-      it "initializes a new ContentEmail with the form params" do
-        message = assigns(:message)
+          message.from_name.should eq "Bryan"
+          message.from_email.should eq "bricker@scpr.org"
+          message.to_email.should eq "bricker@kpcc.org"
+          message.body.should eq "Wat Wat"
+        end
 
-        message.from_name.should eq "Bryan"
-        message.from_email.should eq "bricker@scpr.org"
-        message.to_email.should eq "bricker@kpcc.org"
-        message.body.should eq "Wat Wat"
-      end
-
-      it "sets @message.content to @content" do
-        assigns(:message).content_key.should eq content.obj_key
+        it "sets @message.content to @content" do
+          assigns(:message).content_key.should eq content.obj_key
+        end
       end
     end
 
