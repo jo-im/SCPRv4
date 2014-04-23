@@ -1,0 +1,17 @@
+<ul>
+<% Array(articles).each do |article| %>
+    <li>
+        <a href="<%= article.public_path %>" class="clearfix">
+            <div>
+                <mark><%= article.short_title %></mark>
+                <%= smart_date_js article.public_datetime, tag: "em", "data-window" => "8h", "data-relative" => "2h" %>&nbsp;
+                <span><%= article.byline %></span>
+            </div>
+            <figure class="ratio">
+                <div class="fill"></div>
+                <b class="img-contain"><%= image_tag(article.asset.lsquare.url, alt: '' ) %></b>
+            </figure>
+        </a>
+    </li>
+<% end %>
+</ul>

@@ -240,6 +240,7 @@ Scprv4::Application.routes.draw do
     resources :press_releases, concerns: [:search]
     resources :abstracts, concerns: [:search]
     resources :editions, concerns: [:search]
+    resources :verticals
 
     resources :homepages, concerns: [:preview, :search]
     resources :pij_queries, concerns: [:preview, :search]

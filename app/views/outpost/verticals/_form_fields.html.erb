@@ -1,0 +1,119 @@
+<%= form_block "Landing Page Featured Content" do %>
+  <div class="alert alert-info">
+    Choose the <strong>SIX Featured Articles</strong> for the Landing Page. Click "Help: Verticals" for more information.
+  </div>
+
+  <div class="pull-right">
+
+  <%= modal_toggle title: "Help: Verticals", id: "verticals-help-modal" do %>
+    <h4>Featured Content</h4>
+    This aggregator will populate the featured content on a Vertical page.
+    The order of the articles determines where in the layout they show up.
+    <br /><br />
+
+    <strong>In Order:</strong>
+    <ul>
+      <li><strong>1.</strong> The top article on the page.</li>
+      <li><strong>2, 3, 4, 5.</strong> The "Resources" section.</li>
+      <li><strong>6.</strong> Featured Interactive</li>
+    </ul>
+    <h4>Featured Interactive Style</h4>
+    To choose a background image for the Featured Interactive article (Article #6),
+    select an image style from the Background Image Style dropdown.
+  <% end %>
+
+  </div>
+
+  <h4>Featured Interactive Style</h4>
+  <%= f.input :featured_interactive_style_id, collection: Vertical::FEATURED_INTERACTIVE_STYLES.invert, label: "Background Image Style" %>
+
+  <div id="featured_articles_aggregator" class="aggregator"></div>
+  <%= f.input :vertical_articles_json, as: :hidden, input_html: { id: "vertical_articles_json" } %>
+
+  <% content_for :footer do %>
+    <script>
+      new outpost.Aggregator(
+        "#featured_articles_aggregator", "#vertical_articles_json",
+        <%= render_json("api/private/v2/articles/collection", articles: record.vertical_articles.includes(:article).map {|a| a.article.to_article}) %>,
+        {
+          apiType: "private",
+          view: {
+            dropMaxLimit: 6,
+            dropMinLimit: 6,
+            dropRejectOverflow: false
+          },
+          params: {
+            limit: 20,
+            types: 'news,blogs,segments,shells,events,queries',
+            token: "<%= Rails.application.config.api['kpcc']['private']['api_token'] %>",
+            order: "public_datetime",
+            sort_mode: "desc",
+            with: { is_live: "1" }
+          }
+        }
+      );
+    </script>
+  <% end %>
+<% end %>
+
+
+<%= form_block "Details" do %>
+  <%= f.input :title, input_html: { class: "sluggable" } %>
+  <%= f.input :slug %>
+  <%= f.input :description, label: "Tagline" %>
+  <%= f.association :category %>
+<% end %>
+
+
+<%= form_block "Associations" do %>
+  <%= f.association :blog %>
+  <%= f.association :issues %>
+  <%= f.association :reporters, label: "Reporters" %>
+<% end %>
+
+
+<%= form_block "Quote" do %>
+  <div class="alert alert-info">
+    This Quote is <strong>optional</strong> — all of the fields can be left blank, and no quote will show on the Vertical page. If you want to show a quote, you must fill in at least the "Text" field.
+  </div>
+
+  <%= f.simple_fields_for :quote, record.quote || record.build_quote do |qf| %>
+    <%= qf.input :source_name, hint: "The source of the quote. Example: 'Barack Obama'" %>
+    <%= qf.input :source_context, hint: "The context in which the quote was delivered. Example: 'Press Meeting, June 10'" %>
+    <%= qf.input :text, hint: "The actual text of the quote.", input_html: { class: "tiny" } %>
+    <%= qf.input :_destroy, as: :boolean, label: "Clear this Quote" %>
+
+    <div class="alert alert-info">
+      Choose the source article for the <strong>Featured Quote</strong>, if applicable.
+    </div>
+
+    <%= qf.full_errors :content %>
+    <div id="aggregator_quote_content" class="aggregator short"></div>
+    <%= qf.input :content_json, as: :hidden, input_html: { id: "quote_content_json" } %>
+
+    <% content_for :footer do %>
+      <script>
+        new outpost.Aggregator(
+          "#aggregator_quote_content", "#quote_content_json",
+          <%= render_json("api/private/v2/articles/collection", articles: Array(qf.object.article)) %>,
+          {
+            apiType: "private",
+            view : {
+              dropMaxLimit: 1,
+              dropRejectOverflow: true,
+              active: "search"
+            },
+            params: {
+              limit: 20,
+              types: 'news,blogs,segments,shells,events',
+              token: "<%= Rails.application.config.api['kpcc']['private']['api_token'] %>",
+              order: "public_datetime",
+              sort_mode: "desc",
+              with: { is_live: "1" }
+            }
+          }
+        );
+      </script>
+    <% end %>
+  <% end %>
+<% end %>

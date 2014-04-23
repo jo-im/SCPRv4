@@ -1,0 +1,112 @@
+<div class="lunchbox">
+    <div class="inner bound clearfix">
+
+<%= cache ["categories/show", "issues", 'v1', issues] do %>
+    <% if issue = issues.first %>
+        <section class="issues">
+            <header>
+                <h1>Issues We're Tracking</h1>
+                <h2><%= link_to 'See all issues', issues_path %></h2>
+            </header>
+
+            <div>
+                <header class="special">
+                    <h1><%= issue.title %></h1>
+                    <h2 class="clearfix">
+                        <mark>Special coverage from KPCC</mark>
+                        <%= link_to issue.public_path do %>
+                            See all <span><%= issue.title  %></span>
+                        <% end %>
+                    </h2>
+                </header>
+                <nav>
+                    <ul>
+                    <%= render 'verticals/shared/issue_list', articles: issue.articles.first(2) %>
+                    </ul>
+                </nav>
+            </div>
+
+        <% Array(issues[1..2]).each do |issue| %>
+            <div>
+                <header class="slim clearfix">
+                    <h1><%= issue.title %></h1>
+                    <h2><%= link_to issue.public_path do %>See all <span><%= issue.title %></span><% end %></h2>
+                </header>
+                <nav>
+                    <ul>
+                    <%= render 'verticals/shared/issue_list', articles: issue.articles.first(2) %>
+                    </ul>
+                </nav>
+            </div>
+        <% end %>
+
+        </section><!--/ .issues -->
+    <% end %> <%# issues? %>
+<% end %> <%# cache %>
+
+
+        <div class="treats">
+
+    <%= cache ["vertical", "interactive", vertical, featured_interactive] do %>
+        <% if featured_interactive %>
+            <aside class="featured <%= vertical.featured_interactive_style %>">
+                <div>
+                    <h1>Featured Interactive</h1>
+                    <h2><%= link_to featured_interactive.short_title, featured_interactive.public_path %></h2>
+                    <h3><%= featured_interactive.byline %></h3>
+                </div>
+            </aside>
+        <% end %>
+    <% end %>
+
+            <div class="inbrief clearfix">
+
+        <%= cache ["vertical", "quote", quote] do %>
+            <% if quote %>
+                <aside class="quote">
+                    <blockquote>
+                        <p><%= quote.text %></p>
+                            <cite>
+                                <mark><%= quote.source_name %></mark>
+                                <span><%= quote.source_context %></span>
+                            </cite>
+                    </blockquote>
+                    <footer>
+
+                    <% if quote.article %>
+                        <%= link_to quote.article.short_title, quote.article.public_path, title: "Read this quote's source article" %>
+                    <% end %>
+
+                    </footer>
+                </aside>
+            <% end %>
+        <% end %>
+
+                <aside class="events">
+                   <h1>Upcoming <%= vertical.title %> Events</h1>
+
+                <%= cache ["vertical", "upcoming-events", events] do %>
+                    <ul>
+
+                    <% Array(events).each do |event| %>
+                        <li>
+                            <figure class="clearfix">
+                                <div class="date">
+                                    <b><%= event.starts_at.day %></b>
+                                    <span><mark><%= event.starts_at.strftime('%b') %></mark> <%= event.starts_at.strftime('%Y') %></span>
+                                </div>
+                                <figcaption>
+                                    <b><%= event.headline %></b>
+                                    <%= link_to 'More information', event.public_path %>
+                                </figcaption>
+                            </figure>
+                        </li>
+                    <% end %>
+
+                    </ul>
+                <% end %>
+                </aside>
+            </div>
+        </div><!--/ .bites -->
+    </div> <!--/ .inner.bound -->
+</div><!--/ .lunchbox -->

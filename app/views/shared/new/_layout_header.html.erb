@@ -1,14 +1,14 @@
 <header class="masthead">
     <div class="inner bound">
 
-    <% if @category %>
+    <% if context = @vertical || @category %>
         <section class="titling clearfix">
             <div class="brand">
-              <h1><%= link_to @category.title, @category.public_path %></h1>
-              <h2><%= @category.description %></h2>
+                <h1><%= link_to context.title, context.public_path %></h1>
+                <h2><%= context.description %></h2>
             </div>
 
-            <%= safe_render("verticals/#{@category.slug.underscore}/masthead_ad") %>
+            <%= content_for :masthead_ad %>
         </section><!--/ .titling -->
     <% end %>
 

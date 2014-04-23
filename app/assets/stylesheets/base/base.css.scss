@@ -416,7 +416,7 @@ input[type=submit].btn {
 
 // Utility
 .divider {
-    background:url(image_path('mega-divider.png')) repeat-y right top;
+    background:image-url('mega-divider.png') repeat-y right top;
     margin-right:-15px;
 }
 

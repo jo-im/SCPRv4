@@ -12,12 +12,12 @@ class ContentShell < ActiveRecord::Base
   include Concern::Associations::IssueAssociation
   include Concern::Associations::FeatureAssociation
   include Concern::Associations::CategoryAssociation
-  include Concern::Associations::CategoryArticleAssociation
   include Concern::Associations::HomepageContentAssociation
   include Concern::Associations::FeaturedCommentAssociation
   include Concern::Associations::QuoteAssociation
   include Concern::Associations::MissedItContentAssociation
   include Concern::Associations::EditionsAssociation
+  include Concern::Associations::VerticalArticleAssociation
   include Concern::Validations::PublishedAtValidation
   include Concern::Callbacks::CacheExpirationCallback
   include Concern::Callbacks::RedisPublishCallback

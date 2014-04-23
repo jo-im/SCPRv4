@@ -2,8 +2,6 @@
 # Could definitely be faster and more useful.
 
 shared_examples_for "resource controller" do
-  render_views
-
   before :each do
     @resource_properties = Array(resource)
     @resource = @resource_properties.first
