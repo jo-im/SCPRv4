@@ -12,10 +12,10 @@ scpt.parentNode.insertBefore(elem, scpt);
 })();
 
 _qevents.push(
-{qacct:"p-_ZNT1e57PQPC3",labels:"_fp.event.<%=tracking_page_title%>,_fp.customer.INSERT+CUSTOMER+TYPE,_fp.pcat.INSERT+PRODUCT+CATEGORY",orderid:"INSERT+ORDER+ID",revenue:"INSERT+REVENUE"}
+{qacct:"p-_ZNT1e57PQPC3",labels:"_fp.event.<%=page_title%>"}
 );
 </script>
 <noscript>
-<img src="//pixel.quantserve.com/pixel/p-_ZNT1e57PQPC3.gif?labels=_fp.event.<%=tracking_page_title%>,_fp.customer.INSERT+CUSTOMER+TYPE,_fp.pcat.INSERT+PRODUCT+CATEGORY&orderid=INSERT+ORDER+ID&revenue=INSERT+REVENUE" style="display: none;" border="0" height="1" width="1" alt="Quantcast"/>
+<img src="//pixel.quantserve.com/pixel/p-_ZNT1e57PQPC3.gif?labels=_fp.event.<%=page_title.tr!(" ", "+")%>" style="display: none;" border="0" height="1" width="1" alt="Quantcast"/>
 </noscript>
 <!-- End Quantcast tag -->
