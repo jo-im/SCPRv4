@@ -42,10 +42,12 @@ describe ContentEmailController do
 
   describe "POST /create" do
     let(:content)  { create :news_story }
+
     context "valid recaptcha" do
       before :each do
         controller.stub(:verify_recaptcha) { true }
       end
+
       context "valid message" do
         before :each do
           post :create,
@@ -57,6 +59,7 @@ describe ContentEmailController do
               :body         => "Wat Wat"
             }
         end
+
         it "renders the success template" do
           response.should render_template "success"
         end
@@ -92,6 +95,7 @@ describe ContentEmailController do
               :body         => "Wat Wat"
             }
         end
+
         it "renders the success template" do
           response.should render_template 'new'
         end
