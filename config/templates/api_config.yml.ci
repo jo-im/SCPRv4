@@ -62,6 +62,10 @@ test:
   postmark:
     api_key: xxx
 
+  recaptcha:
+    public_key: xxx
+    private_key: xxx
+
   publish2:
     user: xxx
     pass: xxx
