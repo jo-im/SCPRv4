@@ -274,6 +274,7 @@ GEM
       ffi (>= 0.5.0)
     rb-kqueue (0.2.2)
       ffi (>= 0.5.0)
+    recaptcha (0.3.6)
     redis (3.0.7)
     redis-activesupport (4.0.0)
       activesupport (~> 4)
@@ -427,6 +428,7 @@ DEPENDENCIES
   pry
   rails (~> 4.0.0)
   rb-fsevent (~> 0.9)
+  recaptcha
   redis-content-store!
   resque (~> 1.26.pre.0)
   rspec-rails (~> 2.14.0)

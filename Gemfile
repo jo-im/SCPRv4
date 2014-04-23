@@ -49,6 +49,8 @@ gem 'embeditor-rails', github: 'SCPR/embeditor-rails'
 gem "carrierwave", "~> 0.6"
 gem "ruby-mp3info", '~> 0.8.2', require: 'mp3info'
 gem "ice_cube", "~> 0.11.0"
+gem "recaptcha", require: "recaptcha/rails"
+
 
 
 ## HTTP
