@@ -172,7 +172,7 @@ $(document).ready(function(){
   }, 1000);
 
   // Load pledge pushdown
-  if (scpr.Cookie.get('adClosed') == null) {
+  if (scpr.Cookie.get('adClosed01') == null) {
     var visualCampaign = new scpr.VisualCampaign({
       endpoint: "http://audiobox.scprdev.org/api/v1/visual_campaigns",
       key: "pledge",
@@ -182,7 +182,7 @@ $(document).ready(function(){
         $("#pledge-hide").on({
           click: function(evt){
             $('#pledge-pushdown').hide();
-            scpr.Cookie.set("adClosed", "1", 60*60*24)
+            scpr.Cookie.set("adClosed01", "1", 60*60*24)
           }
         });
       }
