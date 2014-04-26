@@ -1,6 +1,6 @@
 class scpr.Cookie
     @set: (name, value, expireSeconds) ->
-        if (expireSeconds == null)
+        if expireSeconds
             expiry = new Date() + expireSeconds
             expires = "; expires=" + expiry.toGMTString()
         else
