@@ -4,6 +4,8 @@ class scpr.Cookie
             expiry = new Date() + expireSeconds
             expires = "; expires=" + expiry.toGMTString()
         else
+            # Without an expires date set, the cookie will
+            # expire at the end of the session.
             expires = ""
 
         document.cookie = "#{name}=#{value}#{expires};path=/"
