@@ -1,12 +1,54 @@
 class scpr.VisualCampaign
-    constructor: (@options={}) ->
-        return
+    @ENDPOINT       = "http://adhost.scpr.org:8080/api/v1/visual_campaigns"
+    @HIDE_SELECTOR  = ".campaign-hide"
 
-    fetch: ->
+    @queue = {}
+
+    # Enqueue a visual campaign to be included in a batch-fetch
+    @enqueue: (key, element) ->
+        @queue[key] = element
+
+    # Fetch all campaigns in the queue.
+    @fetchQueue: ->
+        # No need to do anything if nothing is in the queue
+        return if _.isEmpty(@queue)
+
         $.ajax
-            type        : "GET"
-            url         : @options.endpoint + "/" + @options.key
-            dataType    : "json"
+            type    : "GET"
+            url     : @ENDPOINT
+            data:
+                keys: _.keys(@queue).join(",")
 
             success: (data, textStatus, jqXHR) =>
-                @options.success(data['visual_campaign']['markup'])
+                console.log data
+                for key, element of @queue
+                    attributes = data["visual_campaigns"][key]
+                    continue unless attributes
+                    continue if scpr.Cookie.get(attributes['cookie_key'])
+
+                    campaign = new scpr.VisualCampaign(attributes, element)
+                    campaign.loadMarkup()
+                    $(@HIDE_SELECTOR, element).on "click", campaign.hide
+
+
+
+    constructor: (attributes={}, @element) ->
+        @key                = attributes['key']
+        @markup             = attributes['markup']
+        @cookie_key         = attributes['cookie_key']
+        @cookie_ttl_hours   = attributes['cookie_ttl_hours']
+
+
+    # Load the campaign's markup into the element
+    loadMarkup: ->
+        @element.append(@markup)
+
+
+    # Hide the element and set a cookie for the campaign
+    hide: ->
+        @element.hide()
+
+        scpr.Cookie.set
+            key           : @cookie_key,
+            value         : "1"
+            expireSeconds : @cookie_ttl_hours*60*60
