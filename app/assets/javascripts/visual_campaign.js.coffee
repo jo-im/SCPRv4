@@ -1,5 +1,5 @@
 class scpr.VisualCampaign
-    @ENDPOINT       = "http://adhost.scpr.org:8080/api/v1/visual_campaigns"
+    @ENDPOINT       = "http://audiobox.scprdev.org/api/v1/visual_campaigns"
     @HIDE_SELECTOR  = ".campaign-hide"
 
     @queue = {}
@@ -20,11 +20,12 @@ class scpr.VisualCampaign
                 keys: _.keys(@queue).join(",")
 
             success: (data, textStatus, jqXHR) =>
-                console.log data
                 for key, element of @queue
                     attributes = data["visual_campaigns"][key]
                     continue unless attributes
-                    continue if scpr.Cookie.get(attributes['cookie_key'])
+
+                    cookie_key = attributes['cookie_key']
+                    continue if cookie_key and scpr.Cookie.get(cookie_key)
 
                     campaign = new scpr.VisualCampaign(attributes, element)
                     campaign.loadMarkup()
