@@ -3,7 +3,8 @@
 <body>
 
 <div class="viewport">
-  <div id="pledge-pushdown"></div>
+  <div id="global-pushdown"></div>
+  <div id="homepage-pushdown"></div>
 
   <!-- MASTHEAD-->
   <%= render "shared/masthead/layout_header" %>
@@ -171,25 +172,8 @@ $(document).ready(function(){
     }
   }, 1000);
 
-  // Load pledge pushdown
-  if (scpr.Cookie.get('adClosed01') == null) {
-    var visualCampaign = new scpr.VisualCampaign({
-      endpoint: "http://audiobox.scprdev.org/api/v1/visual_campaigns",
-      key: "pledge",
-      success: function(markup) {
-        $("#pledge-pushdown").prepend(markup)
-
-        $("#pledge-hide").on({
-          click: function(evt){
-            $('#pledge-pushdown').hide();
-            scpr.Cookie.set("adClosed01", "1", 60*60*24)
-          }
-        });
-      }
-    });
-
-    visualCampaign.fetch();
-  }
+  scpr.VisualCampaign.enqueue('pushdown-global', $('#global-pushdown'));
+  scpr.VisualCampaign.enqueue('pushdown-homepage', $('#homepage-pushdown'));
 });
 </script>
 
