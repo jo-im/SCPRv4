@@ -2,6 +2,8 @@
 
 <body>
 <div class="viewport">
+  <div id="pledge-pushdown"></div>
+
   <%= render "shared/masthead/layout_header" %>
 
   <div id="main" class="container-fluid main-content">
@@ -34,6 +36,34 @@
   </div> <!-- container fluid main -->
 
   <%= render "shared/footer/layout_footer" %>
+
+  <% content_for :footer do %>
+  <script type="text/javascript">
+  $(document).ready(function(){
+
+    // Load pledge pushdown
+    if (scpr.Cookie.get('adClosed01') == null) {
+      var visualCampaign = new scpr.VisualCampaign({
+        endpoint: "http://audiobox.scprdev.org/api/v1/visual_campaigns",
+        key: "pledge",
+        success: function(markup) {
+          $("#pledge-pushdown").prepend(markup)
+
+          $("#pledge-hide").on({
+            click: function(evt){
+              $('#pledge-pushdown').hide();
+              scpr.Cookie.set("adClosed01", "1", 60*60*24)
+            }
+          });
+        }
+      });
+
+      visualCampaign.fetch();
+    }
+  });
+  </script>
+  <% end %>
+
 </div> <!-- viewport -->
 
 <%= render "shared/footer/document_footer" %>
