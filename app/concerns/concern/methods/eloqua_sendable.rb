@@ -133,6 +133,7 @@ module Concern
                 :type           => "CampaignEmail",
                 :id             => "-990",
                 :emailId        => email.id,
+                :name           => "E-mail",
                 :sendTimePeriod => "sendAllEmailAtOnce",
                 :position       => {
                   :type => "Position",
