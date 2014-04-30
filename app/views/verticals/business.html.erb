@@ -42,7 +42,7 @@
 
         <% articles = @marketplace_articles.first(2) %>
         <%= cache ["vertical", "marketplace-articles", articles] do %>
-            <%= render 'verticals/shared/headlines', articles: articles %>
+            <%= raw Rails.cache.read("views/business/marketplace") %>
         <% end %>
 
         </section>
