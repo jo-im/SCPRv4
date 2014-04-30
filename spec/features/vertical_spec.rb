@@ -19,33 +19,13 @@ describe "Vertical page" do
     it "shows 2 latest marketplace articles" do
       vertical = create :vertical, slug: "business"
 
-      story1 = create :news_story, :published,
-        :source => "marketplace",
-        :published_at => 1.week.ago,
-        :short_headline => "xxMarketplace1xx"
-
-      story2 = create :news_story, :published,
-        :source => "marketplace",
-        :published_at => 1.day.ago,
-        :short_headline => "xxMarketplace2xx"
-
-      story3 = create :news_story, :published,
-        :source => "marketplace",
-        :published_at => 1.hour.ago,
-        :short_headline => "xxMarketplace3xx"
-
-      story4 = create :news_story, :published,
-        :source => "npr",
-        :published_at => 1.minute.ago,
-        :short_headline => "xxMarketplace4xx"
+      Rails.cache.write("views/business/marketplace", "<mark>Drought puts California rice in a sticky situation</mark><mark>PODCAST: Winter came for the GDP</mark>")
 
       visit vertical.public_path
 
       within('.affiliated .affiliate') do
-        page.should_not have_content 'xxMarketplace1xx'
-        page.should_not have_content 'xxMarketplace4xx'
-        page.should have_content 'xxMarketplace2xx'
-        page.should have_content 'xxMarketplace3xx'
+        page.should have_content 'Drought puts California rice in a sticky situation'
+        page.should have_content 'PODCAST: Winter came for the GDP'
       end
     end
   end
