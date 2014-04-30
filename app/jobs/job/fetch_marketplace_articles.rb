@@ -35,5 +35,5 @@ module Job
 
       #---------------
     end
-  end # MostViewed
+  end # FetchMarketplaceArticles
 end # Job
