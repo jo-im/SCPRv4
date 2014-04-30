@@ -13,7 +13,6 @@ module Job
 
         log "#{feed.items.size} marketplace stories found"
 
-
         if !feed || feed.items.empty?
           log "Feed is empty. Aborting."
           return false
@@ -32,8 +31,6 @@ module Job
           log "Wrote Marketplace Story #{article.link} to the cache"
         end
       end
-
-      #---------------
     end
   end # FetchMarketplaceArticles
 end # Job
