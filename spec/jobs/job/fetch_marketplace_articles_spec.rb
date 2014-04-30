@@ -8,15 +8,19 @@ describe Job::FetchMarketplaceArticles do
     stub_request(:get, "http://www.marketplace.org/latest-stories/long-feed.xml")
     .to_return({
       :content_type   => 'text/xml',
-      :body           => load_fixture('marketplace.xml')
+      :body           => load_fixture('rss/marketplace.xml')
     })
   end
 
   describe '::perform' do
-    it "fetches and parses the Marketplace RSS feed, then writes to cache" do
+    it "Caches the first two marketplace feed items" do
       Job::FetchMarketplaceArticles.perform
-      marketplace_articles = Rails.cache.read("business/marketplace")
-      marketplace_articles.first.title.should match /Drought puts California rice in a sticky situation/
+      marketplace_articles = Rails.cache.read("views/business/marketplace")
+
+      marketplace_articles.should match %r{When the best advice comes from}
+      marketplace_articles.should match %r{Who wants to be bigger than the}
+      # Doesn't match the third...
+      marketplace_articles.should_not match %r{New York parents opt out of}
     end
   end
 end
