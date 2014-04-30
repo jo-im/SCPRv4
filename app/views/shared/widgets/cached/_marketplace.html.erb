@@ -1,7 +1,7 @@
 <ul>
 <% Array(articles).each do |article| %>
     <li>
-        <a href="<%= article.link %>" class="clearfix">
+        <a href="<%= article.link %>" class="austere">
             <div>
                 <mark><%= article.title %></mark>
                 <%= smart_date_js article.pubDate, tag: "em", "data-window" => "8h", "data-relative" => "2h" %>&nbsp;
