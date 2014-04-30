@@ -13,9 +13,8 @@ describe Job::FetchMarketplaceArticles do
   describe '::perform' do
     it "fetches and parses the Marketplace RSS feed, then writes to cache" do
       Job::FetchMarketplaceArticles.perform
-
       marketplace_articles = Rails.cache.read("business/marketplace")
-      marketplace_articles.should_not be_nil
+      marketplace_articles.first.title.should match /Drought puts California rice in a sticky situation/
     end
   end
 end
