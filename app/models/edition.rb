@@ -255,7 +255,8 @@ class Edition < ActiveRecord::Base
       :name        => "[scpr-edition] #{self.title[0..30]}",
       :description => "SCPR Short List\n" \
                       "Sent: #{Time.now}\nSubject: #{subject}",
-      :subject     => subject
+      :subject     => subject,
+      :email       => "theshortlist@scpr.org"
     }
   end
 
