@@ -110,6 +110,7 @@ namespace :scprv4 do
     Rake::Task["scprv4:cache:most_viewed"].invoke
     Rake::Task["scprv4:cache:most_commented"].invoke
     Rake::Task["scprv4:cache:twitter"].invoke
+    Rake::Task["scprv4:cache:marketplace"].invoke
   end
 
   #----------
@@ -163,6 +164,12 @@ namespace :scprv4 do
     task :homepage => [ :environment ] do
       log "Caching homepage..."
       perform_or_enqueue(Job::HomepageCache)
+    end
+
+    desc "Cache marketplace articles"
+    task :marketplace => [ :environment ] do
+      log "Caching marketplace stories..."
+      perform_or_enqueue(Job::FetchMarketplaceArticles)
     end
   end
 
