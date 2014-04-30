@@ -40,8 +40,7 @@
                 <a href="http://www.marketplace.org">More Marketplace</a>
             </header>
 
-        <% articles = @marketplace_articles.first(2) %>
-            <%= raw Rails.cache.read("views/business/marketplace") %>
+        <%= raw Rails.cache.read("views/business/marketplace") %>
         </section>
 
     </div><!--/ .ataglance -->

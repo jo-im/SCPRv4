@@ -19,7 +19,9 @@ describe "Vertical page" do
     it "shows 2 latest marketplace articles" do
       vertical = create :vertical, slug: "business"
 
-      Rails.cache.write("views/business/marketplace", "<mark>Drought puts California rice in a sticky situation</mark><mark>PODCAST: Winter came for the GDP</mark>")
+      Rails.cache.write("views/business/marketplace",
+        %Q{<mark>Drought puts California rice in a sticky situation</mark>
+          <mark>PODCAST: Winter came for the GDP</mark>})
 
       visit vertical.public_path
 
