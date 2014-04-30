@@ -29,7 +29,7 @@ class scpr.VisualCampaign
 
                     campaign = new scpr.VisualCampaign(attributes, element)
                     campaign.loadMarkup()
-                    $(@HIDE_SELECTOR, element).on "click", campaign.hide
+                    $(@HIDE_SELECTOR, element).on "click", -> campaign.hide()
 
 
 
