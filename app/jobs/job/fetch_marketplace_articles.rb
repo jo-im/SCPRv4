@@ -15,7 +15,7 @@ module Job
 
 
         if !feed || feed.items.empty?
-          log "Feed is empty. Aborting. (#{ENDPOINT})"
+          log "Feed is empty. Aborting."
           return false
         end
 
