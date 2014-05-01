@@ -25,6 +25,10 @@ module Job
           "views/business/marketplace",
           local: :articles
         )
+
+        # Should we break the Business vertical cache here?
+        # It's probably not worth it - there's enough other stuff
+        # breaking that cache and this is of relatively low importance.
       end
     end
   end # FetchMarketplaceArticles
