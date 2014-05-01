@@ -106,10 +106,15 @@ namespace :scprv4 do
 
   desc "Cache everything"
   task :cache => [:environment] do
-    Rake::Task["scprv4:cache:homepage"].invoke
-    Rake::Task["scprv4:cache:most_viewed"].invoke
-    Rake::Task["scprv4:cache:most_commented"].invoke
-    Rake::Task["scprv4:cache:twitter"].invoke
+    %w[
+      homepage
+      most_viewed
+      most_commented
+      twitter
+      marketplace
+    ].each do |task|
+      Rake::Task["scprv4:cache:#{task}"].invoke
+    end
   end
 
   #----------
@@ -160,9 +165,15 @@ namespace :scprv4 do
 
 
     desc "Cache homepage sections"
-    task :homepage => [ :environment ] do
+    task :homepage => [:environment] do
       log "Caching homepage..."
       perform_or_enqueue(Job::HomepageCache)
+    end
+
+    desc "Cache marketplace articles"
+    task :marketplace => [:environment] do
+      log "Caching marketplace stories..."
+      perform_or_enqueue(Job::FetchMarketplaceArticles)
     end
   end
 

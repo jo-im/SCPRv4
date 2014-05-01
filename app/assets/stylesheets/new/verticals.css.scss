@@ -212,6 +212,7 @@ In a Landing view, this is our three-column Smörgåsbord of lead story + ancill
                     &:hover span { color: black; }
                     &:hover .ratio { outline: 1px solid $orange; }
                 }
+                .austere div { width: 100%; float: none; }
                 .ratio {
                     width: 23.543689320388%; // 97 / 412
                     float: left;

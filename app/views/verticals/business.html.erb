@@ -40,11 +40,7 @@
                 <a href="http://www.marketplace.org">More Marketplace</a>
             </header>
 
-        <% articles = @marketplace_articles.first(2) %>
-        <%= cache ["vertical", "marketplace-articles", articles] do %>
-            <%= render 'verticals/shared/headlines', articles: articles %>
-        <% end %>
-
+        <%= raw Rails.cache.read("views/business/marketplace") %>
         </section>
 
     </div><!--/ .ataglance -->
