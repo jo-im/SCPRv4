@@ -41,15 +41,6 @@ class BlogEntry < ActiveRecord::Base
 
   belongs_to :blog
 
-  has_many :tagged,
-    :class_name   => "TaggedContent",
-    :as           => :content
-
-  has_many :tags,
-    :through      => :tagged,
-    :dependent    => :destroy
-
-
   validates_presence_of :blog, if: :should_validate?
 
 
