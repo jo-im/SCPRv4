@@ -33,10 +33,6 @@ module Api::Public::V3
 
     private
 
-    def sanitize_data_key
-      @key = params[:key].to_s
-    end
-
     def sanitize_response_format
       format    = params[:response_format]
       default   = DEFAULTS[:response_format]
