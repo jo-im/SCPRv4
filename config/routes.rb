@@ -202,6 +202,8 @@ Scprv4::Application.routes.draw do
 
   #------------------
 
+  mount Outpost::Secretary::Engine, at: "outpost", as: "secretary"
+
   namespace :outpost do
     root to: 'home#index'
 
@@ -264,10 +266,6 @@ Scprv4::Application.routes.draw do
     resources :sessions, only: [:create, :destroy]
     get 'login'  => "sessions#new", as: :login
     get 'logout' => "sessions#destroy", as: :logout
-
-    get "/activity"                                        => "versions#activity",  as: :activity
-    get "/:resources/:resource_id/history"                 => "versions#index",     as: :history
-    get "/:resources/:resource_id/history/:version_number" => "versions#show",      as: :version
 
     get "trigger_error" => 'home#trigger_error'
     get "*path" => 'home#not_found'
