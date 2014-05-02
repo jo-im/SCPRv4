@@ -16,7 +16,7 @@ module Api::Public::V2
     MAX_RESULTS = 40
 
     before_filter \
-      :set_conditions,
+      :set_hash_conditions,
       :set_classes,
       :sanitize_limit,
       :sanitize_page,
@@ -101,11 +101,6 @@ module Api::Public::V2
 
 
     private
-
-    def set_conditions
-      @conditions = {}
-    end
-
 
     def set_classes
       @classes = []

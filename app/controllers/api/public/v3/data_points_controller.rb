@@ -1,9 +1,12 @@
 module Api::Public::V3
   class DataPointsController < BaseController
     before_filter :sanitize_slug, only: [:show]
-    before_filter :set_conditions, only: [:index]
-    before_filter :sanitize_response_format, only: [:index]
-    before_filter :sanitize_group, only: [:index]
+
+    before_filter \
+      :set_hash_conditions,
+      :sanitize_response_format,
+      :sanitize_group,
+      only: [:index]
 
     RESPONSE_FORMATS = %w[ full simple ]
 
@@ -29,10 +32,6 @@ module Api::Public::V3
 
 
     private
-
-    def set_conditions
-      @conditions = {}
-    end
 
     def sanitize_data_key
       @key = params[:key].to_s
