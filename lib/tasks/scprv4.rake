@@ -1,6 +1,30 @@
 namespace :scprv4 do
+  task :test_rake => [:environment] do
+    tasks = %w{
+      scprv4:enqueue_index
+      scprv4:sync_remote_articles
+      scprv4:sync_external_programs
+      scprv4:clear_events
+      scprv4:fire_content_alarms
+      scprv4:sync_audio
+      scprv4:schedule:build
+      scprv4:enqueue_index
+      scprv4:enqueue_index
+      scprv4:cache
+    }
+
+    tasks.each do |t|
+      begin
+        Rake::Task[t].invoke
+      rescue => e
+        warn "Task #{t} raised an error: #{e}"
+      end
+    end
+  end
+
+
   task :test_error => [:environment] do
-    puts "*** [#{Time.now}] Testing Error..."
+    log "Testing Error..."
 
     # Now test these errors. This Rake task will fail (that's the point)
     Resque.enqueue(ErrorTestJob)
@@ -17,7 +41,7 @@ namespace :scprv4 do
 
   desc "Place a full sphinx index into the queue"
   task :enqueue_index => [:environment] do
-    puts "*** [#{Time.now}] Enqueueing sphinx index into Resque..."
+    log "Enqueueing sphinx index into Resque..."
     Indexer.enqueue
     puts "Finished."
   end
@@ -26,36 +50,22 @@ namespace :scprv4 do
 
   desc "Sync Remote Articles with the remote sources"
   task :sync_remote_articles => [:environment] do
-    puts "*** [#{Time.now}] Syncing remote articles..."
-
-    if Rails.env.development?
-      Job::SyncRemoteArticles.perform
-      puts "Finished.\n"
-    else
-      Job::SyncRemoteArticles.enqueue
-      puts "Job was placed in queue.\n"
-    end
+    log "Syncing remote articles..."
+    perform_or_enqueue(Job::SyncRemoteArticles)
   end
 
 
   desc "Sync external programs"
   task :sync_external_programs => [:environment] do
-    puts "*** [#{Time.now}] Syncing remote programs..."
-
-    if Rails.env.development?
-      Job::SyncExternalPrograms.perform
-      puts "Finished.\n"
-    else
-      Job::SyncExternalPrograms.enqueue
-      puts "Job was placed in queue.\n"
-    end
+    log "Syncing remote programs..."
+    perform_or_enqueue(Job::SyncExternalPrograms)
   end
 
 
 
   desc "Clear events cache"
   task :clear_events => [ :environment ] do
-    puts "*** [#{Time.now}] Clearing Event Cache..."
+    log "Clearing Event Cache..."
     Rails.cache.expire_obj(Event.new_obj_key)
     puts "Finished."
   end
@@ -64,7 +74,7 @@ namespace :scprv4 do
 
   desc "Fire pending content alarms"
   task :fire_content_alarms => [:environment] do
-    puts "*** [#{Time.now}] Firing pending content alarms..."
+    log "Firing pending content alarms..."
 
     NewRelic.with_manual_agent do
       ContentAlarm.fire_pending
@@ -77,31 +87,18 @@ namespace :scprv4 do
 
   desc "Sync all Audio types"
   task :sync_audio => [:environment] do
-    puts "*** [#{Time.now}] Syncing Audio..."
-    args = ["AudioSync::Pending", "AudioSync::Program"]
+    log "Syncing Audio..."
 
-    if Rails.env.development?
-      Job::SyncAudio.perform(args)
-      puts "Finished.\n"
-    else
-      Job::SyncAudio.enqueue(args)
-      puts "Job was placed in queue.\n"
-    end
+    perform_or_enqueue(Job::SyncAudio,
+      ["AudioSync::Pending", "AudioSync::Program"])
   end
 
 
   namespace :schedule do
     desc "Build the recurring schedule occurrences"
     task :build => [:environment] do
-      puts "*** [#{Time.now}] Building recurring schedule..."
-
-      if Rails.env.development?
-        Job::BuildRecurringSchedule.perform
-        puts "Finished.\n"
-      else
-        Job::BuildRecurringSchedule.enqueue
-        puts "Job was placed in queue.\n"
-      end
+      log "Building recurring schedule..."
+      perform_or_enqueue(Job::BuildRecurringSchedule)
     end
   end
 
@@ -109,104 +106,97 @@ namespace :scprv4 do
 
   desc "Cache everything"
   task :cache => [:environment] do
-    Rake::Task["scprv4:cache:homepage"].invoke
-    Rake::Task["scprv4:cache:most_viewed"].invoke
-    Rake::Task["scprv4:cache:most_commented"].invoke
-    Rake::Task["scprv4:cache:audiovision"].invoke
-    Rake::Task["scprv4:cache:twitter"].invoke
+    %w[
+      homepage
+      most_viewed
+      most_commented
+      twitter
+      marketplace
+    ].each do |task|
+      Rake::Task["scprv4:cache:#{task}"].invoke
+    end
   end
 
   #----------
 
   namespace :cache do
-    desc "Cache Audiovision Homepage Module"
-    task :audiovision => [:environment] do
-      puts "*** [#{Time.now}] Caching AudioVision for homepage..."
-
-      if Rails.env.development?
-        Job::AudioVisionCache.perform
-        puts "Finished.\n"
-      else
-        Job::AudioVisionCache.enqueue
-        puts "Job was placed in queue.\n"
-      end
-    end
-
-    #----------
-
     desc "Cache Most Viewed"
     task :most_viewed => [:environment] do
-      puts "*** [#{Time.now}] Caching most viewed..."
-
-      if Rails.env.development?
-        Job::MostViewed.perform
-        puts "Finished.\n"
-      else
-        Job::MostViewed.enqueue
-        puts "Job was placed in queue.\n"
-      end
+      log "Caching most viewed..."
+      perform_or_enqueue(Job::MostViewed)
     end
 
     #----------
 
     desc "Cache Most Commented"
     task :most_commented => [:environment] do
-      puts "*** [#{Time.now}] Caching most commented..."
-
-      if Rails.env.development?
-        Job::MostCommented.perform
-        puts "Finished.\n"
-      else
-        Job::MostCommented.enqueue
-        puts "Job was placed in queue.\n"
-      end
-
+      log "Caching most commented..."
+      perform_or_enqueue(Job::MostCommented)
     end
 
     #----------
 
     desc "Cache twitter feeds"
     task :twitter => [:environment] do
-      puts "*** [#{Time.now}] Caching KPCCForum tweets...."
-
-      args = [
-        "KPCCForum",
-        "/shared/widgets/cached/tweets",
-        "twitter:KPCCForum"
+      feeds = [
+        [
+          "KPCCForum",
+          "/shared/widgets/cached/tweets",
+          "twitter:KPCCForum"
+        ],
+        [
+          "kpcc",
+          "/shared/widgets/cached/sidebar_tweets",
+          "twitter:kpcc",
+          { count: 4 }
+        ]
       ]
 
       NewRelic.with_manual_agent do
-        if Rails.env.development?
-          Job::TwitterCache.perform(*args)
-          puts "Finished KPCCForum tweet caching.\n"
-        else
-          Job::TwitterCache.enqueue(*args)
-          puts "Job was placed in queue.\n"
+        feeds.each do |feed|
+          log "Caching #{feed.first} twitter feed..."
+          perform_or_enqueue(Job::TwitterCache, *feed)
         end
       end
 
-
-      if Rails.env.development?
-        Job::VerticalsTwitterCache.perform
-        puts "Finished Vertical tweet caching.\n"
-      else
-        Job::VerticalsTwitterCache.enqueue
-        puts "Job was placed in queue.\n"
-      end
+      log "Caching Vertical twitter feeds..."
+      perform_or_enqueue(Job::VerticalsTwitterCache)
     end
 
 
     desc "Cache homepage sections"
-    task :homepage => [ :environment ] do
-      puts "*** [#{Time.now}] Caching homepage..."
+    task :homepage => [:environment] do
+      log "Caching homepage..."
+      perform_or_enqueue(Job::HomepageCache)
+    end
 
-      if Rails.env.development?
-        Job::HomepageCache.perform
-        puts "Finished.\n"
-      else
-        Job::HomepageCache.enqueue
-        puts "Job was placed in queue.\n"
-      end
+    desc "Cache marketplace articles"
+    task :marketplace => [:environment] do
+      log "Caching marketplace stories..."
+      perform_or_enqueue(Job::FetchMarketplaceArticles)
+    end
+  end
+
+
+  def log(msg)
+    puts "*** [#{Time.now}] #{msg}"
+  end
+
+  def perform_or_enqueue(klass, *args)
+    if run_jobs?
+      klass.perform(*args)
+      puts "Finished.\n"
+    else
+      klass.enqueue(*args)
+      puts "Job was placed in queue.\n"
+    end
+  end
+
+  def run_jobs?
+    if !ENV['RUN_JOBS'].nil?
+      %w{true 1}.include? ENV['RUN_JOBS']
+    else
+      Rails.env.development?
     end
   end
 end

@@ -30,13 +30,6 @@ class BlogsController < ApplicationController
 
   #----------
 
-  def blog_tagged
-    @tag = Tag.where(slug: params[:tag]).first!
-    @entries = @blog.entries.published.joins(:tags).where(taggit_tag: { slug: @tag.slug }).page(params[:page]).per(5)
-  end
-
-  #----------
-
   # Process the form values for Archive and redirect to canonical URL
   def process_archive_select
     year = params[:archive]["date(1i)"].to_i

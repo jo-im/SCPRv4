@@ -5,6 +5,7 @@ describe ScheduleOccurrence do
   let(:invalid_record) { build :schedule_occurrence, info_url: "notvalid.com" }
   let(:updated_record) { build :schedule_occurrence, info_url: "http://kpcc.org" }
 
+  it_behaves_like "managed resource index"
   it_behaves_like "managed resource destroy"
   it_behaves_like "save options"
   it_behaves_like "admin routes"

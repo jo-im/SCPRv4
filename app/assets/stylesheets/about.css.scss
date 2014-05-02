@@ -1,6 +1,6 @@
 .about-us {
     h1 {
-        background:url(image_path('about/hero-header.png')) no-repeat 0 0;
+        background:image-url('about/hero-header.png') no-repeat 0 0;
         margin:0 auto 20px auto;
         width:258px;
         height:27px;
@@ -18,7 +18,7 @@
         margin-bottom:20px;
     }
     .about-hero {
-        background:url(image_path('about/bg-hero.png')) no-repeat 30px bottom;
+        background:image-url('about/bg-hero.png') no-repeat 30px bottom;
         padding-top:40px;
         p {
             @include font-slab-headings(300, 24px, 36px);
@@ -59,7 +59,7 @@
         padding:40px 0;
         position:relative;
         .donut {
-            background: url(image_path('about/divider-donut.png')) no-repeat left top;
+            background: image-url('about/divider-donut.png') no-repeat left top;
             display:block;
             width:31px;
             height:31px;
@@ -93,7 +93,7 @@
         margin:0;
         @include clearfix();
         li {
-            background:url(image_path('about/ico-directory.png')) no-repeat 0 0;
+            background:image-url('about/ico-directory.png') no-repeat 0 0;
             display:block;
             float:left;
             @include font-slab-headings(300, 18px);
@@ -101,19 +101,19 @@
             padding:16px 0 0 80px;
             width:24%;
             &.tips {
-                background-image:url(image_path('about/ico-tips.png'));
+                background-image:image-url('about/ico-tips.png');
             }
             &.errors {
-                background-image:url(image_path('about/ico-errors.png'));
+                background-image:image-url('about/ico-errors.png');
             }
             &.phone {
-                background-image:url(image_path('about/ico-phone.png'));
+                background-image:image-url('about/ico-phone.png');
             }
             &.directions {
-                background-image:url(image_path('about/ico-directions.png'));
+                background-image:image-url('about/ico-directions.png');
             }
             &.source {
-                background-image:url(image_path('about/ico-source.png'));
+                background-image:image-url('about/ico-source.png');
             }
             a {
                 color:$nearBlack;

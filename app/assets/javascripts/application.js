@@ -1,6 +1,7 @@
 //= require modernizr.custom
 //= require jquery.jplayer.min
 //= require moment-strftime
+//= require moment-twitter
 
 //= require_directory ./t_listen/
 //= require swfobject.min

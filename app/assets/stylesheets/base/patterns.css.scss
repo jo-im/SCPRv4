@@ -12,7 +12,7 @@ body {
 
 // LOGO STYLES
 .logo-mark-sm {
-    background:transparent url(image_path('logo-mark-sm.png')) no-repeat center left;
+    background:transparent image-url('logo-mark-sm.png') no-repeat center left;
     padding-left:32px;
 }
 
@@ -485,7 +485,7 @@ color:$nearBlack;
 // Dividers
 // --------
 .divider-vert {
-    background: url(image_path('divider-vert.png')) repeat-y 775px top;
+    background: image-url('divider-vert.png') repeat-y 775px top;
 }
 
 // Lists
@@ -546,7 +546,7 @@ color:$nearBlack;
 // HEROS
 // -----
 .section-hero {
-    background:url(image_path('about/bg-hero.png')) no-repeat 30px bottom;
+    background:image-url('about/bg-hero.png') no-repeat 30px bottom;
     padding-top:40px;
     h1, h2, h3, h4, h5 {
         color:$orangeDark;

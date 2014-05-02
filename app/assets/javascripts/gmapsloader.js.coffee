@@ -67,4 +67,3 @@ class scpr.GMapsLoader
 
     notifyError: (msg=@options.errorMsg) ->
         $(@options.errorsDiv).append msg
-

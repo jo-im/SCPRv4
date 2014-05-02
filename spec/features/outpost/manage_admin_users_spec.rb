@@ -25,6 +25,25 @@ describe AdminUser do
 
     #------------------------
 
+    describe "Index" do
+      before do
+        # This is a hack so we know the valid_record object is the first
+        # in the list.
+        valid_record.update_attribute(:name, "aaaaaaa")
+      end
+
+      it "shows a list of records" do
+        visit described_class.admin_index_path
+
+        within('table.index-list') do
+          page.should have_css "a.btn"
+          first('a.btn').click
+
+          current_path.should eq valid_record.admin_edit_path
+        end
+      end
+    end
+
     describe "Create" do
       before :each do
         visit described_class.admin_new_path

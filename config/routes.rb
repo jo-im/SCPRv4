@@ -27,7 +27,6 @@ Scprv4::Application.routes.draw do
   get '/blogs/:blog/archive/:year/:month/'             => "blogs#archive",                as: :blog_archive,         constraints: { year: /\d{4}/, month: /\d{2}/ }
   post '/blogs/:blog/process_archive_select'           => "blogs#process_archive_select", as: :blog_process_archive_select
   get '/blogs/:blog/:year/:month/:day/:id/:slug/'      => "blogs#entry",                  as: :blog_entry,           constraints: { year: /\d{4}/, month: /\d{2}/, day: /\d{2}/, id: /\d+/, slug: /[\w-]+/ }
-  get '/blogs/:blog/tagged/:tag/'                      => "blogs#blog_tagged",            as: :blog_entries_tagged
   get '/blogs/:blog/'                                  => 'blogs#show',                   as: :blog
   get '/blogs/'                                        => 'blogs#index',                  as: :blogs
 
@@ -168,6 +167,7 @@ Scprv4::Application.routes.draw do
         resources :buckets, only: [:index, :show]
         resources :episodes, only: [:index, :show]
         resources :blogs, only: [:index, :show]
+        resources :data_points, only: [:index, :show]
 
         resources :schedule, controller: 'schedule_occurrences',only: [:index] do
           collection do
@@ -241,6 +241,7 @@ Scprv4::Application.routes.draw do
     resources :press_releases, concerns: [:search]
     resources :abstracts, concerns: [:search]
     resources :editions, concerns: [:search]
+    resources :verticals
 
     resources :homepages, concerns: [:preview, :search]
     resources :pij_queries, concerns: [:preview, :search]

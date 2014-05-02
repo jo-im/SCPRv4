@@ -18,7 +18,7 @@ body.minimal {
         @include box-shadow($shadow);
 
         h3#site-title a {
-            background:transparent url(image_path('logo-full-sm.png')) no-repeat left top;
+            background:transparent image-url('logo-full-sm.png') no-repeat left top;
             width:130px;
             height:30px;
             display:block;text-indent:-9999px;
@@ -64,7 +64,7 @@ body.minimal {
     }
 
     .floating-shadow {
-        background:transparent url(image_path('floating-shadow.png')) no-repeat center bottom;
+        background:transparent image-url('floating-shadow.png') no-repeat center bottom;
         height: 100px;
         margin-top:-60px;
         position:relative;

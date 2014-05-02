@@ -28,7 +28,6 @@ gem 'outpost-secretary', github: "SCPR/outpost-secretary"
 
 ## Redis
 gem "resque", "~> 1.26.pre.0"
-
 gem 'redis-content-store', github: "SCPR/redis-content-store"
 # gem 'redis-content-store', path: "#{ENV['PROJECT_HOME']}/redis-content-store"
 
@@ -50,6 +49,9 @@ gem 'embeditor-rails', github: 'SCPR/embeditor-rails'
 gem "carrierwave", "~> 0.6"
 gem "ruby-mp3info", '~> 0.8.2', require: 'mp3info'
 gem "ice_cube", "~> 0.11.0"
+gem "recaptcha", require: "recaptcha/rails"
+gem "yajl-ruby" # Faster JSON parsing
+
 
 ## HTTP
 gem "faraday", "~> 0.8"
@@ -84,7 +86,7 @@ end
 
 
 group :development, :staging do
-  gem "dbsync", '~> 0.2.0'
+  gem "dbsync", '~> 0.3.0'
 end
 
 
@@ -99,7 +101,6 @@ end
 
 
 group :test do
-  gem 'simplecov', require: false
   gem 'factory_girl_rails'
   gem 'database_cleaner'
   gem 'capybara', "~> 2.0"

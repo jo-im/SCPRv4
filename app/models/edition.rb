@@ -108,7 +108,8 @@ class Edition < ActiveRecord::Base
       :name        => "[scpr-edition] #{self.title[0..30]}",
       :description => "SCPR Short List\n" \
                       "Sent: #{Time.now}\nSubject: #{subject}",
-      :subject     => subject
+      :subject     => subject,
+      :email       => "theshortlist@scpr.org"
     }
   end
 
@@ -121,7 +122,7 @@ class Edition < ActiveRecord::Base
     self.published? && !self.email_sent?
   end
 
-  def update_email_status(email, campaign)
+  def update_email_status(campaign)
     self.update_column(:email_sent, true)
   end
 

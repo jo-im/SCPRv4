@@ -151,7 +151,8 @@ class BreakingNewsAlert < ActiveRecord::Base
       :name        => "[scpr-alert] #{self.headline[0..30]}",
       :description => "SCPR Breaking News Alert\n" \
                       "Sent: #{Time.now}\nSubject: #{alert_subject}",
-      :subject     => alert_subject
+      :subject     => alert_subject,
+      :email       => "no-reply@kpcc.org"
     }
   end
 
@@ -164,7 +165,7 @@ class BreakingNewsAlert < ActiveRecord::Base
     !self.email_sent?
   end
 
-  def update_email_status(email, campaign)
+  def update_email_status(campaign)
     if campaign.activate
       self.update_column(:email_sent, true)
     end

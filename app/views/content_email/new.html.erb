@@ -38,9 +38,9 @@
     </ul>
   </fieldset>
 
-  <%= f.text_field :lname, class: "hidden" %>
-
   <fieldset>
+    <%= recaptcha_tags %>
     <%= f.submit "Share", class: "btn primary" %>
   </fieldset>
+
 <% end %>

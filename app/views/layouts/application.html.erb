@@ -2,6 +2,8 @@
 
 <body>
 <div class="viewport">
+  <div id="global-pushdown"></div>
+
   <%= render "shared/masthead/layout_header" %>
 
   <div id="main" class="container-fluid main-content">
@@ -34,6 +36,15 @@
   </div> <!-- container fluid main -->
 
   <%= render "shared/footer/layout_footer" %>
+
+<% content_for :footer do %>
+  <script type="text/javascript">
+    $(document).ready(function(){
+      scpr.VisualCampaign.enqueue('pushdown-global', $('#global-pushdown'));
+    });
+  </script>
+<% end %>
+
 </div> <!-- viewport -->
 
 <%= render "shared/footer/document_footer" %>

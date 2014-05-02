@@ -12,16 +12,17 @@ module Scprv4
     ]
 
     config.assets.version = '2.0'
-    config.assets.paths << "#{Rails.root}/vendor/assets/fonts"
     config.assets.precompile += [
+      "webtrends.v2.js",
       "shared.js",
       "outpost/application.css",
       "outpost/application.js",
       "base/print.css",
       "new/application.js",
       "new/application.css",
-      "new/ie-lt9.js", # For ie < 9, separate include
-      "new/ie-lt9.css" # For ie < 9, separate include
+      "new/ie-lt9.js",  # For ie < 9, separate include
+      "new/ie-lt9.css", # For ie < 9, separate include
+      "*.eot", "*.ttf", "*.woff" # Font files
     ]
     config.assets.js_compressor  = :uglifier
     config.assets.css_compressor = :sass

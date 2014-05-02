@@ -7,6 +7,7 @@ describe RecurringScheduleRule do
 
   it_behaves_like "save options"
   it_behaves_like "admin routes"
+  it_behaves_like "managed resource index"
   it_behaves_like "managed resource destroy"
 
   # We need to copy these because info_url isn't officially validated,

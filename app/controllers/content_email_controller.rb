@@ -11,7 +11,10 @@ class ContentEmailController < ApplicationController
     @message = ContentEmail.new(form_params)
     @message.content_key = @content.obj_key
 
-    if @message.save
+    if verify_recaptcha(
+      :model   => @message,
+      :message => "Verification failed, try again."
+    ) && @message.save
       render :success
     else
       render :new
@@ -28,6 +31,6 @@ class ContentEmailController < ApplicationController
 
   def form_params
     params.require(:content_email).permit(
-      :to_email, :from_name, :from_email, :body, :lname)
+      :to_email, :from_name, :from_email, :body)
   end
 end

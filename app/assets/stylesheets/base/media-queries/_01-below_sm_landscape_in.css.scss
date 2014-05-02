@@ -80,12 +80,6 @@
     }
 
     .homepage-top {
-        .audiovision-block {
-            border-bottom: 1px solid $grayLighter;
-            padding-bottom: 10px;
-            margin-bottom: 10px;
-        }
-
         .events-forum {
             border: none !important;
             padding-left: 0 !important;
@@ -147,11 +141,11 @@
     // Make the slideshow target arrows a little smaller here
     .slideview .slides .overlay-nav div.bar {
         &.prev {
-            background-image: url(image_path('overlay-prev-dark-sm.png'));
+            background-image: image-url('overlay-prev-dark-sm.png');
         }
 
         &.next {
-            background-image: url(image_path('overlay-next-dark-sm.png'));
+            background-image: image-url('overlay-next-dark-sm.png');
         }
     }
 

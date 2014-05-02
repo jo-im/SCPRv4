@@ -5,7 +5,9 @@ set :rails_env, "staging"
 
 # --------------
 # Roles
-scprdev = "66.226.4.241"
+scprdev = DEPLOY_CONFIG['staging']['host']
+set :deploy_to, DEPLOY_CONFIG['staging']['deploy_to']
+
 role :app,      scprdev
 role :web,      scprdev
 role :workers,  scprdev

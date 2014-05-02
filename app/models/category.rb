@@ -15,41 +15,8 @@ class Category < ActiveRecord::Base
   }
 
 
-  FEATURED_INTERACTIVE_STYLES = {
-    0 => 'beams',
-    1 => 'traffic',
-    2 => 'palmtrees',
-    3 => 'map'
-  }
-
-
-  has_many :category_articles,
-    -> { order('position') },
-    :dependent => :destroy
-
-  accepts_json_input_for :category_articles
-  tracks_association :category_articles
-
-  belongs_to :featured_blog,
-    :class_name     => 'Blog',
-    :foreign_key    => 'blog_id'
-
-  has_many :category_reporters, dependent: :destroy
-  has_many :bios, through: :category_reporters
-  tracks_association :bios
-
-  has_many :category_issues, dependent: :destroy
-  has_many :issues, through: :category_issues
-  tracks_association :issues
-
-  belongs_to :comment_bucket, class_name: "FeaturedCommentBucket"
-
   has_many :events
-  has_many :quotes,
-    -> { order("created_at desc") },
-    :foreign_key    => "category_id"
-
-
+  belongs_to :comment_bucket, class_name: "FeaturedCommentBucket"
 
   validates :title, presence: true
 
@@ -70,15 +37,6 @@ class Category < ActiveRecord::Base
       previews.reject { |p| p.articles.empty? }
       .sort_by { |p| -p.articles.first.public_datetime.to_i }
     end
-  end
-
-
-  # This category's hand-picked content,
-  # converted to articles.
-  def featured_articles
-    @featured_articles ||= self.category_articles
-      .includes(:article).select(&:article)
-      .map { |a| a.article.to_article }
   end
 
 
@@ -108,16 +66,13 @@ class Category < ActiveRecord::Base
     }
 
     if exclude.present?
-      if exclude.kind_of?(Array)
-        excluded_articles = exclude.select do |article|
-          article.respond_to?(:obj_key_crc32)
-        end
-
-        args[:without] = { obj_key: excluded_articles.map(&:obj_key_crc32) }
-      elsif exclude.respond_to?(:obj_key_crc32)
-        args[:without] = { obj_key: exclude.obj_key_crc32 }
+      exclude = Array(exclude).select do |article|
+        article.respond_to?(:obj_key_crc32)
       end
+
+      args[:without] = { obj_key: exclude.map(&:obj_key_crc32) }
     end
+
     ContentBase.search(args)
   end
 
@@ -131,22 +86,5 @@ class Category < ActiveRecord::Base
   # The Preview for this category.
   def preview(options={})
     @preview ||= CategoryPreview.new(self, options)
-  end
-
-  def featured_interactive_style
-    FEATURED_INTERACTIVE_STYLES[self.featured_interactive_style_id]
-  end
-
-
-  private
-
-  def build_category_article_association(category_article_hash, article)
-    if article.published?
-      CategoryArticle.new(
-        :position   => category_article_hash["position"].to_i,
-        :article    => article,
-        :category   => self
-      )
-    end
   end
 end

@@ -82,9 +82,9 @@ module Concern
           :folderId            => config['email_folder_id'],
           :emailGroupId        => config['email_group_id'],
           :senderName          => "89.3 KPCC",
-          :senderEmail         => "no-reply@kpcc.org",
+          :senderEmail         => email_object[:email],
           :replyToName         => "89.3 KPCC",
-          :replyToEmail        => "no-reply@kpcc.org",
+          :replyToEmail        => email_object[:email],
           :isTracked           => true,
           :name                => email_object[:name],
           :description         => email_object[:description],
@@ -133,6 +133,7 @@ module Concern
                 :type           => "CampaignEmail",
                 :id             => "-990",
                 :emailId        => email.id,
+                :name           => "E-mail",
                 :sendTimePeriod => "sendAllEmailAtOnce",
                 :position       => {
                   :type => "Position",
@@ -144,7 +145,7 @@ module Concern
           }
         )
 
-        update_email_status(email, campaign)
+        update_email_status(campaign)
       end
 
       add_transaction_tracer :publish_email, category: :task
@@ -169,7 +170,7 @@ module Concern
 
       # Update the email_sent status for this object.
       # Returns boolean.
-      def update_email_status(email, campaign)
+      def update_email_status(campaign)
         raise NotImplementedError
       end
 

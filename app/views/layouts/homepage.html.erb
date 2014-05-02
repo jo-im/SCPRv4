@@ -3,7 +3,8 @@
 <body>
 
 <div class="viewport">
-  <div id="pledge-pushdown"></div>
+  <div id="global-pushdown"></div>
+  <div id="homepage-pushdown"></div>
 
   <!-- MASTHEAD-->
   <%= render "shared/masthead/layout_header" %>
@@ -104,8 +105,20 @@
             <%= render "shared/ads/oas", ad_id: 'x01' %>
             <%= render "shared/ads/dfp", ad_key: :membership_sidebar %>
             <%= render "shared/widgets/newsletter_subscribe" %>
-            <%= render "shared/widgets/most_popular" %>
-            <%= render "shared/ads/dfp", ad_key: :homepage_house_promo %>
+
+            <!-- TWITTER -->
+            <% if cached_tweets = Rails.cache.fetch("twitter:kpcc") %>
+              <aside class="curated-tweets widget">
+                <header>
+                  <h1>The latest from Twitter</h1>
+                    <p>For more SoCal photos, breaking news, traffic updates and community coverage, <a href="http://twitter.com/kpcc" data-ga-category="Homepage" data-ga-action="Follow KPCC Twitter" data-ga-label="Twitter Module">follow @KPCC</a>.</p>
+                </header>
+                <ul class="timeline">
+                  <%= cached_tweets %>
+                </ul>
+              </aside>
+            <% end %>
+
           </div> <!-- sidebar-top -->
         </div> <!-- span8 -->
       </div> <!-- row-fluid -->
@@ -159,27 +172,12 @@ $(document).ready(function(){
     }
   }, 1000);
 
-  // Load pledge pushdown
-  if (scpr.Cookie.get('adClosed') == null) {
-    var visualCampaign = new scpr.VisualCampaign({
-      endpoint: "http://audiobox.scprdev.org/api/v1/visual_campaigns",
-      key: "pledge",
-      success: function(markup) {
-        $("#pledge-pushdown").prepend(markup)
-
-        $("#pledge-hide").on({
-          click: function(evt){
-            $('#pledge-pushdown').hide();
-            scpr.Cookie.set("adClosed", "1", 60*60*24)
-          }
-        });
-      }
-    });
-
-    visualCampaign.fetch();
-  }
+  scpr.VisualCampaign.enqueue('pushdown-global', $('#global-pushdown'));
+  scpr.VisualCampaign.enqueue('pushdown-homepage', $('#homepage-pushdown'));
 });
 </script>
+
+<%= render "shared/scripts/quantcast", page_title: 'Homepage' %>
 <% end %>
 
 </div> <!-- viewport -->
