@@ -1,6 +1,3 @@
-# These just make sure there are no blatant view errors.
-# Could definitely be faster and more useful.
-
 shared_examples_for "resource controller" do
   before :each do
     @resource_properties = Array(resource)
@@ -16,42 +13,42 @@ shared_examples_for "resource controller" do
     describe 'GET /index' do
       it "redirects to outpost root" do
         get :index
-        response.should redirect_to outpost_root_path
+        response.should redirect_to "/outpost/"
       end
     end
 
     describe 'GET /show' do
       it "redirects to outpost root" do
         get :show, id: @object.id
-        response.should redirect_to outpost_root_path
+        response.should redirect_to "/outpost/"
       end
     end
 
     describe 'GET /edit' do
       it "redirects to outpost root" do
         get :edit, id: @object.id
-        response.should redirect_to outpost_root_path
+        response.should redirect_to "/outpost/"
       end
     end
 
     describe 'POST /create' do
       it "redirects to outpost root" do
         post :create, @resource => { who: "cares" }
-        response.should redirect_to outpost_root_path
+        response.should redirect_to "/outpost/"
       end
     end
 
     describe 'PUT /update' do
       it "redirects to outpost root" do
         put :update, id: @object.id, @resource => { who: "cares" }
-        response.should redirect_to outpost_root_path
+        response.should redirect_to "/outpost/"
       end
     end
 
     describe 'DELETE /destroy' do
       it "redirects to outpost root" do
         delete :destroy, id: @object.id
-        response.should redirect_to outpost_root_path
+        response.should redirect_to "/outpost/"
       end
     end
   end

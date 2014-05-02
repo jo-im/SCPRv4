@@ -1,6 +1,7 @@
 require "spec_helper"
 
 describe Outpost::VersionsController do
+  routes { Outpost::Secretary::Engine.routes }
   render_views
 
   before :each do

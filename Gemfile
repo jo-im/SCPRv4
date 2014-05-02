@@ -11,7 +11,7 @@ gem 'secretary-rails', '~> 1.1'
 
 ## Outpost
 gem 'outpost-cms', github: 'SCPR/outpost'
-#gem 'outpost-cms', path: "#{ENV['PROJECT_HOME']}/outpost"
+# gem 'outpost-cms', path: "#{ENV['PROJECT_HOME']}/outpost"
 
 gem 'outpost-publishing', github: "SCPR/outpost-publishing"
 #gem 'outpost-publishing', path: "#{ENV['PROJECT_HOME']}/outpost-publishing"
