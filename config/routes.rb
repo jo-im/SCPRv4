@@ -167,6 +167,7 @@ Scprv4::Application.routes.draw do
         resources :buckets, only: [:index, :show]
         resources :episodes, only: [:index, :show]
         resources :blogs, only: [:index, :show]
+        resources :data_points, only: [:index, :show]
 
         resources :schedule, controller: 'schedule_occurrences',only: [:index] do
           collection do
