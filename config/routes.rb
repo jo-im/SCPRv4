@@ -262,16 +262,6 @@ Scprv4::Application.routes.draw do
       end
     end
 
-<<<<<<< HEAD
-    get "/activity"                                        => "versions#activity",  as: :activity
-    get "/:resources/:resource_id/history"                 => "versions#index",     as: :history
-    get "/:resources/:resource_id/history/:version_number" => "versions#show",      as: :version
-=======
-    resources :sessions, only: [:create, :destroy]
-    get 'login'  => "sessions#new", as: :login
-    get 'logout' => "sessions#destroy", as: :logout
->>>>>>> 42a4bcf... Add outpost-secretary mounted routes
-
     get "trigger_error" => 'home#trigger_error'
     get "*path" => 'errors#not_found'
   end
