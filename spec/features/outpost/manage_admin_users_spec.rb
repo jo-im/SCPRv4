@@ -161,6 +161,10 @@ describe AdminUser do
       updated_record
     end
 
+    describe "activity" do
+      pending
+    end
+
     context "new record" do
       it "saves an initial version" do
         visit described_class.admin_new_path

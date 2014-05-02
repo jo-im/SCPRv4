@@ -203,7 +203,6 @@ Scprv4::Application.routes.draw do
   #------------------
 
   mount Outpost::Engine, at: 'outpost'
-  mount Outpost::Secretary::Engine, at: 'outpost', as: 'secretary'
 
   namespace :outpost do
     concern :preview do
@@ -216,11 +215,19 @@ Scprv4::Application.routes.draw do
       get "search", on: :collection, as: :search
     end
 
-
+    # This is an annoying hack. This route needs to be above the
+    # Secretary mounted routes. We need to figure out a way to
+    # inject routes into the middle of a namespace. We can't mount
+    # the routes at the bottom because of the catch-all for error
+    # handling.
     resources :admin_users, concerns: [:search] do
       get "activity", on: :member, as: :activity
     end
+  end
 
+  mount Outpost::Secretary::Engine, at: 'outpost', as: 'secretary'
+
+  namespace :outpost do
     resources :recurring_schedule_rules, concerns: [:search]
     resources :schedule_occurrences, concerns: [:search]
     resources :podcasts, concerns: [:search]
