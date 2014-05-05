@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140418201244) do
+ActiveRecord::Schema.define(version: 20140505234549) do
 
   create_table "abstracts", force: true do |t|
     t.string   "source"
@@ -111,9 +111,8 @@ ActiveRecord::Schema.define(version: 20140418201244) do
   add_index "blogs_blog", ["slug"], name: "slug", unique: true, using: :btree
 
   create_table "blogs_blogauthor", force: true do |t|
-    t.integer  "blog_id",    null: false
-    t.integer  "author_id",  null: false
-    t.integer  "position"
+    t.integer  "blog_id"
+    t.integer  "author_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
