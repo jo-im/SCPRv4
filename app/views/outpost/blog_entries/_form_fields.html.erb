@@ -1,5 +1,5 @@
 <%= form_block "Source" do %>
-  <%= f.association :blog %>
+  <%= f.association :blog, collection: Blog.select_collection %>
 <% end %>
 
 <%= f.section "full_details" %>
