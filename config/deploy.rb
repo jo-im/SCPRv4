@@ -48,28 +48,6 @@ after "deploy:update", "deploy:cleanup"
 # --------------
 # Universal Tasks
 namespace :deploy do
-  # --------------
-  # Override disable/enable
-  # https://github.com/capistrano/capistrano/blob/master/lib/capistrano/recipes/deploy.rb
-  namespace :web do
-    task :disable, :roles => :web, :except => { :no_release => true } do
-      require 'erb'
-      on_rollback { run "rm -f #{shared_path}/system/#{maintenance_basename}.html" }
-
-      reason    = ENV['REASON']
-      deadline  = ENV['UNTIL']
-
-      template = File.read(maintenance_template_path)
-      result   = ERB.new(template).result(binding)
-
-      put result, "#{shared_path}/system/#{maintenance_basename}.html", :mode => 0644
-    end
-
-    task :enable, :roles => :web, :except => { :no_release => true } do
-      run "rm -f #{shared_path}/system/#{maintenance_basename}.html"
-    end
-  end
-
   task :symlink_config do
     %w{ database.yml api_config.yml app_config.yml thinking_sphinx.yml newrelic.yml }.each do |file|
       run "ln -nfs #{shared_path}/config/#{file} #{release_path}/config/#{file}"
