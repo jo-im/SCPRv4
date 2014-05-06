@@ -17,4 +17,18 @@ describe Blog do
       end
     end
   end
+
+  describe "select_collection" do
+    it "orders by active status and title" do
+      blog1 = create :blog, is_active: true, name: "BBB"
+      blog2 = create :blog, is_active: true, name: "CCC"
+      blog3 = create :blog, is_active: false, name: "AAA"
+
+      Blog.select_collection.should eq [
+        ["BBB", blog1.id],
+        ["CCC", blog2.id],
+        ["AAA", blog3.id]
+      ]
+    end
+  end
 end
