@@ -14,7 +14,7 @@ body.single, body.issues, body.landing {
 
     .masthead                                           { background-image: image-url("i/1x/masthead-politics.jpg"); }
     .masthead .station h4 a                             { background-image: image-url("i/1x/logo-kpcc.png"); }
-    .masthead .titling h1 a                             { background-image: image-url("i/1x/logo-represent.png"); }
+    .masthead .titling h1 a                             { background-image: image-url("i/1x/logo-politics.png"); }
     .masthead .titling h2                               { background: black; }
     .masthead .station .kpcc-links li:first-child a     { background-image: image-url("i/1x/workbench-icons.png"); }
     .masthead .station .donate a                        { background-image: image-url("i/1x/workbench-icons.png"); }
@@ -67,7 +67,6 @@ body.single, body.issues, body.landing {
     .interior .masthead .station .search-trigger        { background-image: image-url("i/1x/workbench-icons-gray-alternates.png"); }
     .interior .masthead .titling .brand                 { }
     .interior .masthead .titling h1                     { margin-left: 25px; width: 130px; }
-    .interior .masthead .titling h1 a                   { background-image: image-url("i/1x/logo-represent-interior-fitted.png"); }
     .interior .masthead .titling h2                     { left: 160px; }
 
     .interior .report .inner                            { background: image-url("i/fauxcol-single-report-base.png") repeat-y scroll 74.352% 0; }
@@ -102,12 +101,15 @@ body.single, body.issues, body.landing {
 
 body.landing.education .masthead .titling h1 a          { background-image: image-url("i/1x/logo-education.png"); }
 body.landing.education .resources-row header h1 span    { background-image: image-url("i/1x/logo-resources-education.png"); }
-body.education.interior .masthead .titling h1 a         { background-image: image-url("i/1x/logo-education-interior-fitted.png"); }
 
 /* ########################################################################################################################## */
 
 body.landing.business .masthead .titling h1 a           { background-image: image-url("i/1x/logo-business.png"); }
 body.landing.business .resources-row header h1 span     { background-image: image-url("i/1x/logo-resources-business.png"); }
-body.business.interior .masthead .titling h1 a          { background-image: image-url("i/1x/logo-business-interior-fitted.png"); }
+
+/* ########################################################################################################################## */
+
+body.landing.health .masthead .titling h1 a           { background-image: image-url("i/1x/logo-politics.png"); }
+body.landing.health .resources-row header h1 span     { background-image: image-url("i/1x/logo-resources-politics.png"); }
 
 /* ########################################################################################################################## */
