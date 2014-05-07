@@ -21,7 +21,7 @@ describe Blog do
       visit Blog.admin_new_path
     end
 
-    it "is created", focus: true do
+    it "is created" do
       blog = build :blog
       blog.authors << @bio
 
