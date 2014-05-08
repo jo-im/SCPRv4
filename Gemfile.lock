@@ -51,6 +51,15 @@ GIT
     redis-content-store (0.2.0)
       redis-activesupport (>= 3.2.0, < 5)
 
+GIT
+  remote: git://github.com/SCPR/secretary-rails.git
+  revision: 1d46906eb2f8b88c3c51243efa111a86f3f72e06
+  specs:
+    secretary-rails (1.1.0)
+      activerecord (>= 3.2.0)
+      diffy (~> 3.0.1)
+      railties (>= 3.2.0)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -321,10 +330,6 @@ GEM
       sass (~> 3.2.0)
       sprockets (~> 2.8, <= 2.11.0)
       sprockets-rails (~> 2.0)
-    secretary-rails (1.1.0)
-      activerecord (>= 3.2.0)
-      diffy (~> 3.0.1)
-      railties (>= 3.2.0)
     select2-rails (3.4.1)
       sass-rails
       thor (~> 0.14)
@@ -436,7 +441,7 @@ DEPENDENCIES
   ruby-mp3info (~> 0.8.2)
   sanitize (~> 2.0)
   sass-rails (~> 4.0.0)
-  secretary-rails (~> 1.1)
+  secretary-rails!
   select2-rails (= 3.4.1)
   shoulda-matchers
   simple_form (~> 3.0.0)
