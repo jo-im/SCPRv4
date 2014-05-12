@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140505234549) do
+ActiveRecord::Schema.define(version: 20140512212718) do
 
   create_table "abstracts", force: true do |t|
     t.string   "source"
@@ -190,6 +190,7 @@ ActiveRecord::Schema.define(version: 20140505234549) do
     t.datetime "created_at",                                  null: false
     t.datetime "updated_at",                                  null: false
     t.string   "description"
+    t.string   "short_title"
   end
 
   add_index "contentbase_category", ["comment_bucket_id"], name: "contentbase_category_36c0cbca", using: :btree

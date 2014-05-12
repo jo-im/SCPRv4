@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe FeatureCandidate::Segment do
-  let(:category) { create :category_news }
+  let(:category) { create :category }
 
   describe '#content' do
     sphinx_spec

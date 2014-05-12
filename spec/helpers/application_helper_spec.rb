@@ -48,14 +48,13 @@ describe ApplicationHelper do
   end
 
   describe "sphinx category searches" do
-    let(:category_news) { create :category, :is_news }
-    let(:category_not_news) { create :category, :is_not_news }
+    let(:category) { create :category }
 
     sphinx_spec
 
     it "#latest_news only gets objects where category is news" do
-      story1 = create :news_story, category: category_news
-      story2 = create :news_story, category: category_not_news
+      story1 = create :news_story, category: category
+      story2 = create :news_story, category: category
 
       index_sphinx
 
