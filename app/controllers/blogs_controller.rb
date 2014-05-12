@@ -5,9 +5,7 @@ class BlogsController < ApplicationController
   #----------
 
   def index
-    @blogs          = Blog.active.order("name")
-    @news_blogs     = @blogs.where(is_news: true)
-    @non_news_blogs = @blogs.where(is_news: false)
+    @blogs = Blog.active.order("name")
     render layout:    "application"
   end
 
