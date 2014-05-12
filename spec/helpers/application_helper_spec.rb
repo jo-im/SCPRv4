@@ -62,17 +62,6 @@ describe ApplicationHelper do
         helper.latest_news.should eq [story1].map(&:to_article)
       end
     end
-
-    it "#latest_arts only gets object where category is not news" do
-      story1 = create :news_story, category: category_news
-      story2 = create :news_story, category: category_not_news
-
-      index_sphinx
-
-      ts_retry(2) do
-        helper.latest_arts.should eq [story2].map(&:to_article)
-      end
-    end
   end
 
   #------------------------
