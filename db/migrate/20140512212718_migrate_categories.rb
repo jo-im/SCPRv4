@@ -1,10 +1,5 @@
 class MigrateCategories < ActiveRecord::Migration
   def up
-    # TODO: Redirect all old arts categories to "/arts" (including feed)
-    # TODO Put a model stub for this in place
-    # TODO: Redirect /money to /business
-    # TODO: Redirect "/california" to "/local" (including feed)
-
     add_column :contentbase_category, :short_title, :string
 
     Category.all.each do |category|
