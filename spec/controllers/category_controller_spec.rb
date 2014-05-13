@@ -40,7 +40,7 @@ describe CategoryController do
 
         ts_retry(2) do
           sections.size.should eq 1
-          sections.first.articles.should eq [story2].map(&:to_article)
+          sections.first.articles.should eq [story2, story1].map(&:to_article)
         end
       end
     end
@@ -49,7 +49,6 @@ describe CategoryController do
       sphinx_spec
 
       it "sets content to the most recent content in news" do
-        story1 = create :news_story, published_at: 1.month.ago, category: category
         story2 = create :news_story, published_at: 1.week.ago, category: category
         story3 = create :news_story, published_at: 1.day.ago, category: category
 

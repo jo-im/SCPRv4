@@ -30,18 +30,6 @@ describe BlogsController do
         get :index
         assigns(:blogs).should eq [active_blog]
       end
-
-      it "assigns @news_blogs" do
-        blog = create :blog
-        get :index
-        assigns(:news_blogs).should eq [blog]
-      end
-
-      it "assigns @non_news_blogs" do
-        blog = create :blog
-        get :index
-        assigns(:non_news_blogs).should eq [blog]
-      end
     end
   end
 

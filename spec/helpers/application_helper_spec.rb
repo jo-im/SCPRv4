@@ -52,14 +52,14 @@ describe ApplicationHelper do
 
     sphinx_spec
 
-    it "#latest_news only gets objects where category is news" do
-      story1 = create :news_story, category: category
-      story2 = create :news_story, category: category
+    it "#latest_news gets all objects with limit" do
+      story1 = create :news_story, category: category, published_at: 1.week.ago
+      story2 = create :news_story, category: category, published_at: 1.day.ago
 
       index_sphinx
 
       ts_retry(2) do
-        helper.latest_news.should eq [story1].map(&:to_article)
+        helper.latest_news.should eq [story2, story1].map(&:to_article)
       end
     end
   end
