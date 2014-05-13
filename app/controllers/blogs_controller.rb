@@ -6,7 +6,7 @@ class BlogsController < ApplicationController
 
   def index
     @blogs = Blog.active.order("name")
-    render layout:    "application"
+    render layout: "application"
   end
 
   #----------
