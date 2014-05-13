@@ -22,7 +22,7 @@ Scprv4::Application.configure do
   config.eager_load     = false
   config.consider_all_requests_local = true
   config.action_controller.perform_caching = false
-  config.cache_store = :redis_content_store, config.secrets["redis"]
+  config.cache_store = :redis_content_store, config.secrets["cache"]
   config.action_controller.action_on_unpermitted_parameters = :raise
 
   config.assets.debug         = false # Expand
