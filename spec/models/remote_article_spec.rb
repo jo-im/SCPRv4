@@ -55,8 +55,8 @@ describe RemoteArticle do
     it 'is the importer module' do
       article = build :remote_article, source: "npr"
       article.importer.should eq NprArticleImporter
-      article.source = "chr"
-      article.importer.should eq ChrArticleImporter
+      article.source = "pmp"
+      article.importer.should eq PmpArticleImporter
     end
   end
 
