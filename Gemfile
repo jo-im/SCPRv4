@@ -7,7 +7,6 @@ gem 'jquery-rails', '~> 3.1.0'
 gem "bcrypt-ruby", "~> 3.1.0"
 gem 'thinking-sphinx', '~> 3.1.0'
 gem 'secretary-rails', github: "SCPR/secretary-rails"
-gem 'actionpack-action_caching'
 
 ## Outpost
 gem 'outpost-cms', github: 'SCPR/outpost'
