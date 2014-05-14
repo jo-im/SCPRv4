@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe Job::SyncRemoteArticles do
   subject { described_class }
-  its(:queue) { should eq "scprv4:mid_priority" }
+  it { subject.queue.should eq "scprv4:mid_priority" }
 
   before :each do
     stub_request(:get, %r|api\.npr|).to_return({

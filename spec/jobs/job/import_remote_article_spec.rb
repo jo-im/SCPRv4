@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe Job::ImportRemoteArticle do
   subject { described_class }
-  its(:queue) { should eq "scprv4:high_priority" }
+  it { subject.queue.should eq "scprv4:high_priority" }
 
   before :each do
     stub_request(:get, %r|api\.npr|).to_return({

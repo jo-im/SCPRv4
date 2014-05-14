@@ -69,7 +69,7 @@ describe ContentEmail do
 
       it "is invalid when content_key isn't allowed" do
         content_email.content_key = "admin_user-123"
-        content_email.valid?.should be_false
+        content_email.valid?.should eq false
         content_email.errors.keys.should include :base
       end
 

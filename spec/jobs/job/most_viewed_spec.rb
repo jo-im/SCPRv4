@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe Job::MostViewed do
   subject { described_class }
-  its(:queue) { should eq "scprv4:low_priority" }
+  it { subject.queue.should eq "scprv4:low_priority" }
 
   describe '::perform' do
     it "fetches and parses the analytics, then writes to cache" do
