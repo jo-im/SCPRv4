@@ -8,11 +8,6 @@ describe RemoteArticle do
         :body => load_fixture('api/npr/stories.json')
       })
 
-      stub_request(:get, %r|publish2|).to_return({
-        :content_type => "application/json",
-        :body => load_fixture('api/chr/stories.json')
-      })
-
       PMP::CollectionDocument.any_instance.stub(:oauth_token) { "token" }
 
       stub_request(:get, %r|pmp\.io/?$|).to_return({
