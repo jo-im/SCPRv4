@@ -19,9 +19,6 @@ Dir[Rails.root.join("spec/fixtures/factories/*.rb")].each { |f| require f }
 
 WebMock.disable_net_connect!
 
-# Rspec-mocks 3 calls `respond_to?()` on the object it's mocking.
-# Rails.configuration overrides `respond_to?`. 4.0 overrode it improperly,
-# so we need this until we can upgrade to 4.1 (where it was fixed).
 module Marshal
   class << self
     def dump_with_mocks(object, *rest)
