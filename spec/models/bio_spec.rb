@@ -85,9 +85,9 @@ describe Bio do
       bio.headshot.should be_a AssetHost::Asset
     end
 
-    it "returns false if asset_id isn't set" do
+    it "returns nil if asset_id isn't set" do
       bio = create :bio, asset_id: nil
-      bio.headshot.should be_false
+      bio.headshot.should eq nil
     end
   end
 end

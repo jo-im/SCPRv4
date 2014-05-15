@@ -209,13 +209,13 @@ describe RecurringScheduleRule do
     end
 
     it "destroys and replaces all future occurrences" do
-      rule.schedule_occurrences.all? { |o| o.starts_at.wday == 1 }.should be_true
+      rule.schedule_occurrences.all? { |o| o.starts_at.wday == 1 }.should eq true
 
       # Change the rule and save to trigger rebuilding
       rule.days = [2]
       rule.save!
 
-      rule.schedule_occurrences(true).all? { |o| o.starts_at.wday == 2 }.should be_true
+      rule.schedule_occurrences(true).all? { |o| o.starts_at.wday == 2 }.should eq true
     end
 
     it "rebuilds occurrences through the end of next month" do

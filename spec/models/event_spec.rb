@@ -73,19 +73,19 @@ describe Event do
     it "is true if > 24 hours" do
       event = Event.new
       event.stub(:minutes) { 60*48 }
-      event.multiple_days?.should be_true
+      event.multiple_days?.should eq true
     end
 
     it "is false if < 24 hours" do
       event = Event.new
       event.stub(:minutes) { 60*12 }
-      event.multiple_days?.should be_false
+      event.multiple_days?.should eq false
     end
 
     it "is false if == 24 hours" do
       event = Event.new
       event.stub(:minutes) { 60*24 }
-      event.multiple_days?.should be_false
+      event.multiple_days?.should eq false
     end
   end
 
@@ -106,7 +106,7 @@ describe Event do
       event = Event.new
       event.stub(:multiple_days?) { true }
       event.stub(:current?) { true }
-      event.ongoing?.should be_true
+      event.ongoing?.should eq true
     end
   end
 
@@ -115,12 +115,12 @@ describe Event do
   describe "#upcoming?" do
     it "is true if the start time is greater than right now" do
       event = build :event, ends_at: nil, starts_at: 1.hour.from_now
-      event.upcoming?.should be_true
+      event.upcoming?.should eq true
     end
 
     it "is false if the event start time is in the past" do
       event = build :event, ends_at: nil, starts_at: 1.hour.ago
-      event.upcoming?.should be_false
+      event.upcoming?.should eq false
     end
   end
 
@@ -134,27 +134,27 @@ describe Event do
 
     it "is true if Time.now is between the start and end times" do
       event = build :event, :current
-      event.current?.should be_true
+      event.current?.should eq true
     end
 
     it "is true if ends_at is blank and Time.now is between start time and end of day" do
       event = build :event, starts_at: 1.hour.ago, ends_at: nil
-      event.current?.should be_true
+      event.current?.should eq true
     end
 
     it "is false if start time is in the future" do
       event = build :event, :future
-      event.current?.should be_false
+      event.current?.should eq false
     end
 
     it "is false if event ends_at is in the past" do
       event = build :event, :past
-      event.current?.should be_false
+      event.current?.should eq false
     end
 
     it "is false if no ends_at and event starts_at was yeserday" do
       event = build :event, starts_at: Time.now.yesterday
-      event.current?.should be_false
+      event.current?.should eq false
     end
   end
 
@@ -242,13 +242,13 @@ describe Event do
     it "is true if event type in the ForumTypes variable" do
       Event::ForumTypes.each do |event_type|
         event = build :event, event_type: event_type
-        event.is_forum_event?.should be_true
+        event.is_forum_event?.should eq true
       end
     end
 
     it "is false if event is something else" do
       event = build :event, event_type: "spon"
-      event.is_forum_event?.should be_false
+      event.is_forum_event?.should eq false
     end
   end
 

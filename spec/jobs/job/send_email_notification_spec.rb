@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe Job::SendEmailNotification do
   subject { described_class }
-  its(:queue) { should eq "scprv4:mid_priority" }
+  it { subject.queue.should eq "scprv4:mid_priority" }
 
   before :each do
     stub_request(:post, %r|assets/email|).to_return({
@@ -52,10 +52,10 @@ describe Job::SendEmailNotification do
 
         create :edition_slot, edition: edition, item: abstract1
         create :edition_slot, edition: edition, item: abstract2
-        edition.email_sent?.should be_false
+        edition.email_sent?.should eq false
 
         Job::SendEmailNotification.perform("Edition", edition.id)
-        edition.reload.email_sent?.should be_true
+        edition.reload.email_sent?.should eq true
       end
     end
   end

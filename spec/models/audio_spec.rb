@@ -46,9 +46,9 @@ describe Audio do
   describe '#publish' do
     it "updates the status to live" do
       audio = create :audio, :enco
-      audio.published?.should be_false
+      audio.published?.should eq false
       audio.publish
-      audio.published?.should be_true
+      audio.published?.should eq true
     end
   end
 
@@ -88,7 +88,7 @@ describe Audio do
       .with(Job::ComputeAudioFileInfo, kind_of(Integer))
 
       audio = build :audio, :direct
-      audio.async_compute_file_info.should be_false
+      audio.async_compute_file_info.should eq false
     end
   end
 
@@ -199,7 +199,7 @@ describe Audio do
         :mp3            => nil,
         :url            => nil
 
-      audio.valid?.should be_false
+      audio.valid?.should eq false
       audio.errors.keys.should include :base
       audio.errors[:base].first.should match /must have a source/
     end
@@ -209,7 +209,7 @@ describe Audio do
         :enco_number    => 999,
         :enco_date      => nil
 
-      audio.valid?.should be_false
+      audio.valid?.should eq false
       audio.errors.keys.should include :enco_number
       audio.errors.keys.should include :enco_date
       audio.errors[:base].first.should match /must both be present/
@@ -220,7 +220,7 @@ describe Audio do
         :enco_number    => nil,
         :enco_date      => Date.today
 
-      audio.valid?.should be_false
+      audio.valid?.should eq false
       audio.errors.keys.should include :enco_number
       audio.errors.keys.should include :enco_date
       audio.errors[:base].first.should match /must both be present/
