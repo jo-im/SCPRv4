@@ -19,15 +19,6 @@ Dir[Rails.root.join("spec/fixtures/factories/*.rb")].each { |f| require f }
 
 WebMock.disable_net_connect!
 
-module Marshal
-  class << self
-    def dump_with_mocks(object, *rest)
-      dump_without_mocks(object, *rest)
-    end
-  end
-end
-
-
 RSpec.configure do |config|
   config.use_transactional_fixtures = false
   config.infer_base_class_for_anonymous_controllers = true
