@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140514190552) do
+ActiveRecord::Schema.define(version: 20140515174722) do
 
   create_table "abstracts", force: true do |t|
     t.string   "source"
@@ -94,7 +94,7 @@ ActiveRecord::Schema.define(version: 20140514190552) do
 
   create_table "blogs_blog", force: true do |t|
     t.string   "name"
-    t.string   "slug",                limit: 50
+    t.string   "slug"
     t.text     "description",         limit: 2147483647
     t.boolean  "is_active",                              default: false, null: false
     t.boolean  "is_news",                                                null: false
@@ -123,7 +123,7 @@ ActiveRecord::Schema.define(version: 20140514190552) do
 
   create_table "blogs_entry", force: true do |t|
     t.string   "headline"
-    t.string   "slug",             limit: 50
+    t.string   "slug"
     t.text     "body",             limit: 2147483647
     t.integer  "blog_id"
     t.datetime "published_at"
@@ -184,11 +184,11 @@ ActiveRecord::Schema.define(version: 20140514190552) do
 
   create_table "contentbase_category", force: true do |t|
     t.string   "title"
-    t.string   "slug",              limit: 50
-    t.boolean  "is_news",                      default: true, null: false
+    t.string   "slug"
+    t.boolean  "is_news",           default: true, null: false
     t.integer  "comment_bucket_id"
-    t.datetime "created_at",                                  null: false
-    t.datetime "updated_at",                                  null: false
+    t.datetime "created_at",                       null: false
+    t.datetime "updated_at",                       null: false
     t.string   "description"
   end
 
@@ -333,7 +333,7 @@ ActiveRecord::Schema.define(version: 20140514190552) do
 
   create_table "events", force: true do |t|
     t.string   "headline"
-    t.string   "slug",                limit: 50
+    t.string   "slug"
     t.text     "body",                limit: 2147483647
     t.string   "event_type"
     t.string   "sponsor"
@@ -566,7 +566,7 @@ ActiveRecord::Schema.define(version: 20140514190552) do
 
   create_table "news_story", force: true do |t|
     t.string   "headline"
-    t.string   "slug",             limit: 50
+    t.string   "slug"
     t.string   "news_agency"
     t.text     "teaser",           limit: 2147483647
     t.text     "body",             limit: 2147483647
@@ -600,7 +600,7 @@ ActiveRecord::Schema.define(version: 20140514190552) do
   add_index "permissions", ["resource"], name: "index_permissions_on_resource_and_action", using: :btree
 
   create_table "pij_query", force: true do |t|
-    t.string   "slug",         limit: 50
+    t.string   "slug"
     t.string   "headline"
     t.text     "teaser",       limit: 2147483647
     t.text     "body",         limit: 2147483647
@@ -789,7 +789,7 @@ ActiveRecord::Schema.define(version: 20140514190552) do
   create_table "shows_segment", force: true do |t|
     t.integer  "show_id",                             null: false
     t.string   "headline"
-    t.string   "slug",             limit: 50
+    t.string   "slug"
     t.text     "teaser",           limit: 2147483647
     t.text     "body",             limit: 2147483647
     t.datetime "created_at",                          null: false
