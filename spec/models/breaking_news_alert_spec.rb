@@ -36,19 +36,19 @@ describe BreakingNewsAlert do
       alert = create :breaking_news_alert, :mobile, :published
       alert.mobile_notification_sent?.should eq false
 
-      alert.publish_mobile_notification
+      silence_stream(STDERR) { alert.publish_mobile_notification }
       alert.reload.mobile_notification_sent?.should eq true
     end
 
     it 'returns false and does not publish if it is not published' do
       alert = create :breaking_news_alert, :mobile, :draft
-      alert.publish_mobile_notification.should eq false
+      silence_stream(STDERR) { alert.publish_mobile_notification }.should eq false
       alert.reload.mobile_notification_sent?.should eq false
     end
 
     it 'returns false and does not publish if it is not mobilized' do
       alert = create :breaking_news_alert, :published
-      alert.publish_mobile_notification.should eq false
+      silence_stream(STDERR) { alert.publish_mobile_notification }.should eq false
       alert.reload.mobile_notification_sent?.should eq false
     end
   end
