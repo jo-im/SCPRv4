@@ -2,6 +2,19 @@
 <% meta_tags(url: @vertical.public_url) %>
 <% content_for :body_class, "landing #{@vertical.slug}" %>
 
+<% content_for :footer_sponsors do %>
+<aside class="grant">
+    <div class="inner bound">
+        <section class="tier gold">
+            <h1>KPCC's business coverage is supported by</h1>
+            <ul>
+                <li><span>Gordon and Dona Crawford</span></li>
+            </ul>
+        </section>
+    </div>
+</aside>
+<% end %>
+
 <%= cache ["vertical", @vertical, @category] do %>
 
 <% lead_article = @vertical.featured_articles.first %>

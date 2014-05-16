@@ -3,6 +3,7 @@ $font-freight: "freight-sans-pro", "Avenir Next", "Avenir", "Lucida Grande", "Co
 $font-prox: "proxima-nova", "Avenir Next", "Avenir", "Lucida Grande", "Corbel", "Tahoma", Arial, sans-serif;
 $font-proxcond: "proxima-nova-condensed", "Avenir Next Condensed", "Arial Narrow", Arial, sans-serif;
 $font-merri: "merriweatherregular", "Baskerville", "Garamond", "Cambria", Georgia, serif;
+$font-merri-light: "merriweatherlight", "Baskerville", "Garamond", "Cambria", Georgia, serif;
 $font-merri-lightital: "merriweatherlight_italic", "Baskerville", "Garamond", "Cambria", Georgia, serif;
 $font-merri-ital: "merriweatheritalic", "Baskerville", "Garamond", "Cambria", Georgia, serif;
 $font-merri-bold: "merriweatherbold", "Baskerville", "Garamond", "Cambria", Georgia, serif;
@@ -753,44 +754,88 @@ The only thing that's dynamic about it is that, in the case of Landing, we list 
     }
 
 //  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+//  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~  
     .grant {
         border-bottom: 1px solid #3d3d3d;
         margin-bottom: 13px;
+        
         .inner {
             position: relative;
             min-height: 27px;
-            padding-bottom: 30px;
+            padding-bottom: 35px;
         }
         h1 {
             font-family: $font-prox;
-            margin-bottom: 20px;
-            color: gray;
-            font-weight: 300;
-            span { font-style: italic; }
+            text-transform: uppercase;
+            text-align: center;
+            border-top: 1px solid #a65516;
+            color: #f67d21;
+            font-size: 0.75em;
+            font-weight: 700;
+            padding-top: 0.5em;
+            margin-bottom: 2em;
+        }
+        ul {
+            text-align: center;
+            padding: 0 5%;
         }
         li {
-            padding: 4px 0 9px 46px;
-            margin-bottom: 10px;
-            font-family: $font-merri;
-            font-size: 1.0625em;
-            line-height: 1.4;
             color: white;
-            span { font-style: italic; }
-            background-repeat: no-repeat;
-            background-position: 0 0;
-            background-size: 24px;
-            @media screen and (max-width: 850px) { font-size: 0.9375em; }
-            &.ford          { background-image: image-url("logo-ford.png"); }
-            &.irvine        { background-image: image-url("logo-irvine.png"); }
-            &.cpb           { background-image: image-url("logo-cpb.png"); }
+            font-family: $font-merri-light;
+            display: inline-block;
+            white-space: nowrap;
+            background: image-url("i/ephemera-donut-orange.png") no-repeat 0 0.37em;
+            padding-left: 23px;
+            margin-right: 10px;
+            margin-bottom: 1em;
+            background-size: 10px 10px;
         }
+        .tier {
+            margin-bottom: 25px;
+            &.gold li       { font-size: 1.5em; /* 24 / 16 */ }
+            &.silver h1     { border-top-color: #227794; color: #30a7cf; }
+            &.silver li     { font-size: 1.125em; /* 18 / 16 */ background-position: 0 0.25em; background-image: image-url("i/ephemera-donut-blue.png"); }
+            &.bronze li     { font-size: 1emem; /* 15 / 16 */ color: #ccc; background-image: image-url("i/ephemera-donut-gray.png"); background-position: 0 0.3em; background-size: 7px 7px; padding-left: 20px; }
+            &.bronze        { border-top: 1px solid #484848; padding-top: 25px; }
+            li:first-child  { padding-left: 0; background: none; }
+            li:last-child   { margin-right: 0; }
+        }
+
+        //  ------------------------------------------------------------------------------------------------
+            @media screen and (max-width: 780px) {
+
+                font-size: 85%;
+                li {
+                    white-space: normal;
+                    margin-bottom: 0.7em;
+                }
+                .tier.gold li,
+                .tier.silver li {
+                    display: block;
+                    background: none;
+                    padding: 0;
+                    margin-right: 0;
+                }
+
+            }
+        //  ------------------------------------------------------------------------------------------------
+            @media screen and (max-width: 650px) {
+
+                font-size: 70%;
+                .tier.bronze li {
+                    display: block;
+                    background: none;
+                    padding: 0;
+                    margin-right: 0;
+                }
+
+            }
+        //  ------------------------------------------------------------------------------------------------
 
     }
 
 //  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     .cols {
-        border-bottom: 1px solid #19566a;
-        margin-bottom: 18px;
         padding-bottom: 30px;
         text-transform: uppercase;
         .cols-pair {
