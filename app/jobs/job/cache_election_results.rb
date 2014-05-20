@@ -106,7 +106,7 @@ module Job
         RACES.include?(c["ContestIdentifier"]["ContestName"])
       end
 
-      @reporting_stats = MultiXml.parse(File.read(REPORTING_XML))d["EML"]["Statistics"]["Election"]["Contests"]["Contest"]["TotalVotes"]["CountMetric"]
+      @reporting_stats = MultiXml.parse(File.read(REPORTING_XML))["EML"]["Statistics"]["Election"]["Contests"]["Contest"]["TotalVotes"]["CountMetric"]
     end
 
 
@@ -121,7 +121,7 @@ module Job
         reporting_percentage = @reporting_stats.find { |m| m["Id"] == "PP" }["__content__"].to_i
 
         if d = DataPoint.where(data_key: reporting_key, group_name: GROUP).first
-          d.update_attribute(:data_value, reporting)
+          d.update_attribute(:data_value, reporting_percentage)
         else
           DataPoint.create(
             :title        => contest_name,
