@@ -12,6 +12,7 @@
 /config/sphinx.yml
 /config/thinking_sphinx.yml
 /config/deploy_config.yml
+/config/shards.yml
 
 /config/environments/development.rb
 /db/*.sqlite3
