@@ -106,32 +106,36 @@ module Job
         RACES.include?(c["ContestIdentifier"]["ContestName"])
       end
 
+      @props = MultiXml.parse(File.read(PROP_XML))["EML"]["Count"]["Election"]["Contests"]["Contest"].select do |c|
+        RACES.include?(c["ContestIdentifier"]["ContestName"])
+      end
+
+      binding.pry
       @reporting_stats = MultiXml.parse(File.read(REPORTING_XML))["EML"]["Statistics"]["Election"]["Contests"]["Contest"]["TotalVotes"]["CountMetric"]
     end
 
 
     def update_data
+      reporting_key = "percent_reporting"
+
+      # Get rid of the decimal places
+      reporting_percentage = @reporting_stats.find { |m| m["Id"] == "PP" }["__content__"].to_i
+
+      if d = DataPoint.where(data_key: reporting_key, group_name: GROUP).first
+        d.update_attribute(:data_value, reporting_percentage)
+      else
+        DataPoint.create(
+          :title        => "Percent Precincts Reporting",
+          :data_key     => reporting_key,
+          :data_value   => reporting_percentage,
+          :group_name   => GROUP,
+          :notes        => "no % symbol"
+        )
+      end
+
       @contests.each do |contest|
         contest_name = contest["ContestIdentifier"]["ContestName"]
         contest_key_prefix = RACES[contest_name]
-
-        reporting_key = "percent_reporting"
-
-        # Get rid of the decimal places
-        reporting_percentage = @reporting_stats.find { |m| m["Id"] == "PP" }["__content__"].to_i
-
-        if d = DataPoint.where(data_key: reporting_key, group_name: GROUP).first
-          d.update_attribute(:data_value, reporting_percentage)
-        else
-          DataPoint.create(
-            :title        => contest_name,
-            :data_key     => reporting_key,
-            :data_value   => reporting_percentage,
-            :group_name   => GROUP,
-            :notes        => "no % symbol"
-          )
-        end
-
 
         Array.wrap(contest["TotalVotes"]["Selection"]).each do |candidate|
           candidate_name = candidate["Candidate"]["CandidateFullName"]["PersonFullName"]
