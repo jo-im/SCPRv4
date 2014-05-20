@@ -5,11 +5,8 @@ module Job
 
     GROUP = "election-june2014"
 
-    CONTEST_XML = "/Users/bryan/projects/sosxml/X14GP510v7.xml"
-    # CONTEST_XML = "/web/scprv4/sosxml/X14GP510v7.xml"
-
-    REPORTING_XML = "/Users/bryan/projects/sosxml/X14GP530v7.xml"
-    # REPORTING_XML = "/web/scprv4/sosxml/X14GP530v7.xml"
+    CONTEST_XML = "/web/scprv4/sosxml/X14GP510v7.xml"
+    REPORTING_XML = "/web/scprv4/sosxml/X14GP530v7.xml"
 
     RACES = {
       "Attorney General - Statewide Results"          => "ca.attorney_general",
