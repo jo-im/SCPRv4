@@ -2,8 +2,6 @@ class BlogsController < ApplicationController
   before_filter :load_blog, except: [:index, :entry]
   respond_to :html, :xml, :rss
 
-  caches_action :entry, if: -> { params[:id].to_i == 16634 }, expires_in: 10.minutes
-
   #----------
 
   def index
