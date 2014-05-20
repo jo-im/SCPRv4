@@ -135,8 +135,8 @@ module Job
 
         Array.wrap(contest["TotalVotes"]["Selection"]).each do |candidate|
           candidate_name = candidate["Candidate"]["CandidateFullName"]["PersonFullName"]
-          candidate_key = contest_key_prefix + ":" + candidate_name.underscore
-          percent_votes = candidate["CountMetric"]["__content__"]
+          candidate_key = contest_key_prefix + ":" + candidate_name.parameterize.underscore
+          percent_votes = candidate["CountMetric"]["__content__"].to_i
 
           if d = DataPoint.where(data_key: candidate_key, group_name: GROUP).first
             d.update_attribute(:data_value, percent_votes)
