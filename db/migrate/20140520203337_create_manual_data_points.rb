@@ -54,6 +54,7 @@ class CreateManualDataPoints < ActiveRecord::Migration
     ]
 
     group = "elections-june2014"
+    note = "Percentage; Number Only (no % symbol)"
 
     races.each do |race|
       DataPoint.create(
@@ -61,7 +62,7 @@ class CreateManualDataPoints < ActiveRecord::Migration
         :data_key     => race[:key] + ":reporting",
         :data_value   => "0",
         :group_name   => group,
-        :notes        => "no % symbol"
+        :notes        => note
       )
 
       race[:candidates].each do |candidate|
@@ -72,7 +73,7 @@ class CreateManualDataPoints < ActiveRecord::Migration
           :data_key     => candidate_key,
           :data_value   => "0",
           :group_name   => group,
-          :notes        => "Percent Votes (no % symbol)"
+          :notes        => note
         )
       end
     end

@@ -4,6 +4,7 @@ module Job
 
 
     GROUP = "election-june2014"
+    NOTE = "Percentage; Number Only (no % symbol)"
 
     CONTEST_XML   = "/web/scprv4/sosxml/X14GP510v7.xml"
     REPORTING_XML = "/web/scprv4/sosxml/X14GP530v7.xml"
@@ -132,7 +133,7 @@ module Job
           :data_key     => reporting_key,
           :data_value   => reporting_percentage,
           :group_name   => GROUP,
-          :notes        => "no % symbol"
+          :notes        => NOTE
         )
       end
 
@@ -155,7 +156,7 @@ module Job
             :data_key     => yes_key,
             :data_value   => percent_yes,
             :group_name   => GROUP,
-            :notes        => "Percent Votes (no % symbol)"
+            :notes        => NOTE
           )
         end
 
@@ -168,7 +169,7 @@ module Job
             :data_key     => no_key,
             :data_value   => percent_no,
             :group_name   => GROUP,
-            :notes        => "Percent Votes (no % symbol)"
+            :notes        => NOTE
           )
         end
       end
@@ -191,7 +192,7 @@ module Job
               :data_key     => candidate_key,
               :data_value   => percent_votes,
               :group_name   => GROUP,
-              :notes        => "Percent Votes (no % symbol)"
+              :notes        => NOTE
             )
           end
         end
