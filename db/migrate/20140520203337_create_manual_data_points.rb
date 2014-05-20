@@ -50,7 +50,24 @@ class CreateManualDataPoints < ActiveRecord::Migration
           "Eric Preven",
           "Bobby Shriver"
         ]
+      },
+      {
+        :title => "Prop 41: Veteran/Homeless",
+        :key   => "prop.41",
+        :candidates => [
+          "Yes",
+          "No"
+        ]
+      },
+      {
+        :title => "Prop 42: Public Records",
+        :key   => "prop.42",
+        :candidates => [
+          "Yes",
+          "No"
+        ]
       }
+
     ]
 
     group = "elections-june2014"
