@@ -5,8 +5,9 @@ module Job
 
     GROUP = "election-june2014"
 
-    CONTEST_XML = "/web/scprv4/sosxml/X14GP510v7.xml"
+    CONTEST_XML   = "/web/scprv4/sosxml/X14GP510v7.xml"
     REPORTING_XML = "/web/scprv4/sosxml/X14GP530v7.xml"
+    PROP_XML      = "/web/scprv4/sosxml/X14GP510_1900v7.xml"
 
     RACES = {
       "Attorney General - Statewide Results"          => "ca.attorney_general",
@@ -89,6 +90,9 @@ module Job
       "State Assembly District 70 - Districtwide Results" => "assembly.d70",
       "State Assembly District 71 - Districtwide Results" => "assembly.d71",
       "State Assembly District 75 - Districtwide Results" => "assembly.d75",
+
+      "Veterans Housing & Homeless Bond Act of 2014" => "prop.41",
+      "Public Records. Open Meetings. Reimbursements." => "prop.42"
     }
 
     class << self
@@ -110,7 +114,6 @@ module Job
         RACES.include?(c["ContestIdentifier"]["ContestName"])
       end
 
-      binding.pry
       @reporting_stats = MultiXml.parse(File.read(REPORTING_XML))["EML"]["Statistics"]["Election"]["Contests"]["Contest"]["TotalVotes"]["CountMetric"]
     end
 
@@ -132,6 +135,44 @@ module Job
           :notes        => "no % symbol"
         )
       end
+
+      @props.each do |prop|
+        prop_name = prop["ContestIdentifier"]["ContestName"]
+        prop_key_prefix = RACES[prop_name]
+
+        yes_key = prop_key_prefix + ":yes"
+        no_key  = prop_key_prefix + ":no"
+
+        percent_yes = prop["TotalVotes"]["CountMetric"].find { |m| m["Id"] == "PYV" }["__content__"].to_i
+        percent_no = prop["TotalVotes"]["CountMetric"].find { |m| m["Id"] == "PNV" }["__content__"].to_i
+
+        # YES
+        if d = DataPoint.where(data_key: yes_key, group_name: GROUP).first
+          d.update_attribute(:data_value, percent_yes)
+        else
+          DataPoint.create(
+            :title        => prop_name + ": Yes",
+            :data_key     => yes_key,
+            :data_value   => percent_yes,
+            :group_name   => GROUP,
+            :notes        => "Percent Votes (no % symbol)"
+          )
+        end
+
+        # NO
+        if d = DataPoint.where(data_key: no_key, group_name: GROUP).first
+          d.update_attribute(:data_value, percent_no)
+        else
+          DataPoint.create(
+            :title        => prop_name + ": No",
+            :data_key     => no_key,
+            :data_value   => percent_no,
+            :group_name   => GROUP,
+            :notes        => "Percent Votes (no % symbol)"
+          )
+        end
+      end
+
 
       @contests.each do |contest|
         contest_name = contest["ContestIdentifier"]["ContestName"]
