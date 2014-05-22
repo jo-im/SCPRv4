@@ -8,8 +8,9 @@ class AddNoteForManualEntry < ActiveRecord::Migration
     ]
 
     races.each do |key|
-      dp = DataPoint.where(data_key: key).first
-      dp.update_attribute(:notes, dp.notes + "; MANUAL ENTRY")
+      DataPoint.where("data_key like (?)", "#{key}%").each do |dp|
+        dp.update_attribute(:notes, dp.notes + "; MANUAL ENTRY")
+      end
     end
   end
 
