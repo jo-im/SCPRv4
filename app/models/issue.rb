@@ -4,6 +4,7 @@ class Issue < ActiveRecord::Base
 
   include Concern::Validations::SlugValidation
   include Concern::Callbacks::SphinxIndexCallback
+  include Concern::Associations::TagsAssociation
 
   self.public_route_key = 'issue'
 

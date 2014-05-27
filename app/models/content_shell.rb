@@ -10,6 +10,7 @@ class ContentShell < ActiveRecord::Base
   include Concern::Associations::AssetAssociation
   include Concern::Associations::BylinesAssociation
   include Concern::Associations::IssueAssociation
+  include Concern::Associations::TagsAssociation
   include Concern::Associations::FeatureAssociation
   include Concern::Associations::CategoryAssociation
   include Concern::Associations::HomepageContentAssociation

@@ -36,6 +36,7 @@ Outpost::Config.configure do |config|
     "ScheduleOccurrence",
     "ShowEpisode",
     "ShowSegment",
+    "Tag",
     "Vertical"
   ]
 

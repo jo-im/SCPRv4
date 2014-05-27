@@ -168,6 +168,7 @@ Scprv4::Application.routes.draw do
         resources :episodes, only: [:index, :show]
         resources :blogs, only: [:index, :show]
         resources :data_points, only: [:index, :show]
+        resources :tags, only: [:index, :show]
 
         resources :schedule, controller: 'schedule_occurrences',only: [:index] do
           collection do
@@ -249,6 +250,7 @@ Scprv4::Application.routes.draw do
     resources :abstracts, concerns: [:search]
     resources :editions, concerns: [:search]
     resources :verticals
+    resources :tags, concerns: [:search]
 
     resources :homepages, concerns: [:preview, :search]
     resources :pij_queries, concerns: [:preview, :search]
