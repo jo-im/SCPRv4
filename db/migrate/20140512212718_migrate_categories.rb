@@ -1,11 +1,5 @@
 class MigrateCategories < ActiveRecord::Migration
   def up
-    add_column :contentbase_category, :short_title, :string
-
-    Category.all.each do |category|
-      category.update_column(:short_title, category.title)
-    end
-
     category_classes = [
       Abstract,
       ContentShell,
@@ -20,30 +14,29 @@ class MigrateCategories < ActiveRecord::Migration
 
     # Update titles
     politics = Category.find_by_slug!("politics")
-    politics.update_columns(title: "Politics", short_title: "Politics")
+    politics.update_columns(title: "Politics")
 
     business = Category.find_by_slug!("money")
-    business.update_columns(title: "Business & Economy", short_title: "Business", slug: "business")
+    business.update_columns(title: "Business & Economy", slug: "business")
 
     crime = Category.find_by_slug!("crime")
-    crime.update_columns(title: "Crime & Justice", short_title: "Crime & Justice")
+    crime.update_columns(title: "Crime & Justice")
 
     environment = Category.find_by_slug!("environment")
-    environment.update_columns(title: "Environment & Science", short_title: "Science")
+    environment.update_columns(title: "Environment & Science")
 
     local = Category.find_by_slug!("local")
-    local.update_columns(title: "Local", short_title: "Local")
+    local.update_columns(title: "Local")
 
     world = Category.find_by_slug!("world")
-    world.update_columns(title: "US & World", short_title: "US & World")
+    world.update_columns(title: "US & World")
 
     arts = Category.find_by_slug!("arts")
-    arts.update_columns(title: "Arts & Entertainment", short_title: "Arts & Entertainment")
+    arts.update_columns(title: "Arts & Entertainment")
 
     # Create new category
     community = Category.create!(
-      :title          => "Emerging Communities",
-      :short_title    => "Immigrations & Emerging Communities",
+      :title          => "Immigrations & Emerging Communities",
       :slug           => "immigration")
 
 
