@@ -28,6 +28,7 @@ module Api::Public::V3
 
     before_filter :sanitize_obj_key, only: [:show]
     before_filter :sanitize_url, only: [:by_url]
+    before_filter :sanitize_tags, only: [:index]
 
     #---------------------------
 
@@ -156,6 +157,18 @@ module Api::Public::V3
 
       if ids.present?
         @conditions[:category] = ids
+      end
+    end
+
+
+    def sanitize_tags
+      return false if !params[:tags]
+
+      slugs   = params[:tags].to_s.split(',')
+      ids     = Tag.where(slug: slugs).map(&:id)
+
+      if ids.present?
+        @conditions[:tags] = ids
       end
     end
 
