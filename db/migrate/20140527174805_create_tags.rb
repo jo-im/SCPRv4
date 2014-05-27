@@ -10,7 +10,7 @@ class CreateTags < ActiveRecord::Migration
     end
 
     create_table :taggings do |t|
-      t.integer :taggable_type
+      t.string :taggable_type
       t.integer :taggable_id
       t.integer :tag_id
 
