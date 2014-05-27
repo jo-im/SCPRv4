@@ -36,7 +36,7 @@ class MigrateCategories < ActiveRecord::Migration
 
     # Create new category
     community = Category.create!(
-      :title          => "Immigrations & Emerging Communities",
+      :title          => "Immigration & Emerging Communities",
       :slug           => "immigration")
 
 
