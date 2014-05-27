@@ -814,7 +814,7 @@ ActiveRecord::Schema.define(version: 20140527175926) do
   add_index "shows_segment", ["updated_at"], name: "index_shows_segment_on_updated_at", using: :btree
 
   create_table "taggings", force: true do |t|
-    t.integer  "taggable_type"
+    t.string   "taggable_type"
     t.integer  "taggable_id"
     t.integer  "tag_id"
     t.datetime "created_at"
