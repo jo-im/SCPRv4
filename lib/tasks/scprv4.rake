@@ -1,4 +1,11 @@
 namespace :scprv4 do
+
+  task :election_feed => :environment do
+    log "Caching election results..."
+    perform_or_enqueue(Job::CacheElectionResults)
+  end
+
+
   task :test_rake => [:environment] do
     tasks = %w{
       scprv4:enqueue_index

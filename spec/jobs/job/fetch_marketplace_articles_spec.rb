@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe Job::FetchMarketplaceArticles do
   subject { described_class }
-  its(:queue) { should eq "scprv4:low_priority" }
+  it { subject.queue.should eq "scprv4:low_priority" }
 
   before :each do
     stub_request(:get, "http://www.marketplace.org/latest-stories/long-feed.xml")

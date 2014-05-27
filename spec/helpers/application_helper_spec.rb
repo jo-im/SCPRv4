@@ -241,7 +241,7 @@ describe ApplicationHelper do
 
     it "makes content_for :modal_content" do
       helper.modal("anything") { "Hello!" }
-      helper.content_for?(:modal_content).should be_true
+      helper.content_for?(:modal_content).should eq true
     end
 
     it "renders the modal_content block" do

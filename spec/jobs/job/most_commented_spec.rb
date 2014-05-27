@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe Job::MostCommented do
   subject { described_class }
-  its(:queue) { should eq "scprv4:low_priority" }
+  it { subject.queue.should eq "scprv4:low_priority" }
 
   describe "::perform" do
     it "fetches, parses, and caches the popular articles" do

@@ -66,10 +66,6 @@ test:
     public_key: xxx
     private_key: xxx
 
-  publish2:
-    user: xxx
-    pass: xxx
-
   parse:
     application_id: xxx
     api_key: xxx

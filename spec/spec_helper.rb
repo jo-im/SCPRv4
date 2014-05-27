@@ -5,7 +5,6 @@ Dir[Rails.root.join("spec/fixtures/db/*.rb")].each { |f| require f }
 silence_stream(STDOUT) { FixtureMigration.new.up }
 
 require 'rspec/rails'
-require 'rspec/autorun'
 require 'thinking_sphinx/test'
 require 'database_cleaner'
 require 'webmock/rspec'
