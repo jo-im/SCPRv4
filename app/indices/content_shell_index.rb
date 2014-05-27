@@ -14,6 +14,7 @@ ThinkingSphinx::Index.define :content_shell, with: :active_record do
 
   # For category/homepage building
   has category.id, as: :category
+  has tags.id, as: :tags
 
   # For megamenu
   has category.is_news, as: :category_is_news
