@@ -20,7 +20,7 @@ json.cache! [Api::Public::V3::VERSION, "v2", article.original_object] do
     end
   end
 
-  json.assets do |asset|
+  json.assets do
     json.partial! api_view_path("assets", "collection"),
       assets: article.assets
   end
@@ -34,5 +34,10 @@ json.cache! [Api::Public::V3::VERSION, "v2", article.original_object] do
     json.name       byline.display_name
     json.role_text  byline.role_text
     json.role       byline.role
+  end
+
+  json.tags do
+    json.partial! api_view_path("tags", "collection"),
+      tags: article.tags
   end
 end
