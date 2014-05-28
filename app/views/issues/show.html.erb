@@ -37,7 +37,7 @@
 <section class="backlog">
 
 <%= cache ["issues/show", "list", "v2", @paginated_articles.to_a] do %>
-    <%= render 'shared/new/waterfall_articles', articles: @paginated_articles, issue_tag_exists: false %>
+    <%= render 'shared/new/waterfall_articles', articles: @paginated_articles, display_header: false %>
 <% end %>
 
 <%= paginate @paginated_articles, theme: 'new', outer_window: 1 %>
