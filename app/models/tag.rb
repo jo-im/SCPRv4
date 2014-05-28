@@ -4,4 +4,6 @@ class Tag < ActiveRecord::Base
 
   validates :slug, uniqueness: true
   validates :title, presence: true
+
+  has_many :taggings, dependent: :destroy
 end
