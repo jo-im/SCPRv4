@@ -1,5 +1,5 @@
 class MigrateIssuesToTags < ActiveRecord::Migration
-  def change
+  def up
     Issue.all.each do |issue|
       tag = Tag.create(title: issue.title, slug: issue.slug)
       issue.tags << tag
@@ -10,5 +10,9 @@ class MigrateIssuesToTags < ActiveRecord::Migration
         article.original_object.save!
       end
     end
+  end
+
+  def down
+    # nope
   end
 end
