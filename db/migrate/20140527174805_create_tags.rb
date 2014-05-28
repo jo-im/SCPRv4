@@ -3,9 +3,12 @@ class CreateTags < ActiveRecord::Migration
     create_table :tags do |t|
       t.string :title
       t.string :slug # uuid for API
+      t.text :description
+      t.boolean :is_featured
       t.timestamps
 
       t.index :slug
+      t.index :is_featured
       t.index :created_at
     end
 
