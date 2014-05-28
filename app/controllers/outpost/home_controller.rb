@@ -4,6 +4,7 @@ class Outpost::HomeController < Outpost::BaseController
 
     # Get the latest activity
     @current_user_activities = current_user.activities
+      .where("created_at > ?", 1.week.ago)
       .order("created_at desc").limit(10)
 
     @latest_activities = Secretary::Version.order("created_at desc")
