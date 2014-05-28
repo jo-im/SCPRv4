@@ -1,5 +1,4 @@
 
-
 .interstitial.laup {
     .disclaimer {
         background: black;
@@ -29,7 +28,7 @@
         background: -ms-linear-gradient(top,  #3a9db0 0%,#60b7c5 70%,#60b7c5 100%); /* IE10+ */
         background: linear-gradient(to bottom,  #3a9db0 0%,#60b7c5 70%,#60b7c5 100%); /* W3C */
         filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#3a9db0', endColorstr='#60b7c5',GradientType=0 ); /* IE6-9 */
-    //  ----------------------------------------------------------------------------------------------------        
+    //  ----------------------------------------------------------------------------------------------------
         font-family: $font-prox;
         overflow: hidden;
         a       { display: block; width: 100%; }
@@ -92,25 +91,25 @@
     .message a:hover .outbound      { color: $blue; }
 
 
-//	. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+//  . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 
-	@media screen and (max-width: 1315px) {
+    @media screen and (max-width: 1315px) {
         .photo                      { right: 50px; bottom: -30px; }
         h1                          { font-size: 1.8125em; }
     }
 
-//	. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+//  . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 
-	@media screen and (max-width: 1000px) {
-	    .inner                      { padding-top: 30px; }
+    @media screen and (max-width: 1000px) {
+        .inner                      { padding-top: 30px; }
         .photo                      { right: 15px; width: 270px; bottom: 0; }
         h1                          { font-size: 1.5em; margin-right: 270px; }
     }
 
-//	. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+//  . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 
-	@media screen and (max-width: 890px) {
-	    .inner                      { padding-top: 40px; padding-bottom: 10px; }
+    @media screen and (max-width: 890px) {
+        .inner                      { padding-top: 40px; padding-bottom: 10px; }
         .photo                      { right: 0; width: 250px; }
         h1                          { margin-right: 200px; margin-bottom: 15px; z-index: 3; position: relative; }
         .secondary .logo            { width: 40px; }
@@ -119,38 +118,59 @@
     }
 
 
-//	. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+//  . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 
-	@media screen and (max-width: 650px) {
-	    .message {
+    @media screen and (max-width: 650px) {
+        .message {
             box-shadow:
                 inset 0 -100px 0 #60b7c6,
                 inset 0 -101px 0 #87cdda;
         }
-	    .inner                      { padding-top: 23px; padding-bottom: 138px; }
-	    h1                          { margin: 0 0 10px 0; text-align: center; border-bottom: 1px solid rgba(255,255,255,0.5); padding-bottom: 15px;}
-	    .secondary                  { margin: 0 auto; width: 80%; }
-	    .secondary figcaption       { margin-right: 0; padding-bottom: 15px; }
-	    .outbound                   { bottom: 20px; }
-	    .photo                      { right: auto; left: 30%; width: 185px; }
+        .inner                      { padding-top: 23px; padding-bottom: 138px; }
+        h1                          { margin: 0 0 10px 0; text-align: center; border-bottom: 1px solid rgba(255,255,255,0.5); padding-bottom: 15px;}
+        .secondary                  { margin: 0 auto; width: 80%; }
+        .secondary figcaption       { margin-right: 0; padding-bottom: 15px; }
+        .outbound                   { bottom: 20px; }
+        .photo                      { right: auto; left: 30%; width: 185px; }
     }
 
 
-//	. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+//  . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 
-	@media screen and (max-width: 550px) {
-	    h1                          { font-size: 1.25em; }
-	    .inner                      { padding-top: 18px; }
-	    .secondary                  { width: 90%; }
-	    .photo                      { left: 0; width: 170px; }
-	    .outbound                   { width: 125px; font-size: 1.125em; padding-top: 11px; }
+    @media screen and (max-width: 550px) {
+        h1                          { font-size: 1.25em; }
+        .inner                      { padding-top: 18px; }
+        .secondary                  { width: 90%; }
+        .photo                      { left: 0; width: 170px; }
+        .outbound                   { width: 125px; font-size: 1.125em; padding-top: 11px; }
     }
 
 
+    &.telescope {
+        .message {
+            background: #043156;
+            /* Old browsers */
+            background: -moz-linear-gradient(top, #043156 0%, #0d5077 100%);
+            /* FF3.6+ */
+            background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #043156), color-stop(100%, #0d5077));
+            /* Chrome,Safari4+ */
+            background: -webkit-linear-gradient(top, #043156 0%, #0d5077 100%);
+            /* Chrome10+,Safari5.1+ */
+            background: -o-linear-gradient(top, #043156 0%, #0d5077 100%);
+            /* Opera 11.10+ */
+            background: -ms-linear-gradient(top, #043156 0%, #0d5077 100%);
+            /* IE10+ */
+            background: linear-gradient(to bottom, #043156 0%, #0d5077 100%);
+            /* W3C */
+            filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#043156', endColorstr='#0d5077',GradientType=0 );
+            /* IE6-9 */
+        }
+    }
 
+    @media screen and (max-width: 650px) {
+        &.telescope .message {
+            box-shadow: inset 0 -100px 0 #0d5077, inset 0 -101px 0 #2d8bc2;
+        }
+    }
 
 }
-
-
-
-

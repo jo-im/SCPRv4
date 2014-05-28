@@ -1,13 +1,25 @@
+ignore([
+  %r{^\.sass-cache/*},
+  %r{^bin/*},
+  %r{^db/*},
+  %r{^log/*},
+  %r{^public/*},
+  %r{^script/*},
+  %r{^tmp/*},
+  %r{^vendor/*},
+])
+
 guard :resque, task: 'environment resque:work', environment: 'development' do
   watch(%r{^app/models/(.+)\.rb$})
   watch(%r{^app/jobs/.+\.rb$})
   watch(%r{^app/concerns/(.+)\.rb$})
+  watch(%r{^app/importers/(.+)\.rb$})
   watch(%r{^lib/(.+)\.rb$})
 
   watch(%r{^config/(.+)\.rb$})
 end
 
-guard :rspec, cli: "-c -f progress", all_on_start: false, all_after_pass: false do
+guard :rspec, cli: "-c -f progress --fail-fast", all_on_start: false, all_after_pass: false do
   watch(%r{^spec/.+_spec\.rb$})
 
   watch(%r{^app/(.+)\.rb$})                           { |m| "spec/#{m[1]}_spec.rb" }

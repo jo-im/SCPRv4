@@ -44,7 +44,7 @@
 
     <%= tag "link", rel: "alternate", type: "application/rss+xml", title: "RSS", href: meta_information[:rss_feed] || "http://scpr.org/feeds/all_news" %>
 
-    <link rel="shortcut icon" href="http://media.scpr.org/favicon.ico" type="image/x-icon" />
+    <%= favicon_link_tag '/favicon.ico' %>
 
     <%= stylesheet_link_tag "new/application", media: "screen" %>
     <%= javascript_include_tag "new/application" %>
@@ -60,10 +60,10 @@
 
 
     <script>
-      // User agent detection to dynamically display the appropriate Apple App Banners to iPads and iPhones 
+      // User agent detection to dynamically display the appropriate Apple App Banners to iPads and iPhones
       if (navigator.userAgent.match(/iPad/i)) {
         $('head').append('<meta name="apple-itunes-app" content="app-id=744160424"/>');
-      } 
+      }
       else if (navigator.userAgent.match(/iPhone/i) || navigator.userAgent.match(/iPod/i)) {
         $('head').append('<meta name="apple-itunes-app" content="app-id=293825085"/>');
       }

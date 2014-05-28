@@ -4,11 +4,11 @@
   <ul class="nav nav-tabs">
     <li class="active"><a href="#newsletter_tab1" data-toggle="tab">Breaking News</a></li>
     <li><span class="or">or</span></li>
-    <li><a href="#newsletter_tab2" data-toggle="tab">Daily Connect</a></li>
+    <li><a href="#newsletter_tab2" data-toggle="tab">Short List</a></li>
   </ul>
   <div class="tab-content">
+    <!-- Breaking News -->
     <div class="tab-pane active" id="newsletter_tab1">
-
       <form method="post" name="untitledForm-1359591262588" action="https://s1715082578.t.eloqua.com/e/f2" id="form148">
         <input value="untitledForm-1359591262588" type="hidden" name="elqFormName"  />
         <input value="1715082578" type="hidden" name="elqSiteId"  />
@@ -19,25 +19,30 @@
         <div style="display:none;"><input name="SCPRBreakingAlerts" type="checkbox" value="on" checked="checked"  /></div>
         <input type="submit" value="Subscribe" name="subscribe" class="btn"><br />
 
-        <div id="newsletter_eloqua-livevalidations" style="display: inline-block;width: 1px;height:20px;"></div>
+        <input type="hidden" name="elqCustomerGUID" value="">
+        <input type="hidden" name="elqCookieWrite" value="0">
+      </form>
+    </div>
+
+    <!-- Short List -->
+    <div class="tab-pane" id="newsletter_tab2">
+      <form method="post" name="shortlist-subscribe" action="https://s1715082578.t.eloqua.com/e/f2" id="form352">
+        <input value="shortlist-subscribe" type="hidden" name="elqFormName"  />
+        <input value="1715082578" type="hidden" name="elqSiteId"  />
+        <input name="elqCampaignId" type="hidden">
+
+        <p>Morning newsletter to start the day informed</p>
+        <input id="field0" name="emailAddress" type="text" class="required email" placeholder="Email address">
+
+        <div style="display:none;">
+          <input name="SCPRShortList" type="checkbox" value="on" checked="checked"  />
+        </div>
+
+        <input type="submit" value="Subscribe" name="subscribe" class="btn"><br />
 
         <input type="hidden" name="elqCustomerGUID" value="">
         <input type="hidden" name="elqCookieWrite" value="0">
       </form>
-
-    </div>
-    <div class="tab-pane" id="newsletter_tab2">
-      <div id="mc_embed_signup">
-        <form action="http://scpr.us2.list-manage2.com/subscribe/post?u=5e1e4451f92ffc0fa746da7fa&amp;id=4a625d116f" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate" target="_blank">
-          <p>Morning newsletter to start the day informed</p>
-          <input type="text" value="" placeholder="Email address" name="EMAIL" class="required email" id="mce-EMAIL">
-          <input type="submit" value="Subscribe" name="subscribe" id="mc-embedded-subscribe" class="btn">
-          <div id="mce-responses" style="margin:10px 0 0 0;">
-            <div class="response" id="mce-error-response" style="display:none"></div>
-            <div class="response" id="mce-success-response" style="display:none"></div>
-          </div>
-        </form>
-      </div>
     </div>
   </div>
 

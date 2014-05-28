@@ -7,40 +7,34 @@ class Blog < ActiveRecord::Base
   include Concern::Callbacks::SphinxIndexCallback
   include Concern::Associations::RelatedLinksAssociation
 
-  ROUTE_KEY = "blog"
+  self.public_route_key = "blog"
 
-  #-------------------
-  # Scopes
+
   scope :active, -> { where(is_active: true) }
 
-  #-------------------
-  # Associations
-  has_many :entries, order: 'published_at desc', class_name: "BlogEntry"
+
+  has_many :entries,
+    -> { order('published_at desc') },
+    :class_name => "BlogEntry"
+
   belongs_to :missed_it_bucket
   has_many :authors, through: :blog_authors
   has_many :blog_authors
 
-  #-------------------
-  # Validations
+
   validates :name, presence: true
   validates :slug, uniqueness: true
   validates :description, presence: true
 
-  #-------------------
-  # Callbacks
-
-  #-------------------
 
   class << self
-    #-------------------
     # Maps all records to an array of arrays, to be
     # passed into a Rails select helper
     def select_collection
-      Blog.order("name").map { |blog| [blog.to_title, blog.id] }
+      Blog.order("is_active desc, name").map { |blog| [blog.to_title, blog.id] }
     end
   end
 
-  #-------------------
 
   def route_hash
     return {} if !self.persisted? || !self.persisted_record.is_active?

@@ -3,14 +3,28 @@ require "spec_helper"
 describe ContentMailer do
   describe "email_content" do
     let(:content) { create :news_story }
-    let(:message) { build :content_email,
-                    content:    content,
-                    from_name:  "Bryan Ricker!",
-                    from_email: "bricker@scpr.org",
-                    to_email:   "bricker@kpcc.org",
-                    body:       "Some cool article"
-                  }
-    let(:mail)    { ContentMailer.email_content(message) }
+
+    let(:message) do
+      build :content_email,
+        :from_name    => "Bryan Ricker!",
+        :from_email   => "bricker@scpr.org",
+        :to_email     => "bricker@kpcc.org",
+        :body         => "Some cool article"
+    end
+
+    let(:mail) { ContentMailer.email_content(message.to_json, content.obj_key) }
+
+    it "sends the email" do
+      ActionMailer::Base.deliveries.size.should eq 0
+      ContentMailer.email_content(message.to_json, content.obj_key).deliver
+      ActionMailer::Base.deliveries.size.should eq 1
+    end
+
+    it "raises if the content key isn't safe" do
+      -> {
+        ContentMailer.email_content(message.to_json, "admin_user-123")
+      }.should raise_error ActiveRecord::RecordNotFound
+    end
 
     it "sends to the e-mail passed in" do
       mail.to.should eq [message.to_email]

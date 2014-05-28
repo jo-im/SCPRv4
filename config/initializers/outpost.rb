@@ -1,3 +1,5 @@
+require 'zlib'
+
 # We need to register models somewhere, because theoretically
 # someone could visit the admin page before a class is loaded.
 # The other option is to eager load all classes, which breaks
@@ -29,12 +31,12 @@ Outpost::Config.configure do |config|
     "PijQuery",
     "Podcast",
     "PressRelease",
-    "Quote",
     "RecurringScheduleRule",
     "RemoteArticle",
     "ScheduleOccurrence",
     "ShowEpisode",
-    "ShowSegment"
+    "ShowSegment",
+    "Vertical"
   ]
 
   config.user_class                   = "AdminUser"
@@ -47,6 +49,8 @@ end
 module Outpost
   module Controller
     module CustomErrors
+      # Should this be built-in to outpost?
+      # I don't know and I don't feel like thinking about it right now.
       def report_error(e)
         ::NewRelic.log_error(e)
       end
@@ -56,7 +60,7 @@ module Outpost
   module Model
     module Identifier
       def obj_key_crc32
-        @obj_key_crc32 ||= obj_key.to_crc32
+        @obj_key_crc32 ||= Zlib.crc32(obj_key)
       end
     end
   end

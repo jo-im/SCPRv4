@@ -12,7 +12,6 @@ class Homepage < ActiveRecord::Base
   include Concern::Callbacks::SphinxIndexCallback
   include Concern::Callbacks::HomepageCachingCallback
   include Concern::Callbacks::TouchCallback
-  include Concern::Methods::StatusMethods
 
 
   TEMPLATES = {
@@ -44,8 +43,8 @@ class Homepage < ActiveRecord::Base
 
 
   has_many :content,
+    -> { order('position') },
     :class_name   => "HomepageContent",
-    :order        => "position",
     :dependent    => :destroy
 
   accepts_json_input_for :content

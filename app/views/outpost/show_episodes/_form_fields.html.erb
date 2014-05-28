@@ -1,5 +1,5 @@
 <%= form_block "Source" do %>
-  <%= f.association :show, collection: KpccProgram.active.all %>
+  <%= f.association :show, collection: KpccProgram.select_collection %>
   <%= f.input :air_date, input_html: { class: "thin" } %>
 <% end %>
 

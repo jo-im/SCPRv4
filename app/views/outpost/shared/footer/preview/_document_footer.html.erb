@@ -5,7 +5,7 @@
   the script explicitly on each template that needs it on the KPCC.org frontend
   because we don't want to load it and scrape EVERY page - that would be
   an unnecessary performance hit. In preview, it's okay. %>
-<%= render '/shared/scripts/embedder' %>
+<%= render 'shared/scripts/embedder' %>
 
 <%= yield :footer %>
 </body>

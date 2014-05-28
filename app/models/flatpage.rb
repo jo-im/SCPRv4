@@ -5,7 +5,7 @@ class Flatpage < ActiveRecord::Base
 
   include Concern::Callbacks::SphinxIndexCallback
 
-  ROUTE_KEY = 'root_slug'
+  self.public_route_key = 'root_slug'
 
   TEMPLATE_OPTIONS = [
     ["Normal (with sidebar)",   "inherit"],

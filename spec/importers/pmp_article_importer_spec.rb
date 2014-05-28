@@ -1,0 +1,129 @@
+require 'spec_helper'
+
+describe PmpArticleImporter do
+  before do
+    # We don't care about, or need, the oauth token for these tests.
+    PMP::CollectionDocument.any_instance.stub(:oauth_token) { "token" }
+
+    stub_request(:get, %r|pmp\.io/?$|).to_return({
+      :content_type => "application/json",
+      :body => load_fixture('api/pmp/root.json')
+    })
+
+    stub_request(:get, %r|api.publicradio.org/audio/v2|).to_return({
+      :content_type => "application/json",
+      :body => load_fixture('api/pmp/audio.json')
+    })
+  end
+
+  describe '::sync' do
+    before do
+      stub_request(:get, %r|pmp\.io/docs|).to_return({
+        :content_type => "application/json",
+        :body => load_fixture('api/pmp/marketplace_stories.json')
+      })
+    end
+
+    it 'builds cached articles from the API response' do
+      RemoteArticle.count.should eq 0
+      added = PmpArticleImporter.sync
+      RemoteArticle.count.should eq 2 # Two stories in the JSON fixture
+      added.first.headline.should match /billions and billions/
+    end
+
+    it "sets the url for the stories" do
+      added = PmpArticleImporter.sync
+      added.first.url.should match /marketplace\.org/
+    end
+  end
+
+  describe '#import' do
+    context "multiple enclosures" do
+      before :each do
+        stub_request(:get, %r|pmp\.io/docs\?guid=.+|).to_return({
+          :content_type => "application/json",
+          :body => load_fixture('api/pmp/story.json')
+        })
+      end
+
+      it 'sets the source and news agency' do
+        remote_article = create :pmp_article
+        news_story = PmpArticleImporter.import(remote_article)
+        news_story.source.should eq "marketplace"
+        news_story.news_agency.should eq 'Marketplace'
+      end
+
+      it 'imports the bylines' do
+        remote_article = create :pmp_article
+        news_story = PmpArticleImporter.import(remote_article)
+        news_story.bylines.first.name.should match /Gura, David/
+      end
+
+      it 'sets new to false for imported stories' do
+        remote_article = create :pmp_article
+        PmpArticleImporter.import(remote_article)
+        remote_article[:is_new].should eq false
+      end
+
+      it 'adds in related links if an HTML link is available' do
+        remote_article = create :pmp_article
+        news_story = PmpArticleImporter.import(remote_article)
+        news_story.related_links.first.url.should match /marketplace\.org/
+      end
+
+      it "adds audio if it's available" do
+        remote_article = create :pmp_article
+        news_story = PmpArticleImporter.import(remote_article)
+
+        # The "story.json" file has 2 audio enclosures (they're the same,
+        # it's fake).
+        news_story.audio.size.should eq 2
+
+        audio = news_story.audio.first
+        audio.url.should eq("http://play.publicradio.org/pmp/d/podcast/marketplace/segments/2014/03/12/marketplace_segment09_20140312_64.mp3")
+        audio.duration.should eq 80000 / 1000
+        audio.description.should match /Marketplace Segment/
+      end
+
+      it "creates an asset if image is available" do
+        remote_article = create :pmp_article
+        news_story = PmpArticleImporter.import(remote_article)
+        news_story.assets.size.should eq 1
+      end
+    end
+
+    context "single enclosure" do
+      before :each do
+        stub_request(:get, %r|pmp\.io/docs\?guid=.+|).to_return({
+          :content_type => "application/json",
+          :body => load_fixture('api/pmp/story_single_enclosure.json')
+        })
+      end
+
+      it "imports audio" do
+        remote_article = create :pmp_article
+        news_story = PmpArticleImporter.import(remote_article)
+
+        news_story.audio.size.should eq 1
+        news_story.audio.first.url.should eq("http://play.publicradio.org/pmp/d/podcast/marketplace/segments/2014/03/12/marketplace_segment09_20140312_64.mp3")
+      end
+    end
+
+    context "No items" do
+      before do
+        stub_request(:get, %r|pmp\.io/docs\?guid=.+|).to_return({
+          :content_type => "application/json",
+          :body => load_fixture('api/pmp/story_no_items.json')
+        })
+      end
+
+      it "doesn't try to import audio and assets if no items are available" do
+        remote_article = create :pmp_article
+        news_story = PmpArticleImporter.import(remote_article)
+
+        news_story.audio.should be_empty
+        news_story.assets.should be_empty
+      end
+    end
+  end
+end

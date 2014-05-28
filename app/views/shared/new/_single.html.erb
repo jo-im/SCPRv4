@@ -220,7 +220,8 @@
 
             <div class="supportive">
                 <section>
-                    <% if @category.issues.present? %>
+                    <% if @vertical.present? %>
+                    <% if @vertical.issues.present? %>
                     <h1>Issues We're Tracking</h1>
                         <% main_issue = @category.issues.first %>
                         <h2 class="special"><%= main_issue.title %></h2>
@@ -243,9 +244,12 @@
                       <%= link_to 'See all issues', issues_path %>
                     </footer>
                     <% end %>
+                    <% end %>
                 </section>
                 <section>
-                    <% if @category.bios.present? %>
+
+                    <% bios = @vertical.reporters if @vertical.present? %>
+                    <% if bios.present? %>
                     <h1>Our Reporters</h1>
                     <div class="rollcall clearfix">
                         <% @category.bios.each do |reporter| %>
@@ -284,8 +288,8 @@
                 <h2>Quick primers on civic life in California.</h2>
                 <p>All of us at KPCC believe that civic life in Southern California should be understandable, relevant, and libero ante, aliquam congue mattis id, blandit quis risus. Sed iaculis tellus accumsan ipsum porta ultricies.</p>
                 <nav class="resources clearfix">
-                    <% if @category.featured_articles.present? %>
-                    <% @category.featured_articles[1..4].each do |article| %>
+                    <% if @featured_articles.present? %>
+                    <% @featured_articles[1..4].each do |article| %>
                         <figure class="clearfix">
                             <div class="ratio">
                                 <%= link_to article.public_path, title: article.short_title do %>

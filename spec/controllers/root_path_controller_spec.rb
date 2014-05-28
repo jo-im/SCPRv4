@@ -16,29 +16,20 @@ describe RootPathController do
         category = create :category_news
 
         get :handle_path, path: category.slug, format: :xml
+
+        response.should render_template 'category/show'
         response.header['Content-Type'].should match /xml/
+        response.body.should match RSS_SPEC['xmlns:atom']
       end
     end
 
     describe "with template" do
-      context 'category is active' do
-        before :each do
-          @active_category = create :category_news, is_active: true
-        end
-        it "renders the new template" do
-          get :handle_path, path: @active_category.slug, format: :html
-          response.should render_template 'category/show'
-        end
+      before :each do
+        @category = create :category_news
       end
-
-      context 'category is inactive' do
-        before :each do
-         @inactive_category = create :category_news, is_active: false
-        end
-        it "renders the old template" do
-          get :handle_path, path: @inactive_category.slug, format: :html
-          response.should render_template 'category/simple'
-        end
+      it "renders the new template" do
+        get :handle_path, path: @category.slug, format: :html
+        response.should render_template 'category/show'
       end
     end
   end
@@ -51,19 +42,31 @@ describe RootPathController do
       sphinx_spec
 
       it "renders articles and issues" do
-        category = create :category, is_active: true
+        vertical = create :vertical
         issues = create_list :issue, 3, :is_active
 
-        category.issues = issues
-        articles = create_list :news_story, 6, :published, category: category
+        vertical.issues = issues
+        articles = create_list :news_story, 6, :published, category: vertical.category
         articles.each { |a| a.issues = issues }
 
         index_sphinx
 
         ts_retry(2) do
-          get :handle_path, path: category.slug, format: :html
+          get :handle_path, path: vertical.slug, format: :html
           response.should be_success
         end
+      end
+    end
+
+    describe "with XML" do
+      it "renders normal category xml template when requested" do
+        vertical = create :vertical
+
+        get :handle_path, path: vertical.slug, format: :xml
+
+        response.should render_template 'category/show'
+        response.header['Content-Type'].should match /xml/
+        response.body.should match RSS_SPEC['xmlns:atom']
       end
     end
   end

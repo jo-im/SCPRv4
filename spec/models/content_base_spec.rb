@@ -134,4 +134,54 @@ describe ContentBase do
       end
     end
   end
+
+  describe '::obj_by_url!' do
+    it "returns the object if it's not nil" do
+      ContentBase.stub(:obj_by_url) { "okedoke" }
+      ContentBase.obj_by_url!("anything").should eq "okedoke"
+    end
+
+    it "raises if the return value is nil" do
+      ContentBase.stub(:obj_by_url) { nil }
+      -> {
+        ContentBase.obj_by_url!("anything")
+      }.should raise_error ActiveRecord::RecordNotFound
+    end
+  end
+
+
+  describe '::safe_obj_by_key' do
+    it "returns the object if it is allowed and published" do
+      article = create :blog_entry, :published
+      ContentBase.safe_obj_by_key(article.obj_key).should eq article
+    end
+
+    it "returns nil if the object is not published" do
+      article = create :blog_entry, :draft
+      ContentBase.safe_obj_by_key(article.obj_key).should be_nil
+    end
+
+    it "returns nil if the object isn't found" do
+      ContentBase.safe_obj_by_key("nope-123").should be_nil
+    end
+
+    it "returns nil if the class isn't allowed" do
+      admin_user = create :admin_user
+      ContentBase.safe_obj_by_key(admin_user.obj_key).should be_nil
+    end
+  end
+
+  describe '::safe_obj_by_key!' do
+    it "returns the object if it's not nil" do
+      ContentBase.stub(:safe_obj_by_key) { "okedoke" }
+      ContentBase.safe_obj_by_key!("anything").should eq "okedoke"
+    end
+
+    it "raises if the return value is nil" do
+      ContentBase.stub(:safe_obj_by_key) { nil }
+      -> {
+        ContentBase.safe_obj_by_key!("anything")
+      }.should raise_error ActiveRecord::RecordNotFound
+    end
+  end
 end

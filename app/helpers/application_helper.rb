@@ -11,6 +11,10 @@ module ApplicationHelper
     "personalities/trujillo.png"
   ]
 
+  def add_ga_tracking_to(url)
+    analytics_params = "?utm_source=kpcc&utm_medium=email&utm_campaign=short-list"
+    url =~ /scpr\.org/ ? url + analytics_params : url
+  end
 
   def present(object, klass=nil)
     klass ||= "#{object.class}Presenter".constantize
@@ -51,6 +55,7 @@ module ApplicationHelper
       render *args
     end
   end
+
 
   #---------------------------
   # render_content takes a ContentBase object and a context, and renders
@@ -307,7 +312,7 @@ module ApplicationHelper
     message = options[:message] || "This story was informed by KPCC listeners."
 
     if content.is_from_pij?
-      render '/shared/pij_notice', message: message
+      render 'shared/pij_notice', message: message
     end
   end
 
@@ -367,11 +372,9 @@ module ApplicationHelper
 
     render(partial, {
       :article  => object.to_article,
-      :cssClass => ""
-    }.merge(options))
+      :options  => options
+    })
   end
-
-  alias_method :widget, :content_widget
 
   #---------------
   # These two methods are taken from EscapeUtils
@@ -384,4 +387,44 @@ module ApplicationHelper
     EscapeUtils.escape_url(s.to_s).html_safe
   end
   alias_method :u, :url_encode
+
+
+  # Safely add parameters to any URL
+  #
+  # Examples
+  #
+  #   url_with_params("http://google.com", something: "cool")
+  #   # => "http://google.com?something=cool"
+  #
+  #   url_with_params("http://google.com?cool=thing", another: "params")
+  #   # => "http://google.com?cool=thing&another=params"
+  #
+  # Falsey values will not be added to the parameters. If you want
+  # an empty parameter, pass an empty string.
+  #
+  #   url_with_params("http://google.com", something: nil)
+  #   # => "http://google.com"
+  #
+  #   url_with_params("http://google.com", something: "")
+  #   # => "http://google.com?something="
+  #
+  # Returns String
+  def url_with_params(url, params={})
+    begin
+      uri = URI.parse(url)
+    rescue URI::InvalidURIError => e
+      # We want to know about these invalid URIs so we can fix them,
+      # but it shouldn't prevent the entire page from loading if there's
+      # one bad URL.
+      NewRelic.log_error(e)
+      return url
+    end
+
+    query = URI.decode_www_form(uri.query.to_s)
+
+    params.each { |k, v| query << [k.to_s, v.to_s] if v }
+
+    uri.query = URI.encode_www_form(query)
+    uri.to_s.chomp("?")
+  end
 end

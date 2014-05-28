@@ -1,9 +1,4 @@
-# These just make sure there are no blatant view errors.
-# Could definitely be faster and more useful.
-
 shared_examples_for "resource controller" do
-  render_views
-
   before :each do
     @resource_properties = Array(resource)
     @resource = @resource_properties.first
@@ -18,42 +13,42 @@ shared_examples_for "resource controller" do
     describe 'GET /index' do
       it "redirects to outpost root" do
         get :index
-        response.should redirect_to outpost_root_path
+        response.should redirect_to "/outpost/"
       end
     end
 
     describe 'GET /show' do
       it "redirects to outpost root" do
         get :show, id: @object.id
-        response.should redirect_to outpost_root_path
+        response.should redirect_to "/outpost/"
       end
     end
 
     describe 'GET /edit' do
       it "redirects to outpost root" do
         get :edit, id: @object.id
-        response.should redirect_to outpost_root_path
+        response.should redirect_to "/outpost/"
       end
     end
 
     describe 'POST /create' do
       it "redirects to outpost root" do
         post :create, @resource => { who: "cares" }
-        response.should redirect_to outpost_root_path
+        response.should redirect_to "/outpost/"
       end
     end
 
     describe 'PUT /update' do
       it "redirects to outpost root" do
         put :update, id: @object.id, @resource => { who: "cares" }
-        response.should redirect_to outpost_root_path
+        response.should redirect_to "/outpost/"
       end
     end
 
     describe 'DELETE /destroy' do
       it "redirects to outpost root" do
         delete :destroy, id: @object.id
-        response.should redirect_to outpost_root_path
+        response.should redirect_to "/outpost/"
       end
     end
   end
@@ -101,7 +96,7 @@ shared_examples_for "resource controller" do
         klass = @resource.to_s.classify.constantize
 
         expect {
-          post :create, @resource => build(*@resource_properties).attributes
+          post :create, @resource => build_attributes(*@resource_properties)
         }.to change { klass.count }.by(1)
 
         # Redirect to index path because there is no commit_action parameter,
@@ -117,7 +112,7 @@ shared_examples_for "resource controller" do
         expect {
           put :update,
             :id         => @object.id,
-            @resource   => build(*@resource_properties).attributes
+            @resource   =>  build_attributes(*@resource_properties)
         }.to change { @object.reload.updated_at }
 
         assigns(:record).should eq @object

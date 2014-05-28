@@ -17,7 +17,6 @@ class PodcastsController < ApplicationController
     if @podcast.source.is_a? ExternalProgram
       redirect_to @podcast.podcast_url
     else
-      @articles = @podcast.content
       render_to_string formats: [:xml]
     end
   end
@@ -39,7 +38,8 @@ class PodcastsController < ApplicationController
         rangeEnd      = match[2].to_i
         rangeLength   = (rangeEnd - rangeStart).to_i
 
-        response.headers["Content-Range"]  = "bytes #{rangeStart}-#{rangeEnd == 0 ? "" : rangeEnd}/*"
+        response.headers["Content-Range"] =
+          "bytes #{rangeStart}-#{rangeEnd == 0 ? "" : rangeEnd}/*"
       end
     end
   end

@@ -15,13 +15,13 @@ describe Outpost::HomepagesController do
         put :preview, id: homepage.id, obj_key: homepage.obj_key, homepage: homepage.attributes.merge(base: "lead_right")
         assigns(:homepage).should eq homepage
         assigns(:homepage).base.should eq "lead_right"
-        response.should render_template "/home/_lead_right"
+        response.should render_template "home/_lead_right"
       end
 
       it "renders validation errors if the object is not unconditionally valid" do
         homepage = create :homepage
         put :preview, id: homepage.id, obj_key: homepage.obj_key, homepage: homepage.attributes.merge(base: "")
-        response.should render_template "/outpost/shared/_preview_errors"
+        response.should render_template "outpost/shared/_preview_errors"
       end
     end
 
@@ -30,13 +30,13 @@ describe Outpost::HomepagesController do
         homepage = build :homepage, base: "default"
         post :preview, obj_key: homepage.obj_key, homepage: homepage.attributes
         assigns(:homepage).base.should eq "default"
-        response.should render_template "/home/_#{homepage.base}"
+        response.should render_template "home/_#{homepage.base}"
       end
 
       it "renders validation errors if the object is not unconditionally valid" do
         homepage = build :homepage
         post :preview, obj_key: homepage.obj_key, homepage: homepage.attributes.merge(base: "")
-        response.should render_template "/outpost/shared/_preview_errors"
+        response.should render_template "outpost/shared/_preview_errors"
       end
     end
   end

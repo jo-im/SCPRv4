@@ -1,6 +1,7 @@
 //= require modernizr.custom
 //= require jquery.jplayer.min
 //= require moment-strftime
+//= require moment-twitter
 
 //= require_directory ./t_listen/
 //= require swfobject.min
@@ -22,6 +23,7 @@
 //= require embeditor/adapters/rebel_mouse
 //= require embeditor/adapters/google_fusion
 
+//= require cookie
 //= require content_carousel
 //= require audio
 //= require modal
@@ -32,8 +34,10 @@
 //= require megamenu
 //= require smart_time
 //= require event_tracking
+//= require visual_campaign
 //= require open_popup
 //= require utilities
 //= require collapse
 //= require cms_popup
 //= require reader_bookmarklet
+//= require page_mapping

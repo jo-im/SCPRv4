@@ -1,12 +1,15 @@
 require 'spec_helper'
 
 describe Job::ImportRemoteArticle do
-    before :each do
-      stub_request(:get, %r|api\.npr|).to_return({
-        :content_type => "application/json",
-        :body => load_fixture('api/npr/story.json')
-      })
-    end
+  subject { described_class }
+  it { subject.queue.should eq "scprv4:high_priority" }
+
+  before :each do
+    stub_request(:get, %r|api\.npr|).to_return({
+      :content_type => "application/json",
+      :body => load_fixture('api/npr/story.json')
+    })
+  end
 
   it "finds the article and imports it" do
     # This headline comes from the fixture

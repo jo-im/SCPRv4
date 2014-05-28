@@ -24,6 +24,8 @@ FactoryGirl.define do
     name "Bryan Ricker"
     old_password '$2a$10$HSJMxubR06Ap.xKmxiPpf.Kbbl/lgHadoVB.wynnEfte7b4BY4bDy'
     password "secret"
+    password_confirmation { password }
+
     last_login { Time.now }
     sequence(:email) { |i| "user#{i}@scpr.org" }
 

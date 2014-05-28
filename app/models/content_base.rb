@@ -19,18 +19,18 @@ module ContentBase
   # database so we can search against that.
   STATUS_LIVE = 5
 
-
-  #--------------------
-  # This used the be the array of "classes that are content",
-  # but we've since moved away from that concept.
-  # Don't use it - just be explicit about which classes you
-  # want to search across.
-  CONTENT_CLASSES = [
-    NewsStory,
-    ShowSegment,
-    BlogEntry,
-    ContentShell
+  # Classes which are safe to fetch on the frontend.
+  # This was added to make ContentMailer more safe.
+  SAFE_CLASSES = [
+    "NewsStory",
+    "ShowSegment",
+    "BlogEntry",
+    "ContentShell",
+    "Event",
+    "PijQuery",
+    "ShowEpisode"
   ]
+
 
   #--------------------
   # URLS to match in ::obj_by_url
@@ -66,7 +66,7 @@ module ContentBase
     query       = args[0].to_s
 
     options.reverse_merge!({
-      :classes     => CONTENT_CLASSES,
+      :classes     => [NewsStory, ShowSegment, BlogEntry, ContentShell],
       :page        => 1,
       :order       => "public_datetime #{DESCENDING}",
       :retry_stale => true,
@@ -81,7 +81,7 @@ module ContentBase
     options[:with].reverse_merge!(is_live: true)
 
     begin
-      ThinkingSphinx.search(query, options)
+      ThinkingSphinx.search(Riddle::Query.escape(query), options)
     rescue  Riddle::ConnectionError,
             Riddle::ResponseError,
             ThinkingSphinx::SphinxError => e
@@ -126,6 +126,39 @@ module ContentBase
 
     teaser
   end
+
+
+  # Safely fetch an object by a passed-in key.
+  #
+  # This is similar to Outpost.obj_by_key, except it only selects
+  # published content and it lets us be explicit about which classes
+  # to allow.
+  #
+  # This was originally added to make ContentMailer more safe.
+  #
+  # Arguments
+  # * obj_key (String) - The object key to lookup.
+  #
+  # Examples
+  #
+  #   ContentBase.safe_obj_by_key("blog_entry-999") #=> #<BlogEntry...>
+  #   ContentBase.safe_obj_by_key("admin_user-12") #=> nil
+  def safe_obj_by_key(obj_key)
+    obj = Outpost.obj_by_key(obj_key)
+
+    if !obj || !SAFE_CLASSES.include?(obj.class.name) || !obj.published?
+      return nil
+    end
+
+    obj
+  end
+
+
+  # safe_obj_by_key or raise error
+  def safe_obj_by_key!(obj_key)
+    safe_obj_by_key(obj_key) or raise ActiveRecord::RecordNotFound
+  end
+
 
   #--------------------
   # Look to CONTENT_MATCHES to see if the passed-in URL

@@ -29,6 +29,7 @@ FactoryGirl.define do
   factory :external_segment do
     sequence(:title) { |n| "Some Segment #{n}"}
     sequence(:published_at) { |n| Time.now + n.hours }
+    teaser "This is an external segment."
     external_program
 
     trait :from_npr do

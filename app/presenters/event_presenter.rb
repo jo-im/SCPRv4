@@ -43,6 +43,13 @@ class EventPresenter < ApplicationPresenter
     end
   end
 
+
+  def date_link
+    if event.published?
+      link_to(range_date, event.public_path, class: "event-link")
+    end
+  end
+
   #-------------
 
   def rsvp_url
@@ -90,7 +97,7 @@ class EventPresenter < ApplicationPresenter
 
   def map
     if event.show_map && (event.upcoming? || event.current?)
-      h.render '/events/map/map', p: self
+      h.render 'events/map/map', p: self
     end
   end
 

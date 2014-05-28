@@ -7,10 +7,10 @@ describe IssuesController do
     it 'sets @issues to all active issues' do
       issues = create_list :issue, 3, :is_active
       inactive_issue = create :issue, :is_not_active
+
       get :index
-      assigns(:issues).should eq issues
-      assigns(:issues).count.should eq 3
-      assigns(:issues).should_not include(inactive_issue)
+
+      assigns(:issues).should eq issues.sort_by(&:title)
     end
 
     it "assigns popular articles" do

@@ -5,6 +5,7 @@ describe ScheduleOccurrence do
   let(:invalid_record) { build :schedule_occurrence, info_url: "notvalid.com" }
   let(:updated_record) { build :schedule_occurrence, info_url: "http://kpcc.org" }
 
+  it_behaves_like "managed resource index"
   it_behaves_like "managed resource destroy"
   it_behaves_like "save options"
   it_behaves_like "admin routes"
@@ -48,7 +49,7 @@ describe ScheduleOccurrence do
         updated = described_class.find(valid_record.id)
         updated.versions.size.should eq 2
         click_link "history"
-        current_path.should eq outpost_history_path(valid_record.class.route_key, valid_record.id)
+        current_path.should eq secretary.history_path(valid_record.class.route_key, valid_record.id)
         page.should have_content "View"
         first(:link, "View").click # Capybara 2.0 throws error for ambigious match.
       end

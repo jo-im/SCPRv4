@@ -4,7 +4,7 @@ class Podcast < ActiveRecord::Base
 
   include Concern::Callbacks::SphinxIndexCallback
 
-  ROUTE_KEY = "podcast"
+  self.public_route_key = "podcast"
 
   ITEM_TYPES = [
     ["Episodes", 'episodes'],
@@ -59,7 +59,7 @@ class Podcast < ActiveRecord::Base
 
       else
         if item_type == "content"
-          klasses = [NewsStory, BlogEntry, ShowSegment, ShowEpisode]
+          klasses = [NewsStory, BlogEntry, ShowSegment]
         end
       end
 

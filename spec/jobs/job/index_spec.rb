@@ -1,6 +1,9 @@
 require "spec_helper"
 
 describe Job::Index do
+  subject { described_class }
+  it { subject.queue.should eq "scprv4:sphinx" }
+
   describe "::perform" do
     it "constantizes the arguments and passes it off to Indexer" do
       indexer = Indexer.new(BlogEntry)

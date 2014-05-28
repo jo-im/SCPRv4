@@ -9,7 +9,7 @@ describe Api::Public::V2::AudioController do
 
   describe "GET show" do
     it "finds the object if it exists" do
-      audio = create :uploaded_audio
+      audio = create :audio, :uploaded
       get :show, { id: audio.id }.merge(request_params)
       assigns(:audio).should eq audio
       response.should render_template "show"
@@ -30,13 +30,13 @@ describe Api::Public::V2::AudioController do
       @available   = []
 
       3.times do |n|
-        @available << create(:uploaded_audio,
+         @available << create(:audio, :uploaded,
           created_at: Time.now + n.minutes,
-          mp3: load_audio_fixture("audio/point1sec-#{n}.mp3")
+          mp3: load_audio_fixture("point1sec-#{n}.mp3")
         )
       end
 
-      @unavailable = create_list :enco_audio, 2
+      @unavailable = create_list :audio, 2, :enco
     end
 
     after :each do

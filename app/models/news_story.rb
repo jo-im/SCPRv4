@@ -15,12 +15,12 @@ class NewsStory < ActiveRecord::Base
   include Concern::Associations::IssueAssociation
   include Concern::Associations::FeatureAssociation
   include Concern::Associations::CategoryAssociation
-  include Concern::Associations::CategoryArticleAssociation
   include Concern::Associations::HomepageContentAssociation
   include Concern::Associations::FeaturedCommentAssociation
   include Concern::Associations::QuoteAssociation
   include Concern::Associations::MissedItContentAssociation
   include Concern::Associations::EditionsAssociation
+  include Concern::Associations::VerticalArticleAssociation
   include Concern::Validations::ContentValidation
   include Concern::Callbacks::SetPublishedAtCallback
   include Concern::Callbacks::GenerateShortHeadlineCallback
@@ -32,12 +32,11 @@ class NewsStory < ActiveRecord::Base
   include Concern::Callbacks::HomepageCachingCallback
   include Concern::Callbacks::TouchCallback
   include Concern::Methods::ArticleStatuses
-  include Concern::Methods::StatusMethods
   include Concern::Methods::CommentMethods
   include Concern::Methods::AssetDisplayMethods
 
   self.disqus_identifier_base = "news/story"
-  ROUTE_KEY = "news_story"
+  self.public_route_key = "news_story"
 
   SOURCES = [
     ['KPCC',                        'kpcc'],
@@ -48,7 +47,8 @@ class NewsStory < ActiveRecord::Base
     ['NPR & wire services',         'npr_wire'],
     ['New America Media',           'new_america'],
     ['NPR & KPCC',                  'npr_kpcc'],
-    ['Center for Health Reporting', 'chr']
+    ['Center for Health Reporting', 'chr'],
+    ['Marketplace',                 'marketplace']
   ]
 
 

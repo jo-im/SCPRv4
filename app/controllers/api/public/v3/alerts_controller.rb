@@ -8,7 +8,7 @@ module Api::Public::V3
     MAX_RESULTS = 10
 
     before_filter \
-      :set_conditions,
+      :set_hash_conditions,
       :sanitize_limit,
       :sanitize_page,
       :sanitize_type,
@@ -37,10 +37,6 @@ module Api::Public::V3
 
 
     private
-
-    def set_conditions
-      @conditions = {}
-    end
 
     def sanitize_type
       if params[:type]

@@ -8,8 +8,6 @@ class Outpost::CategoriesController < Outpost::ResourceController
     l.column :title, sortable: true
     l.column :slug, sortable: true
     l.column :is_news, header: "News?"
-    l.column :is_active, header: "Vertical?"
-    l.column :featured_interactive_style_id
     l.column :comment_bucket
   end
 end

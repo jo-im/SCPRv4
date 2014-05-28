@@ -2,8 +2,9 @@ require "spec_helper"
 
 describe Outpost::HomeController do
   render_views
+  routes { Outpost::Engine.routes }
 
-  describe 'GET /index' do
+  describe 'GET dashboard' do
     before :each do
       @current_user = create :admin_user
       controller.stub(:current_user) { @current_user }
@@ -12,7 +13,7 @@ describe Outpost::HomeController do
     it 'gets the current user activities' do
       story = create :news_story, logged_user_id: @current_user.id
 
-      get :index
+      get :dashboard
       assigns(:current_user_activities).should eq story.versions.to_a
     end
 
@@ -22,7 +23,7 @@ describe Outpost::HomeController do
       story1 = create :news_story, logged_user_id: @current_user.id
       story2 = create :news_story, logged_user_id: other_user.id
 
-      get :index
+      get :dashboard
       assigns(:latest_activities).should eq story2.versions.to_a
     end
   end

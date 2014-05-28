@@ -1,6 +1,17 @@
 require "spec_helper"
 
 describe ScheduleOccurrence do
+  describe "::program_select_collection" do
+    it "is all programs combined and selectified" do
+      p1 = create :kpcc_program
+      p2 = create :external_program
+
+      ScheduleOccurrence.program_select_collection.should eq [
+        [p1.title, p1.obj_key], [p2.title, p2.obj_key]
+      ]
+    end
+  end
+
   describe '::after' do
     it "gets occurrences after the requested date" do
       occurrence_early = create :schedule_occurrence, starts_at: Time.now.yesterday

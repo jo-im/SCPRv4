@@ -53,27 +53,6 @@ describe Category do
     end
   end
 
-  describe '#featured_articles' do
-    it 'turns all of the items into articles' do
-      category = create :category_news
-      story = create :news_story
-      category_article = create :category_article, category: category, article: story
-
-      category.featured_articles.map(&:class).uniq.should eq [Article]
-    end
-
-    it "only gets published articles" do
-      category = create :category_news
-      story_published = create :news_story, :published
-      story_unpublished = create :news_story, :draft
-
-      category.category_articles.create(article: story_published)
-      category.category_articles.create(article: story_unpublished)
-
-      category.featured_articles.should eq [story_published].map(&:to_article)
-    end
-  end
-
   describe '#content' do
     let(:category) { create :category_news }
     sphinx_spec
@@ -98,6 +77,18 @@ describe Category do
 
       ts_retry(2) do
         category.content(page: 1, per_page: 10, exclude: story2).to_a
+        .should eq [story1]
+      end
+    end
+
+    it "excludes an array of passed-in objects" do
+      story1 = create :news_story, category: category
+      story2 = create :news_story, category: category
+      story3 = create :news_story, category: category
+      index_sphinx
+
+      ts_retry(2) do
+        category.content(page: 1, per_page: 10, exclude: [story2,story3]).to_a
         .should eq [story1]
       end
     end

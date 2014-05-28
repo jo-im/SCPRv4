@@ -1,8 +1,10 @@
-<%= render '/shared/header/document_header' %>
+<%= render 'shared/header/document_header' %>
 
 <body>
 <div class="viewport">
-  <%= render "/shared/masthead/layout_header" %>
+  <div id="global-pushdown"></div>
+
+  <%= render "shared/masthead/layout_header" %>
 
   <div id="main" class="container-fluid main-content">
     <%= yield :title_bar %>
@@ -18,22 +20,31 @@
             <%= yield(:sidebar) %>
           <% else %>
             <%= yield :sidebar_top %>
-            <%= render "/shared/ads/oas", ad_id: 'x01' %>
+            <%= render "shared/ads/oas", ad_id: 'x01' %>
             <%= yield :sidebar_middle %>
-            <%= render "/shared/ads/dfp", ad_key: :membership_sidebar %>
-            <%= render "/shared/widgets/newsletter_subscribe" %>
-            <%= render "/shared/widgets/most_popular" %>
-            <%= render "/shared/ads/oas", ad_id: 'x02' %>
-            <%= render "/shared/ads/dfp", ad_key: :sidebar_house_promo %>
-            <%= render "/shared/ads/oas", ad_id: 'x03' %>
+            <%= render "shared/ads/dfp", ad_key: :membership_sidebar %>
+            <%= render "shared/widgets/newsletter_subscribe" %>
+            <%= render "shared/widgets/most_popular" %>
+            <%= render "shared/ads/oas", ad_id: 'x02' %>
+            <%= render "shared/ads/dfp", ad_key: :sidebar_house_promo %>
+            <%= render "shared/ads/oas", ad_id: 'x03' %>
           <% end %>
         </div> <!-- sidebar -->
       </div> <!-- span8 -->
     </div> <!-- row-fluid -->
-    <%= render "/shared/audio/inpage_audio_player" %>
+    <%= render "shared/audio/inpage_audio_player" %>
   </div> <!-- container fluid main -->
 
-  <%= render "/shared/footer/layout_footer" %>
+  <%= render "shared/footer/layout_footer" %>
+
+<% content_for :footer do %>
+  <script type="text/javascript">
+    $(document).ready(function(){
+      scpr.VisualCampaign.enqueue('pushdown-global', $('#global-pushdown'));
+    });
+  </script>
+<% end %>
+
 </div> <!-- viewport -->
 
-<%= render "/shared/footer/document_footer" %>
+<%= render "shared/footer/document_footer" %>

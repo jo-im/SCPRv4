@@ -57,7 +57,7 @@ describe Api::Public::V3::EventsController do
       create :event, :published
       get :index, { limit: "Evil Code" }.merge(request_params)
       assigns(:limit).should eq 0
-      assigns(:events).should eq Event.all
+      assigns(:events).to_a.should eq Event.all.to_a
     end
 
     it "accepts a limit" do

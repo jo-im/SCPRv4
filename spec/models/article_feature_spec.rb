@@ -43,17 +43,17 @@ describe ArticleFeature do
   describe '#==' do
     it "compares integers" do
       feature = ArticleFeature.new(id: 123, key: :lasagna)
-      (feature == 123).should be_true
+      (feature == 123).should eq true
     end
 
     it "compares article features" do
       feature = ArticleFeature.new(id: 456, key: :lasagna)
-      (feature == feature).should be_true
+      (feature == feature).should eq true
     end
 
     it "compares keys" do
       feature = ArticleFeature.new(key: :yo)
-      (feature == :yo).should be_true
+      (feature == :yo).should eq true
     end
   end
 end

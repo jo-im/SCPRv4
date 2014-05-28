@@ -3,7 +3,7 @@
 # Options
 #
 # * allowed - An array of allowed URI classes (default: [URI::HTTP])
-# * All standard validation options (eg. :message, :allow_blank) 
+# * All standard validation options (eg. :message, :allow_blank)
 #
 # Examples
 #

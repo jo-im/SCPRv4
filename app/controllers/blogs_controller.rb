@@ -23,6 +23,7 @@ class BlogsController < ApplicationController
     # Only want to paginate for HTML response
     @scoped_entries = @blog.entries.published
     @entries = @scoped_entries.page(params[:page]).per(5)
+
     respond_with @scoped_entries
   end
 
@@ -48,13 +49,6 @@ class BlogsController < ApplicationController
     end
 
     respond_with template: "blogs/entry"
-  end
-
-  #----------
-
-  def blog_tagged
-    @tag = Tag.where(slug: params[:tag]).first!
-    @entries = @blog.entries.published.joins(:tags).where(taggit_tag: { slug: @tag.slug }).page(params[:page]).per(5)
   end
 
   #----------

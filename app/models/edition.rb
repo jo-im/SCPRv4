@@ -10,13 +10,12 @@ class Edition < ActiveRecord::Base
   has_secretary
   has_status
 
-
   include Concern::Associations::ContentAlarmAssociation
   include Concern::Callbacks::SetPublishedAtCallback
   include Concern::Callbacks::TouchCallback
   include Concern::Callbacks::SphinxIndexCallback
   include Concern::Scopes::PublishedScope
-  include Concern::Methods::StatusMethods
+  include Concern::Methods::EloquaSendable
 
 
   status :draft do |s|
@@ -39,8 +38,8 @@ class Edition < ActiveRecord::Base
 
 
   has_many :slots,
+    -> { order('position') },
     :class_name   => "EditionSlot",
-    :order        => "position",
     :dependent    => :destroy
 
   accepts_json_input_for :slots
@@ -50,6 +49,8 @@ class Edition < ActiveRecord::Base
   validates :title,
     :presence   => true,
     :if         => :should_validate?
+
+  after_save :async_send_email, if: :should_send_email?
 
 
   class << self
@@ -85,7 +86,46 @@ class Edition < ActiveRecord::Base
   end
 
 
+  ### EloquaSendable interface implementation
+  # Note that we don't check for presence of first Abstract before trying to
+  # use it (in the templates). We probably should, but trying to send out an
+  # edition without any abstracts would be a mistake, so errors are okay now.
+  # Maybe we should just validate that at least one item slot is present.
+  def as_eloqua_email
+    subject = "#{self.title}: #{self.abstracts.first.headline}"
+
+    {
+      :html_body => view.render_view(
+        :template   => "/editions/email/template",
+        :formats    => [:html],
+        :locals     => { edition: self }).to_s,
+
+      :plain_text_body => view.render_view(
+        :template   => "/editions/email/template",
+        :formats    => [:text],
+        :locals     => { edition: self }).to_s,
+
+      :name        => "[scpr-edition] #{self.title[0..30]}",
+      :description => "SCPR Short List\n" \
+                      "Sent: #{Time.now}\nSubject: #{subject}",
+      :subject     => subject,
+      :email       => "theshortlist@scpr.org"
+    }
+  end
+
+
   private
+
+  # We can't use `publishing?` here because this gets checked in
+  # a background worker.
+  def should_send_email?
+    self.published? && !self.email_sent?
+  end
+
+  def update_email_status(campaign)
+    self.update_column(:email_sent, true)
+  end
+
 
   def build_slot_association(slot_hash, item)
     if item.published?

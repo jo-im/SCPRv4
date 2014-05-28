@@ -14,9 +14,8 @@ class ShowEpisode < ActiveRecord::Base
   include Concern::Callbacks::RedisPublishCallback
   include Concern::Callbacks::SphinxIndexCallback
   include Concern::Callbacks::TouchCallback
-  include Concern::Methods::StatusMethods
 
-  ROUTE_KEY = "episode"
+  self.public_route_key = "episode"
 
 
   status :killed do |s|
@@ -70,10 +69,10 @@ class ShowEpisode < ActiveRecord::Base
     :dependent      => :destroy
 
   has_many :segments,
+    -> { order('position') },
     :class_name     => "ShowSegment",
     :foreign_key    => "segment_id",
-    :through        => :rundowns,
-    :order          => "position"
+    :through        => :rundowns
 
 
   accepts_json_input_for :rundowns

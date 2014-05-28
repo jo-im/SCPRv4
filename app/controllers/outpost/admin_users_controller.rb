@@ -42,6 +42,6 @@ class Outpost::AdminUsersController < Outpost::ResourceController
       .order("#{list.default_order_attribute} #{list.default_order_direction}")
       .page(params[:page]).per(list.per_page)
 
-    render '/outpost/versions/index', locals: { list: list }
+    render 'outpost/versions/index', locals: { list: list }
   end
 end

@@ -1,9 +1,12 @@
+DEPLOY_CONFIG = YAML.load_file(
+  File.expand_path("../deploy_config.yml", __FILE__)
+)
+
 # --------------
 # Requires and Multistage setup
 set :thinking_sphinx_roles, :sphinx
 
 require "bundler/capistrano"
-require 'thinking_sphinx/capistrano'
 
 set :stages, %w{ production staging }
 set :default_stage, "production"
@@ -28,7 +31,7 @@ set :group_writable, false
 set :maintenance_template_path, "public/maintenance.erb"
 set :maintenance_basename, "maintenance"
 
-# Pass these in with -s to override: 
+# Pass these in with -s to override:
 #    cap deploy -s force_assets=true
 set :force_assets,  false # If assets wouldn't normally be precompiled, force them to be
 set :skip_assets,   false # If assets are going to be precompiled, force them NOT to be
@@ -45,28 +48,6 @@ after "deploy:update", "deploy:cleanup"
 # --------------
 # Universal Tasks
 namespace :deploy do
-  # --------------
-  # Override disable/enable
-  # https://github.com/capistrano/capistrano/blob/master/lib/capistrano/recipes/deploy.rb
-  namespace :web do
-    task :disable, :roles => :web, :except => { :no_release => true } do
-      require 'erb'
-      on_rollback { run "rm -f #{shared_path}/system/#{maintenance_basename}.html" }
-
-      reason    = ENV['REASON']
-      deadline  = ENV['UNTIL']
-
-      template = File.read(maintenance_template_path)
-      result   = ERB.new(template).result(binding)
-
-      put result, "#{shared_path}/system/#{maintenance_basename}.html", :mode => 0644
-    end
-
-    task :enable, :roles => :web, :except => { :no_release => true } do
-      run "rm -f #{shared_path}/system/#{maintenance_basename}.html"
-    end
-  end
-
   task :symlink_config do
     %w{ database.yml api_config.yml app_config.yml thinking_sphinx.yml newrelic.yml }.each do |file|
       run "ln -nfs #{shared_path}/config/#{file} #{release_path}/config/#{file}"

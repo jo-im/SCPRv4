@@ -18,3 +18,4 @@
 //= require new/layout
 //= require new/verticals
 //= require new/single
+//= require page_mapping

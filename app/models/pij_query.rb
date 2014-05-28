@@ -13,16 +13,16 @@ class PijQuery < ActiveRecord::Base
   include Concern::Associations::ContentAlarmAssociation
   include Concern::Associations::HomepageContentAssociation
   include Concern::Associations::MissedItContentAssociation
+  include Concern::Associations::VerticalArticleAssociation
   include Concern::Validations::SlugValidation
   include Concern::Callbacks::GenerateSlugCallback
   include Concern::Callbacks::SphinxIndexCallback
   include Concern::Callbacks::SetPublishedAtCallback
   include Concern::Callbacks::CacheExpirationCallback
   include Concern::Callbacks::TouchCallback
-  include Concern::Methods::StatusMethods
 
 
-  ROUTE_KEY = "pij_query"
+  self.public_route_key = "pij_query"
 
   QUERY_TYPES = [
     ["Evergreen", "evergreen"],

@@ -5,15 +5,19 @@ class Issue < ActiveRecord::Base
   include Concern::Validations::SlugValidation
   include Concern::Callbacks::SphinxIndexCallback
 
-  ROUTE_KEY = 'issue'
+  self.public_route_key = 'issue'
 
   scope :active, -> { where(is_active: true) }
 
   has_many :article_issues, dependent: :destroy
-  has_many :category_issues, dependent: :destroy
-  has_many :categories, through: :category_issues
 
-  after_commit :touch_categories
+  # This association is here so the join records will be destroyed
+  # if the issue is destroyed. It also helps break cached on the
+  # verticals when an issue is updated.
+  has_many :vertical_issues, dependent: :destroy
+  has_many :verticals, through: :vertical_issues
+
+  after_commit :touch_verticals
 
   validates :title, presence: true
   validates :slug, uniqueness: true
@@ -34,7 +38,7 @@ class Issue < ActiveRecord::Base
 
   private
 
-  def touch_categories
-    self.categories.each(&:touch)
+  def touch_verticals
+    self.verticals.each(&:touch)
   end
 end

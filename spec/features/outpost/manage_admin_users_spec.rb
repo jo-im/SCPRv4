@@ -25,6 +25,25 @@ describe AdminUser do
 
     #------------------------
 
+    describe "Index" do
+      before do
+        # This is a hack so we know the valid_record object is the first
+        # in the list.
+        valid_record.update_attribute(:name, "aaaaaaa")
+      end
+
+      it "shows a list of records" do
+        visit described_class.admin_index_path
+
+        within('table.index-list') do
+          page.should have_css "a.btn"
+          first('a.btn').click
+
+          current_path.should eq valid_record.admin_edit_path
+        end
+      end
+    end
+
     describe "Create" do
       before :each do
         visit described_class.admin_new_path
@@ -142,6 +161,10 @@ describe AdminUser do
       updated_record
     end
 
+    describe "activity" do
+      pending
+    end
+
     context "new record" do
       it "saves an initial version" do
         visit described_class.admin_new_path
@@ -164,7 +187,7 @@ describe AdminUser do
         updated = described_class.find(valid_record.id)
         updated.versions.size.should eq 2
         click_link "history"
-        current_path.should eq outpost_history_path(valid_record.class.route_key, valid_record.id)
+        current_path.should eq secretary.history_path(valid_record.class.route_key, valid_record.id)
         page.should have_content "View"
         first(:link, "View").click # Capybara 2.0 throws error for ambigious match.
       end

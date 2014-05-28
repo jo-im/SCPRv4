@@ -52,5 +52,18 @@ FEATURES = [
       :key              => :offramp,
       :name             => "Off-Ramp",
       :asset_display    => "photo"
+    },
+    {
+      :id               => 10,
+      :key              => :document,
+      :name             => "Document",
+      :asset_display    => "photo"
+    },
+    {
+      :id               => 11,
+      :key              => :generic,
+      :name             => "Feature",
+      :asset_display    => "photo"
     }
+
   ].map { |attributes| ArticleFeature.new(attributes) }.freeze

@@ -8,7 +8,7 @@ module Api::Public::V2
     MAX_RESULTS = 40
 
     before_filter \
-      :set_conditions,
+      :set_array_conditions,
       :sanitize_limit,
       :sanitize_page,
       :sanitize_only_kpcc_events,
@@ -45,10 +45,6 @@ module Api::Public::V2
     #---------------------------
 
     private
-
-    def set_conditions
-      @conditions = []
-    end
 
     def sanitize_date_range
       begin

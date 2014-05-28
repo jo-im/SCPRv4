@@ -23,7 +23,18 @@ describe ContentEmailController do
 
     it "raises 404 if content isnt found" do
       -> { get :new }.should raise_error ActiveRecord::RecordNotFound
-      -> { get :new, obj_key: "wrong" }.should raise_error ActiveRecord::RecordNotFound
+
+      -> {
+        get :new, obj_key: "wrong"
+      }.should raise_error ActiveRecord::RecordNotFound
+    end
+
+    it "raises 404 if the content isn't allowed" do
+      admin_user = create :admin_user
+
+      -> {
+        get :new, obj_key: admin_user.obj_key
+      }.should raise_error ActiveRecord::RecordNotFound
     end
   end
 
@@ -32,50 +43,90 @@ describe ContentEmailController do
   describe "POST /create" do
     let(:content)  { create :news_story }
 
-    before :each do
-      post :create,
-            obj_key:        content.obj_key,
-            content_email:  { from_name:  "Bryan",
-                              from_email: "bricker@scpr.org",
-                              to_email:   "bricker@kpcc.org"
-                            }
+    context "valid recaptcha" do
+      before :each do
+        controller.stub(:verify_recaptcha) { true }
+      end
+
+      context "valid message" do
+        before :each do
+          post :create,
+            :obj_key => content.obj_key,
+            :content_email => {
+              :from_name    => "Bryan",
+              :from_email   => "bricker@scpr.org",
+              :to_email     => "bricker@kpcc.org",
+              :body         => "Wat Wat"
+            }
+        end
+
+        it "renders the success template" do
+          response.should render_template "success"
+        end
+
+        it "initializes a new ContentEmail with the form params" do
+          message = assigns(:message)
+
+          message.from_name.should eq "Bryan"
+          message.from_email.should eq "bricker@scpr.org"
+          message.to_email.should eq "bricker@kpcc.org"
+          message.body.should eq "Wat Wat"
+        end
+
+        it "sets @message.content to @content" do
+          assigns(:message).content_key.should eq content.obj_key
+        end
+      end
     end
 
-    after :each do
-      ActionMailer::Base.deliveries.clear
-    end
+    context "invalid recaptcha" do
+      before :each do
+        controller.stub(:verify_recaptcha) { false }
+      end
 
-    it "initializes a new ContentEmail with the form params" do
-      message = assigns(:message)
-      message.should be_a ContentEmail
-      message.from_name.should eq   "Bryan"
-      message.from_email.should eq  "bricker@scpr.org"
-      message.to_email.should eq    "bricker@kpcc.org"
-    end
+      context "valid message" do
+        before :each do
+          post :create,
+            :obj_key => content.obj_key,
+            :content_email => {
+              :from_name    => "Bryan",
+              :from_email   => "bricker@scpr.org",
+              :to_email     => "bricker@kpcc.org",
+              :body         => "Wat Wat"
+            }
+        end
 
-    it "sets @message.content to @content" do
-      assigns(:message).content.should eq content
-    end
-
-    context "valid message" do
-      it "renders the success template" do
-        response.should render_template "success"
+        it "renders the success template" do
+          response.should render_template 'new'
+        end
       end
     end
 
     context "invalid message" do
-      before :each do
-        post :create,
-              obj_key:        content.obj_key,
-              content_email:  { to_email: "invalid" }
-      end
-
       it "renders the new template" do
+        post :create,
+          :obj_key          => content.obj_key,
+          :content_email    => { to_email: "invalid" }
+
         response.should render_template 'new'
       end
 
       it "sets @content" do
+        post :create,
+          :obj_key          => content.obj_key,
+          :content_email    => { to_email: "invalid" }
+
         assigns(:content).should_not be_nil
+      end
+
+      it "raises 404 if the content isn't allowed" do
+        admin_user = create :admin_user
+
+        -> {
+          post :create,
+            :content_email => { to_email: "whatever" },
+            :obj_key       => admin_user.obj_key
+        }.should raise_error ActiveRecord::RecordNotFound
       end
     end
   end

@@ -1,21 +1,22 @@
-cache ["v1", @podcast], expires_in: 1.hour do # Podcasts will refresh every hour.
+cache ["v2", @podcast], expires_in: 1.hour do # Podcasts will refresh every hour.
   xml.rss(
     'version'         => "2.0",
     'xmlns:atom'      => "http://www.w3.org/2005/Atom",
     'xmlns:itunes'    => "http://www.itunes.com/dtds/podcast-1.0.dtd"
   ) do
     xml.channel do
-      xml.title             @podcast.title
-      xml.link              @podcast.url || root_url
+      xml.title @podcast.title
+      xml.link  @podcast.url || root_url
 
       xml.atom :link,
         :href => @podcast.url || root_url,
         :rel  => "alternate"
 
-      xml.atom :link,
+      xml.atom :link, {
         :href   => @podcast.public_url,
         :rel    => "self",
         :type   => "application/rss+xml"
+      }
 
       xml.language          "en-us"
       xml.description       h(@podcast.description)
@@ -30,12 +31,10 @@ cache ["v1", @podcast], expires_in: 1.hour do # Podcasts will refresh every hour
         xml.itunes :email, "contact@kpcc.org"
       end
 
-      # need category
-
       xml.itunes :image, :href => @podcast.image_url
       xml.itunes :explicit, "no"
 
-      @articles.select { |c| c.audio.present? }.first(15).each do |article|
+      @podcast.content.select { |c| c.audio.present? }.first(15).each do |article|
         audio = article.audio.first
 
         xml.item do |item|
@@ -48,9 +47,14 @@ cache ["v1", @podcast], expires_in: 1.hour do # Podcasts will refresh every hour
           item.itunes :keywords,  raw(@podcast.keywords)
           item.link               article.public_url
 
-          item.enclosure          :url    => audio.podcast_url,
-                                  :length => audio.size,
-                                  :type   => "audio/mpeg"
+          item.enclosure({
+            :url => url_with_params(audio.podcast_url, {
+              :context    => @podcast.slug,
+              :via        => "podcast"
+            }),
+            :length => audio.size,
+            :type   => "audio/mpeg"
+          })
 
           item.itunes :duration,  audio.duration
         end # xml

@@ -1,5 +1,3 @@
-require 'digest/sha1'
-
 class AdminUser < ActiveRecord::Base
   self.table_name = 'auth_user'
   outpost_model
@@ -11,27 +9,12 @@ class AdminUser < ActiveRecord::Base
 
   self.unversioned_attributes = ['password_digest']
 
-  # ----------------
-  # Callbacks
   before_validation :generate_username,
     :on => :create,
     :if => -> { self.username.blank? }
 
-  # ----------------
-  # Validation
-
-  # ----------------
-  # Scopes
-
-  # ----------------
-  # Association
-  has_many :activities,
-    :class_name     => "Secretary::Version",
-    :foreign_key    => "user_id"
-
   has_one  :bio, foreign_key: "user_id"
 
-  # ----------------
 
   class << self
     def select_collection
@@ -39,7 +22,6 @@ class AdminUser < ActiveRecord::Base
     end
   end
 
-  # ----------------
 
   def json
     {
@@ -51,7 +33,10 @@ class AdminUser < ActiveRecord::Base
     }
   end
 
-  # Private: Generate a username based on real name
+
+  private
+
+  # Generate a username based on real name
   #
   # Returns String of the username
   def generate_username
@@ -68,34 +53,5 @@ class AdminUser < ActiveRecord::Base
     end
 
     self.username = dirty_name
-  end
-
-  # ----------------
-  # Override has_secure_password, so we can authenticate
-  # with legacy password if necessary.
-  def authenticate(unencrypted_password)
-    if self.password_digest.present?
-      super
-    else
-      authenticate_legacy(unencrypted_password)
-    end
-  end
-
-  # ----------------
-
-  private
-
-  # ----------------
-  # Authenticate using the django-style password.
-  # Save the new password on success.
-  def authenticate_legacy(unencrypted_password)
-    algorithm, salt, hash = self.old_password.split('$')
-    if hash.to_s == Digest::SHA1.hexdigest(salt.to_s + unencrypted_password)
-      self.password = unencrypted_password
-      self.save
-      self
-    else
-      false
-    end
   end
 end

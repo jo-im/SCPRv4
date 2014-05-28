@@ -6,42 +6,17 @@ class Category < ActiveRecord::Base
   include Concern::Validations::SlugValidation
   include Concern::Callbacks::SphinxIndexCallback
 
-  ROUTE_KEY = 'root_slug'
+  self.public_route_key = 'root_slug'
 
   DEFAULTS = {
     :page       => 1,
-    :per_page   => 10
+    :per_page   => 10,
+    :classes    => [NewsStory, ContentShell, BlogEntry, ShowSegment]
   }
 
-
-  FEATURED_INTERACTIVE_STYLES = {
-    0 => 'beams',
-    1 => 'traffic',
-    2 => 'palmtrees',
-    3 => 'map'
-  }
-
-
-  has_many :category_articles, order: 'position', dependent: :destroy
-  accepts_json_input_for :category_articles
-  tracks_association :category_articles
-
-  has_many :category_reporters, dependent: :destroy
-  has_many :bios, through: :category_reporters
-  tracks_association :bios
-
-  has_many :category_issues, dependent: :destroy
-  has_many :issues, through: :category_issues
-  tracks_association :issues
-
-  belongs_to :comment_bucket, class_name: "FeaturedCommentBucket"
 
   has_many :events
-  has_many :quotes,
-    :foreign_key    => "category_id",
-    :order          => "created_at desc"
-
-
+  belongs_to :comment_bucket, class_name: "FeaturedCommentBucket"
 
   validates :title, presence: true
 
@@ -65,15 +40,6 @@ class Category < ActiveRecord::Base
   end
 
 
-  # This category's hand-picked content,
-  # converted to articles.
-  def featured_articles
-    @featured_articles ||= self.category_articles
-      .includes(:article).select(&:article)
-      .map { |a| a.article.to_article }
-  end
-
-
   # This category's content converted to Articles.
   def articles(options={})
     content(options).map(&:to_article)
@@ -82,23 +48,29 @@ class Category < ActiveRecord::Base
 
   # All content associated to this category.
   def content(options={})
+    classes   = options[:classes] || DEFAULTS[:classes]
     page      = options[:page] || DEFAULTS[:page]
     per_page  = options[:per_page] || DEFAULTS[:per_page]
     exclude   = options[:exclude]
+    with      = options[:with] || {}
 
     if (page.to_i * per_page.to_i > SPHINX_MAX_MATCHES) || page.to_i < 1
       page = 1
     end
 
     args = {
-      :classes  => [NewsStory, ContentShell, BlogEntry, ShowSegment],
-      :page     => page,
-      :per_page => per_page,
-      :with     => { category: self.id }
+      :classes    => classes,
+      :page       => page,
+      :per_page   => per_page,
+      :with       => { category: self.id }.merge(with)
     }
 
-    if exclude && exclude.respond_to?(:obj_key_crc32)
-      args[:without] = { obj_key: exclude.obj_key_crc32 }
+    if exclude.present?
+      exclude = Array(exclude).select do |article|
+        article.respond_to?(:obj_key_crc32)
+      end
+
+      args[:without] = { obj_key: exclude.map(&:obj_key_crc32) }
     end
 
     ContentBase.search(args)
@@ -114,22 +86,5 @@ class Category < ActiveRecord::Base
   # The Preview for this category.
   def preview(options={})
     @preview ||= CategoryPreview.new(self, options)
-  end
-
-  def featured_interactive_style
-    FEATURED_INTERACTIVE_STYLES[self.featured_interactive_style_id]
-  end
-
-
-  private
-
-  def build_category_article_association(category_article_hash, article)
-    if article.published?
-      CategoryArticle.new(
-        :position   => category_article_hash["position"].to_i,
-        :article    => article,
-        :category   => self
-      )
-    end
   end
 end

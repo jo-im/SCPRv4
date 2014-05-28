@@ -85,43 +85,43 @@
     &.small {
         &.politics a {
             @include hide-text();
-            background-image:url(image_path("blogs/represent_sm.png"));
+            background-image:image-url("blogs/represent_sm.png");
             width:112px;
             height:30px;
         }
         &.education a {
             @include hide-text();
-            background-image:url(image_path("blogs/passfail_sm.png"));
+            background-image:image-url("blogs/passfail_sm.png");
             width:112px;
             height:30px;
         }
         &.multiamerican a {
             @include hide-text();
-            background-image:url(image_path("blogs/multiamerican_sm.png"));
+            background-image:image-url("blogs/multiamerican_sm.png");
             width:160px;
             height:20px;
         }
         &.newmedia a {
             @include hide-text();
-            background-image:url(image_path("blogs/withoutanet_sm.png"));
+            background-image:image-url("blogs/withoutanet_sm.png");
             width:140px;
             height:21px;
         }
         &.news a {
             @include hide-text();
-            background-image:url(image_path("blogs/latest_sm.png"));
+            background-image:image-url("blogs/latest_sm.png");
             width:120px;
             height:30px;
         }
         &.patt-morrison a {
             @include hide-text();
-            background-image:url(image_path("blogs/pattmorrison_sm.png"));
+            background-image:image-url("blogs/pattmorrison_sm.png");
             width:160px;
             height:27px;
         }
         &.southla a {
             @include hide-text();
-            background-image:url(image_path("blogs/oncentral_sm.png"));
+            background-image:image-url("blogs/oncentral_sm.png");
             width:116px;
             height:21px;
         }
@@ -130,7 +130,7 @@
     &.large {
         &.politics a {
             @include hide-text();
-            background-image:url(image_path("blogs/represent_lg.png"));
+            background-image:image-url("blogs/represent_lg.png");
             background-position: -4px 0;
             width:160px;
             height:42px;
@@ -138,7 +138,7 @@
         &.education {
           &:after {
             content:"";
-            background-image:url(image_path("sponsors/education-laup.png"));
+            background-image:image-url("sponsors/education-laup.png");
             background-repeat:no-repeat;
             display:block;
             position:absolute;
@@ -149,38 +149,38 @@
           }
           a {
               @include hide-text();
-              background-image:url(image_path("blogs/passfail_lg.png"));
+              background-image:image-url("blogs/passfail_lg.png");
               width:160px;
               height:46px;
           }
         }
         &.multiamerican a {
             @include hide-text();
-            background-image:url(image_path("blogs/multiamerican_lg.png"));
+            background-image:image-url("blogs/multiamerican_lg.png");
             width:210px;
             height:30px;
         }
         &.newmedia a {
             @include hide-text();
-            background-image:url(image_path("blogs/withoutanet_lg.png"));
+            background-image:image-url("blogs/withoutanet_lg.png");
             width:187px;
             height:32px;
         }
         &.news a {
             @include hide-text();
-            background-image:url(image_path("blogs/latest_lg.png"));
+            background-image:image-url("blogs/latest_lg.png");
             width:160px;
             height:46px;
         }
         &.patt-morrison a {
             @include hide-text();
-            background-image:url(image_path("blogs/pattmorrison_lg.png"));
+            background-image:image-url("blogs/pattmorrison_lg.png");
             width:210px;
             height:35px;
         }
         &.southla a {
             @include hide-text();
-            background-image:url(image_path("blogs/oncentral_lg.png"));
+            background-image:image-url("blogs/oncentral_lg.png");
             width:177px;
             height:32px;
         }

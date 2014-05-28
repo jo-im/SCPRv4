@@ -5,7 +5,7 @@ describe AdminListHelper do
     it "returns a pretty link" do
       link = helper.display_link("http://kpcc.org")
       link.should match /kpcc\.org/
-      link.should match /<a href/
+      link.should match /\A<a /
     end
   end
 
@@ -71,6 +71,10 @@ describe AdminListHelper do
       status = helper.display_audio([audio, audio.dup])
       status.should match /Live/
       status.should match /label-success/
+    end
+
+    it "shows None if there is no audio" do
+      helper.display_audio([]).should match /None/
     end
   end
 

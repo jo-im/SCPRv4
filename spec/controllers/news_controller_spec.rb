@@ -14,6 +14,13 @@ describe NewsController do
       get :story, @story.route_hash
     end
 
+    it 'renders audio if it is available' do
+      audio = create_list :audio, 2, :direct, :live, content: @story
+
+      get :story, @story.route_hash
+      response.status.should eq 200
+    end
+
     it "renders the layout" do
       get :story, @story.route_hash
       response.should render_template "new/single"

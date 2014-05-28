@@ -7,13 +7,15 @@
 # make sure they're defined in each subclass.
 module Job
   class ComputeAudioFileInfo < Base
-    @queue = "#{namespace}:compute_audio_file_info"
+    # Mid priority because this information is important but the task
+    # takes a while so we don't want to block the high_priority queue.
+    @priority = :mid
 
     class << self
       def perform(id)
         audio = Audio.find(id)
 
-        if audio.mp3_file.present?
+        if audio.file.present?
           audio.compute_duration if audio.duration.blank?
           audio.compute_size     if audio.size.blank?
           audio.save!
@@ -26,7 +28,7 @@ module Job
       end
 
       def on_failure(exception, id)
-        log "Couldn't save audio file info for #{audio.class.name} ##{id}: " \
+        log "Couldn't save audio file info for Audio ##{id}: " \
             "(#{exception.class}) #{exception}\n"
       end
     end # singleton

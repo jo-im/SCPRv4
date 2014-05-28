@@ -16,7 +16,7 @@ class NewApplicationController < ActionController::Base
   end
 
   # Override this method from CustomErrors to set the layout
-  def render_error(status, e=StandardError)
+  def render_error(status, e=StandardError, template_prefix="")
     super
     report_error(e)
   end

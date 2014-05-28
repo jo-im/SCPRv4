@@ -51,9 +51,23 @@ describe BlogsController do
     describe "view" do
       render_views
 
-      it "renders the view" do
-        blog = create :blog
-        get :show, blog: blog.slug
+      describe 'with HTML' do
+        it "renders the view" do
+          blog = create :blog
+          get :show, blog: blog.slug
+        end
+      end
+
+      describe "with XML" do
+        it "renders xml template when requested" do
+          blog = create :blog
+          create :blog_entry, blog: blog
+          get :show, blog: blog.slug, format: :xml
+
+          response.should render_template 'blogs/show'
+          response.header['Content-Type'].should match /xml/
+          response.body.should match RSS_SPEC['xmlns:atom']
+        end
       end
     end
 
@@ -70,15 +84,6 @@ describe BlogsController do
       end
 
       context "for valid blogs" do
-        describe "with XML" do
-          it "renders xml template when requested" do
-            blog = create :blog
-            get :show, blog: blog.slug, format: :xml
-            response.should render_template 'blogs/show'
-            response.header['Content-Type'].should match /xml/
-          end
-        end
-
         it "assigns @entries" do
           blog = create :blog
           get :show, blog: blog.slug

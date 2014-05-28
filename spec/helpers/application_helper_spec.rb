@@ -2,10 +2,44 @@ require 'spec_helper'
 
 describe ApplicationHelper do
 
+  describe '#render_content' do
+    describe 'feedxml' do
+      it "renders XML for the article(s)" do
+        entry = build :blog_entry
+        xml = helper.render_content(entry, 'feedxml')
+        xml.should match entry.headline
+      end
+
+      it "renders audio enclosure if asked" do
+        entry = build :blog_entry
+        audio = create :audio, :direct, :live, content: entry
+        entry.save!
+        entry.reload
+
+        xml = helper.render_content(entry, 'feedxml', enclosure_type: :audio)
+        xml.should match audio.url
+      end
+
+      it "renders image enclosure if asked" do
+        entry = build :blog_entry
+        asset = create :asset, content: entry
+        entry.save!
+        entry.reload
+
+        xml = helper.render_content(entry, 'feedxml', enclosure_type: :image)
+        xml.should match asset.full.url
+      end
+    end
+  end
+
+
   describe '#safe_render' do
     it "renders the partial if it exists" do
-      helper.safe_render('verticals/politics/footer_sponsors')
-        .should match /Politics/
+      helper.lookup_context.stub(:exists?) { true }
+      helper.stub(:render) { "hello" }
+
+      helper.safe_render('path/to/existing/partial')
+        .should match /hello/
     end
 
     it "returns nil if the partial does not exist" do
@@ -235,7 +269,7 @@ describe ApplicationHelper do
 
     it "makes content_for :modal_content" do
       helper.modal("anything") { "Hello!" }
-      helper.content_for?(:modal_content).should be_true
+      helper.content_for?(:modal_content).should eq true
     end
 
     it "renders the modal_content block" do
@@ -381,6 +415,50 @@ describe ApplicationHelper do
   describe '#random_headshot' do
     it 'returns an img tag' do
       helper.random_headshot.should match /<img /
+    end
+  end
+
+  describe '#add_ga_tracking_to' do
+    context 'given a url containing scpr.org' do
+      url = 'www.scpr.org'
+      it 'renders a link with google analytics params if the given url contains scpr.org' do
+        helper.add_ga_tracking_to(url).should eq 'www.scpr.org?utm_source=kpcc&utm_medium=email&utm_campaign=short-list'
+      end
+    end
+    context 'given a url that does not contain scpr.org' do
+      url = 'www.npr.org'
+      it 'renders the original link' do
+        helper.add_ga_tracking_to(url).should_not eq 'www.npr.org?utm_source=kpcc&utm_medium=email&utm_campaign=short-list'
+        helper.add_ga_tracking_to(url).should eq 'www.npr.org'
+      end
+    end
+  end
+
+
+  describe '#url_with_params' do
+    it "adds params if there aren't any" do
+      url = helper.url_with_params("http://google.com", context: "kpcc")
+      url.should eq "http://google.com?context=kpcc"
+    end
+
+    it "apprends to params if they already exist" do
+      url = helper.url_with_params("http://google.com?from=kpcc", context: "podcast")
+      url.should eq "http://google.com?from=kpcc&context=podcast"
+    end
+
+    it "ignores params if the value is falsey" do
+      url = helper.url_with_params("http://google.com", from: 'kpcc', context: nil)
+      url.should eq "http://google.com?from=kpcc"
+    end
+
+    it "doesn't leave a trailing ? if there are no params" do
+      url = helper.url_with_params("http://google.com")
+      url.should_not match /\?/
+    end
+
+    it "Returns the url if it's an invalid URI" do
+      url = helper.url_with_params("nope nope nope")
+      url.should eq "nope nope nope"
     end
   end
 end

@@ -5,7 +5,7 @@ module AuthenticationHelper
     password = options[:password] || "secret55"
     @user = create :admin_user, username: username, password: password
 
-    visit outpost_login_path
+    visit outpost.login_path
 
     fill_in "username", with: username
     fill_in "password", with: password

@@ -27,4 +27,3 @@ module Concern
     end
   end
 end
-

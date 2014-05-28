@@ -7,7 +7,7 @@ class KpccProgram < ActiveRecord::Base
   include Concern::Associations::RelatedLinksAssociation
   include Concern::Callbacks::SphinxIndexCallback
 
-  ROUTE_KEY = "program"
+  self.public_route_key = "program"
 
   PROGRAM_STATUS = {
     "onair"      => "Currently Airing",
@@ -20,12 +20,14 @@ class KpccProgram < ActiveRecord::Base
 
   #-------------------
   # Scopes
-  scope :active,         -> { where(air_status: ['onair','online']) }
+  scope :active, -> { where(air_status: ['onair','online']) }
+
   scope :can_sync_audio, -> {
     where(air_status: "onair")
     .where("audio_dir is not null")
     .where("audio_dir != ?", "")
   }
+
 
   #-------------------
   # Associations
@@ -49,22 +51,13 @@ class KpccProgram < ActiveRecord::Base
 
   class << self
     def select_collection
-      KpccProgram.order("title").map { |p| [p.to_title, p.id] }
+      KpccProgram.order("field(air_status, 'onair', '') desc, title")
+      .map { |p| [p.to_title, p.id] }
     end
   end
 
   def published?
     self.air_status != "hidden"
-  end
-
-  #----------
-
-  def absolute_audio_path
-    @absolute_audio_path ||= begin
-      if self.audio_dir.present?
-        File.join(Audio::AUDIO_PATH_ROOT, self.audio_dir)
-      end
-    end
   end
 
   #----------

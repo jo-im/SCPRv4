@@ -35,9 +35,9 @@
 <% end %>
 
 <%= form_block "Sponsor/Contact" do %>
-  <%= f.input :rsvp_url, hint: "If this event requires an RSVP, put the URL for the RSVP page here. <br/>" \
+  <%= f.input :rsvp_url, hint: ("If this event requires an RSVP, put the URL for the RSVP page here. <br/>" \
                                 "For web sites: Use the full URL, including http://<br/>" \
-                                "For email addresses: Enter the address beginning with mailto: (example: mailto:contact@kpcc.org)" %>
+                                "For email addresses: Enter the address beginning with mailto: (example: mailto:contact@kpcc.org)").html_safe %>
   <%= f.input :sponsor, hint: "Contact person, sponsoring organization, etc" %>
   <%= f.input :sponsor_url, hint: "If present, makes the contact text a link to this URL." %>
   <%= f.association :kpcc_program, hint: "If this event belongs to a KPCC-produced show, select it here." %>

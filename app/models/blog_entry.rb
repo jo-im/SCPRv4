@@ -15,12 +15,12 @@ class BlogEntry < ActiveRecord::Base
   include Concern::Associations::IssueAssociation
   include Concern::Associations::FeatureAssociation
   include Concern::Associations::CategoryAssociation
-  include Concern::Associations::CategoryArticleAssociation
   include Concern::Associations::HomepageContentAssociation
   include Concern::Associations::FeaturedCommentAssociation
   include Concern::Associations::QuoteAssociation
   include Concern::Associations::MissedItContentAssociation
   include Concern::Associations::EditionsAssociation
+  include Concern::Associations::VerticalArticleAssociation
   include Concern::Validations::ContentValidation
   include Concern::Callbacks::SetPublishedAtCallback
   include Concern::Callbacks::GenerateShortHeadlineCallback
@@ -32,24 +32,14 @@ class BlogEntry < ActiveRecord::Base
   include Concern::Callbacks::HomepageCachingCallback
   include Concern::Callbacks::TouchCallback
   include Concern::Methods::ArticleStatuses
-  include Concern::Methods::StatusMethods
   include Concern::Methods::CommentMethods
   include Concern::Methods::AssetDisplayMethods
 
   self.disqus_identifier_base = "blogs/entry"
-  ROUTE_KEY = "blog_entry"
+  self.public_route_key = "blog_entry"
 
 
   belongs_to :blog
-
-  has_many :tagged,
-    :class_name   => "TaggedContent",
-    :as           => :content
-
-  has_many :tags,
-    :through      => :tagged,
-    :dependent    => :destroy
-
 
   validates_presence_of :blog, if: :should_validate?
 
