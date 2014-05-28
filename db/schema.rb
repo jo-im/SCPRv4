@@ -848,11 +848,14 @@ ActiveRecord::Schema.define(version: 20140528204926) do
   create_table "tags", force: true do |t|
     t.string   "title"
     t.string   "slug"
+    t.text     "description"
+    t.boolean  "is_featured"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
   add_index "tags", ["created_at"], name: "index_tags_on_created_at", using: :btree
+  add_index "tags", ["is_featured"], name: "index_tags_on_is_featured", using: :btree
   add_index "tags", ["slug"], name: "index_tags_on_slug", using: :btree
 
   create_table "user_permissions", force: true do |t|
