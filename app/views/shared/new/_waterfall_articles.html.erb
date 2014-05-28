@@ -7,8 +7,8 @@
         <div class="ratio">
 
     <% if display_header %>
-        <% if issue = article.issues.first %>
-            <span class="issue"><%= link_to issue.title, issue.public_path %></span>
+        <% if tag = article.tags.first %>
+            <span class="issue"><%= link_to tag.title, issue_path(tag.slug) %></span>
         <% end  %>
     <% end %>
 

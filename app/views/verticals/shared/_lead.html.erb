@@ -22,7 +22,7 @@
 
         <aside class="more">
 
-    <% issue = lead_article.issues.first %>
+    <% tag = lead_article.tags.first %>
     <% related = lead_article.original_object.related_content.first(2) if lead_article.original_object.respond_to?(:related_content) %>
     <%= cache ["vertical", "more-featured", issue, related] do %>
         <% if issue %>
