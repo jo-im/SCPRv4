@@ -1,7 +1,13 @@
 class MigrateIssuesToTags < ActiveRecord::Migration
   def up
     Issue.all.each do |issue|
-      tag = Tag.create(title: issue.title, slug: issue.slug)
+      tag = Tag.create(
+        :title          => issue.title,
+        :slug           => issue.slug,
+        :description    => issue.description,
+        :is_featured    => issue.is_active
+      )
+
       issue.tags << tag
       issue.save!
 

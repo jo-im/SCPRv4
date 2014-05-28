@@ -256,5 +256,16 @@ table {
     ///////////////////
     // Tag
     &.list-tags {
+        .column-title { // tag.title
+            width: 200px;
+        }
+
+        .column-slug { // tag.slug
+            width: 150px;
+        }
+
+        .column-description { // tag.description
+            width: 450px;
+        }
     }
 }
