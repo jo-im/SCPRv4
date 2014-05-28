@@ -1,7 +1,7 @@
 module Api::Public::V3
   class EventsController < BaseController
     DEFAULTS = {
-      :limit => 40,
+      :limit => 20,
       :page  => 1
     }
 
