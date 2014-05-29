@@ -17,7 +17,7 @@
     </div><!--/ .photo -->
 
     <div class="supportive">
-        <h1 class="tease"><%= link_to lead_article.teaser, lead_article.public_path %></h1>
+        <h1 class="tease"><%= link_to strip_tags(lead_article.teaser), lead_article.public_path %></h1>
         <h2 class="byline"><%= render_byline lead_article.original_object %></h2>
 
         <aside class="more">

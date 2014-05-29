@@ -36,7 +36,7 @@
 
                 <header>
                     <h1><%= link_to article.short_title, article.public_path %></h1>
-                    <h2><%= article.teaser %></h2>
+                    <h2><%= article.teaser.html_safe %></h2>
                 </header>
             </article>
         <% end %>

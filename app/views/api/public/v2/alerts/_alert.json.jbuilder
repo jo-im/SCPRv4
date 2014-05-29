@@ -9,7 +9,7 @@ json.cache! [Api::Public::V2::VERSION, "v1", alert] do
   end
 
   if alert.teaser.present?
-    json.teaser alert.teaser
+    json.teaser alert.teaser.html_safe
   end
 
   json.mobile_notification_sent alert.mobile_notification_sent?
