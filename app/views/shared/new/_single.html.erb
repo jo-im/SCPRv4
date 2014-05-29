@@ -201,7 +201,13 @@
     </div>
 </div><!--/ .report -->
 
-<%= render 'shared/new/kpcc_ipad_ad' %>
+<div style="padding-bottom: 30px; border-bottom: 1px solid rgba(0,0,0,0.2); margin-bottom: 25px;">
+    <div style="background: #295b7b; padding: 60px 0;">
+        <p style="text-align: center; color: white; font-size: 1.2em; margin-bottom: 20px;" class="bound">EITHER THE EXCLUSIVE-SPONSOR RESPONSIVE-AD <em style="font-style: italic; font-size: 1.7em;">OR </em> THE ONE-TIME-DONATION MEMBERSHIP-PLUG GOES HERE</p>
+        <p style="text-align: center; color: rgba(255,255,255,0.7); font-size: 0.6em;" class="bound">(OR IT JUST COLLAPSES IF WE DON'T WANT TO RUN EITHER OF THEM)</p>
+    </div>
+</div>
+<%= comments_for article.original_object %>
 <% if @category.present? %>
 <%= render 'shared/new/triptych', category: @category, articles: @category_articles[0..2], header: "More from #{@category.title}" %>
 <% elsif @popular_articles %>
