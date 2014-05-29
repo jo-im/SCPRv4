@@ -1,4 +1,4 @@
-json.partial! api_view_path("shared", "version")
+json.partial! api_view_path("shared", "header")
 
 json.bucket do
   json.partial! api_view_path("buckets", "bucket"), bucket: @bucket

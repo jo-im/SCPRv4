@@ -1,4 +1,4 @@
-json.partial! api_view_path("shared", "version")
+json.partial! api_view_path("shared", "header")
 
 # Since we actually want to return an empty object in this case,
 # we need to check if it exists first. The controller isn't catching it

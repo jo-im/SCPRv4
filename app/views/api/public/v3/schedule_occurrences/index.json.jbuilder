@@ -1,4 +1,4 @@
-json.partial! api_view_path("shared", "version")
+json.partial! api_view_path("shared", "header")
 
 json.schedule_occurrences do
   json.partial! api_view_path("schedule_occurrences", "collection"),
