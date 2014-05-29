@@ -1,8 +1,8 @@
 <div class="lunchbox">
     <div class="inner bound clearfix">
 
-<%= cache ["categories/show", "issues", 'v1', issues] do %>
-    <% if issue = issues.first %>
+<%= cache ["categories/show", "issues", 'v1', tags] do %>
+    <% if tag = tags.first %>
         <section class="issues">
             <header>
                 <h1>Issues We're Tracking</h1>
@@ -11,37 +11,37 @@
 
             <div>
                 <header class="special">
-                    <h1><%= issue.title %></h1>
+                    <h1><%= tag.title %></h1>
                     <h2 class="clearfix">
                         <mark>Special coverage from KPCC</mark>
-                        <%= link_to issue.public_path do %>
-                            See all <span><%= issue.title  %></span>
-                        <% end %>
+                        <a href="<%=issue_path(tag.slug)%>">
+                            See all <span><%= tag.title %></span>
+                        </a>
                     </h2>
                 </header>
                 <nav>
                     <ul>
-                    <%= render 'verticals/shared/issue_list', articles: issue.articles.first(2) %>
+                    <%= render 'verticals/shared/issue_list', articles: tag.articles(limit: 2) %>
                     </ul>
                 </nav>
             </div>
 
-        <% Array(issues[1..2]).each do |issue| %>
+        <% Array(tags[1..2]).each do |tag| %>
             <div>
                 <header class="slim clearfix">
-                    <h1><%= issue.title %></h1>
-                    <h2><%= link_to issue.public_path do %>See all <span><%= issue.title %></span><% end %></h2>
+                    <h1><%= tag.title %></h1>
+                    <h2><a href="<%=issue_path(tag.slug)%>">See all <span><%= tag.title %></span></a></h2>
                 </header>
                 <nav>
                     <ul>
-                    <%= render 'verticals/shared/issue_list', articles: issue.articles.first(2) %>
+                    <%= render 'verticals/shared/issue_list', articles: tag.articles(limit: 2) %>
                     </ul>
                 </nav>
             </div>
         <% end %>
 
         </section><!--/ .issues -->
-    <% end %> <%# issues? %>
+    <% end %> <%# tags? %>
 <% end %> <%# cache %>
 
 

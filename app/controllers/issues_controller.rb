@@ -5,21 +5,25 @@ class IssuesController < NewApplicationController
   before_filter :get_popular_articles
   before_filter :get_issues
 
+  PER_PAGE = 8
 
   def index
   end
 
   def show
-    @issue = Issue.find_by_slug!(params[:slug])
+    @tag = Tag.find_by_slug!(params[:slug])
 
-    @paginated_articles = Kaminari.paginate_array(@issue.articles)
-      .page(params[:page]).per(8)
+    articles = @tag.articles
+    @count = articles.size
+
+    @articles = Kaminari.paginate_array(articles)
+      .page(params[:page]).per(PER_PAGE)
   end
 
 
   private
 
   def get_issues
-    @issues = Issue.active.order("title")
+    @tags = Tag.where(is_featured: true).order("title")
   end
 end
