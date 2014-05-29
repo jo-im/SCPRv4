@@ -86,7 +86,6 @@ ActiveRecord::Schema.define(version: 20140529062114) do
     t.string   "slug"
     t.text     "description",         limit: 2147483647
     t.boolean  "is_active",                              default: false, null: false
-    t.boolean  "is_news",                                                null: false
     t.string   "teaser"
     t.integer  "missed_it_bucket_id"
     t.datetime "created_at",                                             null: false
@@ -164,15 +163,12 @@ ActiveRecord::Schema.define(version: 20140529062114) do
   create_table "contentbase_category", force: true do |t|
     t.string   "title"
     t.string   "slug"
-    t.boolean  "is_news",           default: true, null: false
     t.integer  "comment_bucket_id"
-    t.datetime "created_at",                       null: false
-    t.datetime "updated_at",                       null: false
-    t.string   "description"
+    t.datetime "created_at",        null: false
+    t.datetime "updated_at",        null: false
   end
 
   add_index "contentbase_category", ["comment_bucket_id"], name: "contentbase_category_36c0cbca", using: :btree
-  add_index "contentbase_category", ["is_news"], name: "index_contentbase_category_on_is_news", using: :btree
   add_index "contentbase_category", ["slug"], name: "contentbase_category_a951d5d6", using: :btree
   add_index "contentbase_category", ["title"], name: "index_contentbase_category_on_title", using: :btree
 
