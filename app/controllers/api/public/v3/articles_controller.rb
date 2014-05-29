@@ -164,8 +164,12 @@ module Api::Public::V3
     def sanitize_tags
       return false if !params[:tags]
 
-      slugs = params[:tags].to_s.split(',')
-      @conditions[:tags] = slugs
+      slugs   = params[:tags].to_s.split(',')
+      ids     = Tag.where(slug: slugs).map(&:id)
+
+      if ids.present?
+        @conditions[:tags] = ids
+      end
     end
 
 

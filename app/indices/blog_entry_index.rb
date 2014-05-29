@@ -22,7 +22,7 @@ ThinkingSphinx::Index.define :blog_entry, with: :active_record do
   # For the homepage/category sections
   has category.id, as: :category
   has asset_display_id
-  has tags.slug, as: :tags
+  has tags.id, as: :tags
 
   # For podcasts
   join audio
