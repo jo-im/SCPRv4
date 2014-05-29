@@ -84,10 +84,10 @@ module Api::Public::V2
     end
 
     def sanitize_types
-      if params[:types]
-        types = params[:types].split(",") & Event::EVENT_TYPES.keys
-        @conditions.push(event_type: types)
-      end
+      return true if !params[:types]
+
+      types = params[:types].split(",") & Event::EVENT_TYPES.keys
+      @conditions.push(event_type: types)
     end
   end
 end
