@@ -5,6 +5,5 @@
 
 <%= cache ["show", "v11", @story] do %>
   <%= render "shared/new/single", article: @story, full: true %>
-  <%= render "news/story", story: @story %>
 <% end %>
 
