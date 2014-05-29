@@ -11,7 +11,6 @@ Scprv4::Application.routes.draw do
   # Sections
   get '/category/carousel-content/:object_class/:id' => 'category#carousel_content',  as: :category_carousel, defaults: { format: :js }
   get '/news/'                                       => 'category#news',              as: :latest_news
-  get '/arts-life/'                                  => 'category#arts',              as: :latest_arts
 
   # RSS
   get '/feeds/all_news' => 'feeds#all_news', as: :all_news_feed
