@@ -8,8 +8,13 @@ class MigrateIssuesToTags < ActiveRecord::Migration
         :is_featured    => issue.is_active
       )
 
-      issue.tags << tag
-      issue.save!
+      if ts = issue.articles.first.try(:public_datetime)
+        tag.send :write_attribute, :created_at, ts
+      end
+
+      if ts = issue.articles.last.try(:public_datetime)
+        tag.send :write_attribute, :updated_at, ts
+      end
 
       issue.articles.each do |article|
         article.original_object.tags << tag
