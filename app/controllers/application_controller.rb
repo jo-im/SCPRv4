@@ -23,13 +23,7 @@ class ApplicationController < ActionController::Base
     @upcoming_events_sponsored = Event.published
       .includes(:assets).upcoming.sponsored.limit(3)
 
-    @latest_blogs_news = BlogEntry.published
-      .includes(:blog).limit(3)
-      .where(Blog.table_name => { is_news: true })
-
-    @latest_blogs_arts = BlogEntry.published
-      .includes(:blog).limit(3)
-      .where(Blog.table_name => { is_news: false })
+    @latest_blogs = BlogEntry.published.includes(:blog).limit(3)
   end
 
   #----------

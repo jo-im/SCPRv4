@@ -5,7 +5,7 @@ describe RootPathController do
     render_views
 
     it "assigns @category" do
-      category = create :category_news
+      category = create :category
 
       get :handle_path, path: category.slug
       assigns(:category).should eq category
@@ -13,7 +13,7 @@ describe RootPathController do
 
     describe "with XML" do
       it "renders xml template when requested" do
-        category = create :category_news
+        category = create :category
 
         get :handle_path, path: category.slug, format: :xml
 
@@ -25,7 +25,7 @@ describe RootPathController do
 
     describe "with template" do
       before :each do
-        @category = create :category_news
+        @category = create :category
       end
       it "renders the new template" do
         get :handle_path, path: @category.slug, format: :html

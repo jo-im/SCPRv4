@@ -4,6 +4,7 @@
   <% register_content "layout/breaking_news_alert" %>
   <%= render "breaking_news/breaking_news_alert" %>
 <% end %>
+
 <header id="masthead">
   <div class="container-fluid">
     <div class="head-lead-minimal">
@@ -59,7 +60,6 @@
           <ul>
             <li class="listen-live"><a href="javascript:void(0)" onclick="open_popup('/listen_live/');" id="listen-live">Listen Live</a></li>
             <li class="mega"><a href="/news/" data-section="news-mega"><span>News</span></a></li>
-            <li class="mega"><a href="/arts-life/" data-section="arts-mega"><span>Arts &amp; Life</span></a></li>
             <li class="mega"><a href="/programs/" data-section="programs-mega"><span>Programs</span></a></li>
             <li class="mega"><a href="/events/" data-section="events-mega"><span>Events</span></a></li>
             <li class="mega"><a href="/support/" data-section="support-mega"><span>Support Us</span></a></li>
@@ -84,9 +84,6 @@
 <div id="offscreen-header" style="position:absolute; top:-10000px; width:0px; height:0px;">
   <nav id="news-mega" class="section-mega clearfix" style="display:none;">
     <%= render "shared/masthead/news" %>
-  </nav>
-  <nav id="arts-mega" class="section-mega clearfix" style="display:none;">
-    <%= render "shared/masthead/arts" %>
   </nav>
   <nav id="programs-mega" class="section-mega clearfix" style="display:none;">
     <%= render "shared/masthead/programs" %>
