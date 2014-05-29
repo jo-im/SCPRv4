@@ -12,11 +12,6 @@ FactoryGirl.define do
     position 0
   end
 
-  factory :vertical_issue do
-    vertical
-    issue
-  end
-
   factory :vertical_reporter do
     vertical
     bio

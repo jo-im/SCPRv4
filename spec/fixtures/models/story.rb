@@ -21,7 +21,6 @@ module TestClass
     include Concern::Associations::RelatedLinksAssociation
     include Concern::Associations::BylinesAssociation
     include Concern::Associations::CategoryAssociation
-    include Concern::Associations::IssueAssociation
     include Concern::Associations::TagsAssociation
     include Concern::Associations::FeatureAssociation
     include Concern::Associations::VerticalArticleAssociation
