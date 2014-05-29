@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140528182103) do
+ActiveRecord::Schema.define(version: 20140528204926) do
 
   create_table "abstracts", force: true do |t|
     t.string   "source"
@@ -809,6 +809,17 @@ ActiveRecord::Schema.define(version: 20140528182103) do
   add_index "shows_segment", ["status"], name: "index_shows_segment_on_status", using: :btree
   add_index "shows_segment", ["updated_at"], name: "index_shows_segment_on_updated_at", using: :btree
 
+  create_table "taggings", force: true do |t|
+    t.string   "taggable_type"
+    t.integer  "taggable_id"
+    t.integer  "tag_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "taggings", ["tag_id"], name: "index_taggings_on_tag_id", using: :btree
+  add_index "taggings", ["taggable_type", "taggable_id"], name: "index_taggings_on_taggable_type_and_taggable_id", using: :btree
+
   create_table "taggit_tag", force: true do |t|
     t.string  "name",  limit: 100, null: false
     t.string  "slug",  limit: 100, null: false
@@ -829,6 +840,19 @@ ActiveRecord::Schema.define(version: 20140528182103) do
   add_index "taggit_taggeditem", ["content_type", "content_id"], name: "index_taggit_taggeditem_on_content_type_and_content_id", using: :btree
   add_index "taggit_taggeditem", ["django_content_type_id"], name: "taggit_taggeditem_e4470c6e", using: :btree
   add_index "taggit_taggeditem", ["tag_id"], name: "taggit_taggeditem_3747b463", using: :btree
+
+  create_table "tags", force: true do |t|
+    t.string   "title"
+    t.string   "slug"
+    t.text     "description"
+    t.boolean  "is_featured"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "tags", ["created_at"], name: "index_tags_on_created_at", using: :btree
+  add_index "tags", ["is_featured"], name: "index_tags_on_is_featured", using: :btree
+  add_index "tags", ["slug"], name: "index_tags_on_slug", using: :btree
 
   create_table "user_permissions", force: true do |t|
     t.integer  "admin_user_id"

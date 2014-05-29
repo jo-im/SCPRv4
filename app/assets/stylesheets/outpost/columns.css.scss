@@ -159,7 +159,7 @@ table {
     ///////////////////
     // Issue
     &.list-issues {
-        .column-title { // issue.headline
+        .column-title { // issue.title
             width: 200px;
         }
 
@@ -250,6 +250,22 @@ table {
     &.list-show_episodes {
         .column-show { // show_episode.show
             width: 100px;
+        }
+    }
+
+    ///////////////////
+    // Tag
+    &.list-tags {
+        .column-title { // tag.title
+            width: 200px;
+        }
+
+        .column-slug { // tag.slug
+            width: 150px;
+        }
+
+        .column-description { // tag.description
+            width: 450px;
         }
     }
 }
