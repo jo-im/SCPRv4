@@ -12,12 +12,12 @@
         <%= cache ["vertical", "resources", articles] do %>
             <% articles.each do |article| %>
                 <li>
-                    <%= link_to(article.public_path) do %>
+                    <a href="<%=article.public_path%>">
                         <figure class="clearfix">
                             <div class="ratio"><div class="fill"></div><b class="img-contain"><%= image_tag article.asset.small.url, alt: '' %></b></div>
                             <figcaption><%= article.short_title %></figcaption>
                         </figure>
-                    <% end %>
+                    </a>
                 </li>
             <% end %>
         <% end %>
