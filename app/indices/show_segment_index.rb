@@ -17,7 +17,7 @@ ThinkingSphinx::Index.define :show_segment, with: :active_record do
   # For category/homepage sections
   has category.id, as: :category
   has asset_display_id
-  has tags.id, as: :tags
+  has tags.slug, as: :tags
 
   # For RSS Feed
   has "1",

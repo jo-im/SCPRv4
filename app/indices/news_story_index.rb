@@ -15,7 +15,7 @@ ThinkingSphinx::Index.define :news_story, with: :active_record do
   # For category/homepage building
   has category.id, as: :category
   has asset_display_id
-  has tags.id, as: :tags
+  has tags.slug, as: :tags
 
   # For RSS Feed
   has "(#{NewsStory.table_name}.source <=> 'kpcc')",

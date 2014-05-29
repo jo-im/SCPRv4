@@ -14,7 +14,7 @@ ThinkingSphinx::Index.define :content_shell, with: :active_record do
 
   # For category/homepage building
   has category.id, as: :category
-  has tags.id, as: :tags
+  has tags.slug, as: :tags
 
   # For Feeds - we only want to send our original content to RSS
   # (not stuff copies from AP or NPR, for example)
