@@ -167,9 +167,7 @@ module Api::Public::V3
       slugs   = params[:tags].to_s.split(',')
       ids     = Tag.where(slug: slugs).map(&:id)
 
-      if ids.present?
-        @conditions[:tags] = ids
-      end
+      @conditions[:tags] = ids
     end
 
 
