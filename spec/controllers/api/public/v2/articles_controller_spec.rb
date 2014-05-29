@@ -81,17 +81,17 @@ describe Api::Public::V2::ArticlesController do
       sphinx_spec(num: 0)
 
       it 'only selects stories with the requested categories' do
-        category1  = create :category_not_news, slug: "film"
+        category1  = create :category, slug: "film"
         story1     = create :news_story,
           category: category1, published_at: 1.hour.ago
 
-        category2  = create :category_news, slug: "health"
+        category2  = create :category, slug: "health"
         story2     = create :news_story,
           category: category2, published_at: 2.hours.ago
 
         # Control - add these in to make sure we're *only* returning
         # stories with the requested categories
-        category3  = create :category_news, slug: "wat"
+        category3  = create :category, slug: "wat"
         story3     = create :news_story,
           category: category3, published_at: 2.hours.ago
 

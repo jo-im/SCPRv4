@@ -240,22 +240,10 @@ module ApplicationHelper
 
   #----------
 
-  def latest_arts(limit=2)
-    ContentBase.search({
-      :classes    => [NewsStory, BlogEntry, ShowSegment, ContentShell],
-      :limit      => limit,
-      :with       => { category_is_news: false },
-      :without    => { category: false }
-    }).map(&:to_article)
-  end
-
-  #----------
-
   def latest_news(limit=2)
     ContentBase.search({
       :classes    => [NewsStory, BlogEntry, ShowSegment, ContentShell],
       :limit      => limit,
-      :with       => { category_is_news: true },
       :without    => { category: false }
     }).map(&:to_article)
   end
