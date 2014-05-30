@@ -112,15 +112,15 @@ describe ProgramsController do
         it "excludes current episode and its segments from @episodes" do
           @program.update_column(:display_episodes, true)
 
-          episode = build :episode, :published,
+          episode = build :show_episode, :published,
             :show => @program,
             :air_date => 1.hour.ago
 
-          segment = create :segment, :published, show: @program
+          segment = create :show_segment, :published, show: @program
           episode.segments << segment
           episode.save!
 
-          other_episode = create :episode, :published,
+          other_episode = create :show_episode, :published,
             :show => @program,
             :air_date => 1.day.ago
 
@@ -139,7 +139,7 @@ describe ProgramsController do
 
       context "xml" do
         it "renders xml template" do
-          get :show, show: program.slug, format: :xml
+          get :show, show: @program.slug, format: :xml
           response.should render_template 'programs/kpcc/show'
           response.header['Content-Type'].should match /xml/
         end
@@ -152,12 +152,15 @@ describe ProgramsController do
       end
 
       it "sets @segments to the program's segments" do
-        episode = build :external_episode, external_program: @program
-        get :show, show: @program
-        assigns(:episodes).should eq [episode]
+        segment = create :external_segment, external_program: @program
+        get :show, show: @program.slug
+        assigns(:segments).to_a.should eq [segment]
       end
 
       it "sets @episodes to the program's episodes" do
+        episode = create :external_episode, external_program: @program
+        get :show, show: @program.slug
+        assigns(:episodes).to_a.should eq [episode]
       end
 
       context "html" do
