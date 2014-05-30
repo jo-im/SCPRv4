@@ -16,28 +16,30 @@
       </div>
     </div>
 
-    <%= any_to_list? @current_user_activities, message: "<div>There is no activity to show.</div>" do %>
-      <table class="table table-striped">
-        <thead>
-          <tr>
-            <th>Manage</th>
-            <th>Title</th>
-            <th>Timestamp</th>
-            <th>Description</th>
-          </tr>
-        </thead>
-        <tbody>
-          <% @current_user_activities.each do |version| %>
-            <% record = version.versioned %>
+    <%= cache ["dashboard", @current_user_activities] do %>
+      <%= any_to_list? @current_user_activities, message: "<div>There is no activity to show.</div>" do %>
+        <table class="table table-striped">
+          <thead>
             <tr>
-              <td><%= link_to "Edit", record.admin_edit_path, class: "btn" %></td>
-              <td><%= record.to_title %></td>
-              <td><%= display_datetime(version.created_at) %></td>
-              <td><%= version.description %></td>
+              <th>Manage</th>
+              <th>Title</th>
+              <th>Timestamp</th>
+              <th>Description</th>
             </tr>
-          <% end %>
-        </tbody>
-      </table>
+          </thead>
+          <tbody>
+            <% @current_user_activities.each do |version| %>
+              <% record = version.versioned %>
+              <tr>
+                <td><%= link_to "Edit", record.admin_edit_path, class: "btn" %></td>
+                <td><%= record.to_title %></td>
+                <td><%= display_datetime(version.created_at) %></td>
+                <td><%= version.description %></td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      <% end %>
     <% end %>
     <hr />
 
@@ -48,28 +50,30 @@
       </div>
     </div>
 
-    <%= any_to_list? @latest_activities, message: "There is no activity to show." do %>
-      <table class="table table-striped">
-        <thead>
-          <tr>
-            <th>Title</th>
-            <th>Timestamp</th>
-            <th>Description</th>
-            <th>User</th>
-          </tr>
-        </thead>
-        <tbody>
-          <% @latest_activities.each do |version| %>
-            <% record = version.versioned %>
+    <%= cache ["dashboard", @latest_activities] do %>
+      <%= any_to_list? @latest_activities, message: "There is no activity to show." do %>
+        <table class="table table-striped">
+          <thead>
             <tr>
-              <td><%= guarded_link_to record.class, record.to_title, record.admin_edit_path %></td>
-              <td><%= display_datetime(version.created_at) %></td>
-              <td><%= version.description %></td>
-              <td><%= version.user.to_title %></td>
+              <th>Title</th>
+              <th>Timestamp</th>
+              <th>Description</th>
+              <th>User</th>
             </tr>
-          <% end %>
-        </tbody>
-      </table>
+          </thead>
+          <tbody>
+            <% @latest_activities.each do |version| %>
+              <% record = version.versioned %>
+              <tr>
+                <td><%= guarded_link_to record.class, record.to_title, record.admin_edit_path %></td>
+                <td><%= display_datetime(version.created_at) %></td>
+                <td><%= version.description %></td>
+                <td><%= version.user.to_title %></td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      <% end %>
     <% end %>
 
     <hr />
