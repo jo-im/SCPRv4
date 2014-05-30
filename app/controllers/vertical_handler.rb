@@ -8,23 +8,6 @@ module VerticalHandler
 
   PER_PAGE = 16
 
-  # /business
-  def handle_vertical_business
-    load_vertical_associations
-
-    # Business vertical needs to also show Marketplace stories,
-    # but we don't have a marketplace blog or anything like that,
-    # so we'll just pull in news stories with the "marketplace" source.
-    @marketplace_articles = NewsStory.where(source: 'marketplace')
-      .published.map(&:to_article)
-
-    render(
-      :layout     => 'new/vertical',
-      :template   => 'verticals/business'
-    )
-  end
-
-
   def handle_vertical_default
     load_vertical_associations
     template = "verticals/#{@vertical.slug}"
@@ -43,6 +26,7 @@ module VerticalHandler
     @blog       = @vertical.blog
     @quote      = @vertical.quote
     @events     = @category.events.published.upcoming
+    @tags       = @vertical.tags.order("updated_at desc")
   end
 
 

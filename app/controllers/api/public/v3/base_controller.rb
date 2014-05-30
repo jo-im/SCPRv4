@@ -1,5 +1,5 @@
 module Api::Public::V3
-  VERSION   = Gem::Version.new("3.0.0.beta4")
+  VERSION   = Gem::Version.new("3.0.0.beta6")
   TYPE      = "public"
 
   class BaseController < ::ActionController::Base
@@ -69,6 +69,16 @@ module Api::Public::V3
       response.headers['Access-Control-Max-Age']           = '1000'
       response.headers['Access-Control-Allow-Headers']     = 'x-requested-with,content-type,X-CSRF-Token'
       response.headers['Access-Control-Allow-Credentials'] = "true"
+    end
+
+    #---------------------------
+
+    def set_hash_conditions
+      @conditions = {}
+    end
+
+    def set_array_conditions
+      @conditions = []
     end
 
     #---------------------------

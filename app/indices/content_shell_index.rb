@@ -14,9 +14,7 @@ ThinkingSphinx::Index.define :content_shell, with: :active_record do
 
   # For category/homepage building
   has category.id, as: :category
-
-  # For megamenu
-  has category.is_news, as: :category_is_news
+  has tags.id, as: :tags
 
   # For Feeds - we only want to send our original content to RSS
   # (not stuff copies from AP or NPR, for example)

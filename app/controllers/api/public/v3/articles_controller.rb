@@ -16,7 +16,7 @@ module Api::Public::V3
     MAX_RESULTS = 40
 
     before_filter \
-      :set_conditions,
+      :set_hash_conditions,
       :set_classes,
       :sanitize_limit,
       :sanitize_page,
@@ -28,6 +28,7 @@ module Api::Public::V3
 
     before_filter :sanitize_obj_key, only: [:show]
     before_filter :sanitize_url, only: [:by_url]
+    before_filter :sanitize_tags, only: [:index]
 
     #---------------------------
 
@@ -108,15 +109,11 @@ module Api::Public::V3
 
     private
 
-    def set_conditions
-      @conditions = {}
-    end
-
     def set_classes
       @classes = []
-      params[:types] ||= defaults[:types]
+      types = params[:types] || defaults[:types]
 
-      params[:types].split(",").uniq.each do |type|
+      types.split(",").uniq.each do |type|
         if klasses = TYPES[type]
           @classes += klasses
         end
@@ -161,6 +158,16 @@ module Api::Public::V3
       if ids.present?
         @conditions[:category] = ids
       end
+    end
+
+
+    def sanitize_tags
+      return false if !params[:tags]
+
+      slugs   = params[:tags].to_s.split(',')
+      ids     = Tag.where(slug: slugs).map(&:id)
+
+      @conditions[:tags] = ids
     end
 
 

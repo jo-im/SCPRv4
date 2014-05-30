@@ -19,33 +19,15 @@ describe "Vertical page" do
     it "shows 2 latest marketplace articles" do
       vertical = create :vertical, slug: "business"
 
-      story1 = create :news_story, :published,
-        :source => "marketplace",
-        :published_at => 1.week.ago,
-        :short_headline => "xxMarketplace1xx"
-
-      story2 = create :news_story, :published,
-        :source => "marketplace",
-        :published_at => 1.day.ago,
-        :short_headline => "xxMarketplace2xx"
-
-      story3 = create :news_story, :published,
-        :source => "marketplace",
-        :published_at => 1.hour.ago,
-        :short_headline => "xxMarketplace3xx"
-
-      story4 = create :news_story, :published,
-        :source => "npr",
-        :published_at => 1.minute.ago,
-        :short_headline => "xxMarketplace4xx"
+      Rails.cache.write("views/business/marketplace",
+        %Q{<mark>Drought puts California rice in a sticky situation</mark>
+          <mark>PODCAST: Winter came for the GDP</mark>})
 
       visit vertical.public_path
 
       within('.affiliated .affiliate') do
-        page.should_not have_content 'xxMarketplace1xx'
-        page.should_not have_content 'xxMarketplace4xx'
-        page.should have_content 'xxMarketplace2xx'
-        page.should have_content 'xxMarketplace3xx'
+        page.should have_content 'Drought puts California rice in a sticky situation'
+        page.should have_content 'PODCAST: Winter came for the GDP'
       end
     end
   end
@@ -74,19 +56,19 @@ describe "Vertical page" do
     end
 
     it "does not return the top story in the promoted issues section" do
-      issue           = create :active_issue
+      tag             = create :tag
       vertical        = create :vertical
       featured_story  = create :news_story, :published, category: vertical.category
 
-      vertical.vertical_issues.create(issue: issue)
-      featured_story.article_issues.create(issue: issue)
+      vertical.taggings.create(tag: tag)
+      featured_story.taggings.create(tag: tag)
       vertical.vertical_articles.create(article: featured_story)
 
       other_articles = create_list :news_story, 2, :published
 
       # assign issue to featured article and other articles
       other_articles.each do |article|
-        article.article_issues.create(issue: issue)
+        article.taggings.create(tag: tag)
       end
 
       index_sphinx
@@ -213,11 +195,13 @@ describe "Vertical page" do
   end
 
   describe "rendering issues" do
+    sphinx_spec(num: 0)
+
     it "shows the related issues in the sidebar" do
-      issue1 = create :issue, title: "xxIssue1xx"
-      issue2 = create :issue, title: "xxIssue2xx"
+      tag1 = create :tag, title: "xxIssue1xx"
+      tag2 = create :tag, title: "xxIssue2xx"
       vertical = create :vertical
-      vertical.issues = [issue1, issue2]
+      vertical.tags = [tag1, tag2]
       vertical.save!
 
       visit vertical.public_path
@@ -229,7 +213,7 @@ describe "Vertical page" do
     end
 
     it "shows the issue's 2 latest articles" do
-      issue = create :issue
+      tag = create :tag
 
       article1 = create :news_story, :published,
         :published_at => 1.week.ago,
@@ -243,20 +227,24 @@ describe "Vertical page" do
         :published_at => 1.hour.ago,
         :short_headline => "xxArticle3xx"
 
-      create :article_issue, issue: issue, article: article1
-      create :article_issue, issue: issue, article: article2
-      create :article_issue, issue: issue, article: article3
+      create :tagging, tag: tag, taggable: article1
+      create :tagging, tag: tag, taggable: article2
+      create :tagging, tag: tag, taggable: article3
 
       vertical = build :vertical
-      vertical.issues << issue
+      vertical.tags << tag
       vertical.save!
+
+      index_sphinx
 
       visit vertical.public_path
 
       within('section.issues') do
-        page.should_not have_content "xxArticle1xx"
-        page.should have_content "xxArticle2xx"
-        page.should have_content "xxArticle3xx"
+        ts_retry(2) do
+          page.should_not have_content "xxArticle1xx"
+          page.should have_content "xxArticle2xx"
+          page.should have_content "xxArticle3xx"
+        end
       end
     end
   end

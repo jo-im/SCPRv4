@@ -1,8 +1,8 @@
 require 'spec_helper'
 
 describe CategoryPreview do
-  let(:category) { create :category_news }
-  let(:other_category) { create :category_not_news }
+  let(:category) { create :category }
+  let(:other_category) { create :category }
 
   describe '#category' do
     it 'is the passed-in category' do

@@ -15,16 +15,9 @@ describe HomeController do
   end
 
   it "sets latest news blogs" do
-    blog = create :blog, is_news: true
+    blog = create :blog
     entry = create :blog_entry, :published, blog: blog
     get :index
-    assigns(:latest_blogs_news).should eq [entry]
-  end
-
-  it "sets latest arts blogs" do
-    blog = create :blog, is_news: false
-    entry = create :blog_entry, :published, blog: blog
-    get :index
-    assigns(:latest_blogs_arts).should eq [entry]
+    assigns(:latest_blogs).should eq [entry]
   end
 end

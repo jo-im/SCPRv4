@@ -3,7 +3,7 @@
   <hr />
   <div class="cbase">
     <h2 class="story-headline"><%= @content.headline %></h2>
-    <p><%= @content.teaser %></p>
+    <p><%= @content.teaser.html_safe %></p>
   </div>
   <hr />
 
@@ -38,9 +38,9 @@
     </ul>
   </fieldset>
 
-  <%= f.text_field :lname, class: "hidden" %>
-
   <fieldset>
+    <%= recaptcha_tags %>
     <%= f.submit "Share", class: "btn primary" %>
   </fieldset>
+
 <% end %>

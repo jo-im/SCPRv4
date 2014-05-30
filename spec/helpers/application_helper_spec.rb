@@ -48,30 +48,18 @@ describe ApplicationHelper do
   end
 
   describe "sphinx category searches" do
-    let(:category_news) { create :category, :is_news }
-    let(:category_not_news) { create :category, :is_not_news }
+    let(:category) { create :category }
 
     sphinx_spec
 
-    it "#latest_news only gets objects where category is news" do
-      story1 = create :news_story, category: category_news
-      story2 = create :news_story, category: category_not_news
+    it "#latest_news gets all objects with limit" do
+      story1 = create :news_story, category: category, published_at: 1.week.ago
+      story2 = create :news_story, category: category, published_at: 1.day.ago
 
       index_sphinx
 
       ts_retry(2) do
-        helper.latest_news.should eq [story1].map(&:to_article)
-      end
-    end
-
-    it "#latest_arts only gets object where category is not news" do
-      story1 = create :news_story, category: category_news
-      story2 = create :news_story, category: category_not_news
-
-      index_sphinx
-
-      ts_retry(2) do
-        helper.latest_arts.should eq [story2].map(&:to_article)
+        helper.latest_news.should eq [story2, story1].map(&:to_article)
       end
     end
   end
@@ -253,7 +241,7 @@ describe ApplicationHelper do
 
     it "makes content_for :modal_content" do
       helper.modal("anything") { "Hello!" }
-      helper.content_for?(:modal_content).should be_true
+      helper.content_for?(:modal_content).should eq true
     end
 
     it "renders the modal_content block" do

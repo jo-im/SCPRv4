@@ -2,7 +2,7 @@ require "spec_helper"
 
 describe Job::HomepageCache do
   subject { described_class }
-  its(:queue) { should eq "scprv4:sphinx" }
+  it { subject.queue.should eq "scprv4:sphinx" }
 
   describe "::perform" do
     it "scores and caches the homepage" do

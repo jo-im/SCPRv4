@@ -8,9 +8,13 @@ module Api::Public::V3
       "hidden"
     ]
 
-    before_filter :set_conditions, only: [:index]
     before_filter :sanitize_slug, only: [:show]
-    before_filter :sanitize_air_status, only: [:index]
+
+    before_filter \
+      :set_hash_conditions,
+      :sanitize_air_status,
+      only: [:index]
+
 
     def index
       @programs = Program.where(@conditions)
@@ -30,10 +34,6 @@ module Api::Public::V3
 
 
     private
-
-    def set_conditions
-      @conditions = {}
-    end
 
     def sanitize_air_status
       return true if !params[:air_status]

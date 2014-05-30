@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe Job::SyncExternalPrograms do
   subject { described_class }
-  its(:queue) { should eq "scprv4:low_priority" }
+  it { subject.queue.should eq "scprv4:low_priority" }
 
   before :each do
     stub_request(:get, %r{podcast\.com}).to_return({

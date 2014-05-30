@@ -11,7 +11,6 @@ Scprv4::Application.routes.draw do
   # Sections
   get '/category/carousel-content/:object_class/:id' => 'category#carousel_content',  as: :category_carousel, defaults: { format: :js }
   get '/news/'                                       => 'category#news',              as: :latest_news
-  get '/arts-life/'                                  => 'category#arts',              as: :latest_arts
 
   # RSS
   get '/feeds/all_news' => 'feeds#all_news', as: :all_news_feed
@@ -27,7 +26,6 @@ Scprv4::Application.routes.draw do
   get '/blogs/:blog/archive/:year/:month/'             => "blogs#archive",                as: :blog_archive,         constraints: { year: /\d{4}/, month: /\d{2}/ }
   post '/blogs/:blog/process_archive_select'           => "blogs#process_archive_select", as: :blog_process_archive_select
   get '/blogs/:blog/:year/:month/:day/:id/:slug/'      => "blogs#entry",                  as: :blog_entry,           constraints: { year: /\d{4}/, month: /\d{2}/, day: /\d{2}/, id: /\d+/, slug: /[\w-]+/ }
-  get '/blogs/:blog/tagged/:tag/'                      => "blogs#blog_tagged",            as: :blog_entries_tagged
   get '/blogs/:blog/'                                  => 'blogs#show',                   as: :blog
   get '/blogs/'                                        => 'blogs#index',                  as: :blogs
 
@@ -168,6 +166,8 @@ Scprv4::Application.routes.draw do
         resources :buckets, only: [:index, :show]
         resources :episodes, only: [:index, :show]
         resources :blogs, only: [:index, :show]
+        resources :data_points, only: [:index, :show]
+        resources :tags, only: [:index, :show]
 
         resources :schedule, controller: 'schedule_occurrences',only: [:index] do
           collection do
@@ -202,9 +202,9 @@ Scprv4::Application.routes.draw do
 
   #------------------
 
-  namespace :outpost do
-    root to: 'home#index'
+  mount Outpost::Engine, at: 'outpost'
 
+  namespace :outpost do
     concern :preview do
       put "preview", on: :member
       patch "preview", on: :member
@@ -215,11 +215,19 @@ Scprv4::Application.routes.draw do
       get "search", on: :collection, as: :search
     end
 
-
+    # This is an annoying hack. This route needs to be above the
+    # Secretary mounted routes. We need to figure out a way to
+    # inject routes into the middle of a namespace. We can't mount
+    # the routes at the bottom because of the catch-all for error
+    # handling.
     resources :admin_users, concerns: [:search] do
       get "activity", on: :member, as: :activity
     end
+  end
 
+  mount Outpost::Secretary::Engine, at: 'outpost', as: 'secretary'
+
+  namespace :outpost do
     resources :recurring_schedule_rules, concerns: [:search]
     resources :schedule_occurrences, concerns: [:search]
     resources :podcasts, concerns: [:search]
@@ -241,6 +249,7 @@ Scprv4::Application.routes.draw do
     resources :abstracts, concerns: [:search]
     resources :editions, concerns: [:search]
     resources :verticals
+    resources :tags, concerns: [:search]
 
     resources :homepages, concerns: [:preview, :search]
     resources :pij_queries, concerns: [:preview, :search]
@@ -261,16 +270,8 @@ Scprv4::Application.routes.draw do
       end
     end
 
-    resources :sessions, only: [:create, :destroy]
-    get 'login'  => "sessions#new", as: :login
-    get 'logout' => "sessions#destroy", as: :logout
-
-    get "/activity"                                        => "versions#activity",  as: :activity
-    get "/:resources/:resource_id/history"                 => "versions#index",     as: :history
-    get "/:resources/:resource_id/history/:version_number" => "versions#show",      as: :version
-
     get "trigger_error" => 'home#trigger_error'
-    get "*path" => 'home#not_found'
+    get "*path" => 'errors#not_found'
   end
 
   get "trigger_error" => 'home#trigger_error'

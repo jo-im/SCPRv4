@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe Job::BuildRecurringSchedule do
   subject { described_class }
-  its(:queue) { should eq "scprv4:low_priority" }
+  it { subject.queue.should eq "scprv4:low_priority" }
 
   it "creates occurrences for next month" do
     rule = create :recurring_schedule_rule

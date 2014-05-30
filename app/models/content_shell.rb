@@ -9,7 +9,7 @@ class ContentShell < ActiveRecord::Base
   include Concern::Associations::ContentAlarmAssociation
   include Concern::Associations::AssetAssociation
   include Concern::Associations::BylinesAssociation
-  include Concern::Associations::IssueAssociation
+  include Concern::Associations::TagsAssociation
   include Concern::Associations::FeatureAssociation
   include Concern::Associations::CategoryAssociation
   include Concern::Associations::HomepageContentAssociation
@@ -75,7 +75,7 @@ class ContentShell < ActiveRecord::Base
       :attributions       => self.bylines,
       :byline             => self.byline,
       :edit_url           => self.admin_edit_url,
-      :issues             => self.issues,
+      :tags               => self.tags,
       :feature            => self.feature
     })
   end

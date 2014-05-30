@@ -9,7 +9,6 @@ describe ContentEmail do
     it { should allow_value("other-guy@gmail.com").for(:to_email) }
     it { should_not allow_value("noway jose @ whatever").for(:to_email).with_message(/invalid/i) }
     it { should_not allow_value("nowayjose@whatever").for(:from_email).with_message(/invalid/i) }
-    it { should ensure_length_of(:lname).is_at_most(0) }
   end
 
   #-----------
@@ -70,7 +69,7 @@ describe ContentEmail do
 
       it "is invalid when content_key isn't allowed" do
         content_email.content_key = "admin_user-123"
-        content_email.valid?.should be_false
+        content_email.valid?.should eq false
         content_email.errors.keys.should include :base
       end
 

@@ -5,10 +5,8 @@ class BlogsController < ApplicationController
   #----------
 
   def index
-    @blogs          = Blog.active.order("name")
-    @news_blogs     = @blogs.where(is_news: true)
-    @non_news_blogs = @blogs.where(is_news: false)
-    render layout:    "application"
+    @blogs = Blog.active.order("name")
+    render layout: "application"
   end
 
   #----------
@@ -26,13 +24,6 @@ class BlogsController < ApplicationController
   def entry
     @entry = BlogEntry.published.includes(:blog).find(params[:id])
     @blog  = @entry.blog
-  end
-
-  #----------
-
-  def blog_tagged
-    @tag = Tag.where(slug: params[:tag]).first!
-    @entries = @blog.entries.published.joins(:tags).where(taggit_tag: { slug: @tag.slug }).page(params[:page]).per(5)
   end
 
   #----------

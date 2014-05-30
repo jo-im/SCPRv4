@@ -1,19 +1,17 @@
 source 'https://rubygems.org'
 
-gem 'actionpack-action_caching'
-
 ## Core
 gem 'rails', "~> 4.0.0"
 gem 'mysql2', '~> 0.3.14'
 gem 'jquery-rails', '~> 3.1.0'
 gem "bcrypt-ruby", "~> 3.1.0"
 gem 'thinking-sphinx', '~> 3.1.0'
-gem 'secretary-rails', '~> 1.1'
-
+gem 'secretary-rails', github: "SCPR/secretary-rails"
+gem 'actionpack-action_caching'
 
 ## Outpost
 gem 'outpost-cms', github: 'SCPR/outpost'
-#gem 'outpost-cms', path: "#{ENV['PROJECT_HOME']}/outpost"
+# gem 'outpost-cms', path: "#{ENV['PROJECT_HOME']}/outpost"
 
 gem 'outpost-publishing', github: "SCPR/outpost-publishing"
 #gem 'outpost-publishing', path: "#{ENV['PROJECT_HOME']}/outpost-publishing"
@@ -30,7 +28,6 @@ gem 'outpost-secretary', github: "SCPR/outpost-secretary"
 
 ## Redis
 gem "resque", "~> 1.26.pre.0"
-
 gem 'redis-content-store', github: "SCPR/redis-content-store"
 # gem 'redis-content-store', path: "#{ENV['PROJECT_HOME']}/redis-content-store"
 
@@ -52,6 +49,9 @@ gem 'embeditor-rails', github: 'SCPR/embeditor-rails'
 gem "carrierwave", "~> 0.6"
 gem "ruby-mp3info", '~> 0.8.2', require: 'mp3info'
 gem "ice_cube", "~> 0.11.0"
+gem "recaptcha", require: "recaptcha/rails"
+gem "yajl-ruby" # Faster JSON parsing
+
 
 ## HTTP
 gem "faraday", "~> 0.8"
@@ -101,7 +101,6 @@ end
 
 
 group :test do
-  gem 'simplecov', require: false
   gem 'factory_girl_rails'
   gem 'database_cleaner'
   gem 'capybara', "~> 2.0"

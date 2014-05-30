@@ -1,9 +1,10 @@
 class Vertical < ActiveRecord::Base
   outpost_model
-  has_secretary
+  has_secretary except: ["quote_id"] # Quote is versioned separately
 
   include Concern::Validations::SlugValidation
   include Concern::Callbacks::SphinxIndexCallback
+  include Concern::Associations::TagsAssociation
 
   self.public_route_key = 'root_slug'
 
@@ -22,10 +23,6 @@ class Vertical < ActiveRecord::Base
 
   belongs_to :category
   belongs_to :blog
-
-  has_many :vertical_issues, dependent: :destroy
-  has_many :issues, through: :vertical_issues
-  tracks_association :issues
 
   has_many :vertical_reporters, dependent: :destroy
   has_many :reporters,

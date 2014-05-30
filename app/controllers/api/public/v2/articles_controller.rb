@@ -16,7 +16,7 @@ module Api::Public::V2
     MAX_RESULTS = 40
 
     before_filter \
-      :set_conditions,
+      :set_hash_conditions,
       :set_classes,
       :sanitize_limit,
       :sanitize_page,
@@ -102,16 +102,11 @@ module Api::Public::V2
 
     private
 
-    def set_conditions
-      @conditions = {}
-    end
-
-
     def set_classes
       @classes = []
-      params[:types] ||= defaults[:types]
+      types = params[:types] || defaults[:types]
 
-      params[:types].split(",").uniq.each do |type|
+      types.split(",").uniq.each do |type|
         if klasses = TYPES[type]
           @classes += klasses
         end

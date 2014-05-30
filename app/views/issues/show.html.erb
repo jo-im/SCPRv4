@@ -1,31 +1,29 @@
-<% add_to_page_title @issue.title %>
-<% meta_tags(url: @issue.public_url) %>
+<% add_to_page_title @tag.title %>
+<% meta_tags(url: issue_url(@tag.slug)) %>
 <% content_for :body_class, 'interior issues' %>
 
 
-<%= cache ["issues/show", "meta", "v2", @issue] do %>
+<%= cache ["issues/show", "meta", "v2", @tag] do %>
 
 <header class="preface">
-    <h1><%= @issue.title %></h1>
+    <h1><%= @tag.title %></h1>
     <div class="details clearfix">
         <div class="brief">
-            <p><%= @issue.description %></p>
+            <p><%= @tag.description %></p>
         </div>
         <aside class="timeline">
-            <h2>KPCC has published a total of <mark><%= @issue.articles.size %> articles</mark> on <%= @issue.title %></h2>
+            <h2>KPCC has published a total of <mark><%= @count %> articles</mark> on <%= @tag.title %></h2>
 
-        <% if @issue.articles.present? %>
-            <div class="range">
-                <dl class="began">
-                    <dt><%= format_date(@issue.articles.last.public_datetime, with: '%-d %^b %Y') %></dt>
-                    <dd>Coverage began</dd>
-                </dl>
-                <dl class="latest">
-                    <dt><%= format_date(@issue.articles.first.public_datetime, with: '%-d %^b %Y') %></dt>
-                    <dd>Latest coverage</dd>
-                </dl>
-            </div>
-        <% end %>
+        <div class="range">
+            <dl class="began">
+                <dt><%= format_date(@tag.created_at, with: '%-d %^b %Y') %></dt>
+                <dd>Coverage began</dd>
+            </dl>
+            <dl class="latest">
+                <dt><%= format_date(@tag.updated_at, with: '%-d %^b %Y') %></dt>
+                <dd>Latest coverage</dd>
+            </dl>
+        </div>
 
         </aside>
     </div> <!--/ .details -->
@@ -36,10 +34,10 @@
 
 <section class="backlog">
 
-<%= cache ["issues/show", "list", "v2", @paginated_articles.to_a] do %>
-    <%= render 'shared/new/waterfall_articles', articles: @paginated_articles, issue_tag_exists: false %>
+<%= cache ["issues/show", "list", "v2", @articles.to_a] do %>
+    <%= render 'shared/new/waterfall_articles', articles: @articles, display_header: false %>
 <% end %>
 
-<%= paginate @paginated_articles, theme: 'new', outer_window: 1 %>
+<%= paginate @articles, theme: 'new', outer_window: 1 %>
 
 </section><!--/ .backlog -->

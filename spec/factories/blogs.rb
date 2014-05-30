@@ -8,7 +8,6 @@ FactoryGirl.define do
     teaser { "This is the teaser for #{name}!" }
     description "This is a description for this blog."
     is_active true
-    is_news true
   end
 
   #-------------------------

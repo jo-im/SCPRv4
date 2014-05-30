@@ -31,13 +31,13 @@ class Blog < ActiveRecord::Base
     # Maps all records to an array of arrays, to be
     # passed into a Rails select helper
     def select_collection
-      Blog.order("name").map { |blog| [blog.to_title, blog.id] }
+      Blog.order("is_active desc, name").map { |blog| [blog.to_title, blog.id] }
     end
   end
 
 
   def route_hash
-    return {} if !self.persisted? || !self.persisted_record.is_active?
+    return {} if !self.persisted?
     { :blog => self.persisted_record.slug }
   end
 end

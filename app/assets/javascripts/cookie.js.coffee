@@ -1,12 +1,20 @@
 class scpr.Cookie
-    @set: (name, value, expireSeconds) ->
-        if (expireSeconds == null)
-            expiry = new Date() + expireSeconds
-            expires = "; expires=" + date.toGMTString()
+    # Options:
+    # * key (String) - The key for this cookie
+    # * value (String) - The value of the cookie
+    # * expireSeconds (Number) - The number of seconds that this cookie is valid
+    @set: (options={}) ->
+        if options.expireSeconds
+            unixts = new Date().getTime()
+
+            expiry = new Date(unixts + options.expireSeconds * 1000)
+            expires = "; expires=" + expiry.toGMTString()
         else
+            # Without an expiration date set, the cookie will
+            # expire at the end of the session.
             expires = ""
 
-        document.cookie = "#{name}=#{value}#{expires};path=/"
+        document.cookie = "#{options.key}=#{options.value}#{expires};path=/"
 
 
     @get: (name) ->

@@ -1,4 +1,5 @@
 json.cache! [Api::Public::V3::VERSION, "v1", asset] do
+  json.id       asset.id
   json.title    asset.title
   json.caption  asset.caption.present? ? asset.caption : asset.asset.caption
   json.owner    asset.owner

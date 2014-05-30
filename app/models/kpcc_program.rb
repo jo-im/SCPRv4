@@ -51,7 +51,8 @@ class KpccProgram < ActiveRecord::Base
 
   class << self
     def select_collection
-      KpccProgram.order("title").map { |p| [p.to_title, p.id] }
+      KpccProgram.order("field(air_status, 'onair', '') desc, title")
+      .map { |p| [p.to_title, p.id] }
     end
   end
 

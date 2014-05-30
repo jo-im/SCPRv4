@@ -18,28 +18,28 @@ describe Outpost::RemoteArticlesController do
     describe 'GET /index' do
       it "redirects to outpost root" do
         get :index
-        response.should redirect_to outpost_root_path
+        response.should redirect_to "/outpost/"
       end
     end
 
     describe 'POST /sync' do
       it "redirects to outpost root" do
         post :sync
-        response.should redirect_to outpost_root_path
+        response.should redirect_to "/outpost/"
       end
     end
 
     describe 'POST /import' do
       it "redirects to outpost root" do
         post :import, id: @object.id
-        response.should redirect_to outpost_root_path
+        response.should redirect_to "/outpost/"
       end
     end
 
     describe 'PUT /skip' do
       it "redirects to outpost root" do
         put :skip, id: @object.id
-        response.should redirect_to outpost_root_path
+        response.should redirect_to "/outpost/"
       end
     end
   end

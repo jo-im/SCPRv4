@@ -17,19 +17,19 @@
     </div><!--/ .photo -->
 
     <div class="supportive">
-        <h1 class="tease"><%= link_to lead_article.teaser, lead_article.public_path %></h1>
+        <h1 class="tease"><%= link_to strip_tags(lead_article.teaser), lead_article.public_path %></h1>
         <h2 class="byline"><%= render_byline lead_article.original_object %></h2>
 
         <aside class="more">
 
-    <% issue = lead_article.issues.first %>
+    <% tag = lead_article.tags.first %>
     <% related = lead_article.original_object.related_content.first(2) if lead_article.original_object.respond_to?(:related_content) %>
-    <%= cache ["vertical", "more-featured", issue, related] do %>
-        <% if issue %>
-            <h3>More from <%= link_to issue.title, issue.public_path %></h3>
+    <%= cache ["vertical", "more-featured", tag, related] do %>
+        <% if tag %>
+            <h3>More from <%= link_to tag.title, issue_path(tag.slug) %></h3>
             <ul>
-            <% issue_articles = issue.articles - Array(lead_article) %>
-            <% issue_articles.first(2).each do |article| %>
+            <% issue_articles = tag.articles(limit: 2) - Array(lead_article) %>
+            <% issue_articles.each do |article| %>
                 <li><%= link_to article.short_title, article.public_path %></li>
             <% end %>
 

@@ -18,5 +18,14 @@
 
 <%= yield :footer %>
 
+<script>
+// Make sure this is last! A visual campaign
+// can be queued from anywhere.
+$(function() {
+  // Handle any queued visual campaigns.
+ scpr.VisualCampaign.fetchQueue();
+});
+</script>
+
 </body>
 </html>

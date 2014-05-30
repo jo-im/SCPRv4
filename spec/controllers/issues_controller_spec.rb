@@ -4,13 +4,13 @@ describe IssuesController do
   render_views
 
   describe 'GET /issues' do
-    it 'sets @issues to all active issues' do
-      issues = create_list :issue, 3, :is_active
-      inactive_issue = create :issue, :is_not_active
+    it 'sets @tags to all active tags' do
+      tags = create_list :tag, 3, is_featured: true
+      inactive_tags = create :tag, is_featured: false
 
       get :index
 
-      assigns(:issues).should eq issues.sort_by(&:title)
+      assigns(:tags).should eq tags.sort_by(&:title)
     end
 
     it "assigns popular articles" do
@@ -23,24 +23,54 @@ describe IssuesController do
   end
 
   describe 'GET show' do
-    it 'sets issues' do
-      issue = create :issue, :is_active, slug: "whatever"
-      get :show, slug: "whatever"
-      assigns(:issues).should eq [issue]
+    sphinx_spec(num: 0)
+
+    it 'sets tag' do
+      tag = create :tag
+      get :show, slug: tag.slug
+      assigns(:tag).should eq tag
     end
 
-    it "gets the issue by slug" do
-      issue = create :issue, :is_active, slug: "issue"
-      get :show, slug: "issue"
-      assigns(:issue).should eq issue
+    it "sets articles" do
+      tag = create :tag
+      article = build :news_story
+      article.tags << tag
+      article.save!
+
+      index_sphinx
+
+      ts_retry(2) do
+        get :show, slug: tag.slug
+        assigns(:articles).should eq [article].map(&:to_article)
+      end
+    end
+
+    it "sets count" do
+      tag = create :tag
+      article = build :news_story
+      article.tags << tag
+      article.save!
+
+      index_sphinx
+
+      ts_retry(2) do
+        get :show, slug: tag.slug
+        assigns(:count).should eq 1
+      end
+    end
+
+    it "gets the tag by slug" do
+      tag = create :tag
+      get :show, slug: tag.slug
+      assigns(:tag).should eq tag
     end
 
     it "assigns popular articles" do
       article = create(:news_story).to_article
       Rails.cache.write("popular/viewed", [article])
 
-      issue = create :issue, :is_active, slug: "okay"
-      get :show, slug: "okay"
+      tag = create :tag
+      get :show, slug: tag.slug
       assigns(:popular_articles).should eq [article]
     end
 

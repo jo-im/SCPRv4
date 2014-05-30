@@ -67,6 +67,16 @@ module Api::Public::V2
 
     #---------------------------
 
+    def set_hash_conditions
+      @conditions = {}
+    end
+
+    def set_array_conditions
+      @conditions = []
+    end
+
+    #---------------------------
+
     def render_not_found(options={})
       message = options[:message] || "Not Found"
       render status: :not_found, json: { error: message }

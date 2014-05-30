@@ -8,11 +8,6 @@ describe RemoteArticle do
         :body => load_fixture('api/npr/stories.json')
       })
 
-      stub_request(:get, %r|publish2|).to_return({
-        :content_type => "application/json",
-        :body => load_fixture('api/chr/stories.json')
-      })
-
       PMP::CollectionDocument.any_instance.stub(:oauth_token) { "token" }
 
       stub_request(:get, %r|pmp\.io/?$|).to_return({
@@ -55,8 +50,8 @@ describe RemoteArticle do
     it 'is the importer module' do
       article = build :remote_article, source: "npr"
       article.importer.should eq NprArticleImporter
-      article.source = "chr"
-      article.importer.should eq ChrArticleImporter
+      article.source = "pmp"
+      article.importer.should eq PmpArticleImporter
     end
   end
 

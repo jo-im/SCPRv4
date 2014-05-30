@@ -151,7 +151,8 @@ class BreakingNewsAlert < ActiveRecord::Base
       :name        => "[scpr-alert] #{self.headline[0..30]}",
       :description => "SCPR Breaking News Alert\n" \
                       "Sent: #{Time.now}\nSubject: #{alert_subject}",
-      :subject     => alert_subject
+      :subject     => alert_subject,
+      :email       => "no-reply@kpcc.org"
     }
   end
 

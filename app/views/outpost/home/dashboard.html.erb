@@ -1,0 +1,50 @@
+<% add_to_page_title "Dashboard" %>
+
+<div class="row">
+  <div class="span9">
+    <div class="well">
+      <h2>Welcome to Outpost</h2>
+
+      <p>Drag this link into your Bookmarks Bar. Clicking on it while on a News Story, Show Segment, Blog Entry, Event, or Show Episode will open its edit page in Outpost.</p>
+      <a class="badge" href="javascript:(function()%7Bvar%20newWin%3Btry%7BnewWin%3Dwindow.open('',%22cms-%22%2B(new%20Date().getTime()/1000))%3BopenCMS(newWin)%7Dcatch(e)%7BnewWin.close()%3Balert(%22This%20function%20is%20not%20available%20on%20this%20page.%22)%3B%7D%7D)()%3B">Edit in Outpost</a> &larr; <span class="text-success">Drag this into your bookmarks bar</span>
+    </div>
+
+    <div class="clearfix">
+      <h4 class="pull-left">Your Recent Activity</h4>
+      <div class="pull-right">
+        <%= link_to "View Your Activity", activity_outpost_admin_user_path(current_user), class: "btn" %>
+      </div>
+    </div>
+
+    <div class="alert alert-error">This section temporarily disabled for maintenance</div>
+    <hr />
+
+    <div class="clearfix">
+      <h4 class="pull-left">Recently Saved by Others</h4>
+      <div class="pull-right">
+        <%= link_to "View All Activity", secretary.activity_path, class: "btn" %>
+      </div>
+    </div>
+
+    <div class="alert alert-error">This section temporarily disabled for maintenance</div>
+
+    <hr />
+  </div> <!-- span -->
+
+  <div class="span3">
+    <h4>Current Activity</h4>
+    <hr />
+
+    <div class="viewers" id="newsroom-dashboard_currently-active"></div>
+  </div> <!-- span -->
+</div> <!-- row -->
+
+<% content_for :footer do %>
+  <script type="text/javascript">
+    newsroom = new scpr.Newsroom(
+      "dashboard", // room ID
+      <%= render_json('api/private/v2/admin_users/admin_user', admin_user: current_user) %>, // user info
+      { "el": "#newsroom-dashboard_currently-active" }
+    );
+  </script>
+<% end %>

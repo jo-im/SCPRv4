@@ -1,8 +1,8 @@
 require "spec_helper"
 
 describe Category do
-  let(:valid_record) { build :category, :is_news }
-  let(:updated_record) { build :category, :is_news }
+  let(:valid_record) { build :category }
+  let(:updated_record) { build :category }
   let(:invalid_record) { build :category, title: "" }
 
   it_behaves_like "managed resource"

@@ -6,7 +6,7 @@ describe ProgramPresenter do
       program = build :kpcc_program, teaser: "This is <b>cool</b> teaser, bro."
       p = presenter(program)
       p.teaser.should eq "This is <b>cool</b> teaser, bro."
-      p.teaser.html_safe?.should be_true
+      p.teaser.html_safe?.should eq true
     end
 
     it "returns nil if teaser not present" do
@@ -23,7 +23,7 @@ describe ProgramPresenter do
       program = build :kpcc_program, description: "This is <b>cool</b> description, bro."
       p = presenter(program)
       p.description.should eq "This is <b>cool</b> description, bro."
-      p.description.html_safe?.should be_true
+      p.description.html_safe?.should eq true
     end
 
     it "returns nil if description not present" do

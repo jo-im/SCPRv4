@@ -2,6 +2,19 @@
 <% meta_tags(url: @vertical.public_url) %>
 <% content_for :body_class, "landing #{@vertical.slug}" %>
 
+<% content_for :footer_sponsors do %>
+<aside class="grant">
+    <div class="inner bound">
+        <section class="tier gold">
+            <h1>KPCC's business coverage is supported by</h1>
+            <ul>
+                <li><span>Gordon and Dona Crawford</span></li>
+            </ul>
+        </section>
+    </div>
+</aside>
+<% end %>
+
 <%= cache ["vertical", @vertical, @category] do %>
 
 <% lead_article = @vertical.featured_articles.first %>
@@ -40,11 +53,7 @@
                 <a href="http://www.marketplace.org">More Marketplace</a>
             </header>
 
-        <% articles = @marketplace_articles.first(2) %>
-        <%= cache ["vertical", "marketplace-articles", articles] do %>
-            <%= render 'verticals/shared/headlines', articles: articles %>
-        <% end %>
-
+        <%= raw Rails.cache.read("views/business/marketplace") %>
         </section>
 
     </div><!--/ .ataglance -->
@@ -52,15 +61,15 @@
 
 
 <%= render 'verticals/shared/resources', vertical: @vertical, articles: Array(@vertical.featured_articles[1..4]) %>
-<%= render 'verticals/shared/lunchbox', vertical: @vertical, quote: @quote, events: @events %>
+<%= render 'verticals/shared/lunchbox', vertical: @vertical, quote: @quote, tags: @tags, featured_interactive: @vertical.featured_articles[5], events: @events[0..2] %>
 
 <% articles = Array(vertical_articles) %>
 <%= cache ["vertical", "recent-coverage", @vertical, @category, articles] do %>
-    <%= render 'shared/new/triptych', articles: Array(articles[0..2]), header: "Recent #{@vertical.title} Coverage" %>
+    <%= render 'shared/new/triptych', articles: Array(articles[0..2]), header: "Recent #{@vertical.title} Coverage", tags: @tags %>
 
     <%= render 'shared/new/kpcc_ipad_ad' %>
 
-    <%= render 'shared/new/quadrant', vertical: @vertical, articles: Array(articles[3..6]), header: "" %>
+    <%= render 'shared/new/quadrant', tags: @tags, articles: Array(articles[3..6]), header: "" %>
     <%= render 'shared/new/waterfall', vertical: @vertical, articles: articles %>
 <% end %> <%# cache %>
 

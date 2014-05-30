@@ -81,17 +81,17 @@ describe Api::Public::V3::ArticlesController do
       sphinx_spec(num: 0)
 
       it 'only selects stories with the requested categories' do
-        category1  = create :category_not_news, slug: "film"
+        category1  = create :category, slug: "film"
         story1     = create :news_story,
           category: category1, published_at: 1.hour.ago
 
-        category2  = create :category_news, slug: "health"
+        category2  = create :category, slug: "health"
         story2     = create :news_story,
           category: category2, published_at: 2.hours.ago
 
         # Control - add these in to make sure we're *only* returning
         # stories with the requested categories
-        category3  = create :category_news, slug: "watwat"
+        category3  = create :category, slug: "watwat"
         story3     = create :news_story,
           category: category3, published_at: 1.hour.ago
 
@@ -100,6 +100,34 @@ describe Api::Public::V3::ArticlesController do
         ts_retry(2) do
           get :index, { categories: "film,health" }.merge(request_params)
           assigns(:articles).should eq [story1, story2].map(&:to_article)
+        end
+      end
+    end
+
+    context "with tags" do
+      sphinx_spec(num: 0)
+
+      it "filters by requested tags" do
+        tag1 = create :tag, slug: "cool-tag"
+        tag2 = create :tag, slug: "another-tag"
+        tag3 = create :tag, slug: "nope-tag"
+
+        story1 = build :news_story
+        story1.tags = [tag1, tag2]
+        story1.save!
+
+        story2 = build :news_story
+        story2.tags = [tag3]
+        story2.save!
+
+        index_sphinx
+
+        ts_retry(2) do
+          get :index, { tags: "cool-tag,another-tag" }.merge(request_params)
+          assigns(:articles).should eq [story1].map(&:to_article)
+          response.body.should match tag1.title
+          response.body.should match tag2.title
+          response.body.should_not match tag3.title
         end
       end
     end

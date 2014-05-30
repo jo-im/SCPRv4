@@ -1,14 +1,14 @@
 module Api::Public::V3
   class EventsController < BaseController
     DEFAULTS = {
-      :limit => 40,
+      :limit => 20,
       :page  => 1
     }
 
     MAX_RESULTS = 40
 
     before_filter \
-      :set_conditions,
+      :set_array_conditions,
       :sanitize_limit,
       :sanitize_page,
       :sanitize_only_kpcc_events,
@@ -45,10 +45,6 @@ module Api::Public::V3
     #---------------------------
 
     private
-
-    def set_conditions
-      @conditions = []
-    end
 
     def sanitize_date_range
       begin
@@ -88,10 +84,10 @@ module Api::Public::V3
     end
 
     def sanitize_types
-      if params[:types]
-        types = params[:types].split(",") & Event::EVENT_TYPES.keys
-        @conditions.push(event_type: types)
-      end
+      return true if !params[:types]
+
+      types = params[:types].split(",") & Event::EVENT_TYPES.keys
+      @conditions.push(event_type: types)
     end
   end
 end

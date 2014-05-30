@@ -43,33 +43,62 @@ describe ContentEmailController do
   describe "POST /create" do
     let(:content)  { create :news_story }
 
-    context "valid message" do
+    context "valid recaptcha" do
       before :each do
-        post :create,
-          :obj_key => content.obj_key,
-          :content_email => {
-            :from_name    => "Bryan",
-            :from_email   => "bricker@scpr.org",
-            :to_email     => "bricker@kpcc.org",
-            :body         => "Wat Wat"
-          }
+        controller.stub(:verify_recaptcha) { true }
       end
 
-      it "renders the success template" do
-        response.should render_template "success"
+      context "valid message" do
+        before :each do
+          post :create,
+            :obj_key => content.obj_key,
+            :content_email => {
+              :from_name    => "Bryan",
+              :from_email   => "bricker@scpr.org",
+              :to_email     => "bricker@kpcc.org",
+              :body         => "Wat Wat"
+            }
+        end
+
+        it "renders the success template" do
+          response.should render_template "success"
+        end
+
+        it "initializes a new ContentEmail with the form params" do
+          message = assigns(:message)
+
+          message.from_name.should eq "Bryan"
+          message.from_email.should eq "bricker@scpr.org"
+          message.to_email.should eq "bricker@kpcc.org"
+          message.body.should eq "Wat Wat"
+        end
+
+        it "sets @message.content to @content" do
+          assigns(:message).content_key.should eq content.obj_key
+        end
+      end
+    end
+
+    context "invalid recaptcha" do
+      before :each do
+        controller.stub(:verify_recaptcha) { false }
       end
 
-      it "initializes a new ContentEmail with the form params" do
-        message = assigns(:message)
+      context "valid message" do
+        before :each do
+          post :create,
+            :obj_key => content.obj_key,
+            :content_email => {
+              :from_name    => "Bryan",
+              :from_email   => "bricker@scpr.org",
+              :to_email     => "bricker@kpcc.org",
+              :body         => "Wat Wat"
+            }
+        end
 
-        message.from_name.should eq "Bryan"
-        message.from_email.should eq "bricker@scpr.org"
-        message.to_email.should eq "bricker@kpcc.org"
-        message.body.should eq "Wat Wat"
-      end
-
-      it "sets @message.content to @content" do
-        assigns(:message).content_key.should eq content.obj_key
+        it "renders the success template" do
+          response.should render_template 'new'
+        end
       end
     end
 

@@ -24,7 +24,6 @@ Outpost::Config.configure do |config|
     "FeaturedCommentBucket",
     "Flatpage",
     "Homepage",
-    "Issue",
     "KpccProgram",
     "MissedItBucket",
     "NewsStory",
@@ -36,6 +35,7 @@ Outpost::Config.configure do |config|
     "ScheduleOccurrence",
     "ShowEpisode",
     "ShowSegment",
+    "Tag",
     "Vertical"
   ]
 
@@ -49,6 +49,8 @@ end
 module Outpost
   module Controller
     module CustomErrors
+      # Should this be built-in to outpost?
+      # I don't know and I don't feel like thinking about it right now.
       def report_error(e)
         ::NewRelic.log_error(e)
       end
