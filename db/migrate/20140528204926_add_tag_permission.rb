@@ -5,7 +5,7 @@ class AddTagPermission < ActiveRecord::Migration
     ip = Permission.where(resource: "Issue").first
 
     UserPermission.where(permission_id: ip.id).each do |up|
-      UserPermission.create(user_id: up.id, permission_id: tp.id)
+      UserPermission.create(admin_user_id: up.id, permission_id: tp.id)
     end
   end
 end

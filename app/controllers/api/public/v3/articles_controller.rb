@@ -111,9 +111,9 @@ module Api::Public::V3
 
     def set_classes
       @classes = []
-      params[:types] ||= defaults[:types]
+      types = params[:types] || defaults[:types]
 
-      params[:types].split(",").uniq.each do |type|
+      types.split(",").uniq.each do |type|
         if klasses = TYPES[type]
           @classes += klasses
         end
@@ -167,9 +167,7 @@ module Api::Public::V3
       slugs   = params[:tags].to_s.split(',')
       ids     = Tag.where(slug: slugs).map(&:id)
 
-      if ids.present?
-        @conditions[:tags] = ids
-      end
+      @conditions[:tags] = ids
     end
 
 

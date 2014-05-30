@@ -1,9 +1,9 @@
 <% content_for :opengraph do %>
-  <% @META_DESCRIPT = h(article.teaser) %>
+  <% @META_DESCRIPT = h(strip_tags(article.teaser)) %>
   <% @META_AUTHOR = article.byline %>
 
   <%= cache ["opengraph", "v1", article] do %>
-    <meta property="og:description" content="<%= h(article.teaser) %>">
+    <meta property="og:description" content="<%= h(strip_tags(article.teaser)) %>">
     <meta property="og:title" content="<%= h(article.short_title) %>">
     <meta property="og:type" content="<%= @OG_TYPE || "article" %>">
     <meta property="og:url" content="<%= article.public_url %>"/>
@@ -11,7 +11,7 @@
     <meta name="twitter:site" value="@kpcc">
     <meta name="twitter:url" value="<%= article.public_url %>">
     <meta name="twitter:title" value="<%= h(article.short_title) %>">
-    <meta name="twitter:description" value="<%= h(article.teaser) %>">
+    <meta name="twitter:description" value="<%= h(strip_tags(article.teaser)) %>">
 
     <meta property="article:published_time" content="<%=article.public_datetime%>" />
     <meta property="article:modified_time" content="<%=article.updated_at%>" />
