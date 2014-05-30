@@ -16,29 +16,7 @@
       </div>
     </div>
 
-    <%= any_to_list? @current_user_activities, message: "<div>There is no activity to show.</div>" do %>
-      <table class="table table-striped">
-        <thead>
-          <tr>
-            <th>Manage</th>
-            <th>Title</th>
-            <th>Timestamp</th>
-            <th>Description</th>
-          </tr>
-        </thead>
-        <tbody>
-          <% @current_user_activities.each do |version| %>
-            <% record = version.versioned %>
-            <tr>
-              <td><%= link_to "Edit", record.admin_edit_path, class: "btn" %></td>
-              <td><%= record.to_title %></td>
-              <td><%= display_datetime(version.created_at) %></td>
-              <td><%= version.description %></td>
-            </tr>
-          <% end %>
-        </tbody>
-      </table>
-    <% end %>
+    <div class="alert alert-error">This section temporarily disabled for maintenance</div>
     <hr />
 
     <div class="clearfix">
