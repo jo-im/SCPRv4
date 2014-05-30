@@ -6,7 +6,7 @@
 <%= form_block "Meta" do %>
   <%= f.section "category" %>
   <%= f.section "feature" %>
-  <%= f.association :issues %>
+  <%= f.association :tags %>
 
   <%= f.input :source, collection: NewsStory::SOURCES, include_blank: false %>
   <%= f.input :news_agency %>
