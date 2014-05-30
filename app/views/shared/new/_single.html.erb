@@ -245,7 +245,7 @@
 
 <% if @vertical.present? %>
 <%= render 'shared/new/triptych', category: @category, articles: @category_articles[0..2], header: "More from #{@category.title}" %>
-    <% if @popular_articles %>
+    <% if @popular_articles && is_blog %>
     <%= render 'shared/new/quadrant',
     articles: @popular_articles.first(3),
     header: 'Popular Now on KPCC' %>
