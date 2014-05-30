@@ -82,7 +82,7 @@
 
     <%= content_for?(:middle_ad) ? content_for(:middle_ad) : render('shared/new/kpcc_ipad_ad') %>
 
-    <%= render 'shared/new/quadrant', vertical: @vertical, articles: Array(articles[3..6]), header: "", tags: @tags %>
+    <%= render 'shared/new/quadrant', articles: Array(articles[3..6]), header: "", tags: @tags %>
     <%= render 'shared/new/waterfall', vertical: @vertical, articles: articles %>
 <% end %> <%# cache %>
 

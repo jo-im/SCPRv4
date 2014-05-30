@@ -13,7 +13,7 @@
                     <div class="graphic">
                         <div class="ratio">
 
-                        <% if vertical && (tag = (article.tags & tags).first) %>
+                        <% if tags && (tag = (article.tags & tags).first) %>
                             <span class="issue"><%= link_to tag.title, issue_path(tag.slug) %></span>
                         <% end %>
 
