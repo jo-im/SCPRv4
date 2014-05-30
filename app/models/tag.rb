@@ -7,8 +7,13 @@ class Tag < ActiveRecord::Base
 
   has_many :taggings, dependent: :destroy
 
-  def articles(options={})
+  # This method allows us to get at the raw ThinkingSphinx Query object if
+  # we need it (eg. for counting)
+  def taggables(options={})
     ContentBase.search({ with: { tags: self.id } }.reverse_merge(options))
-    .map(&:to_article)
+  end
+
+  def articles(options={})
+    taggables(options).map(&:to_article)
   end
 end
