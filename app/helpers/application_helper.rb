@@ -242,6 +242,16 @@ module ApplicationHelper
     }.compact.reverse.join(' ')
   end
 
+  #--------------------------
+
+  def format_clip_duration(secs)
+    if !secs
+      return ''
+    end
+    time_format = secs >= 3600 ? "%-H:%M:%S" : "%-M:%S"
+    Time.at(secs).utc.strftime(time_format)
+  end
+
   #----------
 
   def latest_arts(limit=2)

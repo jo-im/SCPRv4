@@ -47,23 +47,22 @@
     <div class="inner bound clearfix">
         <article class="prose">
             <div class="marginal-tools clearfix">
-                <nav class="audio-queue">
-                    <header>Listen to audio from this story</header>
-                    <ul>
-                        <li>
-                            <mark data-clip="what">
-                                <b>2:38</b>
-                                <span>Clip 1</span>
-                            </mark>
-                        </li>
-                        <li>
-                            <mark data-clip="what">
-                                <b>2:31</b>
-                                <span>Clip 2</span>
-                            </mark>
-                        </li>
-                    </ul>
-                </nav>
+                <% if article.audio.any? %>
+                    <% audio = article.audio %>
+                    <nav class="audio-queue">
+                        <header>Listen to audio from this story</header>
+                        <ul>
+                        <% audio.each_with_index do |audio, index| %>
+                            <li>
+                                <mark data-clip="<%= audio.url %>">
+                                    <b><%= format_clip_duration audio.duration %></b>
+                                    <span><%= "Clip #{index+1}" %></span>
+                                </mark>
+                            </li>
+                        <% end %>
+                        </ul>
+                    </nav>
+                <% end %>
                 <aside class="share">
                     <header>Share <span>this story</span></header>
                     <ul>

@@ -384,6 +384,17 @@ describe ApplicationHelper do
 
     #------------------------
 
+    describe '#format_clip_duration' do
+      it "formats the audio duration with only minutes if the duration is less than an hour" do
+        helper.format_clip_duration(240).should match /4:00/
+      end
+      it "formats the audio duration with hours and minutes if the duration is an hour or more" do
+        helper.format_clip_duration(3660).should match /1:01:00/
+      end
+    end
+
+    #------------------------
+
     describe "#comments_for" do
       it "renders the comments partial" do
         comments_for(object).should match 'comments'
