@@ -7,8 +7,8 @@ class Outpost::HomeController < Outpost::BaseController
     #   .where("created_at > ?", 1.week.ago)
     #   .order("created_at desc").limit(10)
 
-    @latest_activities = Secretary::Version.order("created_at desc")
-      .where("user_id != ?", current_user.id).limit(10)
+    # @latest_activities = Secretary::Version.order("created_at desc")
+    #   .where("user_id != ?", current_user.id).limit(10)
   end
 
 
