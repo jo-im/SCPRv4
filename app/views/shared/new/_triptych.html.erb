@@ -11,7 +11,7 @@
                 <div class="graphic">
                     <div class="ratio">
 
-                    <% if tag = (article.tags & @vertical.tags).first %>
+                    <% if tag = (article.tags & tags).first %>
                         <a href="<%=issue_path(tag.slug)%>" class='issue'>
                           <span><%= tag.title %></span>
                         </a>

@@ -61,15 +61,15 @@
 
 
 <%= render 'verticals/shared/resources', vertical: @vertical, articles: Array(@vertical.featured_articles[1..4]) %>
-<%= render 'verticals/shared/lunchbox', vertical: @vertical, quote: @quote, tags: @vertical.tags, featured_interactive: @vertical.featured_articles[5], events: @events[0..2] %>
+<%= render 'verticals/shared/lunchbox', vertical: @vertical, quote: @quote, tags: @tags, featured_interactive: @vertical.featured_articles[5], events: @events[0..2] %>
 
 <% articles = Array(vertical_articles) %>
 <%= cache ["vertical", "recent-coverage", @vertical, @category, articles] do %>
-    <%= render 'shared/new/triptych', articles: Array(articles[0..2]), header: "Recent #{@vertical.title} Coverage" %>
+    <%= render 'shared/new/triptych', articles: Array(articles[0..2]), header: "Recent #{@vertical.title} Coverage", tags: @tags %>
 
     <%= render 'shared/new/kpcc_ipad_ad' %>
 
-    <%= render 'shared/new/quadrant', vertical: @vertical, articles: Array(articles[3..6]), header: "" %>
+    <%= render 'shared/new/quadrant', vertical: @vertical, tags: @tags, articles: Array(articles[3..6]), header: "" %>
     <%= render 'shared/new/waterfall', vertical: @vertical, articles: articles %>
 <% end %> <%# cache %>
 

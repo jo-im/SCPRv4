@@ -2,7 +2,7 @@
     <div class="inner bound clearfix">
 
 <%= cache ["categories/show", "issues", 'v1', tags] do %>
-    <% if tag = tags.first %>
+    <% if tag = tags[0] %>
         <section class="issues">
             <header>
                 <h1>Issues We're Tracking</h1>
