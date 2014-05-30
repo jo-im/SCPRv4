@@ -34,7 +34,7 @@
 
                         <h1><%= link_to article.short_title, article.public_path %></h1>
                         <h2 class="date"><%= smart_date_js article.public_datetime, tag: 'span' %></h2>
-                        <p class="teaser"><%= article.teaser %></p>
+                        <p class="teaser"><%= article.teaser.html_safe %></p>
                     </div> <!--/ .prose -->
                 </article>
             <% end %>

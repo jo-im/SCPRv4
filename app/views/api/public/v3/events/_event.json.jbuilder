@@ -2,6 +2,7 @@ json.cache! [Api::Public::V3::VERSION, "v2", event] do
   json.id         event.id
   json.title      event.headline
   json.public_url event.public_url
+  json.updated_at event.updated_at
 
   json.starts_at      event.starts_at
   json.ends_at        event.ends_at

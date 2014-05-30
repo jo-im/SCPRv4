@@ -3,6 +3,7 @@ json.cache! [Api::Public::V3::VERSION, "v2", article.original_object] do
   json.title        article.title
   json.short_title  article.short_title
   json.published_at article.public_datetime
+  json.updated_at   article.updated_at
   json.byline       article.byline
   json.teaser       article.teaser.html_safe
   json.body         article.body.html_safe

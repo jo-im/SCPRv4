@@ -2,6 +2,7 @@ json.cache! [Api::Public::V3::VERSION, "v2", edition] do
   json.id           edition.id
   json.title        edition.title
   json.published_at edition.published_at
+  json.updated_at   edition.updated_at
 
   json.abstracts edition.abstracts.each do |abstract|
     json.source                 abstract.source
