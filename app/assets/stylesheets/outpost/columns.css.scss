@@ -157,22 +157,6 @@ table {
     }
 
     ///////////////////
-    // Issue
-    &.list-issues {
-        .column-title { // issue.title
-            width: 200px;
-        }
-
-        .column-slug { // issue.slug
-            width: 150px;
-        }
-
-        .column-description { // issue.description
-            width: 450px;
-        }
-    }
-
-    ///////////////////
     // PijQuery
     &.list-pij_queries {
         .column-headline { // pij_query.headline
