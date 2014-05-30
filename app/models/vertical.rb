@@ -24,10 +24,6 @@ class Vertical < ActiveRecord::Base
   belongs_to :category
   belongs_to :blog
 
-  has_many :vertical_issues, dependent: :destroy
-  has_many :issues, through: :vertical_issues
-  tracks_association :issues
-
   has_many :vertical_reporters, dependent: :destroy
   has_many :reporters,
     :through => :vertical_reporters,
