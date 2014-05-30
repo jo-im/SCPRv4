@@ -1,16 +1,16 @@
-<% add_to_page_title @episode.title %>
+<% add_to_page_title @episode.headline %>
 
 <header class="episode">
   <div class="row-fluid">
     <div class="span14">
-      <h4><%= @episode.title %></h4>
+      <h4><%= @episode.headline %></h4>
       <p class="byline"><%= timestamp(@episode.air_date) %></p>
     </div>
     <div class="span10">
       <% if audio = @episode.audio.first %>
         <div class="right">
           <aside class="story-audio inline">
-              <a href="<%= audio.url %>" class="play-btn audio-toggler" title="<%= h @episode.title %>" data-duration="<%= audio.duration %>"></a>
+              <a href="<%= audio.url %>" class="play-btn audio-toggler" title="<%= h @episode.headline %>" data-duration="<%= audio.duration %>"></a>
               <%= link_to "Listen to this episode", audio.url, :class => "audio-toggler play-text",  "data-duration" => audio.duration %>
               <a href="<%= audio.url %>" class="download">Download</a>
           </aside>
