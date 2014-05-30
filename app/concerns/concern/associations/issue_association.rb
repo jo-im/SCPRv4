@@ -19,6 +19,17 @@ module Concern
       end
 
 
+      def issue_ids=(issues)
+        if self.respond_to?(:tag_ids=)
+          issues = Issue.where(id: issues).all
+          tags = Tag.where(slug: issues.map(&:slug))
+
+          self.tag_ids = tags.map(&:id)
+        else
+          super
+        end
+      end
+
       private
 
       def should_touch_issues?
