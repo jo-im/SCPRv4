@@ -42,7 +42,11 @@ class BlogsController < ApplicationController
     content_params[:exclude] = @story
 
     if @category = @entry.category
-      @featured_articles = @category.featured_articles
+      if @vertical = Vertical.find_by_category_id(@category)
+        @featured_articles = @vertical.featured_articles
+      else
+        @featured_articles = @category.articles
+      end
       @content = @category.content(content_params)
       @category_articles = @content.map { |a| a.to_article }
       @events = @category.events.published.upcoming
