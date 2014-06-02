@@ -53,11 +53,11 @@
                         <header>Listen to audio from this story</header>
                         <ul>
                         <% audio.each_with_index do |audio, index| %>
-                            <li>
-                                <mark data-clip="<%= audio.url %>">
+                            <li class="story-audio">
+                                <a href="<%= audio.url %>" class="play-btn audio-toggler" title="<%= h(article.short_title) %>" data-duration="<%= audio.duration %>">
                                     <b><%= format_clip_duration audio.duration %></b>
-                                    <span><%= "Clip #{index+1}" %></span>
-                                </mark>
+                                </a>
+                                <span><%= "Clip #{index+1}" %></span>
                             </li>
                         <% end %>
                         </ul>
