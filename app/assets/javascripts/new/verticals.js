@@ -2,6 +2,19 @@ scpr.Behaviors.Verticals = {
 
     loadBehaviors: function() {
 
+
+
+        //  ================================================
+        //  Landing: Your vertical's category name might be too long
+        //  ------------------------------------------------
+            if ($("body").hasClass("landing")) {
+                var vertLength = $(".titling h1 a").text().length;
+                if(vertLength > 25) {
+                    $(".titling").addClass("verbose");
+                }
+            }
+
+
         //  ================================================
         //  Let's wrap text on hyphens
         //  ------------------------------------------------
@@ -22,17 +35,14 @@ scpr.Behaviors.Verticals = {
         //  ================================================
         //  Landing: Check up on the curated title length
         //  ------------------------------------------------
-        if($("body").hasClass("landing")){
-            var charcount = $(".headline h1 a").html().length;
-
-            if((charcount < 58) && (charcount > 50)) {
-                $(".headline").addClass("concise");
+            if($("body").hasClass("landing")){
+                var charcount = $(".headline h1 a").text().length;
+                if(charcount > 67)                          { $(".headline").addClass("verbose"); }
+                if((charcount < 58) && (charcount > 50))    { $(".headline").addClass("concise"); }
+                if(charcount < 51)                          { $(".headline").addClass("tiny"); }
             }
 
-            if((charcount < 51)) {
-                $(".headline").addClass("tiny");
-            }
-        }
+
 
     } // loadBehaviors
 
