@@ -170,7 +170,7 @@
                         </ul>
                     </aside>
                 <% end %>
-            <% else %>
+            <% elsif @category.present? %>
                 <% cache ["single/article", "more-from-category", "v1", @category] do %>
                     <aside class="see-more issue">
                         <header>
