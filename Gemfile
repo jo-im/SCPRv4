@@ -6,30 +6,19 @@ gem 'mysql2', '~> 0.3.14'
 gem 'jquery-rails', '~> 3.1.0'
 gem "bcrypt-ruby", "~> 3.1.0"
 gem 'thinking-sphinx', '~> 3.1.0'
-gem 'secretary-rails', github: "SCPR/secretary-rails"
-gem 'actionpack-action_caching'
+gem 'secretary-rails'
 
 ## Outpost
-gem 'outpost-cms', github: 'SCPR/outpost'
-# gem 'outpost-cms', path: "#{ENV['PROJECT_HOME']}/outpost"
-
-gem 'outpost-publishing', github: "SCPR/outpost-publishing"
-#gem 'outpost-publishing', path: "#{ENV['PROJECT_HOME']}/outpost-publishing"
-
-gem 'outpost-asset_host', github: "SCPR/outpost-asset_host"
-#gem 'outpost-asset_host', path: "#{ENV['PROJECT_HOME']}/outpost-asset_host"
-
-gem 'outpost-aggregator', github: "SCPR/outpost-aggregator"
-#gem 'outpost-aggregator', path: "#{ENV['PROJECT_HOME']}/outpost-aggregator"
-
-gem 'outpost-secretary', github: "SCPR/outpost-secretary"
-# gem 'outpost-secretary', path: "#{ENV['PROJECT_HOME']}/outpost-secretary"
+gem 'outpost-cms'
+gem 'outpost-publishing'
+gem 'outpost-asset_host'
+gem 'outpost-aggregator'
+gem 'outpost-secretary'
 
 
 ## Redis
 gem "resque", "~> 1.26.pre.0"
 gem 'redis-content-store', github: "SCPR/redis-content-store"
-# gem 'redis-content-store', path: "#{ENV['PROJECT_HOME']}/redis-content-store"
 
 
 ## Views
@@ -41,8 +30,7 @@ gem 'escape_utils', '~> 1.0.1'
 gem 'simple_form', "~> 3.0.0"
 gem 'jbuilder', '~> 1.5.3'
 
-gem 'embeditor-rails', github: 'SCPR/embeditor-rails'
-#gem 'embeditor-rails', path: "#{ENV['PROJECT_HOME']}/embeditor-rails"
+gem 'embeditor-rails'
 
 
 ## Utility
