@@ -12,7 +12,6 @@ describe DataPoint do
   it_behaves_like "managed resource destroy"
   it_behaves_like "save options"
   it_behaves_like "admin routes"
-  it_behaves_like "versioned model"
 
   #------------------------
 
