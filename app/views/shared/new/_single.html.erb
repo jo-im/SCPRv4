@@ -1,48 +1,9 @@
 <% article = article.to_article %>
-
-<% if below_standard_ratio(width: article.asset.eight.width, height: article.asset.eight.height) %>
-    <section class="prologue">
-        <div class="grating">
-            <div class="inner bound clearfix">
-                <div class="prose">
-                    <h1 class="title"><span><%= article.short_title %></span></h1>
-                    <aside class="byline">
-                        <h2 class="author">by <%= render_byline article.original_object %></h2>
-                        <%= smart_date_js article.public_datetime %>
-                    </aside>
-                    <aside class="caption">
-                        <button>Show caption</button>
-                        <p><%= article.asset.caption %><mark class="credit"><%= link_to article.asset.owner, '#' %></mark></p>
-                    </aside>
-                </div><!--/ .prose -->
-                <div class="asset">
-                    <div class="ratio">
-                        <div class="fill"></div>
-                        <b class="img-contain">
-                            <%= image_tag article.asset.eight.url %>
-                        </b>
-                    </div><!--/ .ratio -->
-                </div><!--/ .asset -->
-            </div>
-        </div>
-        <div class="ephemera"><%= image_tag article.asset.full.url %></div>
-    </section><!--/ .prologue -->
+<% if article.original_object.asset_display == :slideshow %>
+    <%= render 'shared/new/assets/slideshow', article: article %>
 <% else %>
-    <section class="prologue austere">
-        <div class="grating">
-            <div class="inner bound clearfix">
-                <div class="prose">
-                    <h1 class="title"><span><%= article.short_title %></span></h1>
-                    <aside class="byline">
-                        <h2 class="author">by <%= render_byline article.original_object %></h2>
-                        <%= smart_date_js article.public_datetime %>
-                    </aside>
-                </div>
-            </div><!--/ .prose -->
-        </div>
-    </section><!--/ .prologue -->
+    <%= render 'shared/new/assets/photo', article: article %>
 <% end %>
-
 <div class="report">
     <div class="inner bound clearfix">
         <article class="prose">
