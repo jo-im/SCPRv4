@@ -33,52 +33,6 @@
   <div class="results">
     <article class="results-block">
 
-      <!-- House Rep District 33 -->
-      <div class="results-block">
-        <header>
-          <h2>US House Rep District 33</h2>
-
-          <aside>(<%=hashed["sos_feed:percent_reporting"]%>% Reporting)</aside>
-        </header>
-
-        <div class="clearfix">
-          <% election_sort_tmp(@points, "house.d33").first(2).each do |dp| %>
-          <section class="initiative local condensed">
-            <div class="title">
-              <h3><%=dp.title%></h3>
-            </div>
-
-            <div class="result relative">
-              <div class="yes "><strong><%=dp.data_value%><b class="percentage">%</b></strong></div>
-            </div>
-          </section>
-          <% end %>
-        </div>
-
-      </div>
-
-      <!-- House Rep District 11 -->
-      <div class="results-block">
-        <header>
-          <h2>US House Rep District 11</h2>
-
-          <aside>(<%=hashed["sos_feed:percent_reporting"]%>% Reporting)</aside>
-        </header>
-
-        <div class="clearfix">
-          <% election_sort_tmp(@points, "house.d11").first(2).each do |dp| %>
-          <section class="initiative local condensed">
-            <div class="title">
-              <h3><%=dp.title%></h3>
-            </div>
-
-            <div class="result relative">
-              <div class="yes "><strong><%=dp.data_value%><b class="percentage">%</b></strong></div>
-            </div>
-          </section>
-          <% end %>
-        </div>
-      </div>
 
       <!-- CA Governor -->
       <div class="results-block">
@@ -103,6 +57,31 @@
         </div>
       </div>
 
+
+      <!-- House Rep District 33 -->
+      <div class="results-block">
+        <header>
+          <h2>US House Rep District 33</h2>
+
+          <aside>(<%=hashed["sos_feed:percent_reporting"]%>% Reporting)</aside>
+        </header>
+
+        <div class="clearfix">
+          <% election_sort_tmp(@points, "house.d33").first(2).each do |dp| %>
+          <section class="initiative local condensed">
+            <div class="title">
+              <h3><%=dp.title%></h3>
+            </div>
+
+            <div class="result relative">
+              <div class="yes "><strong><%=dp.data_value%><b class="percentage">%</b></strong></div>
+            </div>
+          </section>
+          <% end %>
+        </div>
+      </div>
+
+
       <!-- LA County Serriff -->
       <div class="results-block">
         <header>
@@ -126,6 +105,7 @@
         </div>
       </div>
 
+
       <!-- LA County Sup, 3rd District -->
       <div class="results-block">
         <header>
@@ -148,6 +128,32 @@
           <% end %>
         </div>
       </div>
+
+
+      <!-- Long Beach Mayor -->
+      <div class="results-block">
+        <header>
+          <h2>Long Beach Mayor</h2>
+
+          <aside>(<%=hashed["local.lb_mayor:reporting"]%>% Reporting)</aside>
+        </header>
+
+        <div class="clearfix">
+          <% election_sort_tmp(@points, "local.lb_mayor").first(2).each do |dp| %>
+          <section class="initiative local condensed">
+            <div class="title">
+              <h3><%=dp.title%></h3>
+            </div>
+
+            <div class="result relative">
+              <div class="yes "><strong><%=dp.data_value%><b class="percentage">%</b></strong></div>
+            </div>
+          </section>
+          <% end %>
+        </div>
+      </div>
+
+
     </article>
   </div>
 </div>
