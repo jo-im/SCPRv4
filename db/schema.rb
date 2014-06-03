@@ -29,17 +29,6 @@ ActiveRecord::Schema.define(version: 20140603164239) do
   add_index "abstracts", ["source"], name: "index_abstracts_on_source", using: :btree
   add_index "abstracts", ["updated_at"], name: "index_abstracts_on_updated_at", using: :btree
 
-  create_table "article_issues", force: true do |t|
-    t.integer  "issue_id"
-    t.integer  "article_id"
-    t.string   "article_type"
-    t.datetime "created_at",   null: false
-    t.datetime "updated_at",   null: false
-  end
-
-  add_index "article_issues", ["article_id", "article_type"], name: "index_article_issues_on_article_id_and_article_type", using: :btree
-  add_index "article_issues", ["issue_id"], name: "index_article_issues_on_issue_id", using: :btree
-
   create_table "assethost_contentasset", force: true do |t|
     t.integer "content_id"
     t.integer "position",                        default: 99
@@ -160,16 +149,6 @@ ActiveRecord::Schema.define(version: 20140603164239) do
   add_index "category_articles", ["article_id", "article_type"], name: "index_category_articles_on_article_id_and_article_type", using: :btree
   add_index "category_articles", ["position"], name: "index_category_articles_on_position", using: :btree
   add_index "category_articles", ["vertical_id"], name: "index_category_articles_on_vertical_id", using: :btree
-
-  create_table "category_issues", force: true do |t|
-    t.integer  "issue_id"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
-    t.integer  "vertical_id"
-  end
-
-  add_index "category_issues", ["issue_id"], name: "index_category_issues_on_issue_id", using: :btree
-  add_index "category_issues", ["vertical_id"], name: "index_category_issues_on_vertical_id", using: :btree
 
   create_table "category_reporters", force: true do |t|
     t.integer  "bio_id"
@@ -447,20 +426,6 @@ ActiveRecord::Schema.define(version: 20140603164239) do
   add_index "flatpages_flatpage", ["is_public"], name: "index_flatpages_flatpage_on_is_public", using: :btree
   add_index "flatpages_flatpage", ["path"], name: "django_flatpage_url", using: :btree
   add_index "flatpages_flatpage", ["updated_at"], name: "index_flatpages_flatpage_on_updated_at", using: :btree
-
-  create_table "issues", force: true do |t|
-    t.string   "title"
-    t.string   "slug"
-    t.text     "description"
-    t.boolean  "is_active"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
-  end
-
-  add_index "issues", ["created_at"], name: "index_issues_on_created_at", using: :btree
-  add_index "issues", ["is_active"], name: "index_issues_on_is_active", using: :btree
-  add_index "issues", ["slug"], name: "index_issues_on_slug", using: :btree
-  add_index "issues", ["title"], name: "index_issues_on_title", using: :btree
 
   create_table "layout_breakingnewsalert", force: true do |t|
     t.string   "headline",                                                    null: false
