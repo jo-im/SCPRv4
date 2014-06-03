@@ -3,6 +3,8 @@
     <%= render 'shared/new/assets/slideshow', article: article %>
 <% elsif article.original_object.asset_display == :video %>
     <%= render 'shared/new/assets/video', article: article %>
+<% elsif article.original_object.asset_display == :hidden %>
+    <%= render 'shared/new/assets/hidden', article: article %>
 <% else %>
     <%= render 'shared/new/assets/photo', article: article %>
 <% end %>
