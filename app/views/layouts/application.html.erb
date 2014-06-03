@@ -20,14 +20,12 @@
             <%= yield(:sidebar) %>
           <% else %>
             <%= yield :sidebar_top %>
-            <%= render "shared/ads/oas", ad_id: 'x01' %>
+            <%= render "shared/ads/dfp", ad_key: 'slot_a' %>
             <%= yield :sidebar_middle %>
-            <%= render "shared/ads/dfp", ad_key: :membership_sidebar %>
             <%= render "shared/widgets/newsletter_subscribe" %>
             <%= render "shared/widgets/most_popular" %>
-            <%= render "shared/ads/oas", ad_id: 'x02' %>
-            <%= render "shared/ads/dfp", ad_key: :sidebar_house_promo %>
-            <%= render "shared/ads/oas", ad_id: 'x03' %>
+            <%= render "shared/ads/dfp", ad_key: 'slot_b' %>
+            <%= render "shared/ads/dfp", ad_key: 'slot_c' %>
           <% end %>
         </div> <!-- sidebar -->
       </div> <!-- span8 -->

@@ -1,5 +1,6 @@
 <%= render_content @entry, "opengraph" %>
 <% add_to_page_title @entry.headline %>
+<%= render 'shared/ads/dfp_script_config', category: @entry.category %>
 
 <%= cache ["show", "v10", @entry] do %>
   <%= render "blogs/entry", entry: @entry, full: true %>

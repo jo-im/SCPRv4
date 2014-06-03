@@ -1,5 +1,6 @@
 <% add_to_page_title @story.headline %>
 <%= render_content @story, "opengraph" %>
+<%= render 'shared/ads/dfp_script_config', category: @story.category %>
 
 <%= cache ["show", "v11", @story] do %>
   <%= render "news/story", story: @story %>

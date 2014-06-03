@@ -1,3 +1,10 @@
+<% content_for :dfp_script_config do %>
+  <script>
+    // Special DFP key for Homepage
+    DFP_KEY_SUFFIX_OVERRIDE = "homepage"
+  </script>
+<% end %>
+
 <%= render 'shared/header/document_header' %>
 
 <body>
@@ -8,8 +15,6 @@
 
   <!-- MASTHEAD-->
   <%= render "shared/masthead/layout_header" %>
-
-  <%= render "shared/ads/dfp", ad_key: :membership_leaderboard %>
 
   <!-- BROADCAST BAR -->
 <% if @schedule_current.present? %>
@@ -102,8 +107,7 @@
 
         <div class="span8">
           <div id="sidebar-top">
-            <%= render "shared/ads/oas", ad_id: 'x01' %>
-            <%= render "shared/ads/dfp", ad_key: :membership_sidebar %>
+            <%= render "shared/ads/dfp", ad_key: 'slot_a' %>
             <%= render "shared/widgets/newsletter_subscribe" %>
 
             <!-- TWITTER -->
@@ -136,9 +140,8 @@
         </div> <!-- span16 -->
         <div class="span8">
           <div id="sidebar-bottom">
-            <%= render "shared/ads/oas", ad_id: "x02" %>
-            <%= render "shared/ads/dfp", ad_key: :sidebar_house_promo %>
-            <%= render "shared/ads/oas", ad_id: "x03" %>
+            <%= render "shared/ads/dfp", ad_key: "slot_b" %>
+            <%= render "shared/ads/dfp", ad_key: "slot_c" %>
             <%= render "shared/widgets/archive" %>
           </div> <!-- sidebar bottom -->
         </div> <!-- span8 -->
