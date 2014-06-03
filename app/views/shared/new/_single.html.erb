@@ -1,6 +1,8 @@
 <% article = article.to_article %>
 <% if article.original_object.asset_display == :slideshow %>
     <%= render 'shared/new/assets/slideshow', article: article %>
+<% elsif article.original_object.asset_display == :video %>
+    <%= render 'shared/new/assets/video', article: article %>
 <% else %>
     <%= render 'shared/new/assets/photo', article: article %>
 <% end %>

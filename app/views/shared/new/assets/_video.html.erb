@@ -1,0 +1,32 @@
+<section class="prologue">
+    <div class="grating">
+        <div class="inner bound clearfix">
+            <div class="prose">
+                <h1 class="title"><span><%= article.short_title %></span></h1>
+                <aside class="byline">
+                    <h2 class="author">by <%= render_byline article.original_object %></h2>
+                    <%= smart_date_js article.public_datetime %>
+                </aside>
+                <aside class="caption">
+                    <button>Caption</button>
+                    <p><%= article.asset.caption %><mark class="credit"><%= link_to article.asset.owner, '#' %></mark></p>
+                </aside>
+            </div><!--/ .prose -->
+            <div class="asset">
+                <div class="video">
+                    <div class="media-scaler">
+                        <%= article.assets.first.eight.tag %>
+                    </div>
+                </div><!--/ .video -->
+            </div><!--/ .asset -->
+        </div>
+    </div>
+    <div class="ephemera"><%= image_tag article.asset.full.url %></div>
+</section><!--/ .prologue -->
+
+<script>
+  ahClient = new AssetHost.Client();
+</script>
+
+
+
