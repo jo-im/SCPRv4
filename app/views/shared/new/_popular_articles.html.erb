@@ -1,0 +1,19 @@
+<section class="but-a-walking-shadow">
+    <header><h1 class="bound">What's popular now on KPCC</h1></header>
+    <nav class="bound clearfix">
+        <% articles.each do |article| %>
+            <%= link_to article.public_path do %>
+                <figure class="clearfix">
+                    <div class="ratio">
+                        <div class="fill"></div>
+                        <b class="img-contain"><%= image_tag article.asset.eight.url %></b>
+                    </div>
+                    <figcaption>
+                    <h2><%= article.short_title %></h2>
+                        <%= smart_date_js article.public_datetime %>
+                    </figcaption>
+                </figure>
+            <% end %>
+        <% end %>
+    </nav><!--/ .bound -->
+</section><!--/ .but-a-walking-shadow -->
