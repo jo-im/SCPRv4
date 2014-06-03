@@ -2,13 +2,6 @@
   <% content_for :head_tag, flatpage.extra_head.html_safe %>
   <% content_for :footer, flatpage.extra_tail.html_safe %>
 
-  <% content_for :dfp_script_config do %>
-    <script>
-      // Flatpages don't get dynamic DFP keys.
-      DFP_KEY_SUFFIX_OVERRIDE = ""
-    </script>
-  <% end %>
-
   <h1><%= flatpage.title %></h1>
 <% end %>
 

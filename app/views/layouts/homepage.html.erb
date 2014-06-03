@@ -1,10 +1,4 @@
-<% content_for :dfp_script_config do %>
-  <script>
-    // Special DFP key for Homepage
-    DFP_KEY_SUFFIX_OVERRIDE = "homepage"
-  </script>
-<% end %>
-
+<%= render "shared/ads/dfp_script_config", key_override: "homepage" %>
 <%= render 'shared/header/document_header' %>
 
 <body>

@@ -1,7 +1,11 @@
 <% content_for :dfp_script_config do %>
-  <% if category.present? %>
     <script>
-      DFP_CATEGORY = "<%=category.slug%>"
+    <% if category ||= nil %>
+      DFP_CATEGORY = "<%=category.slug%>";
+    <% end %>
+
+    <% if key_override ||= nil %>
+      DFP_KEY_SUFFIX_OVERRIDE = "<%=key_override%>";
+    <% end %>
     </script>
-  <% end %>
 <% end %>
