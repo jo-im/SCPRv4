@@ -122,44 +122,31 @@
                         <%= submit_tag "Go", class: "btn" %>
                     <% end %>
                 </div>
+                <% if @blog.authors.present? %>
                 <div class="hosts">
-                    <h2>Your hosts</h2>
-
-                    <figure class="clearfix">
-                        <div class="photo ratio">
-                            <a href="#">
-                                <div class="fill"></div>
-                                <b class="img-contain"><img src="http://a.scpr.org/i/2222582af380aa60a9bfc5f512525a25/38874-small.jpg" alt="Leslie Berestein Rojas" /></b>
-                            </a>
-                        </div>
-                        <figcaption>
-                            <h3><a href="#">Leslie Berestein Rojas</a></h3>
-                            <ul>
-                                <li class="portfolio"><a href="#">All posts by Leslie</a></li>
-                                <li class="twitter"><a href="#">Follow @Multi_American</a></li>
-                                <li class="email"><a href="#">Email Leslie</a></li>
-                            </ul>
-                        </figcaption>
-                    </figure>
-
-                    <figure class="clearfix">
-                        <div class="photo ratio">
-                            <a href="#">
-                                <div class="fill"></div>
-                                <b class="img-contain"><img src="http://a.scpr.org/i/f9c05b9db9d55b61884474c3c574506f/53685-small.jpg" alt="Josie Huang" /></b>
-                            </a>
-                        </div>
-                        <figcaption>
-                            <h3><a href="#">Josie Huang</a></h3>
-                            <ul>
-                                <li class="portfolio"><a href="#">All posts by Leslie</a></li>
-                                <li class="twitter"><a href="#">Follow @Multi_American</a></li>
-                                <li class="email"><a href="#">Email Leslie</a></li>
-                            </ul>
-                        </figcaption>
-                    </figure>
-
+                    <h2>Your host<%= 's' unless @blog.authors.length == 1 %></h2>
+                    <% @blog.authors.each do |author| %>
+                        <figure class="clearfix">
+                            <div class="photo ratio">
+                                <%= link_to author.public_path do %>
+                                    <div class="fill"></div>
+                                    <% if author.headshot.present? %>
+                                    <b class="img-contain"><%= author.headshot.thumb.tag %></b>
+                                    <% end %>
+                                <% end %>
+                            </div>
+                            <figcaption>
+                                <h3><%= link_to author.name, author.public_path %></h3>
+                                <ul>
+                                    <li class="portfolio"><%= link_to "All posts by #{author.name.split(" ").first()}", author.public_path %></li>
+                                    <li class="twitter"><%= link_to "Follow @#{author.twitter_handle}", twitter_profile_url(author.twitter_handle) if author.twitter_handle.present? %></li>
+                                    <li class="email"><%= link_to "Email #{author.name.split(" ").first()}", author.email %></li>
+                                </ul>
+                            </figcaption>
+                        </figure>
+                    <% end %>
                 </div>
+                <% end %>
             </aside>
 
 
