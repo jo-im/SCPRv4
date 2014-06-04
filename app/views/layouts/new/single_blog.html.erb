@@ -5,7 +5,29 @@
 
 <body class="<%= content_for(:body_class) %>">
 
-    <%= render 'shared/new/blog_layout_header' %>
+    <header class="masthead blog">
+        <div class="inner bound">
+
+            <section class="titling">
+                <div class="brand">
+                    <h1><%= link_to @blog.name, @blog.public_path %></h1>
+                    <div class="secondary">
+                        <h2><%= @blog.teaser %>
+                        <figure class="subscribe clearfix">
+                            <ul>
+                                <li class="rss"><a href="#">RSS</a></li>
+                                <li class="twitter"><a href="#">Twitter</a></li>
+                                <li class="facebook"><a href="#">Facebook</a></li>
+                            </ul>
+                            <figcaption>Subscribe to <%= @blog.name %></figcaption>
+                        </figure>
+                    </div>
+                </div>
+            </section>
+
+            <%= render 'shared/new/main_nav' %>
+        </div>
+    </header><!--/ .masthead -->
 
     <%= yield %>
 
