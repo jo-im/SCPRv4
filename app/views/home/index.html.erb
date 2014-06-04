@@ -10,7 +10,7 @@
 
 <% else %>
 
-<% cache "homepage-election-results", expires_in: 10.minutes do %>
+<% cache "homepage-election-results1", expires_in: 10.minutes do %>
 
 <% hashed = DataPoint.to_hash(@points) %>
 
@@ -61,7 +61,7 @@
       <!-- House Rep District 33 -->
       <div class="results-block">
         <header>
-          <h2>US House Rep District 33</h2>
+          <h2>U.S. Representative 33rd District</h2>
 
           <aside>(<%=hashed["sos_feed:percent_reporting"]%>% Reporting)</aside>
         </header>
