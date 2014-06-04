@@ -218,7 +218,7 @@
     </div>
 
 <% if @vertical.present? %>
-<%= render 'shared/new/triptych', category: @category, articles: @category_articles[0..2], header: "Recent #{@category.title} Coverage" %>
+<%= render 'shared/new/triptych', category: @category, articles: @category_articles[3..5], header: "Recent #{@category.title} Coverage" %>
     <% if @category_articles.present? %>
     <div class="townhall">
         <div class="inner bound clearfix">
