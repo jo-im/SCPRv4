@@ -51,7 +51,7 @@ class BlogsController < ApplicationController
       @category_articles = @content.map { |a| a.to_article }
       @events = @category.events.published.upcoming
     end
-
+    @other_blogs = BlogEntry.published.includes(:blog).first(10).map(&:blog).uniq.first(4)
     respond_with template: "blogs/entry"
   end
 

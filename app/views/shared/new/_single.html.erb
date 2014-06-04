@@ -342,8 +342,37 @@
      </div><!--/ .townhall -->
     <% end %>
 <% end %>
- <% if @popular_articles && is_blog %>
-    <%= render 'shared/new/popular_articles',
-        articles: @popular_articles.first(4),
-        header: 'Popular Now on KPCC' %>
- <% end %>
+
+<% if is_blog %>
+
+   <section class="blog-sampler">
+       <header><h1 class="bound"><span>Enjoy reading <%= @blog.name %>?</span> <span>You might like KPCC’s other blogs.</span></h1></header>
+        <div class="highlights bound clearfix">
+            <% @other_blogs.each do |blog| %>
+            <% blog_article = blog.entries.published.first.to_article %>
+            <article>
+                <header>
+                    <%= link_to blog_article.public_path do %>
+                        <h2><%= blog_article.short_title %></h2>
+                        <%= smart_date_js blog_article.public_datetime %>
+                    <% end %>
+                </header>
+                <aside class="clearfix">
+                    <div class="about">
+                        <h3><%= link_to blog.name, blog.public_path %></h3>
+                        <p><%= blog.teaser %></p>
+                    </div>
+                    <b class="photo"><%= image_tag blog_article.asset.eight.url, alt: blog_article.asset.caption %></b>
+                </aside>
+            </article>
+            <% end %>
+                    </div><!--/ .highlights -->
+        <footer class="bound"><a href="#">See all of our blogs &amp; news coverage</a></footer>
+    </section><!--/ .sampler -->
+
+    <% if @popular_articles %>
+        <%= render 'shared/new/popular_articles',
+            articles: @popular_articles.first(4),
+            header: 'Popular Now on KPCC' %>
+    <% end %>
+<% end %>
