@@ -1,11 +1,18 @@
 module Api::Public::V3
-  VERSION   = Gem::Version.new("3.0.0.beta6")
+  VERSION   = Gem::Version.new("3.0.0")
   TYPE      = "public"
 
   class BaseController < ::ActionController::Base
     respond_to :json
 
     before_filter :set_access_control_headers
+
+    rescue_from StandardError, with: ->(e) {
+      render_internal_error(error: e,
+        message: "An internal server error occurred (#{e.class}). " \
+          "Please contact the API administrator.",
+      )
+    }
 
     #---------------------------
 
@@ -84,29 +91,41 @@ module Api::Public::V3
     #---------------------------
 
     def render_not_found(options={})
-      message = options[:message] || "Not Found"
-      render status: :not_found, json: { error: message }
+      @message = options[:message] || "Not Found"
+      render status: :not_found, template: api_view_path("shared", "error")
     end
 
     #---------------------------
 
     def render_bad_request(options={})
-      message = options[:message] || "Bad Request"
-      render status: :bad_request, json: { error: message }
+      @message = options[:message] || "Bad Request"
+      render status: :bad_request, template: api_view_path("shared", "error")
     end
 
     #---------------------------
 
     def render_unauthorized(options={})
-      message = options[:message] || "Unauthorized"
-      render status: :unauthorized, json: { error: message }
+      @message = options[:message] || "Unauthorized"
+      render status: :unauthorized, template: api_view_path("shared", "error")
     end
 
     #---------------------------
 
     def render_service_unavailable(options={})
-      message = options[:message] || "Service Unavailable"
-      render status: :service_unavailable, json: { error: message }
+      @message = options[:message] || "Service Unavailable"
+
+      render status: :service_unavailable,
+        template: api_view_path("shared", "error")
+    end
+
+
+    def render_internal_error(options={})
+      @message = options[:message] || "Internal Server Error"
+
+      ::NewRelic.log_error(options[:error])
+
+      render status: :internal_server_error,
+        template: api_view_path("shared", "error")
     end
   end
 end

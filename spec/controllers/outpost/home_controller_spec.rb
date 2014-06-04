@@ -11,7 +11,6 @@ describe Outpost::HomeController do
     end
 
     it 'gets the current user activities' do
-      pending "Dashboard temporarily disabled"
       story = create :news_story, logged_user_id: @current_user.id
 
       get :dashboard
@@ -19,7 +18,6 @@ describe Outpost::HomeController do
     end
 
     it 'gets the latest activities from any user' do
-      pending "Dashboard temporarily disabled"
       other_user = create :admin_user
 
       story1 = create :news_story, logged_user_id: @current_user.id

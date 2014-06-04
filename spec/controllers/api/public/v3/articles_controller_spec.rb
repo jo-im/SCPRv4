@@ -18,7 +18,7 @@ describe Api::Public::V3::ArticlesController do
     it "returns a 404 status if it does not exist" do
       get :show, { obj_key: "nope" }.merge(request_params)
       response.response_code.should eq 404
-      response.body.should eq Hash[error: "Not Found"].to_json
+      JSON.parse(response.body)["error"]["message"].should eq "Not Found"
     end
   end
 
@@ -33,12 +33,13 @@ describe Api::Public::V3::ArticlesController do
     it "validates the URI, returning a bad request if not valid" do
       get :by_url, { url: '###' }.merge(request_params)
       response.response_code.should eq 400
+      JSON.parse(response.body)["error"]["message"].should eq "Invalid URL"
     end
 
     it "returns a 404 if no object is found" do
       get :by_url, { url: "nope.com" }.merge(request_params)
       response.response_code.should eq 404
-      response.body.should eq Hash[error: "Not Found"].to_json
+      JSON.parse(response.body)["error"]["message"].should eq "Not Found"
     end
   end
 
@@ -56,6 +57,7 @@ describe Api::Public::V3::ArticlesController do
       get :most_viewed, request_params
       assigns(:articles).should eq nil
       response.response_code.should eq 503
+      JSON.parse(response.body)["error"]["message"].should match /Cache not warm/
     end
   end
 
@@ -73,6 +75,7 @@ describe Api::Public::V3::ArticlesController do
       get :most_commented, request_params
       assigns(:articles).should eq nil
       response.response_code.should eq 503
+      JSON.parse(response.body)["error"]["message"].should match /Cache not warm/
     end
   end
 
@@ -150,7 +153,7 @@ describe Api::Public::V3::ArticlesController do
 
       it "returns a bad request if the date paramter is an invalid format" do
         get :index, { date: "lolnope" }.merge(request_params)
-        response.body.should match /Invalid Date/
+        JSON.parse(response.body)["error"]["message"].should match /Invalid Date/
       end
     end
 
@@ -193,12 +196,12 @@ describe Api::Public::V3::ArticlesController do
 
       it 'returns a bad request if the end_date is present but not start_date' do
         get :index, { end_date: "2013-10-16" }.merge(request_params)
-        response.body.should match /start_date is required/
+        JSON.parse(response.body)["error"]["message"].should match /start_date is required/
       end
 
       it 'returns a bad request if the date ranges are invalid formats' do
         get :index, { start_date: "lolnope" }.merge(request_params)
-        response.body.should match /Invalid Date/
+        JSON.parse(response.body)["error"]["message"].should match /Invalid Date/
       end
     end
 

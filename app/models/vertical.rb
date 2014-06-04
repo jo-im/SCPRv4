@@ -42,6 +42,12 @@ class Vertical < ActiveRecord::Base
   validates :title, :slug, :category_id, presence: true
 
 
+  class << self
+    def interactive_select_collection
+      FEATURED_INTERACTIVE_STYLES.map { |k,v| [v.titleize, k] }
+    end
+  end
+
   # This category's hand-picked content,
   # converted to articles.
   def featured_articles

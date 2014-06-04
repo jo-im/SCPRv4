@@ -1,6 +1,12 @@
 require 'spec_helper'
 
 describe Vertical do
+  describe '::interactive_select_collection' do
+    it "maps and titleizes" do
+      Vertical.interactive_select_collection.should include ["Beams", 0]
+    end
+  end
+
   describe '#vertical_articles' do
     it 'orders by position' do
       vertical = build :vertical
