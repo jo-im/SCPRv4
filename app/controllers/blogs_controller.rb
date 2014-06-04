@@ -1,6 +1,6 @@
 class BlogsController < ApplicationController
   include Concern::Controller::GetPopularArticles
-  layout 'new/single_blog', except: [:archive]
+  layout 'new/single_blog', only: [:entry]
 
   respond_to :html, :xml, :rss
 
