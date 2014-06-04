@@ -151,12 +151,6 @@ describe ProgramsController do
         @program = create :external_program
       end
 
-      it "sets @segments to the program's segments" do
-        segment = create :external_segment, external_program: @program
-        get :show, show: @program.slug
-        assigns(:segments).to_a.should eq [segment]
-      end
-
       it "sets @episodes to the program's episodes" do
         episode = create :external_episode, external_program: @program
         get :show, show: @program.slug
