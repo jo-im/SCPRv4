@@ -1,10 +1,8 @@
-<!-- KPCC segment -->
-
 <% add_to_page_title @segment.headline %>
 <%= render_content @segment, "opengraph" %>
 
 <%= cache ["show", "v10", @segment] do %>
-  <%= render "programs/segment", segment: @segment %>
+  <%= render "programs/kpcc/segment", segment: @segment %>
 <% end %>
 
 <div class="fold" id="fold">

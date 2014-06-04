@@ -1,0 +1,97 @@
+<% if @program.display_episodes? %>
+  <section class="show-feature">
+    <% if current_episode = @program.episodes.published.first %>
+      <div class="current-episode">
+        <div class="episode">
+          <div class="row-fluid">
+            <div class="span<%= current_episode.assets.present? ? "12" : "24" %>">
+              <h2><%= link_to current_episode.headline, current_episode.public_path %></h2>
+              <p class="byline"><%= timestamp(current_episode.air_date) %></p>
+              <%= current_episode.body.html_safe %>
+            </div>
+            <% if current_episode.assets.present? %>
+              <div class="span12">
+                <%= render_asset current_episode, display: "large" %>
+              </div>
+            <% end %>
+          </div>
+        </div>
+
+        <div class="current-episode-segments">
+          <div class="row-fluid">
+            <% split_num = ( current_episode.segments.published.length.to_f / 2 ).ceil %>
+            <div class="span12">
+              <%= render_content current_episode.segments.published.first(split_num), "seg_headline" %>
+            </div>
+            <div class="span12">
+              <%= render_content current_episode.segments.published[split_num..-1], "seg_headline" %>
+            </div>
+          </div>
+        </div>
+      </div>
+    <% end %>
+
+    <% if upcoming = @program.episodes.upcoming.first %>
+      <div class="upcoming-episode">
+        <h3><b>Coming Up:</b> <%= upcoming.headline %></h3>
+        <p><%= upcoming.body %></p>
+      </div>
+    <% end %>
+  </section>
+
+  <%= render "programs/shared/archive_select", program: @program %>
+  <% if flash[:alert] %>
+    <h4 style="color:#f00;"><%= flash[:alert] %></h4>
+  <% end %>
+<% end %>
+
+<% if @program.display_segments? %>
+  <% nav = paginate @segments, params: { anchor: "archive"} %>
+
+  <section class="show-segments">
+    <%= any_to_list? @segments, title: "Segments" do %>
+      <h2>Recently on <%= @program.title %></h2>
+      <%= nav if @segments.current_page > 1 %>
+
+      <%= cache ["segment-teasers", @segments.to_a] do %>
+        <%= render "programs/kpcc/segment_teaser", segments: @segments %>
+      <% end %>
+
+      <%= nav %>
+    <% end %>
+  </section>
+
+<% elsif @program.display_episodes? %>
+  <% nav = paginate @episodes, params: { anchor: "archive"} %>
+
+  <section class="show-episodes">
+    <%= any_to_list? @episodes, title: "Episodes" do %>
+      <h2>Recently on <%= @program.title %></h2>
+      <%= nav if @episodes.current_page > 1 %>
+
+      <%= cache ["episode-teasers", @episodes.to_a] do %>
+        <% @episodes.each do |episode| %>
+          <div class="show-episode episode">
+            <div class="row-fluid">
+            <% if episode.assets.present? %>
+              <div class="span6">
+                <%= render_asset episode, display: 'thumbnail' %>
+              </div>
+
+              <div class="span18">
+            <% else %>
+              <div class="span24">
+            <% end %>
+                <h3><%= link_to episode.headline, episode.public_path %></h3>
+                <span class="byline"><%= timestamp(episode.air_date) %></span>
+                <p><%= episode.body.html_safe %></p>
+              </div>
+            </div>
+          </div>
+        <% end %>
+      <% end %>
+
+      <%= nav %>
+    <% end %>
+  </section>
+<% end %>

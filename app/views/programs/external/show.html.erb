@@ -1,0 +1,50 @@
+<% present @program, ProgramPresenter do |p| %>
+
+<div class="program-external-header">
+  <div class="row-fluid" id="program-external-header">
+    <div class="span18">
+      <h1><%= p.title %></h1>
+      <p><%= p.description %></p>
+    </div>
+    <div class="span6">
+      <nav class="connect">
+        <%= p.web_link %>
+        <%= p.rss_link %>
+        <%= p.podcast_link %>
+      </nav>
+    </div>
+  </div> <!-- row fluid -->
+</div> <!-- .program-ext-header -->
+
+<h6>Recent Episodes</h6>
+
+<%= cache ["episode-teasers", @episodes.to_a] do %>
+<div class="show-segments">
+  <% @episodes.each do |episode| %>
+    <article class="teaser program-external">
+      <div class="row-fluid">
+        <div class="span18">
+          <div class="info">
+            <header>
+              <h3><%= link_to relaxed_sanitize(episode.title), episode.public_path %></h3>
+              <span class="byline">
+                <%= timestamp(episode.air_date) %>
+              </span>
+            </header>
+
+            <%= simple_format relaxed_sanitize(episode.summary) %>
+          </div> <!-- info -->
+        </div> <!-- span -->
+
+        <div class="span6">
+          <%= content_widget "primary_audio", episode, context: episode.external_program.slug %>
+        </div> <!-- span -->
+      </div> <!-- row-fluid -->
+    </article>
+  <% end %>
+</div>
+<% end %>
+
+<%= paginate @episodes %>
+
+<% end %>
