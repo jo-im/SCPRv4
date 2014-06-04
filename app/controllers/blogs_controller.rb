@@ -46,6 +46,7 @@ class BlogsController < ApplicationController
       @category_articles = @content.map { |a| a.to_article }
     end
     @other_blogs = BlogEntry.published.includes(:blog).first(10).map(&:blog).uniq.first(4)
+    @previous_blog_entry = BlogEntry.published.where('published_at < ?', @entry.published_at).first
     respond_with template: "blogs/entry"
   end
 
