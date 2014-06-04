@@ -78,16 +78,18 @@
                 </ul>
             </aside>
 
-            <aside class="previously">
-                <% previous_article = @previous_blog_entry.to_article %>
-                <header><h1>Previously in <%= @blog.name %></h1></header>
-                <nav>
-                    <%= link_to previous_article.public_path do %>
-                        <h2><%= previous_article.short_title %></h2>
-                        <%= smart_date_js previous_article.public_datetime %>
-                    <% end %>
-                </nav>
-            </aside><!--/ .previously -->
+            <% if @previous_blog_entry.present? %>
+                <aside class="previously">
+                    <% previous_article = @previous_blog_entry.to_article %>
+                    <header><h1>Previously in <%= @blog.name %></h1></header>
+                    <nav>
+                        <%= link_to previous_article.public_path do %>
+                            <h2><%= previous_article.short_title %></h2>
+                            <%= smart_date_js previous_article.public_datetime %>
+                        <% end %>
+                    </nav>
+                </aside><!--/ .previously -->
+            <% end %>
 
             <footer class="comments-jump">
                 <a href="#comments">

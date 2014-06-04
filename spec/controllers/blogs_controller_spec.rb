@@ -181,6 +181,19 @@ describe BlogsController do
           assigns(:popular_articles).should eq articles
         end
       end
+
+      context "for previous blog entries" do
+
+        before :each do
+          @previous_entry = create :blog_entry, :published, blog: entry.blog, published_at: entry.published_at - 1.day
+          get :entry, { blog: entry.blog.slug,
+                        id: entry.id,
+                        slug: entry.slug }.merge!(date_path(entry.published_at))
+        end
+        it 'assigns @previous_blog_entry' do
+          assigns(:previous_blog_entry).should eq @previous_entry
+        end
+      end
     end
   end
 
