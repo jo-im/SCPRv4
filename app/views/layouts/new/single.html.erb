@@ -5,8 +5,7 @@
 
 
 <body class="<%= content_for(:body_class) %>">
-
-    <%= render 'shared/new/layout_header' %>
+    <%= @blog.present? ? render('shared/new/blog_layout_header') : render('shared/new/layout_header') %>
 
     <%= yield %>
 
