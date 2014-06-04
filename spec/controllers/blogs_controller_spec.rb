@@ -182,7 +182,7 @@ describe BlogsController do
         end
       end
 
-      context "for previous blog entries" do
+      context "for valid previous blog entries" do
 
         before :each do
           @previous_entry = create :blog_entry, :published, blog: entry.blog, published_at: entry.published_at - 1.day
@@ -193,7 +193,24 @@ describe BlogsController do
         it 'assigns @previous_blog_entry' do
           assigns(:previous_blog_entry).should eq @previous_entry
         end
+
       end
+
+      context "for invalid previous blog entries" do
+
+        before :each do
+          @blog = create :blog
+          @previous_entry = create :blog_entry, :published, blog: @blog, published_at: entry.published_at - 1.day
+          get :entry, { blog: entry.blog.slug,
+                        id: entry.id,
+                        slug: entry.slug }.merge!(date_path(entry.published_at))
+        end
+        it 'assigns @previous_blog_entry' do
+          assigns(:previous_blog_entry).should be_nil
+        end
+
+      end
+
     end
   end
 
