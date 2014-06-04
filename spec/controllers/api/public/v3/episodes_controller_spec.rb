@@ -18,7 +18,7 @@ describe Api::Public::V3::EpisodesController do
     it "returns a 404 status if it does not exist" do
       get :show, { id: 999 }.merge(request_params)
       response.response_code.should eq 404
-      response.body.should eq Hash[error: "Not Found"].to_json
+      JSON.parse(response.body)["error"]["message"].should eq "Not Found"
     end
   end
 

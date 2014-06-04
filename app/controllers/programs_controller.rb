@@ -1,3 +1,7 @@
+# This controller is annoying. The problem is that we have two different
+# resources: KpccProgram, ExternalProgram, but they share the same URL
+# namespace, so we have to send all traffic to this controller and then
+# basically split every action into two.
 class ProgramsController < ApplicationController
   before_filter :get_program, only: [:show, :episode, :archive]
 
@@ -14,56 +18,41 @@ class ProgramsController < ApplicationController
 
 
   def show
-    @segments = @program.segments
-    @episodes = @program.episodes
+    if @program.is_a?(KpccProgram)
+      @segments = @program.segments.published
+      @episodes = @program.episodes.published
 
-    if @kpcc_program
-      @segments = @segments.published
-      @episodes = @episodes.published
+      respond_with do |format|
+        format.html do
+          if @program.display_episodes? && (@current_episode = @episodes.first)
+            @episodes = @episodes.where.not(id: @current_episode.id)
 
-      if request.format.html? && @program.display_episodes?
-        if @current_episode = @episodes.first
-          @episodes = @episodes.where("id != ?", @current_episode.id)
-
-          if segments = @current_episode.segments.published.to_a
-            @segments = @segments.where("id not in (?)", segments.map(&:id))
+            segments = @current_episode.segments.published.to_a
+            @segments = @segments.where.not(id: segments.map(&:id))
           end
+
+          @segments = @segments.page(params[:page]).per(10)
+          @episodes = @episodes.page(params[:page]).per(6)
+
+          render 'programs/kpcc/show'
         end
+
+        format.xml { render 'programs/kpcc/show' }
       end
+
+      return
     end
 
-    # Don't want to paginate for XML response
-    @segments_scoped = @segments
-    @segments = @segments.page(params[:page]).per(10)
-    @episodes = @episodes.page(params[:page]).per(6)
+    if @program.is_a?(ExternalProgram)
+      @segments = @program.external_segments.page(params[:page]).per(10)
+      @episodes = @program.external_episodes.page(params[:page]).per(6)
 
-    if @kpcc_program
-      respond_with @segments_scoped
-    elsif @external_program
       respond_to do |format|
-        format.html { render :show_external, layout: "application" }
+        format.html { render 'programs/external/show', layout: "application" }
         format.xml  { redirect_to @program.podcast_url }
       end
-    end
-  end
 
-
-  def archive
-    @date = Time.new(
-      params[:archive]["date(1i)"].to_i,
-      params[:archive]["date(2i)"].to_i,
-      params[:archive]["date(3i)"].to_i
-    )
-
-    @episode = @program.episodes.for_air_date(@date).first
-
-    if !@episode
-      flash[:alert] = "There is no #{@program.title} " \
-                      "episode for #{@date.strftime('%F')}."
-
-      redirect_to @program.public_path(anchor: "archive") and return
-    else
-      redirect_to @episode.public_path
+      return
     end
   end
 
@@ -76,24 +65,49 @@ class ProgramsController < ApplicationController
     if ( request.env['PATH_INFO'] =~ /\/\z/ ? request.env['PATH_INFO'] : "#{request.env['PATH_INFO']}/" ) != @segment.public_path
       redirect_to @segment.public_path and return
     end
+
+    render 'programs/kpcc/segment' and return
   end
 
 
   def episode
-    # Legacy route handling
-    if !params[:id]
-      date = Date.new(
-        params[:year].to_i,
-        params[:month].to_i,
-        params[:day].to_i
-      )
+    if @program.is_a?(KpccProgram)
+      @episode    = @program.episodes.find(params[:id])
+      @segments   = @episode.segments
 
-      episode = @program.to_program.episodes.for_air_date(date).first!
-      redirect_to episode.public_path and return
+      render 'programs/kpcc/episode' and return
     end
 
-    @episode    = @program.episodes.find(params[:id]).to_episode
-    @segments   = @episode.segments
+    if @program.is_a?(ExternalProgram)
+      @episode  = @program.external_episodes.find(params[:id])
+      @segments = @episode.external_segments
+
+      render 'programs/external/episode', layout: 'application' and return
+    end
+  end
+
+
+  def archive
+    @date = Time.new(
+      params[:archive]["date(1i)"].to_i,
+      params[:archive]["date(2i)"].to_i,
+      params[:archive]["date(3i)"].to_i
+    )
+
+    if @program.is_a?(KpccProgram)
+      @episode = @program.episodes.for_air_date(@date).first
+    elsif @program.is_a?(ExternalProgram)
+      @episode = @program.external_episodes.for_air_date(@date).first
+    end
+
+    if !@episode
+      flash[:alert] = "There is no #{@program.title} " \
+                      "episode for #{@date.strftime('%F')}."
+
+      redirect_to @program.public_path(anchor: "archive") and return
+    else
+      redirect_to @episode.public_path and return
+    end
   end
 
 
@@ -112,12 +126,13 @@ class ProgramsController < ApplicationController
   private
 
   def get_program
-    @program = Program.find_by_slug!(params[:show])
+    @program = KpccProgram.find_by_slug(params[:show]) ||
+      ExternalProgram.find_by_slug(params[:show])
 
-    if @program.original_object.is_a? KpccProgram
-      @kpcc_program = @program.original_object
-    elsif @program.original_object.is_a? ExternalProgram
-      @external_program = @program.original_object
+
+    if !@program
+      render_error(404, ActionController::RoutingError.new("Not Found"))
+      return false
     end
   end
 end

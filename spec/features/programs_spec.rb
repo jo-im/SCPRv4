@@ -25,3 +25,38 @@ describe "Episode page" do
     end
   end
 end
+
+describe "Program page" do
+  context "for KPCC program" do
+    it "shows the current episode if display_episodes is true" do
+      program = create :kpcc_program, display_episodes: true
+      episode = create :show_episode, show: program, headline: "xxCurrentEpisode--"
+
+      visit program.public_path
+
+      within "section.show-feature" do
+        page.should have_content "xxCurrentEpisode--"
+      end
+    end
+
+    it "shows the list of episodes if display_episodes is true" do
+      program = create :kpcc_program, display_episodes: true, display_segments: false
+
+      episode = create :show_episode,
+        :show           => program,
+        :headline       => "xxCurrentEpisode--",
+        :air_date       => 1.hour.ago
+
+      episode = create :show_episode,
+        :show           => program,
+        :headline       => "xxLastEpisode--",
+        :air_date       => 1.day.ago
+
+      visit program.public_path
+
+      within "section.show-episodes" do
+        page.should have_content "xxLastEpisode--"
+      end
+    end
+  end
+end

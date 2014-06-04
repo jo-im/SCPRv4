@@ -120,7 +120,7 @@ module Job
 
 
     def update_data
-      reporting_key = "percent_reporting"
+      reporting_key = "sos_feed:percent_reporting"
 
       # Get rid of the decimal places
       reporting_percentage = @reporting_stats.find { |m| m["Id"] == "PP" }["__content__"].to_i
