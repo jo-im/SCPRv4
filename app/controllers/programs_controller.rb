@@ -45,7 +45,9 @@ class ProgramsController < ApplicationController
 
     if @program.is_a?(ExternalProgram)
       @segments = @program.external_segments.page(params[:page]).per(10)
-      @episodes = @program.external_episodes.page(params[:page]).per(6)
+
+      @episodes = @program.external_episodes.order("created_at desc")
+        .page(params[:page]).per(6)
 
       respond_to do |format|
         format.html { render 'programs/external/show', layout: "application" }
