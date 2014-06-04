@@ -4,6 +4,6 @@
 <% content_for :body_class, 'interior single' %>
 
 <%= cache ["show", "v10", @entry] do %>
-  <%= render "shared/new/single", article: @entry, full: true, is_blog: true %>
+  <%= render "shared/new/single_blog", article: @entry, full: true %>
 <% end %>
 
