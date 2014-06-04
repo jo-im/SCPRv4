@@ -70,7 +70,7 @@
       <%= nav if @episodes.current_page > 1 %>
 
       <%= cache ["episode-teasers", @episodes.to_a] do %>
-        <% episodes.each do |episode| %>
+        <% @episodes.each do |episode| %>
           <div class="show-episode episode">
             <div class="row-fluid">
             <% if episode.assets.present? %>
