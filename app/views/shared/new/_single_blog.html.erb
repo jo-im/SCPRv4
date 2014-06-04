@@ -152,51 +152,26 @@
 
             <aside class="see-more">
                 <header>
-                    <h1>Recently on Multi-American</h1>
+                    <h1>Recently on <%= @blog.name %></h1>
                 </header>
                 <ul class="previews">
-                    <li>
-                        <a href="#">
-                            <figure class="ratio-pairing clearfix">
-                                <div class="ratio">
-                                    <div class="fill"></div>
-                                    <b class="img-contain"><img src="http://a.scpr.org/i/6e7dc3ab63db2d7b9af4512610d01401/57369-eight.jpg" alt="" /></b>
-                                </div><!--/ .ratio -->
-                                <figcaption>
-                                    <time datetime="2013-08-20">20 August 2013</time>
-                                    <mark>World Cup Soccer: If Mexico loses in qualifying match, it could hurt the US economy</mark>
-                                </figcaption>
-                            </figure><!--/ .ratio-pairing -->
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#">
-                            <figure class="ratio-pairing clearfix">
-                                <div class="ratio">
-                                    <div class="fill"></div>
-                                    <b class="img-contain"><img src="http://a.scpr.org/i/7b53e47ceb3880bbc08c7c5cfffe5470/67752-eight.jpg" alt="" /></b>
-                                </div><!--/ .ratio -->
-                                <figcaption>
-                                    <time datetime="2013-08-18">18 August 2013</time>
-                                    <mark>Cal Worthington, car dealer famous for 'Go See Cal' ads, dead at 92</mark>
-                                </figcaption>
-                            </figure><!--/ .ratio-pairing -->
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#">
-                            <figure class="ratio-pairing clearfix">
-                                <div class="ratio">
-                                    <div class="fill"></div>
-                                    <b class="img-contain"><img src="http://a.scpr.org/i/f2087a790f61e2a36bde90fd9d1bc842/67806-eight.jpg" alt="" /></b>
-                                </div><!--/ .ratio -->
-                                <figcaption>
-                                    <time datetime="2013-08-9">9 August 2013</time>
-                                    <mark>'The Child Exchange': The underground market of unwanted adopted children</mark>
-                                </figcaption>
-                            </figure><!--/ .ratio-pairing -->
-                        </a>
-                    </li>
+                    <% @blog.entries.published[1..3].each do |entry| %>
+                        <% blog_article = entry.to_article %>
+                        <li>
+                            <%= link_to blog_article.public_path do %>
+                                <figure class="ratio-pairing clearfix">
+                                    <div class="ratio">
+                                        <div class="fill"></div>
+                                        <b class="img-contain"><%= image_tag blog_article.asset.lsquare.url, alt: blog_article.asset.caption %></b>
+                                    </div><!--/ .ratio -->
+                                    <figcaption>
+                                        <%= smart_date_js blog_article.public_datetime %>
+                                        <mark><%= blog_article.short_title %></mark>
+                                    </figcaption>
+                                </figure><!--/ .ratio-pairing -->
+                            <% end %>
+                        </li>
+                    <% end %>
                 </ul>
             </aside>
 
