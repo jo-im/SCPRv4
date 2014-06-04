@@ -44,8 +44,6 @@ class ProgramsController < ApplicationController
     end
 
     if @program.is_a?(ExternalProgram)
-      @segments = @program.external_segments.page(params[:page]).per(10)
-
       @episodes = @program.external_episodes.order("air_date desc")
         .page(params[:page]).per(6)
 
