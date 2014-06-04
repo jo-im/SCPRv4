@@ -1,6 +1,6 @@
 require "spec_helper"
 
-describe Api::Public::V2::AlertsController do
+describe Api::Public::V3::AlertsController do
   request_params = {
     :format => :json
   }
