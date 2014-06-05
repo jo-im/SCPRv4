@@ -50,6 +50,7 @@
                 <%= article.body.html_safe %>
             </div><!--/ .prose-body -->
 
+
             <% related = article.original_object.related_content.first(2) %>
             <% if related.present? %>
             <aside class="related">
@@ -144,7 +145,7 @@
                                 <%= link_to author.public_path do %>
                                     <div class="fill"></div>
                                     <% if author.headshot.present? %>
-                                    <b class="img-contain"><%= author.headshot.thumb.tag %></b>
+                                    <b class="img-contain"><%= author.headshot.eight.tag %></b>
                                     <% end %>
                                 <% end %>
                             </div>
