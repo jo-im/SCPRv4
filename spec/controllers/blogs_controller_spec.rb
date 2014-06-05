@@ -127,6 +127,26 @@ describe BlogsController do
     end
   end
 
+  describe "get_popular_blog_entry" do
+    before :each do
+      blog = create :blog
+      @entry_published = create :blog_entry, blog: blog
+      p = @entry_published.published_at
+      @entry_attr = {
+        blog: blog.slug,
+        id: @entry_published.id,
+        slug: @entry_published.slug }.merge(date_path(p))
+
+      Rails.cache.write("popular/#{blog.slug}", @entry_published)
+
+   end
+
+    it "gets the most popular blog entry" do
+      get :entry, @entry_attr
+      assigns(:popular_blog_entry).should eq @entry_published
+    end
+  end
+
   # ------------------------
 
   describe "GET /entry" do

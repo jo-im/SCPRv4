@@ -1,0 +1,12 @@
+<aside class="popular-on-blog">
+    <header><h1>Popular now on <%= article.original_object.blog.name %></h1></header>
+    <div class="ratio">
+        <div class="fill"></div>
+        <b class="img-contain">
+            <%= link_to article.public_path do %>
+                <%= image_tag article.asset.eight.url, alt: article.asset.caption %>
+            <% end %>
+        </b>
+    </div>
+    <h2><%= link_to article.short_title, article.public_path %></h2>
+</aside>

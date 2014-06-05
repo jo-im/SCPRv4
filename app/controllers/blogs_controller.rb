@@ -5,6 +5,7 @@ class BlogsController < ApplicationController
   respond_to :html, :xml, :rss
 
   before_filter :load_blog, except: [:index, :entry]
+  before_filter :get_popular_blog_entry, except: [:index]
   before_filter :get_popular_articles
 
   PER_PAGE = 11
@@ -79,5 +80,34 @@ class BlogsController < ApplicationController
 
   def load_blog
     @blog = Blog.includes(:authors).find_by_slug!(params[:blog])
+  end
+
+  def get_popular_blog_entry
+    # We have to rescue here because Marshal doesn't know about
+    # Rails' autoloading. This should be a non-issue in production,
+    # but just in case (and for development), we should be safe.
+    # This is fixed in Rails 4.
+    # https://github.com/rails/rails/issues/8167
+
+    @blog = Blog.includes(:authors).find_by_slug!(params[:blog])
+    prev_klass = nil
+
+    begin
+      @popular_blog_entry = Rails.cache.read("popular/#{@blog.slug}")
+    rescue ArgumentError => e
+      klass = e.message.match(/undefined class\/module (.+)\z/)[1]
+
+      # If we already tried to load this class but couldn't,
+      # give up.
+      if klass == prev_klass
+        warn "Error caught: Couldn't deserialize popular blog entry: #{e}"
+        @popular_blog_entry = nil
+        return
+      end
+
+      prev_klass = klass
+      klass.constantize # Let Rails load it for us.
+      retry
+    end
   end
 end

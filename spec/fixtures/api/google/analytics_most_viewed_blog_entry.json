@@ -1,0 +1,54 @@
+{
+  "kind": "analytics#gaData",
+  "id": "https://www.googleapis.com/analytics/v3/data/ga?ids=ga:1028848&dimensions=ga:pagePath&metrics=ga:pageviews&sort=-ga:pageviews&filters=ga:pagePath=~/blogs%5C/patt-morrison/.%2B$&start-date=2013-11-19&end-date=2013-11-21&max-results=1",
+  "query": {
+    "start-date": "2013-11-19",
+    "end-date": "2013-11-21",
+    "ids": "ga:1028848",
+    "dimensions": "ga:pagePath",
+    "metrics": [
+      "ga:pageviews"
+    ],
+    "sort": [
+      "-ga:pageviews"
+    ],
+    "filters": "ga:pagePath=~/blogs\/patt-morrison/.+$",
+    "start-index": 1,
+    "max-results": 1
+  },
+  "itemsPerPage": 30,
+  "totalResults": 7530,
+  "selfLink": "https://www.googleapis.com/analytics/v3/data/ga?ids=ga:1028848&dimensions=ga:pagePath&metrics=ga:pageviews&sort=-ga:pageviews&filters=ga:pagePath!~/photos/.%2B$&start-date=2013-11-19&end-date=2013-11-21&max-results=30",
+  "nextLink": "https://www.googleapis.com/analytics/v3/data/ga?ids=ga:1028848&dimensions=ga:pagePath&metrics=ga:pageviews&sort=-ga:pageviews&filters=ga:pagePath!~/photos/.%2B$&start-date=2013-11-19&end-date=2013-11-21&start-index=31&max-results=30",
+  "profileInfo": {
+    "profileId": "1028848",
+    "accountId": "624724",
+    "webPropertyId": "UA-624724-1",
+    "internalWebPropertyId": "1043760",
+    "profileName": "* www.scpr.org",
+    "tableId": "ga:1028848"
+  },
+  "containsSampledData": false,
+  "columnHeaders": [
+    {
+      "name": "ga:pagePath",
+      "columnType": "DIMENSION",
+      "dataType": "STRING"
+    },
+    {
+      "name": "ga:pageviews",
+      "columnType": "METRIC",
+      "dataType": "INTEGER"
+    }
+  ],
+  "totalsForAllResults": {
+    "ga:pageviews": "99277"
+  },
+  "rows": [
+    [
+      "/news/2013/11/17/1/tornadoes-in-illinois-cause-severe-damage/",
+      "770"
+    ]
+  ]
+}
+

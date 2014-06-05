@@ -49,7 +49,7 @@
 
                 <%= article.body.html_safe %>
             </div><!--/ .prose-body -->
-
+            <%= raw Rails.cache.read("views/popular/#{@blog.slug}") %>
 
             <% related = article.original_object.related_content.first(2) %>
             <% if related.present? %>
