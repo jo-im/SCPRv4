@@ -116,6 +116,7 @@ namespace :scprv4 do
     %w[
       homepage
       most_viewed
+      most_viewed_blog_entries
       most_commented
       twitter
       marketplace
@@ -131,6 +132,14 @@ namespace :scprv4 do
     task :most_viewed => [:environment] do
       log "Caching most viewed..."
       perform_or_enqueue(Job::MostViewed)
+    end
+
+    #----------
+
+    desc "Cache Most Viewed Blog Entries"
+    task :most_viewed_blog_entries => [:environment] do
+      log "Caching most viewed blog entries..."
+      perform_or_enqueue(Job::MostViewedBlogEntries)
     end
 
     #----------
