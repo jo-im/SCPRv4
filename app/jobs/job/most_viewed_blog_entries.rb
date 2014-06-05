@@ -1,7 +1,7 @@
 require 'oauth2'
 
 module Job
-  class MostViewedBlogEntry < Base
+  class MostViewedBlogEntries < Base
     @priority = :low
 
     TOKEN_URL = "https://accounts.google.com/o/oauth2/token"
