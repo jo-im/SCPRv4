@@ -40,7 +40,7 @@ Scprv4::Application.configure do
   config.active_support.deprecation = :notify
 
   config.dbsync = {
-    :local   => "/scpr/scprv4/dbsync/mercer.dump",
+    :local   => "/web/scprv4/dbsync/mercer.dump",
     :remote  => "scprdb@66.226.4.229:~scprdb/mercer.dump"
   }
 
