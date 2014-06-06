@@ -34,18 +34,9 @@ class BlogsController < ApplicationController
 
     @entry = BlogEntry.published.includes(:blog).find(params[:id])
     @blog = @entry.blog
-    content_params = {
-      page:       params[:page].to_i,
-      per_page:   PER_PAGE
-    }
 
-    content_params[:exclude] = @story
-
-    if @category = @entry.category
-      @content = @category.content(content_params)
-      @category_articles = @content.map { |a| a.to_article }
-    end
     @other_blogs = BlogEntry.published.includes(:blog).first(10).map(&:blog).uniq.first(4)
+
     @previous_blog_entry = BlogEntry.published.where('blog_id = ? AND published_at < ?', @blog.id, @entry.published_at).first
     respond_with template: "blogs/entry"
   end
