@@ -26,6 +26,7 @@ module VerticalHandler
     @blog       = @vertical.blog
     @quote      = @vertical.quote
     @events     = @category.events.published.upcoming
+    @tags       = @vertical.tags.order("updated_at desc")
   end
 
 

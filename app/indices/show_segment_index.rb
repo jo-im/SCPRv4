@@ -14,12 +14,10 @@ ThinkingSphinx::Index.define :show_segment, with: :active_record do
     :type   => :integer,
     :as     => :obj_key
 
-  # For the megamenu
-  has category.is_news, as: :category_is_news
-
   # For category/homepage sections
   has category.id, as: :category
   has asset_display_id
+  has tags.id, as: :tags
 
   # For RSS Feed
   has "1",

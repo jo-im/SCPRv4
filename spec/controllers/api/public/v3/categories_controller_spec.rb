@@ -9,7 +9,7 @@ describe Api::Public::V3::CategoriesController do
 
   describe "GET show" do
     it "finds the object if it exists" do
-      category = create :category_news
+      category = create :category
       get :show, { id: category.slug }.merge(request_params)
       assigns(:category).should eq category
       response.should render_template "show"
@@ -18,13 +18,13 @@ describe Api::Public::V3::CategoriesController do
     it "returns a 404 status if it does not exist" do
       get :show, { id: "nope" }.merge(request_params)
       response.response_code.should eq 404
-      response.body.should eq Hash[error: "Not Found"].to_json
+      JSON.parse(response.body)["error"]["message"].should eq "Not Found"
     end
   end
 
   describe "GET index" do
     it 'returns all of the categories' do
-      categories = create_list :category_news, 2
+      categories = create_list :category, 2
       get :index, request_params
       assigns(:categories).should eq categories
     end

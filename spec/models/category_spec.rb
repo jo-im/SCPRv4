@@ -2,8 +2,8 @@ require "spec_helper"
 
 describe Category do
   describe '::previews' do
-    let(:category) { create :category_news }
-    let(:other_category) { create :category_not_news }
+    let(:category) { create :category }
+    let(:other_category) { create :category }
 
     sphinx_spec
 
@@ -54,11 +54,11 @@ describe Category do
   end
 
   describe '#content' do
-    let(:category) { create :category_news }
+    let(:category) { create :category }
     sphinx_spec
 
     it "returns content for this category" do
-      other_category = create :category_news
+      other_category = create :category
       story1 = create :news_story, category: category
       story2 = create :news_story, category: other_category
 
@@ -100,7 +100,7 @@ describe Category do
 
   describe '#preview' do
     it 'creates a preview for the category' do
-      category = create :category_news
+      category = create :category
 
       # meeeeehhhhhh
       category.preview.should be_a CategoryPreview

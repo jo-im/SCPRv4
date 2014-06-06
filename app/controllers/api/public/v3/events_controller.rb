@@ -1,7 +1,7 @@
 module Api::Public::V3
   class EventsController < BaseController
     DEFAULTS = {
-      :limit => 40,
+      :limit => 20,
       :page  => 1
     }
 
@@ -84,10 +84,10 @@ module Api::Public::V3
     end
 
     def sanitize_types
-      if params[:types]
-        types = params[:types].split(",") & Event::EVENT_TYPES.keys
-        @conditions.push(event_type: types)
-      end
+      return true if !params[:types]
+
+      types = params[:types].split(",") & Event::EVENT_TYPES.keys
+      @conditions.push(event_type: types)
     end
   end
 end

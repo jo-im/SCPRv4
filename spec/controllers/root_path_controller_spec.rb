@@ -5,7 +5,7 @@ describe RootPathController do
     render_views
 
     it "assigns @category" do
-      category = create :category_news
+      category = create :category
 
       get :handle_path, path: category.slug
       assigns(:category).should eq category
@@ -13,7 +13,7 @@ describe RootPathController do
 
     describe "with XML" do
       it "renders xml template when requested" do
-        category = create :category_news
+        category = create :category
 
         get :handle_path, path: category.slug, format: :xml
 
@@ -25,7 +25,7 @@ describe RootPathController do
 
     describe "with template" do
       before :each do
-        @category = create :category_news
+        @category = create :category
       end
       it "renders the new template" do
         get :handle_path, path: @category.slug, format: :html
@@ -38,16 +38,16 @@ describe RootPathController do
   describe "vertical" do
     render_views
 
-    describe "rendering articles with issues" do
+    describe "rendering articles with tags" do
       sphinx_spec
 
       it "renders articles and issues" do
         vertical = create :vertical
-        issues = create_list :issue, 3, :is_active
+        tags = create_list :tag, 3, is_featured: true
 
-        vertical.issues = issues
+        vertical.tags = tags
         articles = create_list :news_story, 6, :published, category: vertical.category
-        articles.each { |a| a.issues = issues }
+        articles.each { |a| a.tags = tags }
 
         index_sphinx
 

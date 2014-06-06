@@ -27,8 +27,8 @@ describe Article do
       article.audio.should eq []
     end
 
-    it 'forces issues into an array' do
-      article.issues.should eq []
+    it 'forces tags into an array' do
+      article.tags.should eq []
     end
   end
 

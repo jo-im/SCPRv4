@@ -4,7 +4,7 @@
         <section class="backlog">
             <h1>More <%= vertical.title %></h1>
                 <%= cache ["categories/show", "waterfall-articles", 'v1', articles] do %>
-                    <%= render 'shared/new/waterfall_articles', articles: Array(articles[7..-1]), issue_tag_exists: true %>
+                    <%= render 'shared/new/waterfall_articles', articles: Array(articles[7..-1]), display_header: true %>
                 <% end %>
         </section><!--/ .backlog -->
 

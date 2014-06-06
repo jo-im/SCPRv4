@@ -29,9 +29,11 @@
     <% end %>
 
     <li>
-      <a href="<%= secretary.history_path(@record.class.route_key, @record.id) %>" title="history">
+      <% if @record.class.has_secretary? %>
+        <a href="<%= secretary.history_path(@record.class.route_key, @record.id) %>" title="history">Last Updated: <strong><%= format_date @record.updated_at, time: true %></strong></a>
+      <% else %>
         Last Updated: <strong><%= format_date @record.updated_at, time: true %></strong>
-      </a>
+      <% end %>
     </li>
   </ul>
 

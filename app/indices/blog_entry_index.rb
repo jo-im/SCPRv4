@@ -19,12 +19,10 @@ ThinkingSphinx::Index.define :blog_entry, with: :active_record do
     :type   => :boolean,
     :as     => :is_source_kpcc
 
-  # For the megamenu
-  has category.is_news, as: :category_is_news
-
   # For the homepage/category sections
   has category.id, as: :category
   has asset_display_id
+  has tags.id, as: :tags
 
   # For podcasts
   join audio

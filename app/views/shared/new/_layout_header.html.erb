@@ -1,16 +1,16 @@
 <header class="masthead">
     <div class="inner bound">
 
-    <% if context = @vertical || @category %>
-        <section class="titling">
-            <div class="brand clearfix">
-                <h1><%= link_to context.title, context.public_path %></h1>
-            </div>
+        <% if context = @vertical || @category %>
+            <section class="titling">
+                <div class="brand clearfix">
+                    <h1><%= link_to context.title, context.public_path %></h1>
+                </div>
 
-            <%= content_for :masthead_ad %>
-        </section><!--/ .titling -->
-    <% end %>
+                <%= content_for :masthead_ad %>
+            </section><!--/ .titling -->
+        <% end %>
 
-    <%= render 'shared/new/main_nav' %>
+        <%= render 'shared/new/main_nav' %>
     </div>
 </header><!--/ .masthead -->

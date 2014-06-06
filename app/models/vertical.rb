@@ -4,6 +4,7 @@ class Vertical < ActiveRecord::Base
 
   include Concern::Validations::SlugValidation
   include Concern::Callbacks::SphinxIndexCallback
+  include Concern::Associations::TagsAssociation
 
   self.public_route_key = 'root_slug'
 
@@ -23,10 +24,6 @@ class Vertical < ActiveRecord::Base
   belongs_to :category
   belongs_to :blog
 
-  has_many :vertical_issues, dependent: :destroy
-  has_many :issues, through: :vertical_issues
-  tracks_association :issues
-
   has_many :vertical_reporters, dependent: :destroy
   has_many :reporters,
     :through => :vertical_reporters,
@@ -44,6 +41,12 @@ class Vertical < ActiveRecord::Base
 
   validates :title, :slug, :category_id, presence: true
 
+
+  class << self
+    def interactive_select_collection
+      FEATURED_INTERACTIVE_STYLES.map { |k,v| [v.titleize, k] }
+    end
+  end
 
   # This category's hand-picked content,
   # converted to articles.

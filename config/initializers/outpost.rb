@@ -24,7 +24,6 @@ Outpost::Config.configure do |config|
     "FeaturedCommentBucket",
     "Flatpage",
     "Homepage",
-    "Issue",
     "KpccProgram",
     "MissedItBucket",
     "NewsStory",
@@ -36,6 +35,7 @@ Outpost::Config.configure do |config|
     "ScheduleOccurrence",
     "ShowEpisode",
     "ShowSegment",
+    "Tag",
     "Vertical"
   ]
 

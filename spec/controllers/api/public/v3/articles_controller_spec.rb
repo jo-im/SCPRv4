@@ -18,7 +18,7 @@ describe Api::Public::V3::ArticlesController do
     it "returns a 404 status if it does not exist" do
       get :show, { obj_key: "nope" }.merge(request_params)
       response.response_code.should eq 404
-      response.body.should eq Hash[error: "Not Found"].to_json
+      JSON.parse(response.body)["error"]["message"].should eq "Not Found"
     end
   end
 
@@ -33,12 +33,13 @@ describe Api::Public::V3::ArticlesController do
     it "validates the URI, returning a bad request if not valid" do
       get :by_url, { url: '###' }.merge(request_params)
       response.response_code.should eq 400
+      JSON.parse(response.body)["error"]["message"].should eq "Invalid URL"
     end
 
     it "returns a 404 if no object is found" do
       get :by_url, { url: "nope.com" }.merge(request_params)
       response.response_code.should eq 404
-      response.body.should eq Hash[error: "Not Found"].to_json
+      JSON.parse(response.body)["error"]["message"].should eq "Not Found"
     end
   end
 
@@ -56,6 +57,7 @@ describe Api::Public::V3::ArticlesController do
       get :most_viewed, request_params
       assigns(:articles).should eq nil
       response.response_code.should eq 503
+      JSON.parse(response.body)["error"]["message"].should match /Cache not warm/
     end
   end
 
@@ -73,6 +75,7 @@ describe Api::Public::V3::ArticlesController do
       get :most_commented, request_params
       assigns(:articles).should eq nil
       response.response_code.should eq 503
+      JSON.parse(response.body)["error"]["message"].should match /Cache not warm/
     end
   end
 
@@ -81,17 +84,17 @@ describe Api::Public::V3::ArticlesController do
       sphinx_spec(num: 0)
 
       it 'only selects stories with the requested categories' do
-        category1  = create :category_not_news, slug: "film"
+        category1  = create :category, slug: "film"
         story1     = create :news_story,
           category: category1, published_at: 1.hour.ago
 
-        category2  = create :category_news, slug: "health"
+        category2  = create :category, slug: "health"
         story2     = create :news_story,
           category: category2, published_at: 2.hours.ago
 
         # Control - add these in to make sure we're *only* returning
         # stories with the requested categories
-        category3  = create :category_news, slug: "watwat"
+        category3  = create :category, slug: "watwat"
         story3     = create :news_story,
           category: category3, published_at: 1.hour.ago
 
@@ -100,6 +103,34 @@ describe Api::Public::V3::ArticlesController do
         ts_retry(2) do
           get :index, { categories: "film,health" }.merge(request_params)
           assigns(:articles).should eq [story1, story2].map(&:to_article)
+        end
+      end
+    end
+
+    context "with tags" do
+      sphinx_spec(num: 0)
+
+      it "filters by requested tags" do
+        tag1 = create :tag, slug: "cool-tag"
+        tag2 = create :tag, slug: "another-tag"
+        tag3 = create :tag, slug: "nope-tag"
+
+        story1 = build :news_story
+        story1.tags = [tag1, tag2]
+        story1.save!
+
+        story2 = build :news_story
+        story2.tags = [tag3]
+        story2.save!
+
+        index_sphinx
+
+        ts_retry(2) do
+          get :index, { tags: "cool-tag,another-tag" }.merge(request_params)
+          assigns(:articles).should eq [story1].map(&:to_article)
+          response.body.should match tag1.title
+          response.body.should match tag2.title
+          response.body.should_not match tag3.title
         end
       end
     end
@@ -122,7 +153,7 @@ describe Api::Public::V3::ArticlesController do
 
       it "returns a bad request if the date paramter is an invalid format" do
         get :index, { date: "lolnope" }.merge(request_params)
-        response.body.should match /Invalid Date/
+        JSON.parse(response.body)["error"]["message"].should match /Invalid Date/
       end
     end
 
@@ -165,12 +196,12 @@ describe Api::Public::V3::ArticlesController do
 
       it 'returns a bad request if the end_date is present but not start_date' do
         get :index, { end_date: "2013-10-16" }.merge(request_params)
-        response.body.should match /start_date is required/
+        JSON.parse(response.body)["error"]["message"].should match /start_date is required/
       end
 
       it 'returns a bad request if the date ranges are invalid formats' do
         get :index, { start_date: "lolnope" }.merge(request_params)
-        response.body.should match /Invalid Date/
+        JSON.parse(response.body)["error"]["message"].should match /Invalid Date/
       end
     end
 

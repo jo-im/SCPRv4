@@ -104,9 +104,9 @@ module Api::Public::V2
 
     def set_classes
       @classes = []
-      params[:types] ||= defaults[:types]
+      types = params[:types] || defaults[:types]
 
-      params[:types].split(",").uniq.each do |type|
+      types.split(",").uniq.each do |type|
         if klasses = TYPES[type]
           @classes += klasses
         end

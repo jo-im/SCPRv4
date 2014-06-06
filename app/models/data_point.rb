@@ -17,7 +17,6 @@
 #
 class DataPoint < ActiveRecord::Base
   outpost_model
-  has_secretary
 
   include Concern::Callbacks::SphinxIndexCallback
 

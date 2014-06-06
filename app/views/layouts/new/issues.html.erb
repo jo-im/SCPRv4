@@ -19,9 +19,9 @@
             <nav class="terms">
                 <ul class="clearfix">
 
-                <% @issues.each do |issue| %>
-                    <li class="<%= 'selected' if @issue == issue %>">
-                        <%= link_to issue.title, issue.public_path %>
+                <% @tags.each do |tag| %>
+                    <li class="<%= 'selected' if @tag == tag %>">
+                        <%= link_to tag.title, issue_path(tag.slug) %>
                     </li>
                 <% end %>
 
@@ -42,9 +42,9 @@
 
     <% if @popular_articles %>
       <%= render 'shared/new/quadrant',
-        vertical: nil,
         articles: @popular_articles.first(4),
-        header: 'Popular Now on KPCC' %>
+        header: 'Popular Now on KPCC',
+        tags: nil %>
     <% end %>
 
 

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140522180628) do
+ActiveRecord::Schema.define(version: 20140603164239) do
 
   create_table "abstracts", force: true do |t|
     t.string   "source"
@@ -29,17 +29,6 @@ ActiveRecord::Schema.define(version: 20140522180628) do
   add_index "abstracts", ["source"], name: "index_abstracts_on_source", using: :btree
   add_index "abstracts", ["updated_at"], name: "index_abstracts_on_updated_at", using: :btree
 
-  create_table "article_issues", force: true do |t|
-    t.integer  "issue_id"
-    t.integer  "article_id"
-    t.string   "article_type"
-    t.datetime "created_at",   null: false
-    t.datetime "updated_at",   null: false
-  end
-
-  add_index "article_issues", ["article_id", "article_type"], name: "index_article_issues_on_article_id_and_article_type", using: :btree
-  add_index "article_issues", ["issue_id"], name: "index_article_issues_on_issue_id", using: :btree
-
   create_table "assethost_contentasset", force: true do |t|
     t.integer "content_id"
     t.integer "position",                        default: 99
@@ -48,7 +37,7 @@ ActiveRecord::Schema.define(version: 20140522180628) do
     t.string  "content_type"
   end
 
-  add_index "assethost_contentasset", ["content_type", "content_id"], name: "index_assethost_contentasset_on_content_type_and_content_id", using: :btree
+  add_index "assethost_contentasset", ["content_id", "content_type"], name: "index_assethost_contentasset_on_content_id_and_content_type", using: :btree
   add_index "assethost_contentasset", ["position"], name: "index_assethost_contentasset_on_asset_order", using: :btree
 
   create_table "auth_user", force: true do |t|
@@ -86,8 +75,8 @@ ActiveRecord::Schema.define(version: 20140522180628) do
     t.string   "last_name"
   end
 
-  add_index "bios_bio", ["is_public", "last_name"], name: "index_bios_bio_on_is_public_and_last_name", using: :btree
   add_index "bios_bio", ["is_public"], name: "index_bios_bio_on_is_public", using: :btree
+  add_index "bios_bio", ["last_name", "is_public"], name: "index_bios_bio_on_last_name_and_is_public", using: :btree
   add_index "bios_bio", ["last_name"], name: "index_bios_bio_on_last_name", using: :btree
   add_index "bios_bio", ["name"], name: "index_bios_bio_on_name", using: :btree
   add_index "bios_bio", ["slug"], name: "index_bios_bio_on_slug", using: :btree
@@ -97,7 +86,6 @@ ActiveRecord::Schema.define(version: 20140522180628) do
     t.string   "slug"
     t.text     "description",         limit: 2147483647
     t.boolean  "is_active",                              default: false, null: false
-    t.boolean  "is_news",                                                null: false
     t.string   "teaser"
     t.integer  "missed_it_bucket_id"
     t.datetime "created_at",                                             null: false
@@ -117,8 +105,8 @@ ActiveRecord::Schema.define(version: 20140522180628) do
     t.datetime "updated_at", null: false
   end
 
+  add_index "blogs_blogauthor", ["author_id", "blog_id"], name: "index_blogs_blogauthor_on_author_id_and_blog_id", using: :btree
   add_index "blogs_blogauthor", ["author_id"], name: "blogs_blog_authors_64afdb51", using: :btree
-  add_index "blogs_blogauthor", ["blog_id", "author_id"], name: "blogs_blog_authors_blog_id_579f20695740dd5e_uniq", unique: true, using: :btree
   add_index "blogs_blogauthor", ["blog_id"], name: "blogs_blog_authors_472bc96c", using: :btree
 
   create_table "blogs_entry", force: true do |t|
@@ -162,16 +150,6 @@ ActiveRecord::Schema.define(version: 20140522180628) do
   add_index "category_articles", ["position"], name: "index_category_articles_on_position", using: :btree
   add_index "category_articles", ["vertical_id"], name: "index_category_articles_on_vertical_id", using: :btree
 
-  create_table "category_issues", force: true do |t|
-    t.integer  "issue_id"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
-    t.integer  "vertical_id"
-  end
-
-  add_index "category_issues", ["issue_id"], name: "index_category_issues_on_issue_id", using: :btree
-  add_index "category_issues", ["vertical_id"], name: "index_category_issues_on_vertical_id", using: :btree
-
   create_table "category_reporters", force: true do |t|
     t.integer  "bio_id"
     t.datetime "created_at",  null: false
@@ -185,15 +163,12 @@ ActiveRecord::Schema.define(version: 20140522180628) do
   create_table "contentbase_category", force: true do |t|
     t.string   "title"
     t.string   "slug"
-    t.boolean  "is_news",           default: true, null: false
     t.integer  "comment_bucket_id"
-    t.datetime "created_at",                       null: false
-    t.datetime "updated_at",                       null: false
-    t.string   "description"
+    t.datetime "created_at",        null: false
+    t.datetime "updated_at",        null: false
   end
 
   add_index "contentbase_category", ["comment_bucket_id"], name: "contentbase_category_36c0cbca", using: :btree
-  add_index "contentbase_category", ["is_news"], name: "index_contentbase_category_on_is_news", using: :btree
   add_index "contentbase_category", ["slug"], name: "contentbase_category_a951d5d6", using: :btree
   add_index "contentbase_category", ["title"], name: "index_contentbase_category_on_title", using: :btree
 
@@ -205,7 +180,7 @@ ActiveRecord::Schema.define(version: 20140522180628) do
     t.datetime "updated_at",   null: false
   end
 
-  add_index "contentbase_contentalarm", ["content_type", "content_id"], name: "index_contentbase_contentalarm_on_content_type_and_content_id", using: :btree
+  add_index "contentbase_contentalarm", ["content_id", "content_type"], name: "index_contentbase_contentalarm_on_content_id_and_content_type", using: :btree
   add_index "contentbase_contentalarm", ["fire_at"], name: "index_contentbase_contentalarm_on_fire_at", using: :btree
 
   create_table "contentbase_contentbyline", force: true do |t|
@@ -218,7 +193,7 @@ ActiveRecord::Schema.define(version: 20140522180628) do
     t.datetime "updated_at",               null: false
   end
 
-  add_index "contentbase_contentbyline", ["content_type", "content_id"], name: "index_contentbase_contentbyline_on_content_type_and_content_id", using: :btree
+  add_index "contentbase_contentbyline", ["content_id", "content_type"], name: "index_contentbase_contentbyline_on_content_id_and_content_type", using: :btree
   add_index "contentbase_contentbyline", ["user_id"], name: "contentbase_contentbyline_fbfc09f1", using: :btree
 
   create_table "contentbase_contentshell", force: true do |t|
@@ -313,7 +288,7 @@ ActiveRecord::Schema.define(version: 20140522180628) do
   end
 
   add_index "edition_slots", ["edition_id"], name: "index_edition_slots_on_edition_id", using: :btree
-  add_index "edition_slots", ["item_type", "item_id"], name: "index_edition_slots_on_item_type_and_item_id", using: :btree
+  add_index "edition_slots", ["item_id", "item_type"], name: "index_edition_slots_on_item_id_and_item_type", using: :btree
   add_index "edition_slots", ["position"], name: "index_edition_slots_on_position", using: :btree
 
   create_table "editions", force: true do |t|
@@ -452,20 +427,6 @@ ActiveRecord::Schema.define(version: 20140522180628) do
   add_index "flatpages_flatpage", ["path"], name: "django_flatpage_url", using: :btree
   add_index "flatpages_flatpage", ["updated_at"], name: "index_flatpages_flatpage_on_updated_at", using: :btree
 
-  create_table "issues", force: true do |t|
-    t.string   "title"
-    t.string   "slug"
-    t.text     "description"
-    t.boolean  "is_active"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
-  end
-
-  add_index "issues", ["created_at"], name: "index_issues_on_created_at", using: :btree
-  add_index "issues", ["is_active"], name: "index_issues_on_is_active", using: :btree
-  add_index "issues", ["slug"], name: "index_issues_on_slug", using: :btree
-  add_index "issues", ["title"], name: "index_issues_on_title", using: :btree
-
   create_table "layout_breakingnewsalert", force: true do |t|
     t.string   "headline",                                                    null: false
     t.string   "alert_type",                                                  null: false
@@ -510,7 +471,7 @@ ActiveRecord::Schema.define(version: 20140522180628) do
     t.string  "content_type"
   end
 
-  add_index "layout_homepagecontent", ["content_type", "content_id"], name: "index_layout_homepagecontent_on_content_type_and_content_id", using: :btree
+  add_index "layout_homepagecontent", ["content_id", "content_type"], name: "index_layout_homepagecontent_on_content_id_and_content_type", using: :btree
   add_index "layout_homepagecontent", ["homepage_id"], name: "layout_homepagecontent_35da0e60", using: :btree
 
   create_table "media_audio", force: true do |t|
@@ -527,7 +488,7 @@ ActiveRecord::Schema.define(version: 20140522180628) do
     t.integer  "status"
   end
 
-  add_index "media_audio", ["content_type", "content_id"], name: "index_media_audio_on_content_type_and_content_id", using: :btree
+  add_index "media_audio", ["content_id", "content_type"], name: "index_media_audio_on_content_id_and_content_type", using: :btree
   add_index "media_audio", ["position"], name: "index_media_audio_on_position", using: :btree
   add_index "media_audio", ["status"], name: "index_media_audio_on_status", using: :btree
 
@@ -561,8 +522,8 @@ ActiveRecord::Schema.define(version: 20140522180628) do
     t.integer "position",     default: 0, null: false
   end
 
-  add_index "media_related", ["content_type", "content_id"], name: "index_media_related_on_content_type_and_content_id", using: :btree
-  add_index "media_related", ["related_type", "related_id"], name: "index_media_related_on_related_type_and_related_id", using: :btree
+  add_index "media_related", ["content_id", "content_type"], name: "index_media_related_on_content_id_and_content_type", using: :btree
+  add_index "media_related", ["related_id", "related_type"], name: "index_media_related_on_related_id_and_related_type", using: :btree
 
   create_table "news_story", force: true do |t|
     t.string   "headline"
@@ -710,7 +671,7 @@ ActiveRecord::Schema.define(version: 20140522180628) do
     t.datetime "updated_at",                     null: false
   end
 
-  add_index "recurring_schedule_rules", ["program_type", "program_id"], name: "index_recurring_schedule_rules_on_program_type_and_program_id", using: :btree
+  add_index "recurring_schedule_rules", ["program_id", "program_type"], name: "index_recurring_schedule_rules_on_program_id_and_program_type", using: :btree
 
   create_table "related_links", force: true do |t|
     t.string   "title",        default: ""
@@ -722,7 +683,7 @@ ActiveRecord::Schema.define(version: 20140522180628) do
     t.datetime "updated_at"
   end
 
-  add_index "related_links", ["content_type", "content_id"], name: "index_media_link_on_content_type_and_content_id", using: :btree
+  add_index "related_links", ["content_id", "content_type"], name: "index_related_links_on_content_id_and_content_type", using: :btree
   add_index "related_links", ["link_type"], name: "index_related_links_on_link_type", using: :btree
 
   create_table "remote_articles", force: true do |t|
@@ -737,8 +698,8 @@ ActiveRecord::Schema.define(version: 20140522180628) do
     t.datetime "updated_at",                                     null: false
   end
 
+  add_index "remote_articles", ["article_id", "source"], name: "index_remote_articles_on_article_id_and_source", using: :btree
   add_index "remote_articles", ["published_at"], name: "index_remote_articles_on_published_at", using: :btree
-  add_index "remote_articles", ["source", "article_id"], name: "index_remote_articles_on_source_and_article_id", using: :btree
   add_index "remote_articles", ["source"], name: "index_remote_articles_on_source", using: :btree
 
   create_table "schedule_occurrences", force: true do |t|
@@ -753,7 +714,7 @@ ActiveRecord::Schema.define(version: 20140522180628) do
     t.datetime "updated_at",                 null: false
   end
 
-  add_index "schedule_occurrences", ["program_type", "program_id"], name: "index_schedule_occurrences_on_program_type_and_program_id", using: :btree
+  add_index "schedule_occurrences", ["program_id", "program_type"], name: "index_schedule_occurrences_on_program_id_and_program_type", using: :btree
   add_index "schedule_occurrences", ["recurring_schedule_rule_id"], name: "index_schedule_occurrences_on_recurring_schedule_rule_id", using: :btree
   add_index "schedule_occurrences", ["starts_at", "ends_at"], name: "index_schedule_occurrences_on_starts_at_and_ends_at", using: :btree
   add_index "schedule_occurrences", ["starts_at"], name: "index_schedule_occurrences_on_starts_at", using: :btree
@@ -813,6 +774,17 @@ ActiveRecord::Schema.define(version: 20140522180628) do
   add_index "shows_segment", ["status"], name: "index_shows_segment_on_status", using: :btree
   add_index "shows_segment", ["updated_at"], name: "index_shows_segment_on_updated_at", using: :btree
 
+  create_table "taggings", force: true do |t|
+    t.string   "taggable_type"
+    t.integer  "taggable_id"
+    t.integer  "tag_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "taggings", ["tag_id"], name: "index_taggings_on_tag_id", using: :btree
+  add_index "taggings", ["taggable_id", "taggable_type"], name: "index_taggings_on_taggable_id_and_taggable_type", using: :btree
+
   create_table "taggit_tag", force: true do |t|
     t.string  "name",  limit: 100, null: false
     t.string  "slug",  limit: 100, null: false
@@ -833,6 +805,19 @@ ActiveRecord::Schema.define(version: 20140522180628) do
   add_index "taggit_taggeditem", ["content_type", "content_id"], name: "index_taggit_taggeditem_on_content_type_and_content_id", using: :btree
   add_index "taggit_taggeditem", ["django_content_type_id"], name: "taggit_taggeditem_e4470c6e", using: :btree
   add_index "taggit_taggeditem", ["tag_id"], name: "taggit_taggeditem_3747b463", using: :btree
+
+  create_table "tags", force: true do |t|
+    t.string   "title"
+    t.string   "slug"
+    t.text     "description"
+    t.boolean  "is_featured"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "tags", ["created_at"], name: "index_tags_on_created_at", using: :btree
+  add_index "tags", ["is_featured"], name: "index_tags_on_is_featured", using: :btree
+  add_index "tags", ["slug"], name: "index_tags_on_slug", using: :btree
 
   create_table "user_permissions", force: true do |t|
     t.integer  "admin_user_id"
@@ -862,7 +847,7 @@ ActiveRecord::Schema.define(version: 20140522180628) do
     t.integer  "version_number"
     t.string   "versioned_type"
     t.integer  "versioned_id"
-    t.string   "user_id"
+    t.integer  "user_id"
     t.text     "description",    limit: 16777215
     t.datetime "created_at"
     t.text     "object_changes", limit: 16777215
@@ -871,7 +856,7 @@ ActiveRecord::Schema.define(version: 20140522180628) do
   add_index "versions", ["created_at"], name: "index_versions_on_created_at", using: :btree
   add_index "versions", ["user_id"], name: "index_versions_on_user_id", using: :btree
   add_index "versions", ["version_number"], name: "index_versions_on_version_number", using: :btree
-  add_index "versions", ["versioned_type", "versioned_id"], name: "index_versions_on_versioned_type_and_versioned_id", using: :btree
+  add_index "versions", ["versioned_id", "versioned_type"], name: "index_versions_on_versioned_id_and_versioned_type", using: :btree
 
   create_table "verticals", force: true do |t|
     t.string   "slug"

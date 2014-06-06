@@ -25,7 +25,7 @@
   </div>
 
   <h4>Featured Interactive Style</h4>
-  <%= f.input :featured_interactive_style_id, collection: Vertical::FEATURED_INTERACTIVE_STYLES.invert, label: "Background Image Style" %>
+  <%= f.input :featured_interactive_style_id, collection: Vertical.interactive_select_collection, label: "Background Image Style" %>
 
   <div id="featured_articles_aggregator" class="aggregator"></div>
   <%= f.input :vertical_articles_json, as: :hidden, input_html: { id: "vertical_articles_json" } %>
@@ -67,7 +67,7 @@
 
 <%= form_block "Associations" do %>
   <%= f.association :blog %>
-  <%= f.association :issues %>
+  <%= f.association :tags %>
   <%= f.association :reporters, label: "Reporters" %>
 <% end %>
 

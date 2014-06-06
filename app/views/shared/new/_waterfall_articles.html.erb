@@ -6,9 +6,9 @@
     <div class="graphic">
         <div class="ratio">
 
-    <% if issue_tag_exists %>
-        <% if issue = article.issues.first %>
-            <span class="issue"><%= link_to issue.title, issue.public_path %></span>
+    <% if display_header %>
+        <% if tag = article.tags.first %>
+            <span class="issue"><%= link_to tag.title, issue_path(tag.slug) %></span>
         <% end  %>
     <% end %>
 
@@ -27,13 +27,13 @@
                 <%= smart_date_js article.public_datetime, tag: 'span' %>
             </p>
 
-        <%- if article.feature.present? %>
+        <% if article.feature.present? %>
             <mark class="trait <%= article.feature.key %>"><%= article.feature.name %></mark>
         <% end %>
 
         </aside>
 
-        <p class="teaser"><%= article.teaser %></p>
+        <p class="teaser"><%= article.teaser.html_safe %></p>
     </div><!--/ .prose -->
 </article>
 

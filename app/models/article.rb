@@ -44,7 +44,7 @@ class Article
     :attributions,
     :byline,
     :edit_url, # Should this really be an attribute, or should we delegate?
-    :issues,
+    :tags,
     :feature
 
 
@@ -64,7 +64,7 @@ class Article
     @assets           = Array(attributes[:assets])
     @audio            = Array(attributes[:audio])
     @attributions     = Array(attributes[:attributions])
-    @issues           = Array(attributes[:issues])
+    @tags             = Array(attributes[:tags])
   end
 
 
