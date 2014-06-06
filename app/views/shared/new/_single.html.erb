@@ -103,19 +103,19 @@
                 </div>
             </aside>
 
-            <% if issue = article.original_object.issues.first %>
-                <% cache ["single/article", "more-issues", "v1", issue] do %>
+            <% if tag = article.original_object.tags.first %>
+                <% cache ["single/article", "more-issues", "v1", tag] do %>
                     <aside class="see-more issue">
                         <header>
                             <h1>More from this Issue</h1>
                             <h2 class="clearfix">
-                                <span><%= link_to issue.title, issue.public_path %></span>
+                                <span><%= link_to tag.title, tag.public_path %></span>
                                 <mark><%= link_to 'See All', issues_path %></mark>
                             </h2>
                         </header>
                         <ul class="previews">
-                            <% if issue_articles = issue.articles.first(3) %>
-                                <% issue_articles.each do |article| %>
+                            <% if tag_articles = tag.articles.first(3) %>
+                                <% tag_articles.each do |article| %>
                                     <li>
                                     <%= link_to article.public_path do %>
                                         <figure class="ratio-pairing clearfix">
@@ -218,14 +218,14 @@
     </div>
 
 <% if @vertical.present? %>
-<%= render 'shared/new/triptych', category: @category, articles: @category_articles[3..5], header: "Recent #{@category.title} Coverage" %>
+<%= render 'shared/new/triptych', articles: @category_articles[3..5], header: "Recent #{@category.title} Coverage", tags: @tags %>
     <% if @category_articles.present? %>
     <div class="townhall">
         <div class="inner bound clearfix">
             <div class="primary clearfix">
                 <section class="backlog">
                     <h1>More <%= @category.title %></h1>
-                    <%= render 'shared/new/waterfall_articles', articles: @category_articles[3..-1], issue_tag_exists: true %>
+                    <%= render 'shared/new/waterfall_articles', articles: @category_articles[3..-1], display_header: true %>
 
                     <footer>
                         <%= link_to "More #{@category.title} News", @category.public_path %>
@@ -236,21 +236,21 @@
                 <div class="supportive">
                     <section>
                         <% if @vertical.present? %>
-                        <% if @vertical.issues.present? %>
-                        <h1>Issues We're Tracking</h1>
-                            <% main_issue = @vertical.issues.first %>
-                            <h2 class="special"><%= main_issue.title %></h2>
+                        <% if @vertical.tags.present? %>
+                            <h1>Issues We're Tracking</h1>
+                            <% main_tag = @vertical.tags.first %>
+                            <h2 class="special"><%= main_tag.title %></h2>
                                 <nav>
                                     <ul>
-                                        <%= render 'shared/new/single_page_issue_list', articles: main_issue.articles.first(2) %>
+                                        <%= render 'shared/new/single_page_issue_list', articles: main_tag.articles.first(2) %>
                                     </ul>
                                 </nav>
-                                <% if other_issues = @vertical.issues[1..2] %>
-                                    <% other_issues.each do |issue| %>
-                                        <h2><%= issue.title %></h2>
+                                <% if other_tags = @vertical.tags[1..2] %>
+                                    <% other_tags.each do |tag| %>
+                                        <h2><%= tag.title %></h2>
                                         <nav>
                                             <ul>
-                                                <%= render 'shared/new/single_page_issue_list', articles: issue.articles.first(2) %>
+                                                <%= render 'shared/new/single_page_issue_list', articles: tag.articles.first(2) %>
                                             </ul>
                                     </nav>
                                     <% end %>
