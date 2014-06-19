@@ -21,8 +21,8 @@
                             <li class="story-audio">
                                 <a href="<%= audio.url %>" class="play-btn audio-toggler" title="<%= h(article.short_title) %>" data-duration="<%= audio.duration %>">
                                     <b><%= format_clip_duration audio.duration %></b>
+                                    <span><%= "Clip #{index+1}" %></span>
                                 </a>
-                                <span><%= "Clip #{index+1}" %></span>
                             </li>
                         <% end %>
                         </ul>
