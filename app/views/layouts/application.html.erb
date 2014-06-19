@@ -21,10 +21,10 @@
           <% else %>
             <%= yield :sidebar_top %>
             <%= render "shared/ads/dfp", ad_key: 'slot_a' %>
+            <%= render "shared/ads/dfp", ad_key: 'slot_b' %>
             <%= yield :sidebar_middle %>
             <%= render "shared/widgets/newsletter_subscribe" %>
             <%= render "shared/widgets/most_popular" %>
-            <%= render "shared/ads/dfp", ad_key: 'slot_b' %>
             <%= render "shared/ads/dfp", ad_key: 'slot_c' %>
           <% end %>
         </div> <!-- sidebar -->
