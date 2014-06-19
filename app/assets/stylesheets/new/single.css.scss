@@ -1593,8 +1593,10 @@ body.single .quadrant {
 @media screen and (max-width: 1529px) {
 
         .report .prose .marginal-tools {
-            .audio-queue,.share     { width: 48%; float: left; }
+            margin-bottom: 2.5em;
+            .audio-queue,.share     { width: 48%; float: left; margin-bottom: 0; }
             .share                  { float: right; }
+            &.minimalist .share     { float: none; width: 100%; }
             .share ul li            { margin: 0 0 0 0; display: inline; }
             .share a                { float: left; text-align: left; margin: 0 25px 0 0; }
             .audio-queue {

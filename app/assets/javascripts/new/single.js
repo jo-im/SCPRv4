@@ -186,6 +186,16 @@ scpr.Behaviors.Single = {
 
 
 
+        //  ================================================
+        //  Single: Do we have any audio?
+        //  ------------------------------------------------
+            if ($(".prose .marginal-tools .audio-queue").length) {
+              // This article has an audio clip(s)
+            } else {
+              $(".prose .marginal-tools").addClass("minimalist");
+            }
+
+
 
 
     } // loadBehaviors
