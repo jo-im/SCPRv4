@@ -37,6 +37,15 @@
     // Position C
     gptadslots[2]= googletag.defineSlot(key, [[300,250]],'dfp-slot_c').setTargeting('pos',['mr-bottom']).addService(googletag.pubads());
 
+    // Listen Live Position A
+    gptadslots[4]= googletag.defineSlot(key, [[300,50]],'dfp-slot_live_a').setTargeting('pos',['top']).addService(googletag.pubads());
+
+    // Listen Live Position B
+    gptadslots[5]= googletag.defineSlot(key, [[300,50]],'dfp-slot_live_b').setTargeting('pos',['middle']).addService(googletag.pubads());
+
+    // Listen Live Position C
+    gptadslots[6]= googletag.defineSlot(key, [[300,50]],'dfp-slot_live_c').setTargeting('pos',['bottom']).addService(googletag.pubads());
+
     googletag.pubads().enableSingleRequest();
 
     // If this page is an article and has a category, add in the targeting tag

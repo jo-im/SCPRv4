@@ -1,3 +1,4 @@
+<%= render "shared/ads/dfp_script_config", key_override: "listen-live" %>
 <% add_to_page_title "Listen Live" %>
 
 <%= render "shared/header/document_header" %>
@@ -79,6 +80,10 @@
   <% end %>
 
   <hr />
+
+  <%= render "shared/ads/dfp", ad_key: 'slot_live_a' %>
+  <%= render "shared/ads/dfp", ad_key: 'slot_live_b' %>
+  <%= render "shared/ads/dfp", ad_key: 'slot_live_c' %>
 
   <footer>
     <div>

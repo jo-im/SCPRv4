@@ -54,5 +54,10 @@ describe "DFP configuration" do
       visit flatpage.public_path
       page.html.should include 'DFP_KEY_SUFFIX_OVERRIDE = ""'
     end
+
+    it "sets a special key for the listen live pate" do
+      visit "/listen_live"
+      page.html.should include 'DFP_KEY_SUFFIX_OVERRIDE = ""'
+    end
   end
 end
