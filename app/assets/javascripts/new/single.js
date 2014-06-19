@@ -159,7 +159,7 @@ scpr.Behaviors.Single = {
             if ($("body").hasClass("single") && $(".audio-queue").length) {
 
                 // Make it do something
-                $(".audio-queue mark").click(function(){
+                $(".audio-queue a").click(function(){
                     $(".audio-player").show();
                 });
 
