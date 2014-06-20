@@ -210,7 +210,11 @@
 	.kpcc-search {
 		@include pane;
 		padding-top: 60px; // default is 53px
-		top: -130px;
+		display:none;
+    top:0;
+    &.active {
+      display:block;
+    }
 		form {
 			width: 100%;
 			position: relative;
@@ -292,8 +296,11 @@
 //	~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~
 	.kpcc-ledge {
 		@include pane;
-//		top: -280px;
-		top: -380px;
+    display:none;
+		top:0;
+    &.active {
+      display:block;
+    }
 		.links {
 			font-weight: 700;
 			-moz-column-count: 2;
