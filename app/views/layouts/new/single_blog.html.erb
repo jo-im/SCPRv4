@@ -17,9 +17,11 @@
                         <h2><%= @blog.teaser %>
                         <figure class="subscribe clearfix">
                             <ul>
-                                <li class="rss"><a href="#">RSS</a></li>
-                                <li class="twitter"><a href="#">Twitter</a></li>
-                                <li class="facebook"><a href="#">Facebook</a></li>
+                                <% present @blog do |p| %>
+                                  <li class="rss"><%= p.rss_link %></li>
+                                  <li class="twitter"><%= p.twitter_link %></li>
+                                  <li class="facebook"><%= p.facebook_link %></li>
+                                <% end %>
                             </ul>
                             <figcaption>Subscribe to <%= @blog.name %></figcaption>
                         </figure>
