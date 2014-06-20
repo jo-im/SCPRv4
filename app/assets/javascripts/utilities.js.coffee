@@ -167,6 +167,7 @@ class scpr.SocialTools
                 window.open fburl, 'pop_up',
                     'height=350,width=556,'+
                     'resizable,left=10,top=10,scrollbars=no,toolbar=no'
+            false
 
         # add share functionality on google plus
         $(@options.gplusfinder).on "click", (evt) =>
@@ -185,6 +186,7 @@ class scpr.SocialTools
                 window.open twurl, 'pop_up',
                     'height=350,width=556,' +
                     'resizable,left=10,top=10,scrollbars=no,toolbar=no'
+            false
 
         # add share functionality for email
         $(@options.emailfinder).on "click", (evt) =>
@@ -193,6 +195,7 @@ class scpr.SocialTools
                 window.open emurl, 'pop_up',
                     'height=650,width=500,' +
                     'resizable,left=10,top=10,scrollbars=no,toolbar=no'
+            false
 
     #----------
 
