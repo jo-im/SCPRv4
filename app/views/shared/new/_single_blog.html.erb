@@ -113,11 +113,8 @@
         <section class="supportive">
 
             <aside class="placard">
-                <div class="ad widget" id="oas_x01">
-                    <a href="#" target="_blank">
-                        <b class="intent-primary"><%= image_tag "sponsor-assets/position-a-block.jpg", alt: "" %></b>
-                        <b class="intent-secondary"><%= image_tag "sponsor-assets/position-a-shallow.jpg", alt: "" %></b>
-                    </a>
+                <div class="ad widget">
+                    <%= render "shared/ads/dfp", ad_key: 'slot_a' %>
                     <p class="appeal"><a href="#">Become a KPCC Sponsor</a></p>
                 </div>
             </aside>
@@ -193,11 +190,8 @@
             </aside>
 
             <aside class="placard">
-                <div class="ad widget" id="oas_x02">
-                    <a href="#" target="_blank">
-                        <b class="intent-primary"><%= image_tag "sponsor-assets/position-b-block.jpg", alt: "" %></b>
-                        <b class="intent-secondary"><%= image_tag "sponsor-assets/position-b-shallow.jpg", alt: "" %></b>
-                    </a>
+                <div class="ad widget">
+                    <%= render "shared/ads/dfp", ad_key: 'slot_b' %>
                     <p class="appeal"><a href="#">Become a KPCC Sponsor</a></p>
                 </div>
             </aside>

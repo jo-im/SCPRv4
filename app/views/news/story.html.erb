@@ -1,5 +1,6 @@
 <% add_to_page_title @story.headline %>
 <%= render_content @story, "opengraph" %>
+<%= render 'shared/ads/dfp_script_config', category: @story.category %>
 <% content_for :membership_copy, @category.present? ? @category.title : 'Lorem Ipsum' %>
 <% content_for :body_class, 'interior single' %>
 

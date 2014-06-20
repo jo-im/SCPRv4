@@ -25,11 +25,8 @@
         </section>
         <div class="secondary">
             <aside class="placard">
-                <div class="ad widget" id="oas_x03">
-                    <a href="#" target="_blank">
-                        <b class="intent-primary"><%= image_tag "sponsor-assets/position-c-block.jpg" %></b>
-                        <b class="intent-secondary"><%= image_tag "sponsor-assets/position-c-shallow.jpg" %></b>
-                    </a>
+                <div class="ad widget">
+                    <%= render "shared/ads/dfp", ad_key: 'slot_c' %>
                     <p class="appeal"><a href="#">Become a KPCC Sponsor</a></p>
                 </div>
             </aside>
