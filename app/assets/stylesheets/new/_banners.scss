@@ -33,8 +33,8 @@ body.interior .masthead {
 
 .placard {
     width: 100%;
-    overflow: hidden;
     background: white;
+    overflow:hidden;
     padding: 20px 0;
     a                   { display: block; }
     b                   { display: block; width: 100%; }
@@ -43,7 +43,8 @@ body.interior .masthead {
     .appeal a           { color: gray; display: inline; }
     .appeal a:hover     { color: black; text-decoration: underline; }
     .intent-secondary   { display: none; }
-    iframe              { display: block; margin: 0 auto; }
+    .dfp                { max-width:100% !important; }
+    iframe              { display: block; margin: 0 auto; max-width:100% !important; }
 }
 .supportive aside.placard > div {
     padding: 0 0 0 0;

@@ -762,6 +762,7 @@ a.comment-count.inline {
     border-bottom:1px solid $grayLighter;
     margin:0 auto 20px;
     padding-bottom:20px;
+    overflow:hidden;
     text-align:center;
     // center ads on Listen Live page
     .listen & {
