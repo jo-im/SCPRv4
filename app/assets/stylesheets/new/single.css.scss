@@ -1795,7 +1795,7 @@ body.single .quadrant {
         &:nth-child(4)                  { float: right; margin-right: 0; }
         figure                          { width: 100%; }
         .ratio                          { margin-bottom: 13px; }
-        .ratio .img-contain             { background: transparent; border-bottom: 4px solid $orange; }
+        .ratio .img-contain             { background: black; border-bottom: 4px solid $orange; }
         &:hover .ratio .img-contain     { border-bottom: 4px solid $blue; }
         figcaption                      { line-height: 1.05; }
         h2                              { font-size: 1.125em; /* 18/16 */ font-weight: 700; margin-bottom: 6px; }
