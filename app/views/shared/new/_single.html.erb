@@ -21,8 +21,8 @@
                             <li class="story-audio">
                                 <a href="<%= audio.url %>" class="play-btn audio-toggler" title="<%= h(article.short_title) %>" data-duration="<%= audio.duration %>">
                                     <b><%= format_clip_duration audio.duration %></b>
+                                    <span><%= "Clip #{index+1}" %></span>
                                 </a>
-                                <span><%= "Clip #{index+1}" %></span>
                             </li>
                         <% end %>
                         </ul>
@@ -42,7 +42,7 @@
                 <figure class="asset-inset">
                 <b class="pic"><%= image_tag article.asset.eight.url, alt: article.asset.caption %></b>
                     <figcaption>
-                    <span><%= article.asset.caption %><mark> <%= link_to article.asset.owner, '#' %></mark></span>
+                    <span><%= article.asset.caption %> <mark> <%= link_to article.asset.owner, '#' %></mark></span>
                     </figcaption>
                 </figure>
                 <% end %>
