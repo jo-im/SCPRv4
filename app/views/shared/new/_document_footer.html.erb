@@ -10,4 +10,14 @@
   });
 </script>
 
+<script>
+// Make sure this is last! A visual campaign
+// can be queued from anywhere.
+$(function() {
+  // Handle any queued visual campaigns.
+ scpr.VisualCampaign.enqueue('pushdown-global', $('#global-pushdown'));
+ scpr.VisualCampaign.fetchQueue();
+});
+</script>
+
 <%= render "shared/footer/tracking_scripts" %>
