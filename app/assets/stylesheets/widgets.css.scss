@@ -757,9 +757,18 @@ a.comment-count.inline {
         small {@include font-sans-serif(normal, 9px, 0px);}
         a {color:#999;}
     }
-    .dfp {
-        margin:0 auto 10px;
-    }
+}
+.dfp {
+    border-bottom:1px solid $grayLighter;
+    margin:0 auto 20px;
+    padding-bottom:20px;
+    text-align:center;
+    // center ads on Listen Live page
+    .listen & {
+        border-bottom:0;
+        margin:0 auto;
+        width:300px;
+    } 
 }
 #sidebar .ad:first-child {
     border-top:0;

@@ -1,4 +1,5 @@
 <%= render_content @event, "opengraph" %>
+<%= render 'shared/ads/dfp_script_config', category: @event.category %>
 
 <% present @event do |p| %>
   <% add_to_page_title p.headline %>
