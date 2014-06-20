@@ -60,6 +60,10 @@ RSpec.configure do |config|
     DatabaseCleaner.strategy = :truncation, { except: STATIC_TABLES }
   end
 
+  config.after type: :feature do
+    DatabaseCleaner.strategy = :transaction
+  end
+
   config.before :all do
     DeferredGarbageCollection.start
   end
