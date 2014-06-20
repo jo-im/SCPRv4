@@ -168,7 +168,9 @@ body.single .comments {
         color: #a6a6a6;
         font-family: "Avenir Next", "Avenir", "Lucida Grande", "Corbel", "Tahoma", Arial, sans-serif;
         font-style: italic;
-        margin-right: 12px;
+        padding-right: 12px;
+        box-sizing: border-box;
+        width: 100%;
         @media screen and (min-width: 871px) { p { display: block !important; } } // no matter what JS says.
         button                  { display: none; }
         .credit                 { color: $blue; font-weight: bold; font-style: normal; white-space: nowrap; font-size: 0.83333333333333em; text-transform: uppercase; }
