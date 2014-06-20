@@ -19,10 +19,11 @@
                 <div id="asset_slideshow_<%=html_safe_id%>" class="slideview">
                     <div class="static-slides">
                         <% article.assets.each do |asset| %>
-                            <div class="slide">
+                            <div class="slide i-am-putting-this-here-for-testing">
                               <div class="asset-block">
-                                <div class="contentasset">
-                                  <%= link_to asset.eight.tag, article.public_url %>
+                                <div class="contentasset ratio">
+                                  <div class="fill"></div>
+                                  <b class="img-contain"><%= link_to asset.eight.tag, article.public_url %></b>
                                 </div>
                               </div>
                             </div>
