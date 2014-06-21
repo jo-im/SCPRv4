@@ -94,19 +94,22 @@
         position: relative;
         display: none;
 //      -----------------------------------
-        z-index: 6;
+        z-index: 8;
         position: absolute;
-        background: rgba(0,0,0,0.6);
+        background: rgba(255,255,255,0.7);
         width: 100%;
         box-sizing: border-box;
         overflow: hidden;
-        height: 80px;
-        padding: 10px 60px 0;
+        padding: 12px 45px;
+        border-bottom: 1px solid rgba(0,0,0,0.5);
+        box-shadow: 0 5px 5px -4px rgba(0,0,0,0.3), inset 0 5px 8px -4px rgba(0,0,0,0.2), inset 0 3px 0 $blue;
+        height: 62px;
         .nav {
           display: block;
           height: 100%;
-          background: lime;
-          width: 40px;
+          background: rgba(0,0,0,0.7);
+          box-shadow: inset 0 5px 5px -3px black, inset 0 1px 0 gray;
+          width: 30px;
           position: absolute;
           top: 0;
           left: 0;
@@ -121,18 +124,17 @@
         }
         .thumbnails {
           display: inline-block;
-          outline: 1px solid orange;
           width: 100%;
-          height: 85%;
-          overflow: hidden;
+          height: 40px;
           .thumbnail {
-            outline: 1px solid red;
-            width: 15%;
-            margin-right: 6.25%;
+            width: 20%;
             float: left;
-            &:nth-child(5)  { float: right; margin-right: 0; }
+            &:nth-child(5)      { float: right; }
+            img                 { display: block; width: 35px; height: 35px; margin: 0 auto; }
+            &.active img        { box-shadow: 0 4px 0 $blue; border-bottom: 1px solid rgba(255,255,255,0.5); }
+            img:hover           { outline: 2px solid $blue; cursor: pointer; }
+            &.active img:hover  { outline: none; cursor: default; }
           }
-          img               { display: block; width: 100%; height: auto; }
         }
     }
 
@@ -168,7 +170,7 @@
             position: absolute;
             left: 0;
             top: 0;
-            z-index: 10;
+            z-index: 6;
             display: block;
             width: 100%;
             height: 100%;
@@ -176,7 +178,7 @@
             div.bar {
                 height: 100%;
                 position: absolute;
-                z-index: 20;
+                z-index: 7;
                 display: block;
                 background-color: transparent;
                 background-repeat: no-repeat;
