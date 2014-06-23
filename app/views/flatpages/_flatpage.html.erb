@@ -1,8 +1,8 @@
 <% unless flatpage.template == "none" %>
-  <% content_for :head_tag, flatpage.extra_head.html_safe %>
-  <% content_for :footer, flatpage.extra_tail.html_safe %>
+    <% content_for :head_tag, flatpage.extra_head.html_safe %>
+    <% content_for :footer, flatpage.extra_tail.html_safe %>
 
-  <h1><%= flatpage.title %></h1>
+    <h1><%= flatpage.title %></h1>
 <% end %>
 
 <%= flatpage.content.html_safe %>
