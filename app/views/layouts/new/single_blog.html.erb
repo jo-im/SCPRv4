@@ -14,17 +14,19 @@
                 <div class="brand">
                     <h1><%= link_to @blog.name, @blog.public_path %></h1>
                     <div class="secondary">
-                        <h2><%= @blog.teaser %>
-                        <figure class="subscribe clearfix">
-                            <ul>
-                                <% present @blog do |p| %>
-                                  <li class="rss"><%= p.rss_link %></li>
-                                  <li class="twitter"><%= p.twitter_link %></li>
-                                  <li class="facebook"><%= p.facebook_link %></li>
+                        <h2><%= @blog.teaser %></h2>
+                        <% present @blog do |p| %>
+                            <figure class="subscribe clearfix">
+                                <ul>
+                                    <li class="rss"><%= p.rss_link %></li>
+                                    <li class="twitter"><%= p.twitter_link %></li>
+                                    <li class="facebook"><%= p.facebook_link %></li>
+                                </ul>
+                                <% if p.rss_link.present? %>
+                                <figcaption>Subscribe to <%= @blog.name %></figcaption>
                                 <% end %>
-                            </ul>
-                            <figcaption>Subscribe to <%= @blog.name %></figcaption>
-                        </figure>
+                            </figure>
+                        <% end %>
                     </div>
                 </div>
             </section>
