@@ -5,7 +5,7 @@
                 <div class="prose">
                     <h1 class="title"><span><%= article.title %></span></h1>
                     <aside class="byline">
-                        <h2 class="author">by <%= render_byline article.original_object %></h2>
+                        <h2 class="author"><%= render_byline article.original_object %></h2>
                         <%= smart_date_js article.public_datetime %>
                     </aside>
                     <aside class="caption">
