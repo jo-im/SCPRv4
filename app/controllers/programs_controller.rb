@@ -73,7 +73,7 @@ class ProgramsController < ApplicationController
   def episode
     if @program.is_a?(KpccProgram)
       @episode    = @program.episodes.find(params[:id])
-      @segments   = @episode.segments
+      @segments   = @episode.segments.published
 
       render 'programs/kpcc/episode' and return
     end
