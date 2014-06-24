@@ -44,10 +44,11 @@ module ContentBase
   # Don't set any of these to 0, because ThinkingSphinx will
   # convert NULL to 0 and return incorrect results.
   ASSET_DISPLAY_IDS = {
-    :slideshow    => 1,
-    :video        => 2,
-    :photo        => 3,
-    :hidden       => 4
+    :slideshow            =>       1,
+    :video                =>       2,
+    :photo_emphasized     =>       3,
+    :photo_deemphasized   =>       4,
+    :hidden               =>       5
   }
 
   ASSET_DISPLAYS = ASSET_DISPLAY_IDS.invert

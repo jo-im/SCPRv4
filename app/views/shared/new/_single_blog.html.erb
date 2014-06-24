@@ -3,7 +3,7 @@
     <%= render 'shared/new/assets/slideshow', article: article %>
 <% elsif article.original_object.asset_display == :video %>
     <%= render 'shared/new/assets/video', article: article %>
-<% elsif article.original_object.asset_display == :hidden || article.original_object.assets.blank? %>
+<% elsif article.original_object.asset_display == :hidden || article.original_object.asset_display == :photo_deemphasized || article.original_object.assets.blank? || below_standard_ratio(width: article.asset.full.width, height: article.asset.full.height) %>
     <%= render 'shared/new/assets/hidden', article: article %>
 <% else %>
     <%= render 'shared/new/assets/photo', article: article %>
@@ -41,7 +41,7 @@
                 </aside>
             </div><!--/ .marginal-tools -->
             <div class="prose-body">
-                <% unless below_standard_ratio(width: article.asset.eight.width, height: article.asset.eight.height) %>
+                <% if (article.original_object.asset_display == :photo_deemphasized) || (article.original_object.asset_display == :photo_emphasized && below_standard_ratio(width: article.asset.full.width, height: article.asset.full.height))  %>
                 <figure class="asset-inset">
                 <b class="pic"><%= image_tag article.asset.eight.url, alt: article.asset.caption %></b>
                     <figcaption>
