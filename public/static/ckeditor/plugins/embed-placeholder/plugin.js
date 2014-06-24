@@ -150,16 +150,16 @@
                     id          : 'embedPlacement',
                     type        : 'select',
                     label       : '<strong>Placement</strong>',
-                    'default'   : 'after',
+                    'default'   : 'replace',
 
                     // The options are actually the placement of the
                     // Embed relative to the Title. For the end-user,
                     // it's less confusing to think of it was where the
                     // Title is.
                     items   : [
+                      ['No Title', 'replace'],
                       ['Title on Top', 'after'],
-                      ['Title on Bottom', 'before'],
-                      ['No Title', 'replace']
+                      ['Title on Bottom', 'before']
                     ] // items
                   } // embedPlacement
                 ] // elements
