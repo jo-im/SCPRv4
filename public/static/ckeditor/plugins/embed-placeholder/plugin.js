@@ -150,7 +150,7 @@
                     id          : 'embedPlacement',
                     type        : 'select',
                     label       : '<strong>Placement</strong>',
-                    'default'   : 'after',
+                    'default'   : 'replace',
 
                     // The options are actually the placement of the
                     // Embed relative to the Title. For the end-user,
