@@ -400,7 +400,7 @@ body.single .comments {
             &:not(.audio)               { padding-top: 37px; }
             &.placard                   { padding-top: 20px; }
             &.placard:last-child        { margin-top: 60px; }
-            &.placard:first-child       { border-bottom: 1px solid $blue; }
+            &.placard:first-child       { border-bottom: 1px solid #eee; }
 
             width: 100%;
             font-family: $font-freight;
