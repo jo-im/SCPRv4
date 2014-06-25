@@ -224,8 +224,8 @@ describe ApplicationHelper do
 
   describe "below_standard_ratio" do
     it "returns true if the image dimensions are equal to or less than the specified ratio and greater than 951px" do
-      image_width = 600
-      image_height = 400
+      image_width = 1800
+      image_height = 1200
 
       helper.below_standard_ratio(width: image_width, height: image_height).should eq true
     end
