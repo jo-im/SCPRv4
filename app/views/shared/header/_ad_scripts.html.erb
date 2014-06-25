@@ -27,14 +27,20 @@
 
     key = '/3468/ibs.scpr.scpr/' + keySuffix;
 
+    // Ad Size Mappings for responsive ad units
+    var mapping = googletag.sizeMapping().
+    addSize([871, 768], [300, 250]).
+    addSize([200, 768], [300, 50]).
+    build();
+
     // Position A
     gptadslots[3]= googletag.defineSlot(key, [[300,50]],'dfp-slot_a').setTargeting('pos',['banner-top']).addService(googletag.pubads());
 
     // Position B
-    gptadslots[1]= googletag.defineSlot(key, [[300,250]],'dfp-slot_b').setTargeting('pos',['mr-top']).addService(googletag.pubads());
+    gptadslots[1]= googletag.defineSlot(key, [[300,250]],'dfp-slot_b').setTargeting('pos',['mr-top']).defineSizeMapping(mapping).addService(googletag.pubads());
 
     // Position C
-    gptadslots[2]= googletag.defineSlot(key, [[300,250]],'dfp-slot_c').setTargeting('pos',['mr-bottom']).addService(googletag.pubads());
+    gptadslots[2]= googletag.defineSlot(key, [[300,250]],'dfp-slot_c').setTargeting('pos',['mr-bottom']).defineSizeMapping(mapping).addService(googletag.pubads());
 
     // Listen Live Position A
     gptadslots[4]= googletag.defineSlot(key, [[300,50]],'dfp-slot_live_a').setTargeting('pos',['top']).addService(googletag.pubads());
