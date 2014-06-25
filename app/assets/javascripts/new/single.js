@@ -114,18 +114,16 @@ scpr.Behaviors.Single = {
             }
 
 
-
-/*
         //  ================================================
-        //  Single: IAB Ad Unit stuff
+        //  Single: Ad positioning adjustments for mobile 
         //  ------------------------------------------------
             if ($("body").hasClass("single") && $(".ad").length) {
 
                 // Okay, the page just loaded.
-                // Right now, where should "POSITION A" and "POSITION C" live?
+                // Should position A live right below the masthead?
                 if ($(".report .supportive").css("float") == "none" ){
-                    $(".placard:first").appendTo(".masthead .inner");           // POSITION A
-                    $(".placard:last").appendTo(".placard-waystation");         // POSITION C
+                    var topOffset = $(".masthead").height() - 10;
+                    $(".placard:first").css("top", topOffset);
                 }
 
                 // ------------------------------------------------------------------------------------------
@@ -133,11 +131,10 @@ scpr.Behaviors.Single = {
                 // This function is debounced, and the new, debounced, function is bound to the event.
                 function adRepositioner() {
                     if ($(".report .supportive").css("float") == "none" ){
-                        $(".placard:first").appendTo(".masthead .inner");       // POSITION A
-                        $(".placard:last").appendTo(".placard-waystation");     // POSITION C
+                        var topOffset = $(".masthead").height() - 10;
+                        $(".placard:first").css("top", topOffset);
                     } else {
-                        $(".placard:first").prependTo(".report .supportive");   // POSITION A
-                        $(".placard:last").prependTo(".comments .secondary");   // POSITION C
+                        $(".placard:first").css("top", "auto");
                     }
                 };
 
@@ -147,11 +144,6 @@ scpr.Behaviors.Single = {
 
 
             } // end "does this page have an ad?" check
-
-
-
-*/
-
 
         //  ================================================
         //  Single: Audio-Queue stuff

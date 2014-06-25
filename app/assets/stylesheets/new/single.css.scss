@@ -887,6 +887,11 @@ body.single .comments {
 //  - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
     @media screen and (max-width: 870px) {
+        .interior {
+            .masthead {
+                padding-bottom:70px;
+            }
+        }
         .prologue {
             margin-bottom: 45px;
         }
@@ -945,8 +950,18 @@ body.single .comments {
                     &.audio                         { margin-bottom: 30px; }
                     .previews figcaption mark       { font-size: 0.875em; }
                 }
-                .placard {
+                aside.placard {
                     box-shadow: none;
+                    &:first-child {
+                        background:transparent;
+                        border-bottom:0;
+                        position:absolute;
+                        left:50%;
+                        margin-left:-150px;
+                        top:150px;
+                        width:300px;
+                        z-index:100;
+                    }
                 }
 
             }
@@ -967,6 +982,18 @@ body.single .comments {
             }
             .comments-trigger           { width: 100%; margin-bottom: 40px; margin-left: 0; padding-left: 0; }
             .asset-inset                { width: 38%; margin: 4px 0 30px 5%; }
+        }
+    }
+
+//  - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+    @media screen and (max-width: 750px) {
+        .report {
+            .supportive {
+                aside.placard {
+                    padding:10px 0 0;
+                }
+            }
         }
     }
 
