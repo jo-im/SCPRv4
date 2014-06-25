@@ -43,7 +43,7 @@
             <div class="prose-body">
                 <% if (article.original_object.asset_display == :photo_deemphasized) || (article.original_object.asset_display == :photo_emphasized && !below_standard_ratio(width: article.asset.full.width, height: article.asset.full.height))  %>
                 <figure class="asset-inset">
-                <b class="pic"><%= image_tag article.asset.eight.url, alt: article.asset.caption %></b>
+                <b class="pic"><%= image_tag article.asset.full.url, alt: article.asset.caption %></b>
                     <figcaption>
                     <span><%= article.asset.caption %> <mark> <%= link_to article.asset.owner, '#' %></mark></span>
                     </figcaption>
