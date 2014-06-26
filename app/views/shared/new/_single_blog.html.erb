@@ -46,7 +46,9 @@
                     <figure class="asset-inset">
                     <b class="pic"><%= image_tag article.asset.full.url, alt: article.asset.caption %></b>
                         <figcaption>
-                        <span><%= article.asset.caption %><mark> <%= link_to article.asset.owner, '#' %></mark></span>
+                            <span>
+                                <%= article.asset.caption %><mark> <%= article.asset.owner if article.asset.owner.present? %></mark>
+                            </span>
                         </figcaption>
                     </figure>
                     <% end %>

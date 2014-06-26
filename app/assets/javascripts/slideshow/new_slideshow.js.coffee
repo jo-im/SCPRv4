@@ -1,5 +1,5 @@
-class scpr.Slideshow
-    @TemplatePath = "slideshow/templates/new/"
+class scpr.NewSlideshow
+    @TemplatePath = "slideshow/templates/"
 
     DefaultOptions:
         el:         "#photo"
@@ -17,7 +17,7 @@ class scpr.Slideshow
             @el = $ @options.el
 
             # -- create asset collection -- #
-            @assets = new Slideshow.Assets @options.assets
+            @assets = new NewSlideshow.Assets @options.assets
             @total  = @assets.length
 
             # Set the starting slide.
@@ -35,11 +35,11 @@ class scpr.Slideshow
 
             #----------
             # Create the elements we need for the complete slideshow
-            @overlayNav = new Slideshow.OverlayNav
+            @overlayNav = new NewSlideshow.OverlayNav
                 start:  @start
                 total:  @total
 
-            @slides = new Slideshow.Slides
+            @slides = new NewSlideshow.Slides
                 collection:     @assets
                 start:          @start
                 wrapper:        @el
@@ -47,23 +47,23 @@ class scpr.Slideshow
             @slides.overlayNav = @overlayNav
             @overlayNav.slides = @slides
 
-            @thumbtray = new Slideshow.Thumbtray
+            @thumbtray = new NewSlideshow.Thumbtray
                 collection: @assets
                 start:      @start
 
 
             # Setup Header elements
-            @header = $ JST[Slideshow.TemplatePath + 'header']
+            @header = $ JST[NewSlideshow.TemplatePath + 'header']
                 title: @options.title
 
-            @nav = new Slideshow.NavigationLinks
+            @nav = new NewSlideshow.NavigationLinks
                 start:  @start
                 total:  @total
 
-            @traytoggler = new Slideshow.ThumbtrayToggler
+            @traytoggler = new NewSlideshow.ThumbtrayToggler
                 thumbtray:  @thumbtray
 
-            @fullscreenButton = JST[Slideshow.TemplatePath + 'fullscreen_button']
+            @fullscreenButton = JST[NewSlideshow.TemplatePath + 'fullscreen_button']
                 target: $(@el).attr('id')
 
 
@@ -168,7 +168,7 @@ class scpr.Slideshow
 
     class @Assets extends Backbone.Collection
         url: "/" # This is unneeded since we're never actually fetching anything
-        model: Slideshow.Asset
+        model: NewSlideshow.Asset
 
     #----------
 
@@ -237,13 +237,12 @@ class scpr.Slideshow
                 @slides[i] = $(el)
 
             # And the overlay nav
-            if @options.showOverlay
-              $(@el).append @overlayNav.el
+            $(@el).append @overlayNav.el
 
-              # Give the images time to start loading
-              setTimeout () =>
-                  @overlayNav.showTargets()
-              , 2000
+            # Give the images time to start loading
+            setTimeout () =>
+                @overlayNav.showTargets()
+            , 2000
 
     #----------
 
@@ -300,7 +299,7 @@ class scpr.Slideshow
             "mouseenter":       "showTargets"
             "mouseleave":       "hideTargets"
 
-        template: JST[Slideshow.TemplatePath + "overlay_nav"]
+        template: JST[NewSlideshow.TemplatePath + "overlay_nav"]
 
         #----------
         # Handle the hiding and showing of the buttons
@@ -331,7 +330,7 @@ class scpr.Slideshow
         events:
             'click .active': '_buttonClick'
 
-        template: JST[Slideshow.TemplatePath + "nav_links"]
+        template: JST[NewSlideshow.TemplatePath + "nav_links"]
 
     #----------
 
@@ -357,8 +356,8 @@ class scpr.Slideshow
             per_page: 5
 
         template:
-            prev: JST[Slideshow.TemplatePath + "thumb_nav_prev"]
-            next: JST[Slideshow.TemplatePath + "thumb_nav_next"]
+            prev: JST[NewSlideshow.TemplatePath + "thumb_nav_prev"]
+            next: JST[NewSlideshow.TemplatePath + "thumb_nav_next"]
 
         #----------
 
@@ -367,7 +366,7 @@ class scpr.Slideshow
             @current    = @options.start
             @visible    = false
 
-            @thumbnailView = new Slideshow.ThumbnailsView
+            @thumbnailView = new NewSlideshow.ThumbnailsView
                 collection: @collection
                 per_page:   @options.per_page
                 thumbtray:  @
@@ -466,7 +465,7 @@ class scpr.Slideshow
             @per_page   = @options.per_page
 
             @collection.each (asset,idx) =>
-                thumb = new Slideshow.Thumbnail
+                thumb = new NewSlideshow.Thumbnail
                     model:      asset
                     index:      idx
                     thumbtray:  @options.thumbtray
@@ -510,7 +509,7 @@ class scpr.Slideshow
         events:
             'click': '_thumbClick'
 
-        template: JST[Slideshow.TemplatePath + "thumbnail"]
+        template: JST[NewSlideshow.TemplatePath + "thumbnail"]
 
         #----------
 
@@ -521,6 +520,7 @@ class scpr.Slideshow
         #----------
 
         render: ->
+            console.log JST[NewSlideshow.TemplatePath + "thumbnail"]
             $(@el).html(@template
                 url: @model.get("urls")['lsquare']
             )
