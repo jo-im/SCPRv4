@@ -59,8 +59,11 @@ scpr.Behaviors.Single = {
         //  Single Blog: Let's reposition our "POPULAR NOW" box
         //  ------------------------------------------------
             if ($(".popular-on-blog").length) {
+        //      Look, if I'm going to float you, then I need you to PROVE to me that you're (a) long enough and (b) devoid of images.
                 var qtyGrafs    = $(".report .prose-body > p").length;
-                if (qtyGrafs > 8) {
+                var qtyEmbeds   = $(".report .prose-body > .embed-wrapper").length;
+                var qtyImages   = $(".report .prose-body > p > img").length;
+                if ((qtyGrafs > 8) && (qtyEmbeds == 0) && (qtyImages == 0)) {
                     var middleInt   = Math.ceil(qtyGrafs / 2);
                     var middleEl    = $($(".prose-body > p")[middleInt - 1]) // thanks, bryan!
                     $(".popular-on-blog").addClass("intermission").insertBefore(middleEl);
