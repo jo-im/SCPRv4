@@ -1146,15 +1146,17 @@ The 3-column last gap of real content in Landing. Big reverse chron, flanked by 
                     position: relative;
                     width: 100%;
                     border-bottom: 1px solid $blue;
-                    padding-bottom: 3px;
+                    padding: 0 47px 5px 0;
                     margin-bottom: 3px;
+                    box-sizing: border-box;
+                    line-height: 0.95;
                     h1, h2      { display: inline-block; white-space: nowrap;   }
                     h1          { font-weight: 700;                             }
-                    h2          { font-size: 0.75em; color: #898989;            }
+                    h2          { font-size: 0.75em; color: #898989; }
                     span {
                         display: inline-block;
                         position: absolute;
-                        top: 3px;
+                        top: 1px;
                         right: 1px;
                         text-align: right;
                         color: $orange;
