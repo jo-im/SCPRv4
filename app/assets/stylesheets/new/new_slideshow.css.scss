@@ -6,6 +6,8 @@
         padding-top: 10px;
     }
     z-index: 1;
+    max-height: 460px; // curb the unsightliness of initial-load image-queue spillover
+    overflow: hidden;
 
     .slideshow-header {
         height: 30px;
