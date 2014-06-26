@@ -652,12 +652,15 @@ body.single .comments {
     .popular-on-blog {
         background: #f5f5f5;
         box-shadow: inset 6px 0 0 #e8e8e8;
-        width: 47.327044025157%; // 301 / 636
-        float: right;
-        margin: 3px -17.452830188679% 20px 25px;
         padding: 11px 0 23px;
         border: 1px solid #f5bd96;
         font-family: $font-freight;
+        margin-bottom: 20px;
+        &.intermission {
+          width: 47.327044025157%; // 301 / 636
+          float: right;
+          margin: 3px -17.452830188679% 20px 25px;
+        }
         header {
             background: image-url("i/single-report-icons.png") no-repeat 0 -512px;
             background-size: 50px 1930px;
@@ -673,13 +676,13 @@ body.single .comments {
                 margin-right: 15px;
             }
         }
-        .ratio              { margin: 0 29% 8px 24px; }
+        .ratio              { margin: 0 29% 8px 24px; max-width: 200px; }
         h2                  { font-size: 1em; line-height: 1.35; font-weight: 400; margin: 0 10% 0 24px; }
         h2 a,h2 a:hover     { color: #2b1200; }
     //  - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
         @media screen and (max-width: 950px) {
             margin-left: 0;
-            float: none;
+            float: none !important;
             width: 100%;
             .ratio          { max-width: 180px; }
         }

@@ -60,9 +60,11 @@ scpr.Behaviors.Single = {
         //  ------------------------------------------------
             if ($(".popular-on-blog").length) {
                 var qtyGrafs    = $(".report .prose-body > p").length;
-                var middleInt   = Math.ceil(qtyGrafs / 2);
-                var middleEl    = $($(".prose-body > p")[middleInt - 1]) // thanks, bryan!
-                $(".popular-on-blog").insertBefore(middleEl);
+                if (qtyGrafs > 8) {
+                    var middleInt   = Math.ceil(qtyGrafs / 2);
+                    var middleEl    = $($(".prose-body > p")[middleInt - 1]) // thanks, bryan!
+                    $(".popular-on-blog").addClass("intermission").insertBefore(middleEl);
+                } 
             }
 
 
