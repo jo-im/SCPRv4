@@ -1,33 +1,96 @@
 <% article = article.to_article %>
-<% if article.original_object.asset_display == :slideshow %>
-    <%= render 'shared/new/assets/slideshow', article: article %>
-<% elsif article.original_object.asset_display == :video %>
-    <%= render 'shared/new/assets/video', article: article %>
-<% elsif article.original_object.asset_display == :hidden || article.original_object.asset_display == :photo_deemphasized || article.original_object.assets.blank? %>
-    <%= render 'shared/new/assets/hidden', article: article %>
-<% else %>
-    <%= render 'shared/new/assets/photo', article: article %>
+<%= cache ["single/article", "asset-display", "v1", article] do %>
+    <% if article.original_object.asset_display == :slideshow %>
+        <%= render 'shared/new/assets/slideshow', article: article %>
+    <% elsif article.original_object.asset_display == :video %>
+        <%= render 'shared/new/assets/video', article: article %>
+    <% elsif article.original_object.asset_display == :hidden || article.original_object.asset_display == :photo_deemphasized || article.original_object.assets.blank? %>
+        <%= render 'shared/new/assets/hidden', article: article %>
+    <% else %>
+        <%= render 'shared/new/assets/photo', article: article %>
+    <% end %>
 <% end %>
 <div class="report">
     <div class="inner bound clearfix">
         <article class="prose">
+
             <div class="marginal-tools clearfix">
                 <% if article.audio.any? %>
                     <% audio = article.audio %>
-                    <nav class="audio-queue">
-                        <header>Listen to audio from this story</header>
-                        <ul>
-                        <% audio.each_with_index do |audio, index| %>
-                            <li class="story-audio">
-                                <a href="<%= audio.url %>" class="play-btn audio-toggler" title="<%= h(article.short_title) %>" data-duration="<%= audio.duration %>">
-                                    <b><%= format_clip_duration audio.duration %></b>
-                                    <span><%= "Clip #{index+1}" %></span>
-                                </a>
-                            </li>
-                        <% end %>
-                        </ul>
-                    </nav>
+                    <%= cache ["single/article", "story-audio", "v1", audio] do %>
+                        <nav class="audio-queue">
+                            <header>Listen to audio from this story</header>
+                            <ul>
+                            <% audio.each_with_index do |audio, index| %>
+                                <li class="story-audio">
+                                    <a href="<%= audio.url %>" class="play-btn audio-toggler" title="<%= h(article.short_title) %>" data-duration="<%= audio.duration %>">
+                                        <b><%= format_clip_duration audio.duration %></b>
+                                        <span><%= "Clip #{index+1}" %></span>
+                                    </a>
+                                </li>
+                            <% end %>
+                            </ul>
+                        </nav>
+                    <% end %>
                 <% end %>
+
+                <%= cache ["single/article", "story-share", "v1", article] do %>
+                    <aside class="share">
+                        <header>Share <span>this story</span></header>
+                        <ul>
+                            <li class="email">
+                                <a href="#" class="track-event email" data-ga-category="Article" data-ga-action="Share" data-ga-label="Email" data-key="<%= article.id %>">Share via Email</a></li>
+                            <li class="twitter">
+                                <a href="#" class="track-event twitter social_twit" data-ga-category="Article" data-ga-action="Share" data-ga-label="Twitter" data-url="<%= article.public_url %>" data-text="<%= u(article.short_title) %>">Share on Twitter</a></li>
+                            <li class="facebook">
+                                <a href="#" class="track-event facebook social_fb" data-ga-category="Article" data-ga-action="Share" data-ga-label="Facebook" data-url="<%= article.public_url %>">Share on Facebook</a></li>
+                        </ul>
+                    </aside>
+                <% end %>
+            </div><!--/ .marginal-tools -->
+
+            <%= cache ["single/article", "article-body", "v1", article] do %>
+                <div class="prose-body">
+
+                    <% if article.original_object.assets.present? %>
+                        <% if (article.original_object.asset_display == :photo_deemphasized) || (article.original_object.asset_display.blank? && !below_standard_ratio(width: article.asset.full.width, height: article.asset.full.height)) || (article.original_object.asset_display == :photo_emphasized && !below_standard_ratio(width: article.asset.full.width, height: article.asset.full.height))  %>
+                        <figure class="asset-inset">
+                        <b class="pic"><%= image_tag article.asset.full.url, alt: article.asset.caption %></b>
+                            <figcaption>
+                                <span>
+                                <%= article.asset.caption %><mark> <%= article.asset.owner if article.asset.owner.present? %></mark>
+                                </span>
+                            </figcaption>
+                        </figure>
+                        <% end %>
+                    <% end %>
+
+                    <%= article.body.html_safe %>
+                </div><!--/ .prose-body -->
+            <% end %>
+
+            <% related = article.original_object.related_content.first(2) %>
+            <% if related.present? %>
+                <%= cache ["single/article", "related-content", "v1", article] do %>
+                    <aside class="related">
+                        <header><h1>Related Links</h1></header>
+                        <nav>
+                            <ul>
+                                <% related.each do |article| %>
+                                  <li class="<%= article.feature.try(:key) %>">
+                                    <%= link_to article.public_path do %>
+                                      <mark><%= article.short_title %></mark>
+                                      <span><%= article.feature.try(:name) || "Article" %></span></a>
+                                    <% end %>
+                                  </li>
+                                <% end %>
+                            </ul>
+                        </nav>
+                    </aside><!--/ .related -->
+                <% end %>
+            <% end %>
+
+            <%= cache ["single/article", "story-share", "v1", article] do %>
                 <aside class="share">
                     <header>Share <span>this story</span></header>
                     <ul>
@@ -39,54 +102,7 @@
                             <a href="#" class="track-event facebook social_fb" data-ga-category="Article" data-ga-action="Share" data-ga-label="Facebook" data-url="<%= article.public_url %>">Share on Facebook</a></li>
                     </ul>
                 </aside>
-            </div><!--/ .marginal-tools -->
-            <div class="prose-body">
-                <% if article.original_object.assets.present? %>
-                    <% if (article.original_object.asset_display == :photo_deemphasized) || (article.original_object.asset_display.blank? && !below_standard_ratio(width: article.asset.full.width, height: article.asset.full.height)) || (article.original_object.asset_display == :photo_emphasized && !below_standard_ratio(width: article.asset.full.width, height: article.asset.full.height))  %>
-                    <figure class="asset-inset">
-                    <b class="pic"><%= image_tag article.asset.full.url, alt: article.asset.caption %></b>
-                        <figcaption>
-                            <span>
-                            <%= article.asset.caption %><mark> <%= article.asset.owner if article.asset.owner.present? %></mark>
-                            </span>
-                        </figcaption>
-                    </figure>
-                    <% end %>
-                <% end %>
-
-                <%= article.body.html_safe %>
-            </div><!--/ .prose-body -->
-
-            <% related = article.original_object.related_content.first(2) %>
-            <% if related.present? %>
-            <aside class="related">
-                <header><h1>Related Links</h1></header>
-                <nav>
-                    <ul>
-                        <% related.each do |article| %>
-                          <li class="<%= article.feature.try(:key) %>">
-                            <%= link_to article.public_path do %>
-                              <mark><%= article.short_title %></mark>
-                              <span><%= article.feature.try(:name) || "Article" %></span></a>
-                            <% end %>
-                          </li>
-                        <% end %>
-                    </ul>
-                </nav>
-            </aside><!--/ .related -->
             <% end %>
-
-            <aside class="share">
-                <header>Share <span>this story</span></header>
-                <ul>
-                    <li class="email">
-                        <a href="#" class="track-event email" data-ga-category="Article" data-ga-action="Share" data-ga-label="Email" data-key="<%= article.id %>">Share via Email</a></li>
-                    <li class="twitter">
-                        <a href="#" class="track-event twitter social_twit" data-ga-category="Article" data-ga-action="Share" data-ga-label="Twitter" data-url="<%= article.public_url %>" data-text="<%= u(article.short_title) %>">Share on Twitter</a></li>
-                    <li class="facebook">
-                        <a href="#" class="track-event facebook social_fb" data-ga-category="Article" data-ga-action="Share" data-ga-label="Facebook" data-url="<%= article.public_url %>">Share on Facebook</a></li>
-                </ul>
-            </aside>
 
             <footer class="comments-jump">
                 <a href="#comments">
@@ -324,7 +340,7 @@
                 <aside>
                     <h1>Get involved.</h1>
                     <% events = @events[0..2] %>
-                    <%= cache ["articles/show", "upcoming-events", "v1", events] do %>
+                    <%= cache ["single/article", "upcoming-events", "v1", events] do %>
                         <ul class="events">
                             <% Array(events).each do |event| %>
                               <li>
