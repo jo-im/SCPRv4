@@ -625,6 +625,10 @@ body.single .comments {
         blockquote:not(.ornate) { border-left: 2px solid $orange; padding-left: 1em; margin-bottom: 2.5em; margin-left: 0.65em; }
         .ornate                 { font-size: 1.26666666666667em; font-family: $font-merri-lightital; padding: 15px 0 0 25px; margin-left: -10px; background: image-url("i/flourish-blockquote.png") no-repeat; background-size: 64px 55px; }
         img                     { max-width: 100%; height: auto; margin: 0 auto; }
+        .prose-body {
+            & > p > img,
+            & .embed-wrapper    { clear: both; }
+        }
     }
     .asset-inset {
         width: 57.389937106918%; // 365 / 636
