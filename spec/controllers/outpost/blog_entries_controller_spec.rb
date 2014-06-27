@@ -27,7 +27,7 @@ describe Outpost::BlogEntriesController do
 
         assigns(:entry).should eq entry
         assigns(:entry).headline.should eq "Updated"
-        response.should render_template "blogs/_entry"
+        response.should render_template "shared/new/_single_preview"
       end
 
       it "renders validation errors if object not unconditionally valid" do
@@ -50,7 +50,7 @@ describe Outpost::BlogEntriesController do
           :obj_key      => entry.obj_key,
           :blog_entry   => entry.attributes
 
-        response.should render_template "blogs/_entry"
+        response.should render_template "shared/new/_single_preview"
       end
 
       describe "rolling back" do
@@ -99,7 +99,7 @@ describe Outpost::BlogEntriesController do
 
         post :preview, obj_key: entry.obj_key, blog_entry: entry.attributes
         assigns(:entry).headline.should eq "This is a blog entry"
-        response.should render_template "blogs/_entry"
+        response.should render_template "shared/new/_single_preview"
       end
 
       it "renders validation errors if object not unconditionally valid" do

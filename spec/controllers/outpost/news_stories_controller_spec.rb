@@ -19,7 +19,7 @@ describe Outpost::NewsStoriesController do
         put :preview, id: news_story.id, obj_key: news_story.obj_key, news_story: news_story.attributes.merge(headline: "Updated")
         assigns(:entry).should eq news_story
         assigns(:entry).headline.should eq "Updated"
-        response.should render_template "news/_story"
+        response.should render_template "shared/new/_single_preview"
       end
 
       it "renders validation errors if the object is not unconditionally valid" do
@@ -31,7 +31,7 @@ describe Outpost::NewsStoriesController do
       it "renders properly for unpublished content" do
         news_story = create :news_story, :draft, headline: "This is a story"
         put :preview, id: news_story.id, obj_key: news_story.obj_key, news_story: news_story.attributes
-        response.should render_template "news/_story"
+        response.should render_template "shared/new/_single_preview"
       end
     end
 
@@ -40,7 +40,7 @@ describe Outpost::NewsStoriesController do
         news_story = build :news_story, headline: "This is a story"
         post :preview, obj_key: news_story.obj_key, news_story: news_story.attributes
         assigns(:entry).headline.should eq "This is a story"
-        response.should render_template "news/_story"
+        response.should render_template "shared/new/_single_preview"
       end
 
       it "renders validation errors if the object is not unconditionally valid" do
