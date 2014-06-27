@@ -1,86 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
-<% article = @entry.to_article %>
 <%= render "shared/new/document_header" %>
 
 <body class="<%= content_for(:body_class) %>">
 
-    <% if article.original_object.asset_display == :slideshow %>
-        <%= render 'shared/new/assets/slideshow', article: article %>
-    <% elsif article.original_object.asset_display == :video %>
-        <%= render 'shared/new/assets/video', article: article %>
-    <% elsif article.original_object.asset_display == :hidden || article.original_object.asset_display == :photo_deemphasized || article.original_object.assets.blank? %>
-        <%= render 'shared/new/assets/hidden', article: article %>
-    <% else %>
-        <%= render 'shared/new/assets/photo', article: article %>
-    <% end %>
-
-    <div class="report">
-        <div class="inner bound clearfix">
-            <article class="prose">
-
-                <div class="marginal-tools clearfix">
-                    <% if article.audio.any? %>
-                        <% audio = article.audio %>
-                        <nav class="audio-queue">
-                            <header>Listen to audio from this story</header>
-                            <ul>
-                            <% audio.each_with_index do |audio, index| %>
-                                <li class="story-audio">
-                                    <a href="<%= audio.url %>" class="play-btn audio-toggler" title="<%= h(article.short_title) %>" data-duration="<%= audio.duration %>">
-                                        <b><%= format_clip_duration audio.duration %></b>
-                                        <span><%= "Clip #{index+1}" %></span>
-                                    </a>
-                                </li>
-                            <% end %>
-                            </ul>
-                        </nav>
-                        <% end %>
-
-                </div><!--/ .marginal-tools -->
-
-                    <div class="prose-body">
-
-                        <% if article.original_object.assets.present? %>
-                            <% if (article.original_object.asset_display == :photo_deemphasized) || (article.original_object.asset_display.blank? && !below_standard_ratio(width: article.asset.full.width, height: article.asset.full.height)) || (article.original_object.asset_display == :photo_emphasized && !below_standard_ratio(width: article.asset.full.width, height: article.asset.full.height))  %>
-                            <figure class="asset-inset">
-                            <b class="pic"><%= image_tag article.asset.full.url, alt: article.asset.caption %></b>
-                                <figcaption>
-                                    <span>
-                                    <%= article.asset.caption %><mark> <%= article.asset.owner if article.asset.owner.present? %></mark>
-                                    </span>
-                                </figcaption>
-                            </figure>
-                            <% end %>
-                        <% end %>
-
-                        <%= article.body.html_safe %>
-                    </div><!--/ .prose-body -->
-
-                <% related = article.original_object.related_content.first(2) %>
-                <% if related.present? %>
-                    <aside class="related">
-                        <header><h1>Related Links</h1></header>
-                        <nav>
-                            <ul>
-                                <% related.each do |article| %>
-                                  <li class="<%= article.feature.try(:key) %>">
-                                    <%= link_to article.public_path do %>
-                                      <mark><%= article.short_title %></mark>
-                                      <span><%= article.feature.try(:name) || "Article" %></span></a>
-                                    <% end %>
-                                  </li>
-                                <% end %>
-                            </ul>
-                        </nav>
-                    </aside><!--/ .related -->
-                <% end %>
-
-
-            </article>
-          </div>
-    </div><!--/ .report -->
-
+    <%= yield %>
 
     <% content_for :extra_footer do %>
     <script>
@@ -101,7 +25,6 @@
     <% end %>
 
     <%= render 'shared/new/document_footer' %>
-
 
 </body>
 </html>

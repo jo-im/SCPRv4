@@ -31,7 +31,7 @@ class Outpost::NewsStoriesController < Outpost::ResourceController
 
       if @entry.unconditionally_valid?
         @title = @entry.to_title
-        render "news/_story",
+        render "shared/new/_single_preview",
           :layout => "outpost/preview/new/application",
           :locals => {
             :story => @entry
