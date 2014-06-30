@@ -26,6 +26,7 @@
     <%= tag "meta", name: "description", content: h(meta_information[:description] || "Member-supported public radio for Southern California. Award-winning local news and cultural programming alongside the best of NPR.") %>
     <%= tag "meta", property: "og:description", content: h(meta_information[:description] || "Member-supported public radio for Southern California. Award-winning local news and cultural programming alongside the best of NPR.") %>
 
+    <%= yield :opengraph %>
     <%= content_for :extra_meta_tags %>
 
     <!-- Always provide the logo as a fallback thumbnail option. -->
