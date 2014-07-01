@@ -193,6 +193,7 @@ body.single .comments {
         float: right;
         padding-top: 60px;
         .img-contain            { background: transparent; }
+        .img-contain .not-wide  { width: auto; height: 100%; max-height: 100%; margin: 0 auto; }
         .media-scaler {
             width: 100%;
             position: relative;

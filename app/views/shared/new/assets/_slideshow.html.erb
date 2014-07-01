@@ -1,6 +1,6 @@
 <section class="prologue">
     <div class="grating">
-        <div class="overture inner bound clearfix" id="overture_<%=html_safe_id%>">
+        <div class="inner bound clearfix">
             <div class="prose">
                 <h1 class="title"><span><%= article.title %></span></h1>
                 <aside class="byline">
@@ -16,7 +16,7 @@
 
                 <% html_safe_id = article.id.parameterize %>
 
-                <div id="asset_slideshow" class="slideview">
+                <div id="asset_slideshow_<%=html_safe_id%>" class="slideview">
                     <div class="static-slides">
                         <% article.assets.each do |asset| %>
                             <div class="slide">
