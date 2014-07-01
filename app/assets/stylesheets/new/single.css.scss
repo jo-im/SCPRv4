@@ -253,7 +253,6 @@ body.single .comments {
                 position: absolute;
                 left: 0;
                 top: 220px;
-                .author,.time   { display: block; }
                 .author         { margin-bottom: 3px; }
             }
             &.austere .byline {
@@ -273,11 +272,7 @@ body.single .comments {
             .title                  { padding-top: 35px; font-size: 1.75em; line-height: 1.18; }
             .caption                { top: 247px; }
             .share                  { top: 201px; }
-            .byline {
-                font-size: 90%;
-                top: 186px;
-                .author             { margin-bottom: -1px; }
-            }
+            .byline                 { font-size: 90%; top: 186px; }
         }
     }
 
@@ -324,7 +319,7 @@ body.single .comments {
                     margin-bottom: 23px;
                     padding-bottom: 17px;
                     border-bottom: 1px solid rgba(0,0,0,0.1);
-                    .author { display: inline-block; padding-right: 18px; }
+                    .author { display: inline-block; }
                     time    { display: inline-block; }
                 }
                 .share {
