@@ -55,6 +55,27 @@ scpr.Behaviors.Single = {
 
 
 
+
+        //  ================================================
+        //  Slideshow: Some photos have dumb aspect ratios
+        //  ------------------------------------------------
+            if ($(".slides .slide").length) {
+              $(".slides img").each(function(){
+                $(this).one('load',function(){
+                  var myIndex   = $(this).closest(".slide").index() + 1;
+                  var myWidth   = $(this).attr("width");
+                  var myHeight  = $(this).attr("height");
+                  var myRatio   = myWidth / myHeight;
+//                alert("for image #" + myIndex + ", its width is " + myWidth + ", its height is " + myHeight + ", which means its ratio is " + myRatio);              
+                  if(myRatio <= 1.35) {
+                    $(this).addClass("not-wide");
+                  }
+                });
+              });
+            }
+
+
+
         //  ================================================
         //  Single Blog: Let's reposition our "POPULAR NOW" box
         //  ------------------------------------------------
