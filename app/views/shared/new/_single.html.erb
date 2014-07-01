@@ -1,0 +1,367 @@
+<% article = article.to_article %>
+<%= cache ["single/article", "asset-display", "v1", article] do %>
+    <% if article.original_object.asset_display == :slideshow %>
+        <%= render 'shared/new/assets/slideshow', article: article %>
+    <% elsif article.original_object.asset_display == :video %>
+        <%= render 'shared/new/assets/video', article: article %>
+    <% elsif article.original_object.asset_display == :hidden || article.original_object.asset_display == :photo_deemphasized || article.original_object.assets.blank? %>
+        <%= render 'shared/new/assets/hidden', article: article %>
+    <% else %>
+        <%= render 'shared/new/assets/photo', article: article %>
+    <% end %>
+<% end %>
+<div class="report">
+    <div class="inner bound clearfix">
+        <article class="prose">
+
+            <div class="marginal-tools clearfix">
+                <% if article.audio.any? %>
+                    <% audio = article.audio %>
+                    <%= cache ["single/article", "story-audio", "v1", audio] do %>
+                        <nav class="audio-queue">
+                            <header>Listen to audio from this story</header>
+                            <ul>
+                            <% audio.each_with_index do |audio, index| %>
+                                <li class="story-audio">
+                                    <a href="<%= audio.url %>" class="play-btn audio-toggler" title="<%= h(article.short_title) %>" data-duration="<%= audio.duration %>">
+                                        <b><%= format_clip_duration audio.duration %></b>
+                                        <span><%= "Clip #{index+1}" %></span>
+                                    </a>
+                                </li>
+                            <% end %>
+                            </ul>
+                        </nav>
+                    <% end %>
+                <% end %>
+
+                <%= cache ["single/article", "story-share", "v1", article] do %>
+                    <aside class="share">
+                        <header>Share <span>this story</span></header>
+                        <ul>
+                            <li class="email">
+                                <a href="#" class="track-event email" data-ga-category="Article" data-ga-action="Share" data-ga-label="Email" data-key="<%= article.id %>">Share via Email</a></li>
+                            <li class="twitter">
+                                <a href="#" class="track-event twitter social_twit" data-ga-category="Article" data-ga-action="Share" data-ga-label="Twitter" data-url="<%= article.public_url %>" data-text="<%= u(article.short_title) %>">Share on Twitter</a></li>
+                            <li class="facebook">
+                                <a href="#" class="track-event facebook social_fb" data-ga-category="Article" data-ga-action="Share" data-ga-label="Facebook" data-url="<%= article.public_url %>">Share on Facebook</a></li>
+                        </ul>
+                    </aside>
+                <% end %>
+            </div><!--/ .marginal-tools -->
+
+            <%= cache ["single/article", "article-body", "v1", article] do %>
+                <div class="prose-body">
+
+                    <% if article.original_object.assets.present? %>
+                        <% if (article.original_object.asset_display == :photo_deemphasized) || (article.original_object.asset_display.blank? && !below_standard_ratio(width: article.asset.full.width, height: article.asset.full.height)) || (article.original_object.asset_display == :photo_emphasized && !below_standard_ratio(width: article.asset.full.width, height: article.asset.full.height))  %>
+                        <figure class="asset-inset">
+                        <b class="pic"><%= image_tag article.asset.full.url, alt: article.asset.caption %></b>
+                            <figcaption>
+                                <span>
+                                <%= article.asset.caption %><mark> <%= article.asset.owner if article.asset.owner.present? %></mark>
+                                </span>
+                            </figcaption>
+                        </figure>
+                        <% end %>
+                    <% end %>
+
+                    <%= article.body.html_safe %>
+                </div><!--/ .prose-body -->
+            <% end %>
+
+            <% related = article.original_object.related_content.first(2) %>
+            <% if related.present? %>
+                <%= cache ["single/article", "related-content", "v1", article] do %>
+                    <aside class="related">
+                        <header><h1>Related Links</h1></header>
+                        <nav>
+                            <ul>
+                                <% related.each do |article| %>
+                                  <li class="<%= article.feature.try(:key) %>">
+                                    <%= link_to article.public_path do %>
+                                      <mark><%= article.short_title %></mark>
+                                      <span><%= article.feature.try(:name) || "Article" %></span></a>
+                                    <% end %>
+                                  </li>
+                                <% end %>
+                            </ul>
+                        </nav>
+                    </aside><!--/ .related -->
+                <% end %>
+            <% end %>
+
+            <%= cache ["single/article", "story-share", "v1", article] do %>
+                <aside class="share">
+                    <header>Share <span>this story</span></header>
+                    <ul>
+                        <li class="email">
+                            <a href="#" class="track-event email" data-ga-category="Article" data-ga-action="Share" data-ga-label="Email" data-key="<%= article.id %>">Share via Email</a></li>
+                        <li class="twitter">
+                            <a href="#" class="track-event twitter social_twit" data-ga-category="Article" data-ga-action="Share" data-ga-label="Twitter" data-url="<%= article.public_url %>" data-text="<%= u(article.short_title) %>">Share on Twitter</a></li>
+                        <li class="facebook">
+                            <a href="#" class="track-event facebook social_fb" data-ga-category="Article" data-ga-action="Share" data-ga-label="Facebook" data-url="<%= article.public_url %>">Share on Facebook</a></li>
+                    </ul>
+                </aside>
+            <% end %>
+
+            <footer class="comments-jump">
+                <a href="#comments">
+                    <mark>Join the discussion.</mark>
+                    <span>Tap here to jump to this article's comments.</span>
+                </a>
+            </footer>
+
+            <!--
+            <footer class="comments-trigger">
+                <a href="#">This article currently has no comments. Click here to start the discussion.</a>
+            </footer>
+            -->
+
+        </article>
+        <section class="supportive">
+            <aside class="placard">
+                <div class="ad widget">
+                    <%= render "shared/ads/dfp", ad_key: 'slot_a' %>
+                </div>
+            </aside>
+
+            <aside class="placard">
+                <div class="ad widget">
+                    <%= render "shared/ads/dfp", ad_key: 'slot_b' %>
+                    <p class="appeal"><a href="#">Become a KPCC Sponsor</a></p>
+                </div>
+            </aside>
+
+            <% if tag = article.original_object.tags.first %>
+                <% cache ["single/article", "more-issues", "v1", tag] do %>
+                    <aside class="see-more issue">
+                        <header>
+                            <h1>More from this Issue</h1>
+                            <h2 class="clearfix">
+                                <span><%= link_to tag.title, tag.public_path %></span>
+                                <mark><%= link_to 'See All', issues_path %></mark>
+                            </h2>
+                        </header>
+                        <ul class="previews">
+                            <% if tag_articles = tag.articles.first(3) %>
+                                <% tag_articles.each do |article| %>
+                                    <li>
+                                    <%= link_to article.public_path do %>
+                                        <figure class="ratio-pairing clearfix">
+                                            <div class="ratio">
+                                                <div class="fill"></div>
+                                                <b class="img-contain"><%= image_tag article.asset.lsquare.url %></b>
+                                            </div><!--/ .ratio -->
+                                            <figcaption>
+                                                <%= smart_date_js article.public_datetime %>
+                                                <mark><%= article.short_title %></mark>
+                                            </figcaption>
+                                        </figure><!--/ .ratio-pairing -->
+                                    <% end %>
+                                    </li>
+                                <% end %>
+                          <% end %>
+                        </ul>
+                    </aside>
+                <% end %>
+            <% elsif @category.present? %>
+                <% cache ["single/article", "more-from-category", "v1", @category] do %>
+                    <aside class="see-more issue">
+                        <header>
+                            <h1>More from this Category</h1>
+                            <h2 class="clearfix">
+                                <span><%= link_to @category.title, @category.public_path %></span>
+                                <mark><%= link_to 'See All', @category.public_path %></mark>
+                            </h2>
+                        </header>
+                        <ul class="previews">
+                            <% if category_articles = @category_articles.first(3) %>
+                                <% category_articles.each do |article| %>
+                                    <li>
+                                    <%= link_to article.public_path do %>
+                                        <figure class="ratio-pairing clearfix">
+                                            <div class="ratio">
+                                                <div class="fill"></div>
+                                                <b class="img-contain"><%= image_tag article.asset.lsquare.url %></b>
+                                            </div><!--/ .ratio -->
+                                            <figcaption>
+                                                <%= smart_date_js article.public_datetime %>
+                                                <mark><%= article.short_title %></mark>
+                                            </figcaption>
+                                        </figure><!--/ .ratio-pairing -->
+                                    <% end %>
+                                    </li>
+                                <% end %>
+                          <% end %>
+                        </ul>
+                    </aside>
+                <% end %>
+            <% end %>
+            <aside class="see-more">
+                <header>
+                    <h1>Popular now on KPCC</h1>
+                </header>
+                <ul class="previews">
+                  <% if @popular_articles.present? %>
+                    <% @popular_articles.first(3).each do |article| %>
+                      <li>
+                        <%= link_to article.public_path do %>
+                              <figure class="ratio-pairing clearfix">
+                                  <div class="ratio">
+                                      <div class="fill"></div>
+                                      <b class="img-contain"><%= image_tag article.asset.lsquare.url %></b>
+                                  </div><!--/ .ratio -->
+                                  <figcaption>
+                                      <%= smart_date_js article.public_datetime %>
+                                      <mark><%= article.short_title %></mark>
+                                  </figcaption>
+                              </figure><!--/ .ratio-pairing -->
+                        <% end %>
+                      </li>
+                    <% end %>
+                  <% end %>
+                </ul>
+            </aside>
+        </section>
+    </div>
+</div><!--/ .report -->
+
+<!-- AdHost Slot: Membership Appeals -->
+<div id="article-membership-appeal"></div>
+
+<%= comments_for article.original_object %>
+
+    <div class="placard-waystation">
+    </div>
+
+<% if @vertical.present? %>
+<%= render 'shared/new/triptych', articles: @category_articles[3..5], header: "Recent #{@category.title} Coverage", tags: @tags %>
+    <% if @category_articles.present? %>
+    <div class="townhall">
+        <div class="inner bound clearfix">
+            <div class="primary clearfix">
+                <section class="backlog">
+                    <h1>More <%= @category.title %></h1>
+                    <%= render 'shared/new/waterfall_articles', articles: @category_articles[3..-1], display_header: true %>
+
+                    <footer>
+                        <%= link_to "More #{@category.title} News", @category.public_path %>
+                    </footer>
+
+                </section><!--/ .backlog -->
+
+                <div class="supportive">
+                    <section>
+                        <% if @vertical.present? %>
+                        <% if @vertical.tags.present? %>
+                            <h1>Issues We're Tracking</h1>
+                            <% main_tag = @vertical.tags.first %>
+                            <h2 class="special"><%= main_tag.title %></h2>
+                                <nav>
+                                    <ul>
+                                        <%= render 'shared/new/single_page_issue_list', articles: main_tag.articles.first(2) %>
+                                    </ul>
+                                </nav>
+                                <% if other_tags = @vertical.tags[1..2] %>
+                                    <% other_tags.each do |tag| %>
+                                        <h2><%= tag.title %></h2>
+                                        <nav>
+                                            <ul>
+                                                <%= render 'shared/new/single_page_issue_list', articles: tag.articles.first(2) %>
+                                            </ul>
+                                    </nav>
+                                    <% end %>
+                                <% end %>
+                        <footer>
+                          <%= link_to 'See all issues', issues_path %>
+                        </footer>
+                        <% end %>
+                        <% end %>
+                    </section>
+                    <section>
+
+                        <% bios = @vertical.reporters if @vertical.present? %>
+                        <% if bios.present? %>
+                        <h1>Our Reporters</h1>
+                        <div class="rollcall clearfix">
+                            <% bios.each do |reporter| %>
+                                <figure class="reporter clearfix">
+                                    <div class="ratio">
+                                        <%= link_to reporter.public_path, title: reporter.name do %>
+                                            <div class="fill"></div>
+                                            <b class="img-contain"><%= reporter.headshot.small.tag %></b>
+                                        <% end %>
+                                    </div>
+                                    <figcaption>
+                                        <mark><%= link_to reporter.name, reporter.public_path, title: reporter.name %></mark>
+                                        <ul class="clearfix">
+                                            <li><%= mail_to reporter.email, 'Email', title: "Email #{reporter.name}" %></li>
+                                            <% if reporter.twitter_handle.present? %>
+                                            <li><%= link_to "Twitter", twitter_profile_url(reporter.twitter_handle), target: "_blank", title: "Follow #{reporter.first_name} on Twitter" %></li>
+                                            <% end %>
+                                        </ul>
+                                    </figcaption>
+                                </figure>
+                            <% end %>
+                        </div>
+                        <% end %>
+                    </section>
+                </div><!--/ .supportive -->
+
+             </div><!--/ .primary -->
+
+             <div class="tourguide">
+                 <aside>
+                     <h1>Welcome to <span>KPCC's Represent.</span></h1>
+                     <p>We’re a Southern-California-focused team of KPCC reporters who are passionate about bringing you the latest, best, curabitur cursus tincidunt nulla faucibus consectetur. Nullam sed libero id nulla facilisis vehicula non quis nulla. Proin gravida pharetra mattis. Sed vitae mauris sapien, ut eleifend felis. Duis quis augue diam.</p>
+                </aside>
+                <aside>
+                    <h1>Represent Resources</h1>
+                    <h2>Quick primers on civic life in California.</h2>
+                    <p>All of us at KPCC believe that civic life in Southern California should be understandable, relevant, and libero ante, aliquam congue mattis id, blandit quis risus. Sed iaculis tellus accumsan ipsum porta ultricies.</p>
+                    <nav class="resources clearfix">
+                        <% if @featured_articles.present? %>
+                        <% @featured_articles[1..4].each do |article| %>
+                            <figure class="clearfix">
+                                <div class="ratio">
+                                    <%= link_to article.public_path, title: article.short_title do %>
+                                        <div class="fill"></div>
+                                        <b class="img-contain"><%= image_tag article.asset.lsquare.url %></b>
+                                    <% end %>
+                                </div>
+                                <figcaption>
+                                    <%= link_to article.short_title, article.public_path %>
+                                </figcaption>
+                            </figure>
+                        <% end %>
+                        <% end %>
+                    </nav>
+                </aside>
+                <aside>
+                    <h1>Get involved.</h1>
+                    <% events = @events[0..2] %>
+                    <%= cache ["single/article", "upcoming-events", "v1", events] do %>
+                        <ul class="events">
+                            <% Array(events).each do |event| %>
+                              <li>
+                                    <figure class="clearfix">
+                                      <%= content_tag :time, datetime: event.starts_at.strftime('%F') do %>
+                                        <b><%= event.starts_at.day %></b>
+                                        <span><mark><%= event.starts_at.strftime('%b') %></mark> <%= event.starts_at.strftime('%Y') %></span>
+                                      <% end %>
+                                        <figcaption>
+                                          <b><%= event.headline %></b>
+                                          <%= link_to 'More information', event.public_path %>
+                                        </figcaption>
+                                    </figure>
+                              </li>
+                             <% end %>
+                         </ul>
+                     <% end %>
+                </aside>
+             </div><!--/ .tourguide -->
+
+         </div>
+     </div><!--/ .townhall -->
+    <% end %>
+<% end %>

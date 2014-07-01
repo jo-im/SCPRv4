@@ -1,0 +1,7 @@
+<li>
+  <%= link_to article.public_path do %>
+    <mark><%= article.short_title %></mark>
+    <%= smart_date_js article.public_datetime %>
+  <% end %>
+</li>
+

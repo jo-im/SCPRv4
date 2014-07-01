@@ -222,6 +222,29 @@ describe ApplicationHelper do
 
   #------------------------
 
+  describe "below_standard_ratio" do
+    it "returns true if the image dimensions are equal to or less than the specified ratio and greater than 951px" do
+      image_width = 1200
+      image_height = 900
+
+      helper.below_standard_ratio(width: image_width, height: image_height).should eq true
+    end
+
+    it "returns false if the image dimensions are greater than the specified ratio" do
+      image_width = 400
+      image_height = 400
+      helper.below_standard_ratio(width: image_width, height: image_height).should eq false
+    end
+
+    it "returns false if the image dimensions are within the specified ratio but less than 951px wide" do
+      image_width = 300
+      image_height = 400
+      helper.below_standard_ratio(width: image_width, height: image_height).should eq false
+    end
+  end
+
+  #------------------------
+
   describe "modal" do
     it "renders the modal shell partial" do
       helper.modal("anything") { "content" }.should_not be_blank
@@ -351,6 +374,17 @@ describe ApplicationHelper do
       it "doesn't render anything if datetime isn't a date/time" do
         helper.timestamp(nil).should eq nil
         helper.timestamp("nothing").should eq nil
+      end
+    end
+
+    #------------------------
+
+    describe '#format_clip_duration' do
+      it "formats the audio duration with only minutes if the duration is less than an hour" do
+        helper.format_clip_duration(240).should match /4:00/
+      end
+      it "formats the audio duration with hours and minutes if the duration is an hour or more" do
+        helper.format_clip_duration(3660).should match /1:01:00/
       end
     end
 

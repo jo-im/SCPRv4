@@ -1,0 +1,44 @@
+<% if below_standard_ratio(width: article.asset.full.width, height: article.asset.full.height) %>
+    <section class="prologue">
+        <div class="grating">
+            <div class="inner bound clearfix">
+                <div class="prose">
+                    <h1 class="title"><span><%= article.title %></span></h1>
+                    <aside class="byline">
+                        <h2 class="author"><%= render_byline article.original_object %></h2>
+                        <%= smart_date_js article.public_datetime %>
+                    </aside>
+                    <aside class="caption">
+                        <button>Show caption</button>
+                        <p><%= article.asset.caption %> <mark class="credit"><%= article.asset.owner %></mark></p>
+                    </aside>
+                </div><!--/ .prose -->
+                <div class="asset">
+                    <div class="ratio">
+                        <div class="fill"></div>
+                        <b class="img-contain">
+                            <%= image_tag article.asset.full.url %>
+                        </b>
+                    </div><!--/ .ratio -->
+                </div><!--/ .asset -->
+            </div>
+        </div>
+        <div class="ephemera"><%= image_tag article.asset.full.url %></div>
+    </section><!--/ .prologue -->
+<% else %>
+    <section class="prologue austere">
+        <div class="grating">
+            <div class="inner bound clearfix">
+                <div class="prose">
+                    <h1 class="title"><span><%= article.title %></span></h1>
+                    <aside class="byline">
+                        <h2 class="author">by <%= render_byline article.original_object %></h2>
+                        <%= smart_date_js article.public_datetime %>
+                    </aside>
+                </div>
+            </div><!--/ .prose -->
+        </div>
+    </section><!--/ .prologue -->
+<% end %>
+
+

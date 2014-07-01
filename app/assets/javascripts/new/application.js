@@ -4,6 +4,7 @@
 //= require moment
 //= require moment-strftime
 //= require jquery_ujs
+//= require jquery.jplayer.min
 
 //= require fastclick
 
@@ -16,4 +17,9 @@
 //= require new/behaviors
 //= require new/layout
 //= require new/verticals
+//= require new/single
+//= require new/jquery.ba-throttle-debounce.min
 //= require page_mapping
+
+//= require_tree ../slideshow/templates
+//= require slideshow/new_slideshow

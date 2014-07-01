@@ -94,8 +94,7 @@ describe BlogsController do
   describe "load_blog" do
     before :each do
       @blog = create :blog
-      @category = create :category
-      entry_published = create :blog_entry, blog: @blog, category: @category
+      entry_published = create :blog_entry, blog: @blog
       p = entry_published.published_at
       @entry_attr = { blog: @blog.slug,
                       id: entry_published.id,
@@ -116,6 +115,26 @@ describe BlogsController do
     end
   end
 
+  describe "get_popular_blog_entry" do
+    before :each do
+      blog = create :blog
+      @entry_published = create :blog_entry, blog: blog
+      p = @entry_published.published_at
+      @entry_attr = {
+        blog: blog.slug,
+        id: @entry_published.id,
+        slug: @entry_published.slug }.merge(date_path(p))
+
+      Rails.cache.write("popular/#{blog.slug}", @entry_published)
+
+   end
+
+    it "gets the most popular blog entry" do
+      get :entry, @entry_attr
+      assigns(:popular_blog_entry).should eq @entry_published
+    end
+  end
+
   # ------------------------
 
   describe "GET /entry" do
@@ -123,8 +142,7 @@ describe BlogsController do
       render_views
 
       it "renders the view" do
-        @category = create :category
-        entry = create :blog_entry, category: @category
+        entry = create :blog_entry
         get :entry, { blog: entry.blog.slug,
                       id: entry.id,
                       slug: entry.slug }.merge!(date_path(entry.published_at))
@@ -132,8 +150,7 @@ describe BlogsController do
     end
 
     describe "controller" do
-      let(:category) { create :category }
-      let(:entry) { create :blog_entry, category: category }
+      let(:entry) { create :blog_entry }
 
       context "for invalid entry" do
         it "raises a routing error for invalid ID" do
@@ -158,20 +175,50 @@ describe BlogsController do
         end
       end
 
-#      context "for popular articles" do
-#        let(:articles) { create_list(:blog_entry, 3).map(&:to_article) }
-#
-#        before :each do
-#          Rails.cache.write("popular/viewed", articles)
-#          get :entry, { blog: entry.blog.slug,
-#                        id: entry.id,
-#                        slug: entry.slug }.merge!(date_path(entry.published_at))
-#        end
-#
-#        it 'assigns @popular_articles' do
-#          assigns(:popular_articles).should eq articles
-#        end
-#      end
+      context "for popular articles" do
+        let(:articles) { create_list(:blog_entry, 3).map(&:to_article) }
+
+        before :each do
+          Rails.cache.write("popular/viewed", articles)
+          get :entry, { blog: entry.blog.slug,
+                        id: entry.id,
+                        slug: entry.slug }.merge!(date_path(entry.published_at))
+        end
+
+        it 'assigns @popular_articles' do
+          assigns(:popular_articles).should eq articles
+        end
+      end
+
+      context "for valid previous blog entries" do
+
+        before :each do
+          @previous_entry = create :blog_entry, :published, blog: entry.blog, published_at: entry.published_at - 1.day
+          get :entry, { blog: entry.blog.slug,
+                        id: entry.id,
+                        slug: entry.slug }.merge!(date_path(entry.published_at))
+        end
+        it 'assigns @previous_blog_entry' do
+          assigns(:previous_blog_entry).should eq @previous_entry
+        end
+
+      end
+
+      context "for invalid previous blog entries" do
+
+        before :each do
+          @blog = create :blog
+          @previous_entry = create :blog_entry, :published, blog: @blog, published_at: entry.published_at - 1.day
+          get :entry, { blog: entry.blog.slug,
+                        id: entry.id,
+                        slug: entry.slug }.merge!(date_path(entry.published_at))
+        end
+        it 'assigns @previous_blog_entry' do
+          assigns(:previous_blog_entry).should be_nil
+        end
+
+      end
+
     end
   end
 

@@ -194,13 +194,17 @@ class scpr.Slideshow
                     @currentEl.removeClass 'active'
                     @trigger "switch", idx
                     @nextEl.addClass('active').fadeIn('fast')
+
+                    caption = @nextEl.find('.img-contain').data('caption')
+                    captionOwner = @nextEl.find('.img-contain').data('owner')
+                    caption_html = "#{caption} <mark class='credit'>#{captionOwner}</mark>"
+                    $('.caption p.caption-text').html(caption_html)
                     @nextEl.trigger "activated"
 
         #----------
 
         currentSlide: ->
             $ @slides[@current]
-
         #----------
 
         setVerticalOffset: (slide) ->
@@ -233,6 +237,10 @@ class scpr.Slideshow
 
                 if i == @options.start
                     $(el).addClass("active")
+                    caption = $(el).find('.img-contain').data('caption')
+                    captionOwner = $(el).find('.img-contain').data('owner')
+                    caption_html = "#{caption} <mark class='credit'>#{captionOwner}</mark>"
+                    $('.caption p.caption-text').html(caption_html)
 
                 @slides[i] = $(el)
 

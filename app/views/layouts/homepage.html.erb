@@ -1,3 +1,4 @@
+<%= render "shared/ads/dfp_script_config", key_override: "homepage" %>
 <%= render 'shared/header/document_header' %>
 
 <body>
@@ -8,8 +9,6 @@
 
   <!-- MASTHEAD-->
   <%= render "shared/masthead/layout_header" %>
-
-  <%= render "shared/ads/dfp", ad_key: :membership_leaderboard %>
 
   <!-- BROADCAST BAR -->
 <% if @schedule_current.present? %>
@@ -102,8 +101,8 @@
 
         <div class="span8">
           <div id="sidebar-top">
-            <%= render "shared/ads/oas", ad_id: 'x01' %>
-            <%= render "shared/ads/dfp", ad_key: :membership_sidebar %>
+            <%= render "shared/ads/dfp", ad_key: 'slot_a' %>
+            <%= render "shared/ads/dfp", ad_key: "slot_b" %>
             <%= render "shared/widgets/newsletter_subscribe" %>
 
             <!-- TWITTER -->
@@ -136,9 +135,7 @@
         </div> <!-- span16 -->
         <div class="span8">
           <div id="sidebar-bottom">
-            <%= render "shared/ads/oas", ad_id: "x02" %>
-            <%= render "shared/ads/dfp", ad_key: :sidebar_house_promo %>
-            <%= render "shared/ads/oas", ad_id: "x03" %>
+            <%= render "shared/ads/dfp", ad_key: "slot_c" %>
             <%= render "shared/widgets/archive" %>
           </div> <!-- sidebar bottom -->
         </div> <!-- span8 -->
@@ -149,29 +146,9 @@
 
   <%= render "shared/footer/layout_footer" %>
 
-
-
-  <div class="modal wide hide" id="homepageModal">
-    <div class="modal-body">
-      <%= render "shared/ads/dfp", ad_key: :membership_lightbox, widget: false %>
-    </div>
-
-    <div class="modal-footer">
-      <a href="#" class="btn" data-dismiss="modal">Close</a>
-    </div>
-  </div>
-
 <% content_for :footer do %>
 <script type="text/javascript">
 $(document).ready(function(){
-  setTimeout(function(){
-    //check if DFP is loading in a line item
-    if($("#<%= DFP_ADS[:membership_lightbox][:id] %> iframe").contents().find("img").length > 0) {
-      // launch modal
-      $('#homepageModal').modal();
-    }
-  }, 1000);
-
   scpr.VisualCampaign.enqueue('pushdown-global', $('#global-pushdown'));
   scpr.VisualCampaign.enqueue('pushdown-homepage', $('#homepage-pushdown'));
 });

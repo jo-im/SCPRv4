@@ -18,15 +18,14 @@
     <meta name="keywords" content="KPCC, California, Southern California, Los Angeles, Pasadena, SCPR, Southern California Public Radio" />
     <meta name="author" content="89.3 KPCC" />
 
+
     <!-- Meta Tags which are always present, but are filled-in by the page we're on, with a fallback -->
-    <%= tag "meta", property: "og:title", content: h(meta_information[:title] || page_title) %>
     <%= tag "meta", property: "og:type", content: h(meta_information[:type] || "website") %>
-    <%= tag "meta", property: "og:url", content: meta_information[:url] || "http://scpr.org" %>
 
     <%= tag "meta", name: "description", content: h(meta_information[:description] || "Member-supported public radio for Southern California. Award-winning local news and cultural programming alongside the best of NPR.") %>
     <%= tag "meta", property: "og:description", content: h(meta_information[:description] || "Member-supported public radio for Southern California. Award-winning local news and cultural programming alongside the best of NPR.") %>
 
-    <%= content_for :extra_meta_tags %>
+    <%= yield :opengraph %>
 
     <!-- Always provide the logo as a fallback thumbnail option. -->
     <meta property="og:image" content="http://scpr.org<%=image_path('kpcc-twitter-logo.png')%>" />
@@ -47,6 +46,8 @@
     <%= favicon_link_tag '/favicon.ico' %>
 
     <%= stylesheet_link_tag "new/application", media: "screen" %>
+    <%= javascript_include_tag "shared", "application" %>
+    <script type="text/javascript" src="http://<%= Rails.application.config.assethost.server %>/assets/client.js?bust=20130523"></script>
     <%= javascript_include_tag "new/application" %>
 
     <!--[if lt IE 9]>
@@ -69,5 +70,5 @@
       }
     </script>
 
-    <%= content_for :extra_header %>
+    <%= render "shared/header/ad_scripts" %>
 </head>

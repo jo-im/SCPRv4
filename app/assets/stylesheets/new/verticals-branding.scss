@@ -1,15 +1,6 @@
 $verticals: ("education", "politics", "business", "health");
 
 @each $vertical in $verticals {
-
-    body.#{$vertical} {
-        .masthead .titling h1 a         { background-image: image-url("i/logo-#{$vertical}.png"); }
-        &.landing .masthead {
-            background-image: image-url("i/masthead-#{$vertical}.jpg");
-            .titling h2                 { background: none; text-shadow: 0 0 8px black; }
-        }
-        .resources-row header h1 span   { background-image: image-url("i/logo-resources-#{$vertical}.png"); }
-    }
-
+        body.#{$vertical}.landing .masthead  { background-image: image-url("i/masthead-#{$vertical}.jpg"); }
 }
 

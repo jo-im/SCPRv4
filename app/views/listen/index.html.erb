@@ -1,4 +1,3 @@
-<% content_for :oas_listpos, 'x61,x62,x63' %>
 <% add_to_page_title "Listen Live" %>
 
 <%= render "shared/header/document_header" %>
@@ -34,7 +33,7 @@
             <strong>Update Required</strong>
             To play the media you will need to either update your browser to a recent version or update your <a href="http://get.adobe.com/flashplayer/" target="_blank">Flash plugin</a>.
           </div>
-          <!-- put bar-close first so it floats right properly when the widget switches to modal
+          <!-- put jp-stop first so it floats right properly when the widget switches to modal
              On the normal layout, everything here is floated so it still gets pushed to the right properly -->
 
           <div class="section-left">
@@ -80,34 +79,10 @@
   <% end %>
 
   <hr />
-  <div class="ad" style="text-align:center; height:80px">
-    <p><small>Sponsors</small></p>
 
-    <!-- OAS AD 'Center1' begin -->
-    <script>
-    <!--
-    OAS_AD('x61');
-    //-->
-    </script>
-    <!-- OAS AD 'Center1' end -->
-
-    <!-- OAS AD 'Center1' begin -->
-    <script>
-    <!--
-    OAS_AD('x62');
-    //-->
-    </script>
-    <!-- OAS AD 'Center1' end -->
-
-    <!-- OAS AD 'Center1' begin -->
-    <script>
-    <!--
-    OAS_AD('x63');
-    //-->
-    </script>
-    <!-- OAS AD 'Center1' end -->
-    <p><small><a href="/support/underwriting/online_sponsorship/">Advertise with us</a></small></p>
-  </div> <!-- ad -->
+  <%= render "shared/ads/dfp", ad_key: 'slot_live_a' %>
+  <%= render "shared/ads/dfp", ad_key: 'slot_live_b' %>
+  <%= render "shared/ads/dfp", ad_key: 'slot_live_c' %>
 
   <footer>
     <div>

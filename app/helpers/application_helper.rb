@@ -174,6 +174,10 @@ module ApplicationHelper
     }.merge(options)
   end
 
+  def below_standard_ratio(options={})
+    ratio = (3.0/4.0)
+    return options[:height].to_f/options[:width].to_f <= ratio && options[:width] > 951
+  end
 
   #----------
   # Render a byline for the passed-in content
@@ -236,6 +240,16 @@ module ApplicationHelper
         "#{n.to_i} #{name}"
       end
     }.compact.reverse.join(' ')
+  end
+
+  #--------------------------
+
+  def format_clip_duration(secs)
+    if !secs
+      return ''
+    end
+    time_format = secs >= 3600 ? "%-H:%M:%S" : "%-M:%S"
+    Time.at(secs).utc.strftime(time_format)
   end
 
   #----------

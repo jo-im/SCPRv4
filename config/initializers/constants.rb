@@ -1,8 +1,6 @@
 DESCENDING = "DESC"
 ASCENDING  = "ASC"
 
-DFP_ADS = YAML.load_file("#{Rails.root}/config/dfp_ads.yml")
-
 FEATURES = YAML.load_file(Rails.root.join("config/features.yml"))
   .map { |attributes| ArticleFeature.new(attributes) }
 

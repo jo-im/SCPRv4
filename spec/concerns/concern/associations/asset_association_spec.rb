@@ -140,9 +140,9 @@ describe Concern::Associations::AssetAssociation do
   describe '#asset_display=' do
     it "sets asset_display_id" do
       record = build :test_class_story, asset_display_id: nil
-      record.asset_display = :photo
-      record.asset_display_id.should eq ContentBase::ASSET_DISPLAY_IDS[:photo]
-      record.asset_display.should eq :photo
+      record.asset_display = :photo_emphasized
+      record.asset_display_id.should eq ContentBase::ASSET_DISPLAY_IDS[:photo_emphasized]
+      record.asset_display.should eq :photo_emphasized
     end
   end
 end

@@ -24,20 +24,20 @@ class Outpost::NewsStoriesController < Outpost::ResourceController
   #----------------
 
   def preview
-    @story = Outpost.obj_by_key(params[:obj_key]) || NewsStory.new
+    @entry = Outpost.obj_by_key(params[:obj_key]) || NewsStory.new
 
-    with_rollback @story do
-      @story.assign_attributes(params[:news_story])
+    with_rollback @entry do
+      @entry.assign_attributes(params[:news_story])
 
-      if @story.unconditionally_valid?
-        @title = @story.to_title
-        render "news/_story",
-          :layout => "outpost/preview/application",
+      if @entry.unconditionally_valid?
+        @title = @entry.to_title
+        render "shared/new/_single_preview",
+          :layout => "outpost/preview/new/application",
           :locals => {
-            :story => @story
+            :story => @entry
           }
       else
-        render_preview_validation_errors(@story)
+        render_preview_validation_errors(@entry)
       end
     end
   end

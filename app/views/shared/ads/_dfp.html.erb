@@ -1,11 +1,6 @@
-<% ad = DFP_ADS[ad_key] %>
-<% widget ||= true %>
-
-<% if widget %><div class="ad widget"><% end %>
-  <!-- <%= ad_key %> -->
-  <div class="dfp" id='<%=ad[:id]%>'>
-    <script type='text/javascript'>
-      googletag.cmd.push(function() { googletag.display('<%=ad[:id]%>'); });
-    </script>
-  </div>
-<% if widget %></div><% end %>
+<!-- <%= ad_key %> -->
+<div class="dfp" id='dfp-<%=ad_key%>'>
+  <script type='text/javascript'>
+    googletag.cmd.push(function() { googletag.display('dfp-<%=ad_key%>'); });
+  </script>
+</div>
