@@ -203,7 +203,7 @@ describe ProgramsController do
   describe "GET /episode" do
     let(:program) { create :kpcc_program }
     let(:episode) { create :show_episode, show: program }
-    let(:segment) { create :show_segment }
+    let(:segment) { create :show_segment, :published, show: program }
 
     let(:params) do
       episode.route_hash
