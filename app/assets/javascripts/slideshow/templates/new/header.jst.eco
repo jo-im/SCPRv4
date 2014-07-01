@@ -1,3 +1,0 @@
-<div class="slideshow-header">
-    <h6><span class="full-title"><%= @title %></span></h6>
-</div>

@@ -1,1 +1,0 @@
-<button class="slideshow-fullscreen" data-target="#<%=@target%>">Fullscreen</button>
