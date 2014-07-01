@@ -9,7 +9,7 @@
                 </aside>
                 <aside class="caption">
                     <button>Caption</button>
-                    <p><%= article.asset.caption %> <mark class="credit"><%= article.asset.owner %></mark></p>
+                    <p class='caption-text'><%= article.asset.caption %> <mark class="credit"><%= article.asset.owner %></mark></p>
                 </aside>
             </div><!--/ .prose -->
             <div class="asset">
@@ -23,7 +23,7 @@
                               <div class="asset-block">
                                 <div class="contentasset ratio">
                                   <div class="fill"></div>
-                                  <b class="img-contain"><%= link_to asset.eight.tag, article.public_url %></b>
+                                  <b class="img-contain" data-caption="<%= asset.caption %>" data-owner="<%= asset.owner %>"><%= link_to asset.full.tag, article.public_url %></b>
                                 </div>
                               </div>
                             </div>
@@ -58,7 +58,7 @@
           el: "#asset_slideshow_<%=html_safe_id%>",
           staticSlides: "staticSlides_<%=html_safe_id%>",
           assets: <%= article.assets.to_json.html_safe %>,
-          showOverlay: false
+          showOverlay: true
     });
 
     slideshow.bind("switch", function(idx) {

@@ -1,0 +1,5 @@
+<aside class="caption">
+    <button>Caption</button>
+    <p><%= @caption_text %> <mark class="credit"><%= @caption_owner %></mark></p>
+</aside>
+
