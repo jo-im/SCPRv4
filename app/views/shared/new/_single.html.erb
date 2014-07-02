@@ -69,7 +69,7 @@
                 </div><!--/ .prose-body -->
             <% end %>
 
-            <% related = article.original_object.related_content.first(2) %>
+            <% related = article.original_object.related_content %>
             <% if related.present? %>
                 <%= cache ["single/article", "related-content", "v1", article] do %>
                     <aside class="related">
