@@ -8,7 +8,7 @@ class NewsController < NewApplicationController
   PER_PAGE = 11
 
   def story
-    @story = NewsStory.published.find_by_slug!(params[:slug])
+    @story = NewsStory.published.find(params[:id])
 
     content_params = {
       page:         params[:page].to_i,
