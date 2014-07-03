@@ -7,8 +7,7 @@ module ApplicationHelper
     "personalities/guzman-lopez.png",
     "personalities/julian.png",
     "personalities/watt.png",
-    "personalities/oneil.png",
-    "personalities/trujillo.png"
+    "personalities/oneil.png"
   ]
 
   def add_ga_tracking_to(url)
