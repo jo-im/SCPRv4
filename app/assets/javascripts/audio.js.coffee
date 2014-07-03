@@ -5,7 +5,7 @@ class scpr.Audio
         widgetClass:    ".story-audio"
         playBtn:        ".audio-toggler"
         audioBar:       "#audio-bar"
-
+        downloadEl:     ".download"
     constructor: (options={}) ->
         @options = _.defaults options, @DefaultOptions
 
@@ -24,7 +24,6 @@ class scpr.Audio
         $(@options.widgetClass).each (idx,el) =>
             # find a play button
             btn = $(@options.playBtn,el)
-
             if btn
                 # get the audio file path from the href
                 mp3      = $(btn).attr("href")
@@ -42,7 +41,6 @@ class scpr.Audio
                     duration:   duration
 
                 @widgets.push widget
-
 
         # register listener to close audio bar
         $("#{@options.audioBar} .jp-stop, #opaque-cover").click => @closeAndStop()
@@ -84,7 +82,7 @@ class scpr.Audio
         # set our new mp3
         @player.jPlayer "setMedia", mp3:widget.options.mp3
         $(@options.titleEl).text widget.options.title
-
+        $(@options.downloadEl).attr('href', widget.options.mp3)
         # should we enable hours?
         $.jPlayer.timeFormat.showHour =
             if widget.options.duration && widget.options.duration > 60*60
@@ -120,7 +118,7 @@ class scpr.Audio
             @options = options
             @player = @options.player
             # register click handler on play button
-            @options.playBtn.parent().on "click", (e) =>
+            @options.playBtn.on "click", (e) =>
                 @player.play @
                 return false
 
