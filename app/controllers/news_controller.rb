@@ -18,9 +18,6 @@ class NewsController < NewApplicationController
     content_params[:exclude] = @story
 
     if @category = @story.category
-      if @vertical = Vertical.find_by_category_id(@category)
-        @featured_articles = @vertical.featured_articles
-      end
       @content = @category.content(content_params)
       @category_articles = @content.map { |a| a.to_article }
       @events  = @category.events.published.upcoming
