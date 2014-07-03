@@ -159,7 +159,7 @@
                     </aside>
                 <% end %>
             <% elsif @category.present? %>
-                <% cache ["single/article", "more-from-category", "v1", @category] do %>
+                <% cache ["single/article", "more-from-category", "v2", @category_articles, @category] do %>
                     <aside class="see-more issue">
                         <header>
                             <h1>More from this Category</h1>
