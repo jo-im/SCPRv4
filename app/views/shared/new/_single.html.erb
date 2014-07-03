@@ -43,38 +43,40 @@
                 <% end %>
             </div><!--/ .marginal-tools -->
 
-            <%= cache ["single/article", "article-body", "v1", article] do %>
-                <div class="prose-body">
+            <div class="prose-body">
+            <% if article_assets = article.original_object.assets.present? %>
+                <%= cache ["single/article", "article-body-asset", "v1", article_assets] do %>
 
-                    <% if article.original_object.assets.present? %>
-                        <% if (article.original_object.asset_display == :photo_deemphasized) || (article.original_object.asset_display.blank? && !below_standard_ratio(width: article.asset.full.width, height: article.asset.full.height)) || (article.original_object.asset_display == :photo_emphasized && !below_standard_ratio(width: article.asset.full.width, height: article.asset.full.height))  %>
+                    <% if (article.original_object.asset_display == :photo_deemphasized) || (article.original_object.asset_display.blank? && !below_standard_ratio(width: article.asset.full.width, height: article.asset.full.height)) || (article.original_object.asset_display == :photo_emphasized && !below_standard_ratio(width: article.asset.full.width, height: article.asset.full.height))  %>
                         <figure class="asset-inset">
-                        <b class="pic"><%= image_tag article.asset.full.url, alt: article.asset.caption %></b>
-                            <figcaption>
-                                <span>
-                                <%= article.asset.caption %><mark> <%= article.asset.owner if article.asset.owner.present? %></mark>
-                                </span>
-                            </figcaption>
+                            <b class="pic"><%= image_tag article.asset.full.url, alt: article.asset.caption %></b>
+                                <figcaption>
+                                    <span>
+                                        <%= article.asset.caption %><mark> <%= article.asset.owner if article.asset.owner.present? %></mark>
+                                    </span>
+                                </figcaption>
                         </figure>
-                        <% end %>
                     <% end %>
-
-                    <%= article.body.html_safe %>
-                </div><!--/ .prose-body -->
+                <% end %>
             <% end %>
+
+            <% cache ["single/article", "article-body", article] do %>
+                <%= article.body.html_safe %>
+            <% end %>
+            </div><!--/ .prose-body -->
 
             <% related = article.original_object.related_content %>
             <% if related.present? %>
-                <%= cache ["single/article", "related-content", "v1", article] do %>
+                <%= cache ["single/article", "related-content", "v1", related] do %>
                     <aside class="related">
                         <header><h1>Related Links</h1></header>
                         <nav>
                             <ul>
-                                <% related.each do |article| %>
-                                  <li class="<%= article.feature.try(:key) %>">
-                                    <%= link_to article.public_path do %>
-                                      <mark><%= article.short_title %></mark>
-                                      <span><%= article.feature.try(:name) || "Article" %></span></a>
+                                <% related.each do |related_article| %>
+                                  <li class="<%= related_article.feature.try(:key) %>">
+                                    <%= link_to related_article.public_path do %>
+                                      <mark><%= related_article.short_title %></mark>
+                                      <span><%= related_article.feature.try(:name) || "Article" %></span></a>
                                     <% end %>
                                   </li>
                                 <% end %>
@@ -159,7 +161,7 @@
                     </aside>
                 <% end %>
             <% elsif @category.present? %>
-                <% cache ["single/article", "more-from-category", "v2", @category_articles, @category] do %>
+                <% cache ["single/article", "more-from-category", "v1", @category_articles, @category] do %>
                     <aside class="see-more issue">
                         <header>
                             <h1>More from this Category</h1>
