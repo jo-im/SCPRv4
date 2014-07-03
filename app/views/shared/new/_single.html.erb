@@ -140,28 +140,30 @@
                         </header>
                         <ul class="previews">
                             <% if tag_articles = tag.articles.first(3) %>
-                                <% tag_articles.each do |article| %>
-                                    <li>
-                                    <%= link_to article.public_path do %>
-                                        <figure class="ratio-pairing clearfix">
-                                            <div class="ratio">
-                                                <div class="fill"></div>
-                                                <b class="img-contain"><%= image_tag article.asset.lsquare.url %></b>
-                                            </div><!--/ .ratio -->
-                                            <figcaption>
-                                                <%= smart_date_js article.public_datetime %>
-                                                <mark><%= article.short_title %></mark>
-                                            </figcaption>
-                                        </figure><!--/ .ratio-pairing -->
+                                <% cache ["single/article", "tag-articles", tag_articles] do %>
+                                    <% tag_articles.each do |article| %>
+                                        <li>
+                                        <%= link_to article.public_path do %>
+                                            <figure class="ratio-pairing clearfix">
+                                                <div class="ratio">
+                                                    <div class="fill"></div>
+                                                    <b class="img-contain"><%= image_tag article.asset.lsquare.url %></b>
+                                                </div><!--/ .ratio -->
+                                                <figcaption>
+                                                    <%= smart_date_js article.public_datetime %>
+                                                    <mark><%= article.short_title %></mark>
+                                                </figcaption>
+                                            </figure><!--/ .ratio-pairing -->
+                                        <% end %>
+                                        </li>
                                     <% end %>
-                                    </li>
                                 <% end %>
-                          <% end %>
+                            <% end %>
                         </ul>
                     </aside>
                 <% end %>
             <% elsif @category.present? %>
-                <% cache ["single/article", "more-from-category", "v1", @category_articles, @category] do %>
+                <% cache ["single/article", "more-from-category", "v1", @category] do %>
                     <aside class="see-more issue">
                         <header>
                             <h1>More from this Category</h1>
@@ -172,23 +174,25 @@
                         </header>
                         <ul class="previews">
                             <% if category_articles = @category_articles.first(3) %>
-                                <% category_articles.each do |article| %>
-                                    <li>
-                                    <%= link_to article.public_path do %>
-                                        <figure class="ratio-pairing clearfix">
-                                            <div class="ratio">
-                                                <div class="fill"></div>
-                                                <b class="img-contain"><%= image_tag article.asset.lsquare.url %></b>
-                                            </div><!--/ .ratio -->
-                                            <figcaption>
-                                                <%= smart_date_js article.public_datetime %>
-                                                <mark><%= article.short_title %></mark>
-                                            </figcaption>
-                                        </figure><!--/ .ratio-pairing -->
+                                <% cache ["single/article", "category-articles", category_articles] do %>
+                                    <% category_articles.each do |article| %>
+                                        <li>
+                                        <%= link_to article.public_path do %>
+                                            <figure class="ratio-pairing clearfix">
+                                                <div class="ratio">
+                                                    <div class="fill"></div>
+                                                    <b class="img-contain"><%= image_tag article.asset.lsquare.url %></b>
+                                                </div><!--/ .ratio -->
+                                                <figcaption>
+                                                    <%= smart_date_js article.public_datetime %>
+                                                    <mark><%= article.short_title %></mark>
+                                                </figcaption>
+                                            </figure><!--/ .ratio-pairing -->
+                                        <% end %>
+                                        </li>
                                     <% end %>
-                                    </li>
                                 <% end %>
-                          <% end %>
+                            <% end %>
                         </ul>
                     </aside>
                 <% end %>
