@@ -252,7 +252,10 @@
                             <h3><%= link_to blog.name, blog.public_path %></h3>
                             <p><%= blog.teaser %></p>
                         </div>
-                        <b class="photo"><%= image_tag blog_article.asset.eight.url, alt: blog_article.asset.caption %></b>
+                        <div class="photo ratio">
+                            <div class="fill"></div>
+                            <div class="img-contain"><%= image_tag blog_article.asset.lsquare.url, alt: blog_article.asset.caption %></div>
+                        </div>
                     </aside>
                 </article>
             <% end %>
