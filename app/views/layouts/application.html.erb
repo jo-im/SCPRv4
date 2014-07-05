@@ -21,11 +21,17 @@
           <% else %>
             <%= yield :sidebar_top %>
             <%= render "shared/ads/dfp", ad_key: 'slot_a' %>
-            <%= render "shared/ads/dfp", ad_key: 'slot_b' %>
+            <div class="ad">
+              <%= render "shared/ads/dfp", ad_key: 'slot_b' %>
+              <p class="appeal"><a href="/support/underwriting/">Become a KPCC Sponsor</a></p>
+            </div>
             <%= yield :sidebar_middle %>
             <%= render "shared/widgets/newsletter_subscribe" %>
             <%= render "shared/widgets/most_popular" %>
-            <%= render "shared/ads/dfp", ad_key: 'slot_c' %>
+            <div class="ad">
+              <%= render "shared/ads/dfp", ad_key: 'slot_c' %>
+              <p class="appeal"><a href="/support/underwriting/">Become a KPCC Sponsor</a></p>
+            </div>
           <% end %>
         </div> <!-- sidebar -->
       </div> <!-- span8 -->

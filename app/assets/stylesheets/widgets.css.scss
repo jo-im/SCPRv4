@@ -757,6 +757,10 @@ a.comment-count.inline {
         small {@include font-sans-serif(normal, 9px, 0px);}
         a {color:#999;}
     }
+
+    .appeal             { @include font-sans-serif(normal, 9px, 0px); margin-bottom:10px; }
+    .appeal a           { color: gray; display: inline; }
+    .appeal a:hover     { color: black; text-decoration: underline; }
 }
 .dfp {
     border-bottom:1px solid $grayLighter;
