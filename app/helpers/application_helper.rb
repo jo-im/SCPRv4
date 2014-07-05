@@ -175,7 +175,7 @@ module ApplicationHelper
 
   def below_standard_ratio(options={})
     ratio = (3.0/4.0)
-    return options[:height].to_f/options[:width].to_f <= ratio && options[:width] > 951
+    return options[:height].to_f/options[:width].to_f <= ratio && options[:width] > 700
   end
 
   #----------
