@@ -102,7 +102,10 @@
         <div class="span8">
           <div id="sidebar-top">
             <%= render "shared/ads/dfp", ad_key: 'slot_a' %>
-            <%= render "shared/ads/dfp", ad_key: "slot_b" %>
+            <div class="ad widget">
+              <%= render "shared/ads/dfp", ad_key: "slot_b" %>
+              <p class="appeal"><a href="/support/underwriting/">Become a KPCC Sponsor</a></p>
+            </div>
             <%= render "shared/widgets/newsletter_subscribe" %>
 
             <!-- TWITTER -->
@@ -135,7 +138,10 @@
         </div> <!-- span16 -->
         <div class="span8">
           <div id="sidebar-bottom">
-            <%= render "shared/ads/dfp", ad_key: "slot_c" %>
+            <div class="ad widget">
+              <%= render "shared/ads/dfp", ad_key: "slot_c" %>
+              <p class="appeal"><a href="/support/underwriting/">Become a KPCC Sponsor</a></p>
+            </div>
             <%= render "shared/widgets/archive" %>
           </div> <!-- sidebar bottom -->
         </div> <!-- span8 -->
