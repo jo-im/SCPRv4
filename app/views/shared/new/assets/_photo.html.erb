@@ -1,9 +1,3 @@
-<script>
-    console.log("asset ratio: <%= article.asset.full.height.to_f/article.asset.full.width.to_f %>");
-    console.log("asset height: <%= article.asset.full.height.to_f %>");
-    console.log("asset width: <%= article.asset.full.width.to_f %>");
-</script>
-
 <% if below_standard_ratio(width: article.asset.full.width, height: article.asset.full.height) %>
     <section class="prologue">
         <div class="grating">
