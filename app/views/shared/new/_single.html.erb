@@ -44,9 +44,11 @@
             </div><!--/ .marginal-tools -->
 
             <div class="prose-body">
+                <% puts "ASSET_RULES #{(article.original_object.asset_display.blank? && !below_standard_ratio(width: article.asset.full.width, height: article.asset.full.height))}" %>
+                <% puts "ASSET_EMPHASIZED #{(article.original_object.asset_display == :photo_emphasized && !below_standard_ratio(width: article.asset.full.width, height: article.asset.full.height))}" %>
+                <% puts article.original_object.assets.present? %>
             <% if article_assets = article.original_object.assets.present? %>
                 <%= cache ["single/article", "article-body-asset", "v1", article_assets] do %>
-
                     <% if (article.original_object.asset_display == :photo_deemphasized) || (article.original_object.asset_display.blank? && !below_standard_ratio(width: article.asset.full.width, height: article.asset.full.height)) || (article.original_object.asset_display == :photo_emphasized && !below_standard_ratio(width: article.asset.full.width, height: article.asset.full.height))  %>
                         <figure class="asset-inset">
                             <b class="pic"><%= image_tag article.asset.full.url, alt: article.asset.caption %></b>
