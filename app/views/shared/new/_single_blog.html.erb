@@ -184,7 +184,7 @@
                                         <ul>
                                             <li class="portfolio"><%= link_to "All posts by #{author.name.split(" ").first()}", author.public_path %></li>
                                             <li class="twitter"><%= link_to "Follow @#{author.twitter_handle}", twitter_profile_url(author.twitter_handle) if author.twitter_handle.present? %></li>
-                                            <li class="email"><%= link_to "Email #{author.name.split(" ").first()}", author.email %></li>
+                                            <li class="email"><%= mail_to author.email, "Email #{author.name.split(" ").first()}" %></li>
                                         </ul>
                                     </figcaption>
                                 </figure>
