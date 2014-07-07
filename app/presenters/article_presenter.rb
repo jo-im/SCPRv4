@@ -13,4 +13,10 @@ class ArticlePresenter < ApplicationPresenter
       render 'shared/new/assets/photo', article: article
     end
   end
+
+  def inline_asset
+    if (article.original_object.asset_display == :photo_deemphasized) || (article.original_object.asset_display.blank? && !below_standard_ratio(width: article.asset.full.width, height: article.asset.full.height)) || (article.original_object.asset_display == :photo_emphasized && !below_standard_ratio(width: article.asset.full.width, height: article.asset.full.height))
+      render 'shared/new/inline_asset', article: article
+    end
+  end
 end
