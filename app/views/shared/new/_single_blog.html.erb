@@ -56,25 +56,37 @@
 
             <%= raw Rails.cache.read("views/popular/#{@blog.slug}") %>
 
-            <% related = article.original_object.related_content %>
-            <% if related.present? %>
-                <%= cache ["single_blog/article", "related-content", "v1", article] do %>
-                    <aside class="related">
-                        <header><h1>Related Links</h1></header>
-                        <nav>
-                            <ul>
-                                <% related.each do |article| %>
-                                  <li class="<%= article.feature.try(:key) %>">
-                                    <%= link_to article.public_path do %>
-                                      <mark><%= article.short_title %></mark>
-                                      <span><%= article.feature.try(:name) || "Article" %></span></a>
+            <% related_content = article.original_object.related_content %>
+            <% related_links = article.original_object.related_links %>
+            <%= cache ["single_blog/article", "related-content", article] do %>
+                <aside class="related">
+                    <header><h1>Related Links</h1></header>
+                    <nav>
+                        <ul>
+                            <% if related_content.present? %>
+                                <% related_content.each do |related_article| %>
+                                  <li class="<%= related_article.feature.try(:key) %>">
+                                    <%= link_to related_article.public_path do %>
+                                      <mark><%= related_article.short_title %></mark>
+                                      <span><%= related_article.feature.try(:name) || "Article" %></span></a>
                                     <% end %>
                                   </li>
                                 <% end %>
-                            </ul>
-                        </nav>
-                    </aside><!--/ .related -->
-                <% end %>
+                            <% end %>
+
+                            <% if related_links.present? %>
+                                <% related_links.each do |related_link| %>
+                                  <li>
+                                    <%= link_to related_link.url do %>
+                                      <mark><%= related_link.title %></mark>
+                                      <span><%= related_link.try(:link_type) || "Article" %></span></a>
+                                    <% end %>
+                                  </li>
+                                <% end %>
+                            <% end %>
+                        </ul>
+                    </nav>
+                </aside><!--/ .related -->
             <% end %>
 
             <%= cache ["single_blog/article", "story-share", "v1", article] do %>
