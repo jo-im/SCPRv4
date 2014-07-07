@@ -345,8 +345,12 @@ body.single .comments {
                     margin: 0 auto;
                     button {
                         display: block;
-                        background: image-url("i/ephemera-triangle-downward.png") no-repeat right 9px top 10px;
                         background-color: #a6a6a6;
+                        background-image: image-url("i/ephemera-triangle-downward.png");
+                        background-repeat: no-repeat;
+                        background-position: right 9px top 10px;
+                        background-position-x: 90%;
+                        background-position-y: 8px;
                         background-size: 8px 6px;
                         border: none;
                         color: white;
