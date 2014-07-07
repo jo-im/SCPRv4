@@ -87,7 +87,7 @@
             <%= cache ["single_blog/article", "story-share", "v1", article] do %>
                 <aside class="share">
                     <header>Share <span>this story</span></header>
-                    <ul>
+                    <ul class="clearfix">
                         <li class="email">
                             <a href="#" class="track-event email" data-ga-category="Article" data-ga-action="Share" data-ga-label="Email" data-key="<%= article.id %>">Share via Email</a></li>
                         <li class="twitter">
