@@ -32,10 +32,6 @@ class BlogsController < ApplicationController
 
     @entry = BlogEntry.published.includes(:blog).find(params[:id])
     @blog = @entry.blog
-
-    @other_blogs = BlogEntry.published.includes(:blog).first(10).map(&:blog).uniq.first(4)
-
-    @previous_blog_entry = BlogEntry.published.includes(:blog).where('blog_id = ? AND published_at < ?', @blog.id, @entry.published_at).first
     respond_with template: "blogs/entry"
   end
 
