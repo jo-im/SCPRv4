@@ -1,5 +1,5 @@
 <% article = article.to_article %>
-<%= cache ["single_blog/article", "asset-display", "v1", article] do %>
+<%= cache ["single_blog/article", "asset-display", article] do %>
     <% present article do |article_presenter| %>
         <%= article_presenter.asset_display %>
     <% end %>
@@ -28,7 +28,7 @@
                 <% end %>
 
 
-                <%= cache ["single_blog/article", "story-share", "v1", article] do %>
+                <%= cache ["single_blog/article", "story-share", article] do %>
                     <aside class="share">
                         <header>Share <span>this story</span></header>
                         <ul>
@@ -42,7 +42,7 @@
                     </aside>
                 <% end %>
             </div><!--/ .marginal-tools -->
-            <%= cache ["single_blog/article", "article-body", "v1", article] do %>
+            <%= cache ["single_blog/article", "article-body", article] do %>
                 <div class="prose-body">
                     <% if article.original_object.assets.present? %>
                         <% present article do |article_presenter| %>
@@ -58,7 +58,7 @@
 
             <% related = article.original_object.related_content %>
             <% if related.present? %>
-                <%= cache ["single_blog/article", "related-content", "v1", article] do %>
+                <%= cache ["single_blog/article", "related-content", article] do %>
                     <aside class="related">
                         <header><h1>Related Links</h1></header>
                         <nav>
@@ -77,7 +77,7 @@
                 <% end %>
             <% end %>
 
-            <%= cache ["single_blog/article", "story-share", "v1", article] do %>
+            <%= cache ["single_blog/article", "story-share", article] do %>
                 <aside class="share">
                     <header>Share <span>this story</span></header>
                     <ul class="clearfix">
@@ -136,7 +136,7 @@
                 </div>
             </aside>
             <aside class="about-this-blog">
-                <%= cache ["single_blog/article", "blog-details", "v1", @blog] do %>
+                <%= cache ["single_blog/article", "blog-details", @blog] do %>
                     <header>
                         <h1><%= link_to @blog.name, @blog.public_path %></h1>
                     </header>
@@ -157,7 +157,7 @@
 
                 <% bios = @blog.authors %>
                 <% if bios.present? %>
-                    <%= cache ["single_blog/article", "bios", 'v1', bios.to_a] do %>
+                    <%= cache ["single_blog/article", "bios", bios.to_a] do %>
                         <div class="hosts">
                             <h2>Your host<%= 's' unless bios.length == 1 %></h2>
                             <% bios.each do |author| %>
@@ -186,7 +186,7 @@
             </aside>
 
 
-            <%= cache ["single_blog/article", "recent-entries", 'v1', @blog] do %>
+            <%= cache ["single_blog/article", "recent-entries", @blog] do %>
                 <aside class="see-more">
                     <header>
                         <h1>Recently on <%= @blog.name %></h1>
@@ -225,7 +225,7 @@
     <div class="placard-waystation">
     </div>
 
-<%= cache ["single_blog/article", "blog-sampler", 'v1', @blog] do %>
+<%= cache ["single_blog/article", "blog-sampler", @blog] do %>
     <section class="blog-sampler">
        <header><h1 class="bound"><span>Enjoy reading <%= @blog.name %>?</span> <span>You might like KPCC’s other blogs.</span></h1></header>
         <div class="highlights bound clearfix">

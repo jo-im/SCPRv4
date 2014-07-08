@@ -1,5 +1,5 @@
 <% article = article.to_article %>
-<%= cache ["single/article", "asset-display", "v1", article] do %>
+<%= cache ["single/article", "asset-display", article] do %>
     <% present article do |article_presenter| %>
         <%= article_presenter.asset_display %>
     <% end %>
@@ -28,7 +28,7 @@
                     <% end %>
                 <% end %>
 
-                <%= cache ["single/article", "story-share", "v1", article] do %>
+                <%= cache ["single/article", "story-share", article] do %>
                     <aside class="share">
                         <header>Share <span>this story</span></header>
                         <ul>
@@ -44,7 +44,7 @@
             </div><!--/ .marginal-tools -->
 
             <div class="prose-body">
-                <%= cache ["single/article", "article-body-asset", "v1", article] do %>
+                <%= cache ["single/article", "article-body-asset", article] do %>
                     <% if article.original_object.assets.present? %>
                         <% present article do |article_presenter| %>
                             <%= article_presenter.inline_asset %>
@@ -59,7 +59,7 @@
 
             <% related = article.original_object.related_content %>
             <% if related.present? %>
-                <%= cache ["single/article", "related-content", "v1", related] do %>
+                <%= cache ["single/article", "related-content", related] do %>
                     <aside class="related">
                         <header><h1>Related Links</h1></header>
                         <nav>
@@ -78,7 +78,7 @@
                 <% end %>
             <% end %>
 
-            <%= cache ["single/article", "story-share", "v1", article] do %>
+            <%= cache ["single/article", "story-share", article] do %>
                 <aside class="share">
                     <header>Share <span>this story</span></header>
                     <ul>
@@ -121,7 +121,7 @@
             </aside>
 
             <% if tag = article.original_object.tags.first %>
-                <% cache ["single/article", "more-issues", "v1", tag] do %>
+                <% cache ["single/article", "more-issues", tag] do %>
                     <aside class="see-more issue">
                         <header>
                             <h1>More from this Issue</h1>
@@ -155,7 +155,7 @@
                     </aside>
                 <% end %>
             <% elsif @category.present? %>
-                <% cache ["single/article", "more-from-category", "v1", @category] do %>
+                <% cache ["single/article", "more-from-category", @category] do %>
                     <aside class="see-more issue">
                         <header>
                             <h1>More from this Category</h1>
