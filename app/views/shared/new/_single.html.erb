@@ -29,17 +29,7 @@
                 <% end %>
 
                 <%= cache ["single/article", "story-share", article] do %>
-                    <aside class="share">
-                        <header>Share <span>this story</span></header>
-                        <ul>
-                            <li class="email">
-                                <a href="#" class="track-event email" data-ga-category="Article" data-ga-action="Share" data-ga-label="Email" data-key="<%= article.id %>">Share via Email</a></li>
-                            <li class="twitter">
-                                <a href="#" class="track-event twitter social_twit" data-ga-category="Article" data-ga-action="Share" data-ga-label="Twitter" data-url="<%= article.public_url %>" data-text="<%= u(article.short_title) %>">Share on Twitter</a></li>
-                            <li class="facebook">
-                                <a href="#" class="track-event facebook social_fb" data-ga-category="Article" data-ga-action="Share" data-ga-label="Facebook" data-url="<%= article.public_url %>">Share on Facebook</a></li>
-                        </ul>
-                    </aside>
+                    <%= render 'shared/new/social_share', article: article %>
                 <% end %>
             </div><!--/ .marginal-tools -->
 
@@ -79,17 +69,7 @@
             <% end %>
 
             <%= cache ["single/article", "story-share", article] do %>
-                <aside class="share">
-                    <header>Share <span>this story</span></header>
-                    <ul>
-                        <li class="email">
-                            <a href="#" class="track-event email" data-ga-category="Article" data-ga-action="Share" data-ga-label="Email" data-key="<%= article.id %>">Share via Email</a></li>
-                        <li class="twitter">
-                            <a href="#" class="track-event twitter social_twit" data-ga-category="Article" data-ga-action="Share" data-ga-label="Twitter" data-url="<%= article.public_url %>" data-text="<%= u(article.short_title) %>">Share on Twitter</a></li>
-                        <li class="facebook">
-                            <a href="#" class="track-event facebook social_fb" data-ga-category="Article" data-ga-action="Share" data-ga-label="Facebook" data-url="<%= article.public_url %>">Share on Facebook</a></li>
-                    </ul>
-                </aside>
+                <%= render 'shared/new/social_share', article: article %>
             <% end %>
 
             <footer class="comments-jump">
