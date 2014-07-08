@@ -670,8 +670,8 @@ body.single .comments {
           position: relative;
           min-height: 110px;
           header    { margin-bottom: 5px; }
-          .ratio    { position: absolute; width: 110px; }
-          h2        { margin: 3px 0 0 147px; }
+          .ratio    { position: absolute; width: 100px; }
+          h2        { margin: 6px 8% 0 135px; }
         }
         header {
             background: image-url("i/single-report-icons.png") no-repeat 0 -512px;
@@ -688,10 +688,11 @@ body.single .comments {
                 margin-right: 15px;
             }
         }
-        .ratio              { margin: 0 29% 8px 24px; max-width: 200px; }
-        .ratio .img-contain { background: #f5f5f5; }
-        h2                  { font-size: 1em; line-height: 1.35; font-weight: 400; margin: 0 10% 0 24px; }
-        h2 a,h2 a:hover     { color: #2b1200; }
+        .ratio                    { margin: 0 29% 8px 24px; max-width: 200px; }
+        .ratio .img-contain       { background: #f5f5f5; }
+        h2                        { font-size: 1em; line-height: 1.35; font-weight: 400; margin: 0 10% 0 24px; }
+        &:not(.intermission) h2   { font-size: 1.2em; line-height: 1.2; }
+        h2 a,h2 a:hover           { color: #2b1200; }
     //  - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
         @media screen and (max-width: 950px) {
             position: relative;
