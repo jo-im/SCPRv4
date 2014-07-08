@@ -50,10 +50,11 @@ describe BlogEntry do
   end
 
   describe '#sister_blog_entries' do
-    it 'finds 4 other blog entries' do
+    it 'finds 4 other blogs and their latest entries' do
       entry = build :blog_entry
       other_entries = create_list :blog_entry, 4
       entry.sister_blog_entries.should_not include(entry)
+      entry.sister_blog_entries.map(&:blog).should_not include(entry.blog)
     end
   end
 end
