@@ -76,10 +76,10 @@
 
                             <% if related_links.present? %>
                                 <% related_links.each do |related_link| %>
-                                  <li>
+                                  <li class="outbound">
                                     <%= link_to related_link.url do %>
                                       <mark><%= related_link.title %></mark>
-                                      <span><%= related_link.try(:link_type) || "Article" %></span></a>
+                                      <span>Source: <!-- JEREMY: PLEASE EXTRACT THE URL'S DOMAIN-PLUS-TLD, AND ECHO IT HERE (e.g., "Source: latimes.com", "Source: espn.com") --><!-- (also, we don't need to expose "link_type" here.) --><%= related_link.try(:link_type) || "Article" %></span></a>
                                     <% end %>
                                   </li>
                                 <% end %>
