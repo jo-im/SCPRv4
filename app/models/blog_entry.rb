@@ -92,6 +92,9 @@ class BlogEntry < ActiveRecord::Base
       ).first
   end
 
+  def sister_blog_entries
+    self.class.published.where.not(id: self.id).limit(4)
+  end
 
   # This was made for the blog list pages - showing the full body
   # was too long, but just the teaser was too short.

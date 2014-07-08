@@ -91,18 +91,16 @@
                 </aside>
             <% end %>
 
-            <% if @previous_blog_entry.present? %>
-                <% cache ["single_blog/article", "previous-entry", "v1", @blog] do %>
+            <% if @entry.previous.present? %>
+                <% previous_article = @entry.previous.to_article %>
+                <% cache ["single_blog/article", "previous-entry", previous_article] do %>
                     <aside class="previously">
                         <header><h1>Previously in <%= @blog.name %></h1></header>
                         <nav>
-                            <% previous_article = @previous_blog_entry.to_article %>
-                            <% cache ["single_blog/article", "previous-article", "v1", previous_article] do %>
                                 <%= link_to previous_article.public_path do %>
                                     <h2><%= previous_article.short_title %></h2>
                                     <%= smart_date_js previous_article.public_datetime %>
                                 <% end %>
-                            <% end %>
                         </nav>
                     </aside><!--/ .previously -->
                 <% end %>
@@ -231,23 +229,23 @@
     <section class="blog-sampler">
        <header><h1 class="bound"><span>Enjoy reading <%= @blog.name %>?</span> <span>You might like KPCC’s other blogs.</span></h1></header>
         <div class="highlights bound clearfix">
-            <% @other_blogs.each do |blog| %>
-                <% blog_article = blog.entries.published.first.to_article %>
+            <% @entry.sister_blog_entries.each do |entry| %>
+                <% sister_article = entry.to_article %>
                 <article>
                     <header>
-                        <%= link_to blog_article.public_path do %>
-                            <h2><%= blog_article.short_title %></h2>
-                            <%= smart_date_js blog_article.public_datetime %>
+                        <%= link_to sister_article.public_path do %>
+                            <h2><%= sister_article.short_title %></h2>
+                            <%= smart_date_js sister_article.public_datetime %>
                         <% end %>
                     </header>
                     <aside class="clearfix">
                         <div class="about">
-                            <h3><%= link_to blog.name, blog.public_path %></h3>
-                            <p><%= blog.teaser %></p>
+                            <h3><%= link_to entry.blog.name, entry.blog.public_path %></h3>
+                            <p><%= entry.blog.teaser %></p>
                         </div>
                         <div class="photo ratio">
                             <div class="fill"></div>
-                            <div class="img-contain"><%= image_tag blog_article.asset.lsquare.url, alt: blog_article.asset.caption %></div>
+                            <div class="img-contain"><%= image_tag sister_article.asset.lsquare.url, alt: sister_article.asset.caption %></div>
                         </div>
                     </aside>
                 </article>

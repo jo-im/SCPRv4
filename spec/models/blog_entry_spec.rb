@@ -48,4 +48,12 @@ describe BlogEntry do
       entry.to_abstract.should be_a Abstract
     end
   end
+
+  describe '#sister_blog_entries' do
+    it 'finds 4 other blog entries' do
+      entry = build :blog_entry
+      other_entries = create_list :blog_entry, 4
+      entry.sister_blog_entries.should_not include(entry)
+    end
+  end
 end
