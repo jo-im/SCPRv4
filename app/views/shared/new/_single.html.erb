@@ -47,22 +47,10 @@
                 <% end %>
             </div><!--/ .prose-body -->
 
-            <% related_content = article.original_object.related_content %>
             <%= cache ["single/article", "related-content", article] do %>
-                <aside class="related">
-                    <header><h1>Related Links</h1></header>
-                    <nav>
-                        <ul>
-                            <% present article do |article_presenter| %>
-                                <%= article_presenter.related_content %>
-                            <% end %>
-
-                            <% present article do |article_presenter| %>
-                                <%= article_presenter.related_links %>
-                            <% end %>
-                        </ul>
-                    </nav>
-                </aside><!--/ .related -->
+                <% present article do |article_presenter| %>
+                    <%= article_presenter.related_links %>
+                <% end %>
             <% end %>
 
             <%= cache ["single/article", "story-share", article] do %>

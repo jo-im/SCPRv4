@@ -20,7 +20,28 @@ class ArticlePresenter < ApplicationPresenter
     end
   end
 
+
   def related_links
+    if article.original_object.related_links.present? || article.original_object.related_content.present?
+      s = "".html_safe
+      h.content_tag :aside, class: "related" do
+        l = h.content_tag :header do
+          h.content_tag :h1 do
+            "Related Links"
+          end
+        end
+        l += h.content_tag :nav do
+          h.content_tag :ul do
+            inbound_links + outbound_links
+          end
+        end
+      end
+    end
+  end
+
+  private
+
+  def outbound_links
     if article.original_object.related_links.present?
       s = "".html_safe
       article.original_object.related_links.each do |related_link|
@@ -42,7 +63,7 @@ class ArticlePresenter < ApplicationPresenter
     s
   end
 
-  def related_content
+  def inbound_links
     if article.original_object.related_content.present?
       s = "".html_safe
       article.original_object.related_content.each do |related_article|
