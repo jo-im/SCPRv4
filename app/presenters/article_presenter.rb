@@ -22,17 +22,18 @@ class ArticlePresenter < ApplicationPresenter
 
   def related_links
     if article.original_object.related_links.present?
-
       s = "".html_safe
       article.original_object.related_links.each do |related_link|
-        s += h.content_tag :li, class: "outbound" do
+        domain = URI.parse(related_link.url).host.sub(/^www\./, '')
+        kpcc_link = domain.split(".").include?("scpr")
+        class_options = "outbound" unless kpcc_link
+        s += h.content_tag :li, class: class_options do
           h.link_to related_link.url do
             l = h.content_tag :mark do
               related_link.title
             end
             l += h.content_tag :span do
-              domain = URI.parse(related_link.url).host.sub(/^www\./, '')
-              domain.split(".").include?("scpr") ? "Article" : domain
+              kpcc_link ? "Article" : "Source: #{domain}"
             end
           end
         end
@@ -40,4 +41,24 @@ class ArticlePresenter < ApplicationPresenter
     end
     s
   end
+
+  def related_content
+    if article.original_object.related_content.present?
+      s = "".html_safe
+      article.original_object.related_content.each do |related_article|
+        s += h.content_tag :li, class: related_article.feature.try(:key) do
+          h.link_to related_article.public_path do
+            l = h.content_tag :mark do
+              related_article.short_title
+            end
+            l += h.content_tag :span do
+              related_article.feature.try(:name) || "Article"
+            end
+          end
+        end
+      end
+    end
+    s
+  end
+
 end

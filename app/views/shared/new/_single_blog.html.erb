@@ -52,15 +52,8 @@
                     <header><h1>Related Links</h1></header>
                     <nav>
                         <ul>
-                            <% if related_content.present? %>
-                                <% related_content.each do |related_article| %>
-                                  <li class="<%= related_article.feature.try(:key) %>">
-                                    <%= link_to related_article.public_path do %>
-                                      <mark><%= related_article.short_title %></mark>
-                                      <span><%= related_article.feature.try(:name) || "Article" %></span></a>
-                                    <% end %>
-                                  </li>
-                                <% end %>
+                            <% present article do |article_presenter| %>
+                                <%= article_presenter.related_content %>
                             <% end %>
 
                             <% present article do |article_presenter| %>
