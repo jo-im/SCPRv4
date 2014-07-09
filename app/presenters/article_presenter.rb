@@ -19,4 +19,25 @@ class ArticlePresenter < ApplicationPresenter
       render 'shared/new/inline_asset', article: article
     end
   end
+
+  def related_links
+    if article.original_object.related_links.present?
+
+      s = "".html_safe
+      article.original_object.related_links.each do |related_link|
+        s += h.content_tag :li, class: "outbound" do
+          h.link_to related_link.url do
+            l = h.content_tag :mark do
+              related_link.title
+            end
+            l += h.content_tag :span do
+              domain = URI.parse(related_link.url).host.sub(/^www\./, '')
+              domain.split(".").include?("scpr") ? "Article" : domain
+            end
+          end
+        end
+      end
+    end
+    s
+  end
 end

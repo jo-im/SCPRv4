@@ -47,14 +47,14 @@
                 <% end %>
             </div><!--/ .prose-body -->
 
-            <% related = article.original_object.related_content %>
-            <% if related.present? %>
-                <%= cache ["single/article", "related-content", related] do %>
-                    <aside class="related">
-                        <header><h1>Related Links</h1></header>
-                        <nav>
-                            <ul>
-                                <% related.each do |related_article| %>
+            <% related_content = article.original_object.related_content %>
+            <%= cache ["single/article", "related-content", article] do %>
+                <aside class="related">
+                    <header><h1>Related Links</h1></header>
+                    <nav>
+                        <ul>
+                            <% if related_content.present? %>
+                                <% related_content.each do |related_article| %>
                                   <li class="<%= related_article.feature.try(:key) %>">
                                     <%= link_to related_article.public_path do %>
                                       <mark><%= related_article.short_title %></mark>
@@ -62,10 +62,17 @@
                                     <% end %>
                                   </li>
                                 <% end %>
-                            </ul>
-                        </nav>
-                    </aside><!--/ .related -->
-                <% end %>
+                            <% end %>
+
+
+                            <% present article do |article_presenter| %>
+                                <%= article_presenter.related_links %>
+                            <% end %>
+
+
+                        </ul>
+                    </nav>
+                </aside><!--/ .related -->
             <% end %>
 
             <%= cache ["single/article", "story-share", article] do %>
