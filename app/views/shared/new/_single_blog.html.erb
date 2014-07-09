@@ -27,11 +27,11 @@
                     <% end %>
                 <% end %>
 
-
                 <%= cache ["single_blog/article", "story-share", article] do %>
                     <%= render 'shared/new/social_share', article: article %>
                 <% end %>
             </div><!--/ .marginal-tools -->
+
             <%= cache ["single_blog/article", "article-body", article] do %>
                 <div class="prose-body">
                     <% if article.original_object.assets.present? %>
@@ -41,6 +41,7 @@
                     <% end %>
 
                     <%= article.body.html_safe %>
+
                 </div><!--/ .prose-body -->
             <% end %>
 
@@ -149,7 +150,6 @@
                     <% end %>
                 <% end %>
             </aside>
-
 
             <%= cache ["single_blog/article", "recent-entries", @blog] do %>
                 <aside class="see-more">

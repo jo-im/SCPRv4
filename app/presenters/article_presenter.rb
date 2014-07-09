@@ -20,7 +20,6 @@ class ArticlePresenter < ApplicationPresenter
     end
   end
 
-
   def related_links
     if article.original_object.related_links.present? || article.original_object.related_content.present?
       s = "".html_safe
