@@ -31,13 +31,7 @@ class ArticlePresenter < ApplicationPresenter
         end
         l += h.content_tag :nav do
           h.content_tag :ul do
-            if article.original_object.related_links.present? && article.original_object.related_content.present?
-              inbound_links + outbound_links 
-            elsif article.original_object.related_links.present?
-              outbound_links
-            else
-              inbound_links
-            end
+            inbound_links + outbound_links
           end
         end
       end
@@ -47,8 +41,8 @@ class ArticlePresenter < ApplicationPresenter
   private
 
   def outbound_links
+    s = "".html_safe
     if article.original_object.related_links.present?
-      s = "".html_safe
       article.original_object.related_links.each do |related_link|
         domain = URI.parse(related_link.url).host.sub(/^www\./, '')
         kpcc_link = domain.split(".").include?("scpr")
@@ -69,8 +63,8 @@ class ArticlePresenter < ApplicationPresenter
   end
 
   def inbound_links
+    s = "".html_safe
     if article.original_object.related_content.present?
-      s = "".html_safe
       article.original_object.related_content.each do |related_article|
         s += h.content_tag :li, class: related_article.feature.try(:key) do
           h.link_to related_article.public_path do
