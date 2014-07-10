@@ -31,7 +31,13 @@ class ArticlePresenter < ApplicationPresenter
         end
         l += h.content_tag :nav do
           h.content_tag :ul do
-            inbound_links + outbound_links
+            if article.original_object.related_links.present? && article.original_object.related_content.present?
+              inbound_links + outbound_links 
+            elsif article.original_object.related_links.present?
+              outbound_links
+            else
+              inbound_links
+            end
           end
         end
       end
