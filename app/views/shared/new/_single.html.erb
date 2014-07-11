@@ -44,6 +44,7 @@
 
                 <% cache ["single/article", "article-body", article] do %>
                     <%= article.body.html_safe %>
+                    <p><i><%= render_contributing_byline article.original_object %></i></p>
                 <% end %>
             </div><!--/ .prose-body -->
 
