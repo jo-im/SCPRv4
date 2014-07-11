@@ -44,7 +44,9 @@
 
                 <% cache ["single/article", "article-body", article] do %>
                     <%= article.body.html_safe %>
-                    <p><i><%= render_contributing_byline article.original_object %></i></p>
+                    <footer class="contributor">
+                      <p><%= render_contributing_byline article.original_object %></p>
+                    </footer>
                 <% end %>
             </div><!--/ .prose-body -->
 

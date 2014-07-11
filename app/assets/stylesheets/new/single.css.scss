@@ -629,6 +629,7 @@ body.single .comments {
         .prose-body {
             & > p > img,
             & .embed-wrapper    { clear: both; }
+            .contributor        { border-top: 1px solid #cfcfcf; color: #b1b1b1; font-size: 0.8125em; line-height: 1.5; padding: 1em 0 1.5em; }
         }
     }
     .asset-inset {
