@@ -17,10 +17,12 @@
     .issues.interior .masthead {
         background: #f3f3f3;
         border-bottom: 1px solid rgba(0,0,0,0.12);
+        padding-bottom: 0 !important;
         .inner {
             padding-bottom: 50px;
             @media screen and (max-width: 975px)                { padding-bottom: 80px; }
-            @media screen and (max-width: 750px)                { padding-bottom: 10px; padding-top: 50px; }
+            @media screen and (min-width: 751px)                { padding-top: 14px !important; }
+            @media screen and (max-width: 750px)                { padding-bottom: 10px; padding-top: 50px !important; }
         }
     }
 
@@ -66,13 +68,17 @@
 
     body.issues .prologue {
         margin: 66px 0 42px;
-        .inner  { position: relative; }
+        .inner {
+          position: relative;
+          height: auto !important;
+        }
         .title {
             font-family: $font-prox;
             text-transform: uppercase;
             font-size: 1.375em; // 22 / 16
             font-weight: 700;
             color: #b6b6b6;
+            padding: 0 !important;
         }
         .share {
             position: absolute;
