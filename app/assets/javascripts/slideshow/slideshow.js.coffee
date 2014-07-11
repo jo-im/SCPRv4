@@ -207,7 +207,7 @@ class scpr.Slideshow
                       unless firstImgToLoad.hasClass('loaded')
                         imgLoaded(firstImgToLoad[0])
                         firstImgToLoad.attr('src', firstImgToLoad.data('original'))
-                # since were loading the first two images, lazy load the third image and onwards
+                    # since were loading the first two images, lazy load the third image and onwards
                     if idx < @slides.length - 1
                       @nextnextEl           = $ @slides[idx + 1]
                       secondImgToLoad       = @nextnextEl.find('.lazy-load')
