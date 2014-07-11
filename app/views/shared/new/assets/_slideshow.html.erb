@@ -18,14 +18,22 @@
 
                 <div id="asset_slideshow_<%=html_safe_id%>" class="slideview">
                     <div class="static-slides">
-                        <% article.assets.each do |asset| %>
+                        <% article.assets.each_with_index do |asset, index| %>
                             <div class="slide">
-                              <div class="asset-block">
-                                <div class="contentasset ratio">
-                                  <div class="fill"></div>
-                                  <b class="img-contain" data-caption="<%= asset.caption %>" data-owner="<%= asset.owner %>"><%= link_to asset.full.tag, article.public_url %></b>
+                                <div class="asset-block">
+                                    <div class="contentasset ratio">
+                                        <div class="fill"></div>
+                                        <b class="img-contain" data-caption="<%= asset.caption %>" data-owner="<%= asset.owner %>">
+                                            <a href="<%= article.public_url %>">
+                                                <% if index <= 1 %>
+                                                    <%= image_tag asset.full.url, class: 'loaded' %>
+                                                <% else %>
+                                                    <img class="lazy-load" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-original="<%= asset.full.url %>" />
+                                                <% end %>
+                                            </a>
+                                        </b>
+                                    </div>
                                 </div>
-                              </div>
                             </div>
                         <% end %>
                     </div>
@@ -60,6 +68,8 @@
           showOverlay: true
     });
 
+
+
     slideshow.bind("switch", function(idx) {
         // (1.) add slide change listener for analytics
         if(typeof(_gaq) != 'undefined') {
@@ -72,5 +82,3 @@
     });
   }());
 </script>
-
-

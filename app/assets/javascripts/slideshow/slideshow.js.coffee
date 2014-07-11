@@ -32,7 +32,6 @@ class scpr.Slideshow
                 if startingSlide > 0 and startingSlide <= @total
                     @start = startingSlide - 1
 
-
             #----------
             # Create the elements we need for the complete slideshow
             @overlayNav = new Slideshow.OverlayNav
@@ -189,8 +188,8 @@ class scpr.Slideshow
             if idx >= 0 and idx <= @slides.length - 1
                 @currentEl  = @currentSlide()
                 @nextEl     = $ @slides[idx]
-
                 @currentEl.stop(true, true).fadeOut 'fast', =>
+
                     @currentEl.removeClass 'active'
                     @trigger "switch", idx
                     @nextEl.addClass('active').fadeIn('fast')
@@ -199,7 +198,23 @@ class scpr.Slideshow
                     captionOwner = @nextEl.find('.img-contain').data('owner')
                     caption_html = "#{caption} <mark class='credit'>#{captionOwner}</mark>"
                     $('.caption p.caption-text').html(caption_html)
+
                     @nextEl.trigger "activated"
+
+                    # if the page is loaded in the middle of the slideshow, this will lazy load each image when switching slides
+                    firstImgToLoad = @nextEl.find('.lazy-load')
+                    if firstImgToLoad.length > 0
+                      unless firstImgToLoad.hasClass('loaded')
+                        imgLoaded(firstImgToLoad[0])
+                        firstImgToLoad.attr('src', firstImgToLoad.data('original'))
+                # since were loading the first two images, lazy load the third image and onwards
+                    if idx < @slides.length - 1
+                      @nextnextEl           = $ @slides[idx + 1]
+                      secondImgToLoad       = @nextnextEl.find('.lazy-load')
+                      unless secondImgToLoad.hasClass('loaded')
+                        imgLoaded(secondImgToLoad[0])
+                        secondImgToLoad.attr('src', secondImgToLoad.data('original'))
+
 
         #----------
 
@@ -237,6 +252,13 @@ class scpr.Slideshow
 
                 if i == @options.start
                     $(el).addClass("active")
+
+                    # lazy load the first image on page load
+                    imgToLoad = $(el).find('.lazy-load')
+                    unless imgToLoad.hasClass('loaded')
+                      imgLoaded(imgToLoad[0])
+                      imgToLoad.attr('src', imgToLoad.data('original'))
+
                     caption = $(el).find('.img-contain').data('caption')
                     captionOwner = $(el).find('.img-contain').data('owner')
                     caption_html = "#{caption} <mark class='credit'>#{captionOwner}</mark>"
@@ -246,7 +268,6 @@ class scpr.Slideshow
 
             # And the overlay nav
             $(@el).append @overlayNav.el
-
             # Give the images time to start loading
             setTimeout () =>
                 @overlayNav.showTargets()
