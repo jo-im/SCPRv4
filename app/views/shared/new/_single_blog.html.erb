@@ -41,10 +41,11 @@
                     <% end %>
 
                     <%= article.body.html_safe %>
-
-                    <footer class="contributor">
-                      <p><%= render_contributing_byline article.original_object %></p>
-                    </footer>
+                    <% if article.original_object.joined_bylines[:contributing].present? %>
+                        <footer class="contributor">
+                            <p><%= render_contributing_byline article.original_object %></p>
+                        </footer>
+                    <% end %>
 
                 </div><!--/ .prose-body -->
             <% end %>
