@@ -4,7 +4,138 @@
 <% content_for :membership_copy, @category.present? ? @category.title : 'Lorem Ipsum' %>
 <% content_for :body_class, 'interior single' %>
 
-<%= cache ["show", "v12", @entry] do %>
+<%= cache ["show", "blog-content","v13", @entry] do %>
   <%= render "shared/new/single_blog", article: @entry, full: true %>
 <% end %>
 
+<% cache ["show", "blog-supportive", "v13", @entry] do %>
+        <section class="supportive">
+
+            <aside class="placard">
+                <div class="ad widget">
+                    <%= render "shared/ads/dfp", ad_key: 'slot_a' %>
+                </div>
+            </aside>
+
+            <aside class="placard">
+                <div class="ad widget">
+                    <%= render "shared/ads/dfp", ad_key: 'slot_b' %>
+                    <p class="appeal"><a href="/support/underwriting/">Become a KPCC Sponsor</a></p>
+                </div>
+            </aside>
+            <aside class="about-this-blog">
+                <header>
+                    <h1><%= link_to @blog.name, @blog.public_path %></h1>
+                </header>
+                <div class="description">
+                    <p><%= @blog.description %></p>
+                </div>
+                <div class="archives">
+                    <h2>Browse the <%= @blog.name %> archive</h2>
+                    <%= form_tag blog_process_archive_select_path(@blog.slug), id: "archive_date_select", class: "archive-date-select" do %>
+                        <%= date_select 'archive', 'date',
+                            :order      => [:month, :year],
+                            :start_year => @blog.created_at.year,
+                            :end_year   => Time.now.year %>
+                        <%= submit_tag "Go", class: "btn" %>
+                    <% end %>
+                </div>
+
+                <% bios = @blog.authors %>
+                <% if bios.present? %>
+                    <div class="hosts">
+                        <h2>Your host<%= 's' unless bios.length == 1 %></h2>
+                        <% bios.each do |author| %>
+                            <figure class="clearfix">
+                                <div class="photo ratio">
+                                    <%= link_to author.public_path do %>
+                                        <div class="fill"></div>
+                                        <% if author.headshot.present? %>
+                                        <b class="img-contain"><%= author.headshot.eight.tag %></b>
+                                        <% end %>
+                                    <% end %>
+                                </div>
+                                <figcaption>
+                                    <h3><%= link_to author.name, author.public_path %></h3>
+                                    <ul>
+                                        <li class="portfolio"><%= link_to "All posts by #{author.name.split(" ").first()}", author.public_path %></li>
+                                        <li class="twitter"><%= link_to "Follow @#{author.twitter_handle}", twitter_profile_url(author.twitter_handle) if author.twitter_handle.present? %></li>
+                                        <li class="contact"><%= mail_to author.email, "Email #{author.name.split(" ").first()}" %></li>
+                                    </ul>
+                                </figcaption>
+                            </figure>
+                        <% end %>
+                    </div>
+                <% end %>
+            </aside>
+
+            <aside class="see-more">
+                <header>
+                    <h1>Recently on <%= @blog.name %></h1>
+                </header>
+                <ul class="previews">
+                    <% @blog.entries.published.first(3).each do |entry| %>
+                        <% blog_article = entry.to_article %>
+                        <li>
+                            <%= link_to blog_article.public_path do %>
+                                <figure class="ratio-pairing clearfix">
+                                    <div class="ratio">
+                                        <div class="fill"></div>
+                                        <b class="img-contain"><%= image_tag blog_article.asset.lsquare.url, alt: blog_article.asset.caption %></b>
+                                    </div><!--/ .ratio -->
+                                    <figcaption>
+                                        <%= smart_date_js blog_article.public_datetime %>
+                                        <mark><%= blog_article.short_title %></mark>
+                                    </figcaption>
+                                </figure><!--/ .ratio-pairing -->
+                            <% end %>
+                        </li>
+                    <% end %>
+                </ul>
+            </aside>
+        </section>
+    </div>
+</div><!--/ .report -->
+
+<!-- AdHost Slot: Membership Appeals -->
+<div id="article-membership-appeal"></div>
+
+<%= comments_for @entry %>
+
+    <div class="placard-waystation">
+    </div>
+
+<section class="blog-sampler">
+   <header><h1 class="bound"><span>Enjoy reading <%= @blog.name %>?</span> <span>You might like KPCC’s other blogs.</span></h1></header>
+    <div class="highlights bound clearfix">
+        <% @entry.sister_blog_entries.each do |entry| %>
+            <% sister_article = entry.to_article %>
+            <article>
+                <header>
+                    <%= link_to sister_article.public_path do %>
+                        <h2><%= sister_article.short_title %></h2>
+                        <%= smart_date_js sister_article.public_datetime %>
+                    <% end %>
+                </header>
+                <aside class="clearfix">
+                    <div class="about">
+                        <h3><%= link_to entry.blog.name, entry.blog.public_path %></h3>
+                        <p><%= entry.blog.teaser %></p>
+                    </div>
+                    <div class="photo ratio">
+                        <div class="fill"></div>
+                        <div class="img-contain"><%= image_tag sister_article.asset.lsquare.url, alt: sister_article.asset.caption %></div>
+                    </div>
+                </aside>
+            </article>
+        <% end %>
+    </div><!--/ .highlights -->
+    <footer class="bound"><a href="/blogs/">See all of our blogs &amp; news coverage</a></footer>
+</section><!--/ .sampler -->
+
+    <% if @popular_articles %>
+        <%= render 'shared/new/popular_articles',
+            articles: @popular_articles.first(4),
+            header: 'Popular Now on KPCC' %>
+    <% end %>
+<% end %>

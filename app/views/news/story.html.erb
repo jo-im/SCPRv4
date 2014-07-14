@@ -4,7 +4,120 @@
 <% content_for :membership_copy, @category.present? ? @category.title : 'Lorem Ipsum' %>
 <% content_for :body_class, 'interior single' %>
 
-<%= cache ["show", "v12", @story] do %>
+<%= cache ["show", "article-content", "v13", @story] do %>
   <%= render "shared/new/single", article: @story, full: true %>
 <% end %>
 
+<% cache ["show", "article-supportive", "v13", @story] do %>
+    <section class="supportive">
+        <aside class="placard">
+            <div class="ad widget">
+                <%= render "shared/ads/dfp", ad_key: 'slot_a' %>
+            </div>
+        </aside>
+
+        <aside class="placard">
+            <div class="ad widget">
+                <%= render "shared/ads/dfp", ad_key: 'slot_b' %>
+                <p class="appeal"><a href="/support/underwriting/">Become a KPCC Sponsor</a></p>
+            </div>
+        </aside>
+
+        <% if tag = @story.tags.first %>
+            <aside class="see-more issue">
+                <header>
+                    <h1>More from this Issue</h1>
+                    <h2 class="clearfix">
+                        <span><%= link_to tag.title, tag.public_path %></span>
+                        <mark><%= link_to 'See All', issues_path %></mark>
+                    </h2>
+                </header>
+                <ul class="previews">
+                    <% if tag_articles = tag.articles.first(3) %>
+                        <% tag_articles.each do |article| %>
+                            <li>
+                            <%= link_to article.public_path do %>
+                                <figure class="ratio-pairing clearfix">
+                                    <div class="ratio">
+                                        <div class="fill"></div>
+                                        <b class="img-contain"><%= image_tag article.asset.lsquare.url %></b>
+                                    </div><!--/ .ratio -->
+                                    <figcaption>
+                                        <%= smart_date_js article.public_datetime %>
+                                        <mark><%= article.short_title %></mark>
+                                    </figcaption>
+                                </figure><!--/ .ratio-pairing -->
+                            <% end %>
+                            </li>
+                        <% end %>
+                    <% end %>
+                </ul>
+            </aside>
+        <% elsif @category.present? %>
+            <aside class="see-more issue">
+                <header>
+                    <h1>More from this Category</h1>
+                    <h2 class="clearfix">
+                        <span><%= link_to @category.title, @category.public_path %></span>
+                        <mark><%= link_to 'See All', @category.public_path %></mark>
+                    </h2>
+                </header>
+                <ul class="previews">
+                    <% if category_articles = @category_articles.first(3) %>
+                        <% category_articles.each do |article| %>
+                            <li>
+                            <%= link_to article.public_path do %>
+                                <figure class="ratio-pairing clearfix">
+                                    <div class="ratio">
+                                        <div class="fill"></div>
+                                        <b class="img-contain"><%= image_tag article.asset.lsquare.url %></b>
+                                    </div><!--/ .ratio -->
+                                    <figcaption>
+                                        <%= smart_date_js article.public_datetime %>
+                                        <mark><%= article.short_title %></mark>
+                                    </figcaption>
+                                </figure><!--/ .ratio-pairing -->
+                            <% end %>
+                            </li>
+                        <% end %>
+                    <% end %>
+                </ul>
+            </aside>
+        <% end %>
+            <aside class="see-more">
+                <header>
+                    <h1>Popular now on KPCC</h1>
+                </header>
+                <ul class="previews">
+                  <% if @popular_articles.present? %>
+                    <% @popular_articles.first(3).each do |article| %>
+                      <li>
+                        <%= link_to article.public_path do %>
+                              <figure class="ratio-pairing clearfix">
+                                  <div class="ratio">
+                                      <div class="fill"></div>
+                                      <b class="img-contain"><%= image_tag article.asset.lsquare.url %></b>
+                                  </div><!--/ .ratio -->
+                                  <figcaption>
+                                      <%= smart_date_js article.public_datetime %>
+                                      <mark><%= article.short_title %></mark>
+                                  </figcaption>
+                              </figure><!--/ .ratio-pairing -->
+                        <% end %>
+                      </li>
+                    <% end %>
+                  <% end %>
+                </ul>
+            </aside>
+        </section>
+    <% end %>
+    </div>
+</div><!--/ .report -->
+
+<!-- AdHost Slot: Membership Appeals -->
+<div id="article-membership-appeal"></div>
+
+<%= comments_for @story %>
+
+<div class="placard-waystation">
+</div>

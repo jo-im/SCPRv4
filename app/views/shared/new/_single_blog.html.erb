@@ -1,8 +1,6 @@
 <% article = article.to_article %>
-<%= cache ["single_blog/article", "asset-display", article] do %>
-    <% present article do |article_presenter| %>
-        <%= article_presenter.asset_display %>
-    <% end %>
+<% present article do |article_presenter| %>
+    <%= article_presenter.asset_display %>
 <% end %>
 <div class="report">
     <div class="inner bound clearfix">
@@ -10,71 +8,59 @@
             <div class="marginal-tools clearfix">
                 <% if article.audio.any? %>
                     <% audio = article.audio %>
-                    <%= cache ["single_blog/article", "story-audio", "v1", audio] do %>
-                        <nav class="audio-queue">
-                            <header>Listen to audio from this story</header>
-                            <ul>
-                            <% audio.each_with_index do |audio, index| %>
-                                <li class="story-audio">
-                                    <a href="<%= audio.url %>" class="play-btn audio-toggler" title="<%= h(article.short_title) %>" data-duration="<%= audio.duration %>">
-                                        <b><%= format_clip_duration audio.duration %></b>
-                                        <span><%= "Clip #{index+1}" %></span>
-                                    </a>
-                                </li>
-                            <% end %>
-                            </ul>
-                        </nav>
-                    <% end %>
+                    <nav class="audio-queue">
+                        <header>Listen to audio from this story</header>
+                        <ul>
+                        <% audio.each_with_index do |audio, index| %>
+                            <li class="story-audio">
+                                <a href="<%= audio.url %>" class="play-btn audio-toggler" title="<%= h(article.short_title) %>" data-duration="<%= audio.duration %>">
+                                    <b><%= format_clip_duration audio.duration %></b>
+                                    <span><%= "Clip #{index+1}" %></span>
+                                </a>
+                            </li>
+                        <% end %>
+                        </ul>
+                    </nav>
                 <% end %>
 
-                <%= cache ["single_blog/article", "story-share", article] do %>
-                    <%= render 'shared/new/social_share', article: article %>
-                <% end %>
+                <%= render 'shared/new/social_share', article: article %>
             </div><!--/ .marginal-tools -->
 
-            <%= cache ["single_blog/article", "article-body", article] do %>
-                <div class="prose-body">
-                    <% if article.original_object.assets.present? %>
-                        <% present article do |article_presenter| %>
-                            <%= article_presenter.inline_asset %>
-                        <% end %>
+            <div class="prose-body">
+                <% if article.original_object.assets.present? %>
+                    <% present article do |article_presenter| %>
+                        <%= article_presenter.inline_asset %>
                     <% end %>
+                <% end %>
 
-                    <%= article.body.html_safe %>
-                    <% if article.original_object.joined_bylines[:contributing].present? %>
-                        <footer class="contributor">
-                            <p><%= render_contributing_byline article.original_object %></p>
-                        </footer>
-                    <% end %>
+                <%= article.body.html_safe %>
+                <% if article.original_object.joined_bylines[:contributing].present? %>
+                    <footer class="contributor">
+                        <p><%= render_contributing_byline article.original_object %></p>
+                    </footer>
+                <% end %>
 
-                </div><!--/ .prose-body -->
-            <% end %>
+            </div><!--/ .prose-body -->
 
             <%= raw Rails.cache.read("views/popular/#{@blog.slug}") %>
 
-            <%= cache ["single_blog/article", "related-content", article] do %>
-                <% present article do |article_presenter| %>
-                    <%= article_presenter.related_links %>
-                <% end %>
+            <% present article do |article_presenter| %>
+                <%= article_presenter.related_links %>
             <% end %>
 
-            <%= cache ["single_blog/article", "story-share", article] do %>
-                <%= render 'shared/new/social_share', article: article %>
-            <% end %>
+            <%= render 'shared/new/social_share', article: article %>
 
             <% if @entry.previous.present? %>
                 <% previous_article = @entry.previous.to_article %>
-                <% cache ["single_blog/article", "previous-entry", previous_article] do %>
-                    <aside class="previously">
-                        <header><h1>Previously in <%= @blog.name %></h1></header>
-                        <nav>
-                                <%= link_to previous_article.public_path do %>
-                                    <h2><%= previous_article.short_title %></h2>
-                                    <%= smart_date_js previous_article.public_datetime %>
-                                <% end %>
-                        </nav>
-                    </aside><!--/ .previously -->
-                <% end %>
+                <aside class="previously">
+                    <header><h1>Previously in <%= @blog.name %></h1></header>
+                    <nav>
+                            <%= link_to previous_article.public_path do %>
+                                <h2><%= previous_article.short_title %></h2>
+                                <%= smart_date_js previous_article.public_datetime %>
+                            <% end %>
+                    </nav>
+                </aside><!--/ .previously -->
             <% end %>
 
             <footer class="comments-jump">
@@ -92,142 +78,4 @@
 
         </article>
 
-        <section class="supportive">
-
-            <aside class="placard">
-                <div class="ad widget">
-                    <%= render "shared/ads/dfp", ad_key: 'slot_a' %>
-                </div>
-            </aside>
-
-            <aside class="placard">
-                <div class="ad widget">
-                    <%= render "shared/ads/dfp", ad_key: 'slot_b' %>
-                    <p class="appeal"><a href="/support/underwriting/">Become a KPCC Sponsor</a></p>
-                </div>
-            </aside>
-            <aside class="about-this-blog">
-                <%= cache ["single_blog/article", "blog-details", @blog] do %>
-                    <header>
-                        <h1><%= link_to @blog.name, @blog.public_path %></h1>
-                    </header>
-                    <div class="description">
-                        <p><%= @blog.description %></p>
-                    </div>
-                    <div class="archives">
-                        <h2>Browse the <%= @blog.name %> archive</h2>
-                        <%= form_tag blog_process_archive_select_path(@blog.slug), id: "archive_date_select", class: "archive-date-select" do %>
-                            <%= date_select 'archive', 'date',
-                                :order      => [:month, :year],
-                                :start_year => @blog.created_at.year,
-                                :end_year   => Time.now.year %>
-                            <%= submit_tag "Go", class: "btn" %>
-                        <% end %>
-                    </div>
-                <% end %>
-
-                <% bios = @blog.authors %>
-                <% if bios.present? %>
-                    <%= cache ["single_blog/article", "bios", bios.to_a] do %>
-                        <div class="hosts">
-                            <h2>Your host<%= 's' unless bios.length == 1 %></h2>
-                            <% bios.each do |author| %>
-                                <figure class="clearfix">
-                                    <div class="photo ratio">
-                                        <%= link_to author.public_path do %>
-                                            <div class="fill"></div>
-                                            <% if author.headshot.present? %>
-                                            <b class="img-contain"><%= author.headshot.eight.tag %></b>
-                                            <% end %>
-                                        <% end %>
-                                    </div>
-                                    <figcaption>
-                                        <h3><%= link_to author.name, author.public_path %></h3>
-                                        <ul>
-                                            <li class="portfolio"><%= link_to "All posts by #{author.name.split(" ").first()}", author.public_path %></li>
-                                            <li class="twitter"><%= link_to "Follow @#{author.twitter_handle}", twitter_profile_url(author.twitter_handle) if author.twitter_handle.present? %></li>
-                                            <li class="contact"><%= mail_to author.email, "Email #{author.name.split(" ").first()}" %></li>
-                                        </ul>
-                                    </figcaption>
-                                </figure>
-                            <% end %>
-                        </div>
-                    <% end %>
-                <% end %>
-            </aside>
-
-            <%= cache ["single_blog/article", "recent-entries", @blog] do %>
-                <aside class="see-more">
-                    <header>
-                        <h1>Recently on <%= @blog.name %></h1>
-                    </header>
-                    <ul class="previews">
-                        <% @blog.entries.published.first(3).each do |entry| %>
-                            <% blog_article = entry.to_article %>
-                            <li>
-                                <%= link_to blog_article.public_path do %>
-                                    <figure class="ratio-pairing clearfix">
-                                        <div class="ratio">
-                                            <div class="fill"></div>
-                                            <b class="img-contain"><%= image_tag blog_article.asset.lsquare.url, alt: blog_article.asset.caption %></b>
-                                        </div><!--/ .ratio -->
-                                        <figcaption>
-                                            <%= smart_date_js blog_article.public_datetime %>
-                                            <mark><%= blog_article.short_title %></mark>
-                                        </figcaption>
-                                    </figure><!--/ .ratio-pairing -->
-                                <% end %>
-                            </li>
-                        <% end %>
-                    </ul>
-                </aside>
-            <% end %>
-        </section>
-
-    </div>
-</div><!--/ .report -->
-
-<!-- AdHost Slot: Membership Appeals -->
-<div id="article-membership-appeal"></div>
-
-<%= comments_for article.original_object %>
-
-    <div class="placard-waystation">
-    </div>
-
-<%= cache ["single_blog/article", "blog-sampler", @blog] do %>
-    <section class="blog-sampler">
-       <header><h1 class="bound"><span>Enjoy reading <%= @blog.name %>?</span> <span>You might like KPCC’s other blogs.</span></h1></header>
-        <div class="highlights bound clearfix">
-            <% @entry.sister_blog_entries.each do |entry| %>
-                <% sister_article = entry.to_article %>
-                <article>
-                    <header>
-                        <%= link_to sister_article.public_path do %>
-                            <h2><%= sister_article.short_title %></h2>
-                            <%= smart_date_js sister_article.public_datetime %>
-                        <% end %>
-                    </header>
-                    <aside class="clearfix">
-                        <div class="about">
-                            <h3><%= link_to entry.blog.name, entry.blog.public_path %></h3>
-                            <p><%= entry.blog.teaser %></p>
-                        </div>
-                        <div class="photo ratio">
-                            <div class="fill"></div>
-                            <div class="img-contain"><%= image_tag sister_article.asset.lsquare.url, alt: sister_article.asset.caption %></div>
-                        </div>
-                    </aside>
-                </article>
-            <% end %>
-        </div><!--/ .highlights -->
-        <footer class="bound"><a href="/blogs/">See all of our blogs &amp; news coverage</a></footer>
-    </section><!--/ .sampler -->
-<% end %>
-
-<% if @popular_articles %>
-    <%= render 'shared/new/popular_articles',
-        articles: @popular_articles.first(4),
-        header: 'Popular Now on KPCC' %>
-<% end %>
 
