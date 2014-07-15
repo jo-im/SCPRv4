@@ -93,7 +93,11 @@ class BlogEntry < ActiveRecord::Base
   end
 
   def sister_blog_entries
-    self.class.published.where.not(blog_id: self.blog_id).limit(4)
+    self.class.published.where.not(blog_id: self.blog_id).first(4)
+  end
+
+  def recent_blog_entries
+    self.class.published.where("blog_id = ? and id <> ?", self.blog_id, self.id).first(3)
   end
 
   # This was made for the blog list pages - showing the full body

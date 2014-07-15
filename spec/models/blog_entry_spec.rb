@@ -51,10 +51,20 @@ describe BlogEntry do
 
   describe '#sister_blog_entries' do
     it 'finds 4 other blogs and their latest entries' do
-      entry = build :blog_entry
+      entry = create :blog_entry
       other_entries = create_list :blog_entry, 4
       entry.sister_blog_entries.should_not include(entry)
       entry.sister_blog_entries.map(&:blog).should_not include(entry.blog)
+    end
+  end
+
+  describe '#recent_blog_entries' do
+    it 'finds 3 latest entries within the same blog' do
+      blog = create :blog
+      entry = create :blog_entry, blog: blog
+      other_entries = create_list :blog_entry, 4, blog: blog
+      entry.recent_blog_entries.should_not include(entry)
+      entry.recent_blog_entries.map(&:blog).uniq.should eq [entry.blog]
     end
   end
 end

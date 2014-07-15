@@ -74,7 +74,7 @@
                     <h1>Recently on <%= @blog.name %></h1>
                 </header>
                 <ul class="previews">
-                    <% @blog.entries.published.first(3).each do |entry| %>
+                    <% @entry.recent_blog_entries.each do |entry| %>
                         <% blog_article = entry.to_article %>
                         <li>
                             <%= link_to blog_article.public_path do %>
