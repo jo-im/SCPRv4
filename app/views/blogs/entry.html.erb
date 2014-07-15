@@ -46,24 +46,26 @@
                     <div class="hosts">
                         <h2>Your host<%= 's' unless bios.length == 1 %></h2>
                         <% bios.each do |author| %>
-                            <figure class="clearfix">
-                                <div class="photo ratio">
-                                    <%= link_to author.public_path do %>
-                                        <div class="fill"></div>
-                                        <% if author.headshot.present? %>
-                                        <b class="img-contain"><%= author.headshot.eight.tag %></b>
+                            <% cache ["bios", author] do %>
+                                <figure class="clearfix">
+                                    <div class="photo ratio">
+                                        <%= link_to author.public_path do %>
+                                            <div class="fill"></div>
+                                            <% if author.headshot.present? %>
+                                            <b class="img-contain"><%= author.headshot.eight.tag %></b>
+                                            <% end %>
                                         <% end %>
-                                    <% end %>
-                                </div>
-                                <figcaption>
-                                    <h3><%= link_to author.name, author.public_path %></h3>
-                                    <ul>
-                                        <li class="portfolio"><%= link_to "All posts by #{author.name.split(" ").first()}", author.public_path %></li>
-                                        <li class="twitter"><%= link_to "Follow @#{author.twitter_handle}", twitter_profile_url(author.twitter_handle) if author.twitter_handle.present? %></li>
-                                        <li class="contact"><%= mail_to author.email, "Email #{author.name.split(" ").first()}" %></li>
-                                    </ul>
-                                </figcaption>
-                            </figure>
+                                    </div>
+                                    <figcaption>
+                                        <h3><%= link_to author.name, author.public_path %></h3>
+                                        <ul>
+                                            <li class="portfolio"><%= link_to "All posts by #{author.name.split(" ").first()}", author.public_path %></li>
+                                            <li class="twitter"><%= link_to "Follow @#{author.twitter_handle}", twitter_profile_url(author.twitter_handle) if author.twitter_handle.present? %></li>
+                                            <li class="contact"><%= mail_to author.email, "Email #{author.name.split(" ").first()}" %></li>
+                                        </ul>
+                                    </figcaption>
+                                </figure>
+                            <% end %>
                         <% end %>
                     </div>
                 <% end %>
