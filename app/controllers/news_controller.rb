@@ -10,6 +10,13 @@ class NewsController < NewApplicationController
   def story
     @story = NewsStory.published.find(params[:id])
 
+    @content_params = {
+      page:         params[:page].to_i,
+      per_page:     PER_PAGE
+    }
+
+    @content_params[:exclude] = @story
+
     if ( request.env['PATH_INFO'] =~ /\/\z/ ? request.env['PATH_INFO'] : "#{request.env['PATH_INFO']}/" ) != @story.public_path
       redirect_to @story.public_path and return
     end

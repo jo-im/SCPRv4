@@ -55,14 +55,8 @@
             </aside>
         <% elsif @story.category.present? %>
             <%
-            content_params = {
-                page:         params[:page].to_i,
-                per_page:     PER_PAGE
-            }
-            content_params[:exclude] = @story
-
             category = @story.category
-            content = category.content(content_params)
+            content = category.content(@content_params)
             category_articles = content.map { |a| a.to_article }
             %>
 
