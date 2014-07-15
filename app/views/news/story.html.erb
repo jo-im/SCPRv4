@@ -53,33 +53,43 @@
                     <% end %>
                 </ul>
             </aside>
-        <% elsif @category.present? %>
+        <% elsif @story.category.present? %>
+            <%
+            content_params = {
+                page:         params[:page].to_i,
+                per_page:     PER_PAGE
+            }
+            content_params[:exclude] = @story
+
+            category = @story.category
+            content = category.content(content_params)
+            category_articles = content.map { |a| a.to_article }
+            %>
+
             <aside class="see-more issue">
                 <header>
                     <h1>More from this Category</h1>
                     <h2 class="clearfix">
-                        <span><%= link_to @category.title, @category.public_path %></span>
-                        <mark><%= link_to 'See All', @category.public_path %></mark>
+                        <span><%= link_to category.title, category.public_path %></span>
+                        <mark><%= link_to 'See All', category.public_path %></mark>
                     </h2>
                 </header>
                 <ul class="previews">
-                    <% if category_articles = @category_articles.first(3) %>
-                        <% category_articles.each do |article| %>
-                            <li>
-                            <%= link_to article.public_path do %>
-                                <figure class="ratio-pairing clearfix">
-                                    <div class="ratio">
-                                        <div class="fill"></div>
-                                        <b class="img-contain"><%= image_tag article.asset.lsquare.url %></b>
-                                    </div><!--/ .ratio -->
-                                    <figcaption>
-                                        <%= smart_date_js article.public_datetime %>
-                                        <mark><%= article.short_title %></mark>
-                                    </figcaption>
-                                </figure><!--/ .ratio-pairing -->
-                            <% end %>
-                            </li>
+                    <% category_articles.first(3).each do |article| %>
+                        <li>
+                        <%= link_to article.public_path do %>
+                            <figure class="ratio-pairing clearfix">
+                                <div class="ratio">
+                                    <div class="fill"></div>
+                                    <b class="img-contain"><%= image_tag article.asset.lsquare.url %></b>
+                                </div><!--/ .ratio -->
+                                <figcaption>
+                                    <%= smart_date_js article.public_datetime %>
+                                    <mark><%= article.short_title %></mark>
+                                </figcaption>
+                            </figure><!--/ .ratio-pairing -->
                         <% end %>
+                        </li>
                     <% end %>
                 </ul>
             </aside>
