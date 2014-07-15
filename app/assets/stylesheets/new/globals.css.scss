@@ -789,7 +789,7 @@ $orange: #f17b21;
 		    &.gold li       { font-size: 1.5em; /* 24 / 16 */ }
 		    &.silver h1     { border-top-color: #227794; color: #30a7cf; }
 		    &.silver li     { font-size: 1.125em; /* 18 / 16 */ background-position: 0 0.25em; background-image: image-url("i/ephemera-donut-blue.png"); }
-		    &.bronze li     { font-size: 0.9375em; /* 15 / 16 */ color: #a8a8a8; background-image: url("i/ephemera-donut-gray.png"); background-position: 0 0.3em; background-size: 7px 7px; padding-left: 20px; }
+		    &.bronze li     { font-size: 0.9375em; /* 15 / 16 */ color: #a8a8a8; background-image: image-url("i/ephemera-donut-gray.png"); background-position: 0 0.3em; background-size: 7px 7px; padding-left: 20px; }
 		    &.bronze        { border-top: 1px solid #484848; padding-top: 25px; }
 		    li:first-child  { padding-left: 0; background: none; }
 		    li:last-child   { margin-right: 0; }
