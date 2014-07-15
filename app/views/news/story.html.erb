@@ -1,6 +1,6 @@
 <% add_to_page_title @story.feature.present? ? "#{@story.feature.name}: #{@story.headline}" : @story.headline %>
 <%= render_content @story, "opengraph" %>
-<%= render 'shared/ads/dfp_script_config', category: @story.category %>
+<%= render 'shared/ads/dfp_script_config', category: @category %>
 <% content_for :membership_copy, @category.present? ? @category.title : 'Lorem Ipsum' %>
 <% content_for :body_class, 'interior single' %>
 
@@ -53,10 +53,9 @@
                     <% end %>
                 </ul>
             </aside>
-        <% elsif @story.category.present? %>
+        <% elsif @category.present? %>
             <%
-            category = @story.category
-            content = category.content(@content_params)
+            content = @category.content(@content_params)
             category_articles = content.map { |a| a.to_article }
             %>
 
@@ -64,8 +63,8 @@
                 <header>
                     <h1>More from this Category</h1>
                     <h2 class="clearfix">
-                        <span><%= link_to category.title, category.public_path %></span>
-                        <mark><%= link_to 'See All', category.public_path %></mark>
+                        <span><%= link_to @category.title, @category.public_path %></span>
+                        <mark><%= link_to 'See All', @category.public_path %></mark>
                     </h2>
                 </header>
                 <ul class="previews">
