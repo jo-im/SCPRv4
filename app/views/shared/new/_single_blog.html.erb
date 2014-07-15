@@ -42,7 +42,7 @@
 
             </div><!--/ .prose-body -->
 
-            <%= raw Rails.cache.read("views/popular/#{@blog.slug}") %>
+            <%= raw Rails.cache.read("views/popular/#{@entry.blog.slug}") %>
 
             <% present article do |article_presenter| %>
                 <%= article_presenter.related_links %>
@@ -53,7 +53,7 @@
             <% if @entry.previous.present? %>
                 <% previous_article = @entry.previous.to_article %>
                 <aside class="previously">
-                    <header><h1>Previously in <%= @blog.name %></h1></header>
+                    <header><h1>Previously in <%= @entry.blog.name %></h1></header>
                     <nav>
                             <%= link_to previous_article.public_path do %>
                                 <h2><%= previous_article.short_title %></h2>

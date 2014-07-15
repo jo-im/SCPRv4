@@ -29,9 +29,8 @@ class BlogsController < ApplicationController
   #----------
 
   def entry
-
     @entry = BlogEntry.published.includes(:blog).find(params[:id])
-    @blog = @entry.blog
+
     respond_with template: "blogs/entry"
   end
 
