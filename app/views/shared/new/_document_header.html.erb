@@ -59,8 +59,13 @@
     <script type="text/javascript" src="//use.typekit.net/vtu6xsq.js"></script>
     <script type="text/javascript">try{Typekit.load();}catch(e){}</script>
 
-
     <script>
+      // Function for lazy loading slideshow images
+      function imgLoaded(img){
+        var $img = $(img);
+
+        $img.addClass('loaded');
+      };
       // User agent detection to dynamically display the appropriate Apple App Banners to iPads and iPhones
       if (navigator.userAgent.match(/iPad/i)) {
         $('head').append('<meta name="apple-itunes-app" content="app-id=744160424"/>');
