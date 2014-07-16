@@ -4,11 +4,11 @@
 <% content_for :membership_copy, @category.present? ? @category.title : 'Lorem Ipsum' %>
 <% content_for :body_class, 'interior single' %>
 
-<%= cache ["show", "blog-content","v13", @entry] do %>
+<%= cache ["show", "blog-content","v14", @entry] do %>
   <%= render "shared/new/single_blog", article: @entry, full: true %>
 <% end %>
 
-<% cache ["show", "blog-supportive", "v13", @entry] do %>
+<% cache ["show", "blog-supportive", "v14", @entry] do %>
         <section class="supportive">
 
             <aside class="placard">
