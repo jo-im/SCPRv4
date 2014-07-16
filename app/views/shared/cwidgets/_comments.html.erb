@@ -23,14 +23,16 @@
             <a href="http://disqus.com" class="dsq-brlink">blog comments powered by <span class="logo-disqus">Disqus</span></a>
             <!-- end disqus comments -->
         </section>
-        <div class="secondary">
-            <aside class="placard">
-                <div class="ad widget">
-                    <%= render "shared/ads/dfp", ad_key: 'slot_c' %>
-                    <p class="appeal"><a href="/support/underwriting/">Become a KPCC Sponsor</a></p>
-                </div>
-            </aside>
-        </div><!--/ .secondary -->
+        <% if options[:templateLayout].nil? %>
+            <div class="secondary">
+                <aside class="placard">
+                    <div class="ad widget">
+                        <%= render "shared/ads/dfp", ad_key: 'slot_c' %>
+                        <p class="appeal"><a href="/support/underwriting/">Become a KPCC Sponsor</a></p>
+                    </div>
+                </aside>
+            </div><!--/ .secondary -->
+        <% end %>
     </div>
   </div>
 <% end %>
