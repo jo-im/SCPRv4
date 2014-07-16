@@ -57,7 +57,7 @@
     query = _(window.location.search.substring(1).split("&")).each(function(pair) { keyval = pair.split("="); params[keyval[0]] = keyval[1]; });
 
     var slideshow;
-    slideshow = new scpr.Slideshow({
+    slideshow = new scpr.NewSlideshow({
         <% if params[:id].present? %>
           start: params["slide"],
           deeplink: true,

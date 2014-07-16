@@ -7,7 +7,6 @@
 //= require swfobject.min
 
 //= require_tree ./slideshow/templates
-//= require slideshow/slideshow
 
 //= require embeditor
 //= require embeditor/templates

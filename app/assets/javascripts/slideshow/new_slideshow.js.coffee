@@ -1,4 +1,4 @@
-class scpr.Slideshow
+class scpr.NewSlideshow
     @TemplatePath = "slideshow/templates/"
 
     DefaultOptions:
@@ -17,7 +17,7 @@ class scpr.Slideshow
             @el = $ @options.el
 
             # -- create asset collection -- #
-            @assets = new Slideshow.Assets @options.assets
+            @assets = new NewSlideshow.Assets @options.assets
             @total  = @assets.length
 
             # Set the starting slide.
@@ -32,14 +32,13 @@ class scpr.Slideshow
                 if startingSlide > 0 and startingSlide <= @total
                     @start = startingSlide - 1
 
-
             #----------
             # Create the elements we need for the complete slideshow
-            @overlayNav = new Slideshow.OverlayNav
+            @overlayNav = new NewSlideshow.OverlayNav
                 start:  @start
                 total:  @total
 
-            @slides = new Slideshow.Slides
+            @slides = new NewSlideshow.Slides
                 collection:     @assets
                 start:          @start
                 wrapper:        @el
@@ -47,23 +46,23 @@ class scpr.Slideshow
             @slides.overlayNav = @overlayNav
             @overlayNav.slides = @slides
 
-            @thumbtray = new Slideshow.Thumbtray
+            @thumbtray = new NewSlideshow.Thumbtray
                 collection: @assets
                 start:      @start
 
 
             # Setup Header elements
-            @header = $ JST[Slideshow.TemplatePath + 'header']
+            @header = $ JST[NewSlideshow.TemplatePath + 'header']
                 title: @options.title
 
-            @nav = new Slideshow.NavigationLinks
+            @nav = new NewSlideshow.NavigationLinks
                 start:  @start
                 total:  @total
 
-            @traytoggler = new Slideshow.ThumbtrayToggler
+            @traytoggler = new NewSlideshow.ThumbtrayToggler
                 thumbtray:  @thumbtray
 
-            @fullscreenButton = JST[Slideshow.TemplatePath + 'fullscreen_button']
+            @fullscreenButton = JST[NewSlideshow.TemplatePath + 'fullscreen_button']
                 target: $(@el).attr('id')
 
 
@@ -168,7 +167,7 @@ class scpr.Slideshow
 
     class @Assets extends Backbone.Collection
         url: "/" # This is unneeded since we're never actually fetching anything
-        model: Slideshow.Asset
+        model: NewSlideshow.Asset
 
     #----------
 
@@ -189,8 +188,8 @@ class scpr.Slideshow
             if idx >= 0 and idx <= @slides.length - 1
                 @currentEl  = @currentSlide()
                 @nextEl     = $ @slides[idx]
-
                 @currentEl.stop(true, true).fadeOut 'fast', =>
+
                     @currentEl.removeClass 'active'
                     @trigger "switch", idx
                     @nextEl.addClass('active').fadeIn('fast')
@@ -199,7 +198,23 @@ class scpr.Slideshow
                     captionOwner = @nextEl.find('.img-contain').data('owner')
                     caption_html = "#{caption} <mark class='credit'>#{captionOwner}</mark>"
                     $('.caption p.caption-text').html(caption_html)
+
                     @nextEl.trigger "activated"
+
+                    # if the page is loaded in the middle of the slideshow, this will lazy load each image when switching slides
+                    firstImgToLoad = @nextEl.find('.lazy-load')
+                    if firstImgToLoad.length > 0
+                      unless firstImgToLoad.hasClass('loaded')
+                        imgLoaded(firstImgToLoad[0])
+                        firstImgToLoad.attr('src', firstImgToLoad.data('original'))
+                    # since were loading the first two images, lazy load the third image and onwards
+                    if idx < @slides.length - 1
+                      @nextnextEl           = $ @slides[idx + 1]
+                      secondImgToLoad       = @nextnextEl.find('.lazy-load')
+                      unless secondImgToLoad.hasClass('loaded')
+                        imgLoaded(secondImgToLoad[0])
+                        secondImgToLoad.attr('src', secondImgToLoad.data('original'))
+
 
         #----------
 
@@ -237,6 +252,13 @@ class scpr.Slideshow
 
                 if i == @options.start
                     $(el).addClass("active")
+
+                    # lazy load the first image on page load
+                    imgToLoad = $(el).find('.lazy-load')
+                    unless imgToLoad.hasClass('loaded')
+                      imgLoaded(imgToLoad[0])
+                      imgToLoad.attr('src', imgToLoad.data('original'))
+
                     caption = $(el).find('.img-contain').data('caption')
                     captionOwner = $(el).find('.img-contain').data('owner')
                     caption_html = "#{caption} <mark class='credit'>#{captionOwner}</mark>"
@@ -246,7 +268,6 @@ class scpr.Slideshow
 
             # And the overlay nav
             $(@el).append @overlayNav.el
-
             # Give the images time to start loading
             setTimeout () =>
                 @overlayNav.showTargets()
@@ -307,7 +328,7 @@ class scpr.Slideshow
             "mouseenter":       "showTargets"
             "mouseleave":       "hideTargets"
 
-        template: JST[Slideshow.TemplatePath + "overlay_nav"]
+        template: JST[NewSlideshow.TemplatePath + "overlay_nav"]
 
         #----------
         # Handle the hiding and showing of the buttons
@@ -338,7 +359,7 @@ class scpr.Slideshow
         events:
             'click .active': '_buttonClick'
 
-        template: JST[Slideshow.TemplatePath + "nav_links"]
+        template: JST[NewSlideshow.TemplatePath + "nav_links"]
 
     #----------
 
@@ -364,8 +385,8 @@ class scpr.Slideshow
             per_page: 5
 
         template:
-            prev: JST[Slideshow.TemplatePath + "thumb_nav_prev"]
-            next: JST[Slideshow.TemplatePath + "thumb_nav_next"]
+            prev: JST[NewSlideshow.TemplatePath + "thumb_nav_prev"]
+            next: JST[NewSlideshow.TemplatePath + "thumb_nav_next"]
 
         #----------
 
@@ -374,7 +395,7 @@ class scpr.Slideshow
             @current    = @options.start
             @visible    = false
 
-            @thumbnailView = new Slideshow.ThumbnailsView
+            @thumbnailView = new NewSlideshow.ThumbnailsView
                 collection: @collection
                 per_page:   @options.per_page
                 thumbtray:  @
@@ -473,7 +494,7 @@ class scpr.Slideshow
             @per_page   = @options.per_page
 
             @collection.each (asset,idx) =>
-                thumb = new Slideshow.Thumbnail
+                thumb = new NewSlideshow.Thumbnail
                     model:      asset
                     index:      idx
                     thumbtray:  @options.thumbtray
@@ -517,7 +538,7 @@ class scpr.Slideshow
         events:
             'click': '_thumbClick'
 
-        template: JST[Slideshow.TemplatePath + "thumbnail"]
+        template: JST[NewSlideshow.TemplatePath + "thumbnail"]
 
         #----------
 
@@ -540,3 +561,4 @@ class scpr.Slideshow
             @thumbtray.trigger "switch", @index
 
 #----------
+

@@ -1,4 +1,5 @@
 //= require fastclick
+//= require slideshow/new_slideshow
 
 //= require new/behaviors
 //= require new/layout
