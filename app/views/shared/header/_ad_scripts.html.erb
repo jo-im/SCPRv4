@@ -22,10 +22,10 @@
     if (typeof DFP_KEY_SUFFIX_OVERRIDE !== "undefined") {
       keySuffix = DFP_KEY_SUFFIX_OVERRIDE
     } else {
-      keySuffix = window.location.pathname.split("/").splice(1, 2).join("/")
+      keySuffix = "/" + window.location.pathname.split("/").splice(1, 2).join("/")
     }
 
-    key = '/3468/ibs.scpr.scpr/' + keySuffix;
+    key = '/3468/ibs.scpr.scpr' + keySuffix;
 
     // Ad Size Mappings for responsive ad units
     var mapping = googletag.sizeMapping().
