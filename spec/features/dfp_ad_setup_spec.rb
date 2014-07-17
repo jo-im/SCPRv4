@@ -46,7 +46,7 @@ describe "DFP configuration" do
   describe "key suffix override" do
     it "sets a special key for the homepage" do
       visit "/"
-      page.html.should include 'DFP_KEY_SUFFIX_OVERRIDE = "homepage"'
+      page.html.should include 'DFP_KEY_SUFFIX_OVERRIDE = "/homepage"'
     end
 
     it "sets a special key for flatpages" do
