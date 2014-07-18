@@ -2,7 +2,7 @@
 <%= render_content @segment, "opengraph" %>
 <%= render 'shared/ads/dfp_script_config', category: @segment.category %>
 
-<%= cache ["show", "v10", @segment] do %>
+<%= cache ["show", "v12", @segment] do %>
   <%= render "programs/kpcc/segment", segment: @segment %>
 <% end %>
 
@@ -29,7 +29,7 @@
         <%= comment_widget_for @segment, cssClass: "left-side", name: "comments" %>
       </div>
       <div class="span18 mq-solo-span">
-        <%= comments_for @segment, header: false %>
+        <%= comments_for @segment, header: false , templateLayout: "old" %>
       </div>
     </div> <!-- row-fluid -->
   </div>

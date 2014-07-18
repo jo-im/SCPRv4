@@ -19,7 +19,7 @@
   %>
 
   <%# Automagically expire this cache when it ends %>
-  <%= cache ["show", "v8", @event], expires_in: expires do %>
+  <%= cache ["show", "v9", @event], expires_in: expires do %>
     <%= render "events/event", event: @event %>
   <% end %>
 
@@ -51,7 +51,7 @@
         <%= content_widget "comment_count", @event, cssClass: "left-side" %>
       </div>
       <div class="span18 mq-solo-span">
-        <%= content_widget "comments", @event, header: false %>
+        <%= content_widget "comments", @event, header: false, templateLayout: "old" %>
       </div>
     </div> <!-- row-fluid -->
   </div>
