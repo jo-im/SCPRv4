@@ -48,11 +48,5 @@ describe "DFP configuration" do
       visit "/"
       page.html.should include 'DFP_KEY_SUFFIX_OVERRIDE = "/homepage"'
     end
-
-    it "sets a special key for flatpages" do
-      flatpage = create :flatpage
-      visit flatpage.public_path
-      page.html.should include 'DFP_KEY_SUFFIX_OVERRIDE = ""'
-    end
   end
 end
