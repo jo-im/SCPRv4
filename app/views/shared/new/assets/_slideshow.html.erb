@@ -26,9 +26,9 @@
                                         <b class="img-contain" data-caption="<%= asset.caption %>" data-owner="<%= asset.owner %>">
                                             <a href="<%= article.public_url %>">
                                                 <% if index <= 1 %>
-                                                    <%= image_tag asset.full.url, class: 'loaded' %>
+                                                    <%= image_tag asset.full.url, width: asset.full.width, height: asset.full.height, class: 'loaded' %>
                                                 <% else %>
-                                                    <img class="lazy-load" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-original="<%= asset.full.url %>" />
+                                                    <img class="lazy-load" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-height="<%= asset.full.height %>" data-width="<%= asset.full.width %>" data-original="<%= asset.full.url %>" />
                                                 <% end %>
                                             </a>
                                         </b>

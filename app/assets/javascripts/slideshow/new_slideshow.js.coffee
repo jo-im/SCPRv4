@@ -206,14 +206,23 @@ class scpr.NewSlideshow
                     if firstImgToLoad.length > 0
                       unless firstImgToLoad.hasClass('loaded')
                         imgLoaded(firstImgToLoad[0])
-                        firstImgToLoad.attr('src', firstImgToLoad.data('original'))
+                        firstImgToLoad.attr {
+                          'width':     firstImgToLoad.data('width'),
+                          'height':    firstImgToLoad.data('height'),
+                          'src':       firstImgToLoad.data('original')
+                        }
+
                     # since were loading the first two images, lazy load the third image and onwards
                     if idx < @slides.length - 1
                       @nextnextEl           = $ @slides[idx + 1]
                       secondImgToLoad       = @nextnextEl.find('.lazy-load')
                       unless secondImgToLoad.hasClass('loaded')
                         imgLoaded(secondImgToLoad[0])
-                        secondImgToLoad.attr('src', secondImgToLoad.data('original'))
+                        secondImgToLoad.attr {
+                          'width':    secondImgToLoad.data('width'),
+                          'height':   secondImgToLoad.data('height'),
+                          'src':      secondImgToLoad.data('original')
+                        }
 
 
         #----------
@@ -257,7 +266,11 @@ class scpr.NewSlideshow
                     imgToLoad = $(el).find('.lazy-load')
                     unless imgToLoad.hasClass('loaded')
                       imgLoaded(imgToLoad[0])
-                      imgToLoad.attr('src', imgToLoad.data('original'))
+                      imgToLoad.attr {
+                        'width':   imgToLoad.data('width'),
+                        'height':  imgToLoad.data('height'),
+                        'src':     imgToLoad.data('original')
+                      }
 
                     caption = $(el).find('.img-contain').data('caption')
                     captionOwner = $(el).find('.img-contain').data('owner')
