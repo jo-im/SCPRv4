@@ -71,7 +71,6 @@ gem 'uglifier', '>= 1.3'
 group :development do
   gem 'capistrano', '~> 2.0'
   gem 'pry'
-  gem 'rack-mini-profiler'
 end
 
 
