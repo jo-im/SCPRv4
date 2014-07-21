@@ -33,6 +33,7 @@ module Scprv4
 
     config.i18n.enforce_available_locales = false
     config.encoding = "utf-8"
+    config.middleware.insert 0, Rack::UTF8Sanitizer
 
     # Temporary until we can go into the controllers and set
     # all this up

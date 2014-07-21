@@ -39,6 +39,7 @@ gem "ruby-mp3info", '~> 0.8.2', require: 'mp3info'
 gem "ice_cube", "~> 0.11.0"
 gem "recaptcha", require: "recaptcha/rails"
 gem "yajl-ruby" # Faster JSON parsing
+gem "rack-utf8_sanitizer"
 
 
 ## HTTP
@@ -70,6 +71,7 @@ gem 'uglifier', '>= 1.3'
 group :development do
   gem 'capistrano', '~> 2.0'
   gem 'pry'
+  gem 'rack-mini-profiler'
 end
 
 
