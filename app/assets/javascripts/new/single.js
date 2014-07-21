@@ -53,32 +53,6 @@ scpr.Behaviors.Single = {
             }
 
 
-
-
-
-
-
-
-        //  ================================================
-        //  Slideshow: Deal with dumb aspect ratios
-        //  ------------------------------------------------
-            if ($(".slides .slide").length) {
-              $(".slides img").each(function(){
-                $(this).one('load',function(){
-
-                  var myWidth   = $(this).attr("width");
-                  var myHeight  = $(this).attr("height");
-                  var myRatio   = myWidth / myHeight;
-                  if(myRatio <= 1.35) {
-                    $(this).addClass("not-wide");
-                  }
-
-                });
-              });
-            }
-
-
-
         //  ================================================
         //  Popular Now: Some photos have dumb aspect ratios
         //  ------------------------------------------------
@@ -110,7 +84,7 @@ scpr.Behaviors.Single = {
                     var middleInt   = Math.ceil(qtyGrafs / 2);
                     var middleEl    = $($(".prose-body > p")[middleInt - 1]) // thanks, bryan!
                     $(".popular-on-blog").addClass("intermission").insertBefore(middleEl);
-                } 
+                }
             }
 
 
@@ -163,7 +137,7 @@ scpr.Behaviors.Single = {
 
 
         //  ================================================
-        //  Single: Ad positioning adjustments for mobile 
+        //  Single: Ad positioning adjustments for mobile
         //  ------------------------------------------------
             if ($("body").hasClass("single") && $(".ad").length) {
 

@@ -205,6 +205,7 @@ class scpr.NewSlideshow
                     firstImgToLoad = @nextEl.find('.lazy-load')
                     if firstImgToLoad.length > 0
                       unless firstImgToLoad.hasClass('loaded')
+                        @scaleVerticalImage(@currentSlide())
                         imgLoaded(firstImgToLoad[0])
                         firstImgToLoad.attr {
                           'width':     firstImgToLoad.data('width'),
@@ -217,6 +218,7 @@ class scpr.NewSlideshow
                       @nextnextEl           = $ @slides[idx + 1]
                       secondImgToLoad       = @nextnextEl.find('.lazy-load')
                       unless secondImgToLoad.hasClass('loaded')
+                        @scaleVerticalImage(@nextnextEl)
                         imgLoaded(secondImgToLoad[0])
                         secondImgToLoad.attr {
                           'width':    secondImgToLoad.data('width'),
@@ -225,28 +227,20 @@ class scpr.NewSlideshow
                         }
 
 
+
         #----------
 
         currentSlide: ->
             $ @slides[@current]
         #----------
 
-        setVerticalOffset: (slide) ->
-            wrapper   = $(".media-wrapper", slide)
+        scaleVerticalImage: (slide) ->
             img       = $("img", slide)
-
-            imgWidth        = img.width()
-            imgHeight       = img.height()
-            wrapperWidth    = wrapper.width()
-            wrapperHeight   = wrapper.height()
-
-            # We can't use CSS to vertically center the images.
-            # If this image is taller than its container,
-            # then set a top of half of the height difference.
-            if imgHeight < wrapperHeight
-                heightDiff = wrapperHeight - imgHeight
-                img.css top: heightDiff/2
-
+            imgWidth        = img.data('width')
+            imgHeight       = img.data('height')
+            myRatio         = imgWidth / imgHeight
+            if myRatio <= 1.35
+              img.addClass("not-wide")
 
         #----------
 
@@ -265,6 +259,7 @@ class scpr.NewSlideshow
                     # lazy load the first image on page load
                     imgToLoad = $(el).find('.lazy-load')
                     unless imgToLoad.hasClass('loaded')
+                      @scaleVerticalImage($(el))
                       imgLoaded(imgToLoad[0])
                       imgToLoad.attr {
                         'width':   imgToLoad.data('width'),
