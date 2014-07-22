@@ -205,7 +205,6 @@ class scpr.NewSlideshow
                     firstImgToLoad = @nextEl.find('.lazy-load')
                     if firstImgToLoad.length > 0
                       unless firstImgToLoad.hasClass('loaded')
-                        @scaleVerticalImage(@currentSlide())
                         imgLoaded(firstImgToLoad[0])
                         firstImgToLoad.attr {
                           'width':     firstImgToLoad.data('width'),
@@ -218,7 +217,6 @@ class scpr.NewSlideshow
                       @nextnextEl           = $ @slides[idx + 1]
                       secondImgToLoad       = @nextnextEl.find('.lazy-load')
                       unless secondImgToLoad.hasClass('loaded')
-                        @scaleVerticalImage(@nextnextEl)
                         imgLoaded(secondImgToLoad[0])
                         secondImgToLoad.attr {
                           'width':    secondImgToLoad.data('width'),
@@ -232,16 +230,6 @@ class scpr.NewSlideshow
 
         currentSlide: ->
             $ @slides[@current]
-        #----------
-
-        scaleVerticalImage: (slide) ->
-            img       = $("img", slide)
-            imgWidth        = img.data('width')
-            imgHeight       = img.data('height')
-            myRatio         = imgWidth / imgHeight
-            if myRatio <= 1.35
-              img.addClass("not-wide")
-
         #----------
 
         setCurrent: (idx) ->
@@ -259,7 +247,6 @@ class scpr.NewSlideshow
                     # lazy load the first image on page load
                     imgToLoad = $(el).find('.lazy-load')
                     unless imgToLoad.hasClass('loaded')
-                      @scaleVerticalImage($(el))
                       imgLoaded(imgToLoad[0])
                       imgToLoad.attr {
                         'width':   imgToLoad.data('width'),

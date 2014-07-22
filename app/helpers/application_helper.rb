@@ -178,6 +178,10 @@ module ApplicationHelper
     return options[:height].to_f/options[:width].to_f <= ratio && options[:width] > 700
   end
 
+  def below_vertical_ratio(options={})
+    ratio = 1.35
+    return options[:width].to_f/options[:height].to_f <= ratio
+  end
   #----------
   # Render a byline for the passed-in content
   # If links is set to false, and the content has
