@@ -182,7 +182,7 @@ scpr.Behaviors.Single = {
 
                 // Cosmetically hide the deck
                 $(".audio-player .collapse").click(function(){
-                    $(".audio-player").css("visibility", "visible");
+                    $(".audio-player").css("visibility", "hidden");
                 });
 
             }
