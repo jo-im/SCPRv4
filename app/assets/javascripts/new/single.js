@@ -177,12 +177,12 @@ scpr.Behaviors.Single = {
 
                 // Make it do something
                 $(".audio-queue a").click(function(){
-                    $(".audio-player").show();
+                    $(".audio-player").css("visibility", "visible");
                 });
 
                 // Cosmetically hide the deck
                 $(".audio-player .collapse").click(function(){
-                    $(".audio-player").hide();
+                    $(".audio-player").css("visibility", "hidden");
                 });
 
             }
