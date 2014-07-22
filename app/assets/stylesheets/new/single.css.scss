@@ -623,6 +623,7 @@ body.single .comments {
         h2,h3                   { font-family: $font-freight; }
         h2                      { color: $orange; font-weight: 600; font-size: 1.3em; }
         h3                      { color: black; font-weight: 700; text-transform: uppercase; font-size: 0.9375em; }
+        h6 /* legacy */         { font-family: $font-prox; margin-bottom: 1em; text-transform: uppercase; font-weight: 700; font-size: 0.875em; }
         blockquote:not(.ornate) { border-left: 2px solid $orange; padding-left: 1em; margin-bottom: 2.5em; margin-left: 0.65em; }
         .ornate                 { font-size: 1.26666666666667em; font-family: $font-merri-lightital; padding: 15px 0 0 25px; margin-left: -10px; background: image-url("i/flourish-blockquote.png") no-repeat; background-size: 64px 55px; }
         img                     { max-width: 100%; height: auto; margin: 0 auto; }
