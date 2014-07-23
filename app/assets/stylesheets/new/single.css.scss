@@ -633,8 +633,47 @@ body.single .comments {
             .contributor        { border-top: 1px solid #cfcfcf; color: #b1b1b1; font-size: 0.8125em; line-height: 1.5; padding: 1em 0 1.5em; }
         }
         // Polldaddy embeds:
-        .pds-box                { width: inherit !important; margin-bottom: 1.73em !important; }
-        .pds-box input          { -webkit-appearance: radio; }
+        .pds-box {
+          width: inherit !important;
+          margin-bottom: 1.73em !important;
+          border-radius: 0 !important;
+          border: 1px solid #f5bd96 !important;
+          background: #f5f5f5 !important;
+          box-shadow: inset 6px 0 0 #e8e8e8;
+          padding: 22px !important;
+          box-sizing: border-box;
+          .pds-question-top {
+            font-family: $font-freight !important;
+            font-size: 1.25em !important;
+            border-bottom: 1px solid rgba(0,0,0,0.3) !important;
+            padding-bottom: 15px !important;
+            line-height: 1.15 !important;
+          }
+          .pds-answer-group {
+            position: relative;
+            margin-bottom: 1em;
+            padding: 0 !important;
+            width: 100%;
+            min-height: 1.8em;
+          }
+          .pds-answer-input,
+          .pds-input-label      { float: none; }
+          .pds-answer           { padding-bottom: 2px !important; border-bottom: 1px solid rgba(0,0,0,0.2) !important; margin-bottom: 5px !important; }
+          .pds-answer-input     { position: absolute !important; top: 0; left: 0; }
+          input                 { -webkit-appearance: radio; }
+          .pds-vote-button {
+            margin-right: 7px !important;
+            cursor: pointer !important;
+            &:hover             { box-shadow: 0 0 3px $orange; }
+          }
+          .pds-input-label {
+            width: auto !important;
+            font-family: $font-merri !important;
+            line-height: 1.25 !important;
+            font-size: 0.875em !important;
+            padding: 6px 0 0 22px !important;
+          }
+        }
     }
     .asset-inset {
         width: 57.389937106918%; // 365 / 636
