@@ -14,6 +14,7 @@ Scprv4::Application.routes.draw do
 
   # RSS
   get '/feeds/all_news' => 'feeds#all_news', as: :all_news_feed
+  get '/feeds/take_two' => 'feeds#take_two', as: :take_two_feed
   get '/feeds/*feed_path', to: redirect { |params, request| "/#{params[:feed_path]}.xml" }
 
 
