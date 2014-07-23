@@ -132,10 +132,7 @@ class scpr.SmartTime
                 # time), then just show the date.
                 if @time < timecutLimit
                     # use date-only format
-                    if now.diff(@time, "year") > 0
                       @$el.text "" + @options.prefix + @time.strftime "#{@options.date_format + ' %Y'}"
-                    else
-                      @$el.text "" + @options.prefix + @time.strftime @options.date_format
                 else
                     # If @time is inside (after) the timecutLimit, then always show time,
                     # and decide whether or not to show date:
