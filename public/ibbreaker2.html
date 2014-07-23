@@ -1,0 +1,55 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+    <head>
+        <title></title>
+    </head>
+    <body>
+        <script type="text/javascript">
+        
+            function getParams(q, delimit, start){
+                var params = {}
+                if (q) {
+                    q = q.substring(q.indexOf(start)+1)
+                    var pairs = q.split(delimit);
+                    for (var i = 0; i < pairs.length; i++) {
+                        var loc = pairs[i].indexOf("=");
+                        if(loc > 0){
+                            var key = pairs[i].substring(0, loc);
+                            params[key] = decodeURIComponent(pairs[i].substring(loc + 1));
+                        }
+                    }
+                }
+                return params;
+            }
+            function validScriptUrl(url){
+                // limit the domains, and dart site names that scripts can only be
+                // servered off doubleclick sites that have a site name that starts with .ibs
+                var allowed = ['http://ad.doubleclick.net/', 'https://ad.doubleclick.net/'];
+                for( var i=0; i < allowed.length; i++){
+                    var pre = allowed[i];
+                    if(url.substring(0, pre.length) == pre){
+                        url = url.substring(pre.length);
+                        var parts = url.split("/", 3);
+                        if(parts.length == 3){
+							if(parts[2].indexOf('ibs.')===0){
+								return true;
+							}
+                        }else if(parts.length==2){
+							if(parts[1].indexOf('ibs.')===0){
+								return true;
+							}							
+						}
+                    }
+                }
+                return false;
+            }
+            var params = getParams(document.location.href, '&' , '#');
+            var adurl = params['adurl'];
+            if(adurl){
+                document.write('<scr' + 'ipt src="' + adurl + '">');
+                document.write('</scr'+ 'ipt>');
+            }
+        </script>
+    </body>
+</html>

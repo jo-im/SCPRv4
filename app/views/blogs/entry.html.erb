@@ -4,7 +4,7 @@
 <% content_for :membership_copy, @category.present? ? @category.title : 'Lorem Ipsum' %>
 <% content_for :body_class, 'interior single' %>
 
-<%= cache ["show", "blog-content","v16", @entry] do %>
+<%= cache ["show", "blog-content","v17", @entry] do %>
   <%= render "shared/new/single_blog", article: @entry, full: true %>
 <% end %>
 
