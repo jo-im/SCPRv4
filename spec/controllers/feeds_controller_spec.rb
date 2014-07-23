@@ -52,6 +52,11 @@ describe FeedsController do
       response.should render_template(layout: false)
     end
 
+    it "adds XML content-type to header" do
+      get :take_two
+      response.header["Content-Type"].should eq "text/xml"
+    end
+
     it "selects the first two segments from the most recent Take Two episode" do
       get :take_two
       assigns(:segments).should_not be_blank
