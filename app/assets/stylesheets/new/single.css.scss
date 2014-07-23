@@ -632,6 +632,9 @@ body.single .comments {
             & .embed-wrapper    { clear: both; }
             .contributor        { border-top: 1px solid #cfcfcf; color: #b1b1b1; font-size: 0.8125em; line-height: 1.5; padding: 1em 0 1.5em; }
         }
+        // Polldaddy embeds:
+        .pds-box                { width: inherit !important; margin-bottom: 1.73em !important; }
+        .pds-box input          { -webkit-appearance: radio; }
     }
     .asset-inset {
         width: 57.389937106918%; // 365 / 636
