@@ -25,9 +25,7 @@ xml.rss({"xmlns:nprml"=>"http://api.npr.org/nprml"}) do
           end
         end
 
-        description = ""
-        description << relaxed_sanitize(segment.body)
-        xml.description description
+        xml.description relaxed_sanitize(segment.body)
       end
     end
   end
