@@ -3,20 +3,22 @@
 <% articles.each do |article| %>
 
 <article class="clearfix">
-    <div class="graphic">
-        <div class="ratio">
+    <%= link_to article.public_path do %>
+        <div class="graphic">
+            <div class="ratio">
 
-    <% if display_header %>
-        <% if tag = article.tags.first %>
-            <span class="issue"><%= link_to tag.title, issue_path(tag.slug) %></span>
-        <% end  %>
+        <% if display_header %>
+            <% if tag = article.tags.first %>
+                <span class="issue"><%= link_to tag.title, issue_path(tag.slug) %></span>
+            <% end  %>
+        <% end %>
+
+                <div class="fill"></div>
+                <b class="img-contain"><%= image_tag article.asset.small.url, alt: '' %></b>
+
+            </div><!--/ .ratio -->
+        </div><!--/ .graphic -->
     <% end %>
-
-            <div class="fill"></div>
-            <b class="img-contain"><%= image_tag article.asset.small.url, alt: '' %></b>
-
-        </div><!--/ .ratio -->
-    </div><!--/ .graphic -->
 
     <div class="prose">
         <h1><%= link_to article.short_title, article.public_path %></h1>
@@ -28,7 +30,9 @@
             </p>
 
         <% if article.feature.present? %>
-            <mark class="trait <%= article.feature.key %>"><%= article.feature.name %></mark>
+            <%= link_to article.public_path do %>
+                <mark class="trait <%= article.feature.key %>"><%= article.feature.name %></mark>
+            <% end %>
         <% end %>
 
         </aside>

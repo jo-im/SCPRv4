@@ -8,31 +8,33 @@
 
         <% articles.each do |article| %>
             <article class="clearfix">
-                <div class="graphic">
-                    <div class="ratio">
+                <%= link_to article.public_path do %>
+                    <div class="graphic">
+                        <div class="ratio">
 
-                    <% if tags && (tag = (article.tags & tags).first) %>
-                        <a href="<%=issue_path(tag.slug)%>" class='issue'>
-                          <span><%= tag.title %></span>
-                        </a>
-                    <% end %>
+                        <% if tags && (tag = (article.tags & tags).first) %>
+                            <a href="<%=issue_path(tag.slug)%>" class='issue'>
+                              <span><%= tag.title %></span>
+                            </a>
+                        <% end %>
 
-                        <div class="fill"></div>
-                        <b class="img-contain"><%= image_tag article.asset.eight.url %></b>
-                    </div><!--/ .ratio -->
+                            <div class="fill"></div>
+                            <b class="img-contain"><%= image_tag article.asset.eight.url %></b>
+                        </div><!--/ .ratio -->
 
-                    <aside class="byline<%=' special' if article.feature.present?%>">
-                        <p>
-                            <b class="author"><%= render_byline(article.original_object) %></b>
-                            <%= smart_date_js article.public_datetime, tag: 'span' %>
-                        </p>
+                        <aside class="byline<%=' special' if article.feature.present?%>">
+                            <p>
+                                <b class="author"><%= render_byline(article.original_object) %></b>
+                                <%= smart_date_js article.public_datetime, tag: 'span' %>
+                            </p>
 
-                    <%- if article.feature.present? %>
-                        <mark class="trait <%= article.feature.key %>"><%= article.feature.name %></mark>
-                    <% end %>
+                        <%- if article.feature.present? %>
+                            <mark class="trait <%= article.feature.key %>"><%= article.feature.name %></mark>
+                        <% end %>
 
-                    </aside>
-                </div> <!--/ .graphic -->
+                        </aside>
+                    </div> <!--/ .graphic -->
+                <% end %>
 
                 <header>
                     <h1><%= link_to article.short_title, article.public_path %></h1>
