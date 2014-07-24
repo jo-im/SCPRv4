@@ -43,6 +43,27 @@ scpr.Behaviors.Single = {
 
 
 
+
+        //	================================================
+        //	Tables need labels
+        //	------------------------------------------------
+        if ($(".kpcc-table").length) {
+          $(".kpcc-table").each(function(){
+
+            $("tbody tr").each(function(){
+              $(this).find("td").each(function(){
+                var myLabel = $(this).index() + 1;
+                myLabel = $(this).closest("table").find("thead th:nth-child(" + myLabel + ")").text();
+                $(this).prepend("<mark>" + myLabel + "</mark>");
+              });
+            });
+
+          });
+        }
+
+
+
+
         //  ================================================
         //  Single: An article's first paragraph should be magical
         //  ------------------------------------------------
