@@ -19,9 +19,14 @@
 
                 <% bios.each do |bio| %>
                     <figure class="ratio-pairing">
+                        
                         <div class="ratio">
                             <div class="fill"></div>
-                            <b class="img-contain"><a href="<%=bio.public_path%>"><img src="<%= bio.headshot.small.url %>"></a></b>
+                            <b class="img-contain">
+                                <% if bio.asset_id? %>
+                                <a href="<%=bio.public_path%>"><img src="<%= bio.headshot.small.url %>"></a>
+                                <% end %>
+                            </b>
                         </div><!--/ .ratio -->
                         <figcaption>
                             <h1><%= link_to bio.name, bio.public_path %></h1>
