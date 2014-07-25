@@ -45,6 +45,9 @@
 
     <%= favicon_link_tag '/favicon.ico' %>
 
+    <!-- Optimizely script for A/B testing -->
+    <script src="//cdn.optimizely.com/js/1611751335.js"></script>
+
     <%= stylesheet_link_tag "new/application", media: "screen" %>
     <%= javascript_include_tag "shared", "application" %>
     <script type="text/javascript" src="http://<%= Rails.application.config.assethost.server %>/assets/client.js?bust=20130523"></script>
