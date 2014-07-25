@@ -79,7 +79,7 @@
                     <% @entry.recent_blog_entries.each do |entry| %>
                         <% blog_article = entry.to_article %>
                         <li>
-                            <%= link_to blog_article.public_path do %>
+                            <%= link_to blog_article.public_path, class: "track-event", data: {"ga-category" => "Article", "ga-action" => "Clickthrough", "ga-label" => "More Sidebar Blog"} do %>
                                 <figure class="ratio-pairing clearfix">
                                     <div class="ratio">
                                         <div class="fill"></div>

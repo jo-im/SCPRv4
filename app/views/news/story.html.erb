@@ -95,7 +95,7 @@
                   <% if @popular_articles.present? %>
                     <% @popular_articles.first(3).each do |article| %>
                       <li>
-                        <%= link_to article.public_path do %>
+                        <%= link_to article.public_path, class: "track-event", data: {"ga-category" => "Article", "ga-action" => "Clickthrough", "ga-label" => "Popular Now Sidebar"} do %>
                               <figure class="ratio-pairing clearfix">
                                   <div class="ratio">
                                       <div class="fill"></div>

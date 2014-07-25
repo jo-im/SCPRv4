@@ -46,8 +46,10 @@ class ArticlePresenter < ApplicationPresenter
       article.original_object.related_links.each do |related_link|
         domain = URI.parse(related_link.url).host.sub(/^www\./, '')
         kpcc_link = domain.split(".").include?("scpr")
-        class_options = "outbound" unless kpcc_link
-        s += h.content_tag :li, class: class_options do
+        class_options = {}
+        class_options[:class] = "track-event related"
+        class_options[:class] << " outbound" unless kpcc_link
+        s += h.content_tag :li, class: class_options[:class] do
           h.link_to related_link.url do
             l = h.content_tag :mark do
               related_link.title
@@ -66,7 +68,11 @@ class ArticlePresenter < ApplicationPresenter
     s = "".html_safe
     if article.original_object.related_content.present?
       article.original_object.related_content.each do |related_article|
-        s += h.content_tag :li, class: related_article.feature.try(:key) do
+        class_options = {}
+        class_options[:class] = "track-event"
+        class_options[:class] << " #{related_article.feature.key.to_s}" if related_article.feature.try(:key).present?
+        class_options[:data] = {"ga-category" => "Article", "ga-action" => "Clickthrough", "ga-label" => "Related" }
+        s += h.content_tag :li, class_options do
           h.link_to related_article.public_path do
             l = h.content_tag :mark do
               related_article.short_title
