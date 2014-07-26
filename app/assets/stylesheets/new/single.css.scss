@@ -1103,7 +1103,7 @@ body.single .comments {
                         margin-left:-150px;
                         top:150px;
                         width:300px;
-                        z-index:100;
+                        z-index:1;
                     }
                 }
 
@@ -1706,6 +1706,16 @@ body.single .quadrant {
     ul .email a     { background-position: 0 0; }
     ul .twitter a   { background-position: 0 -28px; }
     ul .facebook a  { background-position: 0 -55px; }
+    // Count
+    .count {
+      display: inline-block;
+      float: left;
+      font-size: 0.78571428571429em; //11/14
+      color: #fbc1a3;
+      font-weight: 700;
+      line-height: 1;
+      overflow: hidden;
+    }
 }
 
 .report .prose .share,
@@ -1764,16 +1774,18 @@ body.single .quadrant {
 
 
 //  - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
 @media screen and (max-width: 1529px) {
 
         .report .prose .marginal-tools {
             margin-bottom: 2.5em;
-            .audio-queue,.share     { width: 48%; float: left; margin-bottom: 0; }
-            .share                  { float: right; }
-            &.minimalist .share     { float: none; width: 100%; }
-            .share ul li            { margin: 0 0 0 0; display: inline; }
-            .share a                { float: left; text-align: left; margin: 0 25px 0 0; }
+            .audio-queue,.share           { width: 48%; float: left; margin-bottom: 0; }
+            .share                        { float: right; }
+            &.minimalist .share           { float: none; width: 100%; }
+            .share ul li                  { margin: 0 15px 0 0; display: inline-block; }
+            .share ul li.twitter          { margin-right: 10px; }
+            .share a                      { float: left; text-align: left; margin: 0 0 0 0; }
+            .count                        { padding: 7px 0 0 5px; }
+            .share ul li.facebook .count  { padding-left: 1px; }
             .audio-queue {
                 header {
                     background: white image-url("i/flourish-headphones.png") no-repeat 6px 4px;
@@ -1794,10 +1806,8 @@ body.single .quadrant {
             }
         }
 
-}//mq
-
+}
 //  - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
 @media screen and (max-width: 500px) {
 
         .report .prose .marginal-tools                  { margin-bottom: 35px; }
@@ -1805,10 +1815,8 @@ body.single .quadrant {
         .report .prose .marginal-tools .share           { width: 100%; float: none; }
         .report .prose .marginal-tools .audio-queue     { margin-bottom: 25px; }
 
-}//mq
-
+}
 //  - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
 @media screen and (min-width: 1530px) {
 
         .report .prose .marginal-tools {
@@ -1817,6 +1825,10 @@ body.single .quadrant {
             left: -93px;
             width: 80px;
             text-align: right;
+            .share {
+              ul li                 { position: relative; }
+              .count                { text-align: right; position: absolute; top: 5px; right: 25px; }
+            }
             .audio-queue {
                 padding-bottom: 12px;
                 box-shadow:
@@ -1830,8 +1842,7 @@ body.single .quadrant {
             }
         }
 
-}//mq
-
+}
 //  - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 

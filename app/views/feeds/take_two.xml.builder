@@ -6,6 +6,7 @@ xml.rss({"xmlns:nprml"=>"http://api.npr.org/nprml"}) do
         xml.guid  segment.public_url
         xml.link  segment.public_url
         xml.author segment.byline
+        xml.pubDate segment.published_at
 
         if audio = segment.audio
           audio.each do |a|

@@ -300,13 +300,14 @@ class scpr.SocialTools
                     true
                 ])
 
-                # fill in our numbers
+                # fill in our numbers if > 0
                 for el in @fbelements
                     if fbobj = _.find(res.data, (obj) ->
                         obj.url == el.attr("data-url")
                     )
                         count = fbobj.total_count
-                        $(@options.count,el).text count
+                        if count > 0
+                            $(@options.count,el).text count
 
             error: (xhr, status, err) =>
                 @_signalFbLoadFailure(
@@ -357,7 +358,7 @@ class scpr.SocialTools
                 # we mark twitter as successful when the first function returns
                 @twitCancel?()
 
-                if res?.count?
+                if res?.count? && res.count > 0
                     $(@options.count,el).text res.count
 
             # fire off as a script request, using the callback to set values

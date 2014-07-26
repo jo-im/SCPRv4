@@ -165,8 +165,11 @@ scpr.Behaviors.Single = {
                 // Okay, the page just loaded.
                 // Should position A live right below the masthead?
                 if ($(".report .supportive").css("float") == "none" ){
-                    var topOffset = $(".masthead").height() - 10;
-                    $(".placard:first").css("top", topOffset);
+                    // wait 0.5 secs to let AdHost load in any pushdown campaigns
+                    setTimeout(function(){
+                        var topOffset = $(".masthead").height() + $("#global-pushdown").height() - 10;
+                        $(".placard:first").css("top", topOffset);
+                    }, 500);
                 }
 
                 // ------------------------------------------------------------------------------------------
