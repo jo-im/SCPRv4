@@ -4,11 +4,11 @@
 <% content_for :membership_copy, @category.present? ? @category.title : 'Lorem Ipsum' %>
 <% content_for :body_class, 'interior single' %>
 
-<%= cache ["show", "blog-content","v17", @entry] do %>
+<%= cache ["show", "blog-content","v18", @entry] do %>
   <%= render "shared/new/single_blog", article: @entry, full: true %>
 <% end %>
 
-<% cache ["show", "blog-supportive", "v14", @entry] do %>
+<% cache ["show", "blog-supportive", "v15", @entry] do %>
         <section class="supportive">
 
             <aside class="placard">
@@ -49,7 +49,7 @@
                             <% cache ["bios", author] do %>
                                 <figure class="clearfix">
                                     <div class="photo ratio">
-                                        <%= link_to author.public_path do %>
+                                        <%= link_to author.public_path, class: "track-event", data: {"ga-category" => "Article", "ga-action" => "Clickthrough", "ga-label" => "Bios Hosts"} do %>
                                             <div class="fill"></div>
                                             <% if author.headshot.present? %>
                                             <b class="img-contain"><%= author.headshot.eight.tag %></b>
@@ -114,7 +114,7 @@
             <% sister_article = entry.to_article %>
             <article>
                 <header>
-                    <%= link_to sister_article.public_path do %>
+                    <%= link_to sister_article.public_path, class: "track-event", data: {"ga-category" => "Article", "ga-action" => "Clickthrough", "ga-label" => "More Other Blogs"} do %>
                         <h2><%= sister_article.short_title %></h2>
                         <%= smart_date_js sister_article.public_datetime %>
                     <% end %>

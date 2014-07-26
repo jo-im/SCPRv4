@@ -18,9 +18,9 @@
                         <% present @blog do |p| %>
                             <figure class="subscribe clearfix">
                                 <ul>
-                                    <li class="rss"><%= p.rss_link %></li>
-                                    <li class="twitter"><%= p.twitter_link %></li>
-                                    <li class="facebook"><%= p.facebook_link %></li>
+                                    <li class="rss track-event" data-ga-category="Article" data-ga-action="Subscribe" data-ga-label="RSS"><%= p.rss_link %></li>
+                                    <li class="twitter track-event" data-ga-category="Article" data-ga-action="Subscribe" data-ga-label="Twitter"><%= p.twitter_link %></li>
+                                    <li class="facebook track-event" data-ga-category="Article" data-ga-action="Subscribe" data-ga-label="Facebook"><%= p.facebook_link %></li>
                                 </ul>
                                 <% if p.rss_link.present? %>
                                 <figcaption>Subscribe to <%= @blog.name %></figcaption>

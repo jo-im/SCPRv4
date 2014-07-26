@@ -1,2 +1,2 @@
-<div class="bar prev <%=@prev_class%>"></div>
-<div class="bar next <%=@next_class%>"></div>
+<div class="bar prev <%=@prev_class%> track-event" data-ga-category="Article" data-ga-action="Previous" data-ga-label="Slideshow"></div>
+<div class="bar next <%=@next_class%> track-event" data-ga-category="Article" data-ga-action="Next" data-ga-label="Slideshow"></div>

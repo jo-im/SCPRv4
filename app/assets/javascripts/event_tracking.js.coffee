@@ -11,17 +11,22 @@ class scpr.EventTrackingLink
         nonInteraction: "data-non-interaction"
 
     defaults:
-        nonInteraction: 1
+        nonInteraction: 0
 
     constructor: (@el) ->
         @category = @el.attr(@attributes.category)
         @action   = @el.attr(@attributes.action)
         @label    = @el.attr(@attributes.label)
 
-        @nonInteraction = @el.attr(@attributes.nonInteraction) || @defaults.nonInteraction
+        @nonInteraction = parseInt(@el.attr(@attributes.nonInteraction)) || @defaults.nonInteraction
 
         # Setup click event
-        @el.on click: => @_gapush()
+        if @nonInteraction == 1
+          @_gapush()
+        else
+          @el.on click: =>
+            @_gapush()
+
 
     _gapush: ->
         _gaq.push ["_trackEvent", @category, @action, @label, @nonInteraction]
