@@ -1693,7 +1693,11 @@ body.single .quadrant {
     padding-top: 11px;
     margin: 0;
     header      { text-transform: uppercase; }
-    ul li       { display: inline; margin: 0 15px 0 0; }
+    ul li { 
+        clear:both;
+        display: inline; 
+        margin: 0 15px 0 0;  
+    }
     a {
         @include texthide;
         @include redux-icons;
@@ -1715,6 +1719,8 @@ body.single .quadrant {
       font-weight: 700;
       line-height: 1;
       overflow: hidden;
+      margin-left: -16px;
+      margin-right: 16px;
     }
 }
 
@@ -1736,6 +1742,7 @@ body.single .quadrant {
     .share {
         ul li           { display: block; margin: 0 15px 0 0; }
         a               { float: right; margin-right: 0; }
+        .count          { margin-left: auto; }
         header span     { display: none; }
     }
     .audio-queue {
@@ -1827,7 +1834,7 @@ body.single .quadrant {
             text-align: right;
             .share {
               ul li                 { position: relative; }
-              .count                { text-align: right; position: absolute; top: 5px; right: 25px; }
+              .count                { text-align: right; position: absolute; top: 5px; right: 25px; margin-right: auto;}
             }
             .audio-queue {
                 padding-bottom: 12px;
