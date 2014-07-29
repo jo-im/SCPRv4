@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<%= render "shared/new/document_header" %>
+
+<body class="<%= content_for(:body_class) %>">
+
+    <div id="global-pushdown"></div>
+
+    <%= render 'shared/new/layout_header' %>
+
+    <section class="prologue">
+        <div class="inner bound">
+            <h1 class="title">The Short List</h1>
+        </div>
+    </section><!--/ .prologue -->
+
+    <div>
+        <div class="inner bound clearfix">
+
+
+            <div class="showcase">
+
+                <%= yield %>
+
+            </div><!--/ .showcase -->
+
+        </div> <!--/ .inner.bound -->
+    </div><!--/ .catalog -->
+
+
+    <% if @popular_articles %>
+      <%= render 'shared/new/quadrant',
+        articles: @popular_articles.first(4),
+        header: 'Popular Now on KPCC',
+        tags: nil %>
+    <% end %>
+
+
+    <% content_for :extra_footer do %>
+    <script>
+        scpr.Behaviors.loadBehaviors(['Layout']);
+    </script>
+    <% end %>
+
+    <%= render 'shared/new/layout_footer' %>
+    <%= render 'shared/new/document_footer' %>
+
+
+</body>
+</html>
