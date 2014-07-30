@@ -1,5 +1,39 @@
-    //  ################################################################################################
-    //  ################################################################################################
-    //  SHORT LIST styles go here
-    //  ################################################################################################
-    //  ################################################################################################
+//  ################################################################################################
+//  ################################################################################################
+//  SHORT LIST styles go here
+//  ################################################################################################
+//  ################################################################################################
+
+body.short-list {
+
+  .edition-marquee {
+    background: pink;
+    border-bottom: 1px solid #9a9a9a;
+    .titling {
+      background: yellow;
+      position: relative;
+    }
+    .recents {
+      background: aqua;
+      display: none;
+    }
+  }
+  
+  .page-cols {
+    background: image-url("i/shortlist-fauxcol-base.png") repeat-y center top;
+    & > .inner {
+      background: image-url("i/shortlist-fauxcol-inner.png") repeat-y 71.153846153846% top;
+      background-size: 1500px 10px;
+    }
+    .abstracts {
+      width: 65.846153846154%; // 856 / 1300 ...but some of the stuff inside it will push out excessively westward
+      float: left;
+    }
+    .supportive {
+      width: 28.846153846154%; // 375 / 1300
+      float: right;
+      color: #c1c1c1;
+    }
+  }
+
+} // body.short-list
