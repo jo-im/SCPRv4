@@ -36,6 +36,7 @@ body.short-list {
         1500px 5px,
         1500px 10px;
     }
+
     .abstracts {
       width: 65.846153846154%; // 856 / 1300 ...but some of the stuff inside it will push out excessively westward
       background: image-url("i/shortlist-dot-gray.png") repeat-y center top;
@@ -95,12 +96,51 @@ body.short-list {
             display: inline-block;
             background: image-url("i/shortlist-caret-blue.png") no-repeat right 9px;
             background-size: 8px 9px;
-            margin-right: 3px;
             padding-right: 24px;
+          }
+        }
+        // The following three Abstracts are called out because they each are followed by banner ads.
+        &:nth-of-type(1),
+        &:nth-of-type(4),
+        &:nth-of-type(7) {
+          padding-bottom: 0;
+        }
+      }
+      .plug {
+        background: white;
+        padding-bottom: 46px;
+        width: 103.738317757009%;
+        margin-left: -3.738317757009%;
+        & > div {
+          padding: 27px 0;
+          border-bottom: 1px solid #d6d6d6;
+          position: relative;
+          width: 100%;
+        }
+        img {
+          margin: 0 auto;
+        }
+        .appeal {
+          font-family: $font-freight;
+          color: #7e7e7e;
+          font-size: 0.8125em;
+          line-height: 1;
+          text-align: right;
+          position: absolute;
+          right: 0;
+          bottom: 27px;
+          display: block;
+          a {
+            display: inline-block;
+            background: image-url("i/shortlist-caret-gray.png") no-repeat right 5px;
+            background-size: 5px 6px;
+            padding-right: 10px;
+            &:hover   { text-decoration: underline; color: #5c5c5c; }
           }
         }
       }
     }
+
     .supportive {
       width: 28.846153846154%; // 375 / 1300
       float: right;
