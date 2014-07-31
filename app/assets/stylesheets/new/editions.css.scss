@@ -7,8 +7,7 @@
 body.short-list {
 
   .edition-marquee {
-    background: pink;
-    border-bottom: 1px solid #9a9a9a;
+    padding-top: 40px;
     .titling {
       background: yellow;
       position: relative;
@@ -20,14 +19,86 @@ body.short-list {
   }
   
   .page-cols {
-    background: image-url("i/shortlist-fauxcol-base.png") repeat-y center top;
+    background:
+      image-url("i/shortlist-fauxcol-shade-base.png") no-repeat center top,
+      image-url("i/shortlist-fauxcol-base.png") repeat-y center top;
+    background-size:
+      3000px 5px,
+      3000px 10px;
+    box-shadow: inset 0 1px 0 rgba(0,0,0,0.1);
     & > .inner {
-      background: image-url("i/shortlist-fauxcol-inner.png") repeat-y 71.153846153846% top;
-      background-size: 1500px 10px;
+      padding-top: 44px;
+      box-shadow: inset 0 1px 0 rgba(0,0,0,0.1);
+      background:
+        image-url("i/shortlist-fauxcol-shade-inner.png") no-repeat 71.153846153846% top,
+        image-url("i/shortlist-fauxcol-inner.png") repeat-y 71.153846153846% top;
+      background-size:
+        1500px 5px,
+        1500px 10px;
     }
     .abstracts {
       width: 65.846153846154%; // 856 / 1300 ...but some of the stuff inside it will push out excessively westward
+      background: image-url("i/shortlist-dot-gray.png") repeat-y center top;
+      background-size: 1px 1px;
       float: left;
+      article {
+        .photo {
+          width: 103.738317757009%;
+          margin-left: -3.738317757009%;
+          &.ratio .fill     { padding-top: 27.15%; }
+        }
+        .prose              { padding: 30px 0 4px; position: relative; }
+        header,.eisegesis   { width: 48.130841121495%; /* 412 / 856 */ }
+        header              { float: left; }
+        h1                  { font-family: $font-freight; font-weight: 300; font-size: 2.5em; /* 40 / 16 */ line-height: 1.125; }
+        a                   { color: $blue; }
+        a:hover             { text-decoration: underline; }
+
+        mark {
+          display: block;
+          width: 47px;
+          height: 47px;
+          background: white;
+          text-align: center;
+          overflow: hidden;
+          border-radius: 30px;
+          font-family: $font-prox;
+          position: absolute;
+          top: -23px;
+          left: -12px;
+          font-size: 1.375em; // 22 / 16
+          line-height: 1.1;
+          box-sizing: border-box;
+          padding-top: 11px;
+          font-weight: 300;
+          color: #fa7836;
+        }
+        .eisegesis {
+          float: right;
+          font-size: 0.875em;
+          line-height: 1.72;
+          padding-top: 8px;
+          p                 { margin-bottom: 1.7em; }
+        }
+        footer {
+          background: white;
+          border-top: 1px solid #cecece;
+          border-bottom: 1px solid #cecece;
+          text-align: right;
+          font-family: $font-freight;
+          font-size: 1.125em;
+          padding: 15px 0 18px;
+          width: 103.738317757009%;
+          margin-left: -3.738317757009%;
+          a {
+            display: inline-block;
+            background: image-url("i/shortlist-caret-blue.png") no-repeat right 9px;
+            background-size: 8px 9px;
+            margin-right: 3px;
+            padding-right: 24px;
+          }
+        }
+      }
     }
     .supportive {
       width: 28.846153846154%; // 375 / 1300
