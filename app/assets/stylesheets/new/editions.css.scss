@@ -140,13 +140,52 @@ body.short-list {
           }
         }
       }
-    }
+    } // .abstracts
+
 
     .supportive {
       width: 28.846153846154%; // 375 / 1300
       float: right;
       color: #c1c1c1;
-    }
-  }
+      font-family: $font-prox;
+      .contents {
+        header {
+          border-bottom: 1px solid #956146;
+          padding-bottom: 10px;
+          margin-bottom: 7px;
+          h1 {
+            margin-left: 19.733333333333%; // 74 / 375
+            background: image-url("i/shortlist-triangle-leftward.png") no-repeat 10px 0.16em;
+            background-size: 4px 8px;
+            font-weight: 700;
+            padding-left: 27px;
+            color: #fa7836;
+            text-transform: uppercase;
+            font-size: 0.75em;
+            line-height: 1;
+          }
+        }
+        nav {
+          color: #c1c1c1;
+          font-size: 0.8125em; // 13 / 16
+          line-height: 1.1;
+          margin-left: 19.733333333333%; // 74 / 375
+          ol {
+            li {
+              margin-bottom: 4px;
+              position: relative;
+              display: block;
+              outline: 1px solid aqua;
+              padding: 4px 0 0 30px;
+              box-sizing: border-box;
+              min-height: 22px; // to contain the "selected marker" ellipse
+            }
+          }
+        }
+      }
 
+    } // .supportive
+
+
+  } // .page-cols
 } // body.short-list
