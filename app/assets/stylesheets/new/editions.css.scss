@@ -6,18 +6,69 @@
 
 body.short-list {
 
+
   .edition-marquee {
-    padding-top: 40px;
+    padding: 40px 0 19px;
+    font-family: $font-prox;
+    line-height: 1;
+    & > .inner          { position: relative; outline: 1px solid orange; }
+
     .titling {
       background: yellow;
       position: relative;
+      width: 100%;
+      min-height: 43px;
+      box-sizing: border-box;
+      outline: 1px solid blue;
+      text-transform: uppercase;
+      h1,h2             { float: left; }
+      h1                { font-size: 2.9375em; /* 47 / 16 */ font-weight: 300; }
+      h2                { color: $orange; font-weight: 700; font-size: 0.75em; }
     }
+    
+    .date {
+      position: absolute;
+      top: 0;
+      right: 0;
+      outline: 1px solid purple;
+      text-align: right;
+      text-transform: uppercase;
+      time,span,mark    { display: block; }
+      time              { outline: 1px solid green; position: relative; padding: 14px 42px 0 0; }
+      span              { font-size: 0.8125em; color: #929292; font-weight: 300; }
+      mark {
+        position: absolute;
+        top: 0;
+        right: 0;
+        text-align: center;
+        background: maroon image-url("i/shortlist-calendar-icon.png") no-repeat;
+        cursor: pointer;
+        font-weight: 700;
+        font-size: 1.0625em;
+        letter-spacing: -0.03em;
+        color: white;
+        background-size: 33px 167px;
+        width: 33px;
+        height: 43px;
+        overflow: hidden;
+        padding-top: 11px;
+        box-sizing: border-box;
+        &:hover   { background-position: 0 -62px; }
+      }
+      
+    }
+
     .recents {
-      background: aqua;
-      display: none;
+      background: black;
+      color: white;
+      .ratio { width: 80px; height: auto; /* temporary triage debugging */ }
     }
-  }
-  
+
+  } // .edition-marquee
+
+
+
+
   .page-cols {
     background:
       image-url("i/shortlist-fauxcol-shade-base.png") no-repeat center top,
