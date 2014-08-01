@@ -8,6 +8,10 @@ scpr.Behaviors.Editions = {
         $(this).find("a").prepend("<mark>" + myIndex + "</mark> ");
       });
       
+      
+      $(".edition-marquee time mark,.recents button").click(function(){
+        $(".edition-marquee").toggleClass("exposed");
+      });
 
 
     } // loadBehaviors
