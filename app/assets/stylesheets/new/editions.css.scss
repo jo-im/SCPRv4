@@ -173,6 +173,7 @@ body.short-list {
 
 
   .page-cols {
+    border-bottom: 1px solid white;
     background:
       image-url("i/shortlist-fauxcol-shade-base.png") no-repeat center top,
       image-url("i/shortlist-fauxcol-base.png") repeat-y center top;
@@ -402,6 +403,27 @@ body.short-list {
 
     } // .supportive
 
+    .subscribe {
+      background: #c38686 image-url("i/shortlist-la-river.jpg") no-repeat center top;
+      background-size: auto 100%;
+      box-shadow: inset 0 26px 0 white;
+      padding-bottom: 56px;
+      color: white;
+      header {
+        background: image-url("i/shortlist-subscribe-icon.png") no-repeat center top;
+        background-size: 52px 52px;
+        font-family: $font-freight;
+        text-align: center;
+        margin-top: -26px;
+        padding-top: 87px;
+        h1 {
+          font-weight: 300;
+          font-size: 3.125em;
+        }
+        h2                    { font-size: 1.125em; }
+      }
+    } // .subscribe
+    
 
   } // .page-cols
 } // body.short-list
