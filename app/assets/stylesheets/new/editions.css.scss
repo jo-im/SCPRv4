@@ -6,7 +6,6 @@
 
 body.short-list {
 
-
   .edition-marquee {
     padding: 40px 0 19px;
     font-family: $font-prox;
@@ -122,6 +121,7 @@ body.short-list {
           margin-right: 2.461538461538%; // 32 / 1300
           overflow: hidden;
           &:last-child        { margin-right: 0; float: right; }
+          i                   { font-style: inherit; }
           a                   { display: block; }
           .ratio              { margin-bottom: 2px; }
           .ratio .fill        { padding-top: 21.5%; }
@@ -422,8 +422,68 @@ body.short-list {
         }
         h2                    { font-size: 1.125em; }
       }
-    } // .subscribe
-    
+    } // .subscribe    
 
-  } // .page-cols
+  } // .page-cols (under basic/baseline/desktop assumptions)
+
+
+
+
+
+
+//  ###########################################################################
+//  TWEAKPOINTS
+//  ###########################################################################
+
+
+//  ...........................................................................
+
+@media screen and (max-width: 1023px) {
+
+    .edition-marquee .recents nav li figcaption {
+        time b i                { display: none; }
+        mark                    { font-size: 0.9375em; }
+    }
+    .page-cols .abstracts {
+      article {
+        .prose                  { padding-bottom: 1em; background: white; }
+        header,.eisegesis       { width: 100%; float: none; }
+        header h1               { font-size: 1.75em; }
+        header                  { padding-bottom: 1.3em; border-bottom: 1px solid #cecece; margin-bottom: 0.9em; }
+      }
+      .plug {
+        .appeal                 { position: static; padding-top: 10px; text-align: center; }
+      }
+    }
+
+} // 1023
+
+//  ...........................................................................
+
+@media screen and (max-width: 760px) {
+
+    .edition-marquee .recents nav li {
+      outline: 1px solid aqua;
+      width: 47%;
+      margin-right: 6%;
+      margin-bottom: 15px;
+      &:nth-child(2)    { margin-right: 0; }
+      &:nth-child(3)    { clear: both; }
+    }
+    .page-cols .abstracts {
+      article {
+      }
+      .plug {
+      }
+    }
+
+} // 1023
+
+//  ...........................................................................
+
+
+
+
+
+
 } // body.short-list
