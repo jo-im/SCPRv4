@@ -415,14 +415,75 @@ body.short-list {
         font-family: $font-freight;
         text-align: center;
         margin-top: -26px;
-        padding-top: 87px;
-        h1 {
-          font-weight: 300;
-          font-size: 3.125em;
+        margin-bottom: 30px;
+        padding-top: 80px;
+        h1,h2                 { margin-right: 20px; margin-left: 20px; }
+        h1                    { font-weight: 300; font-size: 3.125em; margin-bottom: 20px; line-height: 1; }
+        h2                    { font-size: 1.125em; line-height: 1.2; }
+        h2 span               { white-space: nowrap; /* i'll undo this as needed once the viewport narrows */ }
+      }
+      form {
+        display: block;
+        position: relative;
+        margin: 0 auto;
+        max-width: 459px;
+        height: 37px;
+        overflow: hidden;
+        input[type="text"],
+        input[type="submit"] {
+          display: block;
+          border: none;
+          height: 100%;
+          box-sizing: border-box;
         }
-        h2                    { font-size: 1.125em; }
+        .email-bound {
+          display: block;
+          height: 37px;
+          margin-right: 150px;
+        }
+        input[type="text"] {
+          background: rgba(255,255,255,0.7);
+          width: 100%;
+          font-family: $font-freight;
+          color: #842501;
+          font-size: 1.0625em;
+          padding: 0 9px;
+        }
+        input[type="submit"] {
+          position: absolute;
+          top: 0;
+          right: 0;
+          background: white image-url("i/shortlist-caret-orange.png") no-repeat 90% 13px;
+          background-size: 7px 10px;
+          cursor: pointer;
+          font-family: $font-prox;
+          font-weight: 700;
+          text-transform: uppercase;
+          text-align: left;
+          width: 118px;
+          font-size: 0.875em;
+          line-height: 38px;
+          color: #fa7836;
+          padding: 0 0 0 14px;
+          &:hover     { text-decoration: underline; }
+        }
+        ::-webkit-input-placeholder { /* WebKit browsers */
+            color:    #fa7836;
+        }
+        :-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+            color:    #fa7836;
+            opacity:  1;
+        }
+        ::-moz-placeholder { /* Mozilla Firefox 19+ */
+            color:    #fa7836;
+            opacity:  1;
+        }
+        :-ms-input-placeholder { /* Internet Explorer 10+ */
+            color:    #fa7836;
+        }
       }
     } // .subscribe    
+
 
   } // .page-cols (under basic/baseline/desktop assumptions)
 
@@ -449,11 +510,11 @@ body.short-list {
         .prose                  { padding-bottom: 1em; background: white; }
         header,.eisegesis       { width: 100%; float: none; }
         header h1               { font-size: 1.75em; }
-        header                  { padding-bottom: 1.3em; border-bottom: 1px solid #cecece; margin-bottom: 0.9em; }
+        header                  { padding-bottom: 1.2em; border-bottom: 1px solid #cecece; margin-bottom: 0.7em; }
       }
-      .plug {
-        .appeal                 { position: static; padding-top: 10px; text-align: center; }
-      }
+      .plug .appeal             { position: static; padding-top: 10px; text-align: center; }
+      .subscribe header h1      { font-size: 2.35em; }
+      .subscribe header h2      { font-size: 0.875em; }
     }
 
 } // 1023
@@ -462,26 +523,56 @@ body.short-list {
 
 @media screen and (max-width: 760px) {
 
-    .edition-marquee .recents nav li {
-      outline: 1px solid aqua;
-      width: 47%;
-      margin-right: 6%;
-      margin-bottom: 15px;
-      &:nth-child(2)    { margin-right: 0; }
-      &:nth-child(3)    { clear: both; }
-    }
-    .page-cols .abstracts {
-      article {
-      }
-      .plug {
+    .edition-marquee .recents {
+      & > .bound          { padding-bottom: 10px; } // not 30
+      nav li {
+        width: 47%;
+        margin-right: 6%;
+        margin-bottom: 15px;
+        &:nth-child(2)    { margin-right: 0; }
+        &:nth-child(3)    { clear: both; }
       }
     }
 
-} // 1023
+} // 760
 
 //  ...........................................................................
 
+@media screen and (max-width: 699px) {
 
+    .page-cols {
+      background: white;
+      & > .inner              { background: white; }
+      .abstracts,.supportive  { width: 100%; float: none; }
+      .abstracts {
+        width: 100%;
+        float: none;
+        article {
+          header h1           { font-size: 1.5em; }
+          .eisegesis          { font-size: 0.8125em; }
+          .photo              { width: 100%; margin-left: 0; }
+          footer              { font-size: 0.875em; width: 100%; margin-left: 0; padding: 10px 0 12px; }
+          footer a            { background-position: right 6px; padding-right: 18px; }
+        }
+      }
+      .supportive {
+        display: none;
+      }
+    }
+
+} // 699
+
+//  ...........................................................................
+
+@media screen and (max-width: 400px) {
+
+  .page-cols .abstracts {
+    .subscribe header h2 span { white-space: normal; }
+  }
+
+} // 400
+
+//  ...........................................................................
 
 
 
