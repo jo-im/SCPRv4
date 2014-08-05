@@ -3,22 +3,20 @@
 <% articles.each do |article| %>
 
 <article class="clearfix">
-    <%= link_to article.public_path do %>
-        <div class="graphic">
-            <div class="ratio">
+    <div class="graphic">
+        <div class="ratio">
 
-        <% if display_header %>
-            <% if tag = article.tags.first %>
-                <span class="issue"><%= link_to tag.title, issue_path(tag.slug) %></span>
-            <% end  %>
-        <% end %>
-
-                <div class="fill"></div>
-                <b class="img-contain"><%= image_tag article.asset.small.url, alt: '' %></b>
-
-            </div><!--/ .ratio -->
-        </div><!--/ .graphic -->
+    <% if display_header %>
+        <% if tag = article.tags.first %>
+            <span class="issue"><%= link_to tag.title, issue_path(tag.slug) %></span>
+        <% end  %>
     <% end %>
+
+            <div class="fill"></div>
+            <b class="img-contain"><%= link_to image_tag(article.asset.small.url), article.public_path, alt: '' %></b>
+
+        </div><!--/ .ratio -->
+    </div><!--/ .graphic -->
 
     <div class="prose">
         <h1><%= link_to article.short_title, article.public_path %></h1>
