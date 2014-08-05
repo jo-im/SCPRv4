@@ -24,6 +24,7 @@ body.short-list {
       text-transform: uppercase;
       h1,h2             { float: left; }
       h1                { font-size: 2.9375em; /* 47 / 16 */ font-weight: 300; }
+      h1 span           { display: none; }
       h2 {
         padding: 12px 0 0 6px;
         span {
@@ -575,16 +576,56 @@ body.short-list {
 
 } // 699
 
+
+//  ...........................................................................
+
+@media screen and (min-width: 571px) {
+
+  .shorlist-ledge       { display: none; }
+
+}
+
 //  ...........................................................................
 
 @media screen and (max-width: 570px) {
 
-  .page-cols .abstracts .subscribe {
+  .masthead             { display: none; }
+
+  .shortlist-ledge {
+    background: black;
+    height: 38px;
+    color: white;
+    font-family: $font-prox;
+    width: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 5;
+  }
+
+  .edition-marquee {
+    padding: 71px 0 32px; /* top: 33 + 38 */
+    & > .inner          { /* ... */ }
+    .titling {
+      min-height: 0;
+      h1                { float: none; font-size: 1.3125em; /* 21 / 16 */ font-weight: 700; }
+      h1:before         { content: "The "; }
+      h1 span           { display: block; font-weight: 300; padding-top: 4px; }
+      h2                { padding: 1px 0 0 0; margin-left: -3px; }
+    }
+    .date               { display: none; }
+  }
+
+  .page-cols {
+    box-shadow: none;
+    & > .inner          { box-shadow: none; padding-top: 0; }
+    .abstracts .subscribe {
       form {
         margin: 0 25px;
         height: 37px;
         .email-bound    { margin-right: 130px; }
       }
+    }
   }
 
 } // 880
