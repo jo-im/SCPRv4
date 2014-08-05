@@ -521,6 +521,19 @@ body.short-list {
 
 //  ...........................................................................
 
+@media screen and (min-width: 700px) and (max-width: 880px) {
+
+  .page-cols .abstracts .subscribe {
+      form {
+        margin: 0 32px;
+        height: 37px;
+      }
+  }
+
+} // 880
+
+//  ...........................................................................
+
 @media screen and (max-width: 760px) {
 
     .edition-marquee .recents {
@@ -564,10 +577,29 @@ body.short-list {
 
 //  ...........................................................................
 
+@media screen and (max-width: 570px) {
+
+  .page-cols .abstracts .subscribe {
+      form {
+        margin: 0 25px;
+        height: 37px;
+        .email-bound    { margin-right: 130px; }
+      }
+  }
+
+} // 880
+
+//  ...........................................................................
+
 @media screen and (max-width: 400px) {
 
-  .page-cols .abstracts {
-    .subscribe header h2 span { white-space: normal; }
+  .page-cols .abstracts .subscribe {
+      header h2 span          { white-space: normal; }
+      form {
+        height: auto;
+        input[type="submit"]  { position: static; margin: 0 auto; }
+        .email-bound          { margin-right: 0; margin-bottom: 15px; }
+      }
   }
 
 } // 400
