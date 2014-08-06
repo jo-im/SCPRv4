@@ -17,6 +17,18 @@ scpr.Behaviors.Editions = {
       });
 
 
+      // Prevent internal-anchor URL hashes
+      // NOTE: I (Jon) have a thought on this, but it might be
+      // unfounded. Hit me up if this strikes anyone as a bad idea.
+      // ---------------------------------------------------------
+      $(".contents a").click(function(){
+        var desired = $(this).attr("href");
+        $("html, body").animate({
+            scrollTop: $(desired).offset().top
+        }, "slow");
+        return false;
+      });
+
 
       // Show/hide the "KPCC Menu" flyout.
       // ---------------------------------------------------------
