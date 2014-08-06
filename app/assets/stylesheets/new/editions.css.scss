@@ -202,6 +202,7 @@ body.short-list {
       background: image-url("i/shortlist-dot-gray.png") repeat-y center top;
       background-size: 1px 1px;
       float: left;
+      .share                    { display: none; } // ...oooohhh but he'll be back
       article {
         padding-bottom: 81px;
         .photo {
@@ -396,13 +397,7 @@ body.short-list {
             margin-right: 13px;
             float: left;
           }
-          li:last-child a     { margin-right: 0; }
-          li.twitter a        { background-position: 0 0; }
-          li.twitter a:hover  { background-position: 0 -39px; }
-          li.email a          { background-position: -40px 0; }
-          li.email a:hover    { background-position: -40px -39px; }
-          li.facebook a       { background-position: -80px 0; }
-          li.facebook a:hover { background-position: -80px -39px; }
+          @include shortlist-share-states;
         }
       } // .share
 
@@ -572,6 +567,38 @@ body.short-list {
           footer              { font-size: 0.875em; width: 100%; margin-left: 0; padding: 10px 0 12px; }
           footer a            { background-position: right 6px; padding-right: 18px; }
         }
+        .share {
+          display: block;
+          background: #515151;
+          padding: 25px 0 35px;
+          margin: -30px 0 70px;
+          & > div             { margin: 0 auto; width: 90%; }
+          h1 {
+            color: #3dc6f4;
+            font-size: 1.75em;
+            font-family: $font-freight;
+            font-weight: 300;
+            text-align: center;
+            border-bottom: 1px solid #3e869f;
+            padding-bottom: 8px;
+            margin-bottom: 12px;
+          }
+          ul {
+            width: 109px;
+            margin: 0 auto;
+            li      { display: inline; }
+            a {
+              @include texthide;
+              width: 27px;
+              height: 27px;
+              background: image-url("i/shortlist-share-icons.png") no-repeat;
+              background-size: 107px 67px;
+              margin-right: 13px;
+              float: left;
+            }
+            @include shortlist-share-states;
+          }
+        }
       }
       .supportive {
         display: none;
@@ -586,7 +613,8 @@ body.short-list {
 @media screen and (min-width: 571px) {
 
   .page-cols .abstracts article mark span,
-  .shortlist-ledge        { display: none; }
+  .shortlist-ledge,
+  .edition-marquee .recents time  { display: none; }
 
 }
 
@@ -692,7 +720,6 @@ body.short-list {
     &.exposed .recents-toggle   { right: 0; background-position: 0 -248px; }
 
     .recents {
-//      display: block;
       margin-top: 0;
       position: fixed;
       outline: 1px solid aqua;
