@@ -585,6 +585,7 @@ body.short-list {
 
 @media screen and (min-width: 571px) {
 
+  .page-cols .abstracts article mark span,
   .shortlist-ledge        { display: none; }
 
 }
@@ -722,8 +723,31 @@ body.short-list {
   .page-cols {
     box-shadow: none;
     & > .inner          { box-shadow: none; padding-top: 0; }
-    .abstracts .subscribe {
-      form {
+    .abstracts {
+      article {
+        .photo {
+          margin-left: -5.5%;
+          width: 111%;
+          &.ratio .fill { padding-top: 39%; }
+        }
+        mark {
+          width: auto;
+          height: 25px;
+          left: -10px;
+          top: -20px;
+          padding: 5px 11px 0 10px;
+          text-transform: uppercase;
+          text-align: left;
+          font-weight: 700;
+          font-size: 0.9375em;
+          border-radius: 0;
+          letter-spacing: -0.02em;
+          span      { font-size: 0.66666666666667em; /* 10 / 15 */ color: #bbbbbb; }
+          span b    { color: #6d6d6d; }
+        }
+        .prose      { padding-top: 15px; }
+      }
+      .subscribe form {
         margin: 0 25px;
         height: 37px;
         .email-bound    { margin-right: 130px; }

@@ -17,6 +17,7 @@ scpr.Behaviors.Editions = {
       });
 
 
+
       // Show/hide the "KPCC Menu" flyout.
       // ---------------------------------------------------------
       $(".shortlist-ledge h1").click(function(){
