@@ -596,6 +596,7 @@ body.short-list {
   .masthead               { display: none; }
 
   .shortlist-ledge {
+    & > .bound            { position: relative; }
     background: black;
     height: 38px;
     color: white;
@@ -605,7 +606,52 @@ body.short-list {
     top: 0;
     left: 0;
     z-index: 5;
-    outline: 1px solid red;
+    nav,h2                { display: block; position: absolute; }
+    nav {
+      top: 0;
+      left: 0;
+      h1 {
+        height: 38px;
+        width: 93px;
+        border-right: 1px solid #404040;
+        overflow: hidden;
+        background: image-url("i/shortlist-kpcc-logo.png") no-repeat;
+        background-size: 82px 114px;
+        @include texthide;
+        cursor: pointer;
+        &:hover           { background-position: 0 -38px; }
+      }
+      ul {
+        display: none;
+        position: absolute;
+        top: 38px;
+        background: black;
+        color: white;
+        margin-left: -10px;
+        box-sizing: border-box;
+        width: 150px;
+        padding: 0 10px 5px 10px;
+        li, a             { display: block; }
+        li                { border-bottom: 1px solid #404040; }
+        li:last-child     { border-bottom: none; }
+        li a              { font-size: 0.8125em; padding: 8px 0; font-weight: 700; text-transform: uppercase; }
+        li a:hover        { color: $orange; }
+        li:first-child a  { padding-top: 0; }
+      }
+      &.exposed {
+        h1                { background-position: 0 -76px; }
+        ul                { display: block; }
+      }
+    }
+    h2 {
+      top: 14px;
+      left: 103px;
+      text-transform: uppercase;
+      font-size: 0.75em;
+      line-height: 1;
+      font-weight: 700;
+      span                { color: $orange; }
+    }
   }
 
   .edition-marquee {
@@ -621,25 +667,28 @@ body.short-list {
     }
     // Old <time>:
     & > .inner > .date  { display: none; }
-    // New <time>:
-    .recents-toggle {
+    // New <time>s:
+    .recents-toggle {        
+      display: block;
       width: 33px;
       height: 20px;
       position: absolute;
       z-index: 7;
-      top: 5px;
+      top: 7px;
       right: 0;
-      time {
-        display: block;
-        @include texthide;
-        width: 33px;
-        height: 20px;
-        background: aqua image-url("i/shortlist-calendar-icon.png") no-repeat 0 -186px;
-        background-size: 33px 291px;
-        overflow: hidden;
-        cursor: pointer;
-      }
+      background: image-url("i/shortlist-calendar-icon.png") no-repeat 0 -186px;
+      background-size: 33px 291px;
+      overflow: hidden;
+      cursor: pointer;
+      font-size: 0.75em;
+      line-height: 1;
+      color: white;
+      font-weight: 700;
+      box-sizing: border-box;
+      padding: 6px 0 0 12px;
+      span                      { display: block; text-align: center; }
     }
+    &.exposed .recents-toggle   { right: 0; background-position: 0 -248px; }
 
     .recents {
 //      display: block;
@@ -650,8 +699,13 @@ body.short-list {
       top: 0;
       left: 0;
       z-index: 6;
-      background: purple image-url("i/shortlist-recents-mini-rule.png") no-repeat right 38px;
-      background-size: 600px 6px;
+      background:
+        image-url("i/shortlist-ledge-notch.png") no-repeat right 5% top 38px,
+        image-url("i/shortlist-ledge-rule.png") repeat-x left 38px;
+      background-size:
+        15px 6px,
+        1px 1px;
+      background-color: black;
       & > .bound  { background: none; }
       header {
         color: #b1b1b1;
@@ -661,9 +715,7 @@ body.short-list {
         h1,button { float: none; }
         button    { position: absolute; top: 0; left: 0; width: 15px; height: 15px; }
       }
-      nav {
-        padding-top: 45px;
-      }
+      nav         { padding-top: 64px; }
     }
   }
 

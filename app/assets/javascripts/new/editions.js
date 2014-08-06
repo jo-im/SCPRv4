@@ -12,11 +12,18 @@ scpr.Behaviors.Editions = {
       
       // Show/hide the "Recent Editions" flyout.
       // ---------------------------------------------------------
-      $(".edition-marquee time mark,.recents button,.recents-toggle time").click(function(){
+      $(".edition-marquee time mark,.recents button,.recents-toggle").click(function(){
         $(".edition-marquee").toggleClass("exposed");
       });
 
-      
+
+      // Show/hide the "KPCC Menu" flyout.
+      // ---------------------------------------------------------
+      $(".shortlist-ledge h1").click(function(){
+        $(".shortlist-ledge nav").toggleClass("exposed");
+      });
+
+
       // Shorten cosmetic names of days-of-the-week. (Debounced.)
       // ---------------------------------------------------------
       function dayShortener() {
