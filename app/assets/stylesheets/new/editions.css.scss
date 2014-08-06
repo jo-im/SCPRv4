@@ -61,12 +61,12 @@ body.short-list {
         right: 0;
         text-align: center;
         background: image-url("i/shortlist-calendar-icon.png") no-repeat;
+        background-size: 33px 291px;
         cursor: pointer;
         font-weight: 700;
         font-size: 1.0625em;
         letter-spacing: -0.03em;
         color: white;
-        background-size: 33px 167px;
         width: 33px;
         height: 43px;
         overflow: hidden;
@@ -162,10 +162,14 @@ body.short-list {
     }
 
     &.exposed {
+      .recents                { display: block; }
+    //----------------------------------------------------------------
+      @media screen and (min-width: 571px) {
       .titling h1,.titling h2 { display: none; }
       .date span              { color: #31aad3; }
       .date mark              { background-position: 0 -124px; }
-      .recents                { display: block; }
+      }
+    //----------------------------------------------------------------
     }
 
   } // .edition-marquee
@@ -581,7 +585,7 @@ body.short-list {
 
 @media screen and (min-width: 571px) {
 
-  .shortlist-ledge       { display: none; }
+  .shortlist-ledge        { display: none; }
 
 }
 
@@ -589,7 +593,7 @@ body.short-list {
 
 @media screen and (max-width: 570px) {
 
-  .masthead             { display: none; }
+  .masthead               { display: none; }
 
   .shortlist-ledge {
     background: black;
@@ -601,19 +605,66 @@ body.short-list {
     top: 0;
     left: 0;
     z-index: 5;
+    outline: 1px solid red;
   }
 
   .edition-marquee {
     padding: 71px 0 32px; /* top: 33 + 38 */
     & > .inner          { /* ... */ }
     .titling {
+      position: static;
       min-height: 0;
       h1                { float: none; font-size: 1.3125em; /* 21 / 16 */ font-weight: 700; }
       h1:before         { content: "The "; }
       h1 span           { display: block; font-weight: 300; padding-top: 4px; }
       h2                { padding: 1px 0 0 0; margin-left: -3px; }
     }
-    .date               { display: none; }
+    // Old <time>:
+    & > .inner > .date  { display: none; }
+    // New <time>:
+    .recents-toggle {
+      width: 33px;
+      height: 20px;
+      position: absolute;
+      z-index: 7;
+      top: 5px;
+      right: 0;
+      time {
+        display: block;
+        @include texthide;
+        width: 33px;
+        height: 20px;
+        background: aqua image-url("i/shortlist-calendar-icon.png") no-repeat 0 -186px;
+        background-size: 33px 291px;
+        overflow: hidden;
+        cursor: pointer;
+      }
+    }
+
+    .recents {
+//      display: block;
+      margin-top: 0;
+      position: fixed;
+      outline: 1px solid aqua;
+      box-shadow: none;
+      top: 0;
+      left: 0;
+      z-index: 6;
+      background: purple image-url("i/shortlist-recents-mini-rule.png") no-repeat right 38px;
+      background-size: 600px 6px;
+      & > .bound  { background: none; }
+      header {
+        color: #b1b1b1;
+        top: 11px;
+        background: none;
+        & > div   { height: 17px; position: relative; padding-left: 20px; box-sizing: border-box; overflow: hidden; }
+        h1,button { float: none; }
+        button    { position: absolute; top: 0; left: 0; width: 15px; height: 15px; }
+      }
+      nav {
+        padding-top: 45px;
+      }
+    }
   }
 
   .page-cols {
@@ -628,7 +679,7 @@ body.short-list {
     }
   }
 
-} // 880
+} // 570
 
 //  ...........................................................................
 

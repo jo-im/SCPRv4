@@ -12,7 +12,7 @@ scpr.Behaviors.Editions = {
       
       // Show/hide the "Recent Editions" flyout.
       // ---------------------------------------------------------
-      $(".edition-marquee time mark,.recents button").click(function(){
+      $(".edition-marquee time mark,.recents button,.recents-toggle time").click(function(){
         $(".edition-marquee").toggleClass("exposed");
       });
 
