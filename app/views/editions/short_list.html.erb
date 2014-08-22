@@ -28,7 +28,7 @@
     <div class="inner bound">
       <div class="titling clearfix">
           <h1>Short List <span>for <%= format_date(@edition.published_at, with: '%A, %B %Y') %></span></h1>
-          <h2 class="weekend"><span><%= @edition.title %></span></h2><!-- This H2 should always carry either a "pm", "am", or "weekend" class. -->
+          <h2 class="<%= @edition.slug.split('-').first %>"><span><%= @edition.short_list_type %></span></h2><!-- This H2 should always carry either a "pm", "am", or "weekend" class. -->
       </div>
       <h3 class="date">
           <time datetime="<%= format_date(@edition.published_at, with: '%F') %>">
@@ -128,7 +128,7 @@
           <h1>Share this edition</h1>
           <ul class="clearfix">
               <li class="twitter social_twit" data-url="">
-                  <a href="#" class="track-event twitter" data-ga-category="Article" data-ga-action="Share" data-ga-label="Twitter" data-url="" data-text="<%= u(@edition.title) %>">Share via Twitter</a>
+                  <a href="#" class="track-event twitter" data-ga-category="Article" data-ga-action="Share" data-ga-label="Twitter" data-url="" data-text="<%= u(@edition.short_list_type) %>">Share via Twitter</a>
               </li>
               <li class="email">
                   <a href="#" class="track-event email" data-ga-category="Article" data-ga-action="Share" data-ga-label="Email" data-key="<%= @edition.id %>">Share via Email</a>
@@ -180,7 +180,7 @@
           <h1>Share this edition</h1>
           <ul class="clearfix">
             <li class="twitter social_twit" data-url="<%= @edition.public_url %>">
-              <a href="#" class="track-event twitter" data-ga-category="Article" data-ga-action="Share" data-ga-label="Twitter" data-url="<%= @edition.public_url %>" data-text="<%= u(@edition.title) %>">Share on Twitter</a>
+              <a href="#" class="track-event twitter" data-ga-category="Article" data-ga-action="Share" data-ga-label="Twitter" data-url="<%= @edition.public_url %>" data-text="<%= u(@edition.short_list_type) %>">Share on Twitter</a>
               </li>
             <li class="facebook social_fb" data-url="<%= @edition.public_url %>">
               <a href="#" class="track-event facebook" data-ga-category="Article" data-ga-action="Share" data-ga-label="Facebook" data-url="<%= @edition.public_url %>">Share on Facebook</a>

@@ -24,6 +24,13 @@ describe Edition do
     end
   end
 
+  describe '#short_list_type' do
+    it "is the short list type" do
+      edition = build :edition, slug: 'am-edition'
+      edition.short_list_type.should eq 'A.M. Edition'
+    end
+  end
+
   describe '#title' do
     it "validates title when the edition is pending" do
       edition = build :edition, :pending, title: nil

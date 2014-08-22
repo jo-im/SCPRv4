@@ -5,7 +5,7 @@ FactoryGirl.define do
   factory :edition do
     status Edition.status_id(:live)
     sequence(:title) { |n| "Cool Edition #{n}" }
-
+    slug "A.M. Edition"
     email_sent false
 
     trait :published do

@@ -70,6 +70,10 @@ class Edition < ActiveRecord::Base
 
   self.public_route_key = "short_list"
 
+  def short_list_type
+    SHORT_LIST_TYPES[self.slug]
+  end
+
   def route_hash
     return {} if !self.persisted? || !self.persisted_record.published?
     {
