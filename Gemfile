@@ -30,7 +30,7 @@ gem 'escape_utils', '~> 1.0.1'
 gem 'simple_form', "~> 3.0.0"
 gem 'jbuilder', '~> 1.5.3'
 
-gem 'embeditor-rails'
+gem 'embeditor-rails', '~> 2.0.1'
 
 
 ## Utility

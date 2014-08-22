@@ -88,7 +88,7 @@ GEM
       eco-source
       execjs
     eco-source (1.1.0.rc.1)
-    embeditor-rails (2.0.0)
+    embeditor-rails (2.0.1)
       actionpack (>= 3.2.0, < 5)
       coffee-rails (>= 3.2.0, < 5)
       eco (~> 1.0.0)
@@ -372,7 +372,7 @@ DEPENDENCIES
   database_cleaner
   dbsync (~> 0.3.0)
   eco (~> 1.0)
-  embeditor-rails
+  embeditor-rails (~> 2.0.1)
   escape_utils (~> 1.0.1)
   factory_girl_rails
   faraday (~> 0.8)
