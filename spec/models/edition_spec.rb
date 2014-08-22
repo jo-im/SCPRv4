@@ -18,6 +18,12 @@ describe Edition do
     end
   end
 
+  describe '::slug_select_collection' do
+    it "maps and titleizes" do
+      Edition.slug_select_collection.should include ["A.M. Edition", "am-edition"]
+    end
+  end
+
   describe '#title' do
     it "validates title when the edition is pending" do
       edition = build :edition, :pending, title: nil

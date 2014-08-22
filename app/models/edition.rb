@@ -1,6 +1,5 @@
 # A collection of items, which are meant to be represented
-# as Abstracts (although not all of them will actually be
-# an Abstract object).
+# as Abstracts (although not all of them will actually be an Abstract object).
 #
 # This model was created originally for the mobile application,
 # but there's no reason it couldn't also be presented on the
@@ -36,6 +35,11 @@ class Edition < ActiveRecord::Base
     s.published!
   end
 
+  SHORT_LIST_TYPES = {
+    'am-edition'      => 'A.M. Edition',
+    'pm-edition'      => 'P.M. Edition',
+    'weekend-reads' => 'Weekend Reads'
+  }
 
   has_many :slots,
     -> { order('position') },
@@ -57,6 +61,10 @@ class Edition < ActiveRecord::Base
     def titles_collection
       self.where(status: self.status_id(:live))
       .select('distinct title').order('title').map(&:title)
+    end
+
+    def slug_select_collection
+      SHORT_LIST_TYPES.map { |k,v| [v.titleize, k] }
     end
   end
 

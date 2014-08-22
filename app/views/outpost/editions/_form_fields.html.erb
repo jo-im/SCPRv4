@@ -1,5 +1,6 @@
 <%= form_block "Information" do %>
   <%= f.input :title, input_html: { autocomplete: "off", data: { provide: "typeahead", source: Edition.titles_collection } } %>
+  <%= f.input :slug, collection: Edition.slug_select_collection, include_blank: false, label: "Edition Type" %>
 <% end %>
 
 <%= form_block "Publishing" do %>
