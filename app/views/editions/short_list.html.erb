@@ -179,9 +179,12 @@
         <div class="clearfix">
           <h1>Share this edition</h1>
           <ul class="clearfix">
-            <li class="twitter"><a href="#">Share via Twitter</a></li>
-            <li class="email"><a href="#">Share via Email</a></li>
-            <li class="facebook"><a href="#">Share via Facebook</a></li>
+            <li class="twitter social_twit" data-url="<%= @edition.public_url %>">
+              <a href="#" class="track-event twitter" data-ga-category="Article" data-ga-action="Share" data-ga-label="Twitter" data-url="<%= @edition.public_url %>" data-text="<%= u(@edition.title) %>">Share on Twitter</a>
+              </li>
+            <li class="facebook social_fb" data-url="<%= @edition.public_url %>">
+              <a href="#" class="track-event facebook" data-ga-category="Article" data-ga-action="Share" data-ga-label="Facebook" data-url="<%= @edition.public_url %>">Share on Facebook</a>
+            </li>
           </ul>
         </div>
       </section>
