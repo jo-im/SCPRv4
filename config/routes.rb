@@ -55,6 +55,7 @@ Scprv4::Application.routes.draw do
   get '/events/(list/:list)'              => 'events#index',      as: :events,                defaults: { list: "all" }
 
   # Short List
+  get '/short-list/' => "editions#index"
   get '/short-list/:year/:month/:day/:id/:slug/' => "editions#short_list", as: :short_list,  constraints: { year: /\d{4}/, month: /\d{2}/, day: /\d{2}/, id: /\d+/, slug: /[\w-]+/ }
 
   # Legacy route
