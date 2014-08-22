@@ -69,6 +69,7 @@ class Edition < ActiveRecord::Base
       :month          => "%02d" % self.persisted_record.published_at.month,
       :day            => "%02d" % self.persisted_record.published_at.day,
       :id             => self.persisted_record.id.to_s,
+      :slug           => self.persisted_record.slug,
       :trailing_slash => true
     }
   end
