@@ -81,7 +81,64 @@
 <div class="inner bound clearfix">
 
     <section class="abstracts">
-      <% @edition.abstracts.each_with_index do |abstract, index| %>
+      <% @edition.abstracts.first do |abstract| %>
+          <article name="abstract-01" id="abstract-01">
+            <figure class="photo ratio">
+              <div class="fill"></div>
+              <b class="img-contain"><img src="<%= abstract.asset.full.url %>" /></b>
+            </figure>
+            <div class="prose clearfix">
+              <header>
+                  <h1><%= abstract.headline %></h1>
+                  <mark>1 <span>of <b><%= @edition.abstracts.length %></b></span></mark>
+              </header>
+              <div class="eisegesis">
+                <%= abstract.summary.html_safe %>
+              </div>
+            </div>
+            <footer>
+                <a href="<%= abstract.url %>">Read full story at <%= abstract.source %></a>
+            </footer>
+        </article>
+      <% end %>
+
+      <aside class="plug">
+        <div class="ad widget">
+          <%= render "shared/ads/dfp", ad_key: 'slot_a' %>
+          <span class="appeal"><a href="/support/underwriting/">Become a KPCC sponsor.</a></span>
+        </div>
+      </aside>
+
+      <% @edition.abstracts[1..3].each_with_index do |abstract, index| %>
+          <article name="abstract-<%= (index+1).to_s.rjust(2, "0") %>" id="abstract-<%= (index+1).to_s.rjust(2, "0") %>">
+            <figure class="photo ratio">
+              <div class="fill"></div>
+              <b class="img-contain"><img src="<%= abstract.asset.full.url %>" /></b>
+            </figure>
+            <div class="prose clearfix">
+              <header>
+                  <h1><%= abstract.headline %></h1>
+                  <mark><%= index+1 %> <span>of <b><%= @edition.abstracts.length %></b></span></mark>
+              </header>
+              <div class="eisegesis">
+                <%= abstract.summary.html_safe %>
+              </div>
+            </div>
+            <footer>
+                <a href="<%= abstract.url %>">Read full story at <%= abstract.source %></a>
+            </footer>
+        </article>
+      <% end %>
+
+
+      <aside class="plug">
+        <div class="ad widget">
+          <%= render "shared/ads/dfp", ad_key: 'slot_b' %>
+          <span class="appeal"><a href="/support/underwriting/">Become a KPCC sponsor.</a></span>
+        </div>
+      </aside>
+
+      <% @edition.abstracts[4..6].each_with_index do |abstract, index| %>
           <article name="abstract-<%= (index+1).to_s.rjust(2, "0") %>" id="abstract-<%= (index+1).to_s.rjust(2, "0") %>">
             <figure class="photo ratio">
               <div class="fill"></div>
@@ -104,24 +161,32 @@
 
       <aside class="plug">
         <div class="ad widget">
-          <%= render "shared/ads/dfp", ad_key: 'slot_a' %>
-          <span class="appeal"><a href="/support/underwriting/">Become a KPCC sponsor.</a></span>
-        </div>
-      </aside>
-
-      <aside class="plug">
-        <div class="ad widget">
-          <%= render "shared/ads/dfp", ad_key: 'slot_b' %>
-          <span class="appeal"><a href="/support/underwriting/">Become a KPCC sponsor.</a></span>
-        </div>
-      </aside>
-
-      <aside class="plug">
-        <div class="ad widget">
           <%= render "shared/ads/dfp", ad_key: 'slot_c' %>
           <span class="appeal"><a href="/support/underwriting/">Become a KPCC sponsor.</a></span>
         </div>
       </aside>
+
+     <% @edition.abstracts[7..-1].each_with_index do |abstract, index| %>
+        <article name="abstract-<%= (index+1).to_s.rjust(2, "0") %>" id="abstract-<%= (index+1).to_s.rjust(2, "0") %>">
+            <figure class="photo ratio">
+              <div class="fill"></div>
+              <b class="img-contain"><img src="<%= abstract.asset.full.url %>" /></b>
+            </figure>
+            <div class="prose clearfix">
+              <header>
+                  <h1><%= abstract.headline %></h1>
+                  <mark><%= index+1 %> <span>of <b><%= @edition.abstracts.length %></b></span></mark>
+              </header>
+              <div class="eisegesis">
+                <%= abstract.summary.html_safe %>
+              </div>
+            </div>
+            <footer>
+                <a href="<%= abstract.url %>">Read full story at <%= abstract.source %></a>
+            </footer>
+        </article>
+      <% end %>
+
 
       <section class="share" aria-hidden="true">
         <div>
