@@ -37,5 +37,5 @@ Scprv4::Application.configure do
   config.scpr.media_url    = "http://media.scpr.org"
   config.scpr.resque_queue = :scprv4
 
-  config.node.server = "http://node.scprdev.org"
+  config.newsroom.server = "http://newsroom.scprdev.org:8020"
 end
