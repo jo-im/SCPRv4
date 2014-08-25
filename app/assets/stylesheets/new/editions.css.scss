@@ -126,7 +126,7 @@ body.short-list {
           a                   { display: block; }
           .ratio              { margin-bottom: 2px; }
           .ratio .fill        { padding-top: 21.5%; }
-          .ratio img          { margin-top: -40%; }
+          .ratio img          { /* margin-top: -40%; ...nah, led to clipping. Might revisit later, but too risky for now. */ }
           figcaption {
             time {
               display: block;
@@ -210,7 +210,7 @@ body.short-list {
           margin-left: -3.738317757009%;
           overflow: hidden;
           &.ratio .fill         { padding-top: 27.15%; }
-          img                   { margin-top: -40%; }
+          img                   { margin-top: -25%; }
         }
         .prose                  { padding: 30px 0 4px; position: relative; }
         header,.eisegesis       { width: 48.130841121495%; /* 412 / 856 */ }
