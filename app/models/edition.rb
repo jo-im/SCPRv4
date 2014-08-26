@@ -110,6 +110,9 @@ class Edition < ActiveRecord::Base
     self.update_attributes(status: self.class.status_id(:live))
   end
 
+  def sister_editions
+    self.class.published.where.not(id: self.id).first(4)
+  end
 
   ### EloquaSendable interface implementation
   # Note that we don't check for presence of first Abstract before trying to

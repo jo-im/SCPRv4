@@ -3,16 +3,15 @@ class EditionsController < ApplicationController
   respond_to :html
 
   def latest
-    @scoped_editions = Edition.published.includes(:slots)
-    @edition = @scoped_editions.first
-    @other_editions = @scoped_editions.where.not(id: @edition).first(4)
+    @latest_editions = Edition.published.includes(:slots).first(5)
+    @edition = @latest_editions.first
+    @other_editions = @latest_editions - [@edition]
     render template: "editions/short_list"
   end
 
   def short_list
-    @scoped_editions = Edition.published.includes(:slots)
-    @edition = @scoped_editions.find(params[:id])
-    @other_editions = @scoped_editions.where.not(id: @edition).first(4)
+    @edition = Edition.published.includes(:slots).find(params[:id])
+    @other_editions = @edition.sister_editions
   end
 
 end

@@ -80,6 +80,13 @@ describe Edition do
     end
   end
 
+  describe '#sister_editions' do
+    it 'finds 4 other editions' do
+      edition = create :edition, :published
+      other_editions = create_list :edition, 4, :published
+      edition.sister_editions.should_not include(edition)
+    end
+  end
 
   describe "sending the e-mail" do
     describe "job queue" do
