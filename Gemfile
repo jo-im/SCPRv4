@@ -54,7 +54,7 @@ gem "oauth2", "~> 0.8"
 gem 'postmark-rails', "~> 0.6.0"
 gem 'newrelic_rpm', '~> 3.7'
 gem 'parse-ruby-client', '~> 0.1.15'
-gem 'pmp', '0.3.1' # This is locked since the gem is still in development
+gem 'pmp', '0.4.0' # This is locked since the gem is still in development
 gem 'npr', '~> 2.0'
 gem 'asset_host_client', '~> 1.2'
 gem 'audio_vision', '~> 1.0'

@@ -94,7 +94,7 @@ GEM
       eco (~> 1.0.0)
     erubis (2.7.0)
     escape_utils (1.0.1)
-    excon (0.33.0)
+    excon (0.39.5)
     execjs (2.0.2)
     factory_girl (4.4.0)
       activesupport (>= 3.0.0)
@@ -200,7 +200,7 @@ GEM
       iron_mq
       patron
     patron (0.4.18)
-    pmp (0.3.1)
+    pmp (0.4.0)
       activesupport
       excon
       faraday
@@ -396,7 +396,7 @@ DEPENDENCIES
   outpost-publishing
   outpost-secretary
   parse-ruby-client (~> 0.1.15)
-  pmp (= 0.3.1)
+  pmp (= 0.4.0)
   postmark-rails (~> 0.6.0)
   pry
   rack-utf8_sanitizer
