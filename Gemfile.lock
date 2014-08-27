@@ -88,13 +88,13 @@ GEM
       eco-source
       execjs
     eco-source (1.1.0.rc.1)
-    embeditor-rails (2.0.0)
+    embeditor-rails (2.0.1)
       actionpack (>= 3.2.0, < 5)
       coffee-rails (>= 3.2.0, < 5)
       eco (~> 1.0.0)
     erubis (2.7.0)
     escape_utils (1.0.1)
-    excon (0.33.0)
+    excon (0.39.5)
     execjs (2.0.2)
     factory_girl (4.4.0)
       activesupport (>= 3.0.0)
@@ -200,7 +200,7 @@ GEM
       iron_mq
       patron
     patron (0.4.18)
-    pmp (0.3.1)
+    pmp (0.4.0)
       activesupport
       excon
       faraday
@@ -372,7 +372,7 @@ DEPENDENCIES
   database_cleaner
   dbsync (~> 0.3.0)
   eco (~> 1.0)
-  embeditor-rails
+  embeditor-rails (~> 2.0.1)
   escape_utils (~> 1.0.1)
   factory_girl_rails
   faraday (~> 0.8)
@@ -396,7 +396,7 @@ DEPENDENCIES
   outpost-publishing
   outpost-secretary
   parse-ruby-client (~> 0.1.15)
-  pmp (= 0.3.1)
+  pmp (= 0.4.0)
   postmark-rails (~> 0.6.0)
   pry
   rack-utf8_sanitizer

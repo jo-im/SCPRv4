@@ -22,7 +22,7 @@
     if (typeof DFP_KEY_SUFFIX_OVERRIDE !== "undefined") {
       keySuffix = DFP_KEY_SUFFIX_OVERRIDE
     } else {
-      keySuffix = "/" + window.location.pathname.split("/").splice(1, 2).join("/")
+      keySuffix = "/" + window.location.pathname.split("/").filter(function(v){return v!==''}).splice(0, 2).join("/")
     }
 
     key = '/3468/ibs.scpr.scpr' + keySuffix;
@@ -33,7 +33,7 @@
     addSize([200, 250], [300, 50]).
     build();
 
-    // Only print the Ad Slots we need for the given page, 
+    // Only print the Ad Slots we need for the given page,
     // or else the empty ad requests will count against us in DFP
     <% if current_page?(:listen) %>
 

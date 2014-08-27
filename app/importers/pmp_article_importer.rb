@@ -2,7 +2,7 @@ module PmpArticleImporter
   extend LogsAsTask::ClassMethods
 
   SOURCE    = "pmp"
-  ENDPOINT  = "https://api-sandbox.pmp.io/"
+  ENDPOINT  = "https://api.pmp.io/"
   TAG       = "marketplace"
   PROFILE   = "story"
   LIMIT     = 10

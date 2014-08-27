@@ -31,7 +31,7 @@ Scprv4::Application.configure do
   config.assets.digest        = false # Add asset fingerprints
 
   # Print deprecation notices to the Rails logger
-  config.active_support.deprecation = :log
+  config.active_support.deprecation = :stderr
 
   # Gmail
   config.action_mailer.delivery_method       = :smtp
@@ -62,10 +62,10 @@ Scprv4::Application.configure do
   #   ruby -run -e httpd /Users/bricker/media/ -p 5000
   #
   # Then you can use this configuration:
-  # config.scpr.media_url    = "http://localhost:5000"
+  # config.scpr.media_url = "http://localhost:5000"
 
   # Job queue namespace.
   config.scpr.resque_queue = :scprv4
 
-  config.node.server = "http://localhost:8888"
+  config.newsroom.server = "http://localhost:8888"
 end
