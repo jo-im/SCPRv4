@@ -312,22 +312,52 @@ body.short-list {
       color: #c1c1c1;
       font-family: $font-prox;
 
+      section {
+        header {
+          border-bottom: 1px solid #a8a8a8;
+          padding-bottom: 9px;
+          margin-bottom: 10px;
+        }
+        h1 {
+          text-transform: uppercase;
+          font-size: 0.75em;
+          line-height: 1; 
+          font-weight: 700;
+        }
+        header h1 {          
+          margin-left: 19.733333333333%; // 74 / 375
+          background: image-url("i/shortlist-sidebar-icons.png") no-repeat 10px 0.16em;
+          background-size: 15px 60px;
+          padding-left: 27px;
+        }
+      }
+
+      .subscribe-hint {
+        margin-bottom: 50px;
+        header h1 {
+          color: white;
+          padding-top: 5px;
+          background-position: 0 -44px;
+        }
+        p {
+          font-size: 0.8125em; // 13 / 16
+          color: #dcdcdc;
+          margin-left: 19.733333333333%; // 74 / 375
+          a         { text-decoration: underline; }
+          a:hover   { color: white; }
+        }
+      }
+
       .contents {
         margin-bottom: 32px;
         header {
-          border-bottom: 1px solid #956146;
-          padding-bottom: 9px;
-          margin-bottom: 10px;
+          border-bottom-color: #956146;
           h1 {
             margin-left: 19.733333333333%; // 74 / 375
-            background: image-url("i/shortlist-triangle-leftward.png") no-repeat 10px 0.16em;
-            background-size: 4px 8px;
-            font-weight: 700;
+            background: image-url("i/shortlist-sidebar-icons.png") no-repeat 10px 0.16em;
+            background-size: 15px 60px;
             padding-left: 27px;
             color: #fa7836;
-            text-transform: uppercase;
-            font-size: 0.75em;
-            line-height: 1;
           }
         }
         nav {
@@ -378,14 +408,7 @@ body.short-list {
         padding-top: 8px;
         & > div   { margin-left: 19.733333333333%; /* 74 / 375 */ }
         h1,ul     { float: left; }
-        h1 {
-          color: #3dc6f4;
-          text-transform: uppercase;
-          font-size: 0.75em;
-          padding: 7px 22px 8px 0;
-          line-height: 1; 
-          font-weight: 700;
-        }
+        h1        { color: #3dc6f4; padding: 7px 22px 8px 0; }
         ul {
           li      { display: inline; }
           a {

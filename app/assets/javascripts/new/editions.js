@@ -21,7 +21,7 @@ scpr.Behaviors.Editions = {
       // NOTE: I (Jon) have a thought on this, but it might be
       // unfounded. Hit me up if this strikes anyone as a bad idea.
       // ---------------------------------------------------------
-      $(".contents a").click(function(){
+      $(".contents a,.subscribe-hint a").click(function(){
         var desired = $(this).attr("href");
         $("html, body").animate({
             scrollTop: $(desired).offset().top
