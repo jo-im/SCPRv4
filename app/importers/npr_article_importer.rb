@@ -6,6 +6,7 @@ module NprArticleImporter
   # Reference: http://www.npr.org/api/inputReference.php
   IMPORT_IDS = [
     '1001',      # News (topic)
+    '1161',      # Books News & Features (topic)
     '93559255',  # Planet Money (blog)
     '93568166',  # Monkey See (blog)
     '15709577',  # All Songs Considered (blog)
