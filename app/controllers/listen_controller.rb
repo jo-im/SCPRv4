@@ -10,7 +10,7 @@ class ListenController < ApplicationController
 
       render layout: false
     elsif params[:parse_key].present?
-      user = Parse::Query.new("_User")
+      user = Parse::Query.new("PFSUser")
       live_listener = user.eq("sustainingMemberToken", params[:parse_key])
       sustaining_member = live_listener.get.first
 
