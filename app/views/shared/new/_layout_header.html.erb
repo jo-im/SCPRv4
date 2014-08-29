@@ -10,6 +10,28 @@
 
                 <%= content_for :masthead_ad %>
             </section><!--/ .titling -->
+
+        <% elsif context = @program %>
+            <section class="titling">
+                <div class="brand clearfix">
+                    <h1><%= link_to @program.title, @program.public_path %></h1>
+                    <h2><%= @program.teaser %></h2>
+                    <span class="hosts">Hosted by <%= @program.host %></span>
+                    <span class="air-status">Airs every Thursday evening at 8:30 PT</span>
+                </div>
+                <% present @program, ProgramPresenter do |p| %>
+                    <div class="program-social">
+                        <nav>
+                          <%= p.twitter_link %>
+                          <%= p.facebook_link %>
+                          <%= p.podcast_link %>
+                          <%= p.email_link %>
+                          <%= p.rss_link %>
+                        </nav>
+                    </div>
+                <% end %>
+
+            </section><!--/ .titling -->
         <% end %>
 
         <%= render 'shared/new/main_nav' %>

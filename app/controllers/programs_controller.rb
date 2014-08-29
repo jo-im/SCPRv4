@@ -34,7 +34,10 @@ class ProgramsController < ApplicationController
           @segments = @segments.page(params[:page]).per(10)
           @episodes = @episodes.page(params[:page]).per(6)
 
-          render 'programs/kpcc/show'
+          # Check whether we hace a custom show template for this program
+          action = "handle_program_#{@program.slug}"
+          action_methods.include?(action) ? send(action) : handle_program_template
+
         end
 
         format.xml { render 'programs/kpcc/show' }
@@ -134,5 +137,19 @@ class ProgramsController < ApplicationController
       render_error(404, ActionController::RoutingError.new("Not Found"))
       return false
     end
+  end
+
+  def handle_program_template
+    template = "programs/kpcc/new/#{@program.slug}"
+
+    if template_exists?(template)
+      render(
+        :layout   => 'new/landing',
+        :template => template
+      )
+    else
+      render 'programs/kpcc/show'
+    end
+
   end
 end

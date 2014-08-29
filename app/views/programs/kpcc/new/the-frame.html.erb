@@ -1,0 +1,5 @@
+<% add_to_page_title @program.title %>
+<% meta_tags(url: @program.public_url) %>
+<% content_for :body_class, "program #{@program.slug}" %>
+
+<h1>Show: <%= @program.slug %></h1>
