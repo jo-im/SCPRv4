@@ -11,7 +11,7 @@ class ListenController < ApplicationController
       render layout: false
     elsif params[:parse_key].present?
       user = Parse::Query.new("PFSUser")
-      live_listener = user.eq("sustainingMemberToken", params[:parse_key])
+      live_listener = user.eq("sustainingMembershipToken", params[:parse_key])
       sustaining_member = live_listener.get.first
 
       return redirect_to root_path unless sustaining_member.present?
