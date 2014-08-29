@@ -19,7 +19,7 @@ class ListenController < ApplicationController
       sustaining_member["viewsLeft"] = Parse::Increment.new(-1)
       sustaining_member.save
       if sustaining_member["viewsLeft"] == 0
-        sustaining_member["sustainingMemberToken"] = nil
+        sustaining_member["sustainingMembershipToken"] = nil
         sustaining_member.save
       end
       cookies[:member_session] = params[:parse_key]
