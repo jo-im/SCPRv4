@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140822190137) do
+ActiveRecord::Schema.define(version: 20140602184207) do
 
   create_table "abstracts", force: true do |t|
     t.string   "source"
@@ -298,12 +298,10 @@ ActiveRecord::Schema.define(version: 20140822190137) do
     t.datetime "updated_at",                   null: false
     t.string   "title"
     t.boolean  "email_sent",   default: false
-    t.string   "slug"
   end
 
   add_index "editions", ["email_sent"], name: "index_editions_on_email_sent", using: :btree
   add_index "editions", ["published_at"], name: "index_editions_on_published_at", using: :btree
-  add_index "editions", ["slug"], name: "index_editions_on_slug", using: :btree
   add_index "editions", ["status", "published_at"], name: "index_editions_on_status_and_published_at", using: :btree
   add_index "editions", ["status"], name: "index_editions_on_status", using: :btree
   add_index "editions", ["updated_at"], name: "index_editions_on_updated_at", using: :btree

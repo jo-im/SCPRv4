@@ -564,23 +564,7 @@
 }       // .interior .masthead
 
 
-//  ################################################################################################
-//  ################################################################################################
-//  MASTHEAD (specific only to pages that are unaffiliated with a blog/show/branded entity)
-//  ################################################################################################
-//  ################################################################################################
 
-.ronin.interior .masthead {
-    background: #f3f3f3;
-    border-bottom: 1px solid rgba(0,0,0,0.12);
-    padding-bottom: 0 !important;
-    .inner {
-        padding-bottom: 50px;
-        @media screen and (max-width: 975px)                { padding-bottom: 80px; }
-        @media screen and (min-width: 751px)                { padding-top: 14px !important; }
-        @media screen and (max-width: 750px)                { padding-bottom: 10px; padding-top: 50px !important; }
-    }
-}
 
 
 

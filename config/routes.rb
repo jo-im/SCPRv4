@@ -54,11 +54,6 @@ Scprv4::Application.routes.draw do
   get '/events/:year/:month/:day/:id/:slug/'  => 'events#show',   as: :event,                 constraints: { year: /\d{4}/, month: /\d{2}/, day: /\d{2}/, id: /\d+/, slug: /[\w_-]+/ }
   get '/events/(list/:list)'              => 'events#index',      as: :events,                defaults: { list: "all" }
 
-  # Short List
-  get '/short-list/:year/:month/:day/:id/:slug/' => "editions#short_list", as: :short_list, constraints: { year: /\d{4}/, month: /\d{2}/, day: /\d{2}/, id: /\d+/, slug: /[\w-]+/ }
-  get '/short-list/latest'                       => "editions#latest"
-  get '/short-list/'                             => redirect("/short-list/latest")
-
   # Legacy route
   get '/events/:year/:month/:day/:slug/'  => 'events#show', constraints: { year: /\d{4}/, month: /\d{2}/, day: /\d{2}/, slug: /[\w_-]+/}
 

@@ -1,6 +1,6 @@
 <% add_to_page_title @tag.title %>
 <% meta_tags(url: issue_url(@tag.slug)) %>
-<% content_for :body_class, 'interior ronin' %>
+<% content_for :body_class, 'interior issues' %>
 
 
 <%= cache ["issues/show", "meta", "v2", @tag] do %>
