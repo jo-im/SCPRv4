@@ -82,15 +82,7 @@ $orange: #f17b21;
 	.trait.document		{ background-position: right -987px; }
 	.trait.generic		{ background-position: right -1034px; }
 }
-@mixin shortlist-share-states {
-  li:last-child a     { margin-right: 0; }
-  li.twitter a        { background-position: 0 0; }
-  li.twitter a:hover  { background-position: 0 -39px; }
-  li.email a          { background-position: -40px 0; }
-  li.email a:hover    { background-position: -40px -39px; }
-  li.facebook a       { background-position: -80px 0; }
-  li.facebook a:hover { background-position: -80px -39px; }
-}
+
 
 
 

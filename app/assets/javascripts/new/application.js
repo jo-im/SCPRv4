@@ -5,7 +5,6 @@
 //= require new/layout
 //= require new/verticals
 //= require new/single
-//= require new/editions
 //= require new/jquery.ba-throttle-debounce.min
 //= require page_mapping
 
