@@ -29,6 +29,11 @@ scpr.Behaviors.Editions = {
         return false;
       });
 
+      // Focus email signup form input when user clicks subscribe anchor
+      $(".subscribe-hint a").click(function() {
+        $(".subscribe input[type=text]").focus();
+      }); 
+
 
       // Show/hide the "KPCC Menu" flyout.
       // ---------------------------------------------------------
