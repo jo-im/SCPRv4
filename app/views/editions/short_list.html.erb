@@ -1,5 +1,6 @@
-<%= cache ["edition","v1", @edition] do %>
-    <% content_for :body_class, 'interior ronin short-list' %>
+<% content_for :body_class, 'interior ronin short-list' %>
+
+<%= cache ["short-list","v1", @edition] do %>
     <header class="edition-marquee">
 
         <nav class="shortlist-ledge" aria-hidden="true">
