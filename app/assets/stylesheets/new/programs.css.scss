@@ -1,3 +1,6 @@
+mark    { color: inherit; }
+
+
 /*
 ###############################################################################
 ###############################################################################
@@ -62,8 +65,11 @@ The long two-column flow of recent content (segments and episodes, mostly).
 ############################################################################### */
 
 .neoteric {
+  background: image-url("i/fauxcol-program-neoteric-base.png") repeat-y center top;
   & > .inner {
     padding-bottom: 90px;
+    background: image-url("i/fauxcol-program-neoteric-inner.png") repeat-y 74.384615384615% top;
+    background-size: 1500px 10px;
   }
   .segments {
     width: 68.307692307692%;
@@ -98,13 +104,51 @@ The intermission-y mishmash section of Team, Quote, Exemplary, and Ad C.
 ############################################################################### */
 
 .interregnum {
-  background: tan;
+  cite      { font-style: italic; font-weight: inherit; }
+  border-top: 1px solid #8e8e8e;
+  background:
+    image-url("i/fauxcol-program-interregnum-base-shade.png") no-repeat center top,
+    image-url("i/fauxcol-program-interregnum-base.png") repeat-y center top;
+  background-size:
+    3000px 6px,
+    3000px 20px;
+  font-family: $font-prox;
+  & > .inner {
+    background:
+      image-url("i/fauxcol-program-interregnum-inner-shade.png") no-repeat 23.153846153846% top,
+      image-url("i/ephemera-program-dot-lightgray.png") repeat-y 74.384615384615% top,
+      image-url("i/fauxcol-program-interregnum-inner.png") repeat-y 23.153846153846% top;
+    background-size:  
+      1500px 6px,
+      1px 1px,
+      1500px 10px;
+  }
   .team {
     width: 21.076923076923%; // 274p
     float: left;
+    color: #cdcdcd;
+    padding: 25px 0 50px;
+    a                     { display: block; }
+    h1 {
+      margin-bottom: 30px;
+      border-top: 1px solid rgba(255,255,255,0.28);
+      padding-top: 5px;
+      font-size: 0.875em;
+      width: 100%;
+      padding-right: 9.85401459854%; // 27 / 274
+      font-weight: 700;
+      line-height: 1.2;
+    }
     figure {
       width: 45.255474452555%; // 124p
       float: left;
+      margin-bottom: 19px;
+      &:nth-child(odd)    { margin-right: 9.124087591241%; /* 25 / 274 */ }
+      .ratio .fill        { padding-top: 125%; }
+      .ratio .img-contain { background: $blue; }
+      .photo              { border-bottom: 3px solid $blue; margin-bottom: 5px; }
+      figcaption          { font: normal 0.9375em/1.1 $font-freight; color: $blue; }
+      a:hover             { text-decoration: underline; color: #a8e9ff; }
     }
   }
   .melange {
@@ -112,8 +156,37 @@ The intermission-y mishmash section of Team, Quote, Exemplary, and Ad C.
     float: right;
   }
   .quote {
-    padding-bottom: 40px;
-    border-bottom: 1px solid maroon;
+    padding-bottom: 42px;
+    border-bottom: 1px solid rgba(0,0,0,0.2);
+    background-color: #f2f2f2;
+    box-shadow: inset 0 6px 0 #e7e7e7;
+  }
+  blockquote {
+    background:
+      image-url("i/ephemera-program-quote-open.png") no-repeat 1.201201201201% top,
+      image-url("i/ephemera-program-quote-close.png") no-repeat right 0 bottom 19px;
+    background-size:
+      122px 84px,
+      137px 101px;
+    width: 100%;
+    padding-right: 1.601601601602%;
+    min-height: 100px;
+    padding-top: 14px;
+    p,footer      { margin-left: 9.60960960961%; } // 96 / 999
+    p             { color: #3c3c3c; font: italic 300 2.5625em/1.2 $font-freight; margin-bottom: 11px; }
+    footer {
+      color: #656565;
+      text-align: right;
+      span,cite   { display: block; }
+      span        { font-size: 1.125; margin-bottom: 5px; }
+      mark        { font-weight: 700; }
+      cite        { font-style: normal; text-transform: uppercase; font-size: 0.75em; }
+      a           { color: $orange; text-decoration: underline; }
+      a:hover     { color: $blue; }
+    }
+  }
+  .diptych {
+    padding: 26px 0 50px;
   }
   .exemplary {
     width: 61.661661661662%; // 616p
