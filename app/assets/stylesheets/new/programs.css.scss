@@ -1,9 +1,182 @@
-// Styles for new program pages goes here
+/*
+###############################################################################
+###############################################################################
+
+EXORDIUM
+-------------------------------------------------------------------------------
+The top content part of a Program Landing Page. Includes its curated feature.
+
+###############################################################################
+############################################################################### */
+
+.exordium {
+  border-bottom: 1px solid #e0e0e0;
+  padding-bottom: 55px;
+  & > header {
+    margin-top: -51px;
+    margin-bottom: 40px;
+    h1 {
+      background: white;
+      padding-top: 25px;
+      padding-right: 4.5%;
+      padding-left: 4.5%;
+      width: 100%;
+      margin-left: -4.5%;
+      font: normal 300 3em/1 $font-freight;
+    }
+  }
+  .content {
+    .featured {
+      width: 65.846153846154%;
+      float: left;
+      .photo {
+        width: 74.065420560748%;
+        float: right;
+      }
+      .summary {
+        width: 22.196261682243%;
+        float: left;
+      }
+    }
+    .supporting {
+      width: 31.692307692308%;
+      float: right;
+    }
+  }
+}
 
 
+
+
+
+
+/*
+###############################################################################
+###############################################################################
+
+NEOTERIC
+-------------------------------------------------------------------------------
+The long two-column flow of recent content (segments and episodes, mostly).
+
+###############################################################################
+############################################################################### */
+
+.neoteric {
+  & > .inner {
+    padding-bottom: 90px;
+  }
+  .segments {
+    width: 68.307692307692%;
+    float: left;
+    figure {
+      width: 30.855855855856%;
+      float: left;
+    }
+  }
+  .library {
+    width: 23.153846153846%;
+    float: right;
+  }
+}
+
+
+
+
+
+
+
+
+/*
+###############################################################################
+###############################################################################
+
+INTERREGNUM
+-------------------------------------------------------------------------------
+The intermission-y mishmash section of Team, Quote, Exemplary, and Ad C.
+
+###############################################################################
+############################################################################### */
+
+.interregnum {
+  background: tan;
+  .team {
+    width: 21.076923076923%; // 274p
+    float: left;
+    figure {
+      width: 45.255474452555%; // 124p
+      float: left;
+    }
+  }
+  .melange {
+    width: 76.846153846154%; // 999p
+    float: right;
+  }
+  .quote {
+    padding-bottom: 40px;
+    border-bottom: 1px solid maroon;
+  }
+  .exemplary {
+    width: 61.661661661662%; // 616p
+    margin-left: 3.203203203203%; // 32p
+    float: left;
+    .photo {
+      width: 48.863636363636%; // 301p
+      float: left;
+    }
+    .prose {
+      width: 45.941558441558%; // 283p
+      float: right;
+    }
+  }
+  .plug {
+    width: 30.13013013013%; // 301p
+    float: right;
+  }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+/*
+###############################################################################
+###############################################################################
+
+OTHER PROGRAMS
+-------------------------------------------------------------------------------
+Don't like this show? That's fine, here's four others.
+
+###############################################################################
+############################################################################### */
 
 .other-programs {
   background: #161616;
   padding: 40px 0;
   color: #8a8a8a;
+  .troupe {
+    padding-bottom: 45px;
+  }
+  article {
+    width: 23.153846153846%; // 301p
+    float: left;
+  }
+  footer {
+    border-top: 1px solid #84491c;
+    padding-top: 15px;
+    color: white;
+    font: normal 300 1.375em/1 $font-freight;
+    text-align: right;
+  }
 }
+
+
+
+
+
