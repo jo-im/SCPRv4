@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140822190137) do
+ActiveRecord::Schema.define(version: 20140904223530) do
 
   create_table "abstracts", force: true do |t|
     t.string   "source"
@@ -631,7 +631,7 @@ ActiveRecord::Schema.define(version: 20140822190137) do
     t.string   "air_status",                                           null: false
     t.string   "twitter_handle"
     t.text     "sidebar",             limit: 16777215
-    t.boolean  "display_episodes",                     default: true,  null: false
+    t.boolean  "is_episodic",                          default: true,  null: false
     t.boolean  "display_segments",                     default: true,  null: false
     t.integer  "blog_id"
     t.string   "audio_dir"

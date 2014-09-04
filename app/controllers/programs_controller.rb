@@ -24,7 +24,7 @@ class ProgramsController < ApplicationController
 
       respond_with do |format|
         format.html do
-          if @program.display_episodes? && (@current_episode = @episodes.first)
+          if @program.is_episodic? && (@current_episode = @episodes.first)
             @episodes = @episodes.where.not(id: @current_episode.id)
 
             segments = @current_episode.segments.published.to_a

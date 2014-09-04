@@ -84,7 +84,7 @@ describe ProgramsController do
   describe "GET /show" do
     context "KPCC Program" do
       before do
-        @program = create :kpcc_program, display_episodes: false
+        @program = create :kpcc_program, is_episodic: false
       end
 
       it "sets @program" do
@@ -110,7 +110,7 @@ describe ProgramsController do
 
       context "html" do
         it "excludes current episode and its segments from @episodes" do
-          @program.update_column(:display_episodes, true)
+          @program.update_column(:is_episodic, true)
 
           episode = build :show_episode, :published,
             :show => @program,

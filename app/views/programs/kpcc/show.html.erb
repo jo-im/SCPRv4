@@ -1,4 +1,4 @@
-<% if @program.display_episodes? %>
+<% if @program.is_episodic? %>
   <section class="show-feature">
     <% if current_episode = @program.episodes.published.first %>
       <div class="current-episode">
@@ -61,7 +61,7 @@
     <% end %>
   </section>
 
-<% elsif @program.display_episodes? %>
+<% elsif @program.is_episodic? %>
   <% nav = paginate @episodes, params: { anchor: "archive"} %>
 
   <section class="show-episodes">

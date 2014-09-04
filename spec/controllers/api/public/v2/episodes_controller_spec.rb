@@ -32,7 +32,7 @@ describe Api::Public::V2::EpisodesController do
     end
 
     it 'uses the segments if the program uses_segments_as_episodes? is true' do
-      program = create :kpcc_program, display_segments: true, display_episodes: false
+      program = create :kpcc_program, display_segments: true, is_episodic: false
       segment = create :show_segment, show: program
 
       get :index, { program: program.slug }.merge(request_params)
@@ -67,7 +67,7 @@ describe Api::Public::V2::EpisodesController do
     end
 
     it 'sorts the episodes by descending air_date for kpcc programs' do
-      program   = create :kpcc_program, display_segments: false, display_episodes: true
+      program   = create :kpcc_program, display_segments: false, is_episodic: true
       episode2  = create :show_episode, show: program, air_date: Time.now.yesterday
       episode1  = create :show_episode, show: program, air_date: Time.now.tomorrow
 
@@ -107,7 +107,7 @@ describe Api::Public::V2::EpisodesController do
     end
 
     it 'can filter by air date for segmented programs' do
-      program = create :kpcc_program, display_segments: true, display_episodes: false
+      program = create :kpcc_program, display_segments: true, is_episodic: false
       segment = create :show_segment, show: program, published_at: Time.new(2013, 6, 25)
 
       get :index, { program: program.slug, air_date: "2013-06-25" }.merge(request_params)

@@ -52,7 +52,7 @@ module AudioSync
               date = Time.new(match[:year], match[:month], match[:day])
 
               # Figure out what type of content we should attach the audio to.
-              if program.display_episodes?
+              if program.is_episodic?
                 content = program.episodes.for_air_date(date)
               else
                 content = program.segments.where(

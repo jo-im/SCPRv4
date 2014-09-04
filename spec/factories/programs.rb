@@ -10,7 +10,7 @@ FactoryGirl.define do
     audio_dir "airtalk" # lazy
 
     trait :episodic do
-      display_episodes 1
+      is_episodic 1
     end
 
     trait :segmented do

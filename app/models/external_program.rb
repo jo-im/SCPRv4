@@ -102,7 +102,7 @@ class ExternalProgram < ActiveRecord::Base
       :segments           => self.external_segments.order("published_at desc"),
       # External Programs are always assumed to have episodes.
       # Maybe this isn't always the case, but this is okay for now.
-      :display_episodes   => true
+      :is_episodic   => true
     })
   end
 
