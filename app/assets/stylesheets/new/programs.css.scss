@@ -67,9 +67,12 @@ The top content part of a Program Landing Page. Includes its curated feature.
       font: normal 300 3em/1 $font-freight;
     }
   }
+
   a:hover                       { text-decoration: underline; }
+
   .content {
     font-family: $font-prox;
+    z-index: 1;
     background:
       image-url("i/fauxcol-program-exordium-topper.png") no-repeat 65.846153846154% top,
       image-url("i/fauxcol-program-exordium-lightgray.png") repeat-y 68.307692307692% top;
@@ -80,8 +83,22 @@ The top content part of a Program Landing Page. Includes its curated feature.
     .featured {
       width: 65.846153846154%;
       float: left;
-      .photo                    { width: 74.065420560748%; float: right; }
-      .summary                  { width: 22.196261682243%; float: left; }
+      .photo                    { width: 74.065420560748%; float: right; position: relative; z-index: 2; }
+      .summary                  { width: 22.196261682243%; float: left; position: relative; z-index: 3; }
+    }
+
+    .summary {
+      .prompt {
+        background: white;
+        box-shadow: 0 7px 0 rgba(0,0,0,0.12);
+        width: 147.368421052632%; // 190 + 90 / 190
+        box-sizing: border-box;
+        padding: 7px 15px 20px 0;
+        margin-bottom: 20px;
+        h1                      { margin-bottom: 30px; }
+        .play,.play *           { display: block; }
+        .play a                 { background: image-url("i/program-listen-icons.png") no-repeat; background-size: 45px 258px; background-color: salmon; }
+      }
     }
 
     .plug {
