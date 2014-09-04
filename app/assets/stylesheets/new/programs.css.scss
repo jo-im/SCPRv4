@@ -1,4 +1,43 @@
+
+/*
+###############################################################################
+###############################################################################
+
+OVERALL TWEAKS
+
+###############################################################################
+############################################################################### */
+
 mark    { color: inherit; }
+cite    { font-style: italic; font-weight: inherit; }
+
+
+
+
+
+/*
+###############################################################################
+###############################################################################
+
+PLUG
+-------------------------------------------------------------------------------
+Big ads are too big.
+
+###############################################################################
+############################################################################### */
+
+.plug iframe {
+  display: block;
+  width: 100% !important;
+  max-width: 300px !important;
+  /*  height: auto !important; // JON TO-DO: aw hell, revisit this */
+}
+.exordium .plug iframe {
+  height: 50px !important; // apparently "auto" isn't good enough for you
+}
+
+
+
 
 
 /*
@@ -104,7 +143,6 @@ The intermission-y mishmash section of Team, Quote, Exemplary, and Ad C.
 ############################################################################### */
 
 .interregnum {
-  cite      { font-style: italic; font-weight: inherit; }
   border-top: 1px solid #8e8e8e;
   background:
     image-url("i/fauxcol-program-interregnum-base-shade.png") no-repeat center top,
@@ -185,31 +223,51 @@ The intermission-y mishmash section of Team, Quote, Exemplary, and Ad C.
       a:hover     { color: $blue; }
     }
   }
-  .diptych {
-    padding: 26px 0 50px;
-  }
+  .diptych        { padding: 24px 0 50px; }
   .exemplary {
     width: 61.661661661662%; // 616p
     margin-left: 3.203203203203%; // 32p
     float: left;
-    .photo {
-      width: 48.863636363636%; // 301p
-      float: left;
+    h1            { font-weight: 700; color: #a1a1a1; font-size: 0.875em; margin-bottom: 8px; }
+    h2            { color: #138ab3; font: normal 1.8125em/1.1 $font-freight; margin-bottom: 24px; }
+    h3 {
+      text-transform: uppercase;
+      font-weight: 700;
+      font-size: 0.6875em;
+      color: #999999;
+      padding: 3px 0 8px;
+      margin-bottom: 7px;
+      width: 100%;
+      padding-left: 11.3074204947%; // 32 / 283
+      margin-left: -11.3074204947%; // 32 / 283
+      border-bottom: 1px solid #d0d0d0;
     }
-    .prose {
-      width: 45.941558441558%; // 283p
-      float: right;
-    }
+    a             { display: block; }
+    a:hover       { text-decoration: underline; }
+    p             { color: #3c3c3c; font: normal 0.8125em/1.5 $font-merri; }
+    .photo        { width: 48.863636363636%; /* 301p */ float: left; }
+    .ratio .img-contain { background: #f2f2f2; }
+    .prose        { width: 45.941558441558%; /* 283p */ float: right; }
   }
   .plug {
     width: 30.13013013013%; // 301p
     float: right;
+    .appeal {
+      text-align: right;
+      display: block;
+      padding-top: 4px;
+      a {
+        background: image-url("i/ephemera-dart-darkgray.png") no-repeat right 5px;
+        background-size: 6px 7px;
+        font: normal 0.8125em/1.2 $font-freight;
+        color: #303030;
+        padding-right: 11px;
+        display: inline-block;
+        &:hover   { text-decoration: underline; }
+      }
+    }
   }
 }
-
-
-
-
 
 
 
@@ -231,21 +289,61 @@ Don't like this show? That's fine, here's four others.
 
 .other-programs {
   background: #161616;
-  padding: 40px 0;
+  padding: 42px 0 61px;
   color: #8a8a8a;
-  .troupe {
-    padding-bottom: 45px;
+  font-family: $font-prox;
+  & > header {
+    padding-bottom: 28px;
+    border-bottom: 1px solid #333333;
+    margin-bottom: 31px;
+    h1              { font: normal 300 1.75em/1.1 $font-freight; color: #919191; }
   }
+  .troupe           { padding-bottom: 46px; }
   article {
     width: 23.153846153846%; // 301p
     float: left;
+    margin-right: 2.461538461538%; // 32 / 1300
+    &:last-child    { margin-right: 0; float: right; }
+    a               { display: block; }
+    .photo          { margin-bottom: 12px; }
+    .ratio .fill    { padding-top: 24.252491694352%; }
+    h1,h2,h3,dt     { font-weight: 700; line-height: 1; }
+    h3,dt           { text-transform: uppercase; }
+    h1              { color: white; font-size: 1.5625em; margin-bottom: 6px; }
+    h2              { color: #f17b21; font-size: 0.8125em; margin-bottom: 3px; }
+    h3              { color: #9e4603; font-size: 0.6875em; margin-bottom: 10px; }
+    p               { font-size: 0.75em; border-top: 1px solid #3a3a3a; padding-top: 5px; line-height: 1.2; margin-bottom: 26px; }
+    dl              { border-top: 1px solid #246075; padding-top: 5px; position: relative; color: $blue; }
+    dt,
+    dt mark,
+    dt time,
+    dd              { display: block; }
+    dt              { position: absolute; top: 7px; left: 0; }
+    dt mark         { font-size: 0.75em; margin-bottom: 2px; }
+    dt time         { font-size: 0.625em; color: #16657f; }
+    dd              { font-size: 0.8125em; line-height: 1.2; margin-left: 36.87707641196%; /* 111 / 301 */ }
+    a:hover {
+      h1            { text-decoration: underline; }
+      h3            { color: #f17b21; }
+      p             { color: white; border-top: 1px solid #b6b6b6; }
+      dl            { border-top: 1px solid #5db2cf; }
+      dt time       { color: $blue; }
+      dd            { color: #97e2fc; text-decoration: underline; }
+    }
   }
   footer {
     border-top: 1px solid #84491c;
-    padding-top: 15px;
+    padding-top: 9px;
     color: white;
     font: normal 300 1.375em/1 $font-freight;
     text-align: right;
+    a {
+      display: inline-block;
+      padding-right: 17px;
+      background: image-url("i/ephemera-dart-white.png") no-repeat right 0.4em;
+      background-size: 7px 8px;
+      &:hover       { text-decoration: underline; }
+    }
   }
 }
 
