@@ -67,22 +67,89 @@ The top content part of a Program Landing Page. Includes its curated feature.
       font: normal 300 3em/1 $font-freight;
     }
   }
+  a:hover                       { text-decoration: underline; }
   .content {
+    font-family: $font-prox;
+    background:
+      image-url("i/fauxcol-program-exordium-topper.png") no-repeat 65.846153846154% top,
+      image-url("i/fauxcol-program-exordium-lightgray.png") repeat-y 68.307692307692% top;
+    background-size:
+      1500px 1px,
+      1500px 10px;
+    padding-top: 1px;
     .featured {
       width: 65.846153846154%;
       float: left;
-      .photo {
-        width: 74.065420560748%;
-        float: right;
-      }
-      .summary {
-        width: 22.196261682243%;
-        float: left;
-      }
+      .photo                    { width: 74.065420560748%; float: right; }
+      .summary                  { width: 22.196261682243%; float: left; }
     }
-    .supporting {
-      width: 31.692307692308%;
-      float: right;
+
+    .plug {
+      iframe                    { margin: 0 auto; }
+      .appeal                   { text-align: center; display: block; color: #7e7e7e; padding-top: 7px; padding: 7px 0 15px; }
+      .appeal a                 { display: inline-block; font: normal 0.8125em/1.1 $font-freight; } 
+    }
+
+    .supporting                 { width: 31.692307692308%; float: right; }
+    .prompt h1,
+    .segments h2,
+    .segments footer figcaption { font-weight: 700; text-transform: uppercase; font-size: 0.6875em; line-height: 1; }
+
+    .segments {
+      background: white;
+      margin-bottom: 30px;
+      padding: 7px 0 30px;
+      h2                        { color: $orange; margin-bottom: 19px; }
+      nav {
+        padding-bottom: 12px;
+        font-size: 0.875em;
+        color: #313131;
+        li {
+          line-height: 1.1;
+          margin-bottom: 0.65em;
+          background: image-url("i/ephemera-disc-lightgray.png") no-repeat left 5px;
+          background-size: 4px 4px;
+          padding-left: 2.669902912621%;
+          margin-left: -2.669902912621%;
+          padding-left: 11px;
+          margin-left: -11px;
+        }
+      }
+      footer {
+        border-top: 1px solid #fbd7bc;
+        width: 100%;
+        padding-left: 7.766990291262%; // 32 / 412
+        margin-left: -7.766990291262%;
+        a                       { display: block; }
+        figure                  { position: relative; width: 100%; padding-top: 1px; }
+        mark {
+          display: inline-block;
+          position: absolute;
+          right: 0;
+          top: 5px;
+          text-align: right;
+          color: $orange;
+          font-weight: 700;
+          font-size: 0.875em;
+          letter-spacing: -0.035em;
+          line-height: 1.1;
+          padding-right: 12px;
+          background: image-url("i/ephemera-triangle-orange.png") no-repeat right 5px;
+          background-size: 5px 6px;
+        }
+        figcaption {
+          display: inline-block;
+          background: image-url("i/ephemera-plus.png") no-repeat left 2px;
+          background-size: 6px 6px;
+          color: #b3b3b3;
+          padding-left: 2.669902912621%;
+          margin-left: -2.669902912621%;
+          span                  { color: #ffa662; }
+        }
+        a:hover {
+          mark,figcaption       { text-decoration: underline; color: $orange; }
+        }
+      }
     }
   }
 }
