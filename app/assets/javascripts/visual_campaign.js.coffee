@@ -1,5 +1,5 @@
 class scpr.VisualCampaign
-    @ENDPOINT       = "http://audiobox.scprdev.org/api/v1/visual_campaigns"
+    @ENDPOINT       = "http://campaigns.scprdev.org/api/v1/visual_campaigns"
     @HIDE_SELECTOR  = ".campaign-hide"
 
     @queue = {}
