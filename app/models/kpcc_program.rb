@@ -90,8 +90,7 @@ class KpccProgram < ActiveRecord::Base
       :missed_it_bucket   => self.missed_it_bucket,
       :blog               => self.blog,
       :is_featured        => self.is_featured?,
-      :is_episodic        => self.is_episodic?,
-      :display_segments   => self.display_segments?
+      :is_episodic        => self.is_episodic?
     })
   end
 

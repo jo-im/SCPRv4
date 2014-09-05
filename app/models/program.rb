@@ -46,12 +46,10 @@ class Program
     :blog,
     :missed_it_bucket,
     :is_featured,
-    :is_episodic,
-    :display_segments
+    :is_episodic
 
   alias_method :is_featured?, :is_featured
   alias_method :is_episodic?, :is_episodic
-  alias_method :display_segments?, :display_segments
 
 
   def initialize(attributes={})
@@ -72,7 +70,6 @@ class Program
 
     # Force to boolean
     @is_featured      = !!attributes[:is_featured]
-    @display_segments = !!attributes[:display_segments]
     @is_episodic = !!attributes[:is_episodic]
 
     # Don't force these into an array, so it doesn't load ALL
@@ -97,7 +94,6 @@ class Program
   # Some programs (filmweek, business update) don't use
   # episodes, but instead use Segments as their "episodes".
   def uses_segments_as_episodes?
-    !self.is_episodic? &&
-    self.display_segments?
+    !self.is_episodic?
   end
 end

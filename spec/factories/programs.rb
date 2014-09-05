@@ -13,8 +13,5 @@ FactoryGirl.define do
       is_episodic 1
     end
 
-    trait :segmented do
-      display_segments 1
-    end
   end
 end

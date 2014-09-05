@@ -40,7 +40,7 @@ describe "Program page" do
     end
 
     it "shows the list of episodes if is_episodic is true" do
-      program = create :kpcc_program, is_episodic: true, display_segments: false
+      program = create :kpcc_program, is_episodic: true
 
       episode = create :show_episode,
         :show           => program,
