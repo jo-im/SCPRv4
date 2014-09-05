@@ -10,6 +10,7 @@ OVERALL TWEAKS
 
 mark    { color: inherit; }
 cite    { font-style: italic; font-weight: inherit; }
+b       { font-weight: inherit; }
 
 
 
@@ -88,18 +89,77 @@ The top content part of a Program Landing Page. Includes its curated feature.
     }
 
     .summary {
+      .play a,
+      .download a,
+      footer a {
+        font-weight: 700;
+        line-height: 1;
+        background: image-url("i/program-listen-icons.png") no-repeat;
+        background-size: 45px 381px;
+        box-sizing: border-box;
+      }
       .prompt {
         background: white;
         box-shadow: 0 7px 0 rgba(0,0,0,0.12);
         width: 147.368421052632%; // 190 + 90 / 190
         box-sizing: border-box;
-        padding: 7px 15px 20px 0;
-        margin-bottom: 20px;
-        h1                      { margin-bottom: 30px; }
+        padding: 7px 15px 18px 0;
+        margin-bottom: 16px;
+        h1                      { margin-bottom: 15px; }
         .play,.play *           { display: block; }
-        .play a                 { background: image-url("i/program-listen-icons.png") no-repeat; background-size: 45px 258px; background-color: salmon; }
+        .play a {
+          min-height: 45px;
+          padding: 1px 0 0 53px;
+          color: $blue;
+          display: block;
+          b,span                { line-height: 1; }
+          b                     { font-size: 1.5625em; margin-bottom: 1px; letter-spacing: -0.025em; }
+          span                  { font-size: 1.0625em; color: #9ad6ea; }
+          &:hover {
+            background-position: 0 -90px;
+            color: $orange;
+            text-decoration: none;
+            b                   { text-decoration: underline; }
+            span                { color: #ffc191; }
+          }
+        }
       }
-    }
+      .download {
+        margin-bottom: 11px;
+        a {
+          font-size: 0.75em;
+          font-weight: bold;
+          display: inline-block;
+          color: #b4b3b3;
+          background-position: 0 -180px;
+          min-height: 14px;
+          padding: 2px 0 0 20px;
+          span,i                { white-space: nowrap; }
+          i                     { font-style: normal; font-weight: normal; color: #c5c5c5; font-size: 0.83333333333333em; }
+          &:hover               { color: $orange; background-position: 0 -244px; text-decoration: none; }
+          &:hover span          { text-decoration: underline; }
+          &:hover i             { color: #ffc191; }
+        }
+      }
+      .description {
+        margin-bottom: 13px;
+        font: normal 0.8125em/1.72 $font-merri;
+      }
+      footer {
+        a {
+          display: block;
+          padding: 5px 8px 0 0;
+          border-top: 1px solid $blue;
+          text-align: right;
+          font-size: 0.875em;
+          letter-spacing: -0.02em;
+          padding-right: 10px;
+          color: $blue;
+          background-position: right -295px;
+          &:hover               { background-position: right -359px; color: $orange; border-top: 1px solid $orange; }
+        }
+      }
+    }// .summary
 
     .plug {
       iframe                    { margin: 0 auto; }
@@ -197,6 +257,15 @@ The long two-column flow of recent content (segments and episodes, mostly).
   .segments {
     width: 68.307692307692%;
     float: left;
+    padding-top: 38px;
+    font-family: $font-freight;
+    & > h1 {
+      font-weight: 300;
+      font-size: 2em;
+      color: #7f7f7f;
+      line-height: 1;
+      margin-bottom: 30px;
+    }
     figure {
       width: 30.855855855856%;
       float: left;
@@ -205,6 +274,14 @@ The long two-column flow of recent content (segments and episodes, mostly).
   .library {
     width: 23.153846153846%;
     float: right;
+    padding-top: 45px;
+    font-family: $font-prox;
+    & > section,& > aside       { margin-bottom: 64px; }
+    h2 {
+      font: normal 1.25em/1.05 $font-freight;
+      margin-bottom: 30px;
+      color: #717171;
+    }
   }
 }
 
