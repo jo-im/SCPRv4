@@ -45,23 +45,8 @@
   <% end %>
 <% end %>
 
-<% if @program.uses_segments_as_episodes? %>
-  <% nav = paginate @segments, params: { anchor: "archive"} %>
 
-  <section class="show-segments">
-    <%= any_to_list? @segments, title: "Segments" do %>
-      <h2>Recently on <%= @program.title %></h2>
-      <%= nav if @segments.current_page > 1 %>
-
-      <%= cache ["segment-teasers", @segments.to_a] do %>
-        <%= render "programs/kpcc/segment_teaser", segments: @segments %>
-      <% end %>
-
-      <%= nav %>
-    <% end %>
-  </section>
-
-<% elsif @program.is_episodic? %>
+<% if @program.is_episodic? %>
   <% nav = paginate @episodes, params: { anchor: "archive"} %>
 
   <section class="show-episodes">
@@ -89,6 +74,21 @@
             </div>
           </div>
         <% end %>
+      <% end %>
+
+      <%= nav %>
+    <% end %>
+  </section>
+<% else %>
+<% nav = paginate @segments, params: { anchor: "archive"} %>
+
+  <section class="show-segments">
+    <%= any_to_list? @segments, title: "Segments" do %>
+      <h2>Recently on <%= @program.title %></h2>
+      <%= nav if @segments.current_page > 1 %>
+
+      <%= cache ["segment-teasers", @segments.to_a] do %>
+        <%= render "programs/kpcc/segment_teaser", segments: @segments %>
       <% end %>
 
       <%= nav %>
