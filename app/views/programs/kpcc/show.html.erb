@@ -45,7 +45,7 @@
   <% end %>
 <% end %>
 
-<% if @program.display_segments? %>
+<% if @program.uses_segments_as_episodes? %>
   <% nav = paginate @segments, params: { anchor: "archive"} %>
 
   <section class="show-segments">
