@@ -285,8 +285,8 @@ The long two-column flow of recent content (segments and episodes, mostly).
         a {
           display: block;
           width: 100%;
-          .fill          { padding-top: 75.5%; }
-          .img-contain   { z-index: 2; background: $blue; }
+          .fill                 { padding-top: 75.5%; }
+          .img-contain          { z-index: 2; background: $blue; }
           .has-audio,time       { position: absolute; z-index: 3; left: 0; }
           time {
             top: 13px;
@@ -332,6 +332,12 @@ The long two-column flow of recent content (segments and episodes, mostly).
       font: normal 1.25em/1.05 $font-freight;
       margin-bottom: 32px;
       color: #717171;
+    }
+    .archive h2 {
+      padding: 0 0 12px 10.63122923588%; // 32 / 301
+      margin: 0 0 12px -10.63122923588%; // 32 / 301
+      width: 100%;
+      border-bottom: 3px solid green;
     }
   }
 
@@ -381,6 +387,43 @@ The long two-column flow of recent content (segments and episodes, mostly).
       }
     }
   }// .episodes
+  
+  .flux-capacitor {
+    width: 100%;
+    outline: 1px solid red;
+    .fields {
+    }
+    label,
+    .commit input {
+      display: block;
+      text-transform: uppercase;
+      font: normal 700 0.625em/1 $font-prox;
+      cursor: pointer;
+    }
+    .field {
+      float: left;
+      outline: 1px solid purple;
+      width: 31%;
+      &:last-child    { float: right; margin-right: 0; }
+      select {
+        display: block;
+        width: 100%;
+      }
+    }
+    .commit {
+      outline: 1px solid green;
+      width: 100%;
+      padding-top: 20px;
+      input {
+        color: white;
+        background: $blue;
+        border: none;
+        font-size: 0.875em;
+        padding: 5px 9px;
+        float: right;
+      }
+    }
+  }// .flux-capacitor
 
 }// .neoteric
 
