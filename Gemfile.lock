@@ -1,4 +1,14 @@
 GIT
+  remote: git://github.com/sheerun/parse-ruby-client.git
+  revision: a4eb5618c8167e88857b449cd522b23a8b0c02e9
+  ref: a4eb5618c8167e88857b449cd522b23a8b0c02e9
+  specs:
+    parse-ruby-client (0.2.0)
+      faraday
+      faraday_middleware
+      yajl-ruby
+
+GIT
   remote: git://github.com/SCPR/redis-content-store.git
   revision: a8bb4368588df8f13b0f427c5cef39f68fa36b64
   specs:
@@ -125,10 +135,6 @@ GEM
     i18n (0.6.9)
     ice_cube (0.11.3)
     innertube (1.1.0)
-    iron_core (1.0.3)
-      rest (>= 2.6.4)
-    iron_mq (5.0.1)
-      iron_core (>= 0.5.1)
     jbuilder (1.5.3)
       activesupport (>= 3.0.0)
       multi_json (>= 1.2.0)
@@ -163,7 +169,6 @@ GEM
     multi_xml (0.5.5)
     multipart-post (1.2.0)
     mysql2 (0.3.15)
-    net-http-persistent (2.9.4)
     net-scp (1.2.1)
       net-ssh (>= 2.6.5)
     net-sftp (2.1.2)
@@ -171,7 +176,6 @@ GEM
     net-ssh (2.9.0)
     net-ssh-gateway (1.2.0)
       net-ssh (>= 2.6.5)
-    netrc (0.7.7)
     newrelic_rpm (3.8.0.218)
     nokogiri (1.6.1)
       mini_portile (~> 0.5.0)
@@ -196,10 +200,6 @@ GEM
     outpost-secretary (0.1.0)
       outpost-cms (>= 0.0.1, < 1)
       secretary-rails (>= 1.0.0, < 2)
-    parse-ruby-client (0.1.15)
-      iron_mq
-      patron
-    patron (0.4.18)
     pmp (0.4.0)
       activesupport
       excon
@@ -261,11 +261,6 @@ GEM
       redis-namespace (~> 1.2)
       sinatra (>= 0.9.2)
       vegas (~> 0.1.2)
-    rest (2.7.1)
-      net-http-persistent (>= 2.9.1)
-      rest_client (>= 1.7.1)
-    rest_client (1.7.3)
-      netrc (~> 0.7.7)
     riddle (1.5.11)
     rspec (2.14.1)
       rspec-core (~> 2.14.0)
@@ -395,7 +390,7 @@ DEPENDENCIES
   outpost-cms
   outpost-publishing
   outpost-secretary
-  parse-ruby-client (~> 0.1.15)
+  parse-ruby-client!
   pmp (= 0.4.0)
   postmark-rails (~> 0.6.0)
   pry

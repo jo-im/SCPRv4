@@ -53,7 +53,7 @@ gem "twitter", "~> 4.1"
 gem "oauth2", "~> 0.8"
 gem 'postmark-rails', "~> 0.6.0"
 gem 'newrelic_rpm', '~> 3.7'
-gem 'parse-ruby-client', '~> 0.1.15'
+gem 'parse-ruby-client', github: "sheerun/parse-ruby-client", ref: "a4eb5618c8167e88857b449cd522b23a8b0c02e9"
 gem 'pmp', '0.4.0'
 gem 'npr', '~> 2.0'
 gem 'asset_host_client', '~> 1.2'
