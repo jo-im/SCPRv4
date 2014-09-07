@@ -21,7 +21,13 @@ class RssProgramImporter
 
   # We're only going to bother with the first 5 episodes
   def sync
-    feed = RSS::Parser.parse(@external_program.podcast_url, false)
+    begin
+      feed = RSS::Parser.parse(@external_program.podcast_url, false)
+    rescue => e
+      warn "Error caught in RSSProgramImporter.sync: #{e}"
+      self.log "Could not import from the given RSS feed: #{e}"
+      NewRelic.log_error(e)
+    end
 
     if !feed || feed.items.empty?
       log "Feed is empty. Aborting. (#{@external_program.podcast_url})"
