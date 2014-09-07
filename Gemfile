@@ -19,7 +19,7 @@ gem 'outpost-secretary'
 ## Redis
 gem "resque", "~> 1.26.pre.0"
 gem 'redis-content-store', github: "SCPR/redis-content-store"
-
+gem 'redis-sentinel'
 
 ## Views
 gem 'kaminari', '~> 0.15.0'

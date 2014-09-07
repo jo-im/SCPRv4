@@ -239,6 +239,8 @@ GEM
       redis-store (~> 1.1.0)
     redis-namespace (1.4.1)
       redis (~> 3.0.4)
+    redis-sentinel (1.4.4)
+      redis
     redis-store (1.1.4)
       redis (>= 2.2)
     resque (1.26.pre.0)
@@ -384,6 +386,7 @@ DEPENDENCIES
   rb-fsevent (~> 0.9)
   recaptcha
   redis-content-store!
+  redis-sentinel
   resque (~> 1.26.pre.0)
   rspec-rails (~> 2.14.0)
   ruby-mp3info (~> 0.8.2)
