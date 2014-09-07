@@ -33,7 +33,7 @@ Scprv4::Application.configure do
   default_url_options[:host] = "www.scpr.org"
 
   config.scpr.host         = "www.scpr.org"
-  config.scpr.media_root   = "/home/kpcc/media"
+  config.scpr.media_root   = "/scpr/media"
   config.scpr.media_url    = "http://media.scpr.org"
   config.scpr.resque_queue = :scprv4
 
