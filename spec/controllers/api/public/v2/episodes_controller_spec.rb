@@ -68,8 +68,8 @@ describe Api::Public::V2::EpisodesController do
 
     it 'sorts the episodes by descending air_date for kpcc programs' do
       program   = create :kpcc_program, display_segments: false, display_episodes: true
-      episode2  = create :show_episode, show: program, air_date: Time.now.yesterday
-      episode1  = create :show_episode, show: program, air_date: Time.now.tomorrow
+      episode2  = create :show_episode, show: program, air_date: Time.zone.now.yesterday
+      episode1  = create :show_episode, show: program, air_date: Time.zone.now.tomorrow
 
       get :index, { program: program.slug }.merge(request_params)
       assigns(:episodes).should eq [episode1, episode2].map(&:to_episode)
@@ -77,8 +77,8 @@ describe Api::Public::V2::EpisodesController do
 
     it 'sorts the episodes by descending air_date for external programs' do
       program   = create :external_program
-      episode2  = create :external_episode, external_program: program, air_date: Time.now.yesterday
-      episode1  = create :external_episode, external_program: program, air_date: Time.now.tomorrow
+      episode2  = create :external_episode, external_program: program, air_date: Time.zone.now.yesterday
+      episode1  = create :external_episode, external_program: program, air_date: Time.zone.now.tomorrow
 
       get :index, { program: program.slug }.merge(request_params)
       assigns(:episodes).should eq [episode1, episode2].map(&:to_episode)

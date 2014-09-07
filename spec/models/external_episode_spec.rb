@@ -17,7 +17,7 @@ describe ExternalEpisode do
 
   describe '::for_air_date' do
     it 'matches the dates' do
-      t = Time.now.yesterday
+      t = Time.zone.now.yesterday
       episode = create :external_episode, air_date: t
       ExternalEpisode.for_air_date(t).should eq [episode]
     end

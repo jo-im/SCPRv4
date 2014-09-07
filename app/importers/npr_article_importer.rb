@@ -23,7 +23,7 @@ module NprArticleImporter
       # more often than that!
       npr_stories = NPR::Story.where(
           :id     => IMPORT_IDS,
-          :date   => (1.hour.ago..Time.now))
+          :date   => (1.hour.ago..Time.zone.now))
         .set(
           :requiredAssets   => 'text',
           :action           => "or")

@@ -106,8 +106,8 @@ module Concern
             :folderId    => config['campaign_folder_id'],
             :name        => email_object[:name],
             :description => email_object[:description],
-            :startAt     => Time.now.yesterday.to_i,
-            :endAt       => Time.now.tomorrow.to_i,
+            :startAt     => Time.zone.now.yesterday.to_i,
+            :endAt       => Time.zone.now.tomorrow.to_i,
             :elements    => [
               {
                 :type      => "CampaignSegment",

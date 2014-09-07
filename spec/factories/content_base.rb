@@ -9,7 +9,7 @@ FactoryGirl.define do
 
   trait :published do
     status 5 # perhaps
-    sequence(:published_at) { |n| Time.now - n.hours }
+    sequence(:published_at) { |n| Time.zone.now - n.hours }
   end
 
   trait :draft do

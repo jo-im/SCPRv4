@@ -17,7 +17,7 @@ class ArchiveController < ApplicationController
       )
 
       # Only fetch content if the requested date is before today's date
-      if date < Time.now.to_date
+      if date < Time.zone.now.to_date
         @date = date
       end
     end

@@ -4,7 +4,7 @@
 FactoryGirl.define do
   factory :event do
     sequence(:headline)   { |n| "A Very Special Event #{n}!" }
-    sequence(:starts_at)  { |n| Time.now + 60*60*24*n }
+    sequence(:starts_at)  { |n| Time.zone.now + 60*60*24*n }
 
     slug { headline.parameterize }
     body "This is a very special event."

@@ -187,7 +187,7 @@ describe Api::Public::V3::ArticlesController do
 
         ts_retry(2) do
           get :index, {
-            start_date: Time.now.strftime("%F")
+            start_date: Time.zone.now.strftime("%F")
           }.merge(request_params)
 
           assigns(:articles).should eq [story1, story2].map(&:to_article)

@@ -19,7 +19,7 @@ module FeatureCandidate
     private
 
     def decay(time, decay_length)
-      Math.exp(-(decay_length.to_f/100) * ((Time.now - time) / 1.hour.to_i))
+      Math.exp(-(decay_length.to_f/100) * ((Time.zone.now - time) / 1.hour.to_i))
     end
   end
 end

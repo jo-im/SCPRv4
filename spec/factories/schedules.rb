@@ -17,7 +17,7 @@ FactoryGirl.define do
     event_title "Cool Event"
     info_url "http://scpr.org"
 
-    sequence(:starts_at) { |n| Time.now + n.hours }
+    sequence(:starts_at) { |n| Time.zone.now + n.hours }
     ends_at { starts_at + 1.hour }
 
     trait :recurring do

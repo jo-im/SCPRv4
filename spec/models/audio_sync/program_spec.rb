@@ -56,7 +56,7 @@ describe AudioSync::Program do
         File.should_receive(:mtime)
         .with(
           File.join(Audio::AUDIO_PATH_ROOT, "coolshowbro/20121002_mbrand.mp3")
-        ).and_return(Time.now) # File new
+        ).and_return(Time.zone.now) # File new
       end
 
       it "creates the audio" do
@@ -100,7 +100,7 @@ describe AudioSync::Program do
         File.should_receive(:mtime)
         .with(
           File.join(Audio::AUDIO_PATH_ROOT, "coolshowbro/20121002_mbrand.mp3")
-        ).and_return(Time.now) # File new
+        ).and_return(Time.zone.now) # File new
       end
 
       it "creates the audio" do

@@ -43,7 +43,7 @@ module Api::Public::V3
           ) and return false
         end
       else
-        @start_time = Time.now.beginning_of_week
+        @start_time = Time.zone.now.beginning_of_week
       end
     end
 
@@ -66,7 +66,7 @@ module Api::Public::V3
           ) and return false
         end
       else
-        @time = Time.now
+        @time = Time.zone.now
       end
     end
   end

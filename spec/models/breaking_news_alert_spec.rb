@@ -218,7 +218,7 @@ describe BreakingNewsAlert do
 
       alert3 = create :breaking_news_alert, :published,
         :visible        => false,
-        :published_at   => Time.now
+        :published_at   => Time.zone.now
 
       BreakingNewsAlert.latest_visible_alert.should eq alert2
     end
