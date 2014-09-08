@@ -44,7 +44,6 @@ class Program
     :episodes,
     :segments,
     :blog,
-    :missed_it_bucket,
     :is_featured,
     :is_episodic
 
@@ -66,7 +65,6 @@ class Program
     @podcast_url      = attributes[:podcast_url]
     @rss_url          = attributes[:rss_url]
     @blog             = attributes[:blog]
-    @missed_it_bucket = attributes[:missed_it_bucket]
 
     # Force to boolean
     @is_featured      = !!attributes[:is_featured]

@@ -34,7 +34,6 @@ class KpccProgram < ActiveRecord::Base
   has_many :segments, foreign_key: "show_id", class_name: "ShowSegment"
   has_many :episodes, foreign_key: "show_id", class_name: "ShowEpisode"
   has_many :recurring_schedule_rules, as: :program, dependent: :destroy
-  belongs_to :missed_it_bucket
   belongs_to :blog
 
   #-------------------
@@ -87,7 +86,6 @@ class KpccProgram < ActiveRecord::Base
       :rss_url            => self.get_link('rss'),
       :episodes           => self.episodes.published,
       :segments           => self.segments.published,
-      :missed_it_bucket   => self.missed_it_bucket,
       :blog               => self.blog,
       :is_featured        => self.is_featured?,
       :is_episodic        => self.is_episodic?
