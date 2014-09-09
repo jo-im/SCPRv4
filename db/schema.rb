@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140905001449) do
+ActiveRecord::Schema.define(version: 20140908193537) do
 
   create_table "abstracts", force: true do |t|
     t.string   "source"
@@ -620,6 +620,17 @@ ActiveRecord::Schema.define(version: 20140905001449) do
 
   add_index "press_releases", ["created_at"], name: "index_press_releases_on_created_at", using: :btree
   add_index "press_releases", ["slug"], name: "press_releases_release_slug", using: :btree
+
+  create_table "program_articles", force: true do |t|
+    t.integer "position"
+    t.integer "article_id"
+    t.string  "article_type"
+    t.integer "program_id"
+  end
+
+  add_index "program_articles", ["article_id", "article_type"], name: "index_program_articles_on_article_id_and_article_type", using: :btree
+  add_index "program_articles", ["position"], name: "index_program_articles_on_position", using: :btree
+  add_index "program_articles", ["program_id"], name: "index_program_articles_on_program_id", using: :btree
 
   create_table "programs_kpccprogram", force: true do |t|
     t.string   "slug",                                                 null: false
