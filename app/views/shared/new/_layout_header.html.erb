@@ -12,22 +12,23 @@
             </section><!--/ .titling -->
 
         <% elsif context = @program %>
+
+
+            <!--
+            #####################################################
+            #####################################################
+            #####################################################
+            TEMPORARY! JUST FOR DEVELOPMENT!
+            ##################################################### -->
+            <div id="temp-toggler" style="width: 60px; height: 30px; box-sizing: border-box; padding-top: 9px; text-align: center; font: bold 14px/1 'Avenir Next Condensed'; cursor: pointer; border-radius: 13px; background: salmon; z-index: 99; box-shadow: 0 0 15px black; position: fixed; top: 5px; left: 5px;">
+              SWITCH
+            </div><!--
+            ##################################################### -->
+        
+        
             <section class="titling">
                 <div class="brand">
                     <h1><%= link_to @program.title, @program.public_path %></h1>
-                    
-                    
-                    <nav class="subscribe">
-                    <ul class="clearfix">
-                    <li><a class="twitter with-icon" href="http://www.scpr.org/programs/the-frame.xml" target="_blank">RSS</a></li>
-                    <li><a class="facebook with-icon" href="http://www.scpr.org/programs/the-frame.xml" target="_blank">RSS</a></li>
-                    <li><a class="podcast with-icon" href="http://www.scpr.org/podcasts/the-frame" target="_blank">Podcast</a></li>
-                    <li><a class="email with-icon" href="http://www.scpr.org/programs/the-frame.xml" target="_blank">RSS</a></li>
-                    <li><a class="rss with-icon" href="http://www.scpr.org/programs/the-frame.xml" target="_blank">RSS</a></li>
-                    </ul>
-                    </nav>
-                
-                    <!--
                     <% present @program, ProgramPresenter do |p| %>
                       <nav class="subscribe">
                         <ul class="clearfix">
@@ -39,9 +40,6 @@
                         </ul>
                       </nav>
                     <% end %>
-                    -->
-
-
                 </div><!--/ .brand -->
                 <div class="details">
                   <h2><span><%= @program.teaser %></span> <mark>Hosted by <%= @program.host %></mark></h2>

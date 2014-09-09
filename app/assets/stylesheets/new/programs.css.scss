@@ -332,11 +332,41 @@ EXORDIUM, BUT THE KIND THAT FEATURES A NON-AUDIO SINGLE SEGMENT
 ############################################################################### */
 
 .exordium.curated-segment {
+  .content {
+    background:
+      image-url("i/fauxcol-program-exordium-topper-alt.png") no-repeat 65.846153846154% top,
+      image-url("i/fauxcol-program-exordium-lightgray.png") repeat-y 68.307692307692% top;
+    background-size:
+      1500px 1px,
+      1500px 10px;
+    .summary {
+      .byline {
+        font: normal 1.1875em/1 $font-prox;
+        color: $blue;
+        letter-spacing: -0.03em;
+        padding-top: 11px; // not 7
+        padding-bottom: 21px; // not 18
+        margin-bottom: 22px; // not 16
+        h2,h3                       { font-weight: 700; }
+        h2                          { color: #066585; margin-bottom: 4px; }
+      }
+      .description {
+        font-size: 0.9375em; // not 0.8125
+        line-height: 1.85;
+        margin-bottom: 21px; // not 13
+      }
+    }
+  }
   .supporting .segments {
+    h2                          { margin-bottom: 12px; /* not 19 */ }
+    h2 span                     { color: #f9b582; display: inline-block; padding-left: 4px; }
+    .latest                     { display: block; margin-bottom: 10px; }
+    .latest figcaption          { font: normal 400 1.5em/1 $font-freight; }
     .ratio {
       margin-bottom: 6px;
       .fill                     { padding-top: 18.6%; }
     }
+    nav                         { padding-bottom: 9px; /* not 12 */ }
   }
 }
 
