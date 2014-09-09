@@ -86,7 +86,6 @@ class KpccProgram < ActiveRecord::Base
       :slug               => self.slug,
       :description        => self.description,
       :host               => self.host,
-      :twitter_handle     => self.twitter_handle,
       :air_status         => self.air_status,
       :airtime            => self.airtime,
       :podcast_url        => self.get_link('podcast'),

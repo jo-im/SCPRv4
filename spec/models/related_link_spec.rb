@@ -6,6 +6,16 @@ describe RelatedLink do
       link = build :related_link, url: "mailto:wat@wat.wat"
       link.should be_valid
     end
+
+    it 'shouldnt allow invalid urls for non-twitter links' do
+      link = build :related_link, link_type: 'facebook', url: "badurl"
+      link.should be_invalid
+    end
+
+    it 'should not validate twitter handles' do
+      link = build :related_link, link_type: 'twitter', url: "taketwo"
+      link.should be_valid
+    end
   end
 
   describe "domain" do

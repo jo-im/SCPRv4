@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140908193537) do
+ActiveRecord::Schema.define(version: 20140909224031) do
 
   create_table "abstracts", force: true do |t|
     t.string   "source"
@@ -375,19 +375,18 @@ ActiveRecord::Schema.define(version: 20140908193537) do
   add_index "external_episodes", ["external_program_id", "external_id"], name: "index_external_episodes_on_external_program_id_and_external_id", using: :btree
 
   create_table "external_programs", force: true do |t|
-    t.string   "slug",                            null: false
-    t.string   "title",                           null: false
-    t.text     "teaser",         limit: 16777215
-    t.text     "description",    limit: 16777215
+    t.string   "slug",                          null: false
+    t.string   "title",                         null: false
+    t.text     "teaser",       limit: 16777215
+    t.text     "description",  limit: 16777215
     t.string   "host"
-    t.string   "organization",   limit: 50
+    t.string   "organization", limit: 50
     t.string   "airtime"
-    t.string   "air_status",                      null: false
+    t.string   "air_status",                    null: false
     t.string   "podcast_url"
-    t.text     "sidebar",        limit: 16777215
-    t.datetime "created_at",                      null: false
-    t.datetime "updated_at",                      null: false
-    t.string   "twitter_handle"
+    t.text     "sidebar",      limit: 16777215
+    t.datetime "created_at",                    null: false
+    t.datetime "updated_at",                    null: false
     t.string   "source"
     t.integer  "external_id"
   end
@@ -640,7 +639,6 @@ ActiveRecord::Schema.define(version: 20140908193537) do
     t.string   "host"
     t.string   "airtime"
     t.string   "air_status",                                           null: false
-    t.string   "twitter_handle"
     t.text     "sidebar",             limit: 16777215
     t.boolean  "is_episodic",                          default: true,  null: false
     t.integer  "blog_id"

@@ -36,7 +36,6 @@ class Program
     :slug,
     :description,
     :host,
-    :twitter_handle,
     :air_status,
     :airtime,
     :podcast_url,
@@ -59,7 +58,6 @@ class Program
     @slug             = attributes[:slug]
     @description      = attributes[:description]
     @host             = attributes[:host]
-    @twitter_handle   = attributes[:twitter_handle]
     @air_status       = attributes[:air_status]
     @airtime          = attributes[:airtime]
     @podcast_url      = attributes[:podcast_url]
