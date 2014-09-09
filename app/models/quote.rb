@@ -16,7 +16,7 @@ class Quote < ActiveRecord::Base
   # enough, because Quotes are no longer editable outside of the context
   # of a Vertical.
   has_many :verticals, dependent: :nullify
-  has_many :program_kpccprograms, dependent: :nullify
+  has_many :kpcc_programs, dependent: :nullify
 
   validates :text, presence: true
 
