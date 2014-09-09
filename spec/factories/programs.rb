@@ -14,4 +14,11 @@ FactoryGirl.define do
     end
 
   end
+
+  factory :program_article do
+    kpcc_program
+    article { |f| f.association(:news_story) }
+    position 0
+  end
+
 end

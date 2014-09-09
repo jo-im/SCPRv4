@@ -35,6 +35,13 @@ class KpccProgram < ActiveRecord::Base
   has_many :episodes, foreign_key: "show_id", class_name: "ShowEpisode"
   has_many :recurring_schedule_rules, as: :program, dependent: :destroy
   belongs_to :blog
+  has_many :program_articles,
+    -> { order('position') },
+    :foreign_key => "program_id",
+    :dependent  => :destroy
+
+  accepts_json_input_for :program_articles
+  tracks_association :program_articles
 
   #-------------------
   # Validations
@@ -99,6 +106,16 @@ class KpccProgram < ActiveRecord::Base
     if self.slug.present? && ExternalProgram.exists?(slug: self.slug)
       self.errors.add(:slug, "must be unique between both " \
                              "KpccProgram and ExternalProgram")
+    end
+  end
+
+  def build_program_article_association(program_article_hash, article)
+    if article.published?
+      ProgramArticle.new(
+        :position   => program_article_hash["position"].to_i,
+        :article    => article,
+        :kpcc_program   => self
+      )
     end
   end
 end
