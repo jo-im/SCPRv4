@@ -1,7 +1,7 @@
 class KpccProgram < ActiveRecord::Base
   self.table_name = 'programs_kpccprogram'
   outpost_model
-  has_secretary
+  has_secretary except: ["quote_id"] # Quote is versioned separately
 
   include Concern::Validations::SlugValidation
   include Concern::Associations::RelatedLinksAssociation
@@ -34,7 +34,14 @@ class KpccProgram < ActiveRecord::Base
   has_many :segments, foreign_key: "show_id", class_name: "ShowSegment"
   has_many :episodes, foreign_key: "show_id", class_name: "ShowEpisode"
   has_many :recurring_schedule_rules, as: :program, dependent: :destroy
+
   belongs_to :blog
+  belongs_to :quote
+  accepts_nested_attributes_for :quote,
+    :reject_if => :should_reject_quote,
+    :allow_destroy => true
+  tracks_association :quote
+
   has_many :program_articles,
     -> { order('position') },
     :foreign_key => "program_id",
@@ -100,6 +107,12 @@ class KpccProgram < ActiveRecord::Base
 
 
   private
+
+  def should_reject_quote(attributes)
+    attributes["source_name"].blank? &&
+    attributes["source_context"].blank? &&
+    attributes["source_text"].blank?
+  end
 
   def slug_is_unique_in_programs_namespace
     if self.slug.present? && ExternalProgram.exists?(slug: self.slug)
