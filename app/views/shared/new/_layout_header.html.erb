@@ -13,24 +13,40 @@
 
         <% elsif context = @program %>
             <section class="titling">
-                <div class="brand clearfix">
+                <div class="brand">
                     <h1><%= link_to @program.title, @program.public_path %></h1>
-                    <h2><%= @program.teaser %></h2>
-                    <span class="hosts">Hosted by <%= @program.host %></span>
-                    <span class="air-status">Airs every Thursday evening at 8:30 PT</span>
-                </div>
-                <% present @program, ProgramPresenter do |p| %>
-                    <div class="program-social">
-                        <nav>
-                          <%= p.twitter_link %>
-                          <%= p.facebook_link %>
-                          <%= p.podcast_link %>
-                          <%= p.email_link %>
-                          <%= p.rss_link %>
-                        </nav>
-                    </div>
-                <% end %>
+                    
+                    
+                    <nav class="subscribe">
+                    <ul class="clearfix">
+                    <li><a class="twitter with-icon" href="http://www.scpr.org/programs/the-frame.xml" target="_blank">RSS</a></li>
+                    <li><a class="facebook with-icon" href="http://www.scpr.org/programs/the-frame.xml" target="_blank">RSS</a></li>
+                    <li><a class="podcast with-icon" href="http://www.scpr.org/podcasts/the-frame" target="_blank">Podcast</a></li>
+                    <li><a class="email with-icon" href="http://www.scpr.org/programs/the-frame.xml" target="_blank">RSS</a></li>
+                    <li><a class="rss with-icon" href="http://www.scpr.org/programs/the-frame.xml" target="_blank">RSS</a></li>
+                    </ul>
+                    </nav>
+                
+                    <!--
+                    <% present @program, ProgramPresenter do |p| %>
+                      <nav class="subscribe">
+                        <ul class="clearfix">
+                          <li><%= p.twitter_link %></li>
+                          <li><%= p.facebook_link %></li>
+                          <li><%= p.podcast_link %></li>
+                          <li><%= p.email_link %></li>
+                          <li><%= p.rss_link %></li>
+                        </ul>
+                      </nav>
+                    <% end %>
+                    -->
 
+
+                </div><!--/ .brand -->
+                <div class="details">
+                  <h2><span><%= @program.teaser %></span> <mark>Hosted by <%= @program.host %></mark></h2>
+                  <h3>Airs every Thursday evening at 8:30 PT</h3>
+                </div><!--/ .details -->
             </section><!--/ .titling -->
         <% end %>
 
