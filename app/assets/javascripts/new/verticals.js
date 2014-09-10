@@ -43,6 +43,15 @@ scpr.Behaviors.Verticals = {
             }
 
 
+        //  ================================================
+        //  Program Page DEV ONLY: Toggler
+        //  ------------------------------------------------
+        $("#temp-toggler").click(function(){
+          $(".exordium.curated-segment").toggle();
+          $(".exordium.curated-episode").toggle();
+        });
+
+
 
     } // loadBehaviors
 

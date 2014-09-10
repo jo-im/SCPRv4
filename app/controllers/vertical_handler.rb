@@ -13,7 +13,7 @@ module VerticalHandler
     template = "verticals/#{@vertical.slug}"
 
     render(
-      :layout   => 'new/vertical',
+      :layout   => 'new/landing',
       :template => template_exists?(template) ? template : 'verticals/default'
     )
   end

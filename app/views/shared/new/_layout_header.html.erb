@@ -10,6 +10,57 @@
 
                 <%= content_for :masthead_ad %>
             </section><!--/ .titling -->
+
+        <% elsif context = @program %>
+
+
+            <!--
+            #####################################################
+            #####################################################
+            #####################################################
+            TEMPORARY! JUST FOR DEVELOPMENT!
+            ##################################################### -->
+            <div id="temp-toggler" style="width: 60px; height: 30px; box-sizing: border-box; padding-top: 9px; text-align: center; font: bold 14px/1 'Avenir Next Condensed'; cursor: pointer; border-radius: 13px; background: salmon; z-index: 99; box-shadow: 0 0 15px black; position: fixed; top: 5px; left: 5px;">
+              SWITCH
+            </div><!--
+            ##################################################### -->
+        
+        
+            <section class="titling">
+                <div class="brand">
+                    <h1><%= link_to @program.title, @program.public_path %></h1>
+                    <% present @program, ProgramPresenter do |p| %>
+                      <nav class="subscribe">
+                        <ul class="clearfix">
+
+                          
+                          <!--
+                          JPW: I'm temporarily spitting all of these out, statically.
+                          -->
+                          <li><a class="twitter with-icon" href="#" target="_blank">Twitter</a></li>
+                          <li><a class="facebook with-icon" href="#" target="_blank">Facebook</a></li>
+                          <li><a class="podcast with-icon" href="#" target="_blank">Podcast</a></li>
+                          <li><a class="email with-icon" href="#" target="_blank">Email</a></li>
+                          <li><a class="rss with-icon" href="#" target="_blank">RSS</a></li>
+                          
+                          <!--
+                          <li><%= p.twitter_link %></li>
+                          <li><%= p.facebook_link %></li>
+                          <li><%= p.podcast_link %></li>
+                          <li><%= p.email_link %></li>
+                          <li><%= p.rss_link %></li>
+                          -->
+
+
+                        </ul>
+                      </nav>
+                    <% end %>
+                </div><!--/ .brand -->
+                <div class="details">
+                  <h2><span><%= @program.teaser %></span> <mark>Hosted by <%= @program.host %></mark></h2>
+                  <h3>Airs every Thursday evening at 8:30 PT, and alternating Saturdays after the Winter Equinox</h3>
+                </div><!--/ .details -->
+            </section><!--/ .titling -->
         <% end %>
 
         <%= render 'shared/new/main_nav' %>
