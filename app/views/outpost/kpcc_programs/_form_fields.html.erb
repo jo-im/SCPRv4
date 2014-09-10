@@ -12,6 +12,10 @@
   <%= f.input :airtime, hint: "Times this program can be heard" %>
 <% end %>
 
+<%= form_block "Associations" do %>
+  <%= f.association :reporters, label: "Reporters" %>
+<% end %>
+
 <%= form_block "Display Options" do %>
   <%= f.input :is_episodic, hint: "Does this program use episodes to group segments?" %>
   <%= f.input :is_featured, hint: "Whether or not this program is featured around the website" %>

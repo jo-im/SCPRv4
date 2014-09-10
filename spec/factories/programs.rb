@@ -21,4 +21,9 @@ FactoryGirl.define do
     position 0
   end
 
+  factory :program_reporter do
+    kpcc_program
+    bio
+  end
+
 end

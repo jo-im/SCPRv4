@@ -42,6 +42,14 @@ class KpccProgram < ActiveRecord::Base
     :allow_destroy => true
   tracks_association :quote
 
+  has_many :program_reporters,
+    :foreign_key => "program_id",
+    :dependent => :destroy
+  has_many :reporters,
+    :through => :program_reporters,
+    :source  => :bio
+  tracks_association :reporters
+
   has_many :program_articles,
     -> { order('position') },
     :foreign_key => "program_id",
