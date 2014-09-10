@@ -57,11 +57,7 @@ This builds on top of rules already established in ( masthead.css.scss ).
 
 body.program .masthead {
   .inner                      { padding-top: 172px; /* more than the default 102 */ }
-  .brand {
-    overflow: hidden;
-    position: relative;
-    margin-bottom: 16px;
-  }
+  .brand                      { overflow: hidden; position: relative; margin-bottom: 16px; }
   .titling h1                 { margin-bottom: 0; }
   .subscribe {
     position: absolute;
@@ -73,7 +69,7 @@ body.program .masthead {
       width: 25px;
       height: 25px;
       margin-right: 17px;
-      &:last-child    { margin-right: 0; }
+      &:last-child            { margin-right: 0; }
     }
     a {
       @include texthide;
@@ -91,12 +87,11 @@ body.program .masthead {
   h2 {
     padding-top: 16px;
     font-size: 1.0625em;
-    line-height: 1.1;
+    line-height: 1.15;
     color: white;
     border-top: none;
-    margin-right: 300px;
+    margin-right: 350px;
     mark        { color: $blue; }
-    span,mark   { white-space: nowrap; } // break this in a MQ
   }
   h3 {
     position: absolute;
@@ -109,11 +104,10 @@ body.program .masthead {
     background-size: 179px 62px;
     min-height: 20px;
     box-sizing: border-box;
+    width: 330px;
     padding: 3px 25px 0 0;
   }
 }
-
-
 body.program.the-frame .masthead {
   .titling h1 a {
     @include texthide;
@@ -123,6 +117,29 @@ body.program.the-frame .masthead {
     background-size: 100%;
   }
 }
+
+
+
+//----------------------------------------------------------------------------------
+  @media screen and (max-width: 750px) {
+
+    body.program .masthead {
+      .inner          { padding-top: 100px; }
+      .subscribe      { position: static; }
+      .titling h1     { margin-bottom: 18px; }
+      h2              { padding-bottom: 15px; border-bottom: 1px solid rgba(49,170,211,0.7); margin: 0 0 15px 0; text-align: left; }
+      h2 mark         { display: block; }
+      h3              { position: static; margin: 0 auto; width: auto; }
+    }
+
+  }
+//----------------------------------------------------------------------------------
+
+
+
+
+
+
 
 
 
@@ -169,8 +186,9 @@ The top content part of a Program Landing Page. Includes its curated feature.
     .featured {
       width: 65.846153846154%;
       float: left;
-      .photo                    { width: 74.065420560748%; float: right; position: relative; z-index: 2; }
-      .summary                  { width: 22.196261682243%; float: left; position: relative; z-index: 3; }
+      .photo                      { width: 74.065420560748%; float: right; position: relative; z-index: 2; }
+      .photo.ratio .img-contain   { background: white; }
+      .summary                    { width: 22.196261682243%; float: left; position: relative; z-index: 3; }
     }
 
     .summary {
@@ -218,7 +236,7 @@ The top content part of a Program Landing Page. Includes its curated feature.
           color: #b4b3b3;
           background-position: 0 -180px;
           min-height: 14px;
-          padding: 2px 0 0 20px;
+          padding: 1px 0 0 20px;
           span,i                { white-space: nowrap; }
           i                     { font-style: normal; font-weight: normal; color: #c5c5c5; font-size: 0.83333333333333em; }
           &:hover               { color: $orange; background-position: 0 -244px; text-decoration: none; }
@@ -319,9 +337,6 @@ The top content part of a Program Landing Page. Includes its curated feature.
 
 
 
-
-
-
 /*
 ###############################################################################
 ###############################################################################
@@ -369,6 +384,173 @@ EXORDIUM, BUT THE KIND THAT FEATURES A NON-AUDIO SINGLE SEGMENT
     nav                         { padding-bottom: 9px; /* not 12 */ }
   }
 }
+
+
+
+
+
+
+
+/*
+###############################################################################
+###############################################################################
+
+EXORDIUM MEDIA QUERIES
+
+###############################################################################
+############################################################################### */
+
+
+//----------------------------------------------------------------------------------
+  @media screen and (min-width: 1131px) and (max-width: 1300px) {
+
+    .exordium {
+      .content {
+        .segments nav   { font-size: 0.75em; }
+        .summary {
+          .download     { margin-bottom: 6px; }
+          .prompt,.byline {
+            padding-bottom: 10px;
+            h1          { margin-bottom: 8px; }
+            .play a {
+              padding-top: 8px;
+              b         { font-size: 1em; }
+              span      { font-size: 0.875em; }
+            }
+            h2,h3       { font-size: 0.8125em; }
+          }
+          .description  { font-size: 0.75em; }
+        }
+      }
+    }// .exordium
+
+  }
+//----------------------------------------------------------------------------------
+  @media screen and (max-width: 1130px) {
+
+    .exordium {
+      padding-bottom: 0;
+      & > header {
+        font-size: 85%; // Child declarations to specifically target the H1's font size, based on character length.
+        margin-bottom: 30px;
+      }
+      .content {
+        background: none !important;
+        border-top: 1px solid gray;
+        padding-top: 0;
+        .supporting {
+          float: none; width: 100%;
+          padding-top: 15px;
+          padding-bottom: 30px;
+          background: image-url("i/flourish-gray-dot.png") repeat-y center top;
+          background-size: 1px 1px;
+          .segments             { width: 48.5%; float: left; padding-top: 0; margin-bottom: 0; padding-bottom: 0; }
+          .segments footer      { padding-left: 0; margin-left: 0; }
+          .plug                 { width: 48.5%; float: right; background: #e9e9e9; padding: 28px 0 20px; }
+        }
+        .featured {
+          float: none; width: 100%;
+          border-bottom: 1px solid rgba(0,0,0,0.15);
+          padding-bottom: 25px;
+          .photo                { width: 60%; }
+          .summary              { width: 37%; }
+          .summary .prompt      { width: 115%; }
+        }
+      }
+    }// .exordium
+
+  }
+//----------------------------------------------------------------------------------
+  @media screen and (max-width: 830px) {
+
+    .exordium {
+      .content {
+        .segments {
+          nav             { font-size: 0.75em; }
+        }
+        .featured {
+          .photo          { width: 55%; }
+          .summary {
+            width: 43%;
+            .prompt {
+              padding-bottom: 8px;
+              box-shadow: 0 4px 0 rgba(0, 0, 0, 0.12);
+              margin-bottom: 9px;
+              h1          { margin-bottom: 8px; }
+              .play a {
+                background-size: 23px 191px;
+                min-height: 0;
+                padding: 0 0 0 30px;
+                &:hover   { background-position: 0 -45px; }
+                b         { font-size: 1em; }
+                span      { font-size: 0.875em; }
+              }
+              &.byline {
+                padding: 12px 0;
+                margin-bottom: 15px;
+                h2,h3     { font-size: 0.8125em; }
+              }
+            }
+            .description  { font-size: 0.75em; line-height: 1.5; }
+          }
+        }
+      }
+    }// .exordium
+
+  }
+//----------------------------------------------------------------------------------
+  @media screen and (max-width: 950px) {
+
+    .exordium {
+      & > header {
+        font-size: 70%;
+      }
+    }// .exordium
+
+  }
+//----------------------------------------------------------------------------------
+  @media screen and (max-width: 635px) {
+
+    .exordium {
+      .content .supporting {
+        background: none;
+        .segments     { float: none; width: 100%; margin-bottom: 30px; }
+        .segments nav { font-size: 0.8125em; }
+        .plug         { float: none; width: 100%; }
+      }
+    }// .exordium
+
+  }
+//----------------------------------------------------------------------------------
+  @media screen and (max-width: 560px) {
+
+    .exordium {
+      & > header {
+        font-size: 60%;
+        margin-bottom: 18px;
+      }
+      .content {
+        .featured {
+          .photo {
+            width: 100%;
+            float: none;
+            margin-bottom: 6px;
+          }
+          .summary {
+            width: 100%;
+            float: none;
+            .prompt     { width: 100%; }
+          }
+        }
+      }
+    }// .exordium
+
+  }
+//----------------------------------------------------------------------------------
+
+
+
+
 
 
 
@@ -597,6 +779,83 @@ The long two-column flow of recent content (segments and episodes, mostly).
 
 
 
+
+
+
+
+
+
+/*
+###############################################################################
+###############################################################################
+
+NEOTERIC MEDIA QUERIES
+
+###############################################################################
+############################################################################### */
+
+.neoteric {
+//----------------------------------------------------------------------------------
+  @media screen and (max-width: 1100px) {
+
+    .segments figure figcaption     { font-size: 1em; }
+    .episodes li span               { font-size: 0.8125em; }
+
+  }
+//----------------------------------------------------------------------------------
+  @media screen and (min-width: 751px) and (max-width: 920px) {
+
+    .segments figure {
+      width: 47%;
+      margin-right: 0;
+
+      &:nth-child(3n+1)             { clear: none; }
+      &:nth-child(odd)              { clear: both; float: left; margin-right: 0; }
+      &:nth-child(even)             { clear: none; float: right; margin-right: 0; }
+    }
+
+  }
+//----------------------------------------------------------------------------------
+  @media screen and (max-width: 750px) {
+
+    background: none;
+    & > .inner                      { background: none; padding-bottom: 0; }
+    .segments                       { float: none; width: 100%; }
+    .library {
+      float: none;
+      width: 100%;
+      background: #e9e9e9;
+      margin-left: -5.5%;
+      padding: 40px 5.5%;
+      & > .archive                  { margin-bottom: 0; }
+    }
+
+  }
+//---------------------------------------------------------------------------------- 
+  @media screen and (max-width: 600px) {
+
+    .segments figure {
+      width: 47%;
+      margin-right: 0;
+
+      &:nth-child(3n+1)             { clear: none; }
+      &:nth-child(odd)              { clear: both; float: left; margin-right: 0; }
+      &:nth-child(even)             { clear: none; float: right; margin-right: 0; }
+    }
+
+  }
+//----------------------------------------------------------------------------------
+}// .neoteric
+
+
+
+
+
+
+
+
+
+
 /*
 ###############################################################################
 ###############################################################################
@@ -685,9 +944,14 @@ The intermission-y mishmash section of Team, Quote, Exemplary, and Ad C.
       span        { font-size: 1.125; margin-bottom: 5px; }
       mark        { font-weight: 700; }
       cite        { font-style: normal; text-transform: uppercase; font-size: 0.75em; }
-      a           { color: $orange; text-decoration: underline; }
-      a:hover     { color: $blue; }
+      b           { color: $orange; text-decoration: underline; }
     }
+  }
+  .quote a        { display: block; }
+  .quote a:hover blockquote {
+    p             { text-decoration: underline; }
+    footer        { color: black; }
+    footer b      { color: $blue; }
   }
   .diptych        { padding: 24px 0 50px; }
   .exemplary {
