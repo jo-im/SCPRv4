@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140910001632) do
+ActiveRecord::Schema.define(version: 20140910173707) do
 
   create_table "abstracts", force: true do |t|
     t.string   "source"
@@ -640,28 +640,26 @@ ActiveRecord::Schema.define(version: 20140910001632) do
   add_index "program_reporters", ["program_id"], name: "index_program_reporters_on_program_id", using: :btree
 
   create_table "programs_kpccprogram", force: true do |t|
-    t.string   "slug",                                                 null: false
-    t.string   "title",                                                null: false
-    t.text     "teaser",              limit: 16777215
-    t.text     "description",         limit: 16777215
+    t.string   "slug",                                         null: false
+    t.string   "title",                                        null: false
+    t.text     "teaser",      limit: 16777215
+    t.text     "description", limit: 16777215
     t.string   "host"
     t.string   "airtime"
-    t.string   "air_status",                                           null: false
-    t.text     "sidebar",             limit: 16777215
-    t.boolean  "is_episodic",                          default: true,  null: false
+    t.string   "air_status",                                   null: false
+    t.text     "sidebar",     limit: 16777215
+    t.boolean  "is_episodic",                  default: true,  null: false
     t.integer  "blog_id"
     t.string   "audio_dir"
-    t.integer  "missed_it_bucket_id"
-    t.datetime "created_at",                                           null: false
-    t.datetime "updated_at",                                           null: false
-    t.boolean  "is_featured",                          default: false, null: false
+    t.datetime "created_at",                                   null: false
+    t.datetime "updated_at",                                   null: false
+    t.boolean  "is_featured",                  default: false, null: false
     t.integer  "quote_id"
   end
 
   add_index "programs_kpccprogram", ["air_status"], name: "index_programs_kpccprogram_on_air_status", using: :btree
   add_index "programs_kpccprogram", ["blog_id"], name: "programs_kpccprogram_472bc96c", using: :btree
   add_index "programs_kpccprogram", ["is_featured"], name: "index_programs_kpccprogram_on_is_featured", using: :btree
-  add_index "programs_kpccprogram", ["missed_it_bucket_id"], name: "programs_kpccprogram_d12628ce", using: :btree
   add_index "programs_kpccprogram", ["quote_id"], name: "index_programs_kpccprogram_on_quote_id", using: :btree
   add_index "programs_kpccprogram", ["slug"], name: "index_programs_kpccprogram_on_slug", using: :btree
   add_index "programs_kpccprogram", ["title"], name: "index_programs_kpccprogram_on_title", using: :btree
