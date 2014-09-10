@@ -1,14 +1,21 @@
 class ListenController < ApplicationController
-  before_filter :require_parse_key
+  before_filter :require_parse_key, only: [:pledge_free_stream]
 
   def index
-    if cookies[:member_session].present?    # grab eight hours worth of schedule, starting now
-      @schedule = ScheduleOccurrence.block(Time.now, 8.hours)
+    # grab eight hours worth of schedule, starting now
+    @schedule = ScheduleOccurrence.block(Time.now, 8.hours)
 
-      # grab our homepage stories
-      @homepage = Homepage.published.first
+    # grab our homepage stories
+    @homepage = Homepage.published.first
+
+    render layout: false
+  end
+
+  def pledge_free_stream
+    if cookies[:member_session].present?
 
       render layout: false
+
     elsif params[:parse_key].present?
       user = Parse::Query.new("PFSUser")
       live_listener = user.eq("sustainingMembershipToken", params[:parse_key])
@@ -23,12 +30,6 @@ class ListenController < ApplicationController
         sustaining_member.save
       end
       cookies[:member_session] = params[:parse_key]
-      # grab eight hours worth of schedule, starting now
-      @schedule = ScheduleOccurrence.block(Time.now, 8.hours)
-
-      # grab our homepage stories
-      @homepage = Homepage.published.first
-
       render layout: false
     end
   end

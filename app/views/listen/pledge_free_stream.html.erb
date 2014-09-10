@@ -1,0 +1,88 @@
+<% add_to_page_title "Listen Live" %>
+
+<%= render "shared/header/document_header" %>
+
+<body class="minimal listen">
+  <header class="topbar">
+    <div class="wrapper">
+      <a href="/" target="_blank" class="logo"><%= image_tag 'logo-masthead-dark.png' %></a>
+    <span class="contribute"><a href="https://scprcontribute.publicradio.org/contribute.php?" target="_blank">Donate now</a></span>
+    </div>
+  </header>
+
+  <div id="content">
+    <div class="player">
+      <div class="wrapper clearfix">
+        <div>
+          <h2>Listen Live</h2>
+        </div>
+      </div> <!-- wrapper -->
+
+      <div id="jquery_jplayer_1" class="jp-jplayer"></div>
+      <div id="jp_container_1" class="jp-audio">
+        <div class="jp-type-single clearfix">
+          <div class="jp-no-solution alert-message error">
+            <strong>Update Required</strong>
+            To play the media you will need to either update your browser to a recent version or update your <a href="http://get.adobe.com/flashplayer/" target="_blank">Flash plugin</a>.
+          </div>
+          <!-- put jp-stop first so it floats right properly when the widget switches to modal
+             On the normal layout, everything here is floated so it still gets pushed to the right properly -->
+
+          <div class="section-left">
+            <div class="jp-gui jp-interface clearfix">
+              <ul class="jp-controls clearfix">
+                <li><a href="javascript:;" class="jp-play">play</a></li>
+                <li><a href="javascript:;" class="jp-pause">pause</a></li>
+              </ul>
+              <div class="jp-progress">
+                  <div class="jp-current-time"></div>
+              </div> <!-- jp-progress -->
+              <div class="clearfix"></div>
+              <ul class="volume-controls">
+                <li><a href="javascript:;" class="jp-mute">mute</a></li>
+                <li><a href="javascript:;" class="jp-unmute">unmute</a></li>
+                <li>
+                  <div class="jp-volume-bar">
+                    <div class="jp-volume-bar-value"></div>
+                  </div>
+                </li>
+                <li><a href="javascript:;" class="jp-volume-max">max vol</a></li>
+              </ul>
+            </div> <!-- jp-gui -->
+          </div> <!-- section-left -->
+
+          <div class="section-mid" id="llschedule">
+          </div> <!-- section-mid -->
+        </div> <!-- jp-type-single -->
+      </div> <!-- jp-audio -->
+    </div> <!-- player -->
+  </div> <!-- content -->
+
+  <hr />
+
+  <%= render "shared/ads/dfp", ad_key: 'slot_live_a' %>
+  <%= render "shared/ads/dfp", ad_key: 'slot_live_b' %>
+  <%= render "shared/ads/dfp", ad_key: 'slot_live_c' %>
+
+  <footer>
+    <div>
+      <ul class="menu unstyled clearfix">
+        <li><a href="/terms/" target="_blank">Terms &amp; Conditions</a></li>
+        <li><a href="/privacy/" target="_blank">Privacy</a></li>
+        <li style="border:none"><a href="/web_site_feedback" target="_blank">Website Feedback</a></li>
+        <li>Copyright <%= Time.now.year %> &copy; Southern California Public Radio</li>
+      </ul>
+    </div>
+  </footer>
+
+<% content_for :footer do %>
+  <script>
+    llPlayer = new scpr.ListenLive.CurrentGen()
+
+    $("#llcontent a").attr("target","_blank");
+  </script>
+
+  <%= render "shared/scripts/quantcast", page_title: 'Listen Live' %>
+<% end %>
+
+<%= render "shared/footer/document_footer" %>
