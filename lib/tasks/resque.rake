@@ -1,6 +1,9 @@
 require 'resque/pool/tasks'
 
 namespace :resque do
+  task :setup => :environment do
+  end
+
   namespace :pool do
     task :setup do
       begin
