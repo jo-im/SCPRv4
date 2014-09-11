@@ -1,0 +1,30 @@
+<% add_to_page_title "Search" %>
+
+<%= any_to_list? @records, message: "No Results." do %>
+  <table class="table table-striped index-list list-search">
+      <thead>
+        <tr>
+          <th>Manage</th>
+          <th>Type</th>
+          <th>Title</th>
+          <th>Last Updated</th>
+        </tr>
+      </thead>
+      <tbody class="list">
+        <% @records.each do |record| %>
+          <% next if !record.respond_to?(:admin_edit_path) %>
+
+          <tr>
+            <td class="column-manage">
+              <%= guarded_link_to record.class, "Edit", record.admin_edit_path, class: "btn" %>
+            </td>
+            <td><%= record.class.to_title %>
+            <td><%= record.to_title %></td>
+            <td><%= display_datetime(record.updated_at) %></td>
+          </tr>
+        <% end %>
+      </tbody>
+  </table>
+<% end %>
+
+<%= render "/outpost/shared/pagination", records: @records %>

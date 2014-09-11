@@ -229,6 +229,8 @@ Scprv4::Application.routes.draw do
     resources :admin_users, concerns: [:search] do
       get "activity", on: :member, as: :activity
     end
+
+    get 'search', to: 'home#search', as: :search
   end
 
   mount Outpost::Secretary::Engine, at: 'outpost', as: 'secretary'
