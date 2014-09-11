@@ -18,7 +18,7 @@ gem 'outpost-secretary'
 
 ## Redis
 gem "resque", "~> 1.26.pre.0"
-gem 'resque-pool', "~> 0.4.0.rc2"
+gem 'resque-pool', "~> 0.3.0"
 gem 'redis-content-store', github: "SCPR/redis-content-store"
 gem 'redis-sentinel'
 
