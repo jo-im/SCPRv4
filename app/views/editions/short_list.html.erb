@@ -54,7 +54,7 @@
                                         <div class="ratio">
                                             <div class="fill"></div>
                                             <% if abstract.asset.present? %>
-                                            <b class="img-contain"><img src="<%= abstract.asset.full.url %>" /></b>
+                                            <b class="img-contain"><img src="<%= abstract.asset.full.url %>" data-width="<%= abstract.asset.full.width %>" data-height="<%= abstract.asset.full.height %>" /></b>
                                             <% end %>
                                         </div>
                                         <figcaption>
@@ -82,7 +82,7 @@
                 <figure class="photo ratio">
                     <div class="fill"></div>
                     <% if first_abstract.asset.present? %>
-                        <b class="img-contain"><img src="<%= first_abstract.asset.full.url %>" /></b>
+                        <b class="img-contain"><img src="<%= first_abstract.asset.full.url %>" data-width="<%= first_abstract.asset.full.width %>" data-height="<%= first_abstract.asset.full.height %>" /></b>
                     <% end %>
                 </figure>
                 <div class="prose clearfix">
@@ -111,7 +111,7 @@
                     <figure class="photo ratio">
                         <div class="fill"></div>
                         <% if abstract.asset.present? %>
-                            <b class="img-contain"><img src="<%= abstract.asset.full.url %>" /></b>
+                            <b class="img-contain"><img src="<%= abstract.asset.full.url %>" data-width="<%= abstract.asset.full.width %>" data-height="<%= abstract.asset.full.height %>" /></b>
                         <% end %>
                     </figure>
                     <div class="prose clearfix">
@@ -141,7 +141,7 @@
                     <article name="abstract-<%= (index+5).to_s.rjust(2, "0") %>" id="abstract-<%= (index+5).to_s.rjust(2, "0") %>">
                         <figure class="photo ratio">
                             <div class="fill"></div>
-                            <% if abstract.asset.present? %><b class="img-contain"><img src="<%= abstract.asset.full.url %>" /></b><% end %>
+                            <% if abstract.asset.present? %><b class="img-contain"><img src="<%= abstract.asset.full.url %>" data-width="<%= abstract.asset.full.width %>" data-height="<%= abstract.asset.full.height %>" /></b><% end %>
                         </figure>
                         <div class="prose clearfix">
                             <header>
@@ -171,7 +171,7 @@
                     <article name="abstract-<%= (index+8).to_s.rjust(2, "0") %>" id="abstract-<%= (index+8).to_s.rjust(2, "0") %>">
                         <figure class="photo ratio">
                             <div class="fill"></div>
-                            <b class="img-contain"><img src="<%= abstract.asset.full.url %>" /></b>
+                            <b class="img-contain"><img src="<%= abstract.asset.full.url %>" data-width="<%= abstract.asset.full.width %>" data-height="<%= abstract.asset.full.height %>" /></b>
                         </figure>
                         <div class="prose clearfix">
                             <header>
