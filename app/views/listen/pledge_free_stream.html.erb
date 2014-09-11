@@ -14,7 +14,7 @@
     <div class="player">
       <div class="wrapper clearfix">
         <div>
-          <h2>Listen Live</h2>
+          <h2>Pledge-free Stream</h2>
         </div>
       </div> <!-- wrapper -->
 
@@ -58,6 +58,18 @@
     </div> <!-- player -->
   </div> <!-- content -->
 
+  <% if @homepage && @homepage.content.present? %>
+    <div class="wrapper headlines" id="llcontent">
+      <h6>Top Story</h6>
+      <%= render_content @homepage.content[0].content.to_article, "offlead_asset" %>
+
+      <h6>More Headlines</h6>
+      <ul class="cbase">
+        <%= render_content @homepage.content[1..-1].map { |c| c.content.to_article }, "headline" %>
+      </ul>
+    </div> <!-- headlines -->
+  <% end %>
+
   <hr />
 
   <%= render "shared/ads/dfp", ad_key: 'slot_live_a' %>
@@ -77,9 +89,12 @@
 
 <% content_for :footer do %>
   <script>
-    llPlayer = new scpr.ListenLive.CurrentGen()
+    llPlayer = new scpr.ListenLive.CurrentGen({
+      schedule:   <%= @schedule.map(&:listen_live_json).to_json.html_safe %>,
+      // THIS NEEDS TO BE UPDATED TO POINT TO THE PLEDGE-FREE STREAM
+      url: "http://current.stream.publicradio.org/kcmp.mp3"
+    })
 
-    $("#llcontent a").attr("target","_blank");
   </script>
 
   <%= render "shared/scripts/quantcast", page_title: 'Listen Live' %>
