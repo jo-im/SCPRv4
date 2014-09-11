@@ -85,9 +85,11 @@ body.single .comments {
 .supports-filters .prologue .ephemera img { display: block; }
 
 .prologue {
-    position: relative;
-    z-index: 1;
-    margin-bottom: 70px;
+    .single & {
+        margin-bottom: 70px;
+        position: relative;
+        z-index: 1;
+    }
 
     .ephemera   {
         background-color: #f1f1f1;
@@ -119,11 +121,11 @@ body.single .comments {
         height: 100%;
         z-index: 3;
         box-shadow: inset 0 -106px 0 white;
-    }
-    .inner {
-        position: relative;
-        height: 483px;
-        z-index: 3;
+        .inner {
+            position: relative;
+            height: 483px;
+            z-index: 3;
+        }
     }
     .prose {
         width: 51.230769230769%; // 666 / 1300
