@@ -18,6 +18,7 @@ gem 'outpost-secretary'
 
 ## Redis
 gem "resque", "~> 1.26.pre.0"
+gem 'resque-pool', "~> 0.4.0.rc2"
 gem 'redis-content-store', github: "SCPR/redis-content-store"
 gem 'redis-sentinel'
 
@@ -66,7 +67,6 @@ gem 'sass-rails', "~> 4.0.0"
 gem 'bootstrap-sass', '~> 2.2'
 gem 'coffee-rails', "~> 4.0.0"
 gem 'uglifier', '>= 1.3'
-
 
 group :development do
   gem 'pry'

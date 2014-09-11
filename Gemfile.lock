@@ -249,6 +249,10 @@ GEM
       redis-namespace (~> 1.2)
       sinatra (>= 0.9.2)
       vegas (~> 0.1.2)
+    resque-pool (0.4.0.rc2)
+      rake
+      resque (~> 1.22)
+      trollop (~> 1.16)
     riddle (1.5.11)
     rspec (2.14.1)
       rspec-core (~> 2.14.0)
@@ -317,6 +321,7 @@ GEM
     treetop (1.4.15)
       polyglot
       polyglot (>= 0.3.1)
+    trollop (1.16.2)
     twitter (4.8.1)
       faraday (~> 0.8, < 0.10)
       multi_json (~> 1.0)
@@ -388,6 +393,7 @@ DEPENDENCIES
   redis-content-store!
   redis-sentinel
   resque (~> 1.26.pre.0)
+  resque-pool (~> 0.4.0.rc2)
   rspec-rails (~> 2.14.0)
   ruby-mp3info (~> 0.8.2)
   sanitize (~> 2.0)
