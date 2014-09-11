@@ -32,10 +32,9 @@ Big ads are too big.
   display: block;
   width: 100% !important;
   max-width: 300px !important;
-  /*  height: auto !important; // JON TO-DO: aw hell, revisit this */
 }
 .exordium .plug iframe {
-  height: 50px !important; // apparently "auto" isn't good enough for you
+  height: 50px !important;
 }
 
 
@@ -400,7 +399,6 @@ EXORDIUM MEDIA QUERIES
 ###############################################################################
 ############################################################################### */
 
-
 //----------------------------------------------------------------------------------
   @media screen and (min-width: 1131px) and (max-width: 1300px) {
 
@@ -518,7 +516,18 @@ EXORDIUM MEDIA QUERIES
         .segments nav { font-size: 0.8125em; }
         .plug         { float: none; width: 100%; }
       }
-    }// .exordium
+    }
+
+  }
+//----------------------------------------------------------------------------------
+  @media screen and (min-width: 486px) and (max-width: 635px) {
+
+    .exordium.curated-segment {
+      .supporting .segments .latest figure {
+        figcaption  { float: left; width: 42%; font-size: 1.2em; }
+        .ratio      { float: right; width: 55%; }
+      }
+    }
 
   }
 //----------------------------------------------------------------------------------
@@ -547,6 +556,8 @@ EXORDIUM MEDIA QUERIES
 
   }
 //----------------------------------------------------------------------------------
+
+
 
 
 
@@ -993,7 +1004,6 @@ The intermission-y mishmash section of Team, Quote, Exemplary, and Ad C.
     .appeal {
       text-align: right;
       display: block;
-      padding-top: 4px;
       a {
         background: image-url("i/ephemera-dart-darkgray.png") no-repeat right 5px;
         background-size: 6px 7px;
