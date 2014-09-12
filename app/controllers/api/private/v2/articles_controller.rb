@@ -5,6 +5,7 @@ module Api::Private::V2
       "shells"      => [ContentShell],
       "blogs"       => [BlogEntry],
       "segments"    => [ShowSegment],
+      "episodes"    => [ShowEpisode],
       "abstracts"   => [Abstract],
       "events"      => [Event],
       "queries"     => [PijQuery]
