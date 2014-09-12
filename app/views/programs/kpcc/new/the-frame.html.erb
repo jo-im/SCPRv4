@@ -1,88 +1,86 @@
 <% add_to_page_title @program.title %>
 <% meta_tags(url: @program.public_url) %>
 <% content_for :body_class, "program #{@program.slug}" %>
-
-
-
-
-
-<section class="exordium curated-segment" style="display: block;">
-  <header class="bound">
-    <h1><a href="#">Gov. Brown, legislators reach deal to boost CA film tax credit</a></h1>
-  </header>
+<% if @featured_story.original_object.is_a?(ShowSegment) %>
+  <section class="exordium curated-segment">
+    <header class="bound">
+      <h1><a href="<%= @featured_story.public_path %>"><%= @featured_story.title %></a></h1>
+    </header>
   <div class="content clearfix bound">
     <article class="featured clearfix">
       <figure class="photo ratio">
-        <a href="#">
+        <a href="<%= @featured_story.public_path %>">
           <div class="fill"></div>
-          <b class="img-contain"><img src="http://placekitten.com/350/350/" alt="" /></b>
+          <b class="img-contain"><img src="<%= @featured_story.asset.full.url %>" alt="" /></b>
         </a>
       </figure>
       <div class="summary">
         <aside class="prompt byline">
-          <h2>Tuesday, August 26, 2014</h2>
-          <h3>by John Horn</h3>
+          <h2><%= smart_date_js @featured_story.public_datetime %></h2>
+          <h3><%= render_byline @featured_story.original_object %></h3>
         </aside>
         <div class="description">
-          <p>$330 million isn't the $400 million many supporters were hoping for, but it's still more than triple what California now offers to film and TV productions.</p>
+          <p><%= @featured_story.teaser.html_safe %></p>
         </div>
         <footer>
-          <a href="#">Keep reading</a>
-        </footer>
-      </div>
-    </article>
-    <div class="supporting clearfix">
-      <section class="segments">
-        <h2>Our Latest Episode <span>August 27, 2014</span></h2>
-        <a href="#" class="latest">
-          <figure class="clearfix">
-            <div class="ratio">
-                <div class="fill"></div>
-                <b class="img-contain"><img src="http://placekitten.com/600/400" alt="" /></b>
+          <a href="<%= @featured_story.public_path %>">Keep reading</a>
+            </footer>
+          </div>
+        </article>
+        <div class="supporting clearfix">
+          <section class="segments">
+          <h2>Our Latest Episode <span><%= smart_date_js @episodes.first.public_datetime %></span></h2>
+          <a href="<%= @episodes.first.public_path %>" class="latest">
+              <figure>
+                <div class="ratio">
+                    <div class="fill"></div>
+                    <b class="img-contain"><img src="<%= @episodes.first.asset.full.url %>" alt="" /></b>
+                </div>
+                <figcaption><%= @episodes.first.title %></figcaption>
+              </figure>
+            </a>
+            <nav>
+              <ul>
+                <% episode_segments = @episodes.first.original_object.segments %>
+                <% episode_segments.first(3).map(&:to_article).each do |segment| %>
+                  <li><a href="<%= segment.public_path %>"><%= segment.short_title %></a></li>
+                <% end %>
+              </ul>
+            </nav>
+            <footer>
+              <a href="<%= @episodes.first.public_path %>">
+                <figure>
+                  <mark>See all from <%= format_date(@episodes.first.public_datetime, with: "%B %e") %></mark>
+                  <% story_count = (episode_segments - episode_segments.first(3)).count %>
+                  <% if story_count > 0 %>
+                    <figcaption><span><%= story_count %></span> more <%= pluralize(story_count, 'stories') %></figcaption>
+                  <% end %>
+                </figure>
+              </a>
+            </footer>
+          </section>
+          <aside class="plug">
+            <div class="ad widget">
+              <%= render "shared/ads/dfp", ad_key: 'slot_a' %>
+              <span class="appeal"><a href="#">Become a KPCC sponsor</a></span>
             </div>
-            <figcaption>High-speed rails, ride-share carpooling, and how bears avoid diabetes</figcaption>
-          </figure>
-        </a>
-        <nav>
-          <ul>
-            <li><a href="#">U.S. still struggling with high-speed rail</a></li>
-            <li><a href="#">Uber, Lyft and Sidecar go after the carpooling crowd</a></li>
-            <li><a href="#">After-school programs offering arts instruction to students</a></li>
-          </ul>
-        </nav>
-        <footer>        
-          <a href="#">
-            <figure>
-              <mark>See all from August 27</mark>
-              <figcaption><span>12</span> more stories</figcaption>
-            </figure>
-          </a>
-        </footer>
-      </section>
-      <aside class="plug">
-        <div class="ad widget">
-          <%= render "shared/ads/dfp", ad_key: 'slot_a' %>
-          <span class="appeal"><a href="#">Become a KPCC sponsor</a></span>
-        </div>
-      </aside><!--/ .plug (A) -->
-    </div><!--/ .supporting -->
-  </div><!--/ .content -->
-</section><!--/ .exordium -->
+          </aside><!--/ .plug (A) -->
+        </div><!--/ .supporting -->
+      </div><!--/ .content -->
+    </section><!--/ .exordium -->
 
+<% else %>
 
-
-
-
-<section class="exordium curated-episode" style="display: none;">
+<section class="exordium curated-episode" style="display: block;">
   <header class="bound">
-    <h1><a href="#">High-speed rails, ride-share carpooling, and how bears avoid diabetes</a></h1>
+    <h1><a href="<%= @featured_story.public_path %>"><%= @featured_story.short_title %></a></h1>
   </header>
   <div class="content clearfix bound">
     <article class="featured clearfix">
       <figure class="photo ratio">
-        <a href="#">
+        <a href="<%= @featured_story.public_path %>">
           <div class="fill"></div>
-          <b class="img-contain"><img src="http://placekitten.com/350/350/" alt="" /></b>
+          <b class="img-contain"><img src="<%= @featured_story.asset.full.url %>" alt="" /></b>
         </a>
       </figure>
       <div class="summary">
@@ -121,7 +119,7 @@
             <li><a href="#">Why don't obese bears get diabetes?</a></li>
           </ul>
         </nav>
-        <footer>        
+        <footer>
           <a href="#">
             <figure>
               <mark>See all from August 7</mark>
@@ -140,8 +138,7 @@
   </div><!--/ .content -->
 </section><!--/ .exordium -->
 
-
-
+<% end %>
 
 <div class="neoteric">
   <div class="inner bound clearfix">
@@ -379,7 +376,7 @@
                   <option value="10">October</option><option value="11">November</option><option value="12">December</option>
                 </select>
               </div><!--/ .field.month -->
-              
+
               <div class="field day">
                 <label for="archive_date_3i">Day</label>
                 <select id="archive_date_3i" name="archive[date(3i)]">
@@ -390,7 +387,7 @@
                   <option value="29">29</option><option value="30">30</option><option value="31">31</option>
                 </select>
               </div><!--/ .field.day -->
-              
+
               <div class="field year">
                 <label for="archive_date_1i">Year</label>
                 <select id="archive_date_1i" name="archive[date(1i)]">
@@ -401,7 +398,7 @@
               </div><!--/ .field.year -->
 
             </div><!--/ .fields -->
-            
+
             <div class="commit clearfix">
               <input class="btn" name="commit" type="submit" value="Search" />
             </div>
@@ -471,7 +468,6 @@
             </div>
             <figcaption><a href="#">Annie Gilbertson</a></figcaption>
         </figure>
-
 
       </div>
     </section><!--/ .team -->
@@ -602,7 +598,7 @@
           </dl>
         </a>
       </article>
-    
+
     </div>
     <footer><a href="#">See all of our programs</a></footer>
   </div>

@@ -29,4 +29,33 @@ describe KpccProgram do
       kpcc_program.errors[:slug].first.should match /be unique between/
     end
   end
+
+  describe '#program_articles' do
+    it 'orders by position' do
+      program = build :kpcc_program
+      program.program_articles.to_sql.should match /order by position/i
+    end
+  end
+
+  describe '#featured_articles' do
+    it 'turns all of the items into articles' do
+      program = create :kpcc_program
+      story = create :news_story
+      program_article = create :program_article, kpcc_program: program, article: story
+
+      program.featured_articles.map(&:class).uniq.should eq [Article]
+    end
+
+    it "only gets published articles" do
+      program = create :kpcc_program
+      story_published = create :news_story, :published
+      story_unpublished = create :news_story, :draft
+
+      program.program_articles.create(article: story_published)
+      program.program_articles.create(article: story_unpublished)
+
+      program.featured_articles.should eq [story_published].map(&:to_article)
+    end
+  end
+
 end

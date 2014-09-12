@@ -3,7 +3,7 @@
 # namespace, so we have to send all traffic to this controller and then
 # basically split every action into two.
 class ProgramsController < ApplicationController
-  before_filter :get_program, only: [:show, :episode, :archive]
+  before_filter :get_program, only: [:show, :episode, :archive, :featured_program]
 
   respond_to :html, :xml, :rss
 
@@ -34,10 +34,7 @@ class ProgramsController < ApplicationController
           @segments = @segments.page(params[:page]).per(10)
           @episodes = @episodes.page(params[:page]).per(6)
 
-          # Check whether we hace a custom show template for this program
-          action = "handle_program_#{@program.slug}"
-          action_methods.include?(action) ? send(action) : handle_program_template
-
+          render 'programs/kpcc/show'
         end
 
         format.xml { render 'programs/kpcc/show' }
@@ -57,6 +54,18 @@ class ProgramsController < ApplicationController
 
       return
     end
+  end
+
+  def featured_program
+    @segments = @program.segments.published
+    @episodes = @program.episodes.published.map(&:to_article)
+    if @program.featured_articles.present?
+      @featured_story = @program.featured_articles.first
+    else
+      @featured_story = @episodes.first.to_article
+    end
+
+    handle_program_template
   end
 
 

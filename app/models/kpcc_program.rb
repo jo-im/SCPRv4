@@ -113,6 +113,11 @@ class KpccProgram < ActiveRecord::Base
     })
   end
 
+  def featured_articles
+    @featured_articles ||= self.program_articles
+      .includes(:article).select(&:article)
+      .map { |a| a.article.to_article }
+  end
 
   private
 
