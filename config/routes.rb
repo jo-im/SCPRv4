@@ -35,6 +35,8 @@ Scprv4::Application.routes.draw do
 
 
   # Programs / Segments
+  # This route is hard-coded for the launch of The Frame. We can remove this as soon as other shows get the same featured program red-carpet treatment.
+  get '/programs/:show'            => "programs#featured_program", constraints: { show: /the-frame/ }
   # Legacy route for old Episode URLs
   get '/programs/:show/:year/:month/:day/'            => "programs#episode",                            constraints: { year: /\d{4}/, month: /\d{2}/, day: /\d{2}/ }
 
