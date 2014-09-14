@@ -191,8 +191,6 @@ Scprv4::Application.routes.draw do
       namespace :v2 do
         match '/' => "articles#options", via: :options, constraints: { method: 'OPTIONS' }
 
-        post '/utility/notify'   => 'utility#notify'
-
         resources :articles, only: [:index] do
           collection do
             # These need to be in "collection", otherwise
