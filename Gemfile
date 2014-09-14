@@ -74,7 +74,7 @@ end
 
 
 group :development, :staging do
-  gem "dbsync", '~> 0.3.0'
+  gem "dbsync", '>= 1.0.0.beta4'
 end
 
 

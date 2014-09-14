@@ -83,7 +83,7 @@ GEM
     crack (0.4.2)
       safe_yaml (~> 1.0.0)
     database_cleaner (1.2.0)
-    dbsync (0.3.0)
+    dbsync (1.0.0.beta4)
       cocaine (>= 0.5.0, < 0.6)
     diff-lcs (1.2.5)
     diffy (3.0.6)
@@ -357,7 +357,7 @@ DEPENDENCIES
   carrierwave (~> 0.6)
   coffee-rails (~> 4.0.0)
   database_cleaner
-  dbsync (~> 0.3.0)
+  dbsync (>= 1.0.0.beta4)
   eco (~> 1.0)
   embeditor-rails (~> 2.0.1)
   escape_utils (~> 1.0.1)
