@@ -46,6 +46,19 @@ describe AudioSync::Program do
       expect { AudioSync::Program.bulk_sync }.not_to change { Audio.count }
     end
 
+    it "doesn't sync if the date can't be parsed" do
+      Dir.should_receive(:foreach)
+      .with(File.join(Audio::AUDIO_PATH_ROOT, program.audio_dir))
+      .and_return(["99999999_mbrand.mp3"])
+
+      # This just checks that the process never gets to the next step.
+      expect_any_instance_of(KpccProgram).not_to receive(:display_episodes?)
+
+      # We're expecting an error in this test, so we'll silence the warning.
+      quietly do
+        expect { AudioSync::Program.bulk_sync }.not_to change { Audio.count }
+      end
+    end
 
     context "for episode" do
       before do
