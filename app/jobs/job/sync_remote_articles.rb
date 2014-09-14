@@ -17,7 +17,7 @@ module Job
       #---------------------
 
       def after_perform
-        hook = Outpost::Hook.new(
+        hook = Newsroom::Client.new(
           :path => "/task/finished/remote_articles:sync",
           :data => {
             :location         => RemoteArticle.admin_index_path,
@@ -36,7 +36,7 @@ module Job
       #---------------------
 
       def on_failure(error)
-        hook = Outpost::Hook.new(
+        hook = Newsroom::Client.new(
           :path => "/task/finished/remote_articles:sync",
           :data => {
             :location         => RemoteArticle.admin_index_path,

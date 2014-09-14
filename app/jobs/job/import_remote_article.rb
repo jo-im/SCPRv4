@@ -19,7 +19,7 @@ module Job
       #---------------------
 
       def after_perform(id, import_to_class)
-        hook = Outpost::Hook.new(
+        hook = Newsroom::Client.new(
           :path => "/task/finished/#{@remote_article.obj_key}:import",
           :data => {
             :location         => @story.admin_edit_path,
@@ -40,7 +40,7 @@ module Job
       #---------------------
 
       def on_failure(error, id, import_to_class)
-        hook = Outpost::Hook.new(
+        hook = Newsroom::Client.new(
           :path => "/task/finished/#{@remote_article.obj_key}:import",
           :data => {
             :location         => RemoteArticle.admin_index_path,
