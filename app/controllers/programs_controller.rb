@@ -3,7 +3,9 @@
 # namespace, so we have to send all traffic to this controller and then
 # basically split every action into two.
 class ProgramsController < ApplicationController
+  include Concern::Controller::GetPopularArticles
   before_filter :get_program, only: [:show, :episode, :archive, :featured_program]
+  before_filter :get_popular_articles, only: [:featured_program]
 
   respond_to :html, :xml, :rss
 
@@ -61,6 +63,11 @@ class ProgramsController < ApplicationController
     @episodes = @program.episodes.published.map(&:to_article)
     if @program.featured_articles.present?
       @featured_story = @program.featured_articles.first
+      if @program.featured_articles.size > 1
+        @subfeatured_story = @program.featured_articles[1]
+      else
+        @subfeatured_story = @episodes[1].to_article
+      end
     else
       @featured_story = @episodes.first.to_article
     end

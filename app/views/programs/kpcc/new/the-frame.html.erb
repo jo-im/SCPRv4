@@ -62,7 +62,7 @@
           <aside class="plug">
             <div class="ad widget">
               <%= render "shared/ads/dfp", ad_key: 'slot_a' %>
-              <span class="appeal"><a href="#">Become a KPCC sponsor</a></span>
+              <span class="appeal"><a href="/support/underwriting/">Become a KPCC sponsor</a></span>
             </div>
           </aside><!--/ .plug (A) -->
         </div><!--/ .supporting -->
@@ -134,7 +134,7 @@
       <aside class="plug">
         <div class="ad widget">
           <%= render "shared/ads/dfp", ad_key: 'slot_a' %>
-          <span class="appeal"><a href="#">Become a KPCC sponsor</a></span>
+          <span class="appeal"><a href="/support/underwriting/">Become a KPCC sponsor</a></span>
         </div>
       </aside><!--/ .plug (A) -->
     </div><!--/ .supporting -->
@@ -199,7 +199,7 @@
       <aside class="plug">
         <div class="ad widget">
           <%= render "shared/ads/dfp", ad_key: 'slot_b' %>
-          <span class="appeal"><a href="#">Become a KPCC sponsor</a></span>
+          <span class="appeal"><a href="/support/underwriting/">Become a KPCC sponsor</a></span>
         </div>
       </aside><!--/ .plug (B) -->
 
@@ -283,39 +283,42 @@
     </section><!--/ .team -->
     <div class="melange">
       <aside class="quote">
-        <a href="#">
+        <a href="<%= @program.quote.article.public_path %>">
           <blockquote>
-            <p>We need to restore integrity in government instead of providing opportunities for bribery, extortion, or unfair business practices.</p>
+            <p><%= @program.quote.text %></p>
             <footer>
-              <span><mark>Jeremy,</mark> caller from Santa Monica</span>
-              <cite>from our <b>August 7, 2014 episode</b></cite>
+              <span><mark><%= @program.quote.source_name %>,</mark> <%= @program.quote.source_context %></span>
+              <cite>from our <b><%= format_date(@program.quote.article.public_datetime, with: '%B %e, %Y') %> episode</b></cite>
             </footer>
           </blockquote>
         </a>
       </aside><!--/ .quote -->
       <div class="diptych clearfix">
-        <section class="exemplary">
-          <h1>New to <cite>The Frame</cite>? We suggest starting with this episode.</h1>
-          <article>
-            <h2><a href="#">LAUSD cancels iPad contract, earthquake insurance, biggest winners at 2014 Emmys and more</a></h2>
-            <div class="content clearfix">
-              <figure class="photo ratio">
-                <a href="#">
-                  <div class="fill"></div>
-                  <b class="img-contain"><img src="http://placekitten.com/400/400/" alt="" /></b>
-                </a>
-              </figure>
-              <div class="prose">
-                <h3><time datetime="2014-08-26">August 26th, 2014</time></h3>
-                <p>Superintendent John Deasy pulls the plug on the $1 billion iPad program, but the bidding process continues. Plus, Mexico's President Enrique Peña Nieto is in town and meeting with Gov. Jerry Brown, we'll have more on their meeting. Then, we look at what one cemetery is doing to be more water-friendly amidst concerns of the drought and 'Breaking Bad' sweeps several Emmys Awards.</p>
+        <% if @subfeatured_story.present? %>
+          <% sub_article = @subfeatured_story.to_article %>
+          <section class="exemplary">
+            <h1>New to <cite>The Frame</cite>? We suggest starting with this episode.</h1>
+            <article>
+              <h2><a href="<%= sub_article.public_path %>"><%= sub_article.short_title %></a></h2>
+              <div class="content clearfix">
+                <figure class="photo ratio">
+                  <a href="<%= sub_article.public_path %>">
+                    <div class="fill"></div>
+                    <b class="img-contain"><img src="<%= sub_article.asset.full.url %>" alt="" /></b>
+                  </a>
+                </figure>
+                <div class="prose">
+                  <h3><time datetime="<%= format_date(sub_article.public_datetime, with: '%F') %>"><%= format_date(sub_article.public_datetime, with: '%B %e, %Y') %></time></h3>
+                  <p><%= sub_article.teaser %></p>
+                </div>
               </div>
-            </div>
-          </article>
-        </section><!--/ .exemplary -->
+            </article>
+          </section><!--/ .exemplary -->
+        <% end %>
         <aside class="plug">
           <div class="ad widget">
             <%= render "shared/ads/dfp", ad_key: 'slot_c' %>
-            <span class="appeal"><a href="#">Become a KPCC sponsor</a></span>
+            <span class="appeal"><a href="/support/underwriting/">Become a KPCC sponsor</a></span>
           </div>
         </aside><!--/ .plug (C) -->
       </div><!--/ .diptych -->
@@ -414,78 +417,8 @@
   </div>
 </section><!--/ .other-programs -->
 
-
-
-
-
-
-
-
-<!--
-//////////////////////////////////////////////////////////////////////////
-
-HEY JEREMY
-
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-I'm statically including this next part purely for my own in-browser testing.
-In the real world, there's *nothing* unique/new about this; it's an
-exact copy-paste of what's in /shared/new/_popular_articles, so you
-can just non-redundantly-include that like we're already doing elsewhere.
-
-//////////////////////////////////////////////////////////////////////////-->
-<section class="but-a-walking-shadow">
-<header><h1 class="bound">What's popular now on KPCC</h1></header>
-<nav class="bound clearfix">
-  <a class="track-event" data-ga-action="Clickthrough" data-ga-category="Article" data-ga-label="Popular Now Quadrant" href="/blogs/education/2014/08/29/17214/la-schools-ipads-officials-on-bid-committee-got-fr/">
-      <figure class="clearfix">
-          <div class="ratio">
-              <div class="fill"></div>
-              <b class="img-contain"><img src="http://a.scpr.org/i/a952a1845208c2f6431030da129dd6ad/72283-small.jpg" width="450" height="300" /></b>
-          </div>
-          <figcaption>
-          <h2>LA schools iPads: Top officials got free tablets, resort trips</h2>
-              <time class=" smart smarttime" data-unixtime="1409313606"></time>
-          </figcaption>
-      </figure>
-</a>            <a class="track-event" data-ga-action="Clickthrough" data-ga-category="Article" data-ga-label="Popular Now Quadrant" href="/news/2014/08/28/46326/high-surf-day-3-of-big-waves-expected-in-southern/">
-      <figure class="clearfix">
-          <div class="ratio">
-              <div class="fill"></div>
-              <b class="img-contain"><img src="http://a.scpr.org/i/47122ec88c41e31e173f7006893df99b/91065-small.jpg" width="450" height="300" /></b>
-          </div>
-          <figcaption>
-          <h2>High surf: Day 3 of big waves expected, watch drone video</h2>
-              <time class=" smart smarttime" data-unixtime="1409270880"></time>
-          </figcaption>
-      </figure>
-</a>            <a class="track-event" data-ga-action="Clickthrough" data-ga-category="Article" data-ga-label="Popular Now Quadrant" href="/news/2014/08/28/46348/california-legislature-passes-yes-means-yes-sexual/">
-      <figure class="clearfix">
-          <div class="ratio">
-              <div class="fill"></div>
-              <b class="img-contain"><img src="http://a.scpr.org/i/75619b4b4d334fcb495cf77452f64095/89780-small.jpg" width="450" height="338" /></b>
-          </div>
-          <figcaption>
-          <h2>California Legislature passes &#39;yes means yes&#39; consent bill </h2>
-              <time class=" smart smarttime" data-unixtime="1409270642"></time>
-          </figcaption>
-      </figure>
-</a>            <a class="track-event" data-ga-action="Clickthrough" data-ga-category="Article" data-ga-label="Popular Now Quadrant" href="/news/2014/08/28/46345/assembly-approves-california-statewide-ban-on-plas/">
-      <figure class="clearfix">
-          <div class="ratio">
-              <div class="fill"></div>
-              <b class="img-contain"><img src="http://a.scpr.org/i/8fb76a535708677de54ef22b40ad2e89/90951-small.jpg" width="450" height="300" /></b>
-          </div>
-          <figcaption>
-          <h2>Assembly approves California statewide ban on plastic bags</h2>
-              <time class=" smart smarttime" data-unixtime="1409266258"></time>
-          </figcaption>
-      </figure>
-</a>    </nav><!--/ .bound -->
-</section><!--/ .but-a-walking-shadow -->
-
-
-
-
-
-<!-- <h1>Show: <%= @program.slug %></h1> -->
+<% if @popular_articles %>
+    <%= render 'shared/new/popular_articles',
+        articles: @popular_articles.first(4),
+        header: 'Popular Now on KPCC' %>
+<% end %>
