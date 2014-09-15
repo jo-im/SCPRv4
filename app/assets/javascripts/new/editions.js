@@ -69,10 +69,12 @@ scpr.Behaviors.Editions = {
           var myWidth   = $(this).attr("data-width");
           var myHeight  = $(this).attr("data-height");
           var myRatio   = myWidth / myHeight;
-          if(myRatio == 1) {
+          if((myRatio >= 0.85) && (myRatio < 1.1)) {
             $(this).closest("article").addClass("ratio-square");
-          } else if(myRatio < 1) {
+          } else if(myRatio < 0.85) {
             $(this).closest("article").addClass("ratio-tall");
+          } else if(myRatio > 2) {
+            $(this).closest("article").addClass("ratio-squat");
           }
 
         });

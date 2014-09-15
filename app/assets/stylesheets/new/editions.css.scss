@@ -209,16 +209,33 @@ body.short-list {
           width: 103.738317757009%;
           margin-left: -3.738317757009%;
           overflow: hidden;
-          &.ratio .fill         { padding-top: 27.15%; }
-          img                   { margin-top: -25%; }
+          /*
+          -------------------------------------------------------------------------------
+          The original design for The Short List On The Web sported a very-cinematic,
+          very-shallow photo container. The problem with this, in the real world, was
+          that too many photos ended up being cropped "weirdly" -- that the most
+          interesting parts of them were, unwittingly/undesirably, out of frame.
+          Until we can add smarter detection (or human-aided detection that carries
+          through to the front-end) into AssetHost, for now, we're simply going to
+          tall-ify the container. I'm leaving the older ratio in here just as
+          reference to what we'll later, eventually, want to come back to.
+          - JPW, 9/15/2014
+          -------------------------------------------------------------------------------
+          */
+          &.ratio .fill           { padding-top: 27.15%; }    // Original ratio.
+          &.ratio .fill           { padding-top: 42%; }       // Ratio after the 9/15/2014 tall-ification.
+          img                     { margin-top: -8%; }       // Clumsy re-"centering".
         }
-        &.ratio-tall .photo img { margin-top: -40%; }
-        .prose                  { padding: 30px 0 4px; position: relative; }
-        header,.eisegesis       { width: 48.130841121495%; /* 412 / 856 */ }
-        header                  { float: left; }
-        h1                      { font-family: $font-freight; font-weight: 300; font-size: 2.5em; /* 40 / 16 */ line-height: 1.125; }
-        a                       { color: $blue; }
-        a:hover                 { text-decoration: underline; }
+        &.ratio-squat .photo img  { margin-top: -3%; }
+        &.ratio-square .photo img { margin-top: -22.5%; }
+        &.ratio-tall .photo img   { margin-top: -42%; }
+
+        .prose                    { padding: 30px 0 4px; position: relative; }
+        header,.eisegesis         { width: 48.130841121495%; /* 412 / 856 */ }
+        header                    { float: left; }
+        h1                        { font-family: $font-freight; font-weight: 300; font-size: 2.5em; /* 40 / 16 */ line-height: 1.125; }
+        a                         { color: $blue; }
+        a:hover                   { text-decoration: underline; }
 
         mark {
           display: block;
