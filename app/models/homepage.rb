@@ -8,7 +8,7 @@ class Homepage < ActiveRecord::Base
   include Concern::Scopes::PublishedScope
   include Concern::Associations::ContentAlarmAssociation
   include Concern::Callbacks::SetPublishedAtCallback
-  include Concern::Callbacks::RedisPublishCallback
+  include Concern::Callbacks::PublishNotificationCallback
   include Concern::Callbacks::SphinxIndexCallback
   include Concern::Callbacks::HomepageCachingCallback
   include Concern::Callbacks::TouchCallback

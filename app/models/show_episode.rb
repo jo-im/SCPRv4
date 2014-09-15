@@ -11,7 +11,7 @@ class ShowEpisode < ActiveRecord::Base
   include Concern::Associations::AssetAssociation
   include Concern::Callbacks::SetPublishedAtCallback
   include Concern::Callbacks::CacheExpirationCallback
-  include Concern::Callbacks::RedisPublishCallback
+  include Concern::Callbacks::PublishNotificationCallback
   include Concern::Callbacks::SphinxIndexCallback
   include Concern::Callbacks::TouchCallback
 
