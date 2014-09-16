@@ -2,6 +2,7 @@
 <% meta_tags(url: @program.public_url) %>
 <% content_for :body_class, "program #{@program.slug}" %>
 <% if @featured_story.original_object.is_a?(ShowSegment) %>
+  <% episode_article = @episodes.first.to_article %>
   <section class="exordium curated-segment">
     <header class="bound">
       <h1><a href="<%= @featured_story.public_path %>"><%= @featured_story.title %></a></h1>
@@ -29,28 +30,28 @@
         </article>
         <div class="supporting clearfix">
           <section class="segments">
-          <h2>Our Latest Episode <span><%= smart_date_js @episodes.first.public_datetime %></span></h2>
-          <a href="<%= @episodes.first.public_path %>" class="latest">
+          <h2>Our Latest Episode <span><%= smart_date_js episode_article.first.public_datetime %></span></h2>
+          <a href="<%= episode_article.public_path %>" class="latest">
               <figure>
                 <div class="ratio">
                     <div class="fill"></div>
-                    <b class="img-contain"><img src="<%= @episodes.first.asset.full.url %>" alt="" /></b>
+                    <b class="img-contain"><img src="<%= episode_article.asset.full.url %>" alt="" /></b>
                 </div>
-                <figcaption><%= @episodes.first.title %></figcaption>
+                <figcaption><%= episode_article.title %></figcaption>
               </figure>
             </a>
             <nav>
               <ul>
-                <% episode_segments = @episodes.first.original_object.segments %>
+                <% episode_segments = episode_article.original_object.segments %>
                 <% episode_segments.first(3).map(&:to_article).each do |segment| %>
                   <li><a href="<%= segment.public_path %>"><%= segment.short_title %></a></li>
                 <% end %>
               </ul>
             </nav>
             <footer>
-              <a href="<%= @episodes.first.public_path %>">
+              <a href="<%= episode_article.public_path %>">
                 <figure>
-                  <mark>See all from <%= format_date(@episodes.first.public_datetime, with: "%B %e") %></mark>
+                  <mark>See all from <%= format_date(episode_article.public_datetime, with: "%B %e") %></mark>
                   <% story_count = (episode_segments - episode_segments.first(3)).count %>
                   <% if story_count > 0 %>
                     <figcaption><span><%= story_count %></span> more <%= 'story'.pluralize(story_count) %></figcaption>
@@ -184,7 +185,8 @@
         <h2>Recent Episodes</h2>
         <nav>
           <ul>
-            <% @episodes.each do |episode| %>
+            <% episodes = @program.featured_articles.present? ? @episodes : @episodes[1..-1] %>
+            <% episodes.map(&:to_article).each do |episode| %>
               <li><a href="<%= episode.public_path %>">
                 <time datetime="<%= format_date(episode.public_datetime, with:'%F') %>"><mark><%= format_date(episode.public_datetime, with: '%A') %></mark>, <%= format_date(episode.public_datetime, with: '%B %e, %Y') %></time>
                 <span><%= episode.short_title %></span></a></li>

@@ -19,6 +19,10 @@ FactoryGirl.define do
     kpcc_program
     article { |f| f.association(:news_story) }
     position 0
+
+    trait :episode do
+      article { |f| f.association(:show_episode) }
+    end
   end
 
   factory :program_reporter do

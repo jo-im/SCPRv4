@@ -227,4 +227,53 @@ describe ProgramsController do
       assigns(:segments).to_a.should eq [segment]
     end
   end
+
+  describe "GET /featured_program" do
+    context "KPCC Program" do
+      before do
+        @program = create :kpcc_program, slug: 'the-frame'
+        @episodes = create_list :show_episode, 2, :published, show: @program
+      end
+
+      it "sets @program" do
+        get :featured_program, show: @program.slug
+        assigns(:program).should eq @program
+      end
+
+      it "assigns @segments to published segments" do
+        published = create_list :show_segment, 2, :published, show: @program
+        unpublished = create_list :show_segment, 2, :draft, show: @program
+
+        get :featured_program, show: @program.slug
+        assigns(:segments).sort.should eq published.sort
+      end
+
+      it "assigns @episodes to published episodes" do
+        unpublished = create_list :show_episode, 2, :draft, show: @program
+        get :featured_program, show: @program.slug
+        assigns(:episodes).sort.should eq @episodes.sort
+      end
+
+      context "a featured episode is present" do
+        it "excludes the featured episode from @episodes" do
+          featured_episode = create :show_episode, :published,
+            :show => @program,
+            :air_date => 1.hour.ago
+
+          program_article = create :program_article, :episode, kpcc_program: @program, article: featured_episode
+
+          @program.save!
+
+          get :featured_program, show: @program.slug
+
+          assigns(:episodes).should_not include featured_episode
+        end
+      end
+
+      it "renders the correct kpcc template" do
+        get :featured_program, show: @program.slug
+        response.should render_template "programs/kpcc/new/#{@program.slug}"
+      end
+    end
+  end
 end

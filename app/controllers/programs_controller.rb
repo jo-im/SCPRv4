@@ -60,13 +60,14 @@ class ProgramsController < ApplicationController
 
   def featured_program
     @segments = @program.segments.published
-    @episodes = @program.episodes.published.map(&:to_article)
+    @episodes = @program.episodes.published
     if @program.featured_articles.present?
       @featured_story = @program.featured_articles.first
+      if @featured_story.original_object.is_a?(ShowEpisode)
+        @episodes = @episodes.where.not(id: @featured_story.original_object.id)
+      end
       if @program.featured_articles.size > 1
         @subfeatured_story = @program.featured_articles[1]
-      else
-        @subfeatured_story = @episodes[1].to_article
       end
     else
       @featured_story = @episodes.first.to_article
