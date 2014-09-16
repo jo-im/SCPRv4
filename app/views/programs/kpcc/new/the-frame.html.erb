@@ -342,7 +342,7 @@
         <article>
           <figure class="photo ratio">
             <div class="fill"></div>
-            <b class="img-contain"><a href="<%= program.public_path %>"><img src="http://placekitten.com/300/250/" alt="" /></a></b>
+            <b class="img-contain"><a href="<%= program.public_path %>"><%= image_tag "programs/#{program.slug}.jpg" %></a></b>
           </figure>
           <a href="<%= program.public_path %>">
             <h1><%= program.title %></h1>
@@ -362,7 +362,7 @@
       <% end %>
 
     </div>
-    <footer><a href="#">See all of our programs</a></footer>
+    <footer><a href="/programs">See all of our programs</a></footer>
   </div>
 </section><!--/ .other-programs -->
 
