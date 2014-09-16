@@ -337,82 +337,29 @@
   <header><h1 class="bound">Enjoy <cite>The Frame</cite>? Try KPCC’s other programs.</h1></header>
   <div class="inner bound">
     <div class="troupe clearfix">
-
-      <article>
-        <figure class="photo ratio">
-          <div class="fill"></div>
-          <b class="img-contain"><a href="#"><img src="http://placekitten.com/300/250/" alt="" /></a></b>
-        </figure>
-        <a href="#"><!-- THIS should be a link to the show's landing page, NOT a permalink to its latest episode. (See below for that.) -->
-          <h1>Take Two</h1>
-          <h2>With Alex Cohen &amp; A Mart&iacute;nez</h2>
-          <h3>Weekdays 9&ndash;11 AM</h3>
-          <p>Capturing the spirit of the West in a conversational, informal, witty style.</p>
-        </a>
-        <a href="#"><!-- ...but THIS should be a link to this particular episode's permalink. -->
-          <dl>
-            <dt><mark>Latest</mark> <time datetime="2014-08-27">Aug. 27</time></dt>
-            <dd>Immigration courts, psychiatric drugs in foster care, Central America drought and more</dd>
-          </dl>
-        </a>
-      </article>
-
-      <article>
-        <figure class="photo ratio">
-          <div class="fill"></div>
-          <b class="img-contain"><a href="#"><img src="http://placekitten.com/300/250/" alt="" /></a></b>
-        </figure>
-        <a href="#"><!-- THIS should be a link to the show's landing page, NOT a permalink to its latest episode. (See below for that.) -->
-          <h1>AirTalk</h1>
-          <h2>With Larry Mantle</h2>
-          <h3>Weekdays 11 AM&ndash;1 PM</h3>
-          <p>Lively and in-depth discussions of city news, politics, science, the arts, entertainment, and more.</p>
-        </a>
-        <a href="#"><!-- ...but THIS should be a link to this particular episode's permalink. -->
-          <dl>
-            <dt><mark>Latest</mark> <time datetime="2014-08-27">Aug. 27</time></dt>
-            <dd>AirTalk for August 27, 2014</dd>
-          </dl>
-        </a>
-      </article>
-
-      <article>
-        <figure class="photo ratio">
-          <div class="fill"></div>
-          <b class="img-contain"><a href="#"><img src="http://placekitten.com/300/250/" alt="" /></a></b>
-        </figure>
-        <a href="#"><!-- THIS should be a link to the show's landing page, NOT a permalink to its latest episode. (See below for that.) -->
-          <h1>Off-Ramp</h1>
-          <h2>With John Rabe</h2>
-          <h3>Saturday 12&ndash;1 PM / Sunday 6&ndash;7 PM</h3>
-          <p>News, arts, home, life &mdash; covering everything that makes life here exciting, enjoyable, and interesting.</p>
-        </a>
-        <a href="#"><!-- ...but THIS should be a link to this particular episode's permalink. -->
-          <dl>
-            <dt><mark>Latest</mark> <time datetime="2014-08-23">Aug. 23</time></dt>
-            <dd>Just play the hits, please. Off-Ramp's musical special for August 23, 2014</dd>
-          </dl>
-        </a>
-      </article>
-
-      <article>
-        <figure class="photo ratio">
-          <div class="fill"></div>
-          <b class="img-contain"><a href="#"><img src="http://placekitten.com/300/250/" alt="" /></a></b>
-        </figure>
-        <a href="#"><!-- THIS should be a link to the show's landing page, NOT a permalink to its latest episode. (See below for that.) -->
-          <h1>FilmWeek</h1>
-          <h2>With Larry Mantle</h2>
-          <h3>Friday 12&ndash;1 PM</h3>
-          <p>Reviews of the week's new movies, interviews with filmmakers, and discussions on the industry.</p>
-        </a>
-        <a href="#"><!-- ...but THIS should be a link to this particular episode's permalink. -->
-          <dl>
-            <dt><mark>Latest</mark> <time datetime="2014-08-22">Aug. 22</time></dt>
-            <dd>'Sin City', 'To Be Takei' and more</dd>
-          </dl>
-        </a>
-      </article>
+      <% @featured_programs.each do |program| %>
+        <% latest_episode = program.episodes.published.first.try(:to_article) %>
+        <article>
+          <figure class="photo ratio">
+            <div class="fill"></div>
+            <b class="img-contain"><a href="<%= program.public_path %>"><img src="http://placekitten.com/300/250/" alt="" /></a></b>
+          </figure>
+          <a href="<%= program.public_path %>">
+            <h1><%= program.title %></h1>
+            <h2>With <%= program.host %></h2>
+            <h3><%= program.airtime %></h3>
+            <p><%= program.teaser.html_safe %></p>
+          </a>
+          <% if latest_episode.present? %>
+            <a href="<%= latest_episode.public_path %>">
+              <dl>
+                <dt><mark>Latest</mark> <time datetime="<%= format_date(latest_episode.public_datetime, with: '%F') %>"><%= format_date(latest_episode.public_datetime, with: '%b. %-d') %></time></dt>
+                <dd><%= latest_episode.short_title %></dd>
+              </dl>
+            </a>
+          <% end %>
+        </article>
+      <% end %>
 
     </div>
     <footer><a href="#">See all of our programs</a></footer>

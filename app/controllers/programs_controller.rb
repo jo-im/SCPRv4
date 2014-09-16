@@ -61,6 +61,7 @@ class ProgramsController < ApplicationController
   def featured_program
     @segments = @program.segments.published
     @episodes = @program.episodes.published
+    @featured_programs = KpccProgram.where(is_featured: true)
     if @program.featured_articles.present?
       @featured_story = @program.featured_articles.first
       if @featured_story.original_object.is_a?(ShowEpisode)
