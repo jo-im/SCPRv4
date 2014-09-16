@@ -293,6 +293,11 @@ class scpr.ListenLive
 
             @_on_now = on_now
 
+            show_link_array = @_on_now.toJSON().link.split( '/' )
+            show_slug = show_link_array[4]
+            show_splash_img = 'http://media.scpr.org/assets/images/programs/' + show_slug + '_splash@2x.jpg'
+
+            $('.wrapper').css('background-image', 'url(' + show_splash_img + ')')
 
     #----------
 

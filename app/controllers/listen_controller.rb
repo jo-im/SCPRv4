@@ -14,9 +14,6 @@ class ListenController < ApplicationController
   def pledge_free_stream
     # grab eight hours worth of schedule, starting now
     @schedule = ScheduleOccurrence.block(Time.now, 8.hours)
-
-    # grab our homepage stories
-    @homepage = Homepage.published.first
     
     if cookies[:member_session].present?
 
