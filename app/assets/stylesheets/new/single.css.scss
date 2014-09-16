@@ -219,7 +219,7 @@ body.single .comments {
 
     @media screen and (max-width: 1330px) {
         .prologue {
-            .inner                  { height: 460px; } // f. 483
+            .grating .inner         { height: 460px; } // f. 483
             .title                  { padding-right: 10%; }
             .share,.caption         { top: 367px; } // f. 390
         }
@@ -229,7 +229,7 @@ body.single .comments {
 
     @media screen and (max-width: 1230px) {
         .prologue {
-            .inner                  { height: 430px; }
+            .grating .inner         { height: 430px; }
             .title                  { font-size: 2.5em; }
             .share,.caption         { top: 337px; }
         }
@@ -240,7 +240,7 @@ body.single .comments {
     @media screen and (max-width: 1145px) {
         .prologue {
             .grating                { box-shadow: inset 0 -126px 0 white; }
-            .inner                  { height: 400px; }
+            .grating .inner         { height: 400px; }
             .title                  { font-size: 2.0em; }
             .share,.caption         { top: 287px; }
         }
@@ -270,7 +270,7 @@ body.single .comments {
 
     @media screen and (max-width: 950px) {
         .prologue {
-            .inner                  { height: 360px; }
+            .grating .inner         { height: 360px; }
             .asset                  { padding-top: 40px; }
             .title                  { padding-top: 35px; font-size: 1.75em; line-height: 1.18; }
             .caption                { top: 247px; }
@@ -285,6 +285,7 @@ body.single .comments {
         .prologue {
             .grating {
                 box-shadow: none;
+                & > .inner  { height: auto; }
             }
             .ephemera {
                 img { display: none !important; }
@@ -310,6 +311,7 @@ body.single .comments {
                 width: 100%;
                 float: none;
                 padding: 0 0 0 0;
+                height: auto; // 9-16-2014 JPW
                 .title {
                     font-size: 2em;
                     @media screen and (max-width: 450px) { font-size: 1.5em; }
