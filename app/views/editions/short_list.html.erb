@@ -1,3 +1,4 @@
+<%= render_content @edition.articles.first, "opengraph" %>
 <% content_for :body_class, 'interior ronin short-list' %>
 
 <%= cache ["short-list","v1", @edition] do %>
