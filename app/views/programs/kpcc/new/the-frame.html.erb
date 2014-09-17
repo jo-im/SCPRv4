@@ -174,7 +174,7 @@
                 <b class="img-contain"></b>
               </a>
             </div>
-            <figcaption><a href="#">Browse through more of The Frame</a></figcaption>
+            <figcaption><a href="/programs/the-frame/featured?view=segments">Browse through more of The Frame</a></figcaption>
         </figure>
 
       </div><!--/ .series -->
@@ -194,7 +194,7 @@
           </ul>
         </nav>
         <footer>
-          <a href="#"><span>See <cite>The Frame</cite>&rsquo;s episode archive</span></a>
+          <a href="/programs/the-frame/featured?view=episodes"><span>See <cite>The Frame</cite>&rsquo;s episode archive</span></a>
         </footer>
       </section><!--/ .episodes -->
 
@@ -208,7 +208,7 @@
       <section class="archive">
         <h2>Find a specific episode from The Frame’s archive</h2>
         <div class="flux-capacitor">
-          <form accept-charset="UTF-8" action="/programs/offramp/archive" class="archive-date-select" id="archive_date_select" method="post">
+          <form accept-charset="UTF-8" action="/programs/the-frame/archive" class="archive-date-select" id="archive_date_select" method="post">
             <div style="margin:0;padding:0;display:inline">
               <input name="utf8" type="hidden" value="&#x2713;" />
               <input name="authenticity_token" type="hidden" value="Hv3qnrajp8wwM5yr16aOZvA+r1JCrnBLq+lRXQVHrc0=" />
@@ -219,30 +219,27 @@
               <div class="field month">
                 <label for="archive_date_2i">Month</label>
                 <select id="archive_date_2i" name="archive[date(2i)]">
-                  <option value="1">January</option><option value="2">February</option><option value="3">March</option>
-                  <option value="4">April</option><option value="5">May</option><option value="6">June</option>
-                  <option value="7">July</option><option value="8">August</option><option selected="selected" value="9">September</option>
-                  <option value="10">October</option><option value="11">November</option><option value="12">December</option>
+                  <% (1..12).each do |month| %>
+                    <%= content_tag :option, Date::MONTHNAMES[month], value: month, selected: (true if month == Time.new.month) %>
+                  <% end %>
                 </select>
               </div><!--/ .field.month -->
 
               <div class="field day">
                 <label for="archive_date_3i">Day</label>
                 <select id="archive_date_3i" name="archive[date(3i)]">
-                  <option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option selected="selected" value="5">5</option><option value="6">6</option><option value="7">7</option>
-                  <option value="8">8</option><option value="9">9</option><option value="10">10</option><option value="11">11</option><option value="12">12</option><option value="13">13</option><option value="14">14</option>
-                  <option value="15">15</option><option value="16">16</option><option value="17">17</option><option value="18">18</option><option value="19">19</option><option value="20">20</option><option value="21">21</option>
-                  <option value="22">22</option><option value="23">23</option><option value="24">24</option><option value="25">25</option><option value="26">26</option><option value="27">27</option><option value="28">28</option>
-                  <option value="29">29</option><option value="30">30</option><option value="31">31</option>
+                  <% (1..31).each do |value| %>
+                    <%= content_tag :option, value, value: value, selected: (true if value == Time.new.day) %>
+                  <% end %>
                 </select>
               </div><!--/ .field.day -->
 
               <div class="field year">
                 <label for="archive_date_1i">Year</label>
                 <select id="archive_date_1i" name="archive[date(1i)]">
-                  <option value="2006">2006</option><option value="2007">2007</option><option value="2008">2008</option>
-                  <option value="2009">2009</option><option value="2010">2010</option><option value="2011">2011</option>
-                  <option value="2012">2012</option><option value="2013">2013</option><option selected="selected" value="2014">2014</option>
+                  <% (2006..Time.now.year).each do |time| %>
+                    <%= content_tag :option, time, value: time, selected: (true if time == Time.now.year) %>
+                  <% end %>
                 </select>
               </div><!--/ .field.year -->
 
@@ -259,8 +256,6 @@
 
   </div><!--/ . inner -->
 </div><!--/ .neoteric -->
-
-
 
 <div class="interregnum">
   <div class="inner bound clearfix">
@@ -284,17 +279,19 @@
       </div>
     </section><!--/ .team -->
     <div class="melange">
-      <aside class="quote">
-        <a href="<%= @program.quote.article.public_path %>">
-          <blockquote>
-            <p><%= @program.quote.text %></p>
-            <footer>
-              <span><mark><%= @program.quote.source_name %>,</mark> <%= @program.quote.source_context %></span>
-              <cite>from our <b><%= format_date(@program.quote.article.public_datetime, with: '%B %e, %Y') %> episode</b></cite>
-            </footer>
-          </blockquote>
-        </a>
-      </aside><!--/ .quote -->
+      <% if @program.quote.present? && @program.quote.article.present? %>
+        <aside class="quote">
+          <a href="<%= @program.quote.article.public_path %>">
+            <blockquote>
+              <p><%= @program.quote.text %></p>
+              <footer>
+                <span><mark><%= @program.quote.source_name %>,</mark> <%= @program.quote.source_context %></span>
+                <cite>from our <b><%= format_date(@program.quote.article.public_datetime, with: '%B %e, %Y') %> episode</b></cite>
+              </footer>
+            </blockquote>
+          </a>
+        </aside><!--/ .quote -->
+      <% end %>
       <div class="diptych clearfix">
         <% if @subfeatured_story.present? %>
           <% sub_article = @subfeatured_story.to_article %>
@@ -327,11 +324,6 @@
     </div><!--/ .melange -->
   </div><!--/ .inner -->
 </div><!--/ .interregnum -->
-
-
-
-
-
 
 <section class="other-programs">
   <header><h1 class="bound">Enjoy <cite>The Frame</cite>? Try KPCC’s other programs.</h1></header>
