@@ -219,9 +219,10 @@ body.single .comments {
 
     @media screen and (max-width: 1330px) {
         .prologue {
-            .grating .inner         { height: 460px; } // f. 483
-            .title                  { padding-right: 10%; }
-            .share,.caption         { top: 367px; } // f. 390
+            .grating .inner           { height: 460px; } // f. 483
+            &.austere .grating .inner { height: auto; }
+            .title                    { padding-right: 10%; }
+            .share,.caption           { top: 367px; } // f. 390
         }
     }
 
@@ -283,17 +284,11 @@ body.single .comments {
 
     @media screen and (max-width: 870px) {
         .prologue {
-            .grating {
-                box-shadow: none;
-                & > .inner  { height: auto; }
-            }
-            .ephemera {
-                img { display: none !important; }
-            }
-            .inner {
-                height: auto;
-                position: relative;
-            }
+            &.austere               { margin-bottom: 5px; } // not 45
+            .grating                { box-shadow: none; }
+            .grating > .inner       { height: auto; }
+            .ephemera img           { display: none !important; }
+            .inner                  { height: auto; position: relative; }
             .asset {
                 width: 100%;
                 max-width: 500px;
@@ -301,10 +296,7 @@ body.single .comments {
                 margin: 0 auto 0;
                 padding: 0 0 0 0;
                 @media screen and (max-width: 500px) { padding-bottom: 85px; }
-                .video {
-                    padding-top: 20px;
-                    border-top: 1px solid rgba(0,0,0,0.2);
-                }
+                .video              { padding-top: 20px; border-top: 1px solid rgba(0,0,0,0.2); }
             }
             .prose {
                 position: static;
