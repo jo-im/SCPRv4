@@ -10,7 +10,7 @@
   .wrapper { 
     background-position: center top; 
     background-size: cover;
-    min-height: 70%; // 560 / 800
+    min-height: 60%; // 560 / 800
     position: relative; 
   }
 
@@ -41,11 +41,77 @@
 
   .player {
     color: #fff;
+    font-family: $font-freight;
+    font-weight: 300;
+
     .inner { position: relative; }
+
+    .stream-state {
+      color: #F87E21;
+      font-size: 0.9375em; // 15 / 16
+      text-transform: uppercase;
+    }
+
+    .on-now {
+      font-size: 2.875em; // 46 / 16
+      font-style: normal;
+
+      span { display: none; }
+    }
+
+    .up-next { display: none; }
+
+    .schedule {
+      position: absolute;
+      bottom: -15px;
+      right: 60px;
+    }
+
+    .volume-controls {
+      position: absolute;
+      bottom: -15px;
+      left: 60px;
+    }
+
+    .jp-current-time { 
+      font-size: 1.4375em; // 23 / 16 
+    }
+
   }
 
     .jp-audio {
       margin-top: 40%; // 320 / 800
       text-align: center;
     }
+
+  .ads {
+    border-bottom: 1px solid #EEE;
+    border-top: 1px solid #EEE;
+    margin: 44px 0 22px;
+    padding: 32px 0;
+    text-align: center;
+
+    .appeal { margin-bottom: 12px; }
+
+    .dfp { margin-bottom: 16px; }
+  }
+
+  .footer {
+    display: none;
+    margin: 20px auto;
+    ul {
+      text-align: center;
+      li {
+        border-left: 1px solid #A6A6A6;
+        color: #A6A6A6;
+        font-size: 0.6875em;
+        display: inline-block;
+        font-family: $font-prox;
+        margin-left: 3px;
+        padding-left: 7px;
+
+        &:first-child { border: 0 ; }
+      }
+    }
+  }
 }
