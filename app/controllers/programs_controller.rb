@@ -137,7 +137,6 @@ class ProgramsController < ApplicationController
     end
   end
 
-
   def archive
     @date = Time.new(
       params[:archive]["date(1i)"].to_i,
