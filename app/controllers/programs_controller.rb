@@ -4,7 +4,7 @@
 # basically split every action into two.
 class ProgramsController < ApplicationController
   include Concern::Controller::GetPopularArticles
-  before_filter :get_program, only: [:show, :episode, :archive, :featured_program]
+  before_filter :get_program, only: [:show, :episode, :archive, :featured_program, :featured_show]
   before_filter :get_popular_articles, only: [:featured_program]
 
   respond_to :html, :xml, :rss
@@ -61,7 +61,7 @@ class ProgramsController < ApplicationController
   def featured_program
     @segments = @program.segments.published
     @episodes = @program.episodes.published
-    @featured_programs = KpccProgram.where(is_featured: true)
+    @featured_programs = KpccProgram.where.not(id: @program.id,is_featured: false)
     if @program.featured_articles.present?
       @featured_story = @program.featured_articles.first
       if @featured_story.original_object.is_a?(ShowEpisode)
@@ -107,6 +107,36 @@ class ProgramsController < ApplicationController
     end
   end
 
+  def featured_show
+    if @program.is_a?(KpccProgram) && @program.is_featured?
+      @view_type = params[:view]
+      @segments = @program.segments.published
+      @episodes = @program.episodes.published
+
+      respond_with do |format|
+        format.html do
+          if @program.is_episodic? && (@current_episode = @episodes.first)
+            @episodes = @episodes.where.not(id: @current_episode.id)
+
+            segments = @current_episode.segments.published.to_a
+            @segments = @segments.where.not(id: segments.map(&:id))
+          end
+
+          @segments = @segments.page(params[:page]).per(10)
+          @episodes = @episodes.page(params[:page]).per(6)
+
+          render 'programs/kpcc/featured_show'
+        end
+
+        format.xml { render 'programs/kpcc/show' }
+      end
+
+      return
+    else
+      redirect_to @program.public_path
+    end
+  end
+
 
   def archive
     @date = Time.new(
@@ -125,12 +155,11 @@ class ProgramsController < ApplicationController
       flash[:alert] = "There is no #{@program.title} " \
                       "episode for #{@date.strftime('%F')}."
 
-      redirect_to @program.public_path(anchor: "archive") and return
+      redirect_to featured_show_path(@program.slug, anchor: "archive") and return
     else
       redirect_to @episode.public_path and return
     end
   end
-
 
   def schedule
     @schedule_occurrences = ScheduleOccurrence.block(
