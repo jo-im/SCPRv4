@@ -12,6 +12,14 @@
     background-size: cover;
     min-height: 60%; // 560 / 800
     position: relative; 
+
+    &.backdrop {
+      -webkit-filter: blur(5px);
+      -moz-filter: blur(5px);
+      -o-filter: blur(5px);
+      -ms-filter: blur(5px);
+      filter: blur(5px);
+    }
   }
 
     .wrapper-overlay {
@@ -43,6 +51,9 @@
     color: #fff;
     font-family: $font-freight;
     font-weight: 300;
+    position: absolute;
+    bottom: 40px;
+    width: 100%;
 
     .inner { position: relative; }
 
@@ -61,26 +72,93 @@
 
     .up-next { display: none; }
 
-    .schedule {
-      position: absolute;
-      bottom: -15px;
-      right: 60px;
-    }
-
-    .volume-controls {
-      position: absolute;
-      bottom: -15px;
-      left: 60px;
-    }
-
     .jp-current-time { 
       font-size: 1.4375em; // 23 / 16 
     }
 
+    .jp-play, .jp-pause, .schedule-toggle, .volume-toggle {
+      background: image-url("i/live-player-utilities.png") no-repeat 0 0;
+      background-size: 88px 300px;
+      color: rgba(255,255,255,0);
+      display: inline-block;
+      opacity: 0.75;
+      transition: opacity 0.2s ease;
+
+      &:hover {
+        opacity: 1;
+      }
+    }
+
+      .jp-play, .jp-pause {
+        margin: 26px 0 18px;
+        width: 88px;
+        height: 88px;
+      }
+
+      .jp-pause {
+        background-position: 0 -103px;
+      }
+
+      .volume-controls {
+        display: none;
+      }
+
+      .volume-toggle {
+        background-position: 0 -215px;
+        position: absolute;
+        bottom: 77px;
+        left: 50%;
+        margin-left: -130px;
+        width: 24px;
+        height: 24px;
+
+        &:after {
+          color: #fff;
+          content: "Volume";
+          display: block;
+          font-size: 0.875em; // 14 / 16
+          opacity: 0;
+          position: absolute;
+          left: -12px;
+          bottom: -22px;
+          transition: opacity 0.2s ease;
+        }
+
+        &:hover:after {
+          opacity: 1;
+        }
+      }
+
+      .schedule-toggle {
+        background-position: 0 -262px;
+        position: absolute;
+        bottom: 77px;
+        right: 50%;
+        margin-right: -140px;
+        width: 33px;
+        height: 24px;
+
+        &:after {
+          color: #fff;
+          content: "Schedule";
+          display: block;
+          font-size: 0.875em; // 14 / 16
+          opacity: 0;
+          position: absolute;
+          left: -12px;
+          bottom: -22px;
+          transition: opacity 0.2s ease;
+        }
+
+        &:hover:after {
+          opacity: 1;
+        }
+      }
+
   }
 
     .jp-audio {
-      margin-top: 40%; // 320 / 800
+      margin-top: 11.25em; // 180 / 16
       text-align: center;
     }
 
@@ -88,16 +166,16 @@
     border-bottom: 1px solid #EEE;
     border-top: 1px solid #EEE;
     margin: 44px 0 22px;
-    padding: 32px 0;
+    padding: 18px 0;
     text-align: center;
 
     .appeal { margin-bottom: 12px; }
 
     .dfp { margin-bottom: 16px; }
+    .dfp:last-of-type { margin-bottom: 0; }
   }
 
   .footer {
-    display: none;
     margin: 20px auto;
     ul {
       text-align: center;
