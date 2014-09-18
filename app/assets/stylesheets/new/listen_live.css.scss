@@ -348,10 +348,15 @@
   }
 }
 
+// Hide volume controls for touch devices
+.listen-live.is-touch-device .player .volume-toggle {
+  display: none;
+}
+
 
 //  - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-    @media screen and (max-height: 325px) {
+    @media screen and (max-height: 380px) {
         .listen-live .header .titling { display:none; }
     }
 

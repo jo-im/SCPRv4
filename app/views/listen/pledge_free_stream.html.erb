@@ -124,7 +124,8 @@
     scpr.Behaviors.loadBehaviors(['Layout']);
 
     // Toggle player UI states
-    $(".player-toggle").click(function() {
+    //  ------------------------------------------------
+    $('.player-toggle').click(function() {
         $('.wrapper').toggleClass('backdrop');
         
         var target_element = $(this).data('state');
@@ -132,6 +133,20 @@
 
         event.preventDefault();
     });
+
+    //  Clicks or taps?
+    //  ------------------------------------------------
+    function is_touch_device() {
+      return !!('ontouchstart' in window) // works on most browsers
+        || !!('onmsgesturechange' in window); // works on ie10
+    };
+
+    if ( is_touch_device() ) {
+      $('body').addClass('is-touch-device');
+    }
+    else {
+      window.alert('why not touchy?')
+    }
 
 
   </script>
