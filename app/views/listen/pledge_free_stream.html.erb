@@ -5,6 +5,7 @@
 <body class="listen-live">
 
   <div class="wrapper">
+    <div class="wrapper-backdrop"></div>
     <div class="wrapper-overlay"></div>
 
     <%= render 'shared/new/layout_header' %>
@@ -40,11 +41,12 @@
                   <div class="jp-current-time"></div>
               </div> <!-- jp-progress -->
               <div class="clearfix"></div>
-              <a href="#volume" class="volume-toggle" target="_blank">Volume</a>
-              <ul class="volume-controls">
+              <a href="#volume" class="volume-toggle player-toggle" data-state=".volume-controls">Volume</a>
+              <ul class="volume-controls" id="volume">
+                <li><a href="#" class="player-toggle" data-state=".volume-controls">Close</a></li>
                 <li><a href="javascript:;" class="jp-mute">mute</a></li>
                 <li><a href="javascript:;" class="jp-unmute">unmute</a></li>
-                <li>
+                <li class="volume-bar-wrapper">
                   <div class="jp-volume-bar">
                     <div class="jp-volume-bar-value"></div>
                   </div>
@@ -62,6 +64,33 @@
   </div>
 
   <hr />
+
+  <aside class="schedule">
+    <div class="inner bound">
+      <div class="titling">
+        <h2 class="title">Coming up on KPCC</h2>
+      </div>
+      <table class="upcoming-schedule">
+        <thead>
+          <tr>
+            <th>Program</th>
+            <th>Time</th>
+          </tr>          
+        </thead>
+        <tbody>
+          <% @schedule.each do |occurrence| %>
+            <tr>
+              <% present occurrence, ScheduleOccurrencePresenter do |p| %>
+              <td class="show-title"><%= link_to p.title, p.public_url %></td>
+              <td class="show-airtime"><%= p.start_time %> - <%= p.end_time %></td>
+              <% end %>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+      <a href="#" class="player-toggle" data-state=".schedule">Close</a>
+    </div>
+  </aside>
 
   <div class="inner bound">
     <section class="ads placard">
@@ -93,6 +122,17 @@
     })
 
     scpr.Behaviors.loadBehaviors(['Layout']);
+
+    // Toggle player UI states
+    $(".player-toggle").click(function() {
+        $('.wrapper').toggleClass('backdrop');
+        
+        var target_element = $(this).data('state');
+        $(target_element).toggleClass('active');
+
+        event.preventDefault();
+    });
+
 
   </script>
 

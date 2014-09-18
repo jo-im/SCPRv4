@@ -10,6 +10,6 @@
           <span>Up next:</span> <a href="<%= @on_next?.link %>" target="_blank"><%= @on_next?.title %></a>
           <span class="pipe">|</span>
         </span>
-        <a href="/schedule/" class="schedule-toggle" target="_blank">Program Schedule</a>
+        <a href="/schedule/" class="schedule-toggle player-toggle" data-state=".schedule">Program Schedule</a>
     </span>
 </div>

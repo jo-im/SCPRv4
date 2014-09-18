@@ -297,7 +297,9 @@ class scpr.ListenLive
             show_slug = show_link_array[4]
             show_splash_img = 'http://media.scpr.org/assets/images/programs/' + show_slug + '_splash@2x.jpg'
 
-            $('.wrapper').css('background-image', 'url(' + show_splash_img + ')')
+            $('.wrapper, .wrapper-backdrop').css('background-image', 'url(' + show_splash_img + ')')
+
+
 
     #----------
 
