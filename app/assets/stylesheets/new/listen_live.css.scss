@@ -16,8 +16,10 @@
     height: 70%; // 560 / 800
     overflow: hidden;
     position: relative; 
-    transition: filter 0.7s ease;
     -webkit-filter: blur(0px);
+    -webkit-transform: translateZ(0);
+    -webkit-backface-visibility: hidden;
+    -webkit-perspective: 1000;
 
     &.backdrop {
 
