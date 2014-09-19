@@ -22,6 +22,7 @@ FactoryGirl.define do
 
     trait :episode do
       article { |f| f.association(:show_episode) }
+      position 0
     end
   end
 

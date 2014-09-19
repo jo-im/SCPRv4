@@ -66,18 +66,16 @@ class ProgramsController < ApplicationController
       if @program.featured_articles.size > 1
         @featured_story = @program.featured_articles[0]
         @subfeatured_story = @program.featured_articles[1]
+        @episodes = @episodes.where.not(id: [@featured_story.original_object.id, @episodes.first.id])
       else
-        @featured_story = @episodes.first.to_article
+        @featured_story = @episodes[0].to_article
         @subfeatured_story = @program.featured_articles[0]
+        @episodes = @episodes[1..-1]
       end
 
-      if @featured_story.original_object.is_a?(ShowEpisode)
-        @episodes = @episodes.where.not(id: @featured_story.original_object.id)
-      elsif @featured_story.original_object.is_a?(ShowSegment)
-        @segments = @program.segments - [@featured_story]
-      end
     else
       @featured_story = @episodes.first.to_article
+      @episodes = @episodes[1..-1]
     end
     handle_program_template
   end

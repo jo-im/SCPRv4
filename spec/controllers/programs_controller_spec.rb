@@ -254,19 +254,17 @@ describe ProgramsController do
         assigns(:episodes).sort.should eq @episodes.sort
       end
 
-      context "a featured episode is present" do
-        it "excludes the featured episode from @episodes" do
+      context "a single featured episode is present" do
+        it "excludes the latest episode from @episodes" do
           featured_episode = create :show_episode, :published,
             :show => @program,
             :air_date => 1.hour.ago
-
-          program_article = create :program_article, :episode, kpcc_program: @program, article: featured_episode
-
+          @program.program_articles.create(article: featured_episode)
           @program.save!
 
           get :featured_program, show: @program.slug
 
-          assigns(:episodes).should_not include featured_episode
+          assigns(:episodes).should_not include ShowEpisode.published.first
         end
       end
 
