@@ -1,6 +1,9 @@
 <% add_to_page_title @program.title %>
 <% meta_tags(url: @program.public_url) %>
 <% content_for :body_class, "program #{@program.slug}" %>
+
+<%= cache ["the-frame", @program] do %>
+
 <% if @featured_story.original_object.is_a?(ShowSegment) %>
   <% episode_article = @episodes.first.to_article %>
   <section class="exordium curated-segment">
@@ -357,6 +360,8 @@
     <footer><a href="/programs">See all of our programs</a></footer>
   </div>
 </section><!--/ .other-programs -->
+
+<% end %><%# cache %>
 
 <% if @popular_articles %>
     <%= render 'shared/new/popular_articles',
