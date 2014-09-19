@@ -24,7 +24,8 @@ class ListenController < ApplicationController
       live_listener = user.eq("pledgeToken", params[:pledgeToken])
       sustaining_member = live_listener.get.first
 
-      return redirect_to root_path unless sustaining_member.present?
+      # redirect to flat page
+      return redirect_to '/pledge-free/error' unless sustaining_member.present?
 
       sustaining_member["viewsLeft"] = Parse::Increment.new(-1)
       sustaining_member.save
