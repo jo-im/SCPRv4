@@ -67,6 +67,9 @@ class ProgramsController < ApplicationController
         @featured_story = @program.featured_articles[0]
         @subfeatured_story = @program.featured_articles[1]
         @episodes = @episodes.where.not(id: [@featured_story.original_object.id, @episodes.first.id])
+        if @featured_story.original_object.is_a?(ShowSegment)
+          @segments = @segments - [@featured_story.original_object]
+        end
       else
         @featured_story = @episodes[0].to_article
         @subfeatured_story = @program.featured_articles[0]
