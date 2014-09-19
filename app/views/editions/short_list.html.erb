@@ -1,3 +1,26 @@
+<% content_for :opengraph do %>
+<% meta_tags(keywords: "The Short List, KPCC, California, Southern California, Los Angeles, Pasadena, SCPR, Southern California Public Radio") %>
+<% meta_tags(description: "The Short List is KPCC's rundown of the day's essentials, so you can get caught up on SoCal news quickly.") %>
+<% meta_tags(url: @edition.public_url) %>
+<% meta_tags(title: h(@edition.title)) %>
+
+  <%= cache ["opengraph", "v1", @edition] do %>
+
+    <meta property="article:published_time" content="<%= @edition.published_at %>" />
+    <meta property="article:modified_time" content="<%= @edition.updated_at %>" />
+    <meta property="article:section" content="The Short List" />
+
+    <meta property="og:title" content="<%= h(@edition.title) %>">
+    <meta property="og:type" content="<%= @OG_TYPE || "article" %>">
+    <meta property="og:url" content="<%= @edition.public_url %>"/>
+    <% edition_lead_story_asset = @edition.slots.first.item.asset.full.url %>
+    <meta property="og:image" content="<%= edition_lead_story_asset %>" />
+
+      <link rel="image_src" href="<%= edition_lead_story_asset %>" />
+      <meta name="twitter:image" value="<%= edition_lead_story_asset %>">
+
+  <% end %>
+<% end %>
 <% content_for :body_class, 'interior ronin short-list' %>
 
 <%= cache ["short-list","v1", @edition] do %>
