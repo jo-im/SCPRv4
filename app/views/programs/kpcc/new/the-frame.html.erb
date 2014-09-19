@@ -108,6 +108,7 @@
       <div class="summary">
         <aside class="prompt listen">
         <h1><cite><%= @program.title %></cite> for <%= format_date(@featured_story.public_datetime, with: "%A, %B %Y") %></h1>
+        <% if @featured_story.audio.present? %>
           <mark class="play">
             <ul>
               <li class='story-audio'>
@@ -122,6 +123,7 @@
         <aside class="download">
           <a href="<%= @featured_story.audio.first.url %>"><span>Download episode</span> <i><%= number_to_human_size(@featured_story.audio.first.size, precision: 2) %></i></a>
         </aside>
+        <% end %>
         <div class="description">
           <p><%= @featured_story.teaser %></p>
         </div>
