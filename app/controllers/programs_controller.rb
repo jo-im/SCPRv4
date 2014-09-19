@@ -66,6 +66,8 @@ class ProgramsController < ApplicationController
       @featured_story = @program.featured_articles.first
       if @featured_story.original_object.is_a?(ShowEpisode)
         @episodes = @episodes.where.not(id: @featured_story.original_object.id)
+      elsif @featured_story.original_object.is_a?(ShowSegment)
+        @segments = @program.segments - [@featured_story]
       end
       if @program.featured_articles.size > 1
         @subfeatured_story = @program.featured_articles[1]
@@ -73,7 +75,6 @@ class ProgramsController < ApplicationController
     else
       @featured_story = @episodes.first.to_article
     end
-
     handle_program_template
   end
 
