@@ -379,6 +379,7 @@ EXORDIUM, BUT THE KIND THAT FEATURES A NON-AUDIO SINGLE SEGMENT
     .ratio {
       margin-bottom: 6px;
       .fill                     { padding-top: 18.6%; }
+      .img-contain img          { margin-top: -16%; } // triages the worst of the cropping-awkwardness
     }
     nav                         { padding-bottom: 9px; /* not 12 */ }
   }
@@ -605,8 +606,8 @@ The long two-column flow of recent content (segments and episodes, mostly).
       width: 30.855855855856%;
       float: left;
       margin: 0 3.716216216216% 39px 0; // R: 33 / 888
-      &:nth-child(3n)           { margin-right: 0; }
-      &:nth-child(3n+1)         { clear: both; }
+      &:nth-child(3n)             { margin-right: 0; }
+      &:nth-child(3n+1)           { clear: both; }
       .photo {
         border-bottom: 5px solid $blue;
         z-index: 1;
@@ -615,13 +616,14 @@ The long two-column flow of recent content (segments and episodes, mostly).
         line-height: 1;
         margin-bottom: 4px;
         text-transform: uppercase;
-        &:hover                 { border-bottom: 5px solid $orange; }
+        &:hover                   { border-bottom: 5px solid $orange; }
+        &.ratio .img-contain img  { width: 140%; margin-left: -20%; } // Sean is clever
         a {
           display: block;
           width: 100%;
-          .fill                 { padding-top: 75.5%; }
-          .img-contain          { z-index: 2; background: $blue; }
-          .has-audio,time       { position: absolute; z-index: 3; left: 0; }
+          .fill                   { padding-top: 75.5%; }
+          .img-contain            { z-index: 2; background: $blue; }
+          .has-audio,time         { position: absolute; z-index: 3; left: 0; }
           time {
             top: 13px;
             display: inline-block;
@@ -629,10 +631,10 @@ The long two-column flow of recent content (segments and episodes, mostly).
             color: #6e6e6e;
             background: white;
             padding: 6px 10px 5px 0;
-            span                { color: $blue; }
+            span                  { color: $blue; }
           }
           &:hover time,
-          &:hover time span     { color: $orange; }
+          &:hover time span       { color: $orange; }
           .has-audio {
             bottom: 0;
             width: 100%;
