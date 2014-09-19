@@ -110,8 +110,8 @@ body.program .masthead {
 body.program.the-frame .masthead {
   .titling h1 a {
     @include texthide;
-    width: 268px;     // ARBITRARY; JUST FOR NOW
-    height: 41px;     // ARBITRARY; JUST FOR NOW
+    width: 282px;
+    height: 49px;
     background: image-url("i/program-wordmark-the-frame.png") no-repeat;
     background-size: 100%;
   }
