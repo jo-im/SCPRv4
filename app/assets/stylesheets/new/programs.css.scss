@@ -379,6 +379,7 @@ EXORDIUM, BUT THE KIND THAT FEATURES A NON-AUDIO SINGLE SEGMENT
     .ratio {
       margin-bottom: 6px;
       .fill                     { padding-top: 18.6%; }
+      .img-contain img          { margin-top: -16%; } // triages the worst of the cropping-awkwardness
     }
     nav                         { padding-bottom: 9px; /* not 12 */ }
   }
