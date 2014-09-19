@@ -34,34 +34,52 @@
         <div class="supporting clearfix">
           <section class="segments">
           <h2>Our Latest Episode <span><%= smart_date_js episode_article.public_datetime %></span></h2>
-          <a href="<%= episode_article.public_path %>" class="latest">
-              <figure>
-                <div class="ratio">
-                    <div class="fill"></div>
-                    <b class="img-contain"><img src="<%= episode_article.asset.full.url %>" alt="" /></b>
-                </div>
-                <figcaption><%= episode_article.title %></figcaption>
-              </figure>
-            </a>
-            <nav>
-              <ul>
-                <% episode_segments = episode_article.original_object.segments %>
-                <% episode_segments.first(3).map(&:to_article).each do |segment| %>
-                  <li><a href="<%= segment.public_path %>"><%= segment.short_title %></a></li>
-                <% end %>
-              </ul>
-            </nav>
-            <footer>
-              <a href="<%= episode_article.public_path %>">
+
+              <!--
+              <a href="<%= episode_article.public_path %>" class="latest">
                 <figure>
-                  <mark>See all from <%= format_date(episode_article.public_datetime, with: "%B %e") %></mark>
-                  <% story_count = (episode_segments - episode_segments.first(3)).count %>
-                  <% if story_count > 0 %>
-                    <figcaption><span><%= story_count %></span> more <%= 'story'.pluralize(story_count) %></figcaption>
-                  <% end %>
+                  <div class="ratio">
+                      <div class="fill"></div>
+                      <b class="img-contain"><img src="<%= episode_article.asset.full.url %>" alt="" /></b>
+                  </div>
+                  <figcaption><%= episode_article.title %></figcaption>
                 </figure>
               </a>
-            </footer>
+              -->
+              <!--
+              <nav>
+                <ul>
+                  <% episode_segments = episode_article.original_object.segments %>
+                  <% episode_segments.first(3).map(&:to_article).each do |segment| %>
+                    <li><a href="<%= segment.public_path %>"><%= segment.short_title %></a></li>
+                  <% end %>
+                </ul>
+              </nav>
+              -->
+
+
+              <a href="<%= episode_article.public_path %>" class="freshest">
+                <figure class="clearfix">
+                  <div class="ratio">
+                      <div class="fill"></div>
+                      <b class="img-contain"><img src="<%= episode_article.asset.full.url %>" alt="" /></b>
+                  </div>
+                  <figcaption><%= episode_article.title %></figcaption>
+                </figure>
+              </a>
+
+              <footer>
+                <a href="<%= episode_article.public_path %>">
+                  <figure>
+                    <mark>See all from <%= format_date(episode_article.public_datetime, with: "%B %e") %></mark>
+                    <% story_count = (episode_segments - episode_segments.first(3)).count %>
+                    <% if story_count > 0 %>
+                      <figcaption><span><%= story_count %></span> more <%= 'story'.pluralize(story_count) %></figcaption>
+                    <% end %>
+                  </figure>
+                </a>
+              </footer>
+
           </section>
           <aside class="plug">
             <div class="ad widget">

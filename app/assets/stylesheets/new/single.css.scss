@@ -2038,6 +2038,10 @@ body.single .quadrant {
     box-shadow: 0 -2px 7px rgba(0,0,0,0.13);
     z-index: 10;
     visibility: hidden;
+    &.active {
+        visibility: visible;
+    }
+
     .inner {
         position: relative;
         height: 60px;
