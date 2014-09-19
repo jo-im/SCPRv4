@@ -63,14 +63,18 @@ class ProgramsController < ApplicationController
     @episodes = @program.episodes.published
     @featured_programs = KpccProgram.where.not(id: @program.id,is_featured: false)
     if @program.featured_articles.present?
-      @featured_story = @program.featured_articles.first
+      if @program.featured_articles.size > 1
+        @featured_story = @program.featured_articles[0]
+        @subfeatured_story = @program.featured_articles[1]
+      else
+        @featured_story = @episodes.first.to_article
+        @subfeatured_story = @program.featured_articles[0]
+      end
+
       if @featured_story.original_object.is_a?(ShowEpisode)
         @episodes = @episodes.where.not(id: @featured_story.original_object.id)
       elsif @featured_story.original_object.is_a?(ShowSegment)
         @segments = @program.segments - [@featured_story]
-      end
-      if @program.featured_articles.size > 1
-        @subfeatured_story = @program.featured_articles[1]
       end
     else
       @featured_story = @episodes.first.to_article
