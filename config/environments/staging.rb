@@ -1,7 +1,7 @@
 Scprv4::Application.configure do
   config.cache_classes  = true
   config.eager_load     = true
-  config.consider_all_requests_local = false
+  config.consider_all_requests_local = true
 
   # There's nothing expiring the cache on staging so don't use it
   # If you change this to true, manually expire the cache
