@@ -32,7 +32,7 @@ module TestClass
     include Concern::Callbacks::HomepageCachingCallback
     include Concern::Callbacks::CacheExpirationCallback
     include Concern::Callbacks::TouchCallback
-    include Concern::Callbacks::RedisPublishCallback
+    include Concern::Callbacks::PublishNotificationCallback
     include Concern::Methods::ArticleStatuses
     include Concern::Methods::AssetDisplayMethods
     include Concern::Validations::ContentValidation

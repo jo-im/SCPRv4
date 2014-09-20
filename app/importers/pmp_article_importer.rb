@@ -33,7 +33,7 @@ module PmpArticleImporter
         published  = begin
           Time.parse(story.published.to_s)
         rescue ArgumentError
-          Time.now
+          Time.zone.now
         end
 
         # Get the URL for this story

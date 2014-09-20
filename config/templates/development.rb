@@ -22,10 +22,10 @@ Scprv4::Application.configure do
   config.eager_load     = false
   config.consider_all_requests_local = true
   config.action_controller.perform_caching = false
-  config.cache_store = :redis_content_store, "redis://localhost:6379/5"
+  config.cache_store = :redis_content_store, config.secrets["cache"]
   config.action_controller.action_on_unpermitted_parameters = :raise
 
-  config.assets.debug         = false  # Expand
+  config.assets.debug         = false # Expand
   config.serve_static_assets  = true  # Serve from public/
   config.assets.compile       = true  # Fallback
   config.assets.digest        = false # Add asset fingerprints
@@ -47,8 +47,10 @@ Scprv4::Application.configure do
   }
 
   config.dbsync = {
-    :local   => "#{Rails.root}/../dbdumps/mercer.dump",
-    :remote  => "scprdb@66.226.4.229:~scprdb/mercer.dump"
+    :local => "~/dbdumps/dbsync-scpr.sql",
+    :remote => "ftp://backups.server.org/scpr-latest.sql.gz",
+    :strategy => :curl,
+    :bin_opts => "--netrc"
   }
 
   default_url_options[:host] = "localhost:3000"

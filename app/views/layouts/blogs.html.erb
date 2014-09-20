@@ -45,7 +45,7 @@
           <%= date_select 'archive', 'date',
             :order      => [:month, :year],
             :start_year => @blog.created_at.year,
-            :end_year   => Time.now.year %>
+            :end_year   => Time.zone.now.year %>
           <%= submit_tag "Go", class: "btn" %>
         <% end %>
       </p>

@@ -4,7 +4,7 @@
       <%= date_select 'archive', 'date',
         :order      => [:month, :day, :year],
         :start_year => program.created_at.year,
-        :end_year   => Time.now.year %>
+        :end_year   => Time.zone.now.year %>
     <%= submit_tag "Go", class: "btn" %>
   <% end %>
 </div>

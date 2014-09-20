@@ -29,7 +29,7 @@
   <div class="span16">
     <h1>This Week's Schedule</h1>
 
-<%= cache ["schedule", "v1", @cache_object, Time.now.beginning_of_week.to_i] do %>
+<%= cache ["schedule", "v1", @cache_object, Time.zone.now.beginning_of_week.to_i] do %>
   <%# sort, and then rotate to get Monday first %>
   <% @schedule_occurrences.group_by { |o| [o.wday, o.starts_at.strftime("%A, %B %e")] }.sort_by { |g| g[0] }.rotate.each do |date, occurrences| %>
     <h3><%= date[1] %></h3>

@@ -6,7 +6,7 @@ class ContentAlarm < ActiveRecord::Base
 
   #----------
   # Scopes
-  scope :pending, -> { where("fire_at <= ?", Time.now).order("fire_at") }
+  scope :pending, -> { where("fire_at <= ?", Time.zone.now).order("fire_at") }
 
   #----------
   # Association
@@ -53,6 +53,6 @@ class ContentAlarm < ActiveRecord::Base
 
 
   def pending?
-    self.fire_at <= Time.now
+    self.fire_at <= Time.zone.now
   end
 end

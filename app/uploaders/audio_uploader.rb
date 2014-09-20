@@ -33,7 +33,7 @@ class AudioUploader < CarrierWave::Uploader::Base
   # and URL.
   def relative_dir
     @relative_dir ||= begin
-      time = Time.now
+      time = Time.zone.now
 
       File.join \
         Audio::UPLOAD_DIR,

@@ -15,7 +15,10 @@ describe Job::SendMobileNotification do
         alert = create :breaking_news_alert, :mobile, :published
         alert.mobile_notification_sent?.should eq false
 
-        Job::SendMobileNotification.perform("BreakingNewsAlert", alert.id)
+        silence_stream(STDERR) do
+          Job::SendMobileNotification.perform("BreakingNewsAlert", alert.id)
+        end
+
         alert.reload.mobile_notification_sent?.should eq true
       end
     end

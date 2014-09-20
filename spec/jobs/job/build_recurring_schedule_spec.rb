@@ -11,7 +11,7 @@ describe Job::BuildRecurringSchedule do
 
     Job::BuildRecurringSchedule.perform
 
-    next_month = Time.now.next_month
+    next_month = Time.zone.now.next_month
 
     rule.schedule_occurrences
     .between(next_month.beginning_of_month, next_month.end_of_month)

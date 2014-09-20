@@ -19,7 +19,7 @@ describe Concern::Callbacks::SetPublishedAtCallback do
 
     it "is false if published_at is present" do
       story.status = story.class.status_id(:live)
-      story.published_at = Time.now
+      story.published_at = Time.zone.now
       story.should_set_published_at_to_now?.should eq false
     end
   end
@@ -33,7 +33,7 @@ describe Concern::Callbacks::SetPublishedAtCallback do
       end
 
       it "sets published at to now" do
-        t = Time.now
+        t = Time.zone.now
         Time.stub(:now) { t }
 
         story.save!
@@ -48,7 +48,7 @@ describe Concern::Callbacks::SetPublishedAtCallback do
       end
 
       it "does not set published at to now" do
-        t = Time.now
+        t = Time.zone.now
         Time.stub(:now) { t }
 
         story.save!
@@ -62,12 +62,12 @@ describe Concern::Callbacks::SetPublishedAtCallback do
   describe "#should_set_published_at_to_nil?" do
     it "is true if the object is not published and the published_at date is set" do
       story.status = story.class.status_id(:draft)
-      story.published_at = Time.now
+      story.published_at = Time.zone.now
       story.should_set_published_at_to_nil?.should eq true
     end
 
     it "is false if object is published" do
-      story.published_at = Time.now
+      story.published_at = Time.zone.now
       story.should_set_published_at_to_nil?.should eq false
     end
   end
@@ -77,7 +77,7 @@ describe Concern::Callbacks::SetPublishedAtCallback do
   describe "#set_published_at_to_nil" do
     context "should_set_published_at_to_nil? is true" do
       before :each do
-        story.published_at = Time.now - 1.hour
+        story.published_at = Time.zone.now - 1.hour
         story.status = story.class.status_id(:draft)
         story.stub(:should_set_published_at_to_nil?) { true }
         story.published_at.should_not be_nil
@@ -91,7 +91,7 @@ describe Concern::Callbacks::SetPublishedAtCallback do
 
     context "should_set_published_at_to_nil? is false" do
       before :each do
-        story.published_at = Time.now
+        story.published_at = Time.zone.now
         story.stub(:should_set_published_at_to_nil?) { false }
         story.published_at.should_not be_nil
         story.save!

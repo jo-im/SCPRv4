@@ -20,7 +20,7 @@ class ContentShell < ActiveRecord::Base
   include Concern::Associations::VerticalArticleAssociation
   include Concern::Validations::PublishedAtValidation
   include Concern::Callbacks::CacheExpirationCallback
-  include Concern::Callbacks::RedisPublishCallback
+  include Concern::Callbacks::PublishNotificationCallback
   include Concern::Callbacks::SphinxIndexCallback
   include Concern::Callbacks::HomepageCachingCallback
   include Concern::Callbacks::TouchCallback

@@ -21,14 +21,14 @@ FactoryGirl.define do
 
   factory :external_episode do
     external_program
-    sequence(:air_date) { |n| Time.now + n.hours }
+    sequence(:air_date) { |n| Time.zone.now + n.hours }
     title { "#{external_program.title} for #{air_date}" }
   end
 
 
   factory :external_segment do
     sequence(:title) { |n| "Some Segment #{n}"}
-    sequence(:published_at) { |n| Time.now + n.hours }
+    sequence(:published_at) { |n| Time.zone.now + n.hours }
     teaser "This is an external segment."
     external_program
 

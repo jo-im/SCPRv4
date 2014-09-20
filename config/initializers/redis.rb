@@ -6,6 +6,3 @@ if defined?(PhusionPassenger)
     end
   end
 end
-
-# Use whatever the environment's cache is for Resque
-$redis = Rails.cache.instance_variable_get(:@data)

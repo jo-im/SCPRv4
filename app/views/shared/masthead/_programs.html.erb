@@ -33,7 +33,7 @@
             <li><a href="/schedule/" class="track-event" data-ga-category="MegaMenu" data-ga-action="Programs" data-ga-label="Programs Schedule">Program Schedule</a></li>
             <li><a href="javascript:void(0)" onclick="open_popup('http://scpr.org/listen_live/');" id="listen-live" class="track-event" data-ga-category="MegaMenu" data-ga-action="Programs" data-ga-label="Listen Live">Listen Live</a></li>
             <li><a href="/podcasts/" class="track-event" data-ga-category="MegaMenu" data-ga-action="Programs" data-ga-label="Podcasts">Podcasts</a></li>
-            <li><a href="/archive/<%= Time.now.yesterday.strftime("%Y/%m/%d") %>/?section=programs" class="track-event" data-ga-category="MegaMenu" data-ga-action="Programs" data-ga-label="Archive">Archive</a></li>
+            <li><a href="/archive/<%= Time.zone.now.yesterday.strftime("%Y/%m/%d") %>/?section=programs" class="track-event" data-ga-category="MegaMenu" data-ga-action="Programs" data-ga-label="Archive">Archive</a></li>
           </ul>
         </nav>
       </div> <!-- section -->

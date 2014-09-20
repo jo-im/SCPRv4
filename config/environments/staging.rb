@@ -13,8 +13,8 @@ Scprv4::Application.configure do
   # That would be good for figuring out a problem that was only occurring
   # in production.
 
-  config.action_controller.perform_caching = false
-  config.cache_store = :redis_content_store, "redis://localhost:6379/6"
+  config.action_controller.perform_caching = true
+  config.cache_store = :redis_content_store, config.secrets["cache"]
   config.action_controller.action_on_unpermitted_parameters = :log
 
   config.assets.debug         = false

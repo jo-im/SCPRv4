@@ -1,4 +1,4 @@
-Resque.redis = $redis || Rails.cache.instance_variable_get(:@data)
+Resque.redis = Rails.application.config.secrets["resque"]
 
 Resque.after_fork do |job|
   # Every time a job is started, make sure the connection

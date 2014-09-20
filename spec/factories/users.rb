@@ -26,7 +26,7 @@ FactoryGirl.define do
     password "secret"
     password_confirmation { password }
 
-    last_login { Time.now }
+    last_login { Time.zone.now }
     sequence(:email) { |i| "user#{i}@scpr.org" }
 
     can_login 1

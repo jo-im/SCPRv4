@@ -62,7 +62,7 @@ module Api::Public::V2
       # it likely means that someone is looking for
       # a list of events between now and then. In that
       # case, add a condition to filter start_date
-      # by Time.now. However, if an end_date was
+      # by Time.zone.now. However, if an end_date was
       # requested in the past, then it probably
       # means that they are listing archived
       # events, so in that case we will let it go to
@@ -72,8 +72,8 @@ module Api::Public::V2
       # is specified, because at this point is means
       # that no dates were specified, so we just assume
       # they want Now until forever.
-      if !start_date && ( !end_date || end_date > Time.now )
-        @conditions.push(["starts_at >= ?", Time.now])
+      if !start_date && ( !end_date || end_date > Time.zone.now )
+        @conditions.push(["starts_at >= ?", Time.zone.now])
       end
     end
 

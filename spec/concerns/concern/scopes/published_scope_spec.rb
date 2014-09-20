@@ -6,7 +6,7 @@ describe Concern::Scopes::PublishedScope do
     # these objects in the database, but I can't find it, so...
     TestClass::Story.destroy_all
 
-    t = Time.now
+    t = Time.zone.now
 
     story1 = create :test_class_story, published_at: t - 3.days
     story2 = create :test_class_story, published_at: t - 2.days
