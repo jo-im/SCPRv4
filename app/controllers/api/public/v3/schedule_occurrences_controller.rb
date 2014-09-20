@@ -35,7 +35,7 @@ module Api::Public::V3
 
     def sanitize_start_time
       if params[:start_time].present?
-        @start_time = Time.at(params[:start_time].to_i)
+        @start_time = Time.zone.at(params[:start_time].to_i)
 
         if @start_time > MAXIMUM_LOOKAHEAD.from_now
           render_bad_request(
@@ -58,7 +58,7 @@ module Api::Public::V3
 
     def sanitize_time
       if params[:time].present?
-        @time = Time.at(params[:time].to_i)
+        @time = Time.zone.at(params[:time].to_i)
 
         if @time > MAXIMUM_LOOKAHEAD.from_now
           render_bad_request(

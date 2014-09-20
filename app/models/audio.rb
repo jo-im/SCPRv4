@@ -135,7 +135,7 @@ class Audio < ActiveRecord::Base
     @enco_date = case date
     when String
       begin
-        Time.parse(date)
+        Time.zone.parse!(date)
       rescue ArgumentError
         nil
       end

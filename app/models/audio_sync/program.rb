@@ -52,7 +52,7 @@ module AudioSync
               # If the date for the audio file can't be discerned, an
               # ArgumentError will be thrown and will be caught by the rescue
               # below.
-              date = Time.new(match[:year], match[:month], match[:day])
+              date = Time.zone.local(match[:year], match[:month], match[:day])
 
               # Figure out what type of content we should attach the audio to.
               if program.display_episodes?

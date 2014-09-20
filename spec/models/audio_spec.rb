@@ -180,7 +180,7 @@ describe Audio do
     it "parses the string date when settings enco date" do
       audio = build :audio
       audio.enco_date = "2014-02-07"
-      audio.enco_date.should eq Time.parse("2014-02-07")
+      audio.enco_date.should eq Time.zone.parse!("2014-02-07")
     end
 
     it "ignores the date if it can't be parsed" do

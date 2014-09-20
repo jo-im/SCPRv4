@@ -48,8 +48,8 @@ module Api::Public::V3
 
     def sanitize_date_range
       begin
-        start_date = params[:start_date] ? Time.parse(params[:start_date]) : nil
-        end_date   = params[:end_date] ? Time.parse(params[:end_date]) : nil
+        start_date = params[:start_date] ? Time.zone.parse!(params[:start_date]) : nil
+        end_date   = params[:end_date] ? Time.zone.parse!(params[:end_date]) : nil
       rescue ArgumentError # Time couldn't be parsed
         render_bad_request(message: "Invalid Date. Format is YYYY-MM-DD.")
         return false

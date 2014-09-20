@@ -29,7 +29,7 @@ module Scprv4
     config.assets.css_compressor = :sass
 
     config.time_zone = 'Pacific Time (US & Canada)'
-    config.active_record.default_timezone = :local
+    config.active_record.default_timezone = :utc
 
     config.i18n.enforce_available_locales = false
     config.encoding = "utf-8"

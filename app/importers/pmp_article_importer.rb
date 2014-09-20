@@ -31,7 +31,7 @@ module PmpArticleImporter
         # The PMP API is returning stories with an empty Publish timestamp,
         # so we need to protect against it.
         published  = begin
-          Time.parse(story.published.to_s)
+          Time.zone.parse!(story.published.to_s)
         rescue ArgumentError
           Time.zone.now
         end

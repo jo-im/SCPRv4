@@ -22,7 +22,7 @@ describe RecurringScheduleRule do
       ScheduleOccurrence.destroy_all
       ScheduleOccurrence.count.should eq 0
 
-      t = Time.new(2013, 1, 1)
+      t = Time.zone.local(2013, 1, 1)
       RecurringScheduleRule.create_occurrences(start_date: t, end_date: t + 1.week)
       ScheduleOccurrence.count.should be > 0
     end
@@ -111,7 +111,7 @@ describe RecurringScheduleRule do
 
     before :each do
       # Can't use let here because it gets evaluated into UTC time
-      Time.stub(:now) { Time.new(2013, 7, 1) }
+      Time.stub(:now) { Time.zone.local(2013, 7, 1) }
 
       rule.build_schedule
     end
@@ -157,7 +157,7 @@ describe RecurringScheduleRule do
 
   describe '#create_occurrences' do
     it 'builds occurrences and then saves' do
-      Time.stub(:now) { Time.new(2013, 7, 1) }
+      Time.stub(:now) { Time.zone.local(2013, 7, 1) }
 
       rule = create :recurring_schedule_rule,
         :days         => [1],
@@ -181,7 +181,7 @@ describe RecurringScheduleRule do
     }
 
     it 'rebuilds and then saves' do
-      Time.stub(:now) { Time.new(2013, 7, 1) }
+      Time.stub(:now) { Time.zone.local(2013, 7, 1) }
       rule.save!
       rule.schedule_occurrences.count.should eq 9
 
@@ -201,7 +201,7 @@ describe RecurringScheduleRule do
     }
 
     before do
-      Time.stub(:now) { Time.new(2013, 7, 1) }
+      Time.stub(:now) { Time.zone.local(2013, 7, 1) }
       rule.save!
 
       # It makes 2 months worth. There are 5 mondays in this month.

@@ -33,7 +33,7 @@ describe Api::Public::V3::DataPointsController do
       dp["key"].should eq data_point.data_key.as_json
       dp["value"].should eq data_point.data_value.as_json
       dp["notes"].should eq data_point.notes.as_json
-      dp["updated_at"].should eq data_point.updated_at.as_json
+      Time.parse(dp["updated_at"]).to_i.should eq data_point.updated_at.to_i
     end
 
     it "returns a 404 status if it does not exist" do

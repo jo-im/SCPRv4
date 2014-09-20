@@ -26,7 +26,7 @@ describe EventPresenter do
 
   describe '#date_link' do
     it "is the range date as a link" do
-      event = create :event, :published, starts_at: Time.new(2014, 1, 1)
+      event = create :event, :published, starts_at: Time.zone.local(2014, 1, 1)
       p = presenter(event)
 
       date_link = p.date_link
@@ -218,8 +218,8 @@ describe EventPresenter do
   #-------------------
 
   describe "#range_date" do
-    # epoch = "Thursday, January 1, 12:00pm"
-    let(:epoch) { Time.at(0).utc }
+    # epoch = "Thursday, January 1, 12:00am"
+    let(:epoch) { Time.zone.local(1970, 1, 1) }
 
     context "is_all_day == true" do
       it "uses the start date only if there is no ends_at" do

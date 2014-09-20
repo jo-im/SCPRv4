@@ -175,7 +175,7 @@ module Api::Public::V3
       return true if !params[:date]
 
       begin
-        date = Time.parse(params[:date])
+        date = Time.zone.parse!(params[:date])
       rescue ArgumentError
         render_bad_request(message: "Invalid Date. Format is YYYY-MM-DD.")
         return false
@@ -197,8 +197,8 @@ module Api::Public::V3
       begin
         # If no end_date was passed in, then we should assume that they wanted
         # everything from start_date to now.
-        start_date = Time.parse(params[:start_date])
-        end_date = params[:end_date] ? Time.parse(params[:end_date]) : Time.zone.now
+        start_date = Time.zone.parse!(params[:start_date])
+        end_date = params[:end_date] ? Time.zone.parse!(params[:end_date]) : Time.zone.now
 
       rescue ArgumentError # Time couldn't be parsed
         render_bad_request(message: "Invalid Date. Format is YYYY-MM-DD.")

@@ -12,11 +12,11 @@ describe AudioSync::Program do
     before do
       # October 02, 2012 is the date on the fixture mp3 file
       episode = create :show_episode,
-        :air_date   => Time.new(2012, 10, 2),
+        :air_date   => Time.zone.local(2012, 10, 2),
         :show       => program
 
       segment = create :show_segment, :published,
-        :published_at   => Time.new(2012, 10, 2),
+        :published_at   => Time.zone.local(2012, 10, 2),
         :show           => program
 
       KpccProgram.can_sync_audio.count.should eq 1
@@ -42,7 +42,7 @@ describe AudioSync::Program do
       .with(File.join(Audio::AUDIO_PATH_ROOT, program.audio_dir))
       .and_return(["nomatch.mp3"])
 
-      Time.should_not_receive(:new)
+      Time.zone.should_not_receive(:new)
       expect { AudioSync::Program.bulk_sync }.not_to change { Audio.count }
     end
 

@@ -13,7 +13,7 @@ describe ShowEpisode do
       let(:program) { build :kpcc_program, title: "Cool Show" }
 
       it "generates headline if headline is blank" do
-        episode = build :show_episode, show: program, air_date: Time.new(2012, 1, 1), headline: ""
+        episode = build :show_episode, show: program, air_date: Time.zone.local(2012, 1, 1), headline: ""
         episode.save!
         episode.reload.headline.should eq "Cool Show for January 1, 2012"
       end

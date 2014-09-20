@@ -88,7 +88,7 @@ class ProgramsController < ApplicationController
 
 
   def archive
-    @date = Time.new(
+    @date = Time.zone.local(
       params[:archive]["date(1i)"].to_i,
       params[:archive]["date(2i)"].to_i,
       params[:archive]["date(3i)"].to_i

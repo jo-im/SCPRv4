@@ -3,7 +3,7 @@ require "spec_helper"
 describe ProgramsController do
   describe "GET /archive" do
     it "finds the episode for the program on the given date" do
-      episode = create :show_episode, air_date: Time.new(2012, 3, 22)
+      episode = create :show_episode, air_date: Time.zone.local(2012, 3, 22)
       post :archive,
         :show    => episode.show.slug,
         :archive => {
@@ -16,7 +16,7 @@ describe ProgramsController do
     end
 
     it "assigns @date if date is given" do
-      episode = create :show_episode, air_date: Time.new(2012, 3, 22)
+      episode = create :show_episode, air_date: Time.zone.local(2012, 3, 22)
       post :archive,
         :show    => episode.show.slug,
         :archive => {
@@ -31,7 +31,7 @@ describe ProgramsController do
     end
 
     it "works for external programs" do
-      episode = create :external_episode, air_date: Time.new(2012, 3, 22)
+      episode = create :external_episode, air_date: Time.zone.local(2012, 3, 22)
 
       post :archive, show: episode.external_program.slug,
         :archive => {

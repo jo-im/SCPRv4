@@ -57,23 +57,22 @@ module Api::Public::V2
     private
 
     def sanitize_air_date
-      if params[:air_date]
-        begin
-          @air_date = Time.parse(params[:air_date])
-        rescue ArgumentError # Time couldn't be parsed
-          render_bad_request(message: "Invalid Date. Format is YYYY-MM-DD.")
-          return false
-        end
+      return if !params[:air_date]
+
+      begin
+        @air_date = Time.zone.parse!(params[:air_date])
+      rescue ArgumentError # Time couldn't be parsed
+        render_bad_request(message: "Invalid Date. Format is YYYY-MM-DD.")
+        return false
       end
     end
 
     def sanitize_program_slug
-      if params[:program]
-        @program = Program.find_by_slug(params[:program].to_s)
+      return if !params[:program]
+      @program = Program.find_by_slug(params[:program].to_s)
 
-        if !@program
-          render_not_found(message: "Program not found. (#{params[:program]}")
-        end
+      if !@program
+        render_not_found(message: "Program not found. (#{params[:program]}")
       end
     end
 

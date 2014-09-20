@@ -219,14 +219,14 @@ describe BlogsController do
       let(:blog) { create :blog }
 
       it "only select entries in the correct date range" do
-        entry_jan = create :blog_entry, blog: blog, published_at: Time.new(2012, 1, 10)
-        entry_feb = create :blog_entry, blog: blog, published_at: Time.new(2012, 2, 10)
+        entry_jan = create :blog_entry, blog: blog, published_at: Time.zone.local(2012, 1, 10)
+        entry_feb = create :blog_entry, blog: blog, published_at: Time.zone.local(2012, 2, 10)
         get :archive, blog: blog.slug, year: "2012", month: "01"
         assigns(:entries).should eq [entry_jan]
       end
 
       it "only selects published entries" do
-        date = Time.new("2012", "07")
+        date = Time.zone.local("2012", "07")
 
         entry_pub = create :blog_entry, :published, blog: blog,
                             published_at: date
