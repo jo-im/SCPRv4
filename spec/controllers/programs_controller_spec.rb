@@ -251,7 +251,7 @@ describe ProgramsController do
       it "assigns @episodes to published episodes" do
         unpublished = create_list :show_episode, 2, :draft, show: @program
         get :featured_program, show: @program.slug
-        assigns(:episodes).sort.should eq @episodes.sort
+        assigns(:episodes).should eq @episodes.sort! {|a,b| b[:air_date] <=> a[:air_date] }[1..-1]
       end
 
       context "a single featured episode is present" do
