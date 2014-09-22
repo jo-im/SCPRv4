@@ -11,6 +11,14 @@ class ProgramPresenter < ApplicationPresenter
     program.description.try(:html_safe)
   end
 
+  def airtime
+    if program.airtime.present?
+      h.content_tag :h3 do
+        "Airs  #{program.airtime}".html_safe
+      end
+    end
+  end
+
   def web_link
     if link = program.get_link("website")
       h.link_to "Website", link,

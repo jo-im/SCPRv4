@@ -30,7 +30,9 @@
                 </div><!--/ .brand -->
                 <div class="details">
                   <h2><span><%= @program.teaser %></span> <mark>Hosted by <%= @program.host %></mark></h2>
-                  <h3>Airs every Thursday evening at 8:30 PT, and alternating Saturdays after the Winter Equinox</h3>
+                  <% present @program, ProgramPresenter do |p| %>
+                    <%= p.airtime %>
+                  <% end %>
                 </div><!--/ .details -->
             </section><!--/ .titling -->
         <% end %>
