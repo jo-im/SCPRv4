@@ -10,13 +10,13 @@ describe Concern::Associations::EditionsAssociation do
     post.reload
 
     # set the updated_at timestamp to long ago so we don't have to use `sleep`
-    edition.update_column(:updated_at, Time.now.yesterday)
+    edition.update_column(:updated_at, Time.zone.now.yesterday)
 
     post.update_attributes(headline: "Updated Headline!?")
 
     # Don't really care what the exact updated at timestamp is...
     # we just want to make sure it changed to "right now"
-    # If we use `Time.now`, it would fail occassionally.
+    # If we use `Time.zone.now`, it would fail occassionally.
     edition.reload.updated_at.should be > 1.minute.ago
   end
 end

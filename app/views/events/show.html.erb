@@ -13,8 +13,8 @@
   <%# move this... %>
   <%
     expires = nil
-    if @event.ends_at.to_i > Time.now.to_i
-      expires = @event.ends_at - Time.now
+    if @event.ends_at.to_i > Time.zone.now.to_i
+      expires = @event.ends_at - Time.zone.now
     end
   %>
 

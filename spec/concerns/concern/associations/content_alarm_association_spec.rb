@@ -135,7 +135,7 @@ describe Concern::Associations::ContentAlarmAssociation do
       story.save!
 
       story.reload.alarm.should be_present
-      story.alarm.fire_at = Time.now.tomorrow
+      story.alarm.fire_at = Time.zone.now.tomorrow
       story.save!
 
       story.reload.alarm.should be_present

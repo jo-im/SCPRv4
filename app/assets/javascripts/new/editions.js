@@ -61,6 +61,25 @@ scpr.Behaviors.Editions = {
       
 
 
+      // Different aspect-ratios mean different faux-positionings.
+      // ---------------------------------------------------------
+      if ($(".abstracts > article").length) {
+        $(".abstracts > article img").each(function(){
+
+          var myWidth   = $(this).attr("data-width");
+          var myHeight  = $(this).attr("data-height");
+          var myRatio   = myWidth / myHeight;
+          if((myRatio >= 0.85) && (myRatio < 1.1)) {
+            $(this).closest("article").addClass("ratio-square");
+          } else if(myRatio < 0.85) {
+            $(this).closest("article").addClass("ratio-tall");
+          } else if(myRatio > 2) {
+            $(this).closest("article").addClass("ratio-squat");
+          }
+
+        });
+      };
+
 
 
     } // loadBehaviors

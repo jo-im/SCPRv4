@@ -50,14 +50,14 @@ describe Concern::Methods::AbstractModelMethods do
   describe '#cache_key' do
     it 'is the original object cache_key' do
       klass = Struct.new(:cache_key, :updated_at)
-      person = klass.new("person:123", Time.now)
+      person = klass.new("person:123", Time.zone.now)
       obj = AbstractModel.new(original_object: person)
       obj.cache_key.should eq person.cache_key
     end
 
     it 'is nil if the original object does not have a cache key' do
       klass = Struct.new(:updated_at)
-      person = klass.new(Time.now)
+      person = klass.new(Time.zone.now)
       obj = AbstractModel.new(original_object: person)
       obj.cache_key.should eq nil
     end
@@ -82,14 +82,14 @@ describe Concern::Methods::AbstractModelMethods do
   describe '#updated_at' do
     it 'is the original object updated_at' do
       klass = Struct.new(:cache_key, :updated_at)
-      person = klass.new("person:123", Time.now)
+      person = klass.new("person:123", Time.zone.now)
       obj = AbstractModel.new(original_object: person)
       obj.updated_at.should eq person.updated_at
     end
 
     it 'is nil if the original object does no have a cache key' do
       klass = Struct.new(:cache_key)
-      person = klass.new(Time.now)
+      person = klass.new(Time.zone.now)
       obj = AbstractModel.new(original_object: person)
       obj.updated_at.should eq nil
     end
@@ -99,14 +99,14 @@ describe Concern::Methods::AbstractModelMethods do
   describe '#created_at' do
     it 'is the original object created_at' do
       klass = Struct.new(:cache_key, :created_at)
-      person = klass.new("person:123", Time.now)
+      person = klass.new("person:123", Time.zone.now)
       obj = AbstractModel.new(original_object: person)
       obj.created_at.should eq person.created_at
     end
 
     it 'is nil if the original object does no have a created_at' do
       klass = Struct.new(:cache_key)
-      person = klass.new(Time.now)
+      person = klass.new(Time.zone.now)
       obj = AbstractModel.new(original_object: person)
       obj.created_at.should eq nil
     end
@@ -128,7 +128,7 @@ describe Concern::Methods::AbstractModelMethods do
 
     it 'is nil if the original object does no have a cache key' do
       klass = Struct.new(:cache_key)
-      person = klass.new(Time.now)
+      person = klass.new(Time.zone.now)
       obj = AbstractModel.new(original_object: person)
       obj.public_path.should eq nil
     end

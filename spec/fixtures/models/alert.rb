@@ -11,7 +11,7 @@ module TestClass
         :plain_text_body => "Cool Plaintext",
         :name            => "#{self.title[0..30]}",
         :description     => "SCPR Alert\n" \
-                            "Sent: #{Time.now}\nSubject: #{subject}",
+                            "Sent: #{Time.zone.now}\nSubject: #{subject}",
         :subject         => subject
       }
     end

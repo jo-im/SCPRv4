@@ -108,9 +108,9 @@ describe Api::Public::V2::ArticlesController do
       sphinx_spec(num: 0)
 
       it "returns only stories from that date" do
-        story_new  = create :news_story, published_at: Time.new(2013, 10, 16, 12)
-        story_old1 = create :news_story, published_at: Time.new(2012, 10, 16, 0)
-        story_old2 = create :news_story, published_at: Time.new(2012, 10, 16, 12)
+        story_new  = create :news_story, published_at: Time.zone.local(2013, 10, 16, 12)
+        story_old1 = create :news_story, published_at: Time.zone.local(2012, 10, 16, 0)
+        story_old2 = create :news_story, published_at: Time.zone.local(2012, 10, 16, 12)
 
         index_sphinx
 
@@ -130,9 +130,9 @@ describe Api::Public::V2::ArticlesController do
       sphinx_spec(num: 0)
 
       it 'returns only stories within that range' do
-        story_new  = create :news_story, published_at: Time.new(2013, 10, 16, 12)
-        story_old1 = create :news_story, published_at: Time.new(2012, 10, 16, 0)
-        story_old2 = create :news_story, published_at: Time.new(2012, 10, 17, 12)
+        story_new  = create :news_story, published_at: Time.zone.local(2013, 10, 16, 12)
+        story_old1 = create :news_story, published_at: Time.zone.local(2012, 10, 16, 0)
+        story_old2 = create :news_story, published_at: Time.zone.local(2012, 10, 17, 12)
 
         index_sphinx
 
@@ -146,17 +146,17 @@ describe Api::Public::V2::ArticlesController do
       end
 
       it 'uses now as the end time if none is specified' do
-        Time.stub(:now) { Time.new(2013, 10, 17, 12) }
+        Time.stub(:now) { Time.zone.local(2013, 10, 17, 12) }
 
         story1      = create :news_story, published_at: 10.minutes.ago
         story2      = create :news_story, published_at: 10.hours.ago
-        story_old   = create :news_story, published_at: Time.new(2012, 10, 17, 12)
+        story_old   = create :news_story, published_at: Time.zone.local(2012, 10, 17, 12)
 
         index_sphinx
 
         ts_retry(2) do
           get :index, {
-            start_date: Time.now.strftime("%F")
+            start_date: Time.zone.now.strftime("%F")
           }.merge(request_params)
 
           assigns(:articles).should eq [story1, story2].map(&:to_article)

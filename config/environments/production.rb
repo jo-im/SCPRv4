@@ -3,7 +3,7 @@ Scprv4::Application.configure do
   config.eager_load     = true
   config.consider_all_requests_local       = false
   config.action_controller.perform_caching = true
-  config.cache_store = :redis_content_store, "redis://10.226.4.234:6379/7"
+  config.cache_store = :redis_content_store, config.secrets["cache"]
   # config.cache_store = :redis_content_store, "redis://localhost:6379/5"
   config.action_controller.action_on_unpermitted_parameters = :log
 
@@ -33,7 +33,7 @@ Scprv4::Application.configure do
   default_url_options[:host] = "www.scpr.org"
 
   config.scpr.host         = "www.scpr.org"
-  config.scpr.media_root   = "/home/kpcc/media"
+  config.scpr.media_root   = "/scpr/media"
   config.scpr.media_url    = "http://media.scpr.org"
   config.scpr.resque_queue = :scprv4
 

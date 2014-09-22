@@ -189,7 +189,7 @@ describe ApplicationHelper do
 
   describe "#smart_date_js" do # These tests could be dryed up
     it "returns a time tag with all attributes filled in if some sort of Timestamp object is passed in" do
-      time = Time.now
+      time = Time.zone.now
       tag = helper.smart_date_js(time)
       tag.should match /\<time/
       tag.should match /smart smarttime/
@@ -201,22 +201,22 @@ describe ApplicationHelper do
     end
 
     it "accepts an optional options hash and merges it into the options for the content_tag" do
-      time = Time.now
+      time = Time.zone.now
       helper.smart_date_js(time, "data-window" => "8h").should match "data-window"
     end
 
     it "overrides the default options in the content_tag with any passed-in options" do
-      time = Time.now
+      time = Time.zone.now
       helper.smart_date_js(time, "datetime" => "new format").should match "datetime=\"new format\""
     end
 
     it "merges a passed-in class with the required smarttime class" do
-      time = Time.now
+      time = Time.zone.now
       helper.smart_date_js(time, class: "newClass").should match "newClass smart smarttime"
     end
 
     it "uses the specified tag" do
-      helper.smart_date_js(Time.now, tag: "span").should match /<span/
+      helper.smart_date_js(Time.zone.now, tag: "span").should match /<span/
     end
   end
 
@@ -391,7 +391,7 @@ describe ApplicationHelper do
 
     describe '#timestamp' do
       it "renders tag if datetime responds to strftime" do
-        helper.timestamp(Time.now).should match /\<time/
+        helper.timestamp(Time.zone.now).should match /\<time/
       end
 
       it "doesn't render anything if datetime isn't a date/time" do

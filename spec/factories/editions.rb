@@ -9,7 +9,7 @@ FactoryGirl.define do
     email_sent false
 
     trait :published do
-      sequence(:published_at) { |n| Time.now + n.hours }
+      sequence(:published_at) { |n| Time.zone.now + n.hours }
     end
 
     trait :pending do

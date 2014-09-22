@@ -18,8 +18,9 @@ gem 'outpost-secretary'
 
 ## Redis
 gem "resque", "~> 1.26.pre.0"
+gem 'resque-pool', "~> 0.3.0"
 gem 'redis-content-store', github: "SCPR/redis-content-store"
-
+gem 'redis-sentinel'
 
 ## Views
 gem 'kaminari', '~> 0.15.0'
@@ -53,12 +54,12 @@ gem "twitter", "~> 4.1"
 gem "oauth2", "~> 0.8"
 gem 'postmark-rails', "~> 0.6.0"
 gem 'newrelic_rpm', '~> 3.7'
-gem 'parse-ruby-client', '~> 0.1.15'
+gem 'parse-ruby-client', github: "sheerun/parse-ruby-client", ref: "a4eb5618c8167e88857b449cd522b23a8b0c02e9"
 gem 'pmp', '0.4.0'
 gem 'npr', '~> 2.0'
 gem 'asset_host_client', '~> 1.2'
 gem 'audio_vision', '~> 1.0'
-
+gem 'tinder'
 
 ## Assets
 gem "eco", "~> 1.0"
@@ -67,15 +68,13 @@ gem 'bootstrap-sass', '~> 2.2'
 gem 'coffee-rails', "~> 4.0.0"
 gem 'uglifier', '>= 1.3'
 
-
 group :development do
-  gem 'capistrano', '~> 2.0'
   gem 'pry'
 end
 
 
 group :development, :staging do
-  gem "dbsync", '~> 0.3.0'
+  gem "dbsync", '>= 1.0.0.beta4'
 end
 
 

@@ -85,9 +85,11 @@ body.single .comments {
 .supports-filters .prologue .ephemera img { display: block; }
 
 .prologue {
-    position: relative;
-    z-index: 1;
-    margin-bottom: 70px;
+    .single & {
+        margin-bottom: 70px;
+        position: relative;
+        z-index: 1;
+    }
 
     .ephemera   {
         background-color: #f1f1f1;
@@ -119,11 +121,11 @@ body.single .comments {
         height: 100%;
         z-index: 3;
         box-shadow: inset 0 -106px 0 white;
-    }
-    .inner {
-        position: relative;
-        height: 483px;
-        z-index: 3;
+        .inner {
+            position: relative;
+            height: 483px;
+            z-index: 3;
+        }
     }
     .prose {
         width: 51.230769230769%; // 666 / 1300
@@ -217,9 +219,10 @@ body.single .comments {
 
     @media screen and (max-width: 1330px) {
         .prologue {
-            .inner                  { height: 460px; } // f. 483
-            .title                  { padding-right: 10%; }
-            .share,.caption         { top: 367px; } // f. 390
+            .grating .inner           { height: 460px; } // f. 483
+            &.austere .grating .inner { height: auto; }
+            .title                    { padding-right: 10%; }
+            .share,.caption           { top: 367px; } // f. 390
         }
     }
 
@@ -227,7 +230,7 @@ body.single .comments {
 
     @media screen and (max-width: 1230px) {
         .prologue {
-            .inner                  { height: 430px; }
+            .grating .inner         { height: 430px; }
             .title                  { font-size: 2.5em; }
             .share,.caption         { top: 337px; }
         }
@@ -238,7 +241,7 @@ body.single .comments {
     @media screen and (max-width: 1145px) {
         .prologue {
             .grating                { box-shadow: inset 0 -126px 0 white; }
-            .inner                  { height: 400px; }
+            .grating .inner         { height: 400px; }
             .title                  { font-size: 2.0em; }
             .share,.caption         { top: 287px; }
         }
@@ -268,7 +271,7 @@ body.single .comments {
 
     @media screen and (max-width: 950px) {
         .prologue {
-            .inner                  { height: 360px; }
+            .grating .inner         { height: 360px; }
             .asset                  { padding-top: 40px; }
             .title                  { padding-top: 35px; font-size: 1.75em; line-height: 1.18; }
             .caption                { top: 247px; }
@@ -281,16 +284,11 @@ body.single .comments {
 
     @media screen and (max-width: 870px) {
         .prologue {
-            .grating {
-                box-shadow: none;
-            }
-            .ephemera {
-                img { display: none !important; }
-            }
-            .inner {
-                height: auto;
-                position: relative;
-            }
+            &.austere               { margin-bottom: 5px; } // not 45
+            .grating                { box-shadow: none; }
+            .grating > .inner       { height: auto; }
+            .ephemera img           { display: none !important; }
+            .inner                  { height: auto; position: relative; }
             .asset {
                 width: 100%;
                 max-width: 500px;
@@ -298,16 +296,14 @@ body.single .comments {
                 margin: 0 auto 0;
                 padding: 0 0 0 0;
                 @media screen and (max-width: 500px) { padding-bottom: 85px; }
-                .video {
-                    padding-top: 20px;
-                    border-top: 1px solid rgba(0,0,0,0.2);
-                }
+                .video              { padding-top: 20px; border-top: 1px solid rgba(0,0,0,0.2); }
             }
             .prose {
                 position: static;
                 width: 100%;
                 float: none;
                 padding: 0 0 0 0;
+                height: auto; // 9-16-2014 JPW
                 .title {
                     font-size: 2em;
                     @media screen and (max-width: 450px) { font-size: 1.5em; }

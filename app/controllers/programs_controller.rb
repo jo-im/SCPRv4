@@ -144,7 +144,7 @@ class ProgramsController < ApplicationController
   end
 
   def archive
-    @date = Time.new(
+    @date = Time.zone.local(
       params[:archive]["date(1i)"].to_i,
       params[:archive]["date(2i)"].to_i,
       params[:archive]["date(3i)"].to_i
@@ -168,7 +168,7 @@ class ProgramsController < ApplicationController
 
   def schedule
     @schedule_occurrences = ScheduleOccurrence.block(
-      Time.now.beginning_of_week, 1.week
+      Time.zone.now.beginning_of_week, 1.week
     )
 
     # We can't cache all of them together, since there are too many.

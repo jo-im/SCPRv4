@@ -1,4 +1,26 @@
-<%= render_content @edition.articles.first, "opengraph" %>
+<% content_for :opengraph do %>
+<% meta_tags(keywords: "The Short List, KPCC, California, Southern California, Los Angeles, Pasadena, SCPR, Southern California Public Radio") %>
+<% meta_tags(description: "The Short List is KPCC's rundown of the day's essentials, so you can get caught up on SoCal news quickly.") %>
+<% meta_tags(url: @edition.public_url) %>
+<% meta_tags(title: h(@edition.title)) %>
+
+  <%= cache ["opengraph", "v1", @edition] do %>
+
+    <meta property="article:published_time" content="<%= @edition.published_at %>" />
+    <meta property="article:modified_time" content="<%= @edition.updated_at %>" />
+    <meta property="article:section" content="The Short List" />
+
+    <meta property="og:title" content="<%= h(@edition.title) %>">
+    <meta property="og:type" content="<%= @OG_TYPE || "article" %>">
+    <meta property="og:url" content="<%= @edition.public_url %>"/>
+    <% edition_lead_story_asset = @edition.slots.first.item.asset.full.url %>
+    <meta property="og:image" content="<%= edition_lead_story_asset %>" />
+
+      <link rel="image_src" href="<%= edition_lead_story_asset %>" />
+      <meta name="twitter:image" value="<%= edition_lead_story_asset %>">
+
+  <% end %>
+<% end %>
 <% content_for :body_class, 'interior ronin short-list' %>
 
 <%= cache ["short-list","v1", @edition] do %>
@@ -55,7 +77,7 @@
                                         <div class="ratio">
                                             <div class="fill"></div>
                                             <% if abstract.asset.present? %>
-                                            <b class="img-contain"><img src="<%= abstract.asset.full.url %>" /></b>
+                                            <b class="img-contain"><img src="<%= abstract.asset.full.url %>" data-width="<%= abstract.asset.full.width %>" data-height="<%= abstract.asset.full.height %>" /></b>
                                             <% end %>
                                         </div>
                                         <figcaption>
@@ -83,7 +105,7 @@
                 <figure class="photo ratio">
                     <div class="fill"></div>
                     <% if first_abstract.asset.present? %>
-                        <b class="img-contain"><img src="<%= first_abstract.asset.full.url %>" /></b>
+                        <b class="img-contain"><img src="<%= first_abstract.asset.full.url %>" data-width="<%= first_abstract.asset.full.width %>" data-height="<%= first_abstract.asset.full.height %>" /></b>
                     <% end %>
                 </figure>
                 <div class="prose clearfix">
@@ -112,7 +134,7 @@
                     <figure class="photo ratio">
                         <div class="fill"></div>
                         <% if abstract.asset.present? %>
-                            <b class="img-contain"><img src="<%= abstract.asset.full.url %>" /></b>
+                            <b class="img-contain"><img src="<%= abstract.asset.full.url %>" data-width="<%= abstract.asset.full.width %>" data-height="<%= abstract.asset.full.height %>" /></b>
                         <% end %>
                     </figure>
                     <div class="prose clearfix">
@@ -142,7 +164,7 @@
                     <article name="abstract-<%= (index+5).to_s.rjust(2, "0") %>" id="abstract-<%= (index+5).to_s.rjust(2, "0") %>">
                         <figure class="photo ratio">
                             <div class="fill"></div>
-                            <% if abstract.asset.present? %><b class="img-contain"><img src="<%= abstract.asset.full.url %>" /></b><% end %>
+                            <% if abstract.asset.present? %><b class="img-contain"><img src="<%= abstract.asset.full.url %>" data-width="<%= abstract.asset.full.width %>" data-height="<%= abstract.asset.full.height %>" /></b><% end %>
                         </figure>
                         <div class="prose clearfix">
                             <header>
@@ -172,7 +194,7 @@
                     <article name="abstract-<%= (index+8).to_s.rjust(2, "0") %>" id="abstract-<%= (index+8).to_s.rjust(2, "0") %>">
                         <figure class="photo ratio">
                             <div class="fill"></div>
-                            <b class="img-contain"><img src="<%= abstract.asset.full.url %>" /></b>
+                            <b class="img-contain"><img src="<%= abstract.asset.full.url %>" data-width="<%= abstract.asset.full.width %>" data-height="<%= abstract.asset.full.height %>" /></b>
                         </figure>
                         <div class="prose clearfix">
                             <header>
@@ -194,15 +216,12 @@
                 <div>
                     <h1>Share this edition</h1>
                     <ul class="clearfix">
-                        <li class="twitter social_twit" data-url="">
-                            <a href="#" class="track-event twitter" data-ga-category="Article" data-ga-action="Share" data-ga-label="Twitter" data-url="" data-text="<%= u(@edition.short_list_type) %>">Share via Twitter</a>
-                        </li>
-                        <li class="email">
-                            <a href="#" class="track-event email" data-ga-category="Article" data-ga-action="Share" data-ga-label="Email" data-key="<%= @edition.id %>">Share via Email</a>
-                        </li>
-                        <li class="facebook social_fb" data-url="">
-                            <a href="#" class="track-event facebook" data-ga-category="Article" data-ga-action="Share" data-ga-label="Facebook" data-url="">Share via Facebook</a>
-                        </li>
+                      <li class="twitter social_twit" data-url="<%= @edition.public_url %>">
+                        <a href="#" class="track-event twitter" data-ga-category="Article" data-ga-action="Share" data-ga-label="Twitter" data-url="<%= @edition.public_url %>" data-text="<%= u(@edition.short_list_type) %>">Share on Twitter</a>
+                      </li>
+                      <li class="facebook social_fb" data-url="<%= @edition.public_url %>">
+                        <a href="#" class="track-event facebook" data-ga-category="Article" data-ga-action="Share" data-ga-label="Facebook" data-url="<%= @edition.public_url %>">Share on Facebook</a>
+                      </li>
                     </ul>
                 </div>
             </section>
@@ -210,7 +229,7 @@
             <aside class="subscribe" id="subscribe-feature" name="subscribe-feature">
                 <header>
                     <h1>Start your day informed.</h1>
-                    <h2><span>Sign up and we’ll deliver KPCC’s Short List to your inbox.</span> <span>Morning, evening, and weekend editions.</span></h2>
+                    <h2><span>Sign up and we’ll deliver KPCC’s Short List to your inbox.</span> <span>One edition each weekday morning, plus an edition of weekend reads.</span></h2>
                 </header>
                 <form method="post" name="shortlist-subscribe" action="https://s1715082578.t.eloqua.com/e/f2" id="form352">
                     <input value="shortlist-subscribe" type="hidden" name="elqFormName"  />
@@ -229,7 +248,7 @@
 
             <section class="subscribe-hint">
               <header><h1>Subscribe to The Short List</h1></header>
-              <p><a href="#subscribe-feature">Click here</a> to get each edition of The Short List &mdash; mornings, evenings, and weekends &mdash; delivered to your inbox.</p>
+              <p><a href="#subscribe-feature">Click here</a> to get The Short List delivered to your inbox every weekday.</p>
             </section>
 
             <section class="contents">

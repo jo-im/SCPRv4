@@ -35,7 +35,7 @@ FactoryGirl.define do
     teaser "Cool Remote Teaser"
     slug { headline.parameterize }
     status TestClass::Story.status_id(:live)
-    published_at { Time.now }
+    published_at { Time.zone.now }
     remote_url "http://kpcc.org"
   end
 
@@ -46,7 +46,7 @@ FactoryGirl.define do
     teaser "Cool Asset Teaser"
     slug { headline.parameterize }
     status TestClass::Story.status_id(:live)
-    published_at { Time.now }
+    published_at { Time.zone.now }
 
     trait :published do
       status TestClass::Story.status_id(:live)

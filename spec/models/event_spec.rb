@@ -12,7 +12,7 @@ describe Event do
     let(:events) { [past_one, past_many, current_one, current_many, future_one, future_many].shuffle }
 
     before :each do
-      t = Time.now.beginning_of_day + 12.hours
+      t = Time.zone.now.beginning_of_day + 12.hours
       Time.stub(:now) { t } # noon
     end
 
@@ -42,7 +42,7 @@ describe Event do
 
   describe "#sorter" do
     before :each do
-      t = Time.now.beginning_of_day + 12.hours
+      t = Time.zone.now.beginning_of_day + 12.hours
       Time.stub(:now) { t } # noon
     end
 
@@ -128,16 +128,16 @@ describe Event do
 
   describe "#current?" do
     before :each do
-      t = Time.now.beginning_of_day + 12.hours
+      t = Time.zone.now.beginning_of_day + 12.hours
       Time.stub(:now) { t } # noon
     end
 
-    it "is true if Time.now is between the start and end times" do
+    it "is true if Time.zone.now is between the start and end times" do
       event = build :event, :current
       event.current?.should eq true
     end
 
-    it "is true if ends_at is blank and Time.now is between start time and end of day" do
+    it "is true if ends_at is blank and Time.zone.now is between start time and end of day" do
       event = build :event, starts_at: 1.hour.ago, ends_at: nil
       event.current?.should eq true
     end
@@ -153,7 +153,7 @@ describe Event do
     end
 
     it "is false if no ends_at and event starts_at was yeserday" do
-      event = build :event, starts_at: Time.now.yesterday
+      event = build :event, starts_at: Time.zone.now.yesterday
       event.current?.should eq false
     end
   end

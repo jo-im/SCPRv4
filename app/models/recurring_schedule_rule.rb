@@ -204,7 +204,7 @@ class RecurringScheduleRule < ActiveRecord::Base
   end
 
   def build_occurrences_through_next_month(args={})
-    args[:start_date] = Time.now
+    args[:start_date] = Time.zone.now
     args[:end_date]   = 1.month.from_now.end_of_month
 
     build_occurrences(args)

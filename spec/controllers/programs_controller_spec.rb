@@ -3,7 +3,7 @@ require "spec_helper"
 describe ProgramsController do
   describe "GET /archive" do
     it "finds the episode for the program on the given date" do
-      episode = create :show_episode, air_date: Time.new(2012, 3, 22)
+      episode = create :show_episode, air_date: Time.zone.local(2012, 3, 22)
       post :archive,
         :show    => episode.show.slug,
         :archive => {
@@ -16,7 +16,7 @@ describe ProgramsController do
     end
 
     it "assigns @date if date is given" do
-      episode = create :show_episode, air_date: Time.new(2012, 3, 22)
+      episode = create :show_episode, air_date: Time.zone.local(2012, 3, 22)
       post :archive,
         :show    => episode.show.slug,
         :archive => {
@@ -31,7 +31,7 @@ describe ProgramsController do
     end
 
     it "works for external programs" do
-      episode = create :external_episode, air_date: Time.new(2012, 3, 22)
+      episode = create :external_episode, air_date: Time.zone.local(2012, 3, 22)
 
       post :archive, show: episode.external_program.slug,
         :archive => {
@@ -48,11 +48,11 @@ describe ProgramsController do
   describe "GET /schedule" do
     it "assigns @schedule_occurrences to this week's schedule" do
       create :schedule_occurrence,
-        starts_at: Time.now.beginning_of_week
+        starts_at: Time.zone.now.beginning_of_week
       create :schedule_occurrence,
-        starts_at: Time.now.beginning_of_week + 1.day
+        starts_at: Time.zone.now.beginning_of_week + 1.day
       create :schedule_occurrence,
-        starts_at: Time.now.beginning_of_week + 2.days
+        starts_at: Time.zone.now.beginning_of_week + 2.days
 
       get :schedule
       assigns(:schedule_occurrences).should eq ScheduleOccurrence.all

@@ -195,8 +195,6 @@ Scprv4::Application.routes.draw do
       namespace :v2 do
         match '/' => "articles#options", via: :options, constraints: { method: 'OPTIONS' }
 
-        post '/utility/notify'   => 'utility#notify'
-
         resources :articles, only: [:index] do
           collection do
             # These need to be in "collection", otherwise
@@ -233,6 +231,8 @@ Scprv4::Application.routes.draw do
     resources :admin_users, concerns: [:search] do
       get "activity", on: :member, as: :activity
     end
+
+    get 'search', to: 'home#search', as: :search
   end
 
   mount Outpost::Secretary::Engine, at: 'outpost', as: 'secretary'

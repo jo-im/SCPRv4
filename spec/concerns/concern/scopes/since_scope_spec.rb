@@ -6,7 +6,7 @@ describe Concern::Scopes::SinceScope do
     # these objects in the database, but I can't find it, so...
     TestClass::Story.destroy_all
 
-    t = Time.now
+    t = Time.zone.now
 
     recent     = create :test_class_story, published_at: t - 1.day
     really_old = create :test_class_story, published_at: t - 1.year

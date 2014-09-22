@@ -15,12 +15,12 @@ class HomeController < ApplicationController
     @homepage         = Homepage.published.first
     @featured_comment = FeaturedComment.published.first
 
-    @schedule_current = ScheduleOccurrence.on_at(Time.now)
+    @schedule_current = ScheduleOccurrence.on_at(Time.zone.now)
 
     if @schedule_current
       @schedule_next = @schedule_current.following_occurrence
     else
-      @schedule_next = ScheduleOccurrence.after(Time.now).first
+      @schedule_next = ScheduleOccurrence.after(Time.zone.now).first
     end
   end
 

@@ -68,8 +68,8 @@ describe Api::Public::V2::EpisodesController do
 
     it 'sorts the episodes by descending air_date for kpcc programs' do
       program   = create :kpcc_program,is_episodic: true
-      episode2  = create :show_episode, show: program, air_date: Time.now.yesterday
-      episode1  = create :show_episode, show: program, air_date: Time.now.tomorrow
+      episode2  = create :show_episode, show: program, air_date: Time.zone.now.yesterday
+      episode1  = create :show_episode, show: program, air_date: Time.zone.now.tomorrow
 
       get :index, { program: program.slug }.merge(request_params)
       assigns(:episodes).should eq [episode1, episode2].map(&:to_episode)
@@ -77,8 +77,8 @@ describe Api::Public::V2::EpisodesController do
 
     it 'sorts the episodes by descending air_date for external programs' do
       program   = create :external_program
-      episode2  = create :external_episode, external_program: program, air_date: Time.now.yesterday
-      episode1  = create :external_episode, external_program: program, air_date: Time.now.tomorrow
+      episode2  = create :external_episode, external_program: program, air_date: Time.zone.now.yesterday
+      episode1  = create :external_episode, external_program: program, air_date: Time.zone.now.tomorrow
 
       get :index, { program: program.slug }.merge(request_params)
       assigns(:episodes).should eq [episode1, episode2].map(&:to_episode)
@@ -90,8 +90,8 @@ describe Api::Public::V2::EpisodesController do
     end
 
     it 'can filter by air date' do
-      episode1 = create :show_episode, air_date: Time.new(2013, 6, 25)
-      episode2 = create :show_episode, air_date: Time.new(2013, 6, 24)
+      episode1 = create :show_episode, air_date: Time.zone.local(2013, 6, 25)
+      episode2 = create :show_episode, air_date: Time.zone.local(2013, 6, 24)
 
       get :index, { air_date: "2013-06-24" }.merge(request_params)
       assigns(:episodes).should eq [episode2].map(&:to_episode)
@@ -99,8 +99,8 @@ describe Api::Public::V2::EpisodesController do
 
     it 'can filter by air date for external programs' do
       program = create :external_program
-      episode1 = create :external_episode, air_date: Time.new(2013, 6, 25), external_program: program
-      episode2 = create :external_episode, air_date: Time.new(2013, 6, 25), external_program: program
+      episode1 = create :external_episode, air_date: Time.zone.local(2013, 6, 25), external_program: program
+      episode2 = create :external_episode, air_date: Time.zone.local(2013, 6, 25), external_program: program
 
       get :index, { program: program.slug, air_date: "2013-06-25" }.merge(request_params)
       assigns(:episodes).should eq [episode1, episode2].map(&:to_episode)
@@ -108,7 +108,7 @@ describe Api::Public::V2::EpisodesController do
 
     it 'can filter by air date for segmented programs' do
       program = create :kpcc_program, is_episodic: false
-      segment = create :show_segment, show: program, published_at: Time.new(2013, 6, 25)
+      segment = create :show_segment, show: program, published_at: Time.zone.local(2013, 6, 25)
 
       get :index, { program: program.slug, air_date: "2013-06-25" }.merge(request_params)
       assigns(:episodes).should eq [segment].map(&:to_episode)

@@ -6,8 +6,8 @@
         <%= date_select 'archive', 'date',
           order: [:month, :day, :year],
           start_year: 2002,
-          end_year: Time.now.year,
-          default: Time.now.yesterday %>
+          end_year: Time.zone.now.year,
+          default: Time.zone.now.yesterday %>
         <%= submit_tag "Go", class: "btn" %>
       <% end %>
     </p>

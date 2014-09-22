@@ -20,32 +20,32 @@ describe ArchiveController do
     end
 
     it "assigns date to requested date" do
-      get :show, date_path(Time.now.yesterday.beginning_of_day)
-      assigns(:date).should eq Time.now.yesterday.beginning_of_day
+      get :show, date_path(Time.zone.now.yesterday.beginning_of_day)
+      assigns(:date).should eq Time.zone.now.yesterday.beginning_of_day
     end
 
     it "date is a Time object" do
-      get :show, date_path(Time.now.yesterday.beginning_of_day)
+      get :show, date_path(Time.zone.now.yesterday.beginning_of_day)
       assigns(:date).should be_a Time
     end
 
     it "doesn't assign @date if requested date is in the future" do
-      get :show, date_path(Time.now.tomorrow)
+      get :show, date_path(Time.zone.now.tomorrow)
       assigns(:date).should be_nil
     end
 
     it "raises 404 if requested date is today" do
-      get :show, date_path(Time.now.to_date)
+      get :show, date_path(Time.zone.now.to_date)
       assigns(:date).should be_nil
     end
 
     %w{ news_story show_segment blog_entry content_shell }.each do |content|
       it "only gets #{content.pluralize} published on requested date" do
-        yesterday = create content.to_sym, published_at: Time.now.yesterday
-        today     = create content.to_sym, published_at: Time.now
-        tomorrow  = create content.to_sym, published_at: Time.now.tomorrow
+        yesterday = create content.to_sym, published_at: Time.zone.now.yesterday
+        today     = create content.to_sym, published_at: Time.zone.now
+        tomorrow  = create content.to_sym, published_at: Time.zone.now.tomorrow
 
-        get :show, date_path(Time.now.yesterday)
+        get :show, date_path(Time.zone.now.yesterday)
 
         assigns(:date).should be_present
         assigns(content.pluralize.to_sym).should eq [yesterday]
@@ -53,10 +53,10 @@ describe ArchiveController do
     end
 
     it "only gets show episodes published on requested date" do
-      yesterday = create :show_episode, air_date: Time.now.yesterday
-      today     = create :show_episode, air_date: Time.now
-      tomorrow  = create :show_episode, air_date: Time.now.tomorrow
-      get :show, date_path(Time.now.yesterday.beginning_of_day)
+      yesterday = create :show_episode, air_date: Time.zone.now.yesterday
+      today     = create :show_episode, air_date: Time.zone.now
+      tomorrow  = create :show_episode, air_date: Time.zone.now.tomorrow
+      get :show, date_path(Time.zone.now.yesterday.beginning_of_day)
       assigns(:show_episodes).should eq [yesterday]
     end
   end

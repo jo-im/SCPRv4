@@ -58,7 +58,7 @@ module Job
 
         # Rails log and custom log always gets it
         Rails.logger.info message
-        logger.info("***[#{Time.now}] #{self.name}: #{message}")
+        logger.info("***[#{Time.zone.now}] #{self.name}: #{message}")
 
         # STDOUT only gets it if requested
         if !!ENV['VERBOSE'] || verbose

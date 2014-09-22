@@ -38,7 +38,7 @@ describe NprProgramImporter do
         external_program.external_episodes(true).count.should eq 1
 
         # From the JSON fixture:
-        external_program.external_episodes.first.air_date.should eq Time.new(2013, 7, 15, 12)
+        external_program.external_episodes.first.air_date.should eq Time.zone.local(2013, 7, 15, 12)
       end
 
       it "adds in audio if it's available" do

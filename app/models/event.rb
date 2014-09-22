@@ -61,19 +61,19 @@ class Event < ActiveRecord::Base
 
   scope :upcoming, -> {
     published
-    .where("starts_at > ?", Time.now)
+    .where("starts_at > ?", Time.zone.now)
     .order("starts_at")
   }
 
   scope :upcoming_and_current, -> {
     published
-    .where("ends_at > :now or starts_at > :now", now: Time.now)
+    .where("ends_at > :now or starts_at > :now", now: Time.zone.now)
     .order("starts_at")
   }
 
   scope :past, -> {
     published
-    .where("ends_at < :now", now: Time.now)
+    .where("ends_at < :now", now: Time.zone.now)
     .order("starts_at desc")
   }
 
@@ -154,15 +154,15 @@ class Event < ActiveRecord::Base
 
   # Still display maps, details, etc. if the event is currently happening
   def upcoming?
-    starts_at > Time.now
+    starts_at > Time.zone.now
   end
 
 
   def current?
     if ends_at.present?
-      Time.now.between? starts_at, ends_at
+      Time.zone.now.between? starts_at, ends_at
     else
-      Time.now.between? starts_at, starts_at.end_of_day
+      Time.zone.now.between? starts_at, starts_at.end_of_day
     end
   end
 

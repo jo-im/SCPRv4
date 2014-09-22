@@ -49,7 +49,10 @@ module AudioSync
               next if !match
 
               # Get the date for this episode/segment based on the filename
-              date = Time.new(match[:year], match[:month], match[:day])
+              # If the date for the audio file can't be discerned, an
+              # ArgumentError will be thrown and will be caught by the rescue
+              # below.
+              date = Time.zone.local(match[:year], match[:month], match[:day])
 
               # Figure out what type of content we should attach the audio to.
               if program.is_episodic?
@@ -90,6 +93,11 @@ module AudioSync
             end # Dir
 
           rescue => e
+            # This needs to rescue StandardError because we don't want a single
+            # failed instance to halt the entire process. We know we're dealing
+            # with file read errors, ArgumentError (for date parsing at least),
+            # NFS errors (although in that case everything should fail),
+            # and there's probably other cases we want to catch.
             warn "Error caught in AudioSync::Program.bulk_sync: #{e}"
             self.log "Could not save Audio: #{e}"
             NewRelic.log_error(e)
