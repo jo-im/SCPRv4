@@ -14,7 +14,7 @@ class ProgramPresenter < ApplicationPresenter
   def airtime
     if program.airtime.present?
       h.content_tag :h3 do
-        "Airs  #{program.airtime}".html_safe
+        "Airs #{program.airtime}".html_safe
       end
     end
   end
