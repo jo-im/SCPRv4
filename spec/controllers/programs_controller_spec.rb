@@ -84,7 +84,7 @@ describe ProgramsController do
   describe "GET /show" do
     context "KPCC Program" do
       before do
-        @program = create :kpcc_program, display_episodes: false
+        @program = create :kpcc_program, is_episodic: false
       end
 
       it "sets @program" do
@@ -110,7 +110,7 @@ describe ProgramsController do
 
       context "html" do
         it "excludes current episode and its segments from @episodes" do
-          @program.update_column(:display_episodes, true)
+          @program.update_column(:is_episodic, true)
 
           episode = build :show_episode, :published,
             :show => @program,
@@ -225,6 +225,53 @@ describe ProgramsController do
       get :episode, params
 
       assigns(:segments).to_a.should eq [segment]
+    end
+  end
+
+  describe "GET /featured_program" do
+    context "KPCC Program" do
+      before do
+        @program = create :kpcc_program, slug: 'the-frame'
+        @episodes = create_list :show_episode, 2, :published, show: @program
+      end
+
+      it "sets @program" do
+        get :featured_program, show: @program.slug
+        assigns(:program).should eq @program
+      end
+
+      it "assigns @segments to published segments" do
+        published = create_list :show_segment, 2, :published, show: @program
+        unpublished = create_list :show_segment, 2, :draft, show: @program
+
+        get :featured_program, show: @program.slug
+        assigns(:segments).sort.should eq published.sort
+      end
+
+      it "assigns @episodes to published episodes" do
+        unpublished = create_list :show_episode, 2, :draft, show: @program
+        get :featured_program, show: @program.slug
+        assigns(:episodes).should eq @episodes.sort! {|a,b| b[:air_date] <=> a[:air_date] }[1..-1]
+      end
+
+      context "a single featured episode is present" do
+        it "excludes the latest episode from @episodes" do
+          featured_episode = create :show_episode, :published,
+            :show => @program,
+            :air_date => 1.hour.ago
+          @program.program_articles.create(article: featured_episode)
+          @program.save!
+
+          get :featured_program, show: @program.slug
+
+          assigns(:episodes).should_not include ShowEpisode.published.first
+        end
+      end
+
+      it "renders the correct kpcc template" do
+        get :featured_program, show: @program.slug
+        response.should render_template "programs/kpcc/new/#{@program.slug}"
+      end
     end
   end
 end

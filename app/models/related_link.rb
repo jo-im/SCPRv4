@@ -5,7 +5,7 @@ class RelatedLink < ActiveRecord::Base
     ["PIJ Query", "query"],
     ["Video (youtube, vimeo...)", "video"],
     ["Facebook", "facebook"],
-    ["Twitter", "twitter"],
+    ["Twitter Handle (without @)", "twitter"],
     ["Document (pdf, doc, xls...)", "doc"],
     ["RSS Feed (xml)", "rss"],
     ["Podcast Feed (xml)", "podcast"],
@@ -28,6 +28,7 @@ class RelatedLink < ActiveRecord::Base
   validates :title, presence: true
   validates :url,
     :presence   => true,
+    :unless         => :is_twitter?,
     :url        => { allowed: [URI::HTTP, URI::FTP, URI::MailTo] }
 
   #--------------
@@ -41,5 +42,9 @@ class RelatedLink < ActiveRecord::Base
         URI.parse(URI.encode(self.url)).host
       end
     end
+  end
+
+  def is_twitter?
+    link_type == "twitter"
   end
 end

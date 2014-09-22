@@ -1,7 +1,7 @@
 class KpccProgram < ActiveRecord::Base
   self.table_name = 'programs_kpccprogram'
   outpost_model
-  has_secretary
+  has_secretary except: ["quote_id"] # Quote is versioned separately
 
   include Concern::Validations::SlugValidation
   include Concern::Associations::RelatedLinksAssociation
@@ -34,8 +34,29 @@ class KpccProgram < ActiveRecord::Base
   has_many :segments, foreign_key: "show_id", class_name: "ShowSegment"
   has_many :episodes, foreign_key: "show_id", class_name: "ShowEpisode"
   has_many :recurring_schedule_rules, as: :program, dependent: :destroy
-  belongs_to :missed_it_bucket
+
   belongs_to :blog
+  belongs_to :quote
+  accepts_nested_attributes_for :quote,
+    :reject_if => :should_reject_quote,
+    :allow_destroy => true
+  tracks_association :quote
+
+  has_many :program_reporters,
+    :foreign_key => "program_id",
+    :dependent => :destroy
+  has_many :reporters,
+    :through => :program_reporters,
+    :source  => :bio
+  tracks_association :reporters
+
+  has_many :program_articles,
+    -> { order('position') },
+    :foreign_key => "program_id",
+    :dependent  => :destroy
+
+  accepts_json_input_for :program_articles
+  tracks_association :program_articles
 
   #-------------------
   # Validations
@@ -80,28 +101,46 @@ class KpccProgram < ActiveRecord::Base
       :slug               => self.slug,
       :description        => self.description,
       :host               => self.host,
-      :twitter_handle     => self.twitter_handle,
       :air_status         => self.air_status,
       :airtime            => self.airtime,
       :podcast_url        => self.get_link('podcast'),
       :rss_url            => self.get_link('rss'),
       :episodes           => self.episodes.published,
       :segments           => self.segments.published,
-      :missed_it_bucket   => self.missed_it_bucket,
       :blog               => self.blog,
       :is_featured        => self.is_featured?,
-      :display_episodes   => self.display_episodes?,
-      :display_segments   => self.display_segments?
+      :is_episodic        => self.is_episodic?
     })
   end
 
+  def featured_articles
+    @featured_articles ||= self.program_articles
+      .includes(:article).select(&:article)
+      .map { |a| a.article.to_article }
+  end
 
   private
+
+  def should_reject_quote(attributes)
+    attributes["source_name"].blank? &&
+    attributes["source_context"].blank? &&
+    attributes["source_text"].blank?
+  end
 
   def slug_is_unique_in_programs_namespace
     if self.slug.present? && ExternalProgram.exists?(slug: self.slug)
       self.errors.add(:slug, "must be unique between both " \
                              "KpccProgram and ExternalProgram")
+    end
+  end
+
+  def build_program_article_association(program_article_hash, article)
+    if article.published?
+      ProgramArticle.new(
+        :position   => program_article_hash["position"].to_i,
+        :article    => article,
+        :kpcc_program   => self
+      )
     end
   end
 end

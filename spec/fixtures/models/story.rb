@@ -24,6 +24,7 @@ module TestClass
     include Concern::Associations::TagsAssociation
     include Concern::Associations::FeatureAssociation
     include Concern::Associations::VerticalArticleAssociation
+    include Concern::Associations::ProgramArticleAssociation
     include Concern::Callbacks::GenerateShortHeadlineCallback
     include Concern::Callbacks::GenerateTeaserCallback
     include Concern::Callbacks::SetPublishedAtCallback

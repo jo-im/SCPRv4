@@ -93,7 +93,6 @@ class ExternalProgram < ActiveRecord::Base
       :slug               => self.slug,
       :description        => self.description,
       :host               => self.host,
-      :twitter_handle     => self.twitter_handle,
       :air_status         => self.air_status,
       :airtime            => self.airtime,
       :podcast_url        => self.podcast_url,
@@ -102,7 +101,7 @@ class ExternalProgram < ActiveRecord::Base
       :segments           => self.external_segments.order("published_at desc"),
       # External Programs are always assumed to have episodes.
       # Maybe this isn't always the case, but this is okay for now.
-      :display_episodes   => true
+      :is_episodic   => true
     })
   end
 

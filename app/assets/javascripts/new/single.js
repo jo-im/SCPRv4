@@ -201,12 +201,12 @@ scpr.Behaviors.Single = {
 
                 // Make it do something
                 $(".audio-queue a").click(function(){
-                    $(".audio-player").css("visibility", "visible");
+                    $(".audio-player").addClass("active");
                 });
 
                 // Cosmetically hide the deck
                 $(".audio-player .collapse").click(function(){
-                    $(".audio-player").css("visibility", "hidden");
+                    $(".audio-player").removeClass("active");
                 });
 
             }
@@ -235,6 +235,7 @@ scpr.Behaviors.Single = {
             } else {
               $(".prose .marginal-tools").addClass("minimalist");
             }
+
 
 
 

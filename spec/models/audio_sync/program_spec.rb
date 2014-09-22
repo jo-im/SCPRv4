@@ -4,7 +4,7 @@ describe AudioSync::Program do
   describe "::bulk_sync" do
     let(:program) do
       create :kpcc_program,
-        :display_episodes   => true,
+        :is_episodic        => true,
         :audio_dir          => "coolshowbro",
         :air_status         => "onair"
     end
@@ -104,7 +104,7 @@ describe AudioSync::Program do
 
     context "for segment" do
       before do
-        program.update_attributes(display_episodes: false)
+        program.update_attributes(is_episodic: false)
 
         Dir.should_receive(:foreach)
         .with(File.join(Audio::AUDIO_PATH_ROOT, program.audio_dir))

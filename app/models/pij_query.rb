@@ -14,6 +14,7 @@ class PijQuery < ActiveRecord::Base
   include Concern::Associations::HomepageContentAssociation
   include Concern::Associations::MissedItContentAssociation
   include Concern::Associations::VerticalArticleAssociation
+  include Concern::Associations::ProgramArticleAssociation
   include Concern::Validations::SlugValidation
   include Concern::Callbacks::GenerateSlugCallback
   include Concern::Callbacks::SphinxIndexCallback

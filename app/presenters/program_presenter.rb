@@ -44,9 +44,9 @@ class ProgramPresenter < ApplicationPresenter
   end
 
   def twitter_link
-    if program.twitter_handle.present?
-      h.link_to "@#{program.twitter_handle}",
-        h.twitter_profile_url(program.twitter_handle),
+    if link = program.get_link("twitter")
+      h.link_to "@#{link}",
+        h.twitter_profile_url(link),
         :target => "_blank",
         :class  => "twitter with-icon"
     end

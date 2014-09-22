@@ -1,0 +1,20 @@
+
+
+$programs: ("the-frame");
+
+@each $program in $programs {
+
+  // Masthead Photo
+  body.#{$program}.program .masthead {
+    background-image: image-url("i/masthead-#{$program}.jpg");
+  }
+
+  // "See More Segments"
+  body.#{$program} .neoteric .segments figure:last-child a .img-contain {
+    background: image-url("i/seemore-#{$program}.jpg") no-repeat center top;
+    background-color: black;
+    background-size: 100% auto;
+  }
+
+}
+

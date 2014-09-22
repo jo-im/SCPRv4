@@ -113,14 +113,15 @@ describe ProgramPresenter do
   end
 
   describe "#twitter_link" do
-    it "returns the twitter url if twitter handle is presen t" do
-      program = build :kpcc_program, twitter_handle: "airtalk"
+    it "returns the twitter url if twitter related link is present" do
+      program = build :kpcc_program
+      program.related_links.build(title: "Twitter", url: "airtalk", link_type: "twitter")
       p = presenter(program)
       p.twitter_link.should match %r{twitter\.com/airtalk}
     end
 
     it "returns nil if not specified" do
-      program = build :kpcc_program, twitter_handle: ""
+      program = build :kpcc_program
       p = presenter(program)
       p.twitter_link.should eq nil
     end

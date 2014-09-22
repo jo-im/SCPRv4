@@ -375,19 +375,18 @@ ActiveRecord::Schema.define(version: 20140909004350) do
   add_index "external_episodes", ["external_program_id", "external_id"], name: "index_external_episodes_on_external_program_id_and_external_id", using: :btree
 
   create_table "external_programs", force: true do |t|
-    t.string   "slug",                            null: false
-    t.string   "title",                           null: false
-    t.text     "teaser",         limit: 16777215
-    t.text     "description",    limit: 16777215
+    t.string   "slug",                          null: false
+    t.string   "title",                         null: false
+    t.text     "teaser",       limit: 16777215
+    t.text     "description",  limit: 16777215
     t.string   "host"
-    t.string   "organization",   limit: 50
+    t.string   "organization", limit: 50
     t.string   "airtime"
-    t.string   "air_status",                      null: false
+    t.string   "air_status",                    null: false
     t.string   "podcast_url"
-    t.text     "sidebar",        limit: 16777215
-    t.datetime "created_at",                      null: false
-    t.datetime "updated_at",                      null: false
-    t.string   "twitter_handle"
+    t.text     "sidebar",      limit: 16777215
+    t.datetime "created_at",                    null: false
+    t.datetime "updated_at",                    null: false
     t.string   "source"
     t.integer  "external_id"
   end
@@ -621,30 +620,47 @@ ActiveRecord::Schema.define(version: 20140909004350) do
   add_index "press_releases", ["created_at"], name: "index_press_releases_on_created_at", using: :btree
   add_index "press_releases", ["slug"], name: "press_releases_release_slug", using: :btree
 
+  create_table "program_articles", force: true do |t|
+    t.integer "position"
+    t.integer "article_id"
+    t.string  "article_type"
+    t.integer "program_id"
+  end
+
+  add_index "program_articles", ["article_id", "article_type"], name: "index_program_articles_on_article_id_and_article_type", using: :btree
+  add_index "program_articles", ["position"], name: "index_program_articles_on_position", using: :btree
+  add_index "program_articles", ["program_id"], name: "index_program_articles_on_program_id", using: :btree
+
+  create_table "program_reporters", force: true do |t|
+    t.integer "bio_id"
+    t.integer "program_id"
+  end
+
+  add_index "program_reporters", ["bio_id"], name: "index_program_reporters_on_bio_id", using: :btree
+  add_index "program_reporters", ["program_id"], name: "index_program_reporters_on_program_id", using: :btree
+
   create_table "programs_kpccprogram", force: true do |t|
-    t.string   "slug",                                                 null: false
-    t.string   "title",                                                null: false
-    t.text     "teaser",              limit: 16777215
-    t.text     "description",         limit: 16777215
+    t.string   "slug",                                         null: false
+    t.string   "title",                                        null: false
+    t.text     "teaser",      limit: 16777215
+    t.text     "description", limit: 16777215
     t.string   "host"
     t.string   "airtime"
-    t.string   "air_status",                                           null: false
-    t.string   "twitter_handle"
-    t.text     "sidebar",             limit: 16777215
-    t.boolean  "display_episodes",                     default: true,  null: false
-    t.boolean  "display_segments",                     default: true,  null: false
+    t.string   "air_status",                                   null: false
+    t.text     "sidebar",     limit: 16777215
+    t.boolean  "is_episodic",                  default: true,  null: false
     t.integer  "blog_id"
     t.string   "audio_dir"
-    t.integer  "missed_it_bucket_id"
-    t.datetime "created_at",                                           null: false
-    t.datetime "updated_at",                                           null: false
-    t.boolean  "is_featured",                          default: false, null: false
+    t.datetime "created_at",                                   null: false
+    t.datetime "updated_at",                                   null: false
+    t.boolean  "is_featured",                  default: false, null: false
+    t.integer  "quote_id"
   end
 
   add_index "programs_kpccprogram", ["air_status"], name: "index_programs_kpccprogram_on_air_status", using: :btree
   add_index "programs_kpccprogram", ["blog_id"], name: "programs_kpccprogram_472bc96c", using: :btree
   add_index "programs_kpccprogram", ["is_featured"], name: "index_programs_kpccprogram_on_is_featured", using: :btree
-  add_index "programs_kpccprogram", ["missed_it_bucket_id"], name: "programs_kpccprogram_d12628ce", using: :btree
+  add_index "programs_kpccprogram", ["quote_id"], name: "index_programs_kpccprogram_on_quote_id", using: :btree
   add_index "programs_kpccprogram", ["slug"], name: "index_programs_kpccprogram_on_slug", using: :btree
   add_index "programs_kpccprogram", ["title"], name: "index_programs_kpccprogram_on_title", using: :btree
 

@@ -12,14 +12,93 @@
   <%= f.input :airtime, hint: "Times this program can be heard" %>
 <% end %>
 
+<%= form_block "Associations" do %>
+  <%= f.association :reporters, label: "Reporters" %>
+<% end %>
+
 <%= form_block "Display Options" do %>
-  <%= f.input :display_episodes, hint: "Does this program use episodes to group segments?" %>
-  <%= f.input :display_segments, hint: "Should individual segments be displayed on the program page?" %>
+  <%= f.input :is_episodic, hint: "Does this program use episodes to group segments?" %>
   <%= f.input :is_featured, hint: "Whether or not this program is featured around the website" %>
   <%= f.input :audio_dir, label: "Audio directory" %>
-  <%= f.association :missed_it_bucket %>
 
-  <%= f.section "twitter_handle" %>
+<% end %>
+
+<%= form_block "Featured Content" do %>
+  <div id="featured_articles_aggregator" class="aggregator"></div>
+  <%= f.input :program_articles_json, as: :hidden, input_html: { id: "program_articles_json" } %>
+
+    <% content_for :footer do %>
+          <script>
+        new outpost.Aggregator(
+          "#featured_articles_aggregator", "#program_articles_json",
+          <%= render_json("api/private/v2/articles/collection", articles: record.program_articles.includes(:article).map {|a| a.article.to_article}) %>,
+          {
+            apiType: "private",
+            view: {
+              dropMaxLimit: 6,
+              dropMinLimit: 2,
+              dropRejectOverflow: false
+            },
+            params: {
+              limit: 20,
+              types: 'segments,episodes',
+              token: "<%= Rails.application.config.api['kpcc']['private']['api_token'] %>",
+              order: "public_datetime",
+              sort_mode: "desc",
+              with: { is_live: "1" }
+            }
+          }
+        );
+      </script>
+    <% end %>
+<% end %>
+
+<%= form_block "Quote" do %>
+  <div class="alert alert-info">
+    This Quote is <strong>optional</strong> — all of the fields can be left blank, and no quote will show on the Program page. If you want to show a quote, you must fill in at least the "Text" field.
+  </div>
+
+  <%= f.simple_fields_for :quote, record.quote || record.build_quote do |qf| %>
+    <%= qf.input :source_name, hint: "The source of the quote. Example: 'Barack Obama'" %>
+    <%= qf.input :source_context, hint: "The context in which the quote was delivered. Example: 'Press Meeting, June 10'" %>
+    <%= qf.input :text, hint: "The actual text of the quote.", input_html: { class: "tiny" } %>
+    <%= qf.input :_destroy, as: :boolean, label: "Clear this Quote" %>
+
+    <div class="alert alert-info">
+      Choose the source article for the <strong>Featured Quote</strong>, if applicable.
+    </div>
+
+    <%= qf.full_errors :content %>
+    <div id="aggregator_quote_content" class="aggregator short"></div>
+    <%= qf.input :content_json, as: :hidden, input_html: { id: "quote_content_json" } %>
+
+    <% content_for :footer do %>
+      <script>
+        new outpost.Aggregator(
+          "#aggregator_quote_content", "#quote_content_json",
+          <%= render_json("api/private/v2/articles/collection", articles: Array(qf.object.article)) %>,
+          {
+            apiType: "private",
+            view : {
+              dropMaxLimit: 1,
+              dropRejectOverflow: true,
+              active: "search"
+            },
+            params: {
+              limit: 20,
+              types: 'news,blogs,segments,shells,events',
+              token: "<%= Rails.application.config.api['kpcc']['private']['api_token'] %>",
+              order: "public_datetime",
+              sort_mode: "desc",
+              with: { is_live: "1" }
+            }
+          }
+        );
+      </script>
+    <% end %>
+  <% end %>
 <% end %>
 
 <%= f.section "related_links" %>
+
+

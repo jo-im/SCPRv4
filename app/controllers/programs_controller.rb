@@ -3,7 +3,9 @@
 # namespace, so we have to send all traffic to this controller and then
 # basically split every action into two.
 class ProgramsController < ApplicationController
-  before_filter :get_program, only: [:show, :episode, :archive]
+  include Concern::Controller::GetPopularArticles
+  before_filter :get_program, only: [:show, :episode, :archive, :featured_program, :featured_show]
+  before_filter :get_popular_articles, only: [:featured_program]
 
   respond_to :html, :xml, :rss
 
@@ -24,7 +26,7 @@ class ProgramsController < ApplicationController
 
       respond_with do |format|
         format.html do
-          if @program.display_episodes? && (@current_episode = @episodes.first)
+          if @program.is_episodic? && (@current_episode = @episodes.first)
             @episodes = @episodes.where.not(id: @current_episode.id)
 
             segments = @current_episode.segments.published.to_a
@@ -54,6 +56,31 @@ class ProgramsController < ApplicationController
 
       return
     end
+  end
+
+  def featured_program
+    @segments = @program.segments.published
+    @episodes = @program.episodes.published
+    @featured_programs = KpccProgram.where.not(id: @program.id,is_featured: false)
+    if @program.featured_articles.present?
+      if @program.featured_articles.size > 1
+        @featured_story = @program.featured_articles[0]
+        @subfeatured_story = @program.featured_articles[1]
+        @episodes = @episodes.where.not(id: [@featured_story.original_object.id, @episodes.first.id])
+        if @featured_story.original_object.is_a?(ShowSegment)
+          @segments = @segments - [@featured_story.original_object]
+        end
+      else
+        @featured_story = @episodes[0].to_article
+        @subfeatured_story = @program.featured_articles[0]
+        @episodes = @episodes[1..-1]
+      end
+
+    else
+      @featured_story = @episodes.first.to_article
+      @episodes = @episodes[1..-1]
+    end
+    handle_program_template
   end
 
 
@@ -86,6 +113,35 @@ class ProgramsController < ApplicationController
     end
   end
 
+  def featured_show
+    if @program.is_a?(KpccProgram) && @program.is_featured?
+      @view_type = params[:view]
+      @segments = @program.segments.published
+      @episodes = @program.episodes.published
+
+      respond_with do |format|
+        format.html do
+          if @program.is_episodic? && (@current_episode = @episodes.first)
+            @episodes = @episodes.where.not(id: @current_episode.id)
+
+            segments = @current_episode.segments.published.to_a
+            @segments = @segments.where.not(id: segments.map(&:id))
+          end
+
+          @segments = @segments.page(params[:page]).per(10)
+          @episodes = @episodes.page(params[:page]).per(6)
+
+          render 'programs/kpcc/featured_show'
+        end
+
+        format.xml { render 'programs/kpcc/show' }
+      end
+
+      return
+    else
+      redirect_to @program.public_path
+    end
+  end
 
   def archive
     @date = Time.zone.local(
@@ -104,12 +160,11 @@ class ProgramsController < ApplicationController
       flash[:alert] = "There is no #{@program.title} " \
                       "episode for #{@date.strftime('%F')}."
 
-      redirect_to @program.public_path(anchor: "archive") and return
+      redirect_to featured_show_path(@program.slug, anchor: "archive") and return
     else
       redirect_to @episode.public_path and return
     end
   end
-
 
   def schedule
     @schedule_occurrences = ScheduleOccurrence.block(
@@ -134,5 +189,19 @@ class ProgramsController < ApplicationController
       render_error(404, ActionController::RoutingError.new("Not Found"))
       return false
     end
+  end
+
+  def handle_program_template
+    template = "programs/kpcc/new/#{@program.slug}"
+
+    if template_exists?(template)
+      render(
+        :layout   => 'new/landing',
+        :template => template
+      )
+    else
+      render 'programs/kpcc/show'
+    end
+
   end
 end

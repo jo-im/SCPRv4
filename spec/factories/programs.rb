@@ -10,11 +10,25 @@ FactoryGirl.define do
     audio_dir "airtalk" # lazy
 
     trait :episodic do
-      display_episodes 1
+      is_episodic 1
     end
 
-    trait :segmented do
-      display_segments 1
+  end
+
+  factory :program_article do
+    kpcc_program
+    article { |f| f.association(:news_story) }
+    position 0
+
+    trait :episode do
+      article { |f| f.association(:show_episode) }
+      position 0
     end
   end
+
+  factory :program_reporter do
+    kpcc_program
+    bio
+  end
+
 end

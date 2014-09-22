@@ -588,6 +588,9 @@ $navHeight: 36px;
                 &.offramp {
                     background-image:image-url('broadcast-bar/john-offramp-sm.png');
                 }
+                &.the-frame {
+                    background-image:image-url('broadcast-bar/john-theframe-sm.png');
+                }
                 h4 {
                     border-top:1px solid $grayLighter;
                     color:$orangeDark;
