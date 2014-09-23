@@ -4,7 +4,7 @@
 FactoryGirl.define do
   factory :homepage do
     base "default"
-    sequence(:published_at) { |n| Time.now + 60*60*n }
+    sequence(:published_at) { |n| Time.zone.now + 60*60*n }
     status Homepage.status_id(:live)
 
     trait :pending do

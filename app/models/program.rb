@@ -36,7 +36,6 @@ class Program
     :slug,
     :description,
     :host,
-    :twitter_handle,
     :air_status,
     :airtime,
     :podcast_url,
@@ -44,14 +43,11 @@ class Program
     :episodes,
     :segments,
     :blog,
-    :missed_it_bucket,
     :is_featured,
-    :display_episodes,
-    :display_segments
+    :is_episodic
 
   alias_method :is_featured?, :is_featured
-  alias_method :display_episodes?, :display_episodes
-  alias_method :display_segments?, :display_segments
+  alias_method :is_episodic?, :is_episodic
 
 
   def initialize(attributes={})
@@ -62,18 +58,15 @@ class Program
     @slug             = attributes[:slug]
     @description      = attributes[:description]
     @host             = attributes[:host]
-    @twitter_handle   = attributes[:twitter_handle]
     @air_status       = attributes[:air_status]
     @airtime          = attributes[:airtime]
     @podcast_url      = attributes[:podcast_url]
     @rss_url          = attributes[:rss_url]
     @blog             = attributes[:blog]
-    @missed_it_bucket = attributes[:missed_it_bucket]
 
     # Force to boolean
     @is_featured      = !!attributes[:is_featured]
-    @display_segments = !!attributes[:display_segments]
-    @display_episodes = !!attributes[:display_episodes]
+    @is_episodic = !!attributes[:is_episodic]
 
     # Don't force these into an array, so it doesn't load ALL
     # of the episodes/segments (which could be thousands).
@@ -97,7 +90,6 @@ class Program
   # Some programs (filmweek, business update) don't use
   # episodes, but instead use Segments as their "episodes".
   def uses_segments_as_episodes?
-    !self.display_episodes? &&
-    self.display_segments?
+    !self.is_episodic?
   end
 end

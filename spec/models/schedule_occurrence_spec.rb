@@ -14,26 +14,26 @@ describe ScheduleOccurrence do
 
   describe '::after' do
     it "gets occurrences after the requested date" do
-      occurrence_early = create :schedule_occurrence, starts_at: Time.now.yesterday
-      occurrence_later = create :schedule_occurrence, starts_at: Time.now.tomorrow
+      occurrence_early = create :schedule_occurrence, starts_at: Time.zone.now.yesterday
+      occurrence_later = create :schedule_occurrence, starts_at: Time.zone.now.tomorrow
 
-      ScheduleOccurrence.after(Time.now).should eq [occurrence_later]
+      ScheduleOccurrence.after(Time.zone.now).should eq [occurrence_later]
     end
   end
 
   describe '::before' do
     it "gets occurrences before the requested date" do
-      occurrence_early = create :schedule_occurrence, starts_at: Time.now.yesterday
-      occurrence_later = create :schedule_occurrence, starts_at: Time.now.tomorrow
+      occurrence_early = create :schedule_occurrence, starts_at: Time.zone.now.yesterday
+      occurrence_later = create :schedule_occurrence, starts_at: Time.zone.now.tomorrow
 
-      ScheduleOccurrence.before(Time.now).should eq [occurrence_early]
+      ScheduleOccurrence.before(Time.zone.now).should eq [occurrence_early]
     end
   end
 
   describe '::future' do
     it "gets occurrences after the now" do
-      occurrence_early = create :schedule_occurrence, starts_at: Time.now.yesterday
-      occurrence_later = create :schedule_occurrence, starts_at: Time.now.tomorrow
+      occurrence_early = create :schedule_occurrence, starts_at: Time.zone.now.yesterday
+      occurrence_later = create :schedule_occurrence, starts_at: Time.zone.now.tomorrow
 
       ScheduleOccurrence.future.should eq [occurrence_later]
     end
@@ -41,8 +41,8 @@ describe ScheduleOccurrence do
 
   describe '::past' do
     it "gets occurrences before now" do
-      occurrence_early = create :schedule_occurrence, starts_at: Time.now.yesterday
-      occurrence_later = create :schedule_occurrence, starts_at: Time.now.tomorrow
+      occurrence_early = create :schedule_occurrence, starts_at: Time.zone.now.yesterday
+      occurrence_later = create :schedule_occurrence, starts_at: Time.zone.now.tomorrow
 
       ScheduleOccurrence.past.should eq [occurrence_early]
     end
@@ -50,7 +50,7 @@ describe ScheduleOccurrence do
 
   describe '::between' do
     it 'gets any occurrence which airs between the start and end dates' do
-      t = Time.new(2013, 6, 1)
+      t = Time.zone.local(2013, 6, 1)
 
       occurrence1 = create :schedule_occurrence, starts_at: t
       occurrence2 = create :schedule_occurrence, starts_at: t + 1.hour
@@ -61,7 +61,7 @@ describe ScheduleOccurrence do
     end
 
     it "can grab stuff that started before the start time or ends after the end time" do
-      t = Time.new(2013, 6, 1)
+      t = Time.zone.local(2013, 6, 1)
 
       occurrence1 = create :schedule_occurrence, starts_at: t - 2.hours, ends_at: t + 1.hour
       occurrence2 = create :schedule_occurrence, starts_at: t + 6.hours, ends_at: t + 9.hours
@@ -72,9 +72,9 @@ describe ScheduleOccurrence do
 
   describe '::current' do
     it "gets the currently occurrences" do
-      occurrence_yesterday = create :schedule_occurrence, starts_at: Time.now.yesterday
-      occurrence_tomorrow  = create :schedule_occurrence, starts_at: Time.now.tomorrow
-      occurrence_now       = create :schedule_occurrence, starts_at: Time.now - 1.minute
+      occurrence_yesterday = create :schedule_occurrence, starts_at: Time.zone.now.yesterday
+      occurrence_tomorrow  = create :schedule_occurrence, starts_at: Time.zone.now.tomorrow
+      occurrence_now       = create :schedule_occurrence, starts_at: Time.zone.now - 1.minute
 
       ScheduleOccurrence.current.should eq [occurrence_now]
     end
@@ -82,11 +82,11 @@ describe ScheduleOccurrence do
 
   describe '::at' do
     it "gets occurrences happening at the requested time" do
-      occurrence_yesterday = create :schedule_occurrence, starts_at: Time.now.yesterday - 1.minute
-      occurrence_tomorrow  = create :schedule_occurrence, starts_at: Time.now.tomorrow
-      occurrence_now       = create :schedule_occurrence, starts_at: Time.now
+      occurrence_yesterday = create :schedule_occurrence, starts_at: Time.zone.now.yesterday - 1.minute
+      occurrence_tomorrow  = create :schedule_occurrence, starts_at: Time.zone.now.tomorrow
+      occurrence_now       = create :schedule_occurrence, starts_at: Time.zone.now
 
-      ScheduleOccurrence.at(Time.now.yesterday).should eq [occurrence_yesterday]
+      ScheduleOccurrence.at(Time.zone.now.yesterday).should eq [occurrence_yesterday]
     end
   end
 
@@ -111,7 +111,7 @@ describe ScheduleOccurrence do
 
   describe '::block' do
     it "returns a single stream of events between the requested dates" do
-      t = Time.new(2013, 6, 1)
+      t = Time.zone.local(2013, 6, 1)
 
       occurrence1 = create :schedule_occurrence, starts_at: t
       occurrence2 = create :schedule_occurrence, starts_at: t + 1.hour
@@ -122,7 +122,7 @@ describe ScheduleOccurrence do
     end
 
     it "gets rid of occurences which happen inside of another" do
-      t = Time.new(2013, 6, 1)
+      t = Time.zone.local(2013, 6, 1)
 
       occurrence1 = create :schedule_occurrence, starts_at: t
       occurrence2 = create :schedule_occurrence, starts_at: t - 1.hour, ends_at: t + 1.hour
@@ -134,7 +134,7 @@ describe ScheduleOccurrence do
 
   describe '#following_occurrence' do
     it "selects the slot immediately following this one" do
-      t = Time.new(2013, 6, 1)
+      t = Time.zone.local(2013, 6, 1)
       Time.stub(:now) { t + 20.minutes }
 
       occurrence1 = create :schedule_occurrence, starts_at: t, ends_at: t + 2.hour
@@ -150,7 +150,7 @@ describe ScheduleOccurrence do
       occurrence = create :schedule_occurrence, :recurring
       occurrence.recurring_schedule_rule.should be_present
 
-      occurrence.starts_at = Time.now.tomorrow
+      occurrence.starts_at = Time.zone.now.tomorrow
       occurrence.save!
 
       occurrence.recurring_schedule_rule.should eq nil

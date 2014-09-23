@@ -22,7 +22,7 @@ describe RecurringScheduleRule do
       ScheduleOccurrence.destroy_all
       ScheduleOccurrence.count.should eq 0
 
-      t = Time.new(2013, 1, 1)
+      t = Time.zone.local(2013, 1, 1)
       RecurringScheduleRule.create_occurrences(start_date: t, end_date: t + 1.week)
       ScheduleOccurrence.count.should be > 0
     end
@@ -111,7 +111,7 @@ describe RecurringScheduleRule do
 
     before :each do
       # Can't use let here because it gets evaluated into UTC time
-      Time.stub(:now) { Time.new(2013, 7, 1) }
+      Time.stub(:now) { Time.zone.local(2013, 7, 1) }
 
       rule.build_schedule
     end
@@ -123,23 +123,23 @@ describe RecurringScheduleRule do
     end
 
     it "doesn't run if schedule_occurrences is present" do
-      rule.build_occurrences(start_date: Time.now, end_date: Time.now + 1.month)
+      rule.build_occurrences(start_date: Time.zone.now, end_date: Time.zone.now + 1.month)
       rule.should_not_receive(:build_occurrences)
       rule.save!
     end
 
     it "uses the passed-in start_date" do
-      rule.build_occurrences(start_date: Time.now+1.month, end_date: Time.now+2.month)
-      rule.schedule_occurrences.first.starts_at.should be >= Time.now+1.month
+      rule.build_occurrences(start_date: Time.zone.now+1.month, end_date: Time.zone.now+2.month)
+      rule.schedule_occurrences.first.starts_at.should be >= Time.zone.now+1.month
     end
 
     it "only builds up to the end_date" do
-      rule.build_occurrences(start_date: Time.now, end_date: Time.now+1.week)
-      rule.schedule_occurrences.after(Time.now + 1.week).should be_empty
+      rule.build_occurrences(start_date: Time.zone.now, end_date: Time.zone.now+1.week)
+      rule.schedule_occurrences.after(Time.zone.now + 1.week).should be_empty
     end
 
     it "sets the ends_at of the occurrence to starts_at + duration" do
-      rule.build_occurrences(start_date: Time.now, end_date: Time.now + 1.month)
+      rule.build_occurrences(start_date: Time.zone.now, end_date: Time.zone.now + 1.month)
       rule.schedule_occurrences.first.duration.should eq 1.hour
     end
 
@@ -147,17 +147,17 @@ describe RecurringScheduleRule do
       rule.save!
       rule.schedule_occurrences.count.should eq 9
 
-      rule.create_occurrences(start_date: Time.now, end_date: Time.now+2.months)
+      rule.create_occurrences(start_date: Time.zone.now, end_date: Time.zone.now+2.months)
       rule.schedule_occurrences(true).count.should eq 9
 
-      rule.create_occurrences(start_date: Time.now, end_date: Time.now+3.months)
+      rule.create_occurrences(start_date: Time.zone.now, end_date: Time.zone.now+3.months)
       rule.schedule_occurrences(true).count.should be > 9
     end
   end
 
   describe '#create_occurrences' do
     it 'builds occurrences and then saves' do
-      Time.stub(:now) { Time.new(2013, 7, 1) }
+      Time.stub(:now) { Time.zone.local(2013, 7, 1) }
 
       rule = create :recurring_schedule_rule,
         :days         => [1],
@@ -167,7 +167,7 @@ describe RecurringScheduleRule do
       rule.schedule_occurrences.destroy_all
 
       rule.schedule_occurrences.count.should eq 0
-      rule.create_occurrences(start_date: Time.now, end_date: Time.now + 1.month)
+      rule.create_occurrences(start_date: Time.zone.now, end_date: Time.zone.now + 1.month)
       rule.reload.schedule_occurrences.count.should eq 5
     end
   end
@@ -181,7 +181,7 @@ describe RecurringScheduleRule do
     }
 
     it 'rebuilds and then saves' do
-      Time.stub(:now) { Time.new(2013, 7, 1) }
+      Time.stub(:now) { Time.zone.local(2013, 7, 1) }
       rule.save!
       rule.schedule_occurrences.count.should eq 9
 
@@ -201,7 +201,7 @@ describe RecurringScheduleRule do
     }
 
     before do
-      Time.stub(:now) { Time.new(2013, 7, 1) }
+      Time.stub(:now) { Time.zone.local(2013, 7, 1) }
       rule.save!
 
       # It makes 2 months worth. There are 5 mondays in this month.
@@ -222,7 +222,7 @@ describe RecurringScheduleRule do
       rule.days = [2]
       rule.save!
 
-      rule.schedule_occurrences(true).last.starts_at.month.should eq Time.now.next_month.month
+      rule.schedule_occurrences(true).last.starts_at.month.should eq Time.zone.now.next_month.month
     end
 
     it "gets run on update if the rule has changed" do

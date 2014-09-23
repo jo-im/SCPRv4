@@ -19,7 +19,7 @@ class EventsController < ApplicationController
     if params[:id]
       @event = Event.published.find(params[:id])
     else
-      date    = Time.new(params[:year], params[:month], params[:day])
+      date    = Time.zone.local(params[:year], params[:month], params[:day])
       @event  = Event.published.where(
         :slug         => params[:slug],
         :starts_at    => date..date.end_of_day

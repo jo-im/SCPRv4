@@ -18,7 +18,7 @@ FactoryGirl.define do
 
     trait :published do
       status BreakingNewsAlert.status_id(:published)
-      sequence(:published_at) { |n| Time.now + n.minutes }
+      sequence(:published_at) { |n| Time.zone.now + n.minutes }
     end
 
     trait :pending do

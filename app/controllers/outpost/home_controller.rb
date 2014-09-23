@@ -12,6 +12,18 @@ class Outpost::HomeController < Outpost::BaseController
   end
 
 
+  def search
+    searchable_models = Outpost.config.registered_models
+      .map(&:safe_constantize).compact
+      .select { |m| !ThinkingSphinx::IndexSet.new([m], nil).to_a.empty? }
+
+    @records = ThinkingSphinx.search(Riddle::Query.escape(params[:gquery]),
+      :classes    => searchable_models,
+      :page       => params[:page] || 1,
+      :per_page   => 20
+    )
+  end
+
   def trigger_error
     raise StandardError, "This is a test error. It works (or does it?)"
   end

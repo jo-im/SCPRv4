@@ -1,5 +1,5 @@
 <!-- May Elections -->
-<% if Time.now > Time.new(2013, 5, 21, 20) %>
+<% if Time.zone.now > Time.zone.local(2013, 5, 21, 20) %>
 
 <%= cache [@cache_control['cache_version'], 'election-may2013'], expires_in: 20.minutes do %>
 <div class="hero-election">

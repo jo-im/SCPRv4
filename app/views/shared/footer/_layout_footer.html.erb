@@ -60,7 +60,7 @@
                     <li><a href="/education">Education</a></li>
                     <li><a href="/health">Health</a></li>
                     <li><a href="http://audiovision.scpr.org" class="audiovision-icon">AudioVision</a></li>
-                    <li><a href="/archive/<%= Time.now.yesterday.strftime("%Y/%m/%d") %>/?section=news">Archive</a></li>
+                    <li><a href="/archive/<%= Time.zone.now.yesterday.strftime("%Y/%m/%d") %>/?section=news">Archive</a></li>
                   </ul>
                 </div> <!-- row fluid -->
               </nav>
@@ -79,7 +79,7 @@
                 <ul class="inline">
                   <li><a href="/programs/">Programs A-Z</a></li>
                   <li><a href="/schedule/">Program Schedule</a></li>
-                  <li><a href="/archive/<%= Time.now.yesterday.strftime("%Y/%m/%d") %>/?section=programs">Program Archive</a></li>
+                  <li><a href="/archive/<%= Time.zone.now.yesterday.strftime("%Y/%m/%d") %>/?section=programs">Program Archive</a></li>
                 </ul>
               </nav>
               <nav>
@@ -155,7 +155,7 @@
             <li><a href="/terms/">Terms &amp; Conditions</a></li>
             <li><a href="/privacy/">Privacy</a></li>
             <li><a href="/web_site_feedback/">Feedback</a></li>
-            <li>&copy; <%= Time.now.year %> Southern California Public Radio</li>
+            <li>&copy; <%= Time.zone.now.year %> Southern California Public Radio</li>
           </ul>
         </div>
       </div> <!-- row fluid bottom links -->

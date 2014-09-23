@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<%= render "shared/new/document_header" %>
+
+<body class="<%= content_for(:body_class) %>">
+
+    <div id="global-pushdown"></div>
+
+    <%= render 'shared/new/layout_header' %>
+
+    <%= yield %>
+
+
+
+    <% content_for :extra_footer do %>
+    <script>
+        scpr.Behaviors.loadBehaviors(['Layout', 'Editions']);
+    </script>
+    <% end %>
+
+    <%= render 'shared/new/layout_footer' %>
+    <%= render 'shared/new/document_footer' %>
+
+
+</body>
+</html>

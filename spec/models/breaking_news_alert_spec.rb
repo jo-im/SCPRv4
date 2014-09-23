@@ -1,17 +1,19 @@
 require "spec_helper"
 
 describe BreakingNewsAlert do
+  redis = Rails.cache.instance_variable_get(:@data)
+
   describe '::expire_alert_fragment' do
     it 'runs after save and expires the fragment' do
       set_key = "obj:#{BreakingNewsAlert::FRAGMENT_EXPIRE_KEY}"
       fragment_key = "breaking_news"
-      $redis.set(fragment_key, "oimate")
-      $redis.sadd(set_key, fragment_key)
+      redis.set(fragment_key, "oimate")
+      redis.sadd(set_key, fragment_key)
 
-      $redis.get(fragment_key).should eq "oimate"
+      redis.get(fragment_key).should eq "oimate"
       alert = create :breaking_news_alert
       alert.save!
-      $redis.get(fragment_key).should eq nil
+      redis.get(fragment_key).should eq nil
     end
   end
 
@@ -36,19 +38,19 @@ describe BreakingNewsAlert do
       alert = create :breaking_news_alert, :mobile, :published
       alert.mobile_notification_sent?.should eq false
 
-      alert.publish_mobile_notification
+      silence_stream(STDERR) { alert.publish_mobile_notification }
       alert.reload.mobile_notification_sent?.should eq true
     end
 
     it 'returns false and does not publish if it is not published' do
       alert = create :breaking_news_alert, :mobile, :draft
-      alert.publish_mobile_notification.should eq false
+      silence_stream(STDERR) { alert.publish_mobile_notification }.should eq false
       alert.reload.mobile_notification_sent?.should eq false
     end
 
     it 'returns false and does not publish if it is not mobilized' do
       alert = create :breaking_news_alert, :published
-      alert.publish_mobile_notification.should eq false
+      silence_stream(STDERR) { alert.publish_mobile_notification }.should eq false
       alert.reload.mobile_notification_sent?.should eq false
     end
   end
@@ -218,7 +220,7 @@ describe BreakingNewsAlert do
 
       alert3 = create :breaking_news_alert, :published,
         :visible        => false,
-        :published_at   => Time.now
+        :published_at   => Time.zone.now
 
       BreakingNewsAlert.latest_visible_alert.should eq alert2
     end

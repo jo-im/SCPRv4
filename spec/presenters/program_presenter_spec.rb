@@ -35,6 +35,23 @@ describe ProgramPresenter do
 
   #--------------------
 
+  describe "#airtime" do
+    it "returns html_safe airtime if it's present" do
+      program = build :kpcc_program, airtime: "<em>all the time</em>. It's the only show we got."
+      p = presenter(program)
+      p.airtime.should eq "<h3>Airs <em>all the time</em>. It's the only show we got.</h3>"
+      p.airtime.html_safe?.should eq true
+    end
+
+    it "returns nil if airtime not present" do
+      program = build :kpcc_program, airtime: nil
+      p = presenter(program)
+      p.airtime.should eq nil
+    end
+  end
+
+  #--------------------
+
   describe "#web_link" do
     it "returns program.web_url if specified" do
       program = build :external_program
@@ -113,14 +130,15 @@ describe ProgramPresenter do
   end
 
   describe "#twitter_link" do
-    it "returns the twitter url if twitter handle is presen t" do
-      program = build :kpcc_program, twitter_handle: "airtalk"
+    it "returns the twitter url if twitter related link is present" do
+      program = build :kpcc_program
+      program.related_links.build(title: "Twitter", url: "airtalk", link_type: "twitter")
       p = presenter(program)
       p.twitter_link.should match %r{twitter\.com/airtalk}
     end
 
     it "returns nil if not specified" do
-      program = build :kpcc_program, twitter_handle: ""
+      program = build :kpcc_program
       p = presenter(program)
       p.twitter_link.should eq nil
     end

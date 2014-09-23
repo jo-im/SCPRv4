@@ -24,6 +24,7 @@ module TestClass
     include Concern::Associations::TagsAssociation
     include Concern::Associations::FeatureAssociation
     include Concern::Associations::VerticalArticleAssociation
+    include Concern::Associations::ProgramArticleAssociation
     include Concern::Callbacks::GenerateShortHeadlineCallback
     include Concern::Callbacks::GenerateTeaserCallback
     include Concern::Callbacks::SetPublishedAtCallback
@@ -32,7 +33,7 @@ module TestClass
     include Concern::Callbacks::HomepageCachingCallback
     include Concern::Callbacks::CacheExpirationCallback
     include Concern::Callbacks::TouchCallback
-    include Concern::Callbacks::RedisPublishCallback
+    include Concern::Callbacks::PublishNotificationCallback
     include Concern::Methods::ArticleStatuses
     include Concern::Methods::AssetDisplayMethods
     include Concern::Validations::ContentValidation

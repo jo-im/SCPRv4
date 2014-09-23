@@ -51,10 +51,6 @@
     </section>
   <% end %>
 
-  <% if bucket = @program.missed_it_bucket %>
-    <%= render("shared/widgets/missed_it_bucket", bucket: bucket) %>
-  <% end %>
-
   <% if blog = @program.blog %>
     <%= render('blogs/recent_posts', blog: blog, title: "From the Blog: #{blog.name}") %>
   <% end %>

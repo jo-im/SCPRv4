@@ -252,7 +252,7 @@ module ApplicationHelper
       return ''
     end
     time_format = secs >= 3600 ? "%-H:%M:%S" : "%-M:%S"
-    Time.at(secs).utc.strftime(time_format)
+    Time.zone.at(secs).utc.strftime(time_format)
   end
 
   #----------

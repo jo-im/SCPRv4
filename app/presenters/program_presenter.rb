@@ -11,6 +11,14 @@ class ProgramPresenter < ApplicationPresenter
     program.description.try(:html_safe)
   end
 
+  def airtime
+    if program.airtime.present?
+      h.content_tag :h3 do
+        "Airs #{program.airtime}".html_safe
+      end
+    end
+  end
+
   def web_link
     if link = program.get_link("website")
       h.link_to "Website", link,
@@ -44,9 +52,9 @@ class ProgramPresenter < ApplicationPresenter
   end
 
   def twitter_link
-    if program.twitter_handle.present?
-      h.link_to "@#{program.twitter_handle}",
-        h.twitter_profile_url(program.twitter_handle),
+    if link = program.get_link("twitter")
+      h.link_to "@#{link}",
+        h.twitter_profile_url(link),
         :target => "_blank",
         :class  => "twitter with-icon"
     end

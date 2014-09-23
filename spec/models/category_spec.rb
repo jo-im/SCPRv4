@@ -43,7 +43,7 @@ describe Category do
 
     it 'sorts previews by the descending article publish timestamps' do
       story1 = create :news_story, category: category, published_at: 1.month.ago
-      story2 = create :news_story, category: other_category, published_at: Time.now
+      story2 = create :news_story, category: other_category, published_at: Time.zone.now
 
       index_sphinx
 

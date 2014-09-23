@@ -4,7 +4,7 @@ describe AudioSync::Program do
   describe "::bulk_sync" do
     let(:program) do
       create :kpcc_program,
-        :display_episodes   => true,
+        :is_episodic        => true,
         :audio_dir          => "coolshowbro",
         :air_status         => "onair"
     end
@@ -12,11 +12,11 @@ describe AudioSync::Program do
     before do
       # October 02, 2012 is the date on the fixture mp3 file
       episode = create :show_episode,
-        :air_date   => Time.new(2012, 10, 2),
+        :air_date   => Time.zone.local(2012, 10, 2),
         :show       => program
 
       segment = create :show_segment, :published,
-        :published_at   => Time.new(2012, 10, 2),
+        :published_at   => Time.zone.local(2012, 10, 2),
         :show           => program
 
       KpccProgram.can_sync_audio.count.should eq 1
@@ -42,10 +42,23 @@ describe AudioSync::Program do
       .with(File.join(Audio::AUDIO_PATH_ROOT, program.audio_dir))
       .and_return(["nomatch.mp3"])
 
-      Time.should_not_receive(:new)
+      Time.zone.should_not_receive(:new)
       expect { AudioSync::Program.bulk_sync }.not_to change { Audio.count }
     end
 
+    it "doesn't sync if the date can't be parsed" do
+      Dir.should_receive(:foreach)
+      .with(File.join(Audio::AUDIO_PATH_ROOT, program.audio_dir))
+      .and_return(["99999999_mbrand.mp3"])
+
+      # This just checks that the process never gets to the next step.
+      expect_any_instance_of(KpccProgram).not_to receive(:display_episodes?)
+
+      # We're expecting an error in this test, so we'll silence the warning.
+      quietly do
+        expect { AudioSync::Program.bulk_sync }.not_to change { Audio.count }
+      end
+    end
 
     context "for episode" do
       before do
@@ -56,7 +69,7 @@ describe AudioSync::Program do
         File.should_receive(:mtime)
         .with(
           File.join(Audio::AUDIO_PATH_ROOT, "coolshowbro/20121002_mbrand.mp3")
-        ).and_return(Time.now) # File new
+        ).and_return(Time.zone.now) # File new
       end
 
       it "creates the audio" do
@@ -91,7 +104,7 @@ describe AudioSync::Program do
 
     context "for segment" do
       before do
-        program.update_attributes(display_episodes: false)
+        program.update_attributes(is_episodic: false)
 
         Dir.should_receive(:foreach)
         .with(File.join(Audio::AUDIO_PATH_ROOT, program.audio_dir))
@@ -100,7 +113,7 @@ describe AudioSync::Program do
         File.should_receive(:mtime)
         .with(
           File.join(Audio::AUDIO_PATH_ROOT, "coolshowbro/20121002_mbrand.mp3")
-        ).and_return(Time.now) # File new
+        ).and_return(Time.zone.now) # File new
       end
 
       it "creates the audio" do

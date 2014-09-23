@@ -22,7 +22,7 @@
 #   - Do nothing
 #
 # * Published
-#   - Set `published_at` to Time.now if `published_at` is blank
+#   - Set `published_at` to Time.zone.now if `published_at` is blank
 #
 # * Not published
 #   - Set `published_at` to nil
@@ -42,7 +42,7 @@ module Concern
       end
 
       #--------------
-      # When to set published_at to Time.now
+      # When to set published_at to Time.zone.now
       def should_set_published_at_to_now?
         self.published? && self.published_at.blank?
       end
@@ -54,9 +54,9 @@ module Concern
       end
 
       #--------------
-      # Set published_at to Time.now
+      # Set published_at to Time.zone.now
       def set_published_at_to_now
-        self.published_at = Time.now
+        self.published_at = Time.zone.now
       end
 
       #--------------

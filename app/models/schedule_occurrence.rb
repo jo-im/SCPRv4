@@ -10,9 +10,9 @@ class ScheduleOccurrence < ActiveRecord::Base
 
   scope :after,   ->(time) { where("starts_at > ?", time).order("starts_at") }
   scope :before,  ->(time) { where("ends_at < ?", time).order("starts_at") }
-  scope :future,  -> { after(Time.now) }
-  scope :past,    -> { before(Time.now) }
-  scope :current, -> { at(Time.now) }
+  scope :future,  -> { after(Time.zone.now) }
+  scope :past,    -> { before(Time.zone.now) }
+  scope :current, -> { at(Time.zone.now) }
 
 
   scope :between, ->(start_date, end_date) {
@@ -99,7 +99,7 @@ class ScheduleOccurrence < ActiveRecord::Base
   # Find the occurrence which is coming up next. This assumes that the
   # current object is currently on.
   def following_occurrence
-    between = ScheduleOccurrence.between(Time.now, self.ends_at + 1)
+    between = ScheduleOccurrence.between(Time.zone.now, self.ends_at + 1)
     between.find { |o| o != self }
   end
 

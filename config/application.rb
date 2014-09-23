@@ -48,13 +48,9 @@ module Scprv4
     config.scpr       = ActiveSupport::OrderedOptions.new
     config.assethost  = ActiveSupport::OrderedOptions.new
     config.newsroom   = ActiveSupport::OrderedOptions.new
-    config.node       = ActiveSupport::OrderedOptions.new # DEPRECATED
 
-    config.api = YAML.load_file(
-      "#{Rails.root}/config/api_config.yml"
-    )[Rails.env]
-
-    config.secrets = YAML.load_file("#{Rails.root}/config/app_config.yml")
+    config.api     = YAML.load_file("#{Rails.root}/config/api_config.yml")[Rails.env]
+    config.secrets = YAML.load_file("#{Rails.root}/config/app_config.yml")[Rails.env]
 
     config.assethost.server = config.api['assethost']['server']
     config.assethost.prefix = config.api['assethost']['prefix']

@@ -52,12 +52,6 @@ $headShotWidth: 90px;
 .headshot {
     background-repeat: no-repeat;
     background-position: 0 0;
-    &.brand-martinez {
-        background-image: image-url('broadcast-bar/headshots/brand-martinez.png');
-        &.program-info {
-            padding-right:150px;
-        }
-    }
     &.take-two {
         background-image: image-url('broadcast-bar/headshots/taketwo.png');
         &.program-info {
@@ -69,11 +63,14 @@ $headShotWidth: 90px;
             }
         }
     }
-    &.airtalk {
+    &.airtalk, &.filmweek {
         background-image: image-url('broadcast-bar/headshots/airtalk.png');
     }
     &.offramp {
         background-image: image-url('broadcast-bar/headshots/offramp.png');
+    }
+    &.the-frame {
+        background-image: image-url('broadcast-bar/headshots/theframe.png');
     }
 
     &.program-info {

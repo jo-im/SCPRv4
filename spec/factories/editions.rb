@@ -5,11 +5,11 @@ FactoryGirl.define do
   factory :edition do
     status Edition.status_id(:live)
     sequence(:title) { |n| "Cool Edition #{n}" }
-
+    slug "am-edition"
     email_sent false
 
     trait :published do
-      sequence(:published_at) { |n| Time.now + n.hours }
+      sequence(:published_at) { |n| Time.zone.now + n.hours }
     end
 
     trait :pending do

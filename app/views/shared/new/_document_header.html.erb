@@ -14,9 +14,9 @@
     <meta property="fb:app_id" content="129848480405753" />
     <link rel="publisher" href="https://plus.google.com/108872361044769229886/" />
 
-    <meta property="og:site_name" content="89.3 KPCC" />
-    <meta name="keywords" content="KPCC, California, Southern California, Los Angeles, Pasadena, SCPR, Southern California Public Radio" />
-    <meta name="author" content="89.3 KPCC" />
+    <meta property="og:site_name" content="Southern California Public Radio" />
+    <%= tag "meta", name: "keywords", content: meta_information[:keywords] || "KPCC, California, Southern California, Los Angeles, Pasadena, SCPR, Southern California Public Radio" %>
+    <meta name="author" content="Southern California Public Radio" />
 
 
     <!-- Meta Tags which are always present, but are filled-in by the page we're on, with a fallback -->
@@ -32,7 +32,7 @@
     <%= csrf_meta_tags %>
 
 
-    <meta name="twitter:site" content="KPCC"/>
+    <meta name="twitter:site" content="@kpcc"/>
     <meta name="twitter:card" content="summary"/>
     <meta name="twitter:image:src" content="http://scpr.org<%=image_path('kpcc-twitter-logo.png')%>">
 

@@ -1,6 +1,5 @@
 # A collection of items, which are meant to be represented
-# as Abstracts (although not all of them will actually be
-# an Abstract object).
+# as Abstracts (although not all of them will actually be an Abstract object).
 #
 # This model was created originally for the mobile application,
 # but there's no reason it couldn't also be presented on the
@@ -36,6 +35,11 @@ class Edition < ActiveRecord::Base
     s.published!
   end
 
+  SHORT_LIST_TYPES = {
+    'am-edition'      => 'A.M. Edition',
+    'pm-edition'      => 'P.M. Edition',
+    'weekend-reads' => 'Weekend Reads'
+  }
 
   has_many :slots,
     -> { order('position') },
@@ -58,8 +62,29 @@ class Edition < ActiveRecord::Base
       self.where(status: self.status_id(:live))
       .select('distinct title').order('title').map(&:title)
     end
+
+    def slug_select_collection
+      SHORT_LIST_TYPES.map { |k,v| [v.titleize, k] }
+    end
   end
 
+  self.public_route_key = "short_list"
+
+  def short_list_type
+    SHORT_LIST_TYPES[self.slug]
+  end
+
+  def route_hash
+    return {} if !self.persisted? || !self.persisted_record.published?
+    {
+      :year           => self.persisted_record.published_at.year.to_s,
+      :month          => "%02d" % self.persisted_record.published_at.month,
+      :day            => "%02d" % self.persisted_record.published_at.day,
+      :id             => self.persisted_record.id.to_s,
+      :slug           => self.persisted_record.slug,
+      :trailing_slash => true
+    }
+  end
 
   def needs_validation?
     self.pending? || self.published?
@@ -85,6 +110,9 @@ class Edition < ActiveRecord::Base
     self.update_attributes(status: self.class.status_id(:live))
   end
 
+  def sister_editions
+    self.class.published.where.not(id: self.id).first(4)
+  end
 
   ### EloquaSendable interface implementation
   # Note that we don't check for presence of first Abstract before trying to
@@ -107,7 +135,7 @@ class Edition < ActiveRecord::Base
 
       :name        => "[scpr-edition] #{self.title[0..30]}",
       :description => "SCPR Short List\n" \
-                      "Sent: #{Time.now}\nSubject: #{subject}",
+                      "Sent: #{Time.zone.now}\nSubject: #{subject}",
       :subject     => subject,
       :email       => "theshortlist@scpr.org"
     }

@@ -51,7 +51,7 @@ module Api::Public::V3
     def sanitize_air_date
       if params[:air_date]
         begin
-          @air_date = Time.parse(params[:air_date])
+          @air_date = Time.zone.parse!(params[:air_date])
         rescue ArgumentError # Time couldn't be parsed
           render_bad_request(message: "Invalid Date. Format is YYYY-MM-DD.")
           return false

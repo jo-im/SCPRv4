@@ -18,7 +18,7 @@ module LogsAsTask
 
   module ClassMethods
     def log(msg)
-      msg = ">>> [#{Time.now}] #{self.name}: #{msg}"
+      msg = ">>> [#{Time.zone.now}] #{self.name}: #{msg}"
       Rails.logger.info msg
       stdout_logger.info(msg)
       msg

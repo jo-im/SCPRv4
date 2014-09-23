@@ -62,11 +62,15 @@ class NprProgramImporter
 
     external_episode = build_external_episode(show)
 
-    stories.each do |story|
+    stories.each_with_index do |story, i|
       external_segment = build_external_segment(story)
+
+      # There were some segments coming through without a "shows" property.
+      # I'm not sure what that means, but we'll import it anyways and just
+      # put it at the end of the list.
       external_episode.external_episode_segments.build(
         :external_segment => external_segment,
-        :position         => story.shows.last.segNum
+        :position => story.shows.last.try(:segNum) || stories.length + i
       )
 
       # Bring in Audio

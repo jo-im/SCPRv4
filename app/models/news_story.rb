@@ -21,13 +21,14 @@ class NewsStory < ActiveRecord::Base
   include Concern::Associations::MissedItContentAssociation
   include Concern::Associations::EditionsAssociation
   include Concern::Associations::VerticalArticleAssociation
+  include Concern::Associations::ProgramArticleAssociation
   include Concern::Validations::ContentValidation
   include Concern::Callbacks::SetPublishedAtCallback
   include Concern::Callbacks::GenerateShortHeadlineCallback
   include Concern::Callbacks::GenerateTeaserCallback
   include Concern::Callbacks::GenerateSlugCallback
   include Concern::Callbacks::CacheExpirationCallback
-  include Concern::Callbacks::RedisPublishCallback
+  include Concern::Callbacks::PublishNotificationCallback
   include Concern::Callbacks::SphinxIndexCallback
   include Concern::Callbacks::HomepageCachingCallback
   include Concern::Callbacks::TouchCallback

@@ -1,6 +1,6 @@
 <div class="inner-container">
   <div class="row-fluid">
-    <div class="span6 program">
+    <div class="span5 program">
       <div class="section first">
         <a href="/programs/take-two/" class="take-two track-event" data-ga-category="MegaMenu" data-ga-action="Programs" data-ga-label="Take Two">
           <h4>Take Two</h4>
@@ -8,7 +8,7 @@
         </a>
       </div>
     </div>
-    <div class="span6 program">
+    <div class="span5 program">
       <div class="section">
         <a href="/programs/airtalk/" class="airtalk track-event" data-ga-category="MegaMenu" data-ga-action="Programs" data-ga-label="AirTalk">
           <h4>AirTalk</h4>
@@ -16,7 +16,7 @@
         </a>
       </div>
     </div>
-    <div class="span6 program">
+    <div class="span5 program">
       <div class="section">
         <a href="/programs/offramp/" class="offramp track-event" data-ga-category="MegaMenu" data-ga-action="Programs" data-ga-label="Off-Ramp">
           <h4>Off-Ramp</h4>
@@ -24,7 +24,15 @@
         </a>
       </div>
     </div>
-    <div class="span6">
+    <div class="span5 program">
+      <div class="section">
+        <a href="/programs/the-frame/" class="the-frame track-event" data-ga-category="MegaMenu" data-ga-action="Programs" data-ga-label="The Frame">
+          <h4>The Frame</h4>
+          <p>Movies, music TV, arts and entertainment, straight from Southern California Public Radio.</p>
+        </a>
+      </div>
+    </div>
+    <div class="span4">
       <div class="section">
         <nav>
         <h6>All Programs</h6>
@@ -33,7 +41,7 @@
             <li><a href="/schedule/" class="track-event" data-ga-category="MegaMenu" data-ga-action="Programs" data-ga-label="Programs Schedule">Program Schedule</a></li>
             <li><a href="javascript:void(0)" onclick="open_popup('http://scpr.org/listen_live/');" id="listen-live" class="track-event" data-ga-category="MegaMenu" data-ga-action="Programs" data-ga-label="Listen Live">Listen Live</a></li>
             <li><a href="/podcasts/" class="track-event" data-ga-category="MegaMenu" data-ga-action="Programs" data-ga-label="Podcasts">Podcasts</a></li>
-            <li><a href="/archive/<%= Time.now.yesterday.strftime("%Y/%m/%d") %>/?section=programs" class="track-event" data-ga-category="MegaMenu" data-ga-action="Programs" data-ga-label="Archive">Archive</a></li>
+            <li><a href="/archive/<%= Time.zone.now.yesterday.strftime("%Y/%m/%d") %>/?section=programs" class="track-event" data-ga-category="MegaMenu" data-ga-action="Programs" data-ga-label="Archive">Archive</a></li>
           </ul>
         </nav>
       </div> <!-- section -->

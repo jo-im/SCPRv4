@@ -3,7 +3,7 @@ class ListenController < ApplicationController
 
   def index
     # grab eight hours worth of schedule, starting now
-    @schedule = ScheduleOccurrence.block(Time.now, 8.hours)
+    @schedule = ScheduleOccurrence.block(Time.zone.now, 8.hours)
 
     # grab our homepage stories
     @homepage = Homepage.published.first
@@ -41,6 +41,6 @@ class ListenController < ApplicationController
   private
 
   def require_pledge_token
-    redirect_to root_path unless params[:pledgeToken].present? || cookies[:member_session].present?
+    redirect_to '/pledge-free/error' unless params[:pledgeToken].present? || cookies[:member_session].present?
   end
 end

@@ -36,6 +36,10 @@ Scprv4::Application.routes.draw do
 
 
   # Programs / Segments
+  # This route is hard-coded for the launch of The Frame. We can remove this as soon as other shows get the same featured program red-carpet treatment.
+  get '/programs/:show'            => "programs#featured_program", constraints: { show: /the-frame/ }
+  # This route is for displaying a clone of the old layout for featured programs for an index of episodes and segments
+  get '/programs/:show/featured'            => "programs#featured_show", as: :featured_show
   # Legacy route for old Episode URLs
   get '/programs/:show/:year/:month/:day/'            => "programs#episode",                            constraints: { year: /\d{4}/, month: /\d{2}/, day: /\d{2}/ }
 
@@ -54,6 +58,11 @@ Scprv4::Application.routes.draw do
   get '/events/sponsored/'                => 'events#index',      as: :sponsored_events,      defaults: { list: "sponsored" }
   get '/events/:year/:month/:day/:id/:slug/'  => 'events#show',   as: :event,                 constraints: { year: /\d{4}/, month: /\d{2}/, day: /\d{2}/, id: /\d+/, slug: /[\w_-]+/ }
   get '/events/(list/:list)'              => 'events#index',      as: :events,                defaults: { list: "all" }
+
+  # Short List
+  get '/short-list/:year/:month/:day/:id/:slug/' => "editions#short_list", as: :short_list, constraints: { year: /\d{4}/, month: /\d{2}/, day: /\d{2}/, id: /\d+/, slug: /[\w-]+/ }
+  get '/short-list/latest'                       => "editions#latest"
+  get '/short-list/'                             => redirect("/short-list/latest")
 
   # Legacy route
   get '/events/:year/:month/:day/:slug/'  => 'events#show', constraints: { year: /\d{4}/, month: /\d{2}/, day: /\d{2}/, slug: /[\w_-]+/}
@@ -187,8 +196,6 @@ Scprv4::Application.routes.draw do
       namespace :v2 do
         match '/' => "articles#options", via: :options, constraints: { method: 'OPTIONS' }
 
-        post '/utility/notify'   => 'utility#notify'
-
         resources :articles, only: [:index] do
           collection do
             # These need to be in "collection", otherwise
@@ -225,6 +232,8 @@ Scprv4::Application.routes.draw do
     resources :admin_users, concerns: [:search] do
       get "activity", on: :member, as: :activity
     end
+
+    get 'search', to: 'home#search', as: :search
   end
 
   mount Outpost::Secretary::Engine, at: 'outpost', as: 'secretary'

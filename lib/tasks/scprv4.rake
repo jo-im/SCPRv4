@@ -189,7 +189,7 @@ namespace :scprv4 do
 
 
   def log(msg)
-    puts "*** [#{Time.now}] #{msg}"
+    puts "*** [#{Time.zone.now}] #{msg}"
   end
 
   def perform_or_enqueue(klass, *args)
