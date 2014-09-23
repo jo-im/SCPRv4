@@ -107,7 +107,7 @@
       </figure>
       <div class="summary">
         <aside class="prompt listen">
-        <h1><cite><%= @program.title %></cite> for <%= format_date(@featured_story.public_datetime, with: "%A, %B %Y") %></h1>
+        <h1><cite><%= @program.title %></cite> for <%= format_date(@featured_story.public_datetime, with: "%A, %B %-d, %Y") %></h1>
         <% if @featured_story.audio.present? %>
           <mark class="play">
             <ul>
@@ -210,7 +210,7 @@
           <span class="appeal"><a href="/support/underwriting/">Become a KPCC sponsor</a></span>
         </div>
       </aside><!--/ .plug (B) -->
-      
+
       <section class="episodes">
         <h2>Recent Episodes</h2>
         <nav>
