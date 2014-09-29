@@ -125,7 +125,7 @@
     llPlayer = new scpr.ListenLive.CurrentGen({
       schedule:   <%= @schedule.map(&:listen_live_json).to_json.html_safe %>,
       // THIS NEEDS TO BE UPDATED TO POINT TO THE PLEDGE-FREE STREAM
-      url: "http://live.scpr.org"
+      url: "http://live.scpr.org/kpccpfs"
     })
 
     scpr.Behaviors.loadBehaviors(['Layout']);
