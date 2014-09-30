@@ -131,7 +131,7 @@ module PmpArticleImporter
               href    = remote_audio.href
               api_url = remote_audio.meta['api']['href']
 
-              audio_data = JSON.parse(open(api_url).read)
+              audio_data = open(api_url) { |r| JSON.parse(r.read) }
 
               # Podcast audio isn't always available. In this case we
               # should just not import any audio.
