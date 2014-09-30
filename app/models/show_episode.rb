@@ -13,11 +13,11 @@ class ShowEpisode < ActiveRecord::Base
   include Concern::Associations::RelatedLinksAssociation
   include Concern::Associations::BylinesAssociation
   include Concern::Associations::EditionsAssociation
-  include Concern::Callbacks::SetPublishedAtCallback
-  include Concern::Callbacks::CacheExpirationCallback
-  include Concern::Callbacks::PublishNotificationCallback
-  include Concern::Callbacks::SphinxIndexCallback
-  include Concern::Callbacks::TouchCallback
+  # include Concern::Callbacks::SetPublishedAtCallback
+  # include Concern::Callbacks::CacheExpirationCallback
+  # include Concern::Callbacks::PublishNotificationCallback
+  # include Concern::Callbacks::SphinxIndexCallback
+  # include Concern::Callbacks::TouchCallback
   include Concern::Methods::CommentMethods
   include Concern::Methods::AssetDisplayMethods
 
