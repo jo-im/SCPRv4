@@ -44,10 +44,10 @@ Scprv4::Application.configure do
     :remote  => "scprdb@66.226.4.229:~scprdb/mercer.dump"
   }
 
-  default_url_options[:host] = "staging.scprdev.org"
+  default_url_options[:host] = "scprv4-staging.scprdev.org"
 
   config.scpr.host         = "staging.scprdev.org"
-  config.scpr.media_root   = "/home/kpcc/media"
+  config.scpr.media_root   = "/scpr/media"
   config.scpr.media_url    = "http://media.scpr.org"
   config.scpr.resque_queue = :scprv4
 
