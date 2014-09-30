@@ -20,14 +20,17 @@ module Api::Public::V3
     #---------------------------
 
     def index
-      @episodes = @program ? @program.episodes : ShowEpisode.published
-      @episodes = @episodes.page(@page).per(@limit)
+      if @program
+        @episodes = @program.episodes
+      else
+        @episodes = ShowEpisode.published
+      end
 
       if @air_date
         @episodes = @episodes.for_air_date(@air_date)
       end
 
-      @episodes = @episodes.map(&:to_episode)
+      @episodes = @episodes.page(@page).per(@limit).map(&:to_episode)
       respond_with @episodes
     end
 
@@ -64,7 +67,7 @@ module Api::Public::V3
         @program = Program.find_by_slug(params[:program].to_s)
 
         if !@program
-          render_not_found(message: "Program not found. (#{params[:program]}")
+          render_not_found(message: "Program not found. (#{params[:program]})")
         end
       end
     end

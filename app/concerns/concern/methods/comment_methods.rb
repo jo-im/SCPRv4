@@ -15,6 +15,7 @@ module Concern
         "BlogEntry",
         "NewsStory",
         "ShowSegment",
+        "ShowEpisode",
         "Event"
       ]
 

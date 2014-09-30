@@ -21,21 +21,15 @@ class ProgramsController < ApplicationController
 
   def show
     if @program.is_a?(KpccProgram)
-      @segments = @program.segments.published
       @episodes = @program.episodes.published
 
       respond_with do |format|
         format.html do
-          if @program.is_episodic? && (@current_episode = @episodes.first)
+          if @current_episode = @episodes.first
             @episodes = @episodes.where.not(id: @current_episode.id)
-
-            segments = @current_episode.segments.published.to_a
-            @segments = @segments.where.not(id: segments.map(&:id))
           end
 
-          @segments = @segments.page(params[:page]).per(10)
           @episodes = @episodes.page(params[:page]).per(6)
-
           render 'programs/kpcc/show'
         end
 
@@ -89,7 +83,7 @@ class ProgramsController < ApplicationController
     @program = @kpcc_program = @segment.show.to_program
 
     # check whether this is the correct URL for the segment
-    if ( request.env['PATH_INFO'] =~ /\/\z/ ? request.env['PATH_INFO'] : "#{request.env['PATH_INFO']}/" ) != @segment.public_path
+    if request.original_fullpath != @segment.public_path
       redirect_to @segment.public_path and return
     end
 
@@ -102,7 +96,11 @@ class ProgramsController < ApplicationController
       @episode    = @program.episodes.find(params[:id])
       @segments   = @episode.segments.published
 
-      render 'programs/kpcc/episode' and return
+      if @program.is_segmented?
+        render 'programs/kpcc/episode' and return
+      else
+        render 'programs/kpcc/episode_standalone'
+      end
     end
 
     if @program.is_a?(ExternalProgram)
@@ -121,7 +119,7 @@ class ProgramsController < ApplicationController
 
       respond_with do |format|
         format.html do
-          if @program.is_episodic? && (@current_episode = @episodes.first)
+          if @current_episode = @episodes.first
             @episodes = @episodes.where.not(id: @current_episode.id)
 
             segments = @current_episode.segments.published.to_a

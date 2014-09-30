@@ -1,0 +1,32 @@
+<div class="episode content-block">
+  <div class="row-fluid">
+    <%= content_widget "social_sidebar", episode %>
+
+    <div class="span18 mq-solo-span">
+      <article>
+        <header>
+          <h5 class="episode-title">
+            <%= link_to episode.show.title, episode.show.public_path %>
+          </h5>
+          <h1 class="story-headline"><%= link_to episode.headline, episode.public_path %></h1>
+          <span class="byline">
+            <%= render_byline episode %> <span class="pipe">|</span> <%= timestamp(episode.published_at) %></time>
+          </span>
+        </header>
+
+        <div class="story-body">
+          <div class="visible-reader"><%= content_widget "primary_audio", episode, context: episode.show.slug %></div>
+          <%= render_asset episode %>
+          <%= episode.body.html_safe %>
+          <br style="clear: both"/>
+        </div>
+
+        <footer>
+          <div class="visible-reader"><%= content_widget "extra_audio", episode, context: episode.show.slug %></div>
+        </footer>
+      </article><!-- article -->
+
+      <%= content_widget "social_tools", episode, cssClass: "bottom horizontal", templateLayout: "old" %>
+    </div> <!-- span -->
+  </div> <!-- row fluid -->
+</div>

@@ -19,7 +19,7 @@ class NewsController < NewApplicationController
 
     @category = @story.category
 
-    if ( request.env['PATH_INFO'] =~ /\/\z/ ? request.env['PATH_INFO'] : "#{request.env['PATH_INFO']}/" ) != @story.public_path
+    if request.original_fullpath != @story.public_path
       redirect_to @story.public_path and return
     end
 

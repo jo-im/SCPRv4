@@ -10,8 +10,15 @@ xml.rss(RSS_SPEC) do
     }
 
     xml.description strip_tags(@program.description)
-    xml << render_content(@segments.first(15), "feedxml", {
-      :context => @program.slug
-    })
+
+    if @program.is_segmented?
+      xml << render_content(@program.segments.published.first(15), "feedxml", {
+        :context => @program.slug
+      })
+    else
+      xml << render_content(@episodes.first(15), "feedxml", {
+        :context => @program.slug
+      })
+    end
   end
 end
