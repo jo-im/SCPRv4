@@ -1,0 +1,186 @@
+<% add_to_page_title "Listen Live" %>
+
+<!-- 
+******************************************************************************************
+******************************************************************************************
+******************************************************************************************
+  ____                      _     ____                  _        ____        _        
+ |  _ \  ___  ___ ___ _ __ | |_  |  _ \ ___  ___  _ __ | | ___  |  _ \ _   _| | ___   
+ | | | |/ _ \/ __/ _ \ '_ \| __| | |_) / _ \/ _ \| '_ \| |/ _ \ | |_) | | | | |/ _ \  
+ | |_| |  __/ (_|  __/ | | | |_  |  __/  __/ (_) | |_) | |  __/ |  _ <| |_| | |  __/_ 
+ |____/ \___|\___\___|_| |_|\__| |_|   \___|\___/| .__/|_|\___| |_| \_\\__,_|_|\___(_)
+                                                 |_|                                                                  
+
+If you're viewing the source on this page, it probably means you're smart enough to know 
+how to find the direct URL to our pledge-free stream. And if you find it, it might occur
+to you how easy it would be to share that URL with a thousand people, some of whom may
+not financially support KPCC.
+
+We haven't made it hard to do an end-run around our member validation system, it's true. 
+That's intentional. We love our audience and trust them to do the right thing. Please 
+think twice before breaking that trust. Thanks.
+
+******************************************************************************************
+******************************************************************************************
+******************************************************************************************
+-->
+
+<style>
+  /* Fix IE height bug */
+  html, body {
+    height:100%;
+  }
+</style>
+
+<%= render "shared/new/document_header" %>
+
+<body class="listen-live">
+
+  <div class="wrapper">
+    <div class="wrapper-backdrop"></div>
+    <div class="wrapper-overlay"></div>
+
+    <%= render 'shared/new/layout_header' %>
+
+    <header class="header">
+      <div class="inner bound">
+        <section class="titling">
+          <h1 class="title">Pledge-Free Stream</h1>
+        </section>
+      </div>
+    </header>
+
+    <div class="player">
+      <div class="inner bound">
+        <div id="jquery_jplayer_1" class="jp-jplayer"></div>
+        <div id="jp_container_1" class="jp-audio">
+          <div class="jp-type-single clearfix">
+            <div class="jp-no-solution alert-message error">
+              <strong>Update Required</strong>
+              To play the media you will need to either update your browser to a recent version or update your <a href="http://get.adobe.com/flashplayer/" target="_blank">Flash plugin</a>.
+            </div>
+            <!-- put jp-stop first so it floats right properly when the widget switches to modal
+               On the normal layout, everything here is floated so it still gets pushed to the right properly -->
+
+            <div class="jp-gui jp-interface clearfix">
+              <div class="section-mid" id="llschedule">
+              </div> <!-- section-mid -->
+              <ul class="jp-controls clearfix">
+                <li><a href="javascript:;" class="jp-play">play</a></li>
+                <li><a href="javascript:;" class="jp-pause">pause</a></li>
+              </ul>
+              <div class="jp-progress">
+                  <div class="jp-current-time"></div>
+              </div> <!-- jp-progress -->
+              <div class="clearfix"></div>
+              <a href="#volume" class="volume-toggle player-toggle" data-state=".volume-controls">Volume</a>
+              <ul class="volume-controls" id="volume">
+                <li><a href="#" class="player-toggle" data-state=".volume-controls">Close</a></li>
+                <li><a href="javascript:;" class="jp-mute">mute</a></li>
+                <li><a href="javascript:;" class="jp-unmute">unmute</a></li>
+                <li class="volume-bar-wrapper">
+                  <div class="jp-volume-bar">
+                    <div class="jp-volume-bar-value"></div>
+                  </div>
+                </li>
+                <li><a href="javascript:;" class="jp-volume-max">max vol</a></li>
+              </ul>
+            </div> <!-- jp-gui -->
+
+          </div> <!-- jp-type-single -->
+        </div> <!-- jp-audio -->
+      </div> <!-- inner bound -->
+    </div> <!-- player -->
+
+    
+  </div>
+
+  <hr />
+
+  <aside class="schedule">
+    <div class="inner bound">
+      <div class="titling">
+        <h2 class="title">Coming up on KPCC</h2>
+      </div>
+      <table class="upcoming-schedule">
+        <thead>
+          <tr>
+            <th>Program</th>
+            <th>Time</th>
+          </tr>          
+        </thead>
+        <tbody>
+          <% @schedule.each do |occurrence| %>
+            <tr>
+              <% present occurrence, ScheduleOccurrencePresenter do |p| %>
+              <td class="show-title"><%= link_to p.title, p.public_url %></td>
+              <td class="show-airtime"><%= p.start_time %> - <%= p.end_time %></td>
+              <% end %>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+      <a href="#" class="player-toggle" data-state=".schedule">Close</a>
+    </div>
+  </aside>
+
+  <div class="inner bound">
+    <section class="ads placard">
+      <p class="appeal"><a href="/support/underwriting/">Become a KPCC Sponsor</a></p>
+
+      <%= render "shared/ads/dfp", ad_key: 'slot_live_a' %>
+      <%= render "shared/ads/dfp", ad_key: 'slot_live_b' %>
+      <%= render "shared/ads/dfp", ad_key: 'slot_live_c' %>
+    </section>
+  </div>
+
+  <footer class="footer">
+    <div class="inner bound">
+      <ul class="menu unstyled clearfix">
+        <li><a href="/terms/" target="_blank">Terms &amp; Conditions</a></li>
+        <li><a href="/privacy/" target="_blank">Privacy</a></li>
+        <li><a href="/web_site_feedback" target="_blank">Website Feedback</a></li>
+        <li>Copyright <%= Time.now.year %> &copy; Southern California Public Radio</li>
+      </ul>
+    </div>
+  </footer>
+
+<% content_for :footer do %>
+  <script>
+    llPlayer = new scpr.ListenLive.CurrentGen({
+      schedule:   <%= @schedule.map(&:listen_live_json).to_json.html_safe %>,
+      // THIS NEEDS TO BE UPDATED TO POINT TO THE PLEDGE-FREE STREAM
+      url: "http://live.scpr.org/kpccpfs"
+    })
+
+    scpr.Behaviors.loadBehaviors(['Layout']);
+
+    // Toggle player UI states
+    //  ------------------------------------------------
+    $('.player-toggle').click(function() {
+        $('.wrapper').toggleClass('backdrop');
+        
+        var target_element = $(this).data('state');
+        $(target_element).toggleClass('active');
+
+        event.preventDefault();
+    });
+
+    //  Clicks or taps?
+    //  ------------------------------------------------
+    function is_touch_device() {
+      return !!('ontouchstart' in window) // works on most browsers
+        || !!('onmsgesturechange' in window); // works on ie10
+    };
+
+    if ( is_touch_device() ) {
+      $('body').addClass('is-touch-device');
+    }
+
+
+  </script>
+
+  <%= render "shared/scripts/quantcast", page_title: 'Listen Live' %>
+<% end %>
+
+<%= render "shared/new/document_footer" %>
