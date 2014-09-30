@@ -1,7 +1,7 @@
 class MoveSegmentsToEpisodes < ActiveRecord::Migration
   def up
-    # add_column :shows_episode, :original_segment_id, :integer
-    # add_index :shows_episode, :original_segment_id
+    add_column :shows_episode, :original_segment_id, :integer
+    add_index :shows_episode, :original_segment_id
 
     KpccProgram.where(is_segmented: false).each do |program|
       program.segments.each do |segment|
