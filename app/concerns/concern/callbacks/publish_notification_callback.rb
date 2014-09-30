@@ -33,13 +33,6 @@ module Concern
             "Status Changed to #{self.status_text}: " \
             "#{self.to_title} (#{self.admin_edit_url})",
             "daily_web")
-
-
-        else
-          Job::PublishNotification.enqueue(
-            "Saved: #{self.to_title} (#{self.admin_edit_url})",
-            "daily_web")
-
         end
       end
     end

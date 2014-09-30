@@ -40,7 +40,7 @@
                         <li><a href="https://scprcontribute.publicradio.org/contribute.php">Pledge Now</a></li>
                     </ul>
                 </nav>
-                <h2>Short List <span>Weekend</span></h2>
+                <h2>Short List <span><%= @edition.short_list_type %></span></h2>
                 <time datetime="<%= format_date(@edition.published_at, with: '%F') %>" class="recents-toggle" aria-hidden="true"><span><%= @edition.published_at.day %></span></time>
             </div>
         </nav><!--/ .shortlist-ledge -->

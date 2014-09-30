@@ -24,9 +24,4 @@ describe Concern::Callbacks::PublishNotificationCallback do
     story.save!
   end
 
-  it "fires when status was not changed" do
-    story = create :test_class_story, :published
-    Job::PublishNotification.should_receive(:enqueue).with(/\ASaved/, "daily_web")
-    story.save!
-  end
 end

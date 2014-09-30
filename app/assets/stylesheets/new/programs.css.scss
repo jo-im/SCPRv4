@@ -673,6 +673,49 @@ The long two-column flow of recent content (segments and episodes, mostly).
 
   }// .segments
 
+
+  .podcast-appeal {
+    background: #3c9ecf;
+    color: white;
+    box-shadow: inset 0 38px 0 white;
+    font-family: $font-prox;
+    .inner {
+      background: image-url("i/model-the-frame.png") no-repeat right bottom;
+      background-size: auto 100%;
+      box-sizing: border-box;
+      padding: 60px 40.427927927928% 23px 2.364864864865%; // L: 21/888
+    }
+    .prose  { text-align: center; letter-spacing: -0.02em; text-shadow: 0 0 5px #3c9ecf, 0 0 5px #3c9ecf; }
+    h1      { font-size: 1.375em; line-height: 1.18; margin-bottom: 20px; }
+    ul      { overflow: hidden; }
+    li {
+      display: block;
+      float: left;
+      width: 31.496062992126%; // 160 / 508
+      margin-right: 2.55905511811%; // 13 / 508
+      font-size: 0.9375em;
+      line-height: 1.1;
+      font-weight: 700;
+      a {
+        display: block;
+        width: 100%;
+        box-sizing: border-box;
+        padding-top: 59px;
+        background: image-url("i/ephemera-program-podcast-feeds.png") no-repeat center top;
+        background-size: 52px 432px;
+        color: #b4e7ff;
+        &:hover           { color: white; background-position: center -72px; }
+      }
+      &.stitcher a        { background-position: center -144px; }
+      &.stitcher a:hover  { background-position: center -216px; }
+      &.any               { float: right; margin-right: 0; }
+      &.any a             { background-position: center -288px; }
+      &.any a:hover       { background-position: center -360px; }
+    }
+    span                  { display: block; border-top: 1px solid #66bbe5; padding-top: 4px; min-height: 2em; background: #3c9ecf; }
+  }
+
+
   .library {
     width: 23.153846153846%;
     float: right;
@@ -807,6 +850,50 @@ NEOTERIC MEDIA QUERIES
 ############################################################################### */
 
 .neoteric {
+//----------------------------------------------------------------------------------
+  @media screen and (max-width: 1359px) {
+
+    .podcast-appeal {
+      box-shadow: inset 0 20px 0 white;
+      .inner                        { padding-top: 40px; }
+      h1                            { font-size: 1.1875em; }
+    }
+
+  }
+//----------------------------------------------------------------------------------
+  @media screen and (max-width: 1200px) {
+
+    .podcast-appeal {
+      h1                            { font-size: 1em; }
+      li                            { font-size: 0.8125em; }
+    }
+
+  }
+//----------------------------------------------------------------------------------  
+  @media screen and (max-width: 999px) {
+
+    .podcast-appeal {
+      box-shadow: none;
+      .inner                        { padding: 20px 2.364864864865% 20px 2.364864864865%; background-size: 30% auto; }
+      ul                            { margin-right: 29%; }
+    }
+
+  }
+
+//----------------------------------------------------------------------------------  
+  @media screen and (max-width: 490px) {
+
+    .podcast-appeal {
+      .inner {
+        background-size: 180px auto;
+        background-position: right bottom;
+        padding: 20px 2.364864864865% 144px 2.364864864865%;
+      }
+      ul                            { margin-right: 0; }
+    }
+
+  }
+
 //----------------------------------------------------------------------------------
   @media screen and (max-width: 1100px) {
 
