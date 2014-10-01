@@ -17,30 +17,34 @@ class ListenController < ApplicationController
 
     if cookies[:member_session].present?
 
+      # render pledge-free stream page
       render layout: false
 
-    elsif params[:pledgeToken].present?
-      user = Parse::Query.new("PFSUser")
-      live_listener = user.eq("pledgeToken", params[:pledgeToken])
-      sustaining_member = live_listener.get.first
+    elsif params.has_key?(:pledgeToken)
 
-      # redirect to flat page
-      return redirect_to '/pledge-free/error' unless sustaining_member.present?
+      pledge_token = params[:pledgeToken]
+      parse_user_query = Parse::Query.new("PfsUser")
+      parse_user_query.eq("pledgeToken", params[:pledgeToken])
+      authorized_user = parse_user_query.get.first
 
-      sustaining_member["viewsLeft"] = Parse::Increment.new(-1)
-      sustaining_member.save
-      if sustaining_member["viewsLeft"] == 0
-        sustaining_member["pledgeToken"] = nil
-        sustaining_member.save
-      end
+      # redirect to flat page if we can't find a valid user
+      return redirect_to '/pledge-free/error' unless authorized_user.present?
+
+      authorized_user["viewsLeft"] = Parse::Increment.new(-1)
+      authorized_user.save
+      if authorized_user["viewsLeft"] == 0
+         authorized_user["pledgeToken"] = nil
+         authorized_user.save
+       end
       cookies[:member_session] = params[:pledgeToken]
       render layout: false
+
     end
   end
 
   private
 
   def require_pledge_token
-    redirect_to '/pledge-free/error' unless params[:pledgeToken].present? || cookies[:member_session].present?
+    redirect_to '/pledge-free/effu' unless params.has_key?(:pledgeToken) || cookies[:member_session].present?
   end
 end
