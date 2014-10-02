@@ -2,6 +2,6 @@
   <div class="social-sidebar">
     <%= content_widget "social_tools", article, cssClass: "vertical left" %>
     <%= comment_widget_for article, cssClass: 'left-side' %>
-    <%= content_widget "audio", article %>
+    <%= content_widget "audio", article, options[:audio_options] || {} %>
   </div>
 </div>

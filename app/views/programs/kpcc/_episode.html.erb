@@ -1,6 +1,6 @@
 <div class="episode content-block">
   <div class="row-fluid">
-    <%= content_widget "social_sidebar", episode %>
+    <%= content_widget "social_sidebar", episode, audio_options: { context: episode.show.slug } %>
 
     <div class="span18 mq-solo-span">
       <article>
