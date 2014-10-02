@@ -21,7 +21,7 @@
 </header>
 
 <section class="show-segments episode">
-<%= any_to_list? @segments, title: "Segments" do %>
+<% if @segments.present? %>
   <%= cache ["segment-teasers", @segments.to_a] do %>
     <% @segments.each do |segment| %>
       <div class="teaser cbase">

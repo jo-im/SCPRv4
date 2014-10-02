@@ -9,8 +9,8 @@ describe BroadcastBarPresenter do
       p.show_modal?.should eq false
     end
 
-    it 'is false if programs is_episodic is false' do
-      program   = build :kpcc_program, is_episodic: false
+    it 'is false if programs is_segmented is false' do
+      program   = build :kpcc_program, is_segmented: false
       slot      = build :schedule_occurrence, :recurring, program: program
       p         = presenter(slot)
 
@@ -18,7 +18,7 @@ describe BroadcastBarPresenter do
     end
 
     it 'is true for recurring episodic kpcc programs' do
-      program   = build :kpcc_program, is_episodic: true
+      program   = build :kpcc_program, is_segmented: true
       slot      = build :schedule_occurrence, :recurring, program: program
       p         = presenter(slot)
 

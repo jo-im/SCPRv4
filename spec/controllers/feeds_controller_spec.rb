@@ -43,7 +43,7 @@ describe FeedsController do
 
   describe "GET /take_two" do
     before :each do
-      take_two = create :kpcc_program, is_episodic: false, slug: 'take-two'
+      take_two = create :kpcc_program, is_segmented: false, slug: 'take-two'
       episode = create :show_episode, :published, show: take_two
       segment = create_list :show_rundown, 2, episode: episode
     end

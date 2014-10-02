@@ -99,9 +99,9 @@ class ExternalProgram < ActiveRecord::Base
       :rss_url            => self.get_link('rss'),
       :episodes           => self.external_episodes.order("air_date desc"),
       :segments           => self.external_segments.order("published_at desc"),
-      # External Programs are always assumed to have episodes.
+      # External Programs are always assumed to be segmented.
       # Maybe this isn't always the case, but this is okay for now.
-      :is_episodic   => true
+      :is_segmented   => true
     })
   end
 

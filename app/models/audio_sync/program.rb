@@ -55,14 +55,7 @@ module AudioSync
               date = Time.zone.local(match[:year], match[:month], match[:day])
 
               # Figure out what type of content we should attach the audio to.
-              if program.is_episodic?
-                content = program.episodes.for_air_date(date)
-              else
-                content = program.segments.where(
-                  published_at: date..date.end_of_day)
-              end
-
-              content = content.includes(:audio).first
+              content = program.episodes.for_air_date(date).includes(:audio).first
 
               # Compile the URL for this audio
               url = Audio.url(program.audio_dir, file)

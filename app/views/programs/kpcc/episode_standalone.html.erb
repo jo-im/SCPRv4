@@ -1,0 +1,23 @@
+<% add_to_page_title @episode.headline %>
+<%= render_content @episode, "opengraph" %>
+
+<%= cache ["show", "v1", @episode] do %>
+  <%= render "programs/kpcc/episode", episode: @episode %>
+<% end %>
+
+<div class="fold" id="fold">
+  <%= render "shared/related_content_and_links", content: @episode %>
+
+  <div class="comment-wrap">
+    <div class="row-fluid">
+      <div class="span6 row-title" id="fold-comments-count-widget">
+        <%= comment_widget_for @episode, cssClass: "left-side", name: "comments" %>
+      </div>
+      <div class="span18 mq-solo-span">
+        <%= comments_for @episode, header: false , templateLayout: "old" %>
+      </div>
+    </div> <!-- row-fluid -->
+  </div>
+</div>
+
+<%= render 'shared/scripts/embedder' %>
