@@ -94,6 +94,8 @@ class ShowEpisode < ActiveRecord::Base
   before_save :generate_headline,
     :if => -> { self.headline.blank? }
 
+  before_save :generate_body, if: -> { self.body.blank? && should_validate? }
+
 
   def needs_validation?
     self.pending? || self.published?
@@ -156,6 +158,10 @@ class ShowEpisode < ActiveRecord::Base
       self.headline = "#{self.show.title} for " \
         "#{self.air_date.strftime("%B %-d, %Y")}"
     end
+  end
+
+  def generate_body
+    self.body = self.teaser
   end
 
   def build_rundown_association(rundown_hash, segment)

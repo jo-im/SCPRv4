@@ -128,4 +128,10 @@ describe ShowEpisode do
     end
   end
 
+  describe 'body generate' do
+    it 'generates a body if it is blank on publish' do
+      episode = create :show_episode, :published, body: "", teaser: "hello"
+      episode.body.should eq "hello"
+    end
+  end
 end
