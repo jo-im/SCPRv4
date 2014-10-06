@@ -65,12 +65,4 @@ describe ShowSegment do
       segment.to_abstract.should be_a Abstract
     end
   end
-
-  describe '#to_episode' do
-    it 'is a lame workaround' do
-      segment = build :show_segment
-      segment.to_episode.should be_a Episode
-      segment.to_episode.segments.should eq Array(segment) # lol
-    end
-  end
 end

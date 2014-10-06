@@ -37,11 +37,11 @@ Scprv4::Application.routes.draw do
 
   # Programs / Segments
   # This route is hard-coded for the launch of The Frame. We can remove this as soon as other shows get the same featured program red-carpet treatment.
-  get '/programs/:show'            => "programs#featured_program", constraints: { show: /the-frame/ }
+  get '/programs/:show' => "programs#featured_program", constraints: { show: /the-frame/ }
   # This route is for displaying a clone of the old layout for featured programs for an index of episodes and segments
-  get '/programs/:show/featured'            => "programs#featured_show", as: :featured_show
+  get '/programs/:show/featured' => "programs#featured_show", as: :featured_show
   # Legacy route for old Episode URLs
-  get '/programs/:show/:year/:month/:day/'            => "programs#episode",                            constraints: { year: /\d{4}/, month: /\d{2}/, day: /\d{2}/ }
+  get '/programs/:show/:year/:month/:day/' => "programs#episode", constraints: { year: /\d{4}/, month: /\d{2}/, day: /\d{2}/ }
 
   get '/programs/:show/archive/'                      => redirect("/programs/%{show}/#archive")
   post '/programs/:show/archive/'                     => "programs#archive",    as: :program_archive
@@ -254,7 +254,6 @@ Scprv4::Application.routes.draw do
     resources :featured_comments, concerns: [:search]
     resources :quotes, concerns: [:search]
     resources :data_points, concerns: [:search]
-    resources :show_episodes, concerns: [:search]
     resources :bios, concerns: [:search]
     resources :press_releases, concerns: [:search]
     resources :abstracts, concerns: [:search]
@@ -265,6 +264,7 @@ Scprv4::Application.routes.draw do
     resources :homepages, concerns: [:preview, :search]
     resources :pij_queries, concerns: [:preview, :search]
     resources :flatpages, concerns: [:preview, :search]
+    resources :show_episodes, concerns: [:preview, :search]
     resources :show_segments, concerns: [:preview, :search]
     resources :news_stories, concerns: [:preview, :search]
     resources :blog_entries, concerns: [:preview, :search]

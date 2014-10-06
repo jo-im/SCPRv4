@@ -60,22 +60,4 @@ describe Program do
       .map(&:to_program).sort
     end
   end
-
-  describe '#uses_segments_as_episodes?' do
-    it 'is false if it shows episodes' do
-      program = Program.new({
-        :is_episodic => true
-      })
-
-      program.uses_segments_as_episodes?.should eq false
-    end
-
-    it 'is true if it does not show episodes, and shows segments' do
-      program = Program.new({
-        :is_episodic => false
-      })
-
-      program.uses_segments_as_episodes?.should eq true
-    end
-  end
 end

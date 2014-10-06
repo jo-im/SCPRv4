@@ -1,11 +1,4 @@
 GIT
-  remote: git://github.com/SCPR/redis-content-store.git
-  revision: a8bb4368588df8f13b0f427c5cef39f68fa36b64
-  specs:
-    redis-content-store (0.2.0)
-      redis-activesupport (>= 3.2.0, < 5)
-
-GIT
   remote: git://github.com/sheerun/parse-ruby-client.git
   revision: a4eb5618c8167e88857b449cd522b23a8b0c02e9
   ref: a4eb5618c8167e88857b449cd522b23a8b0c02e9
@@ -14,6 +7,13 @@ GIT
       faraday
       faraday_middleware
       yajl-ruby
+
+GIT
+  remote: git://github.com/SCPR/redis-content-store.git
+  revision: a8bb4368588df8f13b0f427c5cef39f68fa36b64
+  specs:
+    redis-content-store (0.2.0)
+      redis-activesupport (>= 3.2.0, < 5)
 
 GEM
   remote: https://rubygems.org/

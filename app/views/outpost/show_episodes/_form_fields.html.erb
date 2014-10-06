@@ -5,7 +5,10 @@
 
 <%= form_block "Details" do %>
   <%= f.input :headline, input_html: { class: "wide" } %>
-  <%= f.input :body, label: "Teaser", input_html: { class: "tiny" }, wrapper_html: { class: "field-counter", data: { target: 145, fuzziness: 20 } } %>
+  <%= f.input :teaser, input_html: { class: "tiny" }, wrapper_html: { class: "field-counter", data: { target: 145, fuzziness: 20 } } %>
+
+  <div class="alert alert-info">The body is optional and unnecessary for segmented programs. Segmented programs include Airtalk, Take Two, etc. Non-segmented programs, such as Filmweek or Loh Down on Science, should use this field.</div>
+  <%= f.input :body, input_html: { class: "cke-editor-restrictive" } %>
 <% end %>
 
 <%= form_block "Segments" do %>
@@ -15,13 +18,14 @@
     <% end %>
   </div>
 
-  <div id="aggregator" class="aggregator"></div>
+  <div class="alert alert-info">Segments are optional and only necessary if your program is split into segments for web (Airtalk, Take Two, etc.). Non-segmented programs, such as Filmweek and Loh Down on Science, should leave this section empty.</div>
+  <div id="segmented-aggregator" class="aggregator"></div>
   <%= f.input :rundowns_json, as: :hidden, input_html: { id: "rundowns_json" } %>
 
   <% content_for :footer do %>
     <script>
       aggregator = new outpost.Aggregator(
-        "#aggregator", "#rundowns_json",
+        "#segmented-aggregator", "#rundowns_json",
         <%= render_json('api/private/v2/articles/collection', articles: record.segments.map(&:to_article)) %>,
         {
           apiType: "private",
@@ -44,3 +48,5 @@
 <%= f.section "publishing" %>
 <%= f.section "assets" %>
 <%= f.section "audio" %>
+<%= f.section 'related_links' %>
+<%= f.section 'related_content' %>

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140909004350) do
+ActiveRecord::Schema.define(version: 20141002090502) do
 
   create_table "abstracts", force: true do |t|
     t.string   "source"
@@ -640,20 +640,20 @@ ActiveRecord::Schema.define(version: 20140909004350) do
   add_index "program_reporters", ["program_id"], name: "index_program_reporters_on_program_id", using: :btree
 
   create_table "programs_kpccprogram", force: true do |t|
-    t.string   "slug",                                         null: false
-    t.string   "title",                                        null: false
-    t.text     "teaser",      limit: 16777215
-    t.text     "description", limit: 16777215
+    t.string   "slug",                                          null: false
+    t.string   "title",                                         null: false
+    t.text     "teaser",       limit: 16777215
+    t.text     "description",  limit: 16777215
     t.string   "host"
     t.string   "airtime"
-    t.string   "air_status",                                   null: false
-    t.text     "sidebar",     limit: 16777215
-    t.boolean  "is_episodic",                  default: true,  null: false
+    t.string   "air_status",                                    null: false
+    t.text     "sidebar",      limit: 16777215
+    t.boolean  "is_segmented",                  default: true,  null: false
     t.integer  "blog_id"
     t.string   "audio_dir"
-    t.datetime "created_at",                                   null: false
-    t.datetime "updated_at",                                   null: false
-    t.boolean  "is_featured",                  default: false, null: false
+    t.datetime "created_at",                                    null: false
+    t.datetime "updated_at",                                    null: false
+    t.boolean  "is_featured",                   default: false, null: false
     t.integer  "quote_id"
   end
 
@@ -739,17 +739,22 @@ ActiveRecord::Schema.define(version: 20140909004350) do
   add_index "schedule_occurrences", ["updated_at"], name: "index_schedule_occurrences_on_updated_at", using: :btree
 
   create_table "shows_episode", force: true do |t|
-    t.integer  "show_id",                         null: false
+    t.integer  "show_id",                                null: false
     t.datetime "air_date"
     t.string   "headline"
-    t.text     "body",         limit: 2147483647
+    t.text     "teaser",              limit: 2147483647
     t.datetime "published_at"
-    t.integer  "status",                          null: false
-    t.datetime "created_at",                      null: false
-    t.datetime "updated_at",                      null: false
+    t.integer  "status",                                 null: false
+    t.datetime "created_at",                             null: false
+    t.datetime "updated_at",                             null: false
+    t.text     "body"
+    t.integer  "asset_display_id"
+    t.integer  "original_segment_id"
   end
 
   add_index "shows_episode", ["air_date"], name: "index_shows_episode_on_air_date", using: :btree
+  add_index "shows_episode", ["asset_display_id"], name: "index_shows_episode_on_asset_display_id", using: :btree
+  add_index "shows_episode", ["original_segment_id"], name: "index_shows_episode_on_original_segment_id", using: :btree
   add_index "shows_episode", ["published_at"], name: "index_shows_episode_on_published_at", using: :btree
   add_index "shows_episode", ["show_id"], name: "shows_episode_show_id", using: :btree
   add_index "shows_episode", ["status", "published_at"], name: "index_shows_episode_on_status_and_published_at", using: :btree

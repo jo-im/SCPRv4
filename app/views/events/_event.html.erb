@@ -1,7 +1,7 @@
 <% present event do |p| %>
 <div class="event content-block">
   <div class="row-fluid">
-    <%= content_widget "social_sidebar", event %>
+    <%= content_widget "social_sidebar", event, audio_options: { context: 'event' } %>
 
     <div class="span18 mq-solo-span" id="events-event-detail">
       <article>

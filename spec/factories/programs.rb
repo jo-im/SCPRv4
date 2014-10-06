@@ -8,11 +8,6 @@ FactoryGirl.define do
     air_status "onair"
 
     audio_dir "airtalk" # lazy
-
-    trait :episodic do
-      is_episodic 1
-    end
-
   end
 
   factory :program_article do
@@ -30,5 +25,4 @@ FactoryGirl.define do
     kpcc_program
     bio
   end
-
 end

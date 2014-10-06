@@ -17,24 +17,17 @@ module Api::Public::V2
 
     MAX_RESULTS = 8
 
-    #---------------------------
-    # This is a disaster.
     def index
       if @program
-        if @program.uses_segments_as_episodes?
-          @episodes = @program.segments
-          filter_segments_by_published_at_date if @air_date
-        else
-          @episodes = @program.episodes
-          filter_episodes_by_air_date if @air_date
-        end
+        @episodes = @program.episodes
       else
         @episodes = ShowEpisode.published
-        filter_episodes_by_air_date if @air_date
       end
 
-      # If these two things are true, then we can assume that the program
-      # uses segments as its episodes (filmweek, business update, etc.)
+      if @air_date
+        @episodes = @episodes.for_air_date(@air_date)
+      end
+
       @episodes = @episodes.page(@page).per(@limit).map(&:to_episode)
       respond_with @episodes
     end
@@ -72,7 +65,7 @@ module Api::Public::V2
       @program = Program.find_by_slug(params[:program].to_s)
 
       if !@program
-        render_not_found(message: "Program not found. (#{params[:program]}")
+        render_not_found(message: "Program not found. (#{params[:program]})")
       end
     end
 

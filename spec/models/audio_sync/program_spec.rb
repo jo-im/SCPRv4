@@ -4,7 +4,7 @@ describe AudioSync::Program do
   describe "::bulk_sync" do
     let(:program) do
       create :kpcc_program,
-        :is_episodic        => true,
+        :is_segmented        => true,
         :audio_dir          => "coolshowbro",
         :air_status         => "onair"
     end
@@ -14,10 +14,6 @@ describe AudioSync::Program do
       episode = create :show_episode,
         :air_date   => Time.zone.local(2012, 10, 2),
         :show       => program
-
-      segment = create :show_segment, :published,
-        :published_at   => Time.zone.local(2012, 10, 2),
-        :show           => program
 
       KpccProgram.can_sync_audio.count.should eq 1
     end
@@ -98,31 +94,6 @@ describe AudioSync::Program do
 
         expect { AudioSync::Program.bulk_sync }
         .not_to change { Audio.count }
-      end
-    end
-
-
-    context "for segment" do
-      before do
-        program.update_attributes(is_episodic: false)
-
-        Dir.should_receive(:foreach)
-        .with(File.join(Audio::AUDIO_PATH_ROOT, program.audio_dir))
-        .and_return(["20121002_mbrand.mp3"])
-
-        File.should_receive(:mtime)
-        .with(
-          File.join(Audio::AUDIO_PATH_ROOT, "coolshowbro/20121002_mbrand.mp3")
-        ).and_return(Time.zone.now) # File new
-      end
-
-      it "creates the audio" do
-        expect { AudioSync::Program.bulk_sync }.to change { Audio.count }.by(1)
-      end
-
-      it "adds the audio to the segment" do
-        expect { AudioSync::Program.bulk_sync }
-        .to change { program.segments.first.audio.count }.by(1)
       end
     end
   end

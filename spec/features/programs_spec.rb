@@ -28,8 +28,8 @@ end
 
 describe "Program page" do
   context "for KPCC program" do
-    it "shows the current episode if is_episodic is true" do
-      program = create :kpcc_program, is_episodic: true
+    it "shows the current episode" do
+      program = create :kpcc_program, is_segmented: true
       episode = create :show_episode, show: program, headline: "xxCurrentEpisode--"
 
       visit program.public_path
@@ -39,8 +39,8 @@ describe "Program page" do
       end
     end
 
-    it "shows the list of episodes if is_episodic is true" do
-      program = create :kpcc_program, is_episodic: true
+    it "shows the list of episodes if is_segmented is true" do
+      program = create :kpcc_program, is_segmented: true
 
       episode = create :show_episode,
         :show           => program,

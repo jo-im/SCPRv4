@@ -9,11 +9,18 @@ class ShowEpisode < ActiveRecord::Base
   include Concern::Associations::ContentAlarmAssociation
   include Concern::Associations::AudioAssociation
   include Concern::Associations::AssetAssociation
+  include Concern::Associations::RelatedContentAssociation
+  include Concern::Associations::RelatedLinksAssociation
+  include Concern::Associations::BylinesAssociation
+  include Concern::Associations::EditionsAssociation
   include Concern::Callbacks::SetPublishedAtCallback
   include Concern::Callbacks::CacheExpirationCallback
   include Concern::Callbacks::PublishNotificationCallback
   include Concern::Callbacks::SphinxIndexCallback
   include Concern::Callbacks::TouchCallback
+  include Concern::Methods::CommentMethods
+  include Concern::Methods::AssetDisplayMethods
+
 
   self.public_route_key = "episode"
 
@@ -81,16 +88,13 @@ class ShowEpisode < ActiveRecord::Base
 
   validates :show, presence: true
   validates :status, presence: true
+  validates :teaser, presence: true, if: :should_validate?
   validates :air_date, presence: true, if: :should_validate?
-
-  validates :body, :presence => {
-    :message => "can't be blank when publishing",
-    :if      => :should_validate?
-  }
-
 
   before_save :generate_headline,
     :if => -> { self.headline.blank? }
+
+  before_save :generate_body, if: -> { self.body.blank? && should_validate? }
 
 
   def needs_validation?
@@ -103,7 +107,6 @@ class ShowEpisode < ActiveRecord::Base
   end
 
 
-  # For podcasts
   def to_article
     @to_article ||= Article.new({
       :original_object    => self,
@@ -112,7 +115,7 @@ class ShowEpisode < ActiveRecord::Base
       :short_title        => self.headline,
       :public_datetime    => self.published_at,
       :body               => self.body,
-      :teaser             => self.body,
+      :teaser             => self.teaser,
       :assets             => self.assets,
       :audio              => self.audio.available,
       :byline             => self.show.title,
@@ -138,7 +141,7 @@ class ShowEpisode < ActiveRecord::Base
       :original_object    => self,
       :id                 => self.obj_key,
       :title              => self.headline,
-      :summary            => self.body,
+      :summary            => self.teaser,
       :air_date           => self.air_date,
       :assets             => self.assets,
       :audio              => self.audio.available,
@@ -155,6 +158,10 @@ class ShowEpisode < ActiveRecord::Base
       self.headline = "#{self.show.title} for " \
         "#{self.air_date.strftime("%B %-d, %Y")}"
     end
+  end
+
+  def generate_body
+    self.body = self.teaser
   end
 
   def build_rundown_association(rundown_hash, segment)

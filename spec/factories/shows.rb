@@ -13,7 +13,8 @@ FactoryGirl.define do
 
   factory :show_episode do
     sequence(:headline) { |n| "Some Content #{n}" }
-    body    { "Body for #{headline}" }
+    body { "Body for #{headline}" }
+    teaser { "Teaser for #{headline}" }
 
     sequence(:air_date) { |n| Time.zone.now + 60*60*24*n }
 

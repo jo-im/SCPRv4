@@ -1,6 +1,8 @@
 require "spec_helper"
 
 describe ProgramsController do
+  render_views
+
   describe "GET /archive" do
     it "finds the episode for the program on the given date" do
       episode = create :show_episode, air_date: Time.zone.local(2012, 3, 22)
@@ -84,7 +86,7 @@ describe ProgramsController do
   describe "GET /show" do
     context "KPCC Program" do
       before do
-        @program = create :kpcc_program, is_episodic: false
+        @program = create :kpcc_program, is_segmented: false
       end
 
       it "sets @program" do
@@ -92,25 +94,26 @@ describe ProgramsController do
         assigns(:program).should eq @program
       end
 
-      it "assigns @segments to published segments" do
-        published = create_list :show_segment, 2, :published, show: @program
-        unpublished = create_list :show_segment, 2, :draft, show: @program
+      it "assigns @current_episode to the latest episode" do
+        published1 = create :show_episode, :published, show: @program, air_date: 1.day.ago
+        published2 = create :show_episode, :published, show: @program, air_date: 1.week.ago
 
         get :show, show: @program.slug
-        assigns(:segments).sort.should eq published.sort
+        assigns(:current_episode).should eq published1
       end
 
-      it "assigns @episodes to published episodes" do
-        published = create_list :show_episode, 2, :published, show: @program
+      it "assigns @episodes to published episodes except the current one" do
+        published1 = create :show_episode, :published, show: @program, air_date: 1.day.ago
+        published2 = create :show_episode, :published, show: @program, air_date: 1.week.ago
         unpublished = create_list :show_episode, 2, :draft, show: @program
 
         get :show, show: @program.slug
-        assigns(:episodes).sort.should eq published.sort
+        assigns(:episodes).should eq [published2]
       end
 
       context "html" do
         it "excludes current episode and its segments from @episodes" do
-          @program.update_column(:is_episodic, true)
+          @program.update_column(:is_segmented, true)
 
           episode = build :show_episode, :published,
             :show => @program,
@@ -127,7 +130,6 @@ describe ProgramsController do
           get :show, show: @program.slug
 
           assigns(:episodes).should_not include episode
-          assigns(:segments).should_not include segment
           assigns(:current_episode).should eq episode
         end
 
@@ -142,6 +144,22 @@ describe ProgramsController do
           get :show, show: @program.slug, format: :xml
           response.should render_template 'programs/kpcc/show'
           response.header['Content-Type'].should match /xml/
+        end
+
+        it "renders segments for segmented programs" do
+          program = create :kpcc_program, is_segmented: true
+          segment = create :show_segment, :published, show: program, headline: "--Helloxx"
+          get :show, show: program.slug, format: :xml
+
+          response.body.should match "--Helloxx"
+        end
+
+        it "renders episodes for non-segmented programs" do
+          program = create :kpcc_program, is_segmented: false
+          episode = create :show_episode, :published, show: program, headline: "--Helloxx"
+          get :show, show: program.slug, format: :xml
+
+          response.body.should match "--Helloxx"
         end
       end
     end

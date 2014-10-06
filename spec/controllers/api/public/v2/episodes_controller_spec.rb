@@ -31,14 +31,6 @@ describe Api::Public::V2::EpisodesController do
       assigns(:episodes).should eq [episode1].map(&:to_episode)
     end
 
-    it 'uses the segments if the program uses_segments_as_episodes? is true' do
-      program = create :kpcc_program, is_episodic: false
-      segment = create :show_segment, show: program
-
-      get :index, { program: program.slug }.merge(request_params)
-      assigns(:episodes).should eq [segment].map(&:to_episode)
-    end
-
     it "returns the latest KPCC episodes by default" do
       kpcc_episodes       = create_list :show_episode, 2
       external_episodes   = create_list :external_episode, 2
@@ -55,9 +47,17 @@ describe Api::Public::V2::EpisodesController do
       assigns(:episodes).should eq [published].map(&:to_episode)
     end
 
+    it "encapsulates the episode into a segment for non-segmented programs" do
+      program = create :kpcc_program, is_segmented: false
+      episode = create :show_episode, :published, show: program, headline: "--Helloxx"
+
+      get :index, { program: program.slug }.merge(request_params)
+      JSON.parse(response.body).first['segments'].first['title'].should eq "--Helloxx"
+    end
+
     it 'can filter by program slug' do
-      program1 = create :kpcc_program, :episodic, slug: 'hello'
-      program2 = create :kpcc_program, :episodic,  slug: 'goodbye'
+      program1 = create :kpcc_program, is_segmented: true, slug: 'hello'
+      program2 = create :kpcc_program, is_segmented: true,  slug: 'goodbye'
 
       episode1 = create :show_episode, show: program1
       episode2 = create :show_episode, show: program2
@@ -67,7 +67,7 @@ describe Api::Public::V2::EpisodesController do
     end
 
     it 'sorts the episodes by descending air_date for kpcc programs' do
-      program   = create :kpcc_program,is_episodic: true
+      program   = create :kpcc_program, is_segmented: true
       episode2  = create :show_episode, show: program, air_date: Time.zone.now.yesterday
       episode1  = create :show_episode, show: program, air_date: Time.zone.now.tomorrow
 
@@ -104,14 +104,6 @@ describe Api::Public::V2::EpisodesController do
 
       get :index, { program: program.slug, air_date: "2013-06-25" }.merge(request_params)
       assigns(:episodes).should eq [episode1, episode2].map(&:to_episode)
-    end
-
-    it 'can filter by air date for segmented programs' do
-      program = create :kpcc_program, is_episodic: false
-      segment = create :show_segment, show: program, published_at: Time.zone.local(2013, 6, 25)
-
-      get :index, { program: program.slug, air_date: "2013-06-25" }.merge(request_params)
-      assigns(:episodes).should eq [segment].map(&:to_episode)
     end
 
     it "sanitizes the limit" do

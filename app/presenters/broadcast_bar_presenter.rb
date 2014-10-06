@@ -1,7 +1,6 @@
 class BroadcastBarPresenter < ScheduleOccurrencePresenter
   def show_modal?
-    return false if !program.respond_to?(:is_episodic)
-    !!program.try(:is_episodic)
+    program.respond_to?(:is_segmented) && program.is_segmented?
   end
 
   def is_for_featured_program?

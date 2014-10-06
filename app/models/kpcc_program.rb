@@ -109,7 +109,7 @@ class KpccProgram < ActiveRecord::Base
       :segments           => self.segments.published,
       :blog               => self.blog,
       :is_featured        => self.is_featured?,
-      :is_episodic        => self.is_episodic?
+      :is_segmented       => self.is_segmented?
     })
   end
 

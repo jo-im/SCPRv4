@@ -44,10 +44,10 @@ class Program
     :segments,
     :blog,
     :is_featured,
-    :is_episodic
+    :is_segmented
 
   alias_method :is_featured?, :is_featured
-  alias_method :is_episodic?, :is_episodic
+  alias_method :is_segmented?, :is_segmented
 
 
   def initialize(attributes={})
@@ -65,13 +65,13 @@ class Program
     @blog             = attributes[:blog]
 
     # Force to boolean
-    @is_featured      = !!attributes[:is_featured]
-    @is_episodic = !!attributes[:is_episodic]
+    @is_featured  = !!attributes[:is_featured]
+    @is_segmented  = !!attributes[:is_segmented]
 
     # Don't force these into an array, so it doesn't load ALL
     # of the episodes/segments (which could be thousands).
-    @episodes         = attributes[:episodes]
-    @segments         = attributes[:segments]
+    @episodes   = attributes[:episodes]
+    @segments   = attributes[:segments]
   end
 
   def to_program
@@ -84,12 +84,5 @@ class Program
     if self.original_object
       self.original_object.get_link(type)
     end
-  end
-
-  # This is lame but necessary
-  # Some programs (filmweek, business update) don't use
-  # episodes, but instead use Segments as their "episodes".
-  def uses_segments_as_episodes?
-    !self.is_episodic?
   end
 end
