@@ -150,7 +150,7 @@ think twice before doing anything that might break that trust. Thanks.
     llPlayer = new scpr.ListenLive.CurrentGen({
       schedule:   <%= @schedule.map(&:listen_live_json).to_json.html_safe %>,
       // THIS NEEDS TO BE UPDATED TO POINT TO THE PLEDGE-FREE STREAM
-      url: "http://live.scpr.org/kpccpfs"
+      url: "http://live.scpr.org/"
     })
 
     scpr.Behaviors.loadBehaviors(['Layout']);
