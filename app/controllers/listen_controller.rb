@@ -35,7 +35,7 @@ class ListenController < ApplicationController
       if authorized_user["viewsLeft"] == 0
          authorized_user["pledgeToken"] = nil
          authorized_user.save
-       end
+      end
       cookies[:member_session] = params[:pledgeToken]
       render layout: false
 
