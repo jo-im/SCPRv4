@@ -18,7 +18,6 @@ class FeedsController < ApplicationController
     @content = ContentBase.search({
       :classes    => [NewsStory, ContentShell, BlogEntry, ShowSegment],
       :limit      => 15,
-      :with       => { is_source_kpcc: true },
       :without    => { category: false }
     })
 
