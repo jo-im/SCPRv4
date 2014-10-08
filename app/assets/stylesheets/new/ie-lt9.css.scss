@@ -97,3 +97,17 @@ body.education.interior .masthead .titling h1 a     { background-image: image-ur
 .audio-player                                       { background: #ececec; border-top: 1px solid gray; }
 .audio-player button                                { background-image: image-url("i/1x/audio-player-utilities.png"); }
 
+.listen-live .masthead,
+.listen-live .player .volume-toggle,
+.listen-live .player .schedule-toggle,
+.listen-live .schedule,
+.listen-live .volume-controls                       { display: none; }
+
+.listen-live .player {
+  .jp-pause,
+  .jp-play                                          { background: transparent; }
+}
+
+.listen-live .wrapper-overlay                       { filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#99000000', endColorstr='#99000000',GradientType=0 ); }
+.listen-live .titling                               { border-bottom: 1px solid #fff; }
+.listen-live .player a                              { color: #fff; }
