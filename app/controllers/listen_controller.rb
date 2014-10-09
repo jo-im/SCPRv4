@@ -36,7 +36,7 @@ class ListenController < ApplicationController
          authorized_user["pledgeToken"] = nil
          authorized_user.save
       end
-      cookies[:member_session] = params[:pledgeToken]
+      cookies.permanent[:member_session] = params[:pledgeToken]
       render layout: false
 
     end
