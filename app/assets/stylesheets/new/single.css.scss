@@ -982,7 +982,7 @@ body.single .comments {
             }
             .prose {
                 width: 61%; // had been 48.923076923077
-                p:first-child   { width: 100%; }
+                p:first-of-type   { width: 100%; }
             }
             .comments-trigger   { width: 122%; }
             .asset-inset        { width: 40%; margin: 0 -10% 30px 7.075471698113%; }
