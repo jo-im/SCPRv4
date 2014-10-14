@@ -1,3 +1,5 @@
+<%= content_for(:body_class, "single") %>
+
 <% article = @entry.to_article %>
 <% if article.original_object.asset_display == :slideshow %>
     <%= render 'shared/new/assets/slideshow', article: article %>
