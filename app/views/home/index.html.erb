@@ -19,10 +19,16 @@
 <% end %> <%# homepage? %>
 
 <% if @featured_comment %>
+<!--   
   <div class="join-conversation-container home">
     <%= render 'shared/featured_comment/home', comment: @featured_comment %>
-  </div>
+  </div> 
+-->
 <% end %>
+
+<!-- Render scaffold for Short List Partial -->
+<%= render 'short_list_tease' %>
+
 
 <div class="more-content">
   <div class="row-fluid">
