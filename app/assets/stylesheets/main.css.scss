@@ -632,9 +632,77 @@ First version by JPW on 10-14-2014.
             img       { width: 100%; height: auto; display: block; margin-top: -8%; }
         }
     }
-    figcaption        { font: normal 700 1.375em/1.15 "proxima-nova-condensed", Helvetica, sans-serif; }
+    figcaption {
+      line-height: 1;
+      span {
+        font: normal 700 1.375em/1 "proxima-nova-condensed", Helvetica, sans-serif;
+        background: aqua;
+        padding-right: 10px;
+      }
+      mark {
+        background: orange;
+        color: #b24401;
+        text-transform: uppercase;
+        font: normal 700 0.625em/1 "proxima-nova", Helvetica, sans-serif;
+        white-space: nowrap;
+        display: inline-block;
+      }
+    }
   }
-  .enlistment     { display: none; } // for now
+  .enlistment {
+    display: none;
+    background: #004470;
+    box-shadow:
+      inset 0 3px 0 #002b50,
+      inset 0 -1px 0 #cdcdcd,
+      inset 0 -3px 0 white;
+    padding-top: 25px;
+    padding-bottom: 20px;
+    .bound      { margin-right: 2.063273727648%; }
+    header {
+      font: normal 700 1.5625em/1 "proxima-nova-condensed", Helvetica, sans-serif;
+      border-bottom: 1px solid #226591;
+      color: white;
+      padding-bottom: 16px;
+      margin-bottom: 13px;
+    }
+    p {
+      color: #6fb2de;
+      font: normal 0.875em/1.2 "proxima-nova", Helvetica, sans-serif;
+      float: left;
+      width: 44.943820224719%;
+    }
+    form {
+      float: right;
+      width: 47.050561797753%;
+      input[type="text"] {
+        width: 100%;
+        display: block;
+        box-sizing: border-box;
+        margin-bottom: 9px;
+        color: #004470;
+        background: white;
+        font: italic 400 0.875em/1.1 "proxima-nova", Helvetica, sans-serif;
+        border: none;
+        height: 31px;
+        padding: 7px 8px 5px 8px;
+      }
+      input[type="submit"] {
+        display: block;
+        border: none;
+        box-sizing: border-box;
+        float: right;
+        text-transform: uppercase;
+        border-radius: 0;
+        padding: 8px 20px 6px 10px;
+        color: #0073be;
+        font: normal 700 0.8125em/1 "proxima-nova", Helvetica, sans-serif;
+        background: image-url("caret-rightward-blue.png") no-repeat right 9px;
+        background-size: 14px 8px;
+        background-color: white;
+      }
+    }
+  }
 }
 
 
