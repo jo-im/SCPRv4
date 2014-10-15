@@ -552,6 +552,7 @@ First version by JPW on 10-14-2014.
     padding-left: 2.063273727648%;
     margin-left: -2.063273727648%;
   }
+
   .titling {
     background: #b24401;
     position: relative;
@@ -565,13 +566,15 @@ First version by JPW on 10-14-2014.
       position: absolute;
       display: block;
       left: 2.063273727648%;
-      top: 13px;
+      top: 12px;
       margin: 0;
       line-height: 1;
       text-align: left;
       color: white;
       font-size: 0.8125em;
-      mark          { background: none; color: #f69e69; font-size: 0.84615384615385em; }
+      mark          { background: none; padding-left: 4px; color: #f69e69; font-size: 0.84615384615385em; }
+      a             { display: block; }
+      a:hover mark  { color: #ffd5bb; }
     }
     h2,button {
       display: block;
@@ -586,12 +589,23 @@ First version by JPW on 10-14-2014.
       display: block;
       height: 100%;
       width: 100%;
-      background: aqua;
-      padding: 14px 13px 0 31px;
+      background: image-url("shortlist-tease-edition-icons.png") no-repeat 12px 8px;
+      background-size: 12px 150px;
+      background-color: #66170c;
+      padding: 13px 13px 0 30px;
+      color: #c5530d;
+      &:hover       { color: #f7a16c; }
     }
+    h2.am a         { background-position: 12px 8px; }
+    h2.weekend a    { background-position: 12px -42px; }
+    h2.pm a         { background-position: 12px -92px; }
     button {
+      outline: none;
       border: none;
-      background: orange;
+      background: image-url("shortlist-tease-envelope.png") no-repeat 14px 14px;
+      background-size: 10px 75px;
+      background-color: #004470;
+      color: #68c2f9;
       text-transform: uppercase;
       position: relative;
       width: 102px;
@@ -599,11 +613,19 @@ First version by JPW on 10-14-2014.
       span {                      // I am an incandescent ball of pure rage directed at the apparently-not-at-all supported 'box-align' css spec
         display: block;
         position: absolute;
-        top: 14px;
+        top: 13px;
         left: 29px;
+      }
+      &:hover span    { color: #b8e4ff; }
+      &.active {
+        color: white;
+        background-position: 14px -53px;
+        background-color: #0073be;
+        &:hover span  { color: white; }
       }
     }
   }
+
   .brochure {
     background: #e8e8e8;
     box-shadow:
@@ -612,8 +634,9 @@ First version by JPW on 10-14-2014.
       inset 0 -3px 0 white;
     padding-top: 14px;
     padding-bottom: 20px;
+    a                 { display: block; }
     figure            { margin-right: 2.063273727648%; }
-    .photos           { margin-bottom: 11px; }
+    .photos           { margin-bottom: 12px; }
     .photo {
       float: left;
       width: 23.507462686567%;
@@ -635,12 +658,14 @@ First version by JPW on 10-14-2014.
     figcaption {
       line-height: 1;
       span {
-        font: normal 700 1.375em/1 "proxima-nova-condensed", Helvetica, sans-serif;
-        background: aqua;
-        padding-right: 10px;
+        font: normal 700 1.5625em/1.0 "proxima-nova-condensed", Helvetica, sans-serif;
+        padding-right: 5px;
       }
       mark {
-        background: orange;
+        background: image-url("triangle-rightward-maroon.png") no-repeat right 2px;
+        background-size: 4px 5px;
+        background-color: none;
+        padding-right: 8px;
         color: #b24401;
         text-transform: uppercase;
         font: normal 700 0.625em/1 "proxima-nova", Helvetica, sans-serif;
@@ -648,7 +673,9 @@ First version by JPW on 10-14-2014.
         display: inline-block;
       }
     }
+    a:hover figcaption span { text-decoration: underline; }
   }
+
   .enlistment {
     display: none;
     background: #004470;
@@ -702,8 +729,49 @@ First version by JPW on 10-14-2014.
         background-color: white;
       }
     }
-  }
-}
+  }// .enlistment
+
+
+//  ...........................................................................
+
+    @media screen and (max-width: 480px) {
+
+      .titling {
+        box-shadow: inset 0 -30px 0 #66170c;
+        h1 {
+          position: static;
+          padding-top: 15px;
+          padding-bottom: 8px;
+        }
+        h2 {
+          float: left;
+          a               { padding-left: 18px; }
+          &.am a          { background-position: left 8px; }
+          &.weekend a     { background-position: left -42px; }
+          &.pm a          { background-position: left -92px; }
+        }
+        button            { border-left: 1px solid #0d659e; }
+      }
+      .brochure {
+        .photo {
+          width: 48%;
+          margin-right: 4%;
+          &:nth-child(1),
+          &:nth-child(2)  { margin-bottom: 12px; }
+          &:nth-child(3)  { clear: both; }
+          &:nth-child(2),
+          &:last-child    { float: right; margin-right: 0; }
+        }
+      }
+      .enlistment {
+        p,form            { width: 100%; float: none; }
+      }
+
+    }// 490
+
+//  ...........................................................................
+
+}// .shortlist-preview
 
 
 
