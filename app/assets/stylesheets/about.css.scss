@@ -79,9 +79,11 @@
             h4 {
                 color:#5d5d5d;
                 font-size:24px;
-                .orange { color:$orange;}
-                .red {color:#be0101;}
-                .purple {color:#79246b;}
+                .orange     {color:$orange;}
+                .red        {color:#be0101;}
+                .purple     {color:#79246b;}
+                .blue       {color:$blueDark;}
+                .lightblue  {color:$blue;}
             }
             p {
                 font-size:14px;
