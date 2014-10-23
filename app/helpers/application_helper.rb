@@ -72,11 +72,6 @@ module ApplicationHelper
     html = ''
 
     Array(content).compact.each do |article|
-      # if we're caching, add content to the objects list
-      if defined? @COBJECTS
-        @COBJECTS << article
-      end
-
       directory   = article.class.name.underscore
       tmplt_opts  = ["#{directory}/#{context}", "default/#{context}"]
 
@@ -262,7 +257,7 @@ module ApplicationHelper
       :classes    => [NewsStory, BlogEntry, ShowSegment, ContentShell],
       :limit      => limit,
       :without    => { category: false }
-    }).map(&:to_article)
+    })
   end
 
   #----------

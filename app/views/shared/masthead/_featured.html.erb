@@ -1,6 +1,8 @@
+<%= cache ["masthead_featured"]+articles do %>
+
 <div class="featured">
 
-<% articles.each do |article| %>
+<% articles.map(&:to_article).each do |article| %>
   <% register_content article.original_object %>
   <div class="row-fluid">
     <div class="span6">
@@ -27,3 +29,5 @@
 <% end %>
 
 </div> <!-- featured -->
+
+<% end %>
