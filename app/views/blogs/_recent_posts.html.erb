@@ -1,10 +1,8 @@
 <nav class="recent-posts widget">
   <h6><%= title ||= "Recent Posts" %></h6>
-  <%= content_cache("blogs:#{blog.slug}:recent") do %>
-    <% register_content BlogEntry.new_obj_key %>
-    <% blog.entries.published.first(5).each do |entry| %>
-      <% register_content entry %>
-
+  <%= cache ["blogs","recent"]+posts do %>
+    <% posts.each do |entry| %>
+      <%= cache ["blogs","recent",entry] do %>
       <div class="row-fluid">
         <div class="span7">
           <%= render_asset entry, display: 'thumbnail' %>
@@ -16,7 +14,7 @@
           </p>
         </div>
       </div> <!-- row-fluid -->
-
+      <% end %>
     <% end %>
     <p class="more"><%= link_to "More from #{blog.name}", blog_path(blog.slug) %></p>
   <% end %>

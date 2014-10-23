@@ -1,9 +1,4 @@
-<%
-  if !defined?(full)
-    full = params[:id].present?
-  end
-%>
-
+<%= cache ["blogs","_entry",entry] do %>
 <div class="entry content-block">
   <div class="row-fluid">
     <%= content_widget "social_sidebar", entry, audio_options: { context: entry.blog.slug } %>
@@ -21,21 +16,13 @@
           <div class="visible-reader"><%= content_widget "primary_audio", entry, context: entry.blog.slug %></div>
 
           <%= render_asset entry %>
-          <%= entry.send(full ? :body : :extended_teaser).html_safe %>
+          <%= entry.extended_teaser.html_safe %>
         </div>
 
         <footer>
-          <% if full %>
-            <p><i><%= render_contributing_byline entry %></i></p>
-            <div class="visible-reader"><%= content_widget "extra_audio", entry, context: entry.blog.slug %></div>
-
-            <%= pij_source(entry) %>
-            <%= render partial: "/shared/author_info", collection: entry.grouped_bylines[:primary], as: :byline %>
-          <% end %>
         </footer>
       </article>
-
-      <%= content_widget("social_tools", entry, cssClass: "horizontal bottom") if full %>
     </div> <!-- span18 -->
   </div> <!-- row fluid -->
 </div> <!-- entry -->
+<% end %>

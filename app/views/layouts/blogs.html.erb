@@ -77,7 +77,7 @@
   <% end %>
 
 
-  <%= render "blogs/recent_posts", blog: @blog %>
+  <%= render "blogs/recent_posts", blog: @blog, posts:@blog.entries.published.first(5) %>
   <%= render("shared/widgets/missed_it_bucket", bucket: @blog.missed_it_bucket) if @blog.missed_it_bucket.present? %>
 <% end %>
 
