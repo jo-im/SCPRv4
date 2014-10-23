@@ -13,7 +13,7 @@ class HomeController < ApplicationController
 
   def index
     @homepage         = Homepage.published.first
-    @featured_comment = FeaturedComment.published.first
+    @featured_comment = FeaturedComment.published.includes(:content).first
 
     @schedule_current = ScheduleOccurrence.on_at(Time.zone.now)
 
