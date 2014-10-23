@@ -1,18 +1,19 @@
-<%= content_cache "#{bucket.obj_key}:#{params[:page]}" do %>
-  <% register_content bucket %>
+<%= cache ["missed_it",bucket,contents] do %>
   <div class="carousel-section">
     <div class="row-fluid">
-      <% contents.map { |c| c.content.to_article }.each do |article| %>
-        <% register_content article.original_object %>
-        <div class="span4">
-          <div class="carousel-item" data-vr-contentbox="">
-            <%= render_asset article, display: "thumbnail", fallback: true %>
-            <span class="title"><%= link_to article.short_title, article.public_url %></span>
+      <% contents.each do |c| %>
+        <%= cache ["missed_it",c.content] do %>
+          <% article = c.content.to_article %>
+          <div class="span4">
+            <div class="carousel-item" data-vr-contentbox="">
+              <%= render_asset article, display: "thumbnail", fallback: true %>
+              <span class="title"><%= link_to article.short_title, article.public_url %></span>
 
-            <%= render 'shared/feature_trait', article: article %>
+              <%= render 'shared/feature_trait', article: article %>
 
-          </div>
-        </div> <!-- span -->
+            </div>
+          </div> <!-- span -->
+        <% end %>
         <hr />
       <% end %>
     </div> <!-- row fluid -->
