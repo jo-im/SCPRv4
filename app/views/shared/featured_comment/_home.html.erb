@@ -1,11 +1,13 @@
-<% content = comment.content.to_article %>
+<%= cache ["featured-comment","home",comment,comment.content] do %>
+  <% content = comment.content.to_article %>
 
-<% if comment && content %>
-<section class="join_conversation home">
-  <h6>Join the Conversation</h6>
-  <blockquote data-vr-zone="Homepage - Featured Comment">
-    <%= link_to "&ldquo;#{comment.excerpt}&rdquo;".html_safe, content.public_url, :class => 'track-event', :data => {'ga-category' => 'Homepage', 'ga-action' => 'Featured Comment', 'ga-label' => 'Lead Section', 'vr-contentbox' => ''} %>
-  </blockquote>
-  <p class="quotee">from <%= link_to content.short_title, content.public_url %></p>
-</section>
+  <% if comment && content %>
+  <section class="join_conversation home">
+    <h6>Join the Conversation</h6>
+    <blockquote data-vr-zone="Homepage - Featured Comment">
+      <%= link_to "&ldquo;#{comment.excerpt}&rdquo;".html_safe, content.public_url, :class => 'track-event', :data => {'ga-category' => 'Homepage', 'ga-action' => 'Featured Comment', 'ga-label' => 'Lead Section', 'vr-contentbox' => ''} %>
+    </blockquote>
+    <p class="quotee">from <%= link_to content.short_title, content.public_url %></p>
+  </section>
+  <% end %>
 <% end %>

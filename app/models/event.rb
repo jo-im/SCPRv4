@@ -19,7 +19,7 @@ class Event < ActiveRecord::Base
   include Concern::Callbacks::GenerateSlugCallback
   include Concern::Callbacks::GenerateTeaserCallback
   include Concern::Callbacks::SphinxIndexCallback
-  include Concern::Callbacks::CacheExpirationCallback
+  #include Concern::Callbacks::CacheExpirationCallback
   include Concern::Callbacks::TouchCallback
   include Concern::Methods::CommentMethods
   include Concern::Methods::AssetDisplayMethods

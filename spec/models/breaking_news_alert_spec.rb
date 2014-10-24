@@ -3,20 +3,6 @@ require "spec_helper"
 describe BreakingNewsAlert do
   redis = Rails.cache.instance_variable_get(:@data)
 
-  describe '::expire_alert_fragment' do
-    it 'runs after save and expires the fragment' do
-      set_key = "obj:#{BreakingNewsAlert::FRAGMENT_EXPIRE_KEY}"
-      fragment_key = "breaking_news"
-      redis.set(fragment_key, "oimate")
-      redis.sadd(set_key, fragment_key)
-
-      redis.get(fragment_key).should eq "oimate"
-      alert = create :breaking_news_alert
-      alert.save!
-      redis.get(fragment_key).should eq nil
-    end
-  end
-
   describe '#publish' do
     it "published the alert" do
       alert = create :breaking_news_alert, :unpublished

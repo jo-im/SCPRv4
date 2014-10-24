@@ -1,55 +1,58 @@
 <div id="article-related-content">
-  <%= content_cache("related:#{content.obj_key}") do %>
-    <% register_content content %>
-    <% if (relations = content.related_content).present? %>
-      <aside class="related-articles cbase">
-        <div class="row-fluid">
-          <div class="span6 row-title">
-            <h6>More from KPCC</h6>
-          </div>
-          <div class="span18">
-            <ul>
-              <%= render_content relations, "related_article" %>
-            </ul>
-          </div> <!-- span -->
-        </div> <!-- row-fluid -->
-      </aside>
+  <% if (relations = content.related_content).present? %>
+    <%= cache ["related_content",content]+content.related_content do %>
+    <aside class="related-articles cbase">
+      <div class="row-fluid">
+        <div class="span6 row-title">
+          <h6>More from KPCC</h6>
+        </div>
+        <div class="span18">
+          <ul>
+            <%= render_content relations, "related_article" %>
+          </ul>
+        </div> <!-- span -->
+      </div> <!-- row-fluid -->
+    </aside>
     <% end %>
+  <% end %>
 
-    <% if content.related_links.normal.present? %>
-      <aside class="related-links cbase">
-        <div class="row-fluid">
-          <div class="span6 row-title">
-            <h6>Elsewhere on the Web</h6>
-          </div>
-          <div class="span18">
-            <ul>
-              <% content.related_links.normal.each do |link| %>
-                <li>
-                <%= link_to link.title, link.url %> <span class="domain"> | <%= link.domain ? link.domain.gsub(/\Awww\./, "") : link.url %></span>
-                </li>
-              <% end %>
-            </ul>
-          </div> <!-- span -->
-        </div> <!-- row-fluid -->
-      </aside>
-    <% end %>
+  <% if content.related_links.any? %>
+    <%= cache ["related_links",content]+content.related_links do %>
+      <% if content.related_links.normal.present? %>
+        <aside class="related-links cbase">
+          <div class="row-fluid">
+            <div class="span6 row-title">
+              <h6>Elsewhere on the Web</h6>
+            </div>
+            <div class="span18">
+              <ul>
+                <% content.related_links.normal.each do |link| %>
+                  <li>
+                  <%= link_to link.title, link.url %> <span class="domain"> | <%= link.domain ? link.domain.gsub(/\Awww\./, "") : link.url %></span>
+                  </li>
+                <% end %>
+              </ul>
+            </div> <!-- span -->
+          </div> <!-- row-fluid -->
+        </aside>
+      <% end %>
 
-    <% if content.related_links.query.present? %>
-      <aside class="pij-query cbase">
-        <div class="row-fluid">
-          <div class="span6 row-title">
-            <h6>Become a KPCC Source <small><a href="/network/about/">(What's this?)</a></small></h6>
-          </div>
-          <div class="span18">
-            <ul>
-              <% content.related_links.query.each do |query| %>
-                <li><%= link_to query.title, query.url %></li>
-              <% end %>
-            </ul>
-          </div> <!-- span -->
-        </div> <!-- row-fluid -->
-      </aside>
+      <% if content.related_links.query.present? %>
+        <aside class="pij-query cbase">
+          <div class="row-fluid">
+            <div class="span6 row-title">
+              <h6>Become a KPCC Source <small><a href="/network/about/">(What's this?)</a></small></h6>
+            </div>
+            <div class="span18">
+              <ul>
+                <% content.related_links.query.each do |query| %>
+                  <li><%= link_to query.title, query.url %></li>
+                <% end %>
+              </ul>
+            </div> <!-- span -->
+          </div> <!-- row-fluid -->
+        </aside>
+      <% end %>
     <% end %>
   <% end %>
 </div>

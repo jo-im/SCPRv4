@@ -38,20 +38,14 @@
     <div class="span8">
       <div class="section">
         <h6>Latest News</h6>
-        <% content_cache("mega_news_latest") do %>
-          <% register_content(ContentBase.new_obj_key) %>
-          <%= render "shared/masthead/featured", articles: latest_news(2) %>
-        <% end %>
+        <%= render "shared/masthead/featured", articles: latest_news(2) %>
       </div> <!-- section -->
     </div> <!-- span -->
 
     <div class="span10">
       <div class="section">
         <h6>From Our Blogs</h6>
-        <% content_cache("mega_news_blogs") do %>
-          <% register_content(BlogEntry.new_obj_key) %>
-          <%= render "shared/masthead/from_our_blogs", entries: @latest_blogs %>
-        <% end %>
+        <%= render "shared/masthead/from_our_blogs", entries: @latest_blogs %>
       </div> <!-- section -->
     </div> <!-- span -->
   </div> <!-- row fluid -->

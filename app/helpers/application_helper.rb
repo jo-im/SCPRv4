@@ -72,11 +72,6 @@ module ApplicationHelper
     html = ''
 
     Array(content).compact.each do |article|
-      # if we're caching, add content to the objects list
-      if defined? @COBJECTS
-        @COBJECTS << article
-      end
-
       directory   = article.class.name.underscore
       tmplt_opts  = ["#{directory}/#{context}", "default/#{context}"]
 
@@ -84,11 +79,25 @@ module ApplicationHelper
         self.lookup_context.exists?(template, ["shared/content"], true)
       end
 
-      html << render(
+      # -- do we have a cache? -- #
+
+      # TODO: This call looks like it will change in Rails 4.1
+      tmplt_digest = ActionView::Digestor.digest(
         "shared/content/#{partial}",
-        :article => article.to_article,
-        :options => options
+        options[:format] || self.lookup_context.rendered_format,
+        lookup_context,
+        partial: true,
       )
+
+      html << with_output_buffer do
+        cache(["content",context,article,tmplt_digest], skip_digest:true) do
+          self.output_buffer << render(
+            "shared/content/#{partial}",
+            :article => article.to_article,
+            :options => options
+          ).html_safe
+        end
+      end
     end
 
     html.html_safe
@@ -262,7 +271,7 @@ module ApplicationHelper
       :classes    => [NewsStory, BlogEntry, ShowSegment, ContentShell],
       :limit      => limit,
       :without    => { category: false }
-    }).map(&:to_article)
+    })
   end
 
   #----------

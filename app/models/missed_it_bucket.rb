@@ -20,8 +20,6 @@ class MissedItBucket < ActiveRecord::Base
 
 
   before_validation :generate_slug, if: -> { self.slug.blank? }
-  after_commit :expire_cache
-
 
   def articles(limit=nil)
     @articles ||= self.content.includes(:content).limit(limit).map do |c|
@@ -31,10 +29,6 @@ class MissedItBucket < ActiveRecord::Base
 
 
   private
-
-  def expire_cache
-    Rails.cache.expire_obj(self)
-  end
 
   def generate_slug
     if self.title.present?

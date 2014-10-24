@@ -19,7 +19,7 @@ gem 'outpost-secretary'
 ## Redis
 gem "resque", "~> 1.26.pre.0"
 gem 'resque-pool', "~> 0.3.0"
-gem 'redis-content-store', github: "SCPR/redis-content-store"
+gem 'redis-rails'
 gem 'redis-sentinel'
 
 ## Views
@@ -85,6 +85,7 @@ group :test, :development do
   gem 'guard', '~> 1.5'
   gem 'guard-resque'
   gem 'guard-rspec'
+  gem 'ruby-prof'
 end
 
 
