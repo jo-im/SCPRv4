@@ -1,7 +1,8 @@
-<%= cache ["events","forum"]+@upcoming_events_forum do %>
+<% events = upcoming_events_forum() %>
+<%= cache ["events","forum"]+events do %>
   <div class="events-forum" data-vr-zone="Upcoming Forum Events">
     <h6>Events at the Crawford Family Forum</h6>
-    <% @upcoming_events_forum.each do |event| %>
+    <% events.each do |event| %>
       <div class="span12 cbase">
         <div class="event future" data-vr-contentbox>
           <div class="row-fluid">
