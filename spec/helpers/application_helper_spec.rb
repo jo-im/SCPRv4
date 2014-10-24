@@ -59,7 +59,7 @@ describe ApplicationHelper do
       index_sphinx
 
       ts_retry(2) do
-        helper.latest_news.should eq [story2, story1]
+        helper.latest_news.to_a.should eq [story2, story1]
       end
     end
   end
