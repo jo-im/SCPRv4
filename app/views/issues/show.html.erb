@@ -2,6 +2,21 @@
 <% meta_tags(url: issue_url(@tag.slug)) %>
 <% content_for :body_class, 'interior ronin' %>
 
+<% content_for :opengraph do %>
+
+    <%= cache ["opengraph", "v1", @tag] do %>
+
+      <meta property="og:title" content="Issue: <%= h(@tag.title) %>">
+      <meta property="og:type" content="<%= @OG_TYPE || "website" %>">
+      <meta property="og:url" content="http://www.scpr.org/issues/<%= @tag.slug %>"/>
+      <meta property="og:image" content="http://scpr.org<%=image_path('kpcc-twitter-logo.png')%>" />
+
+      <link rel="image_src" href="http://scpr.org<%=image_path('kpcc-twitter-logo.png')%>" />
+      <meta name="twitter:image" value="http://scpr.org<%=image_path('kpcc-twitter-logo.png')%>">
+
+    <% end %>
+
+<% end %>
 
 <%= cache ["issues/show", "meta", "v2", @tag] do %>
 

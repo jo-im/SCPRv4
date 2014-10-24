@@ -18,16 +18,7 @@
     <%= tag "meta", name: "keywords", content: meta_information[:keywords] || "KPCC, California, Southern California, Los Angeles, Pasadena, SCPR, Southern California Public Radio" %>
     <meta name="author" content="Southern California Public Radio" />
 
-    <% if content_for?(:opengraph)%>
-        <%= yield :opengraph %>
-    <% else %>
-        <!-- Meta Tags which are always present, but are filled-in by the page we're on, with a fallback -->
-        <%= tag "meta", property: "og:type", content: h(meta_information[:type] || "website") %>
-        <%= tag "meta", name: "description", content: h(meta_information[:description] || "Member-supported public radio for Southern California. Award-winning local news and cultural programming alongside the best of NPR.") %>
-        <%= tag "meta", property: "og:description", content: h(meta_information[:description] || "Member-supported public radio for Southern California. Award-winning local news and cultural programming alongside the best of NPR.") %>
-        <!-- Always provide the logo as a fallback thumbnail option. -->
-        <meta property="og:image" content="http://scpr.org<%=image_path('kpcc-twitter-logo.png')%>" />
-    <% end %>
+    <%= yield :opengraph %>
 
     <%= csrf_meta_tags %>
 
