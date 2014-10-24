@@ -8,6 +8,8 @@ FactoryGirl.define do
 
     slug { headline.parameterize }
 
+    category_id 1
+
     published
   end
 end

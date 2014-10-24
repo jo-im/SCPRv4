@@ -49,6 +49,10 @@ module ThinkingSphinxHelpers
     @generated_content = []
     return if num == 0
 
+    @generated_content.push FactoryGirl.create_list(
+      :category, 1
+    )
+
     CLASSES.each do |klass|
       @generated_content.push FactoryGirl.create_list(
         klass.to_s.underscore.to_sym, num.to_i, options
