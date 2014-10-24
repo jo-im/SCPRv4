@@ -1,13 +1,13 @@
 <section class="shortlist-preview">
 
   <header class="titling clearfix">
-    <h1><a href="/short-list"><span>The Short List</span> <mark><%= format_date(edition.published_at, with: '%a, %B %d') %></mark></a></h1>
+    <h1><a href="/short-list/latest"><span>The Short List</span> <mark><%= format_date(edition.published_at, with: '%a, %B %d') %></mark></a></h1>
     <button class="subscribe-trigger"><span>Subscribe</span></button>
-    <h2 class="<%= edition.slug %>"><a href="/short-list"><%= edition.slug.titleize %></a></h2><!-- Accepts a class of either "am", "pm", or "weekend". -->
+    <h2 class="<%= edition.slug %>"><a href="/short-list/latest"><%= edition.slug.titleize %></a></h2>
   </header>
 
   <div class="brochure">
-    <a href="/short-list">
+    <a href="/short-list/latest">
       <figure class="bound">
         <div class="photos clearfix">
           <% edition.abstracts[0..3].each_with_index do |abstract, index| %>

@@ -5,8 +5,8 @@ class ListenController < ApplicationController
     # grab eight hours worth of schedule, starting now
     @schedule = ScheduleOccurrence.block(Time.zone.now, 8.hours)
 
-    # grab our homepage stories
-    @homepage = Homepage.published.first
+    # grab the latest edition
+    @latest_edition  = Edition.published.includes(:slots).first
 
     render layout: false
   end

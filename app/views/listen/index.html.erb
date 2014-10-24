@@ -72,40 +72,33 @@
 
   
   <section class="shortlist-plug">
-    <a href="#" title="Read the latest edition of The Short List">
+    <a href="/short-list/latest" title="Read the latest edition of The Short List">
       <header>
         <div class="bound">
-          <h1>The Short List <mark>Wed, October 29</mark></h1>
-          <h2 class="am">A.M. Edition</h2><!-- Accepts a class of either "am", "pm", or "weekend". -->
+          <h1>The Short List <mark><%= format_date(@latest_edition.published_at, with: '%a, %B %d') %></mark></h1>
+          <h2 class="<%= @latest_edition.slug %>"><%= @latest_edition.slug.titleize %></h2>
         </div>
       </header>
       <div class="brochure">
         <figure class="bound">
           <div class="photos clearfix">
-            <div class="photo ratio">
+            <% @latest_edition.abstracts[0..3].each_with_index do |abstract, index| %>
+              <div class="photo ratio">
                 <div class="fill"></div>
-                <b class="img-contain"><img src="http://a.scpr.org/i/717d894d7f25c01594d2deb8ec2bc24d/93372-full.jpg"></b></div>
-            <div class="photo ratio">
-                <div class="fill"></div>
-                <b class="img-contain"><img src="http://a.scpr.org/i/717d894d7f25c01594d2deb8ec2bc24d/93372-full.jpg"></b></div>
-            <div class="photo ratio">
-                <div class="fill"></div>
-                <b class="img-contain"><img src="http://a.scpr.org/i/717d894d7f25c01594d2deb8ec2bc24d/93372-full.jpg"></b></div>
-            <div class="photo ratio">
-                <div class="fill"></div>
-                <b class="img-contain"><img src="http://a.scpr.org/i/717d894d7f25c01594d2deb8ec2bc24d/93372-full.jpg"></b></div>
+                <b class="img-contain"><img src="<%= abstract.asset.full.url %>"></b>
+              </div>
+            <% end %>
           </div>
-          <figcaption>New route for CicLAvia, Gov. Brown signs gun restraint law, wife of slain mayor released, and more</figcaption>
+          <figcaption><%= @latest_edition.title %></figcaption>
         </figure>
       </div><!--/ .brochure -->
       <aside class="contents">
         <div class="bound">
-          <header><mark>15</mark> stories in this edition, including:</header>
+          <header><mark><%= @latest_edition.abstracts.count %></mark> stories in this edition, including:</header>
           <ul>
-            <li>Heat wave to hit Southern California again</li>
-            <li>Secret Service faces questions on White House breach</li>
-            <li>AEG requesting more time to build an NFL stadium</li>
-            <li>New law gives immigrants access to professional licenses</li>
+            <% @latest_edition.abstracts[0..3].each_with_index do |abstract, index| %>
+              <li><%= abstract.headline %></li>
+            <% end %>
           </ul>
         </div>
       </aside>
