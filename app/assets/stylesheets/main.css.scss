@@ -596,9 +596,9 @@ First version by JPW on 10-14-2014.
       color: #c5530d;
       &:hover       { color: #f7a16c; }
     }
-    h2.am a         { background-position: 12px 8px; }
-    h2.weekend a    { background-position: 12px -42px; }
-    h2.pm a         { background-position: 12px -92px; }
+    h2.am-edition a         { background-position: 12px 8px; }
+    h2.weekend-reads a      { background-position: 12px -42px; }
+    h2.pm-edition a         { background-position: 12px -92px; }
     button {
       outline: none;
       border: none;
@@ -619,8 +619,15 @@ First version by JPW on 10-14-2014.
       &:hover span    { color: #b8e4ff; }
       &.active {
         color: white;
-        background-position: 14px -53px;
+        background-image:none;
         background-color: #0073be;
+        span {
+          margin-top:5px;
+          position:relative;
+          text-align:center;
+          top:auto;
+          left:auto;
+        }
         &:hover span  { color: white; }
       }
     }
@@ -745,10 +752,10 @@ First version by JPW on 10-14-2014.
         }
         h2 {
           float: left;
-          a               { padding-left: 18px; }
-          &.am a          { background-position: left 8px; }
-          &.weekend a     { background-position: left -42px; }
-          &.pm a          { background-position: left -92px; }
+          a                       { padding-left: 18px; }
+          &.am-edition a          { background-position: left 8px; }
+          &.weekend-reads a       { background-position: left -42px; }
+          &.pm-edition a          { background-position: left -92px; }
         }
         button            { border-left: 1px solid #0d659e; }
       }
