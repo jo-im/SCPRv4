@@ -1,11 +1,4 @@
 GIT
-  remote: git://github.com/SCPR/redis-content-store.git
-  revision: a8bb4368588df8f13b0f427c5cef39f68fa36b64
-  specs:
-    redis-content-store (0.2.0)
-      redis-activesupport (>= 3.2.0, < 5)
-
-GIT
   remote: git://github.com/sheerun/parse-ruby-client.git
   revision: a4eb5618c8167e88857b449cd522b23a8b0c02e9
   ref: a4eb5618c8167e88857b449cd522b23a8b0c02e9
@@ -233,11 +226,22 @@ GEM
       ffi (>= 0.5.0)
     recaptcha (0.3.6)
     redis (3.0.7)
+    redis-actionpack (4.0.0)
+      actionpack (~> 4)
+      redis-rack (~> 1.5.0)
+      redis-store (~> 1.1.0)
     redis-activesupport (4.0.0)
       activesupport (~> 4)
       redis-store (~> 1.1.0)
     redis-namespace (1.4.1)
       redis (~> 3.0.4)
+    redis-rack (1.5.0)
+      rack (~> 1.5)
+      redis-store (~> 1.1.0)
+    redis-rails (4.0.0)
+      redis-actionpack (~> 4)
+      redis-activesupport (~> 4)
+      redis-store (~> 1.1.0)
     redis-sentinel (1.4.4)
       redis
     redis-store (1.1.4)
@@ -271,6 +275,7 @@ GEM
       rspec-expectations (~> 2.14.0)
       rspec-mocks (~> 2.14.0)
     ruby-mp3info (0.8.4)
+    ruby-prof (0.15.2)
     safe_yaml (1.0.3)
     sanitize (2.1.0)
       nokogiri (>= 1.4.4)
@@ -399,12 +404,13 @@ DEPENDENCIES
   rails (~> 4.0.0)
   rb-fsevent (~> 0.9)
   recaptcha
-  redis-content-store!
+  redis-rails
   redis-sentinel
   resque (~> 1.26.pre.0)
   resque-pool (~> 0.3.0)
   rspec-rails (~> 2.14.0)
   ruby-mp3info (~> 0.8.2)
+  ruby-prof
   sanitize (~> 2.0)
   sass-rails (~> 4.0.0)
   secretary-rails
