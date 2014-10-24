@@ -41,6 +41,10 @@ class CacheController < AbstractController::Base
     write(cache_key, cached)
   end
 
+  def perform_caching
+    false
+  end
+
   #---------------------
 
   private
