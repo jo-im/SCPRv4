@@ -30,8 +30,8 @@ class ArchiveController < ApplicationController
       ]
 
       @news_stories   = NewsStory.published.where(condition)
-      @show_segments  = ShowSegment.published.where(condition)
-      @show_episodes  = ShowEpisode.published.for_air_date(@date)
+      @show_segments  = ShowSegment.published.where(condition).includes(:show)
+      @show_episodes  = ShowEpisode.published.for_air_date(@date).includes(:show)
       @blog_entries   = BlogEntry.published.where(condition).includes(:blog)
       @content_shells = ContentShell.published.where(condition)
     end

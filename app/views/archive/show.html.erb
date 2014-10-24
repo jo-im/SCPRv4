@@ -18,95 +18,92 @@
 
 <!-- News Stories -->
 <div id="news" class="tab-pane active">
-<%= content_cache "archive:#{@date.to_i}:news_stories" do %>
-  <% register_content(NewsStory.new_obj_key) if @date.to_i == Time.zone.now.beginning_of_day %>
   <h2>News</h2>
 
-  <%= any_to_list? @news_stories + @content_shells, message: "There was no News published on this date." do %>
-    <% (@news_stories + @content_shells).map(&:to_article).each do |article| %>
-      <% register_content article.original_object %>
-
-      <div class="teaser cbase">
-        <div class="row-fluid">
-          <% if article.assets.present? %>
-            <div class="span4">
-              <%= render_asset article, display: 'thumbnail' %>
-            </div>
-            <div class="span20">
-          <% else %>
-            <div class="span24">
-          <% end %>
-            <div class="info">
-              <h3><%= link_to article.short_title, article.public_url %></h3>
-              <span class="byline">
-                <% if article.category %>
-                  <span class="categories"><%= link_to article.category.title, article.category.public_path %></span>
+  <% news_content = @news_stories + @content_shells%>
+  <%= any_to_list? news_content, message: "There was no News published on this date." do %>
+    <%= cache ["archive"]+news_content do %>
+    <% news_content.each do |content| %>
+      <%= cache ["archive",content] do %>
+        <% article = content.to_article %>
+        <div class="teaser cbase">
+          <div class="row-fluid">
+            <% if article.assets.present? %>
+              <div class="span4">
+                <%= render_asset article, display: 'thumbnail' %>
+              </div>
+              <div class="span20">
+            <% else %>
+              <div class="span24">
+            <% end %>
+              <div class="info">
+                <h3><%= link_to article.short_title, article.public_url %></h3>
+                <span class="byline">
+                  <% if article.category %>
+                    <span class="categories"><%= link_to article.category.title, article.category.public_path %></span>
+                    <span class="pipe">|</span>
+                  <% end %>
+                  <%= timestamp(article.public_datetime) %>
                   <span class="pipe">|</span>
-                <% end %>
-                <%= timestamp(article.public_datetime) %>
-                <span class="pipe">|</span>
-                <%= render_byline article.original_object %>
-              </span>
-            </div>
+                  <%= render_byline article.original_object %>
+                </span>
+              </div>
 
-            <%= article.teaser.html_safe %>
-          </div> <!-- span18/24 -->
+              <%= article.teaser.html_safe %>
+            </div> <!-- span18/24 -->
+          </div>
         </div>
-      </div>
+        <% end %>
+      <% end %>
     <% end %>
   <% end %>
-<% end %>
 </div>
 <!-- /news-stories -->
 
 
 <!-- Blog Entries -->
 <div id="blogs" class="tab-pane">
-<%= content_cache "archive:#{@date.to_i}:blog_entries" do %>
-  <% register_content(BlogEntry.new_obj_key) if @date.to_i == Time.zone.now.beginning_of_day %>
   <h2>Blogs</h2>
 
   <%= any_to_list? @blog_entries, message: "There were no blog entries published on this date." do %>
-    <% @blog_entries.each do |content| %>
-      <% register_content content %>
+    <%= cache ["archive"]+@blog_entries do %>
+      <% @blog_entries.each do |content| %>
+        <%= cache ["archive",content] do %>
+          <div class="teaser cbase">
+            <div class="row-fluid">
+              <% if content.assets.present? %>
+                <div class="span4">
+                  <%= render_asset content, display: 'thumbnail' %>
+                </div>
+                <div class="span20">
+              <% else %>
+                <div class="span24">
+              <% end %>
+                <div class="info">
+                  <h3><%= link_to content.short_headline, content.public_path %></h3>
+                  <span class="byline">
+                    <span class="blog-title"><%= link_to content.blog.name, blog_path(content.blog.slug) %></span>
+                    <span class="pipe">|</span>
+                    <%= timestamp(content.published_at) %>
+                    <span class="pipe">|</span>
+                    <%= render_byline content %>
+                  </span>
+                </div>
 
-      <div class="teaser cbase">
-        <div class="row-fluid">
-          <% if content.assets.present? %>
-            <div class="span4">
-              <%= render_asset content, display: 'thumbnail' %>
+                <%= content.teaser.html_safe %>
+              </div> <!-- span18/24 -->
             </div>
-            <div class="span20">
-          <% else %>
-            <div class="span24">
-          <% end %>
-            <div class="info">
-              <h3><%= link_to content.short_headline, content.public_path %></h3>
-              <span class="byline">
-                <span class="blog-title"><%= link_to content.blog.name, blog_path(content.blog.slug) %></span>
-                <span class="pipe">|</span>
-                <%= timestamp(content.published_at) %>
-                <span class="pipe">|</span>
-                <%= render_byline content %>
-              </span>
-            </div>
-
-            <%= content.teaser.html_safe %>
-          </div> <!-- span18/24 -->
-        </div>
-      </div>
+          </div>
+        <% end %>
+      <% end %>
     <% end %>
   <% end %>
-<% end %>
 </div>
 <!-- /blog-entries -->
 
 
 <!-- Programs -->
 <div id="programs" class="tab-pane programs">
-<%= content_cache "archive:#{@date.to_i}:programs" do %>
-  <% register_content(ShowSegment.new_obj_key) if @date.to_i == Time.zone.now.beginning_of_day %>
-  <% register_content(ShowEpisode.new_obj_key) if @date.to_i == Time.zone.now.beginning_of_day %>
   <% grouped = (@show_episodes + @show_segments).group_by { |c| c.show.title } %>
 
   <h2>Programs</h2>
@@ -122,51 +119,52 @@
   <% grouped.each do |show, contents| %>
     <% type_group = contents.group_by { |c| c.class.name } %>
 
-    <div class="program-group">
-      <h3 id="<%=show.parameterize%>" class="show-title"><%= show %></h3>
+    <%= cache ["archive"]+contents do %>
+      <div class="program-group">
+        <h3 id="<%=show.parameterize%>" class="show-title"><%= show %></h3>
 
-      <% if type_group["ShowEpisode"].present? %>
-        <% type_group["ShowEpisode"].each do |content| %>
-          <% register_content content %>
-          <h5>Episode: <%= link_to content.headline, content.public_path %></h5>
+        <% if type_group["ShowEpisode"].present? %>
+          <% type_group["ShowEpisode"].each do |content| %>
+            <h5>Episode: <%= link_to content.headline, content.public_path %></h5>
+          <% end %>
         <% end %>
-      <% end %>
 
-      <% if type_group["ShowSegment"].present? %>
-        <% type_group["ShowSegment"].each do |content| %>
-          <% register_content content %>
-          <div class="teaser cbase">
-            <div class="row-fluid">
-              <% if content.assets.present? %>
-                <div class="span4">
-                  <%= render_asset content, display: 'thumbnail' %>
-                </div>
-                <div class="span20">
-              <% else %>
-                <div class="span24">
-              <% end %>
-                <div class="info">
-                  <h3><%= link_to content.short_headline, content.public_path %></h3>
-                  <span class="byline">
-                    <% if content.category.present? %>
-                      <span class="categories"><%= link_to content.category.title, content.category.public_path %></span>
-                      <span class="pipe">|</span>
-                    <% end %>
-                    <%= timestamp(content.published_at) %>
-                    <span class="pipe">|</span>
-                    <%= render_byline content %>
-                  </span>
-                </div>
+        <% if type_group["ShowSegment"].present? %>
+          <% type_group["ShowSegment"].each do |content| %>
+            <%= cache ["archive",content] do %>
+              <div class="teaser cbase">
+                <div class="row-fluid">
+                  <% if content.assets.present? %>
+                    <div class="span4">
+                      <%= render_asset content, display: 'thumbnail' %>
+                    </div>
+                    <div class="span20">
+                  <% else %>
+                    <div class="span24">
+                  <% end %>
+                    <div class="info">
+                      <h3><%= link_to content.short_headline, content.public_path %></h3>
+                      <span class="byline">
+                        <% if content.category.present? %>
+                          <span class="categories"><%= link_to content.category.title, content.category.public_path %></span>
+                          <span class="pipe">|</span>
+                        <% end %>
+                        <%= timestamp(content.published_at) %>
+                        <span class="pipe">|</span>
+                        <%= render_byline content %>
+                      </span>
+                    </div>
 
-                <%= content.teaser.html_safe %>
-              </div> <!-- span18/24 -->
-            </div> <!-- row fluid -->
-          </div> <!-- teaser -->
-        <% end %> <%# each ShowSegment %>
-      <% end %> <%# ShowSegment.present?%>
-    </div> <!-- program-group -->
+                    <%= content.teaser.html_safe %>
+                  </div> <!-- span18/24 -->
+                </div> <!-- row fluid -->
+              </div> <!-- teaser -->
+            <% end %>
+          <% end %> <%# each ShowSegment %>
+        <% end %> <%# ShowSegment.present?%>
+      </div> <!-- program-group -->
+    <% end %>
   <% end %> <%# each grouped %>
-<% end %> <%# content cache %>
 </div>
 <!-- /programs -->
 

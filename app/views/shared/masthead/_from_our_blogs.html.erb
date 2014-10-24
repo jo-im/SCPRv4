@@ -1,7 +1,7 @@
+<%= cache ["masthead_blogs"]+entries do %>
 <ul class="cbase">
 
 <% entries.each do |entry| %>
-    <% register_content(entry) %>
     <li>
       <h4><%= link_to entry.short_headline, entry.public_path, :class => 'track-event', :data => {'ga-category' => 'MegaMenu', 'ga-action' => 'Blog Post', 'ga-label' => 'Content'} %></h4>
       <span class="blog-title"><%= link_to entry.blog.name, entry.blog.public_path %></span>
@@ -10,3 +10,4 @@
 <% end %>
 
 </ul>
+<% end %>

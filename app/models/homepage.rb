@@ -52,15 +52,10 @@ class Homepage < ActiveRecord::Base
 
   belongs_to :missed_it_bucket
 
-
   validates \
     :base,
     :status,
     presence: true
-
-
-  after_commit :expire_cache
-
 
   def publish
     self.update_attributes(status: self.class.status_id(:live))
@@ -82,11 +77,6 @@ class Homepage < ActiveRecord::Base
 
 
   private
-
-  def expire_cache
-    Rails.cache.expire_obj(self)
-  end
-
 
   def build_content_association(content_hash, content)
     if content.published?

@@ -9,11 +9,9 @@
     <% if tagline.present? %> - <span class="tagline"><%= tagline %></span></a><% end %>
   </h3>
 
-  <%= content_cache "blogs:#{blog.slug}:thumb:latest" do %>
-    <% register_content BlogEntry.new_obj_key %>
 
-    <% if latest_entry.present? %>
-      <% register_content latest_entry %>
+  <% if latest_entry.present? %>
+    <%= cache ["blogs","latest-thumb",latest_entry] do %>
       <div class="content">
         <div class="blog-title">
           <%= link_to "Read the Latest Post", latest_entry.public_path %>
@@ -22,6 +20,5 @@
         <%= render_content latest_entry, "sec_lead" %>
       </div>
     <% end %>
-
   <% end %>
 </div>

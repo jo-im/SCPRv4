@@ -1,8 +1,4 @@
 <% if @homepage %>
-
-<%= content_cache('homepage-lead-stories') do %>
-  <% register_content(@homepage) %>
-
   <%=
     begin
       render @homepage.base, homepage: @homepage
@@ -14,9 +10,7 @@
       end
     end
   %>
-
-<% end %> <%# cache %>
-<% end %> <%# homepage? %>
+<% end %>
 
 <% if @featured_comment %> 
 

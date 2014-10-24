@@ -1,12 +1,15 @@
+<% content = homepage.content.includes(:content).map(&:content) %>
+<%= cache ["homepage","wide",@homepage]+content do %>
 <div class="row-fluid">
   <div class="span24" data-vr-zone="Homepage Top Stories - Lead Story">
-    <%= render_content homepage.articles[0], "lead8" %>
+    <%= render_content content[0], "lead8" %>
   </div>
 </div>
 <div class="row-fluid">
   <div class="span24 offleads split">
     <div class="row-fluid" data-vr-zone="Homepage Top Stories - Offleads">
-      <%= render_content homepage.articles[1..2], "offlead_split" %>
+      <%= render_content content[1..2], "offlead_split" %>
     </div>
   </div>
 </div>
+<% end %>

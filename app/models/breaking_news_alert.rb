@@ -72,7 +72,7 @@ class BreakingNewsAlert < ActiveRecord::Base
   after_save :async_send_mobile_notification,
     :if => :should_send_mobile_notification?
 
-  after_commit :expire_alert_fragment
+  #after_commit :expire_alert_fragment
 
   #-------------------
 
@@ -86,9 +86,9 @@ class BreakingNewsAlert < ActiveRecord::Base
       ALERT_TYPES.map { |k, v| [v, k] }
     end
 
-    def expire_alert_fragment
-      Rails.cache.expire_obj(FRAGMENT_EXPIRE_KEY)
-    end
+    #def expire_alert_fragment
+    #  Rails.cache.expire_obj(FRAGMENT_EXPIRE_KEY)
+    #end
   end
 
 
@@ -184,7 +184,7 @@ class BreakingNewsAlert < ActiveRecord::Base
     !self.mobile_notification_sent?
   end
 
-  def expire_alert_fragment
-    BreakingNewsAlert.expire_alert_fragment
-  end
+  #def expire_alert_fragment
+  #  BreakingNewsAlert.expire_alert_fragment
+  #end
 end
