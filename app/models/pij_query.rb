@@ -19,7 +19,7 @@ class PijQuery < ActiveRecord::Base
   include Concern::Callbacks::GenerateSlugCallback
   include Concern::Callbacks::SphinxIndexCallback
   include Concern::Callbacks::SetPublishedAtCallback
-  include Concern::Callbacks::CacheExpirationCallback
+  #include Concern::Callbacks::CacheExpirationCallback
   include Concern::Callbacks::TouchCallback
 
 
