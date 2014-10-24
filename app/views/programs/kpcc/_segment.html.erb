@@ -26,6 +26,7 @@
         </div>
 
         <footer>
+          <p><i><%= render_contributing_byline segment %></i></p>
           <div class="visible-reader"><%= content_widget "extra_audio", segment, context: segment.show.slug %></div>
 
           <%= pij_source(segment) %>
