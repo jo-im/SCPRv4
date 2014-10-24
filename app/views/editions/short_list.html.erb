@@ -62,7 +62,7 @@
 
         <div class="inner bound">
             <div class="titling clearfix">
-                <h1>Short List <span>for <%= format_date(@edition.published_at, with: '%A, %B %Y') %></span></h1>
+                <h1>The Short List <span>for <%= format_date(@edition.published_at, with: '%A, %B %d %Y') %></span></h1>
                 <h2 class="<%= @edition.slug.split('-').first %>"><span><%= @edition.short_list_type %></span></h2><!-- This H2 should always carry either a "pm", "am", or "weekend" class. -->
             </div>
             <h3 class="date">

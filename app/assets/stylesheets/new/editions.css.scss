@@ -594,6 +594,18 @@ body.short-list {
 
 @media screen and (max-width: 699px) {
 
+    .edition-marquee {
+      .titling {
+        h1 {
+          float:none;
+        }
+        h2 {
+          float:none;
+          padding:4px 0 0 0;
+        }
+      }
+    }
+
     .page-cols {
       background: white;
       & > .inner              { background: white; }
@@ -731,7 +743,6 @@ body.short-list {
       position: static;
       min-height: 0;
       h1                { float: none; font-size: 1.3125em; /* 21 / 16 */ font-weight: 700; }
-      h1:before         { content: "The "; }
       h1 span           { display: block; font-weight: 300; padding-top: 4px; }
       h2                { padding: 1px 0 0 0; margin-left: -3px; }
     }
