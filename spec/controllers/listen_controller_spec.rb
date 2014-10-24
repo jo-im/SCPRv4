@@ -13,10 +13,10 @@ describe ListenController do
       assigns(:schedule).should eq [slot1, slot2]
     end
 
-    it "assigns homepage" do
-      homepage = create :homepage, :published
+    it "assigns latest edition" do
+      edition = create :edition, :published
       get :index
-      assigns(:homepage).should eq homepage
+      assigns(:edition).should eq edition
     end
   end
 end
