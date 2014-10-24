@@ -70,7 +70,7 @@
 
 
 
-  
+<%= cache ["latest-edition", @latest_edition] do %>
   <section class="shortlist-plug">
     <a href="/short-list/latest" title="Read the latest edition of The Short List">
       <header>
@@ -104,7 +104,7 @@
       </aside>
     </a><!-- big block link -->
   </section><!--/ .shortlist-plug -->
-
+<% end %>
 
 
 

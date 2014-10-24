@@ -20,6 +20,14 @@
 
 <% end %>
 
+<% if @latest_edition %>
+
+  <%= cache ["latest-edition", @latest_edition] do %>
+    <%= render 'short_list_tease', edition: @latest_edition %>
+  <% end %>
+  
+<% end %>
+
 <div class="more-content">
   <div class="row-fluid">
     <div id="most-popular" class="span12">
