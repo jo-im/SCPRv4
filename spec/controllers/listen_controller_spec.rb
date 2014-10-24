@@ -14,9 +14,9 @@ describe ListenController do
     end
 
     it "assigns latest edition" do
-      edition = create :edition, :published
+      @latest_edition = create :edition, :published, :with_abstract
       get :index
-      assigns(:edition).should eq edition
+      assigns(:edition).should eq @latest_edition
     end
   end
 end
