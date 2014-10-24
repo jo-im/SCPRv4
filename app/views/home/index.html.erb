@@ -18,16 +18,19 @@
 <% end %> <%# cache %>
 <% end %> <%# homepage? %>
 
-<% if @featured_comment %>
-<!--   
+<% if @featured_comment %> 
+
   <div class="join-conversation-container home">
     <%= render 'shared/featured_comment/home', comment: @featured_comment %>
   </div> 
--->
+
 <% end %>
 
-<!-- Render scaffold for Short List Partial -->
-<%= render 'short_list_tease' %>
+<% if @latest_edition %>
+
+  <%= render 'short_list_tease', edition: @latest_edition %>
+
+<% end %>
 
 
 <div class="more-content">
