@@ -52,7 +52,7 @@
   <% end %>
 
   <% if blog = @program.blog %>
-    <%= render('blogs/recent_posts', blog: blog, title: "From the Blog: #{blog.name}") %>
+    <%= render('blogs/recent_posts', blog: blog, title: "From the Blog: #{blog.name}", posts:blog.entries.published.first(5)) %>
   <% end %>
 <% end %>
 
