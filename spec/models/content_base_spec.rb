@@ -8,7 +8,7 @@ describe ContentBase do
       it "searches across ContentBase classes" do
         ts_retry(2) do
           ContentBase.search.to_a.sort_by { |o| o.class.name }
-          .should eq @generated_content.sort_by { |o| o.class.name }
+          .should eq @generated_content.find_all { |o| [NewsStory, ShowSegment, BlogEntry, ContentShell].include?(o.class) }.sort_by { |o| o.class.name }
         end
       end
 
