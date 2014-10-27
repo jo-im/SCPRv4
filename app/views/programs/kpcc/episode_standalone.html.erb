@@ -1,5 +1,5 @@
 <% add_to_page_title @episode.headline %>
-<%= render_content @episode, "opengraph" %>
+<% content_for :opengraph do %><%= render_content @episode, "opengraph" %><% end %>
 
 <%= cache ["show", "v1", @episode] do %>
   <%= render "programs/kpcc/episode", episode: @episode %>

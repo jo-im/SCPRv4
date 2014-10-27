@@ -1,5 +1,5 @@
 <% add_to_page_title @segment.headline %>
-<%= render_content @segment, "opengraph" %>
+<% content_for :opengraph do %><%= render_content @segment, "opengraph" %><% end %>
 <%= render 'shared/ads/dfp_script_config', category: @segment.category %>
 
 <%= cache ["show", "v12", @segment] do %>
