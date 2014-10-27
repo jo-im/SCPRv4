@@ -2,7 +2,6 @@ class ApplicationController < ActionController::Base
   include Outpost::Controller::CustomErrors
 
   protect_from_forgery
-  before_filter :get_content_for_masthead
   before_filter :add_params_for_newrelic
 
   def add_params_for_newrelic
@@ -15,16 +14,6 @@ class ApplicationController < ActionController::Base
   #----------
 
   private
-
-  def get_content_for_masthead
-    @upcoming_events_forum = Event.published
-      .includes(:assets).upcoming.forum.limit(2)
-
-    @upcoming_events_sponsored = Event.published
-      .includes(:assets).upcoming.sponsored.limit(3)
-
-    @latest_blogs = BlogEntry.published.includes(:blog).limit(3)
-  end
 
   #----------
   # Override this method from CustomErrors to set the template prefix

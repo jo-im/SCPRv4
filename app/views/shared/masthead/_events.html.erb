@@ -24,9 +24,10 @@
     <div class="span10">
       <div class="section sponsored-events">
         <h6>Sponsored Events</h6>
-        <%= cache ["events","sponsored"]+@upcoming_events_sponsored do %>
+        <% s_events = upcoming_events_sponsored() %>
+        <%= cache ["events","sponsored"]+s_events do %>
           <ul class="cbase">
-            <% @upcoming_events_sponsored.each do |event| %>
+            <% s_events.each do |event| %>
               <li>
                 <h4><%= link_to event.headline, event.public_path %></h4>
                 <%= link_to format_date(event.starts_at, format: :event), event.public_path, class: "event-link" %>

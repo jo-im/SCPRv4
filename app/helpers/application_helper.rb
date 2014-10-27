@@ -274,6 +274,18 @@ module ApplicationHelper
     })
   end
 
+  def latest_blogs(limit=3)
+    BlogEntry.published.includes(:blog).limit(limit)
+  end
+
+  def upcoming_events_forum
+    Event.published.includes(:assets).upcoming.forum.limit(2)
+  end
+
+  def upcoming_events_sponsored
+    Event.published.includes(:assets).upcoming.sponsored.limit(3)
+  end
+
   #----------
 
   def link_to_audio(title, article, options={}) # This needs to be more useful
