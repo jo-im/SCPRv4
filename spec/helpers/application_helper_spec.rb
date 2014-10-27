@@ -62,6 +62,25 @@ describe ApplicationHelper do
         helper.latest_news.to_a.should eq [story2, story1]
       end
     end
+
+  end
+
+  describe "content helpers" do
+    it "sets upcoming forum events" do
+      event = create :event, :published, :future, event_type: "comm"
+      helper.upcoming_events_forum.should eq [event]
+    end
+
+    it "sets upcoming sponsored events" do
+      event = create :event, :published, :future, event_type: "spon"
+      helper.upcoming_events_sponsored.should eq [event]
+    end
+
+    it "sets latest news blogs" do
+      blog = create :blog
+      entry = create :blog_entry, :published, blog: blog
+      helper.latest_blogs.should eq [entry]
+    end
   end
 
   #------------------------
