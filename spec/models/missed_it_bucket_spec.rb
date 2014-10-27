@@ -8,14 +8,6 @@ describe MissedItBucket do
     end
   end
 
-  describe 'cache expiration' do
-    it "expires cache after save" do
-      bucket = create :missed_it_bucket
-      Rails.cache.should_receive(:expire_obj).with(bucket)
-      bucket.save!
-    end
-  end
-
   describe 'slug generation' do
     subject { create :missed_it_bucket, title: "What What", slug: nil }
 
