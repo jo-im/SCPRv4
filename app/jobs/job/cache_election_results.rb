@@ -106,12 +106,12 @@ module Job
       "State Assembly District 74 - Districtwide Results" => "state.assembly-d74",
       "State Assembly District 75 - Districtwide Results" => "state.assembly-d75",
 
-      "Water Quality, Supply, and Infrastructure Improvement Act of 2014"                     => "state.prop-1",
-      "State Budget. Budget Stabilization Account. Legislative Constitutional Amendment."     => "state.prop-2",
-      "Healthcare Insurance. Rate Changes. Initiative Statute."                               => "state.prop-45",
-      "Drug and Alcohol Testing of Doctors. Medical Negligence Lawsuits. Initiative Statute." => "state.prop-46",
-      "Criminal Sentences. Misdemeanor Penalties. Initiative Statute."                        => "state.prop-47",
-      "Indian Gaming Compacts. Referendum."                                                   => "state.prop-48"
+      "Funding Water Quality, Supply, Treatment, Storage" => "state.prop-1",
+      "State Budget Stabilization Account"                => "state.prop-2",
+      "Healthcare Insurance Rate Changes"                 => "state.prop-45",
+      "Doctor Drug Testing, Medical Negligence"           => "state.prop-46",
+      "Criminal Sentences, Misdemeanor Penalties"         => "state.prop-47",
+      "Indian Gaming Compacts Referendum"                 => "state.prop-48"
     }
 
     class << self
