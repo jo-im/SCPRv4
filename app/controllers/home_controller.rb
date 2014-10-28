@@ -22,6 +22,8 @@ class HomeController < ApplicationController
     else
       @schedule_next = ScheduleOccurrence.after(Time.zone.now).first
     end
+
+    @points = DataPoint.where(group_name: "election-nov2014")
   end
 
   #----------
@@ -57,6 +59,19 @@ class HomeController < ApplicationController
 
 
   private
+
+  def election_sort_tmp(points, key_base)
+    p = points.select { |dp|
+      dp.data_key.match(/\A#{key_base}/) && !dp.data_key.match(/reporting\z/)
+    }
+  
+    if p.size <= 1
+      p
+    else
+      p.sort { |a, b| b.data_value.to_i <=> a.data_value.to_i }
+    end
+  end
+  helper_method :election_sort_tmp
 
   def generate_homepage
     Job::HomepageCache.perform
