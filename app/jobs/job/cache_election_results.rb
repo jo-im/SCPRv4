@@ -6,9 +6,9 @@ module Job
     GROUP = "election-nov2014"
     NOTE = "Percentage; Number Only (no % symbol)"
 
-    CONTEST_XML   = "/scpr/scprv4/sosxml/X14GP510v7.xml"
-    REPORTING_XML = "/scpr/scprv4/sosxml/X14GP530v7.xml"
-    PROP_XML      = "/scpr/scprv4/sosxml/X14GP510_1900v7.xml"
+    CONTEST_XML   = "/scpr/scprv4/sosxml/X14GG510v7.xml"
+    REPORTING_XML = "/scpr/scprv4/sosxml/X14GG530v7.xml"
+    PROP_XML      = "/scpr/scprv4/sosxml/X14GG510_1900v7.xml"
 
     RACES = {
       "Governor - Statewide Results"                                     => "state.governor",        
