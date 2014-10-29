@@ -2,16 +2,17 @@ module Job
   class CacheElectionResults < Base
     @priority = :low
 
+    SOS_URL = "http://media.sos.ca.gov/media/X14GGv7.zip"
 
     GROUP = "election-nov2014"
     NOTE = "Percentage; Number Only (no % symbol)"
 
-    CONTEST_XML   = "/scpr/scprv4/sosxml/X14GG510v7.xml"
-    REPORTING_XML = "/scpr/scprv4/sosxml/X14GG530v7.xml"
-    PROP_XML      = "/scpr/scprv4/sosxml/X14GG510_1900v7.xml"
+    CONTEST_XML   = "X14GG510v7.xml"
+    REPORTING_XML = "X14GG530v7.xml"
+    PROP_XML      = "X14GG510_1900v7.xml"
 
     RACES = {
-      "Governor - Statewide Results"                                     => "state.governor",        
+      "Governor - Statewide Results"                                     => "state.governor",
       "Secretary of State - Statewide Results"                           => "state.sos",
       "Attorney General - Statewide Results"                             => "state.attorney_general",
       "Insurance Commissioner - Statewide Results"                       => "state.insurance_commissioner",
@@ -124,16 +125,26 @@ module Job
 
 
     def load_data
-      # Only get the races we care about
-      @contests = MultiXml.parse(File.read(CONTEST_XML))["EML"]["Count"]["Election"]["Contests"]["Contest"].select do |c|
-        RACES.include?(c["ContestIdentifier"]["ContestName"])
+      # -- create a temp dir for fetching -- #
+
+      Dir.mktmpdir("scprv4-elections") do |dir|
+        # -- fetch the SoS zip file -- #
+
+        # this could be more robust, but it should do the trick for now
+        `cd #{dir} && wget #{SOS_URL} && unzip ./*.zip`
+
+        # Only get the races we care about
+        @contests = MultiXml.parse(File.read(File.join([dir,CONTEST_XML])))["EML"]["Count"]["Election"]["Contests"]["Contest"].select do |c|
+          RACES.include?(c["ContestIdentifier"]["ContestName"])
+        end
+
+        @props = MultiXml.parse(File.read(File.join([dir,PROP_XML])))["EML"]["Count"]["Election"]["Contests"]["Contest"].select do |c|
+          RACES.include?(c["ContestIdentifier"]["ContestName"])
+        end
+
+        @reporting_stats = MultiXml.parse(File.read(File.join([dir,REPORTING_XML])))["EML"]["Statistics"]["Election"]["Contests"]["Contest"]["TotalVotes"]["CountMetric"]
       end
 
-      @props = MultiXml.parse(File.read(PROP_XML))["EML"]["Count"]["Election"]["Contests"]["Contest"].select do |c|
-        RACES.include?(c["ContestIdentifier"]["ContestName"])
-      end
-
-      @reporting_stats = MultiXml.parse(File.read(REPORTING_XML))["EML"]["Statistics"]["Election"]["Contests"]["Contest"]["TotalVotes"]["CountMetric"]
     end
 
 
