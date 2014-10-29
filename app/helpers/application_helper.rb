@@ -271,7 +271,7 @@ module ApplicationHelper
       :classes    => [NewsStory, BlogEntry, ShowSegment, ContentShell],
       :limit      => limit,
       :without    => { category: false }
-    })
+    }).to_a
   end
 
   def latest_blogs(limit=3)
