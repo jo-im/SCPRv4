@@ -8,7 +8,7 @@ window.open_popup = (url) ->
         'resizable,'+
         'left=10,'+
         'top=10,'+
-        'scrollbars=no,'+
+        'scrollbars=yes,'+
         'toolbar=no'
     )
 
