@@ -209,6 +209,7 @@ module Job
         contest_key_prefix = RACES[contest_name]
 
         Array.wrap(contest["TotalVotes"]["Selection"]).each do |candidate|
+          next if candidate["Candidate"].has_key?("ProposalItem")
           candidate_name = candidate["Candidate"]["CandidateFullName"]["PersonFullName"]
           candidate_key = contest_key_prefix + ":" + candidate_name.parameterize.underscore
           percent_votes = candidate["CountMetric"]["__content__"].to_i
