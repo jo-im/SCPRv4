@@ -96,8 +96,8 @@
                                             <% end %>
                                         </div>
                                         <figcaption>
-                                            <time datetime="<%= format_date(edition.published_at, with: '%F') %>"><span data-short="<%= format_date(edition.published_at, with: '%a') %>" data-long="<%= format_date(edition.published_at, with: '%a') %>"><%= format_date(edition.published_at, with: '%A') %></span> <%= format_date(edition.published_at, with: '%m/%d') %> <b><%= edition.title %></b></time>
-                                            <mark><%= abstract.headline %></mark>
+                                            <time datetime="<%= format_date(edition.published_at, with: '%F') %>"><span data-short="<%= format_date(edition.published_at, with: '%a') %>" data-long="<%= format_date(edition.published_at, with: '%a') %>"><%= format_date(edition.published_at, with: '%A') %></span> <%= format_date(edition.published_at, with: '%m/%d') %> <b><%= edition.short_list_type %></b></time>
+                                            <mark><%= edition.title %></mark>
                                         </figcaption>
                                     </figure>
                                 </a>
