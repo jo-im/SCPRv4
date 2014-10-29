@@ -2,7 +2,8 @@ module Job
   class CacheElectionResults < Base
     @priority = :low
 
-    SOS_URL = "http://media.sos.ca.gov/media/X14GGv7.zip"
+    SOS_URL = "http://media.sos.ca.gov/media/"
+    SOS_FILE = "X14GGv7.zip"
 
     GROUP = "election-nov2014"
     NOTE = "Percentage; Number Only (no % symbol)"
@@ -131,7 +132,7 @@ module Job
         # -- fetch the SoS zip file -- #
 
         # this could be more robust, but it should do the trick for now
-        `cd #{dir} && wget #{SOS_URL} && unzip ./*.zip`
+        `cd #{dir} && wget #{SOS_URL}/#{SOS_FILE} && unzip ./#{SOS_FILE}`
 
         # Only get the races we care about
         @contests = MultiXml.parse(File.read(File.join([dir,CONTEST_XML])))["EML"]["Count"]["Election"]["Contests"]["Contest"].select do |c|
