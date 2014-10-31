@@ -688,6 +688,9 @@ body.short-list {
     top: 0;
     left: 0;
     z-index: 5;
+    &.hidden {
+      display:none;
+    }
     nav,h2                { display: block; position: absolute; }
     nav {
       top: 0;

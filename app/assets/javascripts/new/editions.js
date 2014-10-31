@@ -80,6 +80,14 @@ scpr.Behaviors.Editions = {
         });
       };
 
+      // Conditionally add "hidden" class to the ledge when a URL 
+      // hash of #no-prelims is passed to the page.
+      // ---------------------------------------------------------
+      var url = document.location.hash;
+
+      if (url == "#no-prelims"){
+          $(".shortlist-ledge").addClass("hidden");
+      }
 
 
     } // loadBehaviors
