@@ -663,3 +663,24 @@ div.results-block + .initiative {
         text-align:left;
     }
 }
+
+@media (max-width: 480px) {
+  .hero-election {
+    .results {
+      .results-block {
+        header {
+          background:#202020;
+          h2, aside {
+            display:block;
+            padding:0 10px;
+          }
+        }
+        .initiative, .initiative.local {
+          .title {
+            width:126px;
+          }
+        }
+      }
+    }
+  }
+}

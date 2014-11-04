@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141002090502) do
+ActiveRecord::Schema.define(version: 20141028044143) do
 
   create_table "abstracts", force: true do |t|
     t.string   "source"
