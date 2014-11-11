@@ -1,4 +1,10 @@
 <% article = article.to_article %>
+
+<% content_for :masthead_class, "blog" %>
+<% content_for :titling do %>
+    <%= render :partial => 'shared/new/masthead/blog_titling' %>
+<% end %>
+
 <% present article do |article_presenter| %>
     <%= article_presenter.asset_display %>
 <% end %>

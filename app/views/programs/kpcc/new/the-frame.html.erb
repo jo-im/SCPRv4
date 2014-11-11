@@ -1,6 +1,9 @@
 <% add_to_page_title @program.title %>
 <% meta_tags(url: @program.public_url) %>
 <% content_for :body_class, "program #{@program.slug}" %>
+<% content_for :titling do %>
+  <%= render :partial => 'shared/new/masthead/program_titling' %>
+<% end %>
 
 <%= cache ["the-frame", @program] do %>
 

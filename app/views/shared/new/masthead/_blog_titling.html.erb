@@ -1,0 +1,20 @@
+<section class="titling">
+    <div class="brand">
+        <h1><%= link_to @blog.name, @blog.public_path %></h1>
+        <div class="secondary">
+            <h2><%= @blog.teaser %></h2>
+            <% present @blog do |p| %>
+                <figure class="subscribe clearfix">
+                    <ul>
+                        <li class="rss track-event" data-ga-category="Article" data-ga-action="Subscribe" data-ga-label="RSS"><%= p.rss_link %></li>
+                        <li class="twitter track-event" data-ga-category="Article" data-ga-action="Subscribe" data-ga-label="Twitter"><%= p.twitter_link %></li>
+                        <li class="facebook track-event" data-ga-category="Article" data-ga-action="Subscribe" data-ga-label="Facebook"><%= p.facebook_link %></li>
+                    </ul>
+                    <% if p.rss_link.present? %>
+                    <figcaption>Subscribe to <%= @blog.name %></figcaption>
+                    <% end %>
+                </figure>
+            <% end %>
+        </div>
+    </div>
+</section>
