@@ -253,7 +253,8 @@ class RecurringScheduleRule < ActiveRecord::Base
     self.interval_changed? ||
     self.days_changed? ||
     self.start_time_changed? ||
-    self.end_time_changed?
+    self.end_time_changed? ||
+    self.soft_start_offset_changed?
   end
 
 
