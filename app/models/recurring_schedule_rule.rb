@@ -99,10 +99,10 @@ class RecurringScheduleRule < ActiveRecord::Base
 
   def build_schedule
     self.schedule = ScheduleBuilder.build_schedule(
-      :interval     => self.interval,
-      :days         => self.days,
-      :start_time   => self.start_time,
-      :end_time     => self.end_time
+      interval:         self.interval,
+      days:             self.days,
+      start_time:       self.start_time,
+      end_time:         self.end_time,
     )
   end
 
@@ -147,9 +147,10 @@ class RecurringScheduleRule < ActiveRecord::Base
     .reject { |o| existing[o.start_time] }
     .each do |occurrence|
       self.schedule_occurrences.build(
-        :starts_at => occurrence.start_time,
-        :ends_at   => occurrence.start_time + self.duration,
-        :program   => self.program
+        starts_at:      occurrence.start_time,
+        ends_at:        occurrence.start_time + self.duration,
+        soft_starts_at: occurrence.start_time + (self.soft_start_offset || 0),
+        program:        self.program,
       )
     end
 
