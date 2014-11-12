@@ -1,7 +1,5 @@
 <% article = article.to_article %>
-<% present article do |article_presenter| %>
-    <%= article_presenter.asset_display %>
-<% end %>
+
 <div class="report">
     <div class="inner bound clearfix">
         <article class="prose">
@@ -27,11 +25,6 @@
             </div><!--/ .marginal-tools -->
 
             <div class="prose-body">
-                <% if article.original_object.assets.present? %>
-                    <% present article do |article_presenter| %>
-                        <%= article_presenter.inline_asset %>
-                    <% end %>
-                <% end %>
 
                 <%= article.body.html_safe %>
                 <% if article.original_object.joined_bylines[:contributing].present? %>
