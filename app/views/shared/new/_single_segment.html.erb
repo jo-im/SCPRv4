@@ -1,0 +1,72 @@
+<% article = article.to_article %>
+<% present article do |article_presenter| %>
+    <%= article_presenter.asset_display %>
+<% end %>
+<div class="report">
+    <div class="inner bound clearfix">
+        <article class="prose">
+            <div class="marginal-tools clearfix">
+                <% if article.audio.any? %>
+                    <% audio = article.audio %>
+                    <nav class="audio-queue track-event" data-ga-category="Article" data-ga-action="Load" data-ga-label="Player" data-non-interaction="1">
+                        <header>Audio from this story</header>
+                        <ul>
+                        <% audio.each_with_index do |audio, index| %>
+                            <li class="story-audio track-event" data-ga-category="Article" data-ga-action="Play" data-ga-label="Player">
+                                <a href="<%= audio.url %>" class="play-btn audio-toggler track-event" data-ga-category="Article" data-ga-action="Play" data-ga-label="Player" title="<%= h(article.short_title) %>" data-duration="<%= audio.duration %>">
+                                    <b><%= format_clip_duration audio.duration %></b>
+                                    <span><%= index == 0 ? "Listen" : "Extra Audio" %></span>
+                                </a>
+                            </li>
+                        <% end %>
+                        </ul>
+                    </nav>
+                <% end %>
+
+                <%= render 'shared/new/social_share', article: article %>
+            </div><!--/ .marginal-tools -->
+
+            <div class="prose-body">
+                <% if article.original_object.assets.present? %>
+                    <% present article do |article_presenter| %>
+                        <%= article_presenter.inline_asset %>
+                    <% end %>
+                <% end %>
+
+                <%= article.body.html_safe %>
+                <% if article.original_object.joined_bylines[:contributing].present? %>
+                    <footer class="contributor">
+                        <p><%= render_contributing_byline article.original_object %></p>
+                    </footer>
+                <% end %>
+            </div><!--/ .prose-body -->
+
+            <% present article do |article_presenter| %>
+                <%= article_presenter.related_links %>
+            <% end %>
+
+            <aside class="other-segments" id="other-segments">
+                <h6>More from this <%= @segment.episodes.present? ? "Episode" : "Program" %></h6>
+                <ul>
+                    <% @segment.sister_segments.each do |segment| %>
+                    <li><%= link_to segment.short_headline, segment.public_path %></li>
+                    <% end %>
+                </ul>
+            </aside>
+
+            <%= render 'shared/new/social_share', article: article %>
+
+            <footer class="comments-jump">
+                <a href="#comments">
+                    <mark>Join the discussion.</mark>
+                    <span>Tap here to jump to this article's comments.</span>
+                </a>
+            </footer>
+
+            <!--
+            <footer class="comments-trigger">
+                <a href="#">This article currently has no comments. Click here to start the discussion.</a>
+            </footer>
+            -->
+
+        </article>

@@ -1,0 +1,57 @@
+<% add_to_page_title @segment.headline %>
+<% content_for :body_class, 'interior single segment' %>
+<% content_for :opengraph do %><%= render_content @segment, "opengraph" %><% end %>
+<%= render 'shared/ads/dfp_script_config', category: @segment.category %>
+
+<% content_for :titling do %>
+    <%= render :partial => 'shared/new/masthead/program_content_titling' %>
+<% end %>
+
+
+<%= cache ["show", "article-content", "v13", @segment] do %>
+    <%= render "shared/new/single_segment", article: @segment, full: true %>
+<% end %>
+
+<% cache ["show", "article-supportive", "v16", @segment] do %>
+    <section class="supportive">
+        <aside class="placard">
+            <div class="ad widget">
+                <%= render "shared/ads/dfp", ad_key: 'slot_a' %>
+            </div>
+        </aside>
+
+        <aside class="placard">
+            <div class="ad widget">
+                <%= render "shared/ads/dfp", ad_key: 'slot_b' %>
+                <p class="appeal"><a href="/support/underwriting/">Become a KPCC Sponsor</a></p>
+            </div>
+        </aside>
+
+            <aside class="see-more">
+                <header>
+                    <h1>Recently on Off-Ramp</h1>
+                </header>
+            </aside>
+        </section>
+    </div>
+</div><!--/ .report -->
+
+<!-- AdHost Slot: Membership Appeals -->
+<div id="article-membership-appeal"></div>
+
+<%= comments_for @story %>
+
+<div class="placard-waystation"></div>
+<% end %>
+
+<%= comments_for @segment, header: false %>
+
+<% if @featured_programs %>
+    <%= render 'programs/kpcc/new/featured_programs' %>
+<% end %>
+
+<% if @popular_articles %>
+    <%= render 'shared/new/popular_articles',
+        articles: @popular_articles.first(4),
+        header: 'Popular Now on KPCC' %>
+<% end %>

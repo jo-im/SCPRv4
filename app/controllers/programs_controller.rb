@@ -4,8 +4,10 @@
 # basically split every action into two.
 class ProgramsController < ApplicationController
   include Concern::Controller::GetPopularArticles
+  layout 'new/single', only: [:segment]
+
   before_filter :get_program, only: [:show, :episode, :archive, :featured_program, :featured_show]
-  before_filter :get_popular_articles, only: [:featured_program]
+  before_filter :get_popular_articles, only: [:featured_program, :segment]
 
   respond_to :html, :xml, :rss
 
@@ -81,13 +83,14 @@ class ProgramsController < ApplicationController
   def segment
     @segment = ShowSegment.published.includes(:show).find(params[:id])
     @program = @kpcc_program = @segment.show.to_program
+    @featured_programs = KpccProgram.where.not(id: @program.id,is_featured: false).first(4)
 
     # check whether this is the correct URL for the segment
     if request.original_fullpath != @segment.public_path
       redirect_to @segment.public_path and return
     end
 
-    render 'programs/kpcc/segment' and return
+    render 'programs/kpcc/new/segment' and return
   end
 
 
