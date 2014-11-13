@@ -8,6 +8,13 @@
 <% end %>
 
 
+<div class="appellation bound">
+  <h1>Midnight Mission centennial: How this man went from homeless to managing a shelter</h1>
+  <p>Byline goes here. Pubdate.</p>
+</div><!--/ .appellation -->
+
+
+
 <%= cache ["show", "article-content", "v13", @segment] do %>
     <%= render "shared/new/single_segment", article: @segment, full: true %>
 <% end %>
