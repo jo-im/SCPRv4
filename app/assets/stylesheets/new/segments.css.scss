@@ -1,3 +1,4 @@
+body.segment {
 /*
 @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
@@ -10,7 +11,7 @@ SINGLE SEGMENT
 @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ */
 
 
-body.segment {
+
 
 
 /*
@@ -45,10 +46,14 @@ This used to be a <section> (c. 2013-14), but that was dumb.
 ########################################################################
 ######################################################################## */
 .appellation {
-  padding: 70px 0;
+  padding: 65px 0 55px;
   h1    { font: normal 300 3em/1.1 $font-freight; }
   p     { padding-top: 40px; font: normal 0.75em/1 $font-prox; color: #acacac; }
 }
+
+
+
+
 
 
 
@@ -60,18 +65,117 @@ REPORT
 ######################################################################## */
 .report {
   
-  .inner          { background-image: image-url("i/fauxcol-segment-base.png"); }
+  .inner              { background-image: image-url("i/fauxcol-segment-base.png"); background-position: 65.846153846154% 0; }
   .prose {
-    outline: 1px solid green;
     width: 59.769230769231%;
-    p.inaugural   { width: auto; }
+    padding-top: 0;
+    p.inaugural       { width: auto; }
+    background: image-url("i/flourish-faint-dot.png") repeat-y 14.157014157014% 0;
+    background-size: 1px 1px;
+    .primary          { width: 75.546975546976%; float: right; } // 587 / 777
+    .secondary        { width: 14.285714285714%; float: left; } // 111 / 777 
   }
-  .supportive {
-    outline: 1px solid maroon;
-    width: 34.153846153846%;
-  }
+  .supportive         { width: 34.153846153846%; border-top: 0; }
+  .supportive aside.placard:first-child   { padding-top: 0; }
   
 }// .report
+
+
+
+
+
+
+
+/*
+########################################################################
+########################################################################
+------------------------------------------------------------------------
+LEAD ASSET
+------------------------------------------------------------------------
+In "News/Blog," this used to be a far more complicated affair, involving
+the ".prologue" component, and a bunch of variants. No longer.
+Now, it's just ".lead-asset", comprised of two internal flavors:
+Straight-up (i.e., a photo/slideshow/video naturally filling its full
+container's width), or, if it's deemed square-or-narrower, than a
+cosmetic width-constrained tweak.
+------------------------------------------------------------------------
+########################################################################
+######################################################################## */
+.lead-asset {
+  background: white;
+  padding-bottom: 30px;
+  b       { display: block; width: 100%; margin-bottom: 10px; }
+  img     { width: 100%; height: auto; } // Assume it's wide by default
+  figcaption {
+    color: #a6a6a6;
+    width: 100%;
+    display: block;
+    span      { display: block; }
+    .credit   { font: normal 600 0.625em/1.1 $font-freight; text-transform: uppercase; float: left; width: 19.305019305019%; /* 150 / 777 */ }
+    .brief    { font: italic 400 0.8125em/1.2 $font-prox; float: right; width: 75.546975546976%; /* 587 / 777 */ }
+  }
+}
+
+
+
+
+
+
+
+/*
+########################################################################
+########################################################################
+------------------------------------------------------------------------
+AUDIO ACTUATOR
+------------------------------------------------------------------------
+The trigger that launches the audio drawer. Powered by jPlayer.
+------------------------------------------------------------------------
+########################################################################
+######################################################################## */
+.audio-actuator {
+  font: normal bold 1.375em/1 $font-prox;
+  color: white;
+  width: 100%;
+  box-sizing: border-box;
+  margin-bottom: 45px;
+  a {
+    min-height: 60px;
+    position: relative;
+    color: inherit;
+    display: block;
+    background: $blue;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+  }
+  .flourish {
+    display: block;
+    background: #1990c3;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 14.285714285714%; // 111 / 777
+    height: 100%;
+    overflow: hidden;
+  }
+  b {
+    @include texthide;
+    width: 26px;
+    height: 33px;
+    background: pink;
+    position: absolute;
+    top: 50%;   margin-top: -16px;
+    left: 50%;  margin-left: -13px;
+  }
+  div         { margin-left: 24.453024453024%; box-sizing: border-box; padding-top: 0.95em; } // 190 / 777
+  span        { white-space: nowrap; }
+  .duration   { text-transform: uppercase; color: #9ff0ff; font-size: 0.72727272727273em; /* 16 / 22 */ }
+}
+
+
+
+
+
 
 
 
