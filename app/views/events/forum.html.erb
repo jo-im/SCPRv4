@@ -61,7 +61,7 @@
           </div>
         <% end %>
 
-        <%= any_to_list? @future_events, title: "Future Events", message: "There are no events planned for the near future. Check back soon!" do %>
+        <%= any_to_list? @future_events, title: "Future Events", message: "We are getting ready to announce more upcoming events. Check back soon!" do %>
           <% @future_events.each do |event| %>
             <div class="event future">
               <div class="row-fluid">
