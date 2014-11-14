@@ -104,11 +104,40 @@ REPORT
       nav               { padding-top: 28px; }
     }
   }
-  .supportive         { width: 34.153846153846%; border-top: 0; }
-  .supportive aside.placard:first-child   { padding-top: 0; }
+  .supportive           { width: 34.153846153846%; border-top: 0; }
   
 }// .report
 
+
+
+
+
+
+/*
+########################################################################
+########################################################################
+SIDEBAR BOXLETS
+########################################################################
+######################################################################## */
+.report .supportive aside {
+
+  &.placard:first-child     { padding-top: 0; }
+//  header h1                 { margin-bottom: 30px; }
+  header + *                { border-top: 1px solid rgba(0,0,0,0.07); padding-top: 30px; }
+  nav {
+    box-sizing: border-box;
+    padding-right: 7.207207207207%; // 32 / 444
+    padding-left: 7.207207207207%; // 32 / 444
+    article                 { margin-bottom: 20px; }
+    a                       { display: block; position: relative; min-height: 62px; }
+    b                       { display: block; width: 62px; position: absolute; top: 0; left: 0; }
+    img                     { width: 100%; height: auto; }
+    time                    { display: block; text-transform: uppercase; color: $blue; font: normal 700 0.625em/1 $font-prox; }
+    h1                      { color: #323131; font: normal 0.9375em/1.1 $font-freight; }
+    time,h1                 { margin-left: 79px; }
+  }
+
+}// .report .supportive aside
 
 
 
