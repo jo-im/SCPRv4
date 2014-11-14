@@ -64,10 +64,51 @@
                   <% end %>
               </div><!--/ .prose-body -->
 
+
+              <!--
               <% present article do |article_presenter| %>
                   <%= article_presenter.related_links %>
               <% end %>
+              -->
 
+
+
+              <aside class="ancillary related-links">
+                <header>Related links</header>
+                <nav>
+                  <ul>
+                    <li><a href="#">As downtown LA grows, so does urgency to fix Skid Row</a></li>
+                    <li><a href="#">LA's homeless: Skid Row's epic clean-up by the numbers</a></li>
+                    <li><a href="#">LA homeless: Extra $214M to coordinate services, programs</a></li>
+                    <li><a href="#">Massive Arroyo Seco homeless camp cleanup continues</a></li>
+                    <li><a href="#">SF nonprofit converts buses to rolling showers for homeless</a></li>
+                  </ul>
+                </nav>
+              </aside>
+
+
+              <aside class="ancillary episode-contents">
+                <header>More from this episode <cite>Off-Ramp for October 27, 2014</cite></header>
+                <h1>The "lost" sounds of a long-gone amusement park</h1>
+                <nav>
+                  <ul>
+                    <li><a href="#">Dive into a synchronized swimming renaissance with Aqualillies</a></li>
+                    <li><a href="#">LA City Archive: How LA prepped for nuclear war in the 1950s</a></li>
+                    <li><a href="#">Here's why we're putting a GPS tracker in a mattress (updated)</a></li>
+                    <li><a href="#">Los Angeles had America's first Wrigley Field</a></li>
+                    <li><a href="#">PHOTOS: New Woodland Hills homeowners' bonus room: a fully stocked fallout shelter</a></li>
+                    <li><a href="#">He went from sleeping on Skid Row to running the Midnight Mission</a></li>
+                    <li><a href="#">PHOTOS: Why Alvin Kaufman built a fallout shelter in his Woodland Hills back yard</a></li>
+                    <li><a href="#">RIP David Weidman, 93. Prolific printmaker, found new fame in Mad Men</a></li>
+                    <li><a href="#">Grant Morrison explores 52 universes in DC Comics' 'Multiversity'</a></li>
+                    <li><a href="#">The mysterious mannequins of North Hollywood Toyota</a></li>
+                  </ul>
+                </nav>
+              </aside>
+
+
+
+              <!--
               <aside class="other-segments" id="other-segments">
                   <h6>More from this <%= @segment.episodes.present? ? "Episode" : "Program" %></h6>
                   <ul>
@@ -76,15 +117,35 @@
                       <% end %>
                   </ul>
               </aside>
+              -->
 
             </div><!--/ .primary -->
             
 
 
             <div class="secondary">
-                SHARE<br /><br /><br /><br /><br />
-                JUMP TO COMMENTS<br /><br /><br /><br /><br />
-                PART OF A SERIES
+              <aside class="disseminate">
+                <h1>Share</h1>
+                <ul>
+                  <li><a href="#">Email</a></li>
+                  <li><a href="#">Twitter</a></li>
+                  <li><a href="#">Facebook</a></li>
+                </ul>
+              </aside>
+              <aside class="comments-plug">
+                <h1>Comments</h1>
+                <figure>
+                  <mark>18</mark>
+                  <figcaption><a href="#">Join the discussion</a></figcaption>
+                </figure>
+              </aside>
+              <aside class="taxonomy">
+                <h1>Part of a series</h1>
+                <ul>
+                  <li><a href="#">Tuesday Reviewsdays</a></li>
+                  <li><a href="#">A possible second tag</a></li>
+                </ul>
+              </aside>
             </div><!--/ .secondary -->
 
 
@@ -93,14 +154,16 @@
 
 
 
-            <%= render 'shared/new/social_share', article: article %>
+            <%#= render 'shared/new/social_share', article: article %>
 
+            <!--
             <footer class="comments-jump">
                 <a href="#comments">
                     <mark>Join the discussion.</mark>
                     <span>Tap here to jump to this article's comments.</span>
                 </a>
             </footer>
+            -->
 
             <!--
             <footer class="comments-trigger">

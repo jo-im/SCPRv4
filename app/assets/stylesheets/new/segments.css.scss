@@ -68,12 +68,41 @@ REPORT
   .inner              { background-image: image-url("i/fauxcol-segment-base.png"); background-position: 65.846153846154% 0; }
   .prose {
     width: 59.769230769231%;
-    padding-top: 0;
+    padding: 0 0 60px;
     p.inaugural       { width: auto; }
     background: image-url("i/flourish-faint-dot.png") repeat-y 14.157014157014% 0;
     background-size: 1px 1px;
     .primary          { width: 75.546975546976%; float: right; } // 587 / 777
-    .secondary        { width: 14.285714285714%; float: left; } // 111 / 777 
+    .secondary {
+      width: 14.285714285714%; // 111 / 777
+      float: left;
+      font: normal bold 0.75em/1.1 $font-prox;
+      color: #909090;
+      aside {
+        border-top: 1px solid rgba(0,0,0,0.08);
+        box-sizing: border-box;
+        padding: 7px 10px 0 0;
+        margin-bottom: 57px;
+        ul li             { padding-left: 0; list-style: none; margin: 0 0 0.7em; }
+        h1                { font-weight: bold; margin-bottom: 1em; }
+        &.disseminate     { border-top: 1px solid rgba(236,124,45,0.2); }
+        &.disseminate h1  { color: $orange; }
+      }
+    }
+    .ancillary {
+      font-size: 1.06666666666667em; // reset to equivalent of 16
+      border-top: 1px solid rgba(236,124,45,0.5);
+      box-sizing: border-box;
+      padding: 18px 0 0 13.458262350937%; // 79 / 587
+      margin: 0 0 45px -13.458262350937%;
+      &:last-child      { margin-bottom: 0; }
+      & > header {
+        color: $orange;
+        font: normal bold 0.8125em/1.1 $font-prox;
+      }
+      h1                { font: normal 300 1.75em/1 $font-freight; padding-top: 20px; }
+      nav               { padding-top: 28px; }
+    }
   }
   .supportive         { width: 34.153846153846%; border-top: 0; }
   .supportive aside.placard:first-child   { padding-top: 0; }
@@ -151,6 +180,7 @@ The trigger that launches the audio drawer. Powered by jPlayer.
   .flourish {
     display: block;
     background: #1990c3;
+    box-shadow: inset -7px 0 15px rgba(0,0,0,0.08);
     position: absolute;
     top: 0;
     left: 0;
