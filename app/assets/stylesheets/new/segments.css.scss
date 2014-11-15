@@ -65,14 +65,14 @@ REPORT
 ######################################################################## */
 .report {
   
-  .inner              { background-image: image-url("i/fauxcol-segment-base.png"); background-position: 65.846153846154% 0; }
+  .inner                      { background-image: image-url("i/fauxcol-segment-base.png"); background-position: 65.846153846154% 0; }
   .prose {
     width: 59.769230769231%;
     padding: 0 0 60px;
-    p.inaugural       { width: auto; }
+    p.inaugural               { width: auto; }
     background: image-url("i/flourish-faint-dot.png") repeat-y 14.157014157014% 0;
     background-size: 1px 1px;
-    .primary          { width: 75.546975546976%; float: right; } // 587 / 777
+    .primary                  { width: 75.546975546976%; float: right; } // 587 / 777
     .secondary {
       width: 14.285714285714%; // 111 / 777
       float: left;
@@ -83,10 +83,26 @@ REPORT
         box-sizing: border-box;
         padding: 7px 10px 0 0;
         margin-bottom: 57px;
-        ul li             { padding-left: 0; list-style: none; margin: 0 0 0.7em; }
-        h1                { font-weight: bold; margin-bottom: 1em; }
-        &.disseminate     { border-top: 1px solid rgba(236,124,45,0.2); }
-        &.disseminate h1  { color: $orange; }
+        ul li                 { padding-left: 0; list-style: none; margin: 0 0 0.7em; }
+        h1                    { font-weight: bold; margin-bottom: 1em; }
+        &.disseminate         { border-top: 1px solid rgba(236,124,45,0.2); }
+        &.disseminate h1      { color: $orange; }
+        &.comments-plug figure {
+          mark,figcaption a   { display: block; @include segment-icons; }
+          mark {
+            background-position: 0 -250px;
+            font: normal 1.875em/1 $font-proxcond;
+            color: $blue;
+            padding-left: 27px;
+            margin-bottom: 10px;
+          }
+          figcaption a {
+            text-transform: lowercase;
+            background-position: 0 -286px;
+            margin-left: -12px;
+            padding-left: 12px;
+          }
+        }
       }
     }
     .ancillary {
@@ -105,6 +121,28 @@ REPORT
     }
   }
   .supportive           { width: 34.153846153846%; border-top: 0; }
+  .episode-contents {
+    nav {
+      li {
+        list-style: none;
+        margin: 0 0 2px -13.458262350937%;
+        padding-left: 13.458262350937%;
+        display: block;
+        font: normal 0.875em/1.2 $font-freight;
+        &.selected      { background: #f0f0f3; }
+      }
+      a {
+        color: #333333;
+        display: inline-block;
+        padding: 4px 0 5px;
+        @include segment-icons;
+        background-position: 0 -160px;
+        margin-left: -18px;
+        padding-left: 18px;
+      }
+      li.selected a     { background-position: 0 -80px; }
+    }
+  }
   
 }// .report
 
@@ -120,23 +158,70 @@ SIDEBAR BOXLETS
 ########################################################################
 ######################################################################## */
 .report .supportive aside {
-
-  &.placard:first-child     { padding-top: 0; }
-//  header h1                 { margin-bottom: 30px; }
-  header + *                { border-top: 1px solid rgba(0,0,0,0.07); padding-top: 30px; }
-  nav {
-    box-sizing: border-box;
-    padding-right: 7.207207207207%; // 32 / 444
-    padding-left: 7.207207207207%; // 32 / 444
-    article                 { margin-bottom: 20px; }
-    a                       { display: block; position: relative; min-height: 62px; }
-    b                       { display: block; width: 62px; position: absolute; top: 0; left: 0; }
-    img                     { width: 100%; height: auto; }
-    time                    { display: block; text-transform: uppercase; color: $blue; font: normal 700 0.625em/1 $font-prox; }
-    h1                      { color: #323131; font: normal 0.9375em/1.1 $font-freight; }
-    time,h1                 { margin-left: 79px; }
+  position: relative; z-index: 1;
+  &.placard:first-child       { padding-top: 0; }
+  &.overview header           { background-position: 0 -640px; }
+  header {
+    padding: 5px 0 0 13px; position: relative; z-index: 2;
+    & + *                     { padding-top: 23px; }
+    h1 {
+      box-sizing: border-box;
+      color: #9a9a9a;
+      text-transform: none;
+      font: normal 400 1.0625em/1 $font-freight;
+      margin-left: 0;
+      padding: 0 6% 17px 7.207207207207%;
+      border-bottom: 1px solid rgba(0,0,0,0.07);
+    }
   }
-
+  nav,.exposition,.externals  { padding-left: 7.207207207207%; box-sizing: border-box; }
+  nav,.externals              { padding-right: 7.207207207207%; }
+  nav {
+    article                   { margin-bottom: 20px; }
+    a                         { display: block; position: relative; min-height: 62px; }
+    b                         { display: block; width: 62px; position: absolute; top: 0; left: 0; }
+    img                       { width: 100%; height: auto; }
+    time                      { display: block; text-transform: uppercase; color: $blue; font: normal 700 0.625em/1 $font-prox; padding: 4px 0; }
+    h1                        { color: #323131; font: normal 0.9375em/1.2 $font-freight; }
+    time,h1                   { margin-left: 79px; }
+    a:hover h1                { color: black; text-decoration: underline; }
+    a:hover img               { outline: 2px solid $blue; }
+  }
+  .exposition {
+    border-bottom: 1px solid rgba(0,0,0,0.07);
+    padding-right: 0;
+    padding-bottom: 12px;
+    margin-bottom: 12px;
+    position: relative;
+    z-index: 3;
+    p                         { font-size: 0.8125em; margin-bottom: 15px; letter-spacing: -0.01em; }
+    footer {
+      color: #acacac;
+      font: normal 700 0.6875em/1.1 $font-prox;
+      padding: 2px 0 2px 18px;
+      @include segment-icons;
+    }
+    &[data-program="offramp"] {
+      margin-top: -15px;
+      padding-top: 30px;
+      min-height: 170px;
+      p,footer                { padding-right: 160px; }
+      background: image-url("i/host-offramp.png") no-repeat right 15px bottom 0;
+      background-size: 141px 170px;
+    }
+  }
+  .externals {
+    color: #2388aa;
+    font-size: 0.8125em;
+    letter-spacing: -0.01em;
+    li                        { display: block; margin-bottom: 8px; }
+    a {
+      display: inline-block; padding-left: 20px;
+      @include segment-icons;
+      background-position: 0 -327px;
+      &:hover { text-decoration: underline; }
+    }
+  }
 }// .report .supportive aside
 
 

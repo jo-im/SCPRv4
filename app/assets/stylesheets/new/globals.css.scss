@@ -11,6 +11,10 @@ $blue: #31aad3;
 $orange: #f17b21;
 
 // Mixins
+@mixin segment-icons {
+	background: image-url("i/segment-icons.png") no-repeat;
+	background-size: 20px 910px;
+}
 @mixin icon {
 	background: image-url("i/workbench-icons.png") no-repeat;
 	background-size: 300px 450px;
