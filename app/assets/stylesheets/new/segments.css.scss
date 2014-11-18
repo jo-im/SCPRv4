@@ -75,13 +75,14 @@ REPORT
     .primary                  { width: 75.546975546976%; float: right; }
     .secondary                { width: 14.285714285714%; float: left; }
     .buddy {
-      &.pinned                { display: none; } // this gets undone when certain width requirements are met
+      &.pinned                { display: none; } // hiddenness gets undone when certain width requirements are met
       font: normal bold 0.75em/1.1 $font-prox;
       color: #909090;
       border-top: 1px solid rgba(0,0,0,0.08);
       box-sizing: border-box;
       padding: 7px 10px 0 0;
       margin-bottom: 57px;
+      ul                    { margin-bottom: 0; }
       ul li                 { padding-left: 0; list-style: none; margin: 0 0 0.7em; }
       h1                    { font-weight: bold; margin-bottom: 1em; }
       &.disseminate {
@@ -96,10 +97,12 @@ REPORT
           min-height: 21px;
           span              { @include texthide; @include segment-icons; background-position: 0 -609px; width: 20px; height: 18px; }
           mark              { display: block; position: absolute; top: 5px; left: 24px; color: #ffbc8d; }
-          &:hover           { background: #ffe6d5; outline: 1px solid #fccfb0; }
+          &:hover           { background: #fff1e8; outline: 1px solid #fccfb0; }
           &:hover mark      { color: $orange; }
         }
         li.email a span     { background-position: 0 -605px;  }
+        li.email a mark     { display: none; }
+        li.email a:hover mark { display: block; }
         li.twitter a span   { background-position: 0 -706px;  }
         li.facebook a span  { background-position: 0 -808px;  }
       }
@@ -183,6 +186,20 @@ REPORT
         .prose {
           background: none; // Scraps the 1px gray dot divider
           .buddy.pinned   { display: block; }
+          .buddy.disseminate {
+            padding-bottom: 7px;
+            border-bottom: 1px solid rgba(236,124,45,0.2);
+            h1          { float: left; padding-top: 9px; }
+            ul          { float: right; width: 230px; } // meh
+            li          { width: 30%; float: left; margin: 0 5% 0 0; }
+            li:nth-child(3) { float: right; margin-right: 0; }
+            a {
+              width: 100%;
+              min-height: 52px;
+              span              { top: 5px; left: 50%; margin-left: -10px; position: absolute; }
+              mark              { top: 35px; left: 0; text-align: center; width: 100%; }
+            }
+          }
           .primary        { width: 100%; float: none; }
           .secondary      { width: 100%; float: none; }
         }
@@ -276,8 +293,34 @@ SIDEBAR BOXLETS
     li.facebook a             { background-position: 0 -439px; }
     li.podcast a              { background-position: 0 -495px; }
     li.rss a                  { background-position: 0 -551px; }
+  }
+
+
+
+
+
+
+//-------------------------------------------------------------------------------------
+  @media screen and (min-width: 800px) and (max-width: 1109px)  {
+
+
+    .exposition {
+      &[data-program="offramp"] {
+        min-height: 0;
+        padding-bottom: 75px;
+        p                       { padding-right: 12px; }
+        footer                  { padding-right: 120px; }
+        background-size: 99px 119px
+      }
+    }
+
+
+
 
   }
+//-------------------------------------------------------------------------------------
+
+
 }// .report .supportive aside
 
 
