@@ -887,23 +887,8 @@ body.single .comments {
                 padding-bottom: 2px;
                 border-bottom: 1px solid #f6e3d6;
             }
-            a {
-                padding: 0 0 0 25px;
-                background: image-url("i/single-report-icons.png") no-repeat 0 -894px; // all are assumed to be "article" by default
-                background-size: 50px 1930px;
-            }
-            .article a      { background-position: 0 -894px; }
-            .slideshow a    { background-position: 0 -988px; }
-            .video a		    { background-position: 0 -1082px; }
-            .poll a			    { background-position: 0 -1176px; }
-            .map a			    { background-position: 0 -1270px; }
-            .audio a		    { background-position: 0 -1364px; }
-            .infographic a	{ background-position: 0 -1458px; }
-            .taketwo a		  { background-position: 0 -1552px; }
-            .airtalk a		  { background-position: 0 -1646px; }
-            .offramp a		  { background-position: 0 -1740px; }
-            .outbound a     { background-position: 0 -1834px; }
-
+            @include related-link-icons;
+            a               { padding: 0 0 0 25px; }
             span {
                 text-transform: uppercase;
                 color: #bca18d;

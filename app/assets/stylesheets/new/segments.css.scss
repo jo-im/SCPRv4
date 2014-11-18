@@ -85,13 +85,44 @@ REPORT
         margin-bottom: 57px;
         ul li                 { padding-left: 0; list-style: none; margin: 0 0 0.7em; }
         h1                    { font-weight: bold; margin-bottom: 1em; }
-        &.disseminate         { border-top: 1px solid rgba(236,124,45,0.2); }
-        &.disseminate h1      { color: $orange; }
+        &.disseminate {
+          border-top: 1px solid rgba(236,124,45,0.2);
+          h1                  { color: $orange; }
+          li                  { display: block; overflow: none; margin-bottom: 4px; }
+          a {
+            display: block;
+            position: relative;
+            overflow: hidden;
+            width: 100%;
+            min-height: 21px;
+            span {
+              @include texthide;
+              @include segment-icons;
+              background-position: 0 -609px;
+              width: 20px;
+              height: 18px;
+            }
+            mark {
+              display: block;
+              position: absolute;
+              top: 5px;
+              left: 24px;
+              color: #ffbc8d;
+            }
+            &:hover             { background: #ffe6d5; outline: 1px solid #fccfb0; }
+            &:hover mark        { color: $orange; }
+          }
+          li.email a span     { background-position: 0 -605px;  }
+          li.twitter a span   { background-position: 0 -706px;  }
+          li.facebook a span  { background-position: 0 -808px;  }
+            
+        }
+
         &.comments-plug figure {
           mark,figcaption a   { display: block; @include segment-icons; }
           mark {
             background-position: 0 -250px;
-            font: normal 1.875em/1 $font-proxcond;
+            font: normal 2em/1 $font-proxcond;
             color: $blue;
             padding-left: 27px;
             margin-bottom: 10px;
@@ -110,18 +141,32 @@ REPORT
       border-top: 1px solid rgba(236,124,45,0.5);
       box-sizing: border-box;
       padding: 18px 0 0 13.458262350937%; // 79 / 587
-      margin: 0 0 45px -13.458262350937%;
+      margin: 0 0 50px -13.458262350937%;
       &:last-child      { margin-bottom: 0; }
-      & > header {
-        color: $orange;
-        font: normal bold 0.8125em/1.1 $font-prox;
-      }
-      h1                { font: normal 300 1.75em/1 $font-freight; padding-top: 20px; }
+      & > header        { color: $orange; font: normal bold 0.8125em/1.1 $font-prox; }
+      & > h1            { font: normal 300 1.75em/1.1 $font-freight; padding-top: 20px; color: #3a3a3a; }
+      & > header a,
+      & > h1 a          { color: inherit !important; }
       nav               { padding-top: 28px; }
     }
   }
   .supportive           { width: 34.153846153846%; border-top: 0; }
+
+  .related-links {
+    @include related-link-icons;
+    li              { list-style: none; margin: 0 0 14px; display: block; }
+    a               { display: block; box-sizing: border-box; padding-left: 30px; margin-left: -30px; color: #333; }
+    h1              { font: normal 1em/1.1 $font-freight; }
+    p               { margin: 0; padding: 7px 0 0; font: normal 0.6875em/1 $font-prox; color: #b8b8b8; }
+    p > *           { white-space: nowrap; }
+    mark            { color: $orange; padding-right: 4px; }
+    a:hover         { text-decoration: none; color: black; }
+    a:hover h1 span { box-shadow: inset 0 -2px 0 white, inset 0 -3px 0 rgba(0,0,0,0.3); }
+    a:hover p       { color: $orange; }
+  }
+
   .episode-contents {
+    & > header cite { padding-left: 5px; white-space: nowrap; }
     nav {
       li {
         list-style: none;
@@ -129,7 +174,7 @@ REPORT
         padding-left: 13.458262350937%;
         display: block;
         font: normal 0.875em/1.2 $font-freight;
-        &.selected      { background: #f0f0f3; }
+        &.selected      { background: #f0f0f3; font-weight: 600; }
       }
       a {
         color: #333333;
@@ -221,6 +266,11 @@ SIDEBAR BOXLETS
       background-position: 0 -327px;
       &:hover { text-decoration: underline; }
     }
+    li.twitter a              { background-position: 0 -383px; }
+    li.facebook a             { background-position: 0 -439px; }
+    li.podcast a              { background-position: 0 -495px; }
+    li.rss a                  { background-position: 0 -551px; }
+
   }
 }// .report .supportive aside
 
