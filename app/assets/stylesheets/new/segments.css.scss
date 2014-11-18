@@ -69,73 +69,57 @@ REPORT
   .prose {
     width: 59.769230769231%;
     padding: 0 0 60px;
-    p.inaugural               { width: auto; }
     background: image-url("i/flourish-faint-dot.png") repeat-y 14.157014157014% 0;
     background-size: 1px 1px;
-    .primary                  { width: 75.546975546976%; float: right; } // 587 / 777
-    .secondary {
-      width: 14.285714285714%; // 111 / 777
-      float: left;
+    p.inaugural               { width: auto; }
+    .primary                  { width: 75.546975546976%; float: right; }
+    .secondary                { width: 14.285714285714%; float: left; }
+    .buddy {
+      &.pinned                { display: none; } // this gets undone when certain width requirements are met
       font: normal bold 0.75em/1.1 $font-prox;
       color: #909090;
-      aside {
-        border-top: 1px solid rgba(0,0,0,0.08);
-        box-sizing: border-box;
-        padding: 7px 10px 0 0;
-        margin-bottom: 57px;
-        ul li                 { padding-left: 0; list-style: none; margin: 0 0 0.7em; }
-        h1                    { font-weight: bold; margin-bottom: 1em; }
-        &.disseminate {
-          border-top: 1px solid rgba(236,124,45,0.2);
-          h1                  { color: $orange; }
-          li                  { display: block; overflow: none; margin-bottom: 4px; }
-          a {
-            display: block;
-            position: relative;
-            overflow: hidden;
-            width: 100%;
-            min-height: 21px;
-            span {
-              @include texthide;
-              @include segment-icons;
-              background-position: 0 -609px;
-              width: 20px;
-              height: 18px;
-            }
-            mark {
-              display: block;
-              position: absolute;
-              top: 5px;
-              left: 24px;
-              color: #ffbc8d;
-            }
-            &:hover             { background: #ffe6d5; outline: 1px solid #fccfb0; }
-            &:hover mark        { color: $orange; }
-          }
-          li.email a span     { background-position: 0 -605px;  }
-          li.twitter a span   { background-position: 0 -706px;  }
-          li.facebook a span  { background-position: 0 -808px;  }
-            
+      border-top: 1px solid rgba(0,0,0,0.08);
+      box-sizing: border-box;
+      padding: 7px 10px 0 0;
+      margin-bottom: 57px;
+      ul li                 { padding-left: 0; list-style: none; margin: 0 0 0.7em; }
+      h1                    { font-weight: bold; margin-bottom: 1em; }
+      &.disseminate {
+        border-top: 1px solid rgba(236,124,45,0.2);
+        h1                  { color: $orange; }
+        li                  { display: block; overflow: none; margin-bottom: 4px; }
+        a {
+          display: block;
+          position: relative;
+          overflow: hidden;
+          width: 100%;
+          min-height: 21px;
+          span              { @include texthide; @include segment-icons; background-position: 0 -609px; width: 20px; height: 18px; }
+          mark              { display: block; position: absolute; top: 5px; left: 24px; color: #ffbc8d; }
+          &:hover           { background: #ffe6d5; outline: 1px solid #fccfb0; }
+          &:hover mark      { color: $orange; }
         }
-
-        &.comments-plug figure {
-          mark,figcaption a   { display: block; @include segment-icons; }
-          mark {
-            background-position: 0 -250px;
-            font: normal 2em/1 $font-proxcond;
-            color: $blue;
-            padding-left: 27px;
-            margin-bottom: 10px;
-          }
-          figcaption a {
-            text-transform: lowercase;
-            background-position: 0 -286px;
-            margin-left: -12px;
-            padding-left: 12px;
-          }
+        li.email a span     { background-position: 0 -605px;  }
+        li.twitter a span   { background-position: 0 -706px;  }
+        li.facebook a span  { background-position: 0 -808px;  }
+      }
+      &.comments-plug figure {
+        mark,figcaption a   { display: block; @include segment-icons; }
+        mark {
+          background-position: 0 -250px;
+          font: normal 2em/1 $font-proxcond;
+          color: $blue;
+          padding-left: 27px;
+          margin-bottom: 10px;
+        }
+        figcaption a {
+          text-transform: lowercase;
+          background-position: 0 -286px;
+          margin-left: -12px;
+          padding-left: 12px;
         }
       }
-    }
+    }//.buddy
     .ancillary {
       font-size: 1.06666666666667em; // reset to equivalent of 16
       border-top: 1px solid rgba(236,124,45,0.5);
@@ -188,7 +172,29 @@ REPORT
       li.selected a     { background-position: 0 -80px; }
     }
   }
-  
+
+
+
+
+//-------------------------------------------------------------------------------------
+      @media screen and (min-width: 800px) and (max-width: 1109px)  {
+
+
+        .prose {
+          background: none; // Scraps the 1px gray dot divider
+          .buddy.pinned   { display: block; }
+          .primary        { width: 100%; float: none; }
+          .secondary      { width: 100%; float: none; }
+        }
+
+
+
+
+      }
+//-------------------------------------------------------------------------------------
+
+
+
 }// .report
 
 
