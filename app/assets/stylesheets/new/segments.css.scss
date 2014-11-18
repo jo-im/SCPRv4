@@ -125,6 +125,9 @@ REPORT
           padding-left: 12px;
         }
       }
+      &.taxonomy {
+        margin-bottom: 0;
+      }
     }//.buddy
     .ancillary {
       font-size: 1.06666666666667em; // reset to equivalent of 16
@@ -209,7 +212,34 @@ REPORT
       @media screen and (max-width: 870px)  {
 
         .inner          { background: none; }
-        .prose          { width: auto; max-width: 670px; font-size: 0.9375em; /* Earlier, for "News/Blog," I conditionally dropped this down to 0.875em. That, in hindsight, was dumb. */ }
+        .supportive     { width: auto; max-width: 670px; padding-bottom: 50px; background: #f4f4f4; box-shadow: none; }
+        .prose {
+          width: auto;
+          max-width: 670px;
+          margin-bottom: 40px;
+          padding-bottom: 0;
+          font-size: 0.9375em; /* Earlier, for "News/Blog," I conditionally dropped this down to 0.875em. That, in hindsight, was dumb. */
+          .buddy-pairing {
+            background: #e5f4f9;
+            box-sizing: border-box;
+            padding: 26px 5.5% 35px;
+            margin-left: -5.5%;
+            width: 111%;
+            .buddy          { border: none; padding: 0; width: 45%; margin-bottom: 0; }
+            .taxonomy       { float: right; }
+            .comments-plug {
+              float: left;
+              figure figcaption a {
+                margin: 0;
+                padding: 0 12px 0 0;
+                display: inline-block;
+                background-position: right -12px top -285px;
+              }
+            }
+
+          }
+        }
+        
 
       }
 //-------------------------------------------------------------------------------------
@@ -284,8 +314,10 @@ SIDEBAR BOXLETS
   .externals {
     color: #2388aa;
     font-size: 0.8125em;
+    line-height: 1.15;
     letter-spacing: -0.01em;
-    li                        { display: block; margin-bottom: 8px; }
+    li                        { display: block; margin-bottom: 10px; }
+    li:last-child             { margin-bottom: 0; }
     a {
       display: inline-block; padding-left: 20px;
       @include segment-icons;
@@ -296,9 +328,21 @@ SIDEBAR BOXLETS
     li.facebook a             { background-position: 0 -439px; }
     li.podcast a              { background-position: 0 -495px; }
     li.rss a                  { background-position: 0 -551px; }
-  }
+  //-------------------------------------------------------------------------------------
+    @media screen and (min-width: 475px) and (max-width: 870px)  {
 
+      ul {
+        -webkit-column-count: 2;
+        -moz-column-count: 2;
+        column-count: 2;
+        -webkit-column-gap: 25px;
+        -moz-column-gap: 25px;
+        column-gap: 25px;
+      }
 
+    }
+  //-------------------------------------------------------------------------------------
+  }//. externals
 
 
 
@@ -306,23 +350,22 @@ SIDEBAR BOXLETS
 //-------------------------------------------------------------------------------------
   @media screen and (min-width: 800px) and (max-width: 1109px)  {
 
-
-    .exposition {
-      &[data-program="offramp"] {
-        min-height: 0;
-        padding-bottom: 75px;
-        p                       { padding-right: 12px; }
-        footer                  { padding-right: 120px; }
-        background-size: 99px 119px
-      }
-    }
-
-
-
+    .exposition[data-program="offramp"]   { @include overview-narrow-layout-rabe; }
 
   }
 //-------------------------------------------------------------------------------------
+  @media screen and (max-width: 870px) {
 
+    &.placard:nth-child(2)                { padding: 0 0 30px; }
+
+  }
+//-------------------------------------------------------------------------------------
+  @media screen and (max-width: 500px) {
+
+    .exposition[data-program="offramp"]   { @include overview-narrow-layout-rabe; }
+
+  }
+//-------------------------------------------------------------------------------------
 
 }// .report .supportive aside
 
