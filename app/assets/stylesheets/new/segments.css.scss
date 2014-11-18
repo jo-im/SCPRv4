@@ -49,6 +49,9 @@ This used to be a <section> (c. 2013-14), but that was dumb.
   padding: 65px 0 55px;
   h1    { font: normal 300 3em/1.1 $font-freight; }
   p     { padding-top: 40px; font: normal 0.75em/1 $font-prox; color: #acacac; }
+//-------------------------------------------------------------------------------------
+  @media screen and (max-width: 870px)  { text-align: center; }
+//-------------------------------------------------------------------------------------
 }
 
 
@@ -180,36 +183,36 @@ REPORT
 
 
 //-------------------------------------------------------------------------------------
-      @media screen and (min-width: 800px) and (max-width: 1109px)  {
-
+      @media screen and (max-width: 1109px)  {
 
         .prose {
           background: none; // Scraps the 1px gray dot divider
-          .buddy.pinned   { display: block; }
           .buddy.disseminate {
+            &.pinned        { display: block; }
             padding-bottom: 7px;
+            margin-bottom: 40px;
             border-bottom: 1px solid rgba(236,124,45,0.2);
-            h1          { float: left; padding-top: 9px; }
-            ul          { float: right; width: 230px; } // meh
-            li          { width: 30%; float: left; margin: 0 5% 0 0; }
+            h1              { float: left; padding-top: 9px; }
+            ul              { float: right; width: 230px; } // meh
+            li              { width: 30%; float: left; margin: 0 5% 0 0; }
             li:nth-child(3) { float: right; margin-right: 0; }
-            a {
-              width: 100%;
-              min-height: 52px;
-              span              { top: 5px; left: 50%; margin-left: -10px; position: absolute; }
-              mark              { top: 35px; left: 0; text-align: center; width: 100%; }
-            }
+            a               { width: 100%; min-height: 52px; }
+            a span          { top: 5px; left: 50%; margin-left: -10px; position: absolute; }
+            a mark          { top: 35px; left: 0; text-align: center; width: 100%; }
           }
-          .primary        { width: 100%; float: none; }
-          .secondary      { width: 100%; float: none; }
+          .primary          { width: 100%; float: none; }
+          .secondary        { width: 100%; float: none; }
         }
-
-
-
 
       }
 //-------------------------------------------------------------------------------------
+      @media screen and (max-width: 870px)  {
 
+        .inner          { background: none; }
+        .prose          { width: auto; max-width: 670px; font-size: 0.9375em; /* Earlier, for "News/Blog," I conditionally dropped this down to 0.875em. That, in hindsight, was dumb. */ }
+
+      }
+//-------------------------------------------------------------------------------------
 
 
 }// .report
