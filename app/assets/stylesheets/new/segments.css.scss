@@ -486,28 +486,65 @@ The trigger that launches the audio drawer. Powered by jPlayer.
     top: 0;
     left: 0;
     width: 14.285714285714%; // 111 / 777
+    min-width: 54px;
     height: 100%;
     overflow: hidden;
   }
-  b {
-    @include texthide;
+  img {
+    display: block;
     width: 26px;
     height: 33px;
-    background: pink;
     position: absolute;
-    top: 50%;   margin-top: -16px;
-    left: 50%;  margin-left: -13px;
+    top: 50%;
+    left: 50%;
+    margin-top: -16px;
+    margin-left: -13px;
+    -webkit-animation: triangle 1300ms 1 ease-in-out; /* Safari 4+ */
+    -moz-animation:    triangle 1300ms 1 ease-in-out; /* Fx 5+ */
+    -o-animation:      triangle 1300ms 1 ease-in-out; /* Opera 12+ */
+    animation:         triangle 1300ms 1 ease-in-out; /* IE 10+, Fx 29+ */ 
   }
   div         { margin-left: 24.453024453024%; box-sizing: border-box; padding-top: 0.95em; } // 190 / 777
   span        { white-space: nowrap; }
   .duration   { text-transform: uppercase; color: #9ff0ff; font-size: 0.72727272727273em; /* 16 / 22 */ }
+  a:hover {
+    text-decoration: none;
+    background: $orange;
+    color: white;
+    .flourish { background: #c14901; }
+    .duration { color: rgba(255,255,255,0.5); }
+  }
+//-------------------------------------------------------------------------------------
+  @media screen and (max-width: 545px) {
+
+    div       { padding-top: 0.65em; }
+    span      { display: block; }
+
+  }
+//-------------------------------------------------------------------------------------
+
 }
 
 
-
-
-
-
-
-
 }// body.segment
+
+
+
+
+
+@-webkit-keyframes triangle {
+  0%   { left: 120%; opacity: 0.4; }
+  100% { left: 50%; opacity: 1; }
+}
+@-moz-keyframes triangle {
+0%   { left: 120%; opacity: 0.4; }  
+100% { left: 50%; opacity: 1; }
+}
+@-o-keyframes triangle {
+0%   { left: 120%; opacity: 0.4; }  
+100% { left: 50%; opacity: 1; }
+}
+@keyframes triangle {
+0%   { left: 120%; opacity: 0.4; }  
+100% { left: 50%; opacity: 1; }
+}
