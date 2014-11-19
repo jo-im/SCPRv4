@@ -20,15 +20,48 @@ SINGLE SEGMENT
 MASTHEAD
 ########################################################################
 ######################################################################## */
-.masthead .titling {
-//  bottom: 0; // This used to be "-11px", to account for News's "cinematic" scheme.
-  .details {
-    font: normal 700 0.875em/1 $font-prox;
-    color: #ccf2ff;
-    text-align: right;
-    mark    { color: white; }
+.masthead {
+  .inner {
+    padding: 70px 0 0;
+//-------------------------------------------------------------------------------------
+    @media screen and (max-width: 975px)  { padding-top: 95px; }
+    @media screen and (min-width: 871px)  { padding-bottom: 45px; } // For clearance between .masthead and .appellation
+    @media screen and (max-width: 870px)  { border-bottom: 30px solid white; } // Sigh. I know. Thing is, we have to trick Banner Ad "A" into thinking that .masthead is taller than it really is.
+    @media screen and (max-width: 750px)  { padding-top: 60px; }
+//-------------------------------------------------------------------------------------
   }
-}// .masthead .titling
+  .titling {
+    padding: 0;
+    height: auto;
+    bottom: auto;
+    position: static;
+    margin: 0;
+    width: 111%;
+    margin: 0 0 0 -5.5%;
+    box-sizing: border-box;
+    padding: 13px 5.5% 14px;
+    h1 {
+      padding: 0;
+      float: left;
+      width: 25%;
+//-------------------------------------------------------------------------------------
+      @media screen and (max-width: 750px)  { float: none; width: 100%; }
+//-------------------------------------------------------------------------------------
+    }
+    p {
+      font: normal 700 0.875em/1.1 $font-prox;
+      color: #ccf2ff;
+      float: right;
+      text-align: right;
+      width: 70%;
+      padding-top: 5px;
+      mark      { color: white; white-space: nowrap; }
+//-------------------------------------------------------------------------------------
+      @media screen and (max-width: 750px)  { float: none; width: 100%; text-align: center; }
+//-------------------------------------------------------------------------------------
+    }
+  }
+}
 
 
 
@@ -46,7 +79,7 @@ This used to be a <section> (c. 2013-14), but that was dumb.
 ########################################################################
 ######################################################################## */
 .appellation {
-  padding: 65px 0 55px;
+  padding: 0 0 55px;
   h1    { font: normal 300 3em/1.1 $font-freight; }
   p     { padding-top: 40px; font: normal 0.75em/1 $font-prox; color: #acacac; }
 //-------------------------------------------------------------------------------------
@@ -243,6 +276,15 @@ REPORT
 
       }
 //-------------------------------------------------------------------------------------
+      @media screen and (max-width: 780px)  {
+
+        .related-links a,
+        .episode-contents nav a           { margin-left: 0; }
+        .episode-contents > header cite   { padding: 5px 0 0 0; display: block; }
+
+      }
+//-------------------------------------------------------------------------------------
+
 
 
 }// .report
@@ -260,7 +302,7 @@ SIDEBAR BOXLETS
 ######################################################################## */
 .report .supportive aside {
   position: relative; z-index: 1;
-  &.placard:first-child       { padding-top: 0; }
+  &.placard:first-child       { padding-top: 0; z-index: 2; }
   &.overview header           { background-position: 0 -640px; }
   header {
     padding: 5px 0 0 13px; position: relative; z-index: 2;

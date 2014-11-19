@@ -1,10 +1,6 @@
 <% if context = @program %>
-  <section class="titling">
-    <div class="brand">
-      <h1><%= link_to @program.title, @program.public_path %></h1>
-    </div><!--/ .brand -->
-    <div class="details">
-      <p><span>A weekly look at Southern California life, news, arts and culture, and more.<%#= @program.teaser %></span> <mark>Hosted by <%= @program.host %></mark></p>
-    </div><!--/ .details -->
+  <section class="titling clearfix">
+    <h1><%= link_to @program.title, @program.public_path %></h1>
+    <p><span>A weekly look at Southern California life, news, arts and culture, and more.<%#= @program.teaser %></span> <mark>Hosted by <%= @program.host %></mark></p>
   </section><!--/ .titling -->
 <% end %>
