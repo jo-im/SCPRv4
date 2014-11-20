@@ -502,13 +502,9 @@ The trigger that launches the audio drawer. Powered by jPlayer.
     height: 33px;
     position: absolute;
     top: 50%;
-    left: 50%;
+    left: 120%;
     margin-top: -16px;
     margin-left: -13px;
-    -webkit-animation: triangle 1300ms 1 ease-in-out; /* Safari 4+ */
-    -moz-animation:    triangle 1300ms 1 ease-in-out; /* Fx 5+ */
-    -o-animation:      triangle 1300ms 1 ease-in-out; /* Opera 12+ */
-    animation:         triangle 1300ms 1 ease-in-out; /* IE 10+, Fx 29+ */ 
   }
   div         { margin-left: 24.453024453024%; box-sizing: border-box; padding-top: 0.95em; } // 190 / 777
   span        { white-space: nowrap; }
@@ -519,6 +515,12 @@ The trigger that launches the audio drawer. Powered by jPlayer.
     color: white;
     .flourish { background: #c14901; }
     .duration { color: rgba(255,255,255,0.5); }
+  }
+  &.in-view img {
+    -webkit-animation: triangle 1300ms 1 ease-in-out forwards; /* Safari 4+ */
+    -moz-animation:    triangle 1300ms 1 ease-in-out forwards; /* Fx 5+ */
+    -o-animation:      triangle 1300ms 1 ease-in-out forwards; /* Opera 12+ */
+    animation:         triangle 1300ms 1 ease-in-out forwards; /* IE 10+, Fx 29+ */
   }
 //-------------------------------------------------------------------------------------
   @media screen and (max-width: 545px) {

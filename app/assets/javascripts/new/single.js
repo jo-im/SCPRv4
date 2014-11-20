@@ -43,6 +43,18 @@ scpr.Behaviors.Single = {
 
 
 
+        //  ================================================
+        //  Segment: Hold off on fun CSS animation until it's safely in view
+        //  ------------------------------------------------
+        if($("body").hasClass("segment") && $(".audio-actuator").length) {
+
+          $(".audio-actuator").waypoint(function() {
+              $(".audio-actuator").toggleClass("in-view");
+          }, { offset: "80%" });
+
+        }
+
+
 
         //	================================================
         //	Tables need labels
