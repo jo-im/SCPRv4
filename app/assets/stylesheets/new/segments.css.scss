@@ -26,10 +26,12 @@ MASTHEAD
 //-------------------------------------------------------------------------------------
     @media screen and (max-width: 975px)  { padding-top: 95px; }
     @media screen and (min-width: 871px)  { padding-bottom: 45px; } // For clearance between .masthead and .appellation
-    @media screen and (max-width: 870px)  { border-bottom: 30px solid white; } // Sigh. I know. Thing is, we have to trick Banner Ad "A" into thinking that .masthead is taller than it really is.
     @media screen and (max-width: 750px)  { padding-top: 60px; }
 //-------------------------------------------------------------------------------------
   }
+//-------------------------------------------------------------------------------------
+  @media screen and (max-width: 870px)  { padding-bottom: 100px; }
+//-------------------------------------------------------------------------------------
   .titling {
     padding: 0;
     height: auto;
@@ -80,10 +82,14 @@ This used to be a <section> (c. 2013-14), but that was dumb.
 ######################################################################## */
 .appellation {
   padding: 0 0 55px;
-  h1    { font: normal 300 3em/1.1 $font-freight; }
-  p     { padding-top: 40px; font: normal 0.75em/1 $font-prox; color: #acacac; }
+  h1        { font: normal 300 3em/1.1 $font-freight; }
+  p         { padding-top: 40px; font: normal 0.75em/1 $font-prox; color: #acacac; }
+  p a       { color: $blue; font-weight: 700; }
+  p a:hover { text-decoration: underline; }
 //-------------------------------------------------------------------------------------
   @media screen and (max-width: 870px)  { text-align: center; }
+//-------------------------------------------------------------------------------------
+  @media screen and (max-width: 540px)  { h1 { font-size: 2.25em; } }
 //-------------------------------------------------------------------------------------
 }
 
@@ -302,7 +308,7 @@ SIDEBAR BOXLETS
 ######################################################################## */
 .report .supportive aside {
   position: relative; z-index: 1;
-  &.placard:first-child       { padding-top: 0; z-index: 2; }
+  &.placard:first-child       { padding-top: 0; z-index: 1; }
   &.overview header           { background-position: 0 -640px; }
   header {
     padding: 5px 0 0 13px; position: relative; z-index: 2;

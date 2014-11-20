@@ -168,6 +168,7 @@ scpr.Behaviors.Single = {
                     // wait 0.5 secs to let AdHost load in any pushdown campaigns
                     setTimeout(function(){
                         var topOffset = $(".masthead").height() + $("#global-pushdown").height() - 10;
+                        if($("body").hasClass("segment")) { topOffset = topOffset + 25; }
                         $(".placard:first").css("top", topOffset);
                     }, 500);
                 }
@@ -178,6 +179,7 @@ scpr.Behaviors.Single = {
                 function adRepositioner() {
                     if ($(".report .supportive").css("float") == "none" ){
                         var topOffset = $(".masthead").height() - 10;
+                        if($("body").hasClass("segment")) { topOffset = topOffset + 25; }
                         $(".placard:first").css("top", topOffset);
                     } else {
                         $(".placard:first").css("top", "auto");
