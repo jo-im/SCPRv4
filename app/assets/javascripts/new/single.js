@@ -49,8 +49,10 @@ scpr.Behaviors.Single = {
         if($("body").hasClass("segment") && $(".audio-actuator").length) {
 
           $(".audio-actuator").waypoint(function() {
-              $(".audio-actuator").toggleClass("in-view");
-          }, { offset: "80%" });
+            if(!$(".audio-actuator").hasClass("in-view")) {
+              $(".audio-actuator").addClass("in-view");
+            }
+          }, { offset: "70%" });
 
         }
 
