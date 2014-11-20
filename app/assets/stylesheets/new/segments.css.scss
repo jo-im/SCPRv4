@@ -248,6 +248,15 @@ REPORT
 
       }
 //-------------------------------------------------------------------------------------
+      @media screen and (min-width: 871px) and (max-width: 1109px)  {
+
+        .prose .buddy {
+          &.comments-plug   { display: none; }
+          &.taxonomy        { border-top: none; padding-top: 0; }
+        }
+
+      }
+//-------------------------------------------------------------------------------------
       @media screen and (max-width: 870px)  {
 
         .inner          { background: none; }
