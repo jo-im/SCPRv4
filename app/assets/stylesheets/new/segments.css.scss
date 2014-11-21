@@ -575,8 +575,40 @@ BONUS AUDIO
   box-sizing: border-box;
   margin: -45px 0 45px -13.458262350937%;
   padding: 20px 0 23px 13.458262350937%;
-  ul,li      { margin: 0; }
-}
+  h1          { font: normal 700 0.6875em/1.1 $font-prox; text-transform: uppercase; margin-bottom: 10px; color: #979797; }
+  ul,li       { margin: 0; }
+  li {
+    list-style: none;
+    display: block;
+    font: normal 700 0.9375em/1.1 $font-prox;
+    border-bottom: 1px solid white;
+    &:last-child  { border-bottom: none; }
+  }
+  a {
+    @include segment-icons;
+    display: inline-block;
+    background-position: 0 -957px;
+    color: green;
+    box-sizing: border-box;
+    padding: 7px 1em 6px 16px;
+    margin-left: -16px;
+    mark          { color: #1990c3; }
+    span          { text-transform: uppercase; color: #82c4db; font-size: 0.8em; padding-left: 0.5em; white-space: nowrap; }
+    &:hover       { text-decoration: none; background-position: 0 -901px; }
+    &:hover mark  { text-decoration: underline; color: #e45a06; }
+    &:hover span  { color: #fb9137; }
+  }
+//-------------------------------------------------------------------------------------
+  @media screen and (max-width: 1109px)   { margin-top: 30px; }
+//-------------------------------------------------------------------------------------
+  @media screen and (max-width: 499px) {
+    a         { margin-left: 0; }
+    a mark    { display: block; }
+    a span    { display: block; padding: 3px 0 0 0; }
+  }
+//-------------------------------------------------------------------------------------
+
+}//.bonus-audio
 
 
 
