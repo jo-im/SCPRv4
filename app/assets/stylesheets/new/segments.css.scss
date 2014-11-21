@@ -221,9 +221,6 @@ REPORT
     }
   }
 
-
-
-
 //-------------------------------------------------------------------------------------
       @media screen and (max-width: 1109px)  {
 
@@ -449,15 +446,21 @@ cosmetic width-constrained tweak.
 .lead-asset {
   background: white;
   padding-bottom: 30px;
-  b       { display: block; width: 100%; margin-bottom: 10px; }
-  img     { width: 100%; height: auto; } // Assume it's wide by default
+  b                   { display: block; width: 100%; margin-bottom: 10px; }
+  img                 { width: 100%; height: auto; } // Assume it's wide by default
   figcaption {
     color: #a6a6a6;
     width: 100%;
     display: block;
-    span      { display: block; }
-    .credit   { font: normal 600 0.625em/1.1 $font-freight; text-transform: uppercase; float: left; width: 19.305019305019%; /* 150 / 777 */ }
-    .brief    { font: italic 400 0.8125em/1.2 $font-prox; float: right; width: 75.546975546976%; /* 587 / 777 */ }
+    span              { display: block; }
+    .credit           { font: normal 600 0.625em/1.1 $font-freight; text-transform: uppercase; float: left; width: 19.305019305019%; /* 150 / 777 */ }
+    .brief            { font: italic 400 0.8125em/1.2 $font-prox; float: right; width: 75.546975546976%; /* 587 / 777 */ }
+  //-------------------------------------------------------------------------------------
+    @media screen and (max-width: 440px) {
+      .credit,.brief  { float: none; width: auto; }
+      .credit         { padding-top: 5px; }
+    }
+  //-------------------------------------------------------------------------------------
   }
 }
 
@@ -518,12 +521,13 @@ The trigger that launches the audio drawer. Powered by jPlayer.
   }
   div         { margin-left: 24.453024453024%; box-sizing: border-box; padding-top: 0.95em; } // 190 / 777
   span        { white-space: nowrap; }
+  b           { font-weight: inherit; font-style: inherit; font-family: inherit; }
   .duration   { text-transform: uppercase; color: #9ff0ff; font-size: 0.72727272727273em; /* 16 / 22 */ }
   a:hover {
     text-decoration: none;
     background: $orange;
     color: white;
-    .flourish { background: #c14901; }
+    .flourish { background-color: #c14901; }
     .duration { color: rgba(255,255,255,0.5); }
   }
   &.in-view img {
@@ -532,11 +536,20 @@ The trigger that launches the audio drawer. Powered by jPlayer.
     -o-animation:      triangle 600ms 1 ease-in-out forwards; /* Opera 12+ */
     animation:         triangle 600ms 1 ease-in-out forwards; /* IE 10+, Fx 29+ */
   }
+  &.activated {
+    a                   { background: #a1a1a1 !important; }
+    .prompt:before      { content: "Now playing"; }
+    .prompt b,.duration { display: none; }
+    .flourish           { background: image-url("i/audio-actuator-playing.png") no-repeat center center; background-size: 46px 35px; background-color: #6e6e6e !important; }
+    .flourish img       { display: none; }
+  }
 //-------------------------------------------------------------------------------------
   @media screen and (max-width: 545px) {
 
-    div       { padding-top: 0.65em; }
-    span      { display: block; }
+    div                 { padding-top: 0.65em; }
+    span                { display: block; }
+    &.activated div     { padding-top: 0.95em; }
+    &.activated .flourish { background-size: 28px 21px; }
 
   }
 //-------------------------------------------------------------------------------------

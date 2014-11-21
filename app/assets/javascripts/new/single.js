@@ -54,7 +54,20 @@ scpr.Behaviors.Single = {
             }
           }, { offset: "70%" });
 
+
+          /*
+          --------------------------------------------------------------------------------------
+          THIS NEXT PART IS JUST FOR TESTING SOME STYLING; DELETE BEFORE MERGING WITH MASTER! */
+          $(".audio-actuator").click(function(){ $(this).toggleClass("activated"); return false; });/*
+          ------------------------------------------------------------------------------------- */
+
         }
+
+
+
+
+
+
 
 
 
