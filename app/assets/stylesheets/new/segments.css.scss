@@ -446,7 +446,18 @@ cosmetic width-constrained tweak.
 .lead-asset {
   background: white;
   padding-bottom: 30px;
-  b                   { display: block; width: 100%; margin-bottom: 10px; }
+  b {
+    display: block;
+    width: 100%;
+    margin-bottom: 10px;
+//-------------------------------------------------------------------------------------
+    @media screen and (max-width: 699px) {
+      margin-left: -5.5%;
+      width: 111%;
+      box-sizing: border-box;
+    }
+//-------------------------------------------------------------------------------------
+  }
   img                 { width: 100%; height: auto; } // Assume it's wide by default
   figcaption {
     color: #a6a6a6;
@@ -480,7 +491,7 @@ cosmetic width-constrained tweak.
     }
   //-------------------------------------------------------------------------------------
     @media screen and (max-width: 500px) {
-      b               { width: 100%; max-width: 320px; margin: 0 auto 20px auto; }
+      b               { width: 100% !important; max-width: 320px !important; margin: 0 auto 20px auto !important; }
       figcaption      { height: auto; position: static; width: 100%; }
       figcaption div  { padding-bottom: 0; border-bottom: none; position: static; }
     }
@@ -625,6 +636,14 @@ BONUS AUDIO
 //-------------------------------------------------------------------------------------
   @media screen and (max-width: 1109px)   { margin-top: 30px; }
 //-------------------------------------------------------------------------------------
+  @media screen and (max-width: 870px) {
+    margin-left: -3%;
+    width: 106%;
+    padding-left: 3%;
+    a         { margin-left: 0; }
+  }
+//-------------------------------------------------------------------------------------
+
   @media screen and (max-width: 499px) {
     a         { margin-left: 0; }
     a mark    { display: block; }
