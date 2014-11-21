@@ -462,6 +462,30 @@ cosmetic width-constrained tweak.
     }
   //-------------------------------------------------------------------------------------
   }
+  &.exiguous {
+    overflow: hidden;
+    padding-bottom: 0;
+    border-bottom: 30px solid white;
+    position: relative;
+    b { width: 67.310167310167%; margin-bottom: 0; }
+    figcaption {
+      height: 100%;
+      top: 0;
+      right: 0;
+      width: 28.571428571429%;
+      position: absolute;
+      div             { position: absolute; bottom: 0; padding-bottom: 10px; border-bottom: 1px solid rgba(0,0,0,0.15); }
+      .credit,.brief  { float: none; width: auto; }
+      .credit         { padding-top: 5px; }
+    }
+  //-------------------------------------------------------------------------------------
+    @media screen and (max-width: 500px) {
+      b               { width: 100%; max-width: 320px; margin: 0 auto 20px auto; }
+      figcaption      { height: auto; position: static; width: 100%; }
+      figcaption div  { padding-bottom: 0; border-bottom: none; position: static; }
+    }
+  //-------------------------------------------------------------------------------------
+  }
 }//.lead-asset
 
 
