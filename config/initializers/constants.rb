@@ -1,5 +1,5 @@
-DESCENDING = "DESC"
-ASCENDING  = "ASC"
+DESCENDING = "desc"
+ASCENDING  = "asc"
 
 FEATURES = YAML.load_file(Rails.root.join("config/features.yml"))
   .map { |attributes| ArticleFeature.new(attributes) }

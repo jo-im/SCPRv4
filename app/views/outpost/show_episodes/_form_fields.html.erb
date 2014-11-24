@@ -36,8 +36,8 @@
             order: "updated_at", // Don't use published_at - we're finding unpublished content too.
             sort_mode: "desc",
             with: {
-              is_live: ["1", "0"], // True or False.
-              status: <%= ShowSegment.status_ids(:live, :pending, :awaiting_rework, :awaiting_edits, :draft).to_json %>
+              published: [true,false] // True or False.
+              //status: <%= ShowSegment.status_ids(:live, :pending, :awaiting_rework, :awaiting_edits, :draft).to_json %>
             }
           }
         });

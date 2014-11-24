@@ -42,7 +42,6 @@ module Api::Private::V2
         :with      => @conditions
       })
 
-      @articles = @articles.map(&:to_article)
       respond_with @articles
     end
 

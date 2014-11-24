@@ -63,15 +63,13 @@ module ContentBase
   # ContentBase classes and mix in some default search
   # parameters.
   def search(*args)
-    options     = args.extract_options!
-    query       = args[0].to_s
+    options       = args.extract_options!
+    query_string  = args[0].to_s
 
     options.reverse_merge!({
       :classes     => [NewsStory, ShowSegment, BlogEntry, ContentShell],
       :page        => 1,
-      :order       => "public_datetime #{DESCENDING}",
-      :retry_stale => true,
-      :populate    => true
+      :order       => "public_datetime #{DESCENDING}"
     })
 
     # We'll want to search only among live content 99% of the
@@ -79,20 +77,115 @@ module ContentBase
     # we can pass in `with: { is_live: [true, false] }`, for
     # example.
     options[:with] ||= {}
-    options[:with].reverse_merge!(is_live: true)
+    options[:with].reverse_merge!(published: true)
 
-    begin
-      ThinkingSphinx.search(Riddle::Query.escape(query), options)
-    rescue  Riddle::ConnectionError,
-            Riddle::ResponseError,
-            ThinkingSphinx::SphinxError => e
-      # In this one scenario, we need to fail gracefully from a Sphinx error,
-      # because otherwise the entire website will be down if media isn't
-      # available, or if we need to stop the searchd daemon for some reason,
-      # like a rebuild.
-      warn "Caught error in ContentBase.search: #{e}"
-      Kaminari.paginate_array([]).page(0).per(0)
+    # -- build search query -- #
+
+    query = { match_all:{} }
+
+    if query_string && !query_string.empty?
+      query = { query_string: { query: query_string } }
     end
+
+    # -- search filters -- #
+
+    filters = []
+
+    # add permitted classes
+    filters << { terms: { class: options[:classes].collect(&:to_s) } }
+
+    (options[:with]||[]).each do |k,v|
+      # term filters
+      if v.is_a?(Array)
+        filters << { terms: { k => v } }
+      else
+        filters << { term: { k => v } }
+      end
+    end
+
+    (options[:without]||[]).each do |k,v|
+      filters << { not: { filter: { term: { k => v } } } }
+    end
+
+    # -- sort -- #
+
+    (f,dir) = options[:order].split(" ")
+    sort = { f => { order: dir }}
+
+    # -- pagination -- #
+
+    from = 0
+    per_page = options[:per_page] || options[:limit]
+    if options[:page] && per_page
+      from = (options[:page] - 1) * per_page
+    end
+
+    # -- build search body -- #
+
+    body = {
+      query: {
+        filtered: {
+          query: query,
+          filter: case filters.length
+          when 1
+            filters[0]
+          else
+            { and: filters }
+          end
+        }
+      },
+      sort: [ sort ],
+      size: per_page,
+      from: from
+    }
+
+    es = Elasticsearch::Client.new host:Rails.configuration.secrets.elasticsearch
+
+    results = Hashie::Mash.new(es.search index:"scprv4-all", type:"article", body:body)
+
+    # -- convert results into Article objects -- #
+
+    articles = results.hits.hits.collect do |r|
+      # turn ES _source into Article
+      Article.new(r._source.merge({
+        id:               r._source.obj_key,
+        public_datetime:  r._source.public_datetime ? Time.zone.parse(r._source.public_datetime) : nil,
+        created_at:       Time.zone.parse(r._source.created_at),
+        updated_at:       Time.zone.parse(r._source.updated_at),
+      }).except(:obj_key,:class))
+    end
+
+    # -- inject pagination bits into the array -- #
+
+    articles.instance_variable_set :@_pagination, Hashie::Mash.new({
+      per_page:       options[:per_page],
+      offset:         from,
+      total_results:  results.hits.total,
+    })
+
+    articles.singleton_class.class_eval do
+      define_method :current_page do
+        ( @_pagination.offset / @_pagination.per_page ).floor + 1
+      end
+
+      define_method :total_pages do
+        ( @_pagination.total_results / @_pagination.per_page )
+      end
+
+      define_method :offset_value do
+        @_pagination.offset
+      end
+
+      define_method :limit_value do
+        @_pagination.per_page
+      end
+
+      define_method :last_page? do
+        @_pagination.current_page >= @_pagination.total_pages
+      end
+    end
+
+    return articles
   end
 
   #--------------------

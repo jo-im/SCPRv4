@@ -74,9 +74,12 @@ class ContentShell < ActiveRecord::Base
       :assets             => self.assets,
       :attributions       => self.bylines,
       :byline             => self.byline,
-      :edit_url           => self.admin_edit_url,
+      :edit_path          => self.admin_edit_path,
+      :public_path        => self.public_path,
       :tags               => self.tags,
-      :feature            => self.feature
+      :feature            => self.feature,
+      :created_at         => self.created_at,
+      :updated_at         => self.updated_at,
     })
   end
 

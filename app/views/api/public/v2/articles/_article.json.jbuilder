@@ -1,4 +1,4 @@
-json.cache! [Api::Public::V2::VERSION, "v3", article.original_object] do
+json.cache! [Api::Public::V2::VERSION, "v3", article] do
   json.id           article.id
   json.title        article.title
   json.short_title  article.short_title

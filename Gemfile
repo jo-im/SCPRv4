@@ -5,8 +5,10 @@ gem 'rails', "~> 4.0.0"
 gem 'mysql2', '~> 0.3.14'
 gem 'jquery-rails', '~> 3.1.0'
 gem "bcrypt-ruby", "~> 3.1.0"
-gem 'thinking-sphinx', '~> 3.1.0'
+#gem 'thinking-sphinx', '~> 3.1.0'
 gem 'secretary-rails'
+
+gem 'elasticsearch'
 
 ## Outpost
 gem 'outpost-cms'
