@@ -588,6 +588,10 @@ The trigger that launches the audio drawer. Powered by jPlayer.
 
   }
 //-------------------------------------------------------------------------------------
+  &.no-animation {
+    .flourish img       { display: none; }
+    .flourish           { background: image-url("i/audio-actuator-static-triangle.png") no-repeat center center; background-size: 26px 32px; background-color: #1990c3; } 
+  }
 
 }// .audio-actuator
 

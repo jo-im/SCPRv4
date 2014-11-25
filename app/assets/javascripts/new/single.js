@@ -54,14 +54,25 @@ scpr.Behaviors.Single = {
             }
           }, { offset: "70%" });
 
+          /*
+          --------------------------------------------------------------------------------------
+          Wait, do you even know what a CSS3 animation *is*? Oh, god, you don't? Ugh. Cripes.
+          -------------------------------------------------------------------------------------- */
+          if (Modernizr.cssanimations) {
+            // Great! Move along. Enjoy your animations.
+          } else {
+            $(".audio-actuator").addClass("no-animation");
+          }/*
+          -------------------------------------------------------------------------------------- */
 
           /*
           --------------------------------------------------------------------------------------
-          THIS NEXT PART IS JUST FOR TESTING SOME STYLING; DELETE BEFORE MERGING WITH MASTER! */
+          THIS NEXT PART IS JUST FOR TESTING SOME STYLING; DELETE BEFORE MERGING WITH MASTER!
+          -------------------------------------------------------------------------------------- */
           $(".audio-actuator").click(function(){ $(this).toggleClass("activated"); return false; });/*
           ------------------------------------------------------------------------------------- */
 
-        }
+        } // has segment, has audio-actuator
 
 
 
