@@ -58,6 +58,19 @@ module ContentBase
     "contentbase:new"
   end
 
+  def _filter_for(k,v)
+    # term filters
+    if v.is_a?(Array)
+      return { terms: { k => v } }
+    elsif v.is_a?(FalseClass)
+      return { missing: { field: k } }
+    elsif v.is_a?(TrueClass)
+      return { exists: { field: k } }
+    else
+      return { term: { k => v } }
+    end
+  end
+
   #--------------------
   # Wrapper around ThinkingSphinx to just query all
   # ContentBase classes and mix in some default search
@@ -95,16 +108,11 @@ module ContentBase
     filters << { terms: { class: options[:classes].collect(&:to_s).collect(&:underscore) } }
 
     (options[:with]||[]).each do |k,v|
-      # term filters
-      if v.is_a?(Array)
-        filters << { terms: { k => v } }
-      else
-        filters << { term: { k => v } }
-      end
+      filters << self._filter_for(k,v)
     end
 
     (options[:without]||[]).each do |k,v|
-      filters << { not: { filter: { term: { k => v } } } }
+      filters << { not: self._filter_for(k,v) }
     end
 
     # -- sort -- #
@@ -115,7 +123,7 @@ module ContentBase
     # -- pagination -- #
 
     from = 0
-    per_page = options[:per_page] || options[:limit]
+    per_page = (options[:per_page] || options[:limit]).to_i
     if options[:page] && per_page
       from = (options[:page].to_i - 1) * per_page
     end
