@@ -60,14 +60,17 @@ module ContentBase
 
   def _filter_for(k,v)
     # term filters
-    if v.is_a?(Array)
-      return { terms: { k => v } }
-    elsif v.is_a?(FalseClass)
-      return { missing: { field: k } }
-    elsif v.is_a?(TrueClass)
-      return { exists: { field: k } }
+    return case v
+    when Array
+      { terms: { k => v } }
+    when FalseClass
+      { missing: { field: k } }
+    when TrueClass
+      { exists: { field: k } }
+    when Range
+      { range: { k => { gte: v.first, lt: v.last }}}
     else
-      return { term: { k => v } }
+      { term: { k => v } }
     end
   end
 

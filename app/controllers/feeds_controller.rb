@@ -13,7 +13,7 @@ class FeedsController < ApplicationController
     @content = ContentBase.search({
       :classes    => [NewsStory, ContentShell, BlogEntry, ShowSegment],
       :limit      => 15,
-      :without    => { category: false }
+      :with       => { "category.slug" => true }
     })
 
     xml = render_to_string(action: "feed", formats: :xml)
