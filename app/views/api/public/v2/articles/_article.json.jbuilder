@@ -28,8 +28,8 @@ json.cache! [Api::Public::V2::VERSION, "v3", article] do
   end
 
   json.attributions article.attributions do |byline|
-    json.name       byline.display_name
-    json.role_text  byline.role_text
+    json.name       byline.name
+    json.role_text  ContentByline::ROLE_TEXT[ byline.role ]
     json.role       byline.role
   end
 
