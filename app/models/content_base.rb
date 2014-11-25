@@ -92,7 +92,7 @@ module ContentBase
     filters = []
 
     # add permitted classes
-    filters << { terms: { class: options[:classes].collect(&:to_s) } }
+    filters << { terms: { class: options[:classes].collect(&:to_s).collect(&:underscore) } }
 
     (options[:with]||[]).each do |k,v|
       # term filters
@@ -117,7 +117,7 @@ module ContentBase
     from = 0
     per_page = options[:per_page] || options[:limit]
     if options[:page] && per_page
-      from = (options[:page] - 1) * per_page
+      from = (options[:page].to_i - 1) * per_page
     end
 
     # -- build search body -- #
@@ -182,6 +182,10 @@ module ContentBase
 
       define_method :last_page? do
         @_pagination.current_page >= @_pagination.total_pages
+      end
+
+      define_method :results do
+        @_pagination.total_results
       end
     end
 

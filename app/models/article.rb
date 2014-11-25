@@ -199,7 +199,7 @@ class Article
       body:             @body,
       category:         @category,
       byline:           @byline,
-      bylines:          @attributions,
+      attributions:     @attributions,
       feature:          @feature,
       tags:             @tags,
       assets:           @assets,

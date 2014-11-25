@@ -12,8 +12,6 @@ class IssuesController < NewApplicationController
 
   def show
     @tag = Tag.find_by_slug!(params[:slug])
-    @count = @tag.taggables.count
-
     @articles = @tag.articles( page:params[:page], per_page:PER_PAGE )
   end
 

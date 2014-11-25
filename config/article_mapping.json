@@ -65,6 +65,7 @@
       },
       "attributions": {
         "type": "nested",
+        "include_in_parent": true,
         "properties": {
           "name": { "type":"string" },
           "author_id": { "type": "integer" },
@@ -75,7 +76,6 @@
         "type": "string"
       },
       "tags": {
-        "type": "nested",
         "properties": {
           "slug": { "type": "string", "index": "not_analyzed", "include_in_all": false },
           "title": { "type": "string", "include_in_all": false }
@@ -84,6 +84,7 @@
       },
       "assets": {
         "type": "nested",
+        "include_in_parent": true,
         "properties": {
           "asset_id": { "type": "integer" },
           "caption": { "type": "string" },
@@ -92,10 +93,12 @@
       },
       "audio": {
         "type": "nested",
+        "include_in_parent": true,
         "properties": {
-          "url": { "type": "string", "index": "not_analyzed" },
+          "url": { "type": "string", "index": "not_analyzed", "include_in_all": false },
           "description": { "type": "string" },
-          "byline": { "type": "string" }
+          "byline": { "type": "string" },
+          "position": { "type": "integer" }
         }
       },
       "show": {
