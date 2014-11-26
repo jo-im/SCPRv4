@@ -356,15 +356,12 @@ SIDEBAR BOXLETS
       padding: 2px 0 2px 18px;
       @include segment-icons;
     }
-    &[data-program="offramp"] {
-      margin-top: -15px;
-      padding-top: 30px;
-      min-height: 170px;
-      p,footer                { padding-right: 160px; }
-      background: image-url("i/host-offramp.png") no-repeat right 15px bottom 0;
-      background-size: 141px 170px;
-    }
-  }
+    &[data-program="offramp"]   { @include overview-desktop-layout-rabe; }
+    &[data-program="airtalk"]   { @include overview-desktop-layout-mantle; }
+    &[data-program="theframe"]  { @include overview-desktop-layout-horn; }
+    &[data-program="taketwo"]   { @include overview-desktop-layout-cohenmartinez; }
+
+  }//.exposition
   .externals {
     color: #2388aa;
     font-size: 0.8125em;
@@ -405,6 +402,9 @@ SIDEBAR BOXLETS
   @media screen and (min-width: 800px) and (max-width: 1109px)  {
 
     .exposition[data-program="offramp"]   { @include overview-narrow-layout-rabe; }
+    .exposition[data-program="airtalk"]   { @include overview-narrow-layout-rabe; }
+    .exposition[data-program="theframe"]  { @include overview-narrow-layout-rabe; }
+    .exposition[data-program="taketwo"]   { @include overview-narrow-layout-rabe; }
 
   }
 //-------------------------------------------------------------------------------------
@@ -417,6 +417,9 @@ SIDEBAR BOXLETS
   @media screen and (max-width: 500px) {
 
     .exposition[data-program="offramp"]   { @include overview-narrow-layout-rabe; }
+    .exposition[data-program="airtalk"]   { @include overview-narrow-layout-rabe; }
+    .exposition[data-program="theframe"]  { @include overview-narrow-layout-rabe; }
+    .exposition[data-program="taketwo"]   { @include overview-narrow-layout-rabe; }
 
   }
 //-------------------------------------------------------------------------------------

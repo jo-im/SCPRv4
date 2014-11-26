@@ -29,13 +29,50 @@ $orange: #f17b21;
 	background: image-url("i/segment-icons.png") no-repeat;
 	background-size: 20px 1022px;
 }
-@mixin overview-narrow-layout-rabe {
-  min-height: 0;
-  padding-bottom: 75px;
-  p                       { padding-right: 12px; }
-  footer                  { padding-right: 120px; }
-  background-size: 99px 119px;
-}
+//------------------------------------------------------------------------------------------------
+
+    @mixin overview-desktop-layout-rabe {
+      margin-top: -15px;
+      padding-top: 30px;
+      min-height: 170px;
+      background: image-url("i/host-rabe.png") no-repeat right 15px bottom 0;
+      background-size: 141px 170px;
+      p,footer                { padding-right: 160px; }
+    }
+    @mixin overview-desktop-layout-horn {
+      margin-top: -15px;
+      padding-top: 30px;
+      min-height: 170px;
+      background: image-url("i/host-horn.png") no-repeat right 15px bottom 0;
+      background-size: 141px 170px;
+      p,footer                { padding-right: 160px; }
+    }
+    @mixin overview-desktop-layout-mantle {
+    }
+    @mixin overview-desktop-layout-cohenmartinez {
+    }
+
+
+    @mixin overview-narrow-layout-rabe {
+      min-height: 0;
+      padding-bottom: 75px;
+      p                       { padding-right: 12px; }
+      footer                  { padding-right: 120px; }
+      background-size: 99px 119px;
+    }
+    @mixin overview-narrow-layout-horn {
+      min-height: 0;
+      padding-bottom: 75px;
+      p                       { padding-right: 12px; }
+      footer                  { padding-right: 120px; }
+      background-size: 99px 119px;
+    }
+    @mixin overview-narrow-layout-mantle {
+    }
+    @mixin overview-narrow-layout-cohenmartinez {
+    }
+
+//------------------------------------------------------------------------------------------------
 @mixin icon {
 	background: image-url("i/workbench-icons.png") no-repeat;
 	background-size: 300px 450px;
