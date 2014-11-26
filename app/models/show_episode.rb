@@ -123,6 +123,7 @@ class ShowEpisode < ActiveRecord::Base
       :public_path        => self.public_path,
       :created_at         => self.created_at,
       :updated_at         => self.updated_at,
+      :published          => self.published?,
       :show               => self.show,
     })
   end

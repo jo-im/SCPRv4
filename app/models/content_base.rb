@@ -103,12 +103,13 @@ module ContentBase
       query = { query_string: { query: query_string } }
     end
 
+    # what content types are we searching?
+    types = options[:classes].collect(&:to_s).collect(&:underscore)
+
     # -- search filters -- #
 
     filters = []
 
-    # add permitted classes
-    filters << { terms: { class: options[:classes].collect(&:to_s).collect(&:underscore) } }
 
     (options[:with]||[]).each do |k,v|
       filters << self._filter_for(k,v)
@@ -152,7 +153,7 @@ module ContentBase
 
     es = Elasticsearch::Client.new host:Rails.configuration.secrets.elasticsearch
 
-    results = Hashie::Mash.new(es.search index:"scprv4-all", type:"article", body:body)
+    results = Hashie::Mash.new(es.search index:"scprv4-all", type:types, body:body)
 
     # -- convert results into Article objects -- #
 
@@ -163,7 +164,7 @@ module ContentBase
         public_datetime:  r._source.public_datetime ? Time.zone.parse(r._source.public_datetime) : nil,
         created_at:       Time.zone.parse(r._source.created_at),
         updated_at:       Time.zone.parse(r._source.updated_at),
-      }).except(:obj_key,:class))
+      }).except(:obj_key))
     end
 
     # -- inject pagination bits into the array -- #

@@ -126,13 +126,19 @@ class Article
 
   def assets
     (@assets||[]).collect do |a|
-      ContentAsset.new(asset_id:a.asset_id,caption:a.caption,position:a.position)
+      ContentAsset.new(a.to_hash)
     end
   end
 
   def tags
     (@tags||[]).collect do |t|
-      Tag.new(slug:t.slug,title:t.title)
+      Tag.new(t.to_hash)
+    end
+  end
+
+  def audio
+    (@audio||[]).collect do |a|
+      Audio.new(a.to_hash)
     end
   end
 
@@ -146,7 +152,14 @@ class Article
 
   def audio=(audio)
     @audio = (audio||[]).collect do |a|
-      Hashie::Mash.new(description:a.description, byline:a.byline, url:a.url)
+      Hashie::Mash.new(
+        description:  a.description,
+        byline:       a.byline,
+        url:          a.url,
+        size:         a[:size] || a.size,
+        duration:     a.duration,
+        content_type: a.content_type,
+      )
     end
   end
 
@@ -192,10 +205,13 @@ class Article
     @feature = f
   end
 
+  def to_es_bulk_operation
+    [ { index: { _index:"scprv4-all", _type:self.obj_class.underscore, _id:self.id } }, self.to_hash ]
+  end
+
   def to_hash
     {
       obj_key:          @id,
-      class:            self.obj_class,
       title:            @title,
       short_title:      @short_title,
       public_datetime:  @public_datetime,

@@ -1,16 +1,11 @@
 {
-  "article": {
+  "_default_": {
     "dynamic": false,
     "_id": {
       "path": "obj_key"
     },
     "properties": {
       "obj_key": {
-        "type": "string",
-        "index": "not_analyzed",
-        "include_in_all": false
-      },
-      "class": {
         "type": "string",
         "index": "not_analyzed",
         "include_in_all": false
@@ -98,7 +93,10 @@
           "url": { "type": "string", "index": "not_analyzed", "include_in_all": false },
           "description": { "type": "string" },
           "byline": { "type": "string" },
-          "position": { "type": "integer" }
+          "position": { "type": "integer" },
+          "size": { "type": "integer" },
+          "duration": { "type": "integer" },
+          "content-type": { "type": "string", "index": "not_analyzed", "include_in_all": false }
         }
       },
       "show": {
