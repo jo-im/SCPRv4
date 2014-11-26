@@ -151,9 +151,8 @@ module ContentBase
       from: from
     }
 
-    es = Elasticsearch::Client.new host:Rails.configuration.secrets.elasticsearch
 
-    results = Hashie::Mash.new(es.search index:"scprv4-all", type:types, body:body)
+    results = Hashie::Mash.new(ES_CLIENT.search index:"#{ES_PREFIX}-all", type:types, body:body)
 
     # -- convert results into Article objects -- #
 

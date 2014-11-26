@@ -183,6 +183,7 @@ GEM
     outpost-secretary (0.1.0)
       outpost-cms (>= 0.0.1, < 1)
       secretary-rails (>= 1.0.0, < 2)
+    patron (0.4.18)
     pmp (0.4.0)
       activesupport
       excon
@@ -394,6 +395,7 @@ DEPENDENCIES
   outpost-publishing
   outpost-secretary
   parse-ruby-client!
+  patron
   pmp (= 0.4.0)
   postmark-rails (~> 0.6.0)
   pry

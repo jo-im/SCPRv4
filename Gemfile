@@ -9,6 +9,7 @@ gem "bcrypt-ruby", "~> 3.1.0"
 gem 'secretary-rails'
 
 gem 'elasticsearch'
+gem 'patron'
 
 ## Outpost
 gem 'outpost-cms'
