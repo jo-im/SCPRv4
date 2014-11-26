@@ -356,10 +356,15 @@ SIDEBAR BOXLETS
       padding: 2px 0 2px 18px;
       @include segment-icons;
     }
-    &[data-program="offramp"]   { @include overview-desktop-layout-rabe; }
-    &[data-program="airtalk"]   { @include overview-desktop-layout-mantle; }
-    &[data-program="theframe"]  { @include overview-desktop-layout-horn; }
-    &[data-program="taketwo"]   { @include overview-desktop-layout-cohenmartinez; }
+    
+
+    @each $programHost in $programHosts {
+      &[data-program="#{$programHost}"] {
+        @include overview-desktop-assumptions;
+        background-image: image-url("i/host-#{$programHost}.png");
+      }
+    }
+
 
   }//.exposition
   .externals {
@@ -401,10 +406,11 @@ SIDEBAR BOXLETS
 //-------------------------------------------------------------------------------------
   @media screen and (min-width: 800px) and (max-width: 1109px)  {
 
-    .exposition[data-program="offramp"]   { @include overview-narrow-layout-rabe; }
-    .exposition[data-program="airtalk"]   { @include overview-narrow-layout-rabe; }
-    .exposition[data-program="theframe"]  { @include overview-narrow-layout-rabe; }
-    .exposition[data-program="taketwo"]   { @include overview-narrow-layout-rabe; }
+    @each $programHost in $programHosts {
+      &[data-program="#{$programHost}"] {
+        @include overview-narrow-assumptions;
+      }
+    }
 
   }
 //-------------------------------------------------------------------------------------
@@ -416,10 +422,11 @@ SIDEBAR BOXLETS
 //-------------------------------------------------------------------------------------
   @media screen and (max-width: 500px) {
 
-    .exposition[data-program="offramp"]   { @include overview-narrow-layout-rabe; }
-    .exposition[data-program="airtalk"]   { @include overview-narrow-layout-rabe; }
-    .exposition[data-program="theframe"]  { @include overview-narrow-layout-rabe; }
-    .exposition[data-program="taketwo"]   { @include overview-narrow-layout-rabe; }
+    @each $programHost in $programHosts {
+      &[data-program="#{$programHost}"] {
+        @include overview-narrow-assumptions;
+      }
+    }
 
   }
 //-------------------------------------------------------------------------------------
