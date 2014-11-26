@@ -357,7 +357,7 @@ SIDEBAR BOXLETS
       @include segment-icons;
     }
     @each $programHost in $programHosts {
-      &[data-program="#{$programHost}"] {
+      &[data-host="#{$programHost}"] {
         @include overview-desktop-assumptions;
         background-image: image-url("i/host-#{$programHost}.png");
       }
@@ -404,7 +404,7 @@ SIDEBAR BOXLETS
   @media screen and (min-width: 800px) and (max-width: 1109px)  {
 
     @each $programHost in $programHosts {
-      .exposition[data-program="#{$programHost}"] {
+      .exposition[data-host="#{$programHost}"] {
         @include overview-narrow-assumptions;
       }
     }
@@ -420,7 +420,7 @@ SIDEBAR BOXLETS
   @media screen and (max-width: 500px) {
 
     @each $programHost in $programHosts {
-      .exposition[data-program="#{$programHost}"] {
+      .exposition[data-host="#{$programHost}"] {
         @include overview-narrow-assumptions;
       }
     }

@@ -39,7 +39,7 @@ $programHosts: ("rabe","mantle","horn","cohenmartinez");
   background: image-url("i/host-rabe.png") no-repeat right 15px bottom 0;
   background-size: 141px 170px;
   p,footer                  { padding-right: 160px; }
-  &[data-program="mantle"]  { background-size: 250px 170px; /* Larry's different */ }
+  &[data-host="mantle"]  { background-size: 250px 170px; /* Larry's different */ }
 }
 
 @mixin overview-narrow-assumptions {
@@ -48,7 +48,7 @@ $programHosts: ("rabe","mantle","horn","cohenmartinez");
   p                         { padding-right: 12px !important; }
   footer                    { padding-right: 120px; }
   background-size: 99px 119px;
-  &[data-program="mantle"]  { background-size: 150px 102px; padding-bottom: 60px; }
+  &[data-host="mantle"]  { background-size: 150px 102px; padding-bottom: 60px; }
 }
 
 @mixin icon {
