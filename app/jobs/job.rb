@@ -33,10 +33,9 @@ module Job
   #   is happening *constantly*, especially during peak hours (weekdays).
   #   **There should only be ONE sphinx worker running**.
   QUEUES = {
-    :low_priority     => "scprv4:low_priority",
-    :mid_priority     => "scprv4:mid_priority",
-    :high_priority    => "scprv4:high_priority",
-    :sphinx           => "scprv4:sphinx"
+    :low_priority     => "low_priority",
+    :mid_priority     => "mid_priority",
+    :high_priority    => "high_priority",
   }
 
   class Base

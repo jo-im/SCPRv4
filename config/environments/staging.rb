@@ -14,7 +14,7 @@ Scprv4::Application.configure do
   # in production.
 
   config.action_controller.perform_caching = true
-  config.cache_store = :redis_store, config.secrets["cache"]
+  config.cache_store = :redis_store, config.secrets["cache"], { expires_in: 1.year }
   config.action_controller.action_on_unpermitted_parameters = :log
 
   config.assets.debug         = false
