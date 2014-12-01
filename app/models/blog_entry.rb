@@ -29,12 +29,13 @@ class BlogEntry < ActiveRecord::Base
   include Concern::Callbacks::GenerateSlugCallback
   #include Concern::Callbacks::CacheExpirationCallback
   include Concern::Callbacks::PublishNotificationCallback
-  include Concern::Callbacks::SphinxIndexCallback
   include Concern::Callbacks::HomepageCachingCallback
   include Concern::Callbacks::TouchCallback
   include Concern::Methods::ArticleStatuses
   include Concern::Methods::CommentMethods
   include Concern::Methods::AssetDisplayMethods
+
+  include Concern::Model::Searchable
 
   self.disqus_identifier_base = "blogs/entry"
   self.public_route_key = "blog_entry"

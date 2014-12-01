@@ -29,7 +29,7 @@ class NewsStory < ActiveRecord::Base
   include Concern::Callbacks::GenerateSlugCallback
   #include Concern::Callbacks::CacheExpirationCallback
   include Concern::Callbacks::PublishNotificationCallback
-  include Concern::Callbacks::SphinxIndexCallback
+  include Concern::Model::Searchable
   include Concern::Callbacks::HomepageCachingCallback
   include Concern::Callbacks::TouchCallback
   include Concern::Methods::ArticleStatuses

@@ -18,7 +18,7 @@ class Event < ActiveRecord::Base
   include Concern::Associations::ProgramArticleAssociation
   include Concern::Callbacks::GenerateSlugCallback
   include Concern::Callbacks::GenerateTeaserCallback
-  include Concern::Callbacks::SphinxIndexCallback
+  include Concern::Model::Searchable
   #include Concern::Callbacks::CacheExpirationCallback
   include Concern::Callbacks::TouchCallback
   include Concern::Methods::CommentMethods

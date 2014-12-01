@@ -9,7 +9,7 @@ class Homepage < ActiveRecord::Base
   include Concern::Associations::ContentAlarmAssociation
   include Concern::Callbacks::SetPublishedAtCallback
   include Concern::Callbacks::PublishNotificationCallback
-  include Concern::Callbacks::SphinxIndexCallback
+  include Concern::Model::Searchable
   include Concern::Callbacks::HomepageCachingCallback
   include Concern::Callbacks::TouchCallback
 

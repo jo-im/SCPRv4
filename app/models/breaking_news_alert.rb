@@ -5,10 +5,11 @@ class BreakingNewsAlert < ActiveRecord::Base
   has_status
 
 
-  include Concern::Callbacks::SphinxIndexCallback
   include Concern::Callbacks::SetPublishedAtCallback
   include Concern::Associations::ContentAlarmAssociation
   include Concern::Methods::EloquaSendable
+
+  include Concern::Model::Searchable
 
   include ::NewRelic::Agent::Instrumentation::ControllerInstrumentation
 

@@ -5,3 +5,7 @@ ES_CLIENT = Elasticsearch::Client.new(
 )
 
 ES_PREFIX = Rails.configuration.secrets.elasticsearch_prefix
+
+Elasticsearch::Model.client = ES_CLIENT
+
+Elasticsearch::Model::Response::Response.__send__ :include, Elasticsearch::Model::Response::Pagination::Kaminari

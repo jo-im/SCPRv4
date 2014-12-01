@@ -2,7 +2,7 @@ class Podcast < ActiveRecord::Base
   outpost_model
   has_secretary
 
-  include Concern::Callbacks::SphinxIndexCallback
+  include Concern::Model::Searchable
 
   self.public_route_key = "podcast"
 

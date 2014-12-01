@@ -5,7 +5,7 @@ class KpccProgram < ActiveRecord::Base
 
   include Concern::Validations::SlugValidation
   include Concern::Associations::RelatedLinksAssociation
-  include Concern::Callbacks::SphinxIndexCallback
+  include Concern::Model::Searchable
 
   self.public_route_key = "program"
 

@@ -3,7 +3,7 @@ class MissedItBucket < ActiveRecord::Base
   outpost_model
   has_secretary
 
-  include Concern::Callbacks::SphinxIndexCallback
+  include Concern::Model::Searchable
   include Concern::Callbacks::TouchCallback
 
   has_many :content,

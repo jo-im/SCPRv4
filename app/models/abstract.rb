@@ -48,8 +48,9 @@ class Abstract < ActiveRecord::Base
   include Concern::Associations::AssetAssociation
   include Concern::Associations::AudioAssociation
   include Concern::Associations::EditionsAssociation
-  include Concern::Callbacks::SphinxIndexCallback
   include Concern::Callbacks::TouchCallback
+
+  include Concern::Model::Searchable
 
   # We're not using the CategoryAssociation concern here because we don't
   # need Abstracts to touch the Category on save.

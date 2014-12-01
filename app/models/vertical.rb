@@ -3,7 +3,7 @@ class Vertical < ActiveRecord::Base
   has_secretary except: ["quote_id"] # Quote is versioned separately
 
   include Concern::Validations::SlugValidation
-  include Concern::Callbacks::SphinxIndexCallback
+  include Concern::Model::Searchable
   include Concern::Associations::TagsAssociation
 
   self.public_route_key = 'root_slug'

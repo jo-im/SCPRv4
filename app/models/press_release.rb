@@ -3,7 +3,7 @@ class PressRelease < ActiveRecord::Base
   has_secretary
 
   include Concern::Validations::SlugValidation
-  include Concern::Callbacks::SphinxIndexCallback
+  include Concern::Model::Searchable
 
   self.public_route_key = "press_release"
 
