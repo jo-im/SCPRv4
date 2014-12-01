@@ -6,7 +6,7 @@ module Job
       # that it runs *after* a sphinx index has
       # occurred, because the homepage caching relies
       # on an up-to-date index.
-      def queue; QUEUES[:sphinx]; end
+      def queue; QUEUES[:mid_priority]; end
 
       def perform
         homepage = ::Homepage.published.first
