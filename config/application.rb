@@ -55,5 +55,8 @@ module Scprv4
     config.assethost.server = config.api['assethost']['server']
     config.assethost.prefix = config.api['assethost']['prefix']
     config.assethost.token  = config.api['assethost']['token']
+
+    default_url_options[:host]  ||= config.secrets.hostname
+    config.scpr.host           ||= config.secrets.hostname
   end
 end

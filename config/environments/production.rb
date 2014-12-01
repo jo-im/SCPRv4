@@ -30,9 +30,6 @@ Scprv4::Application.configure do
   # Send deprecation notices to registered listeners
   config.active_support.deprecation = :notify
 
-  default_url_options[:host] = "www.scpr.org"
-
-  config.scpr.host         = "www.scpr.org"
   config.scpr.media_root   = "/scpr/media"
   config.scpr.media_url    = "http://media.scpr.org"
   config.scpr.resque_queue = :scprv4
