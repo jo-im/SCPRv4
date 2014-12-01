@@ -206,7 +206,7 @@ class Article
   end
 
   def to_es_bulk_operation
-    [ { index: { _index:"scprv4-all", _type:self.obj_class.underscore, _id:self.id } }, self.to_hash ]
+    [ { index: { _index:ES_ARTICLES_INDEX, _type:self.obj_class.underscore, _id:self.id } }, self.to_hash ]
   end
 
   def to_hash

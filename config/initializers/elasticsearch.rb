@@ -6,6 +6,8 @@ ES_CLIENT = Elasticsearch::Client.new(
 
 ES_PREFIX = Rails.configuration.secrets.elasticsearch_prefix
 
+ES_ARTICLES_INDEX = "#{ES_PREFIX}-articles-all"
+
 Elasticsearch::Model.client = ES_CLIENT
 
 Elasticsearch::Model::Response::Response.__send__ :include, Elasticsearch::Model::Response::Pagination::Kaminari
