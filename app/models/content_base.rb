@@ -152,7 +152,7 @@ module ContentBase
     }
 
 
-    results = Hashie::Mash.new(ES_CLIENT.search index:"#{ES_PREFIX}-all", type:types, body:body)
+    results = Hashie::Mash.new(ES_CLIENT.search index:"#{ES_PREFIX}-articles-all", type:types, body:body)
 
     # -- convert results into Article objects -- #
 

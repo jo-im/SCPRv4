@@ -3,7 +3,7 @@ module Concern::Model::Searchable
 
   included do
     include Elasticsearch::Model
-    index_name "#{ES_PREFIX}.models"
+    index_name "#{ES_PREFIX}-models"
 
     def as_indexed_json(opts={})
       # strip out the extra bits that Outpost injects into our model
