@@ -182,7 +182,7 @@ class Event < ActiveRecord::Base
       :teaser             => self.teaser,
       :body               => self.body,
       :assets             => self.assets,
-      :audio              => self.audio.available,
+      :audio              => self.audio.select(&:available?),
       :byline             => "KPCC",
       :edit_path          => self.admin_edit_path,
       :public_path        => self.public_path,

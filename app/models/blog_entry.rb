@@ -155,7 +155,7 @@ class BlogEntry < ActiveRecord::Base
       :body               => self.body,
       :category           => self.category,
       :assets             => self.assets,
-      :audio              => self.audio.available,
+      :audio              => self.audio.select(&:available?),
       :attributions       => self.bylines,
       :byline             => self.byline,
       :edit_path          => self.admin_edit_path,

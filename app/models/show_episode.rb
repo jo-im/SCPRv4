@@ -117,7 +117,7 @@ class ShowEpisode < ActiveRecord::Base
       :body               => self.body,
       :teaser             => self.teaser,
       :assets             => self.assets,
-      :audio              => self.audio.available,
+      :audio              => self.audio.select(&:available?),
       :byline             => self.show.title,
       :edit_path          => self.admin_edit_path,
       :public_path        => self.public_path,
