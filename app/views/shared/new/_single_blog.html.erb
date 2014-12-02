@@ -30,7 +30,7 @@
                     </nav>
                 <% end %>
 
-                <%= render 'shared/new/social_share', article: article %>
+                <%= render 'shared/new/social_share', article: article, cssClass: "share" %>
             </div><!--/ .marginal-tools -->
 
             <div class="prose-body">
@@ -55,7 +55,7 @@
                 <%= article_presenter.related_links %>
             <% end %>
 
-            <%= render 'shared/new/social_share', article: article %>
+            <%= render 'shared/new/social_share', article: article, cssClass: "share" %>
 
             <% if @entry.previous.present? %>
                 <% previous_article = @entry.previous.to_article %>

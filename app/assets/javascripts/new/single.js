@@ -65,13 +65,6 @@ scpr.Behaviors.Single = {
           }/*
           -------------------------------------------------------------------------------------- */
 
-          /*
-          --------------------------------------------------------------------------------------
-          THIS NEXT PART IS JUST FOR TESTING SOME STYLING; DELETE BEFORE MERGING WITH MASTER!
-          -------------------------------------------------------------------------------------- */
-          $(".audio-actuator").click(function(){ $(this).toggleClass("activated"); return false; });/*
-          ------------------------------------------------------------------------------------- */
-
         } // has segment, has audio-actuator
 
 
@@ -258,7 +251,7 @@ scpr.Behaviors.Single = {
         //  ================================================
         //  Single: Check up on the curated title length
         //  ------------------------------------------------
-            if($("body").hasClass("single")){
+            if($("body").hasClass("single") && $(".prologue").length){
                 var charcount = $(".prologue h1").html().length;
                 if(charcount > 82)                          { $(".prologue .title").addClass("verbose"); }
             }

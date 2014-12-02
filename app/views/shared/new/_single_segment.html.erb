@@ -1,5 +1,10 @@
 <% article = article.to_article %>
 
+<div class="appellation bound">
+  <h1><%= article.title %></h1>
+  <p>by <%= render_byline article.original_object %>. <%= smart_date_js article.public_datetime %>.</p>
+</div><!--/ .appellation -->
+
 <div class="report">
     <div class="inner bound clearfix">
         
@@ -36,69 +41,18 @@
             </figure>
           -->
 
-
-
-
-
-<!--
-====================================================================================================================================================================================
-<div class="marginal-tools clearfix">
-    <% if article.audio.any? %>
-        <% audio = article.audio %>
-        <nav class="audio-queue track-event" data-ga-category="Article" data-ga-action="Load" data-ga-label="Player" data-non-interaction="1">
-            <header>Audio from this story</header>
-            <ul>
-            <% audio.each_with_index do |audio, index| %>
-                <li class="story-audio track-event" data-ga-category="Article" data-ga-action="Play" data-ga-label="Player">
-                    <a href="<%= audio.url %>" class="play-btn audio-toggler track-event" data-ga-category="Article" data-ga-action="Play" data-ga-label="Player" title="<%= h(article.short_title) %>" data-duration="<%= audio.duration %>">
-                        <b><%= format_clip_duration audio.duration %></b>
-                        <span><%= index == 0 ? "Listen" : "Extra Audio" %></span>
-                    </a>
-                </li>
-            <% end %>
-            </ul>
-        </nav>
-    <% end %>
-
-    <%= render 'shared/new/social_share', article: article %>
-</div>
-====================================================================================================================================================================================
--->
-
             
-            <aside class="audio-actuator">
-              <a href="#">
-                <mark class="flourish"><%= image_tag("icons/vector-triangle-white.svg")%></mark>
-                <div><span class="prompt"><b>Listen to this story</b></span> <span class="duration">6 min 53 sec</span></div>
-              </a>
-            </aside>
+            <%= content_widget "new/primary_audio", article %>
 
 
-
-            <aside class="buddy disseminate pinned clearfix" aria-hidden="true">
-              <h1>Share</h1>
-              <ul class="clearfix">
-                <li class="email"><a href="#"><span>Email</span> <mark>email</mark></a></li>
-                <li class="twitter"><a href="#"><span>Twitter</span> <mark>482</mark></a></li>
-                <li class="facebook"><a href="#"><span>Facebook</span> <mark>9,247</mark></a></li>
-              </ul>
-            </aside>
-
+            <%= render 'shared/new/social_share', article: article, cssClass: "pinned" %>
+            
 
             <div class="prose-columns clearfix">
 
               <div class="primary">
 
-
-              <aside class="bonus-audio">
-                <h1>This story contains bonus audio</h1>
-                <ul>
-                  <li><a href="#"><mark>Play audio feature #2</mark> <span>2 min 17 sec</span></a></li>
-                  <li><a href="#"><mark>Play "Interview with ward alderman who spoke with us for a uniquely-titled audio clip, which could go long"</mark> <span>5 min 14 sec</span></a></li>
-                  <li><a href="#"><mark>Play audio feature #4</mark> <span>3 min 42 sec</span></a></li>
-                  <li><a href="#"><mark>Play audio feature #5</mark> <span>6 min 3 sec</span></a></li>
-                </ul>
-              </aside>
+              <%= content_widget "new/extra_audio", article %>
 
 
               <div class="prose-body">
@@ -111,69 +65,28 @@
               </div><!--/ .prose-body -->
 
 
-              <!--
               <% present article do |article_presenter| %>
                   <%= article_presenter.related_links %>
               <% end %>
-              -->
 
 
-
-              <aside class="ancillary related-links">
-                <header>Related links</header>
-                <nav>
-                  <ul>
-                    <li class="article"><a href="#">
-                      <h1><span>As downtown LA grows, so does urgency to fix Skid Row</span></h1>
-                      <p><mark>Article</mark> <time datetime="2014-10-26">October 26th, 2014</time></p></a></li>
-                    <li class="infographic"><a href="#">
-                      <h1><span>LA's homeless: Skid Row's epic clean-up by the numbers</span></h1>
-                      <p><mark>Infographic</mark> <time datetime="2014-10-26">October 26th, 2014</time></p></a></li>
-                    <li class="map"><a href="#">
-                      <h1><span>LA homeless: Extra $214M to coordinate services, programs</span></h1>
-                      <p><mark>Map</mark> <time datetime="2014-10-26">October 26th, 2014</time></p></a></li>
-                    <li class="slideshow"><a href="#">
-                      <h1><span>Massive Arroyo Seco homeless camp cleanup continues</span></h1>
-                      <p><mark>Slideshow</mark> <time datetime="2014-10-26">October 26th, 2014</time></p></a></li>
-                    <li class="taketwo"><a href="#">
-                      <h1><span>SF nonprofit converts buses to rolling showers for homeless</span></h1>
-                      <p><mark>Take Two</mark> <time datetime="2014-10-26">October 26th, 2014</time></p></a></li>
-                  </ul>
-                </nav>
-              </aside>
-
-
+              <% if article.original_object.episode.present? %>
               <aside class="ancillary episode-contents">
-                <header>More from this episode <cite><a href="#"><!-- PERMALINK TO EPISODE GOES HERE -->Off-Ramp for October 27, 2014</a></cite></header>
-                <h1><a href="#"><!-- PERMALINK TO EPISODE GOES HERE, TOO -->The "lost" sounds of a long-gone amusement park</a></h1>
+                <header>
+                  More from this <%= article.original_object.episode.present? ? "episode" : "program" %> 
+                  <cite><a href="<%= article.original_object.episode.public_path %>"><!-- PERMALINK TO EPISODE GOES HERE --><%= @program.title %> for <%= article.original_object.episode.air_date %></a></cite>
+                </header>
+                <h1><%= link_to article.original_object.episode.headline, article.original_object.episode.public_path %></h1>
                 <nav>
                   <ul>
-                    <li><a href="#">Dive into a synchronized swimming renaissance with Aqualillies</a></li>
-                    <li><a href="#">LA City Archive: How LA prepped for nuclear war in the 1950s</a></li>
-                    <li><a href="#">Here's why we're putting a GPS tracker in a mattress (updated)</a></li>
-                    <li><a href="#">Los Angeles had America's first Wrigley Field</a></li>
-                    <li><a href="#">PHOTOS: New Woodland Hills homeowners' bonus room: a fully stocked fallout shelter</a></li>
-                    <li class="selected"><a href="#">He went from sleeping on Skid Row to running the Midnight Mission</a></li>
-                    <li><a href="#">PHOTOS: Why Alvin Kaufman built a fallout shelter in his Woodland Hills back yard</a></li>
-                    <li><a href="#">RIP David Weidman, 93. Prolific printmaker, found new fame in Mad Men</a></li>
-                    <li><a href="#">Grant Morrison explores 52 universes in DC Comics' 'Multiversity'</a></li>
-                    <li><a href="#">The mysterious mannequins of North Hollywood Toyota</a></li>
+                    <% article.original_object.sister_segments.each do |segment| %>
+                      <li><%= link_to segment.short_headline, segment.public_path %></li>
+                    <% end %>
                   </ul>
                 </nav>
               </aside>
+              <% end %>
 
-
-
-              <!--
-              <aside class="other-segments" id="other-segments">
-                  <h6>More from this <%= @segment.episodes.present? ? "Episode" : "Program" %></h6>
-                  <ul>
-                      <% @segment.sister_segments.each do |segment| %>
-                      <li><%= link_to segment.short_headline, segment.public_path %></li>
-                      <% end %>
-                  </ul>
-              </aside>
-              -->
 
             </div><!--/ .primary -->
             
@@ -181,55 +94,15 @@
 
             <div class="secondary">
 
-              <aside class="buddy disseminate clearfix">
-                <h1>Share</h1>
-                <ul class="clearfix">
-                  <li class="email"><a href="#"><span>Email</span> <mark>email</mark></a></li>
-                  <li class="twitter"><a href="#"><span>Twitter</span> <mark>482</mark></a></li>
-                  <li class="facebook"><a href="#"><span>Facebook</span> <mark>9,247</mark></a></li>
-                </ul>
-              </aside>
+              <%= render 'shared/new/social_share', article: article %>
 
               <div class="buddy-pairing clearfix">
-                <aside class="buddy comments-plug">
-                  <h1>Comments</h1>
-                  <figure>
-                    <mark>18</mark>
-                    <figcaption><a href="#">Join the discussion</a></figcaption>
-                  </figure>
-                </aside>
-                <aside class="buddy taxonomy">
-                  <h1>Part of a series</h1>
-                  <ul>
-                    <li><a href="#">Tuesday Reviewsdays</a></li>
-                    <li><a href="#">A possible second tag</a></li>
-                  </ul>
-                </aside>
+                <%= content_widget 'new/comment_count', article %>
               </div>
 
             </div><!--/ .secondary -->
 
 
             </div><!--/ .prose-columns -->
-
-
-
-
-            <%#= render 'shared/new/social_share', article: article %>
-
-            <!--
-            <footer class="comments-jump">
-                <a href="#comments">
-                    <mark>Join the discussion.</mark>
-                    <span>Tap here to jump to this article's comments.</span>
-                </a>
-            </footer>
-            -->
-
-            <!--
-            <footer class="comments-trigger">
-                <a href="#">This article currently has no comments. Click here to start the discussion.</a>
-            </footer>
-            -->
 
         </article>

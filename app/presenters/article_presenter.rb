@@ -23,11 +23,9 @@ class ArticlePresenter < ApplicationPresenter
   def related_links
     if article.original_object.related_links.present? || article.original_object.related_content.present?
       s = "".html_safe
-      h.content_tag :aside, class: "related" do
+      h.content_tag :aside, class: "ancillary related-links" do
         l = h.content_tag :header do
-          h.content_tag :h1 do
-            "Related Links"
-          end
+          "Related Links"
         end
         l += h.content_tag :nav do
           h.content_tag :ul do
@@ -54,7 +52,7 @@ class ArticlePresenter < ApplicationPresenter
             l = h.content_tag :mark do
               related_link.title
             end
-            l += h.content_tag :span do
+            l += h.content_tag :p do
               kpcc_link ? "Article" : "Source: #{domain}"
             end
           end
@@ -74,11 +72,15 @@ class ArticlePresenter < ApplicationPresenter
         class_options[:data] = {"ga-category" => "Article", "ga-action" => "Clickthrough", "ga-label" => "Related" }
         s += h.content_tag :li, class_options do
           h.link_to related_article.public_path do
-            l = h.content_tag :mark do
-              related_article.short_title
+            l = h.content_tag :h1 do
+              h.content_tag :span do
+                related_article.short_title
+              end
             end
-            l += h.content_tag :span do
-              related_article.feature.try(:name) || "Article"
+            l += h.content_tag :p do
+              h.content_tag :mark do
+                related_article.feature.try(:name) || "Article"
+              end
             end
           end
         end

@@ -1,3 +1,4 @@
+<% add_to_page_title @program.title %>
 <% add_to_page_title @segment.headline %>
 <% content_for :body_class, 'interior single segment' %>
 <% content_for :opengraph do %><%= render_content @segment, "opengraph" %><% end %>
@@ -6,13 +7,6 @@
 <% content_for :titling do %>
     <%= render :partial => 'shared/new/masthead/program_content_titling' %>
 <% end %>
-
-
-<div class="appellation bound">
-  <h1>Midnight Mission centennial: How this man went from homeless to managing a shelter</h1>
-  <p>by <a href="#">Firstname Lastname</a>. Pubdate.</p>
-</div><!--/ .appellation -->
-
 
 
 <%= cache ["show", "article-content", "v13", @segment] do %>
@@ -37,49 +31,40 @@
 
 
         <aside class="see-more">
-            <header><h1>Recently on Off-Ramp</h1></header>
+            <header><h1>Recently on <%= @program.title %></h1></header>
             <nav>
-              <article>
-                <a href="#">
-                  <time datetime="2014-10-31">October 31, 2014</time>
-                  <h1>'Classic Alice' gives a college girl's life literary treatment</h1>
-                  <b><img src="http://placekitten.com/350/350" alt="" /></b>
-                </a>
-              </article>
-              <article>
-                <a href="#">
-                  <time datetime="2014-10-31">October 31, 2014</time>
-                  <h1>Art duo Kozyndan on growing up with Hello Kitty in Japan</h1>
-                  <b><img src="http://placekitten.com/350/350" alt="" /></b>
-                </a>
-              </article>
-              <article>
-                <a href="#">
-                  <time datetime="2014-10-24">October 24, 2014</time>
-                  <h1>Director Werner Herzog gives advice on documentary filmmaking</h1>
-                  <b><img src="http://placekitten.com/350/350" alt="" /></b>
-                </a>
-              </article>
+              <% @segment.recent_show_segments.each do |segment| %>
+                  <% show_segment = segment.to_article %>
+                  <article>
+                      <%= link_to show_segment.public_path, class: "track-event", data: {"ga-category" => "Article", "ga-action" => "Clickthrough", "ga-label" => "More Sidebar Show Segment"} do %>
+                          <%= smart_date_js show_segment.public_datetime %>
+                          <h1><%= show_segment.short_title %></h1>
+                          <b><%= image_tag show_segment.asset.lsquare.url, alt: show_segment.asset.caption %></b>
+                      <% end %>
+                  </article>
+              <% end %>
             </nav>
         </aside>
 
 
 
         <aside class="overview">
-          <header><h1>About Off-Ramp</h1></header>
-          <div class="exposition" data-host="cohenmartinez"><!-- accepts: horn | rabe | cohenmartinez | mantle -->
-            <p>Off-Ramp is a lively weekly look at Southern California through the eyes and ears of radio veteran John Rabe. News, arts, home, life — covering everything that makes life here exciting, enjoyable, and interesting.</p>
-            <footer>Saturday noon to 1:00 P.M. and Sunday 6:00 to 7:00 P.M.</footer>
+          <header><h1>About <%= @program.title %></h1></header>
+          <div class="exposition" data-host="rabe"><!-- accepts: horn | rabe | cohenmartinez | mantle -->
+            <p><%= @program.description %></p>
+            <footer><%= @program.airtime %></footer>
           </div>
-          <div class="externals">
-            <ul>
-              <li class="site"><a href="#">Off-Ramp’s website</a></li>
-              <li class="twitter"><a href="#">Follow Off-Ramp on Twitter</a></li>
-              <li class="facebook"><a href="#">Like Off-Ramp on Facebook</a></li>
-              <li class="podcast"><a href="#">Subscribe to Off-Ramp’s podcast on iTunes</a></li>
-              <li class="rss"><a href="#">Subscribe to Off-Ramp via RSS</a></li>
-            </ul>
-          </div>
+          <% present @program, ProgramPresenter do |p| %>
+            <div class="externals">
+              <ul>
+                <%= p.facebook_link %>
+                <%= p.twitter_link %>
+                <%= p.podcast_link %>
+                <%= p.rss_link %>
+                <%= p.email_link %>
+              </ul>
+            </div>
+          <% end %>
         </aside>
 
 
@@ -90,19 +75,17 @@
 <!-- AdHost Slot: Membership Appeals -->
 <div id="article-membership-appeal"></div>
 
-<%= comments_for @story %>
-
 <div class="placard-waystation"></div>
 <% end %>
 
 <%= comments_for @segment, header: false %>
 
-<% if @featured_programs %>
-    <%= render 'programs/kpcc/new/featured_programs' %>
+<% cache ["show", "featured-programs", "v16", @featured_programs] do %>
+  <%= render 'programs/kpcc/new/featured_programs' %>
 <% end %>
 
 <% if @popular_articles %>
-    <%= render 'shared/new/popular_articles',
-        articles: @popular_articles.first(4),
-        header: 'Popular Now on KPCC' %>
+  <%= render 'shared/new/popular_articles',
+      articles: @popular_articles.first(4),
+      header: 'Popular Now on KPCC' %>
 <% end %>

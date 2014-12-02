@@ -29,6 +29,7 @@ class scpr.Audio
                 mp3      = $(btn).attr("href")
                 title    = $(btn).attr("title")
                 duration = Number($(btn).attr("data-duration"))
+                @widget = $(btn).closest(".audio-actuator")
 
                 # take the URL out of the href
                 $(btn).attr "href", "javascript:void(0);"
@@ -52,6 +53,7 @@ class scpr.Audio
     #----------
 
     closeAndStop: ->
+        @widget.removeClass("activated")
         @audiobar.animate { bottom: @audiobar.height() * -1 }, 300, =>
             @audiobar.removeClass('active')
             $("body").removeClass("with-audio-bar") # which also hides the opaque-cover
@@ -91,6 +93,7 @@ class scpr.Audio
                 false
 
         # animate the bar
+        @widget.addClass("activated")
         @audiobar.addClass("active")
         $("body").addClass("with-audio-bar")
         @audiobar.animate { bottom: 0 }, 1000
