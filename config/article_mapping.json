@@ -63,7 +63,7 @@
         "include_in_parent": true,
         "properties": {
           "name": { "type":"string" },
-          "author_id": { "type": "integer" },
+          "user_id": { "type": "integer" },
           "role": { "type": "integer" }
         }
       },

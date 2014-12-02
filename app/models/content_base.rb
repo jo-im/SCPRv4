@@ -93,7 +93,7 @@ module ContentBase
     # we can pass in `with: { is_live: [true, false] }`, for
     # example.
     options[:with] ||= {}
-    options[:with].reverse_merge!(published: true)
+    options[:with].reverse_merge!(published: "true")
 
     # -- build search query -- #
 

@@ -184,9 +184,9 @@ class Article
   def attributions=(bylines)
     @attributions = (bylines||[]).collect do |a|
       if a.is_a? ContentByline
-        Hashie::Mash.new(name:a.display_name, id:a.user_id, role:a.role)
+        Hashie::Mash.new(name:a.display_name, user_id:a.user_id, role:a.role)
       else
-        Hashie::Mash.new(name:a.name,id:a.id,role:a.role)
+        Hashie::Mash.new(name:a.name,user_id:a.user_id,role:a.role)
       end
     end
   end
