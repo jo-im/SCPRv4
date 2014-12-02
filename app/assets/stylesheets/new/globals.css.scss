@@ -38,17 +38,33 @@ $programHosts: ("rabe","mantle","horn","cohenmartinez");
   min-height: 170px;
   background: image-url("i/host-rabe.png") no-repeat right 15px bottom 0;
   background-size: 141px 170px;
-  p,footer                  { padding-right: 160px; }
-  &[data-host="mantle"]  { background-size: 250px 170px; /* Larry's different */ }
+  p,footer                      { padding-right: 160px; }
+  &[data-host="mantle"]         { background-size: 250px 170px; /* Larry's different */ }
+  &[data-host="cohenmartinez"]  {
+    background-size: 240px 169px;
+    background-position: right 3px bottom 0; /* A&A are different */
+    p,footer                    { padding-right: 245px; }
+  //-------------------------------------------------------------------------------------
+    @media screen and (min-width: 871px) and (max-width: 1340px)  {
+      min-height: 0;
+      padding-bottom: 70px;
+      outline: 1px solid orange;
+      background-size: 144px 101px;
+      p                         { padding-right: 12px; }
+      footer                    { padding-right: 148px; }
+    }
+  //-------------------------------------------------------------------------------------
+  }//.cohenmartinez
 }
 
 @mixin overview-narrow-assumptions {
   min-height: 0;
   padding-bottom: 75px;
-  p                         { padding-right: 12px !important; }
-  footer                    { padding-right: 120px; }
+  p                             { padding-right: 12px !important; }
+  footer                        { padding-right: 120px !important; }
   background-size: 99px 119px;
-  &[data-host="mantle"]  { background-size: 150px 102px; padding-bottom: 60px; }
+  &[data-host="mantle"]         { background-size: 150px 102px; padding-bottom: 60px; }
+  &[data-host="cohenmartinez"]  { background-size: 144px 101px; }
 }
 
 @mixin icon {
