@@ -24,6 +24,7 @@ class ShowEpisode < ActiveRecord::Base
 
   self.public_route_key = "episode"
 
+  scope :with_article_includes, ->() { includes(:assets,:audio,:show) }
 
   status :killed do |s|
     s.id = -1

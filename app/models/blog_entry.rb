@@ -40,11 +40,11 @@ class BlogEntry < ActiveRecord::Base
   self.disqus_identifier_base = "blogs/entry"
   self.public_route_key = "blog_entry"
 
-
   belongs_to :blog
 
   validates_presence_of :blog, if: :should_validate?
 
+  scope :with_article_includes, ->() { includes(:blog,:category,:assets,:audio,:tags,:bylines,bylines:[:user]) }
 
   def needs_validation?
     self.pending? || self.published?

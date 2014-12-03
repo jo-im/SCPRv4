@@ -77,6 +77,7 @@ class Event < ActiveRecord::Base
     .order("starts_at desc")
   }
 
+  scope :with_article_includes, ->() { includes(:assets,:category,:audio) }
 
   belongs_to :kpcc_program
 

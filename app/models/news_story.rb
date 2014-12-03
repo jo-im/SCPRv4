@@ -52,7 +52,7 @@ class NewsStory < ActiveRecord::Base
     ['Marketplace',                 'marketplace']
   ]
 
-
+  scope :with_article_includes, ->() { includes(:category,:assets,:audio,:tags,:bylines,bylines:[:user]) }
 
   def needs_validation?
     self.pending? || self.published?

@@ -33,6 +33,7 @@ class ContentShell < ActiveRecord::Base
   validates :url, url: true, presence: true, if: :should_validate?
   validates :site, presence: true, if: :should_validate?
 
+  scope :with_article_includes, ->() { includes(:assets,:category,:tags,:bylines,bylines:[:user]) }
 
   class << self
     def sites_select_collection

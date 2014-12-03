@@ -58,6 +58,8 @@ class ShowSegment < ActiveRecord::Base
 
   validates :show, presence: true
 
+  scope :with_article_includes, ->() { includes(:show,:category,:assets,:audio,:tags,:bylines,bylines:[:user]) }
+
   def needs_validation?
     self.pending? || self.published?
   end
