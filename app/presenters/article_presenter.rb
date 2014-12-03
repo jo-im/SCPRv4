@@ -14,19 +14,6 @@ class ArticlePresenter < ApplicationPresenter
     end
   end
 
-  def segment_asset_display
-    asset_display = article.original_object.asset_display
-    if asset_display == :slideshow
-      render 'shared/new/assets/segment/slideshow', article: article
-    elsif asset_display == :video
-      render 'shared/new/assets/segment/video', article: article
-    elsif asset_display == :hidden || article.original_object.assets.blank?
-      # do nothing
-    else
-      render 'shared/new/assets/segment/photo', article: article
-    end
-  end
-
   def inline_asset
     if (article.original_object.asset_display == :photo_deemphasized) || (article.original_object.asset_display.blank? && !below_standard_ratio(width: article.asset.full.width, height: article.asset.full.height)) || (article.original_object.asset_display == :photo_emphasized && !below_standard_ratio(width: article.asset.full.width, height: article.asset.full.height))
       render 'shared/new/inline_asset', article: article

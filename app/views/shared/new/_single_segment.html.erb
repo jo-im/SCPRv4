@@ -1,25 +1,21 @@
-<% article = article.to_article %>
-
 <div class="appellation bound">
-  <h1><%= article.title %></h1>
-  <p>by <%= render_byline article.original_object %>. <%= smart_date_js article.public_datetime %>.</p>
+  <h1><%= article.headline %></h1>
+  <p>by <%= render_byline article %>. <%= smart_date_js article.published_at %>.</p>
 </div><!--/ .appellation -->
 
 <div class="report">
     <div class="inner bound clearfix">
-        
+
 
         <article class="prose">
 
-            <% present article do |article_presenter| %>
-                <%= article_presenter.segment_asset_display %>
-            <% end %>
-            
+            <%= render_asset article, context:"segments" %>
+
             <%= content_widget "new/primary_audio", article %>
 
 
-            <%= render 'shared/new/social_share', article: article, cssClass: "pinned" %>
-            
+            <%= render 'shared/new/social_share', article: article.to_article, cssClass: "pinned" %>
+
 
             <div class="prose-columns clearfix">
 
@@ -30,7 +26,7 @@
 
               <div class="prose-body">
                   <%= article.body.html_safe %>
-                  <% if article.original_object.joined_bylines[:contributing].present? %>
+                  <% if article.joined_bylines[:contributing].present? %>
                       <footer class="contributor">
                           <p><%= render_contributing_byline article.original_object %></p>
                       </footer>
@@ -38,26 +34,26 @@
               </div><!--/ .prose-body -->
 
 
-              <% present article do |article_presenter| %>
+              <% present article.to_article do |article_presenter| %>
                   <%= article_presenter.related_links %>
               <% end %>
 
 
-              <% if article.original_object.episode.present? %>
+              <% if article.episode.present? %>
               <aside class="ancillary episode-contents">
                 <header>
-                  More from this <%= article.original_object.episode.present? ? "episode" : "program" %> 
+                  More from this <%= article.episode.present? ? "episode" : "program" %>
                   <cite>
-                    <a href="<%= article.original_object.episode.public_path %>">
-                      <%= @program.title %> for <%= article.original_object.episode.air_date.strftime("%B %d, %Y") %>
+                    <a href="<%= article.episode.public_path %>">
+                      <%= @program.title %> for <%= article.episode.air_date.strftime("%B %d, %Y") %>
                     </a>
                   </cite>
                 </header>
-                <h1><%= link_to article.original_object.episode.headline, article.original_object.episode.public_path %></h1>
+                <h1><%= link_to article.episode.headline, article.episode.public_path %></h1>
                 <nav>
                   <ul>
-                    <% article.original_object.episode_segments.each do |segment| %>
-                      <li class="<%= ("selected" if article.original_object.id == segment.id) %>">
+                    <% article.episode_segments.each do |segment| %>
+                      <li class="<%= ("selected" if article.id == segment.id) %>">
                         <%= link_to segment.short_headline, segment.public_path %>
                       </li>
                     <% end %>
@@ -68,12 +64,12 @@
 
 
             </div><!--/ .primary -->
-            
+
 
 
             <div class="secondary">
 
-              <%= render 'shared/new/social_share', article: article %>
+              <%= render 'shared/new/social_share', article: article.to_article %>
 
               <div class="buddy-pairing clearfix">
                 <%= content_widget 'new/comment_count', article %>
