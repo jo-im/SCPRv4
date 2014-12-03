@@ -11,38 +11,9 @@
 
         <article class="prose">
 
-          <%= render_asset article.original_object %>
-
-            <!--
-            ====================================================================================================
-            HORIZONTAL ASSET
-            ==================================================================================================== 
-            <figure class="lead-asset">
-              <b><img src="http://placekitten.com/1000/750" alt="" /></b>
-              <figcaption class="clearfix">
-                <div>
-                  <span class="brief">Midnight Mission Managing Director Clancy Imislund started working at the shelter and recovery center in 1974.</span>
-                  <span class="credit">Kevin Ferguson/KPCC</span>
-                </div>
-              </figcaption>
-            </figure>
-            -->
-
-            <!--
-            ====================================================================================================
-            SQUARE/TALL ASSET
-            ====================================================================================================
-            <figure class="lead-asset exiguous">
-              <b><img src="http://placekitten.com/650/800" alt="" /></b>
-              <figcaption class="clearfix">
-                <div>
-                  <span class="brief">Midnight Mission Managing Director Clancy Imislund started working at the shelter and recovery center in 1974.</span>
-                  <span class="credit">Kevin Ferguson/KPCC</span>
-                </div>
-              </figcaption>
-            </figure>
-          -->
-
+            <% present article do |article_presenter| %>
+                <%= article_presenter.segment_asset_display %>
+            <% end %>
             
             <%= content_widget "new/primary_audio", article %>
 
