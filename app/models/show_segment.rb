@@ -69,11 +69,10 @@ class ShowSegment < ActiveRecord::Base
   end
 
 
-  def sister_segments
-    @sister_segments ||= begin
+  def episode_segments
+    @episode_segments ||= begin
       if episodes.present?
         episode.segments.published
-          .where("shows_segment.id != ?", self.id)
       else
         show.segments.published
           .where("shows_segment.id != ?", self.id).limit(5)
