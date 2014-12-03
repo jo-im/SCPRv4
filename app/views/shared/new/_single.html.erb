@@ -1,7 +1,7 @@
 <% article = article.to_article %>
-<% present article do |article_presenter| %>
-    <%= article_presenter.asset_display %>
-<% end %>
+
+<%= render_asset article.original_object, context:"news" %>
+
 <div class="report">
     <div class="inner bound clearfix">
         <article class="prose">
@@ -27,10 +27,9 @@
             </div><!--/ .marginal-tools -->
 
             <div class="prose-body">
-                <% if article.original_object.assets.present? %>
-                    <% present article do |article_presenter| %>
-                        <%= article_presenter.inline_asset %>
-                    <% end %>
+
+                <% if (article.original_object.asset_display == :photo_deemphasized) || (article.original_object.asset_display.blank? && !below_standard_ratio(width: article.asset.full.width, height: article.asset.full.height)) || (article.original_object.asset_display == :photo_emphasized && !below_standard_ratio(width: article.asset.full.width, height: article.asset.full.height)) %>
+                  <%= render_asset article, context:"news", display:"inline" %>
                 <% end %>
 
                 <%= article.body.html_safe %>
@@ -61,4 +60,3 @@
             -->
 
         </article>
-

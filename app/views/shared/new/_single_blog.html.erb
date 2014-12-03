@@ -5,9 +5,7 @@
     <%= render :partial => 'shared/new/masthead/blog_titling' %>
 <% end %>
 
-<% present article do |article_presenter| %>
-    <%= article_presenter.asset_display %>
-<% end %>
+<%= render_asset article.original_object, context:"news" %>
 <div class="report">
     <div class="inner bound clearfix">
         <article class="prose">
@@ -34,11 +32,7 @@
             </div><!--/ .marginal-tools -->
 
             <div class="prose-body">
-                <% if article.original_object.assets.present? %>
-                    <% present article do |article_presenter| %>
-                        <%= article_presenter.inline_asset %>
-                    <% end %>
-                <% end %>
+                <%= render_asset article, context:"news", display:"inline" %>
 
                 <%= article.body.html_safe %>
                 <% if article.original_object.joined_bylines[:contributing].present? %>
@@ -84,5 +78,3 @@
             -->
 
         </article>
-
-
