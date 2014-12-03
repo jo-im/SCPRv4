@@ -49,11 +49,15 @@ class ArticlePresenter < ApplicationPresenter
         class_options[:class] << " outbound" unless kpcc_link
         s += h.content_tag :li, class: class_options[:class] do
           h.link_to related_link.url do
-            l = h.content_tag :mark do
-              related_link.title
+            l = h.content_tag :h1 do
+              h.content_tag :span do
+                related_link.title
+              end
             end
             l += h.content_tag :p do
-              kpcc_link ? "Article" : "Source: #{domain}"
+              h.content_tag :mark do
+                kpcc_link ? "Article" : "Source: #{domain}"
+              end
             end
           end
         end
