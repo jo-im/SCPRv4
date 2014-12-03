@@ -356,10 +356,10 @@ SIDEBAR BOXLETS
       padding: 2px 0 2px 18px;
       @include segment-icons;
     }
-    @each $programHost in $programHosts {
-      &[data-host="#{$programHost}"] {
+    @each $featuredProgram in $featuredPrograms {
+      &[data-host="#{$featuredProgram}"] {
         @include overview-desktop-assumptions;
-        background-image: image-url("i/host-#{$programHost}.png");
+        background-image: image-url("i/host-#{$featuredProgram}.png");
       }
     }
 
@@ -403,8 +403,8 @@ SIDEBAR BOXLETS
 //-------------------------------------------------------------------------------------
   @media screen and (min-width: 871px) and (max-width: 1109px)  {
 
-    @each $programHost in $programHosts {
-      .exposition[data-host="#{$programHost}"] {
+    @each $featuredProgram in $featuredPrograms {
+      .exposition[data-host="#{$featuredProgram}"] {
         @include overview-narrow-assumptions;
       }
     }
@@ -419,8 +419,8 @@ SIDEBAR BOXLETS
 //-------------------------------------------------------------------------------------
   @media screen and (max-width: 500px) {
 
-    @each $programHost in $programHosts {
-      .exposition[data-host="#{$programHost}"] {
+    @each $featuredProgram in $featuredPrograms {
+      .exposition[data-host="#{$featuredProgram}"] {
         @include overview-narrow-assumptions;
       }
     }

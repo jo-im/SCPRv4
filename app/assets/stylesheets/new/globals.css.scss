@@ -30,17 +30,17 @@ $orange: #f17b21;
 	background-size: 20px 1022px;
 }
 
-$programHosts: ("rabe","mantle","horn","cohenmartinez");
+$featuredPrograms: ("offramp","airtalk","the-frame","take-two");
 
 @mixin overview-desktop-assumptions {
   margin-top: -15px;
   padding-top: 30px;
   min-height: 170px;
-  background: image-url("i/host-rabe.png") no-repeat right 15px bottom 0;
+  background: image-url("i/host-offramp.png") no-repeat right 15px bottom 0;
   background-size: 141px 170px;
   p,footer                      { padding-right: 160px; }
-  &[data-host="mantle"]         { background-size: 250px 170px; /* Larry's different */ }
-  &[data-host="cohenmartinez"]  {
+  &[data-host="airtalk"]         { background-size: 250px 170px; /* Larry's different */ }
+  &[data-host="take-two"]  {
     background-size: 240px 169px;
     background-position: right 3px bottom 0; /* A&A are different */
     p,footer                    { padding-right: 245px; }
@@ -63,8 +63,8 @@ $programHosts: ("rabe","mantle","horn","cohenmartinez");
   p                             { padding-right: 12px !important; }
   footer                        { padding-right: 120px !important; }
   background-size: 99px 119px;
-  &[data-host="mantle"]         { background-size: 150px 102px; padding-bottom: 60px; }
-  &[data-host="cohenmartinez"]  { background-size: 144px 101px; }
+  &[data-host="airtalk"]         { background-size: 150px 102px; padding-bottom: 60px; }
+  &[data-host="take-two"]  { background-size: 144px 101px; }
 }
 
 @mixin icon {

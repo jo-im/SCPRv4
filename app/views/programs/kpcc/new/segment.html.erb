@@ -50,7 +50,7 @@
 
         <aside class="overview">
           <header><h1>About <%= @program.title %></h1></header>
-          <div class="exposition" data-host="rabe"><!-- accepts: horn | rabe | cohenmartinez | mantle -->
+          <div class="exposition" data-host="<%= @program.slug %>"><!-- accepts: horn | rabe | cohenmartinez | mantle -->
             <p><%= @program.description %></p>
             <footer><%= @program.airtime %></footer>
           </div>
