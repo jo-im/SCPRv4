@@ -76,7 +76,11 @@
               <aside class="ancillary episode-contents">
                 <header>
                   More from this <%= article.original_object.episode.present? ? "episode" : "program" %> 
-                  <cite><a href="<%= article.original_object.episode.public_path %>"><!-- PERMALINK TO EPISODE GOES HERE --><%= @program.title %> for <%= article.original_object.episode.air_date %></a></cite>
+                  <cite>
+                    <a href="<%= article.original_object.episode.public_path %>">
+                      <%= @program.title %> for <%= article.original_object.episode.air_date.strftime("%B %d, %Y") %>
+                    </a>
+                  </cite>
                 </header>
                 <h1><%= link_to article.original_object.episode.headline, article.original_object.episode.public_path %></h1>
                 <nav>

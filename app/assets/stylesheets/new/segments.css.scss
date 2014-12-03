@@ -174,6 +174,7 @@ REPORT
       box-sizing: border-box;
       padding: 18px 0 0 13.458262350937%; // 79 / 587
       margin: 0 0 50px -13.458262350937%;
+      &:first-of-type   { margin-top: 3em; }
       &:last-child      { margin-bottom: 0; }
       & > header        { color: $orange; font: normal bold 0.8125em/1.1 $font-prox; }
       & > h1            { font: normal 300 1.75em/1.1 $font-freight; padding-top: 20px; color: #3a3a3a; }
