@@ -28,7 +28,7 @@
 
             <div class="prose-body">
 
-                <% if (article.original_object.asset_display == :photo_deemphasized) || (article.original_object.asset_display.blank? && !below_standard_ratio(width: article.asset.full.width, height: article.asset.full.height)) || (article.original_object.asset_display == :photo_emphasized && !below_standard_ratio(width: article.asset.full.width, height: article.asset.full.height)) %>
+                <% if should_inline_asset_for(article.original_object) %>
                   <%= render_asset article, context:"news", display:"inline" %>
                 <% end %>
 

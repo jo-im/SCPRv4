@@ -32,7 +32,9 @@
             </div><!--/ .marginal-tools -->
 
             <div class="prose-body">
-                <%= render_asset article, context:"news", display:"inline" %>
+                <% if should_inline_asset_for(article.original_object) %>
+                  <%= render_asset article, context:"news", display:"inline" %>
+                <% end %>
 
                 <%= article.body.html_safe %>
                 <% if article.original_object.joined_bylines[:contributing].present? %>
