@@ -98,10 +98,8 @@ scpr.Behaviors.Single = {
         //  ================================================
         //  Single: An article's first paragraph should be magical
         //  ------------------------------------------------
-            if(!$(".prologue").hasClass("austere")) {
-                if ($(".report .prose-body p").length) {
-                    $(".report .prose p:first").addClass("inaugural");
-                }
+            if(!$(".prologue").hasClass("austere") && $(".report .prose-body p").length) {
+                $(".report .prose-body p:first").addClass("inaugural");
             }
 
 
