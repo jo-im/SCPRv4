@@ -13,6 +13,8 @@ gem 'elasticsearch-rails'
 gem 'elasticsearch-model'
 gem 'patron'
 
+gem 'dalli'
+
 ## Outpost
 gem 'outpost-cms'
 gem 'outpost-publishing'
