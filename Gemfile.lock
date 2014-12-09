@@ -36,6 +36,9 @@ GEM
       thread_safe (~> 0.1)
       tzinfo (~> 0.3.37)
     addressable (2.3.6)
+    appsignal (0.11.0)
+      rack
+      thread_safe
     arel (4.0.2)
     asset_host_client (1.2.0)
       faraday (~> 0.8)
@@ -366,6 +369,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  appsignal
   asset_host_client (~> 1.2)
   audio_vision (~> 1.0)
   bcrypt-ruby (~> 3.1.0)

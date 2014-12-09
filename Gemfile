@@ -67,6 +67,7 @@ gem 'npr', '~> 2.0'
 gem 'asset_host_client', '~> 1.2'
 gem 'audio_vision', '~> 1.0'
 gem 'tinder'
+gem 'appsignal'
 
 ## Assets
 gem "eco", "~> 1.0"
