@@ -289,6 +289,8 @@ GEM
       rspec-mocks (~> 2.14.0)
     ruby-mp3info (0.8.4)
     ruby-prof (0.15.2)
+    rufus-scheduler (3.0.9)
+      tzinfo
     safe_yaml (1.0.3)
     sanitize (2.1.0)
       nokogiri (>= 1.4.4)
@@ -423,6 +425,7 @@ DEPENDENCIES
   rspec-rails (~> 2.14.0)
   ruby-mp3info (~> 0.8.2)
   ruby-prof
+  rufus-scheduler
   sanitize (~> 2.0)
   sass-rails (~> 4.0.0)
   secretary-rails

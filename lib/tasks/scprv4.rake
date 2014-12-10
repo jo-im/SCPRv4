@@ -43,9 +43,17 @@ namespace :scprv4 do
   desc "Index all articles to Elasticsearch"
   task :index_all_articles => [:environment] do
     log "Indexing all articles to Elasticsearch..."
-    Article._index_all_articles()
-    puts "Finished."
+    Article._index_all_articles
   end
+
+  desc "Index all models to Elasticsearch"
+  task :index_all_models => [:environment] do
+    log "Indexing all outpost models to Elasticsearch..."
+    Outpost.config.registered_models.map(&:safe_constantize).compact.each { |m| m.try(:import) }
+  end
+
+  desc "Index articles and models"
+  task :index_all => [:index_all_articles,:index_all_models]
 
   #----------
 
@@ -55,23 +63,11 @@ namespace :scprv4 do
     perform_or_enqueue(Job::SyncRemoteArticles)
   end
 
-
   desc "Sync external programs"
   task :sync_external_programs => [:environment] do
     log "Syncing remote programs..."
     perform_or_enqueue(Job::SyncExternalPrograms)
   end
-
-
-
-  desc "Clear events cache"
-  task :clear_events => [ :environment ] do
-    log "Clearing Event Cache..."
-    Rails.cache.expire_obj(Event.new_obj_key)
-    puts "Finished."
-  end
-
-
 
   desc "Fire pending content alarms"
   task :fire_content_alarms => [:environment] do
@@ -148,29 +144,8 @@ namespace :scprv4 do
 
     desc "Cache twitter feeds"
     task :twitter => [:environment] do
-      feeds = [
-        [
-          "KPCCForum",
-          "/shared/widgets/cached/tweets",
-          "twitter:KPCCForum"
-        ],
-        [
-          "kpcc",
-          "/shared/widgets/cached/sidebar_tweets",
-          "twitter:kpcc",
-          { count: 4 }
-        ]
-      ]
-
-      NewRelic.with_manual_agent do
-        feeds.each do |feed|
-          log "Caching #{feed.first} twitter feed..."
-          perform_or_enqueue(Job::TwitterCache, *feed)
-        end
-      end
-
-      log "Caching Vertical twitter feeds..."
-      perform_or_enqueue(Job::VerticalsTwitterCache)
+      log "Caching twitter feeds..."
+      perform_or_enqueue(Job::TwitterCache)
     end
 
 

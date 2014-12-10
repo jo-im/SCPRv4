@@ -5,6 +5,20 @@ module Job
   class TwitterCache < Base
     @priority = :low
 
+    FEEDS = [
+      {
+        screenname: "KPCCForum",
+        partial:    "/shared/widgets/cached/tweets",
+        cache_key:  "twitter:KPCCForum",
+      },
+      {
+        screenname: "kpcc",
+        partial:    "/shared/widgets/cached/sidebar_tweets",
+        cache_key:  "twitter:kpcc",
+        options:    { count: 4 }
+      }
+    ]
+
     DEFAULTS = {
       :count            => 6,
       :trim_user        => false,
@@ -14,25 +28,50 @@ module Job
     }
 
     class << self
-      def perform(screenname, partial, key, options={})
-        options.symbolize_keys!
-        options = options.reverse_merge(DEFAULTS)
+      def perform
+        # -- Process normal accounts -- #
 
-        job = new(screenname)
-        tweets = job.fetch(options)
+        FEEDS.each do |f|
+          options = (f[:options]||{}).reverse_merge(DEFAULTS)
+          job = new(f[:screenname])
 
-        if tweets && tweets.present?
-          self.cache(tweets, partial, key)
+          puts "Calling fetch with #{ options }"
+          tweets = job.fetch(options)
+
+          if tweets && tweets.present?
+            self.cache(tweets,f[:partial],f[:cache_key])
+          end
+        end
+
+        # -- Vertical Reporter Accounts -- #
+
+        Vertical.all.each do |vertical|
+          vtweets = []
+
+          vertical.reporters.select { |b| b.twitter_handle.present? }.each do |bio|
+            job = new(bio.twitter_handle)
+            vtweets += job.fetch||[]
+          end
+
+          vtweets.sort! { |a,b| b.created_at <=> a.created_at }
+
+          self.cache(
+            vtweets.first(7),
+            "/shared/widgets/cached/vertical_tweets",
+            "verticals/#{vertical.slug}/twitter_feed"
+          )
+
+          vertical.touch()
         end
       end
     end
 
+    #----------
 
     def initialize(screen_name)
       @tweeter      = Tweeter.new("kpccweb")
       @screen_name  = screen_name
     end
-
 
     def fetch(options={})
       twitter_options = options.dup
@@ -50,18 +89,18 @@ module Job
         twitter_options[:count] = twitter_options[:count] * 10
       end
 
-      begin
+      #begin
         self.log  "Fetching tweets for #{@screen_name}..."
 
         # We only want to return the requested count here, even though we
         # may actually be fetching way more.
         tweets = @tweeter.user_timeline(@screen_name, twitter_options)
         options[:count] ? tweets.first(options[:count]) : tweets
-      rescue => e
-        warn "Error caught in TwitterCache#fetch: #{e}"
-        self.log "Error: \n #{e}"
-        false
-      end
+      #rescue => e
+      #  warn "Error caught in TwitterCache#fetch: #{e}"
+      #  self.log "Error: \n #{e}"
+      #  false
+      #end
     end
 
     add_transaction_tracer :fetch, category: :task

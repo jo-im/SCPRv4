@@ -48,6 +48,7 @@ gem "ice_cube", "~> 0.11.0"
 gem "recaptcha", require: "recaptcha/rails"
 gem "yajl-ruby" # Faster JSON parsing
 gem "rack-utf8_sanitizer"
+gem "rufus-scheduler"
 
 
 ## HTTP
