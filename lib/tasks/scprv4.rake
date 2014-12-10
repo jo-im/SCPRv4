@@ -40,10 +40,10 @@ namespace :scprv4 do
 
   #----------
 
-  desc "Place a full sphinx index into the queue"
-  task :enqueue_index => [:environment] do
-    log "Enqueueing sphinx index into Resque..."
-    Indexer.enqueue
+  desc "Index all articles to Elasticsearch"
+  task :index_all_articles => [:environment] do
+    log "Indexing all articles to Elasticsearch..."
+    Article._index_all_articles()
     puts "Finished."
   end
 
