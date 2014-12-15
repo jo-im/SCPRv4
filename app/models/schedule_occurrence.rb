@@ -68,7 +68,7 @@ class ScheduleOccurrence < ActiveRecord::Base
     def block(date, length, collapse=false)
       occurrences = self.includes(:program).between(date, date + length)
 
-      occurrences.reject do |occurrence|
+      occurrences.reject! do |occurrence|
         occurrences.any? do |o|
           o != occurrence && o.is_distinct? &&
           o.starts_at <= occurrence.starts_at &&
