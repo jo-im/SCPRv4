@@ -16,7 +16,10 @@ class HomeController < ApplicationController
     @featured_comment = FeaturedComment.published.includes(:content).first
 
     # Load a collapsed schedule for the next 8 hours
-    @schedule = ScheduleOccurrence.block Time.zone.now, 8.hours, true
+    @schedule = ScheduleOccurrence.block(
+      (Time.zone.now - 8.hours), 16.hours, true
+    ).reject { |o| o.ends_at < Time.zone.now }
+
     @schedule_current = @schedule[0]
     @schedule_next    = @schedule[1]
   end
