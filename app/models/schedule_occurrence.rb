@@ -79,7 +79,7 @@ class ScheduleOccurrence < ActiveRecord::Base
       if collapse
         current = nil
         occurrences = occurrences.collect do |o|
-          if current && current.program == o.program
+          if current && o.program && current.program == o.program
             # add this to current
             current.ends_at = o.ends_at
 

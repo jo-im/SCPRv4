@@ -20,8 +20,16 @@ class HomeController < ApplicationController
       (Time.zone.now - 8.hours), 16.hours, true
     ).reject { |o| o.ends_at < Time.zone.now }
 
-    @schedule_current = @schedule[0]
-    @schedule_next    = @schedule[1]
+    if !@schedule.any?
+      @schedule_current = nil
+      @schedule_next    = nil
+    elsif @schedule[0].starts_at < Time.zone.now
+      @schedule_current = @schedule[0]
+      @schedule_next    = @schedule[1]
+    else
+      @schedule_current = nil
+      @schedule_next    = @schedule[0]
+    end
   end
 
   #----------
