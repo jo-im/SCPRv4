@@ -1,31 +1,62 @@
 <% add_to_page_title @episode.headline %>
+<% content_for :body_class, 'interior segment' %>
 
-<header class="episode">
-  <div class="row-fluid">
-    <div class="span14">
-      <h4><%= @episode.headline %></h4>
-      <p class="byline"><%= timestamp(@episode.air_date) %></p>
-    </div>
-    <div class="span10">
-      <% if audio = @episode.audio.first %>
-        <div class="right">
-          <aside class="story-audio inline">
-              <a href="<%= audio.url %>" class="play-btn audio-toggler" title="<%= h @episode.headline %>" data-duration="<%= audio.duration %>"></a>
-              <%= link_to "Listen to this episode", audio.url, :class => "audio-toggler play-text",  "data-duration" => audio.duration %>
-              <a href="<%= audio.url %>" class="download">Download</a>
-          </aside>
-        </div>
-      <% end %>
-    </div>
-  </div>
-</header>
-
-<section class="show-segments episode">
-<%= any_to_list? @segments, title: "Segments" do %>
-  <%= cache ["segment-teasers", @segments.to_a] do %>
-    <%= render 'programs/kpcc/segment_teaser', segments: @segments %>
-  <% end %>
+<% content_for :titling do %>
+    <%= render :partial => 'shared/new/masthead/program_content_titling' %>
 <% end %>
-</section>
 
-<%= render "programs/shared/archive_select", program: @program %>
+<div class="report">
+    <div class="inner bound clearfix">
+
+      <article class="prose">
+        
+        <!-- Episode Summary -->
+        <header>
+          <h1><%= @episode.headline %></h1>
+          <p><%= @program.title %> for <%= timestamp(@episode.air_date) %></p>
+          <%= @episode.teaser.html_safe %>
+        </header>
+
+        <% if audio = @episode.audio.first %>
+          <%= content_widget "new/primary_audio", @episode %>
+        <% end %>
+
+        <!-- Rundown of Segments -->
+        <section class="show-segments">
+          <%= any_to_list? @segments, title: "Segments" do %>
+            <%= cache ["segment-teasers", @segments.to_a] do %>
+              <%= render 'programs/kpcc/segment_teaser', segments: @segments %>
+            <% end %>
+          <% end %>
+        </section>
+
+      </article>
+
+<% cache ["show", "program-supportive", "v1", @episode] do %>
+    <%= render "programs/kpcc/program_supportive" %>
+
+  </div>
+</div><!--/ .report -->
+
+
+<!-- ///////////////////////////////////////////////////////////// -->
+<!-- ////////////////  Post-Episode Bits GO HERE  //////////////// -->
+<!-- ///////////////////////////////////////////////////////////// -->
+
+
+<!-- AdHost Slot: Membership Appeals -->
+<div id="article-membership-appeal"></div>
+
+<div class="placard-waystation"></div>
+<% end %>
+
+<% cache ["show", "featured-programs", "v16", @featured_programs] do %>
+  <%= render 'programs/kpcc/featured_programs' %>
+<% end %>
+
+<% if @popular_articles %>
+  <%= render 'shared/new/popular_articles',
+      articles: @popular_articles.first(4),
+      header: 'Popular Now on KPCC' %>
+<% end %>
+

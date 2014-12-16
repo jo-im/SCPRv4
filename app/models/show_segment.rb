@@ -80,10 +80,6 @@ class ShowSegment < ActiveRecord::Base
     end
   end
 
-  def recent_show_segments
-    self.class.published.where("show_id = ? and id <> ?", self.show_id, self.id).first(3)
-  end
-
 
   def byline_extras
     [self.show.title]

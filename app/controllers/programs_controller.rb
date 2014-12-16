@@ -99,8 +99,10 @@ class ProgramsController < ApplicationController
       @episode    = @program.episodes.find(params[:id])
       @segments   = @episode.segments.published
 
+      @featured_programs = KpccProgram.where.not(id: @program.id, is_featured: false).first(4)
+
       if @program.is_segmented?
-        render 'programs/kpcc/episode' and return
+        render 'programs/kpcc/episode', layout: 'new/ronin' and return
       else
         render 'programs/kpcc/old/episode_standalone'
       end
