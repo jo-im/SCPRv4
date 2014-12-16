@@ -32,10 +32,10 @@ class ProgramsController < ApplicationController
           end
 
           @episodes = @episodes.page(params[:page]).per(6)
-          render 'programs/kpcc/show'
+          render 'programs/kpcc/old/show'
         end
 
-        format.xml { render 'programs/kpcc/show' }
+        format.xml { render 'programs/kpcc/old/show' }
       end
 
       return
@@ -90,7 +90,7 @@ class ProgramsController < ApplicationController
       redirect_to @segment.public_path and return
     end
 
-    render 'programs/kpcc/new/segment' and return
+    render 'programs/kpcc/segment' and return
   end
 
 
@@ -102,7 +102,7 @@ class ProgramsController < ApplicationController
       if @program.is_segmented?
         render 'programs/kpcc/episode' and return
       else
-        render 'programs/kpcc/episode_standalone'
+        render 'programs/kpcc/old/episode_standalone'
       end
     end
 
@@ -132,10 +132,10 @@ class ProgramsController < ApplicationController
           @segments = @segments.page(params[:page]).per(10)
           @episodes = @episodes.page(params[:page]).per(6)
 
-          render 'programs/kpcc/featured_show'
+          render 'programs/kpcc/old/featured_show'
         end
 
-        format.xml { render 'programs/kpcc/show' }
+        format.xml { render 'programs/kpcc/old/show' }
       end
 
       return
@@ -193,7 +193,7 @@ class ProgramsController < ApplicationController
   end
 
   def handle_program_template
-    template = "programs/kpcc/new/#{@program.slug}"
+    template = "programs/kpcc/#{@program.slug}"
 
     if template_exists?(template)
       render(
@@ -201,7 +201,7 @@ class ProgramsController < ApplicationController
         :template => template
       )
     else
-      render 'programs/kpcc/show'
+      render 'programs/kpcc/old/show'
     end
 
   end
