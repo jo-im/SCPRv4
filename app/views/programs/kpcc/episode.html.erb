@@ -25,7 +25,26 @@
         <section class="show-segments">
           <%= any_to_list? @segments, title: "Segments" do %>
             <%= cache ["segment-teasers", @segments.to_a] do %>
-              <%= render 'programs/kpcc/segment_teaser', segments: @segments %>
+              <% segments.each do |segment| %>
+              <div class="teaser">
+                <% if segment.assets.present? %>
+                    <%= render_asset segment, display: 'small' %>
+                    <%= timestamp(segment.published_at) %>
+                <% else %>
+                    <!-- Do something graceful if we don't have an image asset on a segment -->
+                <% end %>
+
+                <h2><%= link_to segment.short_headline, segment.public_path  %></h2>
+                <p class="byline"><%= render_byline segment %></p>
+                <%= segment.teaser.html_safe %>
+
+                <aside class="decorator">
+                  <%= content_widget "primary_audio", segment, context: segment.show.slug %>
+                  <%= comment_count_for segment %>
+                </aside>
+              </div>
+              <% end %>
+
             <% end %>
           <% end %>
         </section>
