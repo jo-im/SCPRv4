@@ -288,7 +288,7 @@ describe ProgramsController do
 
       it "renders the correct kpcc template" do
         get :featured_program, show: @program.slug
-        response.should render_template "programs/kpcc/new/#{@program.slug}"
+        response.should render_template "programs/kpcc/#{@program.slug}"
       end
     end
   end

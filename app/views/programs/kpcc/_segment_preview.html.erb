@@ -1,0 +1,61 @@
+<% article = @segment.to_article %>
+<% content_for :body_class, 'interior single segment' %>
+
+<div class="appellation bound">
+  <h1><%= article.title %></h1>
+  <p>by <%= render_byline article.original_object %>. <%= smart_date_js article.public_datetime %>.</p>
+</div><!--/ .appellation -->
+
+<div class="report">
+    <div class="inner bound clearfix">
+
+
+        <article class="prose">
+
+            <%= render_asset article, context:"segments" %>
+
+            <%= content_widget "new/primary_audio", article %>
+
+
+            <%= render 'shared/new/social_share', article: article.to_article, cssClass: "pinned" %>
+
+
+            <div class="prose-columns clearfix">
+
+              <div class="primary">
+
+              <%= content_widget "new/extra_audio", article %>
+
+
+              <div class="prose-body">
+                  <%= article.body.html_safe %>
+                  <% if article.original_object.joined_bylines[:contributing].present? %>
+                      <footer class="contributor">
+                          <p><%= render_contributing_byline article.original_object %></p>
+                      </footer>
+                  <% end %>
+              </div><!--/ .prose-body -->
+
+
+              <% present article.to_article do |article_presenter| %>
+                  <%= article_presenter.related_links %>
+              <% end %>
+
+            </div><!--/ .primary -->
+
+
+
+            <div class="secondary">
+
+              <%= render 'shared/new/social_share', article: article.to_article %>
+
+              <div class="buddy-pairing clearfix">
+                <%= content_widget 'new/comment_count', article %>
+              </div>
+
+            </div><!--/ .secondary -->
+
+
+            </div><!--/ .prose-columns -->
+
+        </article>

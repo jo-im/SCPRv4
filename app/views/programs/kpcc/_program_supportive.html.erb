@@ -1,0 +1,54 @@
+<section class="supportive">
+    <aside class="placard">
+        <div class="ad widget">
+            <%= render "shared/ads/dfp", ad_key: 'slot_a' %>
+        </div>
+    </aside>
+
+    <aside class="placard">
+        <div class="ad widget">
+            <%= render "shared/ads/dfp", ad_key: 'slot_b' %>
+            <p class="appeal"><a href="/support/underwriting/">Become a KPCC Sponsor</a></p>
+        </div>
+    </aside>
+
+
+
+    <aside class="see-more">
+        <header><h1>Recently on <%= @program.title %></h1></header>
+        <nav>
+          <% @segment.recent_show_segments.each do |segment| %>
+              <% show_segment = segment.to_article %>
+              <article>
+                  <%= link_to show_segment.public_path, class: "track-event", data: {"ga-category" => "Article", "ga-action" => "Clickthrough", "ga-label" => "More Sidebar Show Segment"} do %>
+                      <%= smart_date_js show_segment.public_datetime %>
+                      <h1><%= show_segment.short_title %></h1>
+                      <b><%= image_tag show_segment.asset.lsquare.url, alt: show_segment.asset.caption %></b>
+                  <% end %>
+              </article>
+          <% end %>
+        </nav>
+    </aside>
+
+
+
+    <aside class="overview">
+      <header><h1>About <%= @program.title %></h1></header>
+      <div class="exposition" data-host="<%= @program.slug %>"><!-- accepts: horn | rabe | cohenmartinez | mantle -->
+        <p><%= @program.description %></p>
+        <footer><%= @program.airtime %></footer>
+      </div>
+      <% present @program, ProgramPresenter do |p| %>
+        <div class="externals">
+          <ul>
+            <%= p.facebook_link %>
+            <%= p.twitter_link %>
+            <%= p.podcast_link %>
+            <%= p.rss_link %>
+            <%= p.email_link %>
+          </ul>
+        </div>
+      <% end %>
+    </aside>
+
+</section>
