@@ -15,12 +15,20 @@ class HomeController < ApplicationController
     @homepage         = Homepage.published.first
     @featured_comment = FeaturedComment.published.includes(:content).first
 
-    @schedule_current = ScheduleOccurrence.on_at(Time.zone.now)
+    # Load a collapsed schedule for the next 8 hours
+    @schedule = ScheduleOccurrence.block(
+      (Time.zone.now - 8.hours), 16.hours, true
+    ).reject { |o| o.ends_at < Time.zone.now }
 
-    if @schedule_current
-      @schedule_next = @schedule_current.following_occurrence
+    if !@schedule.any?
+      @schedule_current = nil
+      @schedule_next    = nil
+    elsif @schedule[0].starts_at < Time.zone.now
+      @schedule_current = @schedule[0]
+      @schedule_next    = @schedule[1]
     else
-      @schedule_next = ScheduleOccurrence.after(Time.zone.now).first
+      @schedule_current = nil
+      @schedule_next    = @schedule[0]
     end
   end
 

@@ -3,7 +3,8 @@ class ListenController < ApplicationController
 
   def index
     # grab eight hours worth of schedule, starting now
-    @schedule = ScheduleOccurrence.block(Time.zone.now, 8.hours)
+    # we don't need start time yet, so no need to go backward
+    @schedule = ScheduleOccurrence.block(Time.zone.now, 8.hours, true)
 
     # grab our homepage stories
     @homepage = Homepage.published.first

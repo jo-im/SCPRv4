@@ -11,6 +11,10 @@
     <span style="font-weight:bold;margin: 0 10px;display:inline-block;">- to -</span>
     <%= f.input_field :end_time, type: "time", class: "thin" %>
   <% end %>
+
+  <%= f.input :soft_start_offset, required: false, hint: "Number of seconds after start time that should be used as an offset for playback start." do %>
+    <%= f.input_field :soft_start_offset, type: "number", class: "thin" %>
+  <% end %>
 <% end %>
 
 <%= form_block "Program" do %>

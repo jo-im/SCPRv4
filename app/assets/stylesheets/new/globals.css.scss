@@ -851,13 +851,25 @@ $featuredPrograms: ("offramp","airtalk","the-frame","take-two");
 		.tier {
 		    margin-bottom: 25px;
 		    &.gold li       { font-size: 1.5em; /* 24 / 16 */ }
+        &.gold a {
+          box-shadow: inset 0 -3px 0 black, inset 0 -4px 0 rgba(255,255,255,0.25);
+          text-shadow: 3px 0 0 black, -3px 0 0 black;
+          &:hover { box-shadow: inset 0 -3px 0 black, inset 0 -4px 0 rgba(255,255,255,0.7); }
+    	  }
 		    &.silver h1     { border-top-color: #227794; color: #30a7cf; }
 		    &.silver li     { font-size: 1.125em; /* 18 / 16 */ background-position: 0 0.25em; background-image: image-url("i/ephemera-donut-blue.png"); }
 		    &.bronze li     { font-size: 0.9375em; /* 15 / 16 */ color: #a8a8a8; background-image: image-url("i/ephemera-donut-gray.png"); background-position: 0 0.3em; background-size: 7px 7px; padding-left: 20px; }
 		    &.bronze        { border-top: 1px solid #484848; padding-top: 25px; }
+        &.silver a,
+		    &.bronze a {
+          box-shadow: inset 0 -2px 0 black, inset 0 -3px 0 rgba(255,255,255,0.25);
+          text-shadow: 3px 0 0 black, -3px 0 0 black;
+          &:hover { box-shadow: inset 0 -2px 0 black, inset 0 -3px 0 rgba(255,255,255,0.7); }		      
+	      }
 		    li:first-child  { padding-left: 0; background: none; }
 		    li:last-child   { margin-right: 0; }
 		}
+
 
 		//	------------------------------------------------------------------------------------------------
 			@media screen and (max-width: 780px) {

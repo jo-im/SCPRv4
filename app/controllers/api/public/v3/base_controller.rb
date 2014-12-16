@@ -7,12 +7,15 @@ module Api::Public::V3
 
     before_filter :set_access_control_headers
 
-    rescue_from StandardError, with: ->(e) {
-      render_internal_error(error: e,
-        message: "An internal server error occurred (#{e.class}). " \
-          "Please contact the API administrator.",
-      )
-    }
+    # FIXME: This is crappy, but better than silently catching the error all the time
+    if Rails.env != "development"
+      rescue_from StandardError, with: ->(e) {
+        render_internal_error(error: e,
+          message: "An internal server error occurred (#{e.class}). " \
+            "Please contact the API administrator.",
+        )
+      }
+    end
 
     #---------------------------
 

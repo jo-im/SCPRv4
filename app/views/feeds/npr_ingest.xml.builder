@@ -1,4 +1,3 @@
-# This feed is deprecated. Delete as soon as NPR begins using the `npr_ingest` feed
 xml.rss({"xmlns:nprml"=>"http://api.npr.org/nprml"}) do
   xml.channel do
     @segments.each do |segment|

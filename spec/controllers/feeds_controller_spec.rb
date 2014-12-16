@@ -25,24 +25,28 @@ describe FeedsController do
     end
   end
 
-  describe "GET /take_two" do
+  describe "GET /npr_ingest" do
     before :each do
       take_two = create :kpcc_program, is_segmented: false, slug: 'take-two'
-      episode = create :show_episode, :published, show: take_two
-      segment = create_list :show_rundown, 2, episode: episode
+      take_two_episode = create :show_episode, :published, show: take_two
+      take_two_segment = create_list :show_rundown, 2, episode: take_two_episode
+
+      the_frame = create :kpcc_program, is_segmented: false, slug: 'the-frame'
+      the_frame_episode = create :show_episode, :published, show: the_frame
+      the_frame_segment = create_list :show_rundown, 2, episode: the_frame_episode
     end
     it "doesn't render a layout" do
-      get :take_two
+      get :npr_ingest
       response.should render_template(layout: false)
     end
 
     it "adds XML content-type to header" do
-      get :take_two
+      get :npr_ingest
       response.header["Content-Type"].should eq "text/xml"
     end
 
-    it "selects the first two segments from the most recent Take Two episode" do
-      get :take_two
+    it "populates segments" do
+      get :npr_ingest
       assigns(:segments).should_not be_blank
     end
   end
