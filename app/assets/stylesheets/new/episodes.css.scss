@@ -2,14 +2,26 @@
 @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-
+------------------------------------------------------------------------
 SINGLE EPISODE
-
+------------------------------------------------------------------------
+Started by JPW on 16 December 2014.
+------------------------------------------------------------------------
 @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ */
 body.episode {
   
+
+
+
+  /*
+  ########################################################################
+  ########################################################################
+  STRAIGHTFORWARD EXCEPTIONS FOR "EPISODE"
+  ########################################################################
+  ######################################################################## */
+  .appellation        { margin-bottom: 14px; } // As opposed to 55px
 
 
 
@@ -23,16 +35,29 @@ body.episode {
     font-size: 1.06666666666667em; // Reset ourselves back to "16"
     font-family: $font-prox;
     margin-bottom: 40px;
+    h1,.teaser        { box-sizing: border-box; }
     h1 {
       float: left;
       width: 22.393822393822%; // 190 (-16 for clearance) == 174, which then gets divided by 777
       color: black;
       font-weight: 700;
-      line-height: 0.9;
+      line-height: 1.1;
+      font-size: 0.9375em; // 15
+      letter-spacing: -0.03em;
+      padding-top: 11px;
     }
+    span              { font-variant: small-caps; }
+    time              { display: block; }
     .teaser {
       float: right;
       width: 75.546975546976%;
+      box-shadow: inset 1px 0 0 #b9e2f0; // Let's assume that TEASER will always be at-least-as-tall as DATE.
+      font-size: 0.875em;
+      line-height: 1.45;
+      padding: 8px 0;
+      min-height: 3em;
+      p               { margin-left: 5.765765765766%; }
+      p:last-of-type  { margin-bottom: 0; }
     }
   }//.episode-synopsis
 
