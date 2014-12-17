@@ -16,21 +16,21 @@ body.episode {
 
 
   /*
-  ########################################################################
-  ########################################################################
+  ####################################################################################
+  ####################################################################################
   STRAIGHTFORWARD EXCEPTIONS FOR "EPISODE"
-  ########################################################################
-  ######################################################################## */
-  .appellation        { margin-bottom: 14px; } // As opposed to 55px
-
+  ####################################################################################
+  #################################################################################### */
+  .appellation        { margin-bottom: 14px; }    // As opposed to 55px
+  .report .prose      { background: none; }       // As opposed to a thin gray vertical hairline
 
 
   /*
-  ########################################################################
-  ########################################################################
+  ####################################################################################
+  ####################################################################################
   EPISODE-SYNOPSIS
-  ########################################################################
-  ######################################################################## */
+  ####################################################################################
+  #################################################################################### */
   .episode-synopsis {
     font-size: 1.06666666666667em; // Reset ourselves back to "16"
     font-family: $font-prox;
@@ -67,14 +67,72 @@ body.episode {
 
 
   /*
-  ########################################################################
-  ########################################################################
-  .REPORT .PROSE (This will be piggybacking on what's come before.)
-  ########################################################################
-  ######################################################################## */
-  .report .prose {
-    background: none;
-  }
+  ####################################################################################
+  ####################################################################################
+  EPISODE-ENUMERATION
+  (Because too much other stuff in this site could be called "episode-segments".)
+  ####################################################################################
+  #################################################################################### */
+  .episode-enumeration {
+    font-size: 1.06666666666667em; // Resetting ourselves back to 16
+    & > h1    { color: #9b9b9b; font: normal 300 1.875em/1 $font-freight; margin-bottom: 50px; }
+    
+    article {
+      margin-bottom: 50px;
+      position: relative;
+      font-family: $font-prox;
+      line-height: 1;
+      .asset              { width: 24.453024453024%; float: left; z-index: 1; }
+      .ratio              { position: relative; z-index: 2; }
+      .ratio .img-contain { background: white; }
+      .order {
+        display: block;
+        text-align: center;
+        background: white;
+        padding-top: 7px;
+        width: 35px;
+        height: 35px;
+        box-sizing: border-box;
+        font-size: 1.375em;
+        color: $blue;
+        line-height: 1;
+        border-radius: 20px;
+        font-weight: 300;
+        position: absolute;
+        top: 17px;
+        z-index: 3;
+        left: -17px;
+      }
+      .exposition     { width: 71.428571428571%; float: right; }
+      .author         { color: #b2b2b2; font-size: 0.75em; margin-bottom: 10px; font-weight: 700; }
+      h1              { color: black; font: normal 1.4375em/1.1 $font-freight; border-bottom: 1px solid #91d2e8; padding-bottom: 10px; }
+      .precis         { position: relative; box-sizing: border-box; min-height: 77px; }
+      .precis p       { margin-right: 143px; padding-top: 15px; }
+      .meta {
+        background: salmon;
+        position: absolute;
+        top: 0;
+        right: 0;
+        width: 127px;
+        height: 77px;
+      }
+      .legacy {
+        position: absolute;
+        background: pink;
+        left: 0;
+        top: 132px;               // Okay, so because .asset can be a variable (proportional) height, this won't *always* look right. But it's good enough...
+        width: 24.453024453024%;  // ...and that'll at least keep its *horizontal* alignment in check.
+      }
+      
+    }// article
+  }// .episode-enumeration
 
-  
+
+
+
+
+
+
+
+
 }//body.episode
