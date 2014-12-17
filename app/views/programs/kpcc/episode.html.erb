@@ -1,21 +1,23 @@
 <% add_to_page_title @episode.headline %>
-<% content_for :body_class, 'interior segment' %>
+<% content_for :body_class, 'interior segment episode' %>
 
 <% content_for :titling do %>
     <%= render :partial => 'shared/new/masthead/program_content_titling' %>
 <% end %>
+
+<div class="appellation bound">
+  <h1><%= @episode.headline %></h1>
+</div>
 
 <div class="report">
     <div class="inner bound clearfix">
 
       <article class="prose">
         
-        <!-- Episode Summary -->
-        <header>
-          <h1><%= @episode.headline %></h1>
-          <p><%= @program.title %> for <%= timestamp(@episode.air_date) %></p>
-          <%= @episode.teaser.html_safe %>
-        </header>
+        <section class="episode-synopsis clearfix">
+          <h1><a href="######-THIS-SHOULD-BE-A-LINK-TO-THE-SHOW'S-LANDING-PAGE-######"><%= @program.title %></a> <span>for</span> <%= timestamp(@episode.air_date) %></h1>
+          <div class="teaser"><p><%= @episode.teaser.html_safe %></p></div>
+        </section>
 
         <% if audio = @episode.audio.first %>
           <%= content_widget "new/primary_audio", @episode %>
