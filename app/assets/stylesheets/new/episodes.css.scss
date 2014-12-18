@@ -104,10 +104,10 @@ body.episode {
         left: -17px;
       }
       .exposition     { width: 71.428571428571%; float: right; }
-      .author         { color: #b2b2b2; font-size: 0.75em; margin-bottom: 10px; font-weight: 700; }
-      h1              { color: black; font: normal 1.4375em/1.1 $font-freight; border-bottom: 1px solid #91d2e8; padding-bottom: 10px; }
+      .author         { display: block; color: #b2b2b2; font-size: 0.75em; margin-bottom: 4px; font-weight: 700; }
+      h1              { color: black; font: normal 1.4375em/1.15 $font-freight; border-bottom: 1px solid #91d2e8; padding-bottom: 11px; }
       .precis         { position: relative; box-sizing: border-box; min-height: 77px; }
-      .precis p       { margin-right: 143px; padding-top: 15px; }
+      .precis p       { margin-right: 143px; padding-top: 9px; font-size: 0.875em; line-height: 1.35; }
       .meta {
         background: salmon;
         position: absolute;
@@ -115,13 +115,42 @@ body.episode {
         right: 0;
         width: 127px;
         height: 77px;
+        li {
+          display: block;
+          width: 46.456692913386%;
+          text-align: center;
+          font-size: 0.75em;
+          color: #76c4de;
+          font-weight: bold;
+          height: 77px;
+          box-sizing: border-box;
+          background: yellow;
+          position: absolute;
+          left: 0;
+          top: 0;
+          margin: 0;
+          line-height: 0.9;
+          list-style: none;
+          padding: 0;
+          &:nth-of-type(2)    { left: auto; right: 0; }
+        }
       }
       .legacy {
         position: absolute;
-        background: pink;
+        background: pink image-url("i/calendar.png") no-repeat;
+        background-size: 13px 12px;
+        box-sizing: border-box;
+        padding: 1px 0 0 18px;
+        letter-spacing: -0.02em;
+        font-size: 0.625em;
+        font-weight: 700;
+        color: $blue;
+        text-transform: lowercase;
         left: 0;
         top: 132px;               // Okay, so because .asset can be a variable (proportional) height, this won't *always* look right. But it's good enough...
         width: 24.453024453024%;  // ...and that'll at least keep its *horizontal* alignment in check.
+        min-height: 12px;
+        time    { color: #9d9d9d; white-space: nowrap; }
       }
       
     }// article
