@@ -33,8 +33,8 @@ describe HomeController do
     context "with a current schedule item" do
       let(:schedule_current) {
         create :schedule_occurrence,
-          :starts_at => 1.hour.ago,
-          :ends_at   => 1.hour.from_now
+          :starts_at => Time.zone.now - 1.hour,
+          :ends_at   => Time.zone.now + 1.hour
       }
 
       it "gets the current schedule item" do
@@ -46,7 +46,7 @@ describe HomeController do
       it "gets the following schedule item" do
         schedule_next = create :schedule_occurrence,
           :starts_at => schedule_current.ends_at,
-          :ends_at   => 4.hours.from_now
+          :ends_at   => Time.zone.now + 4.hours
 
         get :index
         assigns(:schedule_next).should eq schedule_next
