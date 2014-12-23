@@ -12,6 +12,9 @@ Scprv4::Application.configure do
   config.assets.digest        = true
   config.assets.compile       = false
 
+  config.assets.js_compressor  = :uglifier
+  config.assets.css_compressor = :sass
+
   # Specifies the header that your server uses for sending files
   config.action_dispatch.x_sendfile_header = 'X-Accel-Redirect' # for nginx
 
