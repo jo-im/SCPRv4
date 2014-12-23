@@ -46,6 +46,6 @@ class ListenController < ApplicationController
   private
 
   def require_pledge_token
-    redirect_to '/pledge-free/effu' unless params.has_key?(:pledgeToken) || cookies[:member_session].present?
+    redirect_to '/pledge-free/error' unless params.has_key?(:pledgeToken) || cookies[:member_session].present?
   end
 end

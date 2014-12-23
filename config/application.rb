@@ -25,8 +25,6 @@ module Scprv4
       "new/ie-lt9.css", # For ie < 9, separate include
       "*.eot", "*.ttf", "*.woff" # Font files
     ]
-    config.assets.js_compressor  = :uglifier
-    config.assets.css_compressor = :sass
 
     config.time_zone = 'Pacific Time (US & Canada)'
     config.active_record.default_timezone = :local
