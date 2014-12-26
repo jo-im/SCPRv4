@@ -1,4 +1,13 @@
 GIT
+  remote: git://github.com/SCPR/resque-pool.git
+  revision: dc5523cbc452c8ebc5d117e90a01f01c6165db3f
+  specs:
+    resque-pool (0.4.0.rc1)
+      rake
+      resque (~> 1.22)
+      trollop (~> 1.16)
+
+GIT
   remote: git://github.com/sheerun/parse-ruby-client.git
   revision: a4eb5618c8167e88857b449cd522b23a8b0c02e9
   ref: a4eb5618c8167e88857b449cd522b23a8b0c02e9
@@ -266,10 +275,6 @@ GEM
       redis-namespace (~> 1.2)
       sinatra (>= 0.9.2)
       vegas (~> 0.1.2)
-    resque-pool (0.3.0)
-      rake
-      resque (~> 1.20)
-      trollop (~> 1.16)
     roauth (0.0.8)
     rspec (2.14.1)
       rspec-core (~> 2.14.0)
@@ -421,7 +426,7 @@ DEPENDENCIES
   redis-rails
   redis-sentinel
   resque (~> 1.26.pre.0)
-  resque-pool (~> 0.3.0)
+  resque-pool!
   rspec-rails (~> 2.14.0)
   ruby-mp3info (~> 0.8.2)
   ruby-prof
