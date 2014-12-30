@@ -40,7 +40,7 @@
                 <mark class="order">1</mark>
                 <div class="ratio">
                   <div class="fill"></div>
-                  <b class="img-contain"><img src="http://a.scpr.org/i/9c82976547867798f40cffbc3acc6d89/95709-eight.jpg" alt="" /></b>
+                  <b class="img-contain"><img src="http://a.scpr.org/i/9c82976547867798f40cffbc3acc6d89/95709-eight.jpg" alt="" data-width="730" data-height="388" /></b>
                 </div>
               </figure>
             </a>
@@ -64,18 +64,22 @@
 
 
           <article class="clearfix">
-            <figure class="asset">
-              <mark class="order">2</mark>
-              <div class="ratio">
-                <div class="fill"></div>
-                <b class="img-contain"><img src="http://a.scpr.org/i/95f3ca2a702684f314162f3aebce9515/95383-eight.jpg" alt="" /></b>
-              </div>
-            </figure>
+            <a href="!!!!!!!!-FIRST-PERMALINK-TO-ARTICLE-!!!!!!!!">
+              <figure class="asset">
+                <mark class="order">2</mark>
+                <div class="ratio">
+                  <div class="fill"></div>
+                  <b class="img-contain"><img src="http://a.scpr.org/i/95f3ca2a702684f314162f3aebce9515/95383-eight.jpg" alt="" data-width="729" data-height="486" /></b>
+                </div>
+              </figure>
+            </a>
             <div class="exposition">
-              <span class="author">John Rabe</span>
-              <h1>Inside the living, breathing Disney Hall organ as it turns 10</h1>
+              <a href="!!!!!!!!-SECOND-PERMALINK-TO-ARTICLE-!!!!!!!!">
+                <span class="author">John Rabe</span>
+                <h1>Inside the living, breathing Disney Hall organ as it turns 10</h1>
+              </a>
               <div class="precis">
-                <p>John Rabe and organ builder Manuel Rosales take us inside the Disney Hall Organ, the iconic centerpiece of Frank Gehry's Walt Disney Concert Hall.</p>
+                <p><a href="!!!!!!!!-THIRD-PERMALINK-TO-ARTICLE-!!!!!!!!">John Rabe and organ builder Manuel Rosales take us inside the Disney Hall Organ, the iconic centerpiece of Frank Gehry's Walt Disney Concert Hall.</a></p>
                 <aside class="meta">
                   <ul>
                     <li class="comments"><a href="#"><span>Comments:</span> <b>43</b></a></li>
@@ -98,12 +102,17 @@
             <%= cache ["segment-teasers", @segments.to_a] do %>
               <% @segments.each do |segment| %>
               <div class="teaser">
-                <% if segment.assets.present? %>
-                    <%= render_asset segment, display: 'small' %>
-                    <%= timestamp(segment.published_at) %>
-                <% else %>
-                    <!-- Do something graceful if we don't have an image asset on a segment -->
+
+                <% if segment.asset.present? %>
+                <img src="<%= segment.asset.full.url %>" alt="" data-width="<%= segment.asset.full.width %>" data-height="<%= segment.asset.full.height %>" />
                 <% end %>
+
+                <%# if segment.assets.present? %>
+                    <%#= render_asset segment, display: 'small' %>
+                    <%#= timestamp(segment.published_at) %>
+                <%# else %>
+                    <!-- Do something graceful if we don't have an image asset on a segment -->
+                <%# end %>
 
                 <h2><%= link_to segment.short_headline, segment.public_path  %></h2>
                 <p class="byline"><%= render_byline segment %></p>

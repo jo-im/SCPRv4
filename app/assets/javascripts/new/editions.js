@@ -61,7 +61,7 @@ scpr.Behaviors.Editions = {
       
 
 
-      // Different aspect-ratios mean different faux-positionings.
+      // SHORTLIST EDITION: Different aspect-ratios mean different faux-positionings.
       // ---------------------------------------------------------
       if ($(".abstracts > article").length) {
         $(".abstracts > article img").each(function(){
@@ -80,6 +80,7 @@ scpr.Behaviors.Editions = {
         });
       };
 
+
       // Conditionally add "hidden" class to the ledge when a URL 
       // hash of #no-prelims is passed to the page.
       // ---------------------------------------------------------
@@ -88,6 +89,33 @@ scpr.Behaviors.Editions = {
       if (url == "#no-prelims"){
           $(".shortlist-ledge").addClass("hidden");
       }
+
+
+
+
+      // SINGLE EPISODE: Different aspect-ratios mean different faux-positionings.
+      // ---------------------------------------------------------
+      if ($("body").hasClass("episode")) {
+        $(".episode-enumeration > article img").each(function(){
+          
+//          $(this).css("border","3px solid red");
+
+          var myWidth   = $(this).attr("data-width");
+          var myHeight  = $(this).attr("data-height");
+          var myRatio   = myWidth / myHeight;
+
+//          alert("my ratio is " + myRatio);
+
+          if(myRatio > 1.5) {
+            $(this).closest("article").addClass("ratio-squat");
+          } else if(myRatio < 1.0) {
+            $(this).closest("article").addClass("ratio-tall");
+          }
+
+        });
+      };
+
+
 
 
     } // loadBehaviors
