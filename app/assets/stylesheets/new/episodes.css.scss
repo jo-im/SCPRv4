@@ -21,8 +21,9 @@ body.episode {
   STRAIGHTFORWARD EXCEPTIONS FOR "EPISODE"
   ####################################################################################
   #################################################################################### */
-  .appellation        { margin-bottom: 14px; }    // As opposed to 55px
-  .report .prose      { background: none; }       // As opposed to a thin gray vertical hairline
+  .appellation                    { margin-bottom: 14px; }  // As opposed to 55px
+  .report .prose                  { background: none; }     // As opposed to a thin gray vertical hairline
+  .report .prose p:first-of-type  { width: auto; }          // As opposed to 100% (i.e., this isn't a news article)
 
 
   /*
@@ -109,7 +110,6 @@ body.episode {
       .precis         { position: relative; box-sizing: border-box; min-height: 77px; }
       .precis p       { margin-right: 143px; padding-top: 9px; font-size: 0.875em; line-height: 1.35; }
       .meta {
-        background: salmon;
         position: absolute;
         top: 0;
         right: 0;
@@ -124,7 +124,6 @@ body.episode {
           font-weight: bold;
           height: 77px;
           box-sizing: border-box;
-          background: yellow;
           position: absolute;
           left: 0;
           top: 0;
@@ -132,9 +131,22 @@ body.episode {
           line-height: 0.9;
           list-style: none;
           padding: 0;
-          &:nth-of-type(2)    { left: auto; right: 0; }
+          &.comingsoon              { background: #e6f5fa; box-shadow: inset 0 3px 0 #c8e9f4; }
+          &:nth-of-type(2)          { left: auto; right: 0; }
+          a                         { display: block; box-sizing: border-box; padding: 11px 4px 0; width: 100%; height: 100%; }
+          span, b                   { display: block; }
+          b                         { text-align: center; color: #76c4de; font: normal 700 1em/0.8 $font-prox; text-transform: lowercase; }
+          a:hover                   { text-decoration: none; }
+          a:hover b                 { color: $orange; }
+          span                      { width: 18px; height: 20px; margin: 0 auto 8px; @include texthide; background: image-url("i/episode-meta-icons.png") no-repeat; background-size: 454px 40px; }
+          &.comments span           { background-position: 0 0; }
+          &.comments a:hover span   { background-position: 0 -20px; }
+          &.play span               { background-position: -218px 0; }
+          &.play a:hover span       { background-position: -218px -20px; }
+          &.comingsoon span         { background-position: -436px 0; }
+          &.comingsoon a:hover span { background-position: -436px -20px; }
         }
-      }
+      }// .meta
       .legacy {
         position: absolute;
         background: pink image-url("i/calendar.png") no-repeat;
@@ -151,7 +163,7 @@ body.episode {
         width: 24.453024453024%;  // ...and that'll at least keep its *horizontal* alignment in check.
         min-height: 12px;
         time    { color: #9d9d9d; white-space: nowrap; }
-      }
+      }// .legacy
       
     }// article
   }// .episode-enumeration
