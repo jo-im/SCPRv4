@@ -21,9 +21,18 @@ body.episode {
   STRAIGHTFORWARD EXCEPTIONS FOR "EPISODE"
   ####################################################################################
   #################################################################################### */
-  .appellation                    { margin-bottom: 14px; }  // As opposed to 55px
-  .report .prose                  { background: none; }     // As opposed to a thin gray vertical hairline
-  .report .prose p:first-of-type  { width: auto; }          // As opposed to 100% (i.e., this isn't a news article)
+  .appellation                    { margin-bottom: 14px; }      // As opposed to 55px
+  .report .prose                  { background: none; }         // As opposed to a thin gray vertical hairline
+  .report .prose p:first-of-type  { width: auto; }              // As opposed to 100% (i.e., this isn't a news article)
+  //-------------------------------------------------------------------------------------
+  @media screen and (max-width: 550px) {
+  .appellation                    { margin-bottom: 35px; padding-bottom: 0; }
+  .appellation h1                 { text-align: left; }
+  }
+  //-------------------------------------------------------------------------------------
+
+
+
 
 
   /*
@@ -60,6 +69,15 @@ body.episode {
       p               { margin-left: 5.765765765766%; }
       p:last-of-type  { margin-bottom: 0; }
     }
+  //-------------------------------------------------------------------------------------
+    @media screen and (max-width: 550px) {
+      h1,.teaser      { float: none; width: auto; }
+      h1              { padding-bottom: 18px; margin-bottom: 18px; border-bottom: 1px solid #b9e2f0; }
+      time            { display: inline; }
+      .teaser         { padding: 0; box-shadow: none; min-height: 0; }
+      .teaser p       { margin: 0 !important; }
+    }
+  //-------------------------------------------------------------------------------------
   }//.episode-synopsis
 
 
@@ -76,8 +94,10 @@ body.episode {
   #################################################################################### */
   .episode-enumeration {
     font-size: 1.06666666666667em; // Resetting ourselves back to 16
-    & > h1    { color: #9b9b9b; font: normal 300 1.875em/1 $font-freight; margin-bottom: 50px; }
-    
+    & > h1 {
+      color: #9b9b9b; font: normal 300 1.875em/1 $font-freight; margin-bottom: 50px;
+      @media screen and (max-width: 870px) { padding-top: 20px; margin-bottom: 70px; }
+    }
     article {
       margin-bottom: 50px;
       position: relative;
@@ -151,7 +171,7 @@ body.episode {
       }// .meta
       .legacy {
         position: absolute;
-        background: pink image-url("i/calendar.png") no-repeat;
+        background: image-url("i/calendar.png") no-repeat;
         background-size: 13px 12px;
         box-sizing: border-box;
         padding: 1px 0 0 18px;
@@ -164,9 +184,38 @@ body.episode {
         top: 132px;               // Okay, so because .asset can be a variable (proportional) height, this won't *always* look right. But it's good enough...
         width: 24.453024453024%;  // ...and that'll at least keep its *horizontal* alignment in check.
         min-height: 12px;
-        time    { color: #9d9d9d; white-space: nowrap; }
+        time                                    { color: #9d9d9d; white-space: nowrap; }
+      //-------------------------------------------------------------------------------------
+        @media screen and (max-width: 1320px)   { top: 122px; }
+        @media screen and (max-width: 1220px)   { top: 112px; }
+        @media screen and (max-width: 1120px)   { top: 102px; }
+        @media screen and (max-width: 1020px)   { top: 92px; }
+        @media screen and (max-width: 940px)    { top: 85px; }
+        @media screen and (max-width: 870px)    { top: 116px; }
+        @media screen and (max-width: 710px)    { top: 106px; }
+        @media screen and (max-width: 640px)    { top: 99px; }
+        @media screen and (max-width: 590px)    { top: 92px; }
+      //-------------------------------------------------------------------------------------
       }// .legacy
-      
+    //-------------------------------------------------------------------------------------
+    @media screen and (max-width: 550px) {
+      .exposition           { float: none; width: 100%; }
+      .asset                { float: none; width: 191px; margin-bottom: 8px; }
+      .precis               { position: static; min-height: 0; }
+      .precis p             { margin: 0; }
+      h1                    { font-size: 1.375em; padding-bottom: 13px; }
+      .legacy               { position: static; width: 100%; margin-top: 9px; }
+      .meta                 { top: 12px; width: 100%; box-sizing: border-box; padding-left: 197px; right: auto; left: 0; }
+      .meta ul              { border-top: 1px solid #cbeaf4; }
+      .meta li              { position: relative; width: 100%; margin: 0; padding: 0; height: 42px; border-bottom: 1px solid #cbeaf4; }
+      .meta li a            { padding: 15px 0 0 37px; position: relative; }
+      .meta li span         { position: absolute; left: 10px; top: 10px; margin: 0; overflow: hidden; }
+      .meta li b            { text-align: left; }
+      .meta li.comingsoon   { box-shadow: none; }
+      .meta li.comingsoon a { padding-top: 8px; }
+      .meta li.comingsoon b { max-width: 5em; line-height: 0.7; }
+    }// max: 550
+    //-------------------------------------------------------------------------------------
     }// article
   }// .episode-enumeration
 
