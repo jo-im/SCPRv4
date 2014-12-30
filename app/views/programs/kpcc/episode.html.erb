@@ -12,7 +12,7 @@
 <div class="report">
     <div class="inner bound clearfix">
 
-      <article class="prose">
+      <div class="prose">
       
         <section class="episode-synopsis clearfix">
           <h1>
@@ -92,44 +92,99 @@
           </article>
 
 
+
+
+          <div style="background: lime; padding: 20px; box-sizing: border-box; text-align: center; margin-bottom: 50px;">Okay, that's enough for the static samples. Here are the dynamic segments.</div>
+
+
+
+
+          <%= any_to_list? @segments, title: "Segments" do %>
+            <%= cache ["segment-teasers", @segments.to_a] do %>
+              <% @segments.each do |segment| %>
+
+              <article class="clearfix">
+                <a href="<%= segment.public_path %>">
+                  <figure class="asset">
+                    <mark class="order">#</mark>
+                    <div class="ratio">
+                      <div class="fill"></div>
+                      <b class="img-contain">
+                        <% if segment.asset.present? %>
+                        <img src="<%= segment.asset.full.url %>" alt="" data-width="<%= segment.asset.full.width %>" data-height="<%= segment.asset.full.height %>" />
+                        <% end %>
+                      </b>
+                    </div>
+                  </figure>
+                </a>
+                <div class="exposition">
+                  <a href="<%= segment.public_path %>">
+                    <span class="author"><%= render_byline segment %></span>
+                    <h1><%= segment.short_headline %></h1>
+                  </a>
+                  <div class="precis">
+                    <p><a href="<%= segment.public_path %>"><%= segment.teaser.html_safe %></a></p>
+                    <aside class="meta">
+                      <ul>
+                        <li class="comments"><a href="#"><span>Comments:</span> <b><%= comment_count_for segment %></b></a></li>
+                        <li class="play"><a href="#"><span>Play Clip:</span> <b><%= content_widget "primary_audio", segment, context: segment.show.slug %></b></a></li>
+                      </li>
+                    </aside>
+                  </div>
+                  <footer class="legacy"><span>Originally published <time datetime="2012-11-06">11/6/2012</time></span></footer>
+                </div><!--/ .exposition -->
+              </article>
+
+              <% end %>
+            <% end %>
+          <% end %>
+
+
+
         </section><!--/ .episode-segments -->
 
 
 
+
         <!-- Rundown of Segments -->
+        <!--
         <section class="show-segments">
-          <%= any_to_list? @segments, title: "Segments" do %>
-            <%= cache ["segment-teasers", @segments.to_a] do %>
-              <% @segments.each do |segment| %>
-              <div class="teaser">
+        -->
 
-                <% if segment.asset.present? %>
-                <img src="<%= segment.asset.full.url %>" alt="" data-width="<%= segment.asset.full.width %>" data-height="<%= segment.asset.full.height %>" />
-                <% end %>
-
+          <%#= any_to_list? @segments, title: "Segments" do %>
+            <%#= cache ["segment-teasers", @segments.to_a] do %>
+              <%# @segments.each do |segment| %>
+              <!--<div class="teaser">-->
                 <%# if segment.assets.present? %>
                     <%#= render_asset segment, display: 'small' %>
                     <%#= timestamp(segment.published_at) %>
                 <%# else %>
                     <!-- Do something graceful if we don't have an image asset on a segment -->
                 <%# end %>
-
-                <h2><%= link_to segment.short_headline, segment.public_path  %></h2>
-                <p class="byline"><%= render_byline segment %></p>
-                <%= segment.teaser.html_safe %>
-
+                <!--
+                <h2><%#= link_to segment.short_headline, segment.public_path  %></h2>
+                <p class="byline"><%#= render_byline segment %></p>
+                -->
+                <%#= segment.teaser.html_safe %>
+                <!--
                 <aside class="decorator">
-                  <%= content_widget "primary_audio", segment, context: segment.show.slug %>
-                  <%= comment_count_for segment %>
+                  <%#= content_widget "primary_audio", segment, context: segment.show.slug %>
+                  <%#= comment_count_for segment %>
                 </aside>
               </div>
-              <% end %>
-
-            <% end %>
-          <% end %>
+              -->
+              <%# end %>
+            <%# end %>
+          <%# end %>
+        <!--
         </section>
+        -->
 
-      </article>
+
+
+
+      </div><!--/ .prose -->
+
 
 <% cache ["show", "program-supportive", "v1", @episode] do %>
     <%= render "programs/kpcc/program_supportive" %>
