@@ -253,47 +253,115 @@
 
     
     <section class="archive-browser">
-      <h1>Browse the Off-Ramp Archives</h1>
-      <div class="shell">
-        Ferguson and personal bias, turkey trot marathons and Tears for Fears - they're back.
+      <h1><span>Browse the Off-Ramp Archives</span></h1>
+      <div class="columns">
 
-        Ferguson decision aftermath, what US-Mexico border sounds like, Shazam app's effect on music industry
+        <!--
+        ==========================================================
+        Okay, here's what's up.
+        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+        Longform-Picker has a very temporary, ephemeral, cosmetic
+        job to do: He only appears for tablet-and-wider users,
+        and only passes choices on to *the actual form,* which
+        is what handheld users see, and which fires off the
+        actual, useful Ajax request.
+        ==========================================================
+        -->
+        <aside class="liminal-picker" aria-hidden="true">
+          <div class="years">
+            <ul>
+              <li class="selected"><span>2014</span></li>
+              <li><span>2013</span></li>
+              <li><span>2012</span></li>
+              <li><span>2011</span></li>
+              <li><span>2010</span></li>
+              <li><span>2009</span></li>
+              <li><span>2008</span></li>
+            </ul>
+          </div>
+          <div class="months">
+            <ul>
+              <li><span>December</span></li>
+              <li class="selected"><span>November</span></li>
+              <li><span>October</span></li>
+              <li><span>September</span></li>
+              <li><span>August</span></li>
+              <li><span>July</span></li>
+              <li><span>June</span></li>
+              <li><span>May</span></li>
+              <li><span>April</span></li>
+              <li><span>March</span></li>
+              <li><span>February</span></li>
+              <li><span>January</span></li>
+            </ul>
+          </div>
+        </aside><!--/ .liminal-picker -->
 
-        Uber revolt, war in cyberspace, gender imbalance in film
+        <div class="directory">
+          <aside class="standard-picker">
+            <form>
+              <div class="fields clearfix">
+                <div class="field years">
+                  <select>
+                    <option selected="selected">2014</option>
+                    <option>2013</option>
+                    <option>2012</option>
+                    <option>2011</option>
+                    <option>2010</option>
+                    <option>2009</option>
+                    <option>2008</option>
+                  </select>
+                </div>
+                <div class="field months">
+                  <select>
+                    <option>December</option>
+                    <option selected="selected">November</option>
+                    <option>October</option>
+                    <option>September</option>
+                    <option>August</option>
+                    <option>July</option>
+                    <option>June</option>
+                    <option>May</option>
+                    <option>April</option>
+                    <option>March</option>
+                    <option>February</option>
+                    <option>January</option>
+                  </select>
+                </div>
+              </div><!--/ .fields -->
+            </form>
+          </aside><!--/ .standard-picker -->
+          <div class="results">
+            <ul>
+              <li><a href="#"><mark>31</mark> <span>Ferguson and personal bias, turkey trot marathons and Tears for Fears - they're back.</span></a></li>
+              <li><a href="#"><mark>31</mark> <span>Ferguson decision aftermath, what US-Mexico border sounds like, Shazam app's effect on music industry</span></a></li>
+              <li><a href="#"><mark>31</mark> <span>Uber revolt, war in cyberspace, gender imbalance in film</span></a></li>
+              <li><a href="#"><mark>31</mark> <span>Immigration reform reactions and effects, Friday Flashback</span></a></li>
+              <li><a href="#"><mark>31</mark> <span>Ferguson fears, Mexico president's mansion controversy, never wash your car again</span></a></li>
+              <li><a href="#"><mark>31</mark> <span>America's hostage policy, 'gay wing' at LA County jail and Bill Cosby's special cancelled</span></a></li>
+              <li><a href="#"><mark>31</mark> <span>NFL wives and domestic violence, hydrogen cars, 'Rebel music' explores indigenous communities' issues</span></a></li>
+              <li><a href="#"><mark>31</mark> <span>Groundwater, Michael Brown audio tapes, the true story of 'Foxcatcher'</span></a></li>
+              <li><a href="#"><mark>31</mark> <span>Obama's immigration executive order, LGBT veterans, black photographers</span></a></li>
+              <li><a href="#"><mark>31</mark> <span>Latest in Ferguson, Hollywood war veterans, three-wheeled vehicles</span></a></li>
+              <li><a href="#"><mark>31</mark> <span>US and China's global warming plan, female veterans challenges, the bad effects of sugar</span></a></li>
+              <li><a href="#"><mark>31</mark> <span>Declining ranks at veterans clubs, do strawberries pose danger, new life for old 78 RPM recordings</span></a></li>
+              <li><a href="#"><mark>31</mark> <span>Veterans' issues, poor track records of nursing homes and fall TV survivors</span></a></li>
+              <li><a href="#"><mark>31</mark> <span>How Facebook can fight Ebola, Californians helping to rebuild in the Philippines, quidditch in real life</span></a></li>
+              <li><a href="#"><mark>31</mark> <span>Congressional women, college 'success fees,' why we should care about net neutralit</span></a></li>
+              <li><a href="#"><mark>31</mark> <span>Election reaction, Latino influence in politics, apps that save money and maybe your life</span></a></li>
+              <li><a href="#"><mark>31</mark> <span>Campaigns and credit cards, Ebola doctor quarantines himself, Taylor Swift dumps Spotify</span></a></li>
+              <li><a href="#"><mark>31</mark> <span>Elections, ancient homonid Lucy 40 years after her discovery, Joan Didion biopic</span></a></li>
+            </ul>
+          </div><!--/ .results -->
+        </div><!--/ .directory -->
 
-        Immigration reform reactions and effects, Friday Flashback
+      </div><!--/ .columns -->
+      <div class="collateral">
 
-        Ferguson fears, Mexico president's mansion controversy, never wash your car again
-
-        America's hostage policy, 'gay wing' at LA County jail and Bill Cosby's special cancelled
-
-        NFL wives and domestic violence, hydrogen cars, 'Rebel music' explores indigenous communities' issues
-
-        Groundwater, Michael Brown audio tapes, the true story of 'Foxcatcher'
-
-        Obama's immigration executive order, LGBT veterans, black photographers
-
-        Latest in Ferguson, Hollywood war veterans, three-wheeled vehicles
-
-        US and China's global warming plan, female veterans challenges, the bad effects of sugar
-
-        Declining ranks at veterans clubs, do strawberries pose danger, new life for old 78 RPM recordings
-
-        Veterans' issues, poor track records of nursing homes and fall TV survivors
-
-        How Facebook can fight Ebola, Californians helping to rebuild in the Philippines, quidditch in real life
-
-        Congressional women, college 'success fees,' why we should care about net neutralit
-
-        Election reaction, Latino influence in politics, apps that save money and maybe your life
-
-        Campaigns and credit cards, Ebola doctor quarantines himself, Taylor Swift dumps Spotify
-
-        Elections, ancient homonid Lucy 40 years after her discovery, Joan Didion biopic
-      </div>
+        <div style="background: aqua; padding: 20px; text-align: center; width: 300px; box-sizing: border-box; height: 250px; font-weight: bold; margin: 0 auto;">I AM THE THRID AD UNIT</div>
+      
+      </div><!--/ .collateral -->
     </section><!--/ .archive-browser -->
-    
-
   </div><!--/ .bound -->
 </div><!--/ .episode-postlude -->
 
