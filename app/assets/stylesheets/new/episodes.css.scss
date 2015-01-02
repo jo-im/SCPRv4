@@ -375,6 +375,7 @@ body.episode {
       select          { display: block; width: 100%; font-size: 2em; }
     }
     .results {
+      min-height: 400px;
       li,a,time,span  { display: block; }
       li,a            { width: 100%; }
       li              { border-bottom: 1px solid #e6e6e6; }

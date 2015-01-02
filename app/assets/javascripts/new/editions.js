@@ -97,14 +97,10 @@ scpr.Behaviors.Editions = {
       // ---------------------------------------------------------
       if ($("body").hasClass("episode")) {
         $(".episode-enumeration > article img").each(function(){
-          
-//          $(this).css("border","3px solid red");
 
           var myWidth   = $(this).attr("data-width");
           var myHeight  = $(this).attr("data-height");
           var myRatio   = myWidth / myHeight;
-
-//          alert("my ratio is " + myRatio);
 
           if(myRatio > 1.5) {
             $(this).closest("article").addClass("ratio-squat");
@@ -114,6 +110,54 @@ scpr.Behaviors.Editions = {
 
         });
       };
+
+
+
+
+
+      // SINGLE EPISODE: FPO Archive-Browser behavior.
+      // ---------------------------------------------------------
+      if ($(".archive-browser").length) {
+      // ---------------------------------------------------------
+      // 1.) Standard-Picker triggers results.
+      //     (And, while we're at it: update Liminal-Picker, too.)
+      // ---------------------------------------------------------
+        $(".standard-picker select").change(function(){
+
+          var myIndex       = $(this).find(":selected").index();
+          var myDropdown    = $(this).closest(".field").index();
+          var myMonth       = $(".standard-picker .months select").find(":selected").text();
+          var myYear        = $(".standard-picker .years select").find(":selected").text();
+          var sampleResult  = "<li><a href=\"#\"><time datetime=\"2000-01-01\">99</time> <span>Here's a bunch of results from " + myMonth + " of " + myYear + ".</span></a></li>";
+
+          $(this).find("option").removeAttr("selected");
+          $(this).find("option:eq(" + myIndex + ")").attr("selected","selected");
+
+          $(".liminal-picker div:eq(" + myDropdown + ") li").removeAttr("class");
+          $(".liminal-picker div:eq(" + myDropdown + ") li:eq(" + myIndex + ")").addClass("selected");
+
+          $(".archive-browser .results ul li").remove();
+          $(".archive-browser .results ul").append(sampleResult,sampleResult,sampleResult,sampleResult,sampleResult,sampleResult,sampleResult,sampleResult);
+
+        });
+      // ---------------------------------------------------------
+      // 2.) Liminal-Picker sends information to Standard-Picker.
+      // ---------------------------------------------------------
+        $(".liminal-picker li").click(function(){
+
+          var myDropdown  = $(this).closest("div").index();
+          var myChoice    = $(this).index();
+
+          $(this).siblings().attr("class","");
+          $(this).addClass("selected");
+
+          $(".standard-picker .field:eq(" + myDropdown + ") select option").removeAttr("selected");
+          $(".standard-picker .field:eq(" + myDropdown + ") select option:eq(" + myChoice + ")").attr("selected", "selected").trigger("change");
+
+        });
+      // ---------------------------------------------------------
+      };//.archive-browser existence check
+
 
 
 
