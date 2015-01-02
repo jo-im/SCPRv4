@@ -372,7 +372,7 @@ body.episode {
       }
       .field          { width: 46.551724137931%; float: left; }
       .months         { float: right; }
-      select          { display: block; width: 100%; font-size: 2em; }
+      select          { display: block; width: 100%; font-size: 14px; /* Look, I know...I know. But unless anyone can show me a bulletproof way to get all browsers in agreement with 'em's, then I gotta do it. */ }
     }
     .results {
       min-height: 400px;
