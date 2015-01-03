@@ -156,6 +156,13 @@ scpr.Behaviors.Editions = {
 
         });
       // ---------------------------------------------------------
+      // 3.) Handheld users can opt to view all results.
+      // ---------------------------------------------------------
+        $(".show-full-results").click(function(){
+          $(".results").toggleClass("show-everything");
+          $(".show-full-results").hide();
+        });
+      // ---------------------------------------------------------
       };//.archive-browser existence check
 
 
