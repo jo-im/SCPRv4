@@ -361,6 +361,7 @@ SIDEBAR BOXLETS
       &[data-host="#{$featuredProgram}"] {
         @include overview-desktop-assumptions;
         background-image: image-url("i/host-#{$featuredProgram}.png");
+        background-repeat: no-repeat !important;
       }
     }
 
