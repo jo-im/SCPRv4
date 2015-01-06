@@ -209,6 +209,7 @@ body.short-list {
           width: 103.738317757009%;
           margin-left: -3.738317757009%;
           overflow: hidden;
+          z-index: 1;
           /*
           -------------------------------------------------------------------------------
           The original design for The Short List On The Web sported a very-cinematic,
@@ -226,6 +227,7 @@ body.short-list {
           &.ratio .fill           { padding-top: 42%; }       // Ratio after the 9/15/2014 tall-ification.
           img                     { margin-top: -8%; }        // Clumsy re-"centering".
         }
+        .img-contain              { z-index: 2; }
         &.ratio-squat .photo img  { margin-top: -3%; }
         &.ratio-square .photo img { margin-top: -22.5%; }
         &.ratio-tall .photo img   { margin-top: -42%; }
@@ -237,6 +239,42 @@ body.short-list {
         a                         { color: $blue; }
         a:hover                   { text-decoration: underline; }
 
+        .credit {
+          position: absolute;
+          bottom: 0;
+          right: 0;
+          z-index: 3;
+          display: block;
+          cursor: default;
+          width: 100%;
+          overflow: hidden;
+          box-sizing: border-box;
+          padding-left: 80px;
+          height: 17px;
+          span {
+            position: relative;
+            width: 100%;
+            box-sizing: border-box;
+            text-align: right;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            font: normal 700 0.5625em/1 $font-prox;
+            text-transform: uppercase;
+            letter-spacing: -0.02em;
+            color: rgba(255,255,255,0.7);
+            box-sizing: border-box;
+            display: inline-block;
+          }
+          i {
+            font-style: inherit;
+            display: inline-block;
+            background: rgba(0,0,0,0.35);
+            padding: 4px 6px;
+            box-sizing: border-box;
+          }
+        }
+
         mark {
           display: block;
           width: 47px;
@@ -245,6 +283,7 @@ body.short-list {
           text-align: center;
           overflow: hidden;
           border-radius: 30px;
+          z-index: 4;
           font-family: $font-prox;
           position: absolute;
           top: -23px;
