@@ -253,7 +253,7 @@ class Article
 
     # -- Index Articles -- #
 
-    klasses = ["NewsStory","BlogEntry","ShowSegment","ShowEpisode","ContentShell","Event"]
+    klasses = ["NewsStory","BlogEntry","ShowSegment","ShowEpisode","ContentShell","Event","PijQuery"]
 
     klasses.each do |k|
       k.constantize.with_article_includes.find_in_batches(batch_size:1000) do |b|
