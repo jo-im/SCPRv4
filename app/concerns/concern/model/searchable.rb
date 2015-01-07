@@ -12,8 +12,9 @@ module Concern::Model::Searchable
     end
 
     def as_indexed_json(opts={})
-      # strip out the extra bits that Outpost injects into our model
-      as_json(opts).except("to_title","link_path","edit_path")
+      model = self.class.name.underscore
+      h = as_json(opts)
+      {}.merge(h[ model ]).merge(h).except(model)
     end
   end
 end
