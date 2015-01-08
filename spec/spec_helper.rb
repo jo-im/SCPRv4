@@ -55,8 +55,8 @@ RSpec.configure do |config|
 
     ContentBase.class_variable_set :@@es_client, Elasticsearch::Client.new(
       hosts:              ["127.0.0.1:#{ES_PORT}"],
-      retry_on_failure:   3,
-      reload_connections: true,
+      retry_on_failure:   0,
+      reload_connections: false,
     )
 
     Elasticsearch::Model.client = ContentBase.es_client
@@ -71,6 +71,11 @@ RSpec.configure do |config|
   config.before :all do
     # Clean up
     ContentBase.es_client.indices.delete index:"_all"
+
+    # And because some specs don't need to insert content, but do need
+    # content lookups to succeed, go ahead and create the articles index
+    ContentBase.es_client.indices.create index:ES_ARTICLES_INDEX
+
   end
 
   config.before type: :feature do
