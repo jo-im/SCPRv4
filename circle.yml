@@ -7,7 +7,7 @@ machine:
       '2.1.1'
 
   environment:
-    ES_CLASSPATH: ~/elasticsearch-1.4.2/lib/*:~/elasticsearch-1.4.2/lib/sigar/*
+    ES_INCLUDE: /home/ubuntu/elasticsearch-1.4.2/bin/elasticsearch.in.sh
 
 dependencies:
   cache_directories:
