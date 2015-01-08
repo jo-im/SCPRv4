@@ -2,7 +2,8 @@ require "spec_helper"
 
 describe FeedsController do
   before(:all) do
-    create :news_story, 3
+    category = create :category
+    create_list :news_story, 3, category:category
   end
 
   describe "GET /all_news" do
