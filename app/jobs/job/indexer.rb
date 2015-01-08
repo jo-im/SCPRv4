@@ -1,5 +1,7 @@
 module Job
   class Indexer < Base
+    SHOULD_RUN_IN_TEST = true
+
     class << self
 
       def queue; QUEUES[:mid_priority]; end
@@ -39,6 +41,12 @@ module Job
           end
         else
           raise "Unknown action type for Job::Indexer: #{action} (#{klass}/#{id})"
+        end
+
+        # I don't like putting this here, but I'm not sure how else to do
+        # it at the moment.
+        if Rails.env.test?
+          ContentBase.es_client.indices.refresh index:"_all"
         end
       end
     end

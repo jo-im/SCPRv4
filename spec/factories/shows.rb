@@ -10,11 +10,6 @@ FactoryGirl.define do
     show
     published
 
-    after(:create) do |s|
-      Job::Indexer.perform s.class.name, s.id, :create
-      ContentBase.es_client.indices.refresh index:"_all"
-    end
-
   end
 
   factory :show_episode do
@@ -39,6 +34,7 @@ FactoryGirl.define do
     trait :unpublished do
       status ShowEpisode.status_id(:draft)
     end
+
   end
 
   factory :show_rundown do

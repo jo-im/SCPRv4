@@ -35,6 +35,8 @@ module Job
   class Base
     include ::NewRelic::Agent::Instrumentation::ControllerInstrumentation
 
+    SHOULD_RUN_IN_TEST = false
+
     class << self
       # Get the queue based on the defined priority.
       # Uses :low priority by default.

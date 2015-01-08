@@ -9,7 +9,10 @@ describe Podcast do
 
         podcast = create :podcast, source: episode.show, item_type: "episodes"
 
-        podcast.content.to_a.should eq [episode.to_article]
+        content = podcast.content
+        content.length.should eq 1
+        content.first.obj_key.should eq episode.obj_key
+
       end
 
       it "grabs segments when item_type is segments" do
@@ -18,7 +21,9 @@ describe Podcast do
 
         podcast = create :podcast, source: segment.show, item_type: "segments"
 
-        podcast.content.to_a.should eq [segment.to_article]
+        content = podcast.content
+        content.length.should eq 1
+        content.first.obj_key.should eq segment.obj_key
       end
     end
 
@@ -37,23 +42,36 @@ describe Podcast do
 
         podcast = create :podcast, source: entry.blog
 
-        podcast.content.to_a.should eq [entry.to_article]
+        content = podcast.content
+        content.length.should eq 1
+        content.first.obj_key.should eq entry.obj_key
       end
     end
 
     context "for Content" do
-      it "grabs content" do
+      it "grabs content ordered by freshness" do
         story   = create :news_story, published_at: 1.days.ago
         entry   = create :blog_entry, published_at: 2.days.ago
         segment = create :show_segment, published_at: 3.days.ago
 
-        [story, entry, segment].each do |content|
+        content = [story, entry, segment]
+
+        content.each do |content|
           create :audio, :direct, content: content
         end
 
         podcast = create :podcast, item_type: "content", source: nil
 
-        podcast.content.to_a.should eq [story, entry, segment].map(&:to_article)
+        # depending on the order in which tests are run, we could get content
+        # from one of the other tests in this file. Pare down to our list
+        # before comparing.
+
+        content.map!(&:obj_key)
+
+        podcast.content
+        .map {|a| a.obj_key }
+        .reject {|k| !content.include?(k) }
+        .should eq content
       end
     end
   end
