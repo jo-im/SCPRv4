@@ -1,6 +1,11 @@
 require 'spec_helper'
 
 describe CategoryPreview do
+
+  before(:all) do
+    create :show_segment
+  end
+
   let(:category) { create :category }
   let(:other_category) { create :category }
 
@@ -43,7 +48,7 @@ describe CategoryPreview do
       stories = create_list :news_story, 6, category: category
 
       preview = CategoryPreview.new(category)
-      preview.articles.sort.should eq stories.first(5).map(&:to_article).sort
+      preview.articles.map(&:obj_key).sort.should eq stories.first(5).map(&:obj_key).sort
     end
   end
 
@@ -63,6 +68,7 @@ describe CategoryPreview do
       create :asset, content: story2
 
       preview = CategoryPreview.new(category)
+
       preview.top_article.should eq story2.to_article
     end
 
