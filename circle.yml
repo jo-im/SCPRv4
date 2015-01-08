@@ -6,6 +6,9 @@ machine:
     version:
       '2.1.1'
 
+  environment:
+    ES_CLASSPATH: ~/elasticsearch-1.4.2
+
 dependencies:
   cache_directories:
     - ~/elasticsearch-1.4.2
