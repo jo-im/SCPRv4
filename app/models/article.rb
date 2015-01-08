@@ -99,7 +99,11 @@ class Article
   end
 
   def cache_key
-    "#{self.id}-#{ self.updated_at.to_i }"
+    if self.id && self.updated_at
+      "#{self.id}-#{ self.updated_at.to_i }"
+    else
+      nil
+    end
   end
 
   def public_url
@@ -140,6 +144,10 @@ class Article
     (@audio||[]).collect do |a|
       Audio.new(a.to_hash)
     end
+  end
+
+  def attributions
+    (@attributions||[])
   end
 
   # -- setters -- #
@@ -235,6 +243,10 @@ class Article
   end
 
   #----------
+
+  def ==(comp)
+    comp.class == self.class && comp.id == self.id
+  end
 
   # This only needs to be done on initial switchover or on a new environment
   def self._index_all_articles
