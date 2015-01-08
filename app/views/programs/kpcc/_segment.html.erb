@@ -1,6 +1,6 @@
 <div class="appellation bound">
   <h1><%= article.headline %></h1>
-  <p>by <%= render_byline article %>. <%= smart_date_js article.published_at %>.</p>
+  <p><span>by <b><%= render_byline article %></b></span> <%= smart_date_js article.published_at %></p>
 </div><!--/ .appellation -->
 
 <div class="report">

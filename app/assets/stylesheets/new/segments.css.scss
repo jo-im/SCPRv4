@@ -84,6 +84,8 @@ This used to be a <section> (c. 2013-14), but that was dumb.
   padding: 0 0 55px;
   h1        { font: normal 300 3em/1.1 $font-freight; }
   p         { padding-top: 40px; font: normal 0.75em/1 $font-prox; color: #acacac; }
+  span      { display: inline-block; }
+  span:first-of-type  { margin-right: 20px; }
   p a       { color: $blue; font-weight: 700; }
   p a:hover { text-decoration: underline; }
 //-------------------------------------------------------------------------------------
