@@ -173,7 +173,7 @@ describe Edition do
 
     describe 'plain_text_body' do
       it 'is a string containing some text' do
-        edition.as_eloqua_email[:plain_text_body].should match edition.title
+        edition.as_eloqua_email[:plain_text_body].should match edition.published_at.strftime("%B %d, %Y")
       end
     end
 
@@ -185,18 +185,16 @@ describe Edition do
     end
 
     describe 'description' do
-      it 'has the title and abstract title' do
+      it 'is the edition title' do
         description = edition.as_eloqua_email[:description]
         description.should match edition.title
-        description.should match abstract.headline
       end
     end
 
     describe 'subject' do
-      it 'has the title and abstract title' do
+      it 'is the edition title' do
         subject = edition.as_eloqua_email[:subject]
         subject.should match edition.title
-        subject.should match abstract.headline
       end
     end
   end
