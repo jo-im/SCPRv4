@@ -5,18 +5,10 @@
 # content in the application.
 #
 module ContentBase
+  @@es_client = ES_CLIENT
+
   extend self
 
-  # This is dumb
-  # I'm keeping it here because currently we don't have a way
-  # to know for sure in the database if an article is published or
-  # not, without checking it against the record's model.
-  # So we have to assume that anything we're looking up in the
-  # database that we want to be published uses the value of
-  # ContentBase::STATUS_LIVE as its "published" status.
-  # This should not and will not always be the case.
-  # I think we just need to add a "published?" boolean to the
-  # database so we can search against that.
   STATUS_LIVE = 5
 
   # Classes which are safe to fetch on the frontend.
@@ -53,6 +45,9 @@ module ContentBase
 
   ASSET_DISPLAYS = ASSET_DISPLAY_IDS.invert
 
+  def self.es_client
+    @@es_client
+  end
 
   def new_obj_key
     "contentbase:new"
@@ -127,7 +122,7 @@ module ContentBase
     # -- pagination -- #
 
     from = 0
-    per_page = (options[:per_page] || options[:limit]).to_i
+    per_page = (options[:per_page] || options[:limit] || 10).to_i
     if options[:page] && per_page
       from = (options[:page].to_i - 1) * per_page
     end
@@ -151,8 +146,7 @@ module ContentBase
       from: from
     }
 
-
-    results = Hashie::Mash.new(ES_CLIENT.search index:ES_ARTICLES_INDEX, type:types, body:body)
+    results = Hashie::Mash.new(@@es_client.search index:ES_ARTICLES_INDEX, type:types, body:body)
 
     # -- convert results into Article objects -- #
 

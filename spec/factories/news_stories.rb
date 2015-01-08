@@ -11,5 +11,10 @@ FactoryGirl.define do
     category_id 1
 
     published
+
+    after(:create) do |s|
+      Job::Indexer.perform s.class.name, s.id, :create
+      ContentBase.es_client.indices.refresh index:"_all"
+    end
   end
 end

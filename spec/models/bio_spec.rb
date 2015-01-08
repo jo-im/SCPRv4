@@ -34,7 +34,7 @@ describe Bio do
         bio.indexed_bylines(1)
       end
 
-      it "returns an array using sphinx" do
+      it "returns an array of Content" do
         bio.indexed_bylines(1).should be_a Array
       end
 

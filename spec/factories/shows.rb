@@ -9,6 +9,12 @@ FactoryGirl.define do
     slug { headline.parameterize }
     show
     published
+
+    after(:create) do |s|
+      Job::Indexer.perform s.class.name, s.id, :create
+      ContentBase.es_client.indices.refresh index:"_all"
+    end
+
   end
 
   factory :show_episode do

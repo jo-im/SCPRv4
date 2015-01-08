@@ -25,13 +25,7 @@ module Job
   #   immediately. This might be a job which is the user is waiting for
   #   completion before moving on to another task.
   #   There can be any number of high_priority workers running.
-  #
-  # * The special `sphinx` queue is reserved for sphinx indexing *and*
-  #   tasks which rely on an up-to-date index. This needs to be separate
-  #   from the other queues because the order in which the tasks are run
-  #   is crucial. It also should be separate because sphinx indexing
-  #   is happening *constantly*, especially during peak hours (weekdays).
-  #   **There should only be ONE sphinx worker running**.
+
   QUEUES = {
     :low_priority     => "low_priority",
     :mid_priority     => "mid_priority",

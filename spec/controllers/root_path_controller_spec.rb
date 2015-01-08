@@ -39,8 +39,6 @@ describe RootPathController do
     render_views
 
     describe "rendering articles with tags" do
-      sphinx_spec
-
       it "renders articles and issues" do
         vertical = create :vertical
         tags = create_list :tag, 3, is_featured: true
@@ -49,12 +47,8 @@ describe RootPathController do
         articles = create_list :news_story, 6, :published, category: vertical.category
         articles.each { |a| a.tags = tags }
 
-        index_sphinx
-
-        ts_retry(2) do
-          get :handle_path, path: vertical.slug, format: :html
-          response.should be_success
-        end
+        get :handle_path, path: vertical.slug, format: :html
+        response.should be_success
       end
     end
 

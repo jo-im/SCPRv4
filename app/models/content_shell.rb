@@ -81,6 +81,7 @@ class ContentShell < ActiveRecord::Base
       :feature            => self.feature,
       :created_at         => self.created_at,
       :updated_at         => self.updated_at,
+      :published          => self.published?,
     })
   end
 

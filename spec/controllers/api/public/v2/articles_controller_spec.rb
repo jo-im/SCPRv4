@@ -78,8 +78,6 @@ describe Api::Public::V2::ArticlesController do
 
   describe "GET index" do
     context 'with category parameter' do
-      sphinx_spec(num: 0)
-
       it 'only selects stories with the requested categories' do
         category1  = create :category, slug: "film"
         story1     = create :news_story,
@@ -95,29 +93,19 @@ describe Api::Public::V2::ArticlesController do
         story3     = create :news_story,
           category: category3, published_at: 2.hours.ago
 
-        index_sphinx
-
-        ts_retry(2) do
-          get :index, { categories: "film,health" }.merge(request_params)
-          assigns(:articles).should eq [story1, story2].map(&:to_article)
-        end
+        get :index, { categories: "film,health" }.merge(request_params)
+        assigns(:articles).should eq [story1, story2].map(&:to_article)
       end
     end
 
     context 'with date parameter' do
-      sphinx_spec(num: 0)
-
       it "returns only stories from that date" do
         story_new  = create :news_story, published_at: Time.zone.local(2013, 10, 16, 12)
         story_old1 = create :news_story, published_at: Time.zone.local(2012, 10, 16, 0)
         story_old2 = create :news_story, published_at: Time.zone.local(2012, 10, 16, 12)
 
-        index_sphinx
-
-        ts_retry(2) do
-          get :index, { date: "2012-10-16" }.merge(request_params)
-          assigns(:articles).should eq [story_old2, story_old1].map(&:to_article)
-        end
+        get :index, { date: "2012-10-16" }.merge(request_params)
+        assigns(:articles).should eq [story_old2, story_old1].map(&:to_article)
       end
 
       it "returns a bad request if the date is an invalid format" do
@@ -127,22 +115,16 @@ describe Api::Public::V2::ArticlesController do
     end
 
     context 'with date range parameters' do
-      sphinx_spec(num: 0)
-
       it 'returns only stories within that range' do
         story_new  = create :news_story, published_at: Time.zone.local(2013, 10, 16, 12)
         story_old1 = create :news_story, published_at: Time.zone.local(2012, 10, 16, 0)
         story_old2 = create :news_story, published_at: Time.zone.local(2012, 10, 17, 12)
 
-        index_sphinx
+        get :index, {
+          start_date: "2012-10-16", end_date: "2012-10-17"
+        }.merge(request_params)
 
-        ts_retry(2) do
-          get :index, {
-            start_date: "2012-10-16", end_date: "2012-10-17"
-          }.merge(request_params)
-
-          assigns(:articles).should eq [story_old2, story_old1].map(&:to_article)
-        end
+        assigns(:articles).should eq [story_old2, story_old1].map(&:to_article)
       end
 
       it 'uses now as the end time if none is specified' do
@@ -152,15 +134,11 @@ describe Api::Public::V2::ArticlesController do
         story2      = create :news_story, published_at: 10.hours.ago
         story_old   = create :news_story, published_at: Time.zone.local(2012, 10, 17, 12)
 
-        index_sphinx
+        get :index, {
+          start_date: Time.zone.now.strftime("%F")
+        }.merge(request_params)
 
-        ts_retry(2) do
-          get :index, {
-            start_date: Time.zone.now.strftime("%F")
-          }.merge(request_params)
-
-          assigns(:articles).should eq [story1, story2].map(&:to_article)
-        end
+        assigns(:articles).should eq [story1, story2].map(&:to_article)
       end
 
       it 'returns a bad request if the end_date is present but not start_date' do
@@ -175,84 +153,58 @@ describe Api::Public::V2::ArticlesController do
     end
 
     context 'with types parameter' do
-      sphinx_spec(num: 1)
-
       it "can take a comma-separated list of types" do
-        ts_retry(2) do
-          get :index, { types: "blogs,segments" }.merge(request_params)
-          assigns(:classes).should eq [BlogEntry, ShowSegment]
-          assigns(:articles).any? { |c| !%w{ShowSegment BlogEntry}.include?(c.original_object.class.name) }.should eq false
-        end
+        get :index, { types: "blogs,segments" }.merge(request_params)
+        assigns(:classes).should eq [BlogEntry, ShowSegment]
+        assigns(:articles).any? { |c| !%w{ShowSegment BlogEntry}.include?(c.original_object.class.name) }.should eq false
       end
 
       it "is blogs,news,segments by default" do
-        ts_retry(2) do
-          get :index, request_params
-          assigns(:articles).size.should eq @generated_content.select { |c|
-            [BlogEntry, NewsStory, ShowSegment].include? c.class
-          }.size
-        end
+        get :index, request_params
+        assigns(:articles).size.should eq @generated_content.select { |c|
+          [BlogEntry, NewsStory, ShowSegment].include? c.class
+        }.size
       end
     end
 
     context 'with limit parameter' do
-      sphinx_spec(num: 1)
-
       it "sanitizes the limit" do
-        ts_retry(2) do
-          get :index, { limit: "Evil Code" }.merge(request_params)
-          assigns(:limit).should eq 0
-          assigns(:articles).should eq []
-        end
+        get :index, { limit: "Evil Code" }.merge(request_params)
+        assigns(:limit).should eq 0
+        assigns(:articles).should eq []
       end
 
       it "returns only LIMIT number of results" do
-        ts_retry(2) do
-          get :index, { limit: 1 }.merge(request_params)
-          assigns(:articles).size.should eq 1
-        end
+        get :index, { limit: 1 }.merge(request_params)
+        assigns(:articles).size.should eq 1
       end
 
       it "sets the max limit to 40" do
-        ts_retry(2) do
-          get :index, { limit: 100 }.merge(request_params)
-          assigns(:limit).should eq 40
-        end
+        get :index, { limit: 100 }.merge(request_params)
+        assigns(:limit).should eq 40
       end
     end
 
     context 'with the page parameter' do
-      sphinx_spec(num: 1)
-
       it "sanitizes the page" do
-        ts_retry(2) do
-          get :index, { page: "Evil Code" }.merge(request_params)
-          assigns(:page).should eq 1
-        end
+        get :index, { page: "Evil Code" }.merge(request_params)
+        assigns(:page).should eq 1
       end
 
       it "returns PAGE page of results" do
-        ts_retry(2) do
-          get :index, request_params
-          third_obj = assigns(:articles)[2]
+        get :index, request_params
+        third_obj = assigns(:articles)[2]
 
-          get :index, { page: 3, limit: 1, types: "news,blogs,segments,shells" }.merge(request_params)
-          assigns(:articles).should eq [third_obj].map(&:to_article)
-        end
+        get :index, { page: 3, limit: 1, types: "news,blogs,segments,shells" }.merge(request_params)
+        assigns(:articles).should eq [third_obj].map(&:to_article)
       end
     end
 
     context 'with the query parameter' do
-      sphinx_spec(num: 1)
-
       it "returns results matching the query" do
         entry = create :blog_entry, headline: "Spongebob Squarepants!"
-        index_sphinx
-
-        ts_retry(2) do
-          get :index, { query: "Spongebob+Squarepants" }.merge(request_params)
-          assigns(:articles).should eq [entry].map(&:to_article)
-        end
+        get :index, { query: "Spongebob+Squarepants" }.merge(request_params)
+        assigns(:articles).should eq [entry].map(&:to_article)
       end
     end
   end

@@ -5,19 +5,21 @@ Dir[Rails.root.join("spec/fixtures/db/*.rb")].each { |f| require f }
 silence_stream(STDOUT) { FixtureMigration.new.up }
 
 require 'rspec/rails'
-require 'thinking_sphinx/test'
 require 'database_cleaner'
 require 'webmock/rspec'
 require 'capybara/rspec'
 
+require 'elasticsearch/extensions/test/cluster'
+
+ES_PORT = (ENV['TEST_CLUSTER_PORT'] || 9250)
+
 Dir[Rails.root.join("spec/support/**/*.rb")].each { |f| require f }
 
 # Load all of our test classes, their indices, and their factories.
-Dir[Rails.root.join("spec/fixtures/indices/*.rb")].each { |f| require f }
 Dir[Rails.root.join("spec/fixtures/models/*.rb")].each { |f| require f }
 Dir[Rails.root.join("spec/fixtures/factories/*.rb")].each { |f| require f }
 
-WebMock.disable_net_connect!
+WebMock.disable_net_connect!(allow:["127.0.0.1:#{ES_PORT}","localhost:#{ES_PORT}"])
 
 RSpec.configure do |config|
   config.use_transactional_fixtures = false
@@ -30,7 +32,6 @@ RSpec.configure do |config|
     :example_group => { file_path: %r{spec/presenters} }
 
   config.include FactoryGirl::Syntax::Methods
-  config.include ThinkingSphinxHelpers
   config.include RemoteStubs
   config.include PresenterHelper
   config.include DatePathHelper
@@ -47,13 +48,29 @@ RSpec.configure do |config|
     FileUtils.rm_rf(
       Rails.application.config.scpr.media_root.join("audio/upload")
     )
+  end
 
-    FileUtils.rm(
-      Dir[Rails.root.join(ThinkingSphinx::Test.config.indices_location, '*')]
+  config.before :suite do
+    Elasticsearch::Extensions::Test::Cluster.start(nodes:1)
+
+    ContentBase.class_variable_set :@@es_client, Elasticsearch::Client.new(
+      hosts:              ["127.0.0.1:#{ES_PORT}"],
+      retry_on_failure:   3,
+      reload_connections: true,
     )
 
-    ThinkingSphinx::Test.init
-    ThinkingSphinx::Test.start_with_autostop
+    Elasticsearch::Model.client = ContentBase.es_client
+
+    Article._put_article_mapping()
+  end
+
+  config.after :suite do
+    Elasticsearch::Extensions::Test::Cluster.stop
+  end
+
+  config.before :all do
+    # Clean up
+    ContentBase.es_client.indices.delete index:"_all"
   end
 
   config.before type: :feature do

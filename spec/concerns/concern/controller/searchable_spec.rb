@@ -13,7 +13,6 @@ describe Concern::Controller::Searchable, type: :controller do
     controller.stub(:current_user) { user }
   end
 
-  sphinx_spec
 
   it "adds a search action" do
     get :search
@@ -22,21 +21,15 @@ describe Concern::Controller::Searchable, type: :controller do
 
   it "searches for the records" do
     article = create :test_class_story, body: "tinker tailor"
-    index_sphinx("test_class_story_core")
 
-    ts_retry(2) do
-      get :search, query: "tinker tailor"
-      assigns(:records).to_a.should eq [article]
-    end
+    get :search, query: "tinker tailor"
+    assigns(:records).to_a.should eq [article]
   end
 
   it 'allows special characters' do
     article = create :test_class_story, body: "tinker / tailor"
-    index_sphinx("test_class_story_core")
 
-    ts_retry(2) do
-      get :search, query: "tinker / tailor"
-      assigns(:records).to_a.should eq [article]
-    end
+    get :search, query: "tinker / tailor"
+    assigns(:records).to_a.should eq [article]
   end
 end

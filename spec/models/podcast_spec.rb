@@ -2,38 +2,23 @@ require "spec_helper"
 
 describe Podcast do
   describe "#content" do
-    before :all do
-      setup_sphinx
-    end
-
-    after :all do
-      teardown_sphinx
-    end
-
     context "for KpccProgram" do
       it "grabs episodes when item_type is episodes" do
         episode = create :show_episode
         create :audio, :direct, content: episode
 
-        index_sphinx
-
         podcast = create :podcast, source: episode.show, item_type: "episodes"
 
-        ts_retry(2) do
-          podcast.content.to_a.should eq [episode.to_article]
-        end
+        podcast.content.to_a.should eq [episode.to_article]
       end
 
       it "grabs segments when item_type is segments" do
         segment = create :show_segment
         create :audio, :direct, content: segment
 
-        index_sphinx
         podcast = create :podcast, source: segment.show, item_type: "segments"
 
-        ts_retry(2) do
-          podcast.content.to_a.should eq [segment.to_article]
-        end
+        podcast.content.to_a.should eq [segment.to_article]
       end
     end
 
@@ -50,12 +35,9 @@ describe Podcast do
         entry = create :blog_entry
         create :audio, :direct, content: entry
 
-        index_sphinx
         podcast = create :podcast, source: entry.blog
 
-        ts_retry(2) do
-          podcast.content.to_a.should eq [entry.to_article]
-        end
+        podcast.content.to_a.should eq [entry.to_article]
       end
     end
 
@@ -69,12 +51,9 @@ describe Podcast do
           create :audio, :direct, content: content
         end
 
-        index_sphinx
         podcast = create :podcast, item_type: "content", source: nil
 
-        ts_retry(2) do
-          podcast.content.to_a.should eq [story, entry, segment].map(&:to_article)
-        end
+        podcast.content.to_a.should eq [story, entry, segment].map(&:to_article)
       end
     end
   end

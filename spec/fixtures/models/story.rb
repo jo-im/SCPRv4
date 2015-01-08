@@ -29,9 +29,7 @@ module TestClass
     include Concern::Callbacks::GenerateTeaserCallback
     include Concern::Callbacks::SetPublishedAtCallback
     include Concern::Callbacks::GenerateSlugCallback
-    include Concern::Callbacks::SphinxIndexCallback
     include Concern::Callbacks::HomepageCachingCallback
-    #include Concern::Callbacks::CacheExpirationCallback
     include Concern::Callbacks::TouchCallback
     include Concern::Callbacks::PublishNotificationCallback
     include Concern::Methods::ArticleStatuses

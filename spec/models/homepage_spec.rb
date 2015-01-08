@@ -23,13 +23,9 @@ describe Homepage do
     let(:other_category) { create :category }
     let(:homepage) { create :homepage }
 
-    sphinx_spec
-
     it 'returns previews for all categories' do
       story1 = create :news_story, category: category
       story2 = create :news_story, category: other_category
-
-      index_sphinx
 
       homepage.category_previews.size.should eq 2
     end
@@ -38,8 +34,6 @@ describe Homepage do
       story1 = create :news_story, category: category
       story2 = create :news_story, category: category
       homepage.content.create(content: story1)
-
-      index_sphinx
 
       homepage.category_previews.first.articles
       .should eq [story2].map(&:to_article)

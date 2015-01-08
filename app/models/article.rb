@@ -238,19 +238,6 @@ class Article
 
   # This only needs to be done on initial switchover or on a new environment
   def self._index_all_articles
-    # -- Put our settings and mapping -- #
-
-    ES_CLIENT.indices.put_template name:"scprv4", body:{
-      template:"#{ES_PREFIX}-*",
-      settings:{
-        'index.number_of_shards'    => 2,
-        'index.number_of_replicas'  => 2
-      },
-    }
-
-    mapping = JSON.parse(File.read("#{Rails.root}/config/article_mapping.json"))
-    ES_CLIENT.indices.put_template name:"#{ES_PREFIX}-articles", body:{template:ES_ARTICLES_INDEX,mappings:mapping}
-
     # -- Index Articles -- #
 
     klasses = ["NewsStory","BlogEntry","ShowSegment","ShowEpisode","ContentShell","Event","PijQuery"]
@@ -260,5 +247,22 @@ class Article
         ES_CLIENT.bulk body:b.collect { |s| s.to_article.to_es_bulk_operation }.flatten(1)
       end
     end
+  end
+
+  #----------
+
+  def self._put_article_mapping
+    # -- Put our settings and mapping -- #
+
+    ContentBase.es_client.indices.put_template name:"scprv4", body:{
+      template:"#{ES_PREFIX}-*",
+      settings:{
+        'index.number_of_shards'    => 5,
+        'index.number_of_replicas'  => 1
+      },
+    }
+
+    mapping = JSON.parse(File.read("#{Rails.root}/config/article_mapping.json"))
+    ContentBase.es_client.indices.put_template name:"#{ES_PREFIX}-articles", body:{template:ES_ARTICLES_INDEX,mappings:mapping}
   end
 end
