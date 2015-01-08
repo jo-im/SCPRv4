@@ -7,7 +7,7 @@ machine:
       '2.1.1'
 
   environment:
-    ES_CLASSPATH: ~/elasticsearch-1.4.2
+    ES_CLASSPATH: ~/elasticsearch-1.4.2/lib/*:~/elasticsearch-1.4.2/lib/sigar/*
 
 dependencies:
   cache_directories:
