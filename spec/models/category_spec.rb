@@ -1,6 +1,12 @@
 require "spec_helper"
 
 describe Category do
+  before(:all) do
+    # create a segment so that our FeatureCandidate::Segment lookup works
+    # (it otherwise fails due to a missing mapping)
+    create :show_segment
+  end
+
   describe '::previews' do
     let(:category) { create :category }
     let(:other_category) { create :category }
@@ -47,27 +53,24 @@ describe Category do
       story1 = create :news_story, category: category
       story2 = create :news_story, category: other_category
 
-      category.content.to_a.should eq [story1]
+      category.content.map(&:obj_key).should eq [story1.obj_key]
     end
 
     it "excludes any passed-in objects" do
       story1 = create :news_story, category: category
       story2 = create :news_story, category: category
 
-      category.content(page: 1, per_page: 10, exclude: story2).to_a
-      .should eq [story1]
+      category.content(page: 1, per_page: 10, exclude: story2)
+      .map(&:obj_key).should eq [story1.obj_key]
     end
 
     it "excludes an array of passed-in objects" do
       story1 = create :news_story, category: category
       story2 = create :news_story, category: category
       story3 = create :news_story, category: category
-      category.content(page: 1, per_page: 10, exclude: [story2,story3]).to_a
-      .should eq [story1]
-    end
 
-    it "returns an empty array if the page * per_page is greater than Thinking Sphinx's max_matches" do
-      category.content(page: 101).should be_blank
+      category.content(page: 1, per_page: 10, exclude: [story2,story3])
+      .map(&:obj_key).should eq [story1.obj_key]
     end
   end
 
