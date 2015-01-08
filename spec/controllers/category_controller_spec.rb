@@ -3,11 +3,16 @@ require "spec_helper"
 describe CategoryController do
   render_views
 
+  before(:all) do
+    create :show_segment
+  end
+
   let(:category) { create :category }
 
   describe 'GET /news' do
     it 'sets @categories to all news categories' do
       category # touch
+      create :news_story
 
       get :news
       assigns(:categories).should eq [category]
@@ -21,7 +26,7 @@ describe CategoryController do
 
         get :news
 
-        assigns(:top).should eq story3
+        assigns(:top).should eq story3.to_article
       end
 
       it 'build sections for the categories, excluding the top article' do
@@ -44,7 +49,7 @@ describe CategoryController do
 
         get :news, format: :xml
 
-        assigns(:content).to_a.should eq [story3, story2]
+        assigns(:content).to_a.should eq [story3, story2].map(&:to_article)
 
         response.should render_template 'category/news'
         response.header['Content-Type'].should match /xml/

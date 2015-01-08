@@ -1,6 +1,10 @@
 require "spec_helper"
 
 describe HomeController do
+  before(:all) do
+    create :news_story
+  end
+
   render_views
 
   describe 'GET /about_us' do
