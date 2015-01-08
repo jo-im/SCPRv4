@@ -39,6 +39,7 @@ RSpec.configure do |config|
   config.include FormFillers,           type: :feature
   config.include AuthenticationHelper,  type: :feature
   config.include FactoryAttributesBuilder
+  config.include ElasticsearchHelper
 
   config.before :suite do
     DatabaseCleaner.clean_with :truncation
@@ -51,7 +52,7 @@ RSpec.configure do |config|
   end
 
   config.before :suite do
-    Elasticsearch::Extensions::Test::Cluster.start(nodes:1)
+    Elasticsearch::Extensions::Test::Cluster.start(nodes:1) unless ENV["ES_RUNNING"]
 
     ContentBase.class_variable_set :@@es_client, Elasticsearch::Client.new(
       hosts:              ["127.0.0.1:#{ES_PORT}"],
@@ -65,17 +66,11 @@ RSpec.configure do |config|
   end
 
   config.after :suite do
-    Elasticsearch::Extensions::Test::Cluster.stop
+    Elasticsearch::Extensions::Test::Cluster.stop unless ENV["ES_RUNNING"]
   end
 
   config.before :all do
-    # Clean up
-    ContentBase.es_client.indices.delete index:"_all"
-
-    # And because some specs don't need to insert content, but do need
-    # content lookups to succeed, go ahead and create the articles index
-    ContentBase.es_client.indices.create index:ES_ARTICLES_INDEX
-
+    reset_es
   end
 
   config.before type: :feature do

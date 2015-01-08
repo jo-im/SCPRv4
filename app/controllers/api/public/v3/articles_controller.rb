@@ -40,7 +40,6 @@ module Api::Public::V3
         :with    => @conditions
       })
 
-      @articles = @articles.map(&:to_article)
       respond_with @articles
     end
 
@@ -53,8 +52,6 @@ module Api::Public::V3
         render_not_found and return false
       end
 
-      @article = @article.to_article
-
       respond_with @article do |format|
         format.json { render :show }
       end
@@ -63,13 +60,12 @@ module Api::Public::V3
     #---------------------------
 
     def show
-      @article = Outpost.obj_by_key(@obj_key)
+      @article = ContentBase.search(with:{obj_key:@obj_key}).first
 
       if !@article
         render_not_found and return false
       end
 
-      @article = @article.to_article
       respond_with @article
     end
 
