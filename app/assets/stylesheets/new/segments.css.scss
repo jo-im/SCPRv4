@@ -513,6 +513,7 @@ cosmetic width-constrained tweak.
 //-------------------------------------------------------------------------------------
   }
   img                 { width: 100%; height: auto; } // Assume it's wide by default
+  img.skinny          { width: auto; max-height: 524px; }
   figcaption {
     color: #a6a6a6;
     width: 100%;
@@ -542,6 +543,10 @@ cosmetic width-constrained tweak.
       div             { position: absolute; bottom: 0; padding-bottom: 10px; border-bottom: 1px solid rgba(0,0,0,0.15); }
       .credit,.brief  { float: none; width: auto; }
       .credit         { padding-top: 5px; }
+    }
+  //-------------------------------------------------------------------------------------
+    @media screen and (max-width: 870px) {
+      b               { margin-left: 0; }
     }
   //-------------------------------------------------------------------------------------
     @media screen and (max-width: 500px) {
