@@ -233,17 +233,26 @@ body.episode {
   ####################################################################################
   #################################################################################### */
   .episode-postlude {
-    background-image: linear-gradient( to right, #686868, #686868 50%, white 50% );
+
+    background: -webkit-linear-gradient(left,  #686868 0%,#686868 50%,#ffffff 50%,#ffffff 50%);   //safari 5.1+
+    background-image: linear-gradient( to right, #686868, #686868 50%, white 50% );               //modernity
+
     box-shadow:
       inset 0 1px 0 rgba(0,0,0,0.5),
       inset 0 5px 0 rgba(0,0,0,0.2);
+
     & > .inner {
-      background-image: linear-gradient( to right, #686868, #686868 34.153846153846%, white 34.153846153846% );
+
+      background: -webkit-linear-gradient(left,  #686868 0%,#686868 34.153846153846%,#ffffff 34.153846153846%,#ffffff 34.153846153846%);                   //safari 5.1+
+      background-image: linear-gradient( to right, #686868, #686868 34.153846153846%, white 34.153846153846% );     //modernity
+
       padding-bottom: 60px;
       box-shadow:
         inset 0 1px 0 rgba(0,0,0,0.5),
         inset 0 5px 0 rgba(0,0,0,0.2);
+
     }
+
     .collateral     { border-top: 1px solid #c3c3c3; padding: 57px 0 80px; }
   //-------------------------------------------------------------------------------------
     @media screen and (max-width: 940px) {
