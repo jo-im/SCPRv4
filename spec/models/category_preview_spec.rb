@@ -2,7 +2,8 @@ require 'spec_helper'
 
 describe CategoryPreview do
 
-  before(:all) do
+  before(:each) do
+    reset_es
     create :show_segment
   end
 
