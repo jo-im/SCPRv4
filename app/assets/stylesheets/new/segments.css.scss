@@ -316,7 +316,9 @@ SIDEBAR BOXLETS
 ########################################################################
 ######################################################################## */
 .report .supportive aside {
-  position: relative; z-index: 1;
+  position: relative;
+  z-index: 1;
+  -webkit-font-smoothing: antialiased;
   &.placard:first-child       { padding-top: 0; z-index: 1; }
   &.overview header           { background-position: 0 -640px; }
   header {
