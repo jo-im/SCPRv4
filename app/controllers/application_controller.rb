@@ -45,7 +45,7 @@ class ApplicationController < ActionController::Base
     # Reset to page 1 if the requested page is too high
     # Otherwise an error will occur
     # TODO: Fallback to SQL query instead of just cutting it off.
-    if params[:page] && params[:page].to_i > (SPHINX_MAX_MATCHES / per_page.to_i)
+    if params[:page] && params[:page].to_i > MAX_PAGES
       params[:page] = 1
     end
   end

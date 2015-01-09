@@ -55,7 +55,7 @@ class Category < ActiveRecord::Base
     exclude   = options[:exclude]
     with      = options[:with] || {}
 
-    if (page.to_i * per_page.to_i > SPHINX_MAX_MATCHES) || page.to_i < 1
+    if (page.to_i > MAX_PAGES) || page.to_i < 1
       page = 1
     end
 
