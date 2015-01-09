@@ -95,7 +95,11 @@ class Abstract < ActiveRecord::Base
       :assets             => self.assets,
       :audio              => self.audio.available,
       :byline             => self.source,
-      :edit_url           => self.admin_edit_url
+      :edit_path          => self.admin_edit_path,
+      :public_path        => self.public_path,
+      :published          => self.published?,
+      :created_at         => self.created_at,
+      :updated_at         => self.updated_at,
     })
   end
 

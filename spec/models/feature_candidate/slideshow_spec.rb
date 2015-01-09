@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe FeatureCandidate::Slideshow, focus:true do
+describe FeatureCandidate::Slideshow do
   let(:category) { create :category }
 
   before(:each) { reset_es;create :show_segment }
