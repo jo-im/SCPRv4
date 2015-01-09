@@ -44,7 +44,7 @@ RSpec.configure do |config|
   config.before :suite do
     DatabaseCleaner.clean_with :truncation
     load "#{Rails.root}/db/seeds.rb"
-    DatabaseCleaner.strategy = :transaction
+    DatabaseCleaner.strategy = :truncation
 
     FileUtils.rm_rf(
       Rails.application.config.scpr.media_root.join("audio/upload")
@@ -73,13 +73,13 @@ RSpec.configure do |config|
     reset_es
   end
 
-  config.before type: :feature do
-    DatabaseCleaner.strategy = :truncation, { except: STATIC_TABLES }
-  end
+  #config.before type: :feature do
+  #  DatabaseCleaner.strategy = :truncation, { except: STATIC_TABLES }
+  #end
 
-  config.after type: :feature do
-    DatabaseCleaner.strategy = :transaction
-  end
+  #config.after type: :feature do
+  #  DatabaseCleaner.strategy = :truncation
+  #end
 
   config.before :all do
     DeferredGarbageCollection.start
@@ -107,12 +107,15 @@ RSpec.configure do |config|
       :content_type => 'audio/mpeg',
       :body         => load_fixture('media/audio/2sec.mp3')
     })
+  end
 
-    DatabaseCleaner.start
+  config.around :each do |example|
+    DatabaseCleaner.cleaning do
+      example.run
+    end
   end
 
   config.after :each do
-    DatabaseCleaner.clean
     Rails.cache.clear
     ActionMailer::Base.deliveries.clear
   end

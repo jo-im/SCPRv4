@@ -89,7 +89,7 @@ GEM
     crack (0.4.2)
       safe_yaml (~> 1.0.0)
     dalli (2.7.2)
-    database_cleaner (1.2.0)
+    database_cleaner (1.4.0)
     dbsync (1.0.0.beta4)
       cocaine (>= 0.5.0, < 0.6)
     diff-lcs (1.2.5)
