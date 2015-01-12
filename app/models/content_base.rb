@@ -146,7 +146,11 @@ module ContentBase
       from: from
     }
 
-    results = Hashie::Mash.new(@@es_client.search index:ES_ARTICLES_INDEX, type:types, body:body)
+    begin
+      results = Hashie::Mash.new(@@es_client.search index:ES_ARTICLES_INDEX, type:types, body:body)
+    rescue Elasticsearch::Transport::Transport::Errors::BadRequest
+      return []
+    end
 
     # -- convert results into Article objects -- #
 

@@ -44,7 +44,7 @@ RSpec.configure do |config|
   config.before :suite do
     DatabaseCleaner.clean_with :truncation
     load "#{Rails.root}/db/seeds.rb"
-    DatabaseCleaner.strategy = :truncation
+    DatabaseCleaner.strategy = :truncation, { except: STATIC_TABLES }
 
     FileUtils.rm_rf(
       Rails.application.config.scpr.media_root.join("audio/upload")
