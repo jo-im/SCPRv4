@@ -59,6 +59,8 @@ module ContentBase
   end
 
   def _filter_for(k,v)
+    # HACK
+    k = :_id if k.to_sym == :obj_key
     # term filters
     return case v
     when Array
@@ -170,6 +172,8 @@ module ContentBase
     end
 
     # -- inject pagination bits into the array -- #
+
+    articles.instance_variable_set :@_body, body
 
     articles.instance_variable_set :@_pagination, Hashie::Mash.new({
       per_page:       options[:per_page],
