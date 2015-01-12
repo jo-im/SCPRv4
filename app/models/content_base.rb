@@ -6,6 +6,7 @@
 #
 module ContentBase
   @@es_client = ES_CLIENT
+  @@es_index  = ES_ARTICLES_INDEX
 
   extend self
 
@@ -47,6 +48,10 @@ module ContentBase
 
   def self.es_client
     @@es_client
+  end
+
+  def self.es_index
+    @@es_index
   end
 
   def new_obj_key
@@ -147,7 +152,7 @@ module ContentBase
     }
 
     begin
-      results = Hashie::Mash.new(@@es_client.search index:ES_ARTICLES_INDEX, type:types, body:body)
+      results = Hashie::Mash.new(@@es_client.search index:@@es_index, ignore_unavailable:true, type:types, body:body)
     rescue Elasticsearch::Transport::Transport::Errors::BadRequest
       return []
     end

@@ -73,6 +73,14 @@ RSpec.configure do |config|
     reset_es
   end
 
+  es_i = 0
+  config.before :each do
+    unless example.metadata[:keep_es]
+      ContentBase.class_variable_set :@@es_index, ES_ARTICLES_INDEX+"-#{es_i}"
+      es_i += 1
+    end
+  end
+
   #config.before type: :feature do
   #  DatabaseCleaner.strategy = :truncation, { except: STATIC_TABLES }
   #end
