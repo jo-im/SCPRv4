@@ -42,19 +42,12 @@ describe FeatureCandidate::Slideshow do
         category: category, feature: :slideshow
       create :asset, content: story1
 
-      # bleh
-      score1 = nil
-      score2 = nil
-
-      score1 = FeatureCandidate::Slideshow.new(category).score
-
-      story1.destroy
-
-      story2 = create :news_story,
-        category: category, feature: :slideshow
+      category2 = create :category
+      story2 = create :news_story, category:category2, feature: :slideshow
       create_list :asset, 2, content: story2
 
-      score2 = FeatureCandidate::Slideshow.new(category).score
+      score1 = FeatureCandidate::Slideshow.new(category).score
+      score2 = FeatureCandidate::Slideshow.new(category2).score
 
       score2.should be > score1
     end
