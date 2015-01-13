@@ -5,7 +5,8 @@ describe ContentBase do
 
   type_list = [:blog_entry,:content_shell,:news_story,:show_segment]
 
-  before(:all) do
+  before(:each) do
+    all_content = []
     type_list.each do |ct|
       all_content << create(ct, :published)
     end
