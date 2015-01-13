@@ -54,7 +54,7 @@ describe ApplicationHelper do
       story1 = create :news_story, category: category, published_at: 1.week.ago
       story2 = create :news_story, category: category, published_at: 1.day.ago
 
-      helper.latest_news.to_a.should eq [story2, story1]
+      helper.latest_news.to_a.should eq [story2.to_article, story1.to_article]
     end
 
   end
@@ -90,7 +90,7 @@ describe ApplicationHelper do
 
     it "should move on to render_asset if there are assets" do
       content = build :content_shell
-      content.stub(:assets) { [1, 2, 3] }
+      build :asset, content: content
       view.stub(:render) { "asset rendered" }
 
       helper.render_asset(content, display: 'thumbnail', fallback: true)
