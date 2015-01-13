@@ -122,6 +122,7 @@
                     <% if first_abstract.asset.present? %>
                         <b class="img-contain"><img src="<%= first_abstract.asset.full.url %>" data-width="<%= first_abstract.asset.full.width %>" data-height="<%= first_abstract.asset.full.height %>" /></b>
                     <% end %>
+                    <figcaption class="credit"><span><i><%= first_abstract.asset.owner %></i></span></figcaption>
                 </figure>
                 <div class="prose clearfix">
                     <header>
@@ -151,6 +152,7 @@
                         <% if abstract.asset.present? %>
                             <b class="img-contain"><img src="<%= abstract.asset.full.url %>" data-width="<%= abstract.asset.full.width %>" data-height="<%= abstract.asset.full.height %>" /></b>
                         <% end %>
+                        <figcaption class="credit"><span><i><%= abstract.asset.owner %></i></span></figcaption>
                     </figure>
                     <div class="prose clearfix">
                         <header>
@@ -180,6 +182,7 @@
                         <figure class="photo ratio">
                             <div class="fill"></div>
                             <% if abstract.asset.present? %><b class="img-contain"><img src="<%= abstract.asset.full.url %>" data-width="<%= abstract.asset.full.width %>" data-height="<%= abstract.asset.full.height %>" /></b><% end %>
+                            <figcaption class="credit"><span><i><%= abstract.asset.owner %></i></span></figcaption>
                         </figure>
                         <div class="prose clearfix">
                             <header>
@@ -210,6 +213,7 @@
                         <figure class="photo ratio">
                             <div class="fill"></div>
                             <b class="img-contain"><img src="<%= abstract.asset.full.url %>" data-width="<%= abstract.asset.full.width %>" data-height="<%= abstract.asset.full.height %>" /></b>
+                            <figcaption class="credit"><span><i><%= abstract.asset.owner %></i></span></figcaption>
                         </figure>
                         <div class="prose clearfix">
                             <header>
