@@ -68,7 +68,7 @@ describe "Search" do
       expect(page).to have_content "No Results"
     end
 
-    it 'paginates' do
+    xit 'paginates' do
       create_list :news_story, 30, headline: "Obama"
 
       login
