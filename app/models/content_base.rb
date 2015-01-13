@@ -59,8 +59,6 @@ module ContentBase
   end
 
   def _filter_for(k,v)
-    # HACK
-    k = :_id if k.to_sym == :obj_key
     # term filters
     return case v
     when Array
