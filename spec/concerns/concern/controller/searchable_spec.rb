@@ -23,13 +23,7 @@ describe Concern::Controller::Searchable, type: :controller do
     article = create :test_class_story, body: "tinker tailor"
 
     get :search, query: "tinker tailor"
-    assigns(:records).to_a.should eq [article]
-  end
 
-  it 'allows special characters' do
-    article = create :test_class_story, body: "tinker / tailor"
-
-    get :search, query: "tinker / tailor"
     assigns(:records).to_a.should eq [article]
   end
 end

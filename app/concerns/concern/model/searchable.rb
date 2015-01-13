@@ -14,7 +14,12 @@ module Concern::Model::Searchable
     def as_indexed_json(opts={})
       model = self.class.name.underscore
       h = as_json(opts)
-      {}.merge(h[ model ]).merge(h).except(model)
+
+      if h[ model ]
+        {}.merge(h[ model ]).merge(h).except(model)
+      else
+        h
+      end
     end
   end
 end
