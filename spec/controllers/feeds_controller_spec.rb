@@ -1,7 +1,7 @@
 require "spec_helper"
 
 describe FeedsController do
-  before(:all) do
+  before(:each) do
     category = create :category
     create_list :news_story, 3, category:category
   end
