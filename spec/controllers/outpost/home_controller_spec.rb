@@ -40,20 +40,11 @@ describe Outpost::HomeController do
       get :search, gquery: "Obama"
 
       records = assigns(:records)
-      expect(records).to include ns
-      expect(records).to include be
-      expect(records).to include pq
-    end
 
-    it 'only searches among models with an index' do
-      vertical = create :vertical, title: "Obama"
-      be = create :blog_entry, headline: "President Obama"
-
-      get :search, gquery: "Obama"
-
-      records = assigns(:records)
-      expect(records).to include be
-      expect(records).not_to include vertical
+      obj_keys = records.map(&:obj_key)
+      expect(obj_keys).to include ns.obj_key
+      expect(obj_keys).to include be.obj_key
+      expect(obj_keys).to include pq.obj_key
     end
   end
 end
