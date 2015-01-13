@@ -4,7 +4,6 @@ describe Category do
   before(:each) do
     # create a segment so that our FeatureCandidate::Segment lookup works
     # (it otherwise fails due to a missing mapping)
-    reset_es
     create :show_segment
   end
 

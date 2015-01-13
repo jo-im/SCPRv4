@@ -77,9 +77,7 @@ module ContentBase
   end
 
   #--------------------
-  # Wrapper around ThinkingSphinx to just query all
-  # ContentBase classes and mix in some default search
-  # parameters.
+
   def search(*args)
     options       = args.extract_options!
     query_string  = args[0].to_s

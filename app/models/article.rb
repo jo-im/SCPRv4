@@ -275,6 +275,6 @@ class Article
     }
 
     mapping = JSON.parse(File.read("#{Rails.root}/config/article_mapping.json"))
-    ContentBase.es_client.indices.put_template name:"#{ES_PREFIX}-articles", body:{template:ES_ARTICLES_INDEX,mappings:mapping}
+    ContentBase.es_client.indices.put_template name:"#{ES_PREFIX}-articles", body:{template:"#{ES_PREFIX}-articles-*",mappings:mapping}
   end
 end
