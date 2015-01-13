@@ -115,7 +115,7 @@ module Api::Private::V2
 
     def sanitize_order
       order       = (params[:order] || DEFAULTS[:order]).to_s
-      sort_mode   = (params[:sort_mode] || DEFAULTS[:sort_mode]).upcase
+      sort_mode   = (params[:sort_mode] || DEFAULTS[:sort_mode]).downcase
 
       direction =
         if [DESCENDING, ASCENDING].include?(sort_mode)

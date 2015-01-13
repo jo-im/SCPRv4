@@ -56,7 +56,8 @@ describe Api::Private::V2::ArticlesController do
 
   describe "GET index" do
     it "returns only the requested classes" do
-      entries = @generated_content.select { |c| c.class == BlogEntry }
+      content = [:news_story, :blog_entry, :show_segment].map { |t| create t }
+      entries = content.select { |c| c.class == BlogEntry }
 
       get :index, { types: "blogs" }.merge(request_params)
       assigns(:articles).should eq entries.map(&:to_article)
@@ -69,10 +70,9 @@ describe Api::Private::V2::ArticlesController do
     end
 
     it "is blogs,news,segments by default" do
+      content = [:news_story, :blog_entry, :show_segment, :content_shell].map { |t| create t }
       get :index, request_params
-      assigns(:articles).size.should eq @generated_content.select { |c|
-        [BlogEntry, NewsStory, ShowSegment].include? c.class
-      }.size
+      assigns(:articles).size.should eq 3
     end
 
     it "sanitizes the limit" do
@@ -82,16 +82,20 @@ describe Api::Private::V2::ArticlesController do
     end
 
     it "accepts a limit" do
+      create_list :news_story, 5
       get :index, { limit: 1 }.merge(request_params)
       assigns(:articles).size.should eq 1
     end
 
     it "sanitizes the page" do
+      create_list :news_story, 5
       get :index, { page: "Evil Code" }.merge(request_params)
       assigns(:page).should eq 1
     end
 
     it "accepts a page" do
+      create_list :news_story, 5
+
       get :index, request_params
       third_obj = assigns(:articles)[2]
 
@@ -108,23 +112,24 @@ describe Api::Private::V2::ArticlesController do
     it "uses the passed-in sort mode if it's kosher" do
       entry = create :blog_entry, published_at: 2.years.ago
 
-      get :index, { order: "published_at", sort_mode: "asc" }.merge(request_params)
-      assigns(:order).should eq "published_at #{ASCENDING}"
+      get :index, { order: "public_datetime", sort_mode: "asc" }.merge(request_params)
+      assigns(:order).should eq "public_datetime #{ASCENDING}"
       assigns(:articles).first.should eq entry.to_article
     end
 
     it "uses desc if the passed-in sort mode is not kosher" do
       entry = create :blog_entry, published_at: 2.years.from_now
 
-      get :index, { order: "published_at", sort_mode: "Evil Sort Mode" }.merge(request_params)
-      assigns(:order).should eq "published_at #{DESCENDING}"
+      get :index, { order: "public_datetime", sort_mode: "Evil Sort Mode" }.merge(request_params)
+
+      assigns(:order).should eq "public_datetime #{DESCENDING}"
       assigns(:articles).first.should eq entry.to_article
     end
 
     it "can accept conditions" do
       entry = create :blog_entry, :draft
       get :index, {
-        with: { status: entry.class.status_id(:draft), is_live: ["1", "0"] }
+        with: { published: [true, false] }
       }.merge(request_params)
 
       assigns(:articles).should eq [entry].map(&:to_article)
