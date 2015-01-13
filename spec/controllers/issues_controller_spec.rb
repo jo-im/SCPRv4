@@ -39,16 +39,6 @@ describe IssuesController do
       assigns(:articles).should eq [article].map(&:to_article)
     end
 
-    it "sets count" do
-      tag = create :tag
-      article = build :news_story
-      article.tags << tag
-      article.save!
-
-      get :show, slug: tag.slug
-      assigns(:count).should eq 1
-    end
-
     it "gets the tag by slug" do
       tag = create :tag
       get :show, slug: tag.slug
