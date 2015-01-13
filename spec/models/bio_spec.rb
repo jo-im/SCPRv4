@@ -19,7 +19,6 @@ describe Bio do
 
   describe "indexed_bylines" do
     before(:each) do
-      reset_es
       create :news_story
     end
 

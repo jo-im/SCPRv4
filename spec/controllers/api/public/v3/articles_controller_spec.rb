@@ -5,10 +5,6 @@ describe Api::Public::V3::ArticlesController do
     :format => :json
   }
 
-  before(:each) do
-    reset_es
-  end
-
   render_views
 
   describe "GET show" do

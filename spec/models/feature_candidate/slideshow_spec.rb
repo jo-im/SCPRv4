@@ -3,7 +3,7 @@ require 'spec_helper'
 describe FeatureCandidate::Slideshow do
   let(:category) { create :category }
 
-  before(:each) { reset_es;create :show_segment }
+  before(:each) { create :show_segment }
 
   describe '#content' do
     it "returns the latest slideshow article in this category" do
