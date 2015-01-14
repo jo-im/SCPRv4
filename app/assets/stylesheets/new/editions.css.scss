@@ -236,6 +236,7 @@ body.short-list {
         header,.eisegesis         { width: 48.130841121495%; /* 412 / 856 */ }
         header                    { float: left; }
         h1                        { font-family: $font-freight; font-weight: 300; font-size: 2.5em; /* 40 / 16 */ line-height: 1.125; }
+        h1 a                      { color: black; }
         a                         { color: $blue; }
         a:hover                   { text-decoration: underline; }
 

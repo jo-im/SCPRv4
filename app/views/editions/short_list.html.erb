@@ -126,7 +126,7 @@
                 </figure>
                 <div class="prose clearfix">
                     <header>
-                        <h1><%= first_abstract.headline %></h1>
+                        <h1><a href="<%= first_abstract.url %>"><%= first_abstract.headline %></a></h1>
                         <mark>1 <span>of <b><%= @edition.abstracts.length %></b></span></mark>
                     </header>
                     <div class="eisegesis">
@@ -156,7 +156,7 @@
                     </figure>
                     <div class="prose clearfix">
                         <header>
-                            <h1><%= abstract.headline %></h1>
+                            <h1><a href="<%= abstract.url %>"><%= abstract.headline %></a></h1>
                             <mark><%= index+2 %> <span>of <b><%= @edition.abstracts.length %></b></span></mark>
                         </header>
                         <div class="eisegesis">
@@ -186,7 +186,7 @@
                         </figure>
                         <div class="prose clearfix">
                             <header>
-                                <h1><%= abstract.headline %></h1>
+                                <h1><a href="<%= abstract.url %>"><%= abstract.headline %></a></h1>
                                 <mark><%= index+5 %> <span>of <b><%= @edition.abstracts.length %></b></span></mark>
                             </header>
                             <div class="eisegesis">
@@ -217,7 +217,7 @@
                         </figure>
                         <div class="prose clearfix">
                             <header>
-                                <h1><%= abstract.headline %></h1>
+                                <h1><a href="<%= abstract.url %>"><%= abstract.headline %></a></h1>
                                 <mark><%= index+8 %> <span>of <b><%= @edition.abstracts.length %></b></span></mark>
                             </header>
                             <div class="eisegesis">
@@ -236,7 +236,7 @@
                     <h1>Share this edition</h1>
                     <ul class="clearfix">
                       <li class="twitter social_twit" data-url="<%= @edition.public_url %>">
-                        <a href="#" class="track-event twitter" data-ga-category="Article" data-ga-action="Share" data-ga-label="Twitter" data-url="<%= @edition.public_url %>" data-text="<%= u(@edition.short_list_type) %>">Share on Twitter</a>
+                        <a href="#" class="track-event twitter" data-ga-category="Article" data-ga-action="Share" data-ga-label="Twitter" data-url="<%= @edition.public_url %>" data-text="<%= u(@edition.title) %>">Share on Twitter</a>
                       </li>
                       <li class="facebook social_fb" data-url="<%= @edition.public_url %>">
                         <a href="#" class="track-event facebook" data-ga-category="Article" data-ga-action="Share" data-ga-label="Facebook" data-url="<%= @edition.public_url %>">Share on Facebook</a>
