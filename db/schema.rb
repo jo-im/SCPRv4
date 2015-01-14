@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141002090502) do
+ActiveRecord::Schema.define(version: 20141110212956) do
 
   create_table "abstracts", force: true do |t|
     t.string   "source"
@@ -678,15 +678,16 @@ ActiveRecord::Schema.define(version: 20141002090502) do
   add_index "quotes", ["created_at"], name: "index_quotes_on_created_at", using: :btree
 
   create_table "recurring_schedule_rules", force: true do |t|
-    t.text     "schedule_hash", limit: 16777215
+    t.text     "schedule_hash",     limit: 16777215
     t.integer  "interval"
     t.string   "days"
     t.string   "start_time"
     t.string   "end_time"
     t.integer  "program_id"
     t.string   "program_type"
-    t.datetime "created_at",                     null: false
-    t.datetime "updated_at",                     null: false
+    t.datetime "created_at",                         null: false
+    t.datetime "updated_at",                         null: false
+    t.integer  "soft_start_offset"
   end
 
   add_index "recurring_schedule_rules", ["program_id", "program_type"], name: "index_recurring_schedule_rules_on_program_id_and_program_type", using: :btree
@@ -730,6 +731,7 @@ ActiveRecord::Schema.define(version: 20141002090502) do
     t.integer  "recurring_schedule_rule_id"
     t.datetime "created_at",                 null: false
     t.datetime "updated_at",                 null: false
+    t.datetime "soft_starts_at"
   end
 
   add_index "schedule_occurrences", ["program_id", "program_type"], name: "index_schedule_occurrences_on_program_id_and_program_type", using: :btree

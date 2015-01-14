@@ -3,7 +3,8 @@ class ListenController < ApplicationController
 
   def index
     # grab eight hours worth of schedule, starting now
-    @schedule = ScheduleOccurrence.block(Time.zone.now, 8.hours)
+    # we don't need start time yet, so no need to go backward
+    @schedule = ScheduleOccurrence.block(Time.zone.now, 8.hours, true)
 
     # grab the latest edition
     @latest_edition  = Edition.published.includes(:slots).first
@@ -45,6 +46,6 @@ class ListenController < ApplicationController
   private
 
   def require_pledge_token
-    redirect_to '/pledge-free/effu' unless params.has_key?(:pledgeToken) || cookies[:member_session].present?
+    redirect_to '/pledge-free/error' unless params.has_key?(:pledgeToken) || cookies[:member_session].present?
   end
 end

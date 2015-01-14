@@ -14,8 +14,9 @@ Scprv4::Application.routes.draw do
   get '/news/'                                       => 'category#news',              as: :latest_news
 
   # RSS
-  get '/feeds/all_news' => 'feeds#all_news', as: :all_news_feed
-  get '/feeds/take_two' => 'feeds#take_two', as: :take_two_feed
+  get '/feeds/all_news'   => 'feeds#all_news',    as: :all_news_feed
+  get '/feeds/take_two'   => 'feeds#take_two',    as: :take_two_feed # Deprecated, delete once replaced with npr_ingest
+  get '/feeds/npr_ingest' => 'feeds#npr_ingest',  as: :npr_ingest_feed
   get '/feeds/*feed_path', to: redirect { |params, request| "/#{params[:feed_path]}.xml" }
 
 

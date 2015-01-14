@@ -183,7 +183,7 @@ describe Edition do
 
     describe 'plain_text_body' do
       it 'is a string containing some text' do
-        edition.as_eloqua_email[:plain_text_body].should match edition.title
+        edition.as_eloqua_email[:plain_text_body].should match edition.published_at.strftime("%B %d, %Y")
       end
     end
 
