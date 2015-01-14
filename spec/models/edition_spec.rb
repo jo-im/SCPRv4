@@ -1,6 +1,16 @@
 require 'spec_helper'
 
 describe Edition do
+  describe "scopes" do
+    describe "::recently" do
+      it "returns only recently published editions" do
+        recent_edition   = create_list :edition, 1, published_at: Time.zone.now
+        stale_edition    = create_list :edition, 2, published_at: Time.zone.now.yesterday
+        Edition.recently.should eq recent_edition
+      end
+    end
+  end
+
   describe '#slots' do
     it 'orders by position' do
       edition = build :edition

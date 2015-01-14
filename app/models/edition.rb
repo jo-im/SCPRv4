@@ -41,6 +41,8 @@ class Edition < ActiveRecord::Base
     'weekend-reads' => 'Weekend Reads'
   }
 
+  scope :recently, ->{ where("published_at > ?", 3.hours.ago) }
+
   has_many :slots,
     -> { order('position') },
     :class_name   => "EditionSlot",
@@ -55,7 +57,6 @@ class Edition < ActiveRecord::Base
     :if         => :should_validate?
 
   after_save :async_send_email, if: :should_send_email?
-
 
   class << self
     def titles_collection
