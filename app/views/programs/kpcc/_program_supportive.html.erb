@@ -35,7 +35,7 @@
     <aside class="overview">
       <header><h1>About <%= @program.title %></h1></header>
       <div class="exposition" data-host="<%= @program.slug %>"><!-- accepts: horn | rabe | cohenmartinez | mantle -->
-        <p><%= @program.description %></p>
+        <p><%= @program.description.html_safe %></p>
         <footer><%= @program.airtime %></footer>
       </div>
       <% present @program, ProgramPresenter do |p| %>
