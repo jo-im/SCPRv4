@@ -15,6 +15,8 @@ class HomeController < ApplicationController
     @homepage         = Homepage.published.first
     @featured_comment = FeaturedComment.published.includes(:content).first
 
+    @latest_edition  = Edition.published.recently.includes(:slots).first
+
     # Load a collapsed schedule for the next 8 hours
     @schedule = ScheduleOccurrence.block(
       (Time.zone.now - 8.hours), 16.hours, true

@@ -21,21 +21,6 @@
 
   <% end %>
 <% end %>
-<% content_for :head_tag do %>
-    <script>
-        var _roost = _roost || [];
-        _roost.push(['appkey','f93b98b2d3f540838884c294f8bc4416']);
-
-        !function(d,s,id){
-            var js, fjs = d.getElementsByTagName(s)[0];
-            if(!d.getElementById(id)){
-                js=d.createElement(s); js.id=id;
-                js.src='//cdn.goroost.com/js/roost.js';
-                fjs.parentNode.insertBefore(js,fjs);
-            }
-        }(document, 'script', 'roost-js');
-    </script>
-<% end %>
 <% content_for :body_class, 'interior ronin short-list' %>
 
 <%= cache ["short-list","v1", @edition] do %>
@@ -62,7 +47,7 @@
 
         <div class="inner bound">
             <div class="titling clearfix">
-                <h1>Short List <span>for <%= format_date(@edition.published_at, with: '%A, %B %Y') %></span></h1>
+                <h1>The Short List <span>headlines for <%= format_date(@edition.published_at, with: '%A, %B %d %Y') %></span></h1>
                 <h2 class="<%= @edition.slug.split('-').first %>"><span><%= @edition.short_list_type %></span></h2><!-- This H2 should always carry either a "pm", "am", or "weekend" class. -->
             </div>
             <h3 class="date">
@@ -96,8 +81,8 @@
                                             <% end %>
                                         </div>
                                         <figcaption>
-                                            <time datetime="<%= format_date(edition.published_at, with: '%F') %>"><span data-short="<%= format_date(edition.published_at, with: '%a') %>" data-long="<%= format_date(edition.published_at, with: '%a') %>"><%= format_date(edition.published_at, with: '%A') %></span> <%= format_date(edition.published_at, with: '%m/%d') %> <b><%= edition.title %></b></time>
-                                            <mark><%= abstract.headline %></mark>
+                                            <time datetime="<%= format_date(edition.published_at, with: '%F') %>"><span data-short="<%= format_date(edition.published_at, with: '%a') %>" data-long="<%= format_date(edition.published_at, with: '%a') %>"><%= format_date(edition.published_at, with: '%A') %></span> <%= format_date(edition.published_at, with: '%m/%d') %> <b><%= edition.short_list_type %></b></time>
+                                            <mark><%= edition.title %></mark>
                                         </figcaption>
                                     </figure>
                                 </a>
@@ -122,10 +107,11 @@
                     <% if first_abstract.asset.present? %>
                         <b class="img-contain"><img src="<%= first_abstract.asset.full.url %>" data-width="<%= first_abstract.asset.full.width %>" data-height="<%= first_abstract.asset.full.height %>" /></b>
                     <% end %>
+                    <figcaption class="credit"><span><i><%= first_abstract.asset.owner %></i></span></figcaption>
                 </figure>
                 <div class="prose clearfix">
                     <header>
-                        <h1><%= first_abstract.headline %></h1>
+                        <h1><a href="<%= first_abstract.url %>"><%= first_abstract.headline %></a></h1>
                         <mark>1 <span>of <b><%= @edition.abstracts.length %></b></span></mark>
                     </header>
                     <div class="eisegesis">
@@ -151,10 +137,11 @@
                         <% if abstract.asset.present? %>
                             <b class="img-contain"><img src="<%= abstract.asset.full.url %>" data-width="<%= abstract.asset.full.width %>" data-height="<%= abstract.asset.full.height %>" /></b>
                         <% end %>
+                        <figcaption class="credit"><span><i><%= abstract.asset.owner %></i></span></figcaption>
                     </figure>
                     <div class="prose clearfix">
                         <header>
-                            <h1><%= abstract.headline %></h1>
+                            <h1><a href="<%= abstract.url %>"><%= abstract.headline %></a></h1>
                             <mark><%= index+2 %> <span>of <b><%= @edition.abstracts.length %></b></span></mark>
                         </header>
                         <div class="eisegesis">
@@ -180,10 +167,11 @@
                         <figure class="photo ratio">
                             <div class="fill"></div>
                             <% if abstract.asset.present? %><b class="img-contain"><img src="<%= abstract.asset.full.url %>" data-width="<%= abstract.asset.full.width %>" data-height="<%= abstract.asset.full.height %>" /></b><% end %>
+                            <figcaption class="credit"><span><i><%= abstract.asset.owner %></i></span></figcaption>
                         </figure>
                         <div class="prose clearfix">
                             <header>
-                                <h1><%= abstract.headline %></h1>
+                                <h1><a href="<%= abstract.url %>"><%= abstract.headline %></a></h1>
                                 <mark><%= index+5 %> <span>of <b><%= @edition.abstracts.length %></b></span></mark>
                             </header>
                             <div class="eisegesis">
@@ -210,10 +198,11 @@
                         <figure class="photo ratio">
                             <div class="fill"></div>
                             <b class="img-contain"><img src="<%= abstract.asset.full.url %>" data-width="<%= abstract.asset.full.width %>" data-height="<%= abstract.asset.full.height %>" /></b>
+                            <figcaption class="credit"><span><i><%= abstract.asset.owner %></i></span></figcaption>
                         </figure>
                         <div class="prose clearfix">
                             <header>
-                                <h1><%= abstract.headline %></h1>
+                                <h1><a href="<%= abstract.url %>"><%= abstract.headline %></a></h1>
                                 <mark><%= index+8 %> <span>of <b><%= @edition.abstracts.length %></b></span></mark>
                             </header>
                             <div class="eisegesis">
@@ -232,7 +221,7 @@
                     <h1>Share this edition</h1>
                     <ul class="clearfix">
                       <li class="twitter social_twit" data-url="<%= @edition.public_url %>">
-                        <a href="#" class="track-event twitter" data-ga-category="Article" data-ga-action="Share" data-ga-label="Twitter" data-url="<%= @edition.public_url %>" data-text="<%= u(@edition.short_list_type) %>">Share on Twitter</a>
+                        <a href="#" class="track-event twitter" data-ga-category="Article" data-ga-action="Share" data-ga-label="Twitter" data-url="<%= @edition.public_url %>" data-text="<%= u(@edition.title) %>">Share on Twitter</a>
                       </li>
                       <li class="facebook social_fb" data-url="<%= @edition.public_url %>">
                         <a href="#" class="track-event facebook" data-ga-category="Article" data-ga-action="Share" data-ga-label="Facebook" data-url="<%= @edition.public_url %>">Share on Facebook</a>

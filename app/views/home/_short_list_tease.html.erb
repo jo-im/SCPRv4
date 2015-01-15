@@ -1,0 +1,44 @@
+<section class="shortlist-preview">
+
+  <header class="titling clearfix">
+    <h1><a href="/short-list/latest"><span>The Short List</span> <mark><%= format_date(edition.published_at, with: '%a, %B %d') %></mark></a></h1>
+    <button class="subscribe-trigger"><span>Subscribe</span></button>
+    <h2 class="<%= edition.slug %>"><a href="/short-list/latest"><%= edition.slug.titleize %></a></h2>
+  </header>
+
+  <div class="brochure">
+    <a href="/short-list/latest">
+      <figure class="bound">
+        <div class="photos clearfix">
+          <% edition.abstracts[0..3].each_with_index do |abstract, index| %>
+          <div class="photo ratio">
+              <div class="fill"></div>
+              <b class="img-contain"><img src="<%= abstract.asset.full.url %>"></b>
+          </div>
+          <% end %>
+        </div>
+        <figcaption><span><%= edition.title %></span> <mark>Read now</mark></figcaption>
+      </figure>
+    </a>
+  </div><!--/ .brochure -->
+
+  <aside class="enlistment">
+    <div class="bound">
+      <header>Start your day informed.</header>
+      <div class="prose clearfix">
+        <p>Sign up and we’ll deliver KPCC’s Short List to your inbox. One edition each weekday morning, plus an edition of weekend reads.</p>
+        <form method="post" name="shortlist-subscribe" action="https://s1715082578.t.eloqua.com/e/f2" id="form352">
+          <input value="shortlist-subscribe" type="hidden" name="elqFormName"  />
+          <input value="1715082578" type="hidden" name="elqSiteId"  />
+          <input name="elqCampaignId" type="hidden">
+          <input id="field0" name="emailAddress" type="text" class="required email" placeholder="Email address">
+          <div style="display:none;"><input name="SCPRShortList" type="checkbox" value="on" checked="checked"  /></div>
+          <input type="submit" value="Sign me up" name="subscribe" class="btn">
+          <input type="hidden" name="elqCustomerGUID" value="">
+          <input type="hidden" name="elqCookieWrite" value="0">
+        </form>
+      </div>
+    </div>
+  </aside><!--/ .enlistment -->
+
+</section><!--/ .shortlist-preview -->
