@@ -34,7 +34,7 @@ module Job
 
           if k.new.respond_to?(:to_article)
             ContentBase.es_client.delete({
-              index:  ES_ARTICLES_INDEX,
+              index:  ContentBase.es_index,
               type:   klass.underscore,
               id:     k.obj_key(id),
             })
