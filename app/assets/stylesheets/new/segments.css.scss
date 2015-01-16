@@ -83,7 +83,9 @@ This used to be a <section> (c. 2013-14), but that was dumb.
 .appellation {
   padding: 0 0 55px;
   h1        { font: normal 300 3em/1.1 $font-freight; }
-  p         { padding-top: 40px; font: normal 0.75em/1 $font-prox; color: #acacac; }
+  p         { padding-top: 40px; font: normal 0.75em/1 $font-prox; color: #acacac; -webkit-font-smoothing: antialiased; }
+  span      { display: inline-block; }
+  span:first-of-type  { margin-right: 20px; }
   p a       { color: $blue; font-weight: 700; }
   p a:hover { text-decoration: underline; }
 //-------------------------------------------------------------------------------------
@@ -118,6 +120,7 @@ REPORT
     .secondary                { width: 14.285714285714%; float: left; }
     .buddy {
       &.pinned                { display: none; } // hiddenness gets undone when certain width requirements are met
+      -webkit-font-smoothing: antialiased;
       font: normal bold 0.75em/1.1 $font-prox;
       color: #909090;
       border-top: 1px solid rgba(0,0,0,0.08);
@@ -182,7 +185,12 @@ REPORT
       & > h1 a          { color: inherit !important; }
       nav               { padding-top: 28px; }
     }
-  }
+  }//.prose
+
+  .prose-body,
+  .related-links,
+  .episode-contents     { -webkit-font-smoothing: antialiased; }
+
   .supportive           { width: 34.153846153846%; border-top: 0; }
 
   .related-links {
@@ -314,11 +322,15 @@ SIDEBAR BOXLETS
 ########################################################################
 ######################################################################## */
 .report .supportive aside {
-  position: relative; z-index: 1;
+  position: relative;
+  z-index: 1;
+  -webkit-font-smoothing: antialiased;
   &.placard:first-child       { padding-top: 0; z-index: 1; }
   &.overview header           { background-position: 0 -640px; }
   header {
-    padding: 5px 0 0 13px; position: relative; z-index: 2;
+    padding: 5px 0 0 13px;
+    position: relative;
+    z-index: 2;
     & + *                     { padding-top: 23px; }
     h1 {
       box-sizing: border-box;
@@ -363,7 +375,6 @@ SIDEBAR BOXLETS
         background-image: image-url("i/host-#{$featuredProgram}.png");
       }
     }
-
   }//.exposition
   .externals {
     color: #2388aa;
@@ -511,6 +522,7 @@ cosmetic width-constrained tweak.
 //-------------------------------------------------------------------------------------
   }
   img                 { width: 100%; height: auto; } // Assume it's wide by default
+  img.skinny          { width: auto; max-height: 524px; }
   figcaption {
     color: #a6a6a6;
     width: 100%;
@@ -542,6 +554,10 @@ cosmetic width-constrained tweak.
       .credit         { padding-top: 5px; }
     }
   //-------------------------------------------------------------------------------------
+    @media screen and (max-width: 870px) {
+      b               { margin-left: 0; }
+    }
+  //-------------------------------------------------------------------------------------
     @media screen and (max-width: 500px) {
       b               { width: 100% !important; max-width: 320px !important; margin: 0 auto 20px auto !important; }
       figcaption      { height: auto; position: static; width: 100%; }
@@ -569,6 +585,7 @@ The trigger that launches the audio drawer. Powered by jPlayer.
 ######################################################################## */
 .audio-actuator {
   font: normal bold 1.375em/1 $font-prox;
+  -webkit-font-smoothing: antialiased;
   color: white;
   width: 100%;
   box-sizing: border-box;

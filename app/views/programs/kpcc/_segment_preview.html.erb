@@ -3,7 +3,7 @@
 
 <div class="appellation bound">
   <h1><%= article.title %></h1>
-  <p>by <%= render_byline article.original_object %>. <%= smart_date_js article.public_datetime %>.</p>
+  <p><span>by <b><%= render_byline article.original_object %></b></span> <%= smart_date_js article.public_datetime %></p>
 </div><!--/ .appellation -->
 
 <div class="report">

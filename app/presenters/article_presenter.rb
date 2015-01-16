@@ -26,7 +26,7 @@ class ArticlePresenter < ApplicationPresenter
         domain = URI.parse(related_link.url).host.sub(/^www\./, '')
         kpcc_link = domain.split(".").include?("scpr")
         class_options = {}
-        class_options[:class] = "track-event related"
+        class_options[:class] = "track-event"
         class_options[:class] << " outbound" unless kpcc_link
         s += h.content_tag :li, class: class_options[:class] do
           h.link_to related_link.url do

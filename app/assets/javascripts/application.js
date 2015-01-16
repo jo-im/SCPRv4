@@ -3,6 +3,7 @@
 //= require moment-strftime
 //= require moment-twitter
 //= require waypoints.min
+//= require widowtamer-min
 
 //= require_directory ./t_listen/
 //= require swfobject.min
