@@ -521,6 +521,8 @@ cosmetic width-constrained tweak.
     }
 //-------------------------------------------------------------------------------------
   }
+  .slideview          { max-height: none; }
+  .slideview .slides  { background: none; }
   img                 { width: 100%; height: auto; } // Assume it's wide by default
   img.skinny          { width: auto; max-height: 524px; }
   figcaption {
