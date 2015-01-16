@@ -49,13 +49,23 @@ class ArticlePresenter < ApplicationPresenter
         class_options = {}
         class_options[:class] = "track-event related"
         class_options[:class] << " outbound" unless kpcc_link
+        class_options[:class] << " query" if related_link.link_type == "query"
         s += h.content_tag :li, class: class_options[:class] do
-          h.link_to related_link.url do
+          m = h.link_to related_link.url do
             l = h.content_tag :mark do
               related_link.title
             end
             l += h.content_tag :span do
-              kpcc_link ? "Article" : "Source: #{domain}"
+              if related_link.link_type == "query"
+                "Contribute Your Voice"
+              elsif kpcc_link ?
+                "Article" : "Source: #{domain}"
+              end 
+            end
+          end
+          if related_link.link_type == "query"
+            m += h.link_to "/network/", class: "pij" do
+              "Learn more about the Public Insight Network"
             end
           end
         end
