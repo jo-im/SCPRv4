@@ -196,8 +196,10 @@ class scpr.NewSlideshow
 
                     caption = @nextEl.find('.img-contain').data('caption')
                     captionOwner = @nextEl.find('.img-contain').data('owner')
-                    caption_html = "#{caption} <mark class='credit'>#{captionOwner}</mark>"
-                    $('.caption p.caption-text').html(caption_html)
+                    caption_html = "#{caption}"
+                    credit_html = "#{captionOwner}"
+                    $('.caption .caption-text').html(caption_html)
+                    $('.caption .credit').html(credit_html)
 
                     @nextEl.trigger "activated"
 
@@ -256,8 +258,10 @@ class scpr.NewSlideshow
 
                     caption = $(el).find('.img-contain').data('caption')
                     captionOwner = $(el).find('.img-contain').data('owner')
-                    caption_html = "#{caption} <mark class='credit'>#{captionOwner}</mark>"
-                    $('.caption p.caption-text').html(caption_html)
+                    caption_html = "#{caption}"
+                    credit_html = "#{captionOwner}"
+                    $('.caption .caption-text').html(caption_html)
+                    $('.caption .credit').html(credit_html)
 
                 @slides[i] = $(el)
 
