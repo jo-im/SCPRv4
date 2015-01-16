@@ -52,7 +52,7 @@ scpr.Behaviors.Single = {
             if(!$(".audio-actuator").hasClass("in-view")) {
               $(".audio-actuator").addClass("in-view");
             }
-          }, { offset: "70%" });
+          }, { offset: "bottom-in-view" });
 
           /*
           --------------------------------------------------------------------------------------
