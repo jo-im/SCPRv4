@@ -33,12 +33,12 @@
 
 
     <aside class="overview">
-      <header><h1>About <%= @program.title %></h1></header>
-      <div class="exposition" data-host="<%= @program.slug %>"><!-- accepts: horn | rabe | cohenmartinez | mantle -->
-        <p><%= @program.description.html_safe %></p>
-        <footer><%= @program.airtime %></footer>
-      </div>
       <% present @program, ProgramPresenter do |p| %>
+      <header><h1>About <%= p.title %></h1></header>
+      <div class="exposition" data-host="<%= p.slug %>"><!-- accepts: horn | rabe | cohenmartinez | mantle -->
+        <p><%= p.description %></p>
+        <footer><%= p.airtime %></footer>
+      </div>
         <div class="externals">
           <ul>
             <%= p.facebook_link %>
