@@ -58,8 +58,10 @@ class ArticlePresenter < ApplicationPresenter
             l += h.content_tag :span do
               if related_link.link_type == "query"
                 "Contribute Your Voice"
-              elsif kpcc_link ?
-                "Article" : "Source: #{domain}"
+              elsif kpcc_link
+                "Article"
+              else
+                "Source: #{domain}"
               end 
             end
           end
