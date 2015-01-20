@@ -9,6 +9,7 @@ FactoryGirl.define do
     slug { headline.parameterize }
     show
     published
+
   end
 
   factory :show_episode do
@@ -33,6 +34,7 @@ FactoryGirl.define do
     trait :unpublished do
       status ShowEpisode.status_id(:draft)
     end
+
   end
 
   factory :show_rundown do

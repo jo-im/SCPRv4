@@ -1,3 +1,5 @@
+require "resque/server"
+
 Scprv4::Application.routes.draw do
   # Homepage
   root to: "home#index"
@@ -215,6 +217,20 @@ Scprv4::Application.routes.draw do
   mount Outpost::Engine, at: 'outpost'
 
   namespace :outpost do
+    resque_constraint = ->(request) do
+      user_id = request.session.to_hash["user_id"]
+
+      if user_id && u = AdminUser.find_by(:id => user_id)
+        u.is_superuser?
+      else
+        false
+      end
+    end
+
+    constraints resque_constraint do
+      mount Resque::Server.new, :at => "resque"
+    end
+
     concern :preview do
       put "preview", on: :member
       patch "preview", on: :member

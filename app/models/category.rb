@@ -4,7 +4,8 @@ class Category < ActiveRecord::Base
   has_secretary
 
   include Concern::Validations::SlugValidation
-  include Concern::Callbacks::SphinxIndexCallback
+
+  include Concern::Model::Searchable
 
   self.public_route_key = 'root_slug'
 
@@ -54,7 +55,7 @@ class Category < ActiveRecord::Base
     exclude   = options[:exclude]
     with      = options[:with] || {}
 
-    if (page.to_i * per_page.to_i > SPHINX_MAX_MATCHES) || page.to_i < 1
+    if (page.to_i > MAX_PAGES) || page.to_i < 1
       page = 1
     end
 
@@ -62,15 +63,15 @@ class Category < ActiveRecord::Base
       :classes    => classes,
       :page       => page,
       :per_page   => per_page,
-      :with       => { category: self.id }.merge(with)
+      :with       => { "category.slug" => self.slug }.merge(with)
     }
 
     if exclude.present?
       exclude = Array(exclude).select do |article|
-        article.respond_to?(:obj_key_crc32)
+        article.respond_to?(:obj_key)
       end
 
-      args[:without] = { obj_key: exclude.map(&:obj_key_crc32) }
+      args[:without] = { obj_key: exclude.map(&:obj_key) }
     end
 
     ContentBase.search(args)

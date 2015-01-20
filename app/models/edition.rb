@@ -12,7 +12,7 @@ class Edition < ActiveRecord::Base
   include Concern::Associations::ContentAlarmAssociation
   include Concern::Callbacks::SetPublishedAtCallback
   include Concern::Callbacks::TouchCallback
-  include Concern::Callbacks::SphinxIndexCallback
+  include Concern::Model::Searchable
   include Concern::Scopes::PublishedScope
   include Concern::Methods::EloquaSendable
 

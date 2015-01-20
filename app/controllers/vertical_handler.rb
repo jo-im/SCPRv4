@@ -67,7 +67,7 @@ module VerticalHandler
     # article essentially makes it invisible.
     @blog_articles = @category.articles({
       :classes    => [BlogEntry],
-      :with       => { blog: @blog.id },
+      :with       => { "blog.id" => @blog.id },
       :per_page   => 2,
       :exclude    => @vertical.featured_articles.first
     })

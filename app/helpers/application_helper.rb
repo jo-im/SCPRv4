@@ -72,7 +72,12 @@ module ApplicationHelper
     html = ''
 
     Array(content).compact.each do |article|
-      directory   = article.class.name.underscore
+      if article.is_a?(Article)
+        directory   = article.obj_class
+      else
+        directory   = article.class.name.underscore
+      end
+
       tmplt_opts  = ["#{directory}/#{context}", "default/#{context}"]
 
       partial = tmplt_opts.find do |template|
@@ -268,10 +273,10 @@ module ApplicationHelper
 
   def latest_news(limit=2)
     ContentBase.search({
-      :classes    => [NewsStory, BlogEntry, ShowSegment, ContentShell],
-      :limit      => limit,
-      :without    => { category: false }
-    }).to_a
+      :classes  => [NewsStory, BlogEntry, ShowSegment, ContentShell],
+      :limit    => limit,
+      :with     => { "category.slug" => true },
+    })
   end
 
   def latest_blogs(limit=3)

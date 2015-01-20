@@ -35,7 +35,7 @@ describe PeopleController do
       it "renders the view" do
         content = create :content_shell
         bylines = create_list :byline, 2, content: content
-        Bio.any_instance.should_receive(:indexed_bylines).and_return(Kaminari.paginate_array(bylines).page(1))
+        Bio.any_instance.should_receive(:indexed_bylines).and_return(Kaminari.paginate_array([content.to_article]).page(1))
 
         bio = create :bio
         get :bio, slug: bio.slug

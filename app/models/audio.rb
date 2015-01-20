@@ -123,6 +123,9 @@ class Audio < ActiveRecord::Base
   scope :available, -> { where(status: Audio.status_id(:live)) }
   scope :awaiting,  -> { where(status: Audio.status_id(:waiting)) }
 
+  def available?
+    self.status == Audio.status_id(:live)
+  end
 
   # Different ways to get audio into the system.
   attr_accessor \

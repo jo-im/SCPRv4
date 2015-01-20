@@ -5,8 +5,14 @@ gem 'rails', "~> 4.0.0"
 gem 'mysql2', '~> 0.3.14'
 gem 'jquery-rails', '~> 3.1.0'
 gem "bcrypt-ruby", "~> 3.1.0"
-gem 'thinking-sphinx', '~> 3.1.0'
 gem 'secretary-rails'
+
+gem 'elasticsearch'
+gem 'elasticsearch-rails'
+gem 'elasticsearch-model'
+gem 'patron'
+
+gem 'dalli'
 
 ## Outpost
 gem 'outpost-cms'
@@ -18,7 +24,7 @@ gem 'outpost-secretary'
 
 ## Redis
 gem "resque", "~> 1.26.pre.0"
-gem 'resque-pool', "~> 0.3.0"
+gem 'resque-pool', github:"SCPR/resque-pool"
 gem 'redis-rails'
 gem 'redis-sentinel'
 
@@ -41,6 +47,7 @@ gem "ice_cube", "~> 0.11.0"
 gem "recaptcha", require: "recaptcha/rails"
 gem "yajl-ruby" # Faster JSON parsing
 gem "rack-utf8_sanitizer"
+gem "rufus-scheduler"
 
 
 ## HTTP
@@ -60,6 +67,7 @@ gem 'npr', '~> 2.0'
 gem 'asset_host_client', '~> 1.2'
 gem 'audio_vision', '~> 1.0'
 gem 'tinder'
+gem 'appsignal'
 
 ## Assets
 gem "eco", "~> 1.0"
@@ -96,4 +104,5 @@ group :test do
   gem 'shoulda-matchers'
   gem 'webmock'
   gem 'test_after_commit'
+  gem 'elasticsearch-extensions'
 end

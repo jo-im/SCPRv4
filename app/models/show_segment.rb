@@ -29,7 +29,7 @@ class ShowSegment < ActiveRecord::Base
   include Concern::Callbacks::GenerateTeaserCallback
   #include Concern::Callbacks::CacheExpirationCallback
   include Concern::Callbacks::PublishNotificationCallback
-  include Concern::Callbacks::SphinxIndexCallback
+  include Concern::Model::Searchable
   include Concern::Callbacks::HomepageCachingCallback
   include Concern::Callbacks::TouchCallback
   include Concern::Methods::ArticleStatuses
@@ -57,6 +57,8 @@ class ShowSegment < ActiveRecord::Base
 
 
   validates :show, presence: true
+
+  scope :with_article_includes, ->() { includes(:show,:category,:assets,:audio,:tags,:bylines,bylines:[:user]) }
 
   def needs_validation?
     self.pending? || self.published?
@@ -111,12 +113,17 @@ class ShowSegment < ActiveRecord::Base
       :body               => self.body,
       :category           => self.category,
       :assets             => self.assets,
-      :audio              => self.audio.available,
+      :audio              => self.audio.select(&:available?),
       :attributions       => self.bylines,
       :byline             => self.byline,
-      :edit_url           => self.admin_edit_url,
+      :edit_path          => self.admin_edit_path,
+      :public_path        => self.public_path,
       :tags               => self.tags,
-      :feature            => self.feature
+      :feature            => self.feature,
+      :created_at         => self.created_at,
+      :updated_at         => self.updated_at,
+      :published          => self.published?,
+      :show               => self.show,
     })
   end
 

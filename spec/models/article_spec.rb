@@ -52,8 +52,8 @@ describe Article do
       article   = Article.new
       asset     = build :asset
 
-      article.assets << asset
-      article.asset.should eq asset
+      article.assets = [asset]
+      article.asset.asset_id.should eq asset.asset_id
     end
 
     it "is a fallback if there is no asset" do
@@ -78,12 +78,12 @@ describe Article do
   end
 
   describe '#cache_key' do
-    it "uses the original object" do
+    it "is based on obj_key and updated_at" do
       entry = create :blog_entry
       article = entry.to_article
 
       article.cache_key.should_not eq nil
-      article.cache_key.should eq entry.cache_key
+      article.cache_key.should eq "#{entry.obj_key}-#{entry.updated_at.to_i}"
     end
 
     it "is nil if original object is blank" do

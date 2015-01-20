@@ -5,18 +5,11 @@
 # content in the application.
 #
 module ContentBase
+  @@es_client = ES_CLIENT
+  @@es_index  = ES_ARTICLES_INDEX
+
   extend self
 
-  # This is dumb
-  # I'm keeping it here because currently we don't have a way
-  # to know for sure in the database if an article is published or
-  # not, without checking it against the record's model.
-  # So we have to assume that anything we're looking up in the
-  # database that we want to be published uses the value of
-  # ContentBase::STATUS_LIVE as its "published" status.
-  # This should not and will not always be the case.
-  # I think we just need to add a "published?" boolean to the
-  # database so we can search against that.
   STATUS_LIVE = 5
 
   # Classes which are safe to fetch on the frontend.
@@ -53,25 +46,44 @@ module ContentBase
 
   ASSET_DISPLAYS = ASSET_DISPLAY_IDS.invert
 
+  def self.es_client
+    @@es_client
+  end
+
+  def self.es_index
+    @@es_index
+  end
 
   def new_obj_key
     "contentbase:new"
   end
 
+  def _filter_for(k,v)
+    # term filters
+    return case v
+    when Array
+      { terms: { k => v } }
+    when FalseClass
+      { missing: { field: k } }
+    when TrueClass
+      { exists: { field: k } }
+    when Range
+      { range: { k => { gte: v.first, lt: v.last }}}
+    else
+      { term: { k => v } }
+    end
+  end
+
   #--------------------
-  # Wrapper around ThinkingSphinx to just query all
-  # ContentBase classes and mix in some default search
-  # parameters.
+
   def search(*args)
-    options     = args.extract_options!
-    query       = args[0].to_s
+    options       = args.extract_options!
+    query_string  = args[0].to_s
 
     options.reverse_merge!({
       :classes     => [NewsStory, ShowSegment, BlogEntry, ContentShell],
       :page        => 1,
-      :order       => "public_datetime #{DESCENDING}",
-      :retry_stale => true,
-      :populate    => true
+      :order       => "public_datetime #{DESCENDING}"
     })
 
     # We'll want to search only among live content 99% of the
@@ -79,20 +91,119 @@ module ContentBase
     # we can pass in `with: { is_live: [true, false] }`, for
     # example.
     options[:with] ||= {}
-    options[:with].reverse_merge!(is_live: true)
+    options[:with].reverse_merge!(published: "true")
+
+    # -- build search query -- #
+
+    query = { match_all:{} }
+
+    if query_string && !query_string.empty?
+      query = { query_string: { query: query_string } }
+    end
+
+    # what content types are we searching?
+    types = options[:classes].collect(&:to_s).collect(&:underscore)
+
+    # -- search filters -- #
+
+    filters = []
+
+
+    (options[:with]||[]).each do |k,v|
+      filters << self._filter_for(k,v)
+    end
+
+    (options[:without]||[]).each do |k,v|
+      filters << { not: self._filter_for(k,v) }
+    end
+
+    # -- sort -- #
+
+    (f,dir) = options[:order].split(" ")
+    sort = { f => { order: dir }}
+
+    # -- pagination -- #
+
+    from = 0
+    per_page = (options[:per_page] || options[:limit] || 10).to_i
+    if options[:page] && per_page
+      from = (options[:page].to_i - 1) * per_page
+    end
+
+    # -- build search body -- #
+
+    body = {
+      query: {
+        filtered: {
+          query: query,
+          filter: case filters.length
+          when 1
+            filters[0]
+          else
+            { and: filters }
+          end
+        }
+      },
+      sort: [ sort ],
+      size: per_page,
+      from: from
+    }
 
     begin
-      ThinkingSphinx.search(Riddle::Query.escape(query), options)
-    rescue  Riddle::ConnectionError,
-            Riddle::ResponseError,
-            ThinkingSphinx::SphinxError => e
-      # In this one scenario, we need to fail gracefully from a Sphinx error,
-      # because otherwise the entire website will be down if media isn't
-      # available, or if we need to stop the searchd daemon for some reason,
-      # like a rebuild.
-      warn "Caught error in ContentBase.search: #{e}"
-      Kaminari.paginate_array([]).page(0).per(0)
+      results = Hashie::Mash.new(@@es_client.search index:@@es_index, ignore_unavailable:true, type:types, body:body)
+    rescue Elasticsearch::Transport::Transport::Errors::BadRequest
+      return []
     end
+
+    # -- convert results into Article objects -- #
+
+    articles = results.hits.hits.collect do |r|
+      # turn ES _source into Article
+      Article.new(r._source.merge({
+        id:               r._source.obj_key,
+        public_datetime:  r._source.public_datetime ? Time.zone.parse(r._source.public_datetime) : nil,
+        created_at:       Time.zone.parse(r._source.created_at),
+        updated_at:       Time.zone.parse(r._source.updated_at),
+      }).except(:obj_key))
+    end
+
+    # -- inject pagination bits into the array -- #
+
+    articles.instance_variable_set :@_body, body
+
+    articles.instance_variable_set :@_pagination, Hashie::Mash.new({
+      per_page:       options[:per_page],
+      offset:         from,
+      total_results:  results.hits.total,
+    })
+
+    articles.singleton_class.class_eval do
+      define_method :current_page do
+        ( @_pagination.offset / @_pagination.per_page ).floor + 1
+      end
+
+      define_method :total_pages do
+        ( @_pagination.total_results / @_pagination.per_page )
+      end
+
+      define_method :offset_value do
+        @_pagination.offset
+      end
+
+      define_method :limit_value do
+        @_pagination.per_page
+      end
+
+      define_method :last_page? do
+        @_pagination.current_page >= @_pagination.total_pages
+      end
+
+      define_method :results do
+        @_pagination.total_results
+      end
+    end
+
+    return articles
   end
 
   #--------------------

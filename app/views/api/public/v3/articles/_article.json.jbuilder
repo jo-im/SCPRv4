@@ -1,4 +1,4 @@
-json.cache! [Api::Public::V3::VERSION, "v2", article.original_object] do
+json.cache! [Api::Public::V3::VERSION, "v2", article] do
   json.id           article.id
   json.title        article.title
   json.short_title  article.short_title
@@ -32,8 +32,8 @@ json.cache! [Api::Public::V3::VERSION, "v2", article.original_object] do
   end
 
   json.attributions article.attributions do |byline|
-    json.name       byline.display_name
-    json.role_text  byline.role_text
+    json.name       byline.name
+    json.role_text  ContentByline::ROLE_TEXT[ byline.role ]
     json.role       byline.role
   end
 

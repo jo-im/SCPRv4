@@ -142,11 +142,8 @@ module Api::Public::V2
       return true if !params[:categories]
 
       slugs   = params[:categories].to_s.split(',')
-      ids     = Category.where(slug: slugs).map(&:id)
 
-      if ids.present?
-        @conditions[:category] = ids
-      end
+      @conditions["category.slug"] = slugs
     end
 
 

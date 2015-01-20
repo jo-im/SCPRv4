@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe Job::PublishNotification do
   subject { described_class }
-  it { subject.queue.should eq "scprv4:low_priority" }
+  it { subject.queue.should eq Job::QUEUES[:low_priority] }
 
   it "sends the message to campfire" do
     # This is a useless test

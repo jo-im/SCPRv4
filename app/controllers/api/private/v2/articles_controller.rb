@@ -42,7 +42,6 @@ module Api::Private::V2
         :with      => @conditions
       })
 
-      @articles = @articles.map(&:to_article)
       respond_with @articles
     end
 
@@ -116,7 +115,7 @@ module Api::Private::V2
 
     def sanitize_order
       order       = (params[:order] || DEFAULTS[:order]).to_s
-      sort_mode   = (params[:sort_mode] || DEFAULTS[:sort_mode]).upcase
+      sort_mode   = (params[:sort_mode] || DEFAULTS[:sort_mode]).downcase
 
       direction =
         if [DESCENDING, ASCENDING].include?(sort_mode)
@@ -130,17 +129,6 @@ module Api::Private::V2
 
     #---------------------------
 
-    # Hello. You've stumbled across this because you're
-    # trying to figure out why unpublished content is
-    # showing up in the aggregator. I'll tell you why.
-    #
-    # Remember that "true" and "false" parameters don't
-    # get converted to actual Ruby boolean values.
-    # Use "1" and "0". Thinking Sphinx or ActiveRecord
-    # will convert them accordingly.
-    #
-    # If that's not the case, make sure your sphinx index
-    # is up-to-date.
     def sanitize_conditions
       @conditions = params[:with]
     end

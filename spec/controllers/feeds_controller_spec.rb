@@ -1,9 +1,12 @@
 require "spec_helper"
 
 describe FeedsController do
-  describe "GET /all_news" do
-    sphinx_spec(num: 1)
+  before(:each) do
+    category = create :category
+    create_list :news_story, 3, category:category
+  end
 
+  describe "GET /all_news" do
     it "doesn't render a layout" do
       get :all_news
       response.should render_template(layout: false)
@@ -19,7 +22,7 @@ describe FeedsController do
       response.body.should be_a String
     end
 
-    it "uses sphinx to populate @content" do
+    it "uses ContentBase to populate @content" do
       get :all_news
       assigns(:content).should_not be_blank
     end

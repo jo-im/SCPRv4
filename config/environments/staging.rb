@@ -14,7 +14,7 @@ Scprv4::Application.configure do
   # in production.
 
   config.action_controller.perform_caching = true
-  config.cache_store = :redis_store, config.secrets["cache"]
+  config.cache_store = :dalli_store, config.secrets.cache.servers, config.secrets.cache.options||{}
   config.action_controller.action_on_unpermitted_parameters = :log
 
   config.assets.debug         = false
@@ -47,9 +47,6 @@ Scprv4::Application.configure do
     :remote  => "scprdb@66.226.4.229:~scprdb/mercer.dump"
   }
 
-  default_url_options[:host] = "scprv4-staging.scprdev.org"
-
-  config.scpr.host         = "staging.scprdev.org"
   config.scpr.media_root   = "/scpr/media"
   config.scpr.media_url    = "http://media.scpr.org"
   config.scpr.resque_queue = :scprv4

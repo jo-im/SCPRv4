@@ -32,7 +32,7 @@
           token: "<%= Rails.application.config.api['kpcc']['private']['api_token'] %>",
           order: "updated_at", // Since Abstracts use the article's original publish date as its "public_datetime"
           sort_mode: "desc",
-          with: { is_live: "1" }
+          with: { published: true }
         }
       }
     );

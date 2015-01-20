@@ -2,7 +2,7 @@ class Quote < ActiveRecord::Base
   outpost_model
   has_secretary
 
-  include Concern::Callbacks::SphinxIndexCallback
+  include Concern::Model::Searchable
 
   belongs_to :content,
     -> { where(status: ContentBase::STATUS_LIVE) },

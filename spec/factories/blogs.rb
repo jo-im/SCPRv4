@@ -31,5 +31,6 @@ FactoryGirl.define do
     category_id 1
 
     published
+
   end
 end
