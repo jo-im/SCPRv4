@@ -286,8 +286,8 @@ module ContentBase
     if match = CONTENT_MATCHES.find { |k,_| u.path =~ k }
       # build the obj_key
       key       = match[1].constantize.obj_key($~[1])
-      article   = Outpost.obj_by_key(key)
-      article && article.published? ? article : nil
+      article = ContentBase.search(with:{obj_key:key}).first
+
     else
       nil
     end
