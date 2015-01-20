@@ -32,7 +32,7 @@ Scprv4::Application.configure do
   # Send deprecation notices to registered listeners
   config.active_support.deprecation = :notify
 
-  config.scpr.media_root   = "/scpr/media"
+  config.scpr.media_root   = "/scpr/scprv4_production/media"
   config.scpr.media_url    = "http://media.scpr.org"
   config.scpr.resque_queue = :scprv4
 
