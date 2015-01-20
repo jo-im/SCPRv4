@@ -3,8 +3,7 @@ Scprv4::Application.configure do
   config.eager_load     = true
   config.consider_all_requests_local       = false
   config.action_controller.perform_caching = true
-  config.cache_store = :redis_store, config.secrets["cache"], { expires_in: 1.year }
-  # config.cache_store = :redis_content_store, "redis://localhost:6379/5"
+  config.cache_store = :dalli_store, config.secrets.cache.servers, config.secrets.cache.options||{}
   config.action_controller.action_on_unpermitted_parameters = :log
 
   config.assets.debug         = false
