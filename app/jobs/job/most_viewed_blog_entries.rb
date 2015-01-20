@@ -86,7 +86,7 @@ module Job
       row = rows.first
       if article = ContentBase.obj_by_url(row[0])
         self.log "(#{row[1]}) #{row[0]}"
-        return article if article.published?
+        return article
       end
     end
 

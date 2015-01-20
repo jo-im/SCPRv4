@@ -24,7 +24,7 @@ module Job
         data = silence_stream(STDOUT) { task.fetch(api_params) }
 
         articles = task.parse(data['rows']).sort_by { |obj|
-          -obj.published_at.to_i
+          -obj.public_datetime.to_i
         }.map(&:to_article)
 
         Rails.cache.write("popular/viewed", articles)
@@ -87,7 +87,7 @@ module Job
       rows.each do |row|
         if article = ContentBase.obj_by_url(row[0])
           self.log "(#{row[1]}) #{row[0]}"
-          articles.push(article) if article.published?
+          articles.push(article)
         end
       end
 
