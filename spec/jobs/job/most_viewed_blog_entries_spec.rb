@@ -14,7 +14,7 @@ describe Job::MostViewedBlogEntries do
         JSON.parse(load_fixture("api/google/analytics_most_viewed_blog_entries.json")))
       ContentBase.should_receive(:obj_by_url)
         .with("/news/2013/11/17/1/tornadoes-in-illinois-cause-severe-damage/")
-        .and_return(story)
+        .and_return(story.to_article)
 
       Job::MostViewedBlogEntries.perform
 
