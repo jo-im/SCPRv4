@@ -17,7 +17,8 @@
                     <div class="ratio">
                         <div class="fill"></div>
                         <b class="img-contain">
-                            <%= image_tag article.asset.full.url %>
+                            <% class_options = below_vertical_ratio(height: article.asset.full.height, width: article.asset.full.width) ? "not-wide" : "" %>
+                            <%= image_tag article.asset.full.url, width: article.asset.full.width, height: article.asset.full.height, class: "loaded #{class_options}" %>
                         </b>
                     </div><!--/ .ratio -->
                 </div><!--/ .asset -->
