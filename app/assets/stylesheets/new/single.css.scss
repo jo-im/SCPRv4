@@ -626,6 +626,37 @@ body.single .comments {
             & .embed-wrapper    { clear: both; }
             .contributor        { border-top: 1px solid #cfcfcf; color: #b1b1b1; font-size: 0.8125em; line-height: 1.5; padding: 1em 0 1.5em; }
         }
+        
+
+        // "Informed by KPCC listeners" / Public Insight Network citations:
+        .content-partners {
+          margin: 0 0 82px;
+          padding-top: 17px;
+          font: normal 700 1em/1 $font-prox; // In this context, "1em" still equals 15px.
+          a {
+            display: block;
+            @include single-report-icons;
+            background-position: left -2013px;
+            margin-left: -30px;
+            padding-left: 30px;
+          }
+          mark,span     { display: block; }
+          mark          { color: inherit; margin-bottom: 6px; border-top: 1px solid #c1e5f2; padding: 10px 0 0; }
+          span          { font-weight: 400; font-size: 0.86666666666667em; }
+          a:hover       { text-decoration: none; background-position: left -1919px; }
+          a:hover mark  { border-top: 1px solid #f8b684; }
+          a:hover span  { color: #f8b684; }
+        //----------------------------------------------------------------------------------------------------------
+          @media screen and (max-width: 700px) {
+            a             { margin-left: 0; border-top: 1px solid #c1e5f2; }
+            a:hover       { border-top: 1px solid #f8b684; }
+            mark,
+            a:hover mark  { border-top: none; }
+            mark          { padding-top: 12px; margin-bottom: 4px; }
+          }
+        //----------------------------------------------------------------------------------------------------------
+        }
+
 
         // Polldaddy embeds:
         .pds-box {
@@ -848,6 +879,8 @@ body.single .comments {
         .comments-jump      { display: block; }
     }
 //  - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+
 
 
 
