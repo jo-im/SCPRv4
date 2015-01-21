@@ -31,6 +31,8 @@ class Article
   #include Concern::Methods::AbstractModelMethods
   include ActiveModel::Model
 
+  VERSION = 1
+
   attr_accessor \
     :original_object,
     :id,
@@ -100,7 +102,7 @@ class Article
 
   def cache_key
     if self.id && self.updated_at
-      "#{self.id}-#{ self.updated_at.to_i }"
+      "#{self.id}-#{ self.updated_at.to_i }-#{Article::VERSION}"
     else
       nil
     end
@@ -130,7 +132,7 @@ class Article
 
   def assets
     (@assets||[]).collect do |a|
-      ContentAsset.new(a.to_hash)
+      ContentAsset.new(a.to_hash.merge({id:a.asset_id}))
     end
   end
 
