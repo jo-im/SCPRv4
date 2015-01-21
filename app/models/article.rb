@@ -31,7 +31,7 @@ class Article
   #include Concern::Methods::AbstractModelMethods
   include ActiveModel::Model
 
-  VERSION = 1
+  VERSION = 3
 
   attr_accessor \
     :original_object,
