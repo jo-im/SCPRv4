@@ -31,7 +31,7 @@ class Article
   #include Concern::Methods::AbstractModelMethods
   include ActiveModel::Model
 
-  VERSION = 3
+  VERSION = 4
 
   attr_accessor \
     :original_object,
@@ -109,7 +109,13 @@ class Article
   end
 
   def public_url
-    "http://#{Rails.application.default_url_options[:host]}#{self.public_path}"
+    # ContentShells give a fully-qualified URL as their public_path. Don't
+    # add on if that's the case
+    if self.public_path =~ /^http/
+      self.public_path
+    else
+      "http://#{Rails.application.default_url_options[:host]}#{self.public_path}"
+    end
   end
 
   def edit_url
