@@ -76,14 +76,9 @@ describe ContentBase do
     context "valid URI" do
       let(:article) { create :news_story }
 
-      before :each do
-        stub_const("ContentBase::CONTENT_MATCHES", {  %r{\A/news/(\d+)/.*} => 'NewsStory' } )
-        @url = "http://something.com/news/123/somethingelse/"
-      end
-
-      it "sends to obj_by_key if the URI matches" do
-        Outpost.should_receive(:obj_by_key).with("news_story-123").and_return(article)
-        ContentBase.obj_by_url(@url).should eq article
+      it "returns the matching article" do
+        #binding.pry
+        ContentBase.obj_by_url(article.public_url).should eq article.to_article
       end
 
       it "returns nil if the URI doesn't match" do
@@ -92,8 +87,7 @@ describe ContentBase do
 
       it 'returns nil if the article is not published' do
         article.update_attribute(:status, article.class.status_id(:draft))
-        Outpost.should_receive(:obj_by_key).with("news_story-123").and_return(article)
-        ContentBase.obj_by_url(@url).should eq nil
+        ContentBase.obj_by_url(article.public_url).should eq nil
       end
     end
   end
