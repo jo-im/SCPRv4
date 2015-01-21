@@ -150,6 +150,15 @@ class Article
     (@attributions||[])
   end
 
+  def category
+    # FIXME: This is a hack while we figure out if a slightly deflated category is breaking the iPad app
+    if @category && !@category.title?
+      @category = Category.find(@category.id)
+    end
+
+    @category
+  end
+
   # -- setters -- #
 
   def assets=(assets)
