@@ -402,13 +402,11 @@ body.single .comments {
             width: 100%;
             font-family: $font-freight;
 
-            & > ul, & > div {
-                padding: 0 6% 0 10.21021021021%; // 34 / 333
-            }
+            & > ul, & > div             { padding: 0 6% 0 10.21021021021%; }
+
             header {
                 padding: 6px 5% 13px 13px;
-                background: image-url("i/single-report-icons.png") no-repeat;
-                background-size: 50px 1930px;
+                @include single-report-icons;
                 margin-left: -13px;
                 h1,h2                   { margin-left: 10.21021021021%; } // 34 / 333
                 h1 {
@@ -790,8 +788,8 @@ body.single .comments {
           h2        { margin: 6px 8% 0 135px; }
         }
         header {
-            background: image-url("i/single-report-icons.png") no-repeat 0 -512px;
-            background-size: 50px 1930px;
+            @include single-report-icons;
+            background-position: 0 -512px;
             margin: 0 0 0 -13px;
             padding: 9px 0 12px 13px;
             h1 {
@@ -863,8 +861,8 @@ body.single .comments {
         font-family: $font-freight;
         a:hover                 { text-decoration: none; }
         header {
-            background: image-url("i/single-report-icons.png") no-repeat;
-            background-size: 50px 1930px;
+            @include single-report-icons;
+            background-position: 0 0;
             margin: 0 0 7px -13px;
             padding: 5px 0 5px 13px;
             h1 {
@@ -889,8 +887,7 @@ body.single .comments {
             }
             a {
                 padding: 0 0 0 25px;
-                background: image-url("i/single-report-icons.png") no-repeat 0 -894px; // all are assumed to be "article" by default
-                background-size: 50px 1930px;
+                @include single-report-icons;
             }
             .article a      { background-position: 0 -894px; }
             .slideshow a    { background-position: 0 -988px; }
@@ -1054,7 +1051,7 @@ body.single .comments {
                         .meta       { margin-left: 78px; }
                     }
                     header {
-                        background: image-url("i/single-report-icons.png") no-repeat scroll 0 0 / 50px 1930px rgba(0, 0, 0, 0);
+                        @include single-report-icons;
                         margin-left: -13px;
                         padding: 6px 5% 13px 13px;
                         background-position: 0 -384px;
