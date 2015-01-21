@@ -879,36 +879,33 @@ body.single .comments {
             li,a,mark,span      { display: block; }
             ul li               { margin: 0 0 12px 0; }
             ul li:last-child    { margin-bottom: 0; }
-            mark {
-                color: #656565;
-                line-height: 1.1;
-                padding-bottom: 2px;
-                border-bottom: 1px solid #f6e3d6;
-            }
-            a {
-                padding: 0 0 0 25px;
-                @include single-report-icons;
-            }
-            .article a      { background-position: 0 -894px; }
-            .slideshow a    { background-position: 0 -988px; }
-            .video a		    { background-position: 0 -1082px; }
-            .poll a			    { background-position: 0 -1176px; }
-            .map a			    { background-position: 0 -1270px; }
-            .audio a		    { background-position: 0 -1364px; }
-            .infographic a	{ background-position: 0 -1458px; }
-            .taketwo a		  { background-position: 0 -1552px; }
-            .airtalk a		  { background-position: 0 -1646px; }
-            .offramp a		  { background-position: 0 -1740px; }
-            .outbound a     { background-position: 0 -1834px; }
-
-            span {
-                text-transform: uppercase;
-                color: #bca18d;
-                font-weight: 700;
-                font-size: 0.625em;
-            }
+            mark                { color: #656565; line-height: 1.1; padding-bottom: 2px; border-bottom: 1px solid #f6e3d6; }
+            a                   { padding: 0 0 0 25px; @include single-report-icons; }
+            .article a          { background-position: 0 -894px; }
+            .slideshow a        { background-position: 0 -988px; }
+            .video a		        { background-position: 0 -1082px; }
+            .poll a			        { background-position: 0 -1176px; }
+            .map a			        { background-position: 0 -1270px; }
+            .audio a		        { background-position: 0 -1364px; }
+            .infographic a	    { background-position: 0 -1458px; }
+            .taketwo a		      { background-position: 0 -1552px; }
+            .airtalk a		      { background-position: 0 -1646px; }
+            .offramp a		      { background-position: 0 -1740px; }
+            .outbound a         { background-position: 0 -1834px; }
+            .query > a          { background-position: 0 -1928px; }
+            span                { text-transform: uppercase; color: #bca18d; font-weight: 700; font-size: 0.625em; }
             a:hover mark        { color: black; border-bottom-color: $orange; }
             a:hover span        { color: #ad6631; }
+            .query > span > a { // "Learn More About The Public Insight Network"
+              background: none;
+              background: image-url("i/swoopy-arrow.png") no-repeat right 2px;
+              background-size: 11px 60px;
+              padding-right: 15px;
+              box-sizing: border-box;
+              display: inline-block;
+              color: #e3b18f;
+              &:hover           { color: #51899b; background-position: right -48px; }
+            }
         }
         &.previously {
             padding-bottom: 15px;
@@ -922,7 +919,7 @@ body.single .comments {
                 a:hover time    { color: black; }
             }
         }
-    }
+    }//.related,.previously
 
     .comments-trigger {
         width: 100%;
