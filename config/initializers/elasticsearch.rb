@@ -11,3 +11,9 @@ ES_ARTICLES_INDEX = "#{ES_PREFIX}-articles-all"
 Elasticsearch::Model.client = ES_CLIENT
 
 Elasticsearch::Model::Response::Response.__send__ :include, Elasticsearch::Model::Response::Pagination::Kaminari
+
+begin
+  # try this, but don't abort startup if it fails
+  Article._put_article_mapping
+rescue
+end

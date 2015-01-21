@@ -261,6 +261,9 @@ class Article
 
   # This only needs to be done on initial switchover or on a new environment
   def self._index_all_articles
+    # make sure our mapping templates are current
+    self._put_article_mapping
+
     # -- Index Articles -- #
 
     klasses = ["NewsStory","BlogEntry","ShowSegment","ShowEpisode","ContentShell","Event","PijQuery","Abstract"]
@@ -277,7 +280,7 @@ class Article
   def self._put_article_mapping
     # -- Put our settings and mapping -- #
 
-    ContentBase.es_client.indices.put_template name:"scprv4", body:{
+    ContentBase.es_client.indices.put_template name:"#{ES_PREFIX}-settings", body:{
       template:"#{ES_PREFIX}-*",
       settings:{
         'index.number_of_shards'    => 5,

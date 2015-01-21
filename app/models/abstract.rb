@@ -69,6 +69,7 @@ class Abstract < ActiveRecord::Base
     end
   end
 
+  scope :with_article_includes, ->() { includes(:assets,:audio) }
 
   # Currently, Abstracts will only be publicly available
   # through Editions, and there is therefore no need for us
