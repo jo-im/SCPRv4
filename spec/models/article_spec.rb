@@ -78,12 +78,12 @@ describe Article do
   end
 
   describe '#cache_key' do
-    it "is based on obj_key and updated_at" do
+    it "should include obj_key" do
       entry = create :blog_entry
       article = entry.to_article
 
       article.cache_key.should_not eq nil
-      article.cache_key.should eq "#{entry.obj_key}-#{entry.updated_at.to_i}"
+      article.cache_key.should include entry.obj_key
     end
 
     it "is nil if original object is blank" do
