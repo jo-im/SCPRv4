@@ -584,6 +584,9 @@ $navHeight: 36px;
                 }
                 &.airtalk {
                     background-image:image-url('broadcast-bar/larry-airtalk-sm.png');
+                    h4 sup {
+                        font-size: 50%;
+                    }
                 }
                 &.offramp {
                     background-image:image-url('broadcast-bar/john-offramp-sm.png');
