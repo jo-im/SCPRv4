@@ -19,13 +19,20 @@ module Concern
       # via Newsroom), but for now if it goes away they will ask for it back.
       def async_notify
         if self.publishing?
-          Job::PublishNotification.enqueue("Published! <#{self.admin_edit_url}|#{self.to_title}>")
+          Job::PublishNotification.enqueue(
+            "Published! #{self.to_title} (#{self.admin_edit_url})",
+            "daily_web")
 
         elsif self.unpublishing?
-          Job::PublishNotification.enqueue("Unpublished: <#{self.admin_edit_url}|#{self.to_title}>")
+          Job::PublishNotification.enqueue(
+            "Unpublished: #{self.to_title} (#{self.admin_edit_url})",
+            "daily_web")
 
         elsif self.status_changed?
-          Job::PublishNotification.enqueue("Status Changed to #{self.status_text}: <#{self.admin_edit_url}|#{self.to_title}>")
+          Job::PublishNotification.enqueue(
+            "Status Changed to #{self.status_text}: " \
+            "#{self.to_title} (#{self.admin_edit_url})",
+            "daily_web")
         end
       end
     end

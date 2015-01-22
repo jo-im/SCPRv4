@@ -3,15 +3,14 @@ module Job
     @priority = :low
 
     class << self
-      def perform(message)
-        config = Rails.application.config.api['slack']
+      def perform(message, room)
+        config = Rails.application.config.api['campfire']
 
-        if config && config['webhook_url']
-          slack = Slack::Notifier.new(config['webhook_url'])
-          slack.ping message
-        else
-          Rails.logger.info "PublishNotification: #{message}"
-        end
+        campfire = Tinder::Campfire.new(config['domain'],
+          token: config['token'])
+
+        room = campfire.find_room_by_id(config['rooms'][room])
+        room.speak(message)
       end
     end
   end

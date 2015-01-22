@@ -66,7 +66,8 @@ gem 'pmp', '0.4.0'
 gem 'npr', '~> 2.0'
 gem 'asset_host_client', '~> 1.2'
 gem 'audio_vision', '~> 1.0'
-gem 'slack-notifier'
+gem 'tinder'
+gem 'appsignal'
 
 ## Assets
 gem "eco", "~> 1.0"
