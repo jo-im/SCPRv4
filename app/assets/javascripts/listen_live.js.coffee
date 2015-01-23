@@ -45,7 +45,7 @@ class scpr.ListenLive
 
             # ping the idSync service
             $.getScript "http://playerservices.live.streamtheworld.com/api/idsync.js?station=KPCCFM", =>
-                @_uuid = scpr.Cookie.get("uuid")
+                #@_uuid = scpr.Cookie.get("uuid")
 
                 if @_playerReady
                     @_play()
@@ -106,11 +106,11 @@ class scpr.ListenLive
                 # hit our ad endpoint and see if there is something to play
                 $.ajax
                     type:       "GET"
-                    url:        "http://cmod.live.streamtheworld.com/ondemand/ars?type=preroll&stid=83153&lsid=cookie:#{@_uuid}"
-                    dataType:   "xml"
+                    url:        "http://cmod.live.streamtheworld.com/ondemand/ars?type=preroll&stid=83153&fmt=vast-jsonp"
+                    jsonp:      "jscb"
+                    dataType:   "jsonp"
                     success:    (xml) =>
-                        # FIXME: do something...
-                        obj = @x2js.xml2json(xml)
+                        obj = @x2js.xml_str2json(xml)
 
                         @_triton = obj
 
