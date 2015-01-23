@@ -41,10 +41,7 @@
                     <% end %>
                 </div><!--/ .prose-body -->
 
-            <% present article do |article_presenter| %>
-                <%= article_presenter.related_links %>
-            <% end %>
-
+            <%= render 'shared/cwidgets/related_links', content:article.original_object %>
 
         </article>
       </div>

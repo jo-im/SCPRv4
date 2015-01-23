@@ -41,9 +41,7 @@
                 <%= pij_source(article.original_object) %>
             </div><!--/ .prose-body -->
 
-            <% present article do |article_presenter| %>
-                <%= article_presenter.related_links %>
-            <% end %>
+            <%= render 'shared/cwidgets/related_links', content:article.original_object %>
 
             <%= render 'shared/new/social_share', article: article, cssClass: "share" %>
 

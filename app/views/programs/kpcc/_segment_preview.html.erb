@@ -36,10 +36,7 @@
                   <% end %>
               </div><!--/ .prose-body -->
 
-
-              <% present article.to_article do |article_presenter| %>
-                  <%= article_presenter.related_links %>
-              <% end %>
+              <%= render 'shared/cwidgets/related_links', content:article %>
 
             </div><!--/ .primary -->
 
