@@ -40,7 +40,6 @@ module Api::Public::V3
         :with    => @conditions
       })
 
-      @articles = @articles.map(&:to_article)
       respond_with @articles
     end
 
@@ -53,8 +52,6 @@ module Api::Public::V3
         render_not_found and return false
       end
 
-      @article = @article.to_article
-
       respond_with @article do |format|
         format.json { render :show }
       end
@@ -63,13 +60,12 @@ module Api::Public::V3
     #---------------------------
 
     def show
-      @article = Outpost.obj_by_key(@obj_key)
+      @article = ContentBase.search(with:{obj_key:@obj_key}).first
 
       if !@article
         render_not_found and return false
       end
 
-      @article = @article.to_article
       respond_with @article
     end
 
@@ -153,11 +149,9 @@ module Api::Public::V3
       return true if !params[:categories]
 
       slugs   = params[:categories].to_s.split(',')
-      ids     = Category.where(slug: slugs).map(&:id)
+      #ids     = Category.where(slug: slugs).map(&:id)
 
-      if ids.present?
-        @conditions[:category] = ids
-      end
+      @conditions["category.slug"] = slugs
     end
 
 
@@ -165,9 +159,9 @@ module Api::Public::V3
       return false if !params[:tags]
 
       slugs   = params[:tags].to_s.split(',')
-      ids     = Tag.where(slug: slugs).map(&:id)
+      #ids     = Tag.where(slug: slugs).map(&:id)
 
-      @conditions[:tags] = ids
+      @conditions["tags.slug"] = slugs
     end
 
 
@@ -181,7 +175,7 @@ module Api::Public::V3
         return false
       end
 
-      @conditions[:published_at] = date.beginning_of_day..date.end_of_day
+      @conditions[:public_datetime] = date.beginning_of_day..date.end_of_day
     end
 
 
@@ -205,7 +199,7 @@ module Api::Public::V3
         return false
       end
 
-      @conditions[:published_at] =
+      @conditions[:public_datetime] =
         start_date.beginning_of_day..end_date.end_of_day
     end
   end

@@ -5,7 +5,8 @@ class Bio < ActiveRecord::Base
 
   include Concern::Validations::SlugValidation
   include Concern::Associations::RelatedLinksAssociation
-  include Concern::Callbacks::SphinxIndexCallback
+
+  include Concern::Model::Searchable
 
   self.public_route_key = "bio"
 
@@ -44,27 +45,14 @@ class Bio < ActiveRecord::Base
   #----------
 
   def indexed_bylines(page=1, per_page=15)
-    # Sphinx max_matches limits how much it can offset results, so for Bios with a lot
-    # of pages of Bylines, we have to fallback to an actual SQL query if the offset is
-    # too high. Run some Ruby methods on the byines to mimic SQL's order and conditions.
-    if page.to_i > (SPHINX_MAX_MATCHES / per_page.to_i)
-      bylines = self.bylines.includes(:content)
-
-      Kaminari.paginate_array(bylines.select { |b| b.content.published? }
-             .sort_by { |b| b.content.published_at }
-             .reverse)
-             .page(page).per(per_page)
-    else
-      ContentByline.search('',
-        :order        => "published_at #{DESCENDING}",
-        :per_page     => per_page,
-        :page         => page,
-        :with         => {
-          :user_id => self.id,
-          :status  => ContentBase::STATUS_LIVE
-        }
-      )
-    end
+    ContentBase.search('',
+      order:  "public_datetime #{DESCENDING}",
+      per_page:   per_page,
+      page:       page,
+      with: {
+        "attributions.user_id" => self.id
+      }
+    )
   end
 
   #---------------------

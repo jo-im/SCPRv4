@@ -209,6 +209,7 @@ body.short-list {
           width: 103.738317757009%;
           margin-left: -3.738317757009%;
           overflow: hidden;
+          z-index: 1;
           /*
           -------------------------------------------------------------------------------
           The original design for The Short List On The Web sported a very-cinematic,
@@ -226,6 +227,7 @@ body.short-list {
           &.ratio .fill           { padding-top: 42%; }       // Ratio after the 9/15/2014 tall-ification.
           img                     { margin-top: -8%; }        // Clumsy re-"centering".
         }
+        .img-contain              { z-index: 2; }
         &.ratio-squat .photo img  { margin-top: -3%; }
         &.ratio-square .photo img { margin-top: -22.5%; }
         &.ratio-tall .photo img   { margin-top: -42%; }
@@ -234,8 +236,45 @@ body.short-list {
         header,.eisegesis         { width: 48.130841121495%; /* 412 / 856 */ }
         header                    { float: left; }
         h1                        { font-family: $font-freight; font-weight: 300; font-size: 2.5em; /* 40 / 16 */ line-height: 1.125; }
+        h1 a                      { color: black; }
         a                         { color: $blue; }
         a:hover                   { text-decoration: underline; }
+
+        .credit {
+          position: absolute;
+          bottom: 0;
+          right: 0;
+          z-index: 3;
+          display: block;
+          cursor: default;
+          width: 100%;
+          overflow: hidden;
+          box-sizing: border-box;
+          padding-left: 80px;
+          height: 17px;
+          span {
+            position: relative;
+            width: 100%;
+            box-sizing: border-box;
+            text-align: right;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            font: normal 700 0.5625em/1 $font-prox;
+            text-transform: uppercase;
+            letter-spacing: -0.02em;
+            color: rgba(255,255,255,0.7);
+            box-sizing: border-box;
+            display: inline-block;
+          }
+          i {
+            font-style: inherit;
+            display: inline-block;
+            background: rgba(0,0,0,0.35);
+            padding: 4px 6px;
+            box-sizing: border-box;
+          }
+        }
 
         mark {
           display: block;
@@ -245,6 +284,7 @@ body.short-list {
           text-align: center;
           overflow: hidden;
           border-radius: 30px;
+          z-index: 4;
           font-family: $font-prox;
           position: absolute;
           top: -23px;
@@ -594,6 +634,18 @@ body.short-list {
 
 @media screen and (max-width: 699px) {
 
+    .edition-marquee {
+      .titling {
+        h1 {
+          float:none;
+        }
+        h2 {
+          float:none;
+          padding:4px 0 0 0;
+        }
+      }
+    }
+
     .page-cols {
       background: white;
       & > .inner              { background: white; }
@@ -734,7 +786,6 @@ body.short-list {
       position: static;
       min-height: 0;
       h1                { float: none; font-size: 1.3125em; /* 21 / 16 */ font-weight: 700; }
-      h1:before         { content: "The "; }
       h1 span           { display: block; font-weight: 300; padding-top: 4px; }
       h2                { padding: 1px 0 0 0; margin-left: -3px; }
     }

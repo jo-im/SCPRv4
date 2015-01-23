@@ -12,7 +12,7 @@
     <% end %>
       <% if options[:show_byline] %>
         <span class="byline">
-          <%= render_byline article.original_object %>
+          <%= article.byline %>
           <%= smart_date_js article.public_datetime, "data-window" => "8h", "data-relative" => "2h" %>
         </span>
 

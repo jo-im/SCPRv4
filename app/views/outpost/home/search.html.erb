@@ -12,13 +12,11 @@
       </thead>
       <tbody class="list">
         <% @records.each do |record| %>
-          <% next if !record.respond_to?(:admin_edit_path) %>
-
           <tr>
             <td class="column-manage">
-              <%= guarded_link_to record.class, "Edit", record.admin_edit_path, class: "btn" %>
+              <%= guarded_link_to record.class, "Edit", record.edit_path, class: "btn" %>
             </td>
-            <td><%= record.class.to_title %>
+            <td><%= record.klass %>
             <td><%= record.to_title %></td>
             <td><%= display_datetime(record.updated_at) %></td>
           </tr>

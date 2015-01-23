@@ -4,6 +4,11 @@ describe ListenController do
   render_views
 
   describe "GET /index" do
+    before :each do
+      @latest_edition = create :edition, :published, :with_abstract
+      @edition_slots = create_list :edition_slot, 10, edition: @latest_edition
+    end
+
     it "gets schedule for the next 8 hours" do
       t = Time.zone.now - 1.hour
       slot1 = create :schedule_occurrence, starts_at: t, ends_at: t + 2.hours
@@ -13,10 +18,9 @@ describe ListenController do
       assigns(:schedule).should eq [slot1, slot2]
     end
 
-    it "assigns homepage" do
-      homepage = create :homepage, :published
+    it "assigns latest edition" do
       get :index
-      assigns(:homepage).should eq homepage
+      assigns(:latest_edition).should eq @latest_edition
     end
   end
 end

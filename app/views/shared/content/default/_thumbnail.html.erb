@@ -1,7 +1,7 @@
 <div class="cbase thumbnail">
   <h3 class="story-headline"><%= link_to article.short_title, article.public_url %></h3>
   <span class="byline">
-    <%= render_byline article.original_object %>
+    <%= article.byline %>
     | <%= format_date article.public_datetime, format: :full_date, time: true %>
   </span>
 

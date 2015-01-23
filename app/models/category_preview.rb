@@ -28,9 +28,9 @@ class CategoryPreview
     @articles = ContentBase.search({
       :classes    => [NewsStory, BlogEntry, ContentShell, ShowSegment],
       :limit      => limit,
-      :with       => { category: @category.id },
-      :without    => { obj_key: @excludes.map(&:obj_key_crc32) }
-    }).map(&:to_article)
+      :with       => { "category.id" => @category.id },
+      :without    => { obj_key: @excludes.map(&:obj_key) }
+    })
 
     @top_article      = find_top_article
     @bottom_articles  = find_bottom_articles

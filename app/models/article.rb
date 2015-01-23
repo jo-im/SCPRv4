@@ -28,7 +28,10 @@ require 'zlib'
 # This should pretty much match up with what our client API
 # response is, but it doesn't necessarily have to.
 class Article
-  include Concern::Methods::AbstractModelMethods
+  #include Concern::Methods::AbstractModelMethods
+  include ActiveModel::Model
+
+  VERSION = 4
 
   attr_accessor \
     :original_object,
@@ -43,35 +46,29 @@ class Article
     :audio,
     :attributions,
     :byline,
-    :edit_url, # Should this really be an attribute, or should we delegate?
+    :edit_path,
+    :public_path,
     :tags,
-    :feature
-
+    :feature,
+    :created_at,
+    :updated_at,
+    :published,
+    :blog,
+    :show
 
   def initialize(attributes={})
-    @original_object  = attributes[:original_object]
-    @id               = attributes[:id]
-    @title            = attributes[:title]
-    @short_title      = attributes[:short_title]
-    @public_datetime  = attributes[:public_datetime]
-    @teaser           = attributes[:teaser]
-    @body             = attributes[:body]
-    @category         = attributes[:category]
-    @byline           = attributes[:byline]
-    @edit_url         = attributes[:edit_url]
-    @feature          = attributes[:feature]
+    super
 
-    @assets           = Array(attributes[:assets])
-    @audio            = Array(attributes[:audio])
-    @attributions     = Array(attributes[:attributions])
-    @tags             = Array(attributes[:tags])
+    #@assets           = Array(attributes[:assets])
+    #@audio            = Array(attributes[:audio])
+    #@attributions     = Array(attributes[:attributions])
+    #@tags             = Array(attributes[:tags])
   end
 
 
   def to_article
     self
   end
-
 
   def to_abstract
     @to_abstract ||= Abstract.new({
@@ -87,13 +84,217 @@ class Article
     })
   end
 
+  def original_object
+    @original_object ||= Outpost.obj_by_key(self.id)
+  end
+
+  def obj_key
+    self.id
+  end
+
+  def obj_class
+    if @original_object
+      @original_object.class.name.underscore
+    else
+      self.id.split("-")[0]
+    end
+  end
+
+  def cache_key
+    if self.id && self.updated_at
+      "#{self.id}-#{ self.updated_at.to_i }-#{Article::VERSION}"
+    else
+      nil
+    end
+  end
+
+  def public_url
+    # ContentShells give a fully-qualified URL as their public_path. Don't
+    # add on if that's the case
+    if self.public_path =~ /^http/
+      self.public_path
+    else
+      "http://#{Rails.application.default_url_options[:host]}#{self.public_path}"
+    end
+  end
+
+  def edit_url
+    "http://#{Rails.application.default_url_options[:host]}#{self.edit_path}"
+  end
 
   def asset
     @asset ||= self.assets.first || AssetHost::Asset::Fallback.new
   end
 
+  def feature
+    @feature ? ArticleFeature.find_by_key(@feature) : nil
+  end
 
   def obj_key_crc32
     @obj_key_crc32 ||= Zlib.crc32(self.id)
+  end
+
+  # -- getters -- #
+
+  def assets
+    (@assets||[]).collect do |a|
+      ContentAsset.new(a.to_hash.merge({id:a.asset_id}))
+    end
+  end
+
+  def tags
+    (@tags||[]).collect do |t|
+      Tag.new(t.to_hash)
+    end
+  end
+
+  def audio
+    (@audio||[]).collect do |a|
+      Audio.new(a.to_hash)
+    end
+  end
+
+  def attributions
+    (@attributions||[])
+  end
+
+  def category
+    # FIXME: This is a hack while we figure out if a slightly deflated category is breaking the iPad app
+    if @category && !@category.title?
+      @category = Category.find(@category.id)
+    end
+
+    @category
+  end
+
+  # -- setters -- #
+
+  def assets=(assets)
+    @assets = (assets||[]).collect do |a|
+      Hashie::Mash.new(asset_id:a.asset_id, caption:a.caption, position:a.position)
+    end
+  end
+
+  def audio=(audio)
+    @audio = (audio||[]).collect do |a|
+      Hashie::Mash.new(
+        description:  a.description,
+        byline:       a.byline,
+        url:          a.url,
+        size:         a[:size] || a.size,
+        duration:     a.duration,
+        content_type: a.content_type,
+      )
+    end
+  end
+
+  def category=(category)
+    @category =  category ? Hashie::Mash.new(id:category.id, slug:category.slug) : nil
+  end
+
+  def tags=(tags)
+    @tags = (tags||[]).collect do |t|
+      Hashie::Mash.new(slug:t.slug, title:t.title)
+    end
+  end
+
+  def blog=(blog)
+    @blog = blog ? Hashie::Mash.new( id:blog.id, slug:blog.slug, name:blog.name ) : nil
+  end
+
+  def show=(show)
+    @show = show ? Hashie::Mash.new( id:show.id, slug:show.slug, title:show.title ) : nil
+  end
+
+  def attributions=(bylines)
+    @attributions = (bylines||[]).collect do |a|
+      if a.is_a? ContentByline
+        Hashie::Mash.new(name:a.display_name, user_id:a.user_id, role:a.role)
+      else
+        Hashie::Mash.new(name:a.name,user_id:a.user_id,role:a.role)
+      end
+    end
+  end
+
+  def feature=(feature)
+    f = nil
+
+    if feature.is_a?(ArticleFeature)
+      f = feature.key
+    elsif feature.is_a?(String)
+      f = feature
+    else
+      f = nil
+    end
+
+    @feature = f
+  end
+
+  def to_es_bulk_operation
+    [ { index: { _index:ContentBase.es_index, _type:self.obj_class.underscore, _id:self.id } }, self.to_hash ]
+  end
+
+  def to_hash
+    {
+      obj_key:          @id,
+      title:            @title,
+      short_title:      @short_title,
+      public_datetime:  @public_datetime,
+      teaser:           @teaser,
+      body:             @body,
+      category:         @category,
+      byline:           @byline,
+      attributions:     @attributions,
+      feature:          @feature,
+      tags:             @tags,
+      assets:           @assets,
+      audio:            @audio,
+      published:        @published,
+      created_at:       @created_at,
+      updated_at:       @updated_at,
+      edit_path:        @edit_path,
+      public_path:      @public_path,
+      blog:             @blog,
+      show:             @show,
+    }
+  end
+
+  #----------
+
+  def ==(comp)
+    comp.class == self.class && comp.id == self.id
+  end
+
+  # This only needs to be done on initial switchover or on a new environment
+  def self._index_all_articles
+    # make sure our mapping templates are current
+    self._put_article_mapping
+
+    # -- Index Articles -- #
+
+    klasses = ["NewsStory","BlogEntry","ShowSegment","ShowEpisode","ContentShell","Event","PijQuery","Abstract"]
+
+    klasses.each do |k|
+      k.constantize.with_article_includes.find_in_batches(batch_size:1000) do |b|
+        ES_CLIENT.bulk body:b.collect { |s| s.to_article.to_es_bulk_operation }.flatten(1)
+      end
+    end
+  end
+
+  #----------
+
+  def self._put_article_mapping
+    # -- Put our settings and mapping -- #
+
+    ContentBase.es_client.indices.put_template name:"#{ES_PREFIX}-settings", body:{
+      template:"#{ES_PREFIX}-*",
+      settings:{
+        'index.number_of_shards'    => 5,
+        'index.number_of_replicas'  => 1
+      },
+    }
+
+    mapping = JSON.parse(File.read("#{Rails.root}/config/article_mapping.json"))
+    ContentBase.es_client.indices.put_template name:"#{ES_PREFIX}-articles", body:{template:"#{ES_PREFIX}-articles-*",mappings:mapping}
   end
 end

@@ -1,5 +1,5 @@
-DESCENDING = "DESC"
-ASCENDING  = "ASC"
+DESCENDING = "desc"
+ASCENDING  = "asc"
 
 FEATURES = YAML.load_file(Rails.root.join("config/features.yml"))
   .map { |attributes| ArticleFeature.new(attributes) }
@@ -13,8 +13,8 @@ RSS_SPEC = {
   'xmlns:atom'    => "http://www.w3.org/2005/Atom"
 }
 
-SPHINX_MAX_MATCHES = 1000
-STATIC_TABLES      = %w{ permissions }
+MAX_PAGES       = 40
+STATIC_TABLES   = %w{ permissions }
 
 CONNECT_DEFAULTS = {
   :facebook      => "http://www.facebook.com/kpccfm",

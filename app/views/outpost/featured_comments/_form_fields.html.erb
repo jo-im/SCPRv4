@@ -25,7 +25,7 @@
           token: "<%= Rails.application.config.api['kpcc']['private']['api_token'] %>",
           order: "public_datetime",
           sort_mode: "desc",
-          with: { is_live: "1" }
+          with: { published: true }
         }
       }
     );

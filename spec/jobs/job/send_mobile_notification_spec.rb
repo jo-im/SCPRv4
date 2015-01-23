@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe Job::SendMobileNotification do
   subject { described_class }
-  it { subject.queue.should eq "scprv4:mid_priority" }
+  it { subject.queue.should eq Job::QUEUES[:mid_priority] }
 
   before :each do
     stub_request(:post, %r|api\.parse\.com|)

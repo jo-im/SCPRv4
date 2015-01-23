@@ -25,22 +25,17 @@ module Job
   #   immediately. This might be a job which is the user is waiting for
   #   completion before moving on to another task.
   #   There can be any number of high_priority workers running.
-  #
-  # * The special `sphinx` queue is reserved for sphinx indexing *and*
-  #   tasks which rely on an up-to-date index. This needs to be separate
-  #   from the other queues because the order in which the tasks are run
-  #   is crucial. It also should be separate because sphinx indexing
-  #   is happening *constantly*, especially during peak hours (weekdays).
-  #   **There should only be ONE sphinx worker running**.
+
   QUEUES = {
-    :low_priority     => "scprv4:low_priority",
-    :mid_priority     => "scprv4:mid_priority",
-    :high_priority    => "scprv4:high_priority",
-    :sphinx           => "scprv4:sphinx"
+    :low_priority     => "low_priority",
+    :mid_priority     => "mid_priority",
+    :high_priority    => "high_priority",
   }
 
   class Base
     include ::NewRelic::Agent::Instrumentation::ControllerInstrumentation
+
+    SHOULD_RUN_IN_TEST = false
 
     class << self
       # Get the queue based on the defined priority.

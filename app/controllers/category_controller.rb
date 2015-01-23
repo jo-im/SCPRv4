@@ -52,7 +52,7 @@ class CategoryController < ApplicationController
       :classes     => [NewsStory, BlogEntry, ContentShell, ShowSegment],
       :page        => params[:page],
       :per_page    => options[:limit],
-      :with        => { category: @categories.map(&:id) }
+      :with        => { "category.id" => @categories.map(&:id) }
     })
   end
 end

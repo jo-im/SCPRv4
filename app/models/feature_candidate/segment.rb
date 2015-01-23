@@ -11,9 +11,9 @@ module FeatureCandidate
       ContentBase.search({
         :classes    => [ShowSegment],
         :limit      => LIMIT,
-        :with       => { category: @category.id },
-        :without    => { obj_key: @excludes.map(&:obj_key_crc32) }
-      }).first.try(&:to_article)
+        :with       => { "category.id" => @category.id },
+        :without    => { obj_key: @excludes.map(&:obj_key) }
+      }).first
     end
 
     def calculate_score

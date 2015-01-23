@@ -4,7 +4,7 @@ class ContentAsset < ActiveRecord::Base
   self.table_name =  "assethost_contentasset"
   self.versioned_attributes = ["position", "asset_id", "caption"]
 
-  belongs_to :content, polymorphic: true
+  belongs_to :content, polymorphic: true, touch:true
 
   delegate \
     :title,

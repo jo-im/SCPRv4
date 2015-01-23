@@ -1,4 +1,4 @@
-json.cache! [Api::Public::V3::VERSION, "v1", asset] do
+#json.cache! [Api::Public::V3::VERSION, "v1", asset] do
   json.id       asset.id
   json.title    asset.title
   json.caption  asset.caption.present? ? asset.caption : asset.asset.caption
@@ -34,4 +34,4 @@ json.cache! [Api::Public::V3::VERSION, "v1", asset] do
     json.width  asset.full.width
     json.height asset.full.height
   end
-end
+#end

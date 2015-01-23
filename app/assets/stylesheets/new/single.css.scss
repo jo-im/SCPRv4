@@ -402,13 +402,11 @@ body.single .comments {
             width: 100%;
             font-family: $font-freight;
 
-            & > ul, & > div {
-                padding: 0 6% 0 10.21021021021%; // 34 / 333
-            }
+            & > ul, & > div             { padding: 0 6% 0 10.21021021021%; }
+
             header {
                 padding: 6px 5% 13px 13px;
-                background: image-url("i/single-report-icons.png") no-repeat;
-                background-size: 50px 1930px;
+                @include single-report-icons;
                 margin-left: -13px;
                 h1,h2                   { margin-left: 10.21021021021%; } // 34 / 333
                 h1 {
@@ -629,6 +627,37 @@ body.single .comments {
             .contributor        { border-top: 1px solid #cfcfcf; color: #b1b1b1; font-size: 0.8125em; line-height: 1.5; padding: 1em 0 1.5em; }
         }
 
+
+        // "Informed by KPCC listeners" / Public Insight Network citations:
+        .content-partners {
+          margin: 0 0 82px;
+          padding-top: 17px;
+          font: normal 700 1em/1 $font-prox; // In this context, "1em" still equals 15px.
+          a {
+            display: block;
+            @include single-report-icons;
+            background-position: left -2013px;
+            margin-left: -30px;
+            padding-left: 30px;
+          }
+          mark,span     { display: block; }
+          mark          { color: inherit; margin-bottom: 6px; border-top: 1px solid #c1e5f2; padding: 10px 0 0; }
+          span          { font-weight: 400; font-size: 0.86666666666667em; }
+          a:hover       { text-decoration: none; background-position: left -1919px; }
+          a:hover mark  { border-top: 1px solid #f8b684; }
+          a:hover span  { color: #f8b684; }
+        //----------------------------------------------------------------------------------------------------------
+          @media screen and (max-width: 700px) {
+            a             { margin-left: 0; border-top: 1px solid #c1e5f2; }
+            a:hover       { border-top: 1px solid #f8b684; }
+            mark,
+            a:hover mark  { border-top: none; }
+            mark          { padding-top: 12px; margin-bottom: 4px; }
+          }
+        //----------------------------------------------------------------------------------------------------------
+        }
+
+
         // Polldaddy embeds:
         .pds-box {
           width: inherit !important;
@@ -670,7 +699,7 @@ body.single .comments {
             font-size: 0.875em !important;
             padding: 6px 0 0 22px !important;
           }
-        } // Polldaddy  
+        } // Polldaddy
     } // .prose
 
 
@@ -790,8 +819,8 @@ body.single .comments {
           h2        { margin: 6px 8% 0 135px; }
         }
         header {
-            background: image-url("i/single-report-icons.png") no-repeat 0 -512px;
-            background-size: 50px 1930px;
+            @include single-report-icons;
+            background-position: 0 -512px;
             margin: 0 0 0 -13px;
             padding: 9px 0 12px 13px;
             h1 {
@@ -855,6 +884,8 @@ body.single .comments {
 
 
 
+
+
     .related,.previously {
         background: #fdebde;
         margin: 3px 0 20px;
@@ -863,8 +894,8 @@ body.single .comments {
         font-family: $font-freight;
         a:hover                 { text-decoration: none; }
         header {
-            background: image-url("i/single-report-icons.png") no-repeat;
-            background-size: 50px 1930px;
+            @include single-report-icons;
+            background-position: 0 0;
             margin: 0 0 7px -13px;
             padding: 5px 0 5px 13px;
             h1 {
@@ -897,6 +928,16 @@ body.single .comments {
             }
             a:hover mark        { color: black; border-bottom-color: $orange; }
             a:hover span        { color: #ad6631; }
+            .query > span > a { // "Learn More About The Public Insight Network"
+              background: none;
+              background: image-url("i/swoopy-arrow.png") no-repeat right 2px;
+              background-size: 11px 60px;
+              padding-right: 15px;
+              box-sizing: border-box;
+              display: inline-block;
+              color: #e3b18f;
+              &:hover           { color: #51899b; background-position: right -48px; }
+            }
         }
         &.previously {
             padding-bottom: 15px;
@@ -910,7 +951,7 @@ body.single .comments {
                 a:hover time    { color: black; }
             }
         }
-    }
+    }//.related,.previously
 
     .comments-trigger {
         width: 100%;
@@ -1039,7 +1080,7 @@ body.single .comments {
                         .meta       { margin-left: 78px; }
                     }
                     header {
-                        background: image-url("i/single-report-icons.png") no-repeat scroll 0 0 / 50px 1930px rgba(0, 0, 0, 0);
+                        @include single-report-icons;
                         margin-left: -13px;
                         padding: 6px 5% 13px 13px;
                         background-position: 0 -384px;
@@ -1674,10 +1715,10 @@ body.single .quadrant {
     padding-top: 11px;
     margin: 0;
     header      { text-transform: uppercase; }
-    ul li { 
+    ul li {
         clear:both;
-        display: inline; 
-        margin: 0 15px 0 0;  
+        display: inline;
+        margin: 0 15px 0 0;
     }
     a {
         @include texthide;

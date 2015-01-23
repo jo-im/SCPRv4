@@ -6,7 +6,7 @@
     <div class="span12">
       <h1 class="story-headline"><%= link_to article.short_title, article.public_url %></h1>
       <span class="byline">
-        <%= render_byline article.original_object %>
+        <%= article.byline %>
         <%= smart_date_js article.public_datetime, "data-relative" => "2h" %>
       </span>
 

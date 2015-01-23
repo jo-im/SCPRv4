@@ -3,14 +3,16 @@ Scprv4::Application.configure do
   config.eager_load     = true
   config.consider_all_requests_local       = false
   config.action_controller.perform_caching = true
-  config.cache_store = :redis_store, config.secrets["cache"]
-  # config.cache_store = :redis_content_store, "redis://localhost:6379/5"
+  config.cache_store = :dalli_store, config.secrets.cache.servers, config.secrets.cache.options||{}
   config.action_controller.action_on_unpermitted_parameters = :log
 
   config.assets.debug         = false
   config.serve_static_assets  = false
   config.assets.digest        = true
   config.assets.compile       = false
+
+  config.assets.js_compressor  = :uglifier
+  config.assets.css_compressor = :sass
 
   # Specifies the header that your server uses for sending files
   config.action_dispatch.x_sendfile_header = 'X-Accel-Redirect' # for nginx
@@ -30,10 +32,7 @@ Scprv4::Application.configure do
   # Send deprecation notices to registered listeners
   config.active_support.deprecation = :notify
 
-  default_url_options[:host] = "www.scpr.org"
-
-  config.scpr.host         = "www.scpr.org"
-  config.scpr.media_root   = "/scpr/media"
+  config.scpr.media_root   = "/scpr/scprv4_production/media"
   config.scpr.media_url    = "http://media.scpr.org"
   config.scpr.resque_queue = :scprv4
 

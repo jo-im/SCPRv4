@@ -150,6 +150,10 @@ $featuredPrograms: ("offramp","airtalk","the-frame","take-two","filmweek");
   li.facebook a       { background-position: -80px 0; }
   li.facebook a:hover { background-position: -80px -39px; }
 }
+@mixin single-report-icons {
+  background: image-url("i/single-report-icons.png") no-repeat 0 -894px;
+  background-size: 50px 2400px;
+}
 
 
 

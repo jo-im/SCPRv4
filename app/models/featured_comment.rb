@@ -5,7 +5,7 @@ class FeaturedComment < ActiveRecord::Base
   has_status
 
 
-  include Concern::Callbacks::SphinxIndexCallback
+  include Concern::Model::Searchable
   include Concern::Callbacks::HomepageCachingCallback
 
 

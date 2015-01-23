@@ -8,14 +8,14 @@ describe ArticlePresenter do
       related_content  = create :related_content, content: related_story, related: story
       story.related_links.build(title: "Website", url: "http://www.scpr.org/airtalk", link_type: "website")
       p = presenter(story.to_article)
-      p.related_links.should eq "<aside class=\"ancillary related-links\"><header>Related Links</header><nav><ul><li class=\"track-event\" data-ga-action=\"Clickthrough\" data-ga-category=\"Article\" data-ga-label=\"Related\"><a href=\"#{related_story.public_path}\"><h1><span>Test Short Headline</span></h1><p><mark>Article</mark></p></a></li><li class=\"track-event\"><a href=\"http://www.scpr.org/airtalk\"><h1><span>Website</span></h1><p><mark>Article</mark></p></a></li></ul></nav></aside>".html_safe
+      p.related_links.should eq "<aside class=\"related\"><header><h1>Related Links</h1></header><nav><ul><li class=\"track-event\" data-ga-action=\"Clickthrough\" data-ga-category=\"Article\" data-ga-label=\"Related\"><a href=\"#{related_story.public_path}\"><mark>Test Short Headline</mark><span>Article</span></a></li><li class=\"track-event\"><a href=\"http://www.scpr.org/airtalk\"><mark>Website</mark><span>Article</span></a><span></span></li></ul></nav></aside>".html_safe
     end
 
     it "returns html_safe related links with a header if present and related_content is absent" do
       story = create :news_story, :published
       story.related_links.build(title: "Website", url: "http://www.scpr.org/airtalk", link_type: "website")
       p = presenter(story.to_article)
-      p.related_links.should eq "<aside class=\"ancillary related-links\"><header>Related Links</header><nav><ul><li class=\"track-event\"><a href=\"http://www.scpr.org/airtalk\"><h1><span>Website</span></h1><p><mark>Article</mark></p></a></li></ul></nav></aside>"
+      p.related_links.should eq "<aside class=\"related\"><header><h1>Related Links</h1></header><nav><ul><li class=\"track-event\"><a href=\"http://www.scpr.org/airtalk\"><mark>Website</mark><span>Article</span></a><span></span></li></ul></nav></aside>"
     end
 
     it "returns html_safe list of related content with a header if present and related links are absent" do

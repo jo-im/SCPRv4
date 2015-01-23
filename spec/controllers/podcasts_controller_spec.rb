@@ -40,29 +40,17 @@ describe PodcastsController do
       response.should redirect_to podcast.podcast_url
     end
 
-    context "sphinx search" do
-      before :all do
-        setup_sphinx
-      end
-
-      after :all do
-        teardown_sphinx
-      end
-
+    context "Content search" do
       it "assigns the content for entry" do
         entry   = create :blog_entry
         audio   = create :audio, :uploaded, content: entry
 
         entry.reload
 
-        index_sphinx
-
         podcast = create :podcast, slug: "podcast", source: entry.blog
 
-        ts_retry(2) do
-          get :podcast, slug: "podcast"
-          response.body.should match entry.headline
-        end
+        get :podcast, slug: "podcast"
+        response.body.should match entry.headline
 
         purge_uploaded_audio
       end
@@ -70,17 +58,14 @@ describe PodcastsController do
       it "assigns the content for episode" do
         episode   = create :show_episode
         audio     = create :audio, :uploaded, content: episode
-        index_sphinx
 
         podcast = create :podcast,
           :slug         => "podcast",
           :source       => episode.show,
           :item_type    => "episodes"
 
-        ts_retry(2) do
-          get :podcast, slug: "podcast"
-          response.body.should match episode.headline
-        end
+        get :podcast, slug: "podcast"
+        response.body.should match episode.headline
 
         purge_uploaded_audio
       end

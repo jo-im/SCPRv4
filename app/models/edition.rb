@@ -12,7 +12,7 @@ class Edition < ActiveRecord::Base
   include Concern::Associations::ContentAlarmAssociation
   include Concern::Callbacks::SetPublishedAtCallback
   include Concern::Callbacks::TouchCallback
-  include Concern::Callbacks::SphinxIndexCallback
+  include Concern::Model::Searchable
   include Concern::Scopes::PublishedScope
   include Concern::Methods::EloquaSendable
 
@@ -41,6 +41,8 @@ class Edition < ActiveRecord::Base
     'weekend-reads' => 'Weekend Reads'
   }
 
+  scope :recently, ->{ where("published_at > ?", 3.hours.ago) }
+
   has_many :slots,
     -> { order('position') },
     :class_name   => "EditionSlot",
@@ -55,7 +57,6 @@ class Edition < ActiveRecord::Base
     :if         => :should_validate?
 
   after_save :async_send_email, if: :should_send_email?
-
 
   class << self
     def titles_collection
@@ -120,7 +121,7 @@ class Edition < ActiveRecord::Base
   # edition without any abstracts would be a mistake, so errors are okay now.
   # Maybe we should just validate that at least one item slot is present.
   def as_eloqua_email
-    subject = "#{self.title}: #{self.abstracts.first.headline}"
+    subject = "#{self.title}"
 
     {
       :html_body => view.render_view(

@@ -22,7 +22,7 @@ class ContentByline < ActiveRecord::Base
 
   ROLES = ROLE_TEXT.map { |k,v| [v, k] }[0..2] # TODO this is terrible
 
-  belongs_to :content, polymorphic: true
+  belongs_to :content, polymorphic: true, touch:true
   belongs_to :user, class_name: "Bio"
 
   self.versioned_attributes = ["name", "role", "user_id"]

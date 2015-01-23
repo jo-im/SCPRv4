@@ -4,8 +4,9 @@ class Blog < ActiveRecord::Base
   has_secretary
 
   include Concern::Validations::SlugValidation
-  include Concern::Callbacks::SphinxIndexCallback
   include Concern::Associations::RelatedLinksAssociation
+
+  include Concern::Model::Searchable
 
   self.public_route_key = "blog"
 
