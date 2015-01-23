@@ -23,9 +23,9 @@ module Job
 
         data = silence_stream(STDOUT) { task.fetch(api_params) }
 
-        articles = task.parse(data['rows']).sort_by { |obj|
+        articles = task.parse(data['rows']).uniq {|obj| obj.obj_key }.sort_by { |obj|
           -obj.public_datetime.to_i
-        }.map(&:to_article)
+        }
 
         Rails.cache.write("popular/viewed", articles)
 
