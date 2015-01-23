@@ -188,12 +188,12 @@ REPORT
   }//.prose
 
   .prose-body,
-  .related-links,
+  .related,
   .episode-contents     { -webkit-font-smoothing: antialiased; }
 
   .supportive           { width: 34.153846153846%; border-top: 0; }
 
-  .related-links {
+  .related {
     @include related-link-icons;
     li              { list-style: none; margin: 0 0 14px; display: block; }
     a               { display: block; box-sizing: border-box; padding-left: 30px; margin-left: -30px; color: #333; }
