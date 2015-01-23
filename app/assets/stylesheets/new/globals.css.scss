@@ -12,7 +12,7 @@ $orange: #f17b21;
 
 // Mixins
 @mixin related-link-icons {
-  a               { background: image-url("i/single-report-icons.png") no-repeat 0 -894px; background-size: 50px 1930px; }
+  a               { background: image-url("i/single-report-icons.png") no-repeat 0 -894px; background-size: 50px 2400px; }
   .article a      { background-position: 0 -894px; }
   .slideshow a    { background-position: 0 -988px; }
   .video a		    { background-position: 0 -1082px; }
