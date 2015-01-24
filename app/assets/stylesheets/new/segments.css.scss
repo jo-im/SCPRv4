@@ -198,16 +198,21 @@ REPORT
     @include related-link-icons;
     header { 
       background-image: none; 
+      margin-bottom: 0;
+      padding-top: 0;
+      padding-bottom: 0;
       h1 { color: $orange; font: normal bold 1em/1.1 $font-prox; margin-left: 0; text-transform: none; }
     }
+    nav             { margin: 0; }
     li              { list-style: none; margin: 0 0 14px; display: block; }
     a               { display: block; box-sizing: border-box; padding-left: 30px; margin-left: -30px; color: #333; }
     h1              { font: normal 1em/1.1 $font-freight; }
     p               { margin: 0; padding: 7px 0 0; font: normal 0.6875em/1 $font-prox; color: #b8b8b8; }
     p > *           { white-space: nowrap; }
-    mark            { color: $orange; padding-right: 4px; }
+    mark            { border-bottom: 0; color: #333; display: inline-block; vertical-align: top; }
+    a span          { color: $orange; display: block; font: normal 0.75em/1 $font-prox; margin-top: -4px; padding-right: 4px; text-transform: none; }
     a:hover         { text-decoration: none; color: black; }
-    a:hover h1 span { box-shadow: inset 0 -2px 0 white, inset 0 -3px 0 rgba(0,0,0,0.3); }
+    a:hover mark    { box-shadow: inset 0 -2px 0 white, inset 0 -3px 0 rgba(0,0,0,0.3); }
     a:hover p       { color: $orange; }
   }
 
@@ -304,7 +309,7 @@ REPORT
 //-------------------------------------------------------------------------------------
       @media screen and (max-width: 780px)  {
 
-        .related-links a,
+        .related a,
         .episode-contents nav a           { margin-left: 0; }
         .episode-contents > header cite   { padding: 5px 0 0 0; display: block; }
 
