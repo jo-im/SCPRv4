@@ -10,6 +10,7 @@ module ContentBase
 
   extend self
 
+  STATUS_DRAFT = 0
   STATUS_LIVE = 5
 
   # Classes which are safe to fetch on the frontend.

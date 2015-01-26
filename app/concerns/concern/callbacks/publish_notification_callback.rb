@@ -24,7 +24,7 @@ module Concern
         elsif self.unpublishing?
           Job::PublishNotification.enqueue("Unpublished: <#{self.admin_edit_url}|#{self.to_title}>")
 
-        elsif self.status_changed?
+        elsif self.status_changed? && self.status != ContentBase::STATUS_DRAFT
           Job::PublishNotification.enqueue("Status Changed to #{self.status_text}: <#{self.admin_edit_url}|#{self.to_title}>")
         end
       end
