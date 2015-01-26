@@ -271,10 +271,10 @@ module ApplicationHelper
 
   #----------
 
-  def latest_news(limit=2)
+  def latest_news
     ContentBase.search({
       :classes  => [NewsStory, BlogEntry, ShowSegment, ContentShell],
-      :limit    => limit,
+      :limit    => 2,
       :with     => { "category.slug" => true },
     })
   end
