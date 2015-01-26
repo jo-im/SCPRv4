@@ -1,7 +1,7 @@
 <% article = article.to_article %>
-<% present article do |article_presenter| %>
-    <%= article_presenter.asset_display %>
-<% end %>
+
+<%= render_asset article.original_object, context:"news", fallback:true %>
+
 <div class="report">
     <div class="inner bound clearfix">
         <article class="prose">
@@ -23,14 +23,13 @@
                     </nav>
                 <% end %>
 
-                <%= render 'shared/new/social_share', article: article %>
+                <%= render 'shared/new/social_share', article: article, cssClass: "share" %>
             </div><!--/ .marginal-tools -->
 
             <div class="prose-body">
-                <% if article.original_object.assets.present? %>
-                    <% present article do |article_presenter| %>
-                        <%= article_presenter.inline_asset %>
-                    <% end %>
+
+                <% if should_inline_asset_for(article.original_object) %>
+                  <%= render_asset article, context:"news", display:"inline" %>
                 <% end %>
 
                 <%= article.body.html_safe %>
@@ -42,11 +41,9 @@
                 <%= pij_source(article.original_object) %>
             </div><!--/ .prose-body -->
 
-            <% present article do |article_presenter| %>
-                <%= article_presenter.related_links %>
-            <% end %>
+            <%= render 'shared/cwidgets/related_links', content:article.original_object %>
 
-            <%= render 'shared/new/social_share', article: article %>
+            <%= render 'shared/new/social_share', article: article, cssClass: "share" %>
 
             <footer class="comments-jump">
                 <a href="#comments">
@@ -62,4 +59,3 @@
             -->
 
         </article>
-

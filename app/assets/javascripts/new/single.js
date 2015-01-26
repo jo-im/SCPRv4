@@ -43,6 +43,51 @@ scpr.Behaviors.Single = {
 
 
 
+        //  ================================================
+        //  Segment: Hold off on fun CSS animation until it's safely in view
+        //  ------------------------------------------------
+        if($("body").hasClass("segment") && $(".audio-actuator").length) {
+
+          $(".audio-actuator").waypoint(function() {
+            if(!$(".audio-actuator").hasClass("in-view")) {
+              $(".audio-actuator").addClass("in-view");
+            }
+          }, { offset: "bottom-in-view" });
+
+          /*
+          --------------------------------------------------------------------------------------
+          Wait, do you even know what a CSS3 animation *is*? Oh, god, you don't? Ugh. Cripes.
+          -------------------------------------------------------------------------------------- */
+          if (Modernizr.cssanimations) {
+            // Great! Move along. Enjoy your animations.
+          } else {
+            $(".audio-actuator").addClass("no-animation");
+          }/*
+          -------------------------------------------------------------------------------------- */
+
+        } // has segment, has audio-actuator
+
+
+
+
+
+
+
+        //  ================================================
+        //  Segment & Episode: No typographic orphans!
+        //  ------------------------------------------------
+        //  credit: https://github.com/nathanford/widowtamer
+        //  ---------------------------------------------------------
+        wt.fix({
+          elements: ".appellation h1",
+          chars: 10,
+          method: "padding-right",
+          event: "resize"
+        });
+
+
+
+
 
         //	================================================
         //	Tables need labels
@@ -67,10 +112,8 @@ scpr.Behaviors.Single = {
         //  ================================================
         //  Single: An article's first paragraph should be magical
         //  ------------------------------------------------
-            if(!$(".prologue").hasClass("austere")) {
-                if ($(".report .prose-body p").length) {
-                    $(".report .prose p:first").addClass("inaugural");
-                }
+            if(!$(".prologue").hasClass("austere") && $(".report .prose-body p").length) {
+                $(".report .prose-body > p:first").addClass("inaugural");
             }
 
 
@@ -168,6 +211,7 @@ scpr.Behaviors.Single = {
                     // wait 0.5 secs to let AdHost load in any pushdown campaigns
                     setTimeout(function(){
                         var topOffset = $(".masthead").height() + $("#global-pushdown").height() - 10;
+                        if($("body").hasClass("segment")) { topOffset = topOffset + 25; }
                         $(".placard:first").css("top", topOffset);
                     }, 500);
                 }
@@ -178,6 +222,7 @@ scpr.Behaviors.Single = {
                 function adRepositioner() {
                     if ($(".report .supportive").css("float") == "none" ){
                         var topOffset = $(".masthead").height() - 10;
+                        if($("body").hasClass("segment")) { topOffset = topOffset + 25; }
                         $(".placard:first").css("top", topOffset);
                     } else {
                         $(".placard:first").css("top", "auto");
@@ -218,7 +263,7 @@ scpr.Behaviors.Single = {
         //  ================================================
         //  Single: Check up on the curated title length
         //  ------------------------------------------------
-            if($("body").hasClass("single")){
+            if($("body").hasClass("single") && $(".prologue").length){
                 var charcount = $(".prologue h1").html().length;
                 if(charcount > 82)                          { $(".prologue .title").addClass("verbose"); }
             }

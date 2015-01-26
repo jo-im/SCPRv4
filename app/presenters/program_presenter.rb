@@ -21,50 +21,56 @@ class ProgramPresenter < ApplicationPresenter
 
   def web_link
     if link = program.get_link("website")
-      h.link_to "Website", link,
-        :target => "_blank",
-        :class  => "archive with-icon"
+      h.content_tag :li, class: "site" do
+        h.link_to "Website", link,
+          :class  => "archive with-icon"
+      end
     end
   end
 
   def facebook_link
     if link = program.get_link("facebook")
-      h.link_to "Facebook", link,
-        :target => "_blank",
-        :class  => "facebook with-icon"
+      h.content_tag :li, class: "facebook" do
+        h.link_to "Facebook", link,
+          :class  => "facebook with-icon"
+      end
     end
   end
 
   def podcast_link
     if link = abstract_program.podcast_url
-      h.link_to "Podcast", link,
-        :target => "_blank",
-        :class  => "podcast with-icon"
+      h.content_tag :li, class: "podcast" do
+        h.link_to "Podcast", link,
+          :class  => "podcast with-icon"
+      end
     end
   end
 
   def rss_link
     if link = abstract_program.rss_url
-      h.link_to "RSS", link,
-        :target => "_blank",
-        :class  => "rss with-icon"
+      h.content_tag :li, class: "rss" do
+        h.link_to "RSS", link,
+          :class  => "rss with-icon"
+      end
     end
   end
 
   def twitter_link
     if link = program.get_link("twitter")
-      h.link_to "@#{link}",
-        h.twitter_profile_url(link),
-        :target => "_blank",
-        :class  => "twitter with-icon"
+      h.content_tag :li, class: "twitter" do
+        h.link_to "@#{link}",
+          h.twitter_profile_url(link),
+          :class  => "twitter with-icon"
+      end
     end
   end
 
   def email_link
     if link = program.get_link("email")
-      h.link_to "Email", link,
-        :target => "_blank",
-        :class  => "email with-icon"
+      h.content_tag :li, class: "email" do
+        h.link_to "Email", link,
+          :class  => "email with-icon"
+      end
     end
   end
 

@@ -1236,6 +1236,7 @@ Don't like this show? That's fine, here's four others.
     border-bottom: 1px solid #333333;
     margin-bottom: 31px;
     h1              { font: normal 300 1.75em/1.1 $font-freight; color: #919191; }
+    cite            { font-weight: inherit; }
   }
   .troupe           { padding-bottom: 46px; }
   article {
@@ -1243,7 +1244,7 @@ Don't like this show? That's fine, here's four others.
     float: left;
     margin-right: 2.461538461538%; // 32 / 1300
     &:last-child    { margin-right: 0; float: right; }
-    a               { display: block; }
+    a               { display: block; min-height: 140px; }
     .photo          { margin-bottom: 12px; }
     .ratio .fill    { padding-top: 24.252491694352%; }
     h1,h2,h3,dt     { font-weight: 700; line-height: 1; }
@@ -1314,7 +1315,14 @@ OTHER-PROGRAMS MEDIA QUERIES
 //----------------------------------------------------------------------------------
   @media screen and (max-width: 500px) {
 
-    article               { width: 100%; float: none; margin: 0 0 40px; }
+    article               { 
+      width: 100%; 
+      float: none; 
+      margin: 0 0 40px; 
+      a {
+        min-height: inherit;
+      }
+    }
     footer                { font-size: 1em; }
 
   }

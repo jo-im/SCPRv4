@@ -135,14 +135,14 @@ describe ProgramsController do
 
         it "renders the correct kpcc template" do
           get :show, show: @program.slug
-          response.should render_template "programs/kpcc/show"
+          response.should render_template "programs/kpcc/old/show"
         end
       end
 
       context "xml" do
         it "renders xml template" do
           get :show, show: @program.slug, format: :xml
-          response.should render_template 'programs/kpcc/show'
+          response.should render_template 'programs/kpcc/old/show'
           response.header['Content-Type'].should match /xml/
         end
 
@@ -288,7 +288,7 @@ describe ProgramsController do
 
       it "renders the correct kpcc template" do
         get :featured_program, show: @program.slug
-        response.should render_template "programs/kpcc/new/#{@program.slug}"
+        response.should render_template "programs/kpcc/#{@program.slug}"
       end
     end
   end

@@ -552,6 +552,11 @@ body.single .comments {
         }
     }
 
+    /*
+    ------------------------------------------------------------------------------------------------------
+    Deprecated by JPW on 2015-01-26.
+    This chunk no longer describes any component that's actually used on the site any more.
+    ------------------------------------------------------------------------------------------------------
     .audio {
         header h1 { margin-bottom: 0; }
         padding: 26px 0 35px;
@@ -590,6 +595,7 @@ body.single .comments {
             }
         }
     }
+    */
 
     .prose {
         width: 48.923076923077%; // 636 / 1300 ...It's really 634, plus 2 for a cosmetic text-catching nudge
@@ -615,7 +621,7 @@ body.single .comments {
         ol,ol li                { list-style: decimal outside; }
         ol li                   { margin: 0 0 0.7em 2em; }
         h2,h3                   { font-family: $font-freight; }
-        h2                      { color: $orange; font-weight: 600; font-size: 1.3em; }
+        h2                      { color: $orange; font-weight: 600; font-size: 1.3em; line-height: 1.25; }
         h3                      { color: black; font-weight: 700; text-transform: uppercase; font-size: 0.9375em; }
         h6 /* legacy */         { font-family: $font-prox; margin-bottom: 1em; text-transform: uppercase; font-weight: 700; font-size: 0.875em; }
         blockquote:not(.ornate) { border-left: 2px solid $orange; padding-left: 1em; margin-bottom: 2.5em; margin-left: 0.65em; }
@@ -626,7 +632,7 @@ body.single .comments {
             & .embed-wrapper    { clear: both; }
             .contributor        { border-top: 1px solid #cfcfcf; color: #b1b1b1; font-size: 0.8125em; line-height: 1.5; padding: 1em 0 1.5em; }
         }
-        
+
 
         // "Informed by KPCC listeners" / Public Insight Network citations:
         .content-partners {
@@ -699,7 +705,7 @@ body.single .comments {
             font-size: 0.875em !important;
             padding: 6px 0 0 22px !important;
           }
-        } // Polldaddy  
+        } // Polldaddy
     } // .prose
 
 
@@ -912,32 +918,31 @@ body.single .comments {
             li,a,mark,span      { display: block; }
             ul li               { margin: 0 0 12px 0; }
             ul li:last-child    { margin-bottom: 0; }
-            mark                { color: #656565; line-height: 1.1; padding-bottom: 2px; border-bottom: 1px solid #f6e3d6; }
-            a                   { padding: 0 0 0 25px; @include single-report-icons; }
-            .article a          { background-position: 0 -894px; }
-            .slideshow a        { background-position: 0 -988px; }
-            .video a		        { background-position: 0 -1082px; }
-            .poll a			        { background-position: 0 -1176px; }
-            .map a			        { background-position: 0 -1270px; }
-            .audio a		        { background-position: 0 -1364px; }
-            .infographic a	    { background-position: 0 -1458px; }
-            .taketwo a		      { background-position: 0 -1552px; }
-            .airtalk a		      { background-position: 0 -1646px; }
-            .offramp a		      { background-position: 0 -1740px; }
-            .outbound a         { background-position: 0 -1834px; }
-            .query > a          { background-position: 0 -1928px; }
-            span                { text-transform: uppercase; color: #bca18d; font-weight: 700; font-size: 0.625em; }
+            mark {
+                color: #656565;
+                line-height: 1.1;
+                padding-bottom: 2px;
+                border-bottom: 1px solid #f6e3d6;
+            }
+            @include related-link-icons;
+            a               { padding: 0 0 0 25px; }
+            span {
+                text-transform: uppercase;
+                color: #bca18d;
+                font-weight: 700;
+                font-size: 0.625em;
+            }
             a:hover mark        { color: black; border-bottom-color: $orange; }
             a:hover span        { color: #ad6631; }
             .query > span > a { // "Learn More About The Public Insight Network"
               background: none;
-              background: image-url("i/swoopy-arrow.png") no-repeat right 2px;
+              background: image-url("i/swoopy-arrow.png") no-repeat right 3px;
               background-size: 11px 60px;
               padding-right: 15px;
               box-sizing: border-box;
               display: inline-block;
               color: #e3b18f;
-              &:hover           { color: #51899b; background-position: right -48px; }
+              &:hover           { color: #51899b; background-position: right -47px; }
             }
         }
         &.previously {
@@ -1716,10 +1721,10 @@ body.single .quadrant {
     padding-top: 11px;
     margin: 0;
     header      { text-transform: uppercase; }
-    ul li { 
+    ul li {
         clear:both;
-        display: inline; 
-        margin: 0 15px 0 0;  
+        display: inline;
+        margin: 0 15px 0 0;
     }
     a {
         @include texthide;
@@ -1750,7 +1755,7 @@ body.single .quadrant {
 .report .prose .share,
 .report .prose .audio-queue {
     font-family: $font-prox;
-    header {
+    h1 {
         line-height: 0.9;
         text-transform: uppercase;
         font-weight: 700;

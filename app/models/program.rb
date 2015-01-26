@@ -34,6 +34,7 @@ class Program
     :source,
     :title,
     :slug,
+    :teaser,
     :description,
     :host,
     :air_status,

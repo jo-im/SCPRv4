@@ -19,27 +19,31 @@ describe ShowSegment do
 
   #------------------
 
-  describe "#sister_segments" do
+  describe "#episode_segments" do
     it "uses the other segments from the episode if episodes exist" do
       episode = build :show_episode
       segments = create_list :show_segment, 3
       episode.segments = segments
       episode.save!
 
-      episode.segments.last.sister_segments.should eq episode.segments.first(2)
+      episode.segments.last.episode_segments.should eq episode.segments.first(3)
     end
 
     it "uses the 5 latest segments from its program if no episodes exist" do
       program = create :kpcc_program
       create_list :show_segment, 7, show: program
-      program.segments.published.last.sister_segments.should eq program.segments.published.first(5)
-      program.segments.published.first.sister_segments.should eq program.segments.published[1..5]
+      program.segments.published.last.episode_segments.should eq program.segments.published.first(5)
+      program.segments.published.first.episode_segments.should eq program.segments.published[1..5]
     end
+  end
 
-    it "does not include itself" do
+  #------------------
+
+  describe '#recent_show_segments' do
+    it 'finds 3 latest segments within the same program' do
       program = create :kpcc_program
-      create_list :show_segment, 3, show: program
-      program.segments.first.sister_segments.should_not include program.segments.first
+      create_list :show_segment, 5, show: program
+      program.segments.published.first.recent_show_segments.should eq program.segments.published[1..3]
     end
   end
 

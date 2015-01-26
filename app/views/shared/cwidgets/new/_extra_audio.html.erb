@@ -1,0 +1,18 @@
+<% if article.audio.size > 1 %>
+  <aside class="bonus-audio">
+    <h1>This story contains bonus audio</h1>
+    <ul>
+      <% article.audio[1..-1].each do |audio| %>
+        <% url = url_with_params(audio.url, context: options[:context], via: 'website') %>
+        <li class="story-audio">
+          <a href="<%= url %>" class="play-btn audio-toggler" title="<%= h(audio.description) %>" data-duration="<%= audio.duration %>">
+            <mark><%= audio.description.blank? ? 'Listen now' : audio.description %></mark> 
+            <span><%= format_duration(audio.duration) %></span>
+          </a>
+        </li>
+      <% end %>
+    </ul>
+  </aside>
+<% end %>
+
+

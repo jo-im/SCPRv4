@@ -1,38 +1,38 @@
+<% add_to_page_title @program.title %>
 <% add_to_page_title @segment.headline %>
+<% content_for :body_class, 'interior single segment' %>
 <% content_for :opengraph do %><%= render_content @segment, "opengraph" %><% end %>
 <%= render 'shared/ads/dfp_script_config', category: @segment.category %>
 
-<%= cache ["show", "v12", @segment] do %>
-  <%= render "programs/kpcc/segment", segment: @segment %>
+<% content_for :titling do %>
+    <%= render :partial => 'shared/new/masthead/program_content_titling' %>
 <% end %>
 
-<div class="fold" id="fold">
-  <%= render "shared/related_content_and_links", content: @segment %>
 
-  <aside class="other-segments" id="other-segments">
-    <div class="row-fluid">
-      <div class="span6 row-title">
-        <h6>More from this <%= @segment.episodes.present? ? "Episode" : "Program" %></h6>
-      </div>
-      <div class="span18">
-        <ul>
-          <% @segment.sister_segments.each do |segment| %>
-            <li><%= link_to segment.short_headline, segment.public_path %></li>
-          <% end %>
-        </ul>
-      </div>
-    </div> <!-- row fluid -->
-  </aside>
-  <div class="comment-wrap">
-    <div class="row-fluid">
-      <div class="span6 row-title" id="fold-comments-count-widget">
-        <%= comment_widget_for @segment, cssClass: "left-side", name: "comments" %>
-      </div>
-      <div class="span18 mq-solo-span">
-        <%= comments_for @segment, header: false , templateLayout: "old" %>
-      </div>
-    </div> <!-- row-fluid -->
+<%= cache ["show", "article-content", "v13", @segment] do %>
+    <%= render "programs/kpcc/segment", article: @segment, full: true %>
+<% end %>
+
+<% cache ["show", "article-supportive", "v16", @segment] do %>
+    <%= render "programs/kpcc/program_supportive" %>
+
   </div>
-</div>
+</div><!--/ .report -->
 
-<%= render 'shared/scripts/embedder' %>
+<!-- AdHost Slot: Membership Appeals -->
+<div id="article-membership-appeal"></div>
+
+<div class="placard-waystation"></div>
+<% end %>
+
+<%= comments_for @segment, header: false %>
+
+<% cache ["show", "featured-programs", "v16", @featured_programs] do %>
+  <%= render 'programs/kpcc/featured_programs' %>
+<% end %>
+
+<% if @popular_articles %>
+  <%= render 'shared/new/popular_articles',
+      articles: @popular_articles.first(4),
+      header: 'Popular Now on KPCC' %>
+<% end %>

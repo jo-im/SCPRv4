@@ -1,0 +1,17 @@
+<figure class="lead-asset">
+    <div class="video">
+        <div class="media-scaler">
+            <%= article.assets.first.full.tag %>
+        </div>
+    </div><!--/ .video -->
+  <figcaption class="clearfix">
+    <div>
+      <span class="brief"><%= article.asset.caption %></span>
+      <span class="credit"><%= article.asset.owner %></span>
+    </div>
+  </figcaption>
+</figure>
+
+<script>
+  ahClient = new AssetHost.Client();
+</script>

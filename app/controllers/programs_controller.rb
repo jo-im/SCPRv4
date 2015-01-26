@@ -4,8 +4,10 @@
 # basically split every action into two.
 class ProgramsController < ApplicationController
   include Concern::Controller::GetPopularArticles
+  layout 'new/single', only: [:segment]
+
   before_filter :get_program, only: [:show, :episode, :archive, :featured_program, :featured_show]
-  before_filter :get_popular_articles, only: [:featured_program]
+  before_filter :get_popular_articles, only: [:featured_program, :segment]
 
   respond_to :html, :xml, :rss
 
@@ -30,10 +32,10 @@ class ProgramsController < ApplicationController
           end
 
           @episodes = @episodes.page(params[:page]).per(6)
-          render 'programs/kpcc/show'
+          render 'programs/kpcc/old/show'
         end
 
-        format.xml { render 'programs/kpcc/show' }
+        format.xml { render 'programs/kpcc/old/show' }
       end
 
       return
@@ -80,7 +82,8 @@ class ProgramsController < ApplicationController
 
   def segment
     @segment = ShowSegment.published.includes(:show).find(params[:id])
-    @program = @kpcc_program = @segment.show.to_program
+    @program = @kpcc_program = @segment.show
+    @featured_programs = KpccProgram.where.not(id: @program.id, is_featured: false).first(4)
 
     # check whether this is the correct URL for the segment
     if request.original_fullpath != @segment.public_path
@@ -99,7 +102,7 @@ class ProgramsController < ApplicationController
       if @program.is_segmented?
         render 'programs/kpcc/episode' and return
       else
-        render 'programs/kpcc/episode_standalone'
+        render 'programs/kpcc/old/episode_standalone'
       end
     end
 
@@ -129,10 +132,10 @@ class ProgramsController < ApplicationController
           @segments = @segments.page(params[:page]).per(10)
           @episodes = @episodes.page(params[:page]).per(6)
 
-          render 'programs/kpcc/featured_show'
+          render 'programs/kpcc/old/featured_show'
         end
 
-        format.xml { render 'programs/kpcc/show' }
+        format.xml { render 'programs/kpcc/old/show' }
       end
 
       return
@@ -190,7 +193,7 @@ class ProgramsController < ApplicationController
   end
 
   def handle_program_template
-    template = "programs/kpcc/new/#{@program.slug}"
+    template = "programs/kpcc/#{@program.slug}"
 
     if template_exists?(template)
       render(
@@ -198,7 +201,7 @@ class ProgramsController < ApplicationController
         :template => template
       )
     else
-      render 'programs/kpcc/show'
+      render 'programs/kpcc/old/show'
     end
 
   end

@@ -1,6 +1,9 @@
 <% add_to_page_title @vertical.title %>
 <% meta_tags(url: @vertical.public_url) %>
 <% content_for :body_class, "landing #{@vertical.slug}" %>
+<% content_for :titling do %>
+    <%= render :partial => 'shared/new/masthead/news_titling' %>
+<% end %>
 
 <% content_for :footer_sponsors do %>
 <aside class="grant">

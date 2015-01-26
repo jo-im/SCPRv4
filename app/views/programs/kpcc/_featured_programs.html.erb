@@ -1,0 +1,32 @@
+<section class="other-programs">
+  <header><h1 class="bound">Enjoy <cite><%= @program.title %></cite>? Try KPCC’s other programs.</h1></header>
+  <div class="inner bound">
+    <div class="troupe clearfix">
+      <% @featured_programs.each do |program| %>
+        <% latest_episode = program.episodes.published.first.try(:to_article) %>
+        <article>
+          <figure class="photo ratio">
+            <div class="fill"></div>
+            <b class="img-contain"><a href="<%= program.public_path %>"><%= image_tag "programs/#{program.slug}.jpg" %></a></b>
+          </figure>
+          <a href="<%= program.public_path %>">
+            <h1><%= program.title %></h1>
+            <h2>With <%= program.host %></h2>
+            <h3><%= program.airtime %></h3>
+            <p><%= program.teaser.html_safe %></p>
+          </a>
+          <% if latest_episode.present? %>
+            <a href="<%= latest_episode.public_path %>">
+              <dl>
+                <dt><mark>Latest</mark> <time datetime="<%= format_date(latest_episode.public_datetime, with: '%F') %>"><%= format_date(latest_episode.public_datetime, with: '%b. %-d') %></time></dt>
+                <dd><%= latest_episode.short_title %></dd>
+              </dl>
+            </a>
+          <% end %>
+        </article>
+      <% end %>
+
+    </div>
+    <footer><a href="/programs">See all of our programs</a></footer>
+  </div>
+</section><!--/ .other-programs -->

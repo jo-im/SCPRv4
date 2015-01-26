@@ -27,6 +27,7 @@ class ShowSegment < ActiveRecord::Base
   include Concern::Callbacks::GenerateSlugCallback
   include Concern::Callbacks::GenerateShortHeadlineCallback
   include Concern::Callbacks::GenerateTeaserCallback
+  include Concern::Callbacks::GenerateBodyCallback
   #include Concern::Callbacks::CacheExpirationCallback
   include Concern::Callbacks::PublishNotificationCallback
   include Concern::Model::Searchable
@@ -70,16 +71,19 @@ class ShowSegment < ActiveRecord::Base
   end
 
 
-  def sister_segments
-    @sister_segments ||= begin
+  def episode_segments
+    @episode_segments ||= begin
       if episodes.present?
         episode.segments.published
-          .where("shows_segment.id != ?", self.id)
       else
         show.segments.published
           .where("shows_segment.id != ?", self.id).limit(5)
       end
     end
+  end
+
+  def recent_show_segments
+    self.class.published.where("show_id = ? and id <> ?", self.show_id, self.id).first(3)
   end
 
 

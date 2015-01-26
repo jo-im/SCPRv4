@@ -1,0 +1,64 @@
+<% if content.related_links.present? || content.related_content.present? %>
+  <aside class="ancillary related">
+    <header><h1>Related Links</h1></header>
+    <nav>
+      <ul>
+        <% for l in (content.related_content + content.related_links ) %>
+          <%
+            classes = "track-event"
+            url         = nil
+            title       = nil
+            descriptor  = nil
+
+            # class_options[:data] = {"ga-category" => "Article", "ga-action" => "Clickthrough", "ga-label" => "Related" }
+
+            is_pij = false
+
+            if l.is_a?(RelatedLink)
+              domain = URI.parse(l.url).host.sub(/^www\./, '')
+              kpcc_link = domain.split(".").include?("scpr")
+
+              if l.link_type == "query"
+                classes     += " query"
+                descriptor  = "Contribute Your Voice"
+                is_pij      = true
+              elsif kpcc_link
+                descriptor  = "Article"
+              else
+                classes     += " outbound" if !kpcc_link
+                descriptor  = "Source: #{domain}"
+              end
+
+              url     = l.url
+              title   = l.title
+            else
+              # hopefully these are content...
+              classes += " #{l.feature.key.to_s}" if l.try(:feature).try(:key).present?
+
+              url     = l.public_path
+              title   = l.short_title
+
+              descriptor = l.feature.try(:name) || "Article"
+            end
+
+          %>
+          <li class="<%= classes %>">
+            <a href="<%= url %>">
+              <mark><%= title %></mark>
+              <span><%= descriptor %></span>
+            </a>
+          <% if is_pij %>
+          <span>
+            <a href="/network/" class="pij">
+              Learn more about the Public Insight Network
+            </a>
+          </span>
+          <% end %>
+          </li>
+
+        <% end %>
+
+      </ul>
+    </nav>
+  </aside>
+<% end %>

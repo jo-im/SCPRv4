@@ -3,6 +3,9 @@
 <%= render 'shared/ads/dfp_script_config', category: @category %>
 <% content_for :membership_copy, @category.present? ? @category.title : 'Lorem Ipsum' %>
 <% content_for :body_class, 'interior single' %>
+<% content_for :titling do %>
+    <%= render :partial => 'shared/new/masthead/news_titling' %>
+<% end %>
 
 <%= cache ["show", "article-content", "v18", @story] do %>
   <%= render "shared/new/single", article: @story, full: true %>

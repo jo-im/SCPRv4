@@ -187,6 +187,12 @@ module ApplicationHelper
     }.merge(options)
   end
 
+  def should_inline_asset_for(article)
+    asset = article.asset
+
+    asset && (article.asset_display == :photo_deemphasized) || (article.asset_display.blank? && !below_standard_ratio(width: asset.full.width, height: asset.full.height)) || (article.asset_display == :photo_emphasized && !below_standard_ratio(width: asset.full.width, height: asset.full.height))
+  end
+
   def below_standard_ratio(options={})
     ratio = (3.0/4.0)
     return options[:height].to_f/options[:width].to_f <= ratio && options[:width] > 700

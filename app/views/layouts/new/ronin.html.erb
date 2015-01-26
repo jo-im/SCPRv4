@@ -5,7 +5,9 @@
 
 <body class="<%= content_for(:body_class) %>">
 
-    <%= render 'shared/new/layout_header' %>
+    <div id="global-pushdown"></div>
+
+    <%= render 'shared/new/masthead/layout_header' %>
 
     <%= yield %>
 

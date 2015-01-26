@@ -1,3 +1,17 @@
+<%= content_for :extra_footer %>
+
+<script type="text/javascript">
+  var smartTime;
+
+  $(function() {
+    smartTime     =       new scpr.SmartTime();
+    social        =       new scpr.SocialTools();
+    adSizer       =       new scpr.adSizer();
+    audio         =       new scpr.Audio({widgetClass: '.story-audio', audioBar: '#audio-bar'});
+    eventTracking =       new scpr.EventTracking();
+  });
+</script>
+
 <%# for Preview, we need to place the embed script here. This might not be the best
   way, but since the preview only renders the article partial (i.e. what is
   inside the cache block), but the embed script is outside of that, we need

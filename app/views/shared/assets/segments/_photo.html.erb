@@ -1,0 +1,11 @@
+<figure class="lead-asset <%= "exiguous" unless below_standard_ratio(width: article.asset.full.width, height: article.asset.full.height) %>">
+  <b><%= image_tag article.asset.full.url %></b>
+  <figcaption class="clearfix">
+    <div>
+      <span class="brief"><%= article.asset.caption %></span>
+      <span class="credit"><%= article.asset.owner %></span>
+    </div>
+  </figcaption>
+</figure>
+
+
