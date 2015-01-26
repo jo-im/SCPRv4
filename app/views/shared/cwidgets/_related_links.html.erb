@@ -22,9 +22,7 @@
                 classes     += " query"
                 descriptor  = "Contribute Your Voice"
                 is_pij      = true
-              end
-
-              if kpcc_link
+              elsif kpcc_link
                 descriptor  = "Article"
               else
                 classes     += " outbound" if !kpcc_link
@@ -49,6 +47,13 @@
               <mark><%= title %></mark>
               <span><%= descriptor %></span>
             </a>
+          <% if is_pij %>
+          <span>
+            <a href="/network/" class="pij">
+              Learn more about the Public Insight Network
+            </a>
+          </span>
+          <% end %>
           </li>
 
         <% end %>
