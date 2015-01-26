@@ -16,7 +16,6 @@ module Job
 
           if obj
             attachment = {
-              pretext: message,
               fields: [],
             }
 
