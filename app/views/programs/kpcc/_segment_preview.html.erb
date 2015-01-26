@@ -34,6 +34,7 @@
                           <p><%= render_contributing_byline article.original_object %></p>
                       </footer>
                   <% end %>
+                  <%= pij_source(article.original_object) %>
               </div><!--/ .prose-body -->
 
               <%= render 'shared/cwidgets/related_links', content:article.original_object %>
