@@ -936,13 +936,13 @@ body.single .comments {
             a:hover span        { color: #ad6631; }
             .query > span > a { // "Learn More About The Public Insight Network"
               background: none;
-              background: image-url("i/swoopy-arrow.png") no-repeat right 2px;
+              background: image-url("i/swoopy-arrow.png") no-repeat right 3px;
               background-size: 11px 60px;
               padding-right: 15px;
               box-sizing: border-box;
               display: inline-block;
               color: #e3b18f;
-              &:hover           { color: #51899b; background-position: right -48px; }
+              &:hover           { color: #51899b; background-position: right -47px; }
             }
         }
         &.previously {
