@@ -175,7 +175,6 @@ REPORT
       background: transparent;
       font-size: 1.06666666666667em; // reset to equivalent of 16
       border-top: 1px solid rgba(236,124,45,0.5);
-      box-sizing: border-box;
       padding: 18px 0 0 13.458262350937%; // 79 / 587
       margin: 0 0 50px -13.458262350937%;
       &:first-of-type   { margin-top: 3em; }
@@ -209,11 +208,10 @@ REPORT
     h1              { font: normal 1em/1.1 $font-freight; }
     p               { margin: 0; padding: 7px 0 0; font: normal 0.6875em/1 $font-prox; color: #b8b8b8; }
     p > *           { white-space: nowrap; }
-    mark            { border-bottom: 0; color: #333; display: inline-block; vertical-align: top; }
-    a span          { color: $orange; display: block; font: normal 0.75em/1 $font-prox; margin-top: -4px; padding-right: 4px; text-transform: none; }
-    a:hover         { text-decoration: none; color: black; }
-    a:hover mark    { box-shadow: inset 0 -2px 0 white, inset 0 -3px 0 rgba(0,0,0,0.3); }
-    a:hover p       { color: $orange; }
+    mark            { color: #333; display: block; vertical-align: top; padding-bottom: 3px; border-bottom: 1px solid white; }
+    a span          { color: $orange !important; display: block; font: normal 0.75em/1 $font-prox; padding: 2px 4px 0 0; text-transform: none; }
+    a:hover         { text-decoration: none; }
+    a:hover mark    { border-bottom: 1px solid rgba(0,0,0,0.15); }
   }
 
   .episode-contents {
