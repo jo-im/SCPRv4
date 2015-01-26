@@ -1,6 +1,22 @@
 <% article = article.to_article %>
 
-<%= render_asset article.original_object, context:"news" %>
+<% if article.assets.any? %>
+  <%= render_asset article.original_object, context:"news" %>
+<% else %>
+    <section class="prologue austere">
+        <div class="grating">
+            <div class="inner bound clearfix">
+                <div class="prose">
+                    <h1 class="title"><span><%= article.title %></span></h1>
+                    <aside class="byline">
+                        <h2 class="author">by <%= render_byline article.original_object %></h2>
+                        <%= smart_date_js article.public_datetime %>
+                    </aside>
+                </div>
+            </div><!--/ .prose -->
+        </div>
+    </section><!--/ .prologue -->
+<% end %>
 
 <div class="report">
     <div class="inner bound clearfix">
