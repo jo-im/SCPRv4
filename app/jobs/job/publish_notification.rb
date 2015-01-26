@@ -3,7 +3,7 @@ module Job
     @priority = :low
 
     class << self
-      def perform(message,obj_key)
+      def perform(message,obj_key=nil)
         config = Rails.application.config.api['slack']
 
         if Rails.env == "development"
