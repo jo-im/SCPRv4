@@ -38,14 +38,14 @@
     <div class="span8">
       <div class="section">
         <h6>Latest News</h6>
-        <%= render "shared/masthead/featured", articles: latest_news(2) %>
+        <%= raw Rails.cache.read("masthead-latest-news") %>
       </div> <!-- section -->
     </div> <!-- span -->
 
     <div class="span10">
       <div class="section">
         <h6>From Our Blogs</h6>
-        <%= render "shared/masthead/from_our_blogs", entries: latest_blogs() %>
+        <%= raw Rails.cache.read("masthead-latest-blogs") %>
       </div> <!-- section -->
     </div> <!-- span -->
   </div> <!-- row fluid -->

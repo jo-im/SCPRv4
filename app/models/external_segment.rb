@@ -22,7 +22,11 @@ class ExternalSegment < ActiveRecord::Base
       :teaser             => self.teaser,
       :body               => self.teaser,
       :audio              => self.audio.available,
-      :byline             => self.external_program.organization
+      :byline             => self.external_program.organization,
+      :created_at         => self.created_at,
+      :updated_at         => self.updated_at,
+      :published          => true,
+      :public_path        => self.external_url,
     })
   end
 
