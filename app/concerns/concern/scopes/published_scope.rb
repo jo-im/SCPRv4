@@ -15,7 +15,7 @@ module Concern
       included do
         scope :published, -> {
           where(status: self.status_id(:live))
-          .order("published_at desc")
+          .order("#{self.table_name}.published_at desc")
         }
       end
     end # PublishedScope

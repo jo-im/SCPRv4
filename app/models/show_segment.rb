@@ -51,7 +51,7 @@ class ShowSegment < ActiveRecord::Base
     :dependent      => :destroy
 
   has_many :episodes,
-    -> { order('air_date') },
+    -> { order('status desc,air_date desc') },
     :through    => :rundowns,
     :source     => :episode,
     :autosave   => true
@@ -70,6 +70,9 @@ class ShowSegment < ActiveRecord::Base
     @episode ||= episodes.first
   end
 
+  def published_episode
+    @published_episode ||= episodes.published.first
+  end
 
   def episode_segments
     @episode_segments ||= begin

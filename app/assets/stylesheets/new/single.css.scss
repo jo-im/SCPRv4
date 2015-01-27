@@ -1816,10 +1816,13 @@ body.single .quadrant {
             .audio-queue,.share           { width: 48%; float: left; margin-bottom: 0; }
             .share                        { float: right; }
             &.minimalist .share           { float: none; width: 100%; }
+            .share ul                     { padding-top: 9px; }
             .share ul li                  { margin: 0 15px 0 0; display: inline-block; }
+            .share ul li.email mark       { display: none; }
             .share ul li.twitter          { margin-right: 10px; }
-            .share a                      { float: left; text-align: left; margin: 0 0 0 0; }
-            .count                        { padding: 7px 0 0 5px; }
+            .share a                      { float: left; text-align: left; margin: 0 0 0 0; text-indent: 0; width: auto; }
+            .share span                   { @include texthide; width: 20px; height: 20px; float: left; }
+            .count                        { padding: 7px 0 0 5px; margin-right: 0; }
             .share ul li.facebook .count  { padding-left: 1px; }
             .audio-queue {
                 header {

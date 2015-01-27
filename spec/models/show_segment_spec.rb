@@ -2,9 +2,9 @@ require "spec_helper"
 
 describe ShowSegment do
   describe '#episodes' do
-    it 'orders by air_date' do
+    it 'orders by status and air_date' do
       segment = build :show_segment
-      segment.episodes.to_sql.should match /order by air_date/i
+      segment.episodes.to_sql.should match /order by status desc,air_date desc/i
     end
   end
 
