@@ -556,7 +556,7 @@ body.single .comments {
     ------------------------------------------------------------------------------------------------------
     Deprecated by JPW on 2015-01-26.
     This chunk no longer describes any component that's actually used on the site any more.
-    ------------------------------------------------------------------------------------------------------ */
+    ------------------------------------------------------------------------------------------------------
     .audio {
         header h1 { margin-bottom: 0; }
         padding: 26px 0 35px;
@@ -595,7 +595,7 @@ body.single .comments {
             }
         }
     }
-
+    */
 
     .prose {
         width: 48.923076923077%; // 636 / 1300 ...It's really 634, plus 2 for a cosmetic text-catching nudge
@@ -1816,10 +1816,13 @@ body.single .quadrant {
             .audio-queue,.share           { width: 48%; float: left; margin-bottom: 0; }
             .share                        { float: right; }
             &.minimalist .share           { float: none; width: 100%; }
+            .share ul                     { padding-top: 9px; }
             .share ul li                  { margin: 0 15px 0 0; display: inline-block; }
+            .share ul li.email mark       { display: none; }
             .share ul li.twitter          { margin-right: 10px; }
-            .share a                      { float: left; text-align: left; margin: 0 0 0 0; }
-            .count                        { padding: 7px 0 0 5px; }
+            .share a                      { float: left; text-align: left; margin: 0 0 0 0; text-indent: 0; width: auto; }
+            .share span                   { @include texthide; width: 20px; height: 20px; float: left; }
+            .count                        { padding: 7px 0 0 5px; margin-right: 0; }
             .share ul li.facebook .count  { padding-left: 1px; }
             .audio-queue {
                 header {
@@ -1827,7 +1830,7 @@ body.single .quadrant {
                     background-size: 16px 16px;
                     margin: 0;
                     border-top: 1px solid $blue;
-                    padding: 11px 0 7px 43px;
+                    padding: 9px 0 7px 43px;
                 }
                 ul li a {// formerly "mark"
                     background-size: 10px 100px;
