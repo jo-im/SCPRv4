@@ -82,16 +82,20 @@ This used to be a <section> (c. 2013-14), but that was dumb.
 ######################################################################## */
 .appellation {
   padding: 0 0 55px;
-  h1        { font: normal 300 3em/1.1 $font-freight; }
-  p         { padding-top: 40px; font: normal 0.75em/1 $font-prox; color: #acacac; -webkit-font-smoothing: antialiased; }
-  span      { display: inline-block; }
-  span:first-of-type  { margin-right: 20px; }
-  p a       { color: $blue; font-weight: 700; }
-  p a:hover { text-decoration: underline; }
+  h1                  { font: normal 300 3em/1.1 $font-freight; }
+  p                   { padding-top: 40px; font: normal 0.75em/1 $font-prox; color: #acacac; -webkit-font-smoothing: antialiased; }
+  span                { display: inline-block; margin-right: 20px; }
+  p a                 { color: $blue; font-weight: 700; }
+  p a:hover           { text-decoration: underline; }
 //-------------------------------------------------------------------------------------
   @media screen and (max-width: 870px)  { text-align: center; }
 //-------------------------------------------------------------------------------------
   @media screen and (max-width: 540px)  { h1 { font-size: 2.25em; } }
+//-------------------------------------------------------------------------------------
+  @media screen and (max-width: 480px)  {
+    span                                { display: block; margin-right: 0; }
+    time                                { display: block; padding-top: 1em; }
+  }
 //-------------------------------------------------------------------------------------
 }
 
