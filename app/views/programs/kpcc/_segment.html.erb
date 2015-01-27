@@ -36,17 +36,17 @@
 
               <%= render 'shared/cwidgets/related_links', content:article %>
 
-              <% if article.episode.present? %>
+              <% if article.published_episode.present? %>
               <aside class="ancillary episode-contents">
                 <header>
-                  More from this <%= article.episode.present? ? "episode" : "program" %>
+                  More from this episode
                   <cite>
-                    <a href="<%= article.episode.public_path %>">
-                      <%= @program.title %> for <%= article.episode.air_date.strftime("%B %d, %Y") %>
+                    <a href="<%= article.published_episode.public_path %>">
+                      <%= @program.title %> for <%= article.published_episode.air_date.strftime("%B %d, %Y") %>
                     </a>
                   </cite>
                 </header>
-                <h1><%= link_to article.episode.headline, article.episode.public_path %></h1>
+                <h1><%= link_to article.published_episode.headline, article.published_episode.public_path %></h1>
                 <nav>
                   <ul>
                     <% article.episode_segments.each do |segment| %>
