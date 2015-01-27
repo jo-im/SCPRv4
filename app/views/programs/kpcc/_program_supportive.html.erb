@@ -18,12 +18,11 @@
         <header><h1>Recently on <%= @program.title %></h1></header>
         <nav>
           <% @segment.recent_show_segments.each do |segment| %>
-              <% show_segment = segment.to_article %>
               <article>
-                  <%= link_to show_segment.public_path, class: "track-event", data: {"ga-category" => "Article", "ga-action" => "Clickthrough", "ga-label" => "More Sidebar Show Segment"} do %>
-                      <%= smart_date_js show_segment.public_datetime %>
-                      <h1><%= show_segment.short_title %></h1>
-                      <b><%= image_tag show_segment.asset.lsquare.url, alt: show_segment.asset.caption %></b>
+                  <%= link_to segment.public_path, class: "track-event", data: {"ga-category" => "Article", "ga-action" => "Clickthrough", "ga-label" => "More Sidebar Show Segment"} do %>
+                      <%= smart_date_js segment.published_at %>
+                      <h1><%= segment.short_headline %></h1>
+                      <b><%= image_tag segment.asset.lsquare.url, alt: segment.asset.caption %></b>
                   <% end %>
               </article>
           <% end %>
