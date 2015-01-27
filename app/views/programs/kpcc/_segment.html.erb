@@ -28,7 +28,7 @@
                   <%= article.body.html_safe %>
                   <% if article.joined_bylines[:contributing].present? %>
                       <footer class="contributor">
-                          <p><%= render_contributing_byline article.original_object %></p>
+                          <p><%= render_contributing_byline article %></p>
                       </footer>
                   <% end %>
                   <%= pij_source(article) %>
