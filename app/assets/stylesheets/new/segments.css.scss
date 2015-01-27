@@ -87,12 +87,13 @@ This used to be a <section> (c. 2013-14), but that was dumb.
   span                { display: inline-block; margin-right: 20px; }
   p a                 { color: $blue; font-weight: 700; }
   p a:hover           { text-decoration: underline; }
+  time                { white-space: nowrap; }
 //-------------------------------------------------------------------------------------
   @media screen and (max-width: 870px)  { text-align: center; }
 //-------------------------------------------------------------------------------------
   @media screen and (max-width: 540px)  { h1 { font-size: 2.25em; } }
 //-------------------------------------------------------------------------------------
-  @media screen and (max-width: 480px)  {
+  @media screen and (max-width: 610px)  {
     span                                { display: block; margin-right: 0; }
     time                                { display: block; padding-top: 1em; }
   }
