@@ -1,10 +1,5 @@
 <% article = article.to_article %>
 
-<% content_for :masthead_class, "blog" %>
-<% content_for :titling do %>
-    <%= render :partial => 'shared/new/masthead/blog_titling' %>
-<% end %>
-
 <%= render_asset article.original_object, context:"news", fallback:true %>
 <div class="report">
     <div class="inner bound clearfix">
