@@ -582,7 +582,6 @@ cosmetic width-constrained tweak.
     }
   //-------------------------------------------------------------------------------------
   }
-
   .media-scaler {
       width: 100%;
       position: relative;
@@ -598,6 +597,8 @@ cosmetic width-constrained tweak.
           height: 100%;
       }
   }
+  .ratio .img-contain                       { background: rgba(0,0,0,0.15); }
+  .slideview .slides .slide img.not-wide    { height: 100%; width: auto; }
 }//.lead-asset
 
 
