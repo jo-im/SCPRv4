@@ -12,7 +12,16 @@ module Concern
       def search
         breadcrumb "Search"
 
-        @results = model.search(params[:query]).page(params[:page]||1).per(50)
+        body = {
+          query: {
+            query_string: {
+              query:              params[:query],
+              default_operator:   "AND",
+            }
+          }
+        }
+
+        @results = model.search(body).page(params[:page]||1).per(50)
         @records = @results.records
       end
 

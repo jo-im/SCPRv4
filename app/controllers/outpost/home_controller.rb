@@ -25,7 +25,7 @@ class Outpost::HomeController < Outpost::BaseController
 
     body = {
       query: {
-        simple_query_string: {
+        query_string: {
           query:              params[:gquery],
           default_operator:   "AND",
         }

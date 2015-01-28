@@ -99,7 +99,7 @@ module ContentBase
     query = { match_all:{} }
 
     if query_string && !query_string.empty?
-      query = { query_string: { query: query_string } }
+      query = { query_string: { query: query_string, default_operator:"AND" } }
     end
 
     # what content types are we searching?
