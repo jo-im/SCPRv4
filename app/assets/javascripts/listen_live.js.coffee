@@ -45,12 +45,10 @@ class scpr.ListenLive
 
             # ping the idSync service
             $.getScript "http://playerservices.live.streamtheworld.com/api/idsync.js?station=KPCCFM", =>
-                #@_uuid = scpr.Cookie.get("uuid")
-
                 if @_playerReady
                     @_play()
                 else
-                    @player.once $.jPlayer.event.ready, (evt) => @_play()
+                    @player.one $.jPlayer.event.ready, (evt) => @_play()
 
                 # -- register play / pause handlers -- #
                 @player.on $.jPlayer.event.play, (evt) =>
