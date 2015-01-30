@@ -28,9 +28,9 @@
     key = '/3468/ibs.scpr.scpr' + keySuffix;
 
     // Ad Size Mappings for responsive ad units
-    // var mapping = googletag.sizeMapping().
-    // addSize([200, 250], [300, 250]).
-    // build();
+    var mapping = googletag.sizeMapping().
+    addSize([200, 250], [300, 250]).
+    build();
 
     // Only print the Ad Slots we need for the given page,
     // or else the empty ad requests will count against us in DFP
@@ -51,10 +51,10 @@
       gptadslots[3]= googletag.defineSlot(key, [[300,50]],'dfp-slot_a').setTargeting('pos',['banner-top']).addService(googletag.pubads());
 
       // Position B
-      gptadslots[1]= googletag.defineSlot(key, [[300,250]],'dfp-slot_b').setTargeting('pos',['mr-top']).addService(googletag.pubads());
+      gptadslots[1]= googletag.defineSlot(key, [[300,250]],'dfp-slot_b').setTargeting('pos',['mr-top']).defineSizeMapping(mapping).addService(googletag.pubads());
 
       // Position C
-      gptadslots[2]= googletag.defineSlot(key, [[300,250]],'dfp-slot_c').setTargeting('pos',['mr-bottom']).addService(googletag.pubads());
+      gptadslots[2]= googletag.defineSlot(key, [[300,250]],'dfp-slot_c').setTargeting('pos',['mr-bottom']).defineSizeMapping(mapping).addService(googletag.pubads());
 
     <% end %>
 
