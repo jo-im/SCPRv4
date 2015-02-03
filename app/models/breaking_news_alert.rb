@@ -39,7 +39,8 @@ class BreakingNewsAlert < ActiveRecord::Base
   end
 
 
-  PARSE_CHANNEL         = "breakingNews"
+  IPAD_CHANNEL          = "sandbox_breakingNews"
+  IPHONE_CHANNEL        = "sandbox_listenLive"
   FRAGMENT_EXPIRE_KEY   = "layout/breaking_news_alert"
 
 
@@ -113,8 +114,8 @@ class BreakingNewsAlert < ActiveRecord::Base
       :alert      => alert_subject,
       :badge      => "Increment",
       :alertId    => self.id
-    }, PARSE_CHANNEL)
-
+    })
+    push.channels = self.alert_type == "audio" ? [IPHONE_CHANNEL,IPAD_CHANNEL] : [IPAD_CHANNEL]
     result = push.save
 
     if result["result"] == true
