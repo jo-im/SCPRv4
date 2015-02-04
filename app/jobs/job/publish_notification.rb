@@ -6,6 +6,8 @@ module Job
       def perform(message,obj_key=nil)
         config = Rails.application.config.api['slack']
 
+        self.log "PublishNotification: #{obj_key} | #{message}"
+
         if Rails.env == "development"
           message = "(TESTING) #{message}"
         end
