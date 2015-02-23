@@ -43,7 +43,9 @@
 
             <%= render 'shared/cwidgets/related_links', content:article.original_object %>
 
-            <%= render 'shared/new/social_share', article: article, cssClass: "share" %>
+            <div class="article-conclusion-sharing">
+              <%= render 'shared/new/social_share', article: article, cssClass: "share" %>
+            </div>
 
             <footer class="comments-jump">
                 <a href="#comments">
