@@ -16,6 +16,7 @@ class scpr.ListenLive
             schedule_template:  JST["t_listen/currentgen_schedule"]
             solution:           "flash, html"
             ad_element:         "#live_ad"
+            skip_preroll:       false
 
         constructor: (opts) ->
             @options = _.defaults opts, @DefaultOptions
@@ -95,7 +96,7 @@ class scpr.ListenLive
                 @player.jPlayer("clearMedia")
                 @player.jPlayer("setMedia",mp3:@options.url).jPlayer("play")
 
-            if !@_shouldTryAd
+            if !@_shouldTryAd || @opts.skip_preroll
                 _playStream()
 
             else
