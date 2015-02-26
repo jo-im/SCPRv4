@@ -96,7 +96,7 @@ class scpr.ListenLive
                 @player.jPlayer("clearMedia")
                 @player.jPlayer("setMedia",mp3:@options.url).jPlayer("play")
 
-            if !@_shouldTryAd || @opts.skip_preroll
+            if !@_shouldTryAd || @options.skip_preroll
                 _playStream()
 
             else
