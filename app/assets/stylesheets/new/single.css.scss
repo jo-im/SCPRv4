@@ -1189,6 +1189,19 @@ body.single .comments {
 
 //  - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
+    @media screen and (max-width: 500px) {
+        .report aside.placard:nth-child(2),
+        .comments .placard {
+          // I only need to futz with Ad Positions "B" and "C" here,
+          // because "A" has already been absolutely shoved into
+          // place up at the top of the layout. He's doing fine.
+          // It's his siblings that are getting clipped.
+          margin-left: -5%;
+          width: 110%;
+        }
+    }
+
+//  - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 
 
