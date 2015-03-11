@@ -37,6 +37,10 @@ describe FeedsController do
       the_frame = create :kpcc_program, is_segmented: false, slug: 'the-frame'
       the_frame_episode = create :show_episode, :published, show: the_frame
       the_frame_segment = create_list :show_rundown, 2, episode: the_frame_episode
+
+      offramp = create :kpcc_program, is_segmented: false, slug: 'offramp'
+      offramp_episode = create :show_episode, :published, show: offramp
+      offramp_segment = create_list :show_rundown, 2, episode: offramp_episode
     end
     it "doesn't render a layout" do
       get :npr_ingest
