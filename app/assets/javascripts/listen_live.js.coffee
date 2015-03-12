@@ -135,7 +135,7 @@ class scpr.ListenLive
                         # is there an ad there for us?
                         if ad = obj?.VAST?.Ad?.InLine
                             # is there a preroll?
-                            if preroll = ad.Creatives?.Creative?[0]?.Linear && !_timedOut
+                            if (preroll = ad.Creatives?.Creative?[0]?.Linear) && !_timedOut
                                 # yes... play it
                                 media = preroll.MediaFiles.MediaFile.toString()
                                 @player.jPlayer("setMedia",mp3:media).jPlayer("play")
