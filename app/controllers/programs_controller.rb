@@ -76,7 +76,10 @@ class ProgramsController < ApplicationController
       @featured_story = @episodes.first.to_article
       @episodes = @episodes[1..-1]
     end
-    handle_program_template
+    render(
+        :layout   => 'new/landing',
+        :template => 'programs/kpcc/featured_program'
+      )
   end
 
 
