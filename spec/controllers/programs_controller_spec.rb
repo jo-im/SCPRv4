@@ -291,7 +291,7 @@ describe ProgramsController do
         if ["the-frame","take-two","offramp"].include?(@program.slug) 
           response.should render_template "programs/kpcc/featured_program"
         else
-          response.should render_template "programs/kpcc/old/show"
+          response.should render_template "programs/kpcc/old/show" 
         end
       end
     end
