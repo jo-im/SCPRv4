@@ -692,12 +692,6 @@ The long two-column flow of recent content (segments and episodes, mostly).
     color: white;
     box-shadow: inset 0 38px 0 white;
     font-family: $font-prox;
-    .inner {
-      background: image-url("i/model-the-frame.png") no-repeat right bottom;
-      background-size: auto 100%;
-      box-sizing: border-box;
-      padding: 60px 40.427927927928% 23px 2.364864864865%; // L: 21/888
-    }
     .prose  { text-align: center; letter-spacing: -0.02em; text-shadow: 0 0 5px #3c9ecf, 0 0 5px #3c9ecf; }
     h1      { font-size: 1.375em; line-height: 1.18; margin-bottom: 20px; }
     ul      { overflow: hidden; }
@@ -840,7 +834,18 @@ The long two-column flow of recent content (segments and episodes, mostly).
 
 }// .neoteric
 
+$programs: ("take-two", "the-frame", "offramp");
 
+@each $program in $programs {
+  body.program.#{$program} .neoteric .podcast-appeal .inner  { 
+    background-image: image-url("i/model-#{$program}.png");
+    background-position: right bottom;
+    background-repeat: no-repeat;
+    background-size: auto 100%;
+    box-sizing: border-box;
+    padding: 60px 40.427927927928% 23px 2.364864864865%; // L: 21/888
+  }
+}
 
 
 
