@@ -8,8 +8,8 @@ module Job
     @priority = :low
 
     class << self
-      def perform
-        ExternalProgram.sync
+      def perform(source=nil)
+        ExternalProgram.sync(source)
       end
     end
   end
