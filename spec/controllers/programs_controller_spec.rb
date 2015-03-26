@@ -288,7 +288,11 @@ describe ProgramsController do
 
       it "renders the correct kpcc template" do
         get :featured_program, show: @program.slug
-        response.should render_template "programs/kpcc/#{@program.slug}"
+        if ["the-frame","take-two","offramp"].include?(@program.slug) 
+          response.should render_template "programs/kpcc/featured_program"
+        else
+          response.should render_template "programs/kpcc/old/show" 
+        end
       end
     end
   end
