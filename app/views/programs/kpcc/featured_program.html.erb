@@ -1,5 +1,7 @@
 <% add_to_page_title @program.title %>
 <% meta_tags(url: @program.public_url) %>
+<% meta_tags(description: @program.description) %>
+<% meta_tags(rss_feed: @program.get_link('rss')) %>
 <% content_for :body_class, "program #{@program.slug}" %>
 <% content_for :titling do %>
   <%= render :partial => 'shared/new/masthead/program_titling' %>
