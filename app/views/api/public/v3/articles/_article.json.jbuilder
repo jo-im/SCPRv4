@@ -28,7 +28,7 @@ json.cache! [Api::Public::V3::VERSION, "v3", article] do
 
   json.audio do
     json.partial! api_view_path("audio", "collection"),
-      audio: article.audio
+      audio: article.audio, content: article
   end
 
   json.attributions article.attributions do |byline|
