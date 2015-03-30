@@ -4,11 +4,10 @@ class ExternalSegment < ActiveRecord::Base
 
   belongs_to :external_program
 
-  has_many :external_episode_segments
+  has_many :external_episode_segments, dependent: :destroy
 
   has_many :external_episodes,
-    :through   => :external_episode_segments,
-    :dependent => :destroy
+    :through   => :external_episode_segments
 
   validates :external_url, url: { allow_blank: true }
 
