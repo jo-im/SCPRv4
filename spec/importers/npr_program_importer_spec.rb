@@ -63,18 +63,6 @@ describe NprProgramImporter do
         NprProgramImporter.sync(external_program).should eq false
         external_program.external_segments(true).should be_empty
       end
-
-      it "is false if the episode already exists" do
-        # Just load up the stub
-        stories = NPR::Story.where(id: "current").to_a
-        date = stories.first.shows.first.showDate
-
-        external_program = create :external_program, :from_npr
-        external_program.external_episodes.create(air_date: date)
-
-        NprProgramImporter.sync(external_program).should eq false
-        external_program.external_episodes(true).count.should eq 1
-      end
     end
 
     context 'without available audio' do
