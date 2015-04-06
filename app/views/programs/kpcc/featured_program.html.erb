@@ -1,11 +1,13 @@
 <% add_to_page_title @program.title %>
 <% meta_tags(url: @program.public_url) %>
+<% meta_tags(description: @program.description) %>
+<% meta_tags(rss_feed: @program.get_link('rss')) %>
 <% content_for :body_class, "program #{@program.slug}" %>
 <% content_for :titling do %>
   <%= render :partial => 'shared/new/masthead/program_titling' %>
 <% end %>
 
-<%= cache ["the-frame", @program] do %>
+<%= cache ["featured-program", @program] do %>
 
 <% if @featured_story.original_object.is_a?(ShowSegment) %>
   <% episode_article = @program.episodes.published.first.to_article %>
@@ -174,7 +176,7 @@
   <div class="inner bound clearfix">
 
     <section class="segments">
-      <h1>Recently on <cite>The Frame</cite></h1>
+      <h1>Recently on <cite><%= @program.title %></cite></h1>
       <div class="series clearfix">
         <% @segments.first(14).each do |segment| %>
           <% article_segment = segment.to_article %>
@@ -195,12 +197,12 @@
 
         <figure>
             <div class="photo ratio">
-              <a href="/programs/the-frame/featured?view=segments">
+              <a href="/programs/<%= @program.slug %>/featured?view=segments">
                 <div class="fill"></div>
                 <b class="img-contain"></b>
               </a>
             </div>
-            <figcaption><a href="/programs/the-frame/featured?view=segments">Browse through more of The Frame</a></figcaption>
+            <figcaption><a href="/programs/<%= @program.slug %>/featured?view=segments">Browse through more of <%= @program.title %></a></figcaption>
         </figure>
 
       </div><!--/ .series -->
@@ -209,11 +211,10 @@
       <aside class="podcast-appeal">
         <div class="inner">
           <div class="prose">
-            <h1>Subscribe to The Frame’s podcast, and receive every new episode, automatically, as soon as it’s released. Listen on your own time, your own way.</h1>
+            <h1>Subscribe to <%= @program.title %>’s podcast, and receive every new episode, automatically, as soon as it’s released. Listen on your own time, your own way.</h1>
             <ul class="clearfix">
               <li class="itunes"><a href="https://itunes.apple.com/us/podcast/the-frame/id911090618"><span>Subscribe via iTunes</span></a></li>
-              <li class="stitcher"><a href="http://www.stitcher.com/podcast/kpcc-the-frame"><span>Subscribe via Stitcher</span></a></li>
-              <li class="any"><a href="http://www.scpr.org/podcasts/the-frame"><span>Any podcast app (XML)</span></a></li>
+              <li class="any"><a href="http://www.scpr.org/podcasts/<%= @program.slug %>"><span>Any podcast app (XML)</span></a></li>
             </ul>
           </div>
         </div>
@@ -242,14 +243,14 @@
           </ul>
         </nav>
         <footer>
-          <a href="/programs/the-frame/featured?view=episodes"><span>See <cite>The Frame</cite>&rsquo;s episode archive</span></a>
+          <a href="/programs/<%= @program.slug %>/featured?view=episodes"><span>See <cite><%= @program.title %></cite>&rsquo;s episode archive</span></a>
         </footer>
       </section><!--/ .episodes -->
 
       <section class="archive">
-        <h2>Find a specific episode from The Frame’s archive</h2>
+        <h2>Find a specific episode from <%= @program.title %>’s archive</h2>
         <div class="flux-capacitor">
-          <form accept-charset="UTF-8" action="/programs/the-frame/archive" class="archive-date-select" id="archive_date_select" method="post">
+          <form accept-charset="UTF-8" action="/programs/<%= @program.slug %>/archive" class="archive-date-select" id="archive_date_select" method="post">
             <div style="margin:0;padding:0;display:inline">
               <input name="utf8" type="hidden" value="&#x2713;" />
               <input name="authenticity_token" type="hidden" value="Hv3qnrajp8wwM5yr16aOZvA+r1JCrnBLq+lRXQVHrc0=" />
@@ -337,7 +338,7 @@
         <% if @subfeatured_story.present? %>
           <% sub_article = @subfeatured_story.to_article %>
           <section class="exemplary">
-            <h1>New to <cite>The Frame</cite>? We suggest starting with this episode.</h1>
+            <h1>New to <cite><%= @program.title %></cite>? We suggest starting with this episode.</h1>
             <article>
               <h2><a href="<%= sub_article.public_path %>"><%= sub_article.short_title %></a></h2>
               <div class="content clearfix">

@@ -107,15 +107,28 @@ body.program .masthead {
     padding: 3px 25px 0 0;
   }
 }
-body.program.the-frame .masthead {
-  .titling h1 a {
-    @include texthide;
-    width: 282px;
-    height: 49px;
-    background: image-url("i/program-wordmark-the-frame.png") no-repeat;
-    background-size: 100%;
-  }
-}
+
+
+//  ==============================================================================
+//  WORDMARK-NOT-LIVE-TYPE TITLING EXCEPTIONS
+//  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    body.program.the-frame .masthead,
+    body.program.take-two .masthead,
+    body.program.offramp .masthead {
+      .titling h1 a {
+        @include texthide;
+        width: 282px;
+        height: 49px;
+        background-repeat: no-repeat;
+        background-size: 100%;
+      }
+    }
+//  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    body.program.the-frame .masthead .titling h1 a  { background-image: image-url("i/program-wordmark-the-frame.png"); }
+    body.program.take-two .masthead .titling h1 a   { background-image: image-url("i/program-wordmark-take-two.png"); }
+    body.program.offramp .masthead .titling h1 a    { background-image: image-url("i/program-wordmark-offramp.png"); }
+//  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+//  ==============================================================================
 
 
 
@@ -679,20 +692,13 @@ The long two-column flow of recent content (segments and episodes, mostly).
     color: white;
     box-shadow: inset 0 38px 0 white;
     font-family: $font-prox;
-    .inner {
-      background: image-url("i/model-the-frame.png") no-repeat right bottom;
-      background-size: auto 100%;
-      box-sizing: border-box;
-      padding: 60px 40.427927927928% 23px 2.364864864865%; // L: 21/888
-    }
     .prose  { text-align: center; letter-spacing: -0.02em; text-shadow: 0 0 5px #3c9ecf, 0 0 5px #3c9ecf; }
     h1      { font-size: 1.375em; line-height: 1.18; margin-bottom: 20px; }
     ul      { overflow: hidden; }
     li {
       display: block;
       float: left;
-      width: 31.496062992126%; // 160 / 508
-      margin-right: 2.55905511811%; // 13 / 508
+      width: 48%;
       font-size: 0.9375em;
       line-height: 1.1;
       font-weight: 700;
@@ -706,9 +712,7 @@ The long two-column flow of recent content (segments and episodes, mostly).
         color: #b4e7ff;
         &:hover           { color: white; background-position: center -72px; }
       }
-      &.stitcher a        { background-position: center -144px; }
-      &.stitcher a:hover  { background-position: center -216px; }
-      &.any               { float: right; margin-right: 0; }
+      &.any               { float: right; }
       &.any a             { background-position: center -288px; }
       &.any a:hover       { background-position: center -360px; }
     }
@@ -830,7 +834,18 @@ The long two-column flow of recent content (segments and episodes, mostly).
 
 }// .neoteric
 
+$programs: ("take-two", "the-frame", "offramp");
 
+@each $program in $programs {
+  body.program.#{$program} .neoteric .podcast-appeal .inner  { 
+    background-image: image-url("i/model-#{$program}.png");
+    background-position: right bottom;
+    background-repeat: no-repeat;
+    background-size: auto 100%;
+    box-sizing: border-box;
+    padding: 60px 40.427927927928% 23px 2.364864864865%; // L: 21/888
+  }
+}
 
 
 

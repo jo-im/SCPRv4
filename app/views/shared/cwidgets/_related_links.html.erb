@@ -15,7 +15,12 @@
             is_pij = false
 
             if l.is_a?(RelatedLink)
-              domain = URI.parse(l.url).host.sub(/^www\./, '')
+              begin
+                domain = URI.parse(l.url.sub(/^([^\?]+)\?.*/,'\1')).host.sub(/^www\./, '')
+              rescue
+                domain = "Link"
+              end
+
               kpcc_link = domain.split(".").include?("scpr")
 
               if l.link_type == "query"

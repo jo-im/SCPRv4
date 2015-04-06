@@ -30,42 +30,4 @@
 
 
 
-<% content_for :masthead_ad do %>
-<div class="partner">
-    <h3><a href="http://laup.net/" title="Los Angeles Universal Preschool">
-        <span>Presented by Los Angeles Universal Preschool.</span>
-        <b class="img"><img src="<%= image_path('sponsor-assets/laup-logo.png') %>" alt="LAUP logo" /></b></a>
-    </h3>
-</div>
-<% end %>
-
-
-
-<% content_for :middle_ad do %>
-<aside class="interstitial laup">
-    <header class="disclaimer">
-        <p class="bound">Sponsor</p>
-    </header>
-    <div class="message">
-        <div class="inner bound">
-            <a href="http://laup.net" title="Los Angeles Universal Preschool">
-                <h1>Preschool: It gives children a quality foundation to reach for the stars.</h1>
-                <figure class="secondary">
-                    <b class="logo"><img src="<%= image_path('sponsor-assets/laup-logo-full.png') %>" alt="LAUP logo" /></b>
-                    <figcaption>LAUP is a non-profit organization providing high-quality preschool education to the children of Los Angeles County.</figcaption>
-                </figure>
-                <figure class="photo">
-                    <img src="<%= image_path('sponsor-assets/laup-photo-telescope.png') %>" alt="Photograph of LAUP student with telescope" />
-                </figure>
-                <mark class="outbound"><span>Learn More</span></mark>
-            </a>
-        </div>
-    </div>
-    <footer class="plug">
-        <p class="bound"><a href="/support/underwriting/">Become a KPCC sponsor.</a></p>
-    </footer>
-</aside><!--/ .interstitial -->
-<% end %>
-
-
 <%= render template: 'verticals/default' %>

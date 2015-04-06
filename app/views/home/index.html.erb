@@ -11,14 +11,8 @@
     end
   %>
 <% end %>
-
-<% if @latest_edition %>
-
-  <%= cache ["latest-edition", @latest_edition] do %>
-    <%= render 'short_list_tease', edition: @latest_edition %>
-  <% end %>
   
-<% elsif @featured_comment %>
+<% if @featured_comment %>
 
   <div class="join-conversation-container home">
     <%= render 'shared/featured_comment/home', comment: @featured_comment %>

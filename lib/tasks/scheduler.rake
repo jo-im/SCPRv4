@@ -30,10 +30,16 @@ task :scheduler => [:environment] do
 
   # -- Externals -- #
 
-  # external programs every six hours
-  scheduler.cron "0 0/6 * * *" do |job|
-    Job::SyncExternalPrograms.enqueue()
+  # external NPR programs every hour
+  scheduler.cron "0 * * * *" do |job|
+    Job::SyncExternalPrograms.enqueue("npr-api")
   end
+
+  # external RSS programs every four hours
+  scheduler.cron "0 * * * *" do |job|
+    Job::SyncExternalPrograms.enqueue("rss")
+  end
+
 
   # marketplace every hour
   scheduler.cron "0 * * * *" do |job|

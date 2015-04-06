@@ -1189,6 +1189,19 @@ body.single .comments {
 
 //  - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
+    @media screen and (max-width: 500px) {
+        .report aside.placard:nth-child(2),
+        .comments .placard {
+          // I only need to futz with Ad Positions "B" and "C" here,
+          // because "A" has already been absolutely shoved into
+          // place up at the top of the layout. He's doing fine.
+          // It's his siblings that are getting clipped.
+          margin-left: -5%;
+          width: 110%;
+        }
+    }
+
+//  - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 
 
@@ -1883,7 +1896,13 @@ body.single .quadrant {
 }
 //  - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-
+.report .prose .article-conclusion-sharing .share {
+  li            { display: inline-block; }
+  a             { width: auto; text-indent: 0; margin: 0; }
+  span          { display: block; white-space: nowrap; text-indent: 100%; overflow: hidden; width: 20px; height: 20px; float: left; }
+  .count        { margin-left: 0; margin-right: 0; padding: 7px 0 0 5px; }
+  li.email mark { display: none; }
+}
 
 
 

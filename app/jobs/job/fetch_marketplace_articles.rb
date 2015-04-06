@@ -5,7 +5,7 @@ module Job
     @priority = :low
 
     RSS_URL   = "http://www.marketplace.org/latest-stories/long-feed.xml"
-    LIMIT     = 2
+    LIMIT     = 4
 
     class << self
       def perform

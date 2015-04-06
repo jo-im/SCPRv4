@@ -16,6 +16,7 @@ class scpr.ListenLive
             schedule_template:  JST["t_listen/currentgen_schedule"]
             solution:           "flash, html"
             ad_element:         "#live_ad"
+            skip_preroll:       false
 
         constructor: (opts) ->
             @options = _.defaults opts, @DefaultOptions
@@ -43,8 +44,7 @@ class scpr.ListenLive
 
             # -- Triton Ad Code -- #
 
-            # ping the idSync service
-            $.getScript "http://playerservices.live.streamtheworld.com/api/idsync.js?station=KPCCFM", =>
+            @_idSync =>
                 if @_playerReady
                     @_play()
                 else
@@ -90,16 +90,34 @@ class scpr.ListenLive
 
         #----------
 
+        _idSync: (cb) ->
+            # ping the idSync service
+            $.getScript "http://playerservices.live.streamtheworld.com/api/idsync.js?station=KPCCFM"
+            .done =>
+                cb()
+            .fail =>
+                cb()
+
+        #----------
+
         _play: ->
-            _playStream = =>
+            _playStream = _.once =>
                 @player.jPlayer("clearMedia")
                 @player.jPlayer("setMedia",mp3:@options.url).jPlayer("play")
 
-            if !@_shouldTryAd
+            if !@_shouldTryAd || @options.skip_preroll
                 _playStream()
 
             else
                 @_shouldTryAd = false
+
+                # set a timeout so that we make sure the stream starts playing
+                # regardless of whether our preroll works
+                _timedOut = false
+                _errorTimeout = setTimeout =>
+                    _timedOut = true
+                    _playStream()
+                , 3000
 
                 # hit our ad endpoint and see if there is something to play
                 $.ajax
@@ -108,6 +126,8 @@ class scpr.ListenLive
                     jsonp:      "jscb"
                     dataType:   "jsonp"
                     success:    (xml) =>
+                        clearTimeout _errorTimeout if _errorTimeout
+
                         obj = @x2js.xml_str2json(xml)
 
                         @_triton = obj
@@ -115,7 +135,7 @@ class scpr.ListenLive
                         # is there an ad there for us?
                         if ad = obj?.VAST?.Ad?.InLine
                             # is there a preroll?
-                            if preroll = ad.Creatives?.Creative?[0]?.Linear
+                            if (preroll = ad.Creatives?.Creative?[0]?.Linear) && !_timedOut
                                 # yes... play it
                                 media = preroll.MediaFiles.MediaFile.toString()
                                 @player.jPlayer("setMedia",mp3:media).jPlayer("play")
@@ -143,13 +163,6 @@ class scpr.ListenLive
 
                         else
                             _playStream()
-
-
-                    error:      (err) =>
-                        # just play the stream
-                        _playStream()
-
-
 
         #----------
 

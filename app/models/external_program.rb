@@ -69,8 +69,14 @@ class ExternalProgram < ActiveRecord::Base
       ExternalProgram.order("title").map { |p| [p.to_title, p.id] }
     end
 
-    def sync
-      self.active.each(&:sync)
+    def sync(source=nil)
+      finder = self.active
+
+      if source
+        finder = finder.where(source:source)
+      end
+
+      finder.each(&:sync)
     end
   end
 

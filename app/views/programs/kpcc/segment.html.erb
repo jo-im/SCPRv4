@@ -9,7 +9,7 @@
 <% end %>
 
 
-<%= cache ["show", "article-content", "v13", @segment] do %>
+<%= cache ["show", "article-content", "v13", @segment, @segment.published_episode] do %>
     <%= render "programs/kpcc/segment", article: @segment, full: true %>
 <% end %>
 
@@ -27,9 +27,8 @@
 
 <%= comments_for @segment, header: false %>
 
-<% cache ["show", "featured-programs", "v16", @featured_programs] do %>
-  <%= render 'programs/kpcc/featured_programs' %>
-<% end %>
+
+<%= render 'programs/kpcc/featured_programs' %>
 
 <% if @popular_articles %>
   <%= render 'shared/new/popular_articles',

@@ -151,7 +151,8 @@ think twice before doing anything that might break that trust. Thanks.
   <script>
     llPlayer = new scpr.ListenLive.CurrentGen({
       schedule:   <%= @schedule.map(&:listen_live_json).to_json.html_safe %>,
-      url: "http://live.scpr.org/kpccpfs"
+      url: "http://live.scpr.org/kpccpfs",
+      skip_preroll: true
     })
 
     scpr.Behaviors.loadBehaviors(['Layout']);
