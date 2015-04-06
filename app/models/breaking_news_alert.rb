@@ -39,8 +39,8 @@ class BreakingNewsAlert < ActiveRecord::Base
   end
 
 
-  IPAD_CHANNEL          = "sandbox_breakingNews"
-  IPHONE_CHANNEL        = "sandbox_listenLive"
+  IPAD_CHANNEL          = "breakingNews"
+  IPHONE_CHANNEL        = "listenLive"
   FRAGMENT_EXPIRE_KEY   = "layout/breaking_news_alert"
 
 
