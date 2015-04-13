@@ -31,8 +31,6 @@ class Bio < ActiveRecord::Base
   #--------------
   # Callbacks
   before_validation :set_last_name, if: -> { self.last_name.blank? }
-  after_commit :touch_categories
-
 
   class << self
     # Maps all records to an array of arrays, to be
@@ -89,9 +87,5 @@ class Bio < ActiveRecord::Base
     if self.name.present?
       self.last_name = self.name.split(" ").last
     end
-  end
-
-  def touch_categories
-    self.categories.each(&:touch)
   end
 end
