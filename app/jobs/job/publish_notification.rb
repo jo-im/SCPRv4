@@ -50,7 +50,18 @@ module Job
         if config && config['webhook_url']
           slack = Slack::Notifier.new(config['webhook_url'])
 
-          slack.ping message, attachments:[attachment]
+          resp = slack.ping message, attachments:[attachment]
+
+
+          if resp.code != "200"
+            Rails.logger.info "PublishNotification: Initial attempt failed for #{message}"
+
+            # FIXME: This is a temporary fix to try and understand an issue we're tracking
+            # in SCPRv4#239
+            raise "Non-200 response from Slack"
+          else
+            Rails.logger.info "Successful publish for #{message}"
+          end
         else
           Rails.logger.info "PublishNotification: #{message}"
         end
