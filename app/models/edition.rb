@@ -121,7 +121,7 @@ class Edition < ActiveRecord::Base
   # edition without any abstracts would be a mistake, so errors are okay now.
   # Maybe we should just validate that at least one item slot is present.
   def as_eloqua_email
-    subject = "#{self.title}"
+    subject = "The Short List: #{self.title}"
 
     {
       :html_body => view.render_view(
