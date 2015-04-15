@@ -1,3 +1,6 @@
+<% @META_DESCRIPT = @program.description %>
+<% meta_tags(rss_feed: @program.get_link('rss')) %>
+
 <% content_for :title_bar do %>
 <div class="page-header program-masthead">
   <div class="row-fluid">
