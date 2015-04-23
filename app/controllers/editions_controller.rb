@@ -19,4 +19,9 @@ class EditionsController < ApplicationController
     @other_editions = @edition.sister_editions
   end
 
+  def email
+    @edition = Edition.published.includes(:slots).first
+    render template: "editions/email/template", :locals => { edition: @edition }, :layout => false
+  end
+
 end
