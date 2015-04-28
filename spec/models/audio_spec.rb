@@ -282,7 +282,7 @@ describe Audio do
 
         audio.save!
 
-        audio.url.should match Audio::AUDIO_URL_ROOT
+        audio.url.should match Rails.application.config.scpr.audio_url
         audio.url.should match /point1sec-.+?\.mp3/
         audio.status.should eq Audio.status_id(:live)
       end

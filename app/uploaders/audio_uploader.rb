@@ -24,7 +24,7 @@ class AudioUploader < CarrierWave::Uploader::Base
   #--------------
 
   def store_dir
-    File.join Audio::AUDIO_PATH_ROOT, relative_dir
+    File.join Rails.application.config.scpr.audio_root, relative_dir
   end
 
 

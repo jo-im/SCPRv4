@@ -30,7 +30,7 @@ module AudioSync
         # Each KpccProgram with episodes and which can sync audio
         KpccProgram.can_sync_audio.each do |program|
           begin
-            audio_path = File.join(Audio::AUDIO_PATH_ROOT, program.audio_dir)
+            audio_path = File.join(Rails.application.config.scpr.audio_root, program.audio_dir)
 
             # Each file in this program's audio directory
             Dir.foreach(audio_path).each do |file|
