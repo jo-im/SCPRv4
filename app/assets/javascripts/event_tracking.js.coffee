@@ -29,4 +29,4 @@ class scpr.EventTrackingLink
 
 
     _gapush: ->
-        _gaq.push ["_trackEvent", @category, @action, @label, @nonInteraction]
+        ga('send', 'event', @category, @action, @label, {'nonInteraction': @nonInteraction});
