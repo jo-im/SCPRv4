@@ -21,10 +21,9 @@ describe ShowSegment do
 
   describe "#episode_segments" do
     it "uses the other segments from the episode if episodes exist" do
-      episode = build :show_episode
+      episode = create :show_episode
       segments = create_list :show_segment, 3
       episode.segments = segments
-      episode.save!
 
       episode.segments.last.episode_segments.should eq episode.segments.first(3)
     end
