@@ -6,7 +6,7 @@ gem 'responders', '~> 2.0'
 gem 'mysql2', '~> 0.3.14'
 gem 'jquery-rails', '~> 3.1.0'
 gem "bcrypt-ruby", "~> 3.1.0"
-gem 'secretary-rails'
+gem 'secretary-rails', "~> 2.0.0rc1"
 
 gem 'elasticsearch'
 gem 'elasticsearch-rails'
