@@ -1,6 +1,6 @@
 class AssetSync
   def initialize
-    @config = Rails.configuration.secrets["assethost_pubsub"]
+    @config = Rails.application.secrets["assethost_pubsub"]
     @redis  = Redis.new( url:@config["redis"] )
     $stderr.puts "Connected to Redis for Pub/Sub on #{ @config["redis"] }"
   end

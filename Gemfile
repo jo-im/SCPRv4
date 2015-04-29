@@ -1,7 +1,8 @@
 source 'https://rubygems.org'
 
 ## Core
-gem 'rails', "~> 4.0.0"
+gem 'rails', "~> 4.2.0"
+gem 'responders', '~> 2.0'
 gem 'mysql2', '~> 0.3.14'
 gem 'jquery-rails', '~> 3.1.0'
 gem "bcrypt-ruby", "~> 3.1.0"
@@ -26,7 +27,6 @@ gem 'outpost-secretary'
 gem "resque", "~> 1.26.pre.0"
 gem 'resque-pool', github:"SCPR/resque-pool"
 gem 'redis-rails'
-gem 'redis-sentinel'
 
 ## Views
 gem 'kaminari', '~> 0.15.0'
