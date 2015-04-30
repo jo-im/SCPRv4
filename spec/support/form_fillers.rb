@@ -46,15 +46,26 @@ module FormFillers
       "#{record.class.singular_route_key}_#{attribute}"
 
     value = record.send(attribute)
-    if value.is_a?(Array) && record.type_for_attribute(attribute).is_a?(ActiveRecord::Type::Serialized)
-      value.each do |v|
-        field = find_by_id(field_id + "_#{v}")
-        interact(field, v)
-      end
-    else
+
+    begin
       field = find_by_id(field_id)
       interact(field, value)
+    rescue Capybara::ElementNotFound => e
+      if value.is_a?(Array)
+        begin
+          value.each do |v|
+            field = find_by_id(field_id + "_#{v}")
+            interact(field, v)
+          end
+        rescue Capybara::ElementNotFound
+          # raise our original failure?
+          raise e
+        end
+      else
+        raise e
+      end
     end
+
   end
 
   #----------------
