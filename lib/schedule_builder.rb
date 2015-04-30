@@ -38,7 +38,7 @@ class ScheduleBuilder
   def build_schedule
     return nil unless @days && @interval && @start_time_parts.present?
 
-    IceCube::Schedule.new do |s|
+    IceCube::Schedule.new(Time.zone.now) do |s|
       s.rrule(IceCube::Rule.weekly
         .day(@days)
         .hour_of_day(@start_time_parts[0])
