@@ -111,10 +111,10 @@ describe RootPathController do
   #------------------
 
   describe "404" do
-    it 'raises a ActionController::RoutingError if nothing is found' do
+    it 'raises a ActionController::UrlGenerationError if nothing is found' do
       -> {
         get :handle_path, path: "nonsense/whatever"
-      }.should raise_error ActionController::RoutingError
+      }.should raise_error ActionController::UrlGenerationError
     end
   end
 end
