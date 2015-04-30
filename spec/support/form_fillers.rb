@@ -46,11 +46,8 @@ module FormFillers
       "#{record.class.singular_route_key}_#{attribute}"
 
     value = record.send(attribute)
-
-    # For serialized arrays acting as has_many associations
-    if record.class
-    .serialized_attributes[attribute.to_s].try(:object_class) == Array
-      record.send(attribute).each do |v|
+    if value.is_a?(Array) && record.type_for_attribute(attribute).is_a?(ActiveRecord::Type::Serialized)
+      value.each do |v|
         field = find_by_id(field_id + "_#{v}")
         interact(field, v)
       end
