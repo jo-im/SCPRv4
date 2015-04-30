@@ -1,4 +1,16 @@
 GIT
+  remote: git://github.com/SCPR/outpost.git
+  revision: 489cd5fe230986255fc01fb99da81d07ad7fd449
+  tag: v0.1.5
+  specs:
+    outpost-cms (0.1.5)
+      bcrypt-ruby (>= 3.0.0, < 4)
+      jquery-rails (~> 3.0)
+      kaminari (~> 0.15.1)
+      rails (>= 3.2, < 5)
+      select2-rails (= 3.4.1)
+
+GIT
   remote: git://github.com/SCPR/resque-pool.git
   revision: dc5523cbc452c8ebc5d117e90a01f01c6165db3f
   specs:
@@ -16,16 +28,6 @@ GIT
       faraday
       faraday_middleware
       yajl-ruby
-
-PATH
-  remote: ../outpost
-  specs:
-    outpost-cms (0.1.4)
-      bcrypt-ruby (>= 3.0.0, < 4)
-      jquery-rails (~> 3.0)
-      kaminari (~> 0.15.1)
-      rails (>= 3.2, < 5)
-      select2-rails (= 3.4.1)
 
 GEM
   remote: https://rubygems.org/
