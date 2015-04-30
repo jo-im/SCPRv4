@@ -39,7 +39,7 @@ Scprv4::Application.routes.draw do
 
 
   # Programs / Segments
-  # This route is hard-coded to constrain only The Frame and Take Two to render with our new featured program design. 
+  # This route is hard-coded to constrain only The Frame and Take Two to render with our new featured program design.
   # We can remove this as soon as all featured programs get the same red-carpet treatment.
   get '/programs/:show' => "programs#featured_program", constraints: { show: /(the-frame|take-two)/ }
   # This route is for displaying a clone of the old layout for featured programs for an index of episodes and segments
@@ -215,7 +215,8 @@ Scprv4::Application.routes.draw do
 
   #------------------
 
-  mount Outpost::Engine, at: 'outpost'
+  mount Outpost::Secretary::Engine => '/outpost', as: 'secretary'
+  mount Outpost::Engine => '/outpost', as: 'outpost'
 
   namespace :outpost do
     resque_constraint = ->(request) do
@@ -252,9 +253,8 @@ Scprv4::Application.routes.draw do
     end
 
     get 'search', to: 'home#search', as: :search
-  end
 
-  mount Outpost::Secretary::Engine, at: 'outpost', as: 'secretary'
+  end
 
   namespace :outpost do
     resources :recurring_schedule_rules, concerns: [:search]
