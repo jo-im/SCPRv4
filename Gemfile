@@ -12,11 +12,12 @@ gem 'elasticsearch'
 gem 'elasticsearch-rails'
 gem 'elasticsearch-model'
 gem 'patron'
+gem 'render_anywhere'
 
 gem 'dalli'
 
 ## Outpost
-gem 'outpost-cms'
+gem 'outpost-cms', path:"../outpost"
 gem 'outpost-publishing'
 gem 'outpost-asset_host'
 gem 'outpost-aggregator'
@@ -34,7 +35,7 @@ gem 'select2-rails', '3.4.1'
 gem 'twitter-text', "~> 1.5"
 gem 'sanitize', "~> 2.0"
 gem 'escape_utils', '~> 1.0.1'
-gem 'simple_form', "~> 3.0.0"
+gem 'simple_form', "~> 3.1.0"
 gem 'jbuilder', '~> 1.5.3'
 
 gem 'embeditor-rails', '~> 2.0.1'
