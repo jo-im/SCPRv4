@@ -16,14 +16,14 @@ describe ContentMailer do
 
     it "sends the email" do
       ActionMailer::Base.deliveries.size.should eq 0
-      ContentMailer.email_content(message.to_json, content.obj_key).deliver
+      ContentMailer.email_content(message.to_json, content.obj_key).deliver_now
       ActionMailer::Base.deliveries.size.should eq 1
     end
 
     it "raises if the content key isn't safe" do
-      -> {
-        ContentMailer.email_content(message.to_json, "admin_user-123")
-      }.should raise_error ActiveRecord::RecordNotFound
+      expect {
+        ContentMailer.email_content(message.to_json, "admin_user-123").message
+      }.to raise_error ActiveRecord::RecordNotFound
     end
 
     it "sends to the e-mail passed in" do

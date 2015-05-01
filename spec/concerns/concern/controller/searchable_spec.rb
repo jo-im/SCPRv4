@@ -7,7 +7,7 @@ describe Concern::Controller::Searchable, type: :controller do
   end
 
   before do
-    routes.draw { get 'search' => "anonymous#search", as: :search }
+    routes.draw { get 'search' => "outpost/resource#search", as: :search }
 
     user = create :admin_user, is_superuser: true
     controller.stub(:current_user) { user }

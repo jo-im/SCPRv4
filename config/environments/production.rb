@@ -7,7 +7,7 @@ Scprv4::Application.configure do
   config.action_controller.action_on_unpermitted_parameters = :log
 
   config.assets.debug         = false
-  config.serve_static_assets  = false
+  config.serve_static_files   = false
   config.assets.digest        = true
   config.assets.compile       = false
 

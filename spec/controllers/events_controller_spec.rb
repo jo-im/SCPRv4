@@ -95,7 +95,7 @@ describe EventsController do
 
       it "only finds published events" do
         event = create :event, status: 0
-        -> { get :show, event.route_hash }.should raise_error ActionController::RoutingError
+        -> { get :show, event.route_hash }.should raise_error ActionController::UrlGenerationError
       end
     end
   end

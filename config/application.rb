@@ -48,9 +48,13 @@ module Scprv4
     config.newsroom   = ActiveSupport::OrderedOptions.new
 
     config.api     = Hashie::Mash.new(YAML.load_file("#{Rails.root}/config/api_config.yml")[Rails.env])
-    config.secrets = Hashie::Mash.new(YAML.load_file("#{Rails.root}/config/app_config.yml")[Rails.env])
+    #config.secrets = Hashie::Mash.new(YAML.load_file("#{Rails.root}/config/app_config.yml")[Rails.env])
 
-    default_url_options[:host]  ||= config.secrets.hostname
-    config.scpr.host           ||= config.secrets.hostname
+    config.assethost.server = config.api['assethost']['server']
+    config.assethost.prefix = config.api['assethost']['prefix']
+    config.assethost.token  = config.api['assethost']['token']
+
+    default_url_options[:host]  ||= secrets.hostname
+    config.scpr.host           ||= secrets.hostname
   end
 end

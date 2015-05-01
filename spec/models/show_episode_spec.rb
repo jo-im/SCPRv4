@@ -106,7 +106,8 @@ describe ShowEpisode do
     context "when no content has changed" do
       it "doesn't set the rundowns" do
         original_json = "[{ \"id\": \"#{segment1.obj_key}\", \"position\": 1 }]"
-        record = create :show_episode, rundowns_json: original_json
+        record = create :show_episode
+        record.rundowns_json = original_json
 
         record.should_not_receive :rundowns=
         record.rundowns_json = original_json

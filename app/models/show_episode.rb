@@ -72,9 +72,10 @@ class ShowEpisode < ActiveRecord::Base
     :touch       => true
 
   has_many :rundowns,
-    :class_name     => "ShowRundown",
-    :foreign_key    => "episode_id",
-    :dependent      => :destroy
+    class_name:   "ShowRundown",
+    foreign_key:  "episode_id",
+    inverse_of:   :episode,
+    dependent:    :destroy
 
   has_many :segments,
     -> { order('position') },
