@@ -120,8 +120,8 @@ describe ProgramsController do
             :air_date => 1.hour.ago
 
           segment = create :show_segment, :published, show: @program
-          episode.segments << segment
           episode.save!
+          episode.segments << segment
 
           other_episode = create :show_episode, :published,
             :show => @program,
@@ -288,10 +288,10 @@ describe ProgramsController do
 
       it "renders the correct kpcc template" do
         get :featured_program, show: @program.slug
-        if ["the-frame","take-two","offramp"].include?(@program.slug) 
+        if ["the-frame","take-two","offramp"].include?(@program.slug)
           response.should render_template "programs/kpcc/featured_program"
         else
-          response.should render_template "programs/kpcc/old/show" 
+          response.should render_template "programs/kpcc/old/show"
         end
       end
     end

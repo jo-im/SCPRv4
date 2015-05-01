@@ -17,8 +17,8 @@ describe "Episode page" do
     it "renders a list of segments" do
       episode = build :show_episode
       segment = build :show_segment, headline: "Cool Segment!"
-      episode.segments << segment
       episode.save!
+      episode.segments << segment
 
       visit episode.public_url
       page.should have_content segment.headline
