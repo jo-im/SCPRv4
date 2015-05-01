@@ -21,5 +21,4 @@ database:
     - cp config/templates/database.yml.ci config/database.yml
     - cp config/templates/api_config.yml.ci config/api_config.yml
     - cp config/templates/secrets.yml.ci config/secrets.yml
-    - mkdir tmp/cache
     - bundle exec rake db:create db:schema:load

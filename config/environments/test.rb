@@ -4,6 +4,7 @@ Scprv4::Application.configure do
   config.consider_all_requests_local       = true
   config.action_controller.perform_caching = false
   #config.cache_store = :redis_store, config.secrets["cache"]
+  config.cache_store = :memory_store
   config.action_controller.action_on_unpermitted_parameters = :raise
   config.active_record.raise_in_transactional_callbacks = true
 
