@@ -1,7 +1,7 @@
 module AuthenticationHelper
   # For features
   def login(options={})
-    username = options[:username] || "bricker"
+    username = options[:username] || "login_user"
     password = options[:password] || "secret55"
     @user = create :admin_user, username: username, password: password
 
