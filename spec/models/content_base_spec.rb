@@ -77,7 +77,6 @@ describe ContentBase do
       let(:article) { create :news_story }
 
       it "returns the matching article" do
-        #binding.pry
         ContentBase.obj_by_url(article.public_url).should eq article.to_article
       end
 
