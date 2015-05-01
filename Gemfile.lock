@@ -20,6 +20,16 @@ GIT
       trollop (~> 1.16)
 
 GIT
+  remote: git://github.com/scpr/asset_host_client.git
+  revision: b097a1f9b5b78390bd2bb33f43625c2ea5e43936
+  tag: v2.0.0
+  specs:
+    asset_host_client (2.0.0)
+      faraday (~> 0.8)
+      faraday_middleware (~> 0.8)
+      rails (>= 3.0, < 5)
+
+GIT
   remote: git://github.com/sheerun/parse-ruby-client.git
   revision: a4eb5618c8167e88857b449cd522b23a8b0c02e9
   ref: a4eb5618c8167e88857b449cd522b23a8b0c02e9
@@ -79,10 +89,6 @@ GEM
     addressable (2.3.6)
     ansi (1.4.3)
     arel (6.0.0)
-    asset_host_client (1.2.0)
-      faraday (~> 0.8)
-      faraday_middleware (~> 0.8)
-      rails (>= 3.0, < 5)
     audio_vision (1.0.0)
       faraday (~> 0.8.8)
       faraday_middleware (~> 0.9.0)
@@ -413,7 +419,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  asset_host_client (~> 1.2)
+  asset_host_client!
   audio_vision (~> 1.0)
   bcrypt-ruby (~> 3.1.0)
   bootstrap-sass (~> 2.2)

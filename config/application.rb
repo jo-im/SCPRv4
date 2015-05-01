@@ -43,10 +43,6 @@ module Scprv4
       :auth_token
     ]
 
-    config.scpr       = ActiveSupport::OrderedOptions.new
-    config.assethost  = ActiveSupport::OrderedOptions.new
-    config.newsroom   = ActiveSupport::OrderedOptions.new
-
     default_url_options[:host] ||= config.x.scpr.host
   end
 end

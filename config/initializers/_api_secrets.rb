@@ -3,5 +3,3 @@ if Rails.application.secrets.api
     Rails.configuration.x.api[k] = ActiveSupport::OrderedOptions.new(v)
   end
 end
-
-binding.pry
