@@ -7,7 +7,7 @@ module Job
       def perform(mailer_class, method, args)
         log "Sending email: #{mailer_class}, #{method}, #{args.inspect}"
         mailer = mailer_class.constantize
-        mailer.send(method, *args).deliver
+        mailer.send(method, *args).deliver_now
       end
     end
   end
