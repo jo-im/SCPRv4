@@ -9,7 +9,7 @@ Scprv4::Application.configure do
   config.active_record.raise_in_transactional_callbacks = true
 
   config.assets.debug         = false
-  config.serve_static_assets  = false
+  config.serve_static_files  = false
   config.assets.digest        = true
   config.assets.compile       = false
 

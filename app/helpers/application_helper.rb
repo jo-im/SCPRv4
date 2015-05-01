@@ -366,6 +366,10 @@ module ApplicationHelper
     end
   end
 
+  def format_date(time, format=:long, blank_message="&nbsp;")
+      time.blank? ? blank_message : time.to_s(format)
+  end
+
 
   #----------
 
