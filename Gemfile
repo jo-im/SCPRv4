@@ -87,7 +87,7 @@ end
 
 
 group :test, :development do
-  gem "rspec-rails", "~> 2.14.0"
+  gem "rspec-rails", "~> 3.2.1"
   gem 'rb-fsevent', '~> 0.9'
   gem 'launchy'
   gem 'guard', '~> 1.5'

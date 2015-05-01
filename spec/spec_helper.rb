@@ -28,8 +28,9 @@ RSpec.configure do |config|
   config.run_all_when_everything_filtered = true
   config.order = 'random'
 
-  config.include ActionView::TestCase::Behavior,
-    :example_group => { file_path: %r{spec/presenters} }
+  config.infer_spec_type_from_file_location!
+
+  config.include ActionView::TestCase::Behavior, file_path: %r{spec/presenters}
 
   config.include FactoryGirl::Syntax::Methods
   config.include RemoteStubs
@@ -75,10 +76,8 @@ RSpec.configure do |config|
 
   es_i = 0
   config.before :each do
-    unless example.metadata[:keep_es]
-      ContentBase.class_variable_set :@@es_index, ES_ARTICLES_INDEX+"-#{es_i}"
-      es_i += 1
-    end
+    ContentBase.class_variable_set :@@es_index, ES_ARTICLES_INDEX+"-#{es_i}"
+    es_i += 1
   end
 
   #config.before type: :feature do
