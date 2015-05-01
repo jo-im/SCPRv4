@@ -8,7 +8,7 @@ describe Concern::Methods::EloquaSendable do
     end
 
     it "raises an error if the configuration is missing" do
-      Rails.configuration.stub(:api) do
+      Rails.configuration.x.stub(:api) do
         { 'eloqua' => { 'attributes' => {} } }
       end
 
