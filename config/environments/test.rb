@@ -28,10 +28,9 @@ Scprv4::Application.configure do
 
   default_url_options[:host] = "scpr.org"
 
-  config.scpr.host         = "www.scpr.org"
-  config.scpr.media_root   = Rails.root.join("spec/fixtures/media")
-  config.scpr.media_url    = "http://media.scpr.org"
-  config.scpr.resque_queue = :scprv4
+  config.x.scpr.host         = "www.scpr.org"
+  config.x.scpr.media_root   = Rails.root.join("spec/fixtures/media")
+  config.x.scpr.media_url    = "http://media.scpr.org"
 
-  config.newsroom.server = "http://localhost:13002"
+  config.x.newsroom = "http://localhost:13002"
 end

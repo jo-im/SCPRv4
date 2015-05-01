@@ -42,7 +42,5 @@ module Scprv4
       :unencrypted_password,
       :auth_token
     ]
-
-    default_url_options[:host] ||= config.x.scpr.host
   end
 end

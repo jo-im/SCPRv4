@@ -17,8 +17,8 @@ It connects to the following services:
 * __Memcached__ is used in production for caching, but isn't required
     for development.
 * __[Newsroom](https://github.com/scpr/newsroom)__ is a small Node.js app
-    that is used to communicate editing status inside the CMS. It is used
-    by SCPRv4 Outpost users, not by SCPRv4 itself.
+    that is used to communicate editing status inside the CMS, including
+    the completion of import jobs inside Outpost.
 * __NFS__ is used to make uploaded audio files available on all SCPRv4
     servers.
 * __[Assethost](http://github.com/scpr/Assethost)__ is used to manage all

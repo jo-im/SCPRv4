@@ -24,9 +24,8 @@ Scprv4::Application.configure do
   config.action_mailer.delivery_method          = :postmark
   config.action_mailer.raise_delivery_errors    = true
   config.action_mailer.postmark_settings = {
-    :api_key => config.api['postmark']['api_key']
+    :api_key => Rails.application.secrets.api['postmark']['api_key']
   }
-
 
   # Enable locale fallbacks for I18n (makes lookups for any locale fall back to
   # the I18n.default_locale when a translation can not be found)
@@ -35,9 +34,5 @@ Scprv4::Application.configure do
   # Send deprecation notices to registered listeners
   config.active_support.deprecation = :notify
 
-  config.scpr.media_root   = "/scpr/scprv4_production/media"
-  config.scpr.media_url    = "http://media.scpr.org"
-  config.scpr.resque_queue = :scprv4
-
-  config.newsroom.server = "http://newsroom.scprdev.org:8020"
+  default_url_options[:host] = config.x.scpr.host = Rails.application.secrets.host
 end
