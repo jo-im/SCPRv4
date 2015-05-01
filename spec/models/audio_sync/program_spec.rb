@@ -21,12 +21,12 @@ describe AudioSync::Program do
 
     it "doesn't sync if file mtime is too old" do
       Dir.should_receive(:foreach)
-      .with(File.join(Rails.application.config.scpr.audio_root, program.audio_dir))
+      .with(File.join(Rails.configuration.x.scpr.audio_root, program.audio_dir))
       .and_return(["20121002_mbrand.mp3"])
 
       File.should_receive(:mtime)
       .with(
-        File.join(Rails.application.config.scpr.audio_root, "coolshowbro/20121002_mbrand.mp3")
+        File.join(Rails.configuration.x.scpr.audio_root, "coolshowbro/20121002_mbrand.mp3")
       ).and_return(1.month.ago)
 
       expect { AudioSync::Program.bulk_sync }.not_to change { Audio.count }
@@ -35,7 +35,7 @@ describe AudioSync::Program do
 
     it "doesn't sync if filename doesn't match the regex" do
       Dir.should_receive(:foreach)
-      .with(File.join(Rails.application.config.scpr.audio_root, program.audio_dir))
+      .with(File.join(Rails.configuration.x.scpr.audio_root, program.audio_dir))
       .and_return(["nomatch.mp3"])
 
       Time.zone.should_not_receive(:new)
@@ -44,7 +44,7 @@ describe AudioSync::Program do
 
     it "doesn't sync if the date can't be parsed" do
       Dir.should_receive(:foreach)
-      .with(File.join(Rails.application.config.scpr.audio_root, program.audio_dir))
+      .with(File.join(Rails.configuration.x.scpr.audio_root, program.audio_dir))
       .and_return(["99999999_mbrand.mp3"])
 
       # This just checks that the process never gets to the next step.
@@ -56,12 +56,12 @@ describe AudioSync::Program do
     context "for episode" do
       before do
         Dir.should_receive(:foreach)
-        .with(File.join(Rails.application.config.scpr.audio_root, program.audio_dir))
+        .with(File.join(Rails.configuration.x.scpr.audio_root, program.audio_dir))
         .and_return(["20121002_mbrand.mp3"])
 
         File.should_receive(:mtime)
         .with(
-          File.join(Rails.application.config.scpr.audio_root, "coolshowbro/20121002_mbrand.mp3")
+          File.join(Rails.configuration.x.scpr.audio_root, "coolshowbro/20121002_mbrand.mp3")
         ).and_return(Time.zone.now) # File new
       end
 

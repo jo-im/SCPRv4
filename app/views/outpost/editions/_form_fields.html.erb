@@ -29,7 +29,7 @@
         params: {
           limit: 20,
           types: 'news,blogs,segments,shells,abstracts',
-          token: "<%= Rails.application.config.api['kpcc']['private']['api_token'] %>",
+          token: "<%= Rails.configuration.x.api.kpcc.private.api_token %>",
           order: "updated_at", // Since Abstracts use the article's original publish date as its "public_datetime"
           sort_mode: "desc",
           with: { published: true }

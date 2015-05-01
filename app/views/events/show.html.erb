@@ -5,7 +5,7 @@
   <% add_to_page_title p.headline %>
 
   <% content_for :footer do %>
-    <script src="http://maps.googleapis.com/maps/api/js?key=<%=Rails.application.config.api["google"]["maps"]%>&amp;sensor=true"></script>
+    <script src="http://maps.googleapis.com/maps/api/js?key=<%=Rails.configuration.x.api.google.maps%>&amp;sensor=true"></script>
 
     <script>gmapsLoader = new scpr.GMapsLoader()</script>
   <% end %>

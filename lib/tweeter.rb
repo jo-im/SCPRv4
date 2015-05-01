@@ -23,7 +23,7 @@ class Tweeter
 
   def client
     @client ||= begin
-      auth = Rails.application.config.api['twitter'][@screen_name]
+      auth = Rails.configuration.x.api.twitter[@screen_name]
       Twitter::Client.new(
         :consumer_key       => auth["consumer_key"],
         :consumer_secret    => auth["consumer_secret"],

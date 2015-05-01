@@ -147,7 +147,7 @@ class Audio < ActiveRecord::Base
     #
     # Returns String
     def url(*parts)
-      File.join(Rails.application.config.scpr.audio_url, *parts)
+      File.join(Rails.configuration.x.scpr.audio_url, *parts)
     end
   end
 
@@ -157,9 +157,9 @@ class Audio < ActiveRecord::Base
   # we want to re-route the audio through the podcast
   # server so that we can deliver preroll.
   # If the audio doesn't come from our servers (i.e. doesn't contain
-  # the Rails.application.config.scpr.audio_url), then just leave it as-is
+  # the Rails.configuration.x.scpr.audio_url), then just leave it as-is
   def podcast_url
-    self.url.gsub(Rails.application.config.scpr.audio_url, Rails.application.config.scpr.podcast_url)
+    self.url.gsub(Rails.configuration.x.scpr.audio_url, Rails.configuration.x.scpr.podcast_url)
   end
 
 

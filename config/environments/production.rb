@@ -6,6 +6,9 @@ Scprv4::Application.configure do
   config.cache_store = :dalli_store, config.secrets.cache.servers, config.secrets.cache.options||{}
   config.action_controller.action_on_unpermitted_parameters = :log
 
+  # Not sure if we need this? - EWR
+  config.active_record.raise_in_transactional_callbacks = false
+
   config.assets.debug         = false
   config.serve_static_files   = false
   config.assets.digest        = true

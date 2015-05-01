@@ -56,7 +56,7 @@ RSpec.configure do |config|
     DatabaseCleaner.strategy = :truncation, { except: STATIC_TABLES }
 
     FileUtils.rm_rf(
-      Rails.application.config.scpr.media_root.join("audio/upload")
+      Rails.configuration.x.scpr.media_root.join("audio/upload")
     )
   end
 

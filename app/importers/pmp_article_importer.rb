@@ -208,7 +208,7 @@ module PmpArticleImporter
     # This isn't memoized so that we get a fresh API result each time.
     # Just be careful not to call this more than once in a method.
     def pmp
-      config = Rails.application.config.api['pmp']
+      config = Rails.configuration.x.api.pmp
 
       client = PMP::Client.new({
         :client_id        => config['client_id'],

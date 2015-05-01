@@ -151,7 +151,7 @@
 <%= yield :footer %>
 
 <% if current_user %>
-  <%= javascript_include_tag "#{Rails.application.config.newsroom.server}/socket.io/socket.io.js", async: true, onload: "scpr.Newsroom.load()", onerror: "scpr.Newsroom.fail()" %>
+  <%= javascript_include_tag "#{Rails.configuration.x.newsroom.server}/socket.io/socket.io.js", async: true, onload: "scpr.Newsroom.load()", onerror: "scpr.Newsroom.fail()" %>
 <% end %>
 
 </body>

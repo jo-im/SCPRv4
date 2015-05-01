@@ -22,7 +22,7 @@ module Newsroom
 
     def connection
       @connection ||= begin
-        Faraday.new(url: Rails.application.config.newsroom.server) do |conn|
+        Faraday.new(url: Rails.configuration.x.newsroom.server) do |conn|
           conn.response :json
           conn.adapter Faraday.default_adapter
         end

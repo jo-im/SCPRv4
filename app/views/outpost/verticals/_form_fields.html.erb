@@ -45,7 +45,7 @@
           params: {
             limit: 20,
             types: 'news,blogs,segments,shells,events,queries',
-            token: "<%= Rails.application.config.api['kpcc']['private']['api_token'] %>",
+            token: "<%= Rails.configuration.x.api.kpcc.private.api_token %>",
             order: "public_datetime",
             sort_mode: "desc",
             with: { published: true }
@@ -106,7 +106,7 @@
             params: {
               limit: 20,
               types: 'news,blogs,segments,shells,events',
-              token: "<%= Rails.application.config.api['kpcc']['private']['api_token'] %>",
+              token: "<%= Rails.configuration.x.api.kpcc.private.api_token %>",
               order: "public_datetime",
               sort_mode: "desc",
               with: { published: true }
