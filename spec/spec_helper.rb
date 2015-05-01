@@ -28,6 +28,14 @@ RSpec.configure do |config|
   config.run_all_when_everything_filtered = true
   config.order = 'random'
 
+  config.mock_with :rspec do |c|
+    c.syntax = [:should,:expect]
+  end
+
+  config.expect_with :rspec do |c|
+    c.syntax = [:should,:expect]
+  end
+
   config.infer_spec_type_from_file_location!
 
   config.include ActionView::TestCase::Behavior, file_path: %r{spec/presenters}
