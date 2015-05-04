@@ -103,3 +103,12 @@ an asset has been updated. When an asset is updated externally, we need to
 delete our cache of it so that the newest version is picked up.
 
 In production, assetsync runs on a worker instance.
+
+## Getting Started
+
+* Install Ruby 2.1.x
+* Install MySQL (5.6.x should be fine) / Elasticsearch (1.5.x) / Redis
+* Acquire a production db dump and load it into MySQL as `scprv4`
+* Acquire a `secrets.yml` file via the wiki
+* `rake scprv4:index_all` to index articles and models into Elasticsearch
+* `rake scprv4:cache:all` to cache homepage, tweets, etc
