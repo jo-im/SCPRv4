@@ -29,7 +29,7 @@ Scprv4::Application.configure do
   config.x.scpr.host          = ENV["SCPRV4_HOST"]              || "scprv4.dev"
   config.x.scpr.audio_root    = ENV["SCPRV4_AUDIO_ROOT"]        || false
   config.x.scpr.media_url     = ENV["SCPRV4_MEDIA_URL"]         || "http://media.scpr.org"
-  config.x.newsroom           = ENV["SCPRV4_NEWSROOM"]          || "http://localhost:8888"
+  config.x.newsroom.url           = ENV["SCPRV4_NEWSROOM"]          || "http://localhost:8888"
 
   config.x.assethost.raise_on_errors = true
 
