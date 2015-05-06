@@ -40,6 +40,24 @@ describe PodcastsController do
       response.should redirect_to podcast.podcast_url
     end
 
+    context "consumer key provided" do
+      it "is included in item links" do
+        entry   = create :blog_entry
+        audio   = create :audio, :uploaded, content: entry
+        entry.reload
+        podcast = create :podcast, slug: "podcast", source: entry.blog
+        get :podcast, slug: "podcast", consumer: "spotify"
+        doc = Nokogiri::XML response.body
+        items = doc.css("item")
+        all_items_have_consumer_key = items.any? && items.all? do |item|
+          uri = URI.parse(item.css("enclosure").first.attributes["url"].to_s)
+          query_params = uri.query
+          query_params.include?("consumer=spotify")
+        end
+        expect(all_items_have_consumer_key).to eq(true)
+      end
+    end
+
     context "Content search" do
       it "assigns the content for entry" do
         entry   = create :blog_entry
