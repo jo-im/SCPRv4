@@ -46,13 +46,13 @@ describe PodcastsController do
         audio   = create :audio, :uploaded, content: entry
         entry.reload
         podcast = create :podcast, slug: "podcast", source: entry.blog
-        get :podcast, slug: "podcast", consumer: "jollypod"
+        get :podcast, slug: "podcast", consumer: "spotify"
         doc = Nokogiri::XML response.body
         items = doc.css("item")
         all_items_have_consumer_key = items.any? && items.all? do |item|
           uri = URI.parse(item.css("enclosure").first.attributes["url"].to_s)
           query_params = uri.query
-          query_params.include?("consumer=jollypod")
+          query_params.include?("consumer=spotify")
         end
         expect(all_items_have_consumer_key).to eq(true)
       end

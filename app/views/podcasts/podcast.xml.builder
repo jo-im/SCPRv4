@@ -51,7 +51,7 @@ cache ["v2", @podcast], expires_in: 1.hour do # Podcasts will refresh every hour
             :url => url_with_params(audio.podcast_url, {
               :context    => @podcast.slug,
               :via        => "podcast",
-              :consumer   => @consumer
+              :consumer   => @consumer,
             }),
             :length => audio.size,
             :type   => "audio/mpeg"
