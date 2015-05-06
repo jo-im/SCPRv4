@@ -28,7 +28,7 @@ module Concern
       # to populate the "coverage began/ended" metadata on the
       # Issues pages.
       def touch_tags
-        self.tags.each(&:touch)
+        self.tags.each(&:update_timestamps)
       end
     end
   end

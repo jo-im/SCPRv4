@@ -31,11 +31,11 @@
 
         <div class="range">
             <dl class="began">
-                <dt><%= format_date(@tag.created_at, with: '%-d %^b %Y') %></dt>
+                <dt><%= format_date(@tag.began_at, with: '%-d %^b %Y') %></dt>
                 <dd>Coverage began</dd>
             </dl>
             <dl class="latest">
-                <dt><%= format_date(@tag.updated_at, with: '%-d %^b %Y') %></dt>
+                <dt><%= format_date(@tag.most_recent_at, with: '%-d %^b %Y') %></dt>
                 <dd>Latest coverage</dd>
             </dl>
         </div>
