@@ -17,8 +17,8 @@ It connects to the following services:
 * __Memcached__ is used in production for caching, but isn't required
     for development.
 * __[Newsroom](https://github.com/scpr/newsroom)__ is a small Node.js app
-    that is used to communicate editing status inside the CMS. It is used
-    by SCPRv4 Outpost users, not by SCPRv4 itself.
+    that is used to communicate editing status inside the CMS, including
+    the completion of import jobs inside Outpost.
 * __NFS__ is used to make uploaded audio files available on all SCPRv4
     servers.
 * __[Assethost](http://github.com/scpr/Assethost)__ is used to manage all
@@ -103,3 +103,12 @@ an asset has been updated. When an asset is updated externally, we need to
 delete our cache of it so that the newest version is picked up.
 
 In production, assetsync runs on a worker instance.
+
+## Getting Started
+
+* Install Ruby 2.1.x
+* Install MySQL (5.6.x should be fine) / Elasticsearch (1.5.x) / Redis
+* Acquire a production db dump and load it into MySQL as `scprv4`
+* Acquire a `secrets.yml` file via the wiki
+* `rake scprv4:index_all` to index articles and models into Elasticsearch
+* `rake scprv4:cache:all` to cache homepage, tweets, etc

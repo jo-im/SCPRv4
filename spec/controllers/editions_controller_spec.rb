@@ -30,11 +30,11 @@ describe EditionsController do
       assigns(:other_editions).should_not include(@edition)
     end
 
-    it "raises RoutingError if edition slug does not exist" do
+    it "raises ActionController::UrlGenerationError if edition slug does not exist" do
       edition = create :edition, :published
       -> {
         get :short_list, { id: edition.id, slug: '' }.merge!(date_path(edition.published_at))
-      }.should raise_error ActionController::RoutingError
+      }.should raise_error ActionController::UrlGenerationError
     end
   end
 

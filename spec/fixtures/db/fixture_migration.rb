@@ -4,7 +4,7 @@ class FixtureMigration < ActiveRecord::Migration
       t.string :title
       t.boolean :email_sent
       t.boolean :send_email
-      t.timestamps
+      t.timestamps null:false
     end
 
     create_table :test_class_stories, force: true do |t|
@@ -19,7 +19,7 @@ class FixtureMigration < ActiveRecord::Migration
       t.string :short_url
       t.integer :asset_display_id
       t.integer :feature_type_id
-      t.timestamps
+      t.timestamps null:false
     end
 
     create_table :test_class_remote_stories, force: true do |t|
@@ -32,7 +32,7 @@ class FixtureMigration < ActiveRecord::Migration
       t.integer :status
       t.integer :category_id
       t.string :remote_url
-      t.timestamps
+      t.timestamps null:false
     end
 
     create_table :test_class_posts, force: true do |t|
@@ -46,7 +46,7 @@ class FixtureMigration < ActiveRecord::Migration
       t.integer :category_id
       t.integer :program_id
       t.string :program_type
-      t.timestamps
+      t.timestamps null:false
     end
 
     create_table :test_class_post_contents, force: true do |t|
@@ -54,14 +54,14 @@ class FixtureMigration < ActiveRecord::Migration
       t.integer :position
       t.string :content_type
       t.integer :content_id
-      t.timestamps
+      t.timestamps null:false
     end
 
     create_table :test_class_people, force: true do |t|
       t.string :name
       t.string :slug
       t.string :twitter_url
-      t.timestamps
+      t.timestamps null:false
     end
 
     create_table :test_class_fake_audio, force: true do |t|

@@ -86,11 +86,9 @@ module ApplicationHelper
 
       # -- do we have a cache? -- #
 
-      # TODO: This call looks like it will change in Rails 4.1
       tmplt_digest = ActionView::Digestor.digest(
-        "shared/content/#{partial}",
-        options[:format] || self.lookup_context.rendered_format,
-        lookup_context,
+        name: "shared/content/#{partial}.#{options[:format] || self.lookup_context.rendered_format}",
+        finder: lookup_context,
         partial: true,
       )
 
@@ -366,6 +364,10 @@ module ApplicationHelper
         :pubdate => true
       )
     end
+  end
+
+  def format_date(time, format=:long, blank_message="&nbsp;")
+      time.blank? ? blank_message : time.to_s(format)
   end
 
 

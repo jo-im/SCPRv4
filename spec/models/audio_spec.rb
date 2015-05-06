@@ -26,7 +26,7 @@ describe Audio do
       url = Audio.url("path", "to", "audio.mp3")
 
       url.should eq File.join(
-        Rails.application.config.scpr.media_url, "audio",
+        Rails.configuration.x.scpr.media_url, "audio",
         "path", "to", "audio.mp3")
     end
   end
@@ -282,7 +282,7 @@ describe Audio do
 
         audio.save!
 
-        audio.url.should match Audio::AUDIO_URL_ROOT
+        audio.url.should match Rails.configuration.x.scpr.audio_url
         audio.url.should match /point1sec-.+?\.mp3/
         audio.status.should eq Audio.status_id(:live)
       end

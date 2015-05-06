@@ -28,8 +28,17 @@ RSpec.configure do |config|
   config.run_all_when_everything_filtered = true
   config.order = 'random'
 
-  config.include ActionView::TestCase::Behavior,
-    :example_group => { file_path: %r{spec/presenters} }
+  config.mock_with :rspec do |c|
+    c.syntax = [:should,:expect]
+  end
+
+  config.expect_with :rspec do |c|
+    c.syntax = [:should,:expect]
+  end
+
+  config.infer_spec_type_from_file_location!
+
+  config.include ActionView::TestCase::Behavior, file_path: %r{spec/presenters}
 
   config.include FactoryGirl::Syntax::Methods
   config.include RemoteStubs
@@ -47,7 +56,7 @@ RSpec.configure do |config|
     DatabaseCleaner.strategy = :truncation, { except: STATIC_TABLES }
 
     FileUtils.rm_rf(
-      Rails.application.config.scpr.media_root.join("audio/upload")
+      Rails.configuration.x.scpr.media_root.join("audio/upload")
     )
   end
 
@@ -75,10 +84,8 @@ RSpec.configure do |config|
 
   es_i = 0
   config.before :each do
-    unless example.metadata[:keep_es]
-      ContentBase.class_variable_set :@@es_index, ES_ARTICLES_INDEX+"-#{es_i}"
-      es_i += 1
-    end
+    ContentBase.class_variable_set :@@es_index, ES_ARTICLES_INDEX+"-#{es_i}"
+    es_i += 1
   end
 
   #config.before type: :feature do

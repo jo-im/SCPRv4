@@ -28,8 +28,7 @@ module Eloqua
       #--------------------
 
       def client
-        @client ||= Eloqua::Client.new(
-          Rails.application.config.api['eloqua']['auth'])
+        @client ||= Eloqua::Client.new(Rails.configuration.x.api.eloqua.auth)
       end
 
       #--------------------

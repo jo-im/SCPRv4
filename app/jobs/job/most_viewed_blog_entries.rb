@@ -12,7 +12,7 @@ module Job
 
     class << self
       def perform
-        analytics = Rails.application.config.api["google"]["analytics"]
+        analytics = Rails.configuration.x.api.google.analytics
 
         task = new(
           analytics["client_id"],

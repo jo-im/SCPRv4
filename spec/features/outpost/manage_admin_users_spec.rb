@@ -11,9 +11,15 @@ describe AdminUser do
   it_behaves_like "save options"
   it_behaves_like "admin routes"
 
-  # We have to copy these over because for admin user it's not exactly the
-  # same. Specifically, the counts are off by 1 since we need a user to login
-  # and stuff.
+  def fill_admin_user_fields(record,password=true)
+    fill_required_fields(record)
+
+    if password
+      find_by_id("#{record.class.singular_route_key}_password").set("abc123")
+      find_by_id("#{record.class.singular_route_key}_password_confirmation").set("abc123")
+    end
+  end
+
   describe 'managing resource' do
     before :each do
       login
@@ -51,10 +57,10 @@ describe AdminUser do
 
       context "invalid" do
         it "shows validation errors" do
-          fill_required_fields(invalid_record)
+          fill_admin_user_fields(invalid_record)
           click_button "edit"
           current_path.should eq described_class.admin_index_path
-          described_class.count.should eq 1
+          described_class.where("username != 'login_user'").count.should eq 0
           page.should_not have_css ".alert-success"
           page.should have_css ".alert-error"
           page.should have_css ".help-inline"
@@ -63,9 +69,9 @@ describe AdminUser do
 
       context "valid" do
         it "is created" do
-          fill_required_fields(valid_record)
+          fill_admin_user_fields(valid_record)
           click_button "edit"
-          described_class.count.should eq 2
+          described_class.where("username != 'login_user'").count.should eq 1
           valid = described_class.last
           current_path.should eq valid.admin_edit_path
           page.should have_css ".alert-success"
@@ -84,7 +90,7 @@ describe AdminUser do
 
       context "invalid" do
         it "shows validation error" do
-          fill_required_fields(invalid_record)
+          fill_admin_user_fields(invalid_record)
           click_button "edit"
           page.should have_css ".alert-error"
           current_path.should eq valid_record.admin_show_path # Technically "#update" but this'll do
@@ -93,7 +99,7 @@ describe AdminUser do
 
       context "valid" do
         it "updates attributes" do
-          fill_required_fields(updated_record)
+          fill_admin_user_fields(updated_record)
           click_button "edit"
           page.should have_css ".alert-success"
           current_path.should eq valid_record.admin_edit_path
@@ -111,7 +117,7 @@ describe AdminUser do
         click_link "Delete"
         current_path.should eq described_class.admin_index_path
         page.should have_css ".alert-success"
-        described_class.count.should eq 1 # user for feature specs
+        described_class.where("username != 'login_user'").count.should eq 0 # user for feature specs
       end
     end
   end
@@ -168,9 +174,9 @@ describe AdminUser do
     context "new record" do
       it "saves an initial version" do
         visit described_class.admin_new_path
-        fill_required_fields(valid_record)
+        fill_admin_user_fields(valid_record)
         click_button "edit"
-        described_class.count.should eq 2
+        described_class.where("username != 'login_user'").count.should eq 1
         new_record = described_class.last
         new_record.versions.size.should eq 1
         click_link "history"
@@ -182,7 +188,7 @@ describe AdminUser do
       it "saves a new version" do
         valid_record.save!
         visit valid_record.admin_edit_path
-        fill_required_fields(updated_record)
+        fill_admin_user_fields(updated_record)
         click_button "edit"
         updated = described_class.find(valid_record.id)
         updated.versions.size.should eq 2

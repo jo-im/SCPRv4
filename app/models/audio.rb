@@ -57,20 +57,6 @@ class Audio < ActiveRecord::Base
   logs_as_task
   has_status
 
-
-  # Server path root - /home/media/kpcc/audio
-  AUDIO_PATH_ROOT = File.join(
-    Rails.application.config.scpr.media_root, "audio")
-
-  # Public URL root - http://media.scpr.org/audio
-  AUDIO_URL_ROOT = File.join(
-    Rails.application.config.scpr.media_url, "audio")
-
-  # Podcast URL root for preroll - http://media.scpr.org/podcasts
-  PODCAST_URL_ROOT = File.join(
-    Rails.application.config.scpr.media_url, "podcasts")
-
-
   ENCO_DIR    = "features"
   UPLOAD_DIR  = "upload"
 
@@ -161,7 +147,7 @@ class Audio < ActiveRecord::Base
     #
     # Returns String
     def url(*parts)
-      File.join(AUDIO_URL_ROOT, *parts)
+      File.join(Rails.configuration.x.scpr.audio_url, *parts)
     end
   end
 
@@ -171,9 +157,9 @@ class Audio < ActiveRecord::Base
   # we want to re-route the audio through the podcast
   # server so that we can deliver preroll.
   # If the audio doesn't come from our servers (i.e. doesn't contain
-  # the AUDIO_URL_ROOT), then just leave it as-is
+  # the Rails.configuration.x.scpr.audio_url), then just leave it as-is
   def podcast_url
-    self.url.gsub(AUDIO_URL_ROOT, PODCAST_URL_ROOT)
+    self.url.gsub(Rails.configuration.x.scpr.audio_url, Rails.configuration.x.scpr.podcast_url)
   end
 
 

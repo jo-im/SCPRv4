@@ -1,21 +1,23 @@
 source 'https://rubygems.org'
 
 ## Core
-gem 'rails', "~> 4.0.0"
+gem 'rails', "~> 4.2.0"
+gem 'responders', '~> 2.0'
 gem 'mysql2', '~> 0.3.14'
 gem 'jquery-rails', '~> 3.1.0'
 gem "bcrypt-ruby", "~> 3.1.0"
-gem 'secretary-rails'
+gem 'secretary-rails', "~> 2.0.0rc1"
 
 gem 'elasticsearch'
 gem 'elasticsearch-rails'
 gem 'elasticsearch-model'
 gem 'patron'
+gem 'render_anywhere'
 
 gem 'dalli'
 
 ## Outpost
-gem 'outpost-cms'
+gem 'outpost-cms', github:"SCPR/outpost", tag:"v0.1.5"
 gem 'outpost-publishing'
 gem 'outpost-asset_host'
 gem 'outpost-aggregator'
@@ -26,7 +28,6 @@ gem 'outpost-secretary'
 gem "resque", "~> 1.26.pre.0"
 gem 'resque-pool', github:"SCPR/resque-pool"
 gem 'redis-rails'
-gem 'redis-sentinel'
 
 ## Views
 gem 'kaminari', '~> 0.15.0'
@@ -34,7 +35,7 @@ gem 'select2-rails', '3.4.1'
 gem 'twitter-text', "~> 1.5"
 gem 'sanitize', "~> 2.0"
 gem 'escape_utils', '~> 1.0.1'
-gem 'simple_form', "~> 3.0.0"
+gem 'simple_form', "~> 3.1.0"
 gem 'jbuilder', '~> 1.5.3'
 
 gem 'embeditor-rails', '~> 2.0.1'
@@ -64,7 +65,7 @@ gem 'newrelic_rpm', '~> 3.7'
 gem 'parse-ruby-client', github: "sheerun/parse-ruby-client", ref: "a4eb5618c8167e88857b449cd522b23a8b0c02e9"
 gem 'pmp', '0.4.0'
 gem 'npr', '~> 2.0'
-gem 'asset_host_client', '~> 1.2'
+gem 'asset_host_client', github:"scpr/asset_host_client", tag:"v2.0.0"
 gem 'audio_vision', '~> 1.0'
 gem 'slack-notifier'
 
@@ -86,7 +87,7 @@ end
 
 
 group :test, :development do
-  gem "rspec-rails", "~> 2.14.0"
+  gem "rspec-rails", "~> 3.2.1"
   gem 'rb-fsevent', '~> 0.9'
   gem 'launchy'
   gem 'guard', '~> 1.5'
@@ -104,4 +105,5 @@ group :test do
   gem 'webmock'
   gem 'test_after_commit'
   gem 'elasticsearch-extensions'
+  gem 'rspec_junit_formatter', :git => 'git@github.com:circleci/rspec_junit_formatter.git'
 end

@@ -4,7 +4,7 @@ module Job
 
     class << self
       def perform(message,obj_key=nil)
-        config = Rails.application.config.api['slack']
+        config = Rails.configuration.x.api.slack
 
         self.log "PublishNotification: #{obj_key} | #{message}"
 
