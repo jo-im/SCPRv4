@@ -31,5 +31,5 @@ Scprv4::Application.configure do
   config.x.scpr.media_root   = Rails.root.join("spec/fixtures/media")
   config.x.scpr.media_url    = "http://media.scpr.org"
 
-  config.x.newsroom = "http://localhost:13002"
+  config.x.newsroom.url = "http://localhost:13002"
 end

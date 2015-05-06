@@ -5,4 +5,4 @@ if Rails.application.secrets.api
 end
 
 # newsroom from secrets
-Rails.configuration.x.newsroom ||= Rails.application.secrets.newsroom
+Rails.configuration.x.newsroom.url ||= Rails.application.secrets.newsroom
