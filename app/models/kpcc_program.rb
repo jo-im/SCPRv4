@@ -128,7 +128,7 @@ class KpccProgram < ActiveRecord::Base
     episodes.published
   end
 
-  def paginate_episodes episodes, page, per_page, current_episode=nil
+  def paginate_episodes episodes:nil, page:nil, per_page:nil, current_episode: nil
     episodes = episodes || published_episodes
     if current_episode && current_episode.id
       episodes = episodes.where.not(id: current_episode.id).page(page).per(per_page)

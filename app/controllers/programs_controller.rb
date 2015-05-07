@@ -26,10 +26,12 @@ class ProgramsController < ApplicationController
     respond_with do |format|
       format.html do
         @current_episode = @episodes.first || MissingEpisode.new
-        @episodes = @program.paginate_episodes @episodes, params[:page], 6, @current_episode
+        @episodes = @program.paginate_episodes episodes: @episodes, page: params[:page], per_page: 6, current_episode: @current_episode
         render @program.class::SHOW_PAGE_PATH, @program.class::SHOW_RENDER_OPTIONS
       end
-      format.xml { send(@program.display_method, @program.podcast_url) }
+      format.xml do
+        send(@program.display_method, @program.podcast_url)
+      end
     end
   end
 

@@ -65,7 +65,7 @@ describe KpccProgram do
       5.times { program.episodes << create(:show_episode) }
     end
     it 'limits the number of episodes' do
-      eps = program.paginate_episodes program.episodes, 1, 2
+      eps = program.paginate_episodes page: 1, per_page: 2
       expect(eps.count).to be 2
     end 
     it 'returns all episodes if no pagination parameters are provided' do
