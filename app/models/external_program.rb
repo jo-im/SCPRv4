@@ -35,6 +35,10 @@ class ExternalProgram < ActiveRecord::Base
     "rss"     => "RssProgramImporter"
   }
 
+  SHOW_PAGE_PATH      = 'programs/kpcc/old/show'
+  PODCAST_URL         = 'programs/kpcc/old/show'
+  SHOW_RENDER_OPTIONS = {layout: 'application'}
+
 
   #-------------------
   # Scopes
@@ -126,11 +130,27 @@ class ExternalProgram < ActiveRecord::Base
   end
 
   def expired_episodes
-    external_episodes.where('CURRENT_TIME() >= DATE_ADD(created_at, INTERVAL ? DAY)', days_to_expiry)
+    if days_to_expiry
+      external_episodes.where('CURRENT_TIME() >= DATE_ADD(created_at, INTERVAL ? DAY)', days_to_expiry)
+    else
+      external_episodes.where("created_at = DATE('3000-01-01')")
+    end
   end
 
   def episodes
-    external_episodes.where('CURRENT_TIME() < DATE_ADD(created_at, INTERVAL ? DAY)', days_to_expiry)
+    if days_to_expiry
+      external_episodes.where('CURRENT_TIME() < DATE_ADD(created_at, INTERVAL ? DAY)', days_to_expiry)
+    else
+      external_episodes
+    end
+  end
+
+  def published_episodes
+    episodes.order("air_date desc")
+  end
+
+  def paginate_episodes episodes, page, per_page, current_episode=nil
+    episodes.page(page).per(per_page)
   end
 
   private
