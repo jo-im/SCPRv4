@@ -6,6 +6,7 @@ class KpccProgram < ActiveRecord::Base
   include Concern::Validations::SlugValidation
   include Concern::Associations::RelatedLinksAssociation
   include Concern::Model::Searchable
+  include Concern::Model::NotMissing
 
   self.public_route_key = "program"
 
