@@ -132,7 +132,7 @@ class ExternalProgram < ActiveRecord::Base
     if days_to_expiry
       external_episodes.where('CURRENT_TIME() >= DATE_ADD(created_at, INTERVAL ? DAY)', days_to_expiry)
     else
-      external_episodes.where("created_at = DATE('3000-01-01')")
+      external_episodes.none
     end
   end
 
