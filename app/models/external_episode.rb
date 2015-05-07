@@ -4,6 +4,7 @@ class ExternalEpisode < ActiveRecord::Base
   # InternalRouting, or something.
   include Outpost::Model::Routing
   include Outpost::Model::Identifier
+  include Concern::Model::NotMissing
 
   include Concern::Associations::AudioAssociation
   self.public_route_key = "episode"

@@ -1,5 +1,6 @@
 class Episode
   include Concern::Methods::AbstractModelMethods
+  include Concern::Model::NotMissing
 
   attr_accessor \
     :original_object,
