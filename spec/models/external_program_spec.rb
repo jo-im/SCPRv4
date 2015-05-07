@@ -88,6 +88,29 @@ describe ExternalProgram do
     end
   end
 
+  describe '#expired_episodes' do
+    program = nil
+    before :each do
+      program = create :external_program, :from_rss, air_status: "onair", days_to_expiry: 3
+      5.times do 
+        program.external_episodes << create(:external_episode)
+      end
+      program.external_episodes << create(:external_episode, created_at: 4.days.ago)
+    end
+    context 'has days_to_expiry timestamp' do
+      it "only returns expired episodes" do
+        expect(program.expired_episodes.any?{|e| e.created_at < 3.days.ago}).to eq(true)
+        expect(program.expired_episodes.any?{|e| e.created_at > 3.days.ago}).to eq(false)
+      end
+    end
+    context 'has no days_to_expiry timestamp' do
+      it 'returns no episodes' do
+        program.update days_to_expiry: nil
+        expect(program.expired_episodes).to be_empty
+      end
+    end
+  end
+
   describe '#to_program' do
     it 'turns it into a program' do
       program = build :external_program
