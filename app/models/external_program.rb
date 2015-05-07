@@ -125,6 +125,13 @@ class ExternalProgram < ActiveRecord::Base
     self.importer.sync(self)
   end
 
+  def expired_episodes
+    external_episodes.where('CURRENT_TIME() >= DATE_ADD(created_at, INTERVAL ? DAY)', days_to_expiry)
+  end
+
+  def episodes
+    external_episodes.where('CURRENT_TIME() < DATE_ADD(created_at, INTERVAL ? DAY)', days_to_expiry)
+  end
 
   private
 
