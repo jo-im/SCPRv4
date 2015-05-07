@@ -40,6 +40,10 @@ task :scheduler => [:environment] do
     Job::SyncExternalPrograms.enqueue("rss")
   end
 
+  # remove external RSS episodes that have expired
+  scheduler.cron "1m" do |job|
+    Job::RemoveExternalEpisodes.enqueue
+  end
 
   # marketplace every hour
   scheduler.cron "0 * * * *" do |job|
