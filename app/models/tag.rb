@@ -21,8 +21,14 @@ class Tag < ActiveRecord::Base
 
   private
 
+  def connection
+    self.class.superclass.connection
+  end
+
   def taggable_classes
-    ActiveRecord::Base.connection.execute(
+    ## Gathers the taggable_types of all associated taggables.  This should always get the existing taggable classes when
+    ## it is "touched" by its taggables, since the touch to update is only performed after the relationship is created.
+    connection.execute(
       "
         SELECT taggable_type FROM taggings
         WHERE tag_id = #{id}
@@ -51,7 +57,7 @@ class Tag < ActiveRecord::Base
       end
     end
     limit_statement = "LIMIT #{limit}"
-    row = ActiveRecord::Base.connection.execute(
+    row = connection.execute(
       "SELECT * FROM
       (
         #{unsorted_published_at_dates_query}
