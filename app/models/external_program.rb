@@ -130,7 +130,7 @@ class ExternalProgram < ActiveRecord::Base
 
   def expired_episodes
     if days_to_expiry
-      external_episodes.where('CURRENT_TIME() >= DATE_ADD(created_at, INTERVAL ? DAY)', days_to_expiry)
+      external_episodes.where('DATE(?) >= DATE_ADD(created_at, INTERVAL ? DAY)', Time.now, days_to_expiry)
     else
       external_episodes.none
     end
@@ -138,7 +138,7 @@ class ExternalProgram < ActiveRecord::Base
 
   def episodes
     if days_to_expiry
-      external_episodes.where('CURRENT_TIME() < DATE_ADD(created_at, INTERVAL ? DAY)', days_to_expiry)
+      external_episodes.where('DATE(?) < DATE_ADD(created_at, INTERVAL ? DAY)', Time.now, days_to_expiry)
     else
       external_episodes
     end
