@@ -69,12 +69,12 @@ describe KpccProgram do
       expect(eps.count).to be 2
     end 
     it 'returns all episodes if no pagination parameters are provided' do
-      eps = program.paginate_episodes program.episodes, nil, nil
+      eps = program.paginate_episodes episodes: program.episodes
       expect(eps.count == program.episodes.count).to eq(true)
     end 
     it 'removes a current episode if provided' do
       current_episode = program.episodes.first
-      eps = program.paginate_episodes program.episodes, nil, nil, current_episode
+      eps = program.paginate_episodes episodes: program.episodes, current_episode: current_episode
       expect(eps.include?(current_episode)).to eq(false)
     end 
   end
