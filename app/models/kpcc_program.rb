@@ -17,6 +17,10 @@ class KpccProgram < ActiveRecord::Base
     "hidden"     => "Not visible on site"
   }
 
+  SHOW_PAGE_PATH = 'programs/kpcc/old/show'
+  PODCAST_URL = 'programs/kpcc/old/show'
+  SHOW_RENDER_OPTIONS = {}
+
   AIR_STATUS = PROGRAM_STATUS.invert
 
   #-------------------
@@ -118,6 +122,25 @@ class KpccProgram < ActiveRecord::Base
     @featured_articles ||= self.program_articles
       .includes(:article).select(&:article)
       .map { |a| a.article.to_article }
+  end
+
+  def published_episodes
+    episodes.published
+  end
+
+  def paginate_episodes episodes, page, per_page, current_episode=nil
+    if current_episode && current_episode.id
+      episodes = episodes.where.not(id: current_episode.id).page(page).per(per_page)
+    end
+    episodes.page(page).per(per_page)
+  end
+
+  def podcast_url
+    self.class::PODCAST_URL
+  end
+
+  def display_method
+    :render
   end
 
   private

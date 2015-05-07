@@ -20,6 +20,7 @@ class ShowEpisode < ActiveRecord::Base
   include Concern::Callbacks::TouchCallback
   include Concern::Methods::CommentMethods
   include Concern::Methods::AssetDisplayMethods
+  include Concern::Model::NotMissing
 
 
   self.public_route_key = "episode"

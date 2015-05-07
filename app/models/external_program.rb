@@ -35,8 +35,7 @@ class ExternalProgram < ActiveRecord::Base
     "rss"     => "RssProgramImporter"
   }
 
-  SHOW_PAGE_PATH      = 'programs/kpcc/old/show'
-  PODCAST_URL         = 'programs/kpcc/old/show'
+  SHOW_PAGE_PATH      = 'programs/external/show'
   SHOW_RENDER_OPTIONS = {layout: 'application'}
 
 
@@ -151,6 +150,10 @@ class ExternalProgram < ActiveRecord::Base
 
   def paginate_episodes episodes, page, per_page, current_episode=nil
     episodes.page(page).per(per_page)
+  end
+
+  def display_method
+    :redirect_to
   end
 
   private
