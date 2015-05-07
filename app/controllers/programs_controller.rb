@@ -153,21 +153,12 @@ class ProgramsController < ApplicationController
       params[:archive]["date(2i)"].to_i,
       params[:archive]["date(3i)"].to_i
     )
-
-    if @program.is_a?(KpccProgram)
-      @episode = @program.episodes.for_air_date(@date).first
-    elsif @program.is_a?(ExternalProgram)
-      @episode = @program.external_episodes.for_air_date(@date).first
-    end
-
-    if !@episode
-      flash[:alert] = "There is no #{@program.title} " \
-                      "episode for #{@date.strftime('%F')}."
-
-      redirect_to featured_show_path(@program.slug, anchor: "archive") and return
-    else
-      redirect_to @episode.public_path and return
-    end
+    @episode = @program.episodes.for_air_date(@date).first || MissingEpisode.new
+    flash[:alert] = @episode.if_missing proc{
+      "There is no #{@program.title} " \
+      "episode for #{@date.strftime('%F')}."
+    }
+    redirect_to @episode.if_not_missing proc{@episode.public_path}, proc{featured_show_path(@program.slug, anchor: "archive")} 
   end
 
   def schedule
