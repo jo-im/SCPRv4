@@ -148,7 +148,7 @@ class ExternalProgram < ActiveRecord::Base
     episodes.order("air_date desc")
   end
 
-  def paginate_episodes episodes, page, per_page, current_episode=nil
+  def paginate_episodes episodes: nil, page: nil, per_page: nil, current_episode: nil
     episodes.page(page).per(per_page)
   end
 
