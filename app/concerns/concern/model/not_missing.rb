@@ -9,4 +9,12 @@ module Concern::Model::NotMissing
 		block.call
 	end
 
+	def missing?
+		false
+	end
+
+	def not_missing?
+		true
+	end
+
 end

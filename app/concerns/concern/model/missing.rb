@@ -9,4 +9,12 @@ module Concern::Model::Missing
 		elseblock.call
 	end
 
+	def missing?
+		true
+	end
+
+	def not_missing?
+		false
+	end
+
 end
