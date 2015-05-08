@@ -1,6 +1,6 @@
 require "spec_helper"
 
-describe Api::Public::V2::ArticlesController do
+describe Api::Public::V2::ArticlesController, :indexing do
   request_params = {
     :format => :json
   }
