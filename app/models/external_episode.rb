@@ -4,7 +4,6 @@ class ExternalEpisode < ActiveRecord::Base
   # InternalRouting, or something.
   include Outpost::Model::Routing
   include Outpost::Model::Identifier
-  include Concern::Model::NotMissing
 
   include Concern::Associations::AudioAssociation
   self.public_route_key = "episode"
@@ -23,7 +22,7 @@ class ExternalEpisode < ActiveRecord::Base
     where("DATE(air_date) = DATE(?)", date_or_time)
   }
 
-  scope :expired, -> { joins(:external_program).where('CURRENT_DATE() >= DATE_ADD(external_episodes.created_at, INTERVAL external_programs.days_to_expiry DAY)') }
+  scope :expired, -> { joins(:external_program).where('CURRENT_DATE() >= DATE_ADD(external_episodes.created_at, INTERVAL days_to_expiry DAY)') }
 
   scope :published, -> { order("air_date desc") }
 
