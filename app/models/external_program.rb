@@ -35,9 +35,6 @@ class ExternalProgram < ActiveRecord::Base
     "rss"     => "RssProgramImporter"
   }
 
-  SHOW_PAGE_PATH      = 'programs/external/show'
-  SHOW_RENDER_OPTIONS = {layout: 'application'}
-
 
   #-------------------
   # Scopes
@@ -119,7 +116,6 @@ class ExternalProgram < ActiveRecord::Base
     self.air_status != "hidden"
   end
 
-
   def importer
     @importer ||= IMPORTERS[self.source].constantize
   end
@@ -128,21 +124,7 @@ class ExternalProgram < ActiveRecord::Base
     self.importer.sync(self)
   end
 
-  def expired_episodes
-    if days_to_expiry
-      external_episodes.where('DATE(?) >= DATE_ADD(created_at, INTERVAL ? DAY)', Time.now, days_to_expiry)
-    else
-      external_episodes.none
-    end
-  end
-
-  def episodes
-    if days_to_expiry
-      external_episodes.where('DATE(?) < DATE_ADD(created_at, INTERVAL ? DAY)', Time.now, days_to_expiry)
-    else
-      external_episodes
-    end
-  end
+  alias_method :episodes, :external_episodes
 
   def published_episodes
     episodes.order("air_date desc")
@@ -154,6 +136,10 @@ class ExternalProgram < ActiveRecord::Base
 
   def display_method
     :redirect_to
+  end
+
+  def external?
+    true
   end
 
   private

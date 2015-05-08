@@ -23,6 +23,13 @@ class ExternalEpisode < ActiveRecord::Base
     where("DATE(air_date) = DATE(?)", date_or_time)
   }
 
+  scope :expired, -> { joins(:external_program).where('CURRENT_DATE() >= DATE_ADD(external_episodes.created_at, INTERVAL external_programs.days_to_expiry DAY)') }
+
+  scope :published, -> { order("air_date desc") }
+
+  scope :paginate, proc{ |page_number, per_page, current_episode|
+    page(page_number).per(per_page)
+  }
 
   # This needs to match ShowEpisode
   def route_hash

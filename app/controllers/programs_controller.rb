@@ -22,16 +22,12 @@ class ProgramsController < ApplicationController
 
 
   def show
-    @episodes = @program.published_episodes
-    respond_with do |format|
-      format.html do
-        @current_episode = @episodes.first || MissingEpisode.new
-        @episodes = @program.paginate_episodes episodes: @episodes, page: params[:page], per_page: 6, current_episode: @current_episode
-        render @program.class::SHOW_PAGE_PATH, @program.class::SHOW_RENDER_OPTIONS
-      end
-      format.xml do
-        send(@program.display_method, @program.podcast_url)
-      end
+    @episodes = @program.episodes.published
+    @current_episode = @episodes.first
+    if @program.external?
+      show_external_program
+    else
+      show_kpcc_program
     end
   end
 
@@ -155,6 +151,31 @@ class ProgramsController < ApplicationController
 
 
   private
+
+  def show_kpcc_program
+    path = 'programs/kpcc/old/show'
+    respond_with do |format|
+      format.html do
+        @episodes = @episodes.paginate params[:page], 6, @current_episode
+        render path
+      end
+      format.xml do
+        render path
+      end
+    end
+  end
+
+  def show_external_program
+    respond_with do |format|
+      format.html do
+        @episodes = @episodes.paginate params[:page], 6, @current_episode
+        render 'programs/external/show', layout: 'application'
+      end
+      format.xml do
+        redirect_to @program.podcast_url
+      end
+    end
+  end
 
   def get_program
     @program = KpccProgram.find_by_slug(params[:show]) ||
