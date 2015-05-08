@@ -15,8 +15,18 @@ class Tag < ActiveRecord::Base
     taggables(options)
   end
 
-  def update_timestamps
-    update began_at: earliest_published_at, most_recent_at: latest_published_at
+  def update_timestamps published_at
+    updates = {}
+    if published_at < began_at
+      updates[:began_at] = published_at
+    end
+
+    if published_at > most_recent_at
+      updates[:most_recent_at] = published_at
+    end
+
+    update(updates) if updates.any?
+    self
   end
 
   private
@@ -25,56 +35,4 @@ class Tag < ActiveRecord::Base
     self.class.superclass.connection
   end
 
-  def taggable_classes
-    ## Gathers the taggable_types of all associated taggables.  This should always get the existing taggable classes when
-    ## it is "touched" by its taggables, since the touch to update is only performed after the relationship is created.
-    connection.execute(
-      "
-        SELECT taggable_type FROM taggings
-        WHERE tag_id = #{id}
-        GROUP BY taggable_type
-      "
-    )
-      .to_a
-      .map{|r| ActiveRecord::Base.const_get(r[0]) rescue nil}
-      .compact
-  end
-
-  def unsorted_published_at_dates_query
-    ## Constructs an SQL query string to gather an array of all published_at dates from content associated with the tag.
-    taggable_classes.map { |m|
-      "SELECT #{m.table_name}.published_at FROM #{m.table_name}
-      INNER JOIN taggings
-      ON taggable_type = '#{m.to_s}' AND taggings.tag_id = #{id}
-      "
-    }.join("\nUNION\n")
-  end
-
-  def published_at_dates order="ASC", limit=1
-    missing_date = Class.new do
-      def first
-        nil
-      end
-    end
-    limit_statement = "LIMIT #{limit}"
-    row = connection.execute(
-      "SELECT * FROM
-      (
-        #{unsorted_published_at_dates_query}
-      ) AS unsorted_dates
-      WHERE published_at IS NOT NULL
-      ORDER BY published_at #{order}
-      #{limit_statement if limit}
-      "
-      )
-    (row.to_a.first || missing_date.new).first
-  end
-
-  def earliest_published_at
-    published_at_dates "ASC", 1
-  end
-
-  def latest_published_at
-    published_at_dates "DESC", 1
-  end
 end
