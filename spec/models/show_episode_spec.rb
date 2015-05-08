@@ -4,7 +4,7 @@ describe ShowEpisode do
   describe '#segments' do
     it 'orders by position' do
       episode = build :show_episode
-      episode.segments.to_sql.should match /order by position/i
+      episode.segments.to_sql.should match /order by shows_rundown.position/i
     end
   end
 
