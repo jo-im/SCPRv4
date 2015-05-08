@@ -48,8 +48,9 @@ describe ExternalEpisode do
     end
     context 'has days_to_expiry timestamp' do
       it "only returns expired episodes" do
-        expect(program.episodes.expired.any?{|e| e.created_at < 3.days.ago}).to eq(true)
-        expect(program.episodes.expired.any?{|e| e.created_at > 3.days.ago}).to eq(false)
+        expired_eps = program.episodes.expired
+        expect(expired_eps.count).to eq(1)
+        expect(expired_eps.first).to eq(program.episodes.order("created_at DESC").last)
       end
     end
     context 'has no days_to_expiry timestamp' do
