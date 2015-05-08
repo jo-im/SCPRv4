@@ -1,7 +1,5 @@
 module Job
   class Indexer < Base
-    SHOULD_RUN_IN_TEST = true
-
     class << self
 
       def queue; QUEUES[:mid_priority]; end

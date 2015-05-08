@@ -7,14 +7,15 @@ machine:
       '2.1.1'
 
   environment:
-    ES_INCLUDE: /home/ubuntu/elasticsearch-1.4.2/bin/elasticsearch.in.sh
+    ES_INCLUDE: /home/ubuntu/elasticsearch-1.5.2/bin/elasticsearch.in.sh
 
 dependencies:
   cache_directories:
-    - ~/elasticsearch-1.4.2
+    - ~/elasticsearch-1.5.2
   post:
-    - if [[ ! -e ~/elasticsearch-1.4.2 ]]; then cd ~ && wget https://download.elasticsearch.org/elasticsearch/elasticsearch/elasticsearch-1.4.2.tar.gz && tar -xvf elasticsearch-1.4.2.tar.gz; fi
-    - ln -s ~/elasticsearch-1.4.2/bin/elasticsearch ~/bin/elasticsearch
+    - if [[ ! -e ~/elasticsearch-1.5.2 ]]; then cd ~ && wget https://download.elasticsearch.org/elasticsearch/elasticsearch/elasticsearch-1.5.2.tar.gz && tar -xvf elasticsearch-1.5.2.tar.gz; fi
+    - ln -s ~/elasticsearch-1.5.2/bin/elasticsearch ~/bin/elasticsearch
+    - bundle clean
 
 database:
   override:

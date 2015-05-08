@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe FeatureCandidate::Slideshow do
+describe FeatureCandidate::Slideshow, :indexing do
   let(:category) { create :category }
 
   before(:each) { create :show_segment }

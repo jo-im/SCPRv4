@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Concern::Controller::Searchable, type: :controller do
+describe Concern::Controller::Searchable, type: :controller, indexing:true do
   controller(Outpost::ResourceController) do
     outpost_controller model: TestClass::Story
     include Concern::Controller::Searchable

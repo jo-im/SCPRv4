@@ -50,10 +50,13 @@ RSpec.configure do |config|
   config.include FactoryAttributesBuilder
   config.include ElasticsearchHelper
 
+#  DatabaseCleaner.strategy = :transaction
+
   config.before :suite do
-    DatabaseCleaner.clean_with :truncation
+    DatabaseCleaner.clean_with(:truncation)
     load "#{Rails.root}/db/seeds.rb"
-    DatabaseCleaner.strategy = :truncation, { except: STATIC_TABLES }
+
+    DatabaseCleaner.strategy = :transaction
 
     FileUtils.rm_rf(
       Rails.configuration.x.scpr.media_root.join("audio/upload")
@@ -71,6 +74,8 @@ RSpec.configure do |config|
 
     Elasticsearch::Model.client = ContentBase.es_client
 
+    ContentBase.es_client.indices.delete index:"_all"
+
     Article._put_article_mapping()
   end
 
@@ -78,23 +83,21 @@ RSpec.configure do |config|
     Elasticsearch::Extensions::Test::Cluster.stop unless ENV["ES_RUNNING"]
   end
 
-  config.before :all do
-    reset_es
-  end
-
   es_i = 0
-  config.before :each do
+  config.around(:each) do |ex|
     ContentBase.class_variable_set :@@es_index, ES_ARTICLES_INDEX+"-#{es_i}"
     es_i += 1
+
+    if ex.metadata[:indexing]
+      Resque.run_in_tests = (Resque.run_in_tests + [Job::Indexer]).uniq
+    end
+
+    DatabaseCleaner.cleaning do
+      ex.run
+    end
+
+    Resque.run_in_tests.delete(Job::Indexer)
   end
-
-  #config.before type: :feature do
-  #  DatabaseCleaner.strategy = :truncation, { except: STATIC_TABLES }
-  #end
-
-  #config.after type: :feature do
-  #  DatabaseCleaner.strategy = :truncation
-  #end
 
   config.before :all do
     DeferredGarbageCollection.start
@@ -137,6 +140,7 @@ RSpec.configure do |config|
 
   config.after :all do
     DeferredGarbageCollection.reconsider
+    DatabaseCleaner.clean_with(:truncation,{ except: STATIC_TABLES })
   end
 
   config.after :suite do

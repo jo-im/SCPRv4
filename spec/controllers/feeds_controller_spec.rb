@@ -22,7 +22,7 @@ describe FeedsController do
       response.body.should be_a String
     end
 
-    it "uses ContentBase to populate @content" do
+    it "uses ContentBase to populate @content", :indexing do
       get :all_news
       assigns(:content).should_not be_blank
     end

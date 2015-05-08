@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe IssuesController do
+describe IssuesController, :indexing do
   render_views
 
   describe 'GET /issues' do

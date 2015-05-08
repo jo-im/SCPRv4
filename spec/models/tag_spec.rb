@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Tag do
+describe Tag, :indexing do
   it { should have_many :taggings }
 
   describe '#articles' do

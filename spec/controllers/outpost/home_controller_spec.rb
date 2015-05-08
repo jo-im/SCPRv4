@@ -29,7 +29,7 @@ describe Outpost::HomeController do
     end
   end
 
-  describe 'GET search' do
+  describe 'GET search', :indexing do
     routes { Rails.application.routes }
 
     it 'gets the records from the query' do

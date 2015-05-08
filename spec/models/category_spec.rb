@@ -1,6 +1,6 @@
 require "spec_helper"
 
-describe Category do
+describe Category, :indexing do
   before(:each) do
     # create a segment so that our FeatureCandidate::Segment lookup works
     # (it otherwise fails due to a missing mapping)
