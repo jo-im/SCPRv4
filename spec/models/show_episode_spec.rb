@@ -75,7 +75,7 @@ describe ShowEpisode do
   #------------------
 
   describe 'attached rundowns' do
-    it "saves them along with the episode", focus:true do
+    it "saves them along with the episode" do
       episode = build :show_episode
       seg1 = create :show_segment
       seg2 = create :show_segment

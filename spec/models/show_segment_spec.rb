@@ -12,7 +12,11 @@ describe ShowSegment do
     it "uses the first episode the segment is associated with" do
       segment = create :show_segment
       episodes = create_list :show_episode, 3
-      episodes.each { |episode| create :show_rundown, episode: episode, segment: segment }
+
+      episodes.each do |ep|
+        ep.segments << segment
+      end
+
       segment.episode.should eq segment.episodes.first
     end
   end
