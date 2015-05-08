@@ -79,7 +79,7 @@ class ShowEpisode < ActiveRecord::Base
     before_add:   :set_rundown_position
 
   has_many :segments,
-    -> { order('show_rundowns.position') },
+    -> { order('shows_rundown.position') },
     :class_name     => "ShowSegment",
     :foreign_key    => "segment_id",
     :through        => :rundowns
