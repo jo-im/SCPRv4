@@ -26,7 +26,7 @@ class ExternalEpisode < ActiveRecord::Base
 
   scope :published, -> { order("air_date desc") }
 
-  scope :paginate, proc{ |page_number, per_page, current_episode|
+  scope :for_show_page, proc{ |page_number, per_page, current_episode|
     page(page_number).per(per_page)
   }
 

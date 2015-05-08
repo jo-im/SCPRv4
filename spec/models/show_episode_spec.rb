@@ -135,4 +135,26 @@ describe ShowEpisode do
       episode.body.should eq "hello"
     end
   end
+
+  describe '#for_show_page' do
+    program = nil
+    before :each do
+      program = create :kpcc_program
+      5.times { program.episodes << create(:show_episode) }
+    end
+    it 'limits the number of episodes' do
+      eps = program.episodes.for_show_page 1, 2
+      expect(eps.count).to be 2
+    end 
+    it 'returns all episodes if no pagination parameters are provided' do
+      eps = program.episodes.for_show_page
+      expect(eps.count == program.episodes.count).to eq(true)
+    end 
+    it 'removes a current episode if provided' do
+      current_episode = program.episodes.first
+      eps = program.episodes.for_show_page 1, 10, current_episode
+      expect(eps.include?(current_episode)).to eq(false)
+    end 
+  end
+
 end

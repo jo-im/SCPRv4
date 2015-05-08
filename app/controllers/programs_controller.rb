@@ -130,12 +130,15 @@ class ProgramsController < ApplicationController
       params[:archive]["date(2i)"].to_i,
       params[:archive]["date(3i)"].to_i
     )
-    @episode = @program.episodes.for_air_date(@date).first || MissingEpisode.new
-    flash[:alert] = @episode.if_missing proc{
-      "There is no #{@program.title} " \
-      "episode for #{@date.strftime('%F')}."
-    }
-    redirect_to @episode.if_not_missing proc{@episode.public_path}, proc{featured_show_path(@program.slug, anchor: "archive")} 
+    @episode = @program.episodes.for_air_date(@date).first
+
+    if @episode
+      flash[:alert] = "There is no #{@program.title} " \
+                      "episode for #{@date.strftime('%F')}."
+      redirect_to featured_show_path(@program.slug, anchor: "archive")
+    else
+      redirect_to @episode.public_path
+    end
   end
 
   def schedule
@@ -156,7 +159,7 @@ class ProgramsController < ApplicationController
     path = 'programs/kpcc/old/show'
     respond_with do |format|
       format.html do
-        @episodes = @episodes.paginate params[:page], 6, @current_episode
+        @episodes = @episodes.for_show_page params[:page], 6, @current_episode
         render path
       end
       format.xml do
@@ -168,7 +171,7 @@ class ProgramsController < ApplicationController
   def show_external_program
     respond_with do |format|
       format.html do
-        @episodes = @episodes.paginate params[:page], 6, @current_episode
+        @episodes = @episodes.for_show_page params[:page], 6, @current_episode
         render 'programs/external/show', layout: 'application'
       end
       format.xml do

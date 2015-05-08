@@ -66,7 +66,7 @@ class ShowEpisode < ActiveRecord::Base
     where("DATE(air_date) = DATE(?)", date_or_time)
   }
 
-  scope :paginate, proc{ |page_number, per_page, current_episode|
+  scope :for_show_page, proc{ |page_number, per_page, current_episode|
     if current_episode && current_episode.id
       where.not(id: current_episode.id).page(page_number).per(per_page)
     else
