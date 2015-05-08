@@ -41,7 +41,7 @@ task :scheduler => [:environment] do
   end
 
   # remove external RSS episodes that have expired
-  scheduler.cron "1m" do |job|
+  scheduler.cron "0 1 * * * " do |job|
     Job::RemoveExternalEpisodes.enqueue
   end
 
