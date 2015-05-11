@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150506234902) do
+ActiveRecord::Schema.define(version: 20150511200111) do
 
   create_table "abstracts", force: :cascade do |t|
     t.string   "source",               limit: 255
@@ -705,6 +705,7 @@ ActiveRecord::Schema.define(version: 20150506234902) do
   end
 
   add_index "related_links", ["content_id", "content_type"], name: "index_related_links_on_content_id_and_content_type", using: :btree
+  add_index "related_links", ["content_type"], name: "index_related_links_on_content_type", using: :btree
   add_index "related_links", ["link_type"], name: "index_related_links_on_link_type", using: :btree
 
   create_table "remote_articles", force: :cascade do |t|
@@ -840,90 +841,13 @@ ActiveRecord::Schema.define(version: 20150506234902) do
     t.boolean  "is_featured",    limit: 1
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.datetime "began_at",                     default: '2015-05-06 12:49:55'
-    t.datetime "most_recent_at",               default: '2015-05-06 12:49:56'
+    t.datetime "began_at",                     default: '2015-05-05 16:31:00'
+    t.datetime "most_recent_at",               default: '2015-05-05 16:31:00'
   end
 
   add_index "tags", ["created_at"], name: "index_tags_on_created_at", using: :btree
   add_index "tags", ["is_featured"], name: "index_tags_on_is_featured", using: :btree
   add_index "tags", ["slug"], name: "index_tags_on_slug", using: :btree
-
-  create_table "test_class_alerts", force: :cascade do |t|
-    t.string   "title",      limit: 255
-    t.boolean  "email_sent", limit: 1
-    t.boolean  "send_email", limit: 1
-    t.datetime "created_at",             null: false
-    t.datetime "updated_at",             null: false
-  end
-
-  create_table "test_class_fake_audio", force: :cascade do |t|
-    t.string  "path",     limit: 255
-    t.integer "status",   limit: 4
-    t.integer "duration", limit: 4
-    t.integer "size",     limit: 4
-  end
-
-  create_table "test_class_people", force: :cascade do |t|
-    t.string   "name",        limit: 255
-    t.string   "slug",        limit: 255
-    t.string   "twitter_url", limit: 255
-    t.datetime "created_at",              null: false
-    t.datetime "updated_at",              null: false
-  end
-
-  create_table "test_class_post_contents", force: :cascade do |t|
-    t.integer  "post_id",      limit: 4
-    t.integer  "position",     limit: 4
-    t.string   "content_type", limit: 255
-    t.integer  "content_id",   limit: 4
-    t.datetime "created_at",               null: false
-    t.datetime "updated_at",               null: false
-  end
-
-  create_table "test_class_posts", force: :cascade do |t|
-    t.string   "headline",       limit: 255
-    t.string   "short_headline", limit: 255
-    t.text     "body",           limit: 65535
-    t.text     "teaser",         limit: 65535
-    t.string   "slug",           limit: 255
-    t.datetime "published_at"
-    t.integer  "status",         limit: 4
-    t.integer  "category_id",    limit: 4
-    t.integer  "program_id",     limit: 4
-    t.string   "program_type",   limit: 255
-    t.datetime "created_at",                   null: false
-    t.datetime "updated_at",                   null: false
-  end
-
-  create_table "test_class_remote_stories", force: :cascade do |t|
-    t.string   "headline",       limit: 255
-    t.string   "short_headline", limit: 255
-    t.text     "body",           limit: 65535
-    t.text     "teaser",         limit: 65535
-    t.string   "slug",           limit: 255
-    t.datetime "published_at"
-    t.integer  "status",         limit: 4
-    t.integer  "category_id",    limit: 4
-    t.string   "remote_url",     limit: 255
-    t.datetime "created_at",                   null: false
-    t.datetime "updated_at",                   null: false
-  end
-
-  create_table "test_class_stories", force: :cascade do |t|
-    t.string   "headline",         limit: 255
-    t.string   "short_headline",   limit: 255
-    t.text     "body",             limit: 65535
-    t.text     "teaser",           limit: 65535
-    t.string   "slug",             limit: 255
-    t.datetime "published_at"
-    t.integer  "status",           limit: 4
-    t.integer  "category_id",      limit: 4
-    t.string   "short_url",        limit: 255
-    t.integer  "asset_display_id", limit: 4
-    t.integer  "feature_type_id",  limit: 4
-    t.datetime "created_at",                     null: false
-    t.datetime "updated_at",                     null: false
-  end
 
   create_table "user_permissions", force: :cascade do |t|
     t.integer  "admin_user_id", limit: 4
