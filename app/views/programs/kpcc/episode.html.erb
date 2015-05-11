@@ -20,7 +20,6 @@
             <span>for</span>
             <time datetime="<%= format_date(@episode.air_date, with: '%F') %>"><%= format_date(@episode.air_date, with: '%B %d, %Y') %></time>
           </h1>
-          <div class="teaser"><p><%= @episode.teaser.html_safe %></p></div>
         </section>
 
         <% if audio = @episode.audio.first %>
@@ -139,50 +138,7 @@
             <% end %>
           <% end %>
 
-
-
         </section><!--/ .episode-segments -->
-
-
-
-
-        <!-- Rundown of Segments -->
-        <!--
-        <section class="show-segments">
-        -->
-
-          <%#= any_to_list? @segments, title: "Segments" do %>
-            <%#= cache ["segment-teasers", @segments.to_a] do %>
-              <%# @segments.each do |segment| %>
-              <!--<div class="teaser">-->
-                <%# if segment.assets.present? %>
-                    <%#= render_asset segment, display: 'small' %>
-                    <%#= timestamp(segment.published_at) %>
-                <%# else %>
-                    <!-- Do something graceful if we don't have an image asset on a segment -->
-                <%# end %>
-                <!--
-                <h2><%#= link_to segment.short_headline, segment.public_path  %></h2>
-                <p class="byline"><%#= render_byline segment %></p>
-                -->
-                <%#= segment.teaser.html_safe %>
-                <!--
-                <aside class="decorator">
-                  <%#= content_widget "primary_audio", segment, context: segment.show.slug %>
-                  <%#= comment_count_for segment %>
-                </aside>
-              </div>
-              -->
-              <%# end %>
-            <%# end %>
-          <%# end %>
-        <!--
-        </section>
-        -->
-
-
-
-
       </div><!--/ .prose -->
 
 
@@ -369,7 +325,12 @@
       </div><!--/ .columns -->
       <div class="collateral">
 
-        <div style="background: aqua; padding: 20px; text-align: center; width: 300px; box-sizing: border-box; height: 250px; font-weight: bold; margin: 0 auto;">I AM THE THIRD AD UNIT</div>
+        <aside class="placard">
+            <div class="ad widget">
+                <%= render "shared/ads/dfp", ad_key: 'slot_c' %>
+                <p class="appeal"><a href="/support/underwriting/">Become a KPCC Sponsor</a></p>
+            </div>
+        </aside>
       
       </div><!--/ .collateral -->
     </section><!--/ .archive-browser -->
