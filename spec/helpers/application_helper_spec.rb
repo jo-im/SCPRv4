@@ -47,7 +47,7 @@ describe ApplicationHelper do
     end
   end
 
-  describe "Content searches" do
+  describe "Content searches", :indexing do
     let(:category) { create :category }
 
     it "#latest_news gets all objects with limit" do

@@ -1,6 +1,6 @@
 require "spec_helper"
 
-describe Homepage do
+describe Homepage, :indexing do
   describe '#content' do
     it 'orders by position' do
       homepage = build :homepage

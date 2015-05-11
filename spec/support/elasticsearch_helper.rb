@@ -7,4 +7,12 @@ module ElasticsearchHelper
     # content lookups to succeed, go ahead and create the articles index
     ContentBase.es_client.indices.create index:ES_ARTICLES_INDEX
   end
+
+  def with_indexing
+    Resque.run_in_tests = (Resque.run_in_tests + [IndexJob]).uniq
+
+    yield
+
+    Resque.run_in_tests.delete(IndexJob)
+  end
 end

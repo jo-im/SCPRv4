@@ -12,7 +12,7 @@ describe ContentBase do
     end
   end
 
-  describe "::search" do
+  describe "::search", :indexing do
     it "searches across ContentBase classes" do
       # we indexed four different types of content above. an unspecific search
       # should return four article objects, one with each content type
@@ -66,7 +66,7 @@ describe ContentBase do
 
   #---------------
 
-  describe "::obj_by_url" do
+  describe "::obj_by_url", :indexing do
     context "invalid URI" do
       it "returns nil" do
         ContentBase.obj_by_url("$$$$").should eq nil
@@ -91,7 +91,7 @@ describe ContentBase do
     end
   end
 
-  describe '::obj_by_url!' do
+  describe '::obj_by_url!', :indexing do
     it "returns the object if it's not nil" do
       ContentBase.stub(:obj_by_url) { "okedoke" }
       ContentBase.obj_by_url!("anything").should eq "okedoke"

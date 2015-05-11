@@ -44,9 +44,9 @@ class FeedsController < ApplicationController
     the_frame = Program.find_by_slug!('the-frame')
     offramp = Program.find_by_slug!('offramp')
     @segments = (
-      take_two.episodes.published.first.segments.first(2) + 
-      the_frame.episodes.published.first.segments +
-      offramp.episodes.published.first.segments 
+      take_two.episodes.published.first.segments.published.first(2) + 
+      the_frame.episodes.published.first.segments.published +
+      offramp.episodes.published.first.segments.published 
     )
     @segments.sort do |a,b|
       comp = (b.published_at <=> a.published_at)

@@ -9,7 +9,7 @@ class PodcastsController < ApplicationController
 
   def podcast
     @podcast = Podcast.where(slug: params[:slug]).first!
-
+    @consumer = params[:consumer]
     # If this is an "ExternalProgram", just redirect to the Podcast URL
     # Otherwise, grab the content, build the XML, and return it.
     # This allows us to "host" other podcasts without actually having to

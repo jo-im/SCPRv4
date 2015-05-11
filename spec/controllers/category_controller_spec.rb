@@ -1,6 +1,6 @@
 require "spec_helper"
 
-describe CategoryController do
+describe CategoryController, :indexing do
   render_views
 
   before(:all) do
