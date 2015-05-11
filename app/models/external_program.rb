@@ -43,8 +43,8 @@ class ExternalProgram < ActiveRecord::Base
   #-------------------
   # Associations
   has_many :recurring_schedule_rules, as: :program, dependent: :destroy
-  has_many :external_episodes, dependent: :destroy
-  has_many :external_segments
+  has_many :episodes, dependent: :destroy, class_name: :ExternalEpisode
+  has_many :segments, class_name: :ExternalSegment
 
 
   #-------------------
@@ -103,8 +103,8 @@ class ExternalProgram < ActiveRecord::Base
       :airtime            => self.airtime,
       :podcast_url        => self.podcast_url,
       :rss_url            => self.get_link('rss'),
-      :episodes           => self.external_episodes.order("air_date desc"),
-      :segments           => self.external_segments.order("published_at desc"),
+      :episodes           => self.episodes.order("air_date desc"),
+      :segments           => self.segments.order("published_at desc"),
       # External Programs are always assumed to be segmented.
       # Maybe this isn't always the case, but this is okay for now.
       :is_segmented   => true
@@ -122,20 +122,6 @@ class ExternalProgram < ActiveRecord::Base
 
   def sync
     self.importer.sync(self)
-  end
-
-  alias_method :episodes, :external_episodes
-
-  def published_episodes
-    episodes.order("air_date desc")
-  end
-
-  def paginate_episodes episodes: nil, page: nil, per_page: nil, current_episode: nil
-    episodes.page(page).per(per_page)
-  end
-
-  def display_method
-    :redirect_to
   end
 
   def external?
