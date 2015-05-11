@@ -27,7 +27,7 @@ class ScheduleOccurrence < ActiveRecord::Base
 
 
   scope :recurring, -> { where("recurring_schedule_rule_id is not null") }
-  scope :distinct,  -> { where("recurring_schedule_rule_id is null") }
+  scope :one_time,  -> { where("recurring_schedule_rule_id is null") }
 
   scope :filtered_by_date, ->(date) { where("DATE(starts_at) = ?", date) }
 
@@ -66,7 +66,7 @@ class ScheduleOccurrence < ActiveRecord::Base
 
 
     def block(date, length, collapse=false)
-      occurrences = self.includes(:program).between(date, date + length)
+      occurrences = self.includes(:program).between(date, date + length).to_a
 
       occurrences.reject! do |occurrence|
         occurrences.any? do |o|

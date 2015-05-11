@@ -72,7 +72,12 @@ module ApplicationHelper
     html = ''
 
     Array(content).compact.each do |article|
-      directory   = article.class.name.underscore
+      if article.is_a?(Article)
+        directory   = article.obj_class
+      else
+        directory   = article.class.name.underscore
+      end
+
       tmplt_opts  = ["#{directory}/#{context}", "default/#{context}"]
 
       partial = tmplt_opts.find do |template|
@@ -81,11 +86,9 @@ module ApplicationHelper
 
       # -- do we have a cache? -- #
 
-      # TODO: This call looks like it will change in Rails 4.1
       tmplt_digest = ActionView::Digestor.digest(
-        "shared/content/#{partial}",
-        options[:format] || self.lookup_context.rendered_format,
-        lookup_context,
+        name: "shared/content/#{partial}.#{options[:format] || self.lookup_context.rendered_format}",
+        finder: lookup_context,
         partial: true,
       )
 
@@ -272,12 +275,12 @@ module ApplicationHelper
 
   #----------
 
-  def latest_news(limit=2)
+  def latest_news
     ContentBase.search({
-      :classes    => [NewsStory, BlogEntry, ShowSegment, ContentShell],
-      :limit      => limit,
-      :without    => { category: false }
-    }).to_a
+      :classes  => [NewsStory, BlogEntry, ShowSegment, ContentShell],
+      :limit    => 2,
+      :with     => { "category.slug" => true },
+    })
   end
 
   def latest_blogs(limit=3)
@@ -361,6 +364,10 @@ module ApplicationHelper
         :pubdate => true
       )
     end
+  end
+
+  def format_date(time, format=:long, blank_message="&nbsp;")
+      time.blank? ? blank_message : time.to_s(format)
   end
 
 

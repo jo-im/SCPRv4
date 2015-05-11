@@ -57,7 +57,7 @@ module Concern
       # This is an instance method because we need to be able to override
       # it at the instance level for "The Multi-American Situation" (tm).
       def disqus_shortname
-        Rails.application.config.api["disqus"]["shortname"]
+        Rails.configuration.x.api.disqus.shortname
       end
     end # CommentMethods
   end # Methods

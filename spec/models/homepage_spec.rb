@@ -1,6 +1,6 @@
 require "spec_helper"
 
-describe Homepage do
+describe Homepage, :indexing do
   describe '#content' do
     it 'orders by position' do
       homepage = build :homepage
@@ -23,13 +23,13 @@ describe Homepage do
     let(:other_category) { create :category }
     let(:homepage) { create :homepage }
 
-    sphinx_spec
+    before(:all) do
+      create :show_segment
+    end
 
     it 'returns previews for all categories' do
       story1 = create :news_story, category: category
       story2 = create :news_story, category: other_category
-
-      index_sphinx
 
       homepage.category_previews.size.should eq 2
     end
@@ -39,10 +39,8 @@ describe Homepage do
       story2 = create :news_story, category: category
       homepage.content.create(content: story1)
 
-      index_sphinx
-
-      homepage.category_previews.first.articles
-      .should eq [story2].map(&:to_article)
+      homepage.category_previews.first.articles.map(&:obj_key)
+      .should eq [story2.obj_key]
     end
   end
 end

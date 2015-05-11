@@ -18,7 +18,7 @@
 class DataPoint < ActiveRecord::Base
   outpost_model
 
-  include Concern::Callbacks::SphinxIndexCallback
+  include Concern::Model::Searchable
 
   #--------------
   # Scopes

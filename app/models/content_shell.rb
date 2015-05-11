@@ -21,7 +21,7 @@ class ContentShell < ActiveRecord::Base
   include Concern::Validations::PublishedAtValidation
   #include Concern::Callbacks::CacheExpirationCallback
   include Concern::Callbacks::PublishNotificationCallback
-  include Concern::Callbacks::SphinxIndexCallback
+  include Concern::Model::Searchable
   include Concern::Callbacks::HomepageCachingCallback
   include Concern::Callbacks::TouchCallback
   include Concern::Methods::ArticleStatuses
@@ -33,6 +33,7 @@ class ContentShell < ActiveRecord::Base
   validates :url, url: true, presence: true, if: :should_validate?
   validates :site, presence: true, if: :should_validate?
 
+  scope :with_article_includes, ->() { includes(:assets,:category,:tags,:bylines,bylines:[:user]) }
 
   class << self
     def sites_select_collection
@@ -74,9 +75,13 @@ class ContentShell < ActiveRecord::Base
       :assets             => self.assets,
       :attributions       => self.bylines,
       :byline             => self.byline,
-      :edit_url           => self.admin_edit_url,
+      :edit_path          => self.admin_edit_path,
+      :public_path        => self.public_path,
       :tags               => self.tags,
-      :feature            => self.feature
+      :feature            => self.feature,
+      :created_at         => self.created_at,
+      :updated_at         => self.updated_at,
+      :published          => self.published?,
     })
   end
 

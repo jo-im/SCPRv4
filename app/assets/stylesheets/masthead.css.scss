@@ -584,6 +584,9 @@ $navHeight: 36px;
                 }
                 &.airtalk {
                     background-image:image-url('broadcast-bar/larry-airtalk-sm.png');
+                    h4 sup {
+                        font-size: 50%;
+                    }
                 }
                 &.offramp {
                     background-image:image-url('broadcast-bar/john-offramp-sm.png');
@@ -669,9 +672,4 @@ $navHeight: 36px;
             background-color:#00b9f3;
         }
     }
-}
-
-li a.audiovision-icon {
-    background: image-url('icons/tiny-audiovision.png') no-repeat left top;
-    padding-left:22px;
 }

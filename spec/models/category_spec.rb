@@ -1,17 +1,19 @@
 require "spec_helper"
 
-describe Category do
+describe Category, :indexing do
+  before(:each) do
+    # create a segment so that our FeatureCandidate::Segment lookup works
+    # (it otherwise fails due to a missing mapping)
+    create :show_segment
+  end
+
   describe '::previews' do
     let(:category) { create :category }
     let(:other_category) { create :category }
 
-    sphinx_spec
-
     it "returns a list of previews for all categories with no category option" do
       create :news_story, category: category
       create :news_story, category: other_category
-
-      index_sphinx
 
       previews = Category.previews
 
@@ -24,8 +26,6 @@ describe Category do
       create :news_story, category: category
       create :news_story, category: other_category
 
-      index_sphinx
-
       previews = Category.previews(categories: [category])
       previews.size.should eq 1
     end
@@ -34,67 +34,43 @@ describe Category do
       story1 = create :news_story, category: category
       other_category # touch
 
-      index_sphinx
-
-      ts_retry(2) do
-        Category.previews.map(&:category).should eq [category]
-      end
+      Category.previews.map(&:category).should eq [category]
     end
 
     it 'sorts previews by the descending article publish timestamps' do
       story1 = create :news_story, category: category, published_at: 1.month.ago
       story2 = create :news_story, category: other_category, published_at: Time.zone.now
 
-      index_sphinx
-
-      ts_retry(2) do
-        Category.previews.first.category.should eq other_category
-      end
+      Category.previews.first.category.should eq other_category
     end
   end
 
   describe '#content' do
     let(:category) { create :category }
-    sphinx_spec
 
     it "returns content for this category" do
       other_category = create :category
       story1 = create :news_story, category: category
       story2 = create :news_story, category: other_category
 
-      index_sphinx
-
-      ts_retry(2) do
-        category.content.to_a.should eq [story1]
-      end
+      category.content.map(&:obj_key).should eq [story1.obj_key]
     end
 
     it "excludes any passed-in objects" do
       story1 = create :news_story, category: category
       story2 = create :news_story, category: category
 
-      index_sphinx
-
-      ts_retry(2) do
-        category.content(page: 1, per_page: 10, exclude: story2).to_a
-        .should eq [story1]
-      end
+      category.content(page: 1, per_page: 10, exclude: story2)
+      .map(&:obj_key).should eq [story1.obj_key]
     end
 
     it "excludes an array of passed-in objects" do
       story1 = create :news_story, category: category
       story2 = create :news_story, category: category
       story3 = create :news_story, category: category
-      index_sphinx
 
-      ts_retry(2) do
-        category.content(page: 1, per_page: 10, exclude: [story2,story3]).to_a
-        .should eq [story1]
-      end
-    end
-
-    it "returns an empty array if the page * per_page is greater than Thinking Sphinx's max_matches" do
-      category.content(page: 101).should be_blank
+      category.content(page: 1, per_page: 10, exclude: [story2,story3])
+      .map(&:obj_key).should eq [story1.obj_key]
     end
   end
 

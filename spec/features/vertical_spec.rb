@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe "Vertical page" do
+describe "Vertical page", :indexing do
   describe "politics vertical" do
     it "renders" do
       vertical = create :vertical, slug: "politics"
@@ -34,8 +34,6 @@ describe "Vertical page" do
 
 
   describe "rendering featured articles" do
-    sphinx_spec
-
     it "does not return the top story in the reverse chronological article sections" do
       vertical = create :vertical
       articles = create_list :news_story, 6, :published, category: vertical.category
@@ -46,13 +44,10 @@ describe "Vertical page" do
         vertical.vertical_articles.create(article: article)
       end
 
-      index_sphinx
-      ts_retry(2) do
-        visit vertical.public_path
+      visit vertical.public_path
 
-        # Make sure the top article only shows up once on the page
-        page.should have_content vertical.featured_articles.first.short_title, count: 1
-      end
+      # Make sure the top article only shows up once on the page
+      page.should have_content vertical.featured_articles.first.short_title, count: 1
     end
 
     it "does not return the top story in the promoted issues section" do
@@ -71,21 +66,17 @@ describe "Vertical page" do
         article.taggings.create(tag: tag)
       end
 
-      index_sphinx
+      visit vertical.public_path
 
-      ts_retry(2) do
-        visit vertical.public_path
+      within(".supportive aside.more") do
+        # make sure top story doesn't show up in the promoted
+        # 'more from this issue' section
+        page.should_not have_content vertical.featured_articles.first.short_title
+      end
 
-        within(".supportive aside.more") do
-          # make sure top story doesn't show up in the promoted
-          # 'more from this issue' section
-          page.should_not have_content vertical.featured_articles.first.short_title
-        end
-
-        within("section.issues") do
-          # make sure top story will still show up in the Issues We're Tracking section
-          page.should have_content vertical.featured_articles.first.short_title, count: 1
-        end
+      within("section.issues") do
+        # make sure top story will still show up in the Issues We're Tracking section
+        page.should have_content vertical.featured_articles.first.short_title, count: 1
       end
     end
 
@@ -105,8 +96,6 @@ describe "Vertical page" do
   end
 
   describe "rendering blog articles" do
-    sphinx_spec
-
     it "shows the latest blog articles" do
       blog     = create :blog
       vertical = create :vertical, blog: blog
@@ -129,16 +118,12 @@ describe "Vertical page" do
         :blog => blog,
         :short_headline => "xxEntry3xx"
 
-      index_sphinx
+      visit vertical.public_path
 
-      ts_retry do
-        visit vertical.public_path
-
-        within('.affiliated .latest') do
-          page.should_not have_content "xxEntry1xx"
-          page.should have_content "xxEntry2xx"
-          page.should have_content "xxEntry3xx"
-        end
+      within('.affiliated .latest') do
+        page.should_not have_content "xxEntry1xx"
+        page.should have_content "xxEntry2xx"
+        page.should have_content "xxEntry3xx"
       end
     end
 
@@ -158,15 +143,11 @@ describe "Vertical page" do
 
       create :vertical_article, vertical: vertical, article: entry1
 
-      index_sphinx
+      visit vertical.public_path
 
-      ts_retry do
-        visit vertical.public_path
-
-        within('.affiliated .latest') do
-          page.should have_content "xxEntry2xx"
-          page.should_not have_content "xxEntry1xx"
-        end
+      within('.affiliated .latest') do
+        page.should have_content "xxEntry2xx"
+        page.should_not have_content "xxEntry1xx"
       end
     end
   end
@@ -195,8 +176,6 @@ describe "Vertical page" do
   end
 
   describe "rendering issues" do
-    sphinx_spec(num: 0)
-
     it "shows the related issues in the sidebar" do
       tag1 = create :tag, title: "xxIssue1xx"
       tag2 = create :tag, title: "xxIssue2xx"
@@ -235,16 +214,12 @@ describe "Vertical page" do
       vertical.tags << tag
       vertical.save!
 
-      index_sphinx
-
       visit vertical.public_path
 
       within('section.issues') do
-        ts_retry(2) do
-          page.should_not have_content "xxArticle1xx"
-          page.should have_content "xxArticle2xx"
-          page.should have_content "xxArticle3xx"
-        end
+        page.should_not have_content "xxArticle1xx"
+        page.should have_content "xxArticle2xx"
+        page.should have_content "xxArticle3xx"
       end
     end
   end

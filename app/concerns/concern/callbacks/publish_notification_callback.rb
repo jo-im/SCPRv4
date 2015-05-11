@@ -13,26 +13,16 @@ module Concern
         after_save :async_notify
       end
 
-      # This a feature that the editors came to depend on - notifications
-      # about article state in their Campfire room. Eventually this could be
-      # replaced with something built-in to Outpost (a notification system
-      # via Newsroom), but for now if it goes away they will ask for it back.
       def async_notify
+        Rails.logger.info "In async_notify for #{ self.obj_key }: Publishing? #{ self.publishing? } | Unpublishing? #{ self.unpublishing? } | Status changed? #{ self.status_changed? } / #{ self.status }"
         if self.publishing?
-          Job::PublishNotification.enqueue(
-            "Published! #{self.to_title} (#{self.admin_edit_url})",
-            "daily_web")
+          Job::PublishNotification.enqueue("Published! <#{self.admin_edit_url}|#{self.to_title}>",self.obj_key)
 
         elsif self.unpublishing?
-          Job::PublishNotification.enqueue(
-            "Unpublished: #{self.to_title} (#{self.admin_edit_url})",
-            "daily_web")
+          Job::PublishNotification.enqueue("Unpublished: <#{self.admin_edit_url}|#{self.to_title}>",self.obj_key)
 
-        elsif self.status_changed?
-          Job::PublishNotification.enqueue(
-            "Status Changed to #{self.status_text}: " \
-            "#{self.to_title} (#{self.admin_edit_url})",
-            "daily_web")
+        elsif self.status_changed? && self.status != ContentBase::STATUS_DRAFT
+          Job::PublishNotification.enqueue("Status Changed to #{self.status_text}: <#{self.admin_edit_url}|#{self.to_title}>",self.obj_key)
         end
       end
     end

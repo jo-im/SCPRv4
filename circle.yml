@@ -6,11 +6,19 @@ machine:
     version:
       '2.1.1'
 
+  environment:
+    ES_INCLUDE: /home/ubuntu/elasticsearch-1.5.2/bin/elasticsearch.in.sh
+
+dependencies:
+  cache_directories:
+    - ~/elasticsearch-1.5.2
+  post:
+    - if [[ ! -e ~/elasticsearch-1.5.2 ]]; then cd ~ && wget https://download.elasticsearch.org/elasticsearch/elasticsearch/elasticsearch-1.5.2.tar.gz && tar -xvf elasticsearch-1.5.2.tar.gz; fi
+    - ln -s ~/elasticsearch-1.5.2/bin/elasticsearch ~/bin/elasticsearch
+    - bundle clean
 
 database:
   override:
     - cp config/templates/database.yml.ci config/database.yml
-    - cp config/templates/api_config.yml.ci config/api_config.yml
-    - cp config/templates/app_config.yml.ci config/app_config.yml
-    - cp config/templates/thinking_sphinx.yml.ci config/thinking_sphinx.yml
+    - cp config/templates/secrets.yml.ci config/secrets.yml
     - bundle exec rake db:create db:schema:load

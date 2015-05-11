@@ -1,6 +1,10 @@
 require "spec_helper"
 
 describe HomeController do
+  before(:all) do
+    create :news_story
+  end
+
   render_views
 
   describe 'GET /about_us' do
@@ -67,10 +71,10 @@ describe HomeController do
   end
 
 
-  describe 'GET /missed_it_content' do
+  describe 'XHR GET /missed_it_content' do
     it "sets the homepage" do
       homepage = create :homepage, :published
-      get :missed_it_content, id: homepage.id, format: 'js'
+      xhr :get, :missed_it_content, id: homepage.id
       assigns(:homepage).should eq homepage
     end
 
@@ -80,7 +84,7 @@ describe HomeController do
       bucket.content.create(content: story)
       homepage = create :homepage, :published, missed_it_bucket: bucket
 
-      get :missed_it_content, id: homepage.id, format: :js
+      xhr :get, :missed_it_content, id: homepage.id
       assigns(:carousel_contents).should eq bucket.content.to_a
     end
   end

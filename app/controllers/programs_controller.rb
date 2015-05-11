@@ -76,7 +76,16 @@ class ProgramsController < ApplicationController
       @featured_story = @episodes.first.to_article
       @episodes = @episodes[1..-1]
     end
-    handle_program_template
+    respond_to do |format|
+      format.html {
+        render(
+            :layout   => 'new/landing',
+            :template => 'programs/kpcc/featured_program'
+          )
+      }
+
+      format.xml { render 'programs/kpcc/old/show' }
+    end
   end
 
 
@@ -194,17 +203,4 @@ class ProgramsController < ApplicationController
     end
   end
 
-  def handle_program_template
-    template = "programs/kpcc/#{@program.slug}"
-
-    if template_exists?(template)
-      render(
-        :layout   => 'new/landing',
-        :template => template
-      )
-    else
-      render 'programs/kpcc/old/show'
-    end
-
-  end
 end

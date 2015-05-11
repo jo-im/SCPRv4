@@ -1,0 +1,8 @@
+development:
+  adapter: mysql2
+  reconnect: true
+  database: scprv4
+test:
+  adapter: mysql2
+  reconnect: true
+  database: scprv4_test

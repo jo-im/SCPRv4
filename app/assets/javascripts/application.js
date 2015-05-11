@@ -42,3 +42,5 @@
 //= require cms_popup
 //= require reader_bookmarklet
 //= require page_mapping
+
+//= require short-list-modules.js

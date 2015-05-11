@@ -1,35 +1,27 @@
 require 'spec_helper'
 
-describe FeatureCandidate::Slideshow do
+describe FeatureCandidate::Slideshow, :indexing do
   let(:category) { create :category }
 
-  describe '#content' do
-    sphinx_spec
+  before(:each) { create :show_segment }
 
+  describe '#content' do
     it "returns the latest slideshow article in this category" do
       story1 = create :news_story,
-        category: category, asset_display: :slideshow
+        category: category, feature: :slideshow
 
-      index_sphinx
-
-      ts_retry(2) do
-        FeatureCandidate::Slideshow.new(category).content.should eq story1.to_article
-      end
+      FeatureCandidate::Slideshow.new(category).content.should eq story1.to_article
     end
 
     it "excludes passed-in articles" do
       story1 = create :news_story,
-        category: category, asset_display: :slideshow, published_at: 1.week.ago
+        category: category, feature: :slideshow, published_at: 1.week.ago
 
       story2 = create :news_story,
-        category: category, asset_display: :slideshow, published_at: 1.month.ago
+        category: category, feature: :slideshow, published_at: 1.month.ago
 
-      index_sphinx
-
-      ts_retry(2) do
-        FeatureCandidate::Slideshow.new(category, exclude: story1)
-        .content.should eq story2.to_article
-      end
+      FeatureCandidate::Slideshow.new(category, exclude: story1)
+      .content.should eq story2.to_article
     end
 
     it "is nil if no articles are available" do
@@ -38,41 +30,24 @@ describe FeatureCandidate::Slideshow do
   end
 
   describe '#score' do
-    sphinx_spec
-
     it 'is the calculated score' do
       story1 = create :news_story,
-        category: category, asset_display: :slideshow
+        category: category, feature: :slideshow
 
-      index_sphinx
-
-      ts_retry(2) do
-        FeatureCandidate::Slideshow.new(category).score.should be > 0
-      end
+      FeatureCandidate::Slideshow.new(category).score.should be > 0
     end
 
     it "is higher if there are more slides" do
       story1 = create :news_story,
-        category: category, asset_display: :slideshow
+        category: category, feature: :slideshow
       create :asset, content: story1
 
-      # bleh
-      score1 = nil
-      score2 = nil
-
-      index_sphinx
-
-      score1 = FeatureCandidate::Slideshow.new(category).score
-
-      story1.destroy
-
-      story2 = create :news_story,
-        category: category, asset_display: :slideshow
+      category2 = create :category
+      story2 = create :news_story, category:category2, feature: :slideshow
       create_list :asset, 2, content: story2
 
-      index_sphinx
-
-      score2 = FeatureCandidate::Slideshow.new(category).score
+      score1 = FeatureCandidate::Slideshow.new(category).score
+      score2 = FeatureCandidate::Slideshow.new(category2).score
 
       score2.should be > score1
     end

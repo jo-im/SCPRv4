@@ -3,10 +3,11 @@ Scprv4::Application.configure do
   config.eager_load     = false
   config.consider_all_requests_local       = true
   config.action_controller.perform_caching = false
-  config.cache_store = :redis_store, config.secrets["cache"]
+  config.cache_store = :memory_store
   config.action_controller.action_on_unpermitted_parameters = :raise
+  config.active_record.raise_in_transactional_callbacks = true
 
-  config.serve_static_assets = true
+  config.serve_static_files = true
   config.static_cache_control = "public, max-age=3600"
 
   config.action_dispatch.show_exceptions = false
@@ -26,10 +27,9 @@ Scprv4::Application.configure do
 
   default_url_options[:host] = "scpr.org"
 
-  config.scpr.host         = "www.scpr.org"
-  config.scpr.media_root   = Rails.root.join("spec/fixtures/media")
-  config.scpr.media_url    = "http://media.scpr.org"
-  config.scpr.resque_queue = :scprv4
+  config.x.scpr.host         = "www.scpr.org"
+  config.x.scpr.media_root   = Rails.root.join("spec/fixtures/media")
+  config.x.scpr.media_url    = "http://media.scpr.org"
 
-  config.newsroom.server = "http://localhost:13002"
+  config.x.newsroom.url = "http://localhost:13002"
 end

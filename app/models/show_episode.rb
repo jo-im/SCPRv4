@@ -16,7 +16,7 @@ class ShowEpisode < ActiveRecord::Base
   include Concern::Callbacks::SetPublishedAtCallback
   #include Concern::Callbacks::CacheExpirationCallback
   include Concern::Callbacks::PublishNotificationCallback
-  include Concern::Callbacks::SphinxIndexCallback
+  include Concern::Model::Searchable
   include Concern::Callbacks::TouchCallback
   include Concern::Methods::CommentMethods
   include Concern::Methods::AssetDisplayMethods
@@ -24,6 +24,7 @@ class ShowEpisode < ActiveRecord::Base
 
   self.public_route_key = "episode"
 
+  scope :with_article_includes, ->() { includes(:assets,:audio,:show) }
 
   status :killed do |s|
     s.id = -1
@@ -71,19 +72,21 @@ class ShowEpisode < ActiveRecord::Base
     :touch       => true
 
   has_many :rundowns,
-    :class_name     => "ShowRundown",
-    :foreign_key    => "episode_id",
-    :dependent      => :destroy
+    class_name:   "ShowRundown",
+    foreign_key:  "episode_id",
+    inverse_of:   :episode,
+    dependent:    :destroy,
+    before_add:   :set_rundown_position
 
   has_many :segments,
-    -> { order('position') },
+    -> { order('shows_rundown.position') },
     :class_name     => "ShowSegment",
     :foreign_key    => "segment_id",
     :through        => :rundowns
 
 
   accepts_json_input_for :rundowns
-  tracks_association :rundowns
+  #tracks_association :rundowns
 
 
   validates :show, presence: true
@@ -117,9 +120,14 @@ class ShowEpisode < ActiveRecord::Base
       :body               => self.body,
       :teaser             => self.teaser,
       :assets             => self.assets,
-      :audio              => self.audio.available,
+      :audio              => self.audio.select(&:available?),
       :byline             => self.show.title,
-      :edit_url           => self.admin_edit_url
+      :edit_path          => self.admin_edit_path,
+      :public_path        => self.public_path,
+      :created_at         => self.created_at,
+      :updated_at         => self.updated_at,
+      :published          => self.published?,
+      :show               => self.show,
     })
   end
 
@@ -162,6 +170,12 @@ class ShowEpisode < ActiveRecord::Base
 
   def generate_body
     self.body = self.teaser
+  end
+
+  def set_rundown_position(rundown)
+    if !rundown.position
+      rundown.position = self.rundowns.length + 1
+    end
   end
 
   def build_rundown_association(rundown_hash, segment)

@@ -116,35 +116,6 @@ describe Concern::Associations::BylinesAssociation do
     end
   end
 
-  describe "sphinx index callback" do
-    let(:story) { build :test_class_story, :published }
-    let(:bio) { create :bio }
-    let(:byline) { create :byline, user: bio }
-
-    before :each do
-      story.bylines << byline
-    end
-
-    it "should enqueue an index of ContentByline after save" do
-      Indexer.should_receive(:enqueue).with("ContentByline")
-      Indexer.should_receive(:enqueue).with("TestClass::Story")
-
-      story.save!
-    end
-
-    it "should enqueue an index of ContentByline after save if destroying" do
-      # There is a Thinking Sphinx bug that throws an error in the destroy
-      # callback if the record isn't persisted, so we need to save it first.
-      # https://github.com/pat/thinking-sphinx/issues/673
-      story.save!
-
-      Indexer.should_receive(:enqueue).with("ContentByline")
-      Indexer.should_receive(:enqueue).with("TestClass::Story")
-
-      story.destroy
-    end
-  end
-
   #--------------------
 
   describe "#byline" do

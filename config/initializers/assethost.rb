@@ -1,0 +1,13 @@
+# Support loading config via secrets.yml
+if Rails.application.secrets.assethost.is_a?(Hash)
+  Rails.application.secrets.assethost.each do |k,v|
+    Rails.configuration.x.assethost[k] ||= v
+  end
+end
+
+# Configure AssetHostClient
+AssetHostClient.setup do |config|
+  config.server           = Rails.configuration.x.assethost.server
+  config.token            = Rails.configuration.x.assethost.token
+  config.raise_on_errors  = Rails.configuration.x.assethost.raise_on_errors || false
+end

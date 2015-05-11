@@ -12,7 +12,7 @@ module Job
 
     class << self
       def perform
-        analytics = Rails.application.config.api["google"]["analytics"]
+        analytics = Rails.configuration.x.api.google.analytics
 
         task = new(
           analytics["client_id"],
@@ -23,9 +23,9 @@ module Job
 
         data = silence_stream(STDOUT) { task.fetch(api_params) }
 
-        articles = task.parse(data['rows']).sort_by { |obj|
-          -obj.published_at.to_i
-        }.map(&:to_article)
+        articles = task.parse(data['rows']).uniq {|obj| obj.obj_key }.sort_by { |obj|
+          -obj.public_datetime.to_i
+        }
 
         Rails.cache.write("popular/viewed", articles)
 
@@ -87,7 +87,7 @@ module Job
       rows.each do |row|
         if article = ContentBase.obj_by_url(row[0])
           self.log "(#{row[1]}) #{row[0]}"
-          articles.push(article) if article.published?
+          articles.push(article)
         end
       end
 

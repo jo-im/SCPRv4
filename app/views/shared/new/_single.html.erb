@@ -1,6 +1,6 @@
 <% article = article.to_article %>
 
-<%= render_asset article.original_object, context:"news" %>
+<%= render_asset article.original_object, context:"news", fallback:true %>
 
 <div class="report">
     <div class="inner bound clearfix">
@@ -9,7 +9,7 @@
                 <% if article.audio.any? %>
                     <% audio = article.audio %>
                     <nav class="audio-queue track-event" data-ga-category="Article" data-ga-action="Load" data-ga-label="Player" data-non-interaction="1">
-                        <header>Audio from this story</header>
+                        <header><h1>Audio from this story</h1></header>
                         <ul>
                         <% audio.each_with_index do |audio, index| %>
                             <li class="story-audio track-event" data-ga-category="Article" data-ga-action="Play" data-ga-label="Player">
@@ -38,13 +38,14 @@
                         <p><%= render_contributing_byline article.original_object %></p>
                     </footer>
                 <% end %>
+                <%= pij_source(article.original_object) %>
             </div><!--/ .prose-body -->
 
-            <% present article do |article_presenter| %>
-                <%= article_presenter.related_links %>
-            <% end %>
+            <%= render 'shared/cwidgets/related_links', content:article.original_object %>
 
-            <%= render 'shared/new/social_share', article: article, cssClass: "share" %>
+            <div class="article-conclusion-sharing">
+              <%= render 'shared/new/social_share', article: article, cssClass: "share" %>
+            </div>
 
             <footer class="comments-jump">
                 <a href="#comments">

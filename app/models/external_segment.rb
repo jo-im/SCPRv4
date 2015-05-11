@@ -4,11 +4,10 @@ class ExternalSegment < ActiveRecord::Base
 
   belongs_to :external_program
 
-  has_many :external_episode_segments
+  has_many :external_episode_segments, dependent: :destroy
 
   has_many :external_episodes,
-    :through   => :external_episode_segments,
-    :dependent => :destroy
+    :through   => :external_episode_segments
 
   validates :external_url, url: { allow_blank: true }
 
@@ -22,7 +21,11 @@ class ExternalSegment < ActiveRecord::Base
       :teaser             => self.teaser,
       :body               => self.teaser,
       :audio              => self.audio.available,
-      :byline             => self.external_program.organization
+      :byline             => self.external_program.organization,
+      :created_at         => self.created_at,
+      :updated_at         => self.updated_at,
+      :published          => true,
+      :public_path        => self.external_url,
     })
   end
 

@@ -2,7 +2,7 @@ require "spec_helper"
 
 describe Job::DelayedMailer do
   subject { described_class }
-  it { subject.queue.should eq "scprv4:low_priority" }
+  it { subject.queue.should eq Job::QUEUES[:low_priority] }
 
   describe "::perform" do
     it "delivers the e-mail" do

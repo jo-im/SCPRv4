@@ -4,6 +4,11 @@
 <% content_for :membership_copy, @category.present? ? @category.title : 'Lorem Ipsum' %>
 <% content_for :body_class, 'interior single' %>
 
+<% content_for :masthead_class, "blog" %>
+<% content_for :titling do %>
+    <%= render :partial => 'shared/new/masthead/blog_titling' %>
+<% end %>
+
 <%= cache ["show", "blog-content","v18", @entry] do %>
   <%= render "shared/new/single_blog", article: @entry, full: true %>
 <% end %>

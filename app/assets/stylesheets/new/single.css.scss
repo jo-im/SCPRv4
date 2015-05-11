@@ -402,13 +402,11 @@ body.single .comments {
             width: 100%;
             font-family: $font-freight;
 
-            & > ul, & > div {
-                padding: 0 6% 0 10.21021021021%; // 34 / 333
-            }
+            & > ul, & > div             { padding: 0 6% 0 10.21021021021%; }
+
             header {
                 padding: 6px 5% 13px 13px;
-                background: image-url("i/single-report-icons.png") no-repeat;
-                background-size: 50px 1930px;
+                @include single-report-icons;
                 margin-left: -13px;
                 h1,h2                   { margin-left: 10.21021021021%; } // 34 / 333
                 h1 {
@@ -554,6 +552,11 @@ body.single .comments {
         }
     }
 
+    /*
+    ------------------------------------------------------------------------------------------------------
+    Deprecated by JPW on 2015-01-26.
+    This chunk no longer describes any component that's actually used on the site any more.
+    ------------------------------------------------------------------------------------------------------
     .audio {
         header h1 { margin-bottom: 0; }
         padding: 26px 0 35px;
@@ -592,6 +595,7 @@ body.single .comments {
             }
         }
     }
+    */
 
     .prose {
         width: 48.923076923077%; // 636 / 1300 ...It's really 634, plus 2 for a cosmetic text-catching nudge
@@ -628,6 +632,37 @@ body.single .comments {
             & .embed-wrapper    { clear: both; }
             .contributor        { border-top: 1px solid #cfcfcf; color: #b1b1b1; font-size: 0.8125em; line-height: 1.5; padding: 1em 0 1.5em; }
         }
+
+
+        // "Informed by KPCC listeners" / Public Insight Network citations:
+        .content-partners {
+          margin: 0 0 82px;
+          padding-top: 17px;
+          font: normal 700 1em/1 $font-prox; // In this context, "1em" still equals 15px.
+          a {
+            display: block;
+            @include single-report-icons;
+            background-position: left -2013px;
+            margin-left: -30px;
+            padding-left: 30px;
+          }
+          mark,span     { display: block; }
+          mark          { color: inherit; margin-bottom: 6px; border-top: 1px solid #c1e5f2; padding: 10px 0 0; }
+          span          { font-weight: 400; font-size: 0.86666666666667em; }
+          a:hover       { text-decoration: none; background-position: left -1919px; }
+          a:hover mark  { border-top: 1px solid #f8b684; }
+          a:hover span  { color: #f8b684; }
+        //----------------------------------------------------------------------------------------------------------
+          @media screen and (max-width: 700px) {
+            a             { margin-left: 0; border-top: 1px solid #c1e5f2; }
+            a:hover       { border-top: 1px solid #f8b684; }
+            mark,
+            a:hover mark  { border-top: none; }
+            mark          { padding-top: 12px; margin-bottom: 4px; }
+          }
+        //----------------------------------------------------------------------------------------------------------
+        }
+
 
         // Polldaddy embeds:
         .pds-box {
@@ -670,7 +705,7 @@ body.single .comments {
             font-size: 0.875em !important;
             padding: 6px 0 0 22px !important;
           }
-        } // Polldaddy  
+        } // Polldaddy
     } // .prose
 
 
@@ -790,8 +825,8 @@ body.single .comments {
           h2        { margin: 6px 8% 0 135px; }
         }
         header {
-            background: image-url("i/single-report-icons.png") no-repeat 0 -512px;
-            background-size: 50px 1930px;
+            @include single-report-icons;
+            background-position: 0 -512px;
             margin: 0 0 0 -13px;
             padding: 9px 0 12px 13px;
             h1 {
@@ -855,6 +890,8 @@ body.single .comments {
 
 
 
+
+
     .related,.previously {
         background: #fdebde;
         margin: 3px 0 20px;
@@ -863,8 +900,8 @@ body.single .comments {
         font-family: $font-freight;
         a:hover                 { text-decoration: none; }
         header {
-            background: image-url("i/single-report-icons.png") no-repeat;
-            background-size: 50px 1930px;
+            @include single-report-icons;
+            background-position: 0 0;
             margin: 0 0 7px -13px;
             padding: 5px 0 5px 13px;
             h1 {
@@ -897,6 +934,16 @@ body.single .comments {
             }
             a:hover mark        { color: black; border-bottom-color: $orange; }
             a:hover span        { color: #ad6631; }
+            .query > span > a { // "Learn More About The Public Insight Network"
+              background: none;
+              background: image-url("i/swoopy-arrow.png") no-repeat right 3px;
+              background-size: 11px 60px;
+              padding-right: 15px;
+              box-sizing: border-box;
+              display: inline-block;
+              color: #e3b18f;
+              &:hover           { color: #51899b; background-position: right -47px; }
+            }
         }
         &.previously {
             padding-bottom: 15px;
@@ -910,7 +957,7 @@ body.single .comments {
                 a:hover time    { color: black; }
             }
         }
-    }
+    }//.related,.previously
 
     .comments-trigger {
         width: 100%;
@@ -1039,7 +1086,7 @@ body.single .comments {
                         .meta       { margin-left: 78px; }
                     }
                     header {
-                        background: image-url("i/single-report-icons.png") no-repeat scroll 0 0 / 50px 1930px rgba(0, 0, 0, 0);
+                        @include single-report-icons;
                         margin-left: -13px;
                         padding: 6px 5% 13px 13px;
                         background-position: 0 -384px;
@@ -1142,6 +1189,19 @@ body.single .comments {
 
 //  - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
+    @media screen and (max-width: 500px) {
+        .report aside.placard:nth-child(2),
+        .comments .placard {
+          // I only need to futz with Ad Positions "B" and "C" here,
+          // because "A" has already been absolutely shoved into
+          // place up at the top of the layout. He's doing fine.
+          // It's his siblings that are getting clipped.
+          margin-left: -5%;
+          width: 110%;
+        }
+    }
+
+//  - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 
 
@@ -1674,10 +1734,10 @@ body.single .quadrant {
     padding-top: 11px;
     margin: 0;
     header      { text-transform: uppercase; }
-    ul li { 
+    ul li {
         clear:both;
-        display: inline; 
-        margin: 0 15px 0 0;  
+        display: inline;
+        margin: 0 15px 0 0;
     }
     a {
         @include texthide;
@@ -1769,10 +1829,13 @@ body.single .quadrant {
             .audio-queue,.share           { width: 48%; float: left; margin-bottom: 0; }
             .share                        { float: right; }
             &.minimalist .share           { float: none; width: 100%; }
+            .share ul                     { padding-top: 9px; }
             .share ul li                  { margin: 0 15px 0 0; display: inline-block; }
+            .share ul li.email mark       { display: none; }
             .share ul li.twitter          { margin-right: 10px; }
-            .share a                      { float: left; text-align: left; margin: 0 0 0 0; }
-            .count                        { padding: 7px 0 0 5px; }
+            .share a                      { float: left; text-align: left; margin: 0 0 0 0; text-indent: 0; width: auto; }
+            .share span                   { @include texthide; width: 20px; height: 20px; float: left; }
+            .count                        { padding: 7px 0 0 5px; margin-right: 0; }
             .share ul li.facebook .count  { padding-left: 1px; }
             .audio-queue {
                 header {
@@ -1833,7 +1896,13 @@ body.single .quadrant {
 }
 //  - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-
+.report .prose .article-conclusion-sharing .share {
+  li            { display: inline-block; }
+  a             { width: auto; text-indent: 0; margin: 0; }
+  span          { display: block; white-space: nowrap; text-indent: 100%; overflow: hidden; width: 20px; height: 20px; float: left; }
+  .count        { margin-left: 0; margin-right: 0; padding: 7px 0 0 5px; }
+  li.email mark { display: none; }
+}
 
 
 

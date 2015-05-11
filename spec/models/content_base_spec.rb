@@ -1,81 +1,44 @@
 require 'spec_helper'
 
 describe ContentBase do
-  describe "::search" do
-    context "when sphinx is running" do
-      sphinx_spec(num: 1, options: { status: ContentBase::STATUS_LIVE })
+  all_content = []
 
-      it "searches across ContentBase classes" do
-        ts_retry(2) do
-          ContentBase.search.to_a.sort_by { |o| o.class.name }
-          .should eq @generated_content.find_all { |o| [NewsStory, ShowSegment, BlogEntry, ContentShell].include?(o.class) }.sort_by { |o| o.class.name }
-        end
-      end
+  type_list = [:blog_entry,:content_shell,:news_story,:show_segment]
 
-      it 'only gets is_live stuff by default' do
-        unpublished = create :news_story, :draft
-        index_sphinx
+  before(:each) do
+    all_content = []
+    type_list.each do |ct|
+      all_content << create(ct, :published)
+    end
+  end
 
-        ts_retry(2) do
-          results = ContentBase.search.to_a
-          results.should_not be_empty
-          results.should_not include unpublished
-        end
-      end
-
-      it 'merges in is_live if I also pass in some other conditions' do
-        unpublished = create :news_story, :draft
-        index_sphinx
-
-        ts_retry(2) do
-          results = ContentBase.search(with: { status: [0, 5] }).to_a
-          results.should_not be_empty
-          results.should_not include unpublished
-        end
-      end
-
-      it "works with empty array conditions" do
-        -> {
-          ContentBase.search(with: { obj_key: [] }, without: { obj_key: [] })
-        }.should_not raise_error
-      end
-
-      it 'merges in is_live if I pass in with as nil' do
-        unpublished = create :news_story, :draft
-        index_sphinx
-
-        ts_retry(2) do
-          results = ContentBase.search(with: nil).to_a
-          results.should_not be_empty
-          results.should_not include unpublished
-        end
-      end
-
-      it 'can also get not-live stuff if requested' do
-        unpublished = create :news_story, :draft
-        index_sphinx
-
-        ts_retry(2) do
-          results = ContentBase.search(with: { is_live: [true, false] }).to_a
-          results.should_not be_empty
-          results.should include unpublished
-        end
-      end
+  describe "::search", :indexing do
+    it "searches across ContentBase classes" do
+      # we indexed four different types of content above. an unspecific search
+      # should return four article objects, one with each content type
+      results = ContentBase.search()
+      results.map { |c| c.obj_class.to_sym }.uniq.should eq type_list
     end
 
-    context "sphinx is not running" do
-      it "has a graceful fallback if sphinx isn't working" do
-        [ ThinkingSphinx::SphinxError,
-          Riddle::ConnectionError,
-          Riddle::ResponseError
-        ].each do |error|
-          ThinkingSphinx.should_receive(:search).and_raise(error)
-          content = silence_warnings { ContentBase.search }
-          content.should be_empty
-          content.should respond_to :total_pages
-          content.should respond_to :current_page
-        end
-      end
+    it 'only gets published content by default' do
+      unpublished = create :news_story, :draft
+
+      results = ContentBase.search
+      results.should_not be_empty
+      results.map { |a| a.obj_key }.should_not include unpublished.obj_key
+    end
+
+    it "works with empty array conditions" do
+      -> {
+        ContentBase.search(with: { obj_key: [] }, without: { obj_key: [] })
+      }.should_not raise_error
+    end
+
+    it 'can also get not-published content if requested' do
+      unpublished = create :news_story, :draft
+      results = ContentBase.search(with: { published: [true, false] })
+      results.should_not be_empty
+      results.map { |a| a.obj_key }.should include unpublished.obj_key
     end
   end
 
@@ -103,7 +66,7 @@ describe ContentBase do
 
   #---------------
 
-  describe "::obj_by_url" do
+  describe "::obj_by_url", :indexing do
     context "invalid URI" do
       it "returns nil" do
         ContentBase.obj_by_url("$$$$").should eq nil
@@ -113,14 +76,8 @@ describe ContentBase do
     context "valid URI" do
       let(:article) { create :news_story }
 
-      before :each do
-        stub_const("ContentBase::CONTENT_MATCHES", {  %r{\A/news/(\d+)/.*} => 'NewsStory' } )
-        @url = "http://something.com/news/123/somethingelse/"
-      end
-
-      it "sends to obj_by_key if the URI matches" do
-        Outpost.should_receive(:obj_by_key).with("news_story-123").and_return(article)
-        ContentBase.obj_by_url(@url).should eq article
+      it "returns the matching article" do
+        ContentBase.obj_by_url(article.public_url).should eq article.to_article
       end
 
       it "returns nil if the URI doesn't match" do
@@ -129,13 +86,12 @@ describe ContentBase do
 
       it 'returns nil if the article is not published' do
         article.update_attribute(:status, article.class.status_id(:draft))
-        Outpost.should_receive(:obj_by_key).with("news_story-123").and_return(article)
-        ContentBase.obj_by_url(@url).should eq nil
+        ContentBase.obj_by_url(article.public_url).should eq nil
       end
     end
   end
 
-  describe '::obj_by_url!' do
+  describe '::obj_by_url!', :indexing do
     it "returns the object if it's not nil" do
       ContentBase.stub(:obj_by_url) { "okedoke" }
       ContentBase.obj_by_url!("anything").should eq "okedoke"

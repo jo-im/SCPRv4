@@ -4,7 +4,7 @@ describe ShowEpisode do
   describe '#segments' do
     it 'orders by position' do
       episode = build :show_episode
-      episode.segments.to_sql.should match /order by position/i
+      episode.segments.to_sql.should match /order by shows_rundown.position/i
     end
   end
 
@@ -74,6 +74,23 @@ describe ShowEpisode do
 
   #------------------
 
+  describe 'attached rundowns' do
+    it "saves them along with the episode" do
+      episode = build :show_episode
+      seg1 = create :show_segment
+      seg2 = create :show_segment
+
+      episode.segments << seg1
+      episode.segments << seg2
+
+      episode.save!
+
+      episode.rundowns.count.should eq 2
+      episode.rundowns.first.position.should eq 1
+      episode.rundowns.last.position.should eq 2
+    end
+  end
+
   describe '#rundowns_json=' do
     let(:episode)  { create :show_episode }
     let(:segment1) { create :show_segment }
@@ -106,7 +123,8 @@ describe ShowEpisode do
     context "when no content has changed" do
       it "doesn't set the rundowns" do
         original_json = "[{ \"id\": \"#{segment1.obj_key}\", \"position\": 1 }]"
-        record = create :show_episode, rundowns_json: original_json
+        record = create :show_episode
+        record.rundowns_json = original_json
 
         record.should_not_receive :rundowns=
         record.rundowns_json = original_json

@@ -1,6 +1,7 @@
 json.cache! [Api::Public::V3::VERSION, "v2", edition] do
   json.id           edition.id
   json.title        edition.title
+  json.edition_type       edition.short_list_type
   json.published_at edition.published_at
   json.updated_at   edition.updated_at
 

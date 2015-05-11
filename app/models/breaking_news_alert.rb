@@ -5,10 +5,11 @@ class BreakingNewsAlert < ActiveRecord::Base
   has_status
 
 
-  include Concern::Callbacks::SphinxIndexCallback
   include Concern::Callbacks::SetPublishedAtCallback
   include Concern::Associations::ContentAlarmAssociation
   include Concern::Methods::EloquaSendable
+
+  include Concern::Model::Searchable
 
   include ::NewRelic::Agent::Instrumentation::ControllerInstrumentation
 
@@ -38,7 +39,8 @@ class BreakingNewsAlert < ActiveRecord::Base
   end
 
 
-  PARSE_CHANNEL         = "breakingNews"
+  IPAD_CHANNEL          = "breakingNews"
+  IPHONE_CHANNEL        = "listenLive"
   FRAGMENT_EXPIRE_KEY   = "layout/breaking_news_alert"
 
 
@@ -112,8 +114,8 @@ class BreakingNewsAlert < ActiveRecord::Base
       :alert      => alert_subject,
       :badge      => "Increment",
       :alertId    => self.id
-    }, PARSE_CHANNEL)
-
+    })
+    push.channels = self.alert_type == "audio" ? [IPHONE_CHANNEL,IPAD_CHANNEL] : [IPAD_CHANNEL]
     result = push.save
 
     if result["result"] == true

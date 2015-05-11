@@ -17,7 +17,7 @@ class PijQuery < ActiveRecord::Base
   include Concern::Associations::ProgramArticleAssociation
   include Concern::Validations::SlugValidation
   include Concern::Callbacks::GenerateSlugCallback
-  include Concern::Callbacks::SphinxIndexCallback
+  include Concern::Model::Searchable
   include Concern::Callbacks::SetPublishedAtCallback
   #include Concern::Callbacks::CacheExpirationCallback
   include Concern::Callbacks::TouchCallback
@@ -59,6 +59,7 @@ class PijQuery < ActiveRecord::Base
   validates :pin_query_id, presence: true
   validates :status, presence: true
 
+  scope :with_article_includes, ->() { includes(:assets) }
 
   def publish
     self.update_attributes(status: self.class.status_id(:live))
@@ -76,7 +77,11 @@ class PijQuery < ActiveRecord::Base
       :body               => self.body,
       :assets             => self.assets,
       :byline             => "KPCC",
-      :edit_url           => self.admin_edit_url
+      :edit_path          => self.admin_edit_path,
+      :public_path        => self.public_path,
+      :created_at         => self.created_at,
+      :updated_at         => self.updated_at,
+      :published          => self.published?,
     })
   end
 

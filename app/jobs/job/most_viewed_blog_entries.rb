@@ -12,7 +12,7 @@ module Job
 
     class << self
       def perform
-        analytics = Rails.application.config.api["google"]["analytics"]
+        analytics = Rails.configuration.x.api.google.analytics
 
         task = new(
           analytics["client_id"],
@@ -86,7 +86,7 @@ module Job
       row = rows.first
       if article = ContentBase.obj_by_url(row[0])
         self.log "(#{row[1]}) #{row[0]}"
-        return article if article.published?
+        return article
       end
     end
 

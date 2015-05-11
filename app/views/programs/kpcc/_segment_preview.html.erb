@@ -1,9 +1,9 @@
-<% article = @segment.to_article %>
+<% article = @segment %>
 <% content_for :body_class, 'interior single segment' %>
 
 <div class="appellation bound">
-  <h1><%= article.title %></h1>
-  <p>by <%= render_byline article.original_object %>. <%= smart_date_js article.public_datetime %>.</p>
+  <h1><%= article.headline %></h1>
+  <p><span>by <b><%= render_byline article %></b></span> <%= smart_date_js article.published_at %></p>
 </div><!--/ .appellation -->
 
 <div class="report">
@@ -29,17 +29,15 @@
 
               <div class="prose-body">
                   <%= article.body.html_safe %>
-                  <% if article.original_object.joined_bylines[:contributing].present? %>
+                  <% if article.joined_bylines[:contributing].present? %>
                       <footer class="contributor">
-                          <p><%= render_contributing_byline article.original_object %></p>
+                          <p><%= render_contributing_byline article %></p>
                       </footer>
                   <% end %>
+                  <%= pij_source(article) %>
               </div><!--/ .prose-body -->
 
-
-              <% present article.to_article do |article_presenter| %>
-                  <%= article_presenter.related_links %>
-              <% end %>
+              <%= render 'shared/cwidgets/related_links', content:article %>
 
             </div><!--/ .primary -->
 

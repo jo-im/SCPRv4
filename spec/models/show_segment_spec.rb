@@ -2,9 +2,9 @@ require "spec_helper"
 
 describe ShowSegment do
   describe '#episodes' do
-    it 'orders by air_date' do
+    it 'orders by status and air_date' do
       segment = build :show_segment
-      segment.episodes.to_sql.should match /order by air_date/i
+      segment.episodes.to_sql.should match /order by status desc,air_date desc/i
     end
   end
 
@@ -12,7 +12,11 @@ describe ShowSegment do
     it "uses the first episode the segment is associated with" do
       segment = create :show_segment
       episodes = create_list :show_episode, 3
-      episodes.each { |episode| create :show_rundown, episode: episode, segment: segment }
+
+      episodes.each do |ep|
+        ep.segments << segment
+      end
+
       segment.episode.should eq segment.episodes.first
     end
   end
@@ -21,10 +25,9 @@ describe ShowSegment do
 
   describe "#episode_segments" do
     it "uses the other segments from the episode if episodes exist" do
-      episode = build :show_episode
+      episode = create :show_episode
       segments = create_list :show_segment, 3
       episode.segments = segments
-      episode.save!
 
       episode.segments.last.episode_segments.should eq episode.segments.first(3)
     end

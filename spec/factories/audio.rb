@@ -13,7 +13,7 @@ FactoryGirl.define do
 
 
     trait :uploaded do
-      mp3 File.open(File.join(Audio::AUDIO_PATH_ROOT, "point1sec.mp3"))
+      mp3 File.open(File.join(Rails.configuration.x.scpr.audio_root, "point1sec.mp3"))
     end
 
     trait :enco do

@@ -32,11 +32,11 @@ describe NewsController do
       assigns(:story).should eq story
     end
 
-    it "raises RoutingError if story slug does not exist" do
+    it "raises an UrlGenerationError if story slug does not exist" do
       story = create :news_story, :published
       -> {
         get :story, { id: story.id, slug: '' }.merge!(date_path(story.published_at))
-      }.should raise_error ActionController::RoutingError
+      }.should raise_error ActionController::UrlGenerationError
     end
 
     context "for popular articles" do

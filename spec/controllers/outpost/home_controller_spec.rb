@@ -29,41 +29,22 @@ describe Outpost::HomeController do
     end
   end
 
-  describe 'GET search' do
+  describe 'GET search', :indexing do
     routes { Rails.application.routes }
-
-    sphinx_spec
 
     it 'gets the records from the query' do
       ns = create :news_story, headline: "Obama"
       be = create :blog_entry, headline: "President Obama"
       pq = create :pij_query, headline: "Something about Obama"
 
-      index_sphinx
+      get :search, gquery: "Obama"
 
-      ts_retry(2) do
-        get :search, gquery: "Obama"
+      records = assigns(:records)
 
-        records = assigns(:records)
-        expect(records).to include ns
-        expect(records).to include be
-        expect(records).to include pq
-      end
-    end
-
-    it 'only searches among models with an index' do
-      vertical = create :vertical, title: "Obama"
-      be = create :blog_entry, headline: "President Obama"
-
-      index_sphinx
-
-      ts_retry(2) do
-        get :search, gquery: "Obama"
-
-        records = assigns(:records)
-        expect(records).to include be
-        expect(records).not_to include vertical
-      end
+      obj_keys = records.map(&:obj_key)
+      expect(obj_keys).to include ns.obj_key
+      expect(obj_keys).to include be.obj_key
+      expect(obj_keys).to include pq.obj_key
     end
   end
 end

@@ -25,7 +25,7 @@ class ExternalProgram < ActiveRecord::Base
   include ::NewRelic::Agent::Instrumentation::ControllerInstrumentation
   include Concern::Validations::SlugValidation
   include Concern::Associations::RelatedLinksAssociation
-  include Concern::Callbacks::SphinxIndexCallback
+  include Concern::Model::Searchable
 
   self.public_route_key = "program"
 
@@ -69,8 +69,14 @@ class ExternalProgram < ActiveRecord::Base
       ExternalProgram.order("title").map { |p| [p.to_title, p.id] }
     end
 
-    def sync
-      self.active.each(&:sync)
+    def sync(source=nil)
+      finder = self.active
+
+      if source
+        finder = finder.where(source:source)
+      end
+
+      finder.each(&:sync)
     end
   end
 

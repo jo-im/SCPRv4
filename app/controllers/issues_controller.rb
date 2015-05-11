@@ -12,10 +12,7 @@ class IssuesController < NewApplicationController
 
   def show
     @tag = Tag.find_by_slug!(params[:slug])
-    @count = @tag.taggables.count
-
-    @articles = Kaminari.paginate_array(@tag.articles)
-      .page(params[:page]).per(PER_PAGE)
+    @articles = @tag.articles( page:params[:page], per_page:PER_PAGE )
   end
 
 

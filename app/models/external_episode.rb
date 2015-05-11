@@ -15,8 +15,8 @@ class ExternalEpisode < ActiveRecord::Base
 
   has_many :external_segments,
     -> { order("position") },
-    :through => :external_episode_segments
-
+    through:    :external_episode_segments,
+    dependent:  :destroy
 
   scope :for_air_date, ->(date_or_time) {
     where("DATE(air_date) = DATE(?)", date_or_time)

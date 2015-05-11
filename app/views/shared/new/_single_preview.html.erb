@@ -1,7 +1,7 @@
 <%= content_for(:body_class, "single") %>
 
 <% article = @entry.to_article %>
-<%= render_asset article.original_object, context:"news" %>
+<%= render_asset article.original_object, context:"news", fallback:true %>
 
 <div class="report">
     <div class="inner bound clearfix">
@@ -41,10 +41,7 @@
                     <% end %>
                 </div><!--/ .prose-body -->
 
-            <% present article do |article_presenter| %>
-                <%= article_presenter.related_links %>
-            <% end %>
-
+            <%= render 'shared/cwidgets/related_links', content:article.original_object %>
 
         </article>
       </div>

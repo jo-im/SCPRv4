@@ -2,7 +2,7 @@ require "spec_helper"
 
 describe Job::ComputeAudioFileInfo do
   subject { described_class }
-  it { subject.queue.should eq "scprv4:mid_priority" }
+  it { subject.queue.should eq Job::QUEUES[:mid_priority] }
 
   describe "::perform" do
     it "finds the audio and finds the duration and size, and saves" do

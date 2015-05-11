@@ -48,8 +48,9 @@ class Abstract < ActiveRecord::Base
   include Concern::Associations::AssetAssociation
   include Concern::Associations::AudioAssociation
   include Concern::Associations::EditionsAssociation
-  include Concern::Callbacks::SphinxIndexCallback
   include Concern::Callbacks::TouchCallback
+
+  include Concern::Model::Searchable
 
   # We're not using the CategoryAssociation concern here because we don't
   # need Abstracts to touch the Category on save.
@@ -68,6 +69,7 @@ class Abstract < ActiveRecord::Base
     end
   end
 
+  scope :with_article_includes, ->() { includes(:assets,:audio) }
 
   # Currently, Abstracts will only be publicly available
   # through Editions, and there is therefore no need for us
@@ -94,7 +96,11 @@ class Abstract < ActiveRecord::Base
       :assets             => self.assets,
       :audio              => self.audio.available,
       :byline             => self.source,
-      :edit_url           => self.admin_edit_url
+      :edit_path          => self.admin_edit_path,
+      :public_path        => self.public_path,
+      :published          => self.published?,
+      :created_at         => self.created_at,
+      :updated_at         => self.updated_at,
     })
   end
 

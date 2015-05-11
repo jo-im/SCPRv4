@@ -82,14 +82,21 @@ This used to be a <section> (c. 2013-14), but that was dumb.
 ######################################################################## */
 .appellation {
   padding: 0 0 55px;
-  h1        { font: normal 300 3em/1.1 $font-freight; }
-  p         { padding-top: 40px; font: normal 0.75em/1 $font-prox; color: #acacac; }
-  p a       { color: $blue; font-weight: 700; }
-  p a:hover { text-decoration: underline; }
+  h1                  { font: normal 300 3em/1.1 $font-freight; }
+  p                   { padding-top: 40px; font: normal 0.75em/1 $font-prox; color: #acacac; -webkit-font-smoothing: antialiased; }
+  span                { display: inline-block; margin-right: 20px; }
+  p a                 { color: $blue; font-weight: 700; }
+  p a:hover           { text-decoration: underline; }
+  time                { white-space: nowrap; }
 //-------------------------------------------------------------------------------------
   @media screen and (max-width: 870px)  { text-align: center; }
 //-------------------------------------------------------------------------------------
   @media screen and (max-width: 540px)  { h1 { font-size: 2.25em; } }
+//-------------------------------------------------------------------------------------
+  @media screen and (max-width: 610px)  {
+    span                                { display: block; margin-right: 0; }
+    time                                { display: block; padding-top: 1em; }
+  }
 //-------------------------------------------------------------------------------------
 }
 
@@ -106,7 +113,7 @@ REPORT
 ########################################################################
 ######################################################################## */
 .report {
-  
+
   .inner                      { background-image: image-url("i/fauxcol-segment-base.png"); background-position: 65.846153846154% 0; }
   .prose {
     width: 59.769230769231%;
@@ -118,6 +125,7 @@ REPORT
     .secondary                { width: 14.285714285714%; float: left; }
     .buddy {
       &.pinned                { display: none; } // hiddenness gets undone when certain width requirements are met
+      -webkit-font-smoothing: antialiased;
       font: normal bold 0.75em/1.1 $font-prox;
       color: #909090;
       border-top: 1px solid rgba(0,0,0,0.08);
@@ -169,9 +177,9 @@ REPORT
       }
     }//.buddy
     .ancillary {
+      background: transparent;
       font-size: 1.06666666666667em; // reset to equivalent of 16
       border-top: 1px solid rgba(236,124,45,0.5);
-      box-sizing: border-box;
       padding: 18px 0 0 13.458262350937%; // 79 / 587
       margin: 0 0 50px -13.458262350937%;
       &:first-of-type   { margin-top: 3em; }
@@ -182,20 +190,34 @@ REPORT
       & > h1 a          { color: inherit !important; }
       nav               { padding-top: 28px; }
     }
-  }
+  }//.prose
+
+  .prose-body,
+  .related,
+  .episode-contents     { -webkit-font-smoothing: antialiased; }
+
   .supportive           { width: 34.153846153846%; border-top: 0; }
 
-  .related-links {
+  .related {
     @include related-link-icons;
+    header {
+      background-image: none;
+      margin-bottom: 0;
+      padding-top: 0;
+      padding-bottom: 0;
+      h1 { color: $orange; font: normal bold 1em/1.1 $font-prox; margin-left: 0; text-transform: none; }
+    }
+    nav             { margin: 0; }
     li              { list-style: none; margin: 0 0 14px; display: block; }
     a               { display: block; box-sizing: border-box; padding-left: 30px; margin-left: -30px; color: #333; }
     h1              { font: normal 1em/1.1 $font-freight; }
     p               { margin: 0; padding: 7px 0 0; font: normal 0.6875em/1 $font-prox; color: #b8b8b8; }
     p > *           { white-space: nowrap; }
-    mark            { color: $orange; padding-right: 4px; }
-    a:hover         { text-decoration: none; color: black; }
-    a:hover h1 span { box-shadow: inset 0 -2px 0 white, inset 0 -3px 0 rgba(0,0,0,0.3); }
-    a:hover p       { color: $orange; }
+    mark            { color: #333; display: block; vertical-align: top; padding-bottom: 3px; border-bottom: 1px solid white; }
+    a span          { color: $orange !important; display: block; font: normal 0.75em/1 $font-prox; padding: 2px 4px 0 0; text-transform: none; }
+    a:hover         { text-decoration: none; }
+    a:hover mark    { border-bottom: 1px solid rgba(0,0,0,0.15); }
+    li > span       { padding-top: 2px; } // PIJ "learn more"
   }
 
   .episode-contents {
@@ -285,13 +307,13 @@ REPORT
 
           }
         }
-        
+
 
       }
 //-------------------------------------------------------------------------------------
       @media screen and (max-width: 780px)  {
 
-        .related-links a,
+        .related a,
         .episode-contents nav a           { margin-left: 0; }
         .episode-contents > header cite   { padding: 5px 0 0 0; display: block; }
 
@@ -314,11 +336,15 @@ SIDEBAR BOXLETS
 ########################################################################
 ######################################################################## */
 .report .supportive aside {
-  position: relative; z-index: 1;
+  position: relative;
+  z-index: 1;
+  -webkit-font-smoothing: antialiased;
   &.placard:first-child       { padding-top: 0; z-index: 1; }
   &.overview header           { background-position: 0 -640px; }
   header {
-    padding: 5px 0 0 13px; position: relative; z-index: 2;
+    padding: 5px 0 0 13px;
+    position: relative;
+    z-index: 2;
     & + *                     { padding-top: 23px; }
     h1 {
       box-sizing: border-box;
@@ -364,7 +390,6 @@ SIDEBAR BOXLETS
         background-repeat: no-repeat !important;
       }
     }
-
   }//.exposition
   .externals {
     color: #2388aa;
@@ -502,7 +527,7 @@ cosmetic width-constrained tweak.
   b {
     display: block;
     width: 100%;
-    margin-bottom: 10px;
+//    margin-bottom: 10px;
 //-------------------------------------------------------------------------------------
     @media screen and (max-width: 699px) {
       margin-left: -5.5%;
@@ -511,10 +536,14 @@ cosmetic width-constrained tweak.
     }
 //-------------------------------------------------------------------------------------
   }
+  .slideview          { max-height: none; }
+  .slideview .slides  { background: none; }
   img                 { width: 100%; height: auto; } // Assume it's wide by default
+  img.skinny          { width: auto; max-height: 524px; }
   figcaption {
     color: #a6a6a6;
     width: 100%;
+    padding-top: 10px;
     display: block;
     span              { display: block; }
     .credit           { font: normal 600 0.625em/1.1 $font-freight; text-transform: uppercase; float: left; width: 19.305019305019%; /* 150 / 777 */ }
@@ -543,6 +572,10 @@ cosmetic width-constrained tweak.
       .credit         { padding-top: 5px; }
     }
   //-------------------------------------------------------------------------------------
+    @media screen and (max-width: 870px) {
+      b               { margin-left: 0; }
+    }
+  //-------------------------------------------------------------------------------------
     @media screen and (max-width: 500px) {
       b               { width: 100% !important; max-width: 320px !important; margin: 0 auto 20px auto !important; }
       figcaption      { height: auto; position: static; width: 100%; }
@@ -550,6 +583,23 @@ cosmetic width-constrained tweak.
     }
   //-------------------------------------------------------------------------------------
   }
+  .media-scaler {
+      width: 100%;
+      position: relative;
+      padding-bottom: 56.25%;
+      height: 0;
+      overflow: hidden;
+      iframe,object,embed {
+          display: block;
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+      }
+  }
+  .ratio .img-contain                       { background: rgba(0,0,0,0.15); }
+  .slideview .slides .slide img.not-wide    { height: 100%; width: auto; }
 }//.lead-asset
 
 
@@ -570,6 +620,7 @@ The trigger that launches the audio drawer. Powered by jPlayer.
 ######################################################################## */
 .audio-actuator {
   font: normal bold 1.375em/1 $font-prox;
+  -webkit-font-smoothing: antialiased;
   color: white;
   width: 100%;
   box-sizing: border-box;
@@ -643,7 +694,7 @@ The trigger that launches the audio drawer. Powered by jPlayer.
 //-------------------------------------------------------------------------------------
   &.no-animation {
     .flourish img       { display: none; }
-    .flourish           { background: image-url("i/audio-actuator-static-triangle.png") no-repeat center center; background-size: 26px 32px; background-color: #1990c3; } 
+    .flourish           { background: image-url("i/audio-actuator-static-triangle.png") no-repeat center center; background-size: 26px 32px; background-color: #1990c3; }
   }
 
 }// .audio-actuator

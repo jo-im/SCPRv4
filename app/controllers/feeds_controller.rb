@@ -13,7 +13,7 @@ class FeedsController < ApplicationController
     @content = ContentBase.search({
       :classes    => [NewsStory, ContentShell, BlogEntry, ShowSegment],
       :limit      => 15,
-      :without    => { category: false }
+      :with       => { "category.slug" => true }
     })
 
     xml = render_to_string(action: "feed", formats: :xml)
@@ -32,20 +32,26 @@ class FeedsController < ApplicationController
     render template: 'feeds/take_two.xml.builder', format: :xml
   end
 
-  # This is a method for sending recent segments from The Frame and
+  # This is a method for sending recent segments from Off-Ramp, The Frame and
   # the latest two segments from the most recently published Take Two episode
   # to the NPR Story API Ingest: https://github.com/npr/lockbox/wiki/Story-API-Ingest
   # This ingest is used specifically to deliver KPCC audio into the NPR One app.
-  # Required format is an RSS feed with xml enclosures to ingest audio and and images
+  # Required format is an RSS feed with xml enclosures to ingest audio and images
   def npr_ingest
     response.headers["Content-Type"] = 'text/xml'
 
     take_two = Program.find_by_slug!('take-two')
     the_frame = Program.find_by_slug!('the-frame')
+    offramp = Program.find_by_slug!('offramp')
     @segments = (
-      take_two.episodes.published.first.segments.first(2) + 
-      the_frame.episodes.published.first.segments
-    ).sort{|a,b| a.published_at <=> b.published_at }
+      take_two.episodes.published.first.segments.published.first(2) + 
+      the_frame.episodes.published.first.segments.published +
+      offramp.episodes.published.first.segments.published 
+    )
+    @segments.sort do |a,b|
+      comp = (b.published_at <=> a.published_at)
+      comp.zero? ? (a.id <=> b.id) : comp
+    end
     render template: 'feeds/npr_ingest.xml.builder', format: :xml
   end
 end

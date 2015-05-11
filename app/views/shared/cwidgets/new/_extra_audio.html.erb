@@ -6,7 +6,7 @@
         <% url = url_with_params(audio.url, context: options[:context], via: 'website') %>
         <li class="story-audio">
           <a href="<%= url %>" class="play-btn audio-toggler" title="<%= h(audio.description) %>" data-duration="<%= audio.duration %>">
-            <mark>Play <%= audio.description %></mark> 
+            <mark><%= audio.description.blank? ? 'Listen now' : audio.description %></mark> 
             <span><%= format_duration(audio.duration) %></span>
           </a>
         </li>

@@ -18,12 +18,11 @@
         <header><h1>Recently on <%= @program.title %></h1></header>
         <nav>
           <% @program.segments.published.first(3).each do |segment| %>
-              <% show_segment = segment.to_article %>
               <article>
-                  <%= link_to show_segment.public_path, class: "track-event", data: {"ga-category" => "Article", "ga-action" => "Clickthrough", "ga-label" => "More Sidebar Show Segment"} do %>
-                      <%= smart_date_js show_segment.public_datetime %>
-                      <h1><%= show_segment.short_title %></h1>
-                      <b><%= image_tag show_segment.asset.lsquare.url, alt: show_segment.asset.caption %></b>
+                  <%= link_to segment.public_path, class: "track-event", data: {"ga-category" => "Article", "ga-action" => "Clickthrough", "ga-label" => "More Sidebar Show Segment"} do %>
+                      <%= smart_date_js segment.published_at %>
+                      <h1><%= segment.short_headline %></h1>
+                      <b><%= image_tag segment.asset.lsquare.url, alt: segment.asset.caption %></b>
                   <% end %>
               </article>
           <% end %>
@@ -33,12 +32,12 @@
 
 
     <aside class="overview">
-      <header><h1>About <%= @program.title %></h1></header>
-      <div class="exposition" data-host="<%= @program.slug %>"><!-- accepts: horn | rabe | cohenmartinez | mantle -->
-        <p><%= @program.description %></p>
-        <footer><%= @program.airtime %></footer>
-      </div>
       <% present @program, ProgramPresenter do |p| %>
+      <header><h1>About <%= p.title %></h1></header>
+      <div class="exposition" data-host="<%= p.slug %>"><!-- accepts: horn | rabe | cohenmartinez | mantle -->
+        <p><%= p.description %></p>
+        <footer><%= p.airtime %></footer>
+      </div>
         <div class="externals">
           <ul>
             <%= p.facebook_link %>

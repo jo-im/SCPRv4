@@ -203,12 +203,19 @@ body.short-list {
       background-size: 1px 1px;
       float: left;
       .share                    { display: none; } // ...oooohhh but he'll be back
+      > .abstract:first-of-type .prose {
+        margin-top: 40px;
+      }
+      > .abstract:last-of-type {
+        padding-bottom: 80px;
+      }
       article {
-        padding-bottom: 81px;
+        padding-bottom: 40px;
         .photo {
           width: 103.738317757009%;
           margin-left: -3.738317757009%;
           overflow: hidden;
+          z-index: 1;
           /*
           -------------------------------------------------------------------------------
           The original design for The Short List On The Web sported a very-cinematic,
@@ -226,6 +233,7 @@ body.short-list {
           &.ratio .fill           { padding-top: 42%; }       // Ratio after the 9/15/2014 tall-ification.
           img                     { margin-top: -8%; }        // Clumsy re-"centering".
         }
+        .img-contain              { z-index: 2; }
         &.ratio-squat .photo img  { margin-top: -3%; }
         &.ratio-square .photo img { margin-top: -22.5%; }
         &.ratio-tall .photo img   { margin-top: -42%; }
@@ -234,45 +242,76 @@ body.short-list {
         header,.eisegesis         { width: 48.130841121495%; /* 412 / 856 */ }
         header                    { float: left; }
         h1                        { font-family: $font-freight; font-weight: 300; font-size: 2.5em; /* 40 / 16 */ line-height: 1.125; }
+        h1 a                      { color: black; }
         a                         { color: $blue; }
         a:hover                   { text-decoration: underline; }
 
+        .credit {
+          position: absolute;
+          bottom: 0;
+          right: 0;
+          z-index: 3;
+          display: block;
+          cursor: default;
+          width: 100%;
+          overflow: hidden;
+          box-sizing: border-box;
+          padding-left: 80px;
+          height: 17px;
+          span {
+            position: relative;
+            width: 100%;
+            box-sizing: border-box;
+            text-align: right;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            font: normal 700 0.5625em/1 $font-prox;
+            text-transform: uppercase;
+            letter-spacing: -0.02em;
+            color: rgba(255,255,255,0.7);
+            box-sizing: border-box;
+            display: inline-block;
+          }
+          i {
+            font-style: inherit;
+            display: inline-block;
+            background: rgba(0,0,0,0.35);
+            padding: 4px 6px;
+            box-sizing: border-box;
+          }
+        }
+
         mark {
           display: block;
-          width: 47px;
-          height: 47px;
-          background: white;
+          width: 30px;
+          height: 40px;
           text-align: center;
           overflow: hidden;
-          border-radius: 30px;
+          z-index: 4;
+          border-bottom: 3px solid #fa7836;
           font-family: $font-prox;
           position: absolute;
           top: -23px;
-          left: -12px;
+          left: 0;
           font-size: 1.375em; // 22 / 16
           line-height: 1.1;
           box-sizing: border-box;
           padding-top: 11px;
           font-weight: 300;
           color: #fa7836;
+          z-index: 0;
         }
         .eisegesis {
           float: right;
           font-size: 0.875em;
           line-height: 1.72;
           padding-top: 8px;
-          p                 { margin-bottom: 1.7em; }
+          p                 { margin-bottom: 1.2em; }
         }
         footer {
-          background: white;
-          border-top: 1px solid #cecece;
-          border-bottom: 1px solid #cecece;
-          text-align: right;
           font-family: $font-freight;
           font-size: 1.125em;
-          padding: 15px 0 18px;
-          width: 103.738317757009%;
-          margin-left: -3.738317757009%;
           a {
             display: inline-block;
             background: image-url("i/shortlist-caret-blue.png") no-repeat right 9px;
@@ -280,18 +319,16 @@ body.short-list {
             padding-right: 24px;
           }
         }
-        // The following three Abstracts are called out because they each are followed by banner ads.
-        &:nth-of-type(1),
-        &:nth-of-type(4),
-        &:nth-of-type(7) {
-          padding-bottom: 0;
-        }
       }
       .plug {
         background: white;
-        padding-bottom: 46px;
+        border-top: 1px solid #d6d6d6;
         width: 103.738317757009%;
         margin-left: -3.738317757009%;
+        // Give abstracts that follow an ad some vertical breathing room
+        & + .abstract {
+          margin-top: 40px;
+        }
         & > div {
           padding: 27px 0;
           border-bottom: 1px solid #d6d6d6;
@@ -547,11 +584,12 @@ body.short-list {
         mark                    { font-size: 0.9375em; }
     }
     .page-cols .abstracts {
+      background: transparent;
       article {
         .prose                  { padding-bottom: 1em; background: white; }
         header,.eisegesis       { width: 100%; float: none; }
         header h1               { font-size: 1.75em; }
-        header                  { padding-bottom: 1.2em; border-bottom: 1px solid #cecece; margin-bottom: 0.7em; }
+        header                  { margin-bottom: 0.7em; }
       }
       .plug .appeal             { position: static; padding-top: 10px; text-align: center; }
       .subscribe header h1      { font-size: 2.35em; }
@@ -594,6 +632,18 @@ body.short-list {
 
 @media screen and (max-width: 699px) {
 
+    .edition-marquee {
+      .titling {
+        h1 {
+          float:none;
+        }
+        h2 {
+          float:none;
+          padding:4px 0 0 0;
+        }
+      }
+    }
+
     .page-cols {
       background: white;
       & > .inner              { background: white; }
@@ -602,11 +652,20 @@ body.short-list {
         width: 100%;
         float: none;
         article {
+          .prose              { border-bottom: 1px solid #cecece; }
           header h1           { font-size: 1.5em; }
           .eisegesis          { font-size: 0.8125em; }
           .photo              { width: 100%; margin-left: 0; }
           footer              { font-size: 0.875em; width: 100%; margin-left: 0; padding: 10px 0 12px; }
           footer a            { background-position: right 6px; padding-right: 18px; }
+          // The following three Abstracts are called out because they each are followed by banner ads.
+          &:nth-of-type(1),
+          &:nth-of-type(4),
+          &:nth-of-type(7) {
+            .prose {
+              border-bottom: 0;
+            }
+          }
         }
         .share {
           display: block;
@@ -734,7 +793,6 @@ body.short-list {
       position: static;
       min-height: 0;
       h1                { float: none; font-size: 1.3125em; /* 21 / 16 */ font-weight: 700; }
-      h1:before         { content: "The "; }
       h1 span           { display: block; font-weight: 300; padding-top: 4px; }
       h2                { padding: 1px 0 0 0; margin-left: -3px; }
     }
@@ -798,29 +856,34 @@ body.short-list {
         .photo {
           margin-left: -5.5%;
           width: 111%;
+          z-index: 0;
           &.ratio .fill { padding-top: 39%; }
         }
         mark {
           width: auto;
           height: 25px;
-          left: -10px;
           top: -20px;
           padding: 5px 11px 0 10px;
           text-transform: uppercase;
           text-align: left;
           font-weight: 700;
           font-size: 0.9375em;
-          border-radius: 0;
+          border-bottom-width: 2px;
           letter-spacing: -0.02em;
           span      { font-size: 0.66666666666667em; /* 10 / 15 */ color: #bbbbbb; }
           span b    { color: #6d6d6d; }
         }
         .prose      { padding-top: 15px; }
       }
-      .subscribe form {
-        margin: 0 25px;
-        height: 37px;
-        .email-bound    { margin-right: 130px; }
+      .subscribe {
+        h2 span {
+          white-space: normal;
+        }
+        form {
+          margin: 0 25px;
+          height: 37px;
+          .email-bound    { margin-right: 130px; }
+        }
       }
     }
   }

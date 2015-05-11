@@ -63,6 +63,22 @@ $headShotWidth: 90px;
             }
         }
     }
+    &.airtalk {
+        .page-title {
+            &:after {
+                content:" \00AE";
+                font-size: 70%;
+            }
+        }
+    }
+    &.offramp {
+        .page-title {
+            &:after {
+                content:" \00AE";
+                font-size: 70%;
+            }
+        }
+    }
     &.airtalk, &.filmweek {
         background-image: image-url('broadcast-bar/headshots/airtalk.png');
     }

@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe IssuesController do
+describe IssuesController, :indexing do
   render_views
 
   describe 'GET /issues' do
@@ -23,8 +23,6 @@ describe IssuesController do
   end
 
   describe 'GET show' do
-    sphinx_spec(num: 0)
-
     it 'sets tag' do
       tag = create :tag
       get :show, slug: tag.slug
@@ -37,26 +35,8 @@ describe IssuesController do
       article.tags << tag
       article.save!
 
-      index_sphinx
-
-      ts_retry(2) do
-        get :show, slug: tag.slug
-        assigns(:articles).should eq [article].map(&:to_article)
-      end
-    end
-
-    it "sets count" do
-      tag = create :tag
-      article = build :news_story
-      article.tags << tag
-      article.save!
-
-      index_sphinx
-
-      ts_retry(2) do
-        get :show, slug: tag.slug
-        assigns(:count).should eq 1
-      end
+      get :show, slug: tag.slug
+      assigns(:articles).should eq [article].map(&:to_article)
     end
 
     it "gets the tag by slug" do

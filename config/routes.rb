@@ -1,3 +1,5 @@
+require "resque/server"
+
 Scprv4::Application.routes.draw do
   # Homepage
   root to: "home#index"
@@ -37,8 +39,9 @@ Scprv4::Application.routes.draw do
 
 
   # Programs / Segments
-  # This route is hard-coded for the launch of The Frame. We can remove this as soon as other shows get the same featured program red-carpet treatment.
-  get '/programs/:show' => "programs#featured_program", constraints: { show: /the-frame/ }
+  # This route is hard-coded to constrain only The Frame and Take Two to render with our new featured program design.
+  # We can remove this as soon as all featured programs get the same red-carpet treatment.
+  get '/programs/:show' => "programs#featured_program", constraints: { show: /(the-frame|take-two)/ }
   # This route is for displaying a clone of the old layout for featured programs for an index of episodes and segments
   get '/programs/:show/featured' => "programs#featured_show", as: :featured_show
   # Legacy route for old Episode URLs
@@ -212,9 +215,24 @@ Scprv4::Application.routes.draw do
 
   #------------------
 
-  mount Outpost::Engine, at: 'outpost'
+  mount Outpost::Secretary::Engine => '/outpost', as: 'secretary'
+  mount Outpost::Engine => '/outpost', as: 'outpost'
 
   namespace :outpost do
+    resque_constraint = ->(request) do
+      user_id = request.session.to_hash["user_id"]
+
+      if user_id && u = AdminUser.find_by(:id => user_id)
+        u.is_superuser?
+      else
+        false
+      end
+    end
+
+    constraints resque_constraint do
+      mount Resque::Server.new, :at => "resque"
+    end
+
     concern :preview do
       put "preview", on: :member
       patch "preview", on: :member
@@ -235,9 +253,8 @@ Scprv4::Application.routes.draw do
     end
 
     get 'search', to: 'home#search', as: :search
-  end
 
-  mount Outpost::Secretary::Engine, at: 'outpost', as: 'secretary'
+  end
 
   namespace :outpost do
     resources :recurring_schedule_rules, concerns: [:search]

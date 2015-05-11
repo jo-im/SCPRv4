@@ -3,9 +3,10 @@ class AdminUser < ActiveRecord::Base
   outpost_model
   has_secretary
 
-  include Concern::Callbacks::SphinxIndexCallback
   include Outpost::Model::Authentication
   include Outpost::Model::Authorization
+
+  include Concern::Model::Searchable
 
   self.unversioned_attributes = ['password_digest']
 

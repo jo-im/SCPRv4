@@ -2,7 +2,7 @@ class Podcast < ActiveRecord::Base
   outpost_model
   has_secretary
 
-  include Concern::Callbacks::SphinxIndexCallback
+  include Concern::Model::Searchable
 
   self.public_route_key = "podcast"
 
@@ -43,7 +43,7 @@ class Podcast < ActiveRecord::Base
 
       case self.source_type
       when "KpccProgram"
-        conditions.merge!(program: self.source.id)
+        conditions.merge!("show.id" => self.source.id)
         klasses.push ShowEpisode if self.item_type == "episodes"
         klasses.push ShowSegment if self.item_type == "segments"
 
@@ -54,7 +54,7 @@ class Podcast < ActiveRecord::Base
         return []
 
       when "Blog"
-        conditions.merge!(blog: self.source.id)
+        conditions.merge!("blog.id" => self.source.id)
         klasses.push BlogEntry
 
       else
@@ -85,7 +85,7 @@ class Podcast < ActiveRecord::Base
   def content_query(limit, klasses, conditions={})
     ContentBase.search({
       :with    => conditions.reverse_merge({
-        :has_audio => true
+        "audio.url" => true
       }),
       :classes => klasses,
       :limit   => limit

@@ -28,6 +28,7 @@ class NprProgramImporter
 
 
   def sync
+    Rails.logger.debug "Starting sync for #{ @external_program.title }"
     # `date=current` returns the program's latest episode's segments.
     # Set limit to 20 to return as many segments as possible for the
     # episode.
@@ -35,76 +36,98 @@ class NprProgramImporter
     offset    = 0
 
     begin
-      response = fetch_stories(offset)
-      stories += response
-      offset += 20
+      response  = fetch_stories(offset)
+      stories   += response
+      offset    += 20
     end until response.size < 20
 
     # If there are no segments then forget about it.
     # Even if an episode is available in the NPR API, its audio may
-    # not be available yet. If there is a single story in the response
-    # which *doesn't* yet have audio, then we will abort importing and
-    # get it next time.
+    # not be available yet.
     return false if stories.empty? || !audio_available?(stories)
 
     # If there's not a show, then we should abort because the
     # imported segment will never get seen anyways, which would
     # be a hidden and potentially confusing bug.
-    # If an episode with this air date for this program was already
-    # imported, then it's safe to assume that we already imported its
-    # segments as well. The NPR API specifies that requesting a
-    # program with `date=current` will only return COMPLETED episodes.
     #
     # If there are segments with their "stream" permission set to "false",
     # then we'll go ahead with the sync, but just won't import those ones.
     show = stories.first.shows.last
-    return false if !show || episode_exists?(show)
+    return false if !show
 
-    external_episode = build_external_episode(show)
+    external_episode = find_or_create_external_episode(show)
+
+    # What segments have we already created in a previous run?
+    existing_segment_ids = external_episode.external_segments.collect(&:external_id).map { |id| id.to_i }
 
     stories.each_with_index do |story, i|
-      external_segment = build_external_segment(story)
+      if existing_segment_ids.include?(story.id)
+        Rails.logger.debug "Skipping existing story #{ story.id }"
+        next
+      end
 
-      # There were some segments coming through without a "shows" property.
-      # I'm not sure what that means, but we'll import it anyways and just
-      # put it at the end of the list.
-      external_episode.external_episode_segments.build(
-        :external_segment => external_segment,
-        :position => story.shows.last.try(:segNum) || stories.length + i
-      )
-
-      # Bring in Audio
-      # Note that NPR doesn't provide Audio for its full episodes,
-      # only segmented audio.
-      story.audio.select { |a| stream_allowed?(a) }
+      # Make sure there's usable audio before we build the segment
+      audio = []
+      story.audio.select { |a| stream_allowed?(a) && !a.formats.empty? && !a.formats.mp3s.empty? }
       .each_with_index do |remote_audio, i|
         if mp3 = remote_audio.formats.mp3s.find { |m| m.type == "mp3" }
-          external_segment.audio.build(
-            :url            => mp3.content,
-            :duration       => remote_audio.duration,
-            :description    => remote_audio.description ||
-                               remote_audio.title ||
-                               story.title,
-            :byline         => remote_audio.rightsHolder || "NPR",
-            :position       => i
-          )
+          audio << {
+            url:          mp3.content,
+            duration:     remote_audio.duration,
+            description:  remote_audio.description || remote_audio.title || story.title,
+            byline:       remote_audio.rightsHolder || "NPR",
+            position:     i,
+          }
         end
       end
+
+      if audio.empty?
+        Rails.logger.debug "Skipping segment for #{ story.id }. No audio yet."
+        next
+      end
+
+      Rails.logger.debug "Building segment for #{ story.id } (#{story.shows.last.try(:segNum)})"
+
+      # Wrap all of our segment creation in a transaction, to try and keep
+      # from ending up with half-formed segments
+      ExternalProgram.transaction do
+        external_segment = @external_program.external_segments.create(
+          title:        story.title,
+          teaser:       story.teaser,
+          published_at: story.pubDate,
+          external_url: story.link_for("html"),
+          external_id:  story.id,
+        )
+
+        # There were some segments coming through without a "shows" property.
+        # I'm not sure what that means, but we'll import it anyways and just
+        # put it at the end of the list.
+        external_episode.external_episode_segments.create(
+          external_segment: external_segment,
+          position:         story.shows.last.try(:segNum) || stories.length + i,
+        )
+
+        # Now create our audio objects
+        audio.each do |a|
+          external_segment.audio.create(a)
+        end
+      end
+
+      # Update timestamp on the episode to make sure new segments bust caching
+      external_episode.touch
     end
 
-    @external_program.save!
+    true
   end
 
   add_transaction_tracer :sync, category: :task
-
-
 
   private
 
   def fetch_stories(offset)
     NPR::Story.where(
-      :id   => @external_program.external_id,
-      :date => "current"
+      id:   @external_program.external_id,
+      date: "current"
     ).set(requiredAssets: "audio")
     .limit(20).offset(offset)
     .to_a.select { |s| can_stream?(s) }
@@ -113,31 +136,18 @@ class NprProgramImporter
   # For NPR, we kind of have to make-up these episodes, since NPR
   # doesn't really keep track of the shows, except for the air-date
   # and as a means to group together segments.
-  def build_external_episode(show)
-    @external_program.external_episodes.build(
-      :title      => "#{@external_program.title} for " +
-                     show.showDate.strftime("%A, %B %e, %Y"),
-      :air_date   => show.showDate
-    )
-  end
+  def find_or_create_external_episode(show)
+    ep = @external_program.external_episodes.find_by(air_date:show.showDate)
 
-  def build_external_segment(story)
-    @external_program.external_segments.build(
-      :title              => story.title,
-      :teaser             => story.teaser,
-      :published_at       => story.pubDate,
-      :external_url       => story.link_for("html"),
-      :external_id        => story.id,
-      :external_program   => @external_program
-    )
-  end
+    if !ep
+      ep = @external_program.external_episodes.create(
+        :title      => "#{@external_program.title} for " +
+                       show.showDate.strftime("%A, %B %e, %Y"),
+        :air_date   => show.showDate,
+      )
+    end
 
-
-  def episode_exists?(show)
-    ExternalEpisode.exists?(
-      :external_program_id    => @external_program.id,
-      :air_date               => show.showDate
-    )
+    ep
   end
 
   def can_stream?(story)
@@ -148,10 +158,11 @@ class NprProgramImporter
     audio.permissions.stream?
   end
 
+  # Do any of these stories have audio available for streaming?
   def audio_available?(stories)
-    stories.all? { |story|
+    stories.any? { |story|
       story.audio.present? &&
-      story.audio.all? { |a| !a.formats.empty? }
+      story.audio.any? { |a| !a.formats.empty? && stream_allowed?(a) && a.formats.mp3s.find { |m| m.type == "mp3" } }
     }
   end
 end

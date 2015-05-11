@@ -8,8 +8,7 @@ module Job
 
     class << self
       def perform
-        task = new("kpcc", "3d",
-          Rails.application.config.api['disqus']['api_key'])
+        task = new("kpcc", "3d", Rails.configuration.x.api.disqus.api_key)
 
         comments  = task.fetch
         articles  = task.parse(comments).map(&:to_article)

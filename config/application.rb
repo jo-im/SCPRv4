@@ -25,8 +25,6 @@ module Scprv4
       "new/ie-lt9.css", # For ie < 9, separate include
       "*.eot", "*.ttf", "*.woff" # Font files
     ]
-    config.assets.js_compressor  = :uglifier
-    config.assets.css_compressor = :sass
 
     config.time_zone = 'Pacific Time (US & Canada)'
     config.active_record.default_timezone = :local
@@ -44,16 +42,5 @@ module Scprv4
       :unencrypted_password,
       :auth_token
     ]
-
-    config.scpr       = ActiveSupport::OrderedOptions.new
-    config.assethost  = ActiveSupport::OrderedOptions.new
-    config.newsroom   = ActiveSupport::OrderedOptions.new
-
-    config.api     = YAML.load_file("#{Rails.root}/config/api_config.yml")[Rails.env]
-    config.secrets = YAML.load_file("#{Rails.root}/config/app_config.yml")[Rails.env]
-
-    config.assethost.server = config.api['assethost']['server']
-    config.assethost.prefix = config.api['assethost']['prefix']
-    config.assethost.token  = config.api['assethost']['token']
   end
 end

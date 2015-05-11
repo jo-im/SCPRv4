@@ -31,8 +31,8 @@ module Concern
         }
 
 
-        promise_to :enqueue_sphinx_index_for_bylines,
-          :if => :should_enqueue_sphinx_index_for_bylines?
+        #promise_to :enqueue_sphinx_index_for_bylines,
+        #  :if => :should_enqueue_sphinx_index_for_bylines?
       end
 
       #-------------------
@@ -99,12 +99,8 @@ module Concern
 
       private
 
-      def should_enqueue_sphinx_index_for_bylines?
+      def should_reindex_byline?
         self.changed? || self.destroyed?
-      end
-
-      def enqueue_sphinx_index_for_bylines
-        Indexer.enqueue("ContentByline")
       end
 
       #-------------------

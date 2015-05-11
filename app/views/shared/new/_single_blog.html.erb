@@ -1,11 +1,6 @@
 <% article = article.to_article %>
 
-<% content_for :masthead_class, "blog" %>
-<% content_for :titling do %>
-    <%= render :partial => 'shared/new/masthead/blog_titling' %>
-<% end %>
-
-<%= render_asset article.original_object, context:"news" %>
+<%= render_asset article.original_object, context:"news", fallback:true %>
 <div class="report">
     <div class="inner bound clearfix">
         <article class="prose">
@@ -42,14 +37,13 @@
                         <p><%= render_contributing_byline article.original_object %></p>
                     </footer>
                 <% end %>
+                <%= pij_source(article.original_object) %>
 
             </div><!--/ .prose-body -->
 
             <%= raw Rails.cache.read("views/popular/#{@entry.blog.slug}") %>
 
-            <% present article do |article_presenter| %>
-                <%= article_presenter.related_links %>
-            <% end %>
+            <%= render 'shared/cwidgets/related_links', content:article.original_object %>
 
             <%= render 'shared/new/social_share', article: article, cssClass: "share" %>
 

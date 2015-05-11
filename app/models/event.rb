@@ -18,7 +18,7 @@ class Event < ActiveRecord::Base
   include Concern::Associations::ProgramArticleAssociation
   include Concern::Callbacks::GenerateSlugCallback
   include Concern::Callbacks::GenerateTeaserCallback
-  include Concern::Callbacks::SphinxIndexCallback
+  include Concern::Model::Searchable
   #include Concern::Callbacks::CacheExpirationCallback
   include Concern::Callbacks::TouchCallback
   include Concern::Methods::CommentMethods
@@ -77,6 +77,7 @@ class Event < ActiveRecord::Base
     .order("starts_at desc")
   }
 
+  scope :with_article_includes, ->() { includes(:assets,:category,:audio) }
 
   belongs_to :kpcc_program
 
@@ -182,9 +183,13 @@ class Event < ActiveRecord::Base
       :teaser             => self.teaser,
       :body               => self.body,
       :assets             => self.assets,
-      :audio              => self.audio.available,
+      :audio              => self.audio.select(&:available?),
       :byline             => "KPCC",
-      :edit_url           => self.admin_edit_url
+      :edit_path          => self.admin_edit_path,
+      :public_path        => self.public_path,
+      :created_at         => self.created_at,
+      :updated_at         => self.updated_at,
+      :published          => self.published?,
     })
   end
 

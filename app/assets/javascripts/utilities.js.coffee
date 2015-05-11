@@ -116,7 +116,7 @@ class scpr.SocialTools
         fbfinder        : ".social_fb"
         twitfinder      : ".social_twit"
         gplusfinder     : ".social_gplus"
-        emailfinder     : ".email"
+        emailfinder     : ".social_email"
         disqfinder      : ".social_disq"
         count           : ".count"
         gaq             : "_gaq"
@@ -162,7 +162,7 @@ class scpr.SocialTools
 
         # add share functionality on facebook
         $(@options.fbfinder).on "click", (evt) =>
-            if url = $(evt.target).attr("data-url")
+            if url = $(@options.fbfinder).attr("data-url")
                 fburl = "http://www.facebook.com/sharer.php?u=#{url}"
                 window.open fburl, 'pop_up',
                     'height=350,width=556,'+
@@ -179,8 +179,8 @@ class scpr.SocialTools
 
         # add share functionality for twitter
         $(@options.twitfinder).on "click", (evt) =>
-            if url = $(evt.target).attr("data-url")
-                headline = $(evt.target).attr("data-text")
+            if url = $(@options.twitfinder).attr("data-url")
+                headline = $(@options.twitfinder).attr("data-text")
                 twurl = "https://twitter.com/intent/tweet?" +
                         "url=#{url}&text=#{headline}&via=kpcc"
                 window.open twurl, 'pop_up',
@@ -190,7 +190,7 @@ class scpr.SocialTools
 
         # add share functionality for email
         $(@options.emailfinder).on "click", (evt) =>
-            if key = $(evt.target).attr("data-key")
+            if key = $(@options.emailfinder).attr("data-key")
                 emurl = "/content/share?obj_key=#{key}"
                 window.open emurl, 'pop_up',
                     'height=650,width=500,' +

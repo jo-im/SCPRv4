@@ -15,7 +15,7 @@ class RecurringScheduleRule < ActiveRecord::Base
   has_secretary
 
   include Concern::Associations::PolymorphicProgramAssociation
-  include Concern::Callbacks::SphinxIndexCallback
+  include Concern::Model::Searchable
 
   DEFAULT_INTERVAL = 1
 

@@ -1,4 +1,4 @@
-cache ["v2", @podcast], expires_in: 1.hour do # Podcasts will refresh every hour.
+cache ["v2", @podcast, @consumer], expires_in: 1.hour do # Podcasts will refresh every hour.
   xml.rss(
     'version'         => "2.0",
     'xmlns:atom'      => "http://www.w3.org/2005/Atom",
@@ -34,7 +34,7 @@ cache ["v2", @podcast], expires_in: 1.hour do # Podcasts will refresh every hour
       xml.itunes :image, :href => @podcast.image_url
       xml.itunes :explicit, "no"
 
-      @podcast.content.select { |c| c.audio.present? }.first(15).each do |article|
+      @podcast.content(15).each do |article|
         audio = article.audio.first
 
         xml.item do |item|
@@ -50,7 +50,8 @@ cache ["v2", @podcast], expires_in: 1.hour do # Podcasts will refresh every hour
           item.enclosure({
             :url => url_with_params(audio.podcast_url, {
               :context    => @podcast.slug,
-              :via        => "podcast"
+              :via        => "podcast",
+              :consumer   => @consumer,
             }),
             :length => audio.size,
             :type   => "audio/mpeg"
