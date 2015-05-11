@@ -23,7 +23,7 @@ class ExternalEpisode < ActiveRecord::Base
     where("DATE(air_date) = DATE(?)", date_or_time)
   }
 
-  scope :expired, -> { joins(:program).where('CURRENT_DATE() >= DATE_ADD(external_episodes.created_at, INTERVAL days_to_expiry DAY)') }
+  scope :expired, -> { joins(:program).where('air_date < ? - INTERVAL days_to_expiry DAY', Time.now) }
 
   scope :published, -> { order("air_date desc") }
 
@@ -71,4 +71,5 @@ class ExternalEpisode < ActiveRecord::Base
       :byline             => self.program.title
     })
   end
+
 end

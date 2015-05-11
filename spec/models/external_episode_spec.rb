@@ -39,24 +39,24 @@ describe ExternalEpisode do
 
   describe 'expired episodes' do
     program = nil
+    expired_episode = nil
     before :each do
       program = create :external_program, :from_rss, air_status: "onair", days_to_expiry: 3
       5.times do 
-        program.episodes << create(:external_episode)
+        program.episodes << create(:external_episode, air_date: Time.now)
       end
-      program.episodes << create(:external_episode, created_at: 4.days.ago)
+      program.episodes << (expired_episode = create(:external_episode, air_date: 4.days.ago))
     end
     context 'has days_to_expiry timestamp' do
       it "only returns expired episodes" do
         expired_eps = program.episodes.expired
         expect(expired_eps.count).to eq(1)
-        expect(expired_eps.first).to eq(program.episodes.order("created_at DESC").last)
+        expect(expired_episode).to eq(program.episodes.order("air_date DESC").last)
       end
     end
     context 'has no days_to_expiry timestamp' do
       it 'returns no episodes' do
         program.update days_to_expiry: nil
-        # binding.pry
         expect(program.episodes.expired).to be_empty
       end
     end
