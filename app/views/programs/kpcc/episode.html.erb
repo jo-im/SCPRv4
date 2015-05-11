@@ -100,12 +100,12 @@
 
           <%= any_to_list? @segments, title: "Segments" do %>
             <%= cache ["segment-teasers", @segments.to_a] do %>
-              <% @segments.each do |segment| %>
+              <% @segments.each.with_index do |segment, index| %>
 
               <article class="clearfix">
                 <a href="<%= segment.public_path %>">
                   <figure class="asset">
-                    <mark class="order">#</mark>
+                    <mark class="order"><%= index + 1 %></mark>
                     <div class="ratio">
                       <div class="fill"></div>
                       <b class="img-contain">
@@ -118,7 +118,6 @@
                 </a>
                 <div class="exposition">
                   <a href="<%= segment.public_path %>">
-                    <span class="author"><%= render_byline segment %></span>
                     <h1><%= segment.short_headline %></h1>
                   </a>
                   <div class="precis">
@@ -156,62 +155,30 @@
 
 
     <section class="recents">
-      <h1>Recent Off-Ramp Episodes</h1>
+      <h1>Recent <%= @program.title %> Episodes</h1>
       <div class="articles clearfix">
-        <article>
-          <a href="#">
-            <h1>Don Bachardy's psychological portraits of Hollywood icons</h1>
-            <div class="brief">
-              <b class="asset"><img src="http://a.scpr.org/i/81809665fa436194134fa8e91fa12283/43005-lsquare.jpg" alt="" /></b>
-              <div class="synopsis">
-                <time datetime="2014-12-13">December 13, 2014</time>
-                <p>80-year old portrait artist Don Bachardy saw Angelina Jolie naked, Kevin Ferguson saw something disturbing in "Batman Returns," Jerry Siegel's daughter sees him in his Superman typewriter.</p>
+        <% @episodes.map(&:to_article).each do |episode| %>
+          <article>
+            <a href="<%= episode.public_path %>">
+              <h1><%= episode.short_title %></h1>
+              <div class="brief">
+                <% if episode.assets.present? %>
+                  <b class="asset"><%= render_asset episode, display: 'thumbnail' %></b>
+                <% end %>
+                <div class="synopsis">
+                  <time datetime="<%= format_date(episode.public_datetime, with:'%F') %>"><mark><%= format_date(episode.public_datetime, with: '%A') %></mark>, <%= format_date(episode.public_datetime, with: '%B %e, %Y') %></time>
+                  <p><%= episode.teaser %></p>
+                </div>
               </div>
-            </div>
-          </a>
-        </article>
-        <article>
-          <a href="#">
-            <h1>How a KPCC editor's cool mom helped integrate Peanuts</h1>
-            <div class="brief">
-              <b class="asset"><img src="http://a.scpr.org/i/81809665fa436194134fa8e91fa12283/43005-lsquare.jpg" alt="" /></b>
-              <div class="synopsis">
-                <time datetime="2014-12-13">December 13, 2014</time>
-                <p>In 1968, KPCC editor Paul Glickman's mom wrote to Charles Schulz, asking him to integrate Peanuts. Franklin was born. Plus: a tribute to Chandler, Pierce College Farm Center, and the harpsichord.</p>
-              </div>
-            </div>
-          </a>
-        </article>
-        <article>
-          <a href="#">
-            <h1>Meet Jim Tully, a forgotten man</h1>
-            <div class="brief">
-              <b class="asset"><img src="http://a.scpr.org/i/81809665fa436194134fa8e91fa12283/43005-lsquare.jpg" alt="" /></b>
-              <div class="synopsis">
-                <time datetime="2014-12-13">December 13, 2014</time>
-                <p>Jim Tully, rescued from obscurity; Canadian v American Thanksgiving; Getty Research Institutes World War 1 exhibit; the big (art) heroes behind "Big Hero 6"</p>
-              </div>
-            </div>
-          </a>
-        </article>
-        <article>
-          <a href="#">
-            <h1>Facing death with Caitlin Doughty</h1>
-            <div class="brief">
-              <b class="asset"><img src="http://a.scpr.org/i/81809665fa436194134fa8e91fa12283/43005-lsquare.jpg" alt="" /></b>
-              <div class="synopsis">
-                <time datetime="2014-12-13">December 13, 2014</time>
-                <p>Remembering: Breakthrough TV with Norman Lear, Oscar de la Renta with a fashion design student, our loved ones with Caitlin Doughty and "the good death," James Brown and the TAMI concert</p>
-              </div>
-            </div>
-          </a>
-        </article>
+            </a>
+          </article>
+        <% end %>
       </div><!--/ .articles -->
     </section><!--/ .recents -->
 
     
     <section class="archive-browser">
-      <h1><span>Browse the Off-Ramp Archives</span></h1>
+      <h1><span>Browse the <%= @program.title %> Archives</span></h1>
       <div class="columns">
 
         <!--

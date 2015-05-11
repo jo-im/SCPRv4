@@ -111,6 +111,7 @@ class ProgramsController < ApplicationController
       @featured_programs = KpccProgram.where.not(id: @program.id, is_featured: false).first(4)
 
       if @program.is_segmented?
+        @episodes = @program.episodes.published.order("air_date").first(4)
         render 'programs/kpcc/episode', layout: 'new/ronin' and return
       else
         render 'programs/kpcc/old/episode_standalone'
