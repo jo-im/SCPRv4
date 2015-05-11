@@ -93,8 +93,8 @@ class ProgramsController < ApplicationController
     end
 
     if @program.is_a?(ExternalProgram)
-      @episode  = @program.external_episodes.find(params[:id])
-      @segments = @episode.external_segments
+      @episode  = @program.episodes.find(params[:id])
+      @segments = @episode.segments
 
       render 'programs/external/episode', layout: 'application' and return
     end

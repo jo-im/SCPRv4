@@ -22,38 +22,38 @@ describe NprProgramImporter do
         })
 
         external_program = create :external_program, :from_npr
-        external_program.external_segments.should be_empty
+        external_program.segments.should be_empty
 
         NprProgramImporter.sync(external_program)
 
-        external_program.external_segments.count.should eq 21
+        external_program.segments.count.should eq 21
       end
 
       it "creates an episode" do
         external_program = create :external_program, :from_npr
-        external_program.external_episodes.should be_empty
+        external_program.episodes.should be_empty
 
         NprProgramImporter.sync(external_program)
 
-        external_program.external_episodes(true).count.should eq 1
+        external_program.episodes(true).count.should eq 1
 
         # From the JSON fixture:
-        external_program.external_episodes.first.air_date.should eq Time.zone.local(2013, 7, 15, 12)
+        external_program.episodes.first.air_date.should eq Time.zone.local(2013, 7, 15, 12)
       end
 
       it "adds in audio if it's available" do
         external_program = create :external_program, :from_npr
         NprProgramImporter.sync(external_program)
 
-        external_program.external_episodes.first.
-        external_segments.first.
+        external_program.episodes.first.
+        segments.first.
         audio.first.url.should eq "http://pd.npr.org/anon.npr-mp3/npr/atc/2013/07/20130715_atc_02.mp3?orgId=1&topicId=1015&ft=3&f=2"
       end
 
       it "sets the program on segments of episodes" do
         external_program = create :external_program, :from_npr
         NprProgramImporter.sync(external_program)
-        external_program.external_segments.should_not be_empty
+        external_program.segments.should_not be_empty
       end
 
       it "is false if segments is empty" do
@@ -61,7 +61,7 @@ describe NprProgramImporter do
 
         external_program = create :external_program, :from_npr
         NprProgramImporter.sync(external_program).should eq false
-        external_program.external_segments(true).should be_empty
+        external_program.segments(true).should be_empty
       end
     end
 
@@ -74,7 +74,7 @@ describe NprProgramImporter do
 
         external_program = create :external_program, :from_npr
         NprProgramImporter.sync(external_program)
-        external_program.external_episodes(true).count.should eq 0
+        external_program.episodes(true).count.should eq 0
       end
 
       it "doesn't import the episode if the audio doesn't grant stream permissions" do
@@ -85,7 +85,7 @@ describe NprProgramImporter do
 
         external_program = create :external_program, :from_npr
         NprProgramImporter.sync(external_program)
-        external_program.external_episodes(true).count.should eq 0
+        external_program.episodes(true).count.should eq 0
       end
     end
   end

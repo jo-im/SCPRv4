@@ -5,7 +5,7 @@ describe "Episode page" do
     it "renders a list of segments" do
       episode = build :external_episode
       segment = build :external_segment, title: "Cool Segment!"
-      episode.external_segments << segment
+      episode.segments << segment
       episode.save!
 
       visit episode.public_url
