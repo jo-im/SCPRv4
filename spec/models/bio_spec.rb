@@ -17,7 +17,7 @@ describe Bio do
 
   #--------------------
 
-  describe "indexed_bylines" do
+  describe "indexed_bylines", :indexing do
     before(:each) do
       create :news_story
     end

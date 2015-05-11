@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe "Vertical page" do
+describe "Vertical page", :indexing do
   describe "politics vertical" do
     it "renders" do
       vertical = create :vertical, slug: "politics"

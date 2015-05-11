@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe CategoryPreview do
+describe CategoryPreview, :indexing do
 
   before(:each) do
     create :show_segment

@@ -83,17 +83,18 @@ class ShowEpisode < ActiveRecord::Base
     class_name:   "ShowRundown",
     foreign_key:  "episode_id",
     inverse_of:   :episode,
-    dependent:    :destroy
+    dependent:    :destroy,
+    before_add:   :set_rundown_position
 
   has_many :segments,
-    -> { order('position') },
+    -> { order('shows_rundown.position') },
     :class_name     => "ShowSegment",
     :foreign_key    => "segment_id",
     :through        => :rundowns
 
 
   accepts_json_input_for :rundowns
-  tracks_association :rundowns
+  #tracks_association :rundowns
 
 
   validates :show, presence: true
@@ -177,6 +178,12 @@ class ShowEpisode < ActiveRecord::Base
 
   def generate_body
     self.body = self.teaser
+  end
+
+  def set_rundown_position(rundown)
+    if !rundown.position
+      rundown.position = self.rundowns.length + 1
+    end
   end
 
   def build_rundown_association(rundown_hash, segment)

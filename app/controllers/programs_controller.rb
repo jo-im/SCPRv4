@@ -53,10 +53,16 @@ class ProgramsController < ApplicationController
       @featured_story = @episodes.first.to_article
       @episodes = @episodes[1..-1]
     end
-    render(
-        :layout   => 'new/landing',
-        :template => 'programs/kpcc/featured_program'
-      )
+    respond_to do |format|
+      format.html {
+        render(
+            :layout   => 'new/landing',
+            :template => 'programs/kpcc/featured_program'
+          )
+      }
+
+      format.xml { render 'programs/kpcc/old/show' }
+    end
   end
 
 

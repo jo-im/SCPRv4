@@ -1,6 +1,6 @@
 require "spec_helper"
 
-describe "Search" do
+describe "Search", :indexing do
   it "shows the search results" do
     story = create :news_story, headline: "Mary Poppins"
     story2 = create :news_story, headline: "Not Interesting"

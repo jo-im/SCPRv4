@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe FeatureCandidate::Segment do
+describe FeatureCandidate::Segment, :indexing do
   let(:category) { create :category }
 
   describe '#content' do

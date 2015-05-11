@@ -1,6 +1,6 @@
 require "spec_helper"
 
-describe PodcastsController do
+describe PodcastsController, :indexing do
   render_views
 
   describe "GET /index" do
@@ -49,6 +49,7 @@ describe PodcastsController do
         get :podcast, slug: "podcast", consumer: "spotify"
         doc = Nokogiri::XML response.body
         items = doc.css("item")
+
         all_items_have_consumer_key = items.any? && items.all? do |item|
           uri = URI.parse(item.css("enclosure").first.attributes["url"].to_s)
           query_params = uri.query

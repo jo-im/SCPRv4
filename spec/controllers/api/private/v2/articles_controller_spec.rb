@@ -1,6 +1,6 @@
 require "spec_helper"
 
-describe Api::Private::V2::ArticlesController do
+describe Api::Private::V2::ArticlesController, :indexing do
   request_params = {
     :token  => Rails.configuration.x.api.kpcc.private.api_token,
     :format => :json

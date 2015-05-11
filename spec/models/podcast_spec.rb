@@ -1,7 +1,7 @@
 require "spec_helper"
 
 describe Podcast do
-  describe "#content" do
+  describe "#content", :indexing do
     context "for KpccProgram" do
       it "grabs episodes when item_type is episodes" do
         episode = create :show_episode
