@@ -155,7 +155,7 @@
 
 
     <section class="recents">
-      <h1>Recent <%= @program.title %> Episodes</h1>
+      <h1>Recent Episodes from <%= @program.title %></h1>
       <div class="articles clearfix">
         <% @episodes.map(&:to_article).each do |episode| %>
           <article>
