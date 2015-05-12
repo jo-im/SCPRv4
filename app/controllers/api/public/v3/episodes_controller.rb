@@ -21,7 +21,7 @@ module Api::Public::V3
 
     def index
       if @program
-        @episodes = @program.episodes
+        @episodes = @program.episodes.published
       else
         @episodes = ShowEpisode.published
       end

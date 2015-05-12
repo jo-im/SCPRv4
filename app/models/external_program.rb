@@ -105,6 +105,10 @@ class ExternalProgram < ActiveRecord::Base
     self.importer.sync(self)
   end
 
+  def is_segmented?
+    true
+  end
+
   private
 
   def slug_is_unique_in_programs_namespace

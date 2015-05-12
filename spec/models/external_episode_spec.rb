@@ -42,7 +42,7 @@ describe ExternalEpisode do
     expired_episode = nil
     before :each do
       program = create :external_program, :from_rss, air_status: "onair", days_to_expiry: 3
-      5.times do 
+      5.times do
         program.episodes << create(:external_episode, air_date: Time.now)
       end
       program.episodes << (expired_episode = create(:external_episode, air_date: 4.days.ago))
