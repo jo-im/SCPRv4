@@ -24,7 +24,7 @@ describe ExternalProgram do
     it "syncs the programs" do
       program = create :external_program, :from_rss, podcast_url: "http://podcast.com/podcast"
       Job::SyncExternalPrograms.perform
-      program.external_episodes.should_not be_empty
+      program.episodes.should_not be_empty
     end
   end
 
@@ -66,8 +66,8 @@ describe ExternalProgram do
       it "syncs using the importer" do
         program = create :external_program, :from_npr
         program.sync
-        program.external_episodes.should_not be_empty
-        program.external_segments.should_not be_empty
+        program.episodes.should_not be_empty
+        program.segments.should_not be_empty
       end
     end
 
@@ -82,8 +82,8 @@ describe ExternalProgram do
       it "syncs using the importer" do
         program = create :external_program, :from_rss, podcast_url: "http://rss.com"
         program.sync
-        program.external_episodes.should_not be_empty
-        program.external_segments.should be_empty
+        program.episodes.should_not be_empty
+        program.segments.should be_empty
       end
     end
   end

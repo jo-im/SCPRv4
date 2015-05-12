@@ -63,7 +63,7 @@ class RssProgramImporter
 
       # No need to build the episode unless the audio is available, so we're
       # waiting until after the audio presence check to build it.
-      episode = @external_program.external_episodes.build(
+      episode = @external_program.episodes.build(
         :title       => item.title,
         :summary     => item.description,
         :air_date    => item.pubDate,

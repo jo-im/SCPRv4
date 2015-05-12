@@ -43,8 +43,8 @@ class ExternalProgram < ActiveRecord::Base
   #-------------------
   # Associations
   has_many :recurring_schedule_rules, as: :program, dependent: :destroy
-  has_many :external_episodes, dependent: :destroy
-  has_many :external_segments
+  has_many :episodes, dependent: :destroy, class_name: :ExternalEpisode
+  has_many :segments, class_name: :ExternalSegment
 
 
   #-------------------
@@ -97,7 +97,6 @@ class ExternalProgram < ActiveRecord::Base
     self.air_status != "hidden"
   end
 
-
   def importer
     @importer ||= IMPORTERS[self.source].constantize
   end
@@ -105,7 +104,6 @@ class ExternalProgram < ActiveRecord::Base
   def sync
     self.importer.sync(self)
   end
-
 
   private
 
