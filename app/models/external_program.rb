@@ -89,28 +89,9 @@ class ExternalProgram < ActiveRecord::Base
     }
   end
 
-
-  def to_program
-    @to_program ||= Program.new({
-      :original_object    => self,
-      :id                 => self.obj_key,
-      :source             => self.source,
-      :title              => self.title,
-      :slug               => self.slug,
-      :description        => self.description,
-      :host               => self.host,
-      :air_status         => self.air_status,
-      :airtime            => self.airtime,
-      :podcast_url        => self.podcast_url,
-      :rss_url            => self.get_link('rss'),
-      :episodes           => self.external_episodes.order("air_date desc"),
-      :segments           => self.external_segments.order("published_at desc"),
-      # External Programs are always assumed to be segmented.
-      # Maybe this isn't always the case, but this is okay for now.
-      :is_segmented   => true
-    })
+  def rss_url
+    self.get_link('rss')
   end
-
 
   def published?
     self.air_status != "hidden"

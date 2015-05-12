@@ -14,13 +14,6 @@ describe KpccProgram do
     end
   end
 
-  describe '#to_program' do
-    it 'turns it into a program' do
-      program = build :kpcc_program
-      program.to_program.should be_a Program
-    end
-  end
-
   describe 'slug uniqueness validation' do
     it 'validates that the slug is unique across the program models' do
       external_program = create :external_program, slug: "same"
