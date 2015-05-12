@@ -23,11 +23,31 @@ class ProgramsController < ApplicationController
 
   def show
     @episodes = @program.episodes.published
-    @current_episode = @episodes.first
-    if @program.external?
-      show_external_program
+
+    if @program.is_a?(KpccProgram)
+      # KPCC Program
+      @current_episode = @episodes.first
+      @episodes = (@current_episode ? @episodes.where.not(id:@current_episode.id) : @episodes).page(params[:page]).per(6)
+
+      path = 'programs/kpcc/old/show'
+      respond_with do |format|
+        format.html do
+          render path
+        end
+        format.xml do
+          render path
+        end
+      end
     else
-      show_kpcc_program
+      # External Program
+      respond_with do |format|
+        format.html do
+          render 'programs/external/show', layout: 'application'
+        end
+        format.xml do
+          redirect_to @program.podcast_url
+        end
+      end
     end
   end
 
@@ -160,31 +180,6 @@ class ProgramsController < ApplicationController
 
 
   private
-
-  def show_kpcc_program
-    path = 'programs/kpcc/old/show'
-    respond_with do |format|
-      format.html do
-        @episodes = @episodes.for_show_page params[:page], 6, @current_episode
-        render path
-      end
-      format.xml do
-        render path
-      end
-    end
-  end
-
-  def show_external_program
-    respond_with do |format|
-      format.html do
-        @episodes = @episodes.for_show_page params[:page], 6, @current_episode
-        render 'programs/external/show', layout: 'application'
-      end
-      format.xml do
-        redirect_to @program.podcast_url
-      end
-    end
-  end
 
   def get_program
     @program = KpccProgram.find_by_slug(params[:show]) ||

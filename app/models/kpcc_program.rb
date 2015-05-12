@@ -119,14 +119,6 @@ class KpccProgram < ActiveRecord::Base
       .map { |a| a.article.to_article }
   end
 
-  def published_episodes
-    episodes.published
-  end
-
-  def external?
-    false
-  end
-
   private
 
   def should_reject_quote(attributes)

@@ -27,10 +27,6 @@ class ExternalEpisode < ActiveRecord::Base
 
   scope :published, -> { order("air_date desc") }
 
-  scope :for_show_page, proc{ |page_number, per_page, current_episode|
-    page(page_number).per(per_page)
-  }
-
   # This needs to match ShowEpisode
   def route_hash
     return {} if !self.persisted?

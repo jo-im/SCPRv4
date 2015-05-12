@@ -124,10 +124,6 @@ class ExternalProgram < ActiveRecord::Base
     self.importer.sync(self)
   end
 
-  def external?
-    true
-  end
-
   private
 
   def slug_is_unique_in_programs_namespace
