@@ -11,6 +11,8 @@ class ExternalSegment < ActiveRecord::Base
 
   validates :external_url, url: { allow_blank: true }
 
+  scope :published, -> {}
+
   def to_article
     @to_article ||= Article.new({
       :original_object    => self,

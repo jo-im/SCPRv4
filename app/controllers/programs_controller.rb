@@ -26,12 +26,13 @@ class ProgramsController < ApplicationController
 
     if @program.is_a?(KpccProgram)
       # KPCC Program
-      @current_episode = @episodes.first
-      @episodes = (@current_episode ? @episodes.where.not(id:@current_episode.id) : @episodes).page(params[:page]).per(6)
 
       path = 'programs/kpcc/old/show'
       respond_with do |format|
         format.html do
+          @current_episode = @episodes.first
+          @episodes = (@current_episode ? @episodes.where.not(id:@current_episode.id) : @episodes).page(params[:page]).per(6)
+
           render path
         end
         format.xml do
@@ -39,6 +40,8 @@ class ProgramsController < ApplicationController
         end
       end
     else
+      @episodes = @episodes.page(params[:page]).per(6)
+
       # External Program
       respond_with do |format|
         format.html do
@@ -101,22 +104,13 @@ class ProgramsController < ApplicationController
 
 
   def episode
+    @episode    = @program.episodes.find(params[:id])
+    @segments   = @episode.segments.published
+
     if @program.is_a?(KpccProgram)
-      @episode    = @program.episodes.find(params[:id])
-      @segments   = @episode.segments.published
-
-      if @program.is_segmented?
-        render 'programs/kpcc/episode' and return
-      else
-        render 'programs/kpcc/old/episode_standalone'
-      end
-    end
-
-    if @program.is_a?(ExternalProgram)
-      @episode  = @program.episodes.find(params[:id])
-      @segments = @episode.segments
-
-      render 'programs/external/episode', layout: 'application' and return
+      render @program.is_segmented? ? 'programs/kpcc/episode' : 'programs/kpcc/old/episode_standalone'
+    else
+      render 'programs/external/episode', layout:'application'
     end
   end
 
