@@ -30,10 +30,4 @@ class Tag < ActiveRecord::Base
     self
   end
 
-  private
-
-  def connection
-    self.class.superclass.connection
-  end
-
 end
