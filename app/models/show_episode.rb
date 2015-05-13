@@ -85,7 +85,7 @@ class ShowEpisode < ActiveRecord::Base
 
 
   accepts_json_input_for :rundowns
-  #tracks_association :rundowns
+  tracks_association :rundowns
 
 
   validates :show, presence: true

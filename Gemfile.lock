@@ -1,4 +1,13 @@
 GIT
+  remote: git://github.com/SCPR/outpost-secretary.git
+  revision: 8e47cd33f45f2a2b55d85fbc7b7521b17352bba2
+  tag: v0.1.1
+  specs:
+    outpost-secretary (0.1.1)
+      outpost-cms (>= 0.0.1, < 1)
+      secretary-rails (>= 1.0.0, < 3)
+
+GIT
   remote: git://github.com/SCPR/outpost.git
   revision: 489cd5fe230986255fc01fb99da81d07ad7fd449
   tag: v0.1.5
@@ -204,7 +213,7 @@ GEM
       rb-fsevent (>= 0.9.3)
       rb-inotify (>= 0.9)
       rb-kqueue (>= 0.2)
-    loofah (2.0.1)
+    loofah (2.0.2)
       nokogiri (>= 1.5.9)
     lumberjack (1.0.9)
     mail (2.6.3)
@@ -233,9 +242,6 @@ GEM
     outpost-aggregator (1.2.0)
     outpost-asset_host (1.1.1)
     outpost-publishing (1.0.1)
-    outpost-secretary (0.1.0)
-      outpost-cms (>= 0.0.1, < 1)
-      secretary-rails (>= 1.0.0, < 2)
     patron (0.4.18)
     pmp (0.4.0)
       activesupport
@@ -256,7 +262,7 @@ GEM
       coderay (~> 1.1.0)
       method_source (~> 0.8.1)
       slop (~> 3.4)
-    rack (1.6.0)
+    rack (1.6.1)
     rack-protection (1.5.3)
       rack
     rack-test (0.6.3)
@@ -357,10 +363,10 @@ GEM
       sass (~> 3.2)
       sprockets (~> 2.12)
       sprockets-rails (>= 2.0, < 4.0)
-    secretary-rails (2.0.0.rc1)
-      activerecord (>= 3.2.0, < 6)
+    secretary-rails (2.0.1)
+      activerecord (>= 4.0.0, < 6)
       diffy (>= 3.0, < 4)
-      railties (>= 3.2.0, < 6)
+      railties (>= 4.0.0, < 6)
     select2-rails (3.4.1)
       sass-rails
       thor (~> 0.14)
@@ -456,7 +462,7 @@ DEPENDENCIES
   outpost-asset_host
   outpost-cms!
   outpost-publishing
-  outpost-secretary
+  outpost-secretary!
   parse-ruby-client!
   patron
   pmp (= 0.4.0)
@@ -478,7 +484,7 @@ DEPENDENCIES
   rufus-scheduler
   sanitize (~> 2.0)
   sass-rails (= 5.0.0beta1)
-  secretary-rails (~> 2.0.0rc1)
+  secretary-rails (~> 2.0.1)
   select2-rails (= 3.4.1)
   shoulda-matchers
   simple_form (~> 3.1.0)

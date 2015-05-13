@@ -6,7 +6,7 @@ gem 'responders', '~> 2.0'
 gem 'mysql2', '~> 0.3.14'
 gem 'jquery-rails', '~> 3.1.0'
 gem "bcrypt-ruby", "~> 3.1.0"
-gem 'secretary-rails', "~> 2.0.0rc1"
+gem 'secretary-rails', "~> 2.0.1"
 
 gem 'elasticsearch'
 gem 'elasticsearch-rails'
@@ -21,7 +21,7 @@ gem 'outpost-cms', github:"SCPR/outpost", tag:"v0.1.5"
 gem 'outpost-publishing'
 gem 'outpost-asset_host'
 gem 'outpost-aggregator'
-gem 'outpost-secretary'
+gem 'outpost-secretary', github:"SCPR/outpost-secretary", tag:"v0.1.1"
 
 
 ## Redis
