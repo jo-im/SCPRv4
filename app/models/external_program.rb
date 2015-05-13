@@ -39,6 +39,7 @@ class ExternalProgram < ActiveRecord::Base
   #-------------------
   # Scopes
   scope :active, -> { where(air_status: ['onair', 'online']) }
+  scope :with_expiration, -> { where("days_to_expiry IS NOT NULL") }
 
   #-------------------
   # Associations
@@ -122,6 +123,14 @@ class ExternalProgram < ActiveRecord::Base
 
   def sync
     self.importer.sync(self)
+  end
+
+  def expired_episodes
+    if self.days_to_expiry?
+      self.episodes.where("air_date < ?",self.days_to_expiry.days.ago).includes(:audio,:segments)
+    else
+      []
+    end
   end
 
   private
