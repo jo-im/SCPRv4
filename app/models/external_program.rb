@@ -39,7 +39,7 @@ class ExternalProgram < ActiveRecord::Base
   #-------------------
   # Scopes
   scope :active, -> { where(air_status: ['onair', 'online']) }
-  scope :with_expiration, -> { where("days_to_expiry IS NOT NULL") }
+  scope :with_expiration, -> { where.not(days_to_expiry: nil, days_to_expiry: 0) }
 
   #-------------------
   # Associations
@@ -59,7 +59,6 @@ class ExternalProgram < ActiveRecord::Base
   validates :podcast_url, presence: true, url: true
   validates :slug, presence: true, uniqueness: true
   validate :slug_is_unique_in_programs_namespace
-  validate :days_to_expiry_is_not_zero
 
   #-------------------
   # Callbacks
@@ -127,19 +126,19 @@ class ExternalProgram < ActiveRecord::Base
   end
 
   def expired_episodes
-    if self.days_to_expiry?
+    if has_episode_expiration?
       self.episodes.where("air_date < ?",self.days_to_expiry.days.ago).includes(:audio,:segments)
     else
       []
     end
   end
 
-  private
-  def days_to_expiry_is_not_zero
-    if days_to_expiry.to_s == "0"
-      errors.add :days_to_expiry, "must be a number greater than zero or left blank."
-    end
+  def has_episode_expiration?
+    !days_to_expiry.nil? && days_to_expiry != 0
   end
+
+  private
+
   def slug_is_unique_in_programs_namespace
     if self.slug.present? && KpccProgram.exists?(slug: self.slug)
       self.errors.add(:slug, "must be unique between both " \

@@ -104,14 +104,6 @@ describe ExternalProgram do
     end
   end
 
-  describe 'days to expiry validation' do
-    it 'validates that expiry is not set to zero' do
-      external_program = build :external_program, days_to_expiry: 0
-      external_program.valid?
-      external_program.errors[:days_to_expiry].first.should match /be a number greater than zero/
-    end
-  end
-
   describe 'expired episodes' do
     context 'has days_to_expiry timestamp' do
       it "only returns expired episodes" do
@@ -135,6 +127,28 @@ describe ExternalProgram do
         program.episodes << (expired_episode = create(:external_episode, air_date: 4.days.ago))
 
         expect(program.expired_episodes).to be_empty
+      end
+    end
+  end
+
+  describe '#has_episode_expiration?' do
+    context "#days_to_expiry returns a non-nil and non-zero value" do
+      it "returns true" do
+        program = build :external_program, days_to_expiry: 3
+        expect(program.has_episode_expiration?).to eq true
+      end
+    end
+
+    context "#days_to_expiry returns nil" do
+      it "returns false" do
+        program = build :external_program, days_to_expiry: nil
+        expect(program.has_episode_expiration?).to eq false
+      end
+    end
+    context "#days_to_expiry returns 0" do
+      it "returns false" do
+        program = build :external_program, days_to_expiry: 0
+        expect(program.has_episode_expiration?).to eq false
       end
     end
   end
