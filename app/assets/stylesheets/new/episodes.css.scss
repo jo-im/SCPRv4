@@ -161,14 +161,22 @@ body.episode {
           b                         { text-align: center; color: #76c4de; font: normal 700 1em/0.8 $font-prox; text-transform: lowercase; }
           a:hover                   { text-decoration: none; }
           a:hover b                 { color: $orange; }
-          span                      { width: 18px; height: 20px; margin: 0 auto 8px; @include texthide; background: image-url("i/episode-meta-icons.png") no-repeat; background-size: 454px 40px; }
+          &.comments span, &.play a { width: 18px; height: 20px; margin: 0 auto 8px; @include texthide; background: image-url("i/episode-meta-icons.png") no-repeat; background-size: 454px 40px; }
           &.comments span           { background-position: 0 0; }
           &.comments a:hover span   { background-position: 0 -20px; }
-          &.play span               { background-position: -218px 0; }
-          &.play a:hover span       { background-position: -218px -20px; }
+          &.play {
+            .audio-content, .audio-tools, .bracket { display: none; }
+            .story-audio, .story-audio .inner-container { height: 100%; }
+            a {
+              margin-top: 11px;
+            }
+          }
+          &.play a                  { background-position: -218px 0; }
+          &.play a:hover            { background-position: -218px -20px; }
           &.comingsoon span         { background-position: -436px 0; }
           &.comingsoon a:hover span { background-position: -436px -20px; }
         }
+
       }// .meta
       .legacy {
         position: absolute;

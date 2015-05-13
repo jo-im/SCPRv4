@@ -101,7 +101,6 @@
           <%= any_to_list? @segments, title: "Segments" do %>
             <%= cache ["segment-teasers", @segments.to_a] do %>
               <% @segments.each.with_index do |segment, index| %>
-
               <article class="clearfix">
                 <a href="<%= segment.public_path %>">
                   <figure class="asset">
@@ -125,7 +124,7 @@
                     <aside class="meta">
                       <ul>
                         <li class="comments"><a href="#"><span>Comments:</span> <b><%= comment_count_for segment %></b></a></li>
-                        <li class="play"><a href="#"><span>Play Clip:</span> <b><%= content_widget "primary_audio", segment, context: segment.show.slug %></b></a></li>
+                        <li class="play"><%= content_widget "primary_audio", segment, context: segment.show.slug %></li>
                       </li>
                     </aside>
                   </div>
