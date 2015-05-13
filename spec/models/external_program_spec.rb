@@ -104,6 +104,14 @@ describe ExternalProgram do
     end
   end
 
+  describe 'days to expiry validation' do
+    it 'validates that expiry is not set to zero' do
+      external_program = build :external_program, days_to_expiry: 0
+      external_program.valid?
+      external_program.errors[:days_to_expiry].first.should match /be a number greater than zero/
+    end
+  end
+
   describe 'expired episodes' do
     context 'has days_to_expiry timestamp' do
       it "only returns expired episodes" do
