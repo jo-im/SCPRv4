@@ -4,14 +4,14 @@ describe ExternalEpisode do
   describe '#external_episode_segments' do
     it 'orders by position' do
       episode = build :external_episode
-      episode.external_episode_segments.to_sql.should match /order by position/i
+      episode.external_episode_segments.to_sql.should match /order by external_episode_segments.position/i
     end
   end
 
   describe '#external_segments' do
     it 'orders by position' do
       episode = build :external_episode
-      episode.segments.to_sql.should match /order by position/i
+      episode.segments.to_sql.should match /order by external_episode_segments.position/i
     end
   end
 
