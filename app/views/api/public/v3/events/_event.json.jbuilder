@@ -44,7 +44,7 @@ json.cache! [Api::Public::V3::VERSION, "v2", event] do
   if event.kpcc_program.present?
     json.program do
       json.partial! api_view_path("programs", "program"),
-        program: event.kpcc_program.to_program
+        program: event.kpcc_program
     end
   end
 

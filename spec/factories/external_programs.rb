@@ -20,9 +20,9 @@ FactoryGirl.define do
 
 
   factory :external_episode do
-    external_program
+    program { create :external_program }
     sequence(:air_date) { |n| Time.zone.now + n.hours }
-    title { "#{external_program.title} for #{air_date}" }
+    title { "#{program.title} for #{air_date}" }
   end
 
 

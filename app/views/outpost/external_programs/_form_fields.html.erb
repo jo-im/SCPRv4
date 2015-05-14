@@ -19,3 +19,7 @@
 <% end %>
 
 <%= f.section "related_links" %>
+
+<%= form_block "Settings" do %>
+  <%= f.input :days_to_expiry, hint: "Number of days since the air date to remove the episode.  Leave blank or set to 0 for no expiration." %>
+<% end %>
