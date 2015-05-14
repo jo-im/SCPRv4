@@ -77,6 +77,6 @@ class ProgramPresenter < ApplicationPresenter
   private
 
   def abstract_program
-    @abstract_program ||= program.to_program
+    @abstract_program ||= program
   end
 end

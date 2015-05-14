@@ -46,7 +46,7 @@ class ExternalEpisode < ActiveRecord::Base
       :summary            => self.summary,
       :air_date           => self.air_date,
       :audio              => self.audio.available,
-      :program            => self.program.to_program,
+      :program            => self.program,
       :segments           => self.segments.map(&:to_article)
     })
   end

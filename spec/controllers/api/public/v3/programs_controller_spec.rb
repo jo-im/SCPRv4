@@ -11,7 +11,7 @@ describe Api::Public::V3::ProgramsController do
     it "finds the object if it exists" do
       program = create :kpcc_program, slug: 'hello'
       get :show, { id: program.slug }.merge(request_params)
-      assigns(:program).should eq program.to_program
+      assigns(:program).should eq program
       response.should render_template "show"
     end
 
@@ -30,7 +30,7 @@ describe Api::Public::V3::ProgramsController do
         another_program = create :kpcc_program, air_status: "onair"
 
         get :index, { air_status: "archive,online" }.merge(request_params)
-        assigns(:programs).should eq [kpcc_program, external_program].map(&:to_program)
+        assigns(:programs).should eq [kpcc_program, external_program]
       end
     end
 
@@ -40,7 +40,7 @@ describe Api::Public::V3::ProgramsController do
         external_program   = create :external_program
 
         get :index, request_params
-        assigns(:programs).should eq [kpcc_program, external_program].map(&:to_program)
+        assigns(:programs).should eq [kpcc_program, external_program]
       end
     end
   end
