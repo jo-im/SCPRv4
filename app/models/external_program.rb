@@ -39,6 +39,7 @@ class ExternalProgram < ActiveRecord::Base
   #-------------------
   # Scopes
   scope :active, -> { where(air_status: ['onair', 'online']) }
+  scope :with_expiration, -> { where.not(days_to_expiry: nil, days_to_expiry: 0) }
 
   #-------------------
   # Associations
@@ -107,6 +108,18 @@ class ExternalProgram < ActiveRecord::Base
 
   def is_segmented?
     true
+  end
+
+  def expired_episodes
+    if has_episode_expiration?
+      self.episodes.where("air_date < ?",self.days_to_expiry.days.ago).includes(:audio,:segments)
+    else
+      []
+    end
+  end
+
+  def has_episode_expiration?
+    !days_to_expiry.nil? && days_to_expiry != 0
   end
 
   private

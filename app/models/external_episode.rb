@@ -11,10 +11,9 @@ class ExternalEpisode < ActiveRecord::Base
   belongs_to :program, class_name: :ExternalProgram, foreign_key: "external_program_id"
 
   has_many :external_episode_segments,
-    -> { order('position') }
+    -> { order('external_episode_segments.position asc') }
 
   has_many :segments,
-    -> { order("position") },
     through:    :external_episode_segments,
     dependent:  :destroy,
     class_name: :ExternalSegment
@@ -22,8 +21,6 @@ class ExternalEpisode < ActiveRecord::Base
   scope :for_air_date, ->(date_or_time) {
     where("DATE(air_date) = DATE(?)", date_or_time)
   }
-
-  scope :expired, -> { joins(:program).where('air_date < ? - INTERVAL days_to_expiry DAY', Time.now) }
 
   scope :published, -> { order("air_date desc") }
 
