@@ -1,5 +1,6 @@
 class Outpost::ShowEpisodesController < Outpost::ResourceController
   outpost_controller
+  include Concern::Controller::KpccEpisodes
 
   define_list do |l|
     l.default_order_attribute   = "air_date"
@@ -23,29 +24,15 @@ class Outpost::ShowEpisodesController < Outpost::ResourceController
 
   def preview
     @episode = Outpost.obj_by_key(params[:obj_key]) || ShowEpisode.new
-
     with_rollback @episode do
       @episode.assign_attributes(params[:show_episode])
-
       if @episode.unconditionally_valid?
-        @title = @episode.to_title
-
-        if @episode.show.is_segmented?
-          @segments = @episode.segments
-          @program = @episode.show
-
-          render "programs/kpcc/episode",
-            :layout => "outpost/preview/application"
-        else
-          render "programs/kpcc/_episode",
-            :layout => "outpost/preview/application",
-            :locals => {
-              :episode => @episode
-            }
-        end
+        @program = @episode.show
+        render_kpcc_episode
       else
-        render_preview_validation_errors(@episode)
+        render_preview_validation_errors @episode
       end
     end
   end
+
 end
