@@ -66,7 +66,6 @@ class ShowEpisode < ActiveRecord::Base
     where("DATE(air_date) = DATE(?)", date_or_time)
   }
 
-
   belongs_to :show,
     :class_name  => "KpccProgram",
     :touch       => true

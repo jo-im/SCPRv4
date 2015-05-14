@@ -39,12 +39,13 @@ class ExternalProgram < ActiveRecord::Base
   #-------------------
   # Scopes
   scope :active, -> { where(air_status: ['onair', 'online']) }
+  scope :with_expiration, -> { where.not(days_to_expiry: nil, days_to_expiry: 0) }
 
   #-------------------
   # Associations
   has_many :recurring_schedule_rules, as: :program, dependent: :destroy
-  has_many :external_episodes, dependent: :destroy
-  has_many :external_segments
+  has_many :episodes, dependent: :destroy, class_name: :ExternalEpisode
+  has_many :segments, class_name: :ExternalSegment
 
 
   #-------------------
@@ -103,8 +104,8 @@ class ExternalProgram < ActiveRecord::Base
       :airtime            => self.airtime,
       :podcast_url        => self.podcast_url,
       :rss_url            => self.get_link('rss'),
-      :episodes           => self.external_episodes.order("air_date desc"),
-      :segments           => self.external_segments.order("published_at desc"),
+      :episodes           => self.episodes.order("air_date desc"),
+      :segments           => self.segments.order("published_at desc"),
       # External Programs are always assumed to be segmented.
       # Maybe this isn't always the case, but this is okay for now.
       :is_segmented   => true
@@ -116,7 +117,6 @@ class ExternalProgram < ActiveRecord::Base
     self.air_status != "hidden"
   end
 
-
   def importer
     @importer ||= IMPORTERS[self.source].constantize
   end
@@ -125,6 +125,17 @@ class ExternalProgram < ActiveRecord::Base
     self.importer.sync(self)
   end
 
+  def expired_episodes
+    if has_episode_expiration?
+      self.episodes.where("air_date < ?",self.days_to_expiry.days.ago).includes(:audio,:segments)
+    else
+      []
+    end
+  end
+
+  def has_episode_expiration?
+    !days_to_expiry.nil? && days_to_expiry != 0
+  end
 
   private
 

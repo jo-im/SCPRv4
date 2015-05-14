@@ -35,7 +35,7 @@ describe ProgramsController do
     it "works for external programs" do
       episode = create :external_episode, air_date: Time.zone.local(2012, 3, 22)
 
-      post :archive, show: episode.external_program.slug,
+      post :archive, show: episode.program.slug,
         :archive => {
           "date(1i)" => episode.air_date.year,
           "date(2i)" => episode.air_date.month,
@@ -170,7 +170,7 @@ describe ProgramsController do
       end
 
       it "sets @episodes to the program's episodes" do
-        episode = create :external_episode, external_program: @program
+        episode = create :external_episode, program: @program
         get :show, show: @program.slug
         assigns(:episodes).to_a.should eq [episode]
       end

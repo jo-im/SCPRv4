@@ -14,6 +14,6 @@ describe Job::SyncExternalPrograms do
   it "syncs the programs" do
     program = create :external_program, :from_rss, podcast_url: "http://podcast.com/podcast"
     Job::SyncExternalPrograms.perform
-    program.external_episodes.should_not be_empty
+    program.episodes.should_not be_empty
   end
 end
