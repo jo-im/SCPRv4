@@ -30,6 +30,8 @@ class HomeController < ApplicationController
       @schedule_current = nil
       @schedule_next    = @schedule[0]
     end
+
+    @points = DataPoint.where(group_name: "elections-may2015")
   end
 
   #----------
@@ -69,4 +71,21 @@ class HomeController < ApplicationController
   def generate_homepage
     Job::HomepageCache.perform
   end
+
+  def election_sort_tmp(points, key_base)
+      p = points.select { |dp|
+        dp.data_key.match(/\A#{key_base}/) && !dp.data_key.match(/reporting\z/)
+      }
+    
+      if p.size <= 1
+        p
+      else
+        p.sort { |a, b| b.data_value.to_i <=> a.data_value.to_i }
+      end
+    end
+    helper_method :election_sort_tmp
+
+    def generate_homepage
+      Job::HomepageCache.perform
+    end
 end
