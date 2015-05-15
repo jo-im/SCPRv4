@@ -403,10 +403,11 @@ module ApplicationHelper
   #----------
 
   def content_widget(partial, object, options={})
+    options = {to_article: true}.merge(options)
     partial = "shared/cwidgets/#{partial}" if partial.chars.first != "/"
 
     render(partial, {
-      :article  => object.to_article,
+      :article  => options[:to_article] ? object.to_article : object,
       :options  => options
     })
   end
