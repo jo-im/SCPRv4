@@ -3,7 +3,6 @@
 # namespace, so we have to send all traffic to this controller and then
 # basically split every action into two.
 class ProgramsController < ApplicationController
-  include Concern::Controller::GetPopularArticles
   layout 'new/single', only: [:segment]
 
   before_filter :get_program, only: [:show, :episode, :archive, :featured_program, :featured_show]
