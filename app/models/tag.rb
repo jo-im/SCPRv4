@@ -17,18 +17,12 @@ class Tag < ActiveRecord::Base
   end
 
   def update_timestamps published_at
-    updates = {}
-
     if began_at.nil? || (published_at < began_at)
-      updates[:began_at] = published_at
+      self.update_attribute :began_at, published_at
     end
 
     if most_recent_at.nil? || (published_at > most_recent_at)
-      updates[:most_recent_at] = published_at
+      self.update_attribute :most_recent_at, published_at
     end
-
-    update(updates) if updates.any?
-    self
   end
-
 end

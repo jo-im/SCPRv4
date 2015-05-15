@@ -705,7 +705,6 @@ ActiveRecord::Schema.define(version: 20150511200111) do
   end
 
   add_index "related_links", ["content_id", "content_type"], name: "index_related_links_on_content_id_and_content_type", using: :btree
-  add_index "related_links", ["content_type"], name: "index_related_links_on_content_type", using: :btree
   add_index "related_links", ["link_type"], name: "index_related_links_on_link_type", using: :btree
 
   create_table "remote_articles", force: :cascade do |t|
@@ -841,8 +840,8 @@ ActiveRecord::Schema.define(version: 20150511200111) do
     t.boolean  "is_featured",    limit: 1
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.datetime "began_at",                     default: '2015-05-05 16:31:00'
-    t.datetime "most_recent_at",               default: '2015-05-05 16:31:00'
+    t.datetime "began_at"
+    t.datetime "most_recent_at"
   end
 
   add_index "tags", ["created_at"], name: "index_tags_on_created_at", using: :btree
