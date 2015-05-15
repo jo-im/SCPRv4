@@ -46,8 +46,8 @@ scpr.Behaviors.Single = {
         //  ================================================
         //  Segment: Hold off on fun CSS animation until it's safely in view
         //  ------------------------------------------------
-        if($("body").hasClass("segment") && $(".audio-actuator").length) {
-
+        if($(".audio-actuator").length) {
+            
           $(".audio-actuator").waypoint(function() {
             if(!$(".audio-actuator").hasClass("in-view")) {
               $(".audio-actuator").addClass("in-view");

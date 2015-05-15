@@ -407,6 +407,7 @@ module ApplicationHelper
 
     render(partial, {
       :article  => object.to_article,
+      :prompt   => options[:prompt],
       :options  => options
     })
   end
