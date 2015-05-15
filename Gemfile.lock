@@ -9,10 +9,10 @@ GIT
 
 GIT
   remote: git://github.com/SCPR/outpost.git
-  revision: 489cd5fe230986255fc01fb99da81d07ad7fd449
-  tag: v0.1.5
+  revision: 925b5a833c7d140f1eac4360aa2e930c568d2aee
+  tag: v0.1.6
   specs:
-    outpost-cms (0.1.5)
+    outpost-cms (0.1.6)
       bcrypt-ruby (>= 3.0.0, < 4)
       jquery-rails (~> 3.0)
       kaminari (~> 0.15.1)
