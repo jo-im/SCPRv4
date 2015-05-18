@@ -5,7 +5,7 @@
   <aside class="audio-actuator story-audio">
     <a href="<%= url %>" class="play-btn audio-toggler" title="<%= h(article.short_title) %>" data-duration="<%= audio.duration %>">
       <mark class="flourish"><%= image_tag("icons/vector-triangle-white.svg")%></mark>
-      <div><span class="prompt"><b><%= prompt || "Listen to this story"%></b></span> <span class="duration"><%= format_duration audio.duration %></span></div>
+      <div><span class="prompt"><b><%= options[:prompt] || "Listen to this story"%></b></span> <span class="duration"><%= format_duration audio.duration %></span></div>
     </a>
   </aside>
   

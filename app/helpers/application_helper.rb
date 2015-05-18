@@ -391,7 +391,7 @@ module ApplicationHelper
       options["data-objkey"] = object.disqus_identifier
 
       link_to("Add your comments",
-        object.public_path(anchor: "comments"), options)
+        object.public_path(anchor: "comments", ), options)
     end
   end
 
@@ -404,11 +404,10 @@ module ApplicationHelper
 
   def content_widget(partial, object, options={})
     partial = "shared/cwidgets/#{partial}" if partial.chars.first != "/"
-
+    article = (options[:to_article] || options[:to_article].nil?) ? object.to_article : object
     render(partial, {
-      :article  => object.to_article,
-      :prompt   => options[:prompt],
-      :options  => options
+      :article  => article,
+      :options  => options,
     })
   end
 
