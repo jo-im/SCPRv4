@@ -58,7 +58,7 @@ class NprProgramImporter
     external_episode = find_or_create_external_episode(show)
 
     # What segments have we already created in a previous run?
-    existing_segment_ids = external_episode.external_segments.collect(&:external_id).map { |id| id.to_i }
+    existing_segment_ids = external_episode.segments.collect(&:external_id).map { |id| id.to_i }
 
     stories.each_with_index do |story, i|
       if existing_segment_ids.include?(story.id)
@@ -91,7 +91,7 @@ class NprProgramImporter
       # Wrap all of our segment creation in a transaction, to try and keep
       # from ending up with half-formed segments
       ExternalProgram.transaction do
-        external_segment = @external_program.external_segments.create(
+        external_segment = @external_program.segments.create(
           title:        story.title,
           teaser:       story.teaser,
           published_at: story.pubDate,
@@ -103,7 +103,7 @@ class NprProgramImporter
         # I'm not sure what that means, but we'll import it anyways and just
         # put it at the end of the list.
         external_episode.external_episode_segments.create(
-          external_segment: external_segment,
+          segment: external_segment,
           position:         story.shows.last.try(:segNum) || stories.length + i,
         )
 
@@ -137,10 +137,10 @@ class NprProgramImporter
   # doesn't really keep track of the shows, except for the air-date
   # and as a means to group together segments.
   def find_or_create_external_episode(show)
-    ep = @external_program.external_episodes.find_by(air_date:show.showDate)
+    ep = @external_program.episodes.find_by(air_date:show.showDate)
 
     if !ep
-      ep = @external_program.external_episodes.create(
+      ep = @external_program.episodes.create(
         :title      => "#{@external_program.title} for " +
                        show.showDate.strftime("%A, %B %e, %Y"),
         :air_date   => show.showDate,

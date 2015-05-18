@@ -6,7 +6,7 @@ describe Program do
       kpcc      = create :kpcc_program
       external  = create :external_program
 
-      Program.all.should eq [kpcc, external].map(&:to_program)
+      Program.all.should eq [kpcc, external]
     end
   end
 
@@ -15,20 +15,20 @@ describe Program do
       kpcc      = create :kpcc_program
       external  = create :external_program
 
-      Program.find_by_slug(kpcc.slug).should eq kpcc.to_program
+      Program.find_by_slug(kpcc.slug).should eq kpcc
     end
 
     it "looks at ExternalProgram if no KPCC program is available" do
       external  = create :external_program
 
-      Program.find_by_slug(external.slug).should eq external.to_program
+      Program.find_by_slug(external.slug).should eq external
     end
   end
 
   describe '::find_by_slug!' do
     it 'finds program by slug if available' do
       program = create :kpcc_program
-      Program.find_by_slug!(program.slug).should eq program.to_program
+      Program.find_by_slug!(program.slug).should eq program
     end
 
     it 'raise AR::RNF if slug is not found' do
@@ -45,19 +45,17 @@ describe Program do
 
     it 'passes in the conditions to each Program model' do
       Program.where(air_status: %w{online onair})
-      .should eq [@kpcc_program.to_program, @external_program.to_program]
+      .should eq [@kpcc_program, @external_program]
     end
 
     it 'returns all programs if conditions is an empty hash' do
-      Program.where({}).sort
-      .should eq [@kpcc_program, @external_program,@another_program]
-      .map(&:to_program).sort
+      Program.where({}).sort_by(&:obj_key)
+      .should eq [@kpcc_program, @external_program,@another_program].sort_by(&:obj_key)
     end
 
     it "returns all programs if conditions is nil" do
-      Program.where(nil).sort
-      .should eq [@kpcc_program, @external_program,@another_program]
-      .map(&:to_program).sort
+      Program.where(nil).sort_by(&:obj_key)
+      .should eq [@kpcc_program, @external_program,@another_program].sort_by(&:obj_key)
     end
   end
 end

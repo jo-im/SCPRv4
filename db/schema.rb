@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150514052613) do
+ActiveRecord::Schema.define(version: 20150511200111) do
 
   create_table "abstracts", force: :cascade do |t|
     t.string   "source",               limit: 255
@@ -375,23 +375,25 @@ ActiveRecord::Schema.define(version: 20150514052613) do
   add_index "external_episodes", ["external_program_id", "external_id"], name: "index_external_episodes_on_external_program_id_and_external_id", using: :btree
 
   create_table "external_programs", force: :cascade do |t|
-    t.string   "slug",         limit: 255,      null: false
-    t.string   "title",        limit: 255,      null: false
-    t.text     "teaser",       limit: 16777215
-    t.text     "description",  limit: 16777215
-    t.string   "host",         limit: 255
-    t.string   "organization", limit: 50
-    t.string   "airtime",      limit: 255
-    t.string   "air_status",   limit: 255,      null: false
-    t.string   "podcast_url",  limit: 255
-    t.text     "sidebar",      limit: 16777215
-    t.datetime "created_at",                    null: false
-    t.datetime "updated_at",                    null: false
-    t.string   "source",       limit: 255
-    t.integer  "external_id",  limit: 4
+    t.string   "slug",           limit: 255,      null: false
+    t.string   "title",          limit: 255,      null: false
+    t.text     "teaser",         limit: 16777215
+    t.text     "description",    limit: 16777215
+    t.string   "host",           limit: 255
+    t.string   "organization",   limit: 50
+    t.string   "airtime",        limit: 255
+    t.string   "air_status",     limit: 255,      null: false
+    t.string   "podcast_url",    limit: 255
+    t.text     "sidebar",        limit: 16777215
+    t.datetime "created_at",                      null: false
+    t.datetime "updated_at",                      null: false
+    t.string   "source",         limit: 255
+    t.integer  "external_id",    limit: 4
+    t.integer  "days_to_expiry", limit: 4
   end
 
   add_index "external_programs", ["air_status"], name: "index_external_programs_on_air_status", using: :btree
+  add_index "external_programs", ["days_to_expiry"], name: "index_external_programs_on_days_to_expiry", using: :btree
   add_index "external_programs", ["slug"], name: "index_external_programs_on_slug", using: :btree
   add_index "external_programs", ["source", "external_id"], name: "index_external_programs_on_source_and_external_id", using: :btree
   add_index "external_programs", ["title"], name: "index_external_programs_on_title", using: :btree
@@ -832,12 +834,14 @@ ActiveRecord::Schema.define(version: 20150514052613) do
   add_index "taggit_taggeditem", ["tag_id"], name: "taggit_taggeditem_3747b463", using: :btree
 
   create_table "tags", force: :cascade do |t|
-    t.string   "title",       limit: 255
-    t.string   "slug",        limit: 255
-    t.text     "description", limit: 65535
-    t.boolean  "is_featured", limit: 1
+    t.string   "title",          limit: 255
+    t.string   "slug",           limit: 255
+    t.text     "description",    limit: 65535
+    t.boolean  "is_featured",    limit: 1
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.datetime "began_at"
+    t.datetime "most_recent_at"
   end
 
   add_index "tags", ["created_at"], name: "index_tags_on_created_at", using: :btree

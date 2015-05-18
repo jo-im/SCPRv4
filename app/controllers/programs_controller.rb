@@ -3,7 +3,6 @@
 # namespace, so we have to send all traffic to this controller and then
 # basically split every action into two.
 class ProgramsController < ApplicationController
-  include Concern::Controller::GetPopularArticles
   layout 'new/single', only: [:segment]
 
   before_filter :get_program, only: [:show, :episode, :archive, :featured_program, :featured_show]
@@ -22,35 +21,35 @@ class ProgramsController < ApplicationController
 
 
   def show
-    if @program.is_a?(KpccProgram)
-      @episodes = @program.episodes.published
+    @episodes = @program.episodes.published
 
+    if @program.is_a?(KpccProgram)
+      # KPCC Program
+
+      path = 'programs/kpcc/old/show'
       respond_with do |format|
         format.html do
-          if @current_episode = @episodes.first
-            @episodes = @episodes.where.not(id: @current_episode.id)
-          end
+          @current_episode = @episodes.first
+          @episodes = (@current_episode ? @episodes.where.not(id:@current_episode.id) : @episodes).page(params[:page]).per(6)
 
-          @episodes = @episodes.page(params[:page]).per(6)
-          render 'programs/kpcc/old/show'
+          render path
         end
-
-        format.xml { render 'programs/kpcc/old/show' }
+        format.xml do
+          render path
+        end
       end
+    else
+      @episodes = @episodes.page(params[:page]).per(6)
 
-      return
-    end
-
-    if @program.is_a?(ExternalProgram)
-      @episodes = @program.external_episodes.order("air_date desc")
-        .page(params[:page]).per(6)
-
-      respond_to do |format|
-        format.html { render 'programs/external/show', layout: "application" }
-        format.xml  { redirect_to @program.podcast_url }
+      # External Program
+      respond_with do |format|
+        format.html do
+          render 'programs/external/show', layout: 'application'
+        end
+        format.xml do
+          redirect_to @program.podcast_url
+        end
       end
-
-      return
     end
   end
 
@@ -104,22 +103,13 @@ class ProgramsController < ApplicationController
 
 
   def episode
+    @episode    = @program.episodes.find(params[:id])
+    @segments   = @episode.segments.published
+
     if @program.is_a?(KpccProgram)
-      @episode    = @program.episodes.find(params[:id])
-      @segments   = @episode.segments.published
-
-      if @program.is_segmented?
-        render 'programs/kpcc/episode' and return
-      else
-        render 'programs/kpcc/old/episode_standalone'
-      end
-    end
-
-    if @program.is_a?(ExternalProgram)
-      @episode  = @program.external_episodes.find(params[:id])
-      @segments = @episode.external_segments
-
-      render 'programs/external/episode', layout: 'application' and return
+      render @program.is_segmented? ? 'programs/kpcc/episode' : 'programs/kpcc/old/episode_standalone'
+    else
+      render 'programs/external/episode', layout:'application'
     end
   end
 
@@ -159,20 +149,14 @@ class ProgramsController < ApplicationController
       params[:archive]["date(2i)"].to_i,
       params[:archive]["date(3i)"].to_i
     )
-
-    if @program.is_a?(KpccProgram)
-      @episode = @program.episodes.for_air_date(@date).first
-    elsif @program.is_a?(ExternalProgram)
-      @episode = @program.external_episodes.for_air_date(@date).first
-    end
+    @episode = @program.episodes.for_air_date(@date).first
 
     if !@episode
       flash[:alert] = "There is no #{@program.title} " \
                       "episode for #{@date.strftime('%F')}."
-
-      redirect_to featured_show_path(@program.slug, anchor: "archive") and return
+      redirect_to featured_show_path(@program.slug, anchor: "archive")
     else
-      redirect_to @episode.public_path and return
+      redirect_to @episode.public_path
     end
   end
 

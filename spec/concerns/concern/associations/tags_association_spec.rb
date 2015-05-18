@@ -1,21 +1,30 @@
 require "spec_helper"
 
 describe Concern::Associations::TagsAssociation do
-  subject { create :test_class_story }
-
-  it { should have_many :taggings }
-  it { should have_many :tags }
-
   it "touches tags after save when publishing" do
-    tag = create :tag
-    tag.update_column(:updated_at, 1.month.ago)
+    tag = FactoryGirl.create :tag
+    tag.update_attributes updated_at: 1.month.ago, most_recent_at: nil, began_at: nil
+    news_story = FactoryGirl.create :news_story
+    news_story.update status: 0
+    news_story.tags << tag
+    news_story.update status: 5
+    tag.reload.updated_at.should be > 1.month.ago
+    tag.reload.most_recent_at.should_not be_nil
+    tag.reload.began_at.should_not be_nil
+  end
 
-    tag.reload.updated_at.should be < 10.minutes.ago
+  describe "updates tag timestamps" do
+    it "when adding a tag to existing content" do
+      story = create :news_story
+      tag = create :tag
 
-    story = build :test_class_story
-    story.tags << tag
-    story.save!
+      story.tags << tag
 
-    tag.reload.updated_at.should be > 10.minutes.ago
+      tag.began_at.should eq story.published_at
+      tag.most_recent_at.should eq story.published_at
+    end
+
+    it "when removing a tag from content"
+    it "when unpublishing a story"
   end
 end

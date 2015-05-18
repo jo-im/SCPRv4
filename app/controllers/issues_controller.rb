@@ -1,4 +1,4 @@
-class IssuesController < NewApplicationController
+class IssuesController < ApplicationController
   layout 'new/issues'
   respond_to :html, :xml, :rss
 

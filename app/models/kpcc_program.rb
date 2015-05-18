@@ -91,26 +91,12 @@ class KpccProgram < ActiveRecord::Base
     }
   end
 
+  def podcast_url
+    self.get_link('podcast')
+  end
 
-  def to_program
-    @to_program ||= Program.new({
-      :original_object    => self,
-      :id                 => self.obj_key,
-      :source             => 'kpcc',
-      :title              => self.title,
-      :slug               => self.slug,
-      :description        => self.description,
-      :host               => self.host,
-      :air_status         => self.air_status,
-      :airtime            => self.airtime,
-      :podcast_url        => self.get_link('podcast'),
-      :rss_url            => self.get_link('rss'),
-      :episodes           => self.episodes.published,
-      :segments           => self.segments.published,
-      :blog               => self.blog,
-      :is_featured        => self.is_featured?,
-      :is_segmented       => self.is_segmented?
-    })
+  def rss_url
+    self.get_link('rss')
   end
 
   def featured_articles

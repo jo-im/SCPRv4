@@ -5,7 +5,10 @@ module Concern
 
       included do
         has_many :taggings, as: :taggable, dependent: :destroy
-        has_many :tags, through: :taggings
+
+        has_many :tags,
+          through:      :taggings,
+          after_add:    :update_tag_timestamps_from_add
 
         if self.has_secretary?
           tracks_association :tags
@@ -28,7 +31,13 @@ module Concern
       # to populate the "coverage began/ended" metadata on the
       # Issues pages.
       def touch_tags
-        self.tags.each(&:touch)
+        tags.each {|t| t.update_timestamps(published_at)}
+      end
+
+      def update_tag_timestamps_from_add(tag)
+        if self.respond_to?(:published_at) && self.published?
+          tag.update_timestamps(self.published_at)
+        end
       end
     end
   end

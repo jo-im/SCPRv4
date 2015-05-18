@@ -24,7 +24,7 @@ describe ExternalProgram do
     it "syncs the programs" do
       program = create :external_program, :from_rss, podcast_url: "http://podcast.com/podcast"
       Job::SyncExternalPrograms.perform
-      program.external_episodes.should_not be_empty
+      program.episodes.should_not be_empty
     end
   end
 
@@ -66,8 +66,8 @@ describe ExternalProgram do
       it "syncs using the importer" do
         program = create :external_program, :from_npr
         program.sync
-        program.external_episodes.should_not be_empty
-        program.external_segments.should_not be_empty
+        program.episodes.should_not be_empty
+        program.segments.should_not be_empty
       end
     end
 
@@ -82,16 +82,9 @@ describe ExternalProgram do
       it "syncs using the importer" do
         program = create :external_program, :from_rss, podcast_url: "http://rss.com"
         program.sync
-        program.external_episodes.should_not be_empty
-        program.external_segments.should be_empty
+        program.episodes.should_not be_empty
+        program.segments.should be_empty
       end
-    end
-  end
-
-  describe '#to_program' do
-    it 'turns it into a program' do
-      program = build :external_program
-      program.to_program.should be_a Program
     end
   end
 
@@ -101,6 +94,55 @@ describe ExternalProgram do
       external_program = build :external_program, slug: "same"
       external_program.should_not be_valid
       external_program.errors[:slug].first.should match /be unique between/
+    end
+  end
+
+  describe 'expired episodes' do
+    context 'has days_to_expiry timestamp' do
+      it "only returns expired episodes" do
+        program = create :external_program, :from_rss, air_status: "onair", days_to_expiry: 3
+
+        program.episodes << create(:external_episode, air_date: Time.zone.now)
+        program.episodes << (expired_episode = create(:external_episode, air_date: 4.days.ago))
+
+        expired_eps = program.expired_episodes
+        expect(expired_eps.count).to eq(1)
+        expect(expired_eps[0]).to eq(expired_episode)
+      end
+    end
+
+    context 'has no days_to_expiry timestamp' do
+      it 'returns no episodes' do
+
+        program = create :external_program, :from_rss, air_status: "onair"
+
+        program.episodes << create(:external_episode, air_date: Time.zone.now)
+        program.episodes << (expired_episode = create(:external_episode, air_date: 4.days.ago))
+
+        expect(program.expired_episodes).to be_empty
+      end
+    end
+  end
+
+  describe '#has_episode_expiration?' do
+    context "#days_to_expiry returns a non-nil and non-zero value" do
+      it "returns true" do
+        program = build :external_program, days_to_expiry: 3
+        expect(program.has_episode_expiration?).to eq true
+      end
+    end
+
+    context "#days_to_expiry returns nil" do
+      it "returns false" do
+        program = build :external_program, days_to_expiry: nil
+        expect(program.has_episode_expiration?).to eq false
+      end
+    end
+    context "#days_to_expiry returns 0" do
+      it "returns false" do
+        program = build :external_program, days_to_expiry: 0
+        expect(program.has_episode_expiration?).to eq false
+      end
     end
   end
 end

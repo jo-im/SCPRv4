@@ -27,7 +27,7 @@ describe Api::Public::V2::EpisodesController do
       episode1 = create :external_episode
       episode2 = create :external_episode
 
-      get :index, { program: episode1.external_program.slug }.merge(request_params)
+      get :index, { program: episode1.program.slug }.merge(request_params)
       assigns(:episodes).should eq [episode1].map(&:to_episode)
     end
 
@@ -77,8 +77,8 @@ describe Api::Public::V2::EpisodesController do
 
     it 'sorts the episodes by descending air_date for external programs' do
       program   = create :external_program
-      episode2  = create :external_episode, external_program: program, air_date: Time.zone.now.yesterday
-      episode1  = create :external_episode, external_program: program, air_date: Time.zone.now.tomorrow
+      episode2  = create :external_episode, program: program, air_date: Time.zone.now.yesterday
+      episode1  = create :external_episode, program: program, air_date: Time.zone.now.tomorrow
 
       get :index, { program: program.slug }.merge(request_params)
       assigns(:episodes).should eq [episode1, episode2].map(&:to_episode)
@@ -99,8 +99,8 @@ describe Api::Public::V2::EpisodesController do
 
     it 'can filter by air date for external programs' do
       program = create :external_program
-      episode1 = create :external_episode, air_date: Time.zone.local(2013, 6, 25), external_program: program
-      episode2 = create :external_episode, air_date: Time.zone.local(2013, 6, 25), external_program: program
+      episode1 = create :external_episode, air_date: Time.zone.local(2013, 6, 25), program: program
+      episode2 = create :external_episode, air_date: Time.zone.local(2013, 6, 25), program: program
 
       get :index, { program: program.slug, air_date: "2013-06-25" }.merge(request_params)
       assigns(:episodes).should eq [episode1, episode2].map(&:to_episode)
