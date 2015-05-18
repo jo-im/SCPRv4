@@ -240,6 +240,7 @@ class scpr.SocialTools
             el = @disqCache[thread.identifiers[0]]
             parent = el.parents("div.comments")
 
+            # will not display comment count if it has the class 'non-zero' and the count is zero
             if el[0] && !((/non-zero/.test(parent.className)) && count == 0)
                 c = $(@options.count, el)
                 if c.length
