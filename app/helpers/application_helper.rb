@@ -375,7 +375,7 @@ module ApplicationHelper
 
   def comment_widget_for(object, options={})
     if has_comments?(object)
-      content_widget('comment_count', object, options)
+      content_widget (options[:partial] || 'comment_count'), object, options
     end
   end
 
