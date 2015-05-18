@@ -128,7 +128,7 @@
                       </li>
                     </aside>
                   </div>
-                  <footer class="legacy"><span>Originally published <time datetime="2012-11-06">11/6/2012</time></span></footer>
+                  <%= timestamp_if_segment_is_legacy segment.published_at, @episode.air_date %>
                 </div><!--/ .exposition -->
               </article>
 
