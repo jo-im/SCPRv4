@@ -123,7 +123,7 @@
                     <p><a href="<%= segment.public_path %>"><%= segment.teaser.html_safe %></a></p>
                     <aside class="meta">
                       <ul>
-                        <li><%= content_widget "new/comment_count_large", segment, to_article: false, non_zero: true %></li>
+                        <li><%= content_widget "new/comment_count_small", segment, to_article: false, non_zero: true %></li>
                         <li class="play"><%= content_widget "primary_audio", segment, context: segment.show.slug %></li>
                       </li>
                     </aside>
