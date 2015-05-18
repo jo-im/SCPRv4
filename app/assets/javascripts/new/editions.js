@@ -137,7 +137,11 @@ scpr.Behaviors.Editions = {
           $(".liminal-picker div:eq(" + myDropdown + ") li:eq(" + myIndex + ")").addClass("selected");
 
           $(".archive-browser .results ul li").remove();
-          $(".archive-browser .results ul").append(sampleResult,sampleResult,sampleResult,sampleResult,sampleResult,sampleResult,sampleResult,sampleResult);
+          var sampleEpisode = new scpr.Episode({headline: "TURN DOWN FOR WHAT!??!?"})
+          var episodeGroup = new scpr.EpisodesCollection([sampleEpisode])
+          var episodesView = new scpr.EpisodesView({collection: episodeGroup})
+          $(".results").html(episodesView.render().el)
+          // $(".archive-browser .results ul").append(sampleResult,sampleResult,sampleResult,sampleResult,sampleResult,sampleResult,sampleResult,sampleResult);
 
         });
       // ---------------------------------------------------------

@@ -9,3 +9,7 @@
 //= require new/jquery.ba-throttle-debounce.min
 //= require page_mapping
 
+//= require_tree ./models/.
+//= require_tree ./collections/.
+//= require ./views/episode_view
+//= require ./views/episodes_view

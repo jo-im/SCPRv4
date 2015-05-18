@@ -1,0 +1,109 @@
+<section class="archive-browser">
+  <h1><span>Browse the <%= program.title %> Archives</span></h1>
+  <div class="columns">
+
+    <!--
+    ==========================================================
+    Okay, here's what's up.
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    Liminal-Picker has a very temporary, ephemeral, cosmetic
+    job to do: He only appears for tablet-and-wider users,
+    and only passes choices on to *the actual form,* which
+    is what handheld users see, and which fires off the
+    actual, useful Ajax request.
+    ==========================================================
+    -->
+    <aside class="liminal-picker" aria-hidden="true">
+      <div class="years">
+        <ul>
+          <li><span>2015</span></li>
+          <li class="selected"><span>2014</span></li>
+          <li><span>2013</span></li>
+          <li><span>2012</span></li>
+          <li><span>2011</span></li>
+          <li><span>2010</span></li>
+          <li><span>2009</span></li>
+          <li><span>2008</span></li>
+        </ul>
+      </div>
+      <div class="months">
+        <ul>
+          <li class="selected"><span>December</span></li>
+          <li><span>November</span></li>
+          <li><span>October</span></li>
+          <li><span>September</span></li>
+          <li><span>August</span></li>
+          <li><span>July</span></li>
+          <li><span>June</span></li>
+          <li><span>May</span></li>
+          <li><span>April</span></li>
+          <li><span>March</span></li>
+          <li><span>February</span></li>
+          <li><span>January</span></li>
+        </ul>
+      </div>
+    </aside><!--/ .liminal-picker -->
+
+    <div class="directory">
+      <aside class="standard-picker">
+        <form>
+          <div class="fields clearfix">
+            <div class="field years">
+              <select autocomplete="off">
+                  <option>2015</option>
+                  <option selected="selected">2014</option>
+                  <option>2013</option>
+                  <option>2012</option>
+                  <option>2011</option>
+                  <option>2010</option>
+                  <option>2009</option>
+                  <option>2008</option>
+              </select>
+            </div>
+            <div class="field months">
+              <select autocomplete="off">
+                  <option selected="selected">December</option>
+                  <option>November</option>
+                  <option>October</option>
+                  <option>September</option>
+                  <option>August</option>
+                  <option>July</option>
+                  <option>June</option>
+                  <option>May</option>
+                  <option>April</option>
+                  <option>March</option>
+                  <option>February</option>
+                  <option>January</option>
+              </select>
+            </div>
+          </div><!--/ .fields -->
+        </form>
+      </aside><!--/ .standard-picker -->
+      <div class="results">
+        <ul>
+
+        </ul>
+        <aside class="show-full-results" aria-hidden="true">
+          <button>Show full month results</button>
+        </aside>
+      </div><!--/ .results -->
+    </div><!--/ .directory -->
+
+  </div><!--/ .columns -->
+  <div class="collateral">
+
+    <aside class="placard">
+        <div class="ad widget">
+            <%= render "shared/ads/dfp", ad_key: 'slot_c' %>
+            <p class="appeal"><a href="/support/underwriting/">Become a KPCC Sponsor</a></p>
+        </div>
+    </aside>
+  
+  </div><!--/ .collateral -->
+</section><!--/ .archive-browser -->
+
+
+
+<script id="episodeView" type="text/template">
+  <li><a href="<%%= url %>"><time datetime="<%%= published_at %>">1</time> <span><%%= headline %></span></a></li>
+</script>   
