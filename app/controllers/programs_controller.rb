@@ -151,7 +151,7 @@ class ProgramsController < ApplicationController
     )
     @episode = @program.episodes.for_air_date(@date).first
 
-    if @episode
+    if !@episode
       flash[:alert] = "There is no #{@program.title} " \
                       "episode for #{@date.strftime('%F')}."
       redirect_to featured_show_path(@program.slug, anchor: "archive")
