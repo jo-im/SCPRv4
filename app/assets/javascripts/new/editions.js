@@ -122,27 +122,40 @@ scpr.Behaviors.Editions = {
       // 1.) Standard-Picker triggers results.
       //     (And, while we're at it: update Liminal-Picker, too.)
       // ---------------------------------------------------------
-        $(".standard-picker select").change(function(){
 
-          var myIndex       = $(this).find(":selected").index();
-          var myDropdown    = $(this).closest(".field").index();
+
+        function populateArchiveBrowser(context){
           var myMonth       = $(".standard-picker .months select").find(":selected").text();
+          var myMonthNumber = new Date(myMonth + " 01, 1995").getMonth() + 1
           var myYear        = $(".standard-picker .years select").find(":selected").text();
-          var sampleResult  = "<li><a href=\"#\"><time datetime=\"2000-01-01\">99</time> <span>Here's a bunch of results from " + myMonth + " of " + myYear + ".</span></a></li>";
+          var slug          = window.location.pathname.match(/programs\/(.*?)\//)[1]
+          var episodeGroup  = new scpr.EpisodesCollection()
+          var episodesView  = new scpr.EpisodesView({collection: episodeGroup})
 
+          episodeGroup.on("reset", function(e){
+            $(".archive-browser .results").html(episodesView.render().el)
+          })
+
+          episodeGroup.url = "/api/v3/programs/" + slug + "/episodes/archive/" + myYear + "/" + myMonthNumber
+          episodeGroup.fetch()
+          if (episodeGroup.length == 0){
+            episodeGroup.add(new scpr.Episode())
+          }
+        }
+
+        $(document).ready(function(){
+          populateArchiveBrowser($(".standard-picker"))
+        })
+
+        $(".standard-picker select").change(function(){
+          var myIndex    = $(this).find(":selected").index();
+          var myDropdown = $(this).closest(".field").index();
           $(this).find("option").removeAttr("selected");
           $(this).find("option:eq(" + myIndex + ")").attr("selected","selected");
 
           $(".liminal-picker div:eq(" + myDropdown + ") li").removeAttr("class");
           $(".liminal-picker div:eq(" + myDropdown + ") li:eq(" + myIndex + ")").addClass("selected");
-
-          $(".archive-browser .results ul li").remove();
-          var sampleEpisode = new scpr.Episode({headline: "TURN DOWN FOR WHAT!??!?"})
-          var episodeGroup = new scpr.EpisodesCollection([sampleEpisode])
-          var episodesView = new scpr.EpisodesView({collection: episodeGroup})
-          $(".results").html(episodesView.render().el)
-          // $(".archive-browser .results ul").append(sampleResult,sampleResult,sampleResult,sampleResult,sampleResult,sampleResult,sampleResult,sampleResult);
-
+          populateArchiveBrowser(this)
         });
       // ---------------------------------------------------------
       // 2.) Liminal-Picker sends information to Standard-Picker.

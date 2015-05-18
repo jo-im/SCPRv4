@@ -1,3 +1,4 @@
+<% current_month = Time.now.strftime("%B") %>
 <section class="archive-browser">
   <h1><span>Browse the <%= program.title %> Archives</span></h1>
   <div class="columns">
@@ -16,30 +17,24 @@
     <aside class="liminal-picker" aria-hidden="true">
       <div class="years">
         <ul>
-          <li><span>2015</span></li>
-          <li class="selected"><span>2014</span></li>
-          <li><span>2013</span></li>
-          <li><span>2012</span></li>
-          <li><span>2011</span></li>
-          <li><span>2010</span></li>
-          <li><span>2009</span></li>
-          <li><span>2008</span></li>
+          <% years.each.with_index do |year, index| %>
+            <% if index.zero? %>
+              <li class="selected"><span><%= year %></span></li>
+            <% else %>
+              <li><span><%= year %></span></li>
+            <% end %>
+          <% end %>
         </ul>
       </div>
       <div class="months">
         <ul>
-          <li class="selected"><span>December</span></li>
-          <li><span>November</span></li>
-          <li><span>October</span></li>
-          <li><span>September</span></li>
-          <li><span>August</span></li>
-          <li><span>July</span></li>
-          <li><span>June</span></li>
-          <li><span>May</span></li>
-          <li><span>April</span></li>
-          <li><span>March</span></li>
-          <li><span>February</span></li>
-          <li><span>January</span></li>
+          <% months.each.with_index do |month, index| %>
+            <% if month == current_month %>
+              <li class="selected"><span><%= month %></span></li>
+            <% else %>
+              <li><span><%= month %></span></li>
+            <% end %>
+          <% end %>
         </ul>
       </div>
     </aside><!--/ .liminal-picker -->
@@ -50,39 +45,31 @@
           <div class="fields clearfix">
             <div class="field years">
               <select autocomplete="off">
-                  <option>2015</option>
-                  <option selected="selected">2014</option>
-                  <option>2013</option>
-                  <option>2012</option>
-                  <option>2011</option>
-                  <option>2010</option>
-                  <option>2009</option>
-                  <option>2008</option>
+                <% years.each.with_index do |year, index| %>
+                  <% if index.zero? %>
+                    <option selected="selected"><%= year %></option>
+                  <% else %>
+                    <option><%= year %></option>
+                  <% end %>
+                <% end %>
               </select>
             </div>
             <div class="field months">
               <select autocomplete="off">
-                  <option selected="selected">December</option>
-                  <option>November</option>
-                  <option>October</option>
-                  <option>September</option>
-                  <option>August</option>
-                  <option>July</option>
-                  <option>June</option>
-                  <option>May</option>
-                  <option>April</option>
-                  <option>March</option>
-                  <option>February</option>
-                  <option>January</option>
+                <% months.each.with_index do |month, index| %>
+                  <% if month == current_month %>
+                    <option selected="selected"><%= month %></option>
+                  <% else %>
+                    <option><%= month %></option>
+                  <% end %>
+                <% end %>
               </select>
             </div>
           </div><!--/ .fields -->
         </form>
       </aside><!--/ .standard-picker -->
       <div class="results">
-        <ul>
-
-        </ul>
+        <ul></ul>
         <aside class="show-full-results" aria-hidden="true">
           <button>Show full month results</button>
         </aside>
@@ -105,5 +92,5 @@
 
 
 <script id="episodeView" type="text/template">
-  <li><a href="<%%= url %>"><time datetime="<%%= published_at %>">1</time> <span><%%= headline %></span></a></li>
-</script>   
+  <li><a href="<%%= public_url %>"><time datetime="<%%= published_at %>"><%%= day() %></time> <span><%%= title %></span></a></li>
+</script>

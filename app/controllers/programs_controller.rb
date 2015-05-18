@@ -104,6 +104,16 @@ class ProgramsController < ApplicationController
 
 
   def episode
+    first_year = @program.episodes
+      .order("air_date ASC")
+      .where("air_date IS NOT NULL")
+      .select("air_date")
+      .limit(1)
+      .first
+      .try(:air_date)
+      .try(:to_date)|| Date.today
+    @years  = (first_year..Date.today).map{|y| y.year}.uniq.reverse
+    @months = (Date.today.beginning_of_year..Date.today.end_of_year).map{|m| m.strftime("%B")}.uniq.reverse
     if @program.is_a?(KpccProgram)
       @episode    = @program.episodes.find(params[:id])
       @segments   = @episode.segments.published
