@@ -32,11 +32,6 @@ module Api::Public::V3
       respond_with @program
     end
 
-    def months
-      @program = KpccProgram.find_by_slug(@slug) || ExternalProgram.find_by_slug(@slug)
-      @months = @program.episode_months params[:year]
-      respond_with @months
-    end
 
     private
 

@@ -122,7 +122,7 @@ scpr.Behaviors.Editions = {
       // 1.) Standard-Picker triggers results.
       //     (And, while we're at it: update Liminal-Picker, too.)
       // ---------------------------------------------------------
-        (function(){
+        (function(scpr){
           var programSlug, currentYear, currentMonth, currentMonthNumber, loadLaminalMonthPicker, getResults, getMonths, 
           setLiminalPicker, setLiminalYearPicker, setLiminalMonthPicker, setStandardMonthPicker, setStandardYearPicker, setStandardSelection 
 
@@ -147,7 +147,7 @@ scpr.Behaviors.Editions = {
             episodeGroup.on("reset", function(e){
               $(".archive-browser .results").html(episodesView.render().el)
             })
-            episodeGroup.url = "/api/v3/programs/" + programSlug() + "/episodes/archive/" + currentYear() + "/" + currentMonth()
+            episodeGroup.url = "/api/v3/programs/" + programSlug() + "/episodes/archive/" + currentYear() + "/" + currentMonthNumber()
             episodeGroup.fetch()
             if (episodeGroup.length == 0){
               episodeGroup.add(new scpr.ArchiveBrowser.Episode())
@@ -217,7 +217,7 @@ scpr.Behaviors.Editions = {
           setStandardMonthPicker()
           getResults()
 
-        })()
+        })(scpr)
 
       // ---------------------------------------------------------
       // 3.) Handheld users can opt to view all results.
