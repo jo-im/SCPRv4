@@ -123,91 +123,100 @@ scpr.Behaviors.Editions = {
       //     (And, while we're at it: update Liminal-Picker, too.)
       // ---------------------------------------------------------
 
-
-        function getSlug(){
+        programSlug = function(){
           return window.location.pathname.match(/programs\/(.*?)\//)[1]
         }
-
-        function populateArchiveBrowser(context){
-          var myMonth       = $(".standard-picker .months select").find(":selected").text();
-          var myMonthNumber = new Date(myMonth + " 01, 1995").getMonth() + 1
-          var myYear        = $(".standard-picker .years select").find(":selected").text();
-          var slug          = getSlug()
+        currentYear = function(){
+          return $(".standard-picker .years select").find(":selected").text().replace(/\s/g, "")
+        }
+        currentMonth = function(){
+          return $(".standard-picker .months select").find(":selected").text().replace(/\s/g, "")
+        }
+        currentMonthNumber = function(){
+          return new Date(currentMonth() + " 01, " + currentYear()).getMonth() + 1
+        }
+        loadLaminalMonthPicker = function(){
+          var element = ($(".standard-picker .months select").find(":selected") || $(".standard-picker .months select")).text()
+        }
+        getResults = function(){
           var episodeGroup  = new scpr.ArchiveBrowser.EpisodesCollection()
           var episodesView  = new scpr.ArchiveBrowser.EpisodesView({collection: episodeGroup})
-
           episodeGroup.on("reset", function(e){
             $(".archive-browser .results").html(episodesView.render().el)
           })
-
-          episodeGroup.url = "/api/v3/programs/" + slug + "/episodes/archive/" + myYear + "/" + myMonthNumber
+          episodeGroup.url = "/api/v3/programs/" + programSlug() + "/episodes/archive/" + currentYear() + "/" + currentMonth()
           episodeGroup.fetch()
           if (episodeGroup.length == 0){
             episodeGroup.add(new scpr.ArchiveBrowser.Episode())
           }
         }
+        getMonths = function(callback){
+          var monthsGroup  = new scpr.ArchiveBrowser.MonthsCollection()
+          var liminalMonthsView  = new scpr.ArchiveBrowser.LiminalMonthsView({collection: monthsGroup})
+          var standardMonthsView  = new scpr.ArchiveBrowser.StandardMonthsView({collection: monthsGroup})
+          monthsGroup.url = "/api/v3/programs/" + programSlug() + "/" + currentYear() + "/months"
+          monthsGroup.on("reset", function(e){
+            $(".liminal-picker .months").html(liminalMonthsView.render().el)
+            $(".standard-picker .fields .field.months").html(standardMonthsView.render().el)
+            setLiminalMonthPicker()
+            setStandardMonthPicker()
+            // setStandardPicker(".standard-picker .fields .field.months select")
+            if(callback){callback.call()}
+          })
+          monthsGroup.fetch()
+        }
+        setLiminalPicker = function(cssClass){
+          var element = $(cssClass)
+          element.removeClass("selected")
+          $(element[0]).addClass("selected")
 
-        $(document).ready(function(){
-          populateArchiveBrowser($(".standard-picker"))
-        })
+          element.click(function(){
+            var myDropdown  = $(this).closest("div").index()
+            var myChoice    = $(this).index()
+            $(this).siblings().attr("class","")
+            $(this).addClass("selected")
 
-        $(".standard-picker select").change(function(){
-          var myIndex    = $(this).find(":selected").index();
-          var myDropdown = $(this).closest(".field").index();
-          $(this).find("option").removeAttr("selected");
-          $(this).find("option:eq(" + myIndex + ")").attr("selected","selected");
+            $(".standard-picker .field:eq(" + myDropdown + ") select option").removeAttr("selected")
+            $(".standard-picker .field:eq(" + myDropdown + ") select option:eq(" + myChoice + ")").attr("selected", "selected").trigger("change")
+          })
+        }
+        setLiminalYearPicker = function(){
+          setLiminalPicker(".liminal-picker div.years li")
+        }
+        setLiminalMonthPicker = function(){
+          setLiminalPicker(".liminal-picker div.months li")
+        }
+        setStandardYearPicker = function(){
+          $(".standard-picker .fields .field.years select").change(function(){
+            setStandardSelection(this)
+            getMonths(function(){
+              getResults()
+            })
+          })
+        }
+        setStandardMonthPicker = function(){
+          $(".standard-picker .fields .field.months select").change(function(){
+            setStandardSelection(this)
+            getResults()
+          })
+        }
+        setStandardSelection = function(context){
+          var myIndex    = $(context).find(":selected").index()
+          var myDropdown = $(context).closest(".field").index()
+          $(context).find("option").removeAttr("selected")
+          $(context).find("option:eq(" + myIndex + ")").attr("selected","selected")
 
-          $(".liminal-picker div:eq(" + myDropdown + ") li").removeAttr("class");
-          $(".liminal-picker div:eq(" + myDropdown + ") li:eq(" + myIndex + ")").addClass("selected");
-          populateArchiveBrowser(this)
-        });
-      // ---------------------------------------------------------
-      // 2.) Liminal-Picker sends information to Standard-Picker.
-      // ---------------------------------------------------------
-
-        function setLiminalPicker(klass){
-          $(klass).click(function(){
-            var myDropdown  = $(this).closest("div").index();
-            var myChoice    = $(this).index();
-
-            $(this).siblings().attr("class","");
-            $(this).addClass("selected");
-
-            $(".standard-picker .field:eq(" + myDropdown + ") select option").removeAttr("selected");
-            $(".standard-picker .field:eq(" + myDropdown + ") select option:eq(" + myChoice + ")").attr("selected", "selected").trigger("change");
-          });
+          $(".liminal-picker div:eq(" + myDropdown + ") li").removeAttr("class")
+          $(".liminal-picker div:eq(" + myDropdown + ") li:eq(" + myIndex + ")").addClass("selected")
         }
 
-        setLiminalPicker(".liminal-picker li")
+        setLiminalYearPicker()
+        setLiminalMonthPicker()
+        setStandardYearPicker()
+        setStandardMonthPicker()
+        getResults()
 
-        $(".liminal-picker li").click(function(){
 
-          var myDropdown  = $(this).closest("div").index();
-          var myChoice    = $(this).index();
-
-          $(this).siblings().attr("class","");
-          $(this).addClass("selected");
-
-          $(".standard-picker .field:eq(" + myDropdown + ") select option").removeAttr("selected");
-          $(".standard-picker .field:eq(" + myDropdown + ") select option:eq(" + myChoice + ")").attr("selected", "selected").trigger("change");
-
-        });
-
-        $(".liminal-picker .years ul li").click(function(){
-          var year = $(this).text()
-          var slug = getSlug()
-          var monthsGroup  = new scpr.ArchiveBrowser.MonthsCollection()
-          var monthsView  = new scpr.ArchiveBrowser.MonthsView({collection: monthsGroup})
-
-          monthsGroup.url = "/api/v3/programs/" + slug + "/" + year + "/months"
-
-          monthsGroup.on("reset", function(e){
-            $(".liminal-picker .months").html(monthsView.render().el)
-          })
-
-          monthsGroup.fetch()
-
-        })
 
       // ---------------------------------------------------------
       // 3.) Handheld users can opt to view all results.

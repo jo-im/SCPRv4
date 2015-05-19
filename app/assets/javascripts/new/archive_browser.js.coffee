@@ -54,21 +54,39 @@ class scpr.ArchiveBrowser.MonthsCollection extends Backbone.Collection
   parse: (response) ->
     return response.months
 
-class scpr.ArchiveBrowser.MonthView extends Backbone.View 
+class scpr.ArchiveBrowser.LiminalMonthView extends Backbone.View 
   tagName: 'li'
   className: 'Month'
   template: ->
-    return _.template($("#monthView").text())
+    return _.template($("#liminalMonthView").text())
   render: ->
     monthTemplate = @template()(@model.toJSON())
     @.$el.html(monthTemplate)
     @
 
-class scpr.ArchiveBrowser.MonthsView extends Backbone.View
+class scpr.ArchiveBrowser.LiminalMonthsView extends Backbone.View
   tagName: 'ul'
   render: ->
     @collection.each(@addMonth, @)
     @
   addMonth: (month)->
-    monthView = new scpr.ArchiveBrowser.MonthView({model: month})
+    monthView = new scpr.ArchiveBrowser.LiminalMonthView({model: month})
+    @.$el.append(monthView.render().el)
+
+class scpr.ArchiveBrowser.StandardMonthView extends Backbone.View 
+  tagName: 'option'
+  template: ->
+    return _.template($("#standardMonthView").text())
+  render: ->
+    monthTemplate = @template()(@model.toJSON())
+    @.$el.html(monthTemplate)
+    @
+
+class scpr.ArchiveBrowser.StandardMonthsView extends Backbone.View
+  tagName: 'select'
+  render: ->
+    @collection.each(@addMonth, @)
+    @
+  addMonth: (month)->
+    monthView = new scpr.ArchiveBrowser.StandardMonthView({model: month})
     @.$el.append(monthView.render().el)
