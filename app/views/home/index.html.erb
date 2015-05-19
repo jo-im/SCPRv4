@@ -1,3 +1,142 @@
+<% if Time.now < Time.new(2015, 5, 19, 20) %>
+
+<!-- BEGIN Voter Guide Promo -->
+<div class="hero-election">
+  <div class="row-fluid">
+    <header class="span24 election-header">
+        <h1>LA City 2015 General Election</h1>
+    </header>
+  </div>
+  <div class="row-fluid">
+    <div class="span24">
+      <div class="header-well">
+        <h2 class="callout center-contents"><a href="http://projects.scpr.org/applications/california-elections-guide/2015/municipal/los-angeles-may-19/">View KPCC's Election Guide</a></h2>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- END Voter Guide Promo -->
+
+<% else %>
+
+<% cache "homepage-election-results1", expires_in: 10.minutes do %>
+
+<% hashed = DataPoint.to_hash(@points) %>
+
+<!-- BEGIN Homepage Elections Results -->
+<div class="hero-election">
+  <div class="row-fluid">
+    <header class="span24 election-header">
+      <h1>LA City 2015 General Election Results</h1>
+    </header>
+  </div>
+  <div class="results">
+    <article class="results-block">
+
+
+      <!-- City Council District 4 -->
+      <div class="results-block">
+        <header>
+          <h2>City Council District 4</h2>
+
+          <aside>(<%=hashed["precincts.cc_district_4:reporting"]%>% Reporting)</aside>
+        </header>
+
+        <div class="clearfix">
+          <% election_sort_tmp(@points, "local.cc_district_4").first(2).each do |dp| %>
+          <section class="initiative local condensed">
+            <div class="title">
+              <h3><%=dp.title%></h3>
+            </div>
+
+            <div class="result relative">
+              <div class="yes "><strong><%=dp.data_value%><b class="percentage">%</b></strong></div>
+            </div>
+          </section>
+          <% end %>
+        </div>
+      </div>
+
+
+      <!-- LAUSD School Board, 3rd District -->
+      <div class="results-block">
+        <header>
+          <h2>LAUSD School Board, 3rd Dist.</h2>
+
+          <aside>(<%=hashed["precincts.lausd_district_3:reporting"]%>% Reporting)</aside>
+        </header>
+
+        <div class="clearfix">
+          <% election_sort_tmp(@points, "local.lausd_district_3").first(2).each do |dp| %>
+          <section class="initiative local condensed">
+            <div class="title">
+              <h3><%=dp.title%></h3>
+            </div>
+
+            <div class="result relative">
+              <div class="yes "><strong><%=dp.data_value%><b class="percentage">%</b></strong></div>
+            </div>
+          </section>
+          <% end %>
+        </div>
+      </div>
+
+
+      <!-- LAUSD School Board, 5th District -->
+      <div class="results-block">
+        <header>
+          <h2>LAUSD School Board, 5th Dist.</h2>
+
+          <aside>(<%=hashed["precincts.lausd_district_5:reporting"]%>% Reporting)</aside>
+        </header>
+
+        <div class="clearfix">
+          <% election_sort_tmp(@points, "local.lausd_district_5").first(2).each do |dp| %>
+          <section class="initiative local condensed">
+            <div class="title">
+              <h3><%=dp.title%></h3>
+            </div>
+
+            <div class="result relative">
+              <div class="yes "><strong><%=dp.data_value%><b class="percentage">%</b></strong></div>
+            </div>
+          </section>
+          <% end %>
+        </div>
+      </div>
+
+
+      <!-- LAUSD School Board, 7rd District -->
+      <div class="results-block">
+        <header>
+          <h2>LAUSD School Board, 7th Dist.</h2>
+
+          <aside>(<%=hashed["precincts.lausd_district_7:reporting"]%>% Reporting)</aside>
+        </header>
+
+        <div class="clearfix">
+          <% election_sort_tmp(@points, "local.lausd_district_7").first(2).each do |dp| %>
+          <section class="initiative local condensed">
+            <div class="title">
+              <h3><%=dp.title%></h3>
+            </div>
+
+            <div class="result relative">
+              <div class="yes "><strong><%=dp.data_value%><b class="percentage">%</b></strong></div>
+            </div>
+          </section>
+          <% end %>
+        </div>
+      </div>
+
+    </article>
+  </div>
+</div>
+<!-- END Homepage Elections Results -->
+
+<% end %>
+<% end %>
+
 <% if @homepage %>
   <%=
     begin
