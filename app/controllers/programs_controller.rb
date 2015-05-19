@@ -104,9 +104,8 @@ class ProgramsController < ApplicationController
 
 
   def episode  
-    first_year = Date.parse("2009-01-01")
-    @years  = (first_year..Date.today).map{|y| y.year}.uniq.reverse
-    @months = (Date.today.beginning_of_year..Date.today.end_of_year).map{|m| m.strftime("%B")}.uniq.reverse
+    @years  = @program.episode_years
+    @months = @program.episode_months(Date.today.year)
 
     if @program.is_a?(KpccProgram)
       @episode    = @program.episodes.find(params[:id])

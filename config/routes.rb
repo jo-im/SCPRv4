@@ -185,6 +185,7 @@ Scprv4::Application.routes.draw do
         resources :tags, only: [:index, :show]
 
         get "programs/:program/episodes/archive/:year/:month" => "episodes#archive"
+        get "programs/:id/:year/months" => "programs#months"
 
         resources :schedule, controller: 'schedule_occurrences',only: [:index] do
           collection do

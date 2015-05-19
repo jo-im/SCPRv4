@@ -124,13 +124,17 @@ scpr.Behaviors.Editions = {
       // ---------------------------------------------------------
 
 
+        function getSlug(){
+          return window.location.pathname.match(/programs\/(.*?)\//)[1]
+        }
+
         function populateArchiveBrowser(context){
           var myMonth       = $(".standard-picker .months select").find(":selected").text();
           var myMonthNumber = new Date(myMonth + " 01, 1995").getMonth() + 1
           var myYear        = $(".standard-picker .years select").find(":selected").text();
-          var slug          = window.location.pathname.match(/programs\/(.*?)\//)[1]
-          var episodeGroup  = new scpr.EpisodesCollection()
-          var episodesView  = new scpr.EpisodesView({collection: episodeGroup})
+          var slug          = getSlug()
+          var episodeGroup  = new scpr.ArchiveBrowser.EpisodesCollection()
+          var episodesView  = new scpr.ArchiveBrowser.EpisodesView({collection: episodeGroup})
 
           episodeGroup.on("reset", function(e){
             $(".archive-browser .results").html(episodesView.render().el)
@@ -139,7 +143,7 @@ scpr.Behaviors.Editions = {
           episodeGroup.url = "/api/v3/programs/" + slug + "/episodes/archive/" + myYear + "/" + myMonthNumber
           episodeGroup.fetch()
           if (episodeGroup.length == 0){
-            episodeGroup.add(new scpr.Episode())
+            episodeGroup.add(new scpr.ArchiveBrowser.Episode())
           }
         }
 
@@ -160,6 +164,22 @@ scpr.Behaviors.Editions = {
       // ---------------------------------------------------------
       // 2.) Liminal-Picker sends information to Standard-Picker.
       // ---------------------------------------------------------
+
+        function setLiminalPicker(klass){
+          $(klass).click(function(){
+            var myDropdown  = $(this).closest("div").index();
+            var myChoice    = $(this).index();
+
+            $(this).siblings().attr("class","");
+            $(this).addClass("selected");
+
+            $(".standard-picker .field:eq(" + myDropdown + ") select option").removeAttr("selected");
+            $(".standard-picker .field:eq(" + myDropdown + ") select option:eq(" + myChoice + ")").attr("selected", "selected").trigger("change");
+          });
+        }
+
+        setLiminalPicker(".liminal-picker li")
+
         $(".liminal-picker li").click(function(){
 
           var myDropdown  = $(this).closest("div").index();
@@ -172,6 +192,23 @@ scpr.Behaviors.Editions = {
           $(".standard-picker .field:eq(" + myDropdown + ") select option:eq(" + myChoice + ")").attr("selected", "selected").trigger("change");
 
         });
+
+        $(".liminal-picker .years ul li").click(function(){
+          var year = $(this).text()
+          var slug = getSlug()
+          var monthsGroup  = new scpr.ArchiveBrowser.MonthsCollection()
+          var monthsView  = new scpr.ArchiveBrowser.MonthsView({collection: monthsGroup})
+
+          monthsGroup.url = "/api/v3/programs/" + slug + "/" + year + "/months"
+
+          monthsGroup.on("reset", function(e){
+            $(".liminal-picker .months").html(monthsView.render().el)
+          })
+
+          monthsGroup.fetch()
+
+        })
+
       // ---------------------------------------------------------
       // 3.) Handheld users can opt to view all results.
       // ---------------------------------------------------------

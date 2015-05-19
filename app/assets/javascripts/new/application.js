@@ -8,4 +8,4 @@
 //= require new/editions
 //= require new/jquery.ba-throttle-debounce.min
 //= require page_mapping
-//= require new/episodes
+//= require new/archive_browser

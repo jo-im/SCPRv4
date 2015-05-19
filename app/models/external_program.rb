@@ -125,6 +125,15 @@ class ExternalProgram < ActiveRecord::Base
     self.importer.sync(self)
   end
 
+  def episode_years
+    external_episodes.select("DISTINCT YEAR(air_date) AS air_year").where.not(air_date: nil).map(&:air_year)
+  end
+
+  def episode_months year
+    beginning_of_year = Time.parse("#{year}-01-01").beginning_of_year
+    end_of_year       = Time.parse("#{year}-01-01").end_of_year
+    external_episodes.select("DISTINCT MONTH(air_date) AS air_month").where.not(air_date: nil).where(air_date: beginning_of_year..end_of_year)
+  end
 
   private
 
