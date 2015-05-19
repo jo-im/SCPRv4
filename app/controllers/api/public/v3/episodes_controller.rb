@@ -6,7 +6,7 @@ module Api::Public::V3
       :sanitize_air_date,
       :sanitize_page,
       :sanitize_limit,
-      only: [:index]
+      only: [:index, :archive]
 
     before_filter :sanitize_id, only: [:show]
 
@@ -51,7 +51,6 @@ module Api::Public::V3
 
     def archive
       date = Time.parse("#{params[:year]}-#{params[:month]}-01")
-      @program = KpccProgram.where(slug: params[:slug]).first
       @episodes = @program.episodes.published.where(air_date: date.beginning_of_month..date.end_of_month)
       respond_with @episodes
     end

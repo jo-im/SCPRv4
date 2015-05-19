@@ -22,6 +22,10 @@ class ExternalEpisode < ActiveRecord::Base
     where("DATE(air_date) = DATE(?)", date_or_time)
   }
 
+  scope :published, ->{
+    all
+  }
+
 
   # This needs to match ShowEpisode
   def route_hash

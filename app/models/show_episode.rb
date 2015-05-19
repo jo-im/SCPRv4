@@ -21,6 +21,7 @@ class ShowEpisode < ActiveRecord::Base
   include Concern::Methods::CommentMethods
   include Concern::Methods::AssetDisplayMethods
 
+  alias_attribute :title, :headline
 
   self.public_route_key = "episode"
 

@@ -3,9 +3,9 @@ class scpr.Episode extends Backbone.Model
     id: undefined
     title: "Untitled Episode"
     public_url: '#'
-    published_at: undefined
+    air_date: undefined
     day: ->
-      new Date(this.published_at).getDate() 
+      new Date(this.air_date).getDate() 
 
 class scpr.EpisodesCollection extends Backbone.Collection
   model: scpr.Episode
