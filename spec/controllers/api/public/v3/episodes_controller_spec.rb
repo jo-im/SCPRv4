@@ -149,5 +149,10 @@ describe Api::Public::V3::EpisodesController do
       assigns(:episodes).should_not include(unpublished)
       assigns(:episodes).should include(published)
     end
+    it "returns a 404 status if it does not exist" do
+      get :archive, { program: 'nonexistant_program', year: "2015", month: "2" }.merge(request_params)
+      response.response_code.should eq 404
+      JSON.parse(response.body)["error"]["message"].should eq "Program not found. (nonexistant_program)"
+    end
   end
 end

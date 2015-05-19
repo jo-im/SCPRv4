@@ -103,14 +103,8 @@ class ProgramsController < ApplicationController
   end
 
 
-  def episode
-    first_year = @program.episodes.published.select("air_date")
-      .order("air_date ASC")
-      .where("air_date IS NOT NULL")
-      .first
-      .try(:air_date)
-      .try(:to_date) || Date.today
-      
+  def episode  
+    first_year = Date.parse("2009-01-01")
     @years  = (first_year..Date.today).map{|y| y.year}.uniq.reverse
     @months = (Date.today.beginning_of_year..Date.today.end_of_year).map{|m| m.strftime("%B")}.uniq.reverse
 
