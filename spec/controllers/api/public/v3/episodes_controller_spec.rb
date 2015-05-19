@@ -132,26 +132,20 @@ describe Api::Public::V3::EpisodesController do
       assigns(:episodes).should eq [second_obj].map(&:to_episode)
     end
   end
+
   describe "GET archive" do
-    it "returns episodes within a specific month" do
+    it "finds the object if it exists" do
       program = create :kpcc_program, slug: "test-program"
-      jan = []
-      feb = []
-      10.times do
-        jan << create(:show_episode, air_date: Date.parse("2015-01-15"), show: program)
-      end
-      10.times do
-        feb << create(:show_episode, air_date: Date.parse("2015-02-15"), show: program)
-      end
-      get :archive, request_params
-      assigns(:episodes).should eq feb
-      response.should render_template "archive"
+      old_episode = create :show_episode, show: program, air_date: Date.parse("2015-01-15")
+      new_episode = create :show_episode, show: program, air_date: Date.parse("2015-02-15")
+      get :archive, { program: "test-program", year: '2015', month: '2' }.merge(request_params)
+      assigns(:episodes).should eq [new_episode]
     end
     it "returns only published episodes" do
       program = create :kpcc_program, slug: "test-program"
       published = create :show_episode, :published, air_date: Date.parse("2015-02-15"), show: program
       unpublished = create :show_episode, :draft, air_date: Date.parse("2015-02-15"), show: program
-      get :archive, { slug: 'test-program', year: "2015", month: "2" }.merge(request_params)
+      get :archive, { program: 'test-program', year: "2015", month: "2" }.merge(request_params)
       assigns(:episodes).should_not include(unpublished)
       assigns(:episodes).should include(published)
     end
