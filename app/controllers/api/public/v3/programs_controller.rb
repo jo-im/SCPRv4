@@ -8,12 +8,12 @@ module Api::Public::V3
       "hidden"
     ]
 
-    before_filter :sanitize_slug, only: [:show, :months]
+    before_filter :sanitize_slug, only: [:show]
 
     before_filter \
       :set_hash_conditions,
       :sanitize_air_status,
-      only: [:index, :months]
+      only: [:index]
 
 
     def index
