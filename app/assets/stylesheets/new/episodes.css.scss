@@ -448,6 +448,9 @@ body.episode {
       span            { font: normal 0.9375em/1.2 $font-freight; margin-left: 32px; }
       a:hover span    { text-decoration: underline; color: $orange; }
       a:hover time    { background-position: 0 -120px; }
+      &.loading {
+        opacity: 0.3;
+      }
     }
   //-------------------------------------------------------------------------------------
     @media screen and (max-width: 940px) {

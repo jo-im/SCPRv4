@@ -142,10 +142,13 @@ scpr.Behaviors.Editions = {
             var element = ($(".standard-picker .months select").find(":selected") || $(".standard-picker .months select")).text()
           }
           getResults = function(){
+            var results = $(".archive-browser .results")
             var episodeGroup  = new scpr.ArchiveBrowser.EpisodesCollection()
             var episodesView  = new scpr.ArchiveBrowser.EpisodesView({collection: episodeGroup})
+            results.addClass("loading")
             episodeGroup.on("reset", function(e){
-              $(".archive-browser .results").html(episodesView.render().el)
+              results.html(episodesView.render().el)
+              results.removeClass("loading")
             })
             episodeGroup.url = "/api/v3/programs/" + programSlug() + "/episodes/archive/" + currentYear() + "/" + currentMonthNumber()
             episodeGroup.fetch()
