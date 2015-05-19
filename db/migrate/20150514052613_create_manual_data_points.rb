@@ -38,8 +38,29 @@ class CreateManualDataPoints < ActiveRecord::Migration
     group = "elections-may2015"
 
     DataPoint.create(
-      :title        => "Percentage Reporting",
-      :data_key     => "local:reporting",
+      :title        => "City Council Percentage Reporting",
+      :data_key     => "precincts.cc_district_4:reporting",
+      :data_value   => "0",
+      :group_name   => group,
+      :notes        => "no % symbol"
+    )
+    DataPoint.create(
+      :title        => "LAUSD Dist 3 Percentage Reporting",
+      :data_key     => "precincts.lausd_district_3:reporting",
+      :data_value   => "0",
+      :group_name   => group,
+      :notes        => "no % symbol"
+    )
+    DataPoint.create(
+      :title        => "LAUSD Dist 5 Percentage Reporting",
+      :data_key     => "precincts.lausd_district_5:reporting",
+      :data_value   => "0",
+      :group_name   => group,
+      :notes        => "no % symbol"
+    )
+    DataPoint.create(
+      :title        => "LAUSD Dist 7 Percentage Reporting",
+      :data_key     => "precincts.lausd_district_7:reporting",
       :data_value   => "0",
       :group_name   => group,
       :notes        => "no % symbol"
