@@ -17,24 +17,10 @@
     <aside class="liminal-picker" aria-hidden="true">
       <div class="years">
         <ul>
-          <% years.each.with_index do |year, index| %>
-            <% if index.zero? %>
-              <li class="selected"><span><%= year %></span></li>
-            <% else %>
-              <li><span><%= year %></span></li>
-            <% end %>
-          <% end %>
         </ul>
       </div>
       <div class="months">
         <ul>
-          <% months.each.with_index do |month, index| %>
-            <% if month == current_month %>
-              <li class="selected"><span><%= month %></span></li>
-            <% else %>
-              <li><span><%= month %></span></li>
-            <% end %>
-          <% end %>
         </ul>
       </div>
     </aside><!--/ .liminal-picker -->
@@ -45,24 +31,10 @@
           <div class="fields clearfix">
             <div class="field years">
               <select autocomplete="off">
-                <% years.each.with_index do |year, index| %>
-                  <% if index.zero? %>
-                    <option selected="selected"><%= year %></option>
-                  <% else %>
-                    <option><%= year %></option>
-                  <% end %>
-                <% end %>
               </select>
             </div>
             <div class="field months">
               <select autocomplete="off">
-                <% months.each.with_index do |month, index| %>
-                  <% if month == current_month %>
-                    <option selected="selected"><%= month %></option>
-                  <% else %>
-                    <option><%= month %></option>
-                  <% end %>
-                <% end %>
               </select>
             </div>
           </div><!--/ .fields -->
@@ -93,6 +65,14 @@
 
 <script id="episodeView" type="text/template">
   <li><a href="<%%= public_url %>"><time datetime="<%%= air_date %>"><%%= day() %></time> <span><%%= title %></span></a></li>
+</script>
+
+<script id="liminalYearView" type="text/template">
+  <span><%%= number %></span>
+</script>
+
+<script id="standardYearView" type="text/template">
+  <%%= number %>
 </script>
 
 <script id="liminalMonthView" type="text/template">

@@ -142,25 +142,41 @@ scpr.Behaviors.Editions = {
             var element = ($(".standard-picker .months select").find(":selected") || $(".standard-picker .months select")).text()
           }
           getResults = function(){
-            var results = $(".archive-browser .results")
-            var episodeGroup  = new scpr.ArchiveBrowser.EpisodesCollection()
-            var episodesView  = new scpr.ArchiveBrowser.EpisodesView({collection: episodeGroup})
-            results.addClass("loading")
-            episodeGroup.on("reset", function(e){
-              results.html(episodesView.render().el)
-              results.removeClass("loading")
-            })
-            episodeGroup.url = "/api/v3/programs/" + programSlug() + "/episodes/archive/" + currentYear() + "/" + currentMonthNumber()
-            episodeGroup.fetch()
-            if (episodeGroup.length == 0){
-              episodeGroup.add(new scpr.ArchiveBrowser.Episode())
+            if(currentMonthNumber()){
+              var results = $(".archive-browser .results")
+              var episodeGroup  = new scpr.ArchiveBrowser.EpisodesCollection()
+              var episodesView  = new scpr.ArchiveBrowser.EpisodesView({collection: episodeGroup})
+              results.addClass("loading")
+              episodeGroup.on("reset", function(e){
+                results.html(episodesView.render().el)
+                results.removeClass("loading")
+              })
+              episodeGroup.url = "/api/v3/programs/" + programSlug() + "/episodes/archive/" + currentYear() + "/" + currentMonthNumber()
+              episodeGroup.fetch()
+              if (episodeGroup.length == 0){
+                episodeGroup.add(new scpr.ArchiveBrowser.Episode())
+              }
             }
+          }
+          getYears = function(callback){
+            var yearsGroup  = new scpr.ArchiveBrowser.YearsCollection()
+            var liminalYearsView  = new scpr.ArchiveBrowser.LiminalYearsView({collection: yearsGroup})
+            var standardYearsView  = new scpr.ArchiveBrowser.StandardYearsView({collection: yearsGroup})
+            yearsGroup.url = "/api/v3/programs/" + programSlug() + "/episodes/archive/years"
+            yearsGroup.on("reset", function(e){
+              $(".liminal-picker .years").html(liminalYearsView.render().el)
+              $(".standard-picker .fields .field.years").html(standardYearsView.render().el)
+              setLiminalYearPicker()
+              setStandardYearPicker()
+              if(callback){callback.call()}
+            })
+            yearsGroup.fetch()
           }
           getMonths = function(callback){
             var monthsGroup  = new scpr.ArchiveBrowser.MonthsCollection()
             var liminalMonthsView  = new scpr.ArchiveBrowser.LiminalMonthsView({collection: monthsGroup})
             var standardMonthsView  = new scpr.ArchiveBrowser.StandardMonthsView({collection: monthsGroup})
-            monthsGroup.url = "/api/v3/programs/" + programSlug() + "/episodes/archive/months/" + currentYear()
+            monthsGroup.url = "/api/v3/programs/" + programSlug() + "/episodes/archive/" + currentYear() + "/months"
             monthsGroup.on("reset", function(e){
               $(".liminal-picker .months").html(liminalMonthsView.render().el)
               $(".standard-picker .fields .field.months").html(standardMonthsView.render().el)
@@ -214,11 +230,13 @@ scpr.Behaviors.Editions = {
             $(".liminal-picker div:eq(" + myDropdown + ") li:eq(" + myIndex + ")").addClass("selected")
           }
 
-          setLiminalYearPicker()
-          setLiminalMonthPicker()
-          setStandardYearPicker()
-          setStandardMonthPicker()
-          getResults()
+          $(document).ready(function(){
+            getYears(function(){
+              getMonths(function(){
+                getResults()
+              })
+            })            
+          })
 
         })(scpr)
 

@@ -90,3 +90,54 @@ class scpr.ArchiveBrowser.StandardMonthsView extends Backbone.View
   addMonth: (month)->
     monthView = new scpr.ArchiveBrowser.StandardMonthView({model: month})
     @.$el.append(monthView.render().el)
+
+
+## YEARS
+
+class scpr.ArchiveBrowser.Year extends Backbone.Model
+  defaults:
+    number: undefined
+  parse: (response) ->
+    return {'number': response}
+
+class scpr.ArchiveBrowser.YearsCollection extends Backbone.Collection
+  model: scpr.ArchiveBrowser.Year
+  parse: (response) ->
+    return response.years
+
+class scpr.ArchiveBrowser.LiminalYearView extends Backbone.View 
+  tagName: 'li'
+  className: 'Year'
+  template: ->
+    return _.template($("#liminalYearView").text())
+  render: ->
+    yearTemplate = @template()(@model.toJSON())
+    @.$el.html(yearTemplate)
+    @
+
+class scpr.ArchiveBrowser.LiminalYearsView extends Backbone.View
+  tagName: 'ul'
+  render: ->
+    @collection.each(@addYear, @)
+    @
+  addYear: (year)->
+    yearView = new scpr.ArchiveBrowser.LiminalYearView({model: year})
+    @.$el.append(yearView.render().el)
+
+class scpr.ArchiveBrowser.StandardYearView extends Backbone.View 
+  tagName: 'option'
+  template: ->
+    return _.template($("#standardYearView").text())
+  render: ->
+    yearTemplate = @template()(@model.toJSON())
+    @.$el.html(yearTemplate)
+    @
+
+class scpr.ArchiveBrowser.StandardYearsView extends Backbone.View
+  tagName: 'select'
+  render: ->
+    @collection.each(@addYear, @)
+    @
+  addYear: (year)->
+    yearView = new scpr.ArchiveBrowser.StandardYearView({model: year})
+    @.$el.append(yearView.render().el)

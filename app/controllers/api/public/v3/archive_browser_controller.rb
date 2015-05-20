@@ -1,7 +1,7 @@
 module Api::Public::V3
   class ArchiveBrowserController < BaseController
 
-    before_filter :sanitize_slug, :find_program, only: [:index, :months]
+    before_filter :sanitize_slug, :find_program, only: [:index, :years, :months]
 
     def index
       date = Time.parse("#{params[:year]}-#{params[:month]}-01")
@@ -11,6 +11,11 @@ module Api::Public::V3
     def months
       @months = @program.episode_months params[:year]
       respond_with @months
+    end
+
+    def years
+      @years = @program.episode_years
+      respond_with @years
     end
 
     private

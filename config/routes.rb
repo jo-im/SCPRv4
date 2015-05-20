@@ -184,7 +184,8 @@ Scprv4::Application.routes.draw do
         resources :data_points, only: [:index, :show]
         resources :tags, only: [:index, :show]
 
-        get "programs/:id/episodes/archive/months/:year" => "archive_browser#months"
+        get "programs/:id/episodes/archive/years"        => "archive_browser#years"
+        get "programs/:id/episodes/archive/:year/months" => "archive_browser#months"
         get "programs/:id/episodes/archive/:year/:month" => "archive_browser#index"
 
         resources :schedule, controller: 'schedule_occurrences',only: [:index] do
