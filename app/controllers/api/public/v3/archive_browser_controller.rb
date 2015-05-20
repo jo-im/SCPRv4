@@ -4,7 +4,7 @@ module Api::Public::V3
     before_filter :sanitize_slug, :find_program, only: [:index, :years, :months]
 
     def index
-      date = Time.parse("#{params[:year]}-#{params[:month]}-01")
+      date = Time.zone.parse("#{params[:year]}-#{params[:month]}-01")
       @episodes = @program.episodes.published.where(air_date: date.beginning_of_month..date.end_of_month)
     end
 
