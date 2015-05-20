@@ -160,7 +160,7 @@ scpr.Behaviors.Editions = {
             var monthsGroup  = new scpr.ArchiveBrowser.MonthsCollection()
             var liminalMonthsView  = new scpr.ArchiveBrowser.LiminalMonthsView({collection: monthsGroup})
             var standardMonthsView  = new scpr.ArchiveBrowser.StandardMonthsView({collection: monthsGroup})
-            monthsGroup.url = "/api/v3/programs/" + programSlug() + "/" + currentYear() + "/months"
+            monthsGroup.url = "/api/v3/programs/" + programSlug() + "/episodes/archive/months/" + currentYear()
             monthsGroup.on("reset", function(e){
               $(".liminal-picker .months").html(liminalMonthsView.render().el)
               $(".standard-picker .fields .field.months").html(standardMonthsView.render().el)
