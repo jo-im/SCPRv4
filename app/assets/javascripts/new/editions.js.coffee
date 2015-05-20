@@ -76,157 +76,122 @@ scpr.Behaviors.Editions = loadBehaviors: ->
       else if myRatio < 1.0
         $(this).closest('article').addClass 'ratio-tall'
       return
-  # SINGLE EPISODE: FPO Archive-Browser behavior.
-  # ---------------------------------------------------------
-  if $('.archive-browser').length
-    # ---------------------------------------------------------
-    # 1.) Standard-Picker triggers results.
-    #     (And, while we're at it: update Liminal-Picker, too.)
-    # ---------------------------------------------------------
-    do (scpr) ->
-      programSlug = undefined
-      currentYear = undefined
-      currentMonth = undefined
-      currentMonthNumber = undefined
-      loadLaminalMonthPicker = undefined
-      getResults = undefined
-      getMonths = undefined
-      setLiminalPicker = undefined
-      setLiminalYearPicker = undefined
-      setLiminalMonthPicker = undefined
-      setStandardMonthPicker = undefined
-      setStandardYearPicker = undefined
-      setStandardSelection = undefined
 
-      programSlug = ->
-        window.location.pathname.match(/programs\/(.*?)\//)[1]
 
-      currentYear = ->
-        $('.standard-picker .years select').find(':selected').text().replace /\s/g, ''
+  class scpr.ArchiveBrowser.Browser
+    constructor: (element)->
+      @element = element
+      $(document).ready =>
+        @getYears =>
+          @getMonths =>
+            @getResults()
 
-      currentMonth = ->
-        $('.standard-picker .months select').find(':selected').text().replace /\s/g, ''
+    programSlug: ->
+      window.location.pathname.match(/programs\/(.*?)\//)[1]
 
-      currentMonthNumber = ->
-        new Date(currentMonth() + ' 01, ' + currentYear()).getMonth() + 1
+    currentYear: ->
+      @element.find('.standard-picker .years select').find(':selected').text().replace /\s/g, ''
 
-      loadLaminalMonthPicker = ->
-        element = ($('.standard-picker .months select').find(':selected') or $('.standard-picker .months select')).text()
-        return
+    currentMonth: ->
+      @element.find('.standard-picker .months select').find(':selected').text().replace /\s/g, ''
 
-      getResults = ->
-        if currentMonthNumber()
-          results = $('.archive-browser .results')
-          episodeGroup = new (scpr.ArchiveBrowser.EpisodesCollection)
-          episodesView = new (scpr.ArchiveBrowser.EpisodesView)(collection: episodeGroup)
-          results.addClass 'loading'
-          episodeGroup.on 'reset', (e) ->
-            results.html episodesView.render().el
-            results.removeClass 'loading'
-            return
-          episodeGroup.url = '/api/v3/programs/' + programSlug() + '/episodes/archive/' + currentYear() + '/' + currentMonthNumber()
-          episodeGroup.fetch()
-          if episodeGroup.length == 0
-            episodeGroup.add new (scpr.ArchiveBrowser.Episode)
-        return
+    currentMonthNumber: ->
+      new Date(@currentMonth() + ' 01, ' + @currentYear()).getMonth() + 1
 
-      getYears = (callback) ->
-        yearsGroup = new (scpr.ArchiveBrowser.YearsCollection)
-        liminalYearsView = new (scpr.ArchiveBrowser.LiminalYearsView)(collection: yearsGroup)
-        standardYearsView = new (scpr.ArchiveBrowser.StandardYearsView)(collection: yearsGroup)
-        yearsGroup.url = '/api/v3/programs/' + programSlug() + '/episodes/archive/years'
-        yearsGroup.on 'reset', (e) ->
-          $('.liminal-picker .years').html liminalYearsView.render().el
-          $('.standard-picker .fields .field.years').html standardYearsView.render().el
-          setLiminalYearPicker()
-          setStandardYearPicker()
-          if callback
-            callback.call()
-          return
-        yearsGroup.fetch()
-        return
+    loadLaminalMonthPicker: ->
+      element = (@element.find('.standard-picker .months select').find(':selected') or @element.find('.standard-picker .months select')).text()
 
-      getMonths = (callback) ->
-        monthsGroup = new (scpr.ArchiveBrowser.MonthsCollection)
-        liminalMonthsView = new (scpr.ArchiveBrowser.LiminalMonthsView)(collection: monthsGroup)
-        standardMonthsView = new (scpr.ArchiveBrowser.StandardMonthsView)(collection: monthsGroup)
-        monthsGroup.url = '/api/v3/programs/' + programSlug() + '/episodes/archive/' + currentYear() + '/months'
-        monthsGroup.on 'reset', (e) ->
-          $('.liminal-picker .months').html liminalMonthsView.render().el
-          $('.standard-picker .fields .field.months').html standardMonthsView.render().el
-          setLiminalMonthPicker()
-          setStandardMonthPicker()
-          if callback
-            callback.call()
-          return
-        monthsGroup.fetch()
-        return
+    getResults: ->
+      if @currentMonthNumber()
+        results = @element.find('.results')
+        episodeGroup = new (scpr.ArchiveBrowser.EpisodesCollection)
+        episodesView = new (scpr.ArchiveBrowser.EpisodesView)(collection: episodeGroup)
+        results.addClass 'loading'
+        episodeGroup.on 'reset', (e) ->
+          results.html episodesView.render().el
+          results.removeClass 'loading'
+        episodeGroup.url = '/api/v3/programs/' + @programSlug() + '/episodes/archive/' + @currentYear() + '/' + @currentMonthNumber()
+        episodeGroup.fetch()
+        if episodeGroup.length == 0
+          episodeGroup.add new (scpr.ArchiveBrowser.Episode)
 
-      setLiminalPicker = (cssClass) ->
-        element = $(cssClass)
-        element.removeClass 'selected'
-        $(element[0]).addClass 'selected'
-        element.click ->
-          myDropdown = $(this).closest('div').index()
-          myChoice = $(this).index()
-          $(this).siblings().attr 'class', ''
-          $(this).addClass 'selected'
-          $('.standard-picker .field:eq(' + myDropdown + ') select option').removeAttr 'selected'
-          $('.standard-picker .field:eq(' + myDropdown + ') select option:eq(' + myChoice + ')').attr('selected', 'selected').trigger 'change'
-          return
-        return
+    getYears: (callback) ->
+      yearsGroup = new (scpr.ArchiveBrowser.YearsCollection)
+      liminalYearsView = new (scpr.ArchiveBrowser.LiminalYearsView)(collection: yearsGroup)
+      standardYearsView = new (scpr.ArchiveBrowser.StandardYearsView)(collection: yearsGroup)
+      yearsGroup.url = '/api/v3/programs/' + @programSlug() + '/episodes/archive/years'
+      yearsGroup.on 'reset', (e) =>
+        @element.find('.liminal-picker .years').html liminalYearsView.render().el
+        @element.find('.standard-picker .fields .field.years').html standardYearsView.render().el
+        @setLiminalYearPicker()
+        @setStandardYearPicker()
+        if callback
+          callback.call()
+      yearsGroup.fetch()
 
-      setLiminalYearPicker = ->
-        setLiminalPicker '.liminal-picker div.years li'
-        return
+    getMonths: (callback) ->
+      monthsGroup = new (scpr.ArchiveBrowser.MonthsCollection)
+      liminalMonthsView = new (scpr.ArchiveBrowser.LiminalMonthsView)(collection: monthsGroup)
+      standardMonthsView = new (scpr.ArchiveBrowser.StandardMonthsView)(collection: monthsGroup)
+      monthsGroup.url = '/api/v3/programs/' + @programSlug() + '/episodes/archive/' + @currentYear() + '/months'
+      monthsGroup.on 'reset', (e) =>
+        @element.find('.liminal-picker .months').html liminalMonthsView.render().el
+        @element.find('.standard-picker .fields .field.months').html standardMonthsView.render().el
+        @setLiminalMonthPicker()
+        @setStandardMonthPicker()
+        if callback
+          callback.call()
+      monthsGroup.fetch()
 
-      setLiminalMonthPicker = ->
-        setLiminalPicker '.liminal-picker div.months li'
-        return
+    setLiminalPicker: (cssClass) ->
+      element = @element
+      pickerElement = @element.find(cssClass)
+      pickerElement.removeClass 'selected'
+      $(pickerElement[0]).addClass 'selected'
+      pickerElement.click ->
+        myDropdown = $(this).closest('div').index()
+        myChoice = $(this).index()
+        $(this).siblings().attr 'class', ''
+        $(this).addClass 'selected'
+        element.find('.standard-picker .field:eq(' + myDropdown + ') select option').removeAttr 'selected'
+        element.find('.standard-picker .field:eq(' + myDropdown + ') select option:eq(' + myChoice + ')').attr('selected', 'selected').trigger 'change'
 
-      setStandardYearPicker = ->
-        $('.standard-picker .fields .field.years select').change ->
-          setStandardSelection this
-          getMonths ->
-            getResults()
-            return
-          return
-        return
+    setLiminalYearPicker: ->
+      @setLiminalPicker @element.find('.liminal-picker div.years li')
 
-      setStandardMonthPicker = ->
-        $('.standard-picker .fields .field.months select').change ->
-          setStandardSelection this
-          getResults()
-          return
-        return
+    setLiminalMonthPicker: ->
+      @setLiminalPicker @element.find('.liminal-picker div.months li')
 
-      setStandardSelection = (context) ->
-        myIndex = $(context).find(':selected').index()
-        myDropdown = $(context).closest('.field').index()
-        $(context).find('option').removeAttr 'selected'
-        $(context).find('option:eq(' + myIndex + ')').attr 'selected', 'selected'
-        $('.liminal-picker div:eq(' + myDropdown + ') li').removeAttr 'class'
-        $('.liminal-picker div:eq(' + myDropdown + ') li:eq(' + myIndex + ')').addClass 'selected'
-        return
+    setStandardYearPicker: ->
+      pickerElement = @element.find('.standard-picker .fields .field.years select')
+      pickerElement.change =>
+        @setStandardSelection pickerElement
+        @getMonths =>
+          @getResults()
 
-      $(document).ready ->
-        getYears ->
-          getMonths ->
-            getResults()
-            return
-          return
-        return
-      return
+    setStandardMonthPicker: ->
+      pickerElement = @element.find('.standard-picker .fields .field.months select')
+      pickerElement.change =>
+        @setStandardSelection pickerElement
+        @getResults()
+
+    setStandardSelection: (context) ->
+      myIndex = $(context).find(':selected').index()
+      myDropdown = $(context).closest('.field').index()
+      $(context).find('option').removeAttr 'selected'
+      $(context).find('option:eq(' + myIndex + ')').attr 'selected', 'selected'
+      @element.find('.liminal-picker div:eq(' + myDropdown + ') li').removeAttr 'class'
+      @element.find('.liminal-picker div:eq(' + myDropdown + ') li:eq(' + myIndex + ')').addClass 'selected' 
+
+  el = $('.archive-browser')
+  new scpr.ArchiveBrowser.Browser el
+
     # ---------------------------------------------------------
     # 3.) Handheld users can opt to view all results.
     # ---------------------------------------------------------
-    $('.show-full-results').click ->
-      $('.results').toggleClass 'show-everything'
-      $('.show-full-results').hide()
-      return
-    # ---------------------------------------------------------
-  #.archive-browser existence check
-  return
+  $('.show-full-results').click ->
+    $('.results').toggleClass 'show-everything'
+    $('.show-full-results').hide()
 
 # ---
 # generated by js2coffee 2.0.4
