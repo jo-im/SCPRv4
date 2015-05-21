@@ -78,7 +78,7 @@ scpr.Behaviors.Editions = loadBehaviors: ->
       return
 
   scpr.ArchiveBrowser ?= {}
-  scpr.ArchiveBrowser.Active ?= []
+  scpr.ArchiveBrowser.active ?= []
 
   class scpr.ArchiveBrowser.Picker
     constructor: (element, group, viewClass, options) ->
@@ -86,13 +86,11 @@ scpr.Behaviors.Editions = loadBehaviors: ->
       @element = element
       @group = group
       @viewClass = viewClass
-      @previousValue = undefined
       @onClick = ->
       @onReset = ->
       @onChange = ->
       @onSelect = ->
       @group.on 'reset', (e) =>
-        @previousValue = @value()
         view = new @viewClass(collection: group)
         @element.html view.render().el
         @behave()
@@ -102,11 +100,11 @@ scpr.Behaviors.Editions = loadBehaviors: ->
     items: ->
       @element.find('li')
     select: (value) ->
-      @previousValue = @value()
-      console.log @previousValue
       @items().removeClass('selected')
       @find(value).addClass('selected')
       @onSelect(value)
+    selectFirst: ->
+      @select $(@items()[0]).text()
     change: (value) ->
       @select(value)
       @onChange(value)
@@ -142,8 +140,6 @@ scpr.Behaviors.Editions = loadBehaviors: ->
       @onSelect(value)
     change: (value) ->
       @select(value)
-      # @onChange(value)
-      # @items.parent().trigger('change')
     value: ->
       $(@element.find("option:selected")[0]).text()
     behave: ->
@@ -168,8 +164,8 @@ scpr.Behaviors.Editions = loadBehaviors: ->
 
   class scpr.ArchiveBrowser.Browser
     constructor: (element, program) ->
-      scpr.ArchiveBrowser.Active ?= []
-      scpr.ArchiveBrowser.Active.push @
+      scpr.ArchiveBrowser.active ?= []
+      scpr.ArchiveBrowser.active.push @
       @element         = element
       @program         = program
       @yearsGroup      = new (scpr.ArchiveBrowser.YearsCollection)
@@ -183,6 +179,7 @@ scpr.Behaviors.Editions = loadBehaviors: ->
       @sMonthPicker    = new scpr.ArchiveBrowser.StandardPicker(@element.find('.standard-picker .field.months'), @monthsGroup, scpr.ArchiveBrowser.StandardMonthsView)
       @episodesResults = new scpr.ArchiveBrowser.Episodes(@element.find('.results'), @episodesGroup, scpr.ArchiveBrowser.EpisodesView)
 
+      @month = undefined
 
       @lYearPicker.onChange = (val) =>
         @sYearPicker.select(val)
@@ -202,12 +199,15 @@ scpr.Behaviors.Editions = loadBehaviors: ->
       @yearsGroup.on "reset", =>
         @monthsGroup.url = "/api/v3/programs/#{@program}/episodes/archive/#{@currentYear()}/months"
         @monthsGroup.on "reset", =>
+          @sMonthPicker.select(@month)
+          @month = @sMonthPicker.value()
+          @lMonthPicker.select @month
           @getEpisodes @currentYear(), @currentMonth()
         @monthsGroup.fetch()
       @yearsGroup.fetch()
 
-
     getEpisodes: (year, month) ->
+      @month = month
       @episodesGroup.url = "/api/v3/programs/#{@program}/episodes/archive/#{year}/#{month}"
       @episodesGroup.fetch()
 
@@ -220,8 +220,6 @@ scpr.Behaviors.Editions = loadBehaviors: ->
     currentMonthNumber: ->
       new Date(@currentMonth() + ' 01, ' + @currentYear()).getMonth() + 1
 
-    getMonths: (value, callback) ->        
+    getMonths: (value, callback) ->     
       @monthsGroup.url = "/api/v3/programs/#{@program}/episodes/archive/#{value}/months"
       @monthsGroup.fetch()
-
-  # browser = new scpr.ArchiveBrowser.Browser($('section.archive-browser'), 'take-two')
