@@ -77,155 +77,151 @@ scpr.Behaviors.Editions = loadBehaviors: ->
         $(this).closest('article').addClass 'ratio-tall'
       return
 
-  $(document).ready ->
+  scpr.ArchiveBrowser ?= {}
+  scpr.ArchiveBrowser.Active ?= []
 
-    class scpr.ArchiveBrowser.Picker
-      constructor: (element, group, viewClass, options) ->
-        @options = options or {}
-        @element = element
-        @group = group
-        @viewClass = viewClass
-        @previousValue = undefined
-        @onClick = ->
-        @onReset = ->
-        @onChange = ->
-        @onSelect = ->
-        @group.on 'reset', (e) =>
-          @previousValue = @value()
-          view = new @viewClass(collection: group)
-          @element.html view.render().el
-          @behave()
-          @onReset()
-
-    class scpr.ArchiveBrowser.LiminalPicker extends scpr.ArchiveBrowser.Picker
-      items: ->
-        @element.find('li')
-      select: (value) ->
+  class scpr.ArchiveBrowser.Picker
+    constructor: (element, group, viewClass, options) ->
+      @options = options or {}
+      @element = element
+      @group = group
+      @viewClass = viewClass
+      @previousValue = undefined
+      @onClick = ->
+      @onReset = ->
+      @onChange = ->
+      @onSelect = ->
+      @group.on 'reset', (e) =>
         @previousValue = @value()
-        @items().removeClass('selected')
-        @find(value).addClass('selected')
-        @onSelect(value)
-      change: (value) ->
-        @select(value)
-        @onChange(value)
-      find: (value) ->
-        @element.find("li:contains('#{value}')")
-      value: ->
-        $(@element.find("li.selected")[0]).text()
-      behave: ->
-        @items().removeClass('selected')
-        $(@items()[0]).addClass('selected')
-        itemList = @items()
-        clickBack = @onClick
-        changeBack = @onChange
-        context = @
-        itemList.click ->
-          myDropdown = $(this).closest('div').index()
-          myChoice = $(this).index()
-          itemList.removeClass 'selected'
-          $(this).addClass 'selected'
-          changeBack($(this).text())
-          clickBack(@, context)
+        view = new @viewClass(collection: group)
+        @element.html view.render().el
+        @behave()
+        @onReset()
 
-    class scpr.ArchiveBrowser.StandardPicker extends scpr.ArchiveBrowser.Picker
-      constructor: (element, group, viewClass, options) ->
-        super element, group, viewClass, options
-        @element.change (e) =>
-          @onChange(@value())
-      items: ->
-        @element.find('option')
-      select: (value) ->
-        @items().removeAttr('selected')
-        @element.find("option:contains('#{value}')").attr('selected', 'selected')
-        @onSelect(value)
-      change: (value) ->
-        @select(value)
-        # @onChange(value)
-        # @items.parent().trigger('change')
-      value: ->
-        $(@element.find("option:selected")[0]).text()
-      behave: ->
-        itemList = @items()
-        clickBack = @onClick
-        changeBack = @onChange
-        context = @
+  class scpr.ArchiveBrowser.LiminalPicker extends scpr.ArchiveBrowser.Picker
+    items: ->
+      @element.find('li')
+    select: (value) ->
+      @previousValue = @value()
+      console.log @previousValue
+      @items().removeClass('selected')
+      @find(value).addClass('selected')
+      @onSelect(value)
+    change: (value) ->
+      @select(value)
+      @onChange(value)
+    find: (value) ->
+      @element.find("li:contains('#{value}')")
+    value: ->
+      $(@element.find("li.selected")[0]).text()
+    behave: ->
+      @items().removeClass('selected')
+      $(@items()[0]).addClass('selected')
+      itemList = @items()
+      clickBack = @onClick
+      changeBack = @onChange
+      context = @
+      itemList.click ->
+        myDropdown = $(this).closest('div').index()
+        myChoice = $(this).index()
+        itemList.removeClass 'selected'
+        $(this).addClass 'selected'
+        changeBack($(this).text())
+        clickBack(@, context)
 
-
-    class scpr.ArchiveBrowser.Episodes
-      constructor: (element, group, viewClass) ->
-        @element = element
-        @group = group
-        @viewClass = viewClass
-        @clickBack = ->
-        @resetBack = ->
-        @group.on 'reset', (e) =>
-          view = new @viewClass(collection: group)
-          @element.html view.render().el
-          @resetBack()
+  class scpr.ArchiveBrowser.StandardPicker extends scpr.ArchiveBrowser.Picker
+    constructor: (element, group, viewClass, options) ->
+      super element, group, viewClass, options
+      @element.change (e) =>
+        @onChange(@value())
+    items: ->
+      @element.find('option')
+    select: (value) ->
+      @items().removeAttr('selected')
+      @element.find("option:contains('#{value}')").attr('selected', 'selected')
+      @onSelect(value)
+    change: (value) ->
+      @select(value)
+      # @onChange(value)
+      # @items.parent().trigger('change')
+    value: ->
+      $(@element.find("option:selected")[0]).text()
+    behave: ->
+      itemList = @items()
+      clickBack = @onClick
+      changeBack = @onChange
+      context = @
 
 
+  class scpr.ArchiveBrowser.Episodes
+    constructor: (element, group, viewClass) ->
+      @element = element
+      @group = group
+      @viewClass = viewClass
+      @clickBack = ->
+      @resetBack = ->
+      @group.on 'reset', (e) =>
+        view = new @viewClass(collection: group)
+        @element.html view.render().el
+        @resetBack()
 
 
-    class scpr.ArchiveBrowser.Browser
-      constructor: (element, program) ->
-        @element         = element
-        @program         = program
-        @yearsGroup      = new (scpr.ArchiveBrowser.YearsCollection)
-        @yearsGroup.url  = "/api/v3/programs/#{@program}/episodes/archive/years"
-        @monthsGroup     = new (scpr.ArchiveBrowser.MonthsCollection)
-        @episodesGroup   = new (scpr.ArchiveBrowser.EpisodesCollection)
+  class scpr.ArchiveBrowser.Browser
+    constructor: (element, program) ->
+      scpr.ArchiveBrowser.Active ?= []
+      scpr.ArchiveBrowser.Active.push @
+      @element         = element
+      @program         = program
+      @yearsGroup      = new (scpr.ArchiveBrowser.YearsCollection)
+      @yearsGroup.url  = "/api/v3/programs/#{@program}/episodes/archive/years"
+      @monthsGroup     = new (scpr.ArchiveBrowser.MonthsCollection)
+      @episodesGroup   = new (scpr.ArchiveBrowser.EpisodesCollection)
 
-        @lYearPicker     = new scpr.ArchiveBrowser.LiminalPicker(@element.find('.liminal-picker .years'), @yearsGroup, scpr.ArchiveBrowser.LiminalYearsView)
-        @lMonthPicker    = new scpr.ArchiveBrowser.LiminalPicker(@element.find('.liminal-picker .months'), @monthsGroup, scpr.ArchiveBrowser.LiminalMonthsView, {'remember': true})
-        @sYearPicker     = new scpr.ArchiveBrowser.StandardPicker(@element.find('.standard-picker .field.years'), @yearsGroup, scpr.ArchiveBrowser.StandardYearsView)
-        @sMonthPicker    = new scpr.ArchiveBrowser.StandardPicker(@element.find('.standard-picker .field.months'), @monthsGroup, scpr.ArchiveBrowser.StandardMonthsView)
-        @episodesResults = new scpr.ArchiveBrowser.Episodes(@element.find('.results'), @episodesGroup, scpr.ArchiveBrowser.EpisodesView)
-
-
-        @lYearPicker.onChange = (val) =>
-          @sYearPicker.select(val)
-          @monthsGroup.url = "/api/v3/programs/#{@program}/episodes/archive/#{@currentYear()}/months"
-          @monthsGroup.on "reset", (e) =>
-            e.stopPropagation()
-            @episodesGroup.url = "/api/v3/programs/#{@program}/episodes/archive/#{@currentYear()}/#{@currentMonth()}"
-            @episodesGroup.fetch()
-          @monthsGroup.fetch()
-
-        @lMonthPicker.onChange = (val) =>
-          @sMonthPicker.select(val)
-          @episodesGroup.url = "/api/v3/programs/#{@program}/episodes/archive/#{@currentYear()}/#{@currentMonth()}"
-          @episodesGroup.fetch()
-
-        @sYearPicker.onChange = (val) =>
-          @lYearPicker.change(val)
-
-        @sMonthPicker.onChange = (val) =>
-          @lMonthPicker.change(val)
-
-        @yearsGroup.on "reset", =>
-          @monthsGroup.url = "/api/v3/programs/#{@program}/episodes/archive/#{@currentYear()}/months"
-          @monthsGroup.on "reset", =>
-            @episodesGroup.url = "/api/v3/programs/#{@program}/episodes/archive/#{@currentYear()}/#{@currentMonth()}"
-            @episodesGroup.fetch()
-          @monthsGroup.fetch()
-        @yearsGroup.fetch()
+      @lYearPicker     = new scpr.ArchiveBrowser.LiminalPicker(@element.find('.liminal-picker .years'), @yearsGroup, scpr.ArchiveBrowser.LiminalYearsView)
+      @lMonthPicker    = new scpr.ArchiveBrowser.LiminalPicker(@element.find('.liminal-picker .months'), @monthsGroup, scpr.ArchiveBrowser.LiminalMonthsView, {'remember': true})
+      @sYearPicker     = new scpr.ArchiveBrowser.StandardPicker(@element.find('.standard-picker .field.years'), @yearsGroup, scpr.ArchiveBrowser.StandardYearsView)
+      @sMonthPicker    = new scpr.ArchiveBrowser.StandardPicker(@element.find('.standard-picker .field.months'), @monthsGroup, scpr.ArchiveBrowser.StandardMonthsView)
+      @episodesResults = new scpr.ArchiveBrowser.Episodes(@element.find('.results'), @episodesGroup, scpr.ArchiveBrowser.EpisodesView)
 
 
-      getEpisodes: (year, month) ->
-        @episodesGroup.url = "/api/v3/programs/#{@program}/episodes/archive/#{year}/#{month}"
-        @episodesGroup.fetch()
-
-      currentYear: ->
-        @sYearPicker.value().replace(/\s/g, '')
-
-      currentMonth: ->
-        @sMonthPicker.value().replace(/\s/g, '')
-
-      currentMonthNumber: ->
-        new Date(@currentMonth() + ' 01, ' + @currentYear()).getMonth() + 1
-
-      getMonths: (value, callback) ->        
-        @monthsGroup.url = "/api/v3/programs/#{@program}/episodes/archive/#{value}/months"
+      @lYearPicker.onChange = (val) =>
+        @sYearPicker.select(val)
+        @monthsGroup.url = "/api/v3/programs/#{@program}/episodes/archive/#{@currentYear()}/months"
         @monthsGroup.fetch()
 
-    browser = new scpr.ArchiveBrowser.Browser($('section.archive-browser'), 'take-two')
+      @lMonthPicker.onChange = (val) =>
+        @sMonthPicker.select(val)
+        @getEpisodes @currentYear(), @currentMonth()
+
+      @sYearPicker.onChange = (val) =>
+        @lYearPicker.change(val)
+
+      @sMonthPicker.onChange = (val) =>
+        @lMonthPicker.change(val)
+
+      @yearsGroup.on "reset", =>
+        @monthsGroup.url = "/api/v3/programs/#{@program}/episodes/archive/#{@currentYear()}/months"
+        @monthsGroup.on "reset", =>
+          @getEpisodes @currentYear(), @currentMonth()
+        @monthsGroup.fetch()
+      @yearsGroup.fetch()
+
+
+    getEpisodes: (year, month) ->
+      @episodesGroup.url = "/api/v3/programs/#{@program}/episodes/archive/#{year}/#{month}"
+      @episodesGroup.fetch()
+
+    currentYear: ->
+      @sYearPicker.value().replace(/\s/g, '')
+
+    currentMonth: ->
+      @sMonthPicker.value().replace(/\s/g, '')
+
+    currentMonthNumber: ->
+      new Date(@currentMonth() + ' 01, ' + @currentYear()).getMonth() + 1
+
+    getMonths: (value, callback) ->        
+      @monthsGroup.url = "/api/v3/programs/#{@program}/episodes/archive/#{value}/months"
+      @monthsGroup.fetch()
+
+  # browser = new scpr.ArchiveBrowser.Browser($('section.archive-browser'), 'take-two')

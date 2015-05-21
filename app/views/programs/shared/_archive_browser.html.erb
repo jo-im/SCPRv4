@@ -1,5 +1,4 @@
-<% current_month = Time.now.strftime("%B") %>
-<section class="archive-browser">
+<section id="<%= program.slug %>-archive-browser" class="archive-browser">
   <h1><span>Browse the <%= program.title %> Archives</span></h1>
   <div class="columns">
 
@@ -90,3 +89,9 @@
 <script id="standardView" type="text/template">
   <%%= name %>
 </script>
+
+<%= javascript_tag do %>
+  $(document).on('ready', function(){
+    new scpr.ArchiveBrowser.Browser($('section#<%= program.slug %>-archive-browser.archive-browser'), '<%= program.slug %>')
+  })
+<% end %>
