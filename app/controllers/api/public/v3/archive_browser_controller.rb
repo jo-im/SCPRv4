@@ -6,6 +6,7 @@ module Api::Public::V3
     def index
       date = Time.zone.parse("#{params[:year]}-#{params[:month]}-01")
       @episodes = @program.episodes.published.where(air_date: date.beginning_of_month..date.end_of_month)
+      respond_with @episodes
     end
 
     def months
@@ -22,6 +23,9 @@ module Api::Public::V3
 
     def find_program
       @program = KpccProgram.find_by_slug(@slug) || ExternalProgram.find_by_slug(@slug)
+      if @program.nil?
+        render_not_found(message: "Program not found. (#{params[:id]})")
+      end
     end
 
   end
