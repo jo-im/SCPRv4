@@ -64,6 +64,11 @@ class ExternalProgram < ActiveRecord::Base
 
   #-------------------
 
+  #-------------------
+  # Aliases
+  alias_attribute :episodes, :external_episodes
+  #-------------------
+
   class << self
     def select_collection
       ExternalProgram.order("title").map { |p| [p.to_title, p.id] }
@@ -132,7 +137,11 @@ class ExternalProgram < ActiveRecord::Base
   def episode_months year
     beginning_of_year = Time.parse("#{year}-01-01").beginning_of_year
     end_of_year       = Time.parse("#{year}-01-01").end_of_year
-    external_episodes.select("DISTINCT MONTH(air_date) AS air_month").where.not(air_date: nil).where(air_date: beginning_of_year..end_of_year)
+    external_episodes.select("DISTINCT DATE_FORMAT(air_date, '%M') AS air_month")
+      .where.not(air_date: nil)
+      .where(air_date: beginning_of_year..end_of_year)
+      .order("air_date DESC")
+      .map(&:air_month)
   end
 
   private
