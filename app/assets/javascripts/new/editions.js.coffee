@@ -185,7 +185,8 @@ scpr.Behaviors.Editions = loadBehaviors: ->
         @lYearPicker.onChange = (val) =>
           @sYearPicker.select(val)
           @monthsGroup.url = "/api/v3/programs/#{@program}/episodes/archive/#{@currentYear()}/months"
-          @monthsGroup.on "reset", =>
+          @monthsGroup.on "reset", (e) =>
+            e.stopPropagation()
             @episodesGroup.url = "/api/v3/programs/#{@program}/episodes/archive/#{@currentYear()}/#{@currentMonth()}"
             @episodesGroup.fetch()
           @monthsGroup.fetch()
