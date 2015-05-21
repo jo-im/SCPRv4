@@ -4,7 +4,7 @@
 # basically split every action into two.
 class ProgramsController < ApplicationController
   include Concern::Controller::GetPopularArticles
-  include Concern::Controller::KpccEpisodes
+  include Concern::Controller::ShowEpisodes
 
   layout 'new/single', only: [:segment]
 

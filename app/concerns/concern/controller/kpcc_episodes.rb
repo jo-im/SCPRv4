@@ -1,6 +1,6 @@
 module Concern
   module Controller
-    module KpccEpisodes
+    module ShowEpisodes
       extend ActiveSupport::Concern
       def render_kpcc_episode
         @segments   = @episode.segments.published

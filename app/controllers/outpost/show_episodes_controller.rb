@@ -1,6 +1,6 @@
 class Outpost::ShowEpisodesController < Outpost::ResourceController
   outpost_controller
-  include Concern::Controller::KpccEpisodes
+  include Concern::Controller::ShowEpisodes
 
   define_list do |l|
     l.default_order_attribute   = "air_date"
