@@ -1,6 +1,6 @@
 json.partial! api_view_path("shared", "meta")
 
-json.aggregation do
+json.histogram do
   json.episode_count @result["hits"]["total"].to_i
   json.years @result["aggregations"]["years"]["buckets"].each do |year|
     json.year year["key_as_string"].to_i

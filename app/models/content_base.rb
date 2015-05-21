@@ -75,6 +75,27 @@ module ContentBase
     end
   end
 
+  def self.date_histogram content_type, match
+    query = {:query=>
+      {:filtered=>
+        {:query=>{:match_all=>{}}, :filter=>{:term=>match}}},
+     :sort=>[{"public_datetime"=>{:order=>"desc"}}],
+     :size=>0,
+     :aggs=>
+      {:years=>
+        {
+          :date_histogram=>{:field=>"public_datetime", :interval=>"year", :time_zone=>"-07:00", :format=>"YYYY"},
+          :aggs => {
+            :months=> {
+              :date_histogram=>{:field=>"public_datetime", :interval=>"month", :time_zone=>"-07:00"}
+            }
+          }
+        }
+      }
+    }
+    es_client.search(index: ContentBase.es_index, type: content_type, body: query)
+  end
+
   #--------------------
 
   def search(*args)

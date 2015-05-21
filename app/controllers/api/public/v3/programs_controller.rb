@@ -32,27 +32,9 @@ module Api::Public::V3
       respond_with @program
     end
 
-    def date_aggregation
+    def date_histogram
       @program = Program.find_by_slug(params[:id])
-      query = {:query=>
-        {:filtered=>
-          {:query=>{:match_all=>{}}, :filter=>{:term=>{:published=>"true", "show.slug" => params[:id]}}}},
-       :sort=>[{"public_datetime"=>{:order=>"desc"}}],
-       :size=>10,
-       :from=>0,
-       :aggs=>
-        {:years=>
-          {
-            :date_histogram=>{:field=>"public_datetime", :interval=>"year", :time_zone=>"-07:00", :format=>"YYYY"},
-            :aggs => {
-              :months=> {
-                :date_histogram=>{:field=>"public_datetime", :interval=>"month", :time_zone=>"-07:00"}
-              }
-            }
-          }
-        }
-      }
-      @result = ContentBase.es_client.search(index: ContentBase.es_index, type: "show_episode", body: query)
+      @result = ContentBase.date_histogram "show_episode", {"show.slug" => params[:id]}
       respond_with @result
     end
 

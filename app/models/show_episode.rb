@@ -117,7 +117,7 @@ class ShowEpisode < ActiveRecord::Base
       :id                 => self.obj_key,
       :title              => self.headline,
       :short_title        => self.headline,
-      :public_datetime    => self.published_at,
+      :public_datetime    => self.air_date,
       :body               => self.body,
       :teaser             => self.teaser,
       :assets             => self.assets,
