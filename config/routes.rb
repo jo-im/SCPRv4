@@ -187,6 +187,7 @@ Scprv4::Application.routes.draw do
         get "programs/:id/episodes/archive/years"        => "archive_browser#years"
         get "programs/:id/episodes/archive/:year/months" => "archive_browser#months"
         get "programs/:id/episodes/archive/:year/:month" => "archive_browser#index"
+        get "programs/:id/dates"                         => "programs#date_aggregation"
 
         resources :schedule, controller: 'schedule_occurrences',only: [:index] do
           collection do

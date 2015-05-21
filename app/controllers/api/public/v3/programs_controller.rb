@@ -8,7 +8,7 @@ module Api::Public::V3
       "hidden"
     ]
 
-    before_filter :sanitize_slug, only: [:show]
+    before_filter :sanitize_slug, only: [:show, :date_aggregation]
 
     before_filter \
       :set_hash_conditions,
@@ -30,6 +30,30 @@ module Api::Public::V3
       end
 
       respond_with @program
+    end
+
+    def date_aggregation
+      @program = Program.find_by_slug(params[:id])
+      query = {:query=>
+        {:filtered=>
+          {:query=>{:match_all=>{}}, :filter=>{:term=>{:published=>"true", "show.slug" => params[:id]}}}},
+       :sort=>[{"public_datetime"=>{:order=>"desc"}}],
+       :size=>10,
+       :from=>0,
+       :aggs=>
+        {:years=>
+          {
+            :date_histogram=>{:field=>"public_datetime", :interval=>"year", :time_zone=>"-07:00", :format=>"YYYY"},
+            :aggs => {
+              :months=> {
+                :date_histogram=>{:field=>"public_datetime", :interval=>"month", :time_zone=>"-07:00"}
+              }
+            }
+          }
+        }
+      }
+      @result = ContentBase.es_client.search(index: ContentBase.es_index, type: "show_episode", body: query)
+      respond_with @result
     end
 
 
