@@ -201,6 +201,7 @@ scpr.Behaviors.Editions = loadBehaviors: ->
         resetMonths = (value) =>
           months = @histogram.months(value)
           @monthsGroup.reset months
+          @getEpisodes(@currentYear(), @currentMonth())
 
         @sYearPicker.on ['Change'], (value) =>
           @lYearPicker.select value
@@ -215,10 +216,12 @@ scpr.Behaviors.Editions = loadBehaviors: ->
         @sMonthPicker.on ['Change'], (value) =>
           @lMonthPicker.select value
           @month = value
+          @getEpisodes(@currentYear(), @currentMonth())
 
         @lMonthPicker.on ['Change'], (value) =>
           @sMonthPicker.select value
           @month = value
+          @getEpisodes(@currentYear(), @currentMonth())
 
         @yearsGroup.on 'reset', =>
           value = @yearsGroup.models[0].attributes.year
@@ -231,11 +234,6 @@ scpr.Behaviors.Editions = loadBehaviors: ->
           @lMonthPicker.select whichMonth
           
         @yearsGroup.reset @histogram.years()
-
-        # @lYearPicker.render()
-        # @sYearPicker.render()
-        # @lMonthPicker.render()
-        # @sMonthPicker.render()
 
     getEpisodes: (year, month) ->
       @month = month
