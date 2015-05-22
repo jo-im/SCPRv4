@@ -75,7 +75,7 @@ module ContentBase
     end
   end
 
-  def self.date_histogram content_type, match, options={}
+  def self.histogram content_type, match, options={}
     query = {:query=>
       {:filtered=>
         {:query=>{:match_all=>{}}, :filter=>{:term=>match}}},

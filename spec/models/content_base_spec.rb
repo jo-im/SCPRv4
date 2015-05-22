@@ -140,4 +140,19 @@ describe ContentBase do
       }.should raise_error ActiveRecord::RecordNotFound
     end
   end
+
+  describe '::histogram', :indexing do
+    it "returns an aggregation" do
+      program = create :kpcc_program
+      (1..5).each do |i|
+        stamp = ("201#{i}-0#{i}-01")
+        create :show_episode, show: program, created_at: stamp, updated_at: stamp, air_date: stamp, status: 5
+      end
+      result = ContentBase.histogram "show_episode", {"show.slug" => program.slug}
+      expect(result['aggregations']["years"]["buckets"].count).to eq 5
+      result['aggregations']["years"]["buckets"].each do |year|
+        expect(year["months"]["buckets"].count).to eq 1
+      end
+    end
+  end
 end

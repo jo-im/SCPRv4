@@ -9,16 +9,6 @@ module Api::Public::V3
       respond_with @episodes
     end
 
-    def months
-      @months = @program.episode_months params[:year]
-      respond_with @months
-    end
-
-    def years
-      @years = @program.episode_years
-      respond_with @years
-    end
-
     private
 
     def find_program

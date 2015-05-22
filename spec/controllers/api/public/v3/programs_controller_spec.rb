@@ -44,4 +44,35 @@ describe Api::Public::V3::ProgramsController do
       end
     end
   end
+
+  describe "GET histogram", :indexing do
+    program, parsed_response = nil
+    before :each do
+      program = create :kpcc_program, slug: 'hello'
+      create :show_episode, air_date: Date.parse("2015-02-15"), show: program
+      get :histogram, { id: program.slug }.merge(request_params)
+      parsed_response = JSON.parse(response.body)["histogram"]
+    end
+    it "renders a json histogram" do
+      assigns(:program).should eq program.to_program
+      response.should render_template "histogram"
+      parsed_response["years"][0]["episode_count"].should eq 1
+      parsed_response["years"][0]["year"].should eq 2015
+      parsed_response["years"][0]["months"].count.should eq 1
+    end
+    it "provides a list of years" do
+      parsed_response["years"][0]["year"].should eq 2015
+    end
+    it "provides an episode count for a year" do
+      parsed_response["years"][0]["episode_count"].should eq 1
+    end
+    it "provides a list of months for a year" do
+      parsed_response["years"][0]["months"].count.should eq 1
+      parsed_response["years"][0]["months"][0]["name"].should eq "February"
+    end
+    it "provides an episode count for a month" do
+      parsed_response["years"][0]["months"][0]["episode_count"].should eq 1
+    end
+  end
+
 end
