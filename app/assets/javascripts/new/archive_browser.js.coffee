@@ -53,6 +53,9 @@ class scpr.ArchiveBrowser.MonthsCollection extends Backbone.Collection
   model: scpr.ArchiveBrowser.Month
   parse: (response) ->
     return response.months
+  valueOrFirst: (value) =>
+    if model = @where({name: value})[0] or @models[0]
+      model.attributes.name
 
 class scpr.ArchiveBrowser.LiminalMonthView extends Backbone.View 
   tagName: 'li'

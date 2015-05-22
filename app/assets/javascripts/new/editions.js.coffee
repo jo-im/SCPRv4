@@ -87,14 +87,19 @@ scpr.Behaviors.Editions = loadBehaviors: ->
       @group = group
       @viewClass = viewClass
       @onClick = ->
-      @onReset = ->
       @onChange = ->
       @onSelect = ->
+      @onRender = ->
       @group.on 'reset', (e) =>
-        view = new @viewClass(collection: group)
-        @element.html view.render().el
-        @behave()
-        @onReset()
+        @render()
+    on: (events, callback) =>
+      _.each events, (event) =>
+        @["on#{event}"] = callback
+    render: ->
+      view = new @viewClass(collection: @group)
+      @element.html view.render().el
+      @behave()
+      @onRender(@value())
 
   class scpr.ArchiveBrowser.LiminalPicker extends scpr.ArchiveBrowser.Picker
     items: ->
@@ -107,14 +112,15 @@ scpr.Behaviors.Editions = loadBehaviors: ->
       @select $(@items()[0]).text()
     change: (value) ->
       @select(value)
-      @onChange(value)
+      @onChange(value.replace(/\s/g, ''))
     find: (value) ->
       @element.find("li:contains('#{value}')")
     value: ->
-      $(@element.find("li.selected")[0]).text()
+      $(@element.find("li.selected")[0]).text().replace(/\s/g, '')
     behave: ->
-      @items().removeClass('selected')
-      $(@items()[0]).addClass('selected')
+      # @items().removeClass('selected')
+      # $(@items()[0]).addClass('selected')
+      # @onSelect(@value())
       itemList = @items()
       clickBack = @onClick
       changeBack = @onChange
@@ -124,14 +130,14 @@ scpr.Behaviors.Editions = loadBehaviors: ->
         myChoice = $(this).index()
         itemList.removeClass 'selected'
         $(this).addClass 'selected'
-        changeBack($(this).text())
+        changeBack($(this).text().replace(/\s/g, ''))
         clickBack(@, context)
 
   class scpr.ArchiveBrowser.StandardPicker extends scpr.ArchiveBrowser.Picker
     constructor: (element, group, viewClass, options) ->
       super element, group, viewClass, options
       @element.change (e) =>
-        @onChange(@value())
+        @onChange(@value().replace(/\s/g, ''))
     items: ->
       @element.find('option')
     select: (value) ->
@@ -141,7 +147,7 @@ scpr.Behaviors.Editions = loadBehaviors: ->
     change: (value) ->
       @select(value)
     value: ->
-      $(@element.find("option:selected")[0]).text()
+      $(@element.find("option:selected")[0]).text().replace(/\s/g, '')
     behave: ->
       itemList = @items()
       clickBack = @onClick
@@ -162,49 +168,74 @@ scpr.Behaviors.Editions = loadBehaviors: ->
         @resetBack()
 
 
+  class scpr.ArchiveBrowser.Histogram
+    constructor: (response) ->
+      @data = response.histogram
+    years: ->
+      @data.years
+    year: (year) ->
+      _.findWhere(@years(), {year: parseInt(year)})
+    months: (year) ->
+      @year(year).months
+
   class scpr.ArchiveBrowser.Browser
     constructor: (element, program) ->
       scpr.ArchiveBrowser.active ?= []
       scpr.ArchiveBrowser.active.push @
       @element         = element
       @program         = program
-      @yearsGroup      = new (scpr.ArchiveBrowser.YearsCollection)
-      @yearsGroup.url  = "/api/v3/programs/#{@program}/episodes/archive/years"
-      @monthsGroup     = new (scpr.ArchiveBrowser.MonthsCollection)
-      @episodesGroup   = new (scpr.ArchiveBrowser.EpisodesCollection)
+      $.get "/api/v3/programs/#{@program}/histogram", (data) =>
+        @histogram  = new scpr.ArchiveBrowser.Histogram(data)
+        @yearsGroup = new (scpr.ArchiveBrowser.YearsCollection)
+        @monthsGroup     = new (scpr.ArchiveBrowser.MonthsCollection)
+        @episodesGroup   = new (scpr.ArchiveBrowser.EpisodesCollection)
+        @lMonthPicker    = new scpr.ArchiveBrowser.LiminalPicker(@element.find('.liminal-picker .months'), @monthsGroup, scpr.ArchiveBrowser.LiminalMonthsView, {'remember': true})
+        @sYearPicker     = new scpr.ArchiveBrowser.StandardPicker(@element.find('.standard-picker .field.years'), @yearsGroup, scpr.ArchiveBrowser.StandardYearsView)
+        @sMonthPicker    = new scpr.ArchiveBrowser.StandardPicker(@element.find('.standard-picker .field.months'), @monthsGroup, scpr.ArchiveBrowser.StandardMonthsView)
+        @episodesResults = new scpr.ArchiveBrowser.Episodes(@element.find('.results'), @episodesGroup, scpr.ArchiveBrowser.EpisodesView)
+        @lYearPicker     = new scpr.ArchiveBrowser.LiminalPicker(@element.find('.liminal-picker .years'), @yearsGroup, scpr.ArchiveBrowser.LiminalYearsView)
+        @lMonthPicker    = new scpr.ArchiveBrowser.LiminalPicker(@element.find('.liminal-picker .months'), @monthsGroup, scpr.ArchiveBrowser.LiminalMonthsView, {'remember': true})
 
-      @lYearPicker     = new scpr.ArchiveBrowser.LiminalPicker(@element.find('.liminal-picker .years'), @yearsGroup, scpr.ArchiveBrowser.LiminalYearsView)
-      @lMonthPicker    = new scpr.ArchiveBrowser.LiminalPicker(@element.find('.liminal-picker .months'), @monthsGroup, scpr.ArchiveBrowser.LiminalMonthsView, {'remember': true})
-      @sYearPicker     = new scpr.ArchiveBrowser.StandardPicker(@element.find('.standard-picker .field.years'), @yearsGroup, scpr.ArchiveBrowser.StandardYearsView)
-      @sMonthPicker    = new scpr.ArchiveBrowser.StandardPicker(@element.find('.standard-picker .field.months'), @monthsGroup, scpr.ArchiveBrowser.StandardMonthsView)
-      @episodesResults = new scpr.ArchiveBrowser.Episodes(@element.find('.results'), @episodesGroup, scpr.ArchiveBrowser.EpisodesView)
+        @month = undefined
 
-      @month = undefined
+        resetMonths = (value) =>
+          months = @histogram.months(value)
+          @monthsGroup.reset months
 
-      @lYearPicker.onChange = (val) =>
-        @sYearPicker.select(val)
-        @monthsGroup.url = "/api/v3/programs/#{@program}/episodes/archive/#{@currentYear()}/months"
-        @monthsGroup.fetch()
-
-      @lMonthPicker.onChange = (val) =>
-        @sMonthPicker.select(val)
-        @getEpisodes @currentYear(), @currentMonth()
-
-      @sYearPicker.onChange = (val) =>
-        @lYearPicker.change(val)
-
-      @sMonthPicker.onChange = (val) =>
-        @lMonthPicker.change(val)
-
-      @yearsGroup.on "reset", =>
-        @monthsGroup.url = "/api/v3/programs/#{@program}/episodes/archive/#{@currentYear()}/months"
-        @monthsGroup.on "reset", =>
-          @sMonthPicker.select(@month)
+        @sYearPicker.on ['Change'], (value) =>
+          @lYearPicker.select value
           @month = @sMonthPicker.value()
-          @lMonthPicker.select @month
-          @getEpisodes @currentYear(), @currentMonth()
-        @monthsGroup.fetch()
-      @yearsGroup.fetch()
+          resetMonths(value)
+
+        @lYearPicker.on ['Change'], (value) =>
+          @sYearPicker.select value
+          @month = @lMonthPicker.value()
+          resetMonths(value)
+
+        @sMonthPicker.on ['Change'], (value) =>
+          @lMonthPicker.select value
+          @month = value
+
+        @lMonthPicker.on ['Change'], (value) =>
+          @sMonthPicker.select value
+          @month = value
+
+        @yearsGroup.on 'reset', =>
+          value = @yearsGroup.models[0].attributes.year
+          @lYearPicker.select value
+          resetMonths(value)
+
+        @monthsGroup.on 'reset', =>
+          whichMonth = @monthsGroup.valueOrFirst(@month)
+          @sMonthPicker.select whichMonth
+          @lMonthPicker.select whichMonth
+          
+        @yearsGroup.reset @histogram.years()
+
+        # @lYearPicker.render()
+        # @sYearPicker.render()
+        # @lMonthPicker.render()
+        # @sMonthPicker.render()
 
     getEpisodes: (year, month) ->
       @month = month
