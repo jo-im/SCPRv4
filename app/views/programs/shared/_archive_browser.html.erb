@@ -94,6 +94,6 @@
 
 <%= javascript_tag do %>
   $(document).on('ready', function(){
-    new scpr.ArchiveBrowser.Browser($('section#<%= program.slug %>-archive-browser.archive-browser'), '<%= program.slug %>')
+    new scpr.ArchiveBrowser($('section#<%= program.slug %>-archive-browser.archive-browser'), '<%= program.slug %>')
   })
 <% end %>
