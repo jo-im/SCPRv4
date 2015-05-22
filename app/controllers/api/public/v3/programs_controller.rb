@@ -32,7 +32,7 @@ module Api::Public::V3
       respond_with @program
     end
 
-    def date_histogram
+    def histogram
       @program = Program.find_by_slug(params[:id])
       @result = ContentBase.date_histogram "show_episode", {"show.slug" => params[:id]}
       respond_with @result
