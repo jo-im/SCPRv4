@@ -118,9 +118,6 @@ scpr.Behaviors.Editions = loadBehaviors: ->
     value: ->
       $(@element.find("li.selected")[0]).text().replace(/\s/g, '')
     behave: ->
-      # @items().removeClass('selected')
-      # $(@items()[0]).addClass('selected')
-      # @onSelect(@value())
       itemList = @items()
       clickBack = @onClick
       changeBack = @onChange
@@ -185,18 +182,19 @@ scpr.Behaviors.Editions = loadBehaviors: ->
       @element         = element
       @program         = program
       $.get "/api/v3/programs/#{@program}/histogram", (data) =>
+        @browserView = new scpr.ArchiveBrowser.BrowserView
         @histogram  = new scpr.ArchiveBrowser.Histogram(data)
         @yearsGroup = new (scpr.ArchiveBrowser.YearsCollection)
         @monthsGroup     = new (scpr.ArchiveBrowser.MonthsCollection)
         @episodesGroup   = new (scpr.ArchiveBrowser.EpisodesCollection)
+        ## Render the browser view
+        $("section##{@program}-archive-browser").html @browserView.render().el
         @lMonthPicker    = new scpr.ArchiveBrowser.LiminalPicker(@element.find('.liminal-picker .months'), @monthsGroup, scpr.ArchiveBrowser.LiminalMonthsView, {'remember': true})
         @sYearPicker     = new scpr.ArchiveBrowser.StandardPicker(@element.find('.standard-picker .field.years'), @yearsGroup, scpr.ArchiveBrowser.StandardYearsView)
         @sMonthPicker    = new scpr.ArchiveBrowser.StandardPicker(@element.find('.standard-picker .field.months'), @monthsGroup, scpr.ArchiveBrowser.StandardMonthsView)
         @episodesResults = new scpr.ArchiveBrowser.Episodes(@element.find('.results'), @episodesGroup, scpr.ArchiveBrowser.EpisodesView)
         @lYearPicker     = new scpr.ArchiveBrowser.LiminalPicker(@element.find('.liminal-picker .years'), @yearsGroup, scpr.ArchiveBrowser.LiminalYearsView)
         @lMonthPicker    = new scpr.ArchiveBrowser.LiminalPicker(@element.find('.liminal-picker .months'), @monthsGroup, scpr.ArchiveBrowser.LiminalMonthsView, {'remember': true})
-
-        @month = undefined
 
         resetMonths = (value) =>
           months = @histogram.months(value)
@@ -248,7 +246,3 @@ scpr.Behaviors.Editions = loadBehaviors: ->
 
     currentMonthNumber: ->
       new Date(@currentMonth() + ' 01, ' + @currentYear()).getMonth() + 1
-
-    getMonths: (value, callback) ->     
-      @monthsGroup.url = "/api/v3/programs/#{@program}/episodes/archive/#{value}/months"
-      @monthsGroup.fetch()

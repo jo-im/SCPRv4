@@ -1,5 +1,12 @@
 scpr.ArchiveBrowser ?= {}
 
+class scpr.ArchiveBrowser.BrowserView extends Backbone.View
+  template: ->
+    return _.template($('#browserView').text())
+  render: ->
+    this.el = @template()()
+    @
+
 ## EPISODES
 
 class scpr.ArchiveBrowser.Episode extends Backbone.Model
