@@ -46,21 +46,23 @@ describe Api::Public::V3::ProgramsController do
   end
 
   describe "GET histogram", :indexing do
-    program, parsed_response = nil
+    program, parsed_response, found_program = nil
     prerun = false
     before :each do
-      # RSpec doesn't allow get/post/etc requests with before(:all).  
+      # RSpec doesn't allow get/post/etc requests with before(:all).
       if prerun != true
         program = create :kpcc_program, slug: 'hello'
         create :show_episode, air_date: Date.parse("2015-02-15"), show: program
         get :histogram, { id: program.slug }.merge(request_params)
+        found_program = assigns(:program)
         parsed_response = JSON.parse(response.body)["histogram"]
         prerun = true
       end
     end
+    it "finds the correct program" do
+      expect(found_program).to eq program.to_program
+    end
     it "renders a json histogram" do
-      assigns(:program).should eq program.to_program
-      response.should render_template "histogram"
       parsed_response["years"][0]["episode_count"].should eq 1
       parsed_response["years"][0]["year"].should eq 2015
       parsed_response["years"][0]["months"].should_not be_empty
