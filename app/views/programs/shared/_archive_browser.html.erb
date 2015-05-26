@@ -92,8 +92,10 @@
   <%%= name %>
 </script>
 
-<%= javascript_tag do %>
-  $(document).on('ready', function(){
-    new scpr.ArchiveBrowser($('section#<%= program.slug %>-archive-browser.archive-browser'), '<%= program.slug %>')
-  })
+<%= content_for :script do %>
+  <%= javascript_tag do %>
+    $(document).on('ready', function(){
+      new scpr.ArchiveBrowser($('section#<%= program.slug %>-archive-browser.archive-browser'), '<%= program.slug %>')
+    })
+  <% end %>
 <% end %>
