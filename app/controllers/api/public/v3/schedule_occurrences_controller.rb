@@ -19,6 +19,7 @@ module Api::Public::V3
 
     def index
       @schedule_occurrences = ScheduleOccurrence.block(@start_time, @length)
+      @pledge_drive = true
       respond_with @schedule_occurrences
     end
 
