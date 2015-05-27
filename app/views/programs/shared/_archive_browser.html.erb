@@ -1,8 +1,4 @@
 <section id="<%= program.slug %>-archive-browser" class="archive-browser">
-
-</section><!--/ .archive-browser -->
-
-  <script id="browserView" type="text/template">
   <h1><span>Browse the <%= program.title %> Archives</span></h1>
     <div class="columns">
 
@@ -18,30 +14,10 @@
       ==========================================================
       -->
       <aside class="liminal-picker" aria-hidden="true">
-        <div class="years">
-          <ul>
-          </ul>
-        </div>
-        <div class="months">
-          <ul>
-          </ul>
-        </div>
       </aside><!--/ .liminal-picker -->
 
       <div class="directory">
         <aside class="standard-picker">
-          <form>
-            <div class="fields clearfix">
-              <div class="field years">
-                <select autocomplete="off">
-                </select>
-              </div>
-              <div class="field months">
-                <select autocomplete="off">
-                </select>
-              </div>
-            </div><!--/ .fields -->
-          </form>
         </aside><!--/ .standard-picker -->
         <div class="results">
           <ul></ul>
@@ -60,42 +36,44 @@
               <p class="appeal"><a href="/support/underwriting/">Become a KPCC Sponsor</a></p>
           </div>
       </aside>
-    
+
     </div><!--/ .collateral -->
-    </script>
+</section><!--/ .archive-browser -->
 
 <script id="episodeView" type="text/template">
-  <li><a href="<%%= public_url %>"><time datetime="<%%= air_date %>"><%%= day() %></time> <span><%%= title %></span></a></li>
+  <li><a href="<%%= public_url %>"><time datetime="<%%= air_date %>"><%%= day %></time> <span><%%= title %></span></a></li>
 </script>
 
-<script id="liminalYearView" type="text/template">
-  <span><%%= year %></span>
+<script id="liminalPicker" type="text/template">
+  <div class="years">
+    <ul>
+    </ul>
+  </div>
+  <div class="months">
+    <ul>
+    </ul>
+  </div>
 </script>
 
-<script id="standardYearView" type="text/template">
-  <%%= year %>
-</script>
-
-<script id="liminalMonthView" type="text/template">
-  <span><%%= name %></span>
-</script>
-
-<script id="standardMonthView" type="text/template">
-  <%%= name %>
-</script>
-
-<script id="liminalView" type="text/template">
-  <span><%%= number %></span>
-</script>
-
-<script id="standardView" type="text/template">
-  <%%= name %>
+<script id="standardPicker" type="text/template">
+  <form>
+    <div class="fields clearfix">
+      <div class="field years">
+        <select autocomplete="off">
+        </select>
+      </div>
+      <div class="field months">
+        <select autocomplete="off">
+        </select>
+      </div>
+    </div><!--/ .fields -->
+  </form>
 </script>
 
 <%= content_for :script do %>
   <%= javascript_tag do %>
     $(document).on('ready', function(){
-      new scpr.ArchiveBrowser($('section#<%= program.slug %>-archive-browser.archive-browser'), '<%= program.slug %>')
+      window.archive_browser = new scpr.ArchiveBrowser('#<%= program.slug %>-archive-browser', '<%= program.slug %>')
     })
   <% end %>
 <% end %>

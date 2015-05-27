@@ -1,323 +1,218 @@
 class scpr.ArchiveBrowser
-  constructor: (element, program) ->
+  constructor: (finder, @program) ->
     scpr.ArchiveBrowser.active ?= []
     scpr.ArchiveBrowser.active.push @
-    @element         = element
-    @program         = program
+
+    @element = $(finder)
+    @episodes = new Episodes [], url:"/api/v3/programs/#{@program}/episodes/archive/"
+
+    @episodesView = new EpisodesView collection:@episodes, el:@element.find(".results ul")
+
     $.get "/api/v3/programs/#{@program}/histogram", (data) =>
-      @browserView = new BrowserView
-      @histogram  = new Histogram(data)
-      @yearsGroup = new (YearsCollection)
-      @monthsGroup     = new (MonthsCollection)
-      @episodesGroup   = new (EpisodesCollection)
+      # histogram has a collection of years, each of which have a collection of months
+      @histogram  = new Histogram(data.histogram)
 
-      $("section##{@program}-archive-browser").html @browserView.render().el
-      @lMonthPicker    = new LiminalPicker(@element.find('.liminal-picker .months'), @monthsGroup, LiminalMonthsView)
-      @sYearPicker     = new StandardPicker(@element.find('.standard-picker .field.years'), @yearsGroup, StandardYearsView)
-      @sMonthPicker    = new StandardPicker(@element.find('.standard-picker .field.months'), @monthsGroup, StandardMonthsView)
-      @episodesResults = new Episodes(@element.find('.results'), @episodesGroup, EpisodesView)
-      @lYearPicker     = new LiminalPicker(@element.find('.liminal-picker .years'), @yearsGroup, LiminalYearsView)
-      @lMonthPicker    = new LiminalPicker(@element.find('.liminal-picker .months'), @monthsGroup, LiminalMonthsView)
+      @standardPicker = new StandardPicker model:@histogram, el:@element.find(".standard-picker")
+      @liminalPicker  = new LiminalPicker model:@histogram, el:@element.find(".liminal-picker")
 
-      @resetMonths = (value) =>
-        months = @histogram.months(value)
-        @monthsGroup.reset months
-        @getEpisodes(@currentYear(), @currentMonth())
+      @standardPicker.render()
+      @liminalPicker.render()
 
-      @sYearPicker.on ['Change'], (value) =>
-        @lYearPicker.select value
-        @month = @sMonthPicker.value()
-        @resetMonths(value)
+      setYear = (y) =>
+        @histogram.set year:y
 
-      @lYearPicker.on ['Change'], (value) =>
-        @sYearPicker.select value
-        @month = @lMonthPicker.value()
-        @resetMonths(value)
+      @standardPicker.on "click:year", setYear
+      @liminalPicker.on "click:year", setYear
 
-      @sMonthPicker.on ['Change'], (value) =>
-        @lMonthPicker.select value
-        @month = value
-        @getEpisodes(@currentYear(), @currentMonth())
+      setMonth = (m) =>
+        @histogram.set month:m
 
-      @lMonthPicker.on ['Change'], (value) =>
-        @sMonthPicker.select value
-        @month = value
-        @getEpisodes(@currentYear(), @currentMonth())
+      @standardPicker.on "click:month", setMonth
+      @liminalPicker.on "click:month", setMonth
 
-      @yearsGroup.on 'reset', =>
-        value = @yearsGroup.models[0].attributes.year
-        @lYearPicker.select value
-        @resetMonths(value)
+      @histogram.on "change", =>
+        @getEpisodes @histogram.get("month")
 
-      @monthsGroup.on 'reset', =>
-        whichMonth = @monthsGroup.valueOrFirst(@month)
-        @sMonthPicker.select whichMonth
-        @lMonthPicker.select whichMonth
-        
-      @yearsGroup.reset @histogram.years()
+      # load our initial episodes
+      @getEpisodes @histogram.get("month")
 
-  getEpisodes: (year, month) ->
-    @month = month
-    @episodesGroup.url = "/api/v3/programs/#{@program}/episodes/archive/#{year}/#{month}"
-    @episodesGroup.fetch()
-
-  currentYear: ->
-    @sYearPicker.value()
-
-  currentMonth: ->
-    @sMonthPicker.value()
-
-  currentMonthNumber: ->
-    new Date(@currentMonth() + ' 01, ' + @currentYear()).getMonth() + 1
+  getEpisodes: (month) ->
+    @episodes.load(month.get("year"),month.get("month"))
 
   ## Child Classes
 
-  class Picker
-    constructor: (element, group, viewClass, options) ->
-      @options = options or {}
-      @element = element
-      @group = group
-      @viewClass = viewClass
-      @onClick = ->
-      @onChange = ->
-      @onSelect = ->
-      @onRender = ->
-      @group.on 'reset', (e) =>
+  # standard picker is an element with selects for years and months
+  class StandardPicker extends Backbone.View
+    initialize: ->
+      @template = _.template $("#standardPicker").text()
+
+      @model.on "change", =>
         @render()
-    on: (events, callback) =>
-      _.each events, (event) =>
-        @["on#{event}"] = callback
+
+    events:
+      "change .years select ": "_changeYear"
+      "change .months select": "_changeMonth"
+
+    _changeYear: (evt) ->
+      year = evt.currentTarget.selectedOptions[0].value
+      y = @model.years.get(year)
+      @trigger "click:year", y
+
+    _changeMonth: (evt) ->
+      month = evt.currentTarget.selectedOptions[0].value
+      m = @model.get("year").months.get(month)
+      @trigger "click:month", m
+
     render: ->
-      view = new @viewClass(collection: @group)
-      @element.html view.render().el
-      @behave()
-      @onRender(@value())
+      @$el.html @template()
 
-  class LiminalPicker extends Picker
-    items: ->
-      @element.find('li')
-    select: (value) ->
-      @items().removeClass('selected')
-      @find(value).addClass('selected')
-      @onSelect(value)
-    selectFirst: ->
-      @select $(@items()[0]).text()
-    change: (value) ->
-      @select(value)
-      @onChange(value.replace(/\s/g, ''))
-    find: (value) ->
-      @element.find("li:contains('#{value}')")
-    value: ->
-      $(@element.find("li.selected")[0]).text().replace(/\s/g, '')
-    behave: ->
-      itemList = @items()
-      clickBack = @onClick
-      changeBack = @onChange
-      context = @
-      itemList.click ->
-        myDropdown = $(this).closest('div').index()
-        myChoice = $(this).index()
-        itemList.removeClass 'selected'
-        $(this).addClass 'selected'
-        changeBack($(this).text().replace(/\s/g, ''))
-        clickBack(@, context)
+      cy = @model.get("year")
+      cm = @model.get("month")
 
-  class StandardPicker extends Picker
-    constructor: (element, group, viewClass, options) ->
-      super element, group, viewClass, options
-      @element.change (e) =>
-        @onChange(@value().replace(/\s/g, ''))
-    items: ->
-      @element.find('option')
-    select: (value) ->
-      @items().removeAttr('selected')
-      @element.find("option:contains('#{value}')").attr('selected', 'selected')
-      @onSelect(value)
-    change: (value) ->
-      @select(value)
-    value: ->
-      $(@element.find("option:selected")[0]).text().replace(/\s/g, '')
-    behave: ->
-      itemList = @items()
-      clickBack = @onClick
-      changeBack = @onChange
-      context = @
+      # fill in our selects
+      @$(".years select").html @model.years.collect (y) =>
+        el = $("<option/>").attr("value",y.get("year")).text y.get("year")
 
+        if y == cy
+          el.attr("selected","selected")
 
-  class Episodes
-    constructor: (element, group, viewClass) ->
-      @element = element
-      @group = group
-      @viewClass = viewClass
-      @clickBack = ->
-      @resetBack = ->
-      @group.on 'reset', (e) =>
-        view = new @viewClass(collection: group)
-        @element.html view.render().el
-        @resetBack()
+        el
 
+      @$(".months select").html @model.get("year").months.collect (m) =>
+        el = $("<option/>").attr("value",m.get("month")).text m.get("name")
 
-  class Histogram
-    constructor: (response) ->
-      @data = response.histogram
-    years: ->
-      @data.years
-    year: (year) ->
-      _.findWhere(@years(), {year: parseInt(year)})
-    months: (year) ->
-      @year(year).months
+        el.attr("selected","selected") if m == cm
 
+        el
+
+      @
+
+  class LiminalItem extends Backbone.View
+    tagName: "li"
+
+    events:
+      click: "_click"
+
+    initialize: (opts) ->
+      @nameAttr = opts.nameAttr
+      @selected = opts.selected || false
+
+    _click: (evt) ->
+      @trigger "click", evt, @model
+
+    render: ->
+      @$el.html $("<span/>").text @model.get(@nameAttr)
+      @$el.addClass "selected" if @selected
+      @
+
+  class LiminalPicker extends Backbone.View
+    initialize: ->
+      @template = _.template $("#liminalPicker").text()
+
+      @model.on "change", =>
+        @render()
+
+    render: ->
+      @$el.html @template()
+
+      cy = @model.get("year")
+      cm = @model.get("month")
+
+      @$(".years ul").html @model.years.collect (y) =>
+        v = new LiminalItem model:y, nameAttr:"year", selected:(y == cy)
+        v.on "click", => @trigger "click:year", y
+        v.render().el
+
+      @$(".months ul").html @model.get("year").months.collect (m) =>
+        v = new LiminalItem model:m, nameAttr:"name", selected:(m == cm)
+        v.on "click", => @trigger "click:month", m
+        v.render().el
+
+      @
+
+  #----------
+
+  class Histogram extends Backbone.Model
+    initialize: ->
+      @years = new HistogramYearCollection @attributes.years
+
+      # to start, set active to to last month of the first (newest) year
+      active = @years.first().months.last()
+      @set year:active.collection.year, month:active
+
+      @on "change:year", =>
+        # is our current month available in the new year?
+        if m = @attributes.year.months.get( @attributes.month.id )
+          # yes... use it
+          @set month:m
+        else
+          # no... use the last month
+          @set month:@attributes.year.months.last()
+
+  class HistogramMonth extends Backbone.Model
+    idAttribute: "month"
+
+  class HistogramMonthCollection extends Backbone.Collection
+    model: HistogramMonth
+    initialize: (data,opts) ->
+      @year = opts.year
+
+  class HistogramYear extends Backbone.Model
+    idAttribute: "year"
+    initialize: ->
+      @months = new HistogramMonthCollection @attributes.months, year:@
+
+  class HistogramYearCollection extends Backbone.Collection
+    model: HistogramYear
+    comparator: (m) -> -1 * m.get('year')
+
+  #----------
 
   ## Models, views, collections
-
-  class BrowserView extends Backbone.View
-    template: ->
-      return _.template($('#browserView').text())
-    render: ->
-      this.el = @template()()
-      @
 
   ## EPISODES
 
   class Episode extends Backbone.Model
-    defaults:
-      id: undefined
-      title: "Untitled Episode"
-      public_url: '#'
-      air_date: undefined
-      day: ->
-        new Date(this.air_date).getDate() 
-    parse: (response) ->
-      return response
+    initialize: ->
+      @attributes.day = (new Date(@attributes.air_date)).getDate()
 
-  class EpisodesCollection extends Backbone.Collection
+  class Episodes extends Backbone.Collection
     model: Episode
-    parse: (response) ->
-      return response.episodes
 
-  class EpisodeView extends Backbone.View 
+    initialize: (data, options) ->
+      @url = options.url
+
+    load: (year,month) ->
+      $.getJSON "#{@url}/#{year}/#{month}", (data) =>
+        console.log "Reseting episodes with ", data.episodes
+        @reset data.episodes
+
+      true
+
+  #----------
+
+  class EpisodeView extends Backbone.View
     tagName: 'li'
-    className: 'Episode'
-    template: ->
-      return _.template($("#episodeView").text())
+    className: 'episode'
+
+    initialize: ->
+      @template = _.template $("#episodeView").text()
+
     render: ->
-      episodeTemplate = @template()(@model.toJSON())
-      @.$el.html(episodeTemplate)
+      @$el.html @template @model.toJSON()
       @
 
   class EpisodesView extends Backbone.View
     tagName: 'ul'
+
+    initialize: ->
+      @collection.on "reset", =>
+        @render()
+
     render: ->
-      if @collection.length != 0
-        @collection.each(@addEpisode, @)
+      if @collection.length > 0
+        @$el.html @collection.collect (ep) => (new EpisodeView model:ep).render().el
       else
-        @.$el.append("No episodes found.")
+        @$el.text "No episodes found."
+
       @
-    addEpisode: (episode)->
-      episodeView = new EpisodeView({model: episode})
-      @.$el.append(episodeView.render().el)
-
-
-  ## MONTHS
-
-  class Month extends Backbone.Model
-    defaults:
-      name: undefined
-    parse: (response) ->
-      return {'name': response}
-
-  class MonthsCollection extends Backbone.Collection
-    model: Month
-    parse: (response) ->
-      return response.months
-    valueOrFirst: (value) =>
-      if model = @where({name: value})[0] or @models[0]
-        model.attributes.name
-
-  class LiminalMonthView extends Backbone.View 
-    tagName: 'li'
-    className: 'Month'
-    template: ->
-      return _.template($("#liminalMonthView").text())
-    render: ->
-      monthTemplate = @template()(@model.toJSON())
-      @.$el.html(monthTemplate)
-      @
-
-  class LiminalMonthsView extends Backbone.View
-    tagName: 'ul'
-    render: ->
-      @collection.each(@addMonth, @)
-      @
-    addMonth: (month)->
-      monthView = new LiminalMonthView({model: month})
-      @.$el.append(monthView.render().el)
-
-  class StandardMonthView extends Backbone.View 
-    tagName: 'option'
-    template: ->
-      return _.template($("#standardMonthView").text())
-    render: ->
-      monthTemplate = @template()(@model.toJSON())
-      @.$el.html(monthTemplate)
-      @
-
-  class StandardMonthsView extends Backbone.View
-    tagName: 'select'
-    render: ->
-      @collection.each(@addMonth, @)
-      @
-    addMonth: (month)->
-      monthView = new StandardMonthView({model: month})
-      @.$el.append(monthView.render().el)
-
-
-  ## YEARS
-
-  class Year extends Backbone.Model
-    defaults:
-      number: undefined
-    parse: (response) ->
-      return {'number': response}
-
-  class YearsCollection extends Backbone.Collection
-    model: Year
-    parse: (response) ->
-      return response.years
-
-  class LiminalYearView extends Backbone.View 
-    tagName: 'li'
-    className: 'Year'
-    template: ->
-      return _.template($("#liminalYearView").text())
-    render: ->
-      yearTemplate = @template()(@model.toJSON())
-      @.$el.html(yearTemplate)
-      @
-
-  class LiminalYearsView extends Backbone.View
-    tagName: 'ul'
-    render: ->
-      @collection.each(@addYear, @)
-      @
-    addYear: (year)->
-      yearView = new LiminalYearView({model: year})
-      @.$el.append(yearView.render().el)
-
-  class StandardYearView extends Backbone.View 
-    tagName: 'option'
-    template: ->
-      return _.template($("#standardYearView").text())
-    render: ->
-      yearTemplate = @template()(@model.toJSON())
-      @.$el.html(yearTemplate)
-      @
-
-  class StandardYearsView extends Backbone.View
-    tagName: 'select'
-    render: ->
-      @collection.each(@addYear, @)
-      @
-    addYear: (year)->
-      yearView = new StandardYearView({model: year})
-      @.$el.append(yearView.render().el)
