@@ -75,7 +75,7 @@ module ContentBase
     end
   end
 
-  def self.histogram content_type, match, options={}
+  def histogram content_type, match, options={}
     query = {:query=>
       {:filtered=>
         {:query=>{:match_all=>{}}, :filter=>{:term=>match}}},
@@ -93,7 +93,7 @@ module ContentBase
         }
       }
     }
-    es_client.search({type: content_type, body: query}.merge(options))
+    es_client.search({index:@@es_index, type: content_type, body: query}.merge(options))
   end
 
   #--------------------
