@@ -104,7 +104,10 @@ class ProgramsController < ApplicationController
     render 'programs/kpcc/segment' and return
   end
 
-  def episode
+  def episode  
+    @years  = @program.episode_years
+    @months = @program.episode_months(Date.today.year)
+
     if @program.is_a?(KpccProgram)
       @episode    = @program.episodes.find(params[:id])
       render_kpcc_episode

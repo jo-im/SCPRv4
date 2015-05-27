@@ -8,7 +8,7 @@ module Api::Public::V3
       "hidden"
     ]
 
-    before_filter :sanitize_slug, only: [:show]
+    before_filter :sanitize_slug, only: [:show, :date_aggregation]
 
     before_filter \
       :set_hash_conditions,
@@ -30,6 +30,12 @@ module Api::Public::V3
       end
 
       respond_with @program
+    end
+
+    def histogram
+      @program = Program.find_by_slug(params[:id])
+      @result = ContentBase.histogram "show_episode", {"show.slug" => params[:id]}
+      respond_with @result
     end
 
 

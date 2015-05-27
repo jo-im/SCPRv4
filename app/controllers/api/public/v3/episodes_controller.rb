@@ -6,7 +6,7 @@ module Api::Public::V3
       :sanitize_air_date,
       :sanitize_page,
       :sanitize_limit,
-      only: [:index]
+      only: [:index, :archive]
 
     before_filter :sanitize_id, only: [:show]
 

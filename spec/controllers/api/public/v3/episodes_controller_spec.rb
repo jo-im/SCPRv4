@@ -132,4 +132,5 @@ describe Api::Public::V3::EpisodesController do
       assigns(:episodes).should eq [second_obj].map(&:to_episode)
     end
   end
+
 end

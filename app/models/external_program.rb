@@ -26,6 +26,7 @@ class ExternalProgram < ActiveRecord::Base
   include Concern::Validations::SlugValidation
   include Concern::Associations::RelatedLinksAssociation
   include Concern::Model::Searchable
+  include Concern::Model::Programs
 
   self.public_route_key = "program"
 
@@ -62,6 +63,11 @@ class ExternalProgram < ActiveRecord::Base
   #-------------------
   # Callbacks
 
+  #-------------------
+
+  #-------------------
+  # Aliases
+  alias_attribute :episodes, :external_episodes
   #-------------------
 
   class << self
@@ -124,7 +130,6 @@ class ExternalProgram < ActiveRecord::Base
   def sync
     self.importer.sync(self)
   end
-
 
   private
 
