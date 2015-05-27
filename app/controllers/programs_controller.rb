@@ -4,6 +4,8 @@
 # basically split every action into two.
 class ProgramsController < ApplicationController
   include Concern::Controller::GetPopularArticles
+  include Concern::Controller::ShowEpisodes
+
   layout 'new/single', only: [:segment]
 
   before_filter :get_program, only: [:show, :episode, :archive, :featured_program, :featured_show]
@@ -102,27 +104,15 @@ class ProgramsController < ApplicationController
     render 'programs/kpcc/segment' and return
   end
 
-
   def episode
     if @program.is_a?(KpccProgram)
       @episode    = @program.episodes.find(params[:id])
-      @segments   = @episode.segments.published
-
-      @featured_programs = KpccProgram.where.not(id: @program.id, is_featured: false).first(4)
-
-      if @program.is_segmented?
-        @episodes = @program.episodes.published.order("air_date").first(4)
-        render 'programs/kpcc/episode', layout: 'new/ronin' and return
-      else
-        render 'programs/kpcc/old/episode_standalone'
-      end
+      render_kpcc_episode
     end
 
     if @program.is_a?(ExternalProgram)
       @episode  = @program.external_episodes.find(params[:id])
-      @segments = @episode.external_segments
-
-      render 'programs/external/episode', layout: 'application' and return
+      render_external_episode
     end
   end
 

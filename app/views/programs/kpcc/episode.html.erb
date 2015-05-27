@@ -23,7 +23,7 @@
         </section>
 
         <% if audio = @episode.audio.first %>
-          <%= content_widget "new/primary_audio", @episode %>
+          <%= content_widget "new/primary_audio", @episode, prompt: "Listen to this episode." %>
         <% end %>
 
 
@@ -123,12 +123,12 @@
                     <p><a href="<%= segment.public_path %>"><%= segment.teaser.html_safe %></a></p>
                     <aside class="meta">
                       <ul>
-                        <li class="comments"><a href="#"><span>Comments:</span> <b><%= comment_count_for segment %></b></a></li>
+                        <li><%= comment_widget_for segment, partial: "new/comment_count_small", to_article: false, non_zero: true %></li>
                         <li class="play"><%= content_widget "primary_audio", segment, context: segment.show.slug %></li>
                       </li>
                     </aside>
                   </div>
-                  <footer class="legacy"><span>Originally published <time datetime="2012-11-06">11/6/2012</time></span></footer>
+                  <%= timestamp_if_segment_is_legacy segment.published_at, @episode.air_date %>
                 </div><!--/ .exposition -->
               </article>
 
@@ -326,4 +326,6 @@
       articles: @popular_articles.first(4),
       header: 'Popular Now on KPCC' %>
 <% end %>
-
+<script>
+  scpr.Behaviors.loadBehaviors(['Single']);
+</script>
