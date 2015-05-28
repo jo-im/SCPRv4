@@ -52,10 +52,13 @@ class scpr.Audio
           @closeAndStop() if event.keyCode is 27 and @audiobar.is(":visible")
 
         # register listener to toggle the active widget from the audio bar
-        _.each ["play", "pause"], (x) =>
-            $("#{@options.audioBar} .jp-#{x}").on "click", (e) =>
-                @active?[x]()
+        _.each ["play", "pause"], (event) =>
+            $("#{@options.audioBar} .jp-#{event}").on "click", (e) =>
+                @active?[event]()
                 return false
+
+        @player.find("audio").on "ended", =>
+            @active?.end()
 
     #----------
 
@@ -83,13 +86,7 @@ class scpr.Audio
 
             return true
 
-        if @playing
-            # # tell the player to stop
-            # @player.jPlayer "stop"
-
-            # # and tell the widget that it stopped
-            # @active?.stop()
-            @stop()
+        @stop() if @playing
 
         # set our new mp3
         @player.jPlayer "setMedia", mp3:widget.options.mp3
@@ -119,10 +116,9 @@ class scpr.Audio
     #----------
 
     stop: () ->
-        if @playing
-            @player.jPlayer "stop"
-            @active?.stop()
-            @playing = false
+        @player.jPlayer "stop"
+        @active?.stop()
+        @playing = false
 
     #----------
 
@@ -136,39 +132,37 @@ class scpr.Audio
                 @player.play @
                 return false
 
-            @started = false
-            @quartile1 = false
-            @quartile2 = false
-            @quartile3 = false
-            @ended = false
+            @started = @quartile1 = @quartile2 = @quartile3 = @ended = @stopped = false
 
             $(@audioElement).on "timeupdate", =>
                 if @ is @player.active
                     duration = @audioElement.duration
                     currentTime = @audioElement.currentTime
 
-                    _.each [1,2,3], (i) ->
+                    _.each [1,2,3], (i) =>
                         if (currentTime > (duration * i/4)) and !@["quartile#{i}"]
                             @["quartile#{i}"] = true
-                            console.log "quartile#{i}"              
+                            @sendEvent
+                                action: "Quartile#{i}"
+                                nonInteraction: true
+                                value: @currentTime()
+                            console.log "quartile#{i}"     
 
 
-        currentTime: () -> @audioElement.currentTime
+        currentTime: () => @audioElement.currentTime
 
         sendEvent: (options) ->
             ga 'send',
-                'hitType': 'event'
-                'eventCategory': 'AudioPlayer'
-                'eventAction': options.action
-                'eventLabel': options.label
-                'nonInteraction': options.nonInteraction or true
-                'eventValue': options.value or undefined
+                hitType: 'event'
+                eventCategory: 'AudioPlayer'
+                eventAction: options.action
+                eventLabel: @options.mp3
+                nonInteraction: options.nonInteraction or true
+                eventValue: options.value or undefined
 
         start: () ->
-            console.log "start"
             @sendEvent
                 action: 'start'
-                label:  @options.mp3
                 nonInteraction: true
             @started = true
 
@@ -177,10 +171,9 @@ class scpr.Audio
                 @start()
             else
                 @resume()
-            console.log "play"
 
         stop: () ->
-            console.log "stop"
+            @stopped = true
             @sendEvent
                 action: 'stop'
                 label:  @options.mp3
@@ -188,16 +181,17 @@ class scpr.Audio
                 value: @currentTime()
 
         pause: () ->
-            console.log "pause"
+            # ->
 
         resume: () ->
-            console.log "resume"
+            if !@stopped
+                # ->
+            else
+                @stopped = false
 
         end: () ->
             if @ended is not true
                 @sendEvent
                     action: 'complete'
-                    label:  @options.mp3
                     nonInteraction: true
                     value: @currentTime()
-                console.log "end"
