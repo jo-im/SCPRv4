@@ -33,6 +33,7 @@ class scpr.Audio
 
                 # take the URL out of the href
                 $(btn).attr "href", "javascript:void(0);"
+
                 widget = new Audio.PlayWidget
                     player:     @
                     widget:     el
@@ -49,6 +50,12 @@ class scpr.Audio
         # Hide the modal if the Esc key is pressed
         $(document).keyup (event) =>
           @closeAndStop() if event.keyCode is 27 and @audiobar.is(":visible")
+
+        # register listener to toggle the active widget from the audio bar
+        _.each ["play", "pause"], (x) =>
+            $("#{@options.audioBar} .jp-#{x}").on "click", (e) =>
+                @active?[x]()
+                return false
 
     #----------
 
@@ -68,18 +75,21 @@ class scpr.Audio
             if @playing == 1
                 @player.jPlayer "pause"
                 @playing = 2
+                @active?.pause()
             else
                 @player.jPlayer "play"
                 @playing = 1
+                @active?.play()
 
             return true
 
         if @playing
-            # tell the player to stop
-            @player.jPlayer "stop"
+            # # tell the player to stop
+            # @player.jPlayer "stop"
 
-            # and tell the widget that it stopped
-            @active?.stop()
+            # # and tell the widget that it stopped
+            # @active?.stop()
+            @stop()
 
         # set our new mp3
         @player.jPlayer "setMedia", mp3:widget.options.mp3
@@ -120,13 +130,74 @@ class scpr.Audio
         constructor: (options) ->
             @options = options
             @player = @options.player
+            @audioElement = @player.player.find("audio")[0]
             # register click handler on play button
             @options.playBtn.on "click", (e) =>
                 @player.play @
                 return false
 
+            @started = false
+            @quartile1 = false
+            @quartile2 = false
+            @quartile3 = false
+            @ended = false
+
+            $(@audioElement).on "timeupdate", =>
+                if @ is @player.active
+                    duration = @audioElement.duration
+                    currentTime = @audioElement.currentTime
+
+                    _.each [1,2,3], (i) ->
+                        if (currentTime > (duration * i/4)) and !@["quartile#{i}"]
+                            @["quartile#{i}"] = true
+                            console.log "quartile#{i}"              
+
+
+        currentTime: () -> @audioElement.currentTime
+
+        sendEvent: (options) ->
+            ga 'send',
+                'hitType': 'event'
+                'eventCategory': 'AudioPlayer'
+                'eventAction': options.action
+                'eventLabel': options.label
+                'nonInteraction': options.nonInteraction or true
+                'eventValue': options.value or undefined
+
+        start: () ->
+            console.log "start"
+            @sendEvent
+                action: 'start'
+                label:  @options.mp3
+                nonInteraction: true
+            @started = true
+
         play: () ->
-            # ...
+            if @started is not true
+                @start()
+            else
+                @resume()
+            console.log "play"
 
         stop: () ->
-            # ...
+            console.log "stop"
+            @sendEvent
+                action: 'stop'
+                label:  @options.mp3
+                nonInteraction: true
+                value: @currentTime()
+
+        pause: () ->
+            console.log "pause"
+
+        resume: () ->
+            console.log "resume"
+
+        end: () ->
+            if @ended is not true
+                @sendEvent
+                    action: 'complete'
+                    label:  @options.mp3
+                    nonInteraction: true
+                    value: @currentTime()
+                console.log "end"
