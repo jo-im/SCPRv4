@@ -14,6 +14,10 @@ class scpr.Audio
             swfPath:  "/assets-flash"
             supplied: "mp3"
             wmode:    "window"
+            timeupdate: (e) =>
+                @.onTimeUpdate?(e.jPlayer.status.currentTime)
+            ended: () =>
+                @active?.end()
 
         @audiobar = $(@options.audioBar)
         @widgets = []
@@ -57,9 +61,6 @@ class scpr.Audio
                 @active?[event]()
                 return false
 
-        @player.find("audio").on "ended", =>
-            @active?.end()
-
     #----------
 
     closeAndStop: ->
@@ -70,7 +71,6 @@ class scpr.Audio
         @player.jPlayer "stop"
         @playing = false
         @active = null
-
         false
 
     play: (widget) ->
@@ -122,11 +122,22 @@ class scpr.Audio
 
     #----------
 
+    currentTime: () ->
+        @player.data("jPlayer").status.currentTime
+
+    #----------
+
+    duration: () ->
+        @player.data("jPlayer").status.duration
+
+    #----------
+
+
     class @PlayWidget
         constructor: (options) ->
             @options = options
             @player = @options.player
-            @audioElement = @player.player.find("audio")[0]
+
             # register click handler on play button
             @options.playBtn.on "click", (e) =>
                 @player.play @
@@ -134,22 +145,6 @@ class scpr.Audio
 
             @started = @quartile1 = @quartile2 = @quartile3 = @ended = @stopped = false
 
-            $(@audioElement).on "timeupdate", =>
-                if @ is @player.active
-                    duration = @audioElement.duration
-                    currentTime = @audioElement.currentTime
-
-                    _.each [1,2,3], (i) =>
-                        if (currentTime > (duration * i/4)) and !@["quartile#{i}"]
-                            @["quartile#{i}"] = true
-                            @sendEvent
-                                action: "Quartile#{i}"
-                                nonInteraction: true
-                                value: @currentTime()
-                            console.log "quartile#{i}"     
-
-
-        currentTime: () => @audioElement.currentTime
 
         sendEvent: (options) ->
             ga 'send',
@@ -158,7 +153,7 @@ class scpr.Audio
                 eventAction: options.action
                 eventLabel: @options.mp3
                 nonInteraction: options.nonInteraction or true
-                eventValue: options.value or undefined
+                eventValue: options.value or 0
 
         start: () ->
             @sendEvent
@@ -167,6 +162,15 @@ class scpr.Audio
             @started = true
 
         play: () ->
+            @player.onTimeUpdate = (time) =>
+                if @ is @player.active
+                    _.each [1,2,3], (i) =>
+                        if (time > (@player.duration() * i/4)) and !@["quartile#{i}"]
+                            @["quartile#{i}"] = true
+                            @sendEvent
+                                action: "Quartile#{i}"
+                                nonInteraction: true
+                                value: time
             if @started is not true
                 @start()
             else
@@ -178,7 +182,7 @@ class scpr.Audio
                 action: 'stop'
                 label:  @options.mp3
                 nonInteraction: true
-                value: @currentTime()
+                value: @player.currentTime()
 
         pause: () ->
             # ->
@@ -189,9 +193,9 @@ class scpr.Audio
             else
                 @stopped = false
 
-        end: () ->
+        end: () =>
             if @ended is not true
                 @sendEvent
                     action: 'complete'
                     nonInteraction: true
-                    value: @currentTime()
+                    value: @player.duration()
