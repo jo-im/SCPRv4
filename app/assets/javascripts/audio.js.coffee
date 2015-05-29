@@ -17,6 +17,7 @@ class scpr.Audio
             timeupdate: (e) =>
                 @.onTimeUpdate?(e.jPlayer.status.currentTime)
             ended: () =>
+                @playing = false
                 @active?.end()
 
         @audiobar = $(@options.audioBar)
@@ -147,7 +148,7 @@ class scpr.Audio
 
 
         sendEvent: (options) ->
-            ga 'send',
+            console.log 'send',
                 hitType: 'event'
                 eventCategory: 'AudioPlayer'
                 eventAction: options.action
@@ -181,7 +182,7 @@ class scpr.Audio
             @sendEvent
                 action: 'stop'
                 label:  @options.mp3
-                nonInteraction: true
+                nonInteraction: false
                 value: @player.currentTime()
 
         pause: () ->
