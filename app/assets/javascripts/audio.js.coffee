@@ -83,8 +83,6 @@ class scpr.Audio
             else
                 @player.jPlayer "play"
                 @playing = 1
-                @active?.play()
-
             return true
 
         @stop() if @playing
@@ -148,7 +146,7 @@ class scpr.Audio
 
 
         sendEvent: (options) ->
-            console.log 'send',
+            ga 'send',
                 hitType: 'event'
                 eventCategory: 'AudioPlayer'
                 eventAction: options.action
