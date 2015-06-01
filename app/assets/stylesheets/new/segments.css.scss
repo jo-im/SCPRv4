@@ -196,7 +196,7 @@ REPORT
   .related,
   .episode-contents     { -webkit-font-smoothing: antialiased; }
 
-  .supportive           { width: 34.153846153846%; border-top: 0; }
+  .supportive           { width: 34.153846153846%; border-top: 0; padding-bottom: 64px; }
 
   .related {
     @include related-link-icons;
