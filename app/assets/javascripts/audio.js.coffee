@@ -9,16 +9,42 @@ class scpr.Audio
     constructor: (options={}) ->
         @options = _.defaults options, @DefaultOptions
 
+        @states = {}
+
         # instantiate jPlayer on playEl
         @player = $(@options.playEl).jPlayer
             swfPath:  "/assets-flash"
             supplied: "mp3"
             wmode:    "window"
+            play: (e) =>
+                @states[@src()] ?= {}
+                @currentState = @states[@src()]
+                if @currentState.started != true
+                    @sendEvent
+                        action: 'start'
+                        nonInteraction: true
+                    @currentState.started = true
             timeupdate: (e) =>
-                @.onTimeUpdate?(e.jPlayer.status.currentTime)
+                time = e.jPlayer.status.currentTime
+                @states[@src()] ?= {}
+                @currentState = @states[@src()]
+                _.each [1,2,3], (i) =>
+                    if (time > (@duration() * i/4)) and !@currentState["quartile#{i}"]
+                        @currentState["quartile#{i}"] = true
+                        @sendEvent
+                            action: "Quartile#{i}"
+                            nonInteraction: true
+                            value: time
             ended: () =>
                 @playing = false
-                @active?.end()
+                @states[@src()] ?= {}
+                @currentState = @states[@src()]
+                if @currentState.ended != true
+                    @sendEvent
+                        action: 'complete'
+                        nonInteraction: true
+                        value: @duration()
+                    @currentState.ended = true
 
         @audiobar = $(@options.audioBar)
         @widgets = []
@@ -38,7 +64,6 @@ class scpr.Audio
 
                 # take the URL out of the href
                 $(btn).attr "href", "javascript:void(0);"
-
                 widget = new Audio.PlayWidget
                     player:     @
                     widget:     el
@@ -56,12 +81,6 @@ class scpr.Audio
         $(document).keyup (event) =>
           @closeAndStop() if event.keyCode is 27 and @audiobar.is(":visible")
 
-        # register listener to toggle the active widget from the audio bar
-        _.each ["play", "pause"], (event) =>
-            $("#{@options.audioBar} .jp-#{event}").on "click", (e) =>
-                @active?[event]()
-                return false
-
     #----------
 
     closeAndStop: ->
@@ -72,6 +91,7 @@ class scpr.Audio
         @player.jPlayer "stop"
         @playing = false
         @active = null
+
         false
 
     play: (widget) ->
@@ -79,13 +99,18 @@ class scpr.Audio
             if @playing == 1
                 @player.jPlayer "pause"
                 @playing = 2
-                @active?.pause()
             else
                 @player.jPlayer "play"
                 @playing = 1
+
             return true
 
-        @stop() if @playing
+        if @playing
+            # tell the player to stop
+            @player.jPlayer "stop"
+
+            # and tell the widget that it stopped
+            @active?.stop()
 
         # set our new mp3
         @player.jPlayer "setMedia", mp3:widget.options.mp3
@@ -115,86 +140,54 @@ class scpr.Audio
     #----------
 
     stop: () ->
-        @player.jPlayer "stop"
-        @active?.stop()
-        @playing = false
+        if @playing
+            @player.jPlayer "stop"
+            @active?.stop()
+            @playing = false
+
+    #----------
+
+    status: () ->
+        @player.data("jPlayer").status
 
     #----------
 
     currentTime: () ->
-        @player.data("jPlayer").status.currentTime
+        @status().currentTime
 
     #----------
 
     duration: () ->
-        @player.data("jPlayer").status.duration
+        @status().duration
 
     #----------
+
+    src: () ->
+        @status().src
+
+    #----------
+
+    sendEvent: (options) ->
+        ga 'send',
+            hitType: 'event'
+            eventCategory: 'AudioPlayer'
+            eventAction: options.action
+            eventLabel: @src()
+            nonInteraction: options.nonInteraction or true
+            eventValue: options.value or 0
 
 
     class @PlayWidget
         constructor: (options) ->
             @options = options
             @player = @options.player
-
             # register click handler on play button
             @options.playBtn.on "click", (e) =>
                 @player.play @
                 return false
 
-            @started = @quartile1 = @quartile2 = @quartile3 = @ended = @stopped = false
-
-
-        sendEvent: (options) ->
-            ga 'send',
-                hitType: 'event'
-                eventCategory: 'AudioPlayer'
-                eventAction: options.action
-                eventLabel: @options.mp3
-                nonInteraction: options.nonInteraction or true
-                eventValue: options.value or 0
-
-        start: () ->
-            @sendEvent
-                action: 'start'
-                nonInteraction: true
-            @started = true
-
         play: () ->
-            @player.onTimeUpdate = (time) =>
-                if @ is @player.active
-                    _.each [1,2,3], (i) =>
-                        if (time > (@player.duration() * i/4)) and !@["quartile#{i}"]
-                            @["quartile#{i}"] = true
-                            @sendEvent
-                                action: "Quartile#{i}"
-                                nonInteraction: true
-                                value: time
-            if @started is not true
-                @start()
-            else
-                @resume()
+            # ...
 
         stop: () ->
-            @stopped = true
-            @sendEvent
-                action: 'stop'
-                label:  @options.mp3
-                nonInteraction: false
-                value: @player.currentTime()
-
-        pause: () ->
-            # ->
-
-        resume: () ->
-            if !@stopped
-                # ->
-            else
-                @stopped = false
-
-        end: () =>
-            if @ended is not true
-                @sendEvent
-                    action: 'complete'
-                    nonInteraction: true
-                    value: @player.duration()
+            # ...
