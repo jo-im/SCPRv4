@@ -145,36 +145,35 @@
 
   </div>
 </div><!--/ .report -->
-
+<% end %>
 
 
 
 <div class="episode-postlude">
   <div class="inner bound clearfix">
-
-
-    <section class="recents">
-      <h1>Recent Episodes from <%= @program.title %></h1>
-      <div class="articles clearfix">
-        <% @episodes.map(&:to_article).each do |episode| %>
-          <article>
-            <a href="<%= episode.public_path %>">
-              <h1><%= episode.short_title %></h1>
-              <div class="brief">
-                <% if episode.assets.present? %>
-                  <b class="asset"><%= render_asset episode, display: 'thumbnail' %></b>
-                <% end %>
-                <div class="synopsis">
-                  <time datetime="<%= format_date(episode.public_datetime, with:'%F') %>"><mark><%= format_date(episode.public_datetime, with: '%A') %></mark>, <%= format_date(episode.public_datetime, with: '%B %e, %Y') %></time>
-                  <p><%= episode.teaser %></p>
+    <% cache ["show", "episode-postlude-recents", "v1", @episode, @episodes.map(&:id)] do %>
+      <section class="recents">
+        <h1>Recent Episodes from <%= @program.title %></h1>
+        <div class="articles clearfix">
+          <% @episodes.map(&:to_article).each do |episode| %>
+            <article>
+              <a href="<%= episode.public_path %>">
+                <h1><%= episode.short_title %></h1>
+                <div class="brief">
+                  <% if episode.assets.present? %>
+                    <b class="asset"><%= render_asset episode, display: 'thumbnail' %></b>
+                  <% end %>
+                  <div class="synopsis">
+                    <time datetime="<%= format_date(episode.public_datetime, with:'%F') %>"><mark><%= format_date(episode.public_datetime, with: '%A') %></mark>, <%= format_date(episode.public_datetime, with: '%B %e, %Y') %></time>
+                    <p><%= episode.teaser %></p>
+                  </div>
                 </div>
-              </div>
-            </a>
-          </article>
-        <% end %>
-      </div><!--/ .articles -->
-    </section><!--/ .recents -->
-
+              </a>
+            </article>
+          <% end %>
+        </div><!--/ .articles -->
+      </section><!--/ .recents -->
+    <% end %>
     <%= render partial: 'programs/shared/archive_browser', locals: {program: @program} %> 
 
   </div><!--/ .bound -->
@@ -192,7 +191,6 @@
 <div id="article-membership-appeal"></div>
 
 <div class="placard-waystation"></div>
-<% end %>
 
 <% cache ["show", "featured-programs", "v16", @featured_programs] do %>
   <%= render 'programs/kpcc/featured_programs' %>
