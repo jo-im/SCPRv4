@@ -23,7 +23,8 @@ class Outpost::ShowEpisodesController < Outpost::ResourceController
 
   def preview
     @episode = Outpost.obj_by_key(params[:obj_key]) || ShowEpisode.new
-
+    @episodes = []
+    
     with_rollback @episode do
       @episode.assign_attributes(params[:show_episode])
 
