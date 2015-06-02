@@ -26,6 +26,13 @@ body.episode {
   .report .prose                  { background: none; }                       // As opposed to a thin gray vertical hairline
   .report .prose p:first-of-type  { width: auto; }                            // As opposed to 100% (i.e., this isn't a news article)
   //-------------------------------------------------------------------------------------
+  @media screen and (max-width: 870px) {
+    // override positioning of Position A ad on smaller screens to ensure it's not
+    // getting cut off by the titling area.
+    .report .supportive aside.placard:first-child {
+      top: 200px;
+    } 
+  }
   @media screen and (max-width: 550px) {
   .appellation                    { margin-bottom: 35px; padding-bottom: 0; }
   .appellation h1                 { text-align: left; }
@@ -45,35 +52,25 @@ body.episode {
   .episode-synopsis {
     font-size: 1.06666666666667em; // Reset ourselves back to "16"
     font-family: $font-prox;
-    margin-bottom: 40px;
+    margin-bottom: 10px;
     h1,.teaser        { box-sizing: border-box; }
     h1 {
-      float: left;
-      width: 22.393822393822%; // 190 (-16 for clearance) == 174, which then gets divided by 777
-      color: black;
-      font-weight: 700;
+      color: #9b9b9b;
+      font-weight: 400;
       line-height: 1.1;
       font-size: 0.9375em; // 15
       letter-spacing: -0.03em;
       padding-top: 11px;
     }
-    span              { font-variant: small-caps; }
-    time              { display: block; }
-    .teaser {
-      float: right;
-      width: 75.546975546976%;
-      box-shadow: inset 1px 0 0 #b9e2f0; // Let's assume that TEASER will always be at-least-as-tall as DATE.
-      font-size: 0.875em;
-      line-height: 1.45;
-      padding: 8px 0;
-      min-height: 3em;
-      p               { margin-left: 5.765765765766%; }
-      p:last-of-type  { margin-bottom: 0; }
+    span { 
+      display: inline-block; 
+      font-variant: small-caps;
+      margin-right: 0;
     }
   //-------------------------------------------------------------------------------------
-    @media screen and (max-width: 550px) {
+    @media screen and (max-width: 610px) {
       h1,.teaser      { float: none; width: auto; }
-      h1              { padding-bottom: 18px; margin-bottom: 18px; border-bottom: 1px solid #b9e2f0; }
+      h1              { padding-bottom: 18px; margin-bottom: 8px; border-bottom: 1px solid #b9e2f0; }
       time            { display: inline; }
       .teaser         { padding: 0; box-shadow: none; min-height: 0; }
       .teaser p       { margin: 0 !important; }
@@ -107,7 +104,7 @@ body.episode {
       .asset                                  { width: 24.453024453024%; float: left; z-index: 1; }
       .ratio                                  { position: relative; z-index: 2; }
       .ratio .img-contain                     { background: white; }
-      &.ratio-squat .ratio .img-contain img   { height: 100%; width: auto !important; max-width: none !important; margin-left: -13%; }
+      &.ratio-squat .ratio .img-contain img   { height: 100%; width: auto !important; max-width: none !important; }
       .order {
         display: block;
         text-align: center;
@@ -131,12 +128,12 @@ body.episode {
       .author         { display: block; color: #b2b2b2; font-size: 0.75em; margin-bottom: 4px; font-weight: 700; }
       h1              { color: black; font: normal 1.4375em/1.15 $font-freight; border-bottom: 1px solid #91d2e8; padding-bottom: 11px; }
       .precis         { position: relative; box-sizing: border-box; min-height: 77px; }
-      .precis p       { margin-right: 143px; padding-top: 9px; font-size: 0.875em; line-height: 1.35; }
+      .precis p       { margin-right: 180px; padding-top: 9px; font-size: 0.875em; line-height: 1.35; }
       .meta {
         position: absolute;
         top: 0;
         right: 0;
-        width: 127px;
+        width: 164px;
         height: 77px;
         li {
           display: block;
@@ -161,9 +158,16 @@ body.episode {
           b                         { text-align: center; color: #76c4de; font: normal 700 1em/0.8 $font-prox; text-transform: lowercase; }
           a:hover                   { text-decoration: none; }
           a:hover b                 { color: $orange; }
-          &.comments span, &.play a { width: 18px; height: 20px; margin: 0 auto 8px; @include texthide; background: image-url("i/episode-meta-icons.png") no-repeat; background-size: 454px 40px; }
-          &.comments span           { background-position: 0 0; }
-          &.comments a:hover span   { background-position: 0 -20px; }
+          .comments span , &.play a { width: 18px; height: 20px; margin: 0 auto 8px; @include texthide; background: image-url("i/episode-meta-icons.png") no-repeat; background-size: 454px 40px; }
+          span           { background-position: 0 0; }
+          a:hover span   { background-position: 0 -20px; }
+          .comments {
+            > span { margin-top: 12px; }
+            b a {
+              padding-top: 0;
+            }
+            &.non-zero { display: none; }
+          }
           &.play {
             .audio-content, .audio-tools, .bracket { display: none; }
             .story-audio, .story-audio .inner-container { height: 100%; }
@@ -208,21 +212,25 @@ body.episode {
       }// .legacy
     //-------------------------------------------------------------------------------------
     @media screen and (max-width: 550px) {
-      .exposition           { float: none; width: 100%; }
-      .asset                { float: none; width: 191px; margin-bottom: 8px; }
-      .precis               { position: static; min-height: 0; }
-      .precis p             { margin: 0; }
-      h1                    { font-size: 1.375em; padding-bottom: 13px; }
-      .legacy               { position: static; width: 100%; margin-top: 9px; }
-      .meta                 { top: 12px; width: 100%; box-sizing: border-box; padding-left: 197px; right: auto; left: 0; }
-      .meta ul              { border-top: 1px solid #cbeaf4; }
-      .meta li              { position: relative; width: 100%; margin: 0; padding: 0; height: 42px; border-bottom: 1px solid #cbeaf4; }
-      .meta li a            { padding: 15px 0 0 37px; position: relative; }
-      .meta li span         { position: absolute; left: 10px; top: 10px; margin: 0; overflow: hidden; }
-      .meta li b            { text-align: left; }
-      .meta li.comingsoon   { box-shadow: none; }
-      .meta li.comingsoon a { padding-top: 8px; }
-      .meta li.comingsoon b { max-width: 5em; line-height: 0.7; }
+    .exposition                   { float: none; width: 100%; }
+    .asset                        { float: none; width: 191px; margin-bottom: 8px; }
+    .precis                       { position: static; min-height: 0; }
+    .precis p                     { margin: 0; }
+    h1                            { font-size: 1.375em; padding-bottom: 13px; }
+    .legacy                       { position: static; width: 100%; margin-top: 9px; }
+    .meta                         { top: 0; width: 100%; box-sizing: border-box; padding-left: 197px; right: auto; left: 0; }
+    .meta ul                      { border-top: 1px solid #cbeaf4; }
+    .meta li                      { position: relative; width: 100%; margin: 0; padding: 0; height: 42px; border-bottom: 1px solid #cbeaf4; }
+    .meta li a                    { padding: 15px 0 0 37px; position: relative; }
+    .meta li span                 { position: absolute; left: 10px; top: 10px; margin: 0; overflow: hidden; }
+    .meta li b                    { text-align: left; }
+    .meta li.play a               { position: absolute; left: 10px; }
+    .meta li.play span            { left: 36px; top: 17px; }
+    .meta li .comments > span     { margin-top: 0; }
+    .meta li .comments b a        { padding-top: 18px; }
+    .meta li.comingsoon           { box-shadow: none; }
+    .meta li.comingsoon a         { padding-top: 8px; }
+    .meta li.comingsoon b         { max-width: 5em; line-height: 0.7; }
     }// max: 550
     //-------------------------------------------------------------------------------------
     }// article
@@ -289,7 +297,7 @@ body.episode {
     width: 31.692307692308%;
     float: left;
     color: #dddddd;
-    & > h1 {
+    header h1 {
       background: rgba(0,0,0,0.5);
       padding: 51px 7.766990291262% 14px 3.883495145631%;
       margin: 0 0 36px -3.883495145631%;
@@ -327,10 +335,15 @@ body.episode {
       background: #686868;
       box-sizing: border-box;
       padding: 0 5% 45px;
-      & > h1 {
+      > header {
         background: rgba(0,0,0,0.5);
-        padding: 51px 0 14px 2.5%;
-        margin: 0 0 36px -2.5%;
+        padding: 51px 0 14px;
+        margin: 0 0 36px 0;
+        h1 {
+          background: transparent;
+          padding: 0 2.5%;
+          margin: 0;
+        }
       }
       // ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~
         @media screen and (min-width: 571px) {
@@ -412,6 +425,7 @@ body.episode {
       box-shadow: inset 0 -7px 0 white;
       background: #c1e5f2; // pale blue
       border-top: 1px solid #31aad3;
+      display: none;
       padding: 16px 4.6875% 0;
       margin-bottom: 26px;
       box-sizing: border-box;
@@ -467,7 +481,7 @@ body.episode {
       .columns              { box-shadow: none; padding-top: 0; }
       .liminal-picker       { display: none; }
       .directory            { margin-left: 0; }
-      .standard-picker      { width: 110%; margin-left: -5.5%; padding: 16px 5.5% 0; }
+      .standard-picker      { display: block; width: 110%; margin-left: -5.5%; padding: 16px 5.5% 0; }
     }
   //-------------------------------------------------------------------------------------
     @media screen and (min-width: 501px) {

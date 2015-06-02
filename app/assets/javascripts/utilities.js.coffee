@@ -238,12 +238,17 @@ class scpr.SocialTools
             continue if count < 1
 
             el = @disqCache[thread.identifiers[0]]
-            c = $(@options.count, el)
+            parent = el.parents("div.comments")
 
-            if c.length
-                c.text(count)
-            else
-                el.text _.template(@options.comments, count: count)
+            # will not display comment count if it has the class 'non-zero' and the count is zero
+            if el[0] && !((/non-zero/.test(parent.className)) && count == 0)
+                c = $(@options.count, el)
+                if c.length
+                    c.text(count)
+                else
+                    el.text _.template(@options.comments, count: count)
+
+                parent.removeClass("non-zero")
 
             # note our pending request as finished
             @disqPending = false

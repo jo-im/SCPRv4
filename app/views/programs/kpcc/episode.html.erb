@@ -6,6 +6,13 @@
 <% end %>
 
 <div class="appellation bound">
+  <section class="episode-synopsis clearfix">
+    <h1>
+      <%= link_to @program.title, @program.public_path %>
+      <span>for</span>
+      <time datetime="<%= format_date(@episode.air_date, with: '%F') %>"><%= format_date(@episode.air_date, with: '%B %d, %Y') %></time>
+    </h1>
+  </section>
   <h1><%= @episode.headline %></h1>
 </div>
 
@@ -13,17 +20,9 @@
     <div class="inner bound clearfix">
 
       <div class="prose">
-      
-        <section class="episode-synopsis clearfix">
-          <h1>
-            <%= link_to @program.title, @program.public_path %>
-            <span>for</span>
-            <time datetime="<%= format_date(@episode.air_date, with: '%F') %>"><%= format_date(@episode.air_date, with: '%B %d, %Y') %></time>
-          </h1>
-        </section>
 
         <% if audio = @episode.audio.first %>
-          <%= content_widget "new/primary_audio", @episode %>
+          <%= content_widget "new/primary_audio", @episode, prompt: "Listen to this episode." %>
         <% end %>
 
 
@@ -31,72 +30,6 @@
         <section class="episode-enumeration">
 
           <h1>Segments From This Episode</h1>
-
-
-          <article class="clearfix">
-            <a href="!!!!!!!!-FIRST-PERMALINK-TO-ARTICLE-!!!!!!!!">
-              <figure class="asset">
-                <mark class="order">1</mark>
-                <div class="ratio">
-                  <div class="fill"></div>
-                  <b class="img-contain"><img src="http://a.scpr.org/i/9c82976547867798f40cffbc3acc6d89/95709-eight.jpg" alt="" data-width="730" data-height="388" /></b>
-                </div>
-              </figure>
-            </a>
-            <div class="exposition">
-              <a href="!!!!!!!!-SECOND-PERMALINK-TO-ARTICLE-!!!!!!!!">
-                <span class="author">Charles Solomon with John Rabe</span>
-                <h1>Big Hero 6's big heroes: the artists who designed San Fransokyo</h1>
-              </a>
-              <div class="precis">
-                <p><a href="!!!!!!!!-THIRD-PERMALINK-TO-ARTICLE-!!!!!!!!">Charles Solomon talks about Disney's animated blockbuster "Big Hero 6" with two of the artists responsible for its look: Paul Felix and Scott Watanabe.</a></p>
-                <aside class="meta">
-                  <ul>
-                    <li class="comments"><a href="#"><span>Comments:</span> <b>43</b></a></li>
-                    <li class="comingsoon"><a href="#"><span>Audio status:</span> <b>Audio coming soon</b></a></li>
-                  </li>
-                </aside>
-              </div>
-              <footer class="legacy"><span>Originally published <time datetime="2012-11-06">11/6/2012</time></span></footer>
-            </div><!--/ .exposition -->
-          </article>
-
-
-          <article class="clearfix">
-            <a href="!!!!!!!!-FIRST-PERMALINK-TO-ARTICLE-!!!!!!!!">
-              <figure class="asset">
-                <mark class="order">2</mark>
-                <div class="ratio">
-                  <div class="fill"></div>
-                  <b class="img-contain"><img src="http://a.scpr.org/i/95f3ca2a702684f314162f3aebce9515/95383-eight.jpg" alt="" data-width="729" data-height="486" /></b>
-                </div>
-              </figure>
-            </a>
-            <div class="exposition">
-              <a href="!!!!!!!!-SECOND-PERMALINK-TO-ARTICLE-!!!!!!!!">
-                <span class="author">John Rabe</span>
-                <h1>Inside the living, breathing Disney Hall organ as it turns 10</h1>
-              </a>
-              <div class="precis">
-                <p><a href="!!!!!!!!-THIRD-PERMALINK-TO-ARTICLE-!!!!!!!!">John Rabe and organ builder Manuel Rosales take us inside the Disney Hall Organ, the iconic centerpiece of Frank Gehry's Walt Disney Concert Hall.</a></p>
-                <aside class="meta">
-                  <ul>
-                    <li class="comments"><a href="#"><span>Comments:</span> <b>43</b></a></li>
-                    <li class="play"><a href="#"><span>Play Clip:</span> <b>12:53</b></a></li>
-                  </li>
-                </aside>
-              </div>
-              <footer class="legacy"><span>Originally published <time datetime="2012-11-06">11/6/2012</time></span></footer>
-            </div><!--/ .exposition -->
-          </article>
-
-
-
-
-          <div style="background: lime; padding: 20px; box-sizing: border-box; text-align: center; margin-bottom: 50px;">Okay, that's enough for the static samples. Here are the dynamic segments.</div>
-
-
-
 
           <%= any_to_list? @segments, title: "Segments" do %>
             <%= cache ["segment-teasers", @segments.to_a] do %>
@@ -123,12 +56,12 @@
                     <p><a href="<%= segment.public_path %>"><%= segment.teaser.html_safe %></a></p>
                     <aside class="meta">
                       <ul>
-                        <li class="comments"><a href="#"><span>Comments:</span> <b><%= comment_count_for segment %></b></a></li>
+                        <li><%= comment_widget_for segment, partial: "new/comment_count_small", to_article: false, non_zero: true %></li>
                         <li class="play"><%= content_widget "primary_audio", segment, context: segment.show.slug %></li>
                       </li>
                     </aside>
                   </div>
-                  <footer class="legacy"><span>Originally published <time datetime="2012-11-06">11/6/2012</time></span></footer>
+                  <%= timestamp_if_segment_is_legacy segment.published_at, @episode.air_date %>
                 </div><!--/ .exposition -->
               </article>
 
@@ -201,4 +134,6 @@
       articles: @popular_articles.first(4),
       header: 'Popular Now on KPCC' %>
 <% end %>
-
+<script>
+  scpr.Behaviors.loadBehaviors(['Single']);
+</script>

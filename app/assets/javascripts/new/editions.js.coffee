@@ -64,15 +64,3 @@ scpr.Behaviors.Editions = loadBehaviors: ->
   url = document.location.hash
   if url == '#no-prelims'
     $('.shortlist-ledge').addClass 'hidden'
-  # SINGLE EPISODE: Different aspect-ratios mean different faux-positionings.
-  # ---------------------------------------------------------
-  if $('body').hasClass('episode')
-    $('.episode-enumeration > article img').each ->
-      myWidth = $(this).attr('data-width')
-      myHeight = $(this).attr('data-height')
-      myRatio = myWidth / myHeight
-      if myRatio > 1.5
-        $(this).closest('article').addClass 'ratio-squat'
-      else if myRatio < 1.0
-        $(this).closest('article').addClass 'ratio-tall'
-      return
