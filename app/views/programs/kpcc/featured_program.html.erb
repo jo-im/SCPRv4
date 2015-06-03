@@ -117,7 +117,7 @@
           <mark class="play">
             <ul>
               <li class='story-audio'>
-                <a href="<%= @featured_story.audio.first.url %>" class="play-btn audio-toggler track-event" data-ga-category="Show Page" data-ga-action="Play" data-ga-label="Player" title="<%= @featured_story.short_title %>" data-duration="<%= @featured_story.audio.first.duration %>">
+                <a href="<%= @featured_story.audio.first.url %>" class="play-btn audio-toggler" title="<%= @featured_story.short_title %>" data-duration="<%= @featured_story.audio.first.duration %>">
                   <b>Listen to Episode</b>
                   <span><%= format_clip_duration @featured_story.audio.first.duration %></span>
                 </a>

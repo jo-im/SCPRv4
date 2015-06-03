@@ -14,6 +14,35 @@ class scpr.Audio
             swfPath:  "/assets-flash"
             supplied: "mp3"
             wmode:    "window"
+            play: (e) =>
+                if @state?.started != true
+                    @state = {}
+                    @sendEvent
+                        action: 'start'
+                        nonInteraction: false
+                    @state.started = true
+            timeupdate: (e) =>
+                time = e.jPlayer.status.currentTime
+                @state ?= {}
+                _.each [1,2,3], (i) =>
+                    if (time > (@duration() * i/4)) and !@state["quartile#{i}"]
+                        @state["quartile#{i}"] = true
+                        @sendEvent
+                            action: "Quartile#{i}"
+                            nonInteraction: true
+                            value: 1
+            ended: () =>
+                @playing = false
+                @state ?= {}
+                if @state.started == true
+                    @sendEvent
+                        action: 'complete'
+                        nonInteraction: true
+                        value: @duration()
+                    @state.started = false
+            loadstart: () =>
+                @state = {}
+
 
         @audiobar = $(@options.audioBar)
         @widgets = []
@@ -115,6 +144,37 @@ class scpr.Audio
             @playing = false
 
     #----------
+
+    status: () ->
+        @player.data("jPlayer").status
+
+    #----------
+
+    currentTime: () ->
+        @status().currentTime
+
+    #----------
+
+    duration: () ->
+        @status().duration
+
+    #----------
+
+    src: () ->
+        @status().src
+
+    #----------
+
+    sendEvent: (options) ->
+        options.nonInteraction ?= true
+        ga 'send',
+            hitType: 'event'
+            eventCategory: 'AudioPlayer'
+            eventAction: options.action
+            eventLabel: @src()
+            nonInteraction: options.nonInteraction
+            eventValue: options.value or 0
+
 
     class @PlayWidget
         constructor: (options) ->
