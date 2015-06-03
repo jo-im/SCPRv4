@@ -22,7 +22,7 @@ class scpr.Audio
                 if @currentState.started != true
                     @sendEvent
                         action: 'start'
-                        nonInteraction: true
+                        nonInteraction: false
                     @currentState.started = true
             timeupdate: (e) =>
                 time = e.jPlayer.status.currentTime
@@ -168,12 +168,13 @@ class scpr.Audio
     #----------
 
     sendEvent: (options) ->
+        options.nonInteraction ?= true
         ga 'send',
             hitType: 'event'
             eventCategory: 'AudioPlayer'
             eventAction: options.action
             eventLabel: @src()
-            nonInteraction: options.nonInteraction or true
+            nonInteraction: options.nonInteraction
             eventValue: options.value or 0
 
 
