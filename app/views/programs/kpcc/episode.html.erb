@@ -88,16 +88,16 @@
       <section class="recents">
         <h1>Recent Episodes from <%= @program.title %></h1>
         <div class="articles clearfix">
-          <% @episodes.map(&:to_article).each do |episode| %>
+          <% @episodes.each do |episode| %>
             <article>
               <a href="<%= episode.public_path %>">
-                <h1><%= episode.short_title %></h1>
+                <h1><%= episode.headline %></h1>
                 <div class="brief">
                   <% if episode.assets.present? %>
                     <b class="asset"><%= render_asset episode, display: 'thumbnail' %></b>
                   <% end %>
                   <div class="synopsis">
-                    <time datetime="<%= format_date(episode.public_datetime, with:'%F') %>"><mark><%= format_date(episode.public_datetime, with: '%A') %></mark>, <%= format_date(episode.public_datetime, with: '%B %e, %Y') %></time>
+                    <time datetime="<%= format_date(episode.published_at, with:'%F') %>"><mark><%= format_date(episode.published_at, with: '%A') %></mark>, <%= format_date(episode.published_at, with: '%B %e, %Y') %></time>
                     <p><%= episode.teaser %></p>
                   </div>
                 </div>
