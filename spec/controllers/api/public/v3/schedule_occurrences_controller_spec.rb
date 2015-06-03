@@ -36,6 +36,13 @@ describe Api::Public::V3::ScheduleOccurrencesController do
       get :index, { start_time: (Time.zone.now + 1.month + 1.day).to_i }.merge(request_params)
       response.body.should match /error/
     end
+
+    it "indicates if there is a pledge drive" do
+      get :index, request_params
+      pledge_drive_status = JSON.parse(response.body)["pledge_drive"]
+      expect((pledge_drive_status == true || pledge_drive_status == false)).to eq true
+    end
+
   end
 
   describe 'GET /show' do
