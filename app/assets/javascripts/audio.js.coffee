@@ -9,42 +9,40 @@ class scpr.Audio
     constructor: (options={}) ->
         @options = _.defaults options, @DefaultOptions
 
-        @states = {}
-
         # instantiate jPlayer on playEl
         @player = $(@options.playEl).jPlayer
             swfPath:  "/assets-flash"
             supplied: "mp3"
             wmode:    "window"
             play: (e) =>
-                @states[@src()] ?= {}
-                @currentState = @states[@src()]
-                if @currentState.started != true
+                if @state?.started != true
+                    @state = {}
                     @sendEvent
                         action: 'start'
                         nonInteraction: false
-                    @currentState.started = true
+                    @state.started = true
             timeupdate: (e) =>
                 time = e.jPlayer.status.currentTime
-                @states[@src()] ?= {}
-                @currentState = @states[@src()]
+                @state ?= {}
                 _.each [1,2,3], (i) =>
-                    if (time > (@duration() * i/4)) and !@currentState["quartile#{i}"]
-                        @currentState["quartile#{i}"] = true
+                    if (time > (@duration() * i/4)) and !@state["quartile#{i}"]
+                        @state["quartile#{i}"] = true
                         @sendEvent
                             action: "Quartile#{i}"
                             nonInteraction: true
-                            value: time
+                            value: 1
             ended: () =>
                 @playing = false
-                @states[@src()] ?= {}
-                @currentState = @states[@src()]
-                if @currentState.ended != true
+                @state ?= {}
+                if @state.started == true
                     @sendEvent
                         action: 'complete'
                         nonInteraction: true
                         value: @duration()
-                    @currentState.ended = true
+                    @state.started = false
+            loadstart: () =>
+                @state = {}
+
 
         @audiobar = $(@options.audioBar)
         @widgets = []
