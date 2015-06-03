@@ -84,7 +84,7 @@
 
 <div class="episode-postlude">
   <div class="inner bound clearfix">
-    <% cache ["show", "episode-postlude-recents", "v1", @episodes.map(&:id)] do %>
+    <% cache ["show", "episode-postlude-recents", "v1", @episodes] do %>
       <section class="recents">
         <h1>Recent Episodes from <%= @program.title %></h1>
         <div class="articles clearfix">
