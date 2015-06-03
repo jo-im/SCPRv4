@@ -86,7 +86,9 @@
   <div class="inner bound clearfix">
     <% cache ["show", "episode-postlude-recents", "v1", @episodes] do %>
       <section class="recents">
-        <h1>Recent Episodes from <%= @program.title %></h1>
+        <header>
+          <h1>Recent Episodes from <%= @program.title %></h1>
+        </header>
         <div class="articles clearfix">
           <% @episodes.each do |episode| %>
             <article>
