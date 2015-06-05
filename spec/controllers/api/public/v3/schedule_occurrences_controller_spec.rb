@@ -37,10 +37,19 @@ describe Api::Public::V3::ScheduleOccurrencesController do
       response.body.should match /error/
     end
 
-    it "indicates if there is a pledge drive" do
-      get :index, request_params
-      pledge_drive_status = JSON.parse(response.body)["pledge_drive"]
-      expect((pledge_drive_status == true || pledge_drive_status == false)).to eq true
+    context "pledge_status parameter is present" do 
+      it "indicates if there is a pledge drive" do
+        get :index, request_params.merge({pledge_status: true})
+        pledge_drive_status = JSON.parse(response.body)["pledge_drive"]
+        expect((pledge_drive_status == true || pledge_drive_status == false)).to eq true
+      end
+    end
+    context "pledge_status parameter is not present" do
+      it "does not include pledge status" do
+        get :index, request_params
+        pledge_drive_status = JSON.parse(response.body)["pledge_drive"]
+        expect(pledge_drive_status).to eq nil
+      end
     end
 
   end
