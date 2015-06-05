@@ -1,31 +1,141 @@
 <% add_to_page_title @episode.headline %>
+<% content_for :body_class, 'interior segment episode' %>
 
-<header class="episode">
-  <div class="row-fluid">
-    <div class="span14">
-      <h4><%= @episode.headline %></h4>
-      <p class="byline"><%= timestamp(@episode.air_date) %></p>
-    </div>
-    <div class="span10">
-      <% if audio = @episode.audio.first %>
-        <div class="right">
-          <aside class="story-audio inline">
-              <a href="<%= audio.url %>" class="play-btn audio-toggler" title="<%= h @episode.headline %>" data-duration="<%= audio.duration %>"></a>
-              <%= link_to "Listen to this episode", audio.url, :class => "audio-toggler play-text",  "data-duration" => audio.duration %>
-              <a href="<%= audio.url %>" class="download">Download</a>
-          </aside>
-        </div>
-      <% end %>
-    </div>
-  </div>
-</header>
-
-<section class="show-segments episode">
-<%= any_to_list? @segments, title: "Segments" do %>
-  <%= cache ["segment-teasers", @segments.to_a] do %>
-    <%= render 'programs/kpcc/segment_teaser', segments: @segments %>
-  <% end %>
+<% content_for :titling do %>
+    <%= render :partial => 'shared/new/masthead/program_content_titling' %>
 <% end %>
-</section>
 
-<%= render "programs/shared/archive_select", program: @program %>
+<div class="appellation bound">
+  <section class="episode-synopsis clearfix">
+    <h1>
+      <%= link_to @program.title, @program.public_path %>
+      <span>for</span>
+      <time datetime="<%= format_date(@episode.air_date, with: '%F') %>"><%= format_date(@episode.air_date, with: '%B %d, %Y') %></time>
+    </h1>
+  </section>
+  <h1><%= @episode.headline %></h1>
+</div>
+
+<div class="report">
+    <div class="inner bound clearfix">
+
+      <div class="prose">
+
+        <% if audio = @episode.audio.first %>
+          <%= content_widget "new/primary_audio", @episode, prompt: "Listen to this episode." %>
+        <% end %>
+
+
+
+        <section class="episode-enumeration">
+
+          <h1>Segments From This Episode</h1>
+
+          <%= any_to_list? @segments, title: "Segments" do %>
+            <%= cache ["segment-teasers", @segments.to_a] do %>
+              <% @segments.each.with_index do |segment, index| %>
+              <article class="clearfix">
+                <a href="<%= segment.public_path %>">
+                  <figure class="asset">
+                    <mark class="order"><%= index + 1 %></mark>
+                    <div class="ratio">
+                      <div class="fill"></div>
+                      <b class="img-contain">
+                        <% if segment.asset.present? %>
+                        <img src="<%= segment.asset.full.url %>" alt="" data-width="<%= segment.asset.full.width %>" data-height="<%= segment.asset.full.height %>" />
+                        <% end %>
+                      </b>
+                    </div>
+                  </figure>
+                </a>
+                <div class="exposition">
+                  <a href="<%= segment.public_path %>">
+                    <h1><%= segment.short_headline %></h1>
+                  </a>
+                  <div class="precis">
+                    <p><a href="<%= segment.public_path %>"><%= segment.teaser.html_safe %></a></p>
+                    <aside class="meta">
+                      <ul>
+                        <li><%= comment_widget_for segment, partial: "new/comment_count_small", to_article: false, non_zero: true %></li>
+                        <li class="play"><%= content_widget "primary_audio", segment, context: segment.show.slug %></li>
+                      </li>
+                    </aside>
+                  </div>
+                  <%= timestamp_if_segment_is_legacy segment.published_at, @episode.air_date %>
+                </div><!--/ .exposition -->
+              </article>
+
+              <% end %>
+            <% end %>
+          <% end %>
+
+        </section><!--/ .episode-segments -->
+      </div><!--/ .prose -->
+
+
+<% cache ["show", "program-supportive", "v1", @episode] do %>
+    <%= render "programs/kpcc/program_supportive" %>
+
+  </div>
+</div><!--/ .report -->
+<% end %>
+
+
+
+<div class="episode-postlude">
+  <div class="inner bound clearfix">
+    <% cache ["show", "episode-postlude-recents", "v1", @episodes] do %>
+      <section class="recents">
+        <header>
+          <h1>Recent Episodes from <%= @program.title %></h1>
+        </header>
+        <div class="articles clearfix">
+          <% @episodes.each do |episode| %>
+            <article>
+              <a href="<%= episode.public_path %>">
+                <h1><%= episode.headline %></h1>
+                <div class="brief">
+                  <% if episode.assets.present? %>
+                    <b class="asset"><%= render_asset episode, display: 'thumbnail' %></b>
+                  <% end %>
+                  <div class="synopsis">
+                    <time datetime="<%= format_date(episode.published_at, with:'%F') %>"><mark><%= format_date(episode.published_at, with: '%A') %></mark>, <%= format_date(episode.published_at, with: '%B %e, %Y') %></time>
+                    <p><%= episode.teaser %></p>
+                  </div>
+                </div>
+              </a>
+            </article>
+          <% end %>
+        </div><!--/ .articles -->
+      </section><!--/ .recents -->
+    <% end %>
+    <%= render partial: 'programs/shared/archive_browser', locals: {program: @program} %> 
+
+  </div><!--/ .bound -->
+</div><!--/ .episode-postlude -->
+
+
+
+
+<!-- ///////////////////////////////////////////////////////////// -->
+<!-- ////////////////  Post-Episode Bits GO HERE  //////////////// -->
+<!-- ///////////////////////////////////////////////////////////// -->
+
+
+<!-- AdHost Slot: Membership Appeals -->
+<div id="article-membership-appeal"></div>
+
+<div class="placard-waystation"></div>
+
+<% cache ["show", "featured-programs", "v16", @featured_programs] do %>
+  <%= render 'programs/kpcc/featured_programs' %>
+<% end %>
+
+<% if @popular_articles %>
+  <%= render 'shared/new/popular_articles',
+      articles: @popular_articles.first(4),
+      header: 'Popular Now on KPCC' %>
+<% end %>
+<script>
+  scpr.Behaviors.loadBehaviors(['Single']);
+</script>

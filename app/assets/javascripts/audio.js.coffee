@@ -58,7 +58,8 @@ class scpr.Audio
                 mp3      = $(btn).attr("href")
                 title    = $(btn).attr("title")
                 duration = Number($(btn).attr("data-duration"))
-                @widget = $(btn).closest(".audio-actuator")
+                actuator = $(btn).closest(".audio-actuator")
+                @widget = actuator if actuator.length
 
                 # take the URL out of the href
                 $(btn).attr "href", "javascript:void(0);"

@@ -1,29 +1,19 @@
 <% segments.each do |segment| %>
-<div class="teaser cbase">
-  <div class="row-fluid">
-    <% if segment.assets.present? %>
-      <div class="span6">
-        <%= render_asset segment, display: 'thumbnail' %>
-      </div>
-      <div class="span12">
-    <% else %>
-      <div class="span18">
-    <% end %>
-      <div class="info">
-        <h3><%= link_to segment.short_headline, segment.public_path  %></h3>
-        <span class="byline">
-          <%= timestamp(segment.published_at) %> <span class="pipe">|</span> <%= render_byline segment %>
-        </span>
-      </div>
+<div class="teaser">
+  <% if segment.assets.present? %>
+      <%= render_asset segment, display: 'small' %>
+      <%= timestamp(segment.published_at) %>
+  <% else %>
+      <!-- Do something graceful if we don't have an image asset on a segment -->
+  <% end %>
 
-      <%= segment.teaser.html_safe %>
-    </div> <!-- span12/9 -->
-    <div class="span6">
-      <div class="interact">
-        <%= content_widget "primary_audio", segment, context: segment.show.slug %>
-        <%= comment_count_for segment, class: "inline" %>
-      </div>
-    </div>
-  </div>
+  <h2><%= link_to segment.short_headline, segment.public_path  %></h2>
+  <p class="byline"><%= render_byline segment %></p>
+  <%= segment.teaser.html_safe %>
+
+  <aside class="decorator">
+    <%= content_widget "primary_audio", segment, context: segment.show.slug %>
+    <%= comment_count_for segment %>
+  </aside>
 </div>
 <% end %>

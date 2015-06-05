@@ -75,6 +75,27 @@ module ContentBase
     end
   end
 
+  def histogram content_type, match, options={}
+    query = {:query=>
+      {:filtered=>
+        {:query=>{:match_all=>{}}, :filter=>{:term=>match}}},
+     :sort=>[{"public_datetime"=>{:order=>"desc"}}],
+     :size=>0,
+     :aggs=>
+      {:years=>
+        {
+          :date_histogram=>{:field=>"public_datetime", :interval=>"year", :time_zone=>"-07:00", :format=>"YYYY"},
+          :aggs => {
+            :months=> {
+              :date_histogram=>{:field=>"public_datetime", :interval=>"month", :time_zone=>"-07:00"}
+            }
+          }
+        }
+      }
+    }
+    es_client.search({index:@@es_index, type: content_type, body: query}.merge(options))
+  end
+
   #--------------------
 
   def search(*args)

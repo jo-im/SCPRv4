@@ -17,7 +17,7 @@
     <aside class="see-more">
         <header><h1>Recently on <%= @program.title %></h1></header>
         <nav>
-          <% @segment.recent_show_segments.each do |segment| %>
+          <% @program.segments.published.first(3).each do |segment| %>
               <article>
                   <%= link_to segment.public_path, class: "track-event", data: {"ga-category" => "Article", "ga-action" => "Clickthrough", "ga-label" => "More Sidebar Show Segment"} do %>
                       <%= smart_date_js segment.published_at %>

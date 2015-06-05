@@ -89,7 +89,6 @@ class ShowSegment < ActiveRecord::Base
     self.class.published.where("show_id = ? and id <> ?", self.show_id, self.id).includes(:assets).first(3)
   end
 
-
   def byline_extras
     [self.show.title]
   end

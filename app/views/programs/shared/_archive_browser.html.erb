@@ -1,0 +1,79 @@
+<section id="<%= program.slug %>-archive-browser" class="archive-browser">
+  <h1><span>Browse the <%= program.title %> Archives</span></h1>
+    <div class="columns">
+
+      <!--
+      ==========================================================
+      Okay, here's what's up.
+      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+      Liminal-Picker has a very temporary, ephemeral, cosmetic
+      job to do: He only appears for tablet-and-wider users,
+      and only passes choices on to *the actual form,* which
+      is what handheld users see, and which fires off the
+      actual, useful Ajax request.
+      ==========================================================
+      -->
+      <aside class="liminal-picker" aria-hidden="true">
+      </aside><!--/ .liminal-picker -->
+
+      <div class="directory">
+        <aside class="standard-picker">
+        </aside><!--/ .standard-picker -->
+        <div class="results">
+          <ul></ul>
+          <aside class="show-full-results" aria-hidden="true">
+            <button>Show full month results</button>
+          </aside>
+        </div><!--/ .results -->
+      </div><!--/ .directory -->
+
+    </div><!--/ .columns -->
+    <div class="collateral">
+
+      <aside class="placard">
+          <div class="ad widget">
+              <%= render "shared/ads/dfp", ad_key: 'slot_c' %>
+              <p class="appeal"><a href="/support/underwriting/">Become a KPCC Sponsor</a></p>
+          </div>
+      </aside>
+
+    </div><!--/ .collateral -->
+</section><!--/ .archive-browser -->
+
+<script id="episodeView" type="text/template">
+  <li><a href="<%%= public_url %>"><time datetime="<%%= air_date %>"><%%= day %></time> <span><%%= title %></span></a></li>
+</script>
+
+<script id="liminalPicker" type="text/template">
+  <div class="years">
+    <ul>
+    </ul>
+  </div>
+  <div class="months">
+    <ul>
+    </ul>
+  </div>
+</script>
+
+<script id="standardPicker" type="text/template">
+  <form>
+    <div class="fields clearfix">
+      <div class="field years">
+        <select autocomplete="off">
+        </select>
+      </div>
+      <div class="field months">
+        <select autocomplete="off">
+        </select>
+      </div>
+    </div><!--/ .fields -->
+  </form>
+</script>
+
+<%= content_for :script do %>
+  <%= javascript_tag do %>
+    $(document).on('ready', function(){
+      window.archive_browser = new scpr.ArchiveBrowser('#<%= program.slug %>-archive-browser', '<%= program.slug %>')
+    })
+  <% end %>
+<% end %>
