@@ -68,7 +68,7 @@ class ExternalProgram < ActiveRecord::Base
 
   #-------------------
   # Aliases
-  alias_attribute :episodes, :external_episodes
+  # alias_attribute :episodes, :external_episodes
   #-------------------
 
   class << self
