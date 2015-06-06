@@ -13,7 +13,7 @@ module Concern
         end
       end
       def render_external_episode
-        @segments = @episode.external_segments
+        @segments = @episode.segments
         render 'programs/external/episode', layout: 'application' and return
       end
     end
