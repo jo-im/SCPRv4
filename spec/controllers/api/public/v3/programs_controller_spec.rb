@@ -60,7 +60,7 @@ describe Api::Public::V3::ProgramsController do
       end
     end
     it "finds the correct program" do
-      expect(found_program).to eq program.to_program
+      expect(found_program).to eq program
     end
     it "renders a json histogram" do
       parsed_response["years"][0]["episode_count"].should eq 1
