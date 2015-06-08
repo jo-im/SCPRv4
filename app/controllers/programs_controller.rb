@@ -3,6 +3,10 @@
 # namespace, so we have to send all traffic to this controller and then
 # basically split every action into two.
 class ProgramsController < ApplicationController
+
+  include Concern::Controller::GetPopularArticles
+  include Concern::Controller::ShowEpisodes
+
   layout 'new/single', only: [:segment]
 
   before_filter :get_program, only: [:show, :episode, :archive, :featured_program, :featured_show]
@@ -101,15 +105,15 @@ class ProgramsController < ApplicationController
     render 'programs/kpcc/segment' and return
   end
 
-
   def episode
-    @episode    = @program.episodes.find(params[:id])
-    @segments   = @episode.segments.published
-
     if @program.is_a?(KpccProgram)
-      render @program.is_segmented? ? 'programs/kpcc/episode' : 'programs/kpcc/old/episode_standalone'
-    else
-      render 'programs/external/episode', layout:'application'
+      @episode    = @program.episodes.find(params[:id])
+      render_kpcc_episode
+    end
+
+    if @program.is_a?(ExternalProgram)
+      @episode  = @program.episodes.find(params[:id])
+      render_external_episode
     end
   end
 

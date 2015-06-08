@@ -42,16 +42,6 @@ describe ShowSegment do
 
   #------------------
 
-  describe '#recent_show_segments' do
-    it 'finds 3 latest segments within the same program' do
-      program = create :kpcc_program
-      create_list :show_segment, 5, show: program
-      program.segments.published.first.recent_show_segments.should eq program.segments.published[1..3]
-    end
-  end
-
-  #------------------
-
   describe "#byline_extras" do
     it "is an array with the show's title" do
       segment = build :show_segment

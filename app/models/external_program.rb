@@ -26,6 +26,7 @@ class ExternalProgram < ActiveRecord::Base
   include Concern::Validations::SlugValidation
   include Concern::Associations::RelatedLinksAssociation
   include Concern::Model::Searchable
+  include Concern::Model::Programs
 
   self.public_route_key = "program"
 
@@ -65,6 +66,11 @@ class ExternalProgram < ActiveRecord::Base
 
   #-------------------
 
+  #-------------------
+  # Aliases
+  # alias_attribute :episodes, :external_episodes
+  #-------------------
+
   class << self
     def select_collection
       ExternalProgram.order("title").map { |p| [p.to_title, p.id] }
@@ -80,7 +86,6 @@ class ExternalProgram < ActiveRecord::Base
       finder.each(&:sync)
     end
   end
-
 
   def route_hash
     return {} if !self.persisted? || !self.persisted_record.published?
