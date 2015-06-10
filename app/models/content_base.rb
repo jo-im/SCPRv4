@@ -205,7 +205,7 @@ module ContentBase
       end
 
       define_method :total_pages do
-        ( @_pagination.total_results / @_pagination.per_page )
+        ( @_pagination.total_results.to_f / @_pagination.per_page.to_f ).ceil
       end
 
       define_method :offset_value do
