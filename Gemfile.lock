@@ -1,4 +1,14 @@
 GIT
+  remote: git://github.com/SCPR/embeditor-rails.git
+  revision: d0ae76ec9582c2c3b02991b849f3b0a7c68c60e1
+  tag: v2.0.2
+  specs:
+    embeditor-rails (2.0.2)
+      actionpack (>= 3.2.0, < 5)
+      coffee-rails (>= 3.2.0, < 5)
+      eco (~> 1.0.0)
+
+GIT
   remote: git://github.com/SCPR/outpost-secretary.git
   revision: 8e47cd33f45f2a2b55d85fbc7b7521b17352bba2
   tag: v0.1.1
@@ -159,10 +169,6 @@ GEM
     elasticsearch-transport (1.0.7)
       faraday
       multi_json
-    embeditor-rails (2.0.1)
-      actionpack (>= 3.2.0, < 5)
-      coffee-rails (>= 3.2.0, < 5)
-      eco (~> 1.0.0)
     erubis (2.7.0)
     escape_utils (1.0.1)
     excon (0.39.5)
@@ -440,7 +446,7 @@ DEPENDENCIES
   elasticsearch-extensions
   elasticsearch-model
   elasticsearch-rails
-  embeditor-rails (~> 2.0.1)
+  embeditor-rails!
   escape_utils (~> 1.0.1)
   factory_girl_rails
   faraday (~> 0.8)
