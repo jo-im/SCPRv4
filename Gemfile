@@ -17,7 +17,7 @@ gem 'render_anywhere'
 gem 'dalli'
 
 ## Outpost
-gem 'outpost-cms', github:"SCPR/outpost", tag:"v0.1.7"
+gem 'outpost-cms', github:"SCPR/outpost", tag:"v0.1.6"
 gem 'outpost-publishing'
 gem 'outpost-asset_host'
 gem 'outpost-aggregator'

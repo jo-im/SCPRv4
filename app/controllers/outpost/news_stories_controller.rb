@@ -27,7 +27,8 @@ class Outpost::NewsStoriesController < Outpost::ResourceController
     @entry = Outpost.obj_by_key(params[:obj_key]) || NewsStory.new
 
     with_rollback @entry do
-      @entry.assign_attributes(params[:news_story])
+
+      @entry.assign_attributes(unescape_params(params[:news_story]))
 
       if @entry.unconditionally_valid?
         @title = @entry.to_title
@@ -41,4 +42,26 @@ class Outpost::NewsStoriesController < Outpost::ResourceController
       end
     end
   end
+
+  private
+
+  def unescape_params params
+    # Takes params values that are interpreted as binary and convert them to UTF-8.
+    params.transform_values { |v|
+      if v.respond_to?(:encoding) && v.encoding.to_s.include?("ASCII-8BIT")
+        begin 
+          CGI.unescape v 
+        rescue
+          if v.respond_to? :encode
+            v.encode("UTF-8", invalid: :replace, undef: :replace, replace: "")
+          else
+            v
+          end
+        end
+      else
+        v
+      end
+    }
+  end
+
 end
