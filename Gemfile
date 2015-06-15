@@ -17,7 +17,7 @@ gem 'render_anywhere'
 gem 'dalli'
 
 ## Outpost
-gem 'outpost-cms', path: "~/workspace/outpost"
+gem 'outpost-cms', github:"SCPR/outpost", tag:"v0.1.6"
 gem 'outpost-publishing'
 gem 'outpost-asset_host'
 gem 'outpost-aggregator'
@@ -78,9 +78,6 @@ gem 'uglifier', '>= 1.3'
 
 group :development do
   gem 'pry'
-  gem 'pry-byebug'
-  gem 'binding_of_caller'
-  gem 'better_errors'
 end
 
 
