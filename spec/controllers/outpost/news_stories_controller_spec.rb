@@ -43,6 +43,14 @@ describe Outpost::NewsStoriesController do
         response.should render_template "shared/new/_single_preview"
       end
 
+      it "assigns attributes that have not yet been saved" do
+        news_story = build :news_story, headline: "This is a story"
+        news_story.headline = "This is a different story"
+        post :preview, obj_key: news_story.obj_key, news_story: news_story.attributes
+        assigns(:entry).headline.should eq "This is a different story"
+        response.should render_template "shared/new/_single_preview"
+      end
+
       it "renders validation errors if the object is not unconditionally valid" do
         news_story = build :news_story, headline: "okay"
         post :preview, obj_key: news_story.obj_key, news_story: news_story.attributes.merge(headline: "")

@@ -24,10 +24,11 @@ class Outpost::NewsStoriesController < Outpost::ResourceController
   #----------------
 
   def preview
-    @entry = Outpost.obj_by_key(params[:obj_key]) || NewsStory.new
+    @entry = Outpost.obj_by_key(unescaped_params[:obj_key]) || NewsStory.new
 
     with_rollback @entry do
-      @entry.assign_attributes(params[:news_story])
+
+      @entry.assign_attributes(unescaped_params[:news_story])
 
       if @entry.unconditionally_valid?
         @title = @entry.to_title
@@ -40,5 +41,14 @@ class Outpost::NewsStoriesController < Outpost::ResourceController
         render_preview_validation_errors(@entry)
       end
     end
+  end
+  private
+  def unescaped_params
+    # Attempts to take params values that are interpreted as binary and convert them to UTF-8.
+    @unescaped_params ||= ->{
+      request.body.rewind
+      output = ActionController::Parameters.new Rack::Utils.parse_nested_query(CGI.unescape(request.body.read))
+      output
+    }.call
   end
 end
