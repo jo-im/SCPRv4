@@ -42,13 +42,26 @@ class Outpost::NewsStoriesController < Outpost::ResourceController
       end
     end
   end
+
   private
+
   def unescaped_params
-    # Attempts to take params values that are interpreted as binary and convert them to UTF-8.
-    @unescaped_params ||= ->{
-      request.body.rewind
-      output = ActionController::Parameters.new Rack::Utils.parse_nested_query(CGI.unescape(request.body.read))
-      output
-    }.call
+    # Takes params values that are interpreted as binary and convert them to UTF-8.
+    @unescaped_params ||= params.transform_values { |v|
+      if v.respond_to?(:encoding) && v.encoding.to_s.include?("ASCII-8BIT")
+        begin 
+          CGI.unescape v 
+        rescue
+          if v.respond_to? :encode
+            v.encode("UTF-8", invalid: :replace, undef: :replace, replace: "")
+          else
+            v
+          end
+        end
+      else
+        v
+      end
+    }
   end
+
 end
