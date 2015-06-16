@@ -38,7 +38,6 @@ class scpr.Audio
                     @sendEvent
                         action: 'complete'
                         nonInteraction: true
-                        value: @duration()
                     @state.started = false
             loadstart: () =>
                 @state = {}
