@@ -13,6 +13,10 @@ class BreakingNewsAlert < ActiveRecord::Base
 
   include ::NewRelic::Agent::Instrumentation::ControllerInstrumentation
 
+  include Concern::Sanitizers::UrlSanitizer
+
+  before_validation ->{ sanitize_urls :alert_url }
+
   ALERT_TYPES = {
     "break"   => "Breaking News",
     "audio"   => "Listen Live",

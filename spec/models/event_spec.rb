@@ -258,4 +258,16 @@ describe Event do
       event.to_article.should be_a Article
     end
   end
+
+  describe "url sanitization" do
+    context "before validation" do 
+      it "removes trailing whitespaces from url attributes" do
+        event = build :event, sponsor_url: " http://someurl.com/ ", location_url: " http://someurl.com/ ", rsvp_url: " http://someurl.com/ "
+        event.valid?
+        expect(event.sponsor_url).to eq "http://someurl.com/"
+        expect(event.location_url).to eq "http://someurl.com/"
+        expect(event.rsvp_url).to eq "http://someurl.com/"
+      end
+    end
+  end
 end

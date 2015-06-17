@@ -1,4 +1,8 @@
 class RelatedLink < ActiveRecord::Base
+  include Concern::Sanitizers::UrlSanitizer
+
+  before_validation ->{ sanitize_urls :url }
+
   TYPES = [
     ["Website", "website"],
     ["Related Story", "related"],
