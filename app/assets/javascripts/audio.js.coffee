@@ -20,6 +20,7 @@ class scpr.Audio
                     @sendEvent
                         action: 'start'
                         nonInteraction: false
+                        value: 1
                     @state.started = true
             timeupdate: (e) =>
                 time = e.jPlayer.status.currentTime
@@ -38,7 +39,7 @@ class scpr.Audio
                     @sendEvent
                         action: 'complete'
                         nonInteraction: true
-                        value: @duration()
+                        value: 1
                     @state.started = false
             loadstart: () =>
                 @state = {}
