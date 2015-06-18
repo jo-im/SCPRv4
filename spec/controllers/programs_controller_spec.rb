@@ -15,6 +15,7 @@ describe ProgramsController do
         }
 
       assigns(:episode).should eq episode
+      expect(response).to redirect_to episode.public_path
     end
 
     it "assigns @date if date is given" do
@@ -43,6 +44,19 @@ describe ProgramsController do
         }
 
       assigns(:episode).should eq episode
+    end
+
+    it "finds no episode" do
+      program = create :kpcc_program
+      post :archive,
+        show: program.slug,
+        archive: {
+          "date(1i)" => "2001",
+          "date(2i)" => "1",
+          "date(3i)" => "1"
+        }
+      assigns(:episode).should eq nil
+      expect(response).to redirect_to featured_show_path(program.slug, anchor: "archive")
     end
   end
 
@@ -213,6 +227,25 @@ describe ProgramsController do
         segment = create :show_segment
         get :segment, segment.route_hash
         assigns(:segment).should eq segment
+      end
+    end
+
+    describe "public path" do 
+      context "the request path matches the public path" do
+        it "renders the correct layout" do
+          segment = create :show_segment
+          get :segment, segment.route_hash
+          expect(response).to render_template 'programs/kpcc/segment'
+        end
+      end
+      context "the request path does not match the public path for" do
+        it "redirect to the public path" do
+          segment = create :show_segment
+          route_hash = segment.route_hash
+          route_hash[:show] = "show-x" 
+          get :segment, route_hash
+          expect(response).to redirect_to segment.public_path
+        end
       end
     end
   end
