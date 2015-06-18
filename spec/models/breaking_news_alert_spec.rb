@@ -13,6 +13,17 @@ describe BreakingNewsAlert do
     end
   end
 
+  describe 'alert url' do
+    context "validation" do
+      it "removes trailing whitespace" do
+        alert = create :breaking_news_alert, :unpublished
+        alert.alert_url = " http://someurl.com/ "
+        alert.valid?
+        alert.alert_url.should eq "http://someurl.com/"
+      end
+    end
+  end
+
 
   describe '#publish_mobile_notification' do
     before :each do

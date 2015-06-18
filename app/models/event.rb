@@ -23,6 +23,9 @@ class Event < ActiveRecord::Base
   include Concern::Callbacks::TouchCallback
   include Concern::Methods::CommentMethods
   include Concern::Methods::AssetDisplayMethods
+  include Concern::Sanitizers::UrlSanitizer
+
+  before_validation ->{ sanitize_urls :sponsor_url, :location_url, :rsvp_url }
 
   self.disqus_identifier_base = "events"
   self.public_route_key = "event"

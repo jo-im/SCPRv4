@@ -18,6 +18,14 @@ describe RelatedLink do
     end
   end
 
+  describe 'url sanitization' do
+    it 'should clean trailing whitespace' do
+      link = build :related_link, url: " http://scpr.org/news "
+      link.should be_valid
+      expect(link.url).to eq "http://scpr.org/news"
+    end
+  end
+
   describe "domain" do
     it "returns nil if link is blank" do
       link = build :related_link, url: nil
