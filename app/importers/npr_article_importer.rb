@@ -23,7 +23,9 @@ module NprArticleImporter
       # more often than that!
       npr_stories = NPR::Story.where(
           :id     => IMPORT_IDS,
-          :date   => (RemoteArticle.where(source: "npr").last.published_at..Time.zone.now))
+          :date   => (
+            (RemoteArticle.where(source: "npr").try{|a| a.last.published_at} || 1.hour.ago)..Time.zone.now)
+          )
         .set(
           :requiredAssets   => 'text',
           :action           => "or")
