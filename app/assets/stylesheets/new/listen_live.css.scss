@@ -70,11 +70,18 @@
     border-bottom: 1px solid rgba(255,255,255,0.25);
 
     .title {
+      background: image-url("i/logo-kpcc-plus.png") no-repeat 0 0;
+      background-size: 139px 20px;
       color: #fff;
       font-family: $font-freight;
       font-size: 1.75em; // 28 / 16
       font-weight: 300;
-      margin-bottom: 4px;
+      margin-bottom: 10px;
+      overflow: hidden;
+      text-indent: 101%;
+      white-space: nowrap;
+      width: 139px;
+      height: 20px;
     }
 
   }
