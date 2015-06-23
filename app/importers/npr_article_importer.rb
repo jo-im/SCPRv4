@@ -23,15 +23,13 @@ module NprArticleImporter
       # more often than that!
       npr_stories = NPR::Story.where(
           :id     => IMPORT_IDS,
-          :date   => (
-            (RemoteArticle.where(source: "npr").last.try(:published_at) || 1.hour.ago)..Time.zone.now)
-          )
+          :date   => (1.hour.ago..Time.zone.now))
         .set(
           :requiredAssets   => 'text',
           :action           => "or")
         .order("date descending").limit(20).to_a
 
-      log "#{npr_stories.size} NPR stories found from an hour since the last story downloaded (max 20)"
+      log "#{npr_stories.size} NPR stories found from the past hour (max 20)"
 
       added = []
 
