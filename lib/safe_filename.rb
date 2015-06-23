@@ -6,7 +6,7 @@ class SafeFilename
   end
 
   def call env
-    if env.has_key?("rack.request.form_hash") && env["rack.request.form_hash"].has_key?('safe_filename')
+    if env.has_key?("rack.request.form_hash")
       env["rack.request.form_hash"] = sanitize_hash(env["rack.request.form_hash"])
     end
     @app.call env

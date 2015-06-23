@@ -1,5 +1,4 @@
 <%= form_block "Audio" do %>
-<%= hidden_field_tag "safe_filename" %>
   <% if record.audio.empty? %>
     <% record.audio.build %>
   <% end %>
