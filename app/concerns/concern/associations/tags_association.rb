@@ -35,7 +35,7 @@ module Concern
       end
 
       def update_tag_timestamps_from_add(tag)
-        if self.respond_to?(:published_at) && self.published?
+        if self.respond_to?(:published_at) && self.published_at
           tag.update_timestamps(self.published_at)
         end
       end
