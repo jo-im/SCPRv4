@@ -18,7 +18,7 @@
         services        = [
           ['Brightcove', 'brightcove', 'brightcove.com'],
           ['Cover It Live', 'coveritlive', 'coveritlive.com'],
-          //['DocumentCloud', 'documentcloud'],
+          ['DocumentCloud', 'documentcloud', 'documentcloud.org'],
           ['Facebook', 'facebook', 'facebook.com'],
           ['Fire Tracker', 'firetracker', 'firetracker.scpr.org'],
           ['Google Maps', 'googlemaps', 'maps.google.com'],
