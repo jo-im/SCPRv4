@@ -23,10 +23,11 @@ module NprArticleImporter
       # more often than that!
 
       npr_stories = []
-      offset    = 0
-
+      offset      = 0
+      start_date  = RemoteArticle.where(source: "npr").last.try(:published_at) || 1.hour.ago
+      end_date    = Time.zone.now
       begin
-        response  = fetch_stories(offset)
+        response  = fetch_stories(offset, start_date, end_date)
         npr_stories   += response
         offset    += 20
       end until response.size < 20
@@ -61,14 +62,14 @@ module NprArticleImporter
       added
     end
 
-    def fetch_stories offset
+    def fetch_stories offset, start_date, end_date
       NPR::Story.where(
           :id     => IMPORT_IDS,
-          :date   => ((RemoteArticle.where(source: "npr").last.try(:published_at) || 1.hour.ago)..Time.zone.now))
+          :date   => (start_date..end_date))
         .set(
           :requiredAssets   => 'text',
           :action           => "or")
-        .order("date descending").limit(20).offset(offset).to_a
+        .order("date ascending").limit(20).offset(offset).to_a
     end
 
 
