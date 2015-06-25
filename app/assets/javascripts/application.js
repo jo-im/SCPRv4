@@ -23,6 +23,7 @@
 //= require embeditor/adapters/brightcove
 //= require embeditor/adapters/rebel_mouse
 //= require embeditor/adapters/google_fusion
+//= require embeditor/adapters/ranker
 
 //= require cookie
 //= require content_carousel
