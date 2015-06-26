@@ -19,6 +19,7 @@
           ['Brightcove', 'brightcove', 'brightcove.com'],
           ['Cover It Live', 'coveritlive', 'coveritlive.com'],
           ['DocumentCloud', 'documentcloud', 'documentcloud.org'],
+          ['Ranker', 'ranker', 'ranker.com'],
           ['Facebook', 'facebook', 'facebook.com'],
           ['Fire Tracker', 'firetracker', 'firetracker.scpr.org'],
           ['Google Maps', 'googlemaps', 'maps.google.com'],
