@@ -8,7 +8,7 @@ class scpr.ListenLive
 
     class @CurrentGen
         DefaultOptions:
-            url:                "http://205.144.162.143/kpcclive?ua=SCPRWEB&preskip=true"
+            url:                "http://live.scpr.org/kpcclive?ua=SCPRWEB&preskip=true"
             player:             "#jquery_jplayer_1"
             swf_path:           "/assets-flash"
             pause_timeout:      300
@@ -42,61 +42,53 @@ class scpr.ListenLive
                 ready: =>
                     @_playerReady = true
 
-            # -- Triton Ad Code -- #
+            # -- Ad Code -- #
 
-            @_idSync =>
-                if @_playerReady
+            if @_playerReady
+                @_play()
+            else
+                @player.one $.jPlayer.event.ready, (evt) => @_play()
+
+            # -- register play / pause handlers -- #
+            @player.on $.jPlayer.event.play, (evt) =>
+                if @_pause_timeout
+                    clearTimeout @_pause_timeout
+                    @_pause_timeout = null
+
+                if url = @_impressionURL
+                    @_impressionURL = null
+                    # create an img and append it to our DOM
+                    #img = $("<img src='#{url}'>")
+                    #@_live_ad.append(img)
+                    $.ajax type:"GET", url:"#{url};cors=yes", success:(resp) =>
+                        # nothing right now
+
+            @player.on $.jPlayer.event.pause, (evt) =>
+
+                # set a timer to convert this pause to a stop in one minute
+                @_pause_timeout = setTimeout =>
+                    @player.jPlayer("clearMedia")
+                    @_shouldTryAd = true
+                , @options.pause_timeout * 1000
+
+            @player.on $.jPlayer.event.error, (evt) =>
+                if evt.jPlayer.error.type == "e_url_not_set"
                     @_play()
-                else
-                    @player.one $.jPlayer.event.ready, (evt) => @_play()
 
-                # -- register play / pause handlers -- #
-                @player.on $.jPlayer.event.play, (evt) =>
-                    if @_pause_timeout
-                        clearTimeout @_pause_timeout
-                        @_pause_timeout = null
+            @player.on $.jPlayer.event.ended, (evt) =>
+                @_play()
 
-                    if url = @_impressionURL
-                        @_impressionURL = null
-                        $.ajax type:"GET", url:url, success:(resp) =>
-                            # nothing right now
+            $.jPlayer.timeFormat.showHour = true;
 
-                @player.on $.jPlayer.event.pause, (evt) =>
+            # -- build our schedule -- #
 
-                    # set a timer to convert this pause to a stop in one minute
-                    @_pause_timeout = setTimeout =>
-                        @player.jPlayer("clearMedia")
-                        @_shouldTryAd = true
-                    , @options.pause_timeout * 1000
+            if @options.schedule
+                @schedule = new ListenLive.Schedule @options.schedule
+                @_buildSchedule()
 
-                @player.on $.jPlayer.event.error, (evt) =>
-                    if evt.jPlayer.error.type == "e_url_not_set"
-                        @_play()
-
-                @player.on $.jPlayer.event.ended, (evt) =>
-                    @_play()
-
-                $.jPlayer.timeFormat.showHour = true;
-
-                # -- build our schedule -- #
-
-                if @options.schedule
-                    @schedule = new ListenLive.Schedule @options.schedule
-                    @_buildSchedule()
-
-                    setTimeout =>
-                        @_buildSchedule() unless @_on_now == @schedule.on_now()
-                    , 60*1000
-
-        #----------
-
-        _idSync: (cb) ->
-            # ping the idSync service
-            $.getScript "http://playerservices.live.streamtheworld.com/api/idsync.js?station=KPCCFM"
-            .done =>
-                cb()
-            .fail =>
-                cb()
+                setTimeout =>
+                    @_buildSchedule() unless @_on_now == @schedule.on_now()
+                , 60*1000
 
         #----------
 
@@ -116,19 +108,24 @@ class scpr.ListenLive
                 _timedOut = false
                 _errorTimeout = setTimeout =>
                     _timedOut = true
+                    console.log "timed out waiting for ad response"
                     _playStream()
                 , 3000
 
                 # hit our ad endpoint and see if there is something to play
                 $.ajax
                     type:       "GET"
-                    url:        "http://cmod.live.streamtheworld.com/ondemand/ars?type=preroll&stid=83153&fmt=vast-jsonp"
-                    jsonp:      "jscb"
-                    dataType:   "jsonp"
+                    url:        "http://adserver.adtechus.com/?adrawdata/3.0/5072.110/3582267/0/0/header=yes;cookie=no;adct=text/xml;cors=yes"
+                    dataType:   "xml"
+                    error: (err) =>
+                        console.log "ajax error ", err
                     success:    (xml) =>
+                        console.log "xml is ", xml
+                        @_xml = xml
+
                         clearTimeout _errorTimeout if _errorTimeout
 
-                        obj = @x2js.xml_str2json(xml)
+                        obj = @x2js.xml2json(xml)
 
                         @_triton = obj
 
@@ -168,22 +165,23 @@ class scpr.ListenLive
 
         _buildSchedule: ->
             on_now = @schedule.on_now()
-            on_next = @schedule.on_at( on_now.end.toDate() )
-
-            $(@options.schedule_finder).html(
-                @options.schedule_template?(
-                    on_now:  on_now.toJSON()
-                    on_next: on_next.toJSON()
-                )
-            )
+            on_next = @schedule.on_at( on_now.end.toDate() ) if on_now
 
             @_on_now = on_now
 
-            show_link_array = @_on_now.toJSON().link.split( '/' )
-            show_slug = show_link_array[4]
-            show_splash_img = 'http://media.scpr.org/assets/images/programs/' + show_slug + '_splash@2x.jpg'
+            if on_now
+                $(@options.schedule_finder).html(
+                    @options.schedule_template?(
+                        on_now:  on_now.toJSON()
+                        on_next: on_next.toJSON()
+                    )
+                )
 
-            $('.wrapper, .wrapper-backdrop').css('background-image', 'url(' + show_splash_img + ')')
+                show_link_array = @_on_now.toJSON().link.split( '/' )
+                show_slug = show_link_array[4]
+                show_splash_img = 'http://media.scpr.org/assets/images/programs/' + show_slug + '_splash@2x.jpg'
+
+                $('.wrapper, .wrapper-backdrop').css('background-image', 'url(' + show_splash_img + ')')
 
 
 
