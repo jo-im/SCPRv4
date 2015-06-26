@@ -27,7 +27,7 @@ module NprArticleImporter
       start_date  = RemoteArticle.where(source: "npr").last.try(:published_at) || 1.hour.ago
       end_date    = Time.zone.now
       begin
-        response  = fetch_stories(offset, start_date, end_date)
+        response  = fetch_stories(start_date, end_date, offset)
         npr_stories   += response
         offset    += 20
       end until response.size < 20
@@ -62,7 +62,7 @@ module NprArticleImporter
       added
     end
 
-    def fetch_stories offset, start_date, end_date
+    def fetch_stories start_date, end_date, offset
       NPR::Story.where(
           :id     => IMPORT_IDS,
           :date   => (start_date..end_date))
