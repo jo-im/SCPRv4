@@ -115,7 +115,7 @@ class scpr.ListenLive
                 # hit our ad endpoint and see if there is something to play
                 $.ajax
                     type:       "GET"
-                    url:        "http://adserver.adtechus.com/?adrawdata/3.0/5072.110/3582267/0/0/header=yes;cookie=no;adct=text/xml;cors=yes"
+                    url:        "http://adserver.adtechus.com/?adrawdata/3.0/5511.1/3590535/0/0/header=yes;cookie=yes;adct=text/xml;cors=yes"
                     dataType:   "xml"
                     error: (err) =>
                         console.log "ajax error ", err
