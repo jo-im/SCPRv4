@@ -21,13 +21,16 @@ module NprArticleImporter
       # The "id" parameter in this case is actually referencing a list.
       # Stories from the last hour are returned... be sure to run this script
       # more often than that!
-      npr_stories = NPR::Story.where(
-          :id     => IMPORT_IDS,
-          :date   => (1.hour.ago..Time.zone.now))
-        .set(
-          :requiredAssets   => 'text',
-          :action           => "or")
-        .order("date descending").limit(20).to_a
+
+      npr_stories = []
+      offset      = 0
+      start_date  = RemoteArticle.where(source: "npr").last.try(:published_at) || 1.hour.ago
+      end_date    = Time.zone.now
+      begin
+        response  = fetch_stories(start_date, end_date, offset)
+        npr_stories   += response
+        offset    += 20
+      end until response.size < 20
 
       log "#{npr_stories.size} NPR stories found from the past hour (max 20)"
 
@@ -59,6 +62,15 @@ module NprArticleImporter
       added
     end
 
+    def fetch_stories start_date, end_date, offset
+      NPR::Story.where(
+          :id     => IMPORT_IDS,
+          :date   => (start_date..end_date))
+        .set(
+          :requiredAssets   => 'text',
+          :action           => "or")
+        .order("date ascending").limit(20).offset(offset).to_a
+    end
 
 
     def import(remote_article, options={})
