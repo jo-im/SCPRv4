@@ -4,6 +4,7 @@
 //= require moment-twitter
 //= require waypoints.min
 //= require widowtamer-min
+//= require jquery-ajax-xdomain
 
 //= require_directory ./t_listen/
 //= require swfobject.min
