@@ -1,13 +1,13 @@
 require "spec_helper"
 
-describe Concern::Sanitizers::UrlSanitizer do
+describe Concern::Sanitizers::Url do
   # Don't use a factory here because it fills in attributes that we don't want
   # it to. We don't want the Generate* callbacks to be run.
   subject { 
     fake = Class.new
     fake.class_eval{
       attr_accessor :url
-      include Concern::Sanitizers::UrlSanitizer
+      include Concern::Sanitizers::Url
     }
     fake.new
   }
