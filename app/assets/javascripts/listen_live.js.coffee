@@ -58,9 +58,9 @@ class scpr.ListenLive
                 if url = @_impressionURL
                     @_impressionURL = null
                     # create an img and append it to our DOM
-                    #img = $("<img src='#{url}'>")
-                    #@_live_ad.append(img)
-                    $.ajax type:"GET", url:"#{url};cors=yes", success:(resp) =>
+                    img = $("<img src='#{url}'>").css("display:none")
+                    @_live_ad.append(img)
+                    #$.ajax type:"GET", url:"#{url};cors=yes", success:(resp) =>
                         # nothing right now
 
             @player.on $.jPlayer.event.pause, (evt) =>
@@ -117,6 +117,8 @@ class scpr.ListenLive
                     type:       "GET"
                     url:        "http://adserver.adtechus.com/?adrawdata/3.0/5511.1/3590535/0/0/header=yes;adct=text/xml;cors=yes"
                     dataType:   "xml"
+                    xhrFields:
+                        withCredentials: true
                     error: (err) =>
                         console.log "ajax error ", err
                     success:    (xml) =>
