@@ -6,6 +6,8 @@ module Concern::Sanitizers::Content
   end
 
   def remove_bad_characters
-    body.gsub!(Regexp.new("\u2028|\u2029"), "")
+    [:name, :title, :short_title, :headline, :slug, :teaser, :body, :byline].each do |attrib|
+      try(attrib).try(:gsub!, Regexp.new("\u2028|\u2029"), "")
+    end
   end
 end
