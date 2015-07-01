@@ -37,6 +37,8 @@ class BlogEntry < ActiveRecord::Base
 
   include Concern::Model::Searchable
 
+  include Concern::Sanitizers::Content
+
   self.disqus_identifier_base = "blogs/entry"
   self.public_route_key = "blog_entry"
 
