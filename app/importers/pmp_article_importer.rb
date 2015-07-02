@@ -3,7 +3,8 @@ module PmpArticleImporter
 
   SOURCE    = "pmp"
   ENDPOINT  = "https://api.pmp.io/"
-  TAG       = "marketplace"
+  TAGS      = ["marketplace"]
+  COLLECTIONS = ["4c6e24e5-484f-49e8-be8d-452cfddd6252"]
   PROFILE   = "story"
   LIMIT     = 10
 
@@ -16,18 +17,21 @@ module PmpArticleImporter
     include ::NewRelic::Agent::Instrumentation::ControllerInstrumentation
 
     def sync
-      stories = pmp.root.query['urn:collectiondoc:query:docs']
-        .where(tag: TAG, profile: PROFILE, limit: LIMIT)
-        .retrieve.items
+      added = []
+      stories = []
+
+      TAGS.each do |tag|
+        stories.concat download_stories(tag: tag)
+      end
+      COLLECTIONS.each do |collection|
+        stories.concat download_stories(collection: collection)
+      end
 
       log "#{stories.size} PMP stories found"
-
-      added = []
 
       stories.reject { |s|
         RemoteArticle.exists?(source: SOURCE, article_id: s.guid)
       }.each do |story|
-
         # The PMP API is returning stories with an empty Publish timestamp,
         # so we need to protect against it.
         published  = begin
@@ -55,13 +59,16 @@ module PmpArticleImporter
               "RemoteArticle ##{cached_article.id}"
         else
           log "Couldn't save PMP Story ##{story.id}"
-        end
-      end # each
-
+        end          
+      end
       added
     end
 
-
+    def download_stories query={}
+      stories = pmp.root.query['urn:collectiondoc:query:docs']
+        .where({profile: PROFILE, limit: LIMIT}.merge(query))
+        .retrieve.items 
+    end
 
     def import(remote_article, options={})
       klass = (options[:import_to_class] || "NewsStory").constantize
