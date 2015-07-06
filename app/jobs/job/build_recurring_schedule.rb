@@ -4,11 +4,10 @@ module Job
 
     class << self
       def perform
-        next_month = 1.month.from_now
-        start_date = next_month.beginning_of_month
-        end_date   = next_month.end_of_month
+        start_date = Time.zone.now
+        end_date   = Time.zone.now + 2.weeks
 
-        RecurringScheduleRule.create_occurrences(
+        RecurringScheduleRule.recreate_occurrences(
           :start_date   => start_date,
           :end_date     => end_date
         )
