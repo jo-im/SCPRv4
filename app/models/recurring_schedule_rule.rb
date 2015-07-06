@@ -48,7 +48,7 @@ class RecurringScheduleRule < ActiveRecord::Base
 
   before_create :build_two_weeks_of_occurrences,
     :if => -> { self.schedule_occurrences.blank? }
-  before_update :rebuild_occurrences, if: :rule_changed?
+  before_update :rebuild_two_weeks_of_occurrences, if: :rule_changed?
 
   # If they only updated the program, but not the rule, then we should fire
   # the callback to update all of the occurrence's programs.
@@ -60,13 +60,16 @@ class RecurringScheduleRule < ActiveRecord::Base
 
   class << self
     def recreate_occurrences options={}
-      ScheduleOccurrence.future.destroy_all
+      destroy_future_recurring_occurrences
       create_occurrences(options)
     end
     def create_occurrences(options={})
       self.all.each do |rule|
         rule.create_occurrences(options)
       end
+    end
+    def destroy_future_recurring_occurrences
+      ScheduleOccurrence.recurring.future.destroy_all
     end
   end
 
@@ -154,14 +157,19 @@ class RecurringScheduleRule < ActiveRecord::Base
   end
 
   def rebuild_occurrences(start_date:, end_date:)
-    schedule_occurrences.future.destroy_all
-    build_occurrences(start_date, end_date)
+    destroy_future_recurring_occurrences
+    build_occurrences(start_date: start_date, end_date: end_date)
   end
 
   def build_two_weeks_of_occurrences
     start_date = Time.zone.now
     end_date   = Time.zone.now + 2.weeks
     build_occurrences start_date: start_date, end_date: end_date
+  end
+
+  def rebuild_two_weeks_of_occurrences
+    destroy_future_recurring_occurrences
+    build_two_weeks_of_occurrences
   end
 
   # Build and save
@@ -174,6 +182,10 @@ class RecurringScheduleRule < ActiveRecord::Base
   def recreate_occurrences(args={})
     rebuild_occurrences(args)
     save
+  end
+
+  def destroy_future_recurring_occurrences
+    schedule_occurrences.recurring.future.destroy_all
   end
 
   private
