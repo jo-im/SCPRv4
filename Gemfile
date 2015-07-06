@@ -77,7 +77,7 @@ gem 'coffee-rails', "~> 4.0.0"
 gem 'uglifier', '>= 1.3'
 
 group :development do
-  gem 'pry'
+
 end
 
 
@@ -87,6 +87,8 @@ end
 
 
 group :test, :development do
+  gem 'pry'
+  gem 'pry-byebug'
   gem "rspec-rails", "~> 3.2.1"
   gem 'rb-fsevent', '~> 0.9'
   gem 'launchy'

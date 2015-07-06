@@ -11,6 +11,8 @@ describe Job::BuildRecurringSchedule do
 
     Job::BuildRecurringSchedule.perform
 
+    rule.reload
+
     start_date = Time.zone.now
     end_date = start_date + 2.weeks
 
