@@ -1,12 +1,12 @@
 module PmpArticleImporter
   extend LogsAsTask::ClassMethods
 
-  SOURCE    = "pmp"
-  ENDPOINT  = "https://api.pmp.io/"
-  TAGS      = ["marketplace"]
-  COLLECTIONS = ["4c6e24e5-484f-49e8-be8d-452cfddd6252"]
-  PROFILE   = "story"
-  LIMIT     = 10
+  SOURCE     = "pmp"
+  ENDPOINT   = "https://api.pmp.io/"
+  TAG        = "marketplace"
+  COLLECTION = "4c6e24e5-484f-49e8-be8d-452cfddd6252"
+  PROFILE    = "story"
+  LIMIT      = 10
 
   PROFILES = {
     :image => "APMImage",
@@ -20,12 +20,9 @@ module PmpArticleImporter
       added = []
       stories = []
 
-      TAGS.each do |tag|
-        stories.concat download_stories(tag: tag)
-      end
-      COLLECTIONS.each do |collection|
-        stories.concat download_stories(collection: collection)
-      end
+      stories.concat download_stories(tag: TAG)
+
+      stories.concat download_stories(collection: COLLECTION)
 
       log "#{stories.size} PMP stories found"
 
