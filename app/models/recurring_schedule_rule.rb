@@ -161,7 +161,7 @@ class RecurringScheduleRule < ActiveRecord::Base
   def build_two_weeks_of_occurrences
     start_date = Time.zone.now
     end_date   = Time.zone.now + 2.weeks
-    build_occurrences start_date, end_date
+    build_occurrences start_date: start_date, end_date: end_date
   end
 
   # Build and save
