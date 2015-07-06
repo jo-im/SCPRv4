@@ -20,8 +20,10 @@ module PmpArticleImporter
       added = []
       stories = []
 
+      ## Stories are downloaded in two ways: a query on a tag(marketplace) and from
+      ## a collection that is specific to veteran stories.  Both sets of results are
+      ## concatenated to the stories array.
       stories.concat download_stories(tag: TAG)
-
       stories.concat download_stories(collection: COLLECTION)
 
       log "#{stories.size} PMP stories found"
