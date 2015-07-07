@@ -1,6 +1,7 @@
 class ExternalSegment < ActiveRecord::Base
   include Outpost::Model::Identifier
   include Concern::Associations::AudioAssociation
+  include Concern::Sanitizers::Url
 
   belongs_to :external_program
 
@@ -12,6 +13,8 @@ class ExternalSegment < ActiveRecord::Base
   validates :external_url, url: { allow_blank: true }
 
   scope :published, -> {}
+
+  before_save ->{ sanitize_urls :external_url }
 
   def to_article
     @to_article ||= Article.new({

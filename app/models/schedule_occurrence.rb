@@ -5,6 +5,9 @@ class ScheduleOccurrence < ActiveRecord::Base
 
   include Concern::Associations::PolymorphicProgramAssociation
   include Concern::Callbacks::TouchCallback
+  include Concern::Sanitizers::Url
+
+  before_validation ->{ sanitize_urls :info_url }
 
 ############################
 

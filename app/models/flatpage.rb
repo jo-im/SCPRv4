@@ -4,6 +4,9 @@ class Flatpage < ActiveRecord::Base
   has_secretary
 
   include Concern::Model::Searchable
+  include Concern::Sanitizers::Url
+
+  before_validation ->{ sanitize_urls :path }
 
   self.public_route_key = 'root_slug'
 

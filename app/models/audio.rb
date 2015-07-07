@@ -82,6 +82,10 @@ class Audio < ActiveRecord::Base
     s.published!
   end
 
+  include Concern::Sanitizers::Url
+
+  before_validation ->{ sanitize_urls :url }
+
 
   belongs_to :content,
     :polymorphic    => true,

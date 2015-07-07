@@ -10,6 +10,10 @@ class RemoteArticle < ActiveRecord::Base
   include ::NewRelic::Agent::Instrumentation::ControllerInstrumentation
   include Outpost::Model::Identifier
   include Outpost::Model::Naming
+  include Concern::Sanitizers::Url
+
+  before_validation ->{ sanitize_urls :url }
+  
   logs_as_task
 
   IMPORTERS = {
