@@ -4,6 +4,7 @@ class PressRelease < ActiveRecord::Base
 
   include Concern::Validations::SlugValidation
   include Concern::Model::Searchable
+  include Concern::Sanitizers::Content
 
   self.public_route_key = "press_release"
 

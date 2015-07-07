@@ -11,5 +11,10 @@ json.cache! [Api::Public::V3::VERSION, "v1", schedule_occurrence] do
       json.partial! api_view_path("programs", "program"),
         :program => schedule_occurrence.program
     end
+	else
+		json.program do
+			json.title schedule_occurrence.title
+			json.slug  "override-#{schedule_occurrence.id}"
+		end
   end
 end

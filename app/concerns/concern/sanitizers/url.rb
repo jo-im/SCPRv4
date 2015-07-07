@@ -1,6 +1,6 @@
 module Concern
   module Sanitizers
-    module UrlSanitizer
+    module Url
       ## TO USE:
       ## before_save ->{ sanitize_urls :url }
       extend ActiveSupport::Concern
