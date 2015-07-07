@@ -48,6 +48,14 @@ GIT
       rails (>= 3.0, < 5)
 
 GIT
+  remote: git://github.com/scpr/npr.git
+  revision: 8d423d530d287ba4852b705999085dfe7c1e2895
+  specs:
+    npr (2.0.2)
+      faraday (~> 0.8.0)
+      faraday_middleware (~> 0.9.0)
+
+GIT
   remote: git://github.com/sheerun/parse-ruby-client.git
   revision: a4eb5618c8167e88857b449cd522b23a8b0c02e9
   ref: a4eb5618c8167e88857b449cd522b23a8b0c02e9
@@ -238,9 +246,6 @@ GEM
     newrelic_rpm (3.11.2.286)
     nokogiri (1.6.6.2)
       mini_portile (~> 0.6.0)
-    npr (2.0.2)
-      faraday (~> 0.8.0)
-      faraday_middleware (~> 0.9.0)
     oauth2 (0.9.3)
       faraday (>= 0.8, < 0.10)
       jwt (~> 0.1.8)
@@ -467,7 +472,7 @@ DEPENDENCIES
   launchy
   mysql2 (~> 0.3.14)
   newrelic_rpm (~> 3.7)
-  npr (~> 2.0)
+  npr (~> 2.0)!
   oauth2 (~> 0.8)
   outpost-aggregator
   outpost-asset_host

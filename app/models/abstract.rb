@@ -49,7 +49,7 @@ class Abstract < ActiveRecord::Base
   include Concern::Associations::AudioAssociation
   include Concern::Associations::EditionsAssociation
   include Concern::Callbacks::TouchCallback
-
+  include Concern::Sanitizers::Url
   include Concern::Model::Searchable
 
   # We're not using the CategoryAssociation concern here because we don't
@@ -60,6 +60,8 @@ class Abstract < ActiveRecord::Base
   validates :url, presence: true, url: true
   validates :headline, presence: true
   validates :summary, presence: true
+
+  before_save ->{ sanitize_urls :url }
 
   attr_accessor :original_object
 

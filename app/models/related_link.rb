@@ -1,5 +1,5 @@
 class RelatedLink < ActiveRecord::Base
-  include Concern::Sanitizers::UrlSanitizer
+  include Concern::Sanitizers::Url
 
   before_validation ->{ sanitize_urls :url }
 

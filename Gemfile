@@ -64,7 +64,8 @@ gem 'postmark-rails', "~> 0.6.0"
 gem 'newrelic_rpm', '~> 3.7'
 gem 'parse-ruby-client', github: "sheerun/parse-ruby-client", ref: "a4eb5618c8167e88857b449cd522b23a8b0c02e9"
 gem 'pmp', '0.4.0'
-gem 'npr', '~> 2.0'
+#gem "npr", path:"../npr"
+gem 'npr', '~> 2.0', github:"scpr/npr"
 gem 'asset_host_client', github:"scpr/asset_host_client", tag:"v2.0.0"
 gem 'audio_vision', '~> 1.0'
 gem 'slack-notifier'

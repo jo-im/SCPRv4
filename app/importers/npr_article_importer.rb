@@ -32,14 +32,13 @@ module NprArticleImporter
         offset    += 20
       end until response.size < 20
 
-      log "#{npr_stories.size} NPR stories found from the past hour (max 20)"
+      log "#{npr_stories.size} NPR stories found since last import."
 
       added = []
 
       npr_stories.reject { |s|
         RemoteArticle.exists?(source: SOURCE, article_id: s.id)
       }.each do |npr_story|
-
         cached_article = RemoteArticle.new(
           :source       => SOURCE,
           :article_id   => npr_story.id,

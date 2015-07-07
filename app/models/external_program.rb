@@ -27,6 +27,7 @@ class ExternalProgram < ActiveRecord::Base
   include Concern::Associations::RelatedLinksAssociation
   include Concern::Model::Searchable
   include Concern::Model::Programs
+  include Concern::Sanitizers::Url
 
   self.public_route_key = "program"
 
@@ -69,6 +70,11 @@ class ExternalProgram < ActiveRecord::Base
   #-------------------
   # Aliases
   # alias_attribute :episodes, :external_episodes
+  #-------------------
+
+  #-------------------
+  # Sanitizers
+  before_save ->{ sanitize_urls :podcast_url }
   #-------------------
 
   class << self

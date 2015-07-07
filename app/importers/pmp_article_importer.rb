@@ -1,11 +1,12 @@
 module PmpArticleImporter
   extend LogsAsTask::ClassMethods
 
-  SOURCE    = "pmp"
-  ENDPOINT  = "https://api.pmp.io/"
-  TAG       = "marketplace"
-  PROFILE   = "story"
-  LIMIT     = 10
+  SOURCE     = "pmp"
+  ENDPOINT   = "https://api.pmp.io/"
+  TAG        = "marketplace"
+  COLLECTION = "4c6e24e5-484f-49e8-be8d-452cfddd6252"
+  PROFILE    = "story"
+  LIMIT      = 10
 
   PROFILES = {
     :image => "APMImage",
@@ -16,18 +17,20 @@ module PmpArticleImporter
     include ::NewRelic::Agent::Instrumentation::ControllerInstrumentation
 
     def sync
-      stories = pmp.root.query['urn:collectiondoc:query:docs']
-        .where(tag: TAG, profile: PROFILE, limit: LIMIT)
-        .retrieve.items
+      added = []
+      stories = []
+
+      ## Stories are downloaded in two ways: a query on a tag(marketplace) and from
+      ## a collection that is specific to veteran stories.  Both sets of results are
+      ## concatenated to the stories array.
+      stories.concat download_stories(tag: TAG)
+      stories.concat download_stories(collection: COLLECTION)
 
       log "#{stories.size} PMP stories found"
-
-      added = []
 
       stories.reject { |s|
         RemoteArticle.exists?(source: SOURCE, article_id: s.guid)
       }.each do |story|
-
         # The PMP API is returning stories with an empty Publish timestamp,
         # so we need to protect against it.
         published  = begin
@@ -55,13 +58,16 @@ module PmpArticleImporter
               "RemoteArticle ##{cached_article.id}"
         else
           log "Couldn't save PMP Story ##{story.id}"
-        end
-      end # each
-
+        end          
+      end
       added
     end
 
-
+    def download_stories query={}
+      stories = pmp.root.query['urn:collectiondoc:query:docs']
+        .where({profile: PROFILE, limit: LIMIT}.merge(query))
+        .retrieve.items 
+    end
 
     def import(remote_article, options={})
       klass = (options[:import_to_class] || "NewsStory").constantize

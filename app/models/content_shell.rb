@@ -25,7 +25,8 @@ class ContentShell < ActiveRecord::Base
   include Concern::Callbacks::HomepageCachingCallback
   include Concern::Callbacks::TouchCallback
   include Concern::Methods::ArticleStatuses
-
+  include Concern::Sanitizers::Content
+  include Concern::Sanitizers::Url
 
   validates :status, presence: true
   validates :headline, presence: true # always
@@ -34,6 +35,8 @@ class ContentShell < ActiveRecord::Base
   validates :site, presence: true, if: :should_validate?
 
   scope :with_article_includes, ->() { includes(:assets,:category,:tags,:bylines,bylines:[:user]) }
+
+  before_save ->{ sanitize_urls :url }
 
   class << self
     def sites_select_collection

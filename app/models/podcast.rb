@@ -3,6 +3,7 @@ class Podcast < ActiveRecord::Base
   has_secretary
 
   include Concern::Model::Searchable
+  include Concern::Sanitizers::Url
 
   self.public_route_key = "podcast"
 
@@ -33,6 +34,8 @@ class Podcast < ActiveRecord::Base
   validates :podcast_url, presence: true, url: true
   validates :itunes_url, url: { allow_blank: true }
   validates :image_url, url: { allow_blank: true }
+
+  before_save ->{ sanitize_urls :url, :podcast_url, :itunes_url, :image_url }
 
 
 
