@@ -16,15 +16,12 @@ describe Concern::Associations::TagsAssociation do
   describe "updates tag timestamps" do
     it "when adding a tag to existing content" do
       story = create :news_story
-      tag = create :tag
-
+      tag = create :tag, began_at: nil, most_recent_at: nil
       story.tags << tag
-
       tag.began_at.should eq story.published_at
       tag.most_recent_at.should eq story.published_at
     end
 
-    it "when removing a tag from content"
-    it "when unpublishing a story"
+
   end
 end
