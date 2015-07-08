@@ -156,9 +156,9 @@ class RecurringScheduleRule < ActiveRecord::Base
     schedule_occurrences
   end
 
-  def rebuild_occurrences(args={})
+  def rebuild_occurrences(start_date:, end_date:)
     destroy_future_recurring_occurrences
-    build_occurrences(start_date: args[:start_date], end_date: args[:end_date])
+    build_occurrences(start_date: start_date, end_date: end_date)
   end
 
   def build_two_weeks_of_occurrences

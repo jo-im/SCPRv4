@@ -183,12 +183,12 @@ describe RecurringScheduleRule do
     it 'rebuilds and then saves' do
       Time.stub(:now) { Time.zone.local(2013, 7, 1) }
       rule.save!
-      rule.schedule_occurrences.count.should eq 2
+      rule.schedule_occurrences.count.should eq 9
 
       rule.schedule_occurrences.destroy_all
 
       rule.recreate_occurrences
-      rule.schedule_occurrences(true).count.should eq 2
+      rule.schedule_occurrences(true).count.should eq 9
     end
   end
 
