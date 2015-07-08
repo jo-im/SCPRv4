@@ -187,12 +187,12 @@ describe RecurringScheduleRule do
 
       rule.schedule_occurrences.destroy_all
 
-      rule.recreate_occurrences
+      rule.recreate_occurrences start_date: Time.now, end_date: (Time.now + 2.weeks)
       rule.schedule_occurrences(true).count.should eq 2
     end
   end
 
-  describe '#rebuild_two_weeks_of_occurrences' do
+  describe '#rebuild_occurrences' do
     let(:rule) {
       build :recurring_schedule_rule,
       :days         => [1],
@@ -204,7 +204,7 @@ describe RecurringScheduleRule do
       Time.stub(:now) { Time.zone.local(2013, 7, 1) }
       rule.save!
 
-      # It makes 2 weeks worth, which means 2 mondays.
+      # It makes 2 weeks worth, which means 2 mondays worth.
       rule.schedule_occurrences.count.should eq 2
     end
 
@@ -225,5 +225,4 @@ describe RecurringScheduleRule do
       rule.schedule_occurrences.last.starts_at.wday.should eq 2
     end
   end
-
 end
