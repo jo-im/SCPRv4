@@ -186,16 +186,6 @@ class RecurringScheduleRule < ActiveRecord::Base
     end
   end
 
-  private
-
-  def then_destroy_future_occurrences &block
-    old_occurrences = schedule_occurrences.future.to_a
-    ActiveRecord::Base.transaction do
-      yield
-      old_occurrences.each(&:destroy)
-    end    
-  end
-
   # Build and save
   def create_occurrences(args={})
     build_occurrences(args)
@@ -206,6 +196,16 @@ class RecurringScheduleRule < ActiveRecord::Base
   def recreate_occurrences(args={})
     rebuild_occurrences(args)
     save
+  end
+
+  private
+
+  def then_destroy_future_occurrences &block
+    old_occurrences = schedule_occurrences.future.to_a
+    ActiveRecord::Base.transaction do
+      yield
+      old_occurrences.each(&:destroy)
+    end    
   end
 
   # For the form...
