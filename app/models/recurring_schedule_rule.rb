@@ -63,7 +63,7 @@ class RecurringScheduleRule < ActiveRecord::Base
       # The following creates new occurrences and then deletes the old ones.
       # This way there isn't a [noticeable] split second where the schedule
       # disappears or is missing occurrences.
-      then_destroy_future_occurrences do
+      execute_then_destroy_old_occurrences do
         create_occurrences(options)
       end
     end
@@ -76,7 +76,7 @@ class RecurringScheduleRule < ActiveRecord::Base
         end
       end
     end
-    def then_destroy_future_occurrences &block
+    def execute_then_destroy_old_occurrences &block
       old_occurrences = ScheduleOccurrence.recurring.future.to_a
       ActiveRecord::Base.transaction do
         yield
@@ -169,7 +169,7 @@ class RecurringScheduleRule < ActiveRecord::Base
   end
 
   def rebuild_occurrences(args={})
-    then_destroy_future_occurrences do
+    execute_then_destroy_old_occurrences do
       build_occurrences(start_date: args[:start_date], end_date: args[:end_date])
     end
   end
@@ -181,7 +181,7 @@ class RecurringScheduleRule < ActiveRecord::Base
   end
 
   def rebuild_two_weeks_of_occurrences
-    then_destroy_future_occurrences do
+    execute_then_destroy_old_occurrences do
       build_two_weeks_of_occurrences
     end
   end
@@ -200,7 +200,7 @@ class RecurringScheduleRule < ActiveRecord::Base
 
   private
 
-  def then_destroy_future_occurrences &block
+  def execute_then_destroy_old_occurrences &block
     old_occurrences = schedule_occurrences.future.to_a
     ActiveRecord::Base.transaction do
       yield
