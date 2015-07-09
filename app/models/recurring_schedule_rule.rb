@@ -43,7 +43,7 @@ class RecurringScheduleRule < ActiveRecord::Base
   validates :end_time, presence: true
   validate :time_fields_are_present
 
-
+  # Build the schedule but not the actual occurrence records.
   before_save :build_schedule, if: :rule_changed?
 
   before_create :build_two_weeks_of_occurrences,
@@ -60,16 +60,28 @@ class RecurringScheduleRule < ActiveRecord::Base
 
   class << self
     def recreate_occurrences options={}
-      destroy_future_recurring_occurrences
-      create_occurrences(options)
-    end
-    def create_occurrences(options={})
-      self.all.each do |rule|
-        rule.create_occurrences(options)
+      # The following creates new occurrences and then deletes the old ones.
+      # This way there isn't a [noticeable] split second where the schedule
+      # disappears or is missing occurrences.
+      then_destroy_future_occurrences do
+        create_occurrences(options)
       end
     end
-    def destroy_future_recurring_occurrences
-      ScheduleOccurrence.recurring.future.destroy_all
+    def create_occurrences options={}
+      all.each do |rule|
+        if options.any?
+          rule.create_occurrences(options)
+        else
+          rule.rebuild_two_weeks_of_occurrences
+        end
+      end
+    end
+    def then_destroy_future_occurrences &block
+      old_occurrences = ScheduleOccurrence.recurring.future.to_a
+      ActiveRecord::Base.transaction do
+        yield
+        old_occurrences.each(&:destroy)
+      end    
     end
   end
 
@@ -157,8 +169,9 @@ class RecurringScheduleRule < ActiveRecord::Base
   end
 
   def rebuild_occurrences(args={})
-    destroy_future_recurring_occurrences
-    build_occurrences(start_date: args[:start_date], end_date: args[:end_date])
+    then_destroy_future_occurrences do
+      build_occurrences(start_date: args[:start_date], end_date: args[:end_date])
+    end
   end
 
   def build_two_weeks_of_occurrences
@@ -168,8 +181,19 @@ class RecurringScheduleRule < ActiveRecord::Base
   end
 
   def rebuild_two_weeks_of_occurrences
-    destroy_future_recurring_occurrences
-    build_two_weeks_of_occurrences
+    then_destroy_future_occurrences do
+      build_two_weeks_of_occurrences
+    end
+  end
+
+  private
+
+  def then_destroy_future_occurrences &block
+    old_occurrences = schedule_occurrences.future.to_a
+    ActiveRecord::Base.transaction do
+      yield
+      old_occurrences.each(&:destroy)
+    end    
   end
 
   # Build and save
@@ -183,12 +207,6 @@ class RecurringScheduleRule < ActiveRecord::Base
     rebuild_occurrences(args)
     save
   end
-
-  def destroy_future_recurring_occurrences
-    schedule_occurrences.recurring.future.destroy_all
-  end
-
-  private
 
   # For the form...
   def program_is_present
@@ -247,4 +265,5 @@ class RecurringScheduleRule < ActiveRecord::Base
 
     existing
   end
+
 end
