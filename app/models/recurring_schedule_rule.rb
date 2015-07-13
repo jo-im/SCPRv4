@@ -43,12 +43,12 @@ class RecurringScheduleRule < ActiveRecord::Base
   validates :end_time, presence: true
   validate :time_fields_are_present
 
-  # Build the schedule but not the actual occurrence records.
+  # Build the schedule but not the actual occurrences.
   before_save :build_schedule, if: :rule_changed?
 
   before_create :build_two_weeks_of_occurrences,
     :if => -> { self.schedule_occurrences.blank? }
-  before_update :rebuild_two_weeks_of_occurrences, if: :rule_changed?
+  before_update :recreate_two_weeks_of_occurrences, if: :rule_changed?
 
   # If they only updated the program, but not the rule, then we should fire
   # the callback to update all of the occurrence's programs.
@@ -168,21 +168,20 @@ class RecurringScheduleRule < ActiveRecord::Base
     schedule_occurrences
   end
 
-  def rebuild_occurrences(args={})
-    execute_then_destroy_old_occurrences do
-      build_occurrences(start_date: args[:start_date], end_date: args[:end_date])
-    end
-  end
-
   def build_two_weeks_of_occurrences
     start_date = Time.zone.now
     end_date   = Time.zone.now + 2.weeks
     build_occurrences start_date: start_date, end_date: end_date
   end
 
-  def rebuild_two_weeks_of_occurrences
+  def create_two_weeks_of_occurrences
+    build_two_weeks_of_occurrences
+    schedule_occurrences.each(&:save!)
+  end
+
+  def recreate_two_weeks_of_occurrences
     execute_then_destroy_old_occurrences do
-      build_two_weeks_of_occurrences
+      create_two_weeks_of_occurrences
     end
   end
 
@@ -192,10 +191,11 @@ class RecurringScheduleRule < ActiveRecord::Base
     save
   end
 
-  # Rebuild and save
+  # Remove old occurrences, create occurrences, and save.
   def recreate_occurrences(args={})
-    rebuild_occurrences(args)
-    save
+    execute_then_destroy_old_occurrences do
+      create_occurrences(args)
+    end
   end
 
   private
