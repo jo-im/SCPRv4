@@ -25,11 +25,11 @@ describe Api::Public::V3::ProgramsController do
   describe "GET index" do
     context "with the air_status parameter" do
       it "only selects programs with the requested air statuses" do
-        kpcc_program = create :kpcc_program, air_status: "archive"
+        kpcc_program = create :kpcc_program, air_status: "hidden"
         external_program = create :external_program, air_status: "online"
         another_program = create :kpcc_program, air_status: "onair"
 
-        get :index, { air_status: "archive,online" }.merge(request_params)
+        get :index, { air_status: "hidden,online" }.merge(request_params)
         assigns(:programs).should eq [kpcc_program, external_program]
       end
     end

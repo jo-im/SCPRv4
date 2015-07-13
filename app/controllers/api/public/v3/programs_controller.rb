@@ -4,7 +4,6 @@ module Api::Public::V3
     AIR_STATUSES = [
       "onair",
       "online",
-      "archive",
       "hidden"
     ]
 
