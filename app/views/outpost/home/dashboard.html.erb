@@ -28,13 +28,14 @@
         </thead>
         <tbody>
           <% @current_user_activities.each do |version| %>
-            <% record = version.versioned %>
-            <tr>
-              <td><%= link_to "Edit", record.admin_edit_path, class: "btn" %></td>
-              <td><%= record.to_title %></td>
-              <td><%= display_datetime(version.created_at) %></td>
-              <td><%= version.description %></td>
-            </tr>
+            <% if record = version.versioned %>
+              <tr>
+                <td><%= link_to "Edit", record.admin_edit_path, class: "btn" %></td>
+                <td><%= record.to_title %></td>
+                <td><%= display_datetime(version.created_at) %></td>
+                <td><%= version.description %></td>
+              </tr>
+            <% end %>
           <% end %>
         </tbody>
       </table>
