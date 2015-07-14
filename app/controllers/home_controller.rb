@@ -25,7 +25,7 @@ class HomeController < ApplicationController
       @schedule_next    = MissingObject
     elsif @schedule[0].starts_at < Time.zone.now
       @schedule_current = @schedule[0]
-      @schedule_next    = MissingObject
+      @schedule_next    = @schedule[1] || MissingObject
     else
       @schedule_current = MissingObject
       @schedule_next    = @schedule[0]
