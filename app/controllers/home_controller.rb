@@ -21,13 +21,13 @@ class HomeController < ApplicationController
     ).reject { |o| o.ends_at < Time.zone.now }
 
     if !@schedule.any?
-      @schedule_current = nil
-      @schedule_next    = nil
+      @schedule_current = MissingObject
+      @schedule_next    = MissingObject
     elsif @schedule[0].starts_at < Time.zone.now
       @schedule_current = @schedule[0]
-      @schedule_next    = @schedule[1]
+      @schedule_next    = MissingObject
     else
-      @schedule_current = nil
+      @schedule_current = MissingObject
       @schedule_next    = @schedule[0]
     end
   end
