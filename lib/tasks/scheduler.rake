@@ -19,6 +19,10 @@ task :scheduler => [:environment] do
     Job::TwitterCache.enqueue()
   end
 
+  scheduler.every '1d' do |job|
+    Job::BuildRecurringSchedule.enqueue()
+  end
+
   # -- Caches -- #
 
   # most whatevers...

@@ -43,12 +43,12 @@ class RecurringScheduleRule < ActiveRecord::Base
   validates :end_time, presence: true
   validate :time_fields_are_present
 
-
+  # Build the schedule but not the actual occurrences.
   before_save :build_schedule, if: :rule_changed?
 
-  before_create :build_occurrences_through_next_month,
+  before_create :build_two_weeks_of_occurrences,
     :if => -> { self.schedule_occurrences.blank? }
-  before_update :rebuild_occurrences, if: :rule_changed?
+  before_update :recreate_two_weeks_of_occurrences, if: :rule_changed?
 
   # If they only updated the program, but not the rule, then we should fire
   # the callback to update all of the occurrence's programs.
@@ -59,13 +59,31 @@ class RecurringScheduleRule < ActiveRecord::Base
 
 
   class << self
-    def create_occurrences(options={})
-      self.all.each do |rule|
-        rule.create_occurrences(options)
+    def recreate_occurrences options={}
+      # The following creates new occurrences and then deletes the old ones.
+      # This way there isn't a [noticeable] split second where the schedule
+      # disappears or is missing occurrences.
+      execute_then_destroy_old_occurrences do
+        create_occurrences(options)
       end
     end
+    def create_occurrences options={}
+      all.each do |rule|
+        if options.any?
+          rule.create_occurrences(options)
+        else
+          rule.rebuild_two_weeks_of_occurrences
+        end
+      end
+    end
+    def execute_then_destroy_old_occurrences &block
+      old_occurrences = ScheduleOccurrence.recurring.future.to_a
+      ActiveRecord::Base.transaction do
+        yield
+        old_occurrences.each(&:destroy)
+      end    
+    end
   end
-
 
   def schedule=(new_schedule)
     self.schedule_hash = new_schedule.try(:to_hash)
@@ -76,7 +94,6 @@ class RecurringScheduleRule < ActiveRecord::Base
       IceCube::Schedule.from_hash(self.schedule_hash, options)
     end
   end
-
 
   def duration
     @duration ||= begin
@@ -138,79 +155,58 @@ class RecurringScheduleRule < ActiveRecord::Base
   # Changing past occurrences is not recommneded. But, do whatever you
   # want. I'm just some words in a file. You don't have to listen to me.
   def build_occurrences(start_date:, end_date:)
-    existing = existing_occurrences_between(start_date, end_date)
-
-    # We don't want to duplicate occurrences that already exist
-    # for this rule.
-    self.schedule(start_date_override: start_date)
+    schedule(start_date_override: start_date)
     .occurrences(end_date)
-    .reject { |o| existing[o.start_time] }
     .each do |occurrence|
-      self.schedule_occurrences.build(
+      schedule_occurrences.build(
         starts_at:      occurrence.start_time,
-        ends_at:        occurrence.start_time + self.duration,
-        soft_starts_at: occurrence.start_time + (self.soft_start_offset || 0),
-        program:        self.program,
+        ends_at:        occurrence.start_time + duration,
+        soft_starts_at: occurrence.start_time + (soft_start_offset || 0),
+        program:        program,
       )
     end
+    schedule_occurrences
+  end
 
-    self.schedule_occurrences
+  def build_two_weeks_of_occurrences
+    start_date = Time.zone.now
+    end_date   = Time.zone.now + 2.weeks
+    build_occurrences start_date: start_date, end_date: end_date
+  end
+
+  def create_two_weeks_of_occurrences
+    build_two_weeks_of_occurrences
+    schedule_occurrences.each(&:save!)
+  end
+
+  def recreate_two_weeks_of_occurrences
+    execute_then_destroy_old_occurrences do
+      create_two_weeks_of_occurrences
+    end
   end
 
   # Build and save
   def create_occurrences(args={})
     build_occurrences(args)
-    self.save
+    save
   end
 
-  # Rebuild and save
+  # Remove old occurrences, create occurrences, and save.
   def recreate_occurrences(args={})
-    rebuild_occurrences(args)
-    self.save
+    execute_then_destroy_old_occurrences do
+      create_occurrences(args)
+    end
   end
-
 
   private
 
-  # When a rule changes, we should just ditch all future occurrences of this
-  # rule, and then rebuild from scratch. If a rule is changed
-  # in the middle of a month, build_occurrences will only update a month's
-  # worth of schedule occurrences, but we're building 2 months ahead of
-  # time, so there will be some lingering occurrences that are no longer valid.
-  #
-  # For example (this actually happened):
-  # On February 1st, the schedule is automatically populated for March by
-  # a rake task. On Februrary 3rd, Colin changes the start time for a recurring
-  # rule. This causes all occurrences between February 3rd and
-  # March 3rd (1 month, the default duration) to be wiped out to make room
-  # for the updated occurrences. But now March 3rd-March 31st still have these
-  # incorrect occurrences. Even worse, they won't get fixed by the rake rask,
-  # because the rake task no longer cares about March... the next time it runs
-  # it will be for April.
-  #
-  # Now, unfortunately we have to keep the full schedule in sync with the
-  # cron job that gets run monthly. On the first of each month, it builds
-  # next month's schedule. If we destroy all future occurrences, and then
-  # rebuild a month's worth from NOW, then come the middle of next month,
-  # this rule will disappear from the schedule.
-  #
-  # How could we fix this hacky circumstance?
-  # Lazily build the schedule, instead of building via cron job. This would
-  # pretty much let us just delete all future occurrences whenever a rule
-  # is changed, and let it be rebuilt as necessary. In some ways it's more
-  # simple, but in many ways it's far more complicated.
-  def rebuild_occurrences(args={})
-    self.schedule_occurrences.future.destroy_all
-    build_occurrences_through_next_month(args)
+  def execute_then_destroy_old_occurrences &block
+    old_occurrences = schedule_occurrences.future.to_a
+    ActiveRecord::Base.transaction do
+      yield
+      old_occurrences.each(&:destroy)
+    end    
   end
-
-  def build_occurrences_through_next_month(args={})
-    args[:start_date] = Time.zone.now
-    args[:end_date]   = 1.month.from_now.end_of_month
-
-    build_occurrences(args)
-  end
-
 
   # For the form...
   def program_is_present
@@ -233,7 +229,6 @@ class RecurringScheduleRule < ActiveRecord::Base
     )
   end
 
-
   def parse_time_string(string)
     string.to_s.split(":").map(&:to_i)
   end
@@ -242,7 +237,6 @@ class RecurringScheduleRule < ActiveRecord::Base
     return nil if time_parts.empty?
     time_parts[0] * 60 * 60 + time_parts[1] * 60
   end
-
 
   def duration_should_change?
     self.start_time_changed? ||
@@ -256,7 +250,6 @@ class RecurringScheduleRule < ActiveRecord::Base
     self.end_time_changed? ||
     self.soft_start_offset_changed?
   end
-
 
   def rule_hash
     @rule_hash ||= self.schedule.recurrence_rules.first.try(:to_hash) || {}
@@ -272,4 +265,5 @@ class RecurringScheduleRule < ActiveRecord::Base
 
     existing
   end
+
 end

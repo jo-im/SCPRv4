@@ -12,7 +12,8 @@
 
   <!-- BROADCAST BAR -->
 <% if @schedule_current.present? %>
-<%= cache ["broadcastbar", "v2", @schedule_current, @schedule_current.starts_at.to_i, @schedule_current.program] do %>
+
+<%= cache ["broadcastbar", "v2", @schedule_current.starts_at, @schedule_current.ends_at, @schedule_current.program_id, @schedule_next.starts_at, @schedule_next.ends_at, @schedule_next.program_id] do %>
 
 <% present @schedule_current, BroadcastBarPresenter do |p| %>
   <div class="broadcast-bar <%=p.headshot_class%>" id="broadcast-bar">
@@ -20,52 +21,54 @@
       <div class="container-fluid">
         <div class="row-fluid">
           <div class="span12" id="bb-current-program">
-            <div class="current program">
+            <% if @schedule_current.present? %>
+              <div class="current program">
 
 
-            <% if p.is_for_featured_program? %>
-              <a href="<%= p.public_url %>" class="headshot <%= p.program_slug %>">&nbsp;</a>
+              <% if p.is_for_featured_program? %>
+                <a href="<%= p.public_url %>" class="headshot <%= p.program_slug %>">&nbsp;</a>
+              <% end %>
+
+
+                <div class="program-info <%= p.program_slug %>">
+                  <a href="<%= p.public_url %>" class="show-title <%= p.modal_class %>" data-modal-id="<%= p.toggler_id %>"><%= p.title %></a>
+                  <span class="show-time"><%= p.start_time %> - <%= p.end_time %></span>
+                </div> <!-- program-info -->
+
+
+              <!-- Modal: For recurring slots with episodes which feature episodes -->
+              <% if p.show_modal? && (episode = p.program.episodes.published.first) %>
+                <div class="modal-container">
+
+                <%= modal("episode-guide", modal_id: "episode-guide") do %>
+                  <h6><%= link_to episode.headline, episode.public_path, :class => 'track-event', :data => {'ga-category' => 'Broadcast Bar', 'ga-action' => 'Episode Guide', 'ga-label' => 'Current Episode'} %></h6>
+                  <%= render_asset episode, display: 'thumbnail' %>
+
+                  <!-- Segments -->
+                  <ul class="cbase">
+
+                  <% episode.segments.published.each_with_index do |segment, i| %>
+                    <li>
+                      <h5 class="headline"><%= link_to segment.short_headline, segment.public_path, :class => 'track-event', :data => {'ga-category' => 'Broadcast Bar', 'ga-action' => 'Episode Guide', 'ga-label' => "#{i==0 ? 'Lead' : 'Offlead'} Segment"} %></h5>
+                      <%= comment_count_for segment %>
+                    </li>
+                  <% end %>
+
+                    <li class="more"><a href="<%= p.program.public_path %>">More <%= p.program.title %></a></li>
+                  </ul>
+                <% end %><%# modal %>
+
+                </div> <!-- modal-container -->
+              <% end %><%# show_modal? %>
+              <!-- end Modal -->
+
+
+              </div> <!-- current program -->
             <% end %>
-
-
-              <div class="program-info <%= p.program_slug %>">
-                <a href="<%= p.public_url %>" class="show-title <%= p.modal_class %>" data-modal-id="<%= p.toggler_id %>"><%= p.title %></a>
-                <span class="show-time"><%= p.start_time %> - <%= p.end_time %></span>
-              </div> <!-- program-info -->
-
-
-            <!-- Modal: For recurring slots with episodes which feature episodes -->
-            <% if p.show_modal? && (episode = p.program.episodes.published.first) %>
-              <div class="modal-container">
-
-              <%= modal("episode-guide", modal_id: "episode-guide") do %>
-                <h6><%= link_to episode.headline, episode.public_path, :class => 'track-event', :data => {'ga-category' => 'Broadcast Bar', 'ga-action' => 'Episode Guide', 'ga-label' => 'Current Episode'} %></h6>
-                <%= render_asset episode, display: 'thumbnail' %>
-
-                <!-- Segments -->
-                <ul class="cbase">
-
-                <% episode.segments.published.each_with_index do |segment, i| %>
-                  <li>
-                    <h5 class="headline"><%= link_to segment.short_headline, segment.public_path, :class => 'track-event', :data => {'ga-category' => 'Broadcast Bar', 'ga-action' => 'Episode Guide', 'ga-label' => "#{i==0 ? 'Lead' : 'Offlead'} Segment"} %></h5>
-                    <%= comment_count_for segment %>
-                  </li>
-                <% end %>
-
-                  <li class="more"><a href="<%= p.program.public_path %>">More <%= p.program.title %></a></li>
-                </ul>
-              <% end %><%# modal %>
-
-              </div> <!-- modal-container -->
-            <% end %><%# show_modal? %>
-            <!-- end Modal -->
-
-
-            </div> <!-- current program -->
           </div> <!-- span -->
 <% end %> <%# presenter %>
 
-      <% if @schedule_next %>
+      <% if @schedule_next.present? %>
         <% present @schedule_next, BroadcastBarPresenter do |p| %>
 
           <div class="span12" id="bb-next-program">

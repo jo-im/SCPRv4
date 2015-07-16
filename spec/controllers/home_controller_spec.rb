@@ -64,7 +64,7 @@ describe HomeController do
           :ends_at   => 4.hours.from_now
 
         get :index
-        assigns(:schedule_current).should be_nil
+        assigns(:schedule_current).present?.should eq false
         assigns(:schedule_next).should eq schedule_next
       end
     end
