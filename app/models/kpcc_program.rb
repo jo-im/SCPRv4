@@ -12,9 +12,8 @@ class KpccProgram < ActiveRecord::Base
 
   PROGRAM_STATUS = {
     "onair"      => "Currently Airing",
-    "online"     => "Online Only (Podcast)",
-    "archive"    => "No longer available",
-    "hidden"     => "Not visible on site"
+    "online"     => "Online",
+    "hidden"     => "Not Listed"
   }
 
   AIR_STATUS = PROGRAM_STATUS.invert

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150511200111) do
+ActiveRecord::Schema.define(version: 20150713211942) do
 
   create_table "abstracts", force: :cascade do |t|
     t.string   "source",               limit: 255
@@ -44,8 +44,8 @@ ActiveRecord::Schema.define(version: 20150511200111) do
     t.string   "username",        limit: 255
     t.string   "email",           limit: 255
     t.string   "old_password",    limit: 255
-    t.boolean  "can_login",       limit: 1,   null: false
-    t.boolean  "is_superuser",    limit: 1,   null: false
+    t.boolean  "can_login",                   null: false
+    t.boolean  "is_superuser",                null: false
     t.datetime "last_login"
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -63,7 +63,7 @@ ActiveRecord::Schema.define(version: 20150511200111) do
     t.string   "slug",           limit: 255
     t.text     "bio",            limit: 16777215
     t.string   "title",          limit: 255
-    t.boolean  "is_public",      limit: 1,        default: false, null: false
+    t.boolean  "is_public",                       default: false, null: false
     t.string   "twitter_handle", limit: 255
     t.integer  "asset_id",       limit: 4
     t.string   "short_bio",      limit: 255
@@ -85,7 +85,7 @@ ActiveRecord::Schema.define(version: 20150511200111) do
     t.string   "name",                limit: 255
     t.string   "slug",                limit: 255
     t.text     "description",         limit: 4294967295
-    t.boolean  "is_active",           limit: 1,          default: false, null: false
+    t.boolean  "is_active",                              default: false, null: false
     t.string   "teaser",              limit: 255
     t.integer  "missed_it_bucket_id", limit: 4
     t.datetime "created_at",                                             null: false
@@ -123,7 +123,7 @@ ActiveRecord::Schema.define(version: 20150511200111) do
     t.datetime "created_at",                                          null: false
     t.datetime "updated_at",                                          null: false
     t.integer  "category_id",      limit: 4
-    t.boolean  "is_from_pij",      limit: 1,          default: false, null: false
+    t.boolean  "is_from_pij",                         default: false, null: false
     t.integer  "feature_type_id",  limit: 4
     t.integer  "asset_display_id", limit: 4
   end
@@ -297,7 +297,7 @@ ActiveRecord::Schema.define(version: 20150511200111) do
     t.datetime "created_at",                               null: false
     t.datetime "updated_at",                               null: false
     t.string   "title",        limit: 255
-    t.boolean  "email_sent",   limit: 1,   default: false
+    t.boolean  "email_sent",               default: false
     t.string   "slug",         limit: 255
   end
 
@@ -317,11 +317,11 @@ ActiveRecord::Schema.define(version: 20150511200111) do
     t.string   "sponsor_url",         limit: 255
     t.datetime "starts_at"
     t.datetime "ends_at"
-    t.boolean  "is_all_day",          limit: 1,          default: false, null: false
+    t.boolean  "is_all_day",                             default: false, null: false
     t.string   "location_name",       limit: 255
     t.string   "location_url",        limit: 255
     t.string   "rsvp_url",            limit: 255
-    t.boolean  "show_map",            limit: 1,          default: true,  null: false
+    t.boolean  "show_map",                               default: true,  null: false
     t.string   "address_1",           limit: 255
     t.string   "address_2",           limit: 255
     t.string   "city",                limit: 255
@@ -329,12 +329,12 @@ ActiveRecord::Schema.define(version: 20150511200111) do
     t.string   "zip_code",            limit: 255
     t.datetime "created_at",                                             null: false
     t.datetime "updated_at",                                             null: false
-    t.boolean  "is_kpcc_event",       limit: 1,          default: false, null: false
+    t.boolean  "is_kpcc_event",                          default: false, null: false
     t.text     "archive_description", limit: 4294967295
     t.text     "teaser",              limit: 4294967295
     t.integer  "kpcc_program_id",     limit: 4
     t.integer  "status",              limit: 4,                          null: false
-    t.boolean  "is_from_pij",         limit: 1
+    t.boolean  "is_from_pij"
     t.string   "hashtag",             limit: 255
     t.integer  "category_id",         limit: 4
     t.integer  "asset_display_id",    limit: 4
@@ -421,7 +421,7 @@ ActiveRecord::Schema.define(version: 20150511200111) do
     t.datetime "updated_at"
     t.text     "description", limit: 4294967295,                 null: false
     t.string   "redirect_to", limit: 255
-    t.boolean  "is_public",   limit: 1,          default: false, null: false
+    t.boolean  "is_public",                      default: false, null: false
     t.datetime "created_at",                                     null: false
     t.string   "template",    limit: 255,                        null: false
   end
@@ -433,15 +433,15 @@ ActiveRecord::Schema.define(version: 20150511200111) do
   create_table "layout_breakingnewsalert", force: :cascade do |t|
     t.string   "headline",                 limit: 255,                        null: false
     t.string   "alert_type",               limit: 255,                        null: false
-    t.boolean  "email_sent",               limit: 1,          default: false, null: false
+    t.boolean  "email_sent",                                  default: false, null: false
     t.datetime "created_at",                                                  null: false
     t.datetime "updated_at",                                                  null: false
     t.text     "teaser",                   limit: 4294967295,                 null: false
     t.string   "alert_url",                limit: 200,                        null: false
-    t.boolean  "send_email",               limit: 1,          default: false, null: false
-    t.boolean  "visible",                  limit: 1,                          null: false
-    t.boolean  "send_mobile_notification", limit: 1,          default: false, null: false
-    t.boolean  "mobile_notification_sent", limit: 1,          default: false, null: false
+    t.boolean  "send_email",                                  default: false, null: false
+    t.boolean  "visible",                                                     null: false
+    t.boolean  "send_mobile_notification",                    default: false, null: false
+    t.boolean  "mobile_notification_sent",                    default: false, null: false
     t.integer  "status",                   limit: 4
     t.datetime "published_at"
   end
@@ -541,7 +541,7 @@ ActiveRecord::Schema.define(version: 20150511200111) do
     t.datetime "created_at",                                          null: false
     t.datetime "updated_at",                                          null: false
     t.integer  "category_id",      limit: 4
-    t.boolean  "is_from_pij",      limit: 1,          default: false, null: false
+    t.boolean  "is_from_pij",                         default: false, null: false
     t.integer  "feature_type_id",  limit: 4
     t.integer  "asset_display_id", limit: 4
   end
@@ -570,7 +570,7 @@ ActiveRecord::Schema.define(version: 20150511200111) do
     t.text     "body",         limit: 4294967295
     t.string   "query_type",   limit: 255
     t.datetime "published_at"
-    t.boolean  "is_featured",  limit: 1,          default: false, null: false
+    t.boolean  "is_featured",                     default: false, null: false
     t.datetime "created_at",                                      null: false
     t.datetime "updated_at",                                      null: false
     t.string   "pin_query_id", limit: 255
@@ -594,7 +594,7 @@ ActiveRecord::Schema.define(version: 20150511200111) do
     t.string   "author",             limit: 255
     t.string   "keywords",           limit: 255
     t.string   "duration",           limit: 255
-    t.boolean  "is_listed",          limit: 1,        default: false, null: false
+    t.boolean  "is_listed",                           default: false, null: false
     t.integer  "source_id",          limit: 4
     t.integer  "category_id",        limit: 4
     t.string   "item_type",          limit: 255
@@ -650,12 +650,12 @@ ActiveRecord::Schema.define(version: 20150511200111) do
     t.string   "airtime",      limit: 255
     t.string   "air_status",   limit: 255,                      null: false
     t.text     "sidebar",      limit: 16777215
-    t.boolean  "is_segmented", limit: 1,        default: true,  null: false
+    t.boolean  "is_segmented",                  default: true,  null: false
     t.integer  "blog_id",      limit: 4
     t.string   "audio_dir",    limit: 255
     t.datetime "created_at",                                    null: false
     t.datetime "updated_at",                                    null: false
-    t.boolean  "is_featured",  limit: 1,        default: false, null: false
+    t.boolean  "is_featured",                   default: false, null: false
     t.integer  "quote_id",     limit: 4
   end
 
@@ -713,7 +713,7 @@ ActiveRecord::Schema.define(version: 20150511200111) do
     t.datetime "published_at"
     t.string   "url",          limit: 200
     t.string   "article_id",   limit: 255
-    t.boolean  "is_new",       limit: 1,          default: true, null: false
+    t.boolean  "is_new",                          default: true, null: false
     t.string   "source",       limit: 255
     t.datetime "created_at",                                     null: false
     t.datetime "updated_at",                                     null: false
@@ -786,7 +786,7 @@ ActiveRecord::Schema.define(version: 20150511200111) do
     t.datetime "published_at"
     t.datetime "updated_at",                          null: false
     t.integer  "category_id",      limit: 4
-    t.boolean  "is_from_pij",      limit: 1
+    t.boolean  "is_from_pij"
     t.integer  "feature_type_id",  limit: 4
     t.integer  "asset_display_id", limit: 4
   end
@@ -837,7 +837,7 @@ ActiveRecord::Schema.define(version: 20150511200111) do
     t.string   "title",          limit: 255
     t.string   "slug",           limit: 255
     t.text     "description",    limit: 65535
-    t.boolean  "is_featured",    limit: 1
+    t.boolean  "is_featured"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.datetime "began_at"
