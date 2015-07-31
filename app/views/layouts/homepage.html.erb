@@ -13,7 +13,7 @@
   <!-- BROADCAST BAR -->
 <% if @schedule_current.present? %>
 
-<%= cache ["broadcastbar", "v2", @schedule_current.starts_at, @schedule_current.ends_at, @schedule_current.program_id, @schedule_next.starts_at, @schedule_next.ends_at, @schedule_next.program_id] do %>
+<%= cache ["broadcastbar", "v2", @schedule_current, @schedule_next] do %>
 
 <% present @schedule_current, BroadcastBarPresenter do |p| %>
   <div class="broadcast-bar <%=p.headshot_class%>" id="broadcast-bar">
