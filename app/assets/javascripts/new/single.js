@@ -282,8 +282,17 @@ scpr.Behaviors.Single = {
             }
 
 
-
-
+        //  ================================================
+        //  Single: Fire scrollDepth event to track views of newsletter signup module
+        //  ------------------------------------------------
+        if($("#appeal-newsletter").length) {
+            $.scrollDepth({
+              elements: ['#appeal-newsletter'],
+              percentage: false,
+              userTiming: false,
+              pixelDepth: false
+            });
+        }
 
 
     } // loadBehaviors

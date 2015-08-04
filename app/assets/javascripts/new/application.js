@@ -9,4 +9,5 @@
 //= require new/editions
 //= require new/episodes
 //= require new/jquery.ba-throttle-debounce.min
+//= require jquery.scrolldepth.min
 //= require page_mapping
