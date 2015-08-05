@@ -27,19 +27,21 @@
 
             </div><!--/ .marginal-tools -->
 
-                <div class="prose-body">
+            <div class="prose-body">
 
-                    <% if should_inline_asset_for(article.original_object) %>
-                      <%= render_asset article, context:"news", display:"inline" %>
-                    <% end %>
+                <% if should_inline_asset_for(article.original_object) %>
+                  <%= render_asset article, context:"news", display:"inline" %>
+                <% end %>
 
-                    <%= article.body.html_safe %>
-                    <% if article.original_object.joined_bylines[:contributing].present? %>
-                        <footer class="contributor">
-                            <p><%= render_contributing_byline article.original_object %></p>
-                        </footer>
-                    <% end %>
-                </div><!--/ .prose-body -->
+                <%= article.body.html_safe %>
+                <% if article.original_object.joined_bylines[:contributing].present? %>
+                    <footer class="contributor">
+                        <p><%= render_contributing_byline article.original_object %></p>
+                    </footer>
+                <% end %>
+            </div><!--/ .prose-body -->
+
+            <%= render 'shared/widgets/short_list_subscribe' %>
 
             <%= render 'shared/cwidgets/related_links', content:article.original_object %>
 
