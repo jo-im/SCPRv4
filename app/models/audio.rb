@@ -92,7 +92,7 @@ class Audio < ActiveRecord::Base
   validate :enco_info_is_present_together
   validate :audio_file_is_mp3
   validates :url, url: { allow_blank: true }
-  validates :enco_number, numericality: {only_integer: true}
+  validates :enco_number, numericality: {only_integer: true}, allow_blank: true
 
 
   before_save :determine_source, if: :audio_source_changed?
