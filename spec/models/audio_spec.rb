@@ -227,7 +227,7 @@ describe Audio do
     end
 
     describe "enco_number format" do
-      context "containing non-numeric characters" do
+      context "trailing whitespace" do
         it "returns an error" do
           audio = build :audio,
             :enco_number    => "12345 ",
@@ -238,7 +238,7 @@ describe Audio do
           audio.errors[:enco_number].should include "must be an integer"
         end
       end
-      context "containing only numerical characters" do
+      context "exclusively numerical characters" do
         it "is valid" do
           audio = build :audio,
             :enco_number    => "12345",
