@@ -164,6 +164,10 @@ class Edition < ActiveRecord::Base
     email_sent? "monday"
   end
 
+  def view
+    @view ||= CacheController.new
+  end
+
   private
 
   # We can't use `publishing?` here because this gets checked in
