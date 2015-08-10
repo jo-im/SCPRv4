@@ -8,13 +8,13 @@ class Edition < ActiveRecord::Base
   outpost_model
   has_secretary
   has_status
+  has_many :eloqua_emails, as: :emailable
 
   include Concern::Associations::ContentAlarmAssociation
   include Concern::Callbacks::SetPublishedAtCallback
   include Concern::Callbacks::TouchCallback
   include Concern::Model::Searchable
   include Concern::Scopes::PublishedScope
-  include Concern::Methods::EloquaSendable
 
 
   status :draft do |s|
@@ -56,7 +56,8 @@ class Edition < ActiveRecord::Base
     :presence   => true,
     :if         => :should_validate?
 
-  after_save :async_send_email, if: :should_send_email?
+  after_save :send_shortlist_email, if: :should_send_shortlist_email?
+  after_save :send_monday_email, if: :should_send_monday_email?
 
   class << self
     def titles_collection
@@ -115,15 +116,8 @@ class Edition < ActiveRecord::Base
     self.class.published.where.not(id: self.id).first(4)
   end
 
-  ### EloquaSendable interface implementation
-  # Note that we don't check for presence of first Abstract before trying to
-  # use it (in the templates). We probably should, but trying to send out an
-  # edition without any abstracts would be a mistake, so errors are okay now.
-  # Maybe we should just validate that at least one item slot is present.
-  def as_eloqua_email
-    subject = "The Short List: #{self.title}"
-
-    {
+  def send_shortlist_email
+    EloquaEmail.create({
       :html_body => view.render_view(
         :template   => "/editions/email/template",
         :formats    => [:html],
@@ -139,22 +133,52 @@ class Edition < ActiveRecord::Base
                       "Sent: #{Time.zone.now}\nSubject: #{subject}",
       :subject     => subject,
       :email       => "theshortlist@scpr.org"
-    }
+    })
   end
 
+  def send_monday_email
+    EloquaEmail.create({
+      :html_body => view.render_view(
+        :template   => "/editions/email/template",
+        :formats    => [:html],
+        :locals     => { edition: self }).to_s,
+
+      :plain_text_body => view.render_view(
+        :template   => "/editions/email/template",
+        :formats    => [:text],
+        :locals     => { edition: self }).to_s,
+
+      :name        => "[scpr-edition] #{self.title[0..30]}",
+      :description => "SCPR Short List\n" \
+                      "Sent: #{Time.zone.now}\nSubject: #{subject}",
+      :subject     => subject,
+      :email       => "theshortlist@scpr.org"
+    })
+  end
+
+  def shortlist_email_sent?
+    email_sent?("shortlist") || email_sent
+  end
+
+  def monday_email_sent?
+    email_sent? "monday"
+  end
 
   private
 
   # We can't use `publishing?` here because this gets checked in
   # a background worker.
-  def should_send_email?
-    self.published? && !self.email_sent?
+  def should_send_shortlist_email?
+    published? && !shortlist_email_sent?
   end
 
-  def update_email_status(campaign)
-    self.update_column(:email_sent, true)
+  def should_send_monday_email?
+    published? && !monday_email_sent? && Date.today.monday?
   end
 
+  def email_sent? email_type
+    (eloqua_emails.where(email_type: email_type).first || Missing).sent?
+  end
 
   def build_slot_association(slot_hash, item)
     if item.published?
