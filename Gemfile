@@ -78,7 +78,7 @@ gem 'coffee-rails', "~> 4.0.0"
 gem 'uglifier', '>= 1.3'
 
 group :development do
-  gem 'pry'
+  # gem 'pry'
 end
 
 
@@ -95,6 +95,8 @@ group :test, :development do
   gem 'guard-resque'
   gem 'guard-rspec'
   gem 'ruby-prof'
+  gem 'pry'
+  gem 'pry-byebug'
 end
 
 

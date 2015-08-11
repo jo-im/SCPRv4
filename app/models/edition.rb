@@ -117,6 +117,7 @@ class Edition < ActiveRecord::Base
   end
 
   def send_shortlist_email
+    subject = "The Short List: #{self.title}"
     EloquaEmail.create({
       :html_body => view.render_view(
         :template   => "/editions/email/template",
@@ -137,6 +138,7 @@ class Edition < ActiveRecord::Base
   end
 
   def send_monday_email
+    subject = "The Short List: #{self.title}"
     EloquaEmail.create({
       :html_body => view.render_view(
         :template   => "/editions/email/template",
