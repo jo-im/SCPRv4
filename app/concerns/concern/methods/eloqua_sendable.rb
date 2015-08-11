@@ -47,7 +47,8 @@ module Concern
         # Returns Hash of Strings
         def eloqua_config
           attributes = Rails.configuration.x.api.eloqua.attributes
-          attributes[self.name.underscore] || raise_missing_eloqua_config
+          name = (self.emailable_type rescue nil) || self.name
+          attributes[name] || raise_missing_eloqua_config
         end
 
 

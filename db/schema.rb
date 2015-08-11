@@ -313,14 +313,14 @@ ActiveRecord::Schema.define(version: 20150810203330) do
     t.string   "description",     limit: 255
     t.string   "subject",         limit: 255
     t.string   "email",           limit: 255
-    t.text     "html_body",       limit: 65535
-    t.text     "plain_text_body", limit: 65535
+    t.text     "html_body",       limit: 16777215
+    t.text     "plain_text_body", limit: 16777215
     t.integer  "emailable_id",    limit: 4
     t.string   "emailable_type",  limit: 255
-    t.boolean  "email_sent",                    default: false
+    t.boolean  "email_sent",                       default: false
     t.string   "email_type",      limit: 255
-    t.datetime "created_at",                                    null: false
-    t.datetime "updated_at",                                    null: false
+    t.datetime "created_at",                                       null: false
+    t.datetime "updated_at",                                       null: false
   end
 
   create_table "events", force: :cascade do |t|
