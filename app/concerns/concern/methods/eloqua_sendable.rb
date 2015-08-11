@@ -45,9 +45,9 @@ module Concern
         # override this method.
         #
         # Returns Hash of Strings
-        def eloqua_config
+        def eloqua_config name=nil
           attributes = Rails.configuration.x.api.eloqua.attributes
-          name = (self.emailable_type rescue nil) || self.name
+          name ||= self.name.underscore
           attributes[name] || raise_missing_eloqua_config
         end
 
@@ -75,7 +75,7 @@ module Concern
       def publish_email(options={})
         return if !should_send_email?
 
-        config        = self.class.eloqua_config
+        config        = self.class.eloqua_config(self.emailable_type.underscore)
         email_object  = self.as_eloqua_email
 
         # Create the e-mail.

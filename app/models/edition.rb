@@ -118,7 +118,7 @@ class Edition < ActiveRecord::Base
 
   def send_shortlist_email
     subject = "The Short List: #{self.title}"
-    EloquaEmail.create({
+    eloqua_emails.create({
       :html_body => view.render_view(
         :template   => "/editions/email/template",
         :formats    => [:html],
@@ -133,13 +133,14 @@ class Edition < ActiveRecord::Base
       :description => "SCPR Short List\n" \
                       "Sent: #{Time.zone.now}\nSubject: #{subject}",
       :subject     => subject,
-      :email       => "theshortlist@scpr.org"
+      :email       => "theshortlist@scpr.org",
+      :email_type  => "shortlist"
     })
   end
 
   def send_monday_email
     subject = "The Short List: #{self.title}"
-    EloquaEmail.create({
+    eloqua_emails.create({
       :html_body => view.render_view(
         :template   => "/editions/email/template",
         :formats    => [:html],
@@ -154,7 +155,8 @@ class Edition < ActiveRecord::Base
       :description => "SCPR Short List\n" \
                       "Sent: #{Time.zone.now}\nSubject: #{subject}",
       :subject     => subject,
-      :email       => "theshortlist@scpr.org"
+      :email       => "theshortlist@scpr.org",
+      :email_type  => "monday"
     })
   end
 
