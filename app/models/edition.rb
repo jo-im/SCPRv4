@@ -119,19 +119,10 @@ class Edition < ActiveRecord::Base
   def send_shortlist_email
     subject = "The Short List: #{self.title}"
     eloqua_emails.create({
-      :html_body => view.render_view(
-        :template   => "/editions/email/template",
-        :formats    => [:html],
-        :locals     => { edition: self }).to_s,
-
-      :plain_text_body => view.render_view(
-        :template   => "/editions/email/template",
-        :formats    => [:text],
-        :locals     => { edition: self }).to_s,
-
+      :html_template   => "/editions/email/template",
+      :plain_text_template   => "/editions/email/template",
       :name        => "[scpr-edition] #{self.title[0..30]}",
-      :description => "SCPR Short List\n" \
-                      "Sent: #{Time.zone.now}\nSubject: #{subject}",
+      :description => "SCPR Short List",
       :subject     => subject,
       :email       => "theshortlist@scpr.org",
       :email_type  => "shortlist"
@@ -141,22 +132,13 @@ class Edition < ActiveRecord::Base
   def send_monday_email
     subject = "The Short List: #{self.title}"
     eloqua_emails.create({
-      :html_body => view.render_view(
-        :template   => "/editions/email/template",
-        :formats    => [:html],
-        :locals     => { edition: self }).to_s,
-
-      :plain_text_body => view.render_view(
-        :template   => "/editions/email/template",
-        :formats    => [:text],
-        :locals     => { edition: self }).to_s,
-
+      :html_template   => "/editions/email/template",
+      :plain_text_template   => "/editions/email/template",
       :name        => "[scpr-edition] #{self.title[0..30]}",
-      :description => "SCPR Short List\n" \
-                      "Sent: #{Time.zone.now}\nSubject: #{subject}",
+      :description => "SCPR Short List",
       :subject     => subject,
       :email       => "theshortlist@scpr.org",
-      :email_type  => "monday"
+      :email_type  => "shortlist"
     })
   end
 

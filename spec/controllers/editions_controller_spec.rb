@@ -42,7 +42,7 @@ describe EditionsController do
     render_views
 
     before :each do
-      @edition = create :edition, :published, :with_abstract
+      @edition = build :edition, :published, :with_abstract
       @edition_slots = create_list :edition_slot, 10, edition: @edition
     end
 

@@ -5,8 +5,8 @@ class CreateEmails < ActiveRecord::Migration
       t.string :description
       t.string :subject
       t.string :email
-      t.text :html_body, limit: 8388607
-      t.text :plain_text_body, limit: 8388607
+      t.string :html_template
+      t.string :plain_text_template
       t.belongs_to :emailable
       t.string :emailable_type
       t.boolean :email_sent, default: false

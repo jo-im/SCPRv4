@@ -5,8 +5,24 @@ class EloquaEmail < ActiveRecord::Base
   belongs_to :emailable, polymorphic: true
 
   def as_eloqua_email
-    # attributes
-    self
+    {
+      :html_body => view.render_view(
+        :template   => html_template,
+        :formats    => [:html],
+        :locals     => { emailable.class.name.underscore.to_sym => emailable }).to_s,
+
+      :plain_text_body => view.render_view(
+        :template   => plain_text_template,
+        :formats    => [:text],
+        :locals     => { emailable.class.name.underscore.to_sym => emailable }).to_s,
+
+      :name        => name,
+      :description => "#{description}\n" \
+                      "Sent: #{Time.zone.now}\nSubject: #{subject}",
+      :subject     => subject,
+      :email       => email,
+      :email_type  => email_type
+    }
   end
 
   def update_email_status campaign
@@ -19,8 +35,6 @@ class EloquaEmail < ActiveRecord::Base
   def should_send_email?
     !sent?
   end
-
-  private
 
   def not_sent?
     sent? != true
