@@ -75,8 +75,11 @@ module Concern
       def publish_email(options={})
         return if !should_send_email?
 
-        config_key    = self.respond_to?(:emailable_type) ? self.emailable_type.underscore : nil
-        config        = self.class.eloqua_config(config_key)
+        if self.respond_to?(:emailable_type) && self.emailable_type
+          config = self.class.eloqua_config(self.emailable_type.underscore)
+        else
+          config = self.class.eloqua_config
+        end
         email_object  = self.as_eloqua_email
 
         # Create the e-mail.

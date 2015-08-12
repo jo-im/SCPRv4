@@ -5,17 +5,7 @@ class EloquaEmail < ActiveRecord::Base
   belongs_to :emailable, polymorphic: true
 
   def as_eloqua_email
-    {
-      :html_body => view.render_view(
-        :template   => html_template,
-        :formats    => [:html],
-        :locals     => { emailable.class.name.underscore.to_sym => emailable }).to_s,
-
-      :plain_text_body => view.render_view(
-        :template   => plain_text_template,
-        :formats    => [:text],
-        :locals     => { emailable.class.name.underscore.to_sym => emailable }).to_s,
-
+    email_object = {
       :name        => name,
       :description => "#{description}\n" \
                       "Sent: #{Time.zone.now}\nSubject: #{subject}",
@@ -23,6 +13,30 @@ class EloquaEmail < ActiveRecord::Base
       :email       => email,
       :email_type  => email_type
     }
+
+    email_object.merge!({html_body: html_body}) if html_body
+    email_object.merge!({plain_text_body: plain_text_body}) if plain_text_body
+    email_object
+  end
+
+  def html_body
+    if html_template
+      view.render_view(
+        :template   => html_template,
+        :formats    => [:html],
+        :locals     => locals
+      ).to_s
+    end
+  end
+
+  def plain_text_body
+    if html_template
+      view.render_view(
+        :template   => plain_text_template,
+        :formats    => [:text],
+        :locals     => locals
+      ).to_s
+    end
   end
 
   def update_email_status campaign
@@ -38,5 +52,11 @@ class EloquaEmail < ActiveRecord::Base
 
   def not_sent?
     sent? != true
+  end
+
+  private
+
+  def locals
+    emailable ? { emailable.class.name.underscore.to_sym => emailable } : {}
   end
 end
