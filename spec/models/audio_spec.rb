@@ -225,6 +225,31 @@ describe Audio do
       audio.errors.keys.should include :enco_date
       audio.errors[:base].first.should match /must both be present/
     end
+
+    describe "enco_number format" do
+      context "trailing whitespace" do
+        it "returns an error" do
+          audio = build :audio,
+            :enco_number    => "12345 ",
+            :enco_date      => Date.today
+
+          audio.valid?.should eq false
+          audio.errors.keys.should include :enco_number
+          audio.errors[:enco_number].should include "must be an integer"
+        end
+      end
+      context "exclusively numerical characters" do
+        it "is valid" do
+          audio = build :audio,
+            :enco_number    => "12345",
+            :enco_date      => Date.today
+
+          audio.valid?.should eq true
+          audio.errors.keys.should_not include :enco_number
+        end
+      end
+    end
+
   end
 
 
