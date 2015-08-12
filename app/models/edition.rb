@@ -154,6 +154,10 @@ class Edition < ActiveRecord::Base
     @view ||= CacheController.new
   end
 
+  def email_sent? email_type
+    (eloqua_emails.where(email_type: email_type).first || Missing).sent?
+  end
+
   private
 
   # We can't use `publishing?` here because this gets checked in
@@ -164,10 +168,6 @@ class Edition < ActiveRecord::Base
 
   def should_send_monday_email?
     published? && !monday_email_sent? && Date.today.monday?
-  end
-
-  def email_sent? email_type
-    (eloqua_emails.where(email_type: email_type).first || Missing).sent?
   end
 
   def build_slot_association(slot_hash, item)
