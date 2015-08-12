@@ -162,6 +162,27 @@ describe Edition do
     # end
   end
 
+  describe "emails" do
+    context "tuesday through sunday" do
+      it "creates one email" do
+        Timecop.freeze(Date.parse('2015-08-13')) do
+          edition = build :edition, :with_abstract
+          edition.save
+          edition.eloqua_emails.count.should eq 1
+        end
+      end
+    end
+    context "monday" do
+      it "creates two emails" do
+        Timecop.freeze(Date.parse('2015-08-10')) do
+          edition = build :edition, :with_abstract
+          edition.save
+          edition.eloqua_emails.count.should eq 2
+        end
+      end
+    end
+  end
+
   # describe '#as_eloqua_email' do
   #   let(:edition) {
   #     build :edition, title: "Hundreds Die in Fire; Grep Proops Unharmed"
