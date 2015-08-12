@@ -89,18 +89,18 @@ module Job
         twitter_options[:count] = twitter_options[:count] * 10
       end
 
-      #begin
+      begin
         self.log  "Fetching tweets for #{@screen_name}..."
 
         # We only want to return the requested count here, even though we
         # may actually be fetching way more.
         tweets = @tweeter.user_timeline(@screen_name, twitter_options)
         options[:count] ? tweets.first(options[:count]) : tweets
-      #rescue => e
-      #  warn "Error caught in TwitterCache#fetch: #{e}"
-      #  self.log "Error: \n #{e}"
-      #  false
-      #end
+      rescue Twitter::Error::NotFound => e
+       warn "Error caught in TwitterCache#fetch: #{e}"
+       self.log "Error: \n #{e}"
+       false
+      end
     end
 
     add_transaction_tracer :fetch, category: :task
