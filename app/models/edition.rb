@@ -132,13 +132,13 @@ class Edition < ActiveRecord::Base
   def send_monday_email
     subject = "The Short List: #{self.title}"
     eloqua_emails.create({
-      :html_template   => "/editions/email/template",
-      :plain_text_template   => "/editions/email/template",
+      :html_template   => "/editions/email/monday/template",
+      :plain_text_template   => "/editions/email/monday/template",
       :name        => "[scpr-edition] #{self.title[0..30]}",
-      :description => "SCPR Short List",
+      :description => "SCPR Monday Short List",
       :subject     => subject,
       :email       => "theshortlist@scpr.org",
-      :email_type  => "shortlist"
+      :email_type  => "monday"
     })
   end
 
