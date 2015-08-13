@@ -63,6 +63,11 @@ describe EloquaEmail do
         eloqua_email.publish_email
         eloqua_email.email_sent.should be true
       end
+      it "doesn't send an e-mail if one has already been sent" do
+        eloqua_email = build :eloqua_email, email_sent: true
+        eloqua_email.should_not_receive(:async_send_email).with(:email_sent, true)
+        eloqua_email.publish_email
+      end
     end
 
   end
