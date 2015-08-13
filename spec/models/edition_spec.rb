@@ -99,26 +99,32 @@ describe Edition do
   end
 
   describe "sending the e-mail" do
-    # describe "job queue" do
-    #   it "queues the job when email should be published" do
-    #     edition = build :edition, :published
-    #     edition.should_receive(:async_send_email)
-    #     edition.save!
-    #   end
+    describe "eloqua emails" do
+      Timecop.freeze(Date.parse('2015-08-13')) do
+        it "creates eloqua emails when the edition is published" do
+          edition = build :edition, :published
+          edition.eloqua_emails.length.should eq 0
+          edition.save!
+          edition.eloqua_emails.length.should eq 1
+        end
 
-    #   it "doesn't queue the job if the email was already sent" do
-    #     edition = build :edition, :published, email_sent: true
-    #     edition.should_not_receive(:async_send_email)
-    #     edition.save!
-    #   end
+        it "doesn't create a new email if one was already sent" do
+          edition = build :edition, :published
+          edition.save!
+          edition.eloqua_emails.length.should eq 1
+          edition.eloqua_emails.last.update email_sent: true
+          edition.save!
+          edition.eloqua_emails.length.should eq 1
+        end
 
-    #   it "doesn't queue the job if the edition isn't published" do
-    #     edition = build :edition, :draft
-    #     edition.should_not_receive(:async_send_email)
-    #     edition.save!
-    #   end
+        it "doesn't queue the job if the edition isn't published" do
+          edition = build :edition, :draft
+          edition.save!
+          edition.eloqua_emails.length.should eq 0
+        end
+      end
 
-    # end
+    end
 
     # describe '#publish_email' do
     #   before do
