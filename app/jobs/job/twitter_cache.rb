@@ -70,7 +70,7 @@ module Job
 
     def initialize(screen_name)
       @tweeter      = Tweeter.new("kpccweb")
-      @screen_name  = screen_name
+      @screen_name  = "34iji932j409jeorj"
     end
 
     def fetch(options={})
