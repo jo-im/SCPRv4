@@ -123,49 +123,7 @@ describe Edition do
           edition.eloqua_emails.length.should eq 0
         end
       end
-
     end
-
-    # describe '#publish_email' do
-    #   before do
-    #     stub_request(:post, %r|assets/email|).to_return({
-    #       :content_type   => "application/json",
-    #       :body           => load_fixture("api/eloqua/email.json")
-    #     })
-
-    #     stub_request(:post, %r|assets/campaign/active|).to_return({
-    #       :content_type   => "application/json",
-    #       :body           => load_fixture("api/eloqua/campaign_activated.json")
-    #     })
-
-    #     stub_request(:post, %r|assets/campaign\z|).to_return({
-    #       :content_type   => "application/json",
-    #       :body           => load_fixture("api/eloqua/email.json")
-    #     })
-
-    #     # Just incase, we don't want this method queueing anything
-    #     # since we're testing the publish method directly.
-    #     Edition.any_instance.stub(:async_send_email)
-    #   end
-
-    #   it "sends an e-mail if the edition is published" do
-    #     edition = create :edition, :published, :with_abstract
-    #     edition.publish_email
-    #     edition.email_sent?.should eq true
-    #   end
-
-    #   it "doesn't send an e-mail if the edition is not published" do
-    #     edition = create :edition, :draft
-    #     edition.publish_email
-    #     edition.email_sent?.should eq false
-    #   end
-
-    #   it "doesn't send an e-mail if one has already been sent" do
-    #     edition = create :edition, :published, email_sent: true
-    #     edition.should_not_receive(:update_column).with(:email_sent, true)
-    #     edition.publish_email
-    #   end
-    # end
   end
 
   describe "emails" do
@@ -200,7 +158,6 @@ describe Edition do
   #     edition.slots.build(item: abstract)
   #     edition.save!
   #   end
-
 
   #   describe 'html_body' do
   #     it 'is a string containing some html' do
