@@ -8,6 +8,6 @@ FactoryGirl.define do
     email "theshortlist@scpr.org"
     email_type "shortlist"
     email_sent false
-    emailable Edition.new
+    # emailable Edition.new
   end
 end
