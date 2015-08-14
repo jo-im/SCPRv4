@@ -25,7 +25,8 @@ module NewRelic
 
     #------------------
 
-    def log_error(e)
+    def log_error(e, custom_attributes={})
+      NewRelic::Agent.add_custom_parameters(custom_attributes)
       NewRelic::Agent.agent.error_collector.notice_error(e)
     end
   end
