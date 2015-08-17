@@ -122,7 +122,8 @@ class Edition < ActiveRecord::Base
       :html_template   => "/editions/email/template",
       :plain_text_template   => "/editions/email/template",
       :name        => "[scpr-edition] #{self.title[0..30]}",
-      :description => "SCPR Short List",
+      :description => "SCPR Short List\n" \
+                      "Sent: #{Time.zone.now}\nSubject: #{subject}",
       :subject     => subject,
       :email       => "theshortlist@scpr.org",
       :email_type  => "shortlist"
@@ -135,7 +136,8 @@ class Edition < ActiveRecord::Base
       :html_template   => "/editions/email/monday/template",
       :plain_text_template   => "/editions/email/monday/template",
       :name        => "[scpr-edition] #{self.title[0..30]}",
-      :description => "SCPR Monday Short List",
+      :description => "SCPR Monday Short List\n" \
+                      "Sent: #{Time.zone.now}\nSubject: #{subject}",
       :subject     => subject,
       :email       => "theshortlist@scpr.org",
       :email_type  => "monday"

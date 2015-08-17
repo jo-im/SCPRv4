@@ -100,29 +100,35 @@ describe Edition do
 
   describe "sending the e-mail" do
     describe "eloqua emails" do
-      Timecop.freeze(Date.parse('2015-08-13')) do
+      
         it "creates eloqua emails when the edition is published" do
-          edition = build :edition, :published
-          edition.eloqua_emails.length.should eq 0
-          edition.save!
-          edition.eloqua_emails.length.should eq 1
+          Timecop.freeze(Date.parse('2015-08-13')) do
+            edition = build :edition, :published
+            edition.eloqua_emails.length.should eq 0
+            edition.save!
+            edition.eloqua_emails.length.should eq 1
+          end
         end
 
         it "doesn't create a new email if one was already sent" do
-          edition = build :edition, :published
-          edition.save!
-          edition.eloqua_emails.length.should eq 1
-          edition.eloqua_emails.last.update email_sent: true
-          edition.save!
-          edition.eloqua_emails.length.should eq 1
+          Timecop.freeze(Date.parse('2015-08-13')) do
+            edition = build :edition, :published
+            edition.save!
+            edition.eloqua_emails.length.should eq 1
+            edition.eloqua_emails.last.update email_sent: true
+            edition.save!
+            edition.eloqua_emails.length.should eq 1
+          end
         end
 
         it "doesn't queue the job if the edition isn't published" do
-          edition = build :edition, :draft
-          edition.save!
-          edition.eloqua_emails.length.should eq 0
+          Timecop.freeze(Date.parse('2015-08-13')) do
+            edition = build :edition, :draft
+            edition.save!
+            edition.eloqua_emails.length.should eq 0
+          end
         end
-      end
+
     end
   end
 

@@ -11,8 +11,7 @@ class EloquaEmail < ActiveRecord::Base
   def as_eloqua_email
     email_object = {
       :name        => name,
-      :description => "#{description}\n" \
-                      "Sent: #{Time.zone.now}\nSubject: #{subject}",
+      :description => description,
       :subject     => subject,
       :email       => email,
       :email_type  => email_type
@@ -56,6 +55,10 @@ class EloquaEmail < ActiveRecord::Base
 
   def not_sent?
     sent? != true
+  end
+
+  def name
+    email_type || (emailable ? emailable.class.name : nil) || self.class.name
   end
 
   private
