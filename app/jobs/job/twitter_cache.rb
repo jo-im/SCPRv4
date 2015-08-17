@@ -70,7 +70,7 @@ module Job
 
     def initialize(screen_name)
       @tweeter      = Tweeter.new("kpccweb")
-      @screen_name  = "34iji932j409jeorj"
+      @screen_name  = screen_name
     end
 
     def fetch(options={})
@@ -97,7 +97,7 @@ module Job
         tweets = @tweeter.user_timeline(@screen_name, twitter_options)
         options[:count] ? tweets.first(options[:count]) : tweets
       rescue Twitter::Error::NotFound => e
-        NewRelic.log_error(e, {metric: @screen_name, custom_params: {twitter_handle: @screen_name}})
+        NewRelic.log_error(e, {custom_params: {twitter_handle: @screen_name}})
         warn "Error caught in TwitterCache#fetch: #{e}"
         self.log "Error: \n #{e}"
         false
