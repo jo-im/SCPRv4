@@ -97,9 +97,10 @@ module Job
         tweets = @tweeter.user_timeline(@screen_name, twitter_options)
         options[:count] ? tweets.first(options[:count]) : tweets
       rescue Twitter::Error::NotFound => e
-       warn "Error caught in TwitterCache#fetch: #{e}"
-       self.log "Error: \n #{e}"
-       false
+        NewRelic.log_error(e, {custom_params: {twitter_handle: @screen_name}})
+        warn "Error caught in TwitterCache#fetch: #{e}"
+        self.log "Error: \n #{e}"
+        false
       end
     end
 
