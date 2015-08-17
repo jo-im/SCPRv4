@@ -6,7 +6,7 @@ FactoryGirl.define do
     description "test description"
     subject "test subject"
     email "theshortlist@scpr.org"
-    email_type "shortlist"
+    email_type "edition"
     email_sent false
     # emailable Edition.new
   end

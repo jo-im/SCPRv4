@@ -76,7 +76,11 @@ module Concern
         return if !should_send_email?
 
         if self.respond_to?(:emailable_type) && self.emailable_type
-          config = self.class.eloqua_config(self.emailable_type.underscore)
+          if respond_to?(:email_type) && email_type
+            config = self.class.eloqua_config(email_type)
+          else 
+            config = self.class.eloqua_config(self.emailable_type.underscore)
+          end
         else
           config = self.class.eloqua_config
         end
