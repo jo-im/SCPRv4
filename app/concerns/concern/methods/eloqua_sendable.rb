@@ -23,10 +23,6 @@ module Concern
       include ::NewRelic::Agent::Instrumentation::ControllerInstrumentation
 
 
-      module ClassMethods
-      end
-
-
       # Enqueue a background task to publish the e-mail.
       #
       # Returns nothing.
@@ -35,7 +31,7 @@ module Concern
       end
 
       # Returns the name of the class for the instance as a string.
-      def name
+      def obj_name
         self.class.name
       end
 
@@ -160,7 +156,7 @@ module Concern
       # Returns Hash of Strings
       def eloqua_config
         attributes = Rails.configuration.x.api.eloqua.attributes
-        attributes[self.name.underscore] || raise_missing_eloqua_config(name)
+        attributes[self.obj_name.underscore] || raise_missing_eloqua_config(obj_name)
       end
 
 

@@ -57,7 +57,7 @@ class EloquaEmail < ActiveRecord::Base
     sent? != true
   end
 
-  def name
+  def obj_name
     email_type || (emailable ? emailable.class.name : nil) || self.class.name
   end
 
