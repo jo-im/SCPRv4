@@ -140,7 +140,7 @@ class Edition < ActiveRecord::Base
                       "Sent: #{Time.zone.now}\nSubject: #{subject}",
       :subject     => subject,
       :email       => "theshortlist@scpr.org",
-      :email_type  => "monday"
+      :email_type  => "monday_shortlist"
     })
   end
 
