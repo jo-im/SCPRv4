@@ -66,4 +66,27 @@ describe Concern::Methods::EloquaSendable do
       alert.async_send_email
     end
   end
+
+  describe "#eloqua_config" do
+    phoney_class = Class.new do
+      include Concern::Methods::EloquaSendable 
+      attr_accessor :obj_name
+      def initialize obj_name=nil
+        @obj_name = obj_name
+      end
+    end
+    context "object has an obj_name" do
+      it "returns the configuration for the object's obj_name" do
+        phoney_object = phoney_class.new("edition")
+        expect(phoney_object.eloqua_config(OpenStruct.new({"edition" => true}))).to eq true
+      end
+    end
+    context "object has an obj_name" do
+      it "returns the configuration for the object's obj_name" do
+        phoney_object = phoney_class.new
+        expect{phoney_object.eloqua_config(OpenStruct.new({"edition" => true}))}.to raise_error(RuntimeError)
+      end
+    end
+  end
+
 end

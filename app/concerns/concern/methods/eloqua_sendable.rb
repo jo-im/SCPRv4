@@ -154,9 +154,9 @@ module Concern
       # override this method.
       #
       # Returns Hash of Strings
-      def eloqua_config
-        attributes = Rails.configuration.x.api.eloqua.attributes
-        attributes[self.obj_name.underscore] || raise_missing_eloqua_config(obj_name)
+      def eloqua_config config=nil
+        attributes = config || Rails.configuration.x.api.eloqua.attributes
+        (self.obj_name ? attributes[self.obj_name.underscore] : nil) || raise_missing_eloqua_config(obj_name)
       end
 
 

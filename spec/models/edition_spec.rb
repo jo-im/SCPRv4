@@ -153,49 +153,4 @@ describe Edition do
     end
   end
 
-  # describe '#as_eloqua_email' do
-  #   let(:edition) {
-  #     build :edition, title: "Hundreds Die in Fire; Grep Proops Unharmed"
-  #   }
-
-  #   let(:abstract) { build :abstract }
-
-  #   before do
-  #     edition.slots.build(item: abstract)
-  #     edition.save!
-  #   end
-
-  #   describe 'html_body' do
-  #     it 'is a string containing some html' do
-  #       edition.as_eloqua_email[:html_body].should match /<html/
-  #     end
-  #   end
-
-  #   describe 'plain_text_body' do
-  #     it 'is a string containing some text' do
-  #       edition.as_eloqua_email[:plain_text_body].should match edition.published_at.strftime("%B %d, %Y")
-  #     end
-  #   end
-
-  #   describe 'name' do
-  #     it 'is a string with part of the title in it' do
-  #       edition.as_eloqua_email[:name]
-  #         .should eq "[scpr-edition] #{edition.title[0..30]}"
-  #     end
-  #   end
-
-  #   describe 'description' do
-  #     it 'is the edition title' do
-  #       description = edition.as_eloqua_email[:description]
-  #       description.should match edition.title
-  #     end
-  #   end
-
-  #   describe 'subject' do
-  #     it 'is the edition title' do
-  #       subject = edition.as_eloqua_email[:subject]
-  #       subject.should match edition.title
-  #     end
-  #   end
-  # end
 end
