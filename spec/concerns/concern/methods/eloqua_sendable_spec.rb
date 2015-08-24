@@ -4,7 +4,7 @@ describe Concern::Methods::EloquaSendable do
   describe '::eloqua_config' do
     email = nil
     before :each do
-      email = build :eloqua_email
+      email = build :eloqua_email, email_type: "shortlist"
     end
     it 'gets eloqua config for the object' do
       email.eloqua_config.should be_a Hash
