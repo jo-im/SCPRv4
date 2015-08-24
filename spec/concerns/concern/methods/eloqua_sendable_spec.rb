@@ -2,9 +2,13 @@ require 'spec_helper'
 
 describe Concern::Methods::EloquaSendable do
   describe '::eloqua_config' do
-    it 'gets eloqua config for the class' do
-      TestClass::Alert.eloqua_config.should be_a Hash
-      TestClass::Alert.eloqua_config.should have_key "email_group_id"
+    email = nil
+    before :each do
+      email = build :eloqua_email, email_type: "shortlist"
+    end
+    it 'gets eloqua config for the object' do
+      email.eloqua_config.should be_a Hash
+      email.eloqua_config.should have_key "email_group_id"
     end
 
     it "raises an error if the configuration is missing" do
@@ -62,4 +66,27 @@ describe Concern::Methods::EloquaSendable do
       alert.async_send_email
     end
   end
+
+  describe "#eloqua_config" do
+    phoney_class = Class.new do
+      include Concern::Methods::EloquaSendable 
+      attr_accessor :obj_name
+      def initialize obj_name=nil
+        @obj_name = obj_name
+      end
+    end
+    context "object has an obj_name" do
+      it "returns the configuration for the object's obj_name" do
+        phoney_object = phoney_class.new("edition")
+        expect(phoney_object.eloqua_config(OpenStruct.new({"edition" => true}))).to eq true
+      end
+    end
+    context "object has an obj_name" do
+      it "returns the configuration for the object's obj_name" do
+        phoney_object = phoney_class.new
+        expect{phoney_object.eloqua_config(OpenStruct.new({"edition" => true}))}.to raise_error(RuntimeError)
+      end
+    end
+  end
+
 end

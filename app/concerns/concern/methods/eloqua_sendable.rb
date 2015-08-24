@@ -23,43 +23,6 @@ module Concern
       include ::NewRelic::Agent::Instrumentation::ControllerInstrumentation
 
 
-      module ClassMethods
-        # Get the Eloqua configuration from the underscored class name.
-        # Raises an error if the configuration isn't found.
-        #
-        # This will look an eloqua configuration that matches the underscored
-        # class name, eg `breaking_news_alert`.
-        # For example, for BreakingNewsAlert:
-        #
-        # eloqua:
-        #   attributes:
-        #     breaking_news_alert:
-        #       email_group_id: xx
-        #       segment_id: xxx
-        #       campaign_folder_id: xxxx
-        #       email_folder_id: xxxx
-        #
-        # See config/templates/api_config.yml.ci for an example.
-        #
-        # If the key you want to use doesn't match the class name, just
-        # override this method.
-        #
-        # Returns Hash of Strings
-        def eloqua_config
-          attributes = Rails.configuration.x.api.eloqua.attributes
-          attributes[self.name.underscore] || raise_missing_eloqua_config
-        end
-
-
-        private
-
-        def raise_missing_eloqua_config
-          raise "No Eloqua Configuration found for #{self.name}. " \
-                "Is your api_config.yml up to date?"
-        end
-      end
-
-
       # Enqueue a background task to publish the e-mail.
       #
       # Returns nothing.
@@ -67,6 +30,10 @@ module Concern
         Resque.enqueue(Job::SendEmailNotification, self.class.name, self.id)
       end
 
+      # Returns the name of the class for the instance as a string.
+      def obj_name
+        self.class.name
+      end
 
       # Publish an e-mail for this object to the Eloqua API.
       #
@@ -74,7 +41,8 @@ module Concern
       def publish_email(options={})
         return if !should_send_email?
 
-        config        = self.class.eloqua_config
+        config = eloqua_config
+
         email_object  = self.as_eloqua_email
 
         # Create the e-mail.
@@ -165,6 +133,32 @@ module Concern
         raise NotImplementedError
       end
 
+      # Get the Eloqua configuration from the underscored class name.
+      # Raises an error if the configuration isn't found.
+      #
+      # This will look an eloqua configuration that matches the underscored
+      # class name, eg `breaking_news_alert`.
+      # For example, for BreakingNewsAlert:
+      #
+      # eloqua:
+      #   attributes:
+      #     breaking_news_alert:
+      #       email_group_id: xx
+      #       segment_id: xxx
+      #       campaign_folder_id: xxxx
+      #       email_folder_id: xxxx
+      #
+      # See config/templates/api_config.yml.ci for an example.
+      #
+      # If the key you want to use doesn't match the class name, just
+      # override this method.
+      #
+      # Returns Hash of Strings
+      def eloqua_config config=nil
+        attributes = config || Rails.configuration.x.api.eloqua.attributes
+        (self.obj_name ? attributes[self.obj_name.underscore] : nil) || raise_missing_eloqua_config(obj_name)
+      end
+
 
       private
 
@@ -186,6 +180,12 @@ module Concern
       def view
         @view ||= CacheController.new
       end
+
+      def raise_missing_eloqua_config name
+        raise "No Eloqua Configuration found for #{name}. " \
+              "Is your api_config.yml up to date?"
+      end
+
     end
   end
 end

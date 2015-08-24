@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150713211942) do
+ActiveRecord::Schema.define(version: 20150810203330) do
 
   create_table "abstracts", force: :cascade do |t|
     t.string   "source",               limit: 255
@@ -307,6 +307,21 @@ ActiveRecord::Schema.define(version: 20150713211942) do
   add_index "editions", ["status", "published_at"], name: "index_editions_on_status_and_published_at", using: :btree
   add_index "editions", ["status"], name: "index_editions_on_status", using: :btree
   add_index "editions", ["updated_at"], name: "index_editions_on_updated_at", using: :btree
+
+  create_table "eloqua_emails", force: :cascade do |t|
+    t.string   "name",                limit: 255
+    t.string   "description",         limit: 255
+    t.string   "subject",             limit: 255
+    t.string   "email",               limit: 255
+    t.string   "html_template",       limit: 255
+    t.string   "plain_text_template", limit: 255
+    t.integer  "emailable_id",        limit: 4
+    t.string   "emailable_type",      limit: 255
+    t.boolean  "email_sent",                      default: false
+    t.string   "email_type",          limit: 255
+    t.datetime "created_at",                                      null: false
+    t.datetime "updated_at",                                      null: false
+  end
 
   create_table "events", force: :cascade do |t|
     t.string   "headline",            limit: 255

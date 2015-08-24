@@ -1,0 +1,21 @@
+89.3 KPCC | The Short List
+-----------------------------------
+<%= edition.published_at.strftime("%B %d, %Y") %>
+-----------------------------------
+Enjoying the Monday Short List? Why not get it daily? Subscribe here:
+http://info.americanpublicmediagroup.org/LP=788
+-----------------------------------
+<%= "\r\n" %>
+<%= edition.abstracts.first.headline %>
+<%= "#{strip_tags edition.abstracts.first.summary.strip}\n" %>
+<%= "#{add_ga_tracking_to edition.abstracts.first.url}\n" %>
+-----------------------------------
+<%= "\r\n" %>
+<% edition.abstracts[1..-1].each do |abstract| %>
+<% if abstract.category.present? %>
+<%= abstract.category.title %>
+<% end %>
+<%= abstract.headline %>
+<%= "#{strip_tags abstract.summary.gsub(/\s+/," ").strip}\n" %>
+<%= "#{add_ga_tracking_to abstract.url}\n" %>
+<% end %>
