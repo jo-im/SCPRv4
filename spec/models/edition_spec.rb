@@ -115,9 +115,20 @@ describe Edition do
             edition = build :edition, :published
             edition.save!
             edition.eloqua_emails.length.should eq 1
-            edition.eloqua_emails.last.update email_sent: true
+            edition.update shortlist_email_sent: true
             edition.save!
             edition.eloqua_emails.length.should eq 1
+          end
+        end
+
+        it "doesn't create a new monday email if one was already sent" do
+          Timecop.freeze(Date.parse('2015-08-10')) do
+            edition = build :edition, :published
+            edition.save!
+            edition.eloqua_emails.length.should eq 2
+            edition.update shortlist_email_sent: true, monday_shortlist_email_sent: true
+            edition.save!
+            edition.eloqua_emails.length.should eq 2
           end
         end
 

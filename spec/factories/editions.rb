@@ -6,8 +6,9 @@ FactoryGirl.define do
     status Edition.status_id(:live)
     sequence(:title) { |n| "Cool Edition #{n}" }
     slug "am-edition"
-    email_sent false
-
+    shortlist_email_sent false
+    monday_shortlist_email_sent false
+    
     trait :published do
       sequence(:published_at) { |n| Time.zone.now + n.hours }
     end

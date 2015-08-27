@@ -44,8 +44,8 @@ class EloquaEmail < ActiveRecord::Base
 
   def update_email_status campaign
     update_column(:email_sent, true)
-    if email_type && emailable.respond_to?("#{email_type}_email_type")
-      emailable.update_column("#{email_type}_email_type", true)
+    if email_type && emailable.respond_to?("#{email_type}_email_sent")
+      emailable.update_column("#{email_type}_email_sent", true)
     end
   end
 

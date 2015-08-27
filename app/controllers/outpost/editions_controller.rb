@@ -12,7 +12,8 @@ class Outpost::EditionsController < Outpost::ResourceController
       :default_order_direction    => DESCENDING
 
     l.column :status
-    l.column :email_sent, header: "Emailed?"
+    l.column :shortlist_email_sent, header: "Email Sent?"
+    l.column :monday_shortlist_email_sent, header: "Monday Email Sent?"
 
     l.column :updated_at,
       :header                     => "Last Updated",
@@ -21,8 +22,12 @@ class Outpost::EditionsController < Outpost::ResourceController
 
     l.filter :status, collection: -> { Edition.status_select_collection }
 
-    l.filter :email_sent,
+    l.filter :shortlist_email_sent,
       :title        => "Email Sent?",
+      :collection   => :boolean
+
+    l.filter :monday_shortlist_email_sent,
+      :title        => "Monday Email Sent?",
       :collection   => :boolean
   end
 end

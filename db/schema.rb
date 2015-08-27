@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150810203330) do
+ActiveRecord::Schema.define(version: 20150827162731) do
 
   create_table "abstracts", force: :cascade do |t|
     t.string   "source",               limit: 255
@@ -292,17 +292,18 @@ ActiveRecord::Schema.define(version: 20150810203330) do
   add_index "edition_slots", ["position"], name: "index_edition_slots_on_position", using: :btree
 
   create_table "editions", force: :cascade do |t|
-    t.integer  "status",       limit: 4
+    t.integer  "status",                      limit: 4
     t.datetime "published_at"
-    t.datetime "created_at",                               null: false
-    t.datetime "updated_at",                               null: false
-    t.string   "title",        limit: 255
-    t.boolean  "email_sent",               default: false
-    t.string   "slug",         limit: 255
+    t.datetime "created_at",                                              null: false
+    t.datetime "updated_at",                                              null: false
+    t.string   "title",                       limit: 255
+    t.boolean  "shortlist_email_sent",                    default: false
+    t.string   "slug",                        limit: 255
+    t.boolean  "monday_shortlist_email_sent",             default: false
   end
 
-  add_index "editions", ["email_sent"], name: "index_editions_on_email_sent", using: :btree
   add_index "editions", ["published_at"], name: "index_editions_on_published_at", using: :btree
+  add_index "editions", ["shortlist_email_sent"], name: "index_editions_on_shortlist_email_sent", using: :btree
   add_index "editions", ["slug"], name: "index_editions_on_slug", using: :btree
   add_index "editions", ["status", "published_at"], name: "index_editions_on_status_and_published_at", using: :btree
   add_index "editions", ["status"], name: "index_editions_on_status", using: :btree

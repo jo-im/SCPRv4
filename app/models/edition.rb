@@ -145,19 +145,20 @@ class Edition < ActiveRecord::Base
   end
 
   def shortlist_email_sent?
-    email_sent?("shortlist") || email_sent
+    email_sent? "shortlist"
   end
 
   def monday_email_sent?
-    email_sent? "monday"
+    email_sent? "monday_shortlist"
   end
 
   def view
     @view ||= CacheController.new
   end
 
+  # Checks if a specific email type was sent
   def email_sent? email_type
-    (eloqua_emails.where(email_type: email_type).first || Missing).sent?
+    send "#{email_type}_email_sent"
   end
 
   private
@@ -170,6 +171,10 @@ class Edition < ActiveRecord::Base
 
   def should_send_monday_email?
     published? && !monday_email_sent? && Date.today.monday?
+  end
+
+  def should_send_email?
+    should_send_shortlist_email? || should_send_monday_email?
   end
 
   def build_slot_association(slot_hash, item)
