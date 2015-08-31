@@ -276,7 +276,7 @@ class Article
 
     klasses.each do |k|
       k.constantize.with_article_includes.find_in_batches(batch_size:1000) do |b|
-        ES_CLIENT.bulk body:b.collect { |s| s.to_article.to_es_bulk_operation }.flatten(1)
+        ES_CLIENT.bulk body:b.collect { |s| s.to_article.try(:to_es_bulk_operation) }.compact().flatten(1)
       end
     end
   end
