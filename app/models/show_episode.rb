@@ -111,6 +111,7 @@ class ShowEpisode < ActiveRecord::Base
 
 
   def to_article
+    return nil if !self.show
     @to_article ||= Article.new({
       :original_object    => self,
       :id                 => self.obj_key,
