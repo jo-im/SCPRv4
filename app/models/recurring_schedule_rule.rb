@@ -185,10 +185,10 @@ class RecurringScheduleRule < ActiveRecord::Base
     end
   end
 
-  # Build and save
+  # Build and save occurrences
   def create_occurrences(args={})
     build_occurrences(args)
-    save
+    schedule_occurrences.each(&:save!)
   end
 
   # Remove old occurrences, create occurrences, and save.
