@@ -11,4 +11,6 @@ json.cache! [Api::Public::V3::VERSION, "v1", program] do
   json.podcast_url(program.podcast_url) if program.podcast_url.present?
   json.rss_url(program.rss_url) if program.rss_url.present?
   json.public_url  program.public_url
+
+  json.is_kpcc program.is_kpcc
 end

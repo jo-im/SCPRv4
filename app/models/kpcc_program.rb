@@ -105,6 +105,10 @@ class KpccProgram < ActiveRecord::Base
       .map { |a| a.article.to_article }
   end
 
+  def is_kpcc
+    true
+  end
+
   private
 
   def should_reject_quote(attributes)

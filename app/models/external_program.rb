@@ -133,6 +133,10 @@ class ExternalProgram < ActiveRecord::Base
     !days_to_expiry.nil? && days_to_expiry != 0
   end
 
+  def is_kpcc
+    false
+  end
+
   private
 
   def slug_is_unique_in_programs_namespace
