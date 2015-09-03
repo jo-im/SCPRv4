@@ -135,7 +135,7 @@ class Edition < ActiveRecord::Base
     eloqua_emails.create({
       :html_template   => "/editions/email/monday/template",
       :plain_text_template   => "/editions/email/monday/template",
-      :name        => "[scpr-edition] #{self.title[0..30]}",
+      :name        => "[scpr-edition-monday] #{self.title[0..30]}",
       :description => "SCPR Monday Short List\n" \
                       "Sent: #{Time.zone.now}\nSubject: #{subject}",
       :subject     => subject,
