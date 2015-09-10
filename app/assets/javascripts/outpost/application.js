@@ -33,3 +33,6 @@
 //= require outpost/global_plugins
 //= require outpost/utilities
 //= require outpost/aggregator
+//= require outpost/ckeditor/inline_asset_placeholder
+//= require outpost/ckeditor/inline_assets
+//= require outpost/dockable

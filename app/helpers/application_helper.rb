@@ -161,6 +161,10 @@ module ApplicationHelper
       :article    => article
   end
 
+  def render_inline_assets content, options={}
+    InlineAssets.render content, options
+  end
+
   #----------
 
   def random_headshot

@@ -33,4 +33,9 @@ class ContentAsset < ActiveRecord::Base
       _asset
     end
   end
+
+  def use
+    inline ? "inline" : "standard"
+  end
+
 end

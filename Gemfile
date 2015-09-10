@@ -17,9 +17,10 @@ gem 'render_anywhere'
 gem 'dalli'
 
 ## Outpost
-gem 'outpost-cms', github:"SCPR/outpost", tag:"v0.1.6"
+# gem 'outpost-cms', github:"SCPR/outpost", tag:"v0.1.6"
+gem 'outpost-cms', path: "~/workspace/outpost"
 gem 'outpost-publishing'
-gem 'outpost-asset_host'
+gem 'outpost-asset_host', path: "~/workspace/outpost-asset_host"
 gem 'outpost-aggregator'
 gem 'outpost-secretary', github:"SCPR/outpost-secretary", tag:"v0.1.1"
 
@@ -79,6 +80,7 @@ gem 'uglifier', '>= 1.3'
 
 group :development do
   gem 'pry'
+  gem 'pry-byebug'
 end
 
 
@@ -95,6 +97,8 @@ group :test, :development do
   gem 'guard-resque'
   gem 'guard-rspec'
   gem 'ruby-prof'
+  gem 'better_errors'
+  gem 'binding_of_caller'
 end
 
 

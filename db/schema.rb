@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150827162731) do
+ActiveRecord::Schema.define(version: 20150915235520) do
 
   create_table "abstracts", force: :cascade do |t|
     t.string   "source",               limit: 255
@@ -33,8 +33,9 @@ ActiveRecord::Schema.define(version: 20150827162731) do
     t.integer "content_id",   limit: 4
     t.integer "position",     limit: 4,          default: 99
     t.integer "asset_id",     limit: 4
-    t.text    "caption",      limit: 4294967295,              null: false
+    t.text    "caption",      limit: 4294967295,                 null: false
     t.string  "content_type", limit: 255
+    t.boolean "inline",                          default: false
   end
 
   add_index "assethost_contentasset", ["content_id", "content_type"], name: "index_assethost_contentasset_on_content_id_and_content_type", using: :btree

@@ -1,4 +1,4 @@
-<%= form_block "Asset Management" do %>
+<%= form_block "Asset Management", dockable: true do %>
   <%= extra %>
 
   <% if record.respond_to?(:asset_display_id) %>
@@ -9,11 +9,12 @@
 
 
   <div id="asset_bucket" class="clearfix"></div>
+
   <%= f.input :asset_json, as: :hidden, input_html: { id: "asset_json" } %>
 
   <script>
     $(document).ready(function() {
-      new outpost.AssetManager(<%= raw record.assets.to_json %>, "#asset_bucket")
+      window.assetManager = new outpost.AssetManager(<%= raw record.assets.to_json %>, "#asset_bucket");
     });
   </script>
 <% end %>

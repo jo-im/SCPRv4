@@ -55,10 +55,11 @@ class NewsStory < ActiveRecord::Base
 
   scope :with_article_includes, ->() { includes(:category,:assets,:audio,:tags,:bylines,bylines:[:user]) }
 
+  before_save :update_inline_assets
+
   def needs_validation?
     self.pending? || self.published?
   end
-
 
   def route_hash
     return {} if !self.persisted? || !self.persisted_record.published?
@@ -88,7 +89,7 @@ class NewsStory < ActiveRecord::Base
       :teaser             => self.teaser,
       :body               => self.body,
       :category           => self.category,
-      :assets             => self.assets,
+      :assets             => ->{mark_inline_assets; self.assets.reject(&:inline)}.call,
       :audio              => self.audio.select(&:available?),
       :attributions       => self.bylines,
       :byline             => self.byline,
@@ -110,10 +111,30 @@ class NewsStory < ActiveRecord::Base
       :summary                => self.teaser,
       :source                 => "KPCC",
       :url                    => self.public_url,
-      :assets                 => self.assets,
+      :assets                 => ->{mark_inline_assets; self.assets.reject(&:inline)}.call,
       :audio                  => self.audio.available,
       :category               => self.category,
       :article_published_at   => self.published_at
     })
   end
+
+  def mark_inline_assets
+    doc = Nokogiri::HTML body
+    inline_asset_ids = doc.css("img.inline-asset").map{|placeholder| placeholder.attr("data-asset-id").to_s}
+    assets.each do |asset|
+      if inline_asset_ids.include? asset.asset_id.to_s
+        asset.inline = true
+      else
+        asset.inline = false
+      end
+    end
+  end
+
+  def update_inline_assets
+    mark_inline_assets
+    ActiveRecord::Base.transaction do 
+      assets.each(&:save!)
+    end
+  end
+
 end
