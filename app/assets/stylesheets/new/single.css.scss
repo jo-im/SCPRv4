@@ -634,6 +634,38 @@ body.single .comments {
         }
 
 
+        // "Part of a Series" citation:
+        .content-series {
+            background: #EAF4FA;
+            margin-bottom: 2em;
+
+            .series-title {
+                background: #26A9D5;
+                h3 {
+                    color: #FFF;
+                    font-family: $font-freight;
+                    font-size: 1.125em;
+                    font-weight: 400;
+                    margin-bottom: 0;
+                    padding: 3px 12px;
+                    em { font-weight: 700; font-family: $font-freight !important; }
+                }
+            }
+            .series-description {
+                padding: 20px 12px;
+                p {
+                    color: #2E2E2E;
+                    font-family: $font-merri;
+                    line-height: 1.5;
+                    font-size: 0.875em;
+                    &:last-child {
+                        margin-bottom: 0;
+                    }
+                    a { color: #0087B4; font-family: $font-merri-bold; }
+                }
+            }
+        }
+
         // "Informed by KPCC listeners" / Public Insight Network citations:
         .content-partners {
           margin: 0 0 82px;
