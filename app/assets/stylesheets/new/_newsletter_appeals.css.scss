@@ -25,26 +25,6 @@
     }
 }
 
-// This element will be used to create a dark overlay 
-// on top of photographic backgrounds we are A/B testing. 
-.appeal-overlay {
-    background: rgba(0,0,0,0);
-    position: absolute;
-    width:100%;
-    height:100%;
-    z-index: 1;
-
-    @media (max-width: 562px) {
-        margin-left: 0;
-        padding-left: 0;
-    }
-
-    .segment & {
-        margin-left: -13.458262350937%;
-        padding-left: 13.458262350937%;
-    }
-}
-
 .appeal-content {
     padding: 60px 0;
     position:relative;
