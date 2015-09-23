@@ -8,6 +8,13 @@ GIT
       eco (~> 1.0.0)
 
 GIT
+  remote: git://github.com/SCPR/outpost-asset_host.git
+  revision: 6c58587abbc2f8a66543c525f54244d8b2c40480
+  branch: inline_assets
+  specs:
+    outpost-asset_host (1.1.1)
+
+GIT
   remote: git://github.com/SCPR/outpost-secretary.git
   revision: 8e47cd33f45f2a2b55d85fbc7b7521b17352bba2
   tag: v0.1.1
@@ -15,6 +22,18 @@ GIT
     outpost-secretary (0.1.1)
       outpost-cms (>= 0.0.1, < 1)
       secretary-rails (>= 1.0.0, < 3)
+
+GIT
+  remote: git://github.com/SCPR/outpost.git
+  revision: 4719c8eb4fd53a065fd1aa4b1c20d44075812df8
+  branch: inline_assets
+  specs:
+    outpost-cms (0.1.7)
+      bcrypt-ruby (>= 3.0.0, < 4)
+      jquery-rails (~> 3.0)
+      kaminari (~> 0.15.1)
+      rails (>= 3.2, < 5)
+      select2-rails (= 3.4.1)
 
 GIT
   remote: git://github.com/SCPR/resque-pool.git
@@ -61,21 +80,6 @@ GIT
       builder (< 4)
       rspec (>= 2, < 4)
       rspec-core (!= 2.12.0)
-
-PATH
-  remote: ~/workspace/outpost
-  specs:
-    outpost-cms (0.1.7)
-      bcrypt-ruby (>= 3.0.0, < 4)
-      jquery-rails (~> 3.0)
-      kaminari (~> 0.15.1)
-      rails (>= 3.2, < 5)
-      select2-rails (= 3.4.1)
-
-PATH
-  remote: ~/workspace/outpost-asset_host
-  specs:
-    outpost-asset_host (1.1.1)
 
 GEM
   remote: https://rubygems.org/
