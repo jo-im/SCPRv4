@@ -1,3 +1,13 @@
 #asset_bucket .collection
   max-height: 500px
   overflow-y: auto
+
+  li.asset div.thumbnail.inline
+    background-color: ghostwhite
+
+    .asset-info:after
+      content: "\a (inline)"
+      font-style: italic
+      color: grey
+      line-height: 10px
+      white-space: pre
