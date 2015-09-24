@@ -34,7 +34,8 @@ CKEDITOR.plugins.add 'inline-asset-placeholder',
     editor.ui.addButton 'DockAssetManager', 
       label: "Dock Asset Manager",
       command: 'dockAssetManager',
-      toolbar: 'insert'
+      toolbar: 'insert',
+      icon: @path + "icons/image.png"
 
     editor.widgets.add 'inline_asset_placeholder',
       dialog: "inlineAssetOptions"
