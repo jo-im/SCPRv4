@@ -5,7 +5,6 @@ CKEDITOR.editorConfig = function(config) {
   config.toolbar = [
     ['Bold', 'Italic', 'Underline', "RemoveFormat"],
     ['NumberedList', 'BulletedList', 'Blockquote'],
-    ['JustifyLeft', 'JustifyCenter', 'JustifyRight'],
     ['Link', 'Unlink', 'DockAssetManager', 'EmbedPlaceholder'],
     ['Find', 'Paste'],
     ['Source', 'Maximize']
@@ -20,7 +19,6 @@ CKEDITOR.editorConfig = function(config) {
     'webkit-span-fix',
     'divarea',
     'inline-asset-placeholder',
-    'justify',
     'widget',
     'dialog',
     'lineutils',
