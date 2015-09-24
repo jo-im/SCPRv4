@@ -1,0 +1,75 @@
+<section class="exordium curated-episode" style="display: block;">
+  <header class="bound">
+    <h1><a href="<%= featured_story.public_path %>"><%= featured_story.short_title %></a></h1>
+  </header>
+  <div class="content clearfix bound">
+    <article class="featured clearfix">
+      <figure class="photo ratio">
+        <a href="<%= featured_story.public_path %>">
+          <div class="fill"></div>
+          <b class="img-contain"><img src="<%= featured_story.asset.full.url %>" alt="" /></b>
+        </a>
+      </figure>
+      <div class="summary">
+        <aside class="prompt listen">
+        <h1><cite><%= program.title %></cite> for <%= format_date(featured_story.public_datetime, with: "%A, %B %-d, %Y") %></h1>
+        <% if featured_story.audio.present? %>
+          <mark class="play">
+            <ul>
+              <li class='story-audio'>
+                <a href="<%= featured_story.audio.first.url %>" class="play-btn audio-toggler" title="<%= featured_story.short_title %>" data-duration="<%= featured_story.audio.first.duration %>">
+                  <b>Listen to Episode</b>
+                  <span><%= format_clip_duration featured_story.audio.first.duration %></span>
+                </a>
+              </li>
+            </ul>
+          </mark>
+        </aside>
+        <aside class="download">
+          <a href="<%= featured_story.audio.first.url %>"><span>Download episode</span> <i><%= number_to_human_size(featured_story.audio.first.size, precision: 2) %></i></a>
+        </aside>
+        <% end %>
+        <div class="description">
+          <p><%= featured_story.teaser %></p>
+        </div>
+        <footer>
+          <a href="<%= featured_story.public_path %>">See full episode</a>
+        </footer>
+      </div>
+    </article>
+    <div class="supporting clearfix">
+      <section class="segments">
+        <h2>Also in this episode</h2>
+        <nav>
+          <ul>
+            <% if program.slug.include? "airtalk" %>
+              <% story_segments = featured_story.original_object.segments.map(&:to_article) %>
+            <% else %>
+              <% story_segments = featured_story.original_object.segments.first(8).map(&:to_article) %>
+            <% end %>
+            <% story_segments.each do |segment| %>
+              <li><a href="<%= segment.public_path %>"><%= segment.short_title %></a><div class="comments comment-count"><%= comment_count_for segment.original_object %></div></li>
+            <% end %>
+          </ul>
+        </nav>
+        <footer>
+          <a href="<%= featured_story.public_path %>">
+            <figure>
+              <mark>See all from <%= format_date(featured_story.public_datetime, with: "%B %e") %></mark>
+              <% story_count = (story_segments - story_segments.first(8)).count %>
+              <% if story_count > 0 %>
+                <figcaption><span><%= story_count %></span> more <%= 'story'.pluralize(story_count) %></figcaption>
+              <% end %>
+            </figure>
+         </a>
+        </footer>
+      </section>
+      <aside class="plug">
+        <div class="ad widget">
+          <%= render "shared/ads/dfp", ad_key: 'slot_a' %>
+          <span class="appeal"><a href="/support/underwriting/">Become a KPCC sponsor</a></span>
+        </div>
+      </aside><!--/ .plug (A) -->
+    </div><!--/ .supporting -->
+  </div><!--/ .content -->
+</section><!--/ .exordium -->
