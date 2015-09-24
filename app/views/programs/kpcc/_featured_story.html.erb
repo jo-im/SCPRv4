@@ -42,13 +42,14 @@
         <h2>Also in this episode</h2>
         <nav>
           <ul>
+            <!-- Some airtalk specific logic here -->
             <% if program.slug.include? "airtalk" %>
               <% story_segments = featured_story.original_object.segments.map(&:to_article) %>
             <% else %>
               <% story_segments = featured_story.original_object.segments.first(8).map(&:to_article) %>
             <% end %>
             <% story_segments.each do |segment| %>
-              <li><a href="<%= segment.public_path %>"><%= segment.short_title %></a><div class="comments comment-count"><%= comment_count_for segment.original_object %></div></li>
+              <li><a href="<%= segment.public_path %>"><%= segment.short_title %></a><div class="comments comment-count"><%= comment_count_for(segment.original_object) if program.slug.include?("airtalk") %></div></li>
             <% end %>
           </ul>
         </nav>
