@@ -1,10 +1,8 @@
 $(document).ready ->
   CKEDITOR.config.autoParagraph = false
   CKEDITOR.disableAutoInline = true
-  CKEDITOR.addCss '.cke_inline_asset_placeholder{background-color:#ff0}'
 
   CKEDITOR.plugins.add 'inline_asset_placeholder',
-    allowedContent: 'img;'
     init: (editor) ->
       CKEDITOR.dialog.add 'inlineAssetOptions', (editor)->
         title: 'Inline Asset Options'
@@ -19,7 +17,8 @@ $(document).ready ->
             setup: ( widget ) ->
               this.setValue widget.data.align
             commit: (widget) ->
-              widget.setData 'align', this.getValue()
+              #We are disabling this for the time-being
+              #widget.setData 'align', this.getValue()
             items: [
               [ editor.lang.common.alignLeft, 'left' ]
               [ editor.lang.common.alignRight, 'right' ]
@@ -32,10 +31,12 @@ $(document).ready ->
           call: ->
             child = $("#form-block-asset-management.dockable").not('.docked')
             child.find("legend a.dock-control").trigger("click")
+
       editor.ui.addButton 'DockAssetManager', 
         label: "Dock Asset Manager",
         command: 'dockAssetManager',
         toolbar: 'insert'
+
       editor.widgets.add 'inline_asset_placeholder',
         dialog: "inlineAssetOptions"
         downcast: ->
