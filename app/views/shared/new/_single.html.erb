@@ -32,7 +32,7 @@
                   <%= render_asset article, context:"news", display:"inline" %>
                 <% end %>
 
-                <%= render_inline_assets article %>
+                <%= render_with_inline_assets article %>
                 <% if article.original_object.joined_bylines[:contributing].present? %>
                     <footer class="contributor">
                         <p><%= render_contributing_byline article.original_object %></p>

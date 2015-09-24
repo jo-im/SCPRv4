@@ -161,7 +161,7 @@ module ApplicationHelper
       :article    => article
   end
 
-  def render_inline_assets content, options={}
+  def render_with_inline_assets content, options={}
     InlineAssets.render content, options
   end
 

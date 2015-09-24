@@ -19,7 +19,7 @@ CKEDITOR.editorConfig = function(config) {
     'embed-placeholder',
     'webkit-span-fix',
     'divarea',
-    'inline_asset_placeholder',
+    'inline-asset-placeholder',
     'justify',
     'widget',
     'dialog',
