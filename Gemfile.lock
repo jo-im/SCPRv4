@@ -9,7 +9,7 @@ GIT
 
 GIT
   remote: git://github.com/SCPR/outpost-asset_host.git
-  revision: 6c58587abbc2f8a66543c525f54244d8b2c40480
+  revision: e11c1b929a113f6e618fc8f1950af4cfb4408a29
   branch: inline_assets
   specs:
     outpost-asset_host (1.1.1)
@@ -25,7 +25,7 @@ GIT
 
 GIT
   remote: git://github.com/SCPR/outpost.git
-  revision: 4719c8eb4fd53a065fd1aa4b1c20d44075812df8
+  revision: 928c70a18cbede024b2668c969071342dc28c67d
   branch: inline_assets
   specs:
     outpost-cms (0.1.7)

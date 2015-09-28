@@ -135,7 +135,7 @@
 
 <div id="main" class="container">
   <div class="row">
-    <%= content_for :top_wrapper %>
+    <%= content_for :content_wrapper_top %>
     <div class="span<%= content_for?(:sidebar) ? "9" : "12" %>">
       <%= render_flash_messages %>
 
@@ -146,7 +146,7 @@
         <%= yield :sidebar %>
       </div>
     <% end %>
-    <%= content_for :bottom_wrapper %>
+    <%= content_for :content_wrapper_bottom %>
   </div> <!-- row -->
 </div> <!-- container main -->
 
