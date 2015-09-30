@@ -843,6 +843,12 @@ body.single .comments {
             &.right{
                 float: right;
             }
+            &.wide{
+                width: 100% !important;
+            }
+            &.square{
+                width: 100%;
+            }
         }
 
     }

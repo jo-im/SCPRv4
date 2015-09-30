@@ -17,6 +17,18 @@ module InlineAssets
     def asset
       self
     end
+    def _dimension
+      width  = @raw_data['sizes']['full']['width']
+      height = @raw_data['sizes']['full']['height']
+      ratio = width.to_f / height.to_f
+      if ratio > 1.2
+        "wide"
+      elsif ratio <= 1.2 && ratio >= 0.9
+        "squarish"
+      elsif ratio < 0.9
+        "skinny"
+      end
+    end
   end
   class Parser
     def initialize body
