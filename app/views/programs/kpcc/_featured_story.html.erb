@@ -39,7 +39,7 @@
     </article>
     <div class="supporting clearfix">
       <section class="segments">
-        <h2>Also in this episode</h2>
+        <h2>In this episode</h2>
         <nav>
           <ul>
             <!-- Some airtalk specific logic here -->
@@ -54,15 +54,17 @@
           </ul>
         </nav>
         <footer>
-          <a href="<%= featured_story.public_path %>">
-            <figure>
-              <mark>See all from <%= format_date(featured_story.public_datetime, with: "%B %e") %></mark>
-              <% story_count = (story_segments - story_segments.first(8)).count %>
-              <% if story_count > 0 %>
-                <figcaption><span><%= story_count %></span> more <%= 'story'.pluralize(story_count) %></figcaption>
-              <% end %>
-            </figure>
-         </a>
+          <% if !program.slug.include? "airtalk" %>
+            <a href="<%= featured_story.public_path %>">
+              <figure>
+                <mark>See all from <%= format_date(featured_story.public_datetime, with: "%B %e") %></mark>
+                <% story_count = (story_segments - story_segments.first(8)).count %>
+                <% if story_count > 0 %>
+                  <figcaption><span><%= story_count %></span> more <%= 'story'.pluralize(story_count) %></figcaption>
+                <% end %>
+              </figure>
+            </a>
+          <% end %>
         </footer>
       </section>
       <aside class="plug">
