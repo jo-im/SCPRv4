@@ -1,8 +1,8 @@
-<figure class="asset-inset inline <%= article._dimension rescue nil %>">
-    <b class="pic"><%= image_tag article.asset.full.url, alt: article.asset.caption %></b>
+<figure class="asset-inset inline">
+    <b class="pic"><%= image_tag asset.asset.full.url, alt: asset.caption %></b>
     <figcaption>
         <span>
-            <%= article.asset.caption %><mark> <%= article.asset.owner if article.asset.owner.present? %></mark>
+            <%= asset.caption %><mark> <%= asset.asset.owner if asset.asset.owner.present? %></mark>
         </span>
     </figcaption>
 </figure>
