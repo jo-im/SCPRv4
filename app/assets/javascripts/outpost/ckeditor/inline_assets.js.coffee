@@ -1,5 +1,7 @@
 $(document).ready ->
   CKEDITOR.on "instanceReady", (env)->
+    if !window.assetManager
+      return
     editor = env.editor
     editorElementName = "cke_#{editor.name}"
     editorElement = editor.document.getById(editorElementName)

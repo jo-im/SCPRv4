@@ -4,6 +4,9 @@ CKEDITOR.disableAutoInline = true;
 
 CKEDITOR.plugins.add('inline-asset-placeholder', {
   init: function(editor) {
+    if (!window.assetManager){
+      return;
+    }
     CKEDITOR.dialog.add('inlineAssetOptions', function(editor) {
       return {
         title: 'Inline Asset Options',
