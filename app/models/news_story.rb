@@ -88,7 +88,7 @@ class NewsStory < ActiveRecord::Base
       :teaser             => self.teaser,
       :body               => self.body,
       :category           => self.category,
-      :assets             => ->{mark_inline_assets; self.assets.reject(&:inline)}.call,
+      :assets             => self.assets.top,
       :audio              => self.audio.select(&:available?),
       :attributions       => self.bylines,
       :byline             => self.byline,
@@ -110,7 +110,7 @@ class NewsStory < ActiveRecord::Base
       :summary                => self.teaser,
       :source                 => "KPCC",
       :url                    => self.public_url,
-      :assets                 => ->{mark_inline_assets; self.assets.reject(&:inline)}.call,
+      :assets                 => self.assets.top,
       :audio                  => self.audio.available,
       :category               => self.category,
       :article_published_at   => self.published_at
