@@ -30,7 +30,7 @@
 
         <div class="story-body">
           <%= render_asset event %>
-          <%= render_inline_assets p.description %>
+          <%= render_with_inline_assets event.to_article %>
           <br style="clear: both" />
         </div>
 
