@@ -36,6 +36,7 @@ class NewsStory < ActiveRecord::Base
   include Concern::Methods::CommentMethods
   include Concern::Methods::AssetDisplayMethods
   include Concern::Sanitizers::Content
+  include Concern::Model::InlineAssets
 
   self.disqus_identifier_base = "news/story"
   self.public_route_key = "news_story"
@@ -54,8 +55,6 @@ class NewsStory < ActiveRecord::Base
   ]
 
   scope :with_article_includes, ->() { includes(:category,:assets,:audio,:tags,:bylines,bylines:[:user]) }
-
-  before_save :update_inline_assets
 
   def needs_validation?
     self.pending? || self.published?
@@ -116,25 +115,6 @@ class NewsStory < ActiveRecord::Base
       :category               => self.category,
       :article_published_at   => self.published_at
     })
-  end
-
-  def mark_inline_assets
-    doc = Nokogiri::HTML body
-    inline_asset_ids = doc.css("img.inline-asset").map{|placeholder| placeholder.attr("data-asset-id").to_s}
-    assets.each do |asset|
-      if inline_asset_ids.include? asset.asset_id.to_s
-        asset.inline = true
-      else
-        asset.inline = false
-      end
-    end
-  end
-
-  def update_inline_assets
-    mark_inline_assets
-    ActiveRecord::Base.transaction do 
-      assets.each(&:save!)
-    end
   end
 
 end

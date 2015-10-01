@@ -25,6 +25,7 @@ class Event < ActiveRecord::Base
   include Concern::Methods::AssetDisplayMethods
   include Concern::Sanitizers::Url
   include Concern::Sanitizers::Content
+  include Concern::Model::InlineAssets
 
   before_validation ->{ sanitize_urls :sponsor_url, :location_url, :rsvp_url }
 
@@ -186,7 +187,7 @@ class Event < ActiveRecord::Base
       :public_datetime    => self.starts_at,
       :teaser             => self.teaser,
       :body               => self.body,
-      :assets             => self.assets,
+      :assets             => ->{mark_inline_assets; self.assets.reject(&:inline)}.call,
       :audio              => self.audio.select(&:available?),
       :byline             => "KPCC",
       :edit_path          => self.admin_edit_path,

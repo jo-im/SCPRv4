@@ -38,6 +38,7 @@ class BlogEntry < ActiveRecord::Base
   include Concern::Model::Searchable
 
   include Concern::Sanitizers::Content
+  include Concern::Model::InlineAssets
 
   self.disqus_identifier_base = "blogs/entry"
   self.public_route_key = "blog_entry"
@@ -156,7 +157,7 @@ class BlogEntry < ActiveRecord::Base
       :teaser             => self.teaser,
       :body               => self.body,
       :category           => self.category,
-      :assets             => self.assets,
+      :assets             => ->{mark_inline_assets; self.assets.reject(&:inline)}.call,
       :audio              => self.audio.select(&:available?),
       :attributions       => self.bylines,
       :byline             => self.byline,
@@ -179,7 +180,7 @@ class BlogEntry < ActiveRecord::Base
       :summary                => self.teaser,
       :source                 => "KPCC",
       :url                    => self.public_url,
-      :assets                 => self.assets,
+      :assets                 => ->{mark_inline_assets; self.assets.reject(&:inline)}.call,
       :audio                  => self.audio.available,
       :category               => self.category,
       :article_published_at   => self.published_at
