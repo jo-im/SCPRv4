@@ -9,7 +9,7 @@
 
 <%= cache ["featured-program", @program] do %>
 
-  <% if @featured_story.original_object.is_a?(ShowSegment) && !@program.slug.include?("airtalk") %>
+  <% if @featured_story.original_object.is_a?(ShowSegment) %>
     <%= render partial: "programs/kpcc/featured_segment", locals: {program: @program, featured_story: @featured_story} %>
   <% else %>
     <%= render partial: "programs/kpcc/featured_story",   locals: {program: @program, featured_story: @featured_story} %>
