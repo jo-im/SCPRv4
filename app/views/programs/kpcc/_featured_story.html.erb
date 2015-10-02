@@ -49,7 +49,7 @@
               <% story_segments = featured_story.original_object.segments.first(8).map(&:to_article) %>
             <% end %>
             <% story_segments.each do |segment| %>
-              <li><a href="<%= segment.public_path %>"><%= segment.short_title %></a><div class="comments comment-count"><%= comment_count_for(segment.original_object) if program.slug.include?("airtalk") %></div></li>
+              <li><a href="<%= segment.public_path %>"><%= segment.short_title %></a></li>
             <% end %>
           </ul>
         </nav>
