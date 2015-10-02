@@ -29,7 +29,7 @@ class Outpost::NewsStoriesController < Outpost::ResourceController
     with_rollback @entry do
 
       @entry.assign_attributes(unescape_params(params[:news_story]))
-
+      @entry.mark_inline_assets
       if @entry.unconditionally_valid?
         @title = @entry.to_title
         render "shared/new/_single_preview",

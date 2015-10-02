@@ -29,7 +29,7 @@
 
                 <div class="prose-body">
 
-                    <% if should_inline_asset_for(article.original_object) %>
+                    <% if should_inline_top_asset_for(article.original_object) %>
                       <%= render_asset article, context:"news", display:"inline" %>
                     <% end %>
 

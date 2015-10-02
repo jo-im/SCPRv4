@@ -41,4 +41,14 @@ class ContentAsset < ActiveRecord::Base
     inline ? "inline" : "standard"
   end
 
+  def orientation
+    if asset
+      {
+        "portrait"  => "portrait",
+        "landscape" => "wide",
+        "square"    => "square"
+      }[asset.json["orientation"]]
+    end
+  end
+
 end
