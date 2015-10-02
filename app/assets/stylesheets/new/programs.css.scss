@@ -834,7 +834,7 @@ The long two-column flow of recent content (segments and episodes, mostly).
 
 }// .neoteric
 
-$programs: ("take-two", "the-frame", "offramp");
+$programs: ("take-two", "the-frame", "offramp", "airtalk");
 
 @each $program in $programs {
   body.program.#{$program} .neoteric .podcast-appeal .inner  { 
