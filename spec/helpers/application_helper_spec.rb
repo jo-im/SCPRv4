@@ -140,6 +140,38 @@ describe ApplicationHelper do
 
   #------------------------
 
+  describe "#render_with_inline_assets" do
+    it "replaces all placeholder tags in the body with markup" do
+      content = create :news_story, asset_display: :slideshow
+      asset = create :asset, content: content
+      content.body = "
+        <h2>Inline Assets Test</h2>
+        <p>lorem ipsum</p>
+        <img class=\"inline-asset\" data-asset-id=\"#{asset.asset_id}\" src=\"#\">
+        <p>dolor sit amet</p>
+      "
+      result = helper.render_with_inline_assets(content.to_article)
+      expect(result).to_not include("<img class=\"inline-asset\" data-asset-id=\"#{asset.asset_id}\" src=\"#\">")
+      expect(result).to match /<img .*?src=\"http:\/\/a.scpr.org\/i\/[a-z0-9]+\/[a-z0-9]+-full.jpg\">/
+    end
+    it "removes the placeholder if no asset exists" do
+      content = create :news_story, asset_display: :slideshow
+      # asset = create :asset, content: content
+      content.body = "
+        <h2>Inline Assets Test</h2>
+        <p>lorem ipsum</p>
+        <img class=\"inline-asset\" data-asset-id=\"12345\" src=\"#\">
+        <p>dolor sit amet</p>
+      "
+      result = helper.render_with_inline_assets(content.to_article)
+      expect(result).to_not include("<img class=\"inline-asset\" data-asset-id=\"12345\" src=\"#\">")
+      expect(result).to_not match /<img .*?src=\"http:\/\/a.scpr.org\/i\/[a-z0-9]+\/[a-z0-9]+-full.jpg\">/
+    end
+  end
+
+
+  #------------------------
+
   describe "#render_byline" do
     context "for object without bylines association" do
       it "returns KPCC if the object doesn't have bylines" do
