@@ -834,23 +834,6 @@ The long two-column flow of recent content (segments and episodes, mostly).
 
 }// .neoteric
 
-$programs: ("take-two", "the-frame", "offramp", "airtalk");
-
-@each $program in $programs {
-  body.program.#{$program} .neoteric .podcast-appeal .inner  { 
-    background-image: image-url("i/model-#{$program}.png");
-    background-position: right bottom;
-    background-repeat: no-repeat;
-    background-size: auto 100%;
-    box-sizing: border-box;
-    padding: 60px 40.427927927928% 23px 2.364864864865%; // L: 21/888
-  }
-}
-
-
-
-
-
 
 
 
