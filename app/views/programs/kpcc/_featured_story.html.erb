@@ -44,7 +44,7 @@
           <ul>
             <% story_segments = featured_story.original_object.segments.first(8).map(&:to_article) %>
             <% story_segments.each do |segment| %>
-              <li><a href="<%= segment.public_path %>"><%= segment.short_title %></a><div class="comments"></div></li>
+              <li><a href="<%= segment.public_path %>"><%= segment.short_title %></a></li>
             <% end %>
           </ul>
         </nav>
