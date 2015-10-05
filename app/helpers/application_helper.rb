@@ -217,12 +217,8 @@ module ApplicationHelper
   end
 
   def should_inline_top_asset_for(article)
-    asset = article.asset
-    if asset && asset.respond_to?(:inline) && !asset.inline
-      (article.asset_display == :photo_deemphasized) || (article.asset_display.blank? && !below_standard_ratio(width: asset.full.width, height: asset.full.height)) || (article.asset_display == :photo_emphasized && !below_standard_ratio(width: asset.full.width, height: asset.full.height))
-    else
-      false
-    end
+    (asset = article.assets.top.first) && 
+    ((article.asset_display == :photo_deemphasized) || (article.asset_display.blank? && !below_standard_ratio(width: asset.full.width, height: asset.full.height)) || (article.asset_display == :photo_emphasized && !below_standard_ratio(width: asset.full.width, height: asset.full.height)))
   end
 
   def below_standard_ratio(options={})
