@@ -156,7 +156,6 @@ describe ApplicationHelper do
     end
     it "removes the placeholder if no asset exists" do
       content = create :news_story, asset_display: :slideshow
-      # asset = create :asset, content: content
       content.body = "
         <h2>Inline Assets Test</h2>
         <p>lorem ipsum</p>
