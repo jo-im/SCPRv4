@@ -145,4 +145,21 @@ describe Concern::Associations::AssetAssociation do
       record.asset_display.should eq :photo_emphasized
     end
   end
+
+  describe "#mark_inline_assets" do 
+    it "marks assets that are in the body as inline" do
+      record = build :test_class_story, asset_json: "[{\"id\":32459,\"caption\":\"Caption\",\"position\":12}, {\"id\":32458,\"caption\":\"Other Caption\",\"position\":0}]"
+      record.body = "
+        <h2>Inline Assets Test</h2>
+        <p>lorem ipsum</p>
+        <img class=\"inline-asset\" data-asset-id=\"32459\" src=\"#\">
+        <p>dolor sit amet</p>
+      "
+      expect(record.assets.map(&:inline).all?{|a| a == false}).to eq true
+      record.mark_inline_assets
+      expect(record.assets.select{|a| a.asset_id == 32459}.first.inline).to eq true
+      expect(record.assets.select{|a| a.asset_id == 32458}.first.inline).to eq false
+    end
+  end
+
 end
