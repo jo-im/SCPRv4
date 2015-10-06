@@ -25,7 +25,6 @@ class Event < ActiveRecord::Base
   include Concern::Methods::AssetDisplayMethods
   include Concern::Sanitizers::Url
   include Concern::Sanitizers::Content
-  include Concern::Model::InlineAssets
 
   before_validation ->{ sanitize_urls :sponsor_url, :location_url, :rsvp_url }
 
