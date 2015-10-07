@@ -105,8 +105,7 @@ describe ApplicationHelper do
     end
 
     it "renders the specified template" do
-      content = create :content_shell
-      asset = create :asset, content: content
+      content = create :content_shell, assets: [create(:asset)]
 
       # Use a real template name here so it passes the lookup context check
       helper.render_asset(content, template: "default/video")
@@ -114,17 +113,15 @@ describe ApplicationHelper do
     end
 
     it "renders with specified display" do
-      content = create :content_shell
-      asset = create :asset, content: content
+      content = create :content_shell, assets: [create(:asset)]
 
       helper.render_asset(content, display: "small")
         .should render_template "shared/assets/default/_small"
     end
 
     it "renders with specified context" do
-      content = create :content_shell
-      asset = create :asset, content: content
-
+      content = create :content_shell, assets: [create(:asset)]
+      
       helper.render_asset(content, context: "pij_query")
         .should render_template "shared/assets/pij_query/_photo"
     end
