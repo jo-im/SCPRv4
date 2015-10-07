@@ -35,13 +35,15 @@ module Concern
       #--------------------
 
       def mark_inline_assets
-        doc = Nokogiri::HTML body
-        inline_asset_ids = doc.css("img.inline-asset").map{|placeholder| placeholder.attr("data-asset-id").to_s}
-        assets.each do |asset|
-          if inline_asset_ids.include? asset.asset_id.to_s
-            asset.inline = true
-          else
-            asset.inline = false
+        if respond_to?(:body)
+          doc = Nokogiri::HTML body
+          inline_asset_ids = doc.css("img.inline-asset").map{|placeholder| placeholder.attr("data-asset-id").to_s}
+          assets.each do |asset|
+            if inline_asset_ids.include? asset.asset_id.to_s
+              asset.inline = true
+            else
+              asset.inline = false
+            end
           end
         end
       end
