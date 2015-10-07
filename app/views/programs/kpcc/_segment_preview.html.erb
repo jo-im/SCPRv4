@@ -12,7 +12,7 @@
 
         <article class="prose">
 
-            <%= render_asset article, context:"segments" %>
+            <%= render_asset article.to_article, context:"segments" %>
 
             <%= content_widget "new/primary_audio", article %>
 
@@ -28,7 +28,7 @@
 
 
               <div class="prose-body">
-                  <%= article.body.html_safe %>
+                  <%= render_with_inline_assets article.to_article %>
                   <% if article.joined_bylines[:contributing].present? %>
                       <footer class="contributor">
                           <p><%= render_contributing_byline article %></p>

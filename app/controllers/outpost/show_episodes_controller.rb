@@ -27,6 +27,7 @@ class Outpost::ShowEpisodesController < Outpost::ResourceController
 
     with_rollback @episode do
       @episode.assign_attributes(params[:show_episode])
+      @episode.update_inline_assets
       if @episode.unconditionally_valid?
         @program = @episode.show
         render_kpcc_episode

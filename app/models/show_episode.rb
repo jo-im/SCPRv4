@@ -120,7 +120,7 @@ class ShowEpisode < ActiveRecord::Base
       :public_datetime    => self.air_date,
       :body               => self.body,
       :teaser             => self.teaser,
-      :assets             => self.assets,
+      :assets             => self.assets.top,
       :audio              => self.audio.select(&:available?),
       :byline             => self.show.title,
       :edit_path          => self.admin_edit_path,
@@ -152,7 +152,7 @@ class ShowEpisode < ActiveRecord::Base
       :title              => self.headline,
       :summary            => self.teaser,
       :air_date           => self.air_date,
-      :assets             => self.assets,
+      :assets             => self.assets.top,
       :audio              => self.audio.available,
       :program            => self.show,
       :segments           => self.segments.published.map(&:to_article)
