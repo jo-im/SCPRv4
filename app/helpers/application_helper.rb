@@ -492,4 +492,13 @@ module ApplicationHelper
     uri.query = URI.encode_www_form(query)
     uri.to_s.chomp("?")
   end
+
+  def strip_inline_assets body
+    doc = Nokogiri::HTML(body.encode('ASCII-8BIT'))
+    doc.css("img.inline-asset").each{|placeholder| 
+      placeholder.replace Nokogiri::HTML::DocumentFragment.parse("")
+    }
+    doc.css('body').children.to_s.html_safe
+  end
+  
 end

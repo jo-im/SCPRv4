@@ -531,4 +531,17 @@ describe ApplicationHelper do
       url.should eq "nope nope nope"
     end
   end
+
+  describe "#strip_inline_assets" do
+    it "removes all inline asset tags from the body" do
+      body = "
+        <h2>Inline Assets Test</h2>
+        <p>lorem ipsum</p>
+        <img class=\"inline-asset\" data-asset-id=\"12345\" src=\"#\">
+        <p>dolor sit amet</p>
+      "
+      expect(helper.strip_inline_assets(body)).to_not include("<img class=\"inline-asset\" data-asset-id=\"12345\" src=\"#\">")
+    end
+  end
+
 end
