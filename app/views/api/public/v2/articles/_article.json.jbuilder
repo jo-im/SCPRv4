@@ -5,7 +5,7 @@ json.cache! [Api::Public::V2::VERSION, "v4", article] do
   json.published_at article.public_datetime
   json.byline       article.byline
   json.teaser       article.teaser.html_safe
-  json.body         strip_inline_assets(article.body.html_safe)
+  json.body         strip_inline_assets(article.body)
   json.public_url   article.public_url
 
 
