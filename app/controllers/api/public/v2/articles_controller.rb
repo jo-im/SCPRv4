@@ -38,7 +38,7 @@ module Api::Public::V2
         :with    => @conditions
       })
 
-      @articles = @articles.map(&:to_article)
+      @articles = @articles.map{|a| a.to_article.strip_inline_assets!}
       respond_with @articles
     end
 

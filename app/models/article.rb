@@ -283,6 +283,17 @@ class Article
 
   #----------
 
+  def strip_inline_assets!
+    doc = Nokogiri::HTML(body.encode('ASCII-8BIT'))
+    doc.css("img.inline-asset").each{|placeholder| 
+      placeholder.replace Nokogiri::HTML::DocumentFragment.parse("")
+    }
+    self.body = doc.css('body').children.to_s.html_safe
+    self
+  end
+
+  #----------
+
   def self._put_article_mapping
     # -- Put our settings and mapping -- #
 
