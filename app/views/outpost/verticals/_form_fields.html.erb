@@ -33,9 +33,10 @@
   <% content_for :footer do %>
     <script>
       new outpost.Aggregator(
-        "#featured_articles_aggregator", "#vertical_articles_json",
-        <%= render_json("api/private/v2/articles/collection", articles: record.vertical_articles.includes(:article).map {|a| a.article.to_article}) %>,
         {
+          el: "#featured_articles_aggregator", 
+          inputEl: "#vertical_articles_json",
+          collection: <%= render_json("api/private/v2/articles/collection", articles: record.vertical_articles.includes(:article).map {|a| a.article.to_article}) %>,
           apiType: "private",
           view: {
             dropMaxLimit: 6,

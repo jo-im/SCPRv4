@@ -8,6 +8,13 @@ GIT
       eco (~> 1.0.0)
 
 GIT
+  remote: git://github.com/SCPR/outpost-aggregator.git
+  revision: 44b0f68b8616cade03c1c4410cceeabd4946864b
+  branch: related_content
+  specs:
+    outpost-aggregator (1.2.0)
+
+GIT
   remote: git://github.com/SCPR/outpost-secretary.git
   revision: 8e47cd33f45f2a2b55d85fbc7b7521b17352bba2
   tag: v0.1.1
@@ -249,7 +256,6 @@ GEM
       multi_json (~> 1.3)
       multi_xml (~> 0.5)
       rack (~> 1.2)
-    outpost-aggregator (1.2.0)
     outpost-asset_host (1.1.1)
     outpost-publishing (1.0.1)
     patron (0.4.18)
@@ -268,7 +274,7 @@ GEM
     postmark-rails (0.6.0)
       actionmailer (>= 3.0.0)
       postmark (~> 1.1.0)
-    pry (0.10.1)
+    pry (0.10.3)
       coderay (~> 1.1.0)
       method_source (~> 0.8.1)
       slop (~> 3.4)
@@ -469,7 +475,7 @@ DEPENDENCIES
   newrelic_rpm (~> 3.7)
   npr (~> 2.0)!
   oauth2 (~> 0.8)
-  outpost-aggregator
+  outpost-aggregator!
   outpost-asset_host
   outpost-cms!
   outpost-publishing
