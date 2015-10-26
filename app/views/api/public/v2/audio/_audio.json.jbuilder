@@ -1,7 +1,11 @@
 #json.cache! [Api::Public::V2::VERSION, "v2", audio] do
   json.id               audio.id
   json.description      audio.description
-  json.url              url_with_params(audio.url, via: "api")
+  if audio.content_type == "ShowEpisode"
+    json.url              url_with_params(audio.url, via: "api")
+  else
+    json.url              url_with_params(audio.url)
+  end
   json.byline           audio.byline
   json.uploaded_at      audio.created_at
   json.position         audio.position

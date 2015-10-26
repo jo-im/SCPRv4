@@ -22,6 +22,43 @@ describe Api::Public::V3::AudioController do
       response.response_code.should eq 404
       JSON.parse(response.body)["error"]["message"].should eq "Not Found"
     end
+
+    context "kpcc episode" do
+      it "gives a via param" do
+        episode = create :show_episode
+        audio = create(:audio, :uploaded, {
+          created_at: Time.zone.now,
+          mp3: load_audio_fixture("point1sec-#{3}.mp3"),
+          content_id: episode.id,
+          content_type: episode.class.to_s,
+          size: 0,
+          description: "test description",
+          byline: "",
+          duration: 300
+        })
+        get :show, { id: audio.id }.merge(request_params)
+        JSON.parse(response.body)["audio"]["url"].should include("via=")
+      end
+    end
+
+    context "external episode" do
+      it "omits a via param" do
+        episode = create :external_episode
+        audio = create(:audio, :uploaded, {
+          created_at: Time.zone.now,
+          mp3: load_audio_fixture("point1sec-#{3}.mp3"),
+          content_id: episode.id,
+          content_type: episode.class.to_s,
+          size: 0,
+          description: "test description",
+          byline: "",
+          duration: 300
+        })
+        get :show, { id: audio.id }.merge(request_params)
+        JSON.parse(response.body)["audio"]["url"].should_not include("via=")
+      end
+    end
+
   end
 
 
