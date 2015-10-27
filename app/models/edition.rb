@@ -121,7 +121,7 @@ class Edition < ActiveRecord::Base
     eloqua_emails.create({
       :html_template   => "/editions/email/template",
       :plain_text_template   => "/editions/email/template",
-      :name        => "[tsl #{Time.zone.now.strftime("%Y%m%-d")}] #{self.headline[0..30]}",
+      :name        => "[tsl #{Time.zone.now.strftime("%Y%m%-d")}] #{self.title[0..30]}",
       :description => "SCPR Short List\n" \
                       "Sent: #{Time.zone.now}\nSubject: #{subject}",
       :subject     => subject,
@@ -135,7 +135,7 @@ class Edition < ActiveRecord::Base
     eloqua_emails.create({
       :html_template   => "/editions/email/monday/template",
       :plain_text_template   => "/editions/email/monday/template",
-      :name        => "[tslm #{Time.zone.now.strftime("%Y%m%-d")}] #{self.headline[0..30]}",
+      :name        => "[tslm #{Time.zone.now.strftime("%Y%m%-d")}] #{self.title[0..30]}",
       :description => "SCPR Monday Short List\n" \
                       "Sent: #{Time.zone.now}\nSubject: #{subject}",
       :subject     => subject,
