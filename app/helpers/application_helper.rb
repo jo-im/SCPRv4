@@ -462,4 +462,11 @@ module ApplicationHelper
     uri.query = URI.encode_www_form(query)
     uri.to_s.chomp("?")
   end
+
+  def audio_url_with_params url, params={}
+    if url.include?("scpr.org")
+      params[:via] ||= "api"
+    end
+    url_with_params url, params
+  end
 end
