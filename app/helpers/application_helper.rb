@@ -424,27 +424,27 @@ module ApplicationHelper
   alias_method :u, :url_encode
 
 
-  # Safely add parameters to any URL
+  # Safely add parameters to an audio URL
   #
   # Examples
   #
-  #   url_with_params("http://google.com", something: "cool")
+  #   audio_url_with_params("http://google.com", something: "cool")
   #   # => "http://google.com?something=cool"
   #
-  #   url_with_params("http://google.com?cool=thing", another: "params")
+  #   audio_url_with_params("http://google.com?cool=thing", another: "params")
   #   # => "http://google.com?cool=thing&another=params"
   #
   # Falsey values will not be added to the parameters. If you want
   # an empty parameter, pass an empty string.
   #
-  #   url_with_params("http://google.com", something: nil)
+  #   audio_url_with_params("http://google.com", something: nil)
   #   # => "http://google.com"
   #
-  #   url_with_params("http://google.com", something: "")
+  #   audio_url_with_params("http://google.com", something: "")
   #   # => "http://google.com?something="
   #
   # Returns String
-  def url_with_params(url, params={})
+  def audio_url_with_params(url, params={})
     begin
       uri = URI.parse(url)
     rescue URI::InvalidURIError => e
@@ -457,16 +457,14 @@ module ApplicationHelper
 
     query = URI.decode_www_form(uri.query.to_s)
 
+    if uri.hostname.include?("scpr.org")
+      params[:via] ||= "api"
+    end
+
     params.each { |k, v| query << [k.to_s, v.to_s] if v }
 
     uri.query = URI.encode_www_form(query)
     uri.to_s.chomp("?")
   end
 
-  def audio_url_with_params url, params={}
-    if url.include?("scpr.org")
-      params[:via] ||= "api"
-    end
-    url_with_params url, params
-  end
 end

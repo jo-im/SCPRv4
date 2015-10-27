@@ -477,34 +477,32 @@ describe ApplicationHelper do
   end
 
 
-  describe '#url_with_params' do
+  describe '#audio_url_with_params' do
     it "adds params if there aren't any" do
-      url = helper.url_with_params("http://google.com", context: "kpcc")
+      url = helper.audio_url_with_params("http://google.com", context: "kpcc")
       url.should eq "http://google.com?context=kpcc"
     end
 
     it "apprends to params if they already exist" do
-      url = helper.url_with_params("http://google.com?from=kpcc", context: "podcast")
+      url = helper.audio_url_with_params("http://google.com?from=kpcc", context: "podcast")
       url.should eq "http://google.com?from=kpcc&context=podcast"
     end
 
     it "ignores params if the value is falsey" do
-      url = helper.url_with_params("http://google.com", from: 'kpcc', context: nil)
+      url = helper.audio_url_with_params("http://google.com", from: 'kpcc', context: nil)
       url.should eq "http://google.com?from=kpcc"
     end
 
     it "doesn't leave a trailing ? if there are no params" do
-      url = helper.url_with_params("http://google.com")
+      url = helper.audio_url_with_params("http://google.com")
       url.should_not match /\?/
     end
 
     it "Returns the url if it's an invalid URI" do
-      url = helper.url_with_params("nope nope nope")
+      url = helper.audio_url_with_params("nope nope nope")
       url.should eq "nope nope nope"
     end
-  end
 
-  describe '#audio_url_with_params' do
     context 'a url containing scpr.org' do
       it 'returns a url with a via=api parameter' do
         url = helper.audio_url_with_params("http://media.scpr.org/audio/upload/2015/10/26/test-audio.mp3", context: "kpcc")
@@ -522,5 +520,7 @@ describe ApplicationHelper do
         url.should_not include "via=api"
       end
     end
+
   end
+
 end

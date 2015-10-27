@@ -18,7 +18,7 @@ xml.item do
   else
     if audio = article.audio.first
       xml.enclosure({
-        :url => url_with_params(audio.url, {
+        :url => audio_url_with_params(audio.url, {
           :context    => options[:context],
           :via        => 'rss'
         }),
