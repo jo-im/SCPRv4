@@ -20,7 +20,7 @@ gem 'dalli'
 gem 'outpost-cms', github:"SCPR/outpost", tag:"v0.1.6"
 gem 'outpost-publishing'
 gem 'outpost-asset_host'
-gem 'outpost-aggregator', github: "SCPR/outpost-aggregator", branch: "related_content"
+gem 'outpost-aggregator', github: "SCPR/outpost-aggregator"
 gem 'outpost-secretary', github:"SCPR/outpost-secretary", tag:"v0.1.1"
 
 
