@@ -18,10 +18,16 @@ describe PmpArticleImporter do
 
   describe '::sync' do
     before do
-      stub_request(:get, %r|pmp\.io/docs|).to_return({
-        :content_type => "application/json",
-        :body => load_fixture('api/pmp/marketplace_stories.json')
-      })
+      stub_request(:get, %r|pmp\.io/docs|)
+        .with(query: {"limit" => "10", "profile" => "story", "tag" => "marketplace"}).to_return({
+          :content_type => "application/json",
+          :body => load_fixture('api/pmp/marketplace_stories.json')
+        })
+      stub_request(:get, %r|pmp\.io/docs|)
+          .with(query: {"collection" => '4c6e24e5-484f-49e8-be8d-452cfddd6252', "limit" => "10", "profile" => "story"}).to_return({
+          :content_type => "application/json",
+          :body => load_fixture('api/pmp/ahp_stories.json')
+        })
     end
 
     it 'builds cached articles from the API response' do
