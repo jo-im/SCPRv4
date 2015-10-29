@@ -733,7 +733,7 @@ ActiveRecord::Schema.define(version: 20151029212124) do
     t.string   "source",       limit: 255
     t.datetime "created_at",                                     null: false
     t.datetime "updated_at",                                     null: false
-    t.string   "publisher",    limit: 255
+    t.string   "news_agency",  limit: 255
   end
 
   add_index "remote_articles", ["article_id", "source"], name: "index_remote_articles_on_article_id_and_source", using: :btree

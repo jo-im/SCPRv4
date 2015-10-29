@@ -26,12 +26,12 @@ module PmpArticleImporter
       stories
     end
 
-    def download_stories publisher_name, query={}
+    def download_stories news_agency_name, query={}
       added = []
       stories = pmp.root.query['urn:collectiondoc:query:docs']
         .where({profile: PROFILE, limit: LIMIT}.merge(query))
         .retrieve.items
-      log "#{stories.size} PMP stories from #{publisher_name} found"
+      log "#{stories.size} PMP stories from #{news_agency_name} found"
       stories.reject { |s|
         RemoteArticle.exists?(source: SOURCE, article_id: s.guid)
       }.each do |story|
@@ -54,7 +54,7 @@ module PmpArticleImporter
           :published_at   => published,
           :url            => url,
           :is_new         => true,
-          :publisher      => publisher_name
+          :news_agency      => news_agency_name
         )
 
         if cached_article.save
@@ -91,10 +91,10 @@ module PmpArticleImporter
         # TODO: This is temporary, at some point we'll need to figure out
         # how to determine the "source" of an article from PMP.
         # Right now we're only pulling in Marketplace stories.
-        publisher = remote_article.publisher || "PMP"
+        news_agency = remote_article.news_agency || "PMP"
 
-        article.source        = publisher.downcase
-        article.news_agency   = publisher
+        article.source        = news_agency.downcase
+        article.news_agency   = news_agency
       end
 
       # Bylines
