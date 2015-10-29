@@ -17,17 +17,23 @@ module PmpArticleImporter
     include ::NewRelic::Agent::Instrumentation::ControllerInstrumentation
 
     def sync
-      added = []
       stories = []
 
       ## Stories are downloaded in two ways: a query on a tag(marketplace) and from
       ## a collection that is specific to veteran stories.  Both sets of results are
       ## concatenated to the stories array.
-      stories.concat download_stories(tag: TAG)
-      stories.concat download_stories(collection: COLLECTION)
+      stories.concat download_stories("Marketplace", tag: TAG)
+      stories.concat download_stories("American Homefront Project", collection: COLLECTION)
 
-      log "#{stories.size} PMP stories found"
+      stories
+    end
 
+    def download_stories publisher_name, query={}
+      added = []
+      stories = pmp.root.query['urn:collectiondoc:query:docs']
+        .where({profile: PROFILE, limit: LIMIT}.merge(query))
+        .retrieve.items
+      log "#{stories.size} PMP stories from #{publisher_name} found"
       stories.reject { |s|
         RemoteArticle.exists?(source: SOURCE, article_id: s.guid)
       }.each do |story|
@@ -43,13 +49,14 @@ module PmpArticleImporter
         url = story.alternate.first.href if story.alternate.present?
 
         cached_article = RemoteArticle.new(
-          :source       => SOURCE,
-          :article_id   => story.guid,
-          :headline     => story.title,
-          :teaser       => story.teaser,
-          :published_at => published,
-          :url          => url,
-          :is_new       => true
+          :source         => SOURCE,
+          :article_id     => story.guid,
+          :headline       => story.title,
+          :teaser         => story.teaser,
+          :published_at   => published,
+          :url            => url,
+          :is_new         => true,
+          :publisher      => publisher_name
         )
 
         if cached_article.save
@@ -58,15 +65,9 @@ module PmpArticleImporter
               "RemoteArticle ##{cached_article.id}"
         else
           log "Couldn't save PMP Story ##{story.id}"
-        end          
+        end
       end
       added
-    end
-
-    def download_stories query={}
-      stories = pmp.root.query['urn:collectiondoc:query:docs']
-        .where({profile: PROFILE, limit: LIMIT}.merge(query))
-        .retrieve.items 
     end
 
     def import(remote_article, options={})
@@ -92,8 +93,8 @@ module PmpArticleImporter
         # TODO: This is temporary, at some point we'll need to figure out
         # how to determine the "source" of an article from PMP.
         # Right now we're only pulling in Marketplace stories.
-        article.source        = "marketplace"
-        article.news_agency   = "Marketplace"
+        article.source        = remote_article.publisher.downcase
+        article.news_agency   = remote_article.publisher
       end
 
       # Bylines
