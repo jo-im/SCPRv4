@@ -46,11 +46,22 @@ describe PmpArticleImporter do
         })
       end
 
-      it 'sets the source and news agency' do
-        remote_article = create :pmp_article
-        news_story = PmpArticleImporter.import(remote_article)
-        news_story.source.should eq "marketplace"
-        news_story.news_agency.should eq 'Marketplace'
+      context 'remote article with publisher name' do
+        it 'sets the matching source and news agency' do
+          remote_article = create :pmp_article
+          news_story = PmpArticleImporter.import(remote_article)
+          news_story.source.should eq remote_article.publisher.downcase
+          news_story.news_agency.should eq remote_article.publisher
+        end
+      end
+
+      context 'remote article without publisher name' do
+        it 'sets the matching source and news agency to fallback of PMP' do
+          remote_article = create :pmp_article, publisher: nil
+          news_story = PmpArticleImporter.import(remote_article)
+          news_story.source.should eq "pmp"
+          news_story.news_agency.should eq "PMP"
+        end
       end
 
       it 'imports the bylines' do

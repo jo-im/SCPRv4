@@ -93,8 +93,10 @@ module PmpArticleImporter
         # TODO: This is temporary, at some point we'll need to figure out
         # how to determine the "source" of an article from PMP.
         # Right now we're only pulling in Marketplace stories.
-        article.source        = remote_article.publisher.downcase
-        article.news_agency   = remote_article.publisher
+        publisher = remote_article.publisher || "PMP"
+
+        article.source        = publisher.downcase
+        article.news_agency   = publisher
       end
 
       # Bylines

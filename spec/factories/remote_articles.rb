@@ -10,6 +10,7 @@ FactoryGirl.define do
     url "http://npr.org/wat.html"
     article_id 12345
     is_new true
+    publisher "NPR"
   end
 
   factory :pmp_article, class: "RemoteArticle" do
@@ -20,6 +21,7 @@ FactoryGirl.define do
     url "http://marketplace.org/wat.html"
     article_id "fe111285-92c5-f5de-7b34-8a720d5fc750"
     is_new true
+    publisher {["Marketplace", "NPR", "American Homefront Project"].sample}
   end
 
 end
