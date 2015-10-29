@@ -3,8 +3,6 @@ module PmpArticleImporter
 
   SOURCE     = "pmp"
   ENDPOINT   = "https://api.pmp.io/"
-  TAG        = "marketplace"
-  COLLECTION = "4c6e24e5-484f-49e8-be8d-452cfddd6252"
   PROFILE    = "story"
   LIMIT      = 10
 
@@ -22,8 +20,8 @@ module PmpArticleImporter
       ## Stories are downloaded in two ways: a query on a tag(marketplace) and from
       ## a collection that is specific to veteran stories.  Both sets of results are
       ## concatenated to the stories array.
-      stories.concat download_stories("Marketplace", tag: TAG)
-      stories.concat download_stories("American Homefront Project", collection: COLLECTION)
+      stories.concat download_stories("Marketplace", tag: "marketplace")
+      stories.concat download_stories("American Homefront Project", collection: "4c6e24e5-484f-49e8-be8d-452cfddd6252")
 
       stories
     end

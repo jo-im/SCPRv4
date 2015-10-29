@@ -33,7 +33,7 @@ describe PmpArticleImporter do
     it 'builds cached articles from the API response' do
       RemoteArticle.count.should eq 0
       added = PmpArticleImporter.sync
-      RemoteArticle.count.should eq 4 # Two stories in the JSON fixture grabbed twice(two for marketplace and two for veterans collection)
+      RemoteArticle.count.should eq 12 # Two stories from Marketplace fixture and 10 from AHP fixture
       added.first.headline.should match /billions and billions/
     end
 
