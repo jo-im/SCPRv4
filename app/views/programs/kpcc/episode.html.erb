@@ -22,7 +22,7 @@
       <div class="prose">
 
         <% if audio = @episode.audio.first %>
-          <%= content_widget "new/primary_audio", @episode, prompt: "Listen to this episode." %>
+          <%= content_widget "new/primary_audio", @episode, prompt: "Listen to this episode.", context: @episode.program.slug %>
         <% end %>
 
 
