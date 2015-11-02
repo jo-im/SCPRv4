@@ -154,7 +154,7 @@ class BreakingNewsAlert < ActiveRecord::Base
         :formats    => [:text],
         :locals     => { alert: self }).to_s,
 
-      :name        => "[scpr-alert] #{self.headline[0..30]}",
+      :name        => "[alert #{Time.zone.now.strftime("%Y%m%d")}] #{self.headline[0..30]}",
       :description => "SCPR Breaking News Alert\n" \
                       "Sent: #{Time.zone.now}\nSubject: #{alert_subject}",
       :subject     => alert_subject,

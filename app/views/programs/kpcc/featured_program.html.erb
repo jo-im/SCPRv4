@@ -9,367 +9,56 @@
 
 <%= cache ["featured-program", @program] do %>
 
-<% if @featured_story.original_object.is_a?(ShowSegment) %>
-  <% episode_article = @program.episodes.published.first.to_article %>
-  <section class="exordium curated-segment">
-    <header class="bound">
-      <h1><a href="<%= @featured_story.public_path %>"><%= @featured_story.title %></a></h1>
-    </header>
-  <div class="content clearfix bound">
-    <article class="featured clearfix">
-      <figure class="photo ratio">
-        <a href="<%= @featured_story.public_path %>">
-          <div class="fill"></div>
-          <b class="img-contain"><img src="<%= @featured_story.asset.full.url %>" alt="" /></b>
-        </a>
-      </figure>
-      <div class="summary">
-        <aside class="prompt byline">
-          <h2><%= smart_date_js @featured_story.public_datetime %></h2>
-          <h3><%= render_byline @featured_story.original_object %></h3>
-        </aside>
-        <div class="description">
-          <p><%= @featured_story.teaser.html_safe %></p>
-        </div>
-        <footer>
-          <a href="<%= @featured_story.public_path %>">Keep reading</a>
-            </footer>
-          </div>
-        </article>
-        <div class="supporting clearfix">
-          <section class="segments">
-          <h2>Our Latest Episode <span><%= smart_date_js episode_article.public_datetime %></span></h2>
+  <%= cache ["featured-program-story",@program,@featured_story] do %>
+    <% if @featured_story.is_a?(ShowSegment) %>
+      <%= render partial: "programs/kpcc/featured_segment", locals: {program: @program, featured_story: @featured_story} %>
+    <% else %>
+      <%= render partial: "programs/kpcc/featured_story",   locals: {program: @program, featured_story: @featured_story.to_article} %>
+    <% end %>
+  <% end %>
 
-              <!--
-              <a href="<%= episode_article.public_path %>" class="latest">
-                <figure>
-                  <div class="ratio">
-                      <div class="fill"></div>
-                      <b class="img-contain"><img src="<%= episode_article.asset.full.url %>" alt="" /></b>
-                  </div>
-                  <figcaption><%= episode_article.title %></figcaption>
-                </figure>
-              </a>
-              -->
-              <!--
-              <nav>
-                <ul>
-                  <% episode_segments = episode_article.original_object.segments %>
-                  <% episode_segments.first(3).map(&:to_article).each do |segment| %>
-                    <li><a href="<%= segment.public_path %>"><%= segment.short_title %></a></li>
-                  <% end %>
-                </ul>
-              </nav>
-              -->
-
-
-              <a href="<%= episode_article.public_path %>" class="freshest">
-                <figure class="clearfix">
-                  <div class="ratio">
-                      <div class="fill"></div>
-                      <b class="img-contain"><img src="<%= episode_article.asset.full.url %>" alt="" /></b>
-                  </div>
-                  <figcaption><%= episode_article.title %></figcaption>
-                </figure>
-              </a>
-
-              <footer>
-                <a href="<%= episode_article.public_path %>">
-                  <figure>
-                    <mark>See all from <%= format_date(episode_article.public_datetime, with: "%B %e") %></mark>
-                    <% story_count = (episode_segments - episode_segments.first(3)).count %>
-                    <% if story_count > 0 %>
-                      <figcaption><span><%= story_count %></span> more <%= 'story'.pluralize(story_count) %></figcaption>
-                    <% end %>
-                  </figure>
-                </a>
-              </footer>
-
-          </section>
-          <aside class="plug">
-            <div class="ad widget">
-              <%= render "shared/ads/dfp", ad_key: 'slot_a' %>
-              <span class="appeal"><a href="/support/underwriting/">Become a KPCC sponsor</a></span>
-            </div>
-          </aside><!--/ .plug (A) -->
-        </div><!--/ .supporting -->
-      </div><!--/ .content -->
-    </section><!--/ .exordium -->
-
-<% else %>
-
-<section class="exordium curated-episode" style="display: block;">
-  <header class="bound">
-    <h1><a href="<%= @featured_story.public_path %>"><%= @featured_story.short_title %></a></h1>
-  </header>
-  <div class="content clearfix bound">
-    <article class="featured clearfix">
-      <figure class="photo ratio">
-        <a href="<%= @featured_story.public_path %>">
-          <div class="fill"></div>
-          <b class="img-contain"><img src="<%= @featured_story.asset.full.url %>" alt="" /></b>
-        </a>
-      </figure>
-      <div class="summary">
-        <aside class="prompt listen">
-        <h1><cite><%= @program.title %></cite> for <%= format_date(@featured_story.public_datetime, with: "%A, %B %-d, %Y") %></h1>
-        <% if @featured_story.audio.present? %>
-          <mark class="play">
-            <ul>
-              <li class='story-audio'>
-                <a href="<%= @featured_story.audio.first.url %>" class="play-btn audio-toggler" title="<%= @featured_story.short_title %>" data-duration="<%= @featured_story.audio.first.duration %>">
-                  <b>Listen to Episode</b>
-                  <span><%= format_clip_duration @featured_story.audio.first.duration %></span>
-                </a>
-              </li>
-            </ul>
-          </mark>
-        </aside>
-        <aside class="download">
-          <a href="<%= @featured_story.audio.first.url %>"><span>Download episode</span> <i><%= number_to_human_size(@featured_story.audio.first.size, precision: 2) %></i></a>
-        </aside>
-        <% end %>
-        <div class="description">
-          <p><%= @featured_story.teaser %></p>
-        </div>
-        <footer>
-          <a href="<%= @featured_story.public_path %>">See full episode</a>
-        </footer>
-      </div>
-    </article>
-    <div class="supporting clearfix">
-      <section class="segments">
-        <h2>Also in this episode</h2>
-        <nav>
-          <ul>
-            <% story_segments = @featured_story.original_object.segments %>
-            <% story_segments.first(8).map(&:to_article).each do |segment| %>
-              <li><a href="<%= segment.public_path %>"><%= segment.short_title %></a></li>
-            <% end %>
-          </ul>
-        </nav>
-        <footer>
-          <a href="<%= @featured_story.public_path %>">
-            <figure>
-              <mark>See all from <%= format_date(@featured_story.public_datetime, with: "%B %e") %></mark>
-              <% story_count = (story_segments - story_segments.first(8)).count %>
-              <% if story_count > 0 %>
-                <figcaption><span><%= story_count %></span> more <%= 'story'.pluralize(story_count) %></figcaption>
-              <% end %>
-            </figure>
-         </a>
-        </footer>
-      </section>
-      <aside class="plug">
-        <div class="ad widget">
-          <%= render "shared/ads/dfp", ad_key: 'slot_a' %>
-          <span class="appeal"><a href="/support/underwriting/">Become a KPCC sponsor</a></span>
-        </div>
-      </aside><!--/ .plug (A) -->
-    </div><!--/ .supporting -->
-  </div><!--/ .content -->
-</section><!--/ .exordium -->
-
-<% end %>
-
-<div class="neoteric">
-  <div class="inner bound clearfix">
-
-    <section class="segments">
-      <h1>Recently on <cite><%= @program.title %></cite></h1>
-      <div class="series clearfix">
-        <% @segments.first(14).each do |segment| %>
-          <% article_segment = segment.to_article %>
-          <figure>
-              <div class="photo ratio">
-                <a href="<%= article_segment.public_path %>">
-                  <div class="fill"></div>
-                  <time datetime="<%= format_date(article_segment.public_datetime, with: "%F") %>"><span><%= format_date(article_segment.public_datetime, with: "%a") %></span> <%= format_date(article_segment.public_datetime, with: "%B %e") %></time>
-                  <% if article_segment.audio.present? %>
-                    <mark class="has-audio"><%= format_clip_duration article_segment.audio.first.duration %></mark>
-                  <% end %>
-                  <b class="img-contain"><img src="<%= segment.asset.full.url %>" alt="" /></b>
-                </a>
-              </div>
-              <figcaption><a href="<%= article_segment.public_path %>"><%= article_segment.short_title %></a></figcaption>
-          </figure>
-        <% end %>
-
-        <figure>
-            <div class="photo ratio">
-              <a href="/programs/<%= @program.slug %>/featured?view=segments">
-                <div class="fill"></div>
-                <b class="img-contain"></b>
-              </a>
-            </div>
-            <figcaption><a href="/programs/<%= @program.slug %>/featured?view=segments">Browse through more of <%= @program.title %></a></figcaption>
-        </figure>
-
-      </div><!--/ .series -->
-
-
-      <aside class="podcast-appeal">
-        <div class="inner">
-          <div class="prose">
-            <h1>Subscribe to <%= @program.title %>’s podcast, and receive every new episode, automatically, as soon as it’s released. Listen on your own time, your own way.</h1>
-            <ul class="clearfix">
-              <li class="itunes"><a href="https://itunes.apple.com/us/podcast/the-frame/id911090618"><span>Subscribe via iTunes</span></a></li>
-              <li class="any"><a href="http://www.scpr.org/podcasts/<%= @program.slug %>"><span>Any podcast app (XML)</span></a></li>
-            </ul>
-          </div>
-        </div>
-      </aside>
-
-
-    </section><!--/ .segments -->
-
-    <div class="library">
-      <aside class="plug">
-        <div class="ad widget">
-          <%= render "shared/ads/dfp", ad_key: 'slot_b' %>
-          <span class="appeal"><a href="/support/underwriting/">Become a KPCC sponsor</a></span>
-        </div>
-      </aside><!--/ .plug (B) -->
-
-      <section class="episodes">
-        <h2>Recent Episodes</h2>
-        <nav>
-          <ul>
-            <% @episodes.map(&:to_article).first(5).each do |episode| %>
-              <li><a href="<%= episode.public_path %>">
-                <time datetime="<%= format_date(episode.public_datetime, with:'%F') %>"><mark><%= format_date(episode.public_datetime, with: '%A') %></mark>, <%= format_date(episode.public_datetime, with: '%B %e, %Y') %></time>
-                <span><%= episode.short_title %></span></a></li>
-            <% end %>
-          </ul>
-        </nav>
-        <footer>
-          <a href="/programs/<%= @program.slug %>/featured?view=episodes"><span>See <cite><%= @program.title %></cite>&rsquo;s episode archive</span></a>
-        </footer>
-      </section><!--/ .episodes -->
-
-      <section class="archive">
-        <h2>Find a specific episode from <%= @program.title %>’s archive</h2>
-        <div class="flux-capacitor">
-          <form accept-charset="UTF-8" action="/programs/<%= @program.slug %>/archive" class="archive-date-select" id="archive_date_select" method="post">
-            <div style="margin:0;padding:0;display:inline">
-              <input name="utf8" type="hidden" value="&#x2713;" />
-              <input name="authenticity_token" type="hidden" value="Hv3qnrajp8wwM5yr16aOZvA+r1JCrnBLq+lRXQVHrc0=" />
-            </div>
-
-            <div class="fields clearfix">
-
-              <div class="field month">
-                <label for="archive_date_2i">Month</label>
-                <select id="archive_date_2i" name="archive[date(2i)]">
-                  <% (1..12).each do |month| %>
-                    <%= content_tag :option, Date::MONTHNAMES[month], value: month, selected: (true if month == Time.new.month) %>
-                  <% end %>
-                </select>
-              </div><!--/ .field.month -->
-
-              <div class="field day">
-                <label for="archive_date_3i">Day</label>
-                <select id="archive_date_3i" name="archive[date(3i)]">
-                  <% (1..31).each do |value| %>
-                    <%= content_tag :option, value, value: value, selected: (true if value == Time.new.day) %>
-                  <% end %>
-                </select>
-              </div><!--/ .field.day -->
-
-              <div class="field year">
-                <label for="archive_date_1i">Year</label>
-                <select id="archive_date_1i" name="archive[date(1i)]">
-                  <% (2006..Time.now.year).each do |time| %>
-                    <%= content_tag :option, time, value: time, selected: (true if time == Time.now.year) %>
-                  <% end %>
-                </select>
-              </div><!--/ .field.year -->
-
-            </div><!--/ .fields -->
-
-            <div class="commit clearfix">
-              <input class="btn" name="commit" type="submit" value="Search" />
-            </div>
-
-          </form>
-        </div><!--/ .flux-capacitor -->
-      </section><!--/ .archive -->
-    </div><!--/ .library -->
-
-  </div><!--/ . inner -->
-</div><!--/ .neoteric -->
-
-<div class="interregnum">
-  <div class="inner bound clearfix">
-    <section class="team">
-      <h1>Meet <cite><%= @program.title %></cite>&rsquo;s team</h1>
-      <div class="roster clearfix">
-      <% bios = @program.reporters %>
-      <% if bios.present? %>
-        <% bios.each do |bio| %>
-          <figure>
-              <div class="photo ratio">
-                <a href="<%= bio.public_path %>">
-                  <div class="fill"></div>
-                  <b class="img-contain"><img src="<%= bio.headshot.small.url %>" alt="" /></b>
-                </a>
-              </div>
-              <figcaption><a href="<%= bio.public_path %>"><%= bio.name %></a></figcaption>
-          </figure>
-        <% end %>
-      <% end %>
-      </div>
-    </section><!--/ .team -->
-    <div class="melange">
-      <% if @program.quote.present? && @program.quote.article.present? %>
-        <aside class="quote">
-          <a href="<%= @program.quote.article.public_path %>">
-            <blockquote>
-              <p><%= @program.quote.text %></p>
-              <footer>
-                <span><mark><%= @program.quote.source_name %>,</mark> <%= @program.quote.source_context %></span>
-                <cite>from our <b><%= format_date(@program.quote.article.public_datetime, with: '%B %e, %Y') %> episode</b></cite>
-              </footer>
-            </blockquote>
-          </a>
-        </aside><!--/ .quote -->
-      <% end %>
-      <div class="diptych clearfix">
-        <% if @subfeatured_story.present? %>
-          <% sub_article = @subfeatured_story.to_article %>
-          <section class="exemplary">
-            <h1>New to <cite><%= @program.title %></cite>? We suggest starting with this episode.</h1>
-            <article>
-              <h2><a href="<%= sub_article.public_path %>"><%= sub_article.short_title %></a></h2>
-              <div class="content clearfix">
-                <figure class="photo ratio">
-                  <a href="<%= sub_article.public_path %>">
-                    <div class="fill"></div>
-                    <b class="img-contain"><img src="<%= sub_article.asset.full.url %>" alt="" /></b>
-                  </a>
-                </figure>
-                <div class="prose">
-                  <h3><time datetime="<%= format_date(sub_article.public_datetime, with: '%F') %>"><%= format_date(sub_article.public_datetime, with: '%B %e, %Y') %></time></h3>
-                  <p><%= sub_article.teaser %></p>
-                </div>
-              </div>
-            </article>
-          </section><!--/ .exemplary -->
-        <% end %>
+  <div class="neoteric">
+    <div class="inner bound clearfix">
+      <%= render partial: "programs/kpcc/recent_segments", locals: {program: @program, segments: @segments} %>
+      <div class="library">
         <aside class="plug">
           <div class="ad widget">
-            <%= render "shared/ads/dfp", ad_key: 'slot_c' %>
+            <%= render "shared/ads/dfp", ad_key: 'slot_b' %>
             <span class="appeal"><a href="/support/underwriting/">Become a KPCC sponsor</a></span>
           </div>
-        </aside><!--/ .plug (C) -->
-      </div><!--/ .diptych -->
-    </div><!--/ .melange -->
-  </div><!--/ .inner -->
-</div><!--/ .interregnum -->
+        </aside><!--/ .plug (B) -->
+        <%= render partial: "programs/kpcc/recent_episodes_list", locals: {program: @program, episodes: @episodes} %>
+        <%= render partial: "programs/kpcc/program_archive", locals: {program: @program} %>
+      </div><!--/ .library -->
+    </div><!--/ . inner -->
+  </div><!--/ .neoteric -->
 
-<% if @featured_programs %>
-    <%= render 'programs/kpcc/featured_programs' %>
-<% end %>
+  <div class="interregnum">
+    <div class="inner bound clearfix">
+      <%= render partial: "programs/kpcc/team", locals: {program: @program} %>
+      <div class="melange">
+        <% if @program.quote.present? && @program.quote.article.present? %>
+          <%= render partial: "programs/kpcc/program_quote", locals: {program: @program} %>
+        <% end %>
+        <div class="diptych clearfix">
+          <% if @subfeatured_story.present? %>
+            <%= render partial: "programs/kpcc/subfeatured_story", locals: {subfeatured_story: @subfeatured_story, program: @program} %>
+          <% end %>
+          <aside class="plug">
+            <div class="ad widget">
+              <%= render "shared/ads/dfp", ad_key: 'slot_c' %>
+              <span class="appeal"><a href="/support/underwriting/">Become a KPCC sponsor</a></span>
+            </div>
+          </aside><!--/ .plug (C) -->
+        </div><!--/ .diptych -->
+      </div><!--/ .melange -->
+    </div><!--/ .inner -->
+  </div><!--/ .interregnum -->
+
+  <% if @featured_programs %>
+      <%= render 'programs/kpcc/featured_programs' %>
+  <% end %>
+
 
 <% end %><%# cache %>
 

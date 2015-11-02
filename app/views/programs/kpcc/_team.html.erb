@@ -1,0 +1,19 @@
+<section class="team">
+  <h1>Meet <cite><%= program.title %></cite>&rsquo;s team</h1>
+  <div class="roster clearfix">
+  <% bios = program.reporters %>
+  <% if bios.present? %>
+    <% bios.each do |bio| %>
+      <figure>
+          <div class="photo ratio">
+            <a href="<%= bio.public_path %>">
+              <div class="fill"></div>
+              <b class="img-contain"><img src="<%= bio.headshot.small.url %>" alt="" /></b>
+            </a>
+          </div>
+          <figcaption><a href="<%= bio.public_path %>"><%= bio.name %></a></figcaption>
+      </figure>
+    <% end %>
+  <% end %>
+  </div>
+</section><!--/ .team -->

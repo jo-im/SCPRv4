@@ -162,7 +162,7 @@ describe BreakingNewsAlert do
     describe 'name' do
       it 'is a string with part of the headline in it' do
         alert.as_eloqua_email[:name]
-          .should eq "[scpr-alert] #{alert.headline[0..30]}"
+          .should match /\[alert \d{8}\] #{alert.headline[0..30]}/
       end
     end
 
