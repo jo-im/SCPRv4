@@ -7,8 +7,8 @@ module PmpArticleImporter
   LIMIT      = 10
 
   PROFILES = {
-    :image => "APMImage",
-    :audio => "APMAudio"
+    :image => ["APMImage", "Image Profile"],
+    :audio => ["APMAudio", "Audio Profile"]
   }
 
   class << self
@@ -121,44 +121,48 @@ module PmpArticleImporter
 
       if pmp_story.items.present?
         image = pmp_story.items.find do |i|
-          i.profile.first.title == PROFILES[:image]
+          PROFILES[:image].include? i.profile.first.title
         end
 
         audio = pmp_story.items.find do |i|
-          i.profile.first.title == PROFILES[:audio]
+          PROFILES[:audio].include? i.profile.first.title 
         end
 
-        # If we have an enclosure node, extract audio and assets from it.
         # Import Audio
-        if audio
-          audios = Array(audio.enclosure)
-
-          if !audios.empty?
-            audios.each_with_index do |remote_audio, i|
-              href    = remote_audio.href
+        # If we have an enclosure node, extract audio and assets from it.
+        #
+        # Using "title" for description here because the "description"
+        # property seems to be an internal description, like:
+        #
+        #   "A 'show' containing all the individual segments for
+        #   Marketplace to ship off to Slacker and other distributors"
+        if audio && !(audios = Array(audio.enclosure)).empty?
+          audios.each_with_index do |remote_audio, i|
+            audio_attributes = {byline: "APM", position: i}
+            case article.news_agency
+            when "Marketplace"
               api_url = remote_audio.meta['api']['href']
-
               audio_data = open(api_url) { |r| JSON.parse(r.read) }
-
-              # Podcast audio isn't always available. In this case we
-              # should just not import any audio.
-              if meta = audio_data[href]['podcast']
-                # Using "title" for description here because the "description"
-                # property seems to be an internal description, like:
-                #
-                #   "A 'show' containing all the individual segments for
-                #   Marketplace to ship off to Slacker and other distributors"
-                article.audio.build(
-                  :url            => meta['http_file_path'],
-                  :duration       => meta['duration'].to_i / 1000,
-                  :description    => meta['title'],
-                  :byline         => "APM",
-                  :position       => i
-                )
+              if meta = audio_data[audio_data.keys.first]['podcast']
+                audio_attributes.merge!({
+                  url:      meta['http_file_path'],
+                  duration: meta['duration'].to_i / 1000,
+                  description: meta['title']
+                })
               end
+            when "American Homefront Project"
+              audio_attributes.merge!({
+                url: remote_audio.href,
+                duration: remote_audio.meta.duration.to_i / 1000,
+                description: audio.title
+              })
             end
+            # Podcast audio isn't always available. In this case we
+            # should just not import any audio.
+            article.audio.build(audio_attributes) if audio_attributes[:url]
           end # audios
         end # audio
+
 
         # Import Primary Image
         # We're doing this last since it hits an external API... we don't
