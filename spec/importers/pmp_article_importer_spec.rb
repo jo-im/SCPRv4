@@ -95,7 +95,6 @@ describe PmpArticleImporter do
         # The "story.json" file has 2 audio enclosures (they're the same,
         # it's fake).
         news_story.audio.size.should eq 2
-
         audio = news_story.audio.first
         audio.url.should eq("http://play.publicradio.org/pmp/d/podcast/marketplace/segments/2014/03/12/marketplace_segment09_20140312_64.mp3")
         audio.duration.should eq 80000 / 1000

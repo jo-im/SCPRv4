@@ -21,7 +21,7 @@ FactoryGirl.define do
     url "http://marketplace.org/wat.html"
     article_id "fe111285-92c5-f5de-7b34-8a720d5fc750"
     is_new true
-    news_agency {["Marketplace", "NPR", "American Homefront Project"].sample}
+    news_agency "Marketplace"
   end
 
 end
