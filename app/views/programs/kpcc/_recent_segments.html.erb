@@ -2,20 +2,21 @@
   <h1>Recently on <cite><%= program.title %></cite></h1>
   <div class="series clearfix">
     <% segments.first(14).each do |segment| %>
-      <% article_segment = segment.to_article %>
-      <figure>
-          <div class="photo ratio">
-            <a href="<%= article_segment.public_path %>">
-              <div class="fill"></div>
-              <time datetime="<%= format_date(article_segment.public_datetime, with: "%F") %>"><span><%= format_date(article_segment.public_datetime, with: "%a") %></span> <%= format_date(article_segment.public_datetime, with: "%B %e") %></time>
-              <% if article_segment.audio.present? %>
-                <mark class="has-audio"><%= format_clip_duration article_segment.audio.first.duration %></mark>
-              <% end %>
-              <b class="img-contain"><img src="<%= segment.asset.full.url %>" alt="" /></b>
-            </a>
-          </div>
-          <figcaption><a href="<%= article_segment.public_path %>"><%= article_segment.short_title %></a></figcaption>
-      </figure>
+      <% cache ["featured-program-segments",segment] do %>
+        <figure>
+            <div class="photo ratio">
+              <a href="<%= segment.public_path %>">
+                <div class="fill"></div>
+                <time datetime="<%= format_date(segment.published_at, with: "%F") %>"><span><%= format_date(segment.published_at, with: "%a") %></span> <%= format_date(segment.published_at, with: "%B %e") %></time>
+                <% if segment.audio.any? %>
+                  <mark class="has-audio"><%= format_clip_duration segment.audio.first.duration %></mark>
+                <% end %>
+                <b class="img-contain"><img src="<%= segment.asset.full.url %>" alt="" /></b>
+              </a>
+            </div>
+            <figcaption><a href="<%= segment.public_path %>"><%= segment.short_headline %></a></figcaption>
+        </figure>
+      <% end %>
     <% end %>
 
     <figure>
@@ -36,7 +37,7 @@
       <div class="prose">
         <h1>Subscribe to <%= program.title %>’s podcast, and receive every new episode, automatically, as soon as it’s released. Listen on your own time, your own way.</h1>
         <ul class="clearfix">
-          <li class="itunes"><a href="https://itunes.apple.com/us/podcast/the-frame/id911090618"><span>Subscribe via iTunes</span></a></li>
+          <li class="itunes"><a href="<%= program.get_link('podcast') %>"><span>Subscribe via iTunes</span></a></li>
           <li class="any"><a href="http://www.scpr.org/podcasts/<%= program.slug %>"><span>Any podcast app (XML)</span></a></li>
         </ul>
       </div>
