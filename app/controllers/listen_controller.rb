@@ -1,5 +1,5 @@
 class ListenController < ApplicationController
-  before_filter :check_if_air_status, :require_pledge_token, only: [:pledge_free_stream]
+  before_filter :check_pledge_status, :require_pledge_token, only: [:pledge_free_stream]
 
   def index
     # grab eight hours worth of schedule, starting now
@@ -44,7 +44,7 @@ class ListenController < ApplicationController
 
   private
 
-  def check_if_air_status
+  def check_pledge_status
     return redirect_to("/listen_live/pledge-free/off-air") if !PLEDGE_DRIVE
   end
 
