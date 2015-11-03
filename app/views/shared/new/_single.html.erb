@@ -13,7 +13,7 @@
                         <ul>
                         <% audio.each_with_index do |audio, index| %>
                             <li class="story-audio" data-ga-category="Article" data-ga-action="Play" data-ga-label="Player">
-                                <a href="<%= audio.url %>" class="play-btn audio-toggler track-event" data-ga-category="Article" data-ga-action="Play" data-ga-label="Player" title="<%= h(article.short_title) %>" data-duration="<%= audio.duration %>">
+                                <a href="<%= raw url_with_params audio.url, via: 'website', context: 'news' %>" class="play-btn audio-toggler track-event" data-ga-category="Article" data-ga-action="Play" data-ga-label="Player" title="<%= h(article.short_title) %>" data-duration="<%= audio.duration %>">
                                     <b><%= format_clip_duration audio.duration %></b>
                                     <span><%= index == 0 ? "Listen" : "Extra Audio" %></span>
                                 </a>

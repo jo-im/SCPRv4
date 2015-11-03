@@ -14,7 +14,7 @@
 
             <%= render_asset article, context:"segments" %>
 
-            <%= content_widget "new/primary_audio", article %>
+            <%= content_widget "new/primary_audio", article, context: article.show.slug %>
 
 
             <%= render 'shared/new/social_share', article: article.to_article, cssClass: "pinned" %>
@@ -24,7 +24,7 @@
 
               <div class="primary">
 
-              <%= content_widget "new/extra_audio", article %>
+              <%= content_widget "new/extra_audio", article, context: article.show.slug %>
 
 
               <div class="prose-body">
