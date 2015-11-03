@@ -1,3 +1,4 @@
+content ||= nil
 if content && content.is_a?(Article)
 	context = content.show.try(:slug)
 else
