@@ -88,17 +88,36 @@ describe PmpArticleImporter do
         news_story.related_links.first.url.should match /marketplace\.org/
       end
 
-      it "adds audio if it's available" do
-        remote_article = create :pmp_article
-        news_story = PmpArticleImporter.import(remote_article)
+      context "marketplace story" do
+        it "adds audio if it's available" do
+          remote_article = create :pmp_article
+          news_story = PmpArticleImporter.import(remote_article)
 
-        # The "story.json" file has 2 audio enclosures (they're the same,
-        # it's fake).
-        news_story.audio.size.should eq 2
-        audio = news_story.audio.first
-        audio.url.should eq("http://play.publicradio.org/pmp/d/podcast/marketplace/segments/2014/03/12/marketplace_segment09_20140312_64.mp3")
-        audio.duration.should eq 80000 / 1000
-        audio.description.should match /Marketplace Segment/
+          # The "story.json" file has 2 audio enclosures (they're the same,
+          # it's fake).
+          news_story.audio.size.should eq 2
+          audio = news_story.audio.first
+          audio.url.should eq("http://play.publicradio.org/pmp/d/podcast/marketplace/segments/2014/03/12/marketplace_segment09_20140312_64.mp3")
+          audio.duration.should eq 80000 / 1000
+          audio.description.should match /Marketplace Segment/
+        end
+      end
+
+      context "ahp story" do
+        it "adds audio if it's available" do
+          stub_request(:get, %r|pmp\.io/docs\?guid=.+|).to_return({
+            :content_type => "application/json",
+            :body => load_fixture('api/pmp/ahp_story.json')
+          })
+          remote_article = create :pmp_article, news_agency: "American Homefront Project"
+          news_story = PmpArticleImporter.import(remote_article)
+
+          news_story.audio.size.should eq 2
+          audio = news_story.audio.first
+          audio.url.should eq("http://ahp.org/segments/2014/03/12/segment09_20140312_64.mp3")
+          audio.duration.should eq 80000 / 1000
+          audio.description.should match /Obama seeks expanded overtime pay/
+        end
       end
 
       it "creates an asset if image is available" do
