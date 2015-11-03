@@ -454,9 +454,12 @@ module ApplicationHelper
       NewRelic.log_error(e)
       return url
     end
-    if (hostname = uri.hostname) && hostname.include?("scpr.org")
-      params[:via] ||= "api"
-    else
+
+    # Remove via param for any URL that does not belong to SCPR.org
+    # This is so we can potentially use this helper for other
+    # purposes besides audio, since there isn't really a reason why
+    # we would use this parameter for URLs we don't own.
+    if !((hostname = uri.hostname) && hostname.include?("scpr.org"))
       params.delete(:via) 
     end
     query = URI.decode_www_form(uri.query.to_s)
