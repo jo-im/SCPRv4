@@ -505,7 +505,7 @@ describe ApplicationHelper do
 
     context 'a url containing scpr.org' do
       it 'returns a url with a via=api parameter' do
-        url = helper.url_with_params("http://media.scpr.org/audio/upload/2015/10/26/test-audio.mp3", context: "kpcc")
+        url = helper.url_with_params("http://media.scpr.org/audio/upload/2015/10/26/test-audio.mp3", context: "kpcc", via: "api")
         url.should include "via=api"
       end
       it 'does not overwrite the specified via parameter value if there is one' do
@@ -516,7 +516,7 @@ describe ApplicationHelper do
     end
     context 'a url not containing scpr.org' do
       it 'returns the original url' do
-        url = helper.url_with_params("http://www.podtrac.com/pts/redirect.mp3/download.php", context: "podcast")
+        url = helper.url_with_params("http://www.podtrac.com/pts/redirect.mp3/download.php", context: "podcast", via: "api")
         url.should_not include "via=api"
       end
     end
