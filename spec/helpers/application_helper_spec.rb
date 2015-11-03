@@ -477,46 +477,46 @@ describe ApplicationHelper do
   end
 
 
-  describe '#audio_url_with_params' do
+  describe '#url_with_params' do
     it "adds params if there aren't any" do
-      url = helper.audio_url_with_params("http://google.com", context: "kpcc")
+      url = helper.url_with_params("http://google.com", context: "kpcc")
       url.should eq "http://google.com?context=kpcc"
     end
 
     it "apprends to params if they already exist" do
-      url = helper.audio_url_with_params("http://google.com?from=kpcc", context: "podcast")
+      url = helper.url_with_params("http://google.com?from=kpcc", context: "podcast")
       url.should eq "http://google.com?from=kpcc&context=podcast"
     end
 
     it "ignores params if the value is falsey" do
-      url = helper.audio_url_with_params("http://google.com", from: 'kpcc', context: nil)
+      url = helper.url_with_params("http://google.com", from: 'kpcc', context: nil)
       url.should eq "http://google.com?from=kpcc"
     end
 
     it "doesn't leave a trailing ? if there are no params" do
-      url = helper.audio_url_with_params("http://google.com")
+      url = helper.url_with_params("http://google.com")
       url.should_not match /\?/
     end
 
     it "Returns the url if it's an invalid URI" do
-      url = helper.audio_url_with_params("nope nope nope")
+      url = helper.url_with_params("nope nope nope")
       url.should eq "nope nope nope"
     end
 
     context 'a url containing scpr.org' do
       it 'returns a url with a via=api parameter' do
-        url = helper.audio_url_with_params("http://media.scpr.org/audio/upload/2015/10/26/test-audio.mp3", context: "kpcc")
+        url = helper.url_with_params("http://media.scpr.org/audio/upload/2015/10/26/test-audio.mp3", context: "kpcc")
         url.should include "via=api"
       end
       it 'does not overwrite the specified via parameter value if there is one' do
-        url = helper.audio_url_with_params("http://media.scpr.org/audio/upload/2015/10/26/test-audio.mp3", context: "kpcc", via: "npr")
+        url = helper.url_with_params("http://media.scpr.org/audio/upload/2015/10/26/test-audio.mp3", context: "kpcc", via: "npr")
         url.should_not include "via=api"
         url.should include "via=npr"
       end
     end
     context 'a url not containing scpr.org' do
       it 'returns the original url' do
-        url = helper.audio_url_with_params("http://www.podtrac.com/pts/redirect.mp3/download.php", context: "podcast")
+        url = helper.url_with_params("http://www.podtrac.com/pts/redirect.mp3/download.php", context: "podcast")
         url.should_not include "via=api"
       end
     end

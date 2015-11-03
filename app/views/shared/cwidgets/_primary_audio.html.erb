@@ -1,6 +1,6 @@
 <% if audio = article.audio.first %>
 
-  <% url = audio_url_with_params(audio.url, context: options[:context], via: 'website') %>
+  <% url = url_with_params(audio.url, context: options[:context], via: 'website') %>
 
   <aside class="story-audio <%= options[:cssClass] %>">
     <div class="inner-container clearfix">

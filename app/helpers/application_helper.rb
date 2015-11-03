@@ -454,32 +454,17 @@ module ApplicationHelper
       NewRelic.log_error(e)
       return url
     end
-
+    if uri.hostname.include?("scpr.org")
+      params[:via] ||= "api"
+    else
+      params.delete(:via) 
+    end
     query = URI.decode_www_form(uri.query.to_s)
 
     params.each { |k, v| query << [k.to_s, v.to_s] if v }
 
     uri.query = URI.encode_www_form(query)
     uri.to_s.chomp("?")
-  end
-
-
-  # Safely add parameters to an audio URL
-  #
-  # Works in the same way as #url_with_params, except it 
-  # will append a 'via=api' paremeter if the hostname
-  # of the audio is our own.
-  def audio_url_with_params(url, params={})
-    begin
-      uri = URI.parse(url)
-    rescue URI::InvalidURIError => e
-      NewRelic.log_error(e)
-      return url
-    end
-    if uri.hostname.include?("scpr.org")
-      params[:via] ||= "api"
-    end
-    url_with_params(url, params)
   end
 
 end
