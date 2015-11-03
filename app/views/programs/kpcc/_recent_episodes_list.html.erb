@@ -2,10 +2,10 @@
   <h2>Recent Episodes</h2>
   <nav>
     <ul>
-      <% episodes.map(&:to_article).first(5).each do |episode| %>
+      <% episodes.first(5).each do |episode| %>
         <li><a href="<%= episode.public_path %>">
-          <time datetime="<%= format_date(episode.public_datetime, with:'%F') %>"><mark><%= format_date(episode.public_datetime, with: '%A') %></mark>, <%= format_date(episode.public_datetime, with: '%B %e, %Y') %></time>
-          <span><%= episode.short_title %></span></a></li>
+          <time datetime="<%= format_date(episode.air_date, with:'%F') %>"><mark><%= format_date(episode.air_date, with: '%A') %></mark>, <%= format_date(episode.air_date, with: '%B %e, %Y') %></time>
+          <span><%= episode.headline %></span></a></li>
       <% end %>
     </ul>
   </nav>
