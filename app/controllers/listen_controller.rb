@@ -1,5 +1,5 @@
 class ListenController < ApplicationController
-  before_filter :require_pledge_token, only: [:pledge_free_stream]
+  before_filter :check_pledge_status, :require_pledge_token, only: [:pledge_free_stream]
 
   def index
     # grab eight hours worth of schedule, starting now
@@ -29,7 +29,7 @@ class ListenController < ApplicationController
       authorized_user = parse_user_query.get.first
 
       # redirect to flat page if we can't find a valid user
-      return redirect_to '/pledge-free/error' unless authorized_user.present?
+      return redirect_to '/listen_live/pledge-free/error' unless authorized_user.present?
 
       authorized_user["viewsLeft"] = Parse::Increment.new(-1)
       authorized_user.save
@@ -39,13 +39,16 @@ class ListenController < ApplicationController
       end
       cookies.permanent[:member_session] = params[:pledgeToken]
       render layout: false
-
     end
   end
 
   private
 
+  def check_pledge_status
+    return redirect_to("/listen_live/pledge-free/off-air") if !PLEDGE_DRIVE
+  end
+
   def require_pledge_token
-    redirect_to '/pledge-free/error' unless params.has_key?(:pledgeToken) || cookies[:member_session].present?
+    redirect_to '/listen_live/pledge-free/error' unless params.has_key?(:pledgeToken) || cookies[:member_session].present?
   end
 end
