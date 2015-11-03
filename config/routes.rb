@@ -9,6 +9,8 @@ Scprv4::Application.routes.draw do
   # Listen Live
   get '/listen_live/' => 'listen#index', as: :listen
   get '/listen_live/pledge-free' => 'listen#pledge_free_stream', as: :listen_pledge_free
+  get '/listen_live/pledge-free/off-air' => 'listen#pledge_free_off_air', as: :listen_pledge_free_off_air
+  get '/listen_live/pledge-free/error' => 'listen#pledge_free_error', as: :listen_pledge_free_error
 
 
   # Sections
