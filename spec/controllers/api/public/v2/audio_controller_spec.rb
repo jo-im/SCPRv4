@@ -44,9 +44,8 @@ describe Api::Public::V2::AudioController do
     context "external episode" do
       it "omits a via param" do
         episode = create :external_episode
-        audio = create(:audio, :uploaded, {
+        audio = create(:audio, :external, {
           created_at: Time.zone.now,
-          mp3: load_audio_fixture("point1sec-3.mp3"),
           content_id: episode.id,
           content_type: episode.class.to_s,
           size: 0,
