@@ -82,6 +82,19 @@ class Podcast < ActiveRecord::Base
     { slug: self.slug }
   end
 
+  ## This is to provide the correct context parameter
+  ## for a podcast item URL since some of the podcast
+  ## slugs don't match their programs, making things 
+  ## difficult for analytics.  It first relies on the 
+  ## source slug and falls back on the slug attribute.
+  def context
+    if source = self.source
+      source.slug || self.slug
+    else
+      self.slug
+    end
+  end
+
 
   private
 
