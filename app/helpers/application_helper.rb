@@ -454,7 +454,7 @@ module ApplicationHelper
       NewRelic.log_error(e)
       return url
     end
-    if uri.hostname.include?("scpr.org")
+    if hostname = uri.hostname && hostname.include?("scpr.org")
       params[:via] ||= "api"
     else
       params.delete(:via) 
