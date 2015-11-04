@@ -93,7 +93,7 @@ module PmpArticleImporter
         # Right now we're only pulling in Marketplace stories.
         news_agency = remote_article.news_agency || "PMP"
 
-        article.source        = news_agency.downcase
+        article.source        = news_agency.downcase.gsub(" ", "_")
         article.news_agency   = news_agency
       end
 
