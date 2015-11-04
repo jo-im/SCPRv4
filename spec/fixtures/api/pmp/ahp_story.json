@@ -1,0 +1,539 @@
+{
+  "version": "1.0",
+  "href": "https://api-sandbox.pmp.io/docs/92dbabbf-fa82-b580-7240-e3bddb6310ff",
+  "attributes": {
+    "valid": {
+      "from": "2014-03-12T14:44:30+00:00",
+      "to": "3014-03-12T14:44:30+00:00"
+    },
+    "created": "2014-03-12T18:01:18+00:00",
+    "modified": "2014-03-12T18:01:18+00:00",
+    "description": "The president seeks to change overtime pay rules via executive powers.",
+    "hreflang": "en",
+    "contenttemplated": "[{\"type\":\"text/html\",\"content\":\"The White House wants to make more Americans eligible for overtime pay. Currently, because of what is referred to as the Fair Labor Standards Actâs â<a style=\\\"line-height: 1.42em; font-size: 14px;\\\" href=\\\"http://www.dol.gov/whd/regs/compliance/fairpay/fs17a_overview.pdf\\\">white collar exemption</a>,â many salaried professionals are not entitled to extra pay if they work more than 40 hours per week.\"},{\"content\":\"Later this week, the president intends to use his executive authority to change those rules. For 2014, which he is calling a âyear of action,â he has promised to pursue policy changes that do not involve congress.\",\"type\":\"text/html\"},{\"content\":\"So whom would this change affect? âPeople who are defined as âsupervisors,ââ says Gary Burtless, an economist at The Brookings Institution. âThey have responsibility over other people besides themselves, a certain amount of independence.â\",\"type\":\"text/html\"},{\"type\":\"text/html\",\"content\":\"The economic recovery, Burtless argues, âhas been better for profits than wages.â âThe government is trying to put its thumb on the scale, helping workers,â he says.\"},{\"content\":\"Economist Jared Bernstein, a senior fellow with the liberal Center on Budget and Policy Priorities, has pushed for this change for more than a decade, since President George W. Bush expanded the exemption in 2004:&nbsp;\",\"type\":\"text/html\"},{\"type\":\"text/html\",\"content\":\"âWeâre talking about millions of workers who would be newly eligible for overtime pay,â he says.\"},{\"type\":\"text/html\",\"content\":\"Critics argue changing the exemption would make it harder for businesses to hire new employees, and it could motivate them to trim their payrolls. In the long run, employers could simply reduce a white-collar supervisorâs base pay, so there would be no difference to his overall salary.\"},{\"content\":\"Bill Kilberg, a partner with the law firm Gibson, Dunn &amp; Crutcher, says he âdoesnât know if it is a good idea.â Kilberg suspects the courts will be asked to decide whether or not a rule change would be constitutional. âThey can give it deference or not give it deference.â\",\"type\":\"text/html\"}]",
+    "title": "Obama seeks expanded overtime pay",
+    "byline": "Gura, David",
+    "published": "2014-03-12T14:44:30+00:00",
+    "guid": "92dbabbf-fa82-b580-7240-e3bddb6310ff",
+    "tags": [
+      "Marketplace Morning Report for Wednesday, March 12, 2014",
+      "APM_TESTING",
+      "92dbabbffa82b5807240e3bddb6310ff",
+      "Marketplace Morning Report",
+      "PMP:Marketplace_PMP",
+      "Business",
+      "Marketplace"
+    ],
+    "teaser": "The president seeks to change overtime pay rules via executive powers.",
+    "contentencoded": "<p>The White House wants to make more Americans eligible for overtime pay. Currently, because of what is referred to as the Fair Labor Standards Act’s “<a style=\"line-height: 1.42em; font-size: 14px;\" href=\"http://www.dol.gov/whd/regs/compliance/fairpay/fs17a_overview.pdf\">white collar exemption</a>,” many salaried professionals are not entitled to extra pay if they work more than 40 hours per week.</p>\n<p>Later this week, the president intends to use his executive authority to change those rules. For 2014, which he is calling a “year of action,” he has promised to pursue policy changes that do not involve congress.</p>\n<p>So whom would this change affect? “People who are defined as ‘supervisors,’” says Gary Burtless, an economist at The Brookings Institution. “They have responsibility over other people besides themselves, a certain amount of independence.”</p>\n<p>The economic recovery, Burtless argues, “has been better for profits than wages.” “The government is trying to put its thumb on the scale, helping workers,” he says.</p>\n<p>Economist Jared Bernstein, a senior fellow with the liberal Center on Budget and Policy Priorities, has pushed for this change for more than a decade, since President George W. Bush expanded the exemption in 2004:&nbsp;</p>\n<p>“We’re talking about millions of workers who would be newly eligible for overtime pay,” he says.</p>\n<p>Critics argue changing the exemption would make it harder for businesses to hire new employees, and it could motivate them to trim their payrolls. In the long run, employers could simply reduce a white-collar supervisor’s base pay, so there would be no difference to his overall salary.</p>\n<p>Bill Kilberg, a partner with the law firm Gibson, Dunn &amp; Crutcher, says he “doesn’t know if it is a good idea.” Kilberg suspects the courts will be asked to decide whether or not a rule change would be constitutional. “They can give it deference or not give it deference.”</p>"
+  },
+  "links": {
+    "profile": [
+      {
+        "title": "APMStory",
+        "href": "https://api.pmp.io/profiles/story"
+      }
+    ],
+    "alternate": [
+      {
+        "type": "text/html",
+        "href": "http://www.marketplace.org/topics/business/obama-seeks-expanded-overtime-pay"
+      }
+    ],
+    "item": [
+      {
+        "href": "https://api-sandbox.pmp.io/docs/1dc81410-d86d-3c03-6fcc-39f77f0b0301"
+      },
+      {
+        "href": "https://api-sandbox.pmp.io/docs/0ee06f8c-b86b-b0c9-87e3-e8c17d59b132"
+      }
+    ],
+    "collection": [
+      {
+        "title": "Marketplace",
+        "href": "https://api-sandbox.pmp.io/docs/36d4a0dd-34da-4ce3-a31e-112fd9d8d91c"
+      },
+      {
+        "href": "https://api-sandbox.pmp.io/docs/df9a7bdb-c650-42c1-8691-55a154f07322",
+        "title": "Marketplace Morning Report"
+      }
+    ],
+    "distributor": [],
+    "copyright": [
+      {
+        "title": "Copyright (C) 2014 American Public Media Group",
+        "href": "http://www.publicradio.org/terms"
+      }
+    ],
+    "creator": [
+      {
+        "href": "https://api-sandbox.pmp.io/docs/98bf597a-2a6f-446c-9b7e-d8ae60122f0d"
+      }
+    ],
+    "navigation": [
+      {
+        "href": "https://api-sandbox.pmp.io/docs?guid=92dbabbf-fa82-b580-7240-e3bddb6310ff",
+        "rels": [
+          "self"
+        ],
+        "totalitems": 2,
+        "totalpages": 1,
+        "pagenum": 1
+      }
+    ],
+    "query": [
+      {
+        "href-template": "https://api-sandbox.pmp.io/users{?limit,offset,tag,collection,text,searchsort,has}",
+        "title": "Query for users",
+        "rels": [
+          "urn:collectiondoc:query:users"
+        ],
+        "href-vars": {
+          "limit": "http://docs.pmp.io/wiki/Content-Retrieval",
+          "offset": "http://docs.pmp.io/wiki/Content-Retrieval",
+          "tag": "http://docs.pmp.io/wiki/Content-Retrieval",
+          "collection": "http://docs.pmp.io/wiki/Content-Retrieval",
+          "text": "http://docs.pmp.io/wiki/Content-Retrieval",
+          "searchsort": "http://docs.pmp.io/wiki/Content-Retrieval",
+          "has": "http://docs.pmp.io/wiki/Content-Retrieval"
+        },
+        "hints": {
+          "allow": [
+            "GET"
+          ]
+        }
+      },
+      {
+        "href-template": "https://api-sandbox.pmp.io/groups{?limit,offset,tag,collection,text,searchsort,has}",
+        "title": "Query for groups",
+        "rels": [
+          "urn:collectiondoc:query:groups"
+        ],
+        "href-vars": {
+          "limit": "http://docs.pmp.io/wiki/Content-Retrieval",
+          "offset": "http://docs.pmp.io/wiki/Content-Retrieval",
+          "tag": "http://docs.pmp.io/wiki/Content-Retrieval",
+          "collection": "http://docs.pmp.io/wiki/Content-Retrieval",
+          "text": "http://docs.pmp.io/wiki/Content-Retrieval",
+          "searchsort": "http://docs.pmp.io/wiki/Content-Retrieval"
+        },
+        "hints": {
+          "allow": [
+            "GET"
+          ]
+        }
+      },
+      {
+        "href-template": "https://api-sandbox.pmp.io/profiles{/guid}",
+        "title": "Access profiles",
+        "rels": [
+          "urn:collectiondoc:hreftpl:profiles"
+        ],
+        "href-vars": {
+          "guid": "http://docs.pmp.io/wiki/Content-Retrieval"
+        },
+        "hints": {
+          "allow": [
+            "GET"
+          ]
+        }
+      },
+      {
+        "href-template": "https://api-sandbox.pmp.io/profiles{?limit,offset,tag,collection,text,searchsort,has}",
+        "title": "Query for profiles",
+        "rels": [
+          "urn:collectiondoc:query:profiles"
+        ],
+        "href-vars": {
+          "limit": "http://docs.pmp.io/wiki/Content-Retrieval",
+          "offset": "http://docs.pmp.io/wiki/Content-Retrieval",
+          "tag": "http://docs.pmp.io/wiki/Content-Retrieval",
+          "collection": "http://docs.pmp.io/wiki/Content-Retrieval",
+          "text": "http://docs.pmp.io/wiki/Content-Retrieval",
+          "searchsort": "http://docs.pmp.io/wiki/Content-Retrieval",
+          "has": "http://docs.pmp.io/wiki/Content-Retrieval"
+        },
+        "hints": {
+          "allow": [
+            "GET"
+          ]
+        }
+      },
+      {
+        "href-template": "https://api-sandbox.pmp.io/schemas{/guid}",
+        "title": "Access schemas",
+        "rels": [
+          "urn:collectiondoc:hreftpl:schemas"
+        ],
+        "href-vars": {
+          "guid": "http://docs.pmp.io/wiki/Content-Retrieval"
+        },
+        "hints": {
+          "allow": [
+            "GET"
+          ]
+        }
+      },
+      {
+        "href-template": "https://api-sandbox.pmp.io/users{?limit,offset,tag,collection,text,searchsort,has}",
+        "title": "Query for schemas",
+        "rels": [
+          "urn:collectiondoc:query:schemas"
+        ],
+        "href-vars": {
+          "limit": "http://docs.pmp.io/wiki/Content-Retrieval",
+          "offset": "http://docs.pmp.io/wiki/Content-Retrieval",
+          "tag": "http://docs.pmp.io/wiki/Content-Retrieval",
+          "collection": "http://docs.pmp.io/wiki/Content-Retrieval",
+          "text": "http://docs.pmp.io/wiki/Content-Retrieval",
+          "searchsort": "http://docs.pmp.io/wiki/Content-Retrieval",
+          "has": "http://docs.pmp.io/wiki/Content-Retrieval"
+        },
+        "hints": {
+          "allow": [
+            "GET"
+          ]
+        }
+      },
+      {
+        "href-template": "https://api-sandbox.pmp.io/docs{/guid}{?limit,offset}",
+        "title": "Access documents",
+        "rels": [
+          "urn:collectiondoc:hreftpl:docs"
+        ],
+        "href-vars": {
+          "guid": "http://docs.pmp.io/wiki/Content-Retrieval",
+          "limit": "http://docs.pmp.io/wiki/Content-Retrieval",
+          "offset": "http://docs.pmp.io/wiki/Content-Retrieval"
+        },
+        "hints": {
+          "allow": [
+            "GET"
+          ]
+        }
+      },
+      {
+        "href-template": "https://api-sandbox.pmp.io/docs{?guid,limit,offset,tag,collection,text,searchsort,has,author,distributor,distributorgroup,startdate,enddate,profile,language}",
+        "title": "Query for documents",
+        "rels": [
+          "urn:collectiondoc:query:docs"
+        ],
+        "href-vars": {
+          "guid": "http://docs.pmp.io/wiki/Content-Retrieval",
+          "limit": "http://docs.pmp.io/wiki/Content-Retrieval",
+          "offset": "http://docs.pmp.io/wiki/Content-Retrieval",
+          "tag": "http://docs.pmp.io/wiki/Content-Retrieval",
+          "collection": "http://docs.pmp.io/wiki/Content-Retrieval",
+          "text": "http://docs.pmp.io/wiki/Content-Retrieval",
+          "searchsort": "http://docs.pmp.io/wiki/Content-Retrieval",
+          "has": "http://docs.pmp.io/wiki/Content-Retrieval",
+          "author": "http://docs.pmp.io/wiki/Content-Retrieval",
+          "distributor": "http://docs.pmp.io/wiki/Content-Retrieval",
+          "distributorgroup": "http://docs.pmp.io/wiki/Content-Retrieval",
+          "startdate": "http://docs.pmp.io/wiki/Content-Retrieval",
+          "enddate": "http://docs.pmp.io/wiki/Content-Retrieval",
+          "profile": "http://docs.pmp.io/wiki/Content-Retrieval",
+          "language": "http://docs.pmp.io/wiki/Content-Retrieval"
+        },
+        "hints": {
+          "allow": [
+            "GET"
+          ]
+        }
+      },
+      {
+        "href": "https://api-sandbox.pmp.io/guids",
+        "title": "Generate guids",
+        "rels": [
+          "urn:collectiondoc:query:guids"
+        ],
+        "hints": {
+          "allow": [
+            "POST"
+          ],
+          "accept-post": [
+            "application/x-www-form-urlencoded"
+          ]
+        },
+        "type": "application/json"
+      }
+    ],
+    "edit": [
+      {
+        "href-template": "https://publish-sandbox.pmp.io/docs{/guid}",
+        "title": "Document Save",
+        "rels": [
+          "urn:collectiondoc:form:documentsave"
+        ],
+        "href-vars": {
+          "guid": "http://docs.pmp.io/wiki/Globaly-Unique-Identifiers-for-PMP-Documents"
+        },
+        "hints": {
+          "formats": [
+            "application/vnd.collection.doc+json"
+          ],
+          "allow": [
+            "PUT",
+            "DELETE"
+          ],
+          "docs": "http://docs.pmp.io/wiki/Collection.doc-JSON-Media-Type"
+        }
+      },
+      {
+        "href-template": "https://publish-sandbox.pmp.io/profiles{/guid}",
+        "title": "Profile Save",
+        "rels": [
+          "urn:collectiondoc:form:profilesave"
+        ],
+        "href-vars": {
+          "guid": "http://docs.pmp.io/wiki/Globaly-Unique-Identifiers-for-PMP-Documents"
+        },
+        "hints": {
+          "formats": [
+            "application/vnd.collection.doc+json"
+          ],
+          "allow": [
+            "PUT",
+            "DELETE"
+          ],
+          "docs": "http://docs.pmp.io/wiki/Profile-profile"
+        }
+      },
+      {
+        "href-template": "https://publish-sandbox.pmp.io/schemas{/guid}",
+        "title": "Schema Save",
+        "rels": [
+          "urn:collectiondoc:form:schemasave"
+        ],
+        "href-vars": {
+          "guid": "http://docs.pmp.io/wiki/Globaly-Unique-Identifiers-for-PMP-Documents"
+        },
+        "hints": {
+          "formats": [
+            "application/vnd.collection.doc+json"
+          ],
+          "allow": [
+            "PUT",
+            "DELETE"
+          ],
+          "docs": "http://docs.pmp.io/wiki/Schema-profile"
+        }
+      },
+      {
+        "href": "https://publish-sandbox.pmp.io/files",
+        "title": "Upload a rich media file",
+        "rels": [
+          "urn:collectiondoc:form:mediaupload"
+        ],
+        "href-vars": {
+          "submission": "http://docs.pmp.io/wiki/Media-File-Upload"
+        },
+        "hints": {
+          "allow": [
+            "POST"
+          ],
+          "accept-post": [
+            "multipart/form-data"
+          ]
+        }
+      }
+    ],
+    "auth": [
+      {
+        "href": "https://api-sandbox.pmp.io/auth/access_token",
+        "title": "Issue OAuth2 Token",
+        "rels": [
+          "urn:collectiondoc:form:issuetoken"
+        ],
+        "hints": {
+          "allow": [
+            "POST"
+          ],
+          "docs": "http://docs.pmp.io/wiki/Authentication-Model#token-management"
+        }
+      },
+      {
+        "href": "https://publish-sandbox.pmp.io/auth/access_token",
+        "title": "Revoke OAuth2 Token",
+        "rels": [
+          "urn:collectiondoc:form:revoketoken"
+        ],
+        "hints": {
+          "allow": [
+            "DELETE"
+          ],
+          "docs": "http://docs.pmp.io/wiki/Authentication-Model#revoke-a-token"
+        }
+      }
+    ]
+  },
+  "items": [
+    {
+      "version": "1.0",
+      "href": "https://api-sandbox.pmp.io/docs/1dc81410-d86d-3c03-6fcc-39f77f0b0301",
+      "attributes": {
+        "valid": {
+          "from": "2014-03-12T14:44:30+00:00",
+          "to": "3014-03-12T14:44:30+00:00"
+        },
+        "created": "2014-03-12T18:01:17+00:00",
+        "modified": "2014-03-12T18:01:17+00:00",
+        "byline": "Gura, David",
+        "title": "111348788_1.jpg",
+        "guid": "1dc81410-d86d-3c03-6fcc-39f77f0b0301",
+        "tags": [
+          "Marketplace Morning Report for Wednesday, March 12, 2014",
+          "APM_TESTING",
+          "Marketplace Morning Report",
+          "PMP:Marketplace_PMP",
+          "1dc81410d86d3c036fcc39f77f0b0301",
+          "Marketplace",
+          "Business"
+        ],
+        "hreflang": "en",
+        "description": "The president seeks to change overtime pay rules via executive powers.",
+        "published": "2014-03-12T14:44:30+00:00"
+      },
+      "links": {
+        "profile": [
+          {
+            "href": "https://api.pmp.io/profiles/image",
+            "title": "APMImage"
+          }
+        ],
+        "copyright": [
+          {
+            "href": "http://www.publicradio.org/terms",
+            "title": "Copyright (C) 2014 American Public Media Group"
+          }
+        ],
+        "distributor": [],
+        "enclosure": [
+          {
+            "type": "image/jpeg",
+            "meta": {
+              "width": "610",
+              "crop": "primary",
+              "height": "340"
+            },
+            "href": "http://www.marketplace.org/sites/default/files/styles/primary-image-610x340/public/111348788_1.jpg?itok=UfS-D_BL"
+          }
+        ],
+        "collection": [
+          {
+            "title": "Marketplace",
+            "href": "https://api-sandbox.pmp.io/docs/36d4a0dd-34da-4ce3-a31e-112fd9d8d91c"
+          },
+          {
+            "title": "Marketplace Morning Report",
+            "href": "https://api-sandbox.pmp.io/docs/df9a7bdb-c650-42c1-8691-55a154f07322"
+          }
+        ],
+        "creator": [
+          {
+            "href": "https://api-sandbox.pmp.io/docs/98bf597a-2a6f-446c-9b7e-d8ae60122f0d"
+          }
+        ],
+        "item": [],
+        "navigation": [
+          {
+            "href": "https://api-sandbox.pmp.io/docs?guid=1dc81410-d86d-3c03-6fcc-39f77f0b0301",
+            "rels": [
+              "self"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "version": "1.0",
+      "href": "https://api-sandbox.pmp.io/docs/0ee06f8c-b86b-b0c9-87e3-e8c17d59b132",
+      "attributes": {
+        "valid": {
+          "from": "2014-03-12T14:44:30+00:00",
+          "to": "3014-03-12T14:44:30+00:00"
+        },
+        "created": "2014-03-12T17:59:41+00:00",
+        "modified": "2014-03-12T17:59:41+00:00",
+        "byline": "Gura, David",
+        "title": "Obama seeks expanded overtime pay",
+        "hreflang": "en",
+        "description": "The president seeks to change overtime pay rules via executive powers.",
+        "guid": "0ee06f8c-b86b-b0c9-87e3-e8c17d59b132",
+        "tags": [
+          "Marketplace",
+          "Business",
+          "PMP:Marketplace_PMP",
+          "Marketplace Morning Report",
+          "APM_TESTING",
+          "Marketplace Morning Report for Wednesday, March 12, 2014",
+          "0ee06f8cb86bb0c987e3e8c17d59b132"
+        ],
+        "published": "2014-03-12T14:44:30+00:00"
+      },
+      "links": {
+        "profile": [
+          {
+            "href": "https://api.pmp.io/profiles/audio",
+            "title": "APMAudio"
+          }
+        ],
+        "collection": [
+          {
+            "href": "https://api-sandbox.pmp.io/docs/36d4a0dd-34da-4ce3-a31e-112fd9d8d91c",
+            "title": "Marketplace"
+          },
+          {
+            "href": "https://api-sandbox.pmp.io/docs/df9a7bdb-c650-42c1-8691-55a154f07322",
+            "title": "Marketplace Morning Report"
+          }
+        ],
+        "enclosure": [
+          {
+            "href": "http://ahp.org/segments/2014/03/12/segment09_20140312_64.mp3",
+            "type": "audio/mpeg",
+            "meta": {
+              "duration": "80000",
+              "api": {
+                "href": "http://api.publicradio.org/audio/v2?ref=pmp&id=apm-audio:/marketplace/segments/2014/03/12/marketplace_segment09_20140312_64.mp3",
+                "type": "application/json"
+              }
+            }
+          },
+          {
+            "href": "http://ahp.org/marketplace/segments/2014/03/12/segment09_20140312_64.mp3",
+            "type": "audio/mpeg",
+            "meta": {
+              "duration": "80000",
+              "api": {
+                "href": "http://api.publicradio.org/audio/v2?ref=pmp&id=apm-audio:/marketplace/segments/2014/03/12/marketplace_segment09_20140312_64.mp3",
+                "type": "application/json"
+              }
+            }
+          }
+        ],
+        "copyright": [
+          {
+            "href": "http://www.publicradio.org/terms",
+            "title": "Copyright (C) 2014 American Public Media Group"
+          }
+        ],
+        "distributor": [],
+        "creator": [
+          {
+            "href": "https://api-sandbox.pmp.io/docs/98bf597a-2a6f-446c-9b7e-d8ae60122f0d"
+          }
+        ],
+        "item": [],
+        "navigation": [
+          {
+            "href": "https://api-sandbox.pmp.io/docs?guid=0ee06f8c-b86b-b0c9-87e3-e8c17d59b132",
+            "rels": [
+              "self"
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}
