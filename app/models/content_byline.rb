@@ -39,7 +39,10 @@ class ContentByline < ActiveRecord::Base
       extra     = elements[:extra]
 
       names = [primary, secondary].reject { |e| e.blank? }.join(" with ")
-      [names, extra].reject { |e| e.blank? }.join(" | ")
+      # Sometimes the primary byline of a story might be the same as its 
+      # secondary or extra(as with remote articles), so we call #uniq on
+      # the array of names to prevent duplication.
+      [names, extra].reject { |e| e.blank? }.uniq.join(" | ")
     end
   end
 
