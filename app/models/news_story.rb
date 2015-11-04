@@ -51,7 +51,7 @@ class NewsStory < ActiveRecord::Base
     ['NPR & KPCC',                  'npr_kpcc'],
     ['Center for Health Reporting', 'chr'],
     ['Marketplace',                 'marketplace'],
-    ['American Homefront Porject',  'american_homefront_project']
+    ['American Homefront Project',  'american_homefront_project']
   ]
 
   scope :with_article_includes, ->() { includes(:category,:assets,:audio,:tags,:bylines,bylines:[:user]) }
