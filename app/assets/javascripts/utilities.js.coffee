@@ -120,8 +120,6 @@ class scpr.SocialTools
         disqfinder      : ".social_disq"
         count           : ".count"
         gaq             : "_gaq"
-        fburl           : "http://graph.facebook.com/fql"
-        twiturl         : "http://urls.api.twitter.com/1/urls/count.json"
         disqurl         : "https://disqus.com/api/3.0/threads/set.jsonp"
         disq_api_key    : 'EAlRB1x2Coj262YxEGbmvecZufapzC8IJ8aqKgtG0ILS4L1EMucA66Jq9MlY270b'
         disq_short_name : 'kpcc'
@@ -131,8 +129,8 @@ class scpr.SocialTools
     constructor: (options) ->
         @options = _.defaults options||{}, @DefaultOptions
 
-        # look for facebook elements so that we can fetch
-        # counts and add functionality
+        # look for facebook elements so that
+        # we can add functionality
         @fbelements = ($ el for el in $ @options.fbfinder)
         @fbTimeout = null
 
