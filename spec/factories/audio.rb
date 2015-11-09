@@ -25,6 +25,9 @@ FactoryGirl.define do
       url "http://media.scpr.org/audio/events/2012/10/02/SomeCoolEvent.mp3"
     end
 
+    trait :external do
+      url "http://externalaudio.org/audio/upload/2015/11/02/audioclip.mp3"
+    end
 
     trait :for_episode do
       content { |a| a.association :show_episode }

@@ -49,7 +49,7 @@ cache ["v2", @podcast, @consumer], expires_in: 1.hour do # Podcasts will refresh
 
           item.enclosure({
             :url => url_with_params(audio.podcast_url, {
-              :context    => @podcast.slug,
+              :context    => @podcast.context,
               :via        => "podcast",
               :consumer   => @consumer,
             }),

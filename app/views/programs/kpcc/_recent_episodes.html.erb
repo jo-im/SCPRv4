@@ -1,0 +1,47 @@
+<section class="segments">
+  <h1>Recently on <cite><%= program.title %></cite></h1>
+  <div class="series clearfix">
+    <% episodes.first(14).each do |episode| %>
+      <% article_episode = episode.to_article %>
+      <figure>
+          <div class="photo ratio">
+            <a href="<%= article_episode.public_path %>">
+              <div class="fill"></div>
+              <time datetime="<%= format_date(article_episode.public_datetime, with: "%F") %>"><span><%= format_date(article_episode.public_datetime, with: "%a") %></span> <%= format_date(article_episode.public_datetime, with: "%B %e") %></time>
+              <% if article_episode.audio.present? %>
+                <mark class="has-audio"><%= format_clip_duration article_episode.audio.first.duration %></mark>
+              <% end %>
+              <b class="img-contain"><img src="<%= episode.asset.full.url %>" alt="" /></b>
+            </a>
+          </div>
+          <figcaption><a href="<%= article_episode.public_path %>"><%= article_episode.short_title %></a></figcaption>
+      </figure>
+    <% end %>
+
+    <figure>
+        <div class="photo ratio">
+          <a href="/programs/<%= program.slug %>/featured?view=episodes">
+            <div class="fill"></div>
+            <b class="img-contain"></b>
+          </a>
+        </div>
+        <figcaption><a href="/programs/<%= program.slug %>/featured?view=episodes">Browse through more of <%= program.title %></a></figcaption>
+    </figure>
+
+  </div><!--/ .series -->
+
+
+  <aside class="podcast-appeal">
+    <div class="inner">
+      <div class="prose">
+        <h1>Subscribe to <%= program.title %>’s podcast, and receive every new episode, automatically, as soon as it’s released. Listen on your own time, your own way.</h1>
+        <ul class="clearfix">
+          <li class="itunes"><a href="https://itunes.apple.com/us/podcast/the-frame/id911090618"><span>Subscribe via iTunes</span></a></li>
+          <li class="any"><a href="http://www.scpr.org/podcasts/<%= program.slug %>"><span>Any podcast app (XML)</span></a></li>
+        </ul>
+      </div>
+    </div>
+  </aside>
+
+
+</section><!--/ .episodes -->

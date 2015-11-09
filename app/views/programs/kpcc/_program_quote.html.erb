@@ -1,0 +1,11 @@
+<aside class="quote">
+  <a href="<%= program.quote.article.public_path %>">
+    <blockquote>
+      <p><%= program.quote.text %></p>
+      <footer>
+        <span><mark><%= program.quote.source_name %>,</mark> <%= program.quote.source_context %></span>
+        <cite>from our <b><%= format_date(program.quote.article.public_datetime, with: '%B %e, %Y') %> episode</b></cite>
+      </footer>
+    </blockquote>
+  </a>
+</aside><!--/ .quote -->
