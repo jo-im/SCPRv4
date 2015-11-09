@@ -32,7 +32,7 @@
                 <header>
                     <h1>More from this Issue</h1>
                     <h2 class="clearfix">
-                        <span><%= link_to tag.title, tag.public_path %></span>
+                        <span><%= link_to tag.title, issue_path(tag.slug) %></span>
                         <mark><%= link_to 'See All', issues_path %></mark>
                     </h2>
                 </header>
