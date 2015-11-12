@@ -124,7 +124,7 @@
                         </div>
 <!--END LEAD ABSTRACT//-->
 
-                        <% Array(edition.abstracts[4..-1]).compact.each do |abstract| %>
+                        <% Array(edition.abstracts[1..3]).compact.each do |abstract| %>
                           <%= render partial: "editions/email/abstract", locals: {abstract: abstract} %>
                         <% end %>
 
