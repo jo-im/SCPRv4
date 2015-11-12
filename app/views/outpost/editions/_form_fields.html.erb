@@ -21,7 +21,7 @@
     aggregator = new outpost.Aggregator(
       { 
         el: "#aggregator",
-        inputEl: "#slots_json"
+        inputEl: "#slots_json",
         collection: <%= render_json("api/private/v2/articles/collection", articles: record.articles) %>,
         apiType: "private",
         view: {
