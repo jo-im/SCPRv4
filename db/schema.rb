@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151030202328) do
+ActiveRecord::Schema.define(version: 20151116220729) do
 
   create_table "abstracts", force: :cascade do |t|
     t.string   "source",               limit: 255
