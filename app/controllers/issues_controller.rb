@@ -19,6 +19,6 @@ class IssuesController < ApplicationController
   private
 
   def get_issues
-    @tags = Tag.where(is_featured: true).order("title")
+    @tags = Tag.order("title")
   end
 end

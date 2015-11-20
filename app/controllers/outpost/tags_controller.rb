@@ -20,10 +20,5 @@ class Outpost::TagsController < Outpost::ResourceController
       :sortable => true,
       :default_order_direction => DESCENDING
 
-
-    l.filter :is_featured,
-      :title        => "Featured?",
-      :collection   => :boolean
-
   end
 end
