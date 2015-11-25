@@ -63,6 +63,12 @@ class EloquaEmail < ActiveRecord::Base
     email_type || (emailable ? emailable.class.name : nil) || self.class.name
   end
 
+  def publish_email options={}
+    super
+    self.attempts_made += 1
+    save
+  end
+
   private
 
   def locals
