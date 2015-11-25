@@ -4,6 +4,8 @@ class EloquaEmail < ActiveRecord::Base
   after_save :async_send_email, if: :not_sent? # enqueues the record in Resque, which then calls #publish_email on the record
   belongs_to :emailable, polymorphic: true
 
+  scope :unsent, ->{ where(email_sent: false).where(attempts_made: 1..2) }
+
   ## This method is named this way in order to make it compatible
   ## with the way that EloquaSendbale already works.  Perhaps
   ## it should be globally renamed in the future to prevent
