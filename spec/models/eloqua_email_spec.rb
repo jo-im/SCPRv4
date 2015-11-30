@@ -68,6 +68,12 @@ describe EloquaEmail do
         eloqua_email.should_not_receive(:async_send_email).with(:email_sent, true)
         eloqua_email.publish_email
       end
+      it "increments attempts_made" do
+        eloqua_email = build :eloqua_email, email_sent: true
+        eloqua_email.attempts_made.should eq 0
+        eloqua_email.publish_email
+        eloqua_email.attempts_made.should eq 1
+      end
     end
 
   end
