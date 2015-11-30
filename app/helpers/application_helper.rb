@@ -501,7 +501,7 @@ module ApplicationHelper
   end
 
   def strip_inline_assets body
-    doc = Nokogiri::HTML(body.encode('ASCII-8BIT'))
+    doc = Nokogiri::HTML(body.force_encoding('ASCII-8BIT'))
     doc.css("img.inline-asset").each{|placeholder| 
       placeholder.replace Nokogiri::HTML::DocumentFragment.parse("")
     }
