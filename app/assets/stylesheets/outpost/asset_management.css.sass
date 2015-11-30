@@ -1,0 +1,23 @@
+#asset_bucket .collection
+  max-height: 500px
+  overflow-y: auto
+
+  li.asset div.thumbnail.inline
+    background-color: ghostwhite
+    width: 100%
+
+    .asset-info:after
+      content: "\a (inline)"
+      font-style: italic
+      color: grey
+      line-height: 10px
+      white-space: pre
+
+.cke_inline_asset_placeholder 
+  margin-bottom: 5px
+  border-style: solid
+  border-width: 1px
+  border-color: lightgray
+  border-radius: 3px
+  .asset-info
+    padding: 5px

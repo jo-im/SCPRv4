@@ -30,7 +30,7 @@ class Outpost::ShowSegmentsController < Outpost::ResourceController
 
     with_rollback @segment do
       @segment.assign_attributes(params[:show_segment])
-
+      @segment.update_inline_assets
       if @segment.unconditionally_valid?
         @title = @segment.to_title
         render "programs/kpcc/_segment_preview",

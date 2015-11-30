@@ -60,7 +60,6 @@ class NewsStory < ActiveRecord::Base
     self.pending? || self.published?
   end
 
-
   def route_hash
     return {} if !self.persisted? || !self.persisted_record.published?
     {
@@ -89,7 +88,7 @@ class NewsStory < ActiveRecord::Base
       :teaser             => self.teaser,
       :body               => self.body,
       :category           => self.category,
-      :assets             => self.assets,
+      :assets             => self.assets.top,
       :audio              => self.audio.select(&:available?),
       :attributions       => self.bylines,
       :byline             => self.byline,
@@ -111,10 +110,11 @@ class NewsStory < ActiveRecord::Base
       :summary                => self.teaser,
       :source                 => "KPCC",
       :url                    => self.public_url,
-      :assets                 => self.assets,
+      :assets                 => self.assets.top,
       :audio                  => self.audio.available,
       :category               => self.category,
       :article_published_at   => self.published_at
     })
   end
+
 end

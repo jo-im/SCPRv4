@@ -30,7 +30,7 @@
 
         <div class="story-body">
           <%= render_asset event %>
-          <%= p.description %>
+          <%= render_with_inline_assets event.to_article %>
           <br style="clear: both" />
           <hr>
           <%= render partial: "shared/widgets/events_subscribe" %>

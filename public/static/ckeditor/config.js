@@ -3,9 +3,9 @@ CKEDITOR.timestamp = '20140219';
 CKEDITOR.editorConfig = function(config) {
 
   config.toolbar = [
-    ['Bold', 'Italic', 'Underline', 'Format', "RemoveFormat"],
+    ['Bold', 'Italic', 'Underline', "RemoveFormat"],
     ['NumberedList', 'BulletedList', 'Blockquote'],
-    ['Link', 'Unlink', 'Image', 'EmbedPlaceholder'],
+    ['Link', 'Unlink', 'DockAssetManager', 'EmbedPlaceholder'],
     ['Find', 'Paste'],
     ['Source', 'Maximize']
   ];
@@ -16,7 +16,13 @@ CKEDITOR.editorConfig = function(config) {
     'image', // This plugin has custom changes so we didn't include it in the build
     'autosave',
     'embed-placeholder',
-    'webkit-span-fix'
+    'webkit-span-fix',
+    'divarea',
+    'inline-asset-placeholder',
+    'widget',
+    'dialog',
+    'lineutils',
+    'clipboard',
   ].join(',');
 
   config.codemirror = {

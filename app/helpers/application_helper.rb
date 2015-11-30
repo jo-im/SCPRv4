@@ -122,7 +122,9 @@ module ApplicationHelper
     article = content.to_article
     context = options[:context] || "default"
 
-    if article.assets.empty?
+    asset = options[:asset] || nil
+
+    if !asset && article.assets.empty?
       html = if options[:fallback]
         render("shared/assets/#{context}/fallback", article: article)
       else
@@ -157,8 +159,37 @@ module ApplicationHelper
     partial ||= tmplt_opts.last
 
     render "shared/assets/#{partial}",
+      :asset      => asset || article.asset,
       :assets     => article.assets,
       :article    => article
+  end
+
+  #----------
+
+  def render_with_inline_assets content, options={}
+    cssPath = "img.inline-asset[data-asset-id]"
+    context = options[:context] || "news"
+    display = options[:display] || "inline"
+    doc = Nokogiri::HTML(content.body)
+    doc.css(cssPath).each do |placeholder|
+      asset_id = placeholder.attribute('data-asset-id').value
+
+      # we have to fall back to original_object here to get the full list of
+      # assets. in any case where we're rendering a body, we'll already have
+      # the original object loaded, so that's ok
+
+      asset = content.original_object.assets.find_by(asset_id:asset_id)
+
+      if asset
+        rendered_asset = render_asset content, context: context, display: display, asset:asset
+        placeholder.replace Nokogiri::HTML::DocumentFragment.parse(rendered_asset)
+      else
+        # FIXME: I'm sure there's a cleaner "delete"
+        placeholder.replace Nokogiri::HTML::DocumentFragment.parse("")
+      end
+    end
+
+    doc.to_s.html_safe
   end
 
   #----------
@@ -185,10 +216,9 @@ module ApplicationHelper
     }.merge(options)
   end
 
-  def should_inline_asset_for(article)
-    asset = article.asset
-
-    asset && (article.asset_display == :photo_deemphasized) || (article.asset_display.blank? && !below_standard_ratio(width: asset.full.width, height: asset.full.height)) || (article.asset_display == :photo_emphasized && !below_standard_ratio(width: asset.full.width, height: asset.full.height))
+  def should_inline_top_asset_for(article)
+    (asset = article.assets.top.first) && 
+    ((article.asset_display == :photo_deemphasized) || (article.asset_display.blank? && !below_standard_ratio(width: asset.full.width, height: asset.full.height)) || (article.asset_display == :photo_emphasized && !below_standard_ratio(width: asset.full.width, height: asset.full.height)))
   end
 
   def below_standard_ratio(options={})
@@ -470,4 +500,12 @@ module ApplicationHelper
     uri.to_s.chomp("?")
   end
 
+  def strip_inline_assets body
+    doc = Nokogiri::HTML(body.force_encoding('ASCII-8BIT'))
+    doc.css("img.inline-asset").each{|placeholder| 
+      placeholder.replace Nokogiri::HTML::DocumentFragment.parse("")
+    }
+    doc.css('body').children.to_s.html_safe
+  end
+  
 end

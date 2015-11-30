@@ -138,7 +138,7 @@ class Article
 
   def assets
     (@assets||[]).collect do |a|
-      ContentAsset.new(a.to_hash.merge({id:a.asset_id}))
+      ContentAsset.new(a.to_hash.merge({id:a.asset_id, inline: a.inline}))
     end
   end
 
@@ -171,7 +171,7 @@ class Article
 
   def assets=(assets)
     @assets = (assets||[]).collect do |a|
-      Hashie::Mash.new(asset_id:a.asset_id, caption:a.caption, position:a.position)
+      Hashie::Mash.new(asset_id:a.asset_id, caption:a.caption, position:a.position, inline: a.inline)
     end
   end
 
@@ -297,4 +297,5 @@ class Article
     mapping = JSON.parse(File.read("#{Rails.root}/config/article_mapping.json"))
     ContentBase.es_client.indices.put_template name:"#{ES_PREFIX}-articles", body:{template:"#{ES_PREFIX}-articles-*",mappings:mapping}
   end
+
 end
