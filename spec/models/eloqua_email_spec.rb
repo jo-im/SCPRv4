@@ -74,6 +74,26 @@ describe EloquaEmail do
         eloqua_email.publish_email
         eloqua_email.attempts_made.should eq 1
       end
+      context "500 status from API" do
+        before do 
+          stub_request(:any, /.*/).to_return(body: "", status: 500)
+        end
+        it "leaves email_sent as false" do
+          edition = build :edition, :with_abstract
+          edition.save
+          eloqua_email = edition.eloqua_emails.last
+          eloqua_email.publish_email
+          eloqua_email.email_sent.should be false
+        end
+        it "increments attempts_made" do
+          edition = build :edition, :with_abstract
+          edition.save
+          eloqua_email = edition.eloqua_emails.last
+          eloqua_email.attempts_made.should be 0
+          eloqua_email.publish_email
+          eloqua_email.attempts_made.should be 1
+        end
+      end
     end
 
   end
