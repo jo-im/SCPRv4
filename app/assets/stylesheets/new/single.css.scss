@@ -815,10 +815,7 @@ body.single .comments {
 
 
     .asset-inset {
-        width: 57.389937106918%; // 365 / 636
-        float: right;
         padding-top: 7px;
-        margin: 0 -34.591194968553% 55px 7.075471698113%;
         .pic                { display: block; width: 100%; margin-bottom: 10px; }
         img                 { width: 100%; height: auto; }
         figcaption          { text-align: right; color: #a6a6a6; font-family: $font-freight; font-style: italic; font-size: 0.8125em; line-height: 1.3; }
@@ -835,19 +832,47 @@ body.single .comments {
 //          ` ` ` ` ` ` ` ` ` ` ` ` ` ` ` ` ` ` ` ` ` ` ` ` ` ` ` ` ` ` ` ` ` ` ` ` ` ` ` ` ` ` ` ` ` ` ` ` `
         }
         &.inline {
-            padding: 10px;
-            margin: 0;
+            mark {
+                white-space: normal;
+            }
             &.left{
                 float: left;
+                margin-right: 24px;
             }
-            &.right{
+            &.portrait {
+                width: 52%;
                 float: right;
+                margin: 0 -34.591194968553% 55px 7.075471698113%;
+                @media screen and (max-width: 1100px) {
+                    float: none; 
+                    width: 100%; 
+                    margin: 0 0 35px 0; 
+                    border-bottom: 1px solid #e8e8e8; 
+                    max-width: 100%;
+                    img             { max-height: 400px; width: auto; }
+                    figcaption      { text-align: left; padding-bottom: 25px; }
+                    span            { display: block; padding-left: 0; }
+                }
+                figcaption {
+                    text-align: left;
+                }
+                span {
+                    padding-left: 0;
+                }
+                mark {
+                    padding-left: 0;
+                }
             }
-            &.wide{
+            &.wide, &.square {
+                float: none;
+                margin-bottom: 35px;
                 width: 100% !important;
-            }
-            &.square{
-                width: 100%;
+                figcaption { 
+                    text-align: left;
+                    span {
+                        padding-left: 0;
+                    }
+                }
             }
         }
 
@@ -1065,7 +1090,6 @@ body.single .comments {
                 p:first-of-type   { width: 100%; }
             }
             .comments-trigger   { width: 122%; }
-            .asset-inset        { width: 40%; margin: 0 -10% 30px 7.075471698113%; }
         }
     }
 
@@ -1098,8 +1122,6 @@ body.single .comments {
             .prose                      { width: 67%; }
             .related                    { float: none; width: 100%; margin: 0 0 25px 0; }
             .comments-trigger           { width: 111.1%; }
-            .asset-inset                { width: 35%; margin: 0 -3% 30px 7.075471698113%; }
-            .asset-inset span           { padding-left: 0; }
         }
     }
 
@@ -1200,7 +1222,6 @@ body.single .comments {
                 .related                { font-size: 110%; }
             }
             .comments-trigger           { width: 100%; margin-bottom: 40px; margin-left: 0; padding-left: 0; }
-            .asset-inset                { width: 38%; margin: 4px 0 30px 5%; }
         }
     }
 

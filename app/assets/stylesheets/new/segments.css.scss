@@ -192,6 +192,39 @@ REPORT
     }
   }//.prose
 
+  .asset-inset {
+    &.inline {
+        &.portrait {
+            width: 52%;
+            float: right;
+            margin: 0 0 55px 7.075471698113%;
+            @media screen and (max-width: 1100px) {
+                float: none; 
+                width: 100%; 
+                margin: 0 0 35px 0; 
+                border-bottom: 1px solid #e8e8e8; 
+                max-width: 100%;
+                img             { max-height: 400px; width: auto; }
+                figcaption      { 
+                  text-align: left;
+                  padding-bottom: 25px;
+                }
+                span            { display: block; padding-left: 0; }
+            }
+            figcaption {
+                text-align: left;
+                -webkit-font-smoothing: auto;
+            }
+            span {
+                padding-left: 0;
+            }
+            mark {
+                padding-left: 0;
+            }
+        }
+    }
+  }
+
   .prose-body,
   .related,
   .episode-contents     { -webkit-font-smoothing: antialiased; }
