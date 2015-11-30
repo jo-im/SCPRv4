@@ -322,7 +322,6 @@ ActiveRecord::Schema.define(version: 20151125223240) do
     t.string   "email_type",          limit: 255
     t.datetime "created_at",                                      null: false
     t.datetime "updated_at",                                      null: false
-    t.datetime "send_at"
     t.integer  "attempts_made",       limit: 4,   default: 0
   end
 
@@ -861,8 +860,6 @@ ActiveRecord::Schema.define(version: 20151125223240) do
     t.datetime "updated_at"
     t.datetime "began_at"
     t.datetime "most_recent_at"
-    t.string   "image",          limit: 255
-    t.string   "tag_type",       limit: 255,   default: "keyword"
   end
 
   add_index "tags", ["created_at"], name: "index_tags_on_created_at", using: :btree
