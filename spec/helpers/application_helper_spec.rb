@@ -105,8 +105,7 @@ describe ApplicationHelper do
     end
 
     it "renders the specified template" do
-      content = create :content_shell
-      asset = create :asset, content: content
+      content = create :content_shell, assets: [create(:asset)]
 
       # Use a real template name here so it passes the lookup context check
       helper.render_asset(content, template: "default/video")
@@ -114,17 +113,15 @@ describe ApplicationHelper do
     end
 
     it "renders with specified display" do
-      content = create :content_shell
-      asset = create :asset, content: content
+      content = create :content_shell, assets: [create(:asset)]
 
       helper.render_asset(content, display: "small")
         .should render_template "shared/assets/default/_small"
     end
 
     it "renders with specified context" do
-      content = create :content_shell
-      asset = create :asset, content: content
-
+      content = create :content_shell, assets: [create(:asset)]
+      
       helper.render_asset(content, context: "pij_query")
         .should render_template "shared/assets/pij_query/_photo"
     end
@@ -137,6 +134,37 @@ describe ApplicationHelper do
         .should render_template "shared/assets/default/_slideshow"
     end
   end
+
+  #------------------------
+
+  describe "#render_with_inline_assets" do
+    it "replaces all placeholder tags in the body with markup" do
+      content = create :news_story, asset_display: :slideshow
+      asset = create :asset, content: content
+      content.body = "
+        <h2>Inline Assets Test</h2>
+        <p>lorem ipsum</p>
+        <img class=\"inline-asset\" data-asset-id=\"#{asset.asset_id}\" src=\"#\">
+        <p>dolor sit amet</p>
+      "
+      result = helper.render_with_inline_assets(content.to_article)
+      expect(result).to_not include("<img class=\"inline-asset\" data-asset-id=\"#{asset.asset_id}\" src=\"#\">")
+      expect(result).to match /<img .*?src=\"http:\/\/a.scpr.org\/i\/[a-z0-9]+\/[a-z0-9]+-full.jpg\">/
+    end
+    it "removes the placeholder if no asset exists" do
+      content = create :news_story, asset_display: :slideshow
+      content.body = "
+        <h2>Inline Assets Test</h2>
+        <p>lorem ipsum</p>
+        <img class=\"inline-asset\" data-asset-id=\"12345\" src=\"#\">
+        <p>dolor sit amet</p>
+      "
+      result = helper.render_with_inline_assets(content.to_article)
+      expect(result).to_not include("<img class=\"inline-asset\" data-asset-id=\"12345\" src=\"#\">")
+      expect(result).to_not match /<img .*?src=\"http:\/\/a.scpr.org\/i\/[a-z0-9]+\/[a-z0-9]+-full.jpg\">/
+    end
+  end
+
 
   #------------------------
 
@@ -521,6 +549,18 @@ describe ApplicationHelper do
       end
     end
 
+  end
+
+  describe "#strip_inline_assets" do
+    it "removes all inline asset tags from the body" do
+      body = "
+        <h2>Inline Assets Test</h2>
+        <p>lorem ipsum</p>
+        <img class=\"inline-asset\" data-asset-id=\"12345\" src=\"#\">
+        <p>dolor sit amet</p>
+      "
+      expect(helper.strip_inline_assets(body)).to_not include("<img class=\"inline-asset\" data-asset-id=\"12345\" src=\"#\">")
+    end
   end
 
 end

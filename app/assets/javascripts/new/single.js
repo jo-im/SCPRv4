@@ -152,38 +152,6 @@ scpr.Behaviors.Single = {
             }
 
 
-
-
-
-        //  ================================================
-        //  Single: Figure out the orientation of any images
-        //  ------------------------------------------------
-            if ($(".report .prose img").length) {
-                $(window).load(function() { // because WebKit browsers need this in order to *definitely* load/assess the images
-                    $(".report .prose img").each(function(){
-        //              -------------------------------------------------------------------------
-        //              Let's start with all images.
-                        var myWidth     = $(this).width();
-                        var myHeight    = $(this).height();
-                        var myRatio     = myWidth / myHeight;
-                        if(myRatio > 1.2)                           { myRatio = "wide"; }
-                        if((myRatio <= 1.2) && (myRatio >= 0.9))    { myRatio = "squarish"; }
-                        if(myRatio < 0.9)                           { myRatio = "skinny"; }
-                        $(this).addClass(myRatio);
-        //              --------------------------------------------------------------------------
-        //              Now let's specifically act on ones that might appear in an "asset-inset."
-                        if($(this).closest(".asset-inset").length > 0) {
-                            $(this).closest(".asset-inset").addClass(myRatio);
-                        }
-                    });
-                });
-            }
-
-
-
-
-
-
         //  ================================================
         //  Single: Toggle small-viewport caption visibility
         //  ------------------------------------------------

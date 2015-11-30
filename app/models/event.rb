@@ -186,7 +186,7 @@ class Event < ActiveRecord::Base
       :public_datetime    => self.starts_at,
       :teaser             => self.teaser,
       :body               => self.body,
-      :assets             => self.assets,
+      :assets             => self.assets.top,
       :audio              => self.audio.select(&:available?),
       :byline             => "KPCC",
       :edit_path          => self.admin_edit_path,

@@ -4,6 +4,9 @@ class ContentAsset < ActiveRecord::Base
   self.table_name =  "assethost_contentasset"
   self.versioned_attributes = ["position", "asset_id", "caption"]
 
+  scope :top, ->{where(inline:false)}
+  scope :inline, ->{where(inline:true)}
+
   belongs_to :content, polymorphic: true, touch:true
 
   delegate \
@@ -33,4 +36,19 @@ class ContentAsset < ActiveRecord::Base
       _asset
     end
   end
+
+  def use
+    inline ? "inline" : "standard"
+  end
+
+  def orientation
+    if asset
+      {
+        "portrait"  => "portrait",
+        "landscape" => "wide",
+        "square"    => "square"
+      }[asset.json["orientation"]]
+    end
+  end
+
 end

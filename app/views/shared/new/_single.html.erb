@@ -28,11 +28,11 @@
 
             <div class="prose-body">
 
-                <% if should_inline_asset_for(article.original_object) %>
+                <% if should_inline_top_asset_for(article.original_object) %>
                   <%= render_asset article, context:"news", display:"inline" %>
                 <% end %>
 
-                <%= article.body.html_safe %>
+                <%= render_with_inline_assets article %>
                 <% if article.original_object.joined_bylines[:contributing].present? %>
                     <footer class="contributor">
                         <p><%= render_contributing_byline article.original_object %></p>
