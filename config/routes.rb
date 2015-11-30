@@ -9,6 +9,8 @@ Scprv4::Application.routes.draw do
   # Listen Live
   get '/listen_live/' => 'listen#index', as: :listen
   get '/listen_live/pledge-free' => 'listen#pledge_free_stream', as: :listen_pledge_free
+  get '/listen_live/pledge-free/off-air' => 'listen#pledge_free_off_air', as: :listen_pledge_free_off_air
+  get '/listen_live/pledge-free/error' => 'listen#pledge_free_error', as: :listen_pledge_free_error
 
 
   # Sections
@@ -41,7 +43,7 @@ Scprv4::Application.routes.draw do
   # Programs / Segments
   # This route is hard-coded to constrain only The Frame and Take Two to render with our new featured program design.
   # We can remove this as soon as all featured programs get the same red-carpet treatment.
-  get '/programs/:show' => "programs#featured_program", constraints: { show: /(the-frame|take-two)/ }
+  get '/programs/:show' => "programs#featured_program", constraints: { show: /(the-frame|take-two|airtalk)/ }
   # This route is for displaying a clone of the old layout for featured programs for an index of episodes and segments
   get '/programs/:show/featured' => "programs#featured_show", as: :featured_show
   # Legacy route for old Episode URLs

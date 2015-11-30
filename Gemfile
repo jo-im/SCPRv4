@@ -17,13 +17,10 @@ gem 'render_anywhere'
 gem 'dalli'
 
 ## Outpost
-# gem 'outpost-cms', github:"SCPR/outpost", tag:"v0.1.6"
-# gem 'outpost-cms', path: "~/workspace/outpost"
 gem 'outpost-cms', github: "SCPR/outpost", branch: "inline_assets"
 gem 'outpost-publishing'
-# gem 'outpost-asset_host', path: "~/workspace/outpost-asset_host"
 gem 'outpost-asset_host', github: "SCPR/outpost-asset_host", branch: "inline_assets"
-gem 'outpost-aggregator'
+gem 'outpost-aggregator', github: "SCPR/outpost-aggregator", tag: "v2.0.1"
 gem 'outpost-secretary', github:"SCPR/outpost-secretary", tag:"v0.1.1"
 
 

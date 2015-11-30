@@ -1,4 +1,11 @@
 <%= form_block "Related Content" do %>
+  <% if record.errors.present? %>
+    <div class="alert alert-error">
+      <% record.errors.full_messages_for(:related_content).each do |error| %>
+        <%= error %>
+      <% end %>
+    </div>
+  <% end %>
   <div id="related_content-aggregator" class="aggregator"></div>
   <%= f.input :outgoing_references_json, as: :hidden, input_html: { id: "outgoing_references_json" } %>
 <% end %>
@@ -6,9 +13,11 @@
 <% content_for :footer do %>
   <script>
     aggregator = new outpost.Aggregator(
-      "#related_content-aggregator", "#outgoing_references_json",
-      <%= render_json('api/private/v2/articles/collection', articles: record.outgoing_references.includes(:related).map(&:related).map(&:to_article)) %>,
       {
+        el: "#related_content-aggregator",
+        inputEl: "#outgoing_references_json",
+        collection: <%= render_json('api/private/v2/articles/collection', articles: record.outgoing_references.includes(:related).map(&:related).map(&:to_article)) %>,
+        referenceCollection: <%= render_json('api/private/v2/articles/collection', articles: record.incoming_references.includes(:content).map(&:content).compact.map(&:to_article)) %>,
         view: { active: 'search' },
         apiType: "private",
         params: {

@@ -28,11 +28,12 @@
   <%= f.input :program_articles_json, as: :hidden, input_html: { id: "program_articles_json" } %>
 
     <% content_for :footer do %>
-          <script>
+      <script>
         new outpost.Aggregator(
-          "#featured_articles_aggregator", "#program_articles_json",
-          <%= render_json("api/private/v2/articles/collection", articles: record.program_articles.includes(:article).map {|a| a.article.to_article}) %>,
           {
+            el: "#featured_articles_aggregator", 
+            inputEl: "#program_articles_json",
+            collection: <%= render_json("api/private/v2/articles/collection", articles: record.program_articles.includes(:article).map {|a| a.article.to_article}) %>,
             apiType: "private",
             view: {
               dropMaxLimit: 6,
@@ -75,9 +76,10 @@
     <% content_for :footer do %>
       <script>
         new outpost.Aggregator(
-          "#aggregator_quote_content", "#quote_content_json",
-          <%= render_json("api/private/v2/articles/collection", articles: Array(qf.object.article)) %>,
           {
+            el: "#aggregator_quote_content",
+            inputEl: "#quote_content_json",
+            collection: <%= render_json("api/private/v2/articles/collection", articles: Array(qf.object.article)) %>,
             apiType: "private",
             view : {
               dropMaxLimit: 1,

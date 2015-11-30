@@ -25,9 +25,10 @@
   <% content_for :footer do %>
     <script>
       aggregator = new outpost.Aggregator(
-        "#segmented-aggregator", "#rundowns_json",
-        <%= render_json('api/private/v2/articles/collection', articles: record.segments.map(&:to_article)) %>,
         {
+          el: "#segmented-aggregator", 
+          inputEl: "#rundowns_json",
+          collection: <%= render_json('api/private/v2/articles/collection', articles: record.segments.map(&:to_article)) %>,
           apiType: "private",
           params: {
             limit: 20,

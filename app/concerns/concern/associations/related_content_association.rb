@@ -30,8 +30,18 @@ module Concern
         if self.has_secretary?
           tracks_association :outgoing_references
         end
+
+        before_save :outgoing_references_only
       end
 
+      def outgoing_references_only
+        incoming_reference_ids = incoming_references.map(&:content_id)
+        bad_outgoing_references = outgoing_references.where(related_id: incoming_reference_ids)
+        if bad_outgoing_references.any?
+          bad_outgoing_references.destroy_all
+          clear_association_cache
+        end
+      end
 
       #-------------------------
       # Return any content which this content references,

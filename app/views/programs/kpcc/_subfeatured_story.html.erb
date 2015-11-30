@@ -1,0 +1,19 @@
+<% sub_article = subfeatured_story.to_article %>
+<section class="exemplary">
+  <h1>New to <cite><%= program.title %></cite>? We suggest starting with this episode.</h1>
+  <article>
+    <h2><a href="<%= sub_article.public_path %>"><%= sub_article.short_title %></a></h2>
+    <div class="content clearfix">
+      <figure class="photo ratio">
+        <a href="<%= sub_article.public_path %>">
+          <div class="fill"></div>
+          <b class="img-contain"><img src="<%= sub_article.asset.full.url %>" alt="" /></b>
+        </a>
+      </figure>
+      <div class="prose">
+        <h3><time datetime="<%= format_date(sub_article.public_datetime, with: '%F') %>"><%= format_date(sub_article.public_datetime, with: '%B %e, %Y') %></time></h3>
+        <p><%= sub_article.teaser %></p>
+      </div>
+    </div>
+  </article>
+</section><!--/ .exemplary -->

@@ -485,6 +485,13 @@ module ApplicationHelper
       return url
     end
 
+    # Remove via param for any URL that does not belong to SCPR.org
+    # This is so we can potentially use this helper for other
+    # purposes besides audio, since there isn't really a reason why
+    # we would use this parameter for URLs we don't own.
+    if !((hostname = uri.hostname) && hostname.include?("scpr.org"))
+      params.delete(:via) 
+    end
     query = URI.decode_www_form(uri.query.to_s)
 
     params.each { |k, v| query << [k.to_s, v.to_s] if v }

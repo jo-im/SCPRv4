@@ -3,31 +3,35 @@ module PmpArticleImporter
 
   SOURCE     = "pmp"
   ENDPOINT   = "https://api.pmp.io/"
-  TAG        = "marketplace"
-  COLLECTION = "4c6e24e5-484f-49e8-be8d-452cfddd6252"
   PROFILE    = "story"
   LIMIT      = 10
 
   PROFILES = {
-    :image => "APMImage",
-    :audio => "APMAudio"
+    :image => ["APMImage", "Image Profile"],
+    :audio => ["APMAudio", "Audio Profile"]
   }
 
   class << self
     include ::NewRelic::Agent::Instrumentation::ControllerInstrumentation
 
     def sync
-      added = []
       stories = []
 
       ## Stories are downloaded in two ways: a query on a tag(marketplace) and from
       ## a collection that is specific to veteran stories.  Both sets of results are
       ## concatenated to the stories array.
-      stories.concat download_stories(tag: TAG)
-      stories.concat download_stories(collection: COLLECTION)
+      stories.concat download_stories("Marketplace", tag: "marketplace")
+      stories.concat download_stories("American Homefront Project", collection: "4c6e24e5-484f-49e8-be8d-452cfddd6252")
 
-      log "#{stories.size} PMP stories found"
+      stories
+    end
 
+    def download_stories news_agency_name, query={}
+      added = []
+      stories = pmp.root.query['urn:collectiondoc:query:docs']
+        .where({profile: PROFILE, limit: LIMIT}.merge(query))
+        .retrieve.items
+      log "#{stories.size} PMP stories from #{news_agency_name} found"
       stories.reject { |s|
         RemoteArticle.exists?(source: SOURCE, article_id: s.guid)
       }.each do |story|
@@ -43,13 +47,14 @@ module PmpArticleImporter
         url = story.alternate.first.href if story.alternate.present?
 
         cached_article = RemoteArticle.new(
-          :source       => SOURCE,
-          :article_id   => story.guid,
-          :headline     => story.title,
-          :teaser       => story.teaser,
-          :published_at => published,
-          :url          => url,
-          :is_new       => true
+          :source         => SOURCE,
+          :article_id     => story.guid,
+          :headline       => story.title,
+          :teaser         => story.teaser,
+          :published_at   => published,
+          :url            => url,
+          :is_new         => true,
+          :news_agency      => news_agency_name
         )
 
         if cached_article.save
@@ -58,15 +63,9 @@ module PmpArticleImporter
               "RemoteArticle ##{cached_article.id}"
         else
           log "Couldn't save PMP Story ##{story.id}"
-        end          
+        end
       end
       added
-    end
-
-    def download_stories query={}
-      stories = pmp.root.query['urn:collectiondoc:query:docs']
-        .where({profile: PROFILE, limit: LIMIT}.merge(query))
-        .retrieve.items 
     end
 
     def import(remote_article, options={})
@@ -92,8 +91,10 @@ module PmpArticleImporter
         # TODO: This is temporary, at some point we'll need to figure out
         # how to determine the "source" of an article from PMP.
         # Right now we're only pulling in Marketplace stories.
-        article.source        = "marketplace"
-        article.news_agency   = "Marketplace"
+        news_agency = remote_article.news_agency || "PMP"
+
+        article.source        = news_agency.downcase.gsub(" ", "_")
+        article.news_agency   = news_agency
       end
 
       # Bylines
@@ -120,44 +121,48 @@ module PmpArticleImporter
 
       if pmp_story.items.present?
         image = pmp_story.items.find do |i|
-          i.profile.first.title == PROFILES[:image]
+          PROFILES[:image].include? i.profile.first.title
         end
 
         audio = pmp_story.items.find do |i|
-          i.profile.first.title == PROFILES[:audio]
+          PROFILES[:audio].include? i.profile.first.title 
         end
 
-        # If we have an enclosure node, extract audio and assets from it.
         # Import Audio
-        if audio
-          audios = Array(audio.enclosure)
-
-          if !audios.empty?
-            audios.each_with_index do |remote_audio, i|
-              href    = remote_audio.href
+        # If we have an enclosure node, extract audio and assets from it.
+        #
+        # Using "title" for description here because the "description"
+        # property seems to be an internal description, like:
+        #
+        #   "A 'show' containing all the individual segments for
+        #   Marketplace to ship off to Slacker and other distributors"
+        if audio && !(audios = Array(audio.enclosure)).empty?
+          audios.each_with_index do |remote_audio, i|
+            audio_attributes = {byline: "APM", position: i}
+            case article.news_agency
+            when "Marketplace"
               api_url = remote_audio.meta['api']['href']
-
               audio_data = open(api_url) { |r| JSON.parse(r.read) }
-
-              # Podcast audio isn't always available. In this case we
-              # should just not import any audio.
-              if meta = audio_data[href]['podcast']
-                # Using "title" for description here because the "description"
-                # property seems to be an internal description, like:
-                #
-                #   "A 'show' containing all the individual segments for
-                #   Marketplace to ship off to Slacker and other distributors"
-                article.audio.build(
-                  :url            => meta['http_file_path'],
-                  :duration       => meta['duration'].to_i / 1000,
-                  :description    => meta['title'],
-                  :byline         => "APM",
-                  :position       => i
-                )
+              if meta = audio_data[audio_data.keys.first]['podcast']
+                audio_attributes.merge!({
+                  url:      meta['http_file_path'],
+                  duration: meta['duration'].to_i / 1000,
+                  description: meta['title']
+                })
               end
+            when "American Homefront Project"
+              audio_attributes.merge!({
+                url: remote_audio.href,
+                duration: remote_audio.meta.duration.to_i / 1000,
+                description: audio.title
+              })
             end
+            # Podcast audio isn't always available. In this case we
+            # should just not import any audio.
+            article.audio.build(audio_attributes) if audio_attributes[:url]
           end # audios
         end # audio
+
 
         # Import Primary Image
         # We're doing this last since it hits an external API... we don't

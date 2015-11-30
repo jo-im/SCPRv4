@@ -8,6 +8,13 @@ GIT
       eco (~> 1.0.0)
 
 GIT
+  remote: git://github.com/SCPR/outpost-aggregator.git
+  revision: 6db288266918768a13a50d7a417b38e8d52b8c12
+  tag: v2.0.1
+  specs:
+    outpost-aggregator (2.0.0)
+
+GIT
   remote: git://github.com/SCPR/outpost-asset_host.git
   revision: e11c1b929a113f6e618fc8f1950af4cfb4408a29
   branch: inline_assets
@@ -266,7 +273,6 @@ GEM
       multi_json (~> 1.3)
       multi_xml (~> 0.5)
       rack (~> 1.2)
-    outpost-aggregator (1.2.0)
     outpost-publishing (1.0.1)
     patron (0.4.18)
     pmp (0.4.0)
@@ -490,7 +496,7 @@ DEPENDENCIES
   newrelic_rpm (~> 3.7)
   npr (~> 2.0)!
   oauth2 (~> 0.8)
-  outpost-aggregator
+  outpost-aggregator!
   outpost-asset_host!
   outpost-cms!
   outpost-publishing
@@ -529,3 +535,6 @@ DEPENDENCIES
   uglifier (>= 1.3)
   webmock
   yajl-ruby
+
+BUNDLED WITH
+   1.10.6

@@ -1,3 +1,4 @@
+<script src="//cdn.optimizely.com/js/1611751335.js"></script>
 <% add_to_page_title @story.feature.present? ? "#{@story.feature.name}: #{@story.headline}" : @story.headline %>
 <% content_for :opengraph do %><%= render_content @story, "opengraph" %><% end %>
 <%= render 'shared/ads/dfp_script_config', category: @category %>
@@ -31,7 +32,7 @@
                 <header>
                     <h1>More from this Issue</h1>
                     <h2 class="clearfix">
-                        <span><%= link_to tag.title, tag.public_path %></span>
+                        <span><%= link_to tag.title, issue_path(tag.slug) %></span>
                         <mark><%= link_to 'See All', issues_path %></mark>
                     </h2>
                 </header>

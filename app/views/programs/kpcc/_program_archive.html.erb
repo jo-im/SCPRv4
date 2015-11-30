@@ -1,0 +1,47 @@
+<section class="archive">
+  <h2>Find a specific episode from <%= program.title %>’s archive</h2>
+  <div class="flux-capacitor">
+    <form accept-charset="UTF-8" action="/programs/<%= program.slug %>/archive" class="archive-date-select" id="archive_date_select" method="post">
+      <div style="margin:0;padding:0;display:inline">
+        <input name="utf8" type="hidden" value="&#x2713;" />
+        <input name="authenticity_token" type="hidden" value="Hv3qnrajp8wwM5yr16aOZvA+r1JCrnBLq+lRXQVHrc0=" />
+      </div>
+
+      <div class="fields clearfix">
+
+        <div class="field month">
+          <label for="archive_date_2i">Month</label>
+          <select id="archive_date_2i" name="archive[date(2i)]">
+            <% (1..12).each do |month| %>
+              <%= content_tag :option, Date::MONTHNAMES[month], value: month, selected: (true if month == Time.new.month) %>
+            <% end %>
+          </select>
+        </div><!--/ .field.month -->
+
+        <div class="field day">
+          <label for="archive_date_3i">Day</label>
+          <select id="archive_date_3i" name="archive[date(3i)]">
+            <% (1..31).each do |value| %>
+              <%= content_tag :option, value, value: value, selected: (true if value == Time.new.day) %>
+            <% end %>
+          </select>
+        </div><!--/ .field.day -->
+
+        <div class="field year">
+          <label for="archive_date_1i">Year</label>
+          <select id="archive_date_1i" name="archive[date(1i)]">
+            <% (2006..Time.now.year).each do |time| %>
+              <%= content_tag :option, time, value: time, selected: (true if time == Time.now.year) %>
+            <% end %>
+          </select>
+        </div><!--/ .field.year -->
+
+      </div><!--/ .fields -->
+
+      <div class="commit clearfix">
+        <input class="btn" name="commit" type="submit" value="Search" />
+      </div>
+
+    </form>
+  </div><!--/ .flux-capacitor -->
+</section><!--/ .archive -->

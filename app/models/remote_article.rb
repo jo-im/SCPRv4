@@ -11,6 +11,7 @@ class RemoteArticle < ActiveRecord::Base
   include Outpost::Model::Identifier
   include Outpost::Model::Naming
   include Concern::Sanitizers::Url
+  include Concern::Model::Searchable
 
   before_validation ->{ sanitize_urls :url }
   

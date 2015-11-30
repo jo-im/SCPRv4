@@ -6,9 +6,10 @@
 <% content_for :footer do %>
   <script>
     aggregator = new outpost.Aggregator(
-      "#aggregator", "#content_json",
-      <%= render_json("api/private/v2/articles/collection", articles: record.content.includes(:content).map(&:content).map(&:to_article)) %>,
       {
+        el: "#aggregator",
+        inputEl: "#content_json",
+        collection: <%= render_json("api/private/v2/articles/collection", articles: record.content.includes(:content).map(&:content).map(&:to_article)) %>,
         apiType: "private",
         view: {
             dropMinLimit: 4

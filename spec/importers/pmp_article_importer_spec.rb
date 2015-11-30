@@ -18,16 +18,22 @@ describe PmpArticleImporter do
 
   describe '::sync' do
     before do
-      stub_request(:get, %r|pmp\.io/docs|).to_return({
-        :content_type => "application/json",
-        :body => load_fixture('api/pmp/marketplace_stories.json')
-      })
+      stub_request(:get, %r|pmp\.io/docs|)
+        .with(query: {"limit" => "10", "profile" => "story", "tag" => "marketplace"}).to_return({
+          :content_type => "application/json",
+          :body => load_fixture('api/pmp/marketplace_stories.json')
+        })
+      stub_request(:get, %r|pmp\.io/docs|)
+          .with(query: {"collection" => '4c6e24e5-484f-49e8-be8d-452cfddd6252', "limit" => "10", "profile" => "story"}).to_return({
+          :content_type => "application/json",
+          :body => load_fixture('api/pmp/ahp_stories.json')
+        })
     end
 
     it 'builds cached articles from the API response' do
       RemoteArticle.count.should eq 0
       added = PmpArticleImporter.sync
-      RemoteArticle.count.should eq 4 # Two stories in the JSON fixture grabbed twice(two for marketplace and two for veterans collection)
+      RemoteArticle.count.should eq 12 # Two stories from Marketplace fixture and 10 from AHP fixture
       added.first.headline.should match /billions and billions/
     end
 
@@ -46,11 +52,22 @@ describe PmpArticleImporter do
         })
       end
 
-      it 'sets the source and news agency' do
-        remote_article = create :pmp_article
-        news_story = PmpArticleImporter.import(remote_article)
-        news_story.source.should eq "marketplace"
-        news_story.news_agency.should eq 'Marketplace'
+      context 'remote article with news agency name' do
+        it 'sets the matching source and news agency' do
+          remote_article = create :pmp_article
+          news_story = PmpArticleImporter.import(remote_article)
+          news_story.source.should eq remote_article.news_agency.downcase
+          news_story.news_agency.should eq remote_article.news_agency
+        end
+      end
+
+      context 'remote article without news agency name' do
+        it 'sets the matching source and news agency to fallback of PMP' do
+          remote_article = create :pmp_article, news_agency: nil
+          news_story = PmpArticleImporter.import(remote_article)
+          news_story.source.should eq "pmp"
+          news_story.news_agency.should eq "PMP"
+        end
       end
 
       it 'imports the bylines' do
@@ -71,18 +88,36 @@ describe PmpArticleImporter do
         news_story.related_links.first.url.should match /marketplace\.org/
       end
 
-      it "adds audio if it's available" do
-        remote_article = create :pmp_article
-        news_story = PmpArticleImporter.import(remote_article)
+      context "marketplace story" do
+        it "adds audio if it's available" do
+          remote_article = create :pmp_article
+          news_story = PmpArticleImporter.import(remote_article)
 
-        # The "story.json" file has 2 audio enclosures (they're the same,
-        # it's fake).
-        news_story.audio.size.should eq 2
+          # The "story.json" file has 2 audio enclosures (they're the same,
+          # it's fake).
+          news_story.audio.size.should eq 2
+          audio = news_story.audio.first
+          audio.url.should eq("http://play.publicradio.org/pmp/d/podcast/marketplace/segments/2014/03/12/marketplace_segment09_20140312_64.mp3")
+          audio.duration.should eq 80000 / 1000
+          audio.description.should match /Marketplace Segment/
+        end
+      end
 
-        audio = news_story.audio.first
-        audio.url.should eq("http://play.publicradio.org/pmp/d/podcast/marketplace/segments/2014/03/12/marketplace_segment09_20140312_64.mp3")
-        audio.duration.should eq 80000 / 1000
-        audio.description.should match /Marketplace Segment/
+      context "ahp story" do
+        it "adds audio if it's available" do
+          stub_request(:get, %r|pmp\.io/docs\?guid=.+|).to_return({
+            :content_type => "application/json",
+            :body => load_fixture('api/pmp/ahp_story.json')
+          })
+          remote_article = create :pmp_article, news_agency: "American Homefront Project"
+          news_story = PmpArticleImporter.import(remote_article)
+
+          news_story.audio.size.should eq 2
+          audio = news_story.audio.first
+          audio.url.should eq("http://ahp.org/segments/2014/03/12/segment09_20140312_64.mp3")
+          audio.duration.should eq 80000 / 1000
+          audio.description.should match /Obama seeks expanded overtime pay/
+        end
       end
 
       it "creates an asset if image is available" do
