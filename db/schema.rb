@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151120004231) do
+ActiveRecord::Schema.define(version: 20151201172312) do
 
   create_table "abstracts", force: :cascade do |t|
     t.string   "source",               limit: 255
@@ -864,6 +864,8 @@ ActiveRecord::Schema.define(version: 20151120004231) do
     t.datetime "most_recent_at"
     t.string   "image",          limit: 255
     t.string   "tag_type",       limit: 255,   default: "keyword"
+    t.integer  "parent_id",      limit: 4
+    t.string   "parent_type",    limit: 255
   end
 
   add_index "tags", ["created_at"], name: "index_tags_on_created_at", using: :btree

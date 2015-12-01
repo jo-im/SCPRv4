@@ -8,6 +8,8 @@ class Tag < ActiveRecord::Base
 
   has_many :taggings, dependent: :destroy
 
+  belongs_to :parent, polymorphic: true
+
   def taggables(options={})
     ContentBase.search({ with: { "tags.slug" => self.slug } }.reverse_merge(options))
   end

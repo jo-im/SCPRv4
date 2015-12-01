@@ -5,6 +5,8 @@
 class Program
   include Concern::Methods::AbstractModelMethods
 
+  has_many :tags, as: :parent
+
   class << self
     def all
       (KpccProgram.all + ExternalProgram.all)
