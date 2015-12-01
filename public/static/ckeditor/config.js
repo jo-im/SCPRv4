@@ -10,7 +10,7 @@ CKEDITOR.editorConfig = function(config) {
     ['Source', 'Maximize']
   ];
 
-  config.format_tags = 'p;h1;h2;h3';
+  config.format_tags = 'p;h2;h3';
 
   config.extraPlugins = [
     'image', // This plugin has custom changes so we didn't include it in the build
