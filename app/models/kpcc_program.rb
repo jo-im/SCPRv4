@@ -34,6 +34,7 @@ class KpccProgram < ActiveRecord::Base
   has_many :segments, foreign_key: "show_id", class_name: "ShowSegment"
   has_many :episodes, foreign_key: "show_id", class_name: "ShowEpisode"
   has_many :recurring_schedule_rules, as: :program, dependent: :destroy
+  has_many :tags, as: :parent
 
   belongs_to :blog
   belongs_to :quote
