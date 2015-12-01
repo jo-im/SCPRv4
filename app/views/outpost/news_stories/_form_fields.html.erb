@@ -7,7 +7,6 @@
   <%= f.section "category" %>
   <%= f.section "feature" %>
   <%= f.association :tags %>
-
   <%= f.input :source, collection: NewsStory::SOURCES, include_blank: false %>
   <%= f.input :news_agency %>
   <%= f.input :is_from_pij, hint: "Was this story informed by PIJ Sources?" %>

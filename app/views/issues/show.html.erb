@@ -1,36 +1,59 @@
-<% add_to_page_title @tag.title %>
-<% meta_tags(url: issue_url(@tag.slug)) %>
-<% content_for :body_class, 'interior ronin' %>
+<section class="prologue">
+    <div class="inner bound">
+        <h1 class="title">All Issues</h1>
+    </div>
+</section><!--/ .prologue -->
 
-<% content_for :opengraph do %>
+<div class="catalog">
+  <div class="inner bound clearfix">
 
-    <%= cache ["opengraph", "v1", @tag] do %>
+      <nav class="terms">
+          <ul class="clearfix">
 
-      <meta property="og:title" content="Issue: <%= h(@tag.title) %>">
-      <meta property="og:type" content="<%= @OG_TYPE || "website" %>">
-      <meta property="og:url" content="http://www.scpr.org/issues/<%= @tag.slug %>"/>
-      <meta property="og:image" content="http://scpr.org<%=image_path('kpcc-twitter-logo.png')%>" />
+          <% @tags.each do |tag| %>
+              <li class="<%= 'selected' if @tag == tag %>">
+                  <%= link_to tag.title, issue_path(tag.slug) %>
+              </li>
+          <% end %>
 
-      <link rel="image_src" href="http://scpr.org<%=image_path('kpcc-twitter-logo.png')%>" />
-      <meta name="twitter:image" value="http://scpr.org<%=image_path('kpcc-twitter-logo.png')%>">
+          </ul>
+      </nav>
 
-    <% end %>
+      <div class="showcase">
 
-<% end %>
+            <% add_to_page_title @tag.title %>
+            <% meta_tags(url: issue_url(@tag.slug)) %>
+            <% content_for :body_class, 'interior ronin' %>
 
-<%= cache ["issues/show", "meta", "v2", @tag] do %>
+            <% content_for :opengraph do %>
 
-  <%= render partial: "issue_preface_header", locals: {issue: @tag, articles: @articles} %>
+                <%= cache ["opengraph", "v1", @tag] do %>
 
-<% end %>
+                  <meta property="og:title" content="Issue: <%= h(@tag.title) %>">
+                  <meta property="og:type" content="<%= @OG_TYPE || "website" %>">
+                  <meta property="og:url" content="http://www.scpr.org/issues/<%= @tag.slug %>"/>
+                  <meta property="og:image" content="http://scpr.org<%=image_path('kpcc-twitter-logo.png')%>" />
+
+                  <link rel="image_src" href="http://scpr.org<%=image_path('kpcc-twitter-logo.png')%>" />
+                  <meta name="twitter:image" value="http://scpr.org<%=image_path('kpcc-twitter-logo.png')%>">
+
+                <% end %>
+
+            <% end %>
 
 
-<section class="backlog">
 
-<%= cache ["issues/show", "list", "v2", @articles.to_a] do %>
-    <%= render 'shared/new/waterfall_articles', articles: @articles, display_header: false %>
-<% end %>
 
-<%= paginate @articles, theme: 'new', outer_window: 1 %>
+            <section class="backlog">
 
-</section><!--/ .backlog -->
+            <%= cache ["issues/show", "list", "v2", @articles.to_a] do %>
+                <%= render 'shared/new/waterfall_articles', articles: @articles, display_header: false %>
+            <% end %>
+
+            <%= paginate @articles, theme: 'new', outer_window: 1 %>
+
+            </section><!--/ .backlog -->
+              
+        </div><!--/ .showcase -->
+    </div> <!--/ .inner.bound -->
+</div><!--/ .catalog -->
