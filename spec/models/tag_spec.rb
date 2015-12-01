@@ -63,4 +63,16 @@ describe Tag, :indexing do
 
   end
 
+  describe "#sanitize_tag_type" do
+    tag = nil
+    before(:each) do
+      tag = create :tag
+    end
+    it "formats and sanitizes tag type upon save" do
+      tag.tag_type = " beat  \n"
+      tag.save
+      expect(tag.tag_type).to eq "Beat"
+    end
+  end
+
 end
