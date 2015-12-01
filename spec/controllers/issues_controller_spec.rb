@@ -5,8 +5,7 @@ describe IssuesController, :indexing do
 
   describe 'GET /issues' do
     it 'sets @tags to all active tags' do
-      tags = create_list :tag, 3, is_featured: true
-      inactive_tags = create :tag, is_featured: false
+      tags = create_list :tag, 3
 
       get :index
 
