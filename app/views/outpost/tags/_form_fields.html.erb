@@ -3,4 +3,10 @@
   <%= f.input :slug, hint: "This is not automatically generated." %>
   <%= f.input :description, input_html: { class: "tiny" } %>
   <%= f.association :tag_type %>
+  <div class="control-group select optional tag_tag_type">
+    <label class="select optional control-label">Parent Program</label>
+      <div class="controls">
+        <%= select_tag :parent_id, options_from_collection_for_select(KpccProgram.all, "id", "title", f.object.parent.id), include_blank: true, id: "tag_parent_id", name: "tag[parent_id]" %>
+      </div>
+  </div>
 <% end %>
