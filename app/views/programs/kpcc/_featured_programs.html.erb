@@ -3,9 +3,9 @@
   <div class="inner bound">
     <div class="troupe clearfix">
       <% @featured_programs.each do |program| %>
-        <% cache program do %>
+        <% cache ["show", "featured-programs", "v1", program] do %>
           <% latest_episode = program.episodes.published.first.try(:to_article) %>
-          <% cache latest_episode do %>
+          <% cache ["show", "featured-programs", "latest-episode", "v1", latest_episode] do %>
             <article>
               <figure class="photo ratio">
                 <div class="fill"></div>
