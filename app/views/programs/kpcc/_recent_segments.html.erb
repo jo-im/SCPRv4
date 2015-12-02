@@ -1,6 +1,6 @@
 <section class="segments">
   <h1>Recently on <cite><%= program.title %></cite></h1>
-  <% cache ["featured-program-segments","program",program] do %>
+  <% cache ["featured-program-segments",program] do %>
     <div class="series clearfix">
       <% segments.first(14).each do |segment| %>
         <% cache ["featured-program-segments",segment] do %>
