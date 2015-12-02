@@ -4,7 +4,7 @@
     <div class="troupe clearfix">
       <% @featured_programs.each do |program| %>
         <% cache ["show", "featured-programs", "v1", program] do %>
-          <% latest_episode = program.episodes.published.first.try(:to_article) %>
+          <% latest_episode = program.episodes.published.first %>
           <% cache ["show", "featured-programs", "latest-episode", "v1", latest_episode] do %>
             <article>
               <figure class="photo ratio">
@@ -20,8 +20,8 @@
               <% if latest_episode.present? %>
                 <a href="<%= latest_episode.public_path %>">
                   <dl>
-                    <dt><mark>Latest</mark> <time datetime="<%= format_date(latest_episode.public_datetime, with: '%F') %>"><%= format_date(latest_episode.public_datetime, with: '%b. %-d') %></time></dt>
-                    <dd><%= latest_episode.short_title %></dd>
+                    <dt><mark>Latest</mark> <time datetime="<%= format_date(latest_episode.air_date, with: '%F') %>"><%= format_date(latest_episode.air_date, with: '%b. %-d') %></time></dt>
+                    <dd><%= latest_episode.headline %></dd>
                   </dl>
                 </a>
               <% end %>
