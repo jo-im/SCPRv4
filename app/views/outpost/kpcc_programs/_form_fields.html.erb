@@ -14,7 +14,7 @@
 
 <%= form_block "Associations" do %>
   <%= f.association :reporters, label: "Reporters" %>
-  <%= f.association :tags, as: :grouped_select, collection: TagGroup.all, group_method: :tags, input_html: { :multiple => true }, hint: "Selecting a tag means that this program will now take ownership over it, and the tag will be removed from the other program it is currently owned by." %>
+  <%= f.association :tags, as: :grouped_select, collection: TagType.all, group_method: :tags, input_html: { :multiple => true }, hint: "Selecting a tag means that this program will now take ownership over it, and the tag will be removed from the other program it is currently owned by." %>
 <% end %>
 
 <%= form_block "Display Options" do %>

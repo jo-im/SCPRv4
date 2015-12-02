@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151201172312) do
+ActiveRecord::Schema.define(version: 20151202004111) do
 
   create_table "abstracts", force: :cascade do |t|
     t.string   "source",               limit: 255
@@ -323,8 +323,6 @@ ActiveRecord::Schema.define(version: 20151201172312) do
     t.string   "email_type",          limit: 255
     t.datetime "created_at",                                      null: false
     t.datetime "updated_at",                                      null: false
-    t.datetime "send_at"
-    t.integer  "attempts_made",       limit: 4,   default: 0
   end
 
   create_table "events", force: :cascade do |t|
@@ -821,6 +819,12 @@ ActiveRecord::Schema.define(version: 20151201172312) do
   add_index "shows_segment", ["status"], name: "index_shows_segment_on_status", using: :btree
   add_index "shows_segment", ["updated_at"], name: "index_shows_segment_on_updated_at", using: :btree
 
+  create_table "tag_types", force: :cascade do |t|
+    t.string   "name",       limit: 255
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
+  end
+
   create_table "taggings", force: :cascade do |t|
     t.string   "taggable_type", limit: 255
     t.integer  "taggable_id",   limit: 4
@@ -857,19 +861,17 @@ ActiveRecord::Schema.define(version: 20151201172312) do
     t.string   "title",          limit: 255
     t.string   "slug",           limit: 255
     t.text     "description",    limit: 65535
-    t.boolean  "is_featured"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.datetime "began_at"
     t.datetime "most_recent_at"
     t.string   "image",          limit: 255
-    t.string   "tag_type",       limit: 255,   default: "keyword"
     t.integer  "parent_id",      limit: 4
     t.string   "parent_type",    limit: 255
+    t.integer  "tag_type_id",    limit: 4,     default: 1
   end
 
   add_index "tags", ["created_at"], name: "index_tags_on_created_at", using: :btree
-  add_index "tags", ["is_featured"], name: "index_tags_on_is_featured", using: :btree
   add_index "tags", ["slug"], name: "index_tags_on_slug", using: :btree
 
   create_table "user_permissions", force: :cascade do |t|

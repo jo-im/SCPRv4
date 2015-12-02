@@ -68,7 +68,7 @@
 
 <%= form_block "Associations" do %>
   <%= f.association :blog %>
-  <%= f.association :tags, as: :grouped_select, collection: TagGroup.all, group_method: :tags, input_html: { :multiple => true } %>
+  <%= f.association :tags, as: :grouped_select, collection: TagType.all, group_method: :tags, input_html: { :multiple => true } %>
   <%= f.association :reporters, label: "Reporters" %>
 <% end %>
 

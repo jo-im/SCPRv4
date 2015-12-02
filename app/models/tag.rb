@@ -10,8 +10,7 @@ class Tag < ActiveRecord::Base
   has_many :taggings, dependent: :destroy
 
   belongs_to :parent, polymorphic: true
-
-  before_save :sanitize_tag_type, if: :tag_type_changed?
+  belongs_to :tag_type
 
   def taggables(options={})
     ContentBase.search({ with: { "tags.slug" => self.slug } }.reverse_merge(options))
@@ -31,7 +30,4 @@ class Tag < ActiveRecord::Base
     end
   end
 
-  def sanitize_tag_type
-    self.tag_type = tag_type.titleize.chomp.strip.squeeze(" ")
-  end
 end
