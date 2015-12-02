@@ -11,7 +11,7 @@ class Tag < ActiveRecord::Base
   belongs_to :parent, polymorphic: true
   belongs_to :tag_type
 
-  before_save :add_default_tag_type, if: :tag_type_id?
+  before_save :add_default_tag_type, unless: :tag_type_id?
 
   def taggables(options={})
     ContentBase.search({ with: { "tags.slug" => self.slug } }.reverse_merge(options))
@@ -31,7 +31,7 @@ class Tag < ActiveRecord::Base
     end
   end
 
-  def add_default_tag
+  def add_default_tag_type
     if tag_type = TagType.where(name: "Keyword").first
       self.tag_type = tag_type
     end
