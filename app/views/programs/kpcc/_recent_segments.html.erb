@@ -3,21 +3,19 @@
   <% cache ["featured-program-segments",program] do %>
     <div class="series clearfix">
       <% segments.first(14).each do |segment| %>
-        <% cache ["featured-program-segments",segment] do %>
-          <figure>
-              <div class="photo ratio">
-                <a href="<%= segment.public_path %>">
-                  <div class="fill"></div>
-                  <time datetime="<%= format_date(segment.published_at, with: "%F") %>"><span><%= format_date(segment.published_at, with: "%a") %></span> <%= format_date(segment.published_at, with: "%B %e") %></time>
-                  <% if segment.audio.any? %>
-                    <mark class="has-audio"><%= format_clip_duration segment.audio.first.duration %></mark>
-                  <% end %>
-                  <b class="img-contain"><img src="<%= segment.asset.full.url %>" alt="" /></b>
-                </a>
-              </div>
-              <figcaption><a href="<%= segment.public_path %>"><%= segment.short_headline %></a></figcaption>
-          </figure>
-        <% end %>
+        <figure>
+            <div class="photo ratio">
+              <a href="<%= segment.public_path %>">
+                <div class="fill"></div>
+                <time datetime="<%= format_date(segment.published_at, with: "%F") %>"><span><%= format_date(segment.published_at, with: "%a") %></span> <%= format_date(segment.published_at, with: "%B %e") %></time>
+                <% if segment.audio.any? %>
+                  <mark class="has-audio"><%= format_clip_duration segment.audio.first.duration %></mark>
+                <% end %>
+                <b class="img-contain"><img src="<%= segment.asset.full.url %>" alt="" /></b>
+              </a>
+            </div>
+            <figcaption><a href="<%= segment.public_path %>"><%= segment.short_headline %></a></figcaption>
+        </figure>
       <% end %>
 
       <figure>
