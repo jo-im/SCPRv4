@@ -3,7 +3,7 @@ CKEDITOR.timestamp = '20140219';
 CKEDITOR.editorConfig = function(config) {
 
   config.toolbar = [
-    ['Bold', 'Italic', 'Underline', "RemoveFormat"],
+    ['Format', 'Bold', 'Italic', 'Underline', "RemoveFormat"],
     ['NumberedList', 'BulletedList', 'Blockquote'],
     ['Link', 'Unlink', 'DockAssetManager', 'EmbedPlaceholder'],
     ['Find', 'Paste'],

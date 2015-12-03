@@ -95,11 +95,12 @@
     <% content_for :footer do %>
       <script>
         new outpost.Aggregator(
-          "#aggregator_quote_content", "#quote_content_json",
-          <%= render_json("api/private/v2/articles/collection", articles: Array(qf.object.article)) %>,
           {
+            el: "#aggregator_quote_content", 
+            inputEl: "#quote_content_json",
+            collection: <%= render_json("api/private/v2/articles/collection", articles: Array(qf.object.article)) %>,
             apiType: "private",
-            view : {
+            view: {
               dropMaxLimit: 1,
               dropRejectOverflow: true,
               active: "search"
