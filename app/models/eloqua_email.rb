@@ -66,7 +66,7 @@ class EloquaEmail < ActiveRecord::Base
   def publish_email options={}
     super
   rescue => e
-    logger.error e.message
+    NewRelic.log_error(e)
   ensure
     self.attempts_made += 1
     save
