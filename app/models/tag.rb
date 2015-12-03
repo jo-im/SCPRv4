@@ -9,9 +9,8 @@ class Tag < ActiveRecord::Base
   has_many :taggings, dependent: :destroy
 
   belongs_to :parent, polymorphic: true
-  belongs_to :tag_type
 
-  before_save :add_default_tag_type, unless: :tag_type_id?
+  TYPES = ["Keyword", "Series", "Beat"]
 
   def taggables(options={})
     ContentBase.search({ with: { "tags.slug" => self.slug } }.reverse_merge(options))
@@ -31,9 +30,13 @@ class Tag < ActiveRecord::Base
     end
   end
 
-  def add_default_tag_type
-    if tag_type = TagType.where(name: "Keyword").first
-      self.tag_type = tag_type
+  class << self
+    def by_type
+      list = []
+      TYPES.each do |tag_type|
+        list << OpenStruct.new(name: tag_type, tags: where(tag_type: tag_type))
+      end
+      list
     end
   end
 
