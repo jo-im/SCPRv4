@@ -283,7 +283,6 @@ Scprv4::Application.routes.draw do
     resources :editions, concerns: [:search]
     resources :verticals
     resources :tags, concerns: [:search]
-    resources :tag_types, concerns: [:search]
 
     resources :homepages, concerns: [:preview, :search]
     resources :pij_queries, concerns: [:preview, :search]
