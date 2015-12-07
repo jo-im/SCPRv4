@@ -4,12 +4,12 @@ class PopulateBeatTags < ActiveRecord::Migration
     ["Public Safety", "public-safety", "insert description here"],
     ["SoCal Economy", "socal-economy", "insert description here"],
     ["SoCal Politics", "socal-politics", "insert description here"],
-    ["The Social Safety Net", "the-social-safety-net", "insert description here"],
+    ["The Social Safety Net", "social-safety-net", "insert description here"],
     ["Vets", "vets", "insert description here"],
     ["Workplace", "workplace", "insert description here"],
-    ["Changing Neighborhoods & Affordability", "changing-neighborhoods-and-affordability", "insert description here"],
-    ["Communting", "commuting", "insert description here"],
-    ["Immigration 3.0", "immigration-3-0", "insert description here"],
+    ["Changing Neighborhoods & Affordability", "changing-neighborhoods", "insert description here"],
+    ["Commuting", "commuting", "insert description here"],
+    ["Immigration 3.0", "immigration", "insert description here"],
     ["Infrastructure", "infrastructure", "insert description here"],
     ["Orange County", "orange-county", "insert description here"]
   ]
