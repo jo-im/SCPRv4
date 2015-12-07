@@ -4,11 +4,6 @@
 <%= cache ["categories/show", "topics", 'v1', tags] do %>
     <% if tag = tags[0] %>
         <section class="topics">
-            <header>
-                <h1>Topics We're Tracking</h1>
-                <h2><%= link_to 'See all topics', topics_path %></h2>
-            </header>
-
             <div>
                 <header class="special">
                     <h1><%= tag.title %></h1>
