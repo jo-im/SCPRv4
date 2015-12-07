@@ -1,6 +1,6 @@
 <section class="prologue">
   <div class="inner bound">
-    <h1 class="title">All Issues</h1>
+    <h1 class="title">All Topics</h1>
   </div>
 </section><!--/ .prologue -->
 
@@ -12,7 +12,7 @@
 
         <% @tags.each do |tag| %>
           <li class="<%= 'selected' if @tag == tag %>">
-            <%= link_to tag.title, issue_path(tag.slug) %>
+            <%= link_to tag.title, topic_path(tag.slug) %>
           </li>
         <% end %>
 
@@ -22,16 +22,16 @@
     <div class="showcase">
 
       <% add_to_page_title @tag.title %>
-      <% meta_tags(url: issue_url(@tag.slug)) %>
+      <% meta_tags(url: topic_url(@tag.slug)) %>
       <% content_for :body_class, 'interior ronin' %>
 
       <% content_for :opengraph do %>
 
         <%= cache ["opengraph", "v1", @tag] do %>
 
-          <meta property="og:title" content="Issue: <%= h(@tag.title) %>">
+          <meta property="og:title" content="Topic: <%= h(@tag.title) %>">
           <meta property="og:type" content="<%= @OG_TYPE || "website" %>">
-          <meta property="og:url" content="http://www.scpr.org/issues/<%= @tag.slug %>"/>
+          <meta property="og:url" content="http://www.scpr.org/topics/<%= @tag.slug %>"/>
           <meta property="og:image" content="http://scpr.org<%=image_path('kpcc-twitter-logo.png')%>" />
 
           <link rel="image_src" href="http://scpr.org<%=image_path('kpcc-twitter-logo.png')%>" />
@@ -41,16 +41,16 @@
 
       <% end %>
 
-      <%= cache ["issues/show", "meta", "v2", @tag] do %>
+      <%= cache ["topics/show", "meta", "v2", @tag] do %>
 
-        <%= render partial: "issue_preface_header", locals: {issue: @tag, articles: @articles} %>
+        <%= render partial: "topic_preface_header", locals: {topic: @tag, articles: @articles} %>
 
       <% end %>
 
 
       <section class="backlog">
 
-        <%= cache ["issues/show", "list", "v2", @articles.to_a] do %>
+        <%= cache ["topics/show", "list", "v2", @articles.to_a] do %>
         <%= render 'shared/new/waterfall_articles', articles: @articles, display_header: false %>
         <% end %>
 

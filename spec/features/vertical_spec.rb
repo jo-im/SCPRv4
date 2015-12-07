@@ -75,7 +75,7 @@ describe "Vertical page", :indexing do
       end
 
       within("section.issues") do
-        # make sure top story will still show up in the Issues We're Tracking section
+        # make sure top story will still show up in the Topics We're Tracking section
         page.should have_content vertical.featured_articles.first.short_title, count: 1
       end
     end

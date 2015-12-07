@@ -8,7 +8,7 @@
 
     <% if display_header %>
         <% if tag = article.tags.first %>
-            <span class="issue"><%= link_to tag.title, issue_path(tag.slug) %></span>
+            <span class="topic"><%= link_to tag.title, topic_path(tag.slug) %></span>
         <% end  %>
     <% end %>
 

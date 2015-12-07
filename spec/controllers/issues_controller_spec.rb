@@ -1,9 +1,9 @@
 require 'spec_helper'
 
-describe IssuesController, :indexing do
+describe TopicsController, :indexing do
   render_views
 
-  describe 'GET /issues' do
+  describe 'GET /topics' do
     it 'sets @tags to all active tags' do
       tags = create_list :tag, 3
 

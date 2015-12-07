@@ -15,11 +15,11 @@
     //  ################################################################################################
     //  ################################################################################################
 
-    body.issues .quadrant {
+    body.topics .quadrant {
         border-top: 6px solid $orange;
         box-shadow: inset 0 6px 0 black;
     }
-    body.issues .quadrant .inner {
+    body.topics .quadrant .inner {
         padding-top: 45px; // not 85
         & > header {
             color: $orange;
@@ -37,7 +37,7 @@
     //  ################################################################################################
     //  ################################################################################################
 
-    body.issues .prologue {
+    body.topics .prologue {
         margin: 66px 0 42px;
         .inner {
           position: relative;
@@ -80,16 +80,16 @@
 
     .catalog {
         background:
-            image-url("i/fauxcol-issues-topper.png") no-repeat center top,
-            image-url("i/fauxcol-issues-splitflood.png") repeat-y center top;
+            image-url("i/fauxcol-topics-topper.png") no-repeat center top,
+            image-url("i/fauxcol-topics-splitflood.png") repeat-y center top;
         background-size:
             3000px 4px,
             3000px 30px;
         border-bottom: 1px solid #eeeeee;
         .inner {
             background:
-                image-url("i/fauxcol-issues-inner-topper.png") no-repeat 23.153846153846% top,
-                image-url("i/fauxcol-issues-inner.png") repeat-y 23.153846153846% top;
+                image-url("i/fauxcol-topics-inner-topper.png") no-repeat 23.153846153846% top,
+                image-url("i/fauxcol-topics-inner.png") repeat-y 23.153846153846% top;
             background-size:
                 1500px 4px,
                 1500px 15px;
@@ -194,7 +194,7 @@
                             position: absolute;
                             top: 0;
                             left: 0;
-                            background: image-url("i/issues-timeline.png") no-repeat;
+                            background: image-url("i/topics-timeline.png") no-repeat;
                             background-size: 104px 150px;
                             width: 104px;
                             dt          { color: $blue; margin: 4px 0 13px 36px; }

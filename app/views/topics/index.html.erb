@@ -1,6 +1,6 @@
 <section class="prologue">
     <div class="inner bound">
-        <h1 class="title">All Issues</h1>
+        <h1 class="title">All Topics</h1>
     </div>
 </section><!--/ .prologue -->
 
@@ -12,7 +12,7 @@
 
             <% @tags.each do |tag| %>
                 <li class="<%= 'selected' if @tag == tag %>">
-                    <%= link_to tag.title, issue_path(tag.slug) %>
+                    <%= link_to tag.title, topic_path(tag.slug) %>
                 </li>
             <% end %>
 
@@ -22,16 +22,16 @@
         <div class="showcase">
 
 
-          <% add_to_page_title "Issues" %>
-          <% meta_tags(url: issues_url) %>
+          <% add_to_page_title "Topics" %>
+          <% meta_tags(url: topics_url) %>
           <% content_for :body_class, 'interior ronin' %>
 
           <% content_for :opengraph do %>
 
 
-                <meta property="og:title" content="Issues">
+                <meta property="og:title" content="Topics">
                 <meta property="og:type" content="<%= @OG_TYPE || "website" %>">
-                <meta property="og:url" content="http://www.scpr.org/issues/"/>
+                <meta property="og:url" content="http://www.scpr.org/topics/"/>
                 <meta property="og:image" content="http://scpr.org<%=image_path('kpcc-twitter-logo.png')%>" />
 
                 <link rel="image_src" href="http://scpr.org<%=image_path('kpcc-twitter-logo.png')%>" />
@@ -41,7 +41,7 @@
           <% end %>
 
           <header class="preface">
-              <h1>Begin by choosing one of the issues <span class="directional"><b>at left</b></span>.</h1>
+              <h1>Begin by choosing one of the topics <span class="directional"><b>at left</b></span>.</h1>
           </header>
           </div>
 

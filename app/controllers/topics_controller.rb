@@ -1,9 +1,9 @@
-class IssuesController < ApplicationController
+class TopicsController < ApplicationController
   layout 'new/ronin'
   respond_to :html, :xml, :rss
 
   before_filter :get_popular_articles
-  before_filter :get_issues
+  before_filter :get_topics
 
   PER_PAGE = 8
 
@@ -18,7 +18,7 @@ class IssuesController < ApplicationController
 
   private
 
-  def get_issues
+  def get_topics
     @tags = Tag.order("title")
   end
 end
