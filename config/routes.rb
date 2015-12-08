@@ -75,12 +75,12 @@ Scprv4::Application.routes.draw do
 
 
   # Topics
-  get '/topics' => 'topics#index'
   get 'topics/:slug' => 'topics#show', as: :topic
   ## Deprecated show page route
   get 'issues/:slug', to: redirect { |params, request| "/topics/#{params[:slug]}" }
   ## Deprecated index path redirects to home page
-  get '/issues' => redirect("/topics")
+  get '/issues' => redirect("/")
+  get '/topics' => redirect("/")
 
 
   # Search
