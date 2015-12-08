@@ -20,16 +20,6 @@ class Tag < ActiveRecord::Base
     taggables(options)
   end
 
-  def update_timestamps published_at
-    if began_at.nil? || (published_at < began_at)
-      self.update_attribute :began_at, published_at
-    end
-
-    if most_recent_at.nil? || (published_at > most_recent_at)
-      self.update_attribute :most_recent_at, published_at
-    end
-  end
-
   class << self
     def by_type
       list = []
