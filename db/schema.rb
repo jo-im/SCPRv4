@@ -323,6 +323,7 @@ ActiveRecord::Schema.define(version: 20151208183243) do
     t.string   "email_type",          limit: 255
     t.datetime "created_at",                                      null: false
     t.datetime "updated_at",                                      null: false
+    t.integer  "attempts_made",       limit: 4,   default: 0
   end
 
   create_table "events", force: :cascade do |t|
