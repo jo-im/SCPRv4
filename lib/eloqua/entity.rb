@@ -34,7 +34,7 @@ module Eloqua
       #--------------------
 
       def process_response(resp)
-        if resp.body.present?
+        if resp.body.present? && resp.success?
           new(resp.body)
         else
           nil
