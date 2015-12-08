@@ -1,9 +1,22 @@
-<h2>Gaps</h2>
-<%= @gaps.each do |gap| %>
-  p gap
-<% end %>
+There seems to be a few problems with the current SCPR program schedule:
 
-<h2>Overlaps</h2>
-<%= @overlaps.each do |overlap| %>
-  p overlap
+<% if @overlaps %>
+  <h2>Overlaps</h2>
+    <ul>
+      <%= @overlaps.each do |overlap| %>
+        <li>
+          <%= [overlap[0].program.try(:title), overlap[0].event_title].compact.join(" ") %> ends at <%= overlap[0].ends_at %> but <%= [overlap[1].program.try(:title), overlap[1].event_title].compact.join(" ") %> starts at <%= overlap[1].starts_at %>
+        </li>
+      <% end %>
+    </ul>
+<% end %>
+<% if @gaps %>
+  <h2>Gaps</h2>
+  <ul>
+    <%= @gaps.each do |gap| %>
+      <li>
+        <%= [gap[0].program.try(:title), gap[0].event_title].compact.join(" ") %> ends at <%= gap[0].ends_at %> but <%= [gap[1].program.try(:title), gap[1].event_title].compact.join(" ") %> starts at <%= gap[1].starts_at %>
+      </li>
+    <% end %>
+  </ul>
 <% end %>
