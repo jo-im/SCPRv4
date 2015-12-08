@@ -1,23 +1,5 @@
-<section class="prologue">
-  <div class="inner bound">
-    <h1 class="title">All Topics</h1>
-  </div>
-</section><!--/ .prologue -->
-
 <div class="catalog">
   <div class="inner bound clearfix">
-
-    <nav class="terms">
-      <ul class="clearfix">
-
-        <% @tags.each do |tag| %>
-          <li class="<%= 'selected' if @tag == tag %>">
-            <%= link_to tag.title, topic_path(tag.slug) %>
-          </li>
-        <% end %>
-
-      </ul>
-    </nav>
 
     <div class="showcase">
 
