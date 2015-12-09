@@ -4,7 +4,7 @@ There seem to be a few problems with the current SCPR program schedule:
 OVERLAPS
 ---------
 <% @overlaps.each do |overlap| %>
-  * <%= overlap[0].display_name %> ends at <%= overlap[0].ends_at.try(:strftime, "%I:%M%P %-d/%-m") %> but <%= overlap[1].display_name %> starts at <%= overlap[1].starts_at.try(:strftime, "%I:%M%P %-d/%-m") %>
+  * <%= overlap[0].display_name %> ends at <%= overlap[0].ends_at.try(:strftime, "%I:%M%P %-m/%-d") %> but <%= overlap[1].display_name %> starts at <%= overlap[1].starts_at.try(:strftime, "%I:%M%P %-m/%-d") %>
 <% end %>
 <% end %>
 
@@ -12,6 +12,6 @@ OVERLAPS
 GAPS
 ---------
 <% @gaps.each do |gap| %>
-  * <%= gap[0].display_name %> ends at <%= gap[0].ends_at.try(:strftime, "%I:%M%P %-d/%-m") %> but <%= gap[1].display_name %> starts at <%= gap[1].starts_at.try(:strftime, "%I:%M%P %-d/%-m") %>
+  * <%= gap[0].display_name %> ends at <%= gap[0].ends_at.try(:strftime, "%I:%M%P %-m/%-d") %> but <%= gap[1].display_name %> starts at <%= gap[1].starts_at.try(:strftime, "%I:%M%P %-m/%-d") %>
 <% end %>
 <% end %>
