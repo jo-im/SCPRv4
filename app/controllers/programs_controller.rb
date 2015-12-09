@@ -58,7 +58,7 @@ class ProgramsController < ApplicationController
   end
 
   def featured_program
-    @segments = @program.segments.published
+    @segments = @program.segments.published.includes(:audio)
     @episodes = @program.episodes.published
     @featured_programs = KpccProgram.where.not(id: @program.id,is_featured: false)
     if @program.featured_articles.present?
