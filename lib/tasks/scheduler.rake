@@ -21,6 +21,7 @@ task :scheduler => [:environment] do
 
   scheduler.every '1d' do |job|
     Job::BuildRecurringSchedule.enqueue()
+    Job::ReportScheduleProblems.enqueue
   end
 
   # -- Caches -- #
