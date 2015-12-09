@@ -172,6 +172,10 @@ class ScheduleOccurrence < ActiveRecord::Base
     }
   end
 
+  def display_name
+    [program.try(:title), event_title].compact.join(" - ")
+  end
+
 
   private
 
