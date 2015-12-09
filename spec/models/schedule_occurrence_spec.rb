@@ -144,7 +144,7 @@ describe ScheduleOccurrence do
         occurrence6 = create :schedule_occurrence, starts_at: (t + 1.4.day), ends_at: (t + 1.5.day)
         occurrence7 = create :schedule_occurrence, starts_at: (t + 1.5.day), ends_at: (t + 2.day) 
 
-        ScheduleOccurrence.gaps.should eq [[occurrence3, occurrence4]]
+        ScheduleOccurrence.problems[:gaps].should eq [[occurrence3, occurrence4]]
       end
     end
   end
@@ -162,7 +162,7 @@ describe ScheduleOccurrence do
         occurrence6 = create :schedule_occurrence, starts_at: (t + 1.4.day), ends_at: (t + 1.5.day)
         occurrence7 = create :schedule_occurrence, starts_at: (t + 1.5.day), ends_at: (t + 2.day) 
 
-        ScheduleOccurrence.overlaps.should eq [[occurrence2, occurrence3], [occurrence5, occurrence6]]
+        ScheduleOccurrence.problems[:overlaps].should eq [[occurrence2, occurrence3], [occurrence5, occurrence6]]
       end
     end
   end  
