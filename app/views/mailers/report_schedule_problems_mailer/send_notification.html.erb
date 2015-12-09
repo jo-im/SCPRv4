@@ -1,21 +1,21 @@
 There seem to be a few problems with the current SCPR program schedule:
 
-<% if @overlaps %>
+<% if @overlaps.any? %>
   <h2>Overlaps</h2>
     <ul>
-      <%= @overlaps.each do |overlap| %>
+      <% @overlaps.each do |overlap| %>
         <li>
-          <%= overlap[0].display_name %> ends at <%= overlap[0].ends_at %> but <%= overlap[1].display_name %> starts at <%= overlap[1].starts_at %>
+          <%= overlap[0].display_name %> ends at <%= overlap[0].ends_at.try(:strftime, "%I:%M%P %-d/%-m") %> but <%= overlap[1].display_name %> starts at <%= overlap[1].starts_at.try(:strftime, "%I:%M%P %-d/%-m") %>
         </li>
       <% end %>
     </ul>
 <% end %>
-<% if @gaps %>
+<% if @gaps.any? %>
   <h2>Gaps</h2>
   <ul>
-    <%= @gaps.each do |gap| %>
+    <% @gaps.each do |gap| %>
       <li>
-        <%= gap[0].display_name %> ends at <%= gap[0].ends_at %> but <%= gap[1].display_name %> starts at <%= gap[1].starts_at %>
+        <%= gap[0].display_name %> ends at <%= gap[0].ends_at.try(:strftime, "%I:%M%P %-d/%-m") %> but <%= gap[1].display_name %> starts at <%= gap[1].starts_at.try(:strftime, "%I:%M%P %-d/%-m") %>
       </li>
     <% end %>
   </ul>
