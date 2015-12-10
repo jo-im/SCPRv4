@@ -10,7 +10,7 @@ class Tag < ActiveRecord::Base
 
   belongs_to :parent, polymorphic: true
 
-  TYPES = ["Keyword", "Series", "Beat"]
+  TYPES = ["Beat", "Series", "Keyword"]
 
   def taggables(options={})
     ContentBase.search({ with: { "tags.slug" => self.slug } }.reverse_merge(options))
