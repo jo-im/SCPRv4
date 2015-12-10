@@ -15,6 +15,7 @@ class PopulateBeatTags < ActiveRecord::Migration
   ]
 
   def up
+    Tag.where(slug: "immigration").first.update(slug: "immigration-reform")
     TAG_NAMES.each do |tag|
       Tag.where(title: tag[0], slug: tag[1], description: tag[2], tag_type: "Beat").first_or_create
     end
@@ -22,5 +23,6 @@ class PopulateBeatTags < ActiveRecord::Migration
 
   def down
     Tag.where(title: TAG_NAMES.map(&:first), tag_type: "Beat").destroy_all
+    Tag.where(slug: "immigration-reform").not(tag_type: "Beat").first.update(slug: "immigration")
   end
 end
