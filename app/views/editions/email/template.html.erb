@@ -85,7 +85,7 @@
                           <a href="<%= edition.public_url %>" style="font-family: Georgia, serif; color: #007fa6; text-decoration: none;">&gt;Read this Short List in your web browser</a>
                         </p>
 <!--// BEGIN LEAD ABSTRACT-->
-                        <h5 class="timestamp-heading center" style="font-family: Georgia, serif; line-height: 1.1; margin-bottom: 15px; margin-top: 0 !important; color: #b24401 !important; font-weight: 400; font-size: 16px; text-align: center;" align="center"><%= edition.published_at.strftime("%B %d, %Y") %></h5>
+                        <h5 class="timestamp-heading center" style="font-family: Georgia, serif; line-height: 1.1; margin-bottom: 15px; margin-top: 0 !important; color: #b24401 !important; font-weight: 400; font-size: 16px; text-align: center;" align="center"><%= render_byline @edition %> | <%= edition.published_at.strftime("%B %d, %Y") %></h5>
                         <img src="<%= edition.abstracts.first.asset.eight.url %>" style="height: auto; line-height: 100%; max-width: 100%; outline: none; text-decoration: none; font-family: Georgia, serif; border-top-width: 0; border-right-width: 0; border-bottom-width: 0; border-left-width: 0;" />
                         <p style="font-family: Georgia, serif; color: #3d3d3d; font-weight: normal; font-size: 12px; font-style: italic;line-height: 18px; margin-top: 6px; margin-right: 0; margin-bottom: 18px; margin-left: 0;">
                                 <%= edition.abstracts.first.asset.owner %>
