@@ -1,15 +1,6 @@
 module ApplicationHelper
   include Twitter::Autolink
 
-  HEADSHOTS = [
-    "personalities/stoltze.png",
-    "personalities/peterson.png",
-    "personalities/guzman-lopez.png",
-    "personalities/julian.png",
-    "personalities/watt.png",
-    "personalities/oneil.png"
-  ]
-
   def add_ga_tracking_to(url)
     analytics_params = "?utm_source=kpcc&utm_medium=email&utm_campaign=short-list"
     url =~ /scpr\.org/ ? url + analytics_params : url
@@ -190,12 +181,6 @@ module ApplicationHelper
     end
 
     doc.to_s.html_safe
-  end
-
-  #----------
-
-  def random_headshot
-    image_tag HEADSHOTS.sample
   end
 
   #----------

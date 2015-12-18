@@ -482,12 +482,6 @@ describe ApplicationHelper do
     end
   end
 
-  describe '#random_headshot' do
-    it 'returns an img tag' do
-      helper.random_headshot.should match /<img /
-    end
-  end
-
   describe '#add_ga_tracking_to' do
     context 'given a url containing scpr.org' do
       url = 'www.scpr.org'
