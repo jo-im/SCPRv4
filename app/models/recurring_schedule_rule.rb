@@ -198,6 +198,10 @@ class RecurringScheduleRule < ActiveRecord::Base
     end
   end
 
+  def problems
+    ScheduleOccurrence.problems(self)
+  end
+
   private
 
   def execute_then_destroy_old_occurrences &block
@@ -265,5 +269,7 @@ class RecurringScheduleRule < ActiveRecord::Base
 
     existing
   end
+
+
 
 end

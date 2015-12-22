@@ -1,4 +1,16 @@
+<% if record.problems && (record.problems[:gaps].any? || record.problems[:overlaps].any?) %>
+  <%= form_block "Problems" do %>
+    <% record.problems[:gaps].each do |problem| %>
+      <%= problem %>
+    <% end %>
+    <% record.problems[:overlaps].each do |problem| %>
+      <%= problem %>
+    <% end %>
+  <% end %>
+<% end %>
+
 <%= form_block "Rule" do %>
+
   <%= f.input :interval, required: true do %>
     Every <%= f.input_field :interval, value: record.interval || RecurringScheduleRule::DEFAULT_INTERVAL, type: 'number', class: "tiny" %> Week(s)
   <% end %>

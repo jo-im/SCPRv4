@@ -12,10 +12,19 @@ class ScheduleOccurrence < ActiveRecord::Base
 
   scope :after,   ->(time) { where("starts_at > ?", time).order("starts_at") }
   scope :before,  ->(time) { where("ends_at < ?", time).order("starts_at") }
-  scope :future,  -> { after(Time.zone.now) }
+  scope :future,  ->(*args) do 
+    unless args.include?(:unsaved)
+      after(Time.zone.now)
+    else
+      ## This might get time consuming
+      ## but should be okay in general
+      ## since we have a job that prunes
+      ## old schedule occurrences.
+      all.to_a.select{|o| o.starts_at > Time.zone.now}.reject(&:id)
+    end
+  end
   scope :past,    -> { before(Time.zone.now) }
   scope :current, -> { at(Time.zone.now) }
-
 
   scope :between, ->(start_date, end_date) {
     where("starts_at < ? and ends_at > ?", end_date, start_date)
@@ -101,14 +110,30 @@ class ScheduleOccurrence < ActiveRecord::Base
       occurrences
     end
 
-    def problems
+    def problems rule=nil
       probs = {gaps: [], overlaps: []}
-      future.order("starts_at ASC").each_cons(2) do |pair|
+      unless rule
+        occurrences = future.order("starts_at ASC")
+      else
+        ## This is for when we need to look for
+        ## problems coming from unsaved schedule
+        ## occurrences from a rule.
+        # rule.build_two_weeks_of_occurrences
+        occurrences = rule.schedule_occurrences.future(:unsaved)
+          .concat(
+            future.where.not(recurring_schedule_rule_id: rule.id)
+            )
+          .sort_by(&:starts_at)
+      end
+      occurrences.each_cons(2) do |pair|
         next if pair.length < 2
-        if pair[0].ends_at < pair[1].starts_at
-          probs[:gaps] << pair
-        elsif pair[0].ends_at > pair[1].starts_at
-          probs[:overlaps] << pair
+        # if a rule is provided, only return problems that match the rule id.  else, return all problems.
+        if !rule || (pair[0].recurring_schedule_rule_id == rule.id || pair[1].recurring_schedule_rule_id == rule.id)
+          if pair[0].ends_at.to_i < pair[1].starts_at.to_i
+            probs[:gaps] << pair
+          elsif pair[0].ends_at.to_i > pair[1].starts_at.to_i
+            probs[:overlaps] << pair
+          end
         end
       end
       probs
@@ -164,7 +189,7 @@ class ScheduleOccurrence < ActiveRecord::Base
   end
 
   def display_name
-    [program.try(:title), event_title].compact.join(" - ")
+    [program.try(:title), recurring_schedule_rule_id, event_title].compact.join(" - ")
   end
 
 
