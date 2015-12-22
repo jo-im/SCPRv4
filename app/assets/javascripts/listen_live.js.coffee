@@ -115,7 +115,8 @@ class scpr.ListenLive
                 # hit our ad endpoint and see if there is something to play
                 $.ajax
                     type:       "GET"
-                    url:        "http://adserver.adtechus.com/?adrawdata/3.0/5511.1/3590535/0/0/header=yes;adct=text/xml;cors=yes"
+                    url: "http://adserver.adtechus.com/?adrawdata/3.0/5511.1/3683959/0/1013/header=yes;cookie=no;adct=text/xml;cors=yes"
+                    # url:        "http://adserver.adtechus.com/?adrawdata/3.0/5511.1/3590535/0/0/header=yes;adct=text/xml;cors=yes"
                     dataType:   "xml"
                     xhrFields:
                         withCredentials: true
@@ -131,35 +132,65 @@ class scpr.ListenLive
 
                         @_triton = obj
 
+                        class AdResponse
+                            constructor: (obj)->
+                                @obj = null      
+                            preroll: ->
+                                @ad().Creatives?.Creative?[0]?.Linear
+                            ad: ->
+                                @obj?.Ad?.InLine
+                            renderVisual: (el)->
+                                # is there a visual?
+                                if companions = @companions()
+                                    # find the first html or iframe
+                                    _(@companions()).find (c) =>
+                                        switch
+                                            when c.HTMLResource?
+                                                el?.html(c.HTMLResource.toString())
+                                                el.css(margin:"0 auto").width(c._width)
+                                                return true
+                                            when c.IFrameResource?
+                                                el?.html $("<iframe>",src:c.IFrameResource.toString(),width:c._width,height:c._height)
+                                                return true
+                                            else
+                                                return false
+                            impressionURL: ->
+                                @ad().Impression.toString() 
+                            playPreroll: (player)->
+                                if preroll = @preroll()
+                                    media = preroll.MediaFiles.MediaFile.toString()
+                                    player.jPlayer("setMedia",mp3:media).jPlayer("play")                                  
+
+                        class DAASTResponse extends AdResponse
+                            constructor: (obj)->
+                                @obj = obj.DAAST
+                            companions: ->
+                                @ad().Creatives?.Creative?[1]?.CompanionAds
+
+                        class VASTResponse extends AdResponse
+                            constructor: (obj)->
+                                @obj = obj.VAST
+                            companions: ->
+                                @ad().Creatives?.Creative?[1]?.CompanionAds?.Companion
+
+                        if obj.DAAST
+                            response = new DAASTResponse(obj)
+                        else if obj.VAST
+                            response = new VASTResponse(obj)
+                        else
+                            response = new AdResponse()
+
                         # is there an ad there for us?
-                        if ad = obj?.VAST?.Ad?.InLine
+                        if response.ad()
                             # is there a preroll?
-                            if (preroll = ad.Creatives?.Creative?[0]?.Linear) && !_timedOut
+                            if response.preroll() && !_timedOut
                                 # yes... play it
-                                media = preroll.MediaFiles.MediaFile.toString()
-                                @player.jPlayer("setMedia",mp3:media).jPlayer("play")
-
-                                @_impressionURL = ad.Impression.toString()
-
+                                response.playPreroll(@player)
+                                @_impressionURL = response.impressionURL()
                             else
                                 _playStream()
-
-                            # is there a visual?
-                            if companions = ad.Creatives?.Creative?[1]?.CompanionAds?.Companion
-                                # find the first html or iframe
-                                _(companions).find (c) =>
-                                    switch
-                                        when c.HTMLResource?
-                                            @_live_ad?.html(c.HTMLResource.toString())
-                                            @_live_ad.css(margin:"0 auto").width(c._width)
-                                            true
-                                        when c.IFrameResource?
-                                            @_live_ad?.html $("<iframe>",src:c.IFrameResource.toString(),width:c._width,height:c._height)
-
-                                            true
-                                        else
-                                            false
-
+                            # display a visual if there is one
+                            response.renderVisual(@_live_ad)
                         else
                             _playStream()
 
