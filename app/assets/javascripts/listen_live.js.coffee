@@ -55,13 +55,12 @@ class scpr.ListenLive
                     clearTimeout @_pause_timeout
                     @_pause_timeout = null
 
-                if url = @_impressionURL
-                    @_impressionURL = null
-                    # create an img and append it to our DOM
-                    img = $("<img src='#{url}'>").css("display:none")
-                    @_live_ad.append(img)
-                    #$.ajax type:"GET", url:"#{url};cors=yes", success:(resp) =>
-                        # nothing right now
+                if urls = @_impressionURLs
+                    @_impressionURLs = null
+                    _.each urls, (url) =>      
+                        # create an img and append it to our DOM              
+                        img = $("<img src='#{url}' style='display: none;'>")
+                        @_live_ad.append(img)
 
             @player.on $.jPlayer.event.pause, (evt) =>
 
@@ -115,6 +114,7 @@ class scpr.ListenLive
                 # hit our ad endpoint and see if there is something to play
                 $.ajax
                     type:       "GET"
+                    # url: "http://www.mocky.io/v2/567afabe0f00007d201af00e"
                     url: "http://adserver.adtechus.com/?adrawdata/3.0/5511.1/3683959/0/1013/header=yes;cookie=no;adct=text/xml;cors=yes"
                     # url:        "http://adserver.adtechus.com/?adrawdata/3.0/5511.1/3590535/0/0/header=yes;adct=text/xml;cors=yes"
                     dataType:   "xml"
@@ -140,38 +140,51 @@ class scpr.ListenLive
                             ad: ->
                                 @obj?.Ad?.InLine
                             renderVisual: (el)->
-                                # is there a visual?
-                                if companions = @companions()
-                                    # find the first html or iframe
-                                    _(@companions()).find (c) =>
-                                        switch
-                                            when c.HTMLResource?
-                                                el?.html(c.HTMLResource.toString())
-                                                el.css(margin:"0 auto").width(c._width)
-                                                return true
-                                            when c.IFrameResource?
-                                                el?.html $("<iframe>",src:c.IFrameResource.toString(),width:c._width,height:c._height)
-                                                return true
-                                            else
-                                                return false
-                            impressionURL: ->
-                                @ad().Impression.toString() 
+                                # find the first html or iframe
+                                _(@companions()).find (c) =>
+                                    switch
+                                        when c.HTMLResource?
+                                            el?.html(c.HTMLResource.toString())
+                                            el.css(margin:"0 auto").width(c._width)
+                                            @_submitViewEvent(c)
+                                        when c.IFrameResource?
+                                            el?.html $("<iframe>",src:c.IFrameResource.toString(),width:c._width,height:c._height)
+                                            @_submitViewEvent(c)
+                                            return true
+                                        else
+                                            return false
+                            impressions: ->
+                                # Always return an array, even if there is one or no impressions
+                                impressions = @ad().Impression
+                                if impressions
+                                    if _.isArray(impressions)
+                                        parsedImpressions = impressions
+                                    else
+                                        parsedImpressions = [impressions]
+                                else
+                                    parsedImpressions = []
+                                _.map parsedImpressions, (i) ->
+                                    return i.toString()
                             playPreroll: (player)->
                                 if preroll = @preroll()
                                     media = preroll.MediaFiles.MediaFile.toString()
-                                    player.jPlayer("setMedia",mp3:media).jPlayer("play")                                  
+                                    player.jPlayer("setMedia",mp3:media).jPlayer("play")     
+                            _submitViewEvent: (companion) ->
+                                if url = companion.TrackingEvents.Tracking.toString()
+                                    $.get("#{url};cors=yes")                                
+
 
                         class DAASTResponse extends AdResponse
                             constructor: (obj)->
                                 @obj = obj.DAAST
                             companions: ->
-                                @ad().Creatives?.Creative?[1]?.CompanionAds
+                                @ad().Creatives?.Creative?[1]?.CompanionAds or []
 
                         class VASTResponse extends AdResponse
                             constructor: (obj)->
                                 @obj = obj.VAST
                             companions: ->
-                                @ad().Creatives?.Creative?[1]?.CompanionAds?.Companion
+                                @ad().Creatives?.Creative?[1]?.CompanionAds?.Companion or []
 
                         if obj.DAAST
                             response = new DAASTResponse(obj)
@@ -186,7 +199,7 @@ class scpr.ListenLive
                             if response.preroll() && !_timedOut
                                 # yes... play it
                                 response.playPreroll(@player)
-                                @_impressionURL = response.impressionURL()
+                                @_impressionURLs = response.impressions()
                             else
                                 _playStream()
                             # display a visual if there is one
