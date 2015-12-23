@@ -146,7 +146,6 @@ class scpr.ListenLive
                                         when c.HTMLResource?
                                             el?.html(c.HTMLResource.toString())
                                             el.css(margin:"0 auto").width(c._width)
-                                            @_submitViewEvent(c)
                                         when c.IFrameResource?
                                             el?.html $("<iframe>",src:c.IFrameResource.toString(),width:c._width,height:c._height)
                                             @_submitViewEvent(c)
