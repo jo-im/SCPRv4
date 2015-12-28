@@ -134,7 +134,9 @@ class scpr.ListenLive
 
                         class AdResponse
                             constructor: (obj)->
-                                @obj = null      
+                                # choose DAAST or VAST response
+                                # give DAAST higher precedence than VAST
+                                @obj = obj.DAAST or obj.VAST or undefined     
                             preroll: ->
                                 @ad().Creatives?.Creative?[0]?.Linear
                             ad: ->
@@ -164,33 +166,17 @@ class scpr.ListenLive
                                     parsedImpressions = []
                                 _.map parsedImpressions, (i) ->
                                     return i.toString()
+                            companions: ->
+                                @ad().Creatives?.Creative?[1]?.CompanionAds or @ad().Creatives?.Creative?[1]?.CompanionAds?.Companion or []
                             playPreroll: (player)->
                                 if preroll = @preroll()
                                     media = preroll.MediaFiles.MediaFile.toString()
                                     player.jPlayer("setMedia",mp3:media).jPlayer("play")     
                             _submitViewEvent: (companion) ->
                                 if url = companion.TrackingEvents.Tracking.toString()
-                                    $.get("#{url};cors=yes")                                
+                                    $.get("#{url};cors=yes")
 
-
-                        class DAASTResponse extends AdResponse
-                            constructor: (obj)->
-                                @obj = obj.DAAST
-                            companions: ->
-                                @ad().Creatives?.Creative?[1]?.CompanionAds or []
-
-                        class VASTResponse extends AdResponse
-                            constructor: (obj)->
-                                @obj = obj.VAST
-                            companions: ->
-                                @ad().Creatives?.Creative?[1]?.CompanionAds?.Companion or []
-
-                        if obj.DAAST
-                            response = new DAASTResponse(obj)
-                        else if obj.VAST
-                            response = new VASTResponse(obj)
-                        else
-                            response = new AdResponse()
+                        response = new AdResponse(obj)
 
                         # is there an ad there for us?
                         if response.ad()
