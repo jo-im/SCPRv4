@@ -1,10 +1,6 @@
 #= require xml2json
 
 class scpr.ListenLive
-    constructor: (options) ->
-        # This was old code for a StreamMachine PoC. It is no longer used.
-
-    #----------
 
     class @CurrentGen
         DefaultOptions:
@@ -21,8 +17,7 @@ class scpr.ListenLive
         constructor: (opts) ->
             @options = _.defaults opts, @DefaultOptions
 
-            @eventStacks = 
-                playerStateChange: []
+            @eventQueues = {}
 
             @x2js = new X2JS()
 
@@ -36,29 +31,6 @@ class scpr.ListenLive
             @_on_now = null
 
             @_playerReady = false
-
-            @nielsen = new NOLCMB.ggInitialize
-                sfcode: "cert"
-                apid  : "whateverdawg"
-                apn   : "test"
-
-            @nielsen._play = =>
-                @nielsen.ggPM "loadMetadata",
-                    stationType: 2
-                    dataSrc    : "cms"
-                    type       : "radio"
-                    assetid    : "KPCC-FM"
-                    provider   : "American Public Media - Radio"
-
-                @nielsen.ggPM "play", Math.floor(Date.now() / 1000)
-                console.log("nielsen play")
-                @_setPlayheadPosition = setInterval(=>
-                    @nielsen?.ggPM "setPlayheadPosition", Math.floor(Date.now() / 1000)
-                )
-
-            @nielsen._stop = =>
-                @nielsen.ggPM "stop", Math.floor(Date.now() / 1000)
-                clearInterval(@_setPlayheadPosition)
 
             # -- set up our player -- #
 
@@ -81,35 +53,27 @@ class scpr.ListenLive
                     clearTimeout @_pause_timeout
                     @_pause_timeout = null
 
-                if url = @_impressionURL
-                    @_impressionURL = null
-                    # create an img and append it to our DOM
-                    img = $("<img src='#{url}'>").css("display:none")
-                    @_live_ad.append(img)
-                    #$.ajax type:"GET", url:"#{url};cors=yes", success:(resp) =>
-                        # nothing right now
+                @adResponse?.touchImpressions(@_live_ad)
 
-                @nielsen._play() if @_shouldReportToNielsen && !@_shouldTryAd || @options.skip_preroll
-                @_triggerOnPlayerStateChange()
+                @nielsen?._play() if !@_shouldTryAd || @options.skip_preroll
 
             @player.on $.jPlayer.event.pause, (evt) =>
-
                 # set a timer to convert this pause to a stop in one minute
                 @_pause_timeout = setTimeout =>
                     @player.jPlayer("clearMedia")
                     @_shouldTryAd = true
+                    # disable nielsen and allow it to be re-enabled by preroll ending
+                    @nielsen = undefined
                 , @options.pause_timeout * 1000
-                @nielsen._stop()
-                @_triggerOnPlayerStateChange()
+                @nielsen?._stop() if !@_shouldTryAd || @options.skip_preroll
 
             @player.on $.jPlayer.event.error, (evt) =>
                 if evt.jPlayer.error.type == "e_url_not_set"
                     @_play()
 
             @player.on $.jPlayer.event.ended, (evt) =>
-                @nielsen._stop()
                 @_play()
-                @_triggerOnPlayerStateChange()
+                @_trigger_player_ended?()
 
             $.jPlayer.timeFormat.showHour = true;
 
@@ -122,12 +86,6 @@ class scpr.ListenLive
                 setTimeout =>
                     @_buildSchedule() unless @_on_now == @schedule.on_now()
                 , 60*1000
-
-        #----------
-        _triggerOnPlayerStateChange: ->
-            if @eventStacks?.playerStateChange
-                _.each @eventStacks.playerStateChange, (e) =>
-                    e.call(@)
 
         #----------
 
@@ -154,9 +112,9 @@ class scpr.ListenLive
                 # hit our ad endpoint and see if there is something to play
                 $.ajax
                     type:       "GET"
-                    url: "http://www.mocky.io/v2/567afabe0f00007d201af00e"
+                    # url: "http://www.mocky.io/v2/567afabe0f00007d201af00e"
                     # url: "http://adserver.adtechus.com/?adrawdata/3.0/5511.1/3683959/0/1013/header=yes;cookie=no;adct=text/xml;cors=yes"
-                    # url:        "http://adserver.adtechus.com/?adrawdata/3.0/5511.1/3590535/0/0/header=yes;adct=text/xml;cors=yes"
+                    url:        "http://adserver.adtechus.com/?adrawdata/3.0/5511.1/3590535/0/0/header=yes;adct=text/xml;cors=yes"
                     dataType:   "xml"
                     xhrFields:
                         withCredentials: true
@@ -164,77 +122,38 @@ class scpr.ListenLive
                         console.log "ajax error ", err
                     success:    (xml) =>
                         console.log "xml is ", xml
-                        @_xml = xml
 
                         clearTimeout _errorTimeout if _errorTimeout
 
                         obj = @x2js.xml2json(xml)
 
-                        @_triton = obj
-
-                        class AdResponse
-                            constructor: (obj)->
-                                # choose DAAST or VAST response
-                                # give DAAST higher precedence than VAST
-                                @obj = obj.DAAST or obj.VAST or undefined     
-                            preroll: ->
-                                @ad().Creatives?.Creative?[0]?.Linear
-                            ad: ->
-                                @obj?.Ad?.InLine
-                            renderVisual: (el)->
-                                # find the first html or iframe
-                                _(@companions()).find (c) =>
-                                    switch
-                                        when c.HTMLResource?
-                                            el?.html(c.HTMLResource.toString())
-                                            el.css(margin:"0 auto").width(c._width)
-                                        when c.IFrameResource?
-                                            el?.html $("<iframe>",src:c.IFrameResource.toString(),width:c._width,height:c._height)
-                                            @_submitViewEvent(c)
-                                            return true
-                                        else
-                                            return false
-                            impressions: ->
-                                # Always return an array, even if there is one or no impressions
-                                impressions = @ad().Impression
-                                if impressions
-                                    if _.isArray(impressions)
-                                        parsedImpressions = impressions
-                                    else
-                                        parsedImpressions = [impressions]
-                                else
-                                    parsedImpressions = []
-                                _.map parsedImpressions, (i) ->
-                                    return i.toString()
-                            companions: ->
-                                @ad().Creatives?.Creative?[1]?.CompanionAds or @ad().Creatives?.Creative?[1]?.CompanionAds?.Companion or []
-                            playPreroll: (player)->
-                                if preroll = @preroll()
-                                    media = preroll.MediaFiles.MediaFile.toString()
-                                    player.jPlayer("setMedia",mp3:media).jPlayer("play")   
-                            _submitViewEvent: (companion) ->
-                                if url = companion.TrackingEvents.Tracking.toString()
-                                    $.get("#{url};cors=yes")
-
-                        response = new AdResponse(obj)
+                        if obj.DAAST
+                            @adResponse = new DAASTResponse(obj.DAAST)
+                        else if obj.VAST
+                            @adResponse = new VASTResponse(obj.VAST)
+                        else
+                            @adResponse = new AdResponse()
 
                         # is there an ad there for us?
-                        if response.ad()
+                        if @adResponse.ad()
                             # is there a preroll?
-                            if response.preroll() && !_timedOut
+                            if @adResponse.preroll() && !_timedOut
                                 # yes... play it
-                                @.on "playerStateChange", =>
-                                    @_shouldReportToNielsen = true
-                                response.playPreroll(@player)
-                                @_impressionURLs = response.impressions()
+                                @.one "ended", => @_initializeNielsen() # and start nielsen tracking after preroll finishes
+                                @adResponse.playPreroll(@player)
                             else
-                                @_shouldReportToNielsen = true
+                                @_initializeNielsen()
                                 _playStream()
                             # display a visual if there is one
-                            response.renderVisual(@_live_ad)
+                            @adResponse.renderVisual(@_live_ad)
                         else
-                            @_shouldReportToNielsen = true
+                            @_initializeNielsen()
                             _playStream()
+
+        #----------
+
+        _initializeNielsen: ->
+            @nielsen ||= new Nielsen()
 
         #----------
 
@@ -260,9 +179,16 @@ class scpr.ListenLive
 
         #----------
 
-        on: (eventName, callback)->
-            @eventStacks[eventName].push(callback)
-
+        one: (eventName, callback)->
+            # run a callback once upon event
+            if !@eventQueues[eventName]
+                @eventQueues[eventName] = []
+                @["_trigger_player_#{eventName}"] = =>
+                    len = @eventQueues[eventName].length
+                    while len > 0
+                        @eventQueues[eventName].shift().call(@)
+                        len--
+            @eventQueues[eventName].push(callback)
 
 
     #----------
@@ -305,3 +231,111 @@ class scpr.ListenLive
         on_now: -> @on_at (new Date)
 
     #----------
+
+    class AdResponse
+        constructor: (obj)->
+            @obj = obj or undefined
+        preroll: ->
+            @ad().Creatives?.Creative?[0]?.Linear
+        ad: ->
+            @obj?.Ad?.InLine
+        renderVisual: (el)->
+            # find the first html or iframe
+            companions = @companions()
+            resources = {}
+
+            resourceTypes = [
+              {
+                name: 'HTMLResource'
+                render: (c) ->
+                    el?.html(c.HTMLResource.toString())
+                    el.css(margin:"0 auto").width(c._width)
+              }
+              {
+                name: 'IFrameResource'
+                render: (c) ->
+                    el?.html $("<iframe>",src:c.IFrameResource.toString(),width:c._width,height:c._height)
+                    @_submitViewEvent(c)
+              }
+            ]
+
+            for r in resourceTypes
+                break if _(companions).find (c) =>
+                    if c[r.name]?
+                        r.render(c)
+                        found = true
+                        return true
+                    else
+                        return false
+
+        impressions: ->
+            # Always return an array, even if there is one or no impressions
+            impressions = _.flatten [@ad().Impression or []]
+            _.map impressions, (i) ->
+                return i.toString()
+        companions: ->
+            []
+        playPreroll: (player)->
+            if preroll = @preroll()
+                media = preroll.MediaFiles.MediaFile.toString()
+                player.jPlayer("setMedia",mp3:media).jPlayer("play")
+        _submitViewEvent: (companion) ->
+            trackingEvents = _.flatten([companion.TrackingEvents.Tracking])
+            # only use the creativeView tracking event
+            _.find trackingEvents, (e) ->
+                if e._event == "creativeView"
+                    url = e.toString()
+                    $.get("#{url};cors=yes")
+                    return true
+                else
+                    return false
+        touchImpressions: (el)->
+            if el && (impressions = @impressions())
+                _.each impressions, (url) =>      
+                    # create an img and append it to our DOM
+                    img = $("<img src='#{url}'>").css("display:none")
+                    el.append(img)
+                console.log "touched impressions"
+
+    #----------
+
+    class DAASTResponse extends AdResponse
+        companions: ->
+            @ad().Creatives?.Creative?[1]?.CompanionAds or []
+
+    #----------
+
+    class VASTResponse extends AdResponse
+        companions: ->
+            @ad().Creatives?.Creative?[1]?.CompanionAds?.Companion or []
+
+    #----------
+
+    class Nielsen
+        constructor: ->
+            @nielsen = new NOLCMB.ggInitialize
+                sfcode: "cert"
+                apid  : "T4FA39C01-1BC0-41C3-A309-06ED295D84D2"
+                apn   : "test"
+                console.log "nielsen initialize"
+        _play: =>
+            if @nielsen
+                @nielsen.ggPM "loadMetadata",
+                    stationType: 2
+                    dataSrc    : "cms"
+                    type       : "radio"
+                    assetid    : "KPCC-FM"
+                    provider   : "Southern California Public Radio - Radio"
+
+                @nielsen.ggPM "play", Math.floor(Date.now() / 1000)
+                console.log "nielsen play"
+                # send setPlayheadPosition every 2 seconds, as specified by Nielsen
+                @_setPlayheadPosition = setInterval(=>
+                    @nielsen?.ggPM "setPlayheadPosition", Math.floor(Date.now() / 1000)
+                    console.log "nielsen set playhead position"
+                , 2000)
+        _stop: =>
+            if @nielsen
+                @nielsen.ggPM "stop", Math.floor(Date.now() / 1000)
+                console.log "nielsen stop"
+            clearInterval(@_setPlayheadPosition)
