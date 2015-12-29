@@ -17,8 +17,6 @@ class scpr.ListenLive
         constructor: (opts) ->
             @options = _.defaults opts, @DefaultOptions
 
-            @eventQueues = {}
-
             @x2js = new X2JS()
 
             @player = $(@options.player)
@@ -73,7 +71,8 @@ class scpr.ListenLive
 
             @player.on $.jPlayer.event.ended, (evt) =>
                 @_play()
-                @_trigger_player_ended?()
+                @onEnded?()
+                @onEnded = undefined
 
             $.jPlayer.timeFormat.showHour = true;
 
@@ -139,7 +138,7 @@ class scpr.ListenLive
                             # is there a preroll?
                             if @adResponse.preroll() && !_timedOut
                                 # yes... play it
-                                @.one "ended", => @_initializeNielsen() # and start nielsen tracking after preroll finishes
+                                @onEnded = @_initializeNielsen # and start nielsen tracking after preroll finishes
                                 @adResponse.playPreroll(@player)
                             else
                                 @_initializeNielsen()
@@ -176,20 +175,6 @@ class scpr.ListenLive
                 show_splash_img = 'http://media.scpr.org/assets/images/programs/' + show_slug + '_splash@2x.jpg'
 
                 $('.wrapper, .wrapper-backdrop').css('background-image', 'url(' + show_splash_img + ')')
-
-        #----------
-
-        one: (eventName, callback)->
-            # run a callback once upon event
-            if !@eventQueues[eventName]
-                @eventQueues[eventName] = []
-                @["_trigger_player_#{eventName}"] = =>
-                    len = @eventQueues[eventName].length
-                    while len > 0
-                        @eventQueues[eventName].shift().call(@)
-                        len--
-            @eventQueues[eventName].push(callback)
-
 
     #----------
 
