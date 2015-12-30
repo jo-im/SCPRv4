@@ -37,9 +37,9 @@ class ScheduleOccurrence < ActiveRecord::Base
     probs = {gaps: [], overlaps: []}
     future.order("starts_at ASC").each_cons(2) do |pair|
       next if pair.length < 2
-      if pair[0].ends_at < pair[1].starts_at
+      if pair[0].ends_at.to_i < pair[1].starts_at.to_i
         probs[:gaps] << pair
-      elsif pair[0].ends_at > pair[1].starts_at
+      elsif pair[0].ends_at.to_i > pair[1].starts_at.to_i
         probs[:overlaps] << pair
       end
     end
