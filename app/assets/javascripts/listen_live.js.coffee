@@ -225,10 +225,9 @@ class scpr.ListenLive
         ad: ->
             @obj?.Ad?.InLine
         renderVisual: (el)->
-            # find the first html or iframe
             companions = @companions()
             resources = {}
-
+            # ordered by precedence
             resourceTypes = [
               {
                 name: 'HTMLResource'
@@ -248,7 +247,6 @@ class scpr.ListenLive
                 break if _(companions).find (c) =>
                     if c[r.name]?
                         r.render(c)
-                        found = true
                         return true
                     else
                         return false
@@ -298,11 +296,14 @@ class scpr.ListenLive
 
     class Nielsen
         constructor: ->
-            @nielsen = new NOLCMB.ggInitialize
-                sfcode: "cert"
-                apid  : "T4FA39C01-1BC0-41C3-A309-06ED295D84D2"
-                apn   : "test"
-                console.log "nielsen initialize"
+            if NOLCMB?
+                @nielsen = new NOLCMB.ggInitialize
+                    sfcode: "cert"
+                    apid  : "T4FA39C01-1BC0-41C3-A309-06ED295D84D2"
+                    apn   : "test"
+                    console.log "nielsen initialize"
+            else
+                @nielsen = undefined
         _play: =>
             if @nielsen
                 @nielsen.ggPM "loadMetadata",
