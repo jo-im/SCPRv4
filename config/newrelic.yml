@@ -1,3 +1,4 @@
 development:
   developer_mode: true
   resque.capture_params: true
+  rules.ignore_url_regexes: ["^/assets"]

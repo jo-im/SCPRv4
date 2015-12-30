@@ -60,6 +60,11 @@ task :scheduler => [:environment] do
     Job::SyncRemoteArticles.enqueue()
   end
 
+  # retry failed Eloqua emails
+  scheduler.every '1m' do |job|
+    Job::RetryEmails.enqueue()
+  end
+
   # Go!
   puts "Scheduler running."
   scheduler.join
