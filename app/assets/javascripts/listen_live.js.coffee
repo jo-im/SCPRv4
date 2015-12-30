@@ -121,18 +121,9 @@ class scpr.ListenLive
                         console.log "ajax error ", err
                     success:    (xml) =>
                         console.log "xml is ", xml
-
                         clearTimeout _errorTimeout if _errorTimeout
-
-                        obj = @x2js.xml2json(xml)
-
-                        if obj.DAAST
-                            @adResponse = new DAASTResponse(obj.DAAST)
-                        else if obj.VAST
-                            @adResponse = new VASTResponse(obj.VAST)
-                        else
-                            @adResponse = new AdResponse()
-
+                        response_xml = @x2js.xml2json(xml)
+                        @adResponse = new AdResponse(response_xml)
                         # is there an ad there for us?
                         if @adResponse.ad()
                             # is there a preroll?
@@ -218,8 +209,9 @@ class scpr.ListenLive
     #----------
 
     class AdResponse
-        constructor: (obj)->
-            @obj = obj or undefined
+        constructor: (xml)->
+            @xml = xml
+            @obj = xml.DAAST or xml.VAST or undefined
         preroll: ->
             @ad().Creatives?.Creative?[0]?.Linear
         ad: ->
@@ -257,7 +249,12 @@ class scpr.ListenLive
             _.map impressions, (i) ->
                 return i.toString()
         companions: ->
-            []
+            if @xml.DAAST
+                @ad().Creatives?.Creative?[1]?.CompanionAds or []
+            else if @xml.VAST
+                @ad().Creatives?.Creative?[1]?.CompanionAds?.Companion or []
+            else
+                []
         playPreroll: (player)->
             if preroll = @preroll()
                 media = preroll.MediaFiles.MediaFile.toString()
@@ -279,18 +276,6 @@ class scpr.ListenLive
                     img = $("<img src='#{url}'>").css("display:none")
                     el.append(img)
                 console.log "touched impressions"
-
-    #----------
-
-    class DAASTResponse extends AdResponse
-        companions: ->
-            @ad().Creatives?.Creative?[1]?.CompanionAds or []
-
-    #----------
-
-    class VASTResponse extends AdResponse
-        companions: ->
-            @ad().Creatives?.Creative?[1]?.CompanionAds?.Companion or []
 
     #----------
 
