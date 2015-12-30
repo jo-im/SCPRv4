@@ -131,6 +131,42 @@ describe ScheduleOccurrence do
     end
   end
 
+  describe '::gaps' do
+    it "returns a hash with the correct pairs of gaps" do
+      Timecop.freeze(Date.parse('2013-06-01')) do
+        t = Time.zone.local(2013, 6, 1)
+
+        occurrence1 = create :schedule_occurrence, starts_at: t, ends_at: (t + 1.hour)
+        occurrence2 = create :schedule_occurrence, starts_at: (t + 1.hour), ends_at: (t + 1.5.hour)
+        occurrence3 = create :schedule_occurrence, starts_at: (t + 1.25.hour), ends_at: (t + 2.hour)
+        occurrence4 = create :schedule_occurrence, starts_at: (t + 1.day), ends_at: (t + 1.1.day)
+        occurrence5 = create :schedule_occurrence, starts_at: (t + 1.1.day), ends_at: (t + 1.5.day)
+        occurrence6 = create :schedule_occurrence, starts_at: (t + 1.4.day), ends_at: (t + 1.5.day)
+        occurrence7 = create :schedule_occurrence, starts_at: (t + 1.5.day), ends_at: (t + 2.day) 
+
+        ScheduleOccurrence.problems[:gaps].should eq [[occurrence3, occurrence4]]
+      end
+    end
+  end
+
+  describe '::overlaps' do
+    it "returns a hash with the correct pairs of overlaps" do
+      Timecop.freeze(Date.parse('2013-06-01')) do
+        t = Time.zone.local(2013, 6, 1)
+
+        occurrence1 = create :schedule_occurrence, starts_at: t, ends_at: (t + 1.hour)
+        occurrence2 = create :schedule_occurrence, starts_at: (t + 1.hour), ends_at: (t + 1.5.hour)
+        occurrence3 = create :schedule_occurrence, starts_at: (t + 1.25.hour), ends_at: (t + 2.hour)
+        occurrence4 = create :schedule_occurrence, starts_at: (t + 1.day), ends_at: (t + 1.1.day)
+        occurrence5 = create :schedule_occurrence, starts_at: (t + 1.1.day), ends_at: (t + 1.5.day)
+        occurrence6 = create :schedule_occurrence, starts_at: (t + 1.4.day), ends_at: (t + 1.5.day)
+        occurrence7 = create :schedule_occurrence, starts_at: (t + 1.5.day), ends_at: (t + 2.day) 
+
+        ScheduleOccurrence.problems[:overlaps].should eq [[occurrence2, occurrence3], [occurrence5, occurrence6]]
+      end
+    end
+  end  
+
 
   describe '#following_occurrence' do
     it "selects the slot immediately following this one" do

@@ -33,6 +33,19 @@ class ScheduleOccurrence < ActiveRecord::Base
 
   scope :filtered_by_date, ->(date) { where("DATE(starts_at) = ?", date) }
 
+  scope :problems, ->{
+    probs = {gaps: [], overlaps: []}
+    future.order("starts_at ASC").each_cons(2) do |pair|
+      next if pair.length < 2
+      if pair[0].ends_at.to_i < pair[1].starts_at.to_i
+        probs[:gaps] << pair
+      elsif pair[0].ends_at.to_i > pair[1].starts_at.to_i
+        probs[:overlaps] << pair
+      end
+    end
+    probs 
+  }
+
 ############################
 
   validate :program_or_info_is_present
@@ -100,6 +113,7 @@ class ScheduleOccurrence < ActiveRecord::Base
 
       occurrences
     end
+
   end
 
 
@@ -147,6 +161,10 @@ class ScheduleOccurrence < ActiveRecord::Base
       :title => self.title,
       :link  => self.public_url
     }
+  end
+
+  def display_name
+    [program.try(:title), event_title].compact.join(" - ")
   end
 
 
