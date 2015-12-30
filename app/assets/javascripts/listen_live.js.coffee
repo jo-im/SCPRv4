@@ -53,7 +53,7 @@ class scpr.ListenLive
 
                 @adResponse?.touchImpressions(@_live_ad)
 
-                @nielsen?._play() if !@_shouldTryAd || @options.skip_preroll
+                @nielsen?.play() if !@_shouldTryAd || @options.skip_preroll
 
             @player.on $.jPlayer.event.pause, (evt) =>
                 # set a timer to convert this pause to a stop in one minute
@@ -63,7 +63,7 @@ class scpr.ListenLive
                     # disable nielsen and allow it to be re-enabled by preroll ending
                     @nielsen = undefined
                 , @options.pause_timeout * 1000
-                @nielsen?._stop() if !@_shouldTryAd || @options.skip_preroll
+                @nielsen?.stop() if !@_shouldTryAd || @options.skip_preroll
 
             @player.on $.jPlayer.event.error, (evt) =>
                 if evt.jPlayer.error.type == "e_url_not_set"
@@ -280,31 +280,31 @@ class scpr.ListenLive
     class Nielsen
         constructor: ->
             if NOLCMB?
-                @nielsen = new NOLCMB.ggInitialize
+                @nolcmb = new NOLCMB.ggInitialize
                     sfcode: "cert"
                     apid  : "T4FA39C01-1BC0-41C3-A309-06ED295D84D2"
                     apn   : "test"
                     console.log "nielsen initialize"
             else
-                @nielsen = undefined
-        _play: =>
-            if @nielsen
-                @nielsen.ggPM "loadMetadata",
+                @nolcmb = undefined
+        play: =>
+            if @nolcmb
+                @nolcmb.ggPM "loadMetadata",
                     stationType: 2
                     dataSrc    : "cms"
                     type       : "radio"
                     assetid    : "KPCC-FM"
                     provider   : "Southern California Public Radio - Radio"
 
-                @nielsen.ggPM "play", Math.floor(Date.now() / 1000)
+                @nolcmb.ggPM "play", Math.floor(Date.now() / 1000)
                 console.log "nielsen play"
                 # send setPlayheadPosition every 2 seconds, as specified by Nielsen
                 @_setPlayheadPosition = setInterval(=>
-                    @nielsen?.ggPM "setPlayheadPosition", Math.floor(Date.now() / 1000)
+                    @nolcmb?.ggPM "setPlayheadPosition", Math.floor(Date.now() / 1000)
                     console.log "nielsen set playhead position"
                 , 2000)
-        _stop: =>
-            if @nielsen
-                @nielsen.ggPM "stop", Math.floor(Date.now() / 1000)
+        stop: =>
+            if @nolcmb
+                @nolcmb.ggPM "stop", Math.floor(Date.now() / 1000)
                 console.log "nielsen stop"
             clearInterval(@_setPlayheadPosition)
