@@ -280,7 +280,7 @@ class scpr.ListenLive
         constructor: ->
             if NOLCMB?
                 @nolcmb = new NOLCMB.ggInitialize
-                    sfcode: "cert"
+                    sfcode: "uat-cert"
                     apid  : "T4FA39C01-1BC0-41C3-A309-06ED295D84D2"
                     apn   : "test"
             else
