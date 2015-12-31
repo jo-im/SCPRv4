@@ -55,7 +55,7 @@ class scpr.ListenLive
 
                 @adResponse?.touchImpressions(@_live_ad)
 
-                @nielsen?.play() if !@_shouldTryAd || @options.skip_preroll
+                @nielsen?.play() if @options.skip_preroll || !@_shouldTryAd
 
             @player.on $.jPlayer.event.pause, (evt) =>
                 # set a timer to convert this pause to a stop in one minute
@@ -63,7 +63,7 @@ class scpr.ListenLive
                     @player.jPlayer("clearMedia")
                     @_shouldTryAd = true
                 , @options.pause_timeout * 1000
-                @nielsen?.stop() if !@_shouldTryAd || @options.skip_preroll
+                @nielsen?.stop() if @options.skip_preroll || !@_shouldTryAd
 
             @player.on $.jPlayer.event.error, (evt) =>
                 if evt.jPlayer.error.type == "e_url_not_set"
