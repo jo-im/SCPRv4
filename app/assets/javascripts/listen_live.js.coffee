@@ -15,22 +15,25 @@ class scpr.ListenLive
             skip_preroll:       false
 
         constructor: (opts) ->
-            @options = _.defaults opts, @DefaultOptions
+            @options        = _.defaults opts, @DefaultOptions
 
-            @x2js = new X2JS()
+            @x2js           = new X2JS()
 
-            @player = $(@options.player)
+            @player         = $(@options.player)
+
             @_pause_timeout = null
 
-            @_live_ad = $(@options.ad_element)
+            @_live_ad       = $(@options.ad_element)
 
-            @_shouldTryAd = true
+            @_shouldTryAd   = true
 
-            @_on_now = null
+            @_inPreroll     = false
 
-            @_playerReady = false
+            @_on_now        = null
 
-            @nielsen = new Nielsen()
+            @_playerReady   = false
+
+            @nielsen        = new Nielsen()
 
             # -- set up our player -- #
 
@@ -55,15 +58,15 @@ class scpr.ListenLive
 
                 @adResponse?.touchImpressions(@_live_ad)
 
-                @nielsen?.play() if @options.skip_preroll || !@_shouldTryAd
+                @nielsen?.play() if !@_inPreroll
 
             @player.on $.jPlayer.event.pause, (evt) =>
                 # set a timer to convert this pause to a stop in one minute
                 @_pause_timeout = setTimeout =>
                     @player.jPlayer("clearMedia")
                     @_shouldTryAd = true
-                , @options.pause_timeout * 1000
-                @nielsen?.stop() if @options.skip_preroll || !@_shouldTryAd
+                , @options.pause_timeout * 10
+                @nielsen?.stop() if !@_inPreroll
 
             @player.on $.jPlayer.event.error, (evt) =>
                 if evt.jPlayer.error.type == "e_url_not_set"
@@ -71,6 +74,7 @@ class scpr.ListenLive
 
             @player.on $.jPlayer.event.ended, (evt) =>
                 @_shouldTryAd = false
+                @_inPreroll   = false
                 @_play()
 
             $.jPlayer.timeFormat.showHour = true;
@@ -95,12 +99,13 @@ class scpr.ListenLive
             if !@_shouldTryAd || @options.skip_preroll
                 _playStream()
             else
+                @_shouldTryAd = false
                 # set a timeout so that we make sure the stream starts playing
                 # regardless of whether our preroll works
                 _timedOut = false
                 _errorTimeout = setTimeout =>
                     _timedOut = true
-                    @_shouldTryAd = false
+                    @_inPreroll = false
                     console.log "timed out waiting for ad response"
                     _playStream()
                 , 3000
@@ -124,6 +129,7 @@ class scpr.ListenLive
                             # is there a preroll?
                             if @adResponse.preroll() && !_timedOut
                                 # yes... play it
+                                @_inPreroll = true
                                 @adResponse.playPreroll(@player)
                             else
                                 _playStream()
