@@ -273,7 +273,6 @@ class scpr.ListenLive
                     # create an img and append it to our DOM
                     img = $("<img src='#{url}'>").css("display:none")
                     el.append(img)
-                console.log "touched impressions"
 
     #----------
 
@@ -284,7 +283,6 @@ class scpr.ListenLive
                     sfcode: "cert"
                     apid  : "T4FA39C01-1BC0-41C3-A309-06ED295D84D2"
                     apn   : "test"
-                    console.log "nielsen initialize"
             else
                 @nolcmb = undefined
         play: =>
@@ -297,14 +295,11 @@ class scpr.ListenLive
                     provider   : "Southern California Public Radio - Radio"
 
                 @nolcmb.ggPM "play", Math.floor(Date.now() / 1000)
-                console.log "nielsen play"
                 # send setPlayheadPosition every 2 seconds, as specified by Nielsen
                 @_setPlayheadPosition = setInterval(=>
                     @nolcmb?.ggPM "setPlayheadPosition", Math.floor(Date.now() / 1000)
-                    console.log "nielsen set playhead position"
                 , 2000)
         stop: =>
             if @nolcmb
                 @nolcmb.ggPM "stop", Math.floor(Date.now() / 1000)
-                console.log "nielsen stop"
             clearInterval(@_setPlayheadPosition)
