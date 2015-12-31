@@ -30,6 +30,8 @@ class scpr.ListenLive
 
             @_playerReady = false
 
+            @nielsen = new Nielsen()
+
             # -- set up our player -- #
 
             @player.jPlayer
@@ -60,8 +62,6 @@ class scpr.ListenLive
                 @_pause_timeout = setTimeout =>
                     @player.jPlayer("clearMedia")
                     @_shouldTryAd = true
-                    # disable nielsen and allow it to be re-enabled by preroll ending
-                    @nielsen = undefined
                 , @options.pause_timeout * 1000
                 @nielsen?.stop() if !@_shouldTryAd || @options.skip_preroll
 
@@ -70,9 +70,8 @@ class scpr.ListenLive
                     @_play()
 
             @player.on $.jPlayer.event.ended, (evt) =>
+                @_shouldTryAd = false
                 @_play()
-                @onEnded?()
-                @onEnded = undefined
 
             $.jPlayer.timeFormat.showHour = true;
 
@@ -95,15 +94,13 @@ class scpr.ListenLive
 
             if !@_shouldTryAd || @options.skip_preroll
                 _playStream()
-
             else
-                @_shouldTryAd = false
-
                 # set a timeout so that we make sure the stream starts playing
                 # regardless of whether our preroll works
                 _timedOut = false
                 _errorTimeout = setTimeout =>
                     _timedOut = true
+                    @_shouldTryAd = false
                     console.log "timed out waiting for ad response"
                     _playStream()
                 , 3000
@@ -127,21 +124,13 @@ class scpr.ListenLive
                             # is there a preroll?
                             if @adResponse.preroll() && !_timedOut
                                 # yes... play it
-                                @onEnded = @_initializeNielsen # and start nielsen tracking after preroll finishes
                                 @adResponse.playPreroll(@player)
                             else
-                                @_initializeNielsen()
                                 _playStream()
                             # display a visual if there is one
                             @adResponse.renderVisual(@_live_ad)
                         else
-                            @_initializeNielsen()
                             _playStream()
-
-        #----------
-
-        _initializeNielsen: ->
-            @nielsen ||= new Nielsen()
 
         #----------
 
@@ -278,13 +267,11 @@ class scpr.ListenLive
 
     class Nielsen
         constructor: ->
-            if NOLCMB?
-                @nolcmb = new NOLCMB.ggInitialize
-                    sfcode: "uat-cert"
-                    apid  : "T4FA39C01-1BC0-41C3-A309-06ED295D84D2"
-                    apn   : "test"
-            else
-                @nolcmb = undefined
+            @nolcmb = new NOLCMB?.ggInitialize
+                sfcode: "uat-cert"
+                apid  : "T4FA39C01-1BC0-41C3-A309-06ED295D84D2"
+                apn   : "test"
+
         play: =>
             if @nolcmb
                 @nolcmb.ggPM "loadMetadata",
@@ -302,4 +289,4 @@ class scpr.ListenLive
         stop: =>
             if @nolcmb
                 @nolcmb.ggPM "stop", Math.floor(Date.now() / 1000)
-            clearInterval(@_setPlayheadPosition)
+                clearInterval(@_setPlayheadPosition)
