@@ -296,3 +296,4 @@ class scpr.ListenLive
             if @nolcmb
                 @nolcmb.ggPM "stop", Math.floor(Date.now() / 1000)
                 clearInterval(@_setPlayheadPosition)
+                    el.append(img)
