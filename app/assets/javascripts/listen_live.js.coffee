@@ -56,7 +56,7 @@ class scpr.ListenLive
                     clearTimeout @_pause_timeout
                     @_pause_timeout = null
 
-                @adResponse?.touchImpressions(@_live_ad)
+                @adResponse?.touchImpressions()
 
                 @nielsen?.play() if !@_inPreroll
 
@@ -262,12 +262,12 @@ class scpr.ListenLive
                     return true
                 else
                     return false
-        touchImpressions: (el)->
-            if el && (impressions = @impressions())
-                _.each impressions, (url) =>      
-                    # create an img and append it to our DOM
-                    img = $("<img src='#{url}'>").css("display:none")
-                    el.append(img)
+        touchImpressions: ->
+            impressions = @impressions()
+            _.each impressions, (url) =>      
+                # create an img and append it to our DOM
+                img = $("<img src='#{url}'>").css("display:none")
+                $('body').append(img)
 
     #----------
 
@@ -296,4 +296,3 @@ class scpr.ListenLive
             if @nolcmb
                 @nolcmb.ggPM "stop", Math.floor(Date.now() / 1000)
                 clearInterval(@_setPlayheadPosition)
-                    el.append(img)
