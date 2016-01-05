@@ -11,6 +11,8 @@
   <div id="scheduled_status" class="notification block"></div>
 <% end %>
 
+<%= f.section "bylines" %>
+
 <%= form_block "Content" do %>
   <div id="aggregator" class="aggregator"></div>
   <%= f.input :slots_json, as: :hidden, input_html: { id: "slots_json" } %>

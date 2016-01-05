@@ -56,6 +56,9 @@
                     <mark><%= @edition.published_at.day %></mark>
                </time>
             </h3>
+            <span class="byline">
+                <%= render_byline @edition %> <span class="pipe">|</span> <%= timestamp(@edition.published_at) %></time>
+            </span>
         </div><!--/ .inner -->
 
         <aside class="recents">
