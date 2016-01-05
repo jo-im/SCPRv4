@@ -1,0 +1,45 @@
+<div class="catalog">
+  <div class="inner bound clearfix">
+
+    <div class="showcase">
+
+      <% add_to_page_title @tag.title %>
+      <% meta_tags(url: topic_url(@tag.slug)) %>
+      <% content_for :body_class, 'interior ronin' %>
+
+      <% content_for :opengraph do %>
+
+        <%= cache ["opengraph", "v1", @tag] do %>
+
+          <meta property="og:title" content="Topic: <%= h(@tag.title) %>">
+          <meta property="og:type" content="<%= @OG_TYPE || "website" %>">
+          <meta property="og:url" content="http://www.scpr.org/topics/<%= @tag.slug %>"/>
+          <meta property="og:image" content="http://scpr.org<%=image_path('kpcc-twitter-logo.png')%>" />
+
+          <link rel="image_src" href="http://scpr.org<%=image_path('kpcc-twitter-logo.png')%>" />
+          <meta name="twitter:image" value="http://scpr.org<%=image_path('kpcc-twitter-logo.png')%>">
+
+        <% end %>
+
+      <% end %>
+
+      <%= cache ["topics/show", "meta", "v2", @tag] do %>
+
+        <%= render partial: "topic_preface_header", locals: {topic: @tag, articles: @articles} %>
+
+      <% end %>
+
+
+      <section class="backlog">
+
+        <%= cache ["topics/show", "list", "v2", @articles.to_a] do %>
+        <%= render 'shared/new/waterfall_articles', articles: @articles, display_header: false %>
+        <% end %>
+
+        <%= paginate @articles, theme: 'new', outer_window: 1 %>
+
+      </section><!--/ .backlog -->
+
+    </div><!--/ .showcase -->
+  </div> <!--/ .inner.bound -->
+</div><!--/ .catalog -->

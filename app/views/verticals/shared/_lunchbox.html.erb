@@ -1,27 +1,22 @@
 <div class="lunchbox">
     <div class="inner bound clearfix">
 
-<%= cache ["categories/show", "issues", 'v1', tags] do %>
+<%= cache ["categories/show", "topics", 'v1', tags] do %>
     <% if tag = tags[0] %>
-        <section class="issues">
-            <header>
-                <h1>Issues We're Tracking</h1>
-                <h2><%= link_to 'See all issues', issues_path %></h2>
-            </header>
-
+        <section class="topics">
             <div>
                 <header class="special">
                     <h1><%= tag.title %></h1>
                     <h2 class="clearfix">
                         <mark>Special coverage from KPCC</mark>
-                        <a href="<%=issue_path(tag.slug)%>">
+                        <a href="<%=topic_path(tag.slug)%>">
                             See all <span><%= tag.title %></span>
                         </a>
                     </h2>
                 </header>
                 <nav>
                     <ul>
-                    <%= render 'verticals/shared/issue_list', articles: tag.articles(limit: 2) %>
+                    <%= render 'verticals/shared/topic_list', articles: tag.articles(limit: 2) %>
                     </ul>
                 </nav>
             </div>
@@ -30,17 +25,17 @@
             <div>
                 <header class="slim clearfix">
                     <h1><%= tag.title %></h1>
-                    <h2><a href="<%=issue_path(tag.slug)%>">See all <span><%= tag.title %></span></a></h2>
+                    <h2><a href="<%=topic_path(tag.slug)%>">See all <span><%= tag.title %></span></a></h2>
                 </header>
                 <nav>
                     <ul>
-                    <%= render 'verticals/shared/issue_list', articles: tag.articles(limit: 2) %>
+                    <%= render 'verticals/shared/topic_list', articles: tag.articles(limit: 2) %>
                     </ul>
                 </nav>
             </div>
         <% end %>
 
-        </section><!--/ .issues -->
+        </section><!--/ .topics -->
     <% end %> <%# tags? %>
 <% end %> <%# cache %>
 

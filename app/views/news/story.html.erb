@@ -28,19 +28,18 @@
         </aside>
 
         <% if tag = @story.tags.first %>
-            <aside class="see-more issue">
+            <aside class="see-more topic">
                 <header>
-                    <h1>More from this Issue</h1>
+                    <h1>More from this Topic</h1>
                     <h2 class="clearfix">
-                        <span><%= link_to tag.title, issue_path(tag.slug) %></span>
-                        <mark><%= link_to 'See All', issues_path %></mark>
+                        <span><%= link_to tag.title, topic_path(tag.slug) %></span>
                     </h2>
                 </header>
                 <ul class="previews">
                     <% if tag_articles = tag.articles.first(3) %>
                         <% tag_articles.each do |article| %>
                             <li>
-                            <%= link_to article.public_path, class: "track-event", data: {"ga-category" => "Article", "ga-action" => "Clickthrough", "ga-label" => "More Sidebar Issue"} do %>
+                            <%= link_to article.public_path, class: "track-event", data: {"ga-category" => "Article", "ga-action" => "Clickthrough", "ga-label" => "More Sidebar Topic"} do %>
                                 <figure class="ratio-pairing clearfix">
                                     <div class="ratio">
                                         <div class="fill"></div>
@@ -63,7 +62,7 @@
             category_articles = content.map { |a| a.to_article }
             %>
 
-            <aside class="see-more issue">
+            <aside class="see-more topic">
                 <header>
                     <h1>More from this Category</h1>
                     <h2 class="clearfix">

@@ -41,7 +41,7 @@ describe RootPathController do
     describe "rendering articles with tags" do
       it "renders articles and issues" do
         vertical = create :vertical
-        tags = create_list :tag, 3, is_featured: true
+        tags = create_list :tag, 3
 
         vertical.tags = tags
         articles = create_list :news_story, 6, :published, category: vertical.category

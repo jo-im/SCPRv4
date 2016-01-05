@@ -15,11 +15,11 @@
     //  ################################################################################################
     //  ################################################################################################
 
-    body.issues .quadrant {
+    body.topics .quadrant {
         border-top: 6px solid $orange;
         box-shadow: inset 0 6px 0 black;
     }
-    body.issues .quadrant .inner {
+    body.topics .quadrant .inner {
         padding-top: 45px; // not 85
         & > header {
             color: $orange;
@@ -37,7 +37,7 @@
     //  ################################################################################################
     //  ################################################################################################
 
-    body.issues .prologue {
+    body.topics .prologue {
         margin: 66px 0 42px;
         .inner {
           position: relative;
@@ -79,61 +79,14 @@
     //  ################################################################################################
 
     .catalog {
-        background:
-            image-url("i/fauxcol-issues-topper.png") no-repeat center top,
-            image-url("i/fauxcol-issues-splitflood.png") repeat-y center top;
-        background-size:
-            3000px 4px,
-            3000px 30px;
         border-bottom: 1px solid #eeeeee;
         .inner {
-            background:
-                image-url("i/fauxcol-issues-inner-topper.png") no-repeat 23.153846153846% top,
-                image-url("i/fauxcol-issues-inner.png") repeat-y 23.153846153846% top;
-            background-size:
-                1500px 4px,
-                1500px 15px;
-            padding-bottom: 142px;
-        }
-        .terms {
-            width: 23.153846153846%; // 301 / 1300
-            float: left;
-            color: #494949;
-            font-family: $font-freight;
-            font-weight: 300;
-            font-size: 1.25em; // 20 / 16
-            padding-top: 22px;
-            a {
-                display: block;
-                border-top: 1px solid rgba(0,0,0,0.08);
-                padding: 5px 20px 16px 0;
-                white-space: nowrap;
-                overflow: hidden;
-                text-overflow: ellipsis;
-                &:hover {
-                    color: black;
-                    padding-left: 5.31561461794%; // 16 / 301
-                    margin-left: -5.31561461794%;
-                    background: rgba(0,0,0,0.05);
-                    box-shadow: 0 1px 0 #cdcdcd;
-                }
-            }
-            .selected a {
-                background: white;
-                color: $blue;
-                font-weight: 400;
-                box-shadow:
-                    inset -7px 0 0 #f7f7f7,
-                    0 1px 0 #cdcdcd;
-                padding-left: 5.31561461794%; // 16 / 301
-                margin-left: -5.31561461794%;
-            }
+            padding: 142px 0;
         }
         .showcase {
             width: 68.307692307692%; // 888 / 1300
-            float: right;
+            margin: 0 auto;
             padding-top: 9px;
-            box-shadow: inset 0 1px 0 #e1e1e1;
             .load-more {
                 padding-top: 18px;
                 a {
@@ -160,11 +113,11 @@
                 }
             }
             .details {
+                border-top: 1px solid #e1e1e1;
+                padding: 18px 0;
                 .brief {
-                    width: 48.986486486486%; // 435 / 888
-                    float: left;
-                    font-size: 0.75em;
-                    line-height: 1.67;
+                    font-size: 1.15em;
+                    line-height: 1.8;
                     color: #7f7e7e;
                 }
                 .timeline {
@@ -194,7 +147,7 @@
                             position: absolute;
                             top: 0;
                             left: 0;
-                            background: image-url("i/issues-timeline.png") no-repeat;
+                            background: image-url("i/topics-timeline.png") no-repeat;
                             background-size: 104px 150px;
                             width: 104px;
                             dt          { color: $blue; margin: 4px 0 13px 36px; }
@@ -301,7 +254,7 @@
             }
             .catalog {
                 background: none;
-                .inner                      { background: none; padding-bottom: 70px; }
+                .inner                      { background: none; padding: 70px 0; }
                 .terms {
                     background: #f1f1f1;
                     width: 100%;
@@ -322,6 +275,7 @@
                     padding-top: 0;
                     box-shadow: none;
                     .preface h1             { font-size: 1.75em; }
+                    .details .brief         { font-size: 0.85em; margin-bottom: 0;}
                     .directional b          { display: none; }
                     .directional:before     { content: "above"; }
                 }
