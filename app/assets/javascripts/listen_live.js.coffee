@@ -65,7 +65,7 @@ class scpr.ListenLive
                 @_pause_timeout = setTimeout =>
                     @player.jPlayer("clearMedia")
                     @_shouldTryAd = true
-                , @options.pause_timeout * 10
+                , @options.pause_timeout * 1000
                 @nielsen?.stop() if !@_inPreroll
 
             @player.on $.jPlayer.event.error, (evt) =>
@@ -273,26 +273,41 @@ class scpr.ListenLive
 
     class Nielsen
         constructor: ->
-            @nolcmb = new NOLCMB?.ggInitialize
-                sfcode: "uat-cert"
-                apid  : "T4FA39C01-1BC0-41C3-A309-06ED295D84D2"
-                apn   : "test"
+            @_queued = []
+            $.getScript "http://secure-cert.imrworldwide.com/novms/js/2/ggcmb400.js"
+                .done (script,status) =>
+                    @nolcmb = new NOLCMB?.ggInitialize
+                        sfcode: "uat-cert"
+                        apid  : "T4FA39C01-1BC0-41C3-A309-06ED295D84D2"
+                        apn   : "test"
 
-        play: =>
-            if @nolcmb
-                @nolcmb.ggPM "loadMetadata",
-                    stationType: 2
-                    dataSrc    : "cms"
-                    type       : "radio"
-                    assetid    : "KPCC-FM"
-                    provider   : "Southern California Public Radio - Radio"
+                    @nolcmb.ggPM e... for e in @_queued
+                    true
 
-                @nolcmb.ggPM "play", Math.floor(Date.now() / 1000)
-                # send setPlayheadPosition every 2 seconds, as specified by Nielsen
-                @_setPlayheadPosition = setInterval(=>
-                    @nolcmb?.ggPM "setPlayheadPosition", Math.floor(Date.now() / 1000)
-                , 2000)
-        stop: =>
+                .fail (xhr,settings,exception) =>
+                    console.log "Failed to load Nielsen SDK: #{exception}"
+
+        _send: (event,data) ->
             if @nolcmb
-                @nolcmb.ggPM "stop", Math.floor(Date.now() / 1000)
-                clearInterval(@_setPlayheadPosition)
+                @nolcmb.ggPM event, data
+            else
+                @_queued.push [event,data]
+
+        play: ->
+            @_send "loadMetadata",
+                stationType: 2
+                dataSrc    : "cms"
+                type       : "radio"
+                assetid    : "KPCC-FM"
+                provider   : "Southern California Public Radio - Radio"
+
+            @_send "play", Math.floor(Date.now() / 1000)
+
+            # send setPlayheadPosition every 2 seconds, as specified by Nielsen
+            @_setPlayheadPosition = setInterval(=>
+                @_send "setPlayheadPosition", Math.floor(Date.now() / 1000)
+            , 2000)
+
+        stop: ->
+            @_send "stop", Math.floor(Date.now() / 1000)
+            clearInterval(@_setPlayheadPosition)
