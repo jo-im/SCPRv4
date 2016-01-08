@@ -63,6 +63,7 @@ class Audio < ActiveRecord::Base
 
   TIMEOUT = 60
 
+  PMP_PROFILE = "audio"
 
   # The NONE Status is so we can show "None" text in Outpost
   status :none do |s|

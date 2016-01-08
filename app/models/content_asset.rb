@@ -2,6 +2,8 @@ class ContentAsset < ActiveRecord::Base
   include Outpost::AssetHost::JoinModelJson
   include Concern::Associations::PmpContentAssociation
 
+  PMP_PROFILE = "image"
+
   self.table_name =  "assethost_contentasset"
   self.versioned_attributes = ["position", "asset_id", "caption"]
 

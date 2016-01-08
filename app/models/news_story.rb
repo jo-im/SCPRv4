@@ -38,6 +38,8 @@ class NewsStory < ActiveRecord::Base
   include Concern::Sanitizers::Content
   include Concern::Associations::PmpContentAssociation
 
+  PMP_PROFILE = "story"
+
   self.disqus_identifier_base = "news/story"
   self.public_route_key = "news_story"
 
