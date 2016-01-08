@@ -113,7 +113,7 @@ class PmpContent < ActiveRecord::Base
       doc.links['item'].concat(content.audio.map do |a|
         audio_content = a.parent || self.class.create(content: a, parent: self, profile: "audio")
         audio_content.publish unless audio_content.published?
-        audio_content.href ? PMP::Link.new(href: audio_content.href) : nil
+        audio_content.link
       end.compact)
     end
 
@@ -121,7 +121,7 @@ class PmpContent < ActiveRecord::Base
       doc.links['item'].concat(content.assets.map do |i|
         image_content = i.parent || self.class.create(content: i, parent: self, profile: "image")
         image_content.publish unless image_content.published?
-        image_content.href ? PMP::Link.new(href: image_content.href) : nil
+        image_content.link
       end.compact)
     end
 
@@ -162,6 +162,10 @@ class PmpContent < ActiveRecord::Base
     # Load the root document
     client.root.load
     client
+  end
+
+  def link
+    href && PMP::Link.new(href: href)
   end
 
 end
