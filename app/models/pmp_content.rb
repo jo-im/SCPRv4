@@ -2,8 +2,8 @@ class PmpContent < ActiveRecord::Base
 
   belongs_to :content, polymorphic: true, required: true
   ## figure out why the api won't let us delete, then we can enable these
-  belongs_to :pmp_content, dependent: :destroy
-  has_many :pmp_contents
+  belongs_to :pmp_content
+  has_many :pmp_contents, dependent: :destroy
   # before_destroy :destroy_from_pmp
   scope :story, ->{where(profile: "story")}
   scope :audio, ->{where(profile: "audio")}
