@@ -1,7 +1,5 @@
 class PmpContent < ActiveRecord::Base
 
-  attr_accessor :api_errors
-
   belongs_to :content, polymorphic: true, required: true
   ## figure out why the api won't let us delete, then we can enable these
   belongs_to :pmp_content, dependent: :destroy
@@ -164,11 +162,6 @@ class PmpContent < ActiveRecord::Base
     # Load the root document
     client.root.load
     client
-  end
-
-  def api_errors= error
-    @api_errors ||= []
-    @api_errors << error
   end
 
 end
