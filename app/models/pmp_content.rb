@@ -2,8 +2,8 @@ class PmpContent < ActiveRecord::Base
 
   belongs_to :content, polymorphic: true, required: true
   ## figure out why the api won't let us delete, then we can enable these
-  belongs_to :pmp_content
-  has_many :pmp_contents, dependent: :destroy
+  belongs_to :parent, class_name: :PmpContent, foreign_key: :pmp_content_id
+  has_many :children, foreign_key: :pmp_content_id, class_name: :PmpContent, dependent: :destroy
   # before_destroy :destroy_from_pmp
   scope :story, ->{where(profile: "story")}
   scope :audio, ->{where(profile: "audio")}
@@ -111,7 +111,7 @@ class PmpContent < ActiveRecord::Base
 
     if content.respond_to?(:audio)
       doc.links['item'].concat(content.audio.map do |a|
-        audio_content = a.pmp_content || self.class.create(content: a, pmp_content: self, profile: "audio")
+        audio_content = a.parent || self.class.create(content: a, parent: self, profile: "audio")
         audio_content.publish unless audio_content.published?
         audio_content.href ? PMP::Link.new(href: audio_content.href) : nil
       end.compact)
@@ -119,7 +119,7 @@ class PmpContent < ActiveRecord::Base
 
     if content.respond_to?(:assets)
       doc.links['item'].concat(content.assets.map do |i|
-        image_content = i.pmp_content || self.class.create(content: i, pmp_content: self, profile: "image")
+        image_content = i.parent || self.class.create(content: i, parent: self, profile: "image")
         image_content.publish unless image_content.published?
         image_content.href ? PMP::Link.new(href: image_content.href) : nil
       end.compact)

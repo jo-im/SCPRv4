@@ -20,6 +20,14 @@ module Concern
         end
       end
 
+      def published_to_pmp?
+        if pmp_content && pmp_content.published?
+          true
+        else
+          false
+        end
+      end
+
       alias_method :publish_to_pmp?, :publish_to_pmp
 
       def save_pmp_content

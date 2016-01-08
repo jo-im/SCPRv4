@@ -17,6 +17,8 @@ class Outpost::NewsStoriesController < Outpost::ResourceController
       :sortable                   => true,
       :default_order_direction    => DESCENDING
 
+    l.column :published_to_pmp?
+
     l.filter :status, collection: -> { NewsStory.status_select_collection }
     l.filter :bylines, collection: -> { Bio.select_collection }
   end
