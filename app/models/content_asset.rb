@@ -1,5 +1,6 @@
 class ContentAsset < ActiveRecord::Base
   include Outpost::AssetHost::JoinModelJson
+  include Concern::Associations::PmpContentAssociation
 
   self.table_name =  "assethost_contentasset"
   self.versioned_attributes = ["position", "asset_id", "caption"]
@@ -22,8 +23,13 @@ class ContentAsset < ActiveRecord::Base
     :small,
     :eight,
     :full,
+    :wide,
     to: :asset
 
+  alias_attribute :primary, :full
+  alias_attribute :large, :full
+  alias_attribute :medium, :wide
+  alias_attribute :square, :lsquare
 
   def asset
     @asset ||= begin

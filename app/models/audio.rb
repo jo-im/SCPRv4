@@ -53,6 +53,7 @@ require 'open-uri'
 # file's date and program slug. We treat this audio just as "direct" audio,
 # by assigning its url directly.
 class Audio < ActiveRecord::Base
+  include Concern::Associations::PmpContentAssociation
   self.table_name = "media_audio"
   logs_as_task
   has_status

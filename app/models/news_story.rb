@@ -36,6 +36,7 @@ class NewsStory < ActiveRecord::Base
   include Concern::Methods::CommentMethods
   include Concern::Methods::AssetDisplayMethods
   include Concern::Sanitizers::Content
+  include Concern::Associations::PmpContentAssociation
 
   self.disqus_identifier_base = "news/story"
   self.public_route_key = "news_story"
