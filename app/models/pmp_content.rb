@@ -102,6 +102,7 @@ class PmpContent < ActiveRecord::Base
       contentencoded:   content.body,
       contenttemplated: content.body,
     })
+    doc.links['permissions'] = permissions
     doc
   end
 
@@ -150,22 +151,34 @@ class PmpContent < ActiveRecord::Base
     end
   end
 
+  class << self
+    def pmp
+      config = Rails.configuration.x.api.pmp.sandbox
+
+      client = PMP::Client.new({
+        :client_id        => config['client_id'],
+        :client_secret    => config['client_secret'],
+        :endpoint         => "https://api-sandbox.pmp.io/"
+      })
+
+      # Load the root document
+      client.root.load
+      client
+    end
+  end
+
   def pmp
-    config = Rails.configuration.x.api.pmp.sandbox
-
-    client = PMP::Client.new({
-      :client_id        => config['client_id'],
-      :client_secret    => config['client_secret'],
-      :endpoint         => "https://api-sandbox.pmp.io/"
-    })
-
-    # Load the root document
-    client.root.load
-    client
+    self.class.pmp
   end
 
   def link
     href && PMP::Link.new(href: href)
+  end
+
+  def permissions
+    groups = content.pmp_permission_groups
+    groups.concat(parent.permissions) if parent # inherit permissions from parent document
+    groups
   end
 
 end
