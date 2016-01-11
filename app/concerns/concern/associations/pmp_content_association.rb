@@ -31,6 +31,7 @@ module Concern
       def pmp_permission_groups
         groups = []
         if respond_to?(:tags) && tags.where(slug: "california-counts").any?
+          ## replace this with the url of the group document that we will make
           groups.concat [
             PMP::Link.new(href: "http://helloworld.com")
           ]

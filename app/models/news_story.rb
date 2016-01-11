@@ -59,6 +59,8 @@ class NewsStory < ActiveRecord::Base
 
   scope :with_article_includes, ->() { includes(:category,:assets,:audio,:tags,:bylines,bylines:[:user]) }
 
+  alias_attribute :url, :public_url
+
   def needs_validation?
     self.pending? || self.published?
   end
