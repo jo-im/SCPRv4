@@ -44,9 +44,11 @@ class PmpStory < PmpContent
 
     if content.respond_to?(:assets)
       doc.links['item'].concat(content.assets.map do |i|
-        image_content = pmp_images.first_or_create(content: i)
-        image_content.publish unless image_content.published?
-        image_content.link
+        if i.owner.include?("KPCC")
+          image_content = pmp_images.first_or_create(content: i)
+          image_content.publish unless image_content.published?
+          image_content.link
+        end
       end.compact)
     end
 

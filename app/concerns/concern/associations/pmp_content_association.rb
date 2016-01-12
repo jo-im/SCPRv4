@@ -6,10 +6,7 @@ module Concern
       included do
         attr_writer :publish_to_pmp
         has_one :pmp_content, as: :content, dependent: :destroy
-        ## this should probably be only made to happen
-        ## for 'story' content and not things like 
-        ## audio or image assets
-        before_save :save_pmp_content
+        before_save :publish_pmp_content
       end
 
       def publish_to_pmp
@@ -21,7 +18,7 @@ module Concern
       end
 
       def published_to_pmp?
-        if pmp_content && pmp_content.published?
+        if pmp_content && (pmp_content.try(:published?) || pmp_content.try(:publishing?))
           true
         else
           false
@@ -40,7 +37,7 @@ module Concern
 
       alias_method :publish_to_pmp?, :publish_to_pmp
 
-      def save_pmp_content
+      def publish_pmp_content
         if valid? # can we do better than this?
           if publish_to_pmp? && !pmp_content
             content = create_pmp_content profile: self.class::PMP_PROFILE
