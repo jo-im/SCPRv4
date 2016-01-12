@@ -5,7 +5,7 @@ class PmpContent < ActiveRecord::Base
   has_many :children, foreign_key: :pmp_content_id, class_name: :PmpContent
   after_initialize :set_profile
   ## figure out why the api won't let us delete, then we can enable this
-  before_destroy :destroy_from_pmppubli
+  before_destroy :destroy_from_pmp
   scope :published, ->{where.not(guid: nil)}
   scope :unpublished, ->{where(guid: nil)}
 
