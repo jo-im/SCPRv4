@@ -25,7 +25,7 @@ class PmpStory < PmpContent
       published:        content.published_at,
       guid:             guid,
       description:      Nokogiri::HTML(content.body).xpath("//text()").css('body').to_s,
-      contentencoded:   ApplicationHelper.render_with_inline_assets(content), # this sucks
+      contentencoded:   Nokogiri::HTML(ApplicationHelper.render_with_inline_assets(content)).at('body').children.to_s,
       contenttemplated: content.body,
     })
     doc.links['permissions'] = permissions

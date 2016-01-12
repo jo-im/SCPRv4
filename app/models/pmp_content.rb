@@ -21,23 +21,6 @@ class PmpContent < ActiveRecord::Base
     end
   end
 
-  def build_doc
-    doc = pmp.doc_of_type(profile)
-    doc.parse_attributes({
-      title:            content.headline,
-      teaser:           content.teaser,
-      byline:           content.byline,
-      tags:             content.tags.map(&:slug),
-      published:        content.published_at,
-      guid:             guid,
-      description:      Nokogiri::HTML(content.body).xpath("//text()").to_s,
-      contentencoded:   Nokogiri::HTML(ApplicationHelper.render_with_inline_assets(content)).at('body').children.to_s,
-      contenttemplated: content.body,
-    })
-    doc.links['permissions'] = permissions
-    doc
-  end
-
   def destroy_from_pmp
     if guid && doc = retrieve('write')
       delete_response = doc.delete
