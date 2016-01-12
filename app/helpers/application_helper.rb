@@ -109,7 +109,7 @@ module ApplicationHelper
   # * shared/assets/default/photo
   # * shared/assets/story/default
   # * shared/assets/default/default
-  def self.render_asset(content, options={})
+  def render_asset(content, options={})
     article = content.to_article
     context = options[:context] || "default"
 
@@ -155,11 +155,9 @@ module ApplicationHelper
       :article    => article
   end
 
-  define_method :render_asset, self.method(:render_asset).to_proc
-
   #----------
 
-  def self.render_with_inline_assets content, options={}
+  def render_with_inline_assets content, options={}
     cssPath = "img.inline-asset[data-asset-id]"
     context = options[:context] || "news"
     display = options[:display] || "inline"
@@ -184,8 +182,6 @@ module ApplicationHelper
 
     doc.to_s.html_safe
   end
-
-  define_method :render_with_inline_assets, self.method(:render_with_inline_assets).to_proc
 
   #----------
   # Render the tag necessary for the Smart Date JS to pick it up.
@@ -496,5 +492,6 @@ module ApplicationHelper
     }
     doc.css('body').children.to_s.html_safe
   end
-  
+
+  extend self
 end
