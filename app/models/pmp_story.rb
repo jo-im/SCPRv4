@@ -1,7 +1,7 @@
 class PmpStory < PmpContent
   self.table_name = "pmp_contents"
   default_scope ->{where("pmp_contents.profile = 'story'")}
-  has_many :pmp_audios, dependent: :destroy, foreign_key: :pmp_content_id
+  has_many :pmp_audio, dependent: :destroy, foreign_key: :pmp_content_id, class_name: :PmpAudio
   has_many :pmp_images, dependent: :destroy, foreign_key: :pmp_content_id
 
   def publish
@@ -36,7 +36,7 @@ class PmpStory < PmpContent
 
     if content.respond_to?(:audio)
       doc.links['item'].concat(content.audio.map do |a|
-        audio_content = pmp_audios.first_or_create(content: a)
+        audio_content = pmp_audio.first_or_create(content: a)
         audio_content.publish unless audio_content.published?
         audio_content.link
       end.compact)

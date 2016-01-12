@@ -41,13 +41,7 @@ class PmpContent < ActiveRecord::Base
 
   def destroy_from_pmp
     if guid
-      ## Maybe we have to actually fetch it and that's why it doesn't actually delete?
-      # doc = pmp.doc_of_type(profile)
-      # pmp.root.query['urn:collectiondoc:query:docs']
-      # .where(guid: guid, limit: 1).items.each do |doc|
-      #   doc.delete
-      # end
-      doc = pimp.query['urn:collectiondoc:hreftpl:docs'].where(guid: guid)
+      doc = pmp.query['urn:collectiondoc:hreftpl:docs'].where(guid: guid)
       doc.destroy
       true
     else
