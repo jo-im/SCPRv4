@@ -5,7 +5,7 @@ class PmpAudio < PmpContent
 
   def publish
     if a = content
-      adoc = pmp.doc_of_type("audio")
+      adoc = pmp('write').doc_of_type("audio")
       adoc.title = a.description
       adoc.links ||= {}
       adoc.links['enclosure'] ||= []

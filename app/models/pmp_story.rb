@@ -16,7 +16,7 @@ class PmpStory < PmpContent
   end
 
   def build_doc
-    doc = pmp.doc_of_type(profile)
+    doc = pmp('write').doc_of_type(profile)
     doc.parse_attributes({
       title:            content.headline,
       teaser:           content.teaser,

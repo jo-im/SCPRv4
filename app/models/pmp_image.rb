@@ -5,7 +5,7 @@ class PmpImage < PmpContent
 
   def publish
     if i = content
-      idoc = pmp.doc_of_type("image")
+      idoc = pmp('write').doc_of_type("image")
       idoc.title = i.caption
       idoc.byline = i.owner
       idoc.links ||= {}

@@ -40,19 +40,23 @@ class PmpContent < ActiveRecord::Base
   end
 
   def destroy_from_pmp
-    if guid
-      doc = pmp.query['urn:collectiondoc:hreftpl:docs'].where(guid: guid)
-      doc.destroy
-      true
+    if guid && doc = retrieve('write')
+      delete_response = doc.delete
+      if delete_response && delete_response.raw.status == 204
+        self.update guid: nil
+        true
+      else
+        false
+      end
     else
       false
     end
   end
 
-  def retrieve
+  def retrieve action="read"
     if guid
-      ref = pmp.root.query['urn:collectiondoc:query:docs'].where(guid: guid).retrieve
-      ref.retrieve # why do we need to do this twice?
+      ref = pmp(action).query['urn:collectiondoc:hreftpl:docs'].where(guid: guid).retrieve
+      ref.retrieve
       ref
     else
       nil
@@ -69,15 +73,12 @@ class PmpContent < ActiveRecord::Base
         :endpoint         => config[action]['endpoint']
       })
 
-      # Load the root document
-      client.root.load
+      client.root.retrieve
       client
     end
   end
 
-  def pmp
-    self.class.pmp
-  end
+  define_method :pmp, self.method(:pmp).curry
 
   def link
     href && PMP::Link.new(href: href)
