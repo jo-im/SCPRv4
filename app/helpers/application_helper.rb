@@ -109,7 +109,7 @@ module ApplicationHelper
   # * shared/assets/default/photo
   # * shared/assets/story/default
   # * shared/assets/default/default
-  def render_asset(content, options={})
+  def self.render_asset(content, options={})
     article = content.to_article
     context = options[:context] || "default"
 
@@ -154,6 +154,8 @@ module ApplicationHelper
       :assets     => article.assets,
       :article    => article
   end
+
+  define_method :render_asset, self.method(:render_asset).to_proc
 
   #----------
 
