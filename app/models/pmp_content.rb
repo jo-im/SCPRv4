@@ -5,7 +5,7 @@ class PmpContent < ActiveRecord::Base
   has_many :children, foreign_key: :pmp_content_id, class_name: :PmpContent
   after_initialize :set_profile
   ## figure out why the api won't let us delete, then we can enable this
-  # before_destroy :destroy_from_pmp
+  before_destroy :destroy_from_pmppubli
   scope :published, ->{where.not(guid: nil)}
   scope :unpublished, ->{where(guid: nil)}
 
@@ -31,7 +31,8 @@ class PmpContent < ActiveRecord::Base
       published:        content.published_at,
       guid:             guid,
       description:      Nokogiri::HTML(content.body).xpath("//text()").to_s,
-      contentencoded:   ApplicationHelper.render_with_inline_assets(content.body), # wow, this sucks
+      # contentencoded:   ApplicationHelper.render_with_inline_assets(content.body), # wow, this sucks
+      contentencoded:   content.body,
       contenttemplated: content.body,
     })
     doc.links['permissions'] = permissions
@@ -41,9 +42,13 @@ class PmpContent < ActiveRecord::Base
   def destroy_from_pmp
     if guid
       ## Maybe we have to actually fetch it and that's why it doesn't actually delete?
-      doc = pmp.doc_of_type(profile)
-      doc.guid = guid
-      doc.delete
+      # doc = pmp.doc_of_type(profile)
+      # pmp.root.query['urn:collectiondoc:query:docs']
+      # .where(guid: guid, limit: 1).items.each do |doc|
+      #   doc.delete
+      # end
+      doc = pimp.query['urn:collectiondoc:hreftpl:docs'].where(guid: guid)
+      doc.destroy
       true
     else
       false
@@ -61,13 +66,13 @@ class PmpContent < ActiveRecord::Base
   end
 
   class << self
-    def pmp
-      config = Rails.configuration.x.api.pmp.sandbox
+    def pmp action="read"
+      config = Rails.configuration.x.api.pmp
 
       client = PMP::Client.new({
-        :client_id        => config['client_id'],
-        :client_secret    => config['client_secret'],
-        :endpoint         => "https://api-sandbox.pmp.io/"
+        :client_id        => config[action]['client_id'],
+        :client_secret    => config[action]['client_secret'],
+        :endpoint         => config[action]['endpoint']
       })
 
       # Load the root document

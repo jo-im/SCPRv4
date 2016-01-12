@@ -24,8 +24,8 @@ class PmpStory < PmpContent
       tags:             content.tags.map(&:slug),
       published:        content.published_at,
       guid:             guid,
-      description:      content.body,
-      contentencoded:   content.body,
+      description:      Nokogiri::HTML(content.body).xpath("//text()").css('body').to_s,
+      contentencoded:   ApplicationHelper.render_with_inline_assets(content), # this sucks
       contenttemplated: content.body,
     })
     doc.links['permissions'] = permissions

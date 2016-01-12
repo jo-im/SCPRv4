@@ -1,4 +1,4 @@
-module ApplicationHelper
+module ApplicationHelper 
   include Twitter::Autolink
 
   def add_ga_tracking_to(url)
@@ -182,6 +182,8 @@ module ApplicationHelper
 
     doc.to_s.html_safe
   end
+
+  module_function :render_with_inline_assets
 
   #----------
   # Render the tag necessary for the Smart Date JS to pick it up.
