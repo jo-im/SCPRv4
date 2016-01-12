@@ -31,8 +31,7 @@ class PmpContent < ActiveRecord::Base
       published:        content.published_at,
       guid:             guid,
       description:      Nokogiri::HTML(content.body).xpath("//text()").to_s,
-      # contentencoded:   ApplicationHelper.render_with_inline_assets(content.body), # wow, this sucks
-      contentencoded:   content.body,
+      contentencoded:   Nokogiri::HTML(ApplicationHelper.render_with_inline_assets(content)).at('body').children.to_s,
       contenttemplated: content.body,
     })
     doc.links['permissions'] = permissions
@@ -90,6 +89,10 @@ class PmpContent < ActiveRecord::Base
     groups = content.pmp_permission_groups
     groups.concat(parent.permissions) if parent # inherit permissions from parent document
     groups
+  end
+
+  def async_publish
+    Resque.enqueue(Job::PublishPmpContent, profile, id)
   end
 
   private

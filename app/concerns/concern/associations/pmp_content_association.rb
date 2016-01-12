@@ -43,7 +43,8 @@ module Concern
       def save_pmp_content
         if valid? # can we do better than this?
           if publish_to_pmp? && !pmp_content
-            create_pmp_content profile: self.class::PMP_PROFILE
+            content = create_pmp_content profile: self.class::PMP_PROFILE
+            content.async_publish
           elsif !publish_to_pmp? && pmp_content
             pmp_content.destroy
             reload
