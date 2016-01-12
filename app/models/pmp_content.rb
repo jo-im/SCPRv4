@@ -78,7 +78,9 @@ class PmpContent < ActiveRecord::Base
     end
   end
 
-  define_method :pmp, self.method(:pmp).curry
+  def pmp *args
+    self.class.pmp(*args)
+  end
 
   def link
     href && PMP::Link.new(href: href)

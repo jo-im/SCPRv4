@@ -157,7 +157,7 @@ module ApplicationHelper
 
   #----------
 
-  def render_with_inline_assets content, options={}
+  def self.render_with_inline_assets content, options={}
     cssPath = "img.inline-asset[data-asset-id]"
     context = options[:context] || "news"
     display = options[:display] || "inline"
@@ -183,7 +183,7 @@ module ApplicationHelper
     doc.to_s.html_safe
   end
 
-  module_function :render_with_inline_assets
+  define_method :render_with_inline_assets, self.method(:render_with_inline_assets).to_proc
 
   #----------
   # Render the tag necessary for the Smart Date JS to pick it up.

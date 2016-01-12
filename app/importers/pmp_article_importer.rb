@@ -228,7 +228,7 @@ module PmpArticleImporter
       })
 
       # Load the root document
-      client.root.load
+      client.root.retrieve
       client
     end
   end
