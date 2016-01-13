@@ -6,7 +6,7 @@ module Concern
       included do
         attr_writer :publish_to_pmp
         has_one :pmp_content, as: :content, dependent: :destroy
-        after_save :build_pmp_content, :publish_pmp_content
+        after_save :destroy_pmp_content, :build_pmp_content, :publish_pmp_content
       end
 
       def publish_to_pmp
@@ -37,6 +37,13 @@ module Concern
 
       alias_method :publish_to_pmp?, :publish_to_pmp
 
+      def destroy_pmp_content
+        if !publish_to_pmp?
+          pmp_content.destroy
+          reload
+        end
+      end
+
       def build_pmp_content
         if valid? && publish_to_pmp? && !pmp_content
           content = create_pmp_content profile: self.class::PMP_PROFILE
@@ -48,9 +55,6 @@ module Concern
           content = pmp_content
           if publish_to_pmp && content && (try(:published?) || try(:publishing?))
             async_publish_pmp_content
-          elsif !publish_to_pmp? && content
-            content.destroy
-            self.reload
           end
         end
       end

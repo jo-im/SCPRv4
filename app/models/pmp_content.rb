@@ -9,13 +9,15 @@ class PmpContent < ActiveRecord::Base
   scope :published, ->{where.not(guid: nil)}
   scope :unpublished, ->{where(guid: nil)}
 
+  PMPCONFIG = Rails.configuration.x.api.pmp
+
   def published?
     guid ? true : false
   end
 
   def href
     if guid
-      "https://api-sandbox.pmp.io/docs/#{guid}"
+      "#{PMPCONFIG['endpoint']}#{guid}"
     else
       nil
     end
@@ -42,12 +44,11 @@ class PmpContent < ActiveRecord::Base
 
   class << self
     def pmp action="read"
-      config = Rails.configuration.x.api.pmp
 
       client = PMP::Client.new({
-        :client_id        => config[action]['client_id'],
-        :client_secret    => config[action]['client_secret'],
-        :endpoint         => config[action]['endpoint']
+        :client_id        => PMPCONFIG[action]['client_id'],
+        :client_secret    => PMPCONFIG[action]['client_secret'],
+        :endpoint         => PMPCONFIG['endpoint']
       })
 
       client.root.retrieve

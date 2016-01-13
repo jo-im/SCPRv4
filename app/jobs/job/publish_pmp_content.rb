@@ -9,6 +9,8 @@ module Job
         ## and is followed by the profile name. (e.g. 'story', 'image', 'audio')
         record = "Pmp#{profile.capitalize}".constantize.find(id)
         record.publish
+      rescue => e
+        NewRelic.log_error(e)
       end
     end
   end
