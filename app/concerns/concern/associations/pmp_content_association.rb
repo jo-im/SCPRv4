@@ -6,7 +6,7 @@ module Concern
       included do
         attr_writer :publish_to_pmp
         has_one :pmp_content, as: :content, dependent: :destroy
-        before_save :publish_pmp_content
+        after_save :build_pmp_content, :publish_pmp_content
       end
 
       def publish_to_pmp
@@ -18,7 +18,7 @@ module Concern
       end
 
       def published_to_pmp?
-        if pmp_content && (pmp_content.try(:published?) || pmp_content.try(:publishing?))
+        if pmp_content && pmp_content.published?
           true
         else
           false
@@ -37,15 +37,28 @@ module Concern
 
       alias_method :publish_to_pmp?, :publish_to_pmp
 
+      def build_pmp_content
+        if valid? && publish_to_pmp? && !pmp_content
+          content = create_pmp_content profile: self.class::PMP_PROFILE
+        end
+      end
+
       def publish_pmp_content
-        if valid? # can we do better than this?
-          if publish_to_pmp? && !pmp_content
-            content = create_pmp_content profile: self.class::PMP_PROFILE
-            content.async_publish
-          elsif !publish_to_pmp? && pmp_content
-            pmp_content.destroy
-            reload
+        if valid?
+          content = pmp_content
+          if publish_to_pmp && content && (try(:published?) || try(:publishing?))
+            async_publish_pmp_content
+          elsif !publish_to_pmp? && content
+            content.destroy
+            self.reload
           end
+        end
+      end
+
+      def async_publish_pmp_content
+        content = pmp_content
+        if (published_to_pmp? && changed?) || !published_to_pmp?
+          content.async_publish
         end
       end
 

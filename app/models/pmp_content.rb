@@ -26,12 +26,7 @@ class PmpContent < ActiveRecord::Base
       delete_response = doc.delete
       if delete_response && delete_response.raw.status == 204
         self.update guid: nil
-        true
-      else
-        false
       end
-    else
-      false
     end
   end
 
