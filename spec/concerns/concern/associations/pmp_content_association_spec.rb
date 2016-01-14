@@ -24,6 +24,7 @@ describe Concern::Associations::AssetAssociation do
           content = create :news_story, publish_to_pmp: true
           expect(content.pmp_content).not_to eq(nil)
           content.update publish_to_pmp: false
+          content.reload
           expect(content.pmp_content).to eq(nil)
         end
       end
@@ -84,6 +85,7 @@ describe Concern::Associations::AssetAssociation do
         story = create :news_story, status: 5, publish_to_pmp: true
         expect(story.pmp_content).to_not eq nil
         story.update publish_to_pmp: false
+        story.reload
         expect(story.pmp_content).to eq nil
       end
     end
