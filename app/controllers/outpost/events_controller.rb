@@ -18,6 +18,8 @@ class Outpost::EventsController < Outpost::ResourceController
     l.column :is_kpcc_event, header: "KPCC?"
     l.column :status
 
+    l.column :published_to_pmp?, display: :display_pmp_status
+
     l.filter :is_kpcc_event,
       :title        => "KPCC Event?",
       :collection   => :boolean
