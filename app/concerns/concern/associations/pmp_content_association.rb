@@ -58,7 +58,7 @@ module Concern
         end
       end
 
-      ["story", "audio", "image"].each do |profile_name|
+      ["story", "audio", "image", "episode"].each do |profile_name|
         mod = Module.new do
           extend ActiveSupport::Concern
           included do

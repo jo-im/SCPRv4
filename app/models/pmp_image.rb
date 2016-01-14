@@ -2,6 +2,7 @@ class PmpImage < PmpContent
   self.table_name = "pmp_contents"
   default_scope ->{where("pmp_contents.profile = 'image'")}
   belongs_to :pmp_story, class_name: :PmpStory, foreign_key: :pmp_content_id
+  belongs_to :pmp_episode, class_name: :PmpEpisode, foreign_key: :pmp_content_id
   belongs_to :content, polymorphic: true
 
   def publish

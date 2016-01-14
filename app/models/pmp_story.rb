@@ -32,7 +32,7 @@ class PmpStory < PmpContent
 
     if content.respond_to?(:audio)
       doc.links['item'].concat(content.audio.map do |a|
-        audio_content = pmp_audio.first_or_create(content: a)
+        audio_content = pmp_audio.where(content: a).first_or_create
         audio_content.publish unless audio_content.published?
         audio_content.link
       end.compact)
@@ -41,7 +41,7 @@ class PmpStory < PmpContent
     if content.respond_to?(:assets)
       doc.links['item'].concat(content.assets.map do |i|
         if i.owner.try(:include?, "KPCC")
-          image_content = pmp_images.first_or_create(content: i)
+          image_content = pmp_images.where(content: i).first_or_create
           image_content.publish unless image_content.published?
           image_content.link
         end
