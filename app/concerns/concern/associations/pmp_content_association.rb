@@ -33,7 +33,6 @@ module Concern
       def destroy_pmp_content
         if !publish_to_pmp?
           pmp_content.try(:destroy)
-          reload
         end
       end
 
