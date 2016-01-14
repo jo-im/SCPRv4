@@ -55,9 +55,7 @@ module Concern
       def async_publish_pmp_content
         content = pmp_content
         if (published_to_pmp? && changed?) || !published_to_pmp?
-          # content.async_publish
-          # content.publish
-          pmp_story.publish
+          content.async_publish
         end
       end
 
