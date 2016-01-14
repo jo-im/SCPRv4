@@ -9,6 +9,7 @@
 
   <div class="alert alert-info">The body is optional and unnecessary for segmented programs. Segmented programs include Airtalk, Take Two, etc. Non-segmented programs, such as Filmweek or Loh Down on Science, should use this field.</div>
   <%= f.input :body, input_html: { class: "cke-editor-restrictive" } %>
+  <%= f.pmp_checkbox %>
 <% end %>
 
 <%= form_block "Segments" do %>

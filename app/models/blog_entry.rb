@@ -22,6 +22,7 @@ class BlogEntry < ActiveRecord::Base
   include Concern::Associations::EditionsAssociation
   include Concern::Associations::VerticalArticleAssociation
   include Concern::Associations::ProgramArticleAssociation
+  include Concern::Associations::PmpContentAssociation::StoryProfile
   include Concern::Validations::ContentValidation
   include Concern::Callbacks::SetPublishedAtCallback
   include Concern::Callbacks::GenerateShortHeadlineCallback
@@ -45,6 +46,7 @@ class BlogEntry < ActiveRecord::Base
   belongs_to :blog
 
   validates_presence_of :blog, if: :should_validate?
+
 
   scope :with_article_includes, ->() { includes(:blog,:category,:assets,:audio,:tags,:bylines,bylines:[:user]) }
 
@@ -144,7 +146,6 @@ class BlogEntry < ActiveRecord::Base
       :trailing_slash => true
     }
   end
-
 
   def to_article
     @to_article ||= Article.new({

@@ -21,6 +21,7 @@
   <% end %>
 
   <%= f.input :teaser, as: :text, hint: "This will be generated on publish if left blank.", input_html: { class: "tiny" }, wrapper_html: { class: "field-counter", data: { target: 145, fuzziness: 20 } } %>
+  <%= f.pmp_checkbox %>
 <% end %>
 
 <%= form_block "Location" do %>

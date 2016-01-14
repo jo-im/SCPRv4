@@ -493,5 +493,20 @@ module ApplicationHelper
     doc.css('body').children.to_s.html_safe
   end
 
+  class ActionView::Helpers::FormBuilder
+    include ActionView::Helpers::TagHelper
+    include ActionView::Helpers::FormTagHelper
+    include ActionView::Helpers::FormOptionsHelper
+    include ActionView::Helpers::CaptureHelper
+    include ActionView::Helpers::AssetTagHelper
+
+    def pmp_checkbox
+      self.input :publish_to_pmp, label: "Publish to PMP", hint: "Make available in Public Media Platform?" do
+        @template.check_box self.object.class.name.underscore, :publish_to_pmp, {checked: self.object.publish_to_pmp?}, "true", "false"
+      end
+    end
+
+  end
+
   extend self
 end

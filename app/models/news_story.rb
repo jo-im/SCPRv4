@@ -36,9 +36,7 @@ class NewsStory < ActiveRecord::Base
   include Concern::Methods::CommentMethods
   include Concern::Methods::AssetDisplayMethods
   include Concern::Sanitizers::Content
-  include Concern::Associations::PmpContentAssociation
-
-  PMP_PROFILE = "story"
+  include Concern::Associations::PmpContentAssociation::StoryProfile
 
   self.disqus_identifier_base = "news/story"
   self.public_route_key = "news_story"
@@ -59,7 +57,6 @@ class NewsStory < ActiveRecord::Base
 
   scope :with_article_includes, ->() { includes(:category,:assets,:audio,:tags,:bylines,bylines:[:user]) }
 
-  alias_attribute :url, :public_url
 
   def needs_validation?
     self.pending? || self.published?

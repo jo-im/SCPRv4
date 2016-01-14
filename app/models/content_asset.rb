@@ -1,6 +1,6 @@
 class ContentAsset < ActiveRecord::Base
   include Outpost::AssetHost::JoinModelJson
-  include Concern::Associations::PmpContentAssociation
+  include Concern::Associations::PmpContentAssociation::ImageProfile
 
   PMP_PROFILE = "image"
 

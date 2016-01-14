@@ -5,14 +5,10 @@ class PmpStory < PmpContent
   has_many :pmp_images, dependent: :destroy, foreign_key: :pmp_content_id
 
   def publish
-    if content
-      doc = build_doc
-      if doc.save
-        update! guid: doc.guid
-      end
-    else
-      raise ActiveRecord::RecordNotFound
-    end      
+    doc = build_doc
+    if doc.save
+      update! guid: doc.guid
+    end
   end
 
   def build_doc
@@ -21,15 +17,15 @@ class PmpStory < PmpContent
       title:            content.headline,
       teaser:           content.teaser,
       byline:           content.byline,
-      tags:             content.tags.map(&:slug),
-      published:        content.published_at,
+      tags:             content.try(:tags).try(:map, &:slug) || [],
+      published:        content.try(:published_at) || content.created_at,
       guid:             guid,
-      description:      Nokogiri::HTML(content.body).xpath("//text()").css('body').to_s,
+      description:      Nokogiri::HTML(content.body).xpath("//text()").to_s,
       contentencoded:   Nokogiri::HTML(ApplicationHelper.render_with_inline_assets(content)).at('body').children.to_s,
       contenttemplated: content.body,
     })
     doc.links['permissions'] = permissions
-    doc.links['alternate']   = content.url
+    doc.links['alternate']   = content.public_url
     doc.links['copyright'] = PMP::Link.new({href: "http://www.scpr.org/terms/"})
 
     doc.links['item'] ||= []
@@ -44,7 +40,7 @@ class PmpStory < PmpContent
 
     if content.respond_to?(:assets)
       doc.links['item'].concat(content.assets.map do |i|
-        if i.owner.include?("KPCC")
+        if i.owner.try(:include?, "KPCC")
           image_content = pmp_images.first_or_create(content: i)
           image_content.publish unless image_content.published?
           image_content.link
