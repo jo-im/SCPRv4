@@ -6,8 +6,7 @@
 <%= form_block "Meta" do %>
   <%= f.section "category" %>
   <%= f.section "feature" %>
-  <%= f.association :tags %>
-
+  <%= f.association :tags, as: :grouped_select, collection: Tag.by_type, group_method: :tags, group_label_method: :name, input_html: { :multiple => true } %>
   <%= f.input :source, collection: NewsStory::SOURCES, include_blank: false %>
   <%= f.input :news_agency %>
   <%= f.input :is_from_pij, hint: "Was this story informed by PIJ Sources?" %>

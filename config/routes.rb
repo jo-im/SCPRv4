@@ -74,9 +74,13 @@ Scprv4::Application.routes.draw do
   get '/events/:year/:month/:day/:slug/'  => 'events#show', constraints: { year: /\d{4}/, month: /\d{2}/, day: /\d{2}/, slug: /[\w_-]+/}
 
 
-  # Issues
-  get 'issues/:slug' => 'issues#show', as: :issue
-  get '/issues' => 'issues#index'
+  # Topics
+  get 'topics/:slug' => 'topics#show', as: :topic
+  ## Deprecated show page route
+  get 'issues/:slug', to: redirect { |params, request| "/topics/#{params[:slug]}" }
+  ## Deprecated index path redirects to home page
+  get '/issues' => redirect("/")
+  get '/topics' => redirect("/")
 
 
   # Search
@@ -268,7 +272,7 @@ Scprv4::Application.routes.draw do
     resources :breaking_news_alerts, concerns: [:search]
     resources :featured_comment_buckets, concerns: [:search]
     resources :categories, concerns: [:search]
-    resources :issues, concerns: [:search]
+    resources :topics, concerns: [:search]
     resources :missed_it_buckets, concerns: [:search]
     resources :external_programs, concerns: [:search]
     resources :kpcc_programs, concerns: [:search]

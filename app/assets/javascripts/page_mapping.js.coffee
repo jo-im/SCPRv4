@@ -16,7 +16,7 @@ scpr.GA_PAGE_MAPPING =
     # "^/news"                : "Content/About"
     # "^/arts-life"           : "Content/About"
     # "^/blogs"               : "Content/About"
-    # "^/issues"              : "Content/About"
+    # "^/topics"              : "Content/About"
     # "^/network"             : "Content/About"
     # "^/archive"             : "Content/About"
     ""                      : "Content/About" # Catch-all fallback

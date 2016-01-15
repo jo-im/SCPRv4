@@ -15,6 +15,7 @@ class Edition < ActiveRecord::Base
   include Concern::Callbacks::TouchCallback
   include Concern::Model::Searchable
   include Concern::Scopes::PublishedScope
+  include Concern::Associations::BylinesAssociation
 
 
   status :draft do |s|
