@@ -274,12 +274,12 @@ class scpr.ListenLive
     class Nielsen
         constructor: ->
             @_queued = []
-            $.getScript "http://secure-cert.imrworldwide.com/novms/js/2/ggcmb400.js"
+            $.getScript "http://secure-drm.imrworldwide.com/novms/js/2/ggcmb400.js"
                 .done (script,status) =>
                     @nolcmb = new NOLCMB?.ggInitialize
-                        sfcode: "uat-cert"
+                        sfcode: "drm"
                         apid  : "T4FA39C01-1BC0-41C3-A309-06ED295D84D2"
-                        apn   : "test"
+                        apn   : "kpcc-live-stream-browser"
 
                     @nolcmb.ggPM e... for e in @_queued
                     true
@@ -299,7 +299,7 @@ class scpr.ListenLive
                 dataSrc    : "cms"
                 type       : "radio"
                 assetid    : "KPCC-FM"
-                provider   : "Southern California Public Radio - Radio"
+                provider   : "Southern California Public Radio"
 
             @_send "play", Math.floor(Date.now() / 1000)
 
