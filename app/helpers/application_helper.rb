@@ -171,7 +171,8 @@ module ApplicationHelper
 
       asset = content.original_object.assets.find_by(asset_id:asset_id)
 
-      if asset
+      ## If kpcc_only is true, only render if the owner of the asset is KPCC
+      if asset && (!options[:kpcc_only] || asset.owner.try(:include?, "KPCC"))
         rendered_asset = render_asset content, context: context, display: display, asset:asset
         placeholder.replace Nokogiri::HTML::DocumentFragment.parse(rendered_asset)
       else

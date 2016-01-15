@@ -63,7 +63,7 @@ module Concern
       end
 
       def rendered_body
-        Nokogiri::HTML(ApplicationHelper.render_with_inline_assets(self)).at('body').children.to_s
+        Nokogiri::HTML(ApplicationHelper.render_with_inline_assets(self, kpcc_only: true)).at('body').children.to_s
       end
 
       ["story", "audio", "image", "episode"].each do |profile_name|
