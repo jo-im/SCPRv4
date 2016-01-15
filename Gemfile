@@ -111,4 +111,5 @@ group :test do
   gem 'elasticsearch-extensions'
   gem 'rspec_junit_formatter', :git => 'git@github.com:circleci/rspec_junit_formatter.git'
   gem 'timecop'
+  gem 'faker'
 end

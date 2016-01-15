@@ -58,6 +58,14 @@ module Concern
         end
       end
 
+      def plaintext_body
+        output = Nokogiri::HTML(body).xpath("//text()").to_s
+      end
+
+      def rendered_body
+        Nokogiri::HTML(ApplicationHelper.render_with_inline_assets(self)).at('body').children.to_s
+      end
+
       ["story", "audio", "image", "episode"].each do |profile_name|
         mod = Module.new do
           extend ActiveSupport::Concern

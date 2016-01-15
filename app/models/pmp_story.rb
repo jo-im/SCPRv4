@@ -5,7 +5,7 @@ class PmpStory < PmpContent
   has_many :pmp_images, dependent: :destroy, foreign_key: :pmp_content_id
 
   def publish
-    doc = build_doc
+    doc = build_docs
     if doc.save
       update! guid: doc.guid
     end
@@ -20,8 +20,8 @@ class PmpStory < PmpContent
       tags:             content.try(:tags).try(:map, &:slug) || [],
       published:        content.try(:published_at) || content.created_at,
       guid:             guid,
-      description:      Nokogiri::HTML(content.body).xpath("//text()").to_s,
-      contentencoded:   Nokogiri::HTML(ApplicationHelper.render_with_inline_assets(content)).at('body').children.to_s,
+      description:      content.plaintext_body,
+      contentencoded:   content.rendered_body,
       contenttemplated: content.body,
     })
     doc.links['permissions'] = permissions
@@ -30,6 +30,12 @@ class PmpStory < PmpContent
 
     doc.links['item'] ||= []
 
+    doc
+  end
+
+  ## This will publish audio and image docs.  You have been warned.
+  def build_docs
+    doc = build_doc
     if content.respond_to?(:audio)
       doc.links['item'].concat(content.audio.map do |a|
         audio_content = pmp_audio.where(content: a).first_or_create
@@ -37,7 +43,6 @@ class PmpStory < PmpContent
         audio_content.link
       end.compact)
     end
-
     if content.respond_to?(:assets)
       doc.links['item'].concat(content.assets.map do |i|
         if i.owner.try(:include?, "KPCC")
@@ -47,7 +52,6 @@ class PmpStory < PmpContent
         end
       end.compact)
     end
-
     doc
   end
 
