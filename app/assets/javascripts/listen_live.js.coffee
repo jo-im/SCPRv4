@@ -33,8 +33,6 @@ class scpr.ListenLive
 
             @_playerReady   = false
 
-            @nielsen        = new Nielsen()
-
             # -- set up our player -- #
 
             @player.jPlayer
@@ -56,9 +54,7 @@ class scpr.ListenLive
                     clearTimeout @_pause_timeout
                     @_pause_timeout = null
 
-                @adResponse?.touchImpressions()
-
-                @nielsen?.play() if !@_inPreroll
+                @adResponse?.touchImpressions(@_live_ad)
 
             @player.on $.jPlayer.event.pause, (evt) =>
                 # set a timer to convert this pause to a stop in one minute
@@ -66,7 +62,6 @@ class scpr.ListenLive
                     @player.jPlayer("clearMedia")
                     @_shouldTryAd = true
                 , @options.pause_timeout * 1000
-                @nielsen?.stop() if !@_inPreroll
 
             @player.on $.jPlayer.event.error, (evt) =>
                 if evt.jPlayer.error.type == "e_url_not_set"
@@ -262,52 +257,9 @@ class scpr.ListenLive
                     return true
                 else
                     return false
-        touchImpressions: ->
-            impressions = @impressions()
-            _.each impressions, (url) =>      
-                # create an img and append it to our DOM
-                img = $("<img src='#{url}'>").css("display:none")
-                $('body').append(img)
-
-    #----------
-
-    class Nielsen
-        constructor: ->
-            @_queued = []
-            $.getScript "http://secure-drm.imrworldwide.com/novms/js/2/ggcmb400.js"
-                .done (script,status) =>
-                    @nolcmb = new NOLCMB?.ggInitialize
-                        sfcode: "drm"
-                        apid  : "T4FA39C01-1BC0-41C3-A309-06ED295D84D2"
-                        apn   : "kpcc-live-stream-browser"
-
-                    @nolcmb.ggPM e... for e in @_queued
-                    true
-
-                .fail (xhr,settings,exception) =>
-                    console.log "Failed to load Nielsen SDK: #{exception}"
-
-        _send: (event,data) ->
-            if @nolcmb
-                @nolcmb.ggPM event, data
-            else
-                @_queued.push [event,data]
-
-        play: ->
-            @_send "loadMetadata",
-                stationType: 2
-                dataSrc    : "cms"
-                type       : "radio"
-                assetid    : "KPCC-FM"
-                provider   : "Southern California Public Radio"
-
-            @_send "play", Math.floor(Date.now() / 1000)
-
-            # send setPlayheadPosition every 2 seconds, as specified by Nielsen
-            @_setPlayheadPosition = setInterval(=>
-                @_send "setPlayheadPosition", Math.floor(Date.now() / 1000)
-            , 2000)
-
-        stop: ->
-            @_send "stop", Math.floor(Date.now() / 1000)
-            clearInterval(@_setPlayheadPosition)
+        touchImpressions: (el)->
+            if el && (impressions = @impressions())
+                _.each impressions, (url) =>      
+                    # create an img and append it to our DOM
+                    img = $("<img src='#{url}'>").css("display:none")
+                    el.append(img)
