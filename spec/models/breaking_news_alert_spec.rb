@@ -227,4 +227,21 @@ describe BreakingNewsAlert do
       BreakingNewsAlert.latest_visible_alert.should be_nil
     end
   end
+
+  #-----------------------
+
+  describe "#badge" do
+    context "alert is an audio alert" do
+      it "returns nil" do
+        alert = create :breaking_news_alert, alert_type: 'audio'
+        expect(alert.badge).to be_nil
+      end
+    end
+    context "alert is not an audio alert" do
+      it 'returns increment string' do
+        alert = create :breaking_news_alert, alert_type: 'break'
+        expect(alert.badge.include?('Increment')).to be true
+      end
+    end
+  end
 end
