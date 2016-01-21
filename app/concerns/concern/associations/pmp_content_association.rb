@@ -22,7 +22,7 @@ module Concern
         groups = []
         if respond_to?(:tags) && tags.where(slug: "california-counts").any?
           groups.concat [
-            PMP::Link.new(href: "https://api-sandbox.pmp.io/docs/724d1c1e-0ab6-4067-8bfb-af72e47ba6fb", operation: "read")
+            PMP::Link.new(href: Rails.application.secrets.api['pmp']['permission_groups']['california_counts'], operation: "read")
           ]
         end
         groups
