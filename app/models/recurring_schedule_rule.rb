@@ -199,7 +199,15 @@ class RecurringScheduleRule < ActiveRecord::Base
   end
 
   def problems
-    ScheduleOccurrence.problems(self)
+    occurrences = schedule_occurrences.future(:unsaved)
+    if occurrences.empty?
+      occurrences = schedule_occurrences.future
+    end
+      .concat(
+        ScheduleOccurrence.future.where.not(recurring_schedule_rule_id: self.id)
+        )
+      .sort_by(&:starts_at)
+    ScheduleOccurrence.find_problems(occurrences)
   end
 
   private

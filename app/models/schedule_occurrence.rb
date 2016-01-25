@@ -42,6 +42,10 @@ class ScheduleOccurrence < ActiveRecord::Base
 
   scope :filtered_by_date, ->(date) { where("DATE(starts_at) = ?", date) }
 
+  scope :problems, ->{
+    find_problems future.order("starts_at ASC")
+  }
+
 ############################
 
   validate :program_or_info_is_present
@@ -110,37 +114,24 @@ class ScheduleOccurrence < ActiveRecord::Base
       occurrences
     end
 
-    def problems rule=nil
+    def find_problems occurrences
       probs = {gaps: [], overlaps: []}
-      unless rule
-        occurrences = future.order("starts_at ASC")
-      else
-        ## This is for when we need to look for
-        ## problems coming from unsaved schedule
-        ## occurrences from a rule.
-        # rule.build_two_weeks_of_occurrences
-        occurrences = rule.schedule_occurrences.future(:unsaved)
-          .concat(
-            future.where.not(recurring_schedule_rule_id: rule.id)
-            )
-          .sort_by(&:starts_at)
-      end
       occurrences.each_cons(2) do |pair|
         next if pair.length < 2
-        # if a rule is provided, only return problems that match the rule id.  else, return all problems.
-        if !rule || (pair[0].recurring_schedule_rule_id == rule.id || pair[1].recurring_schedule_rule_id == rule.id)
-          if pair[0].ends_at.to_i < pair[1].starts_at.to_i
-            probs[:gaps] << pair
-          elsif pair[0].ends_at.to_i > pair[1].starts_at.to_i
-            probs[:overlaps] << pair
-          end
+        if pair[0].ends_at.to_i < pair[1].starts_at.to_i
+          probs[:gaps] << pair
+        elsif pair[0].ends_at.to_i > pair[1].starts_at.to_i
+          probs[:overlaps] << pair
         end
       end
-      probs
+      probs     
     end
 
   end
 
+  def find_problems occurrences
+    self.class.find_problems occurrences
+  end
 
   def wday
     self.starts_at.wday
@@ -191,7 +182,6 @@ class ScheduleOccurrence < ActiveRecord::Base
   def display_name
     [program.try(:title), recurring_schedule_rule_id, event_title].compact.join(" - ")
   end
-
 
   private
 

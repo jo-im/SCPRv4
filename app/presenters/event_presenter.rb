@@ -14,6 +14,8 @@ class EventPresenter < ApplicationPresenter
     s.html_safe
   end
 
+  alias_method :body, :description
+
   #-------------
 
   def sponsor

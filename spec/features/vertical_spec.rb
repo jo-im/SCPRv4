@@ -50,7 +50,7 @@ describe "Vertical page", :indexing do
       page.should have_content vertical.featured_articles.first.short_title, count: 1
     end
 
-    it "does not return the top story in the promoted issues section" do
+    it "does not return the top story in the promoted topics section" do
       tag             = create :tag
       vertical        = create :vertical
       featured_story  = create :news_story, :published, category: vertical.category
@@ -61,7 +61,7 @@ describe "Vertical page", :indexing do
 
       other_articles = create_list :news_story, 2, :published
 
-      # assign issue to featured article and other articles
+      # assign topic to featured article and other articles
       other_articles.each do |article|
         article.taggings.create(tag: tag)
       end
@@ -70,20 +70,20 @@ describe "Vertical page", :indexing do
 
       within(".supportive aside.more") do
         # make sure top story doesn't show up in the promoted
-        # 'more from this issue' section
+        # 'more from this topic' section
         page.should_not have_content vertical.featured_articles.first.short_title
       end
 
-      within("section.issues") do
-        # make sure top story will still show up in the Issues We're Tracking section
+      within("section.topics") do
+        # make sure top story will still show up in the Topics We're Tracking section
         page.should have_content vertical.featured_articles.first.short_title, count: 1
       end
     end
 
     # This spec is here becase an error occurred when a content shell
-    # without issues was the lead article, since content shells don't have
+    # without topics was the lead article, since content shells don't have
     # related content.
-    it "can have a content shell as the lead article with no issues" do
+    it "can have a content shell as the lead article with no topics" do
       vertical = create :vertical
       shell = create :content_shell, :published
 
@@ -175,8 +175,8 @@ describe "Vertical page", :indexing do
     end
   end
 
-  describe "rendering issues" do
-    it "shows the related issues in the sidebar" do
+  describe "rendering topics" do
+    it "shows the related topics in the sidebar" do
       tag1 = create :tag, title: "xxIssue1xx"
       tag2 = create :tag, title: "xxIssue2xx"
       vertical = create :vertical
@@ -185,13 +185,13 @@ describe "Vertical page", :indexing do
 
       visit vertical.public_path
 
-      within('section.issues') do
+      within('section.topics') do
         page.should have_content "xxIssue1xx"
         page.should have_content "xxIssue2xx"
       end
     end
 
-    it "shows the issue's 2 latest articles" do
+    it "shows the topic's 2 latest articles" do
       tag = create :tag
 
       article1 = create :news_story, :published,
@@ -216,7 +216,7 @@ describe "Vertical page", :indexing do
 
       visit vertical.public_path
 
-      within('section.issues') do
+      within('section.topics') do
         page.should_not have_content "xxArticle1xx"
         page.should have_content "xxArticle2xx"
         page.should have_content "xxArticle3xx"

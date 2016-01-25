@@ -72,9 +72,10 @@ header#masthead {
 }
 
 // Contribute
-.kpcc-personalities {
+.masthead-banner {
     @include ie-inline-block;
-    background: transparent image-url("contribute-container-bg.jpg") no-repeat bottom;
+    // Until we place something back inside this element, having the background doesn't make sense.
+    // background: transparent image-url("contribute-container-bg.jpg") no-repeat bottom;
     height:73px;
     max-height: 73px;
     overflow: hidden;

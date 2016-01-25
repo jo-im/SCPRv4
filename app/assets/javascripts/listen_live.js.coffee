@@ -1,10 +1,6 @@
 #= require xml2json
 
 class scpr.ListenLive
-    constructor: (options) ->
-        # This was old code for a StreamMachine PoC. It is no longer used.
-
-    #----------
 
     class @CurrentGen
         DefaultOptions:
@@ -19,20 +15,23 @@ class scpr.ListenLive
             skip_preroll:       false
 
         constructor: (opts) ->
-            @options = _.defaults opts, @DefaultOptions
+            @options        = _.defaults opts, @DefaultOptions
 
-            @x2js = new X2JS()
+            @x2js           = new X2JS()
 
-            @player = $(@options.player)
+            @player         = $(@options.player)
+
             @_pause_timeout = null
 
-            @_live_ad = $(@options.ad_element)
+            @_live_ad       = $(@options.ad_element)
 
-            @_shouldTryAd = true
+            @_shouldTryAd   = true
 
-            @_on_now = null
+            @_inPreroll     = false
 
-            @_playerReady = false
+            @_on_now        = null
+
+            @_playerReady   = false
 
             # -- set up our player -- #
 
@@ -55,16 +54,9 @@ class scpr.ListenLive
                     clearTimeout @_pause_timeout
                     @_pause_timeout = null
 
-                if url = @_impressionURL
-                    @_impressionURL = null
-                    # create an img and append it to our DOM
-                    img = $("<img src='#{url}'>").css("display:none")
-                    @_live_ad.append(img)
-                    #$.ajax type:"GET", url:"#{url};cors=yes", success:(resp) =>
-                        # nothing right now
+                @adResponse?.touchImpressions(@_live_ad)
 
             @player.on $.jPlayer.event.pause, (evt) =>
-
                 # set a timer to convert this pause to a stop in one minute
                 @_pause_timeout = setTimeout =>
                     @player.jPlayer("clearMedia")
@@ -76,6 +68,8 @@ class scpr.ListenLive
                     @_play()
 
             @player.on $.jPlayer.event.ended, (evt) =>
+                @_shouldTryAd = false
+                @_inPreroll   = false
                 @_play()
 
             $.jPlayer.timeFormat.showHour = true;
@@ -99,15 +93,14 @@ class scpr.ListenLive
 
             if !@_shouldTryAd || @options.skip_preroll
                 _playStream()
-
             else
                 @_shouldTryAd = false
-
                 # set a timeout so that we make sure the stream starts playing
                 # regardless of whether our preroll works
                 _timedOut = false
                 _errorTimeout = setTimeout =>
                     _timedOut = true
+                    @_inPreroll = false
                     console.log "timed out waiting for ad response"
                     _playStream()
                 , 3000
@@ -123,43 +116,20 @@ class scpr.ListenLive
                         console.log "ajax error ", err
                     success:    (xml) =>
                         console.log "xml is ", xml
-                        @_xml = xml
-
                         clearTimeout _errorTimeout if _errorTimeout
-
-                        obj = @x2js.xml2json(xml)
-
-                        @_triton = obj
-
+                        response_xml = @x2js.xml2json(xml)
+                        @adResponse = new AdResponse(response_xml)
                         # is there an ad there for us?
-                        if ad = obj?.VAST?.Ad?.InLine
+                        if @adResponse.ad()
                             # is there a preroll?
-                            if (preroll = ad.Creatives?.Creative?[0]?.Linear) && !_timedOut
+                            if @adResponse.preroll() && !_timedOut
                                 # yes... play it
-                                media = preroll.MediaFiles.MediaFile.toString()
-                                @player.jPlayer("setMedia",mp3:media).jPlayer("play")
-
-                                @_impressionURL = ad.Impression.toString()
-
+                                @_inPreroll = true
+                                @adResponse.playPreroll(@player)
                             else
                                 _playStream()
-
-                            # is there a visual?
-                            if companions = ad.Creatives?.Creative?[1]?.CompanionAds?.Companion
-                                # find the first html or iframe
-                                _(companions).find (c) =>
-                                    switch
-                                        when c.HTMLResource?
-                                            @_live_ad?.html(c.HTMLResource.toString())
-                                            @_live_ad.css(margin:"0 auto").width(c._width)
-                                            true
-                                        when c.IFrameResource?
-                                            @_live_ad?.html $("<iframe>",src:c.IFrameResource.toString(),width:c._width,height:c._height)
-
-                                            true
-                                        else
-                                            false
-
+                            # display a visual if there is one
+                            @adResponse.renderVisual(@_live_ad)
                         else
                             _playStream()
 
@@ -184,8 +154,6 @@ class scpr.ListenLive
                 show_splash_img = 'http://media.scpr.org/assets/images/programs/' + show_slug + '_splash@2x.jpg'
 
                 $('.wrapper, .wrapper-backdrop').css('background-image', 'url(' + show_splash_img + ')')
-
-
 
     #----------
 
@@ -227,3 +195,71 @@ class scpr.ListenLive
         on_now: -> @on_at (new Date)
 
     #----------
+
+    class AdResponse
+        constructor: (xml)->
+            @xml = xml
+            @obj = xml.DAAST or xml.VAST or undefined
+        preroll: ->
+            @ad().Creatives?.Creative?[0]?.Linear
+        ad: ->
+            @obj?.Ad?.InLine
+        renderVisual: (el)->
+            companions = @companions()
+            resources = {}
+            # ordered by precedence
+            resourceTypes = [
+              {
+                name: 'HTMLResource'
+                render: (c) ->
+                    el?.html(c.HTMLResource.toString())
+                    el.css(margin:"0 auto").width(c._width)
+              }
+              {
+                name: 'IFrameResource'
+                render: (c) ->
+                    el?.html $("<iframe>",src:c.IFrameResource.toString(),width:c._width,height:c._height)
+                    @_submitViewEvent(c)
+              }
+            ]
+
+            for r in resourceTypes
+                break if _(companions).find (c) =>
+                    if c[r.name]?
+                        r.render(c)
+                        return true
+                    else
+                        return false
+
+        impressions: ->
+            # Always return an array, even if there is one or no impressions
+            impressions = _.flatten [@ad().Impression or []]
+            _.map impressions, (i) ->
+                return i.toString()
+        companions: ->
+            if @xml.DAAST
+                @ad().Creatives?.Creative?[1]?.CompanionAds or []
+            else if @xml.VAST
+                @ad().Creatives?.Creative?[1]?.CompanionAds?.Companion or []
+            else
+                []
+        playPreroll: (player)->
+            if preroll = @preroll()
+                media = preroll.MediaFiles.MediaFile.toString()
+                player.jPlayer("setMedia",mp3:media).jPlayer("play")
+        _submitViewEvent: (companion) ->
+            trackingEvents = _.flatten([companion.TrackingEvents.Tracking])
+            # only use the creativeView tracking event
+            _.find trackingEvents, (e) ->
+                if e._event == "creativeView"
+                    url = e.toString()
+                    $.get("#{url};cors=yes")
+                    return true
+                else
+                    return false
+        touchImpressions: (el)->
+            if el && (impressions = @impressions())
+                _.each impressions, (url) =>      
+                    # create an img and append it to our DOM
+                    img = $("<img src='#{url}'>").css("display:none")
+                    el.append(img)

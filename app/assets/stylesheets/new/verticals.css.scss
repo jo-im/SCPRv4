@@ -505,7 +505,7 @@ Our fun compartment-tray activity kit of Top Issues, Featured Interactive, Quote
         box-shadow:
             inset 0 8px 0 rgba(0,0,0,0.25);
     }
-    .issues {
+    .topics {
         width: 32.923076923077%; // 428 / 1300
         float: left;
         z-index: 3;
@@ -684,7 +684,7 @@ Our fun compartment-tray activity kit of Top Issues, Featured Interactive, Quote
 
 //  ------------------------------------------------------------------------------------------------
 
-.lunchbox .issues {
+.lunchbox .topics {
     padding: 29px 0 35px;
 
     & > header {
@@ -861,7 +861,7 @@ Our fun compartment-tray activity kit of Top Issues, Featured Interactive, Quote
 
     .lunchbox {
         .inner  { background: none; }
-        .issues {
+        .topics {
             width: 50%; // had been 32.923...
             & > header  { margin-bottom: 25px; }
             & > div     { margin-bottom: 35px; }
@@ -919,7 +919,7 @@ Our fun compartment-tray activity kit of Top Issues, Featured Interactive, Quote
         background: #363636; // dark gray
         box-shadow: inset 0 8px 0 rgba(0,0,0,0.9);
         .inner  { box-shadow: none; }
-        .issues {
+        .topics {
             width: 100%; // had been 50
             float: none;
             & > header {

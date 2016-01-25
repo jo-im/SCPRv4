@@ -13,7 +13,7 @@
                         <div class="ratio">
 
                         <% if tags && (tag = (article.tags & tags).first) %>
-                            <a href="<%=issue_path(tag.slug)%>" class='issue'>
+                            <a href="<%=topic_path(tag.slug)%>" class='topic'>
                               <span><%= tag.title %></span>
                             </a>
                         <% end %>

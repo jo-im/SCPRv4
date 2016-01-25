@@ -190,7 +190,7 @@ $featuredPrograms: ("offramp","airtalk","the-frame","take-two","filmweek");
 
 		.ratio {
 			z-index: 1;
-			.issue {
+			.topic {
 				z-index: 2;
 				position: absolute;
 				display: inline-block;
@@ -381,7 +381,7 @@ $featuredPrograms: ("offramp","airtalk","the-frame","take-two","filmweek");
 			.ratio {
 				z-index: 1;
 			}
-			.issue {
+			.topic {
 				position: absolute;
 				display: inline-block;
 				text-transform: uppercase;
@@ -505,7 +505,7 @@ $featuredPrograms: ("offramp","airtalk","the-frame","take-two","filmweek");
 				.prose			{ width: 70%; }
 			}
 			@media screen and (min-width: 380px) and (max-width: 600px) {
-				.graphic .issue	{ top: 100%; }
+				.graphic .topic	{ top: 100%; }
 			}
 			@media screen and (max-width: 530px) {
 				.graphic		{ width: 38%; }
@@ -576,7 +576,7 @@ $featuredPrograms: ("offramp","airtalk","the-frame","take-two","filmweek");
 		.ratio {
 			z-index: 1;
 			overflow: hidden;
-			.issue {
+			.topic {
 				display: inline-block;
 				position: absolute;
 				text-align: right;
@@ -599,7 +599,7 @@ $featuredPrograms: ("offramp","airtalk","the-frame","take-two","filmweek");
 
 				.ratio {
 					overflow: visible;
-					.issue {
+					.topic {
 						display: block;
 						width: 100%;
 						padding: 0 0 0 0;

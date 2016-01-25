@@ -1,8 +1,8 @@
 <section class="segments">
   <h1>Recently on <cite><%= program.title %></cite></h1>
-  <div class="series clearfix">
-    <% segments.first(14).each do |segment| %>
-      <% cache ["featured-program-segments",segment] do %>
+  <% cache ["featured-program-segments",program] do %>
+    <div class="series clearfix">
+      <% segments.first(14).each do |segment| %>
         <figure>
             <div class="photo ratio">
               <a href="<%= segment.public_path %>">
@@ -17,32 +17,31 @@
             <figcaption><a href="<%= segment.public_path %>"><%= segment.short_headline %></a></figcaption>
         </figure>
       <% end %>
-    <% end %>
 
-    <figure>
-        <div class="photo ratio">
-          <a href="/programs/<%= program.slug %>/featured?view=segments">
-            <div class="fill"></div>
-            <b class="img-contain"></b>
-          </a>
+      <figure>
+          <div class="photo ratio">
+            <a href="/programs/<%= program.slug %>/featured?view=segments">
+              <div class="fill"></div>
+              <b class="img-contain"></b>
+            </a>
+          </div>
+          <figcaption><a href="/programs/<%= program.slug %>/featured?view=segments">Browse through more of <%= program.title %></a></figcaption>
+      </figure>
+
+    </div><!--/ .series -->
+
+
+    <aside class="podcast-appeal">
+      <div class="inner">
+        <div class="prose">
+          <h1>Subscribe to <%= program.title %>’s podcast, and receive every new episode, automatically, as soon as it’s released. Listen on your own time, your own way.</h1>
+          <ul class="clearfix">
+            <li class="itunes"><a href="<%= program.get_link('podcast') %>"><span>Subscribe via iTunes</span></a></li>
+            <li class="any"><a href="http://www.scpr.org/podcasts/<%= program.slug %>"><span>Any podcast app (XML)</span></a></li>
+          </ul>
         </div>
-        <figcaption><a href="/programs/<%= program.slug %>/featured?view=segments">Browse through more of <%= program.title %></a></figcaption>
-    </figure>
-
-  </div><!--/ .series -->
-
-
-  <aside class="podcast-appeal">
-    <div class="inner">
-      <div class="prose">
-        <h1>Subscribe to <%= program.title %>’s podcast, and receive every new episode, automatically, as soon as it’s released. Listen on your own time, your own way.</h1>
-        <ul class="clearfix">
-          <li class="itunes"><a href="<%= program.get_link('podcast') %>"><span>Subscribe via iTunes</span></a></li>
-          <li class="any"><a href="http://www.scpr.org/podcasts/<%= program.slug %>"><span>Any podcast app (XML)</span></a></li>
-        </ul>
       </div>
-    </div>
-  </aside>
-
+    </aside>
+<% end %>
 
 </section><!--/ .segments -->

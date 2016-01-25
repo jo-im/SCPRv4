@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151116220729) do
+ActiveRecord::Schema.define(version: 20151210190834) do
 
   create_table "abstracts", force: :cascade do |t|
     t.string   "source",               limit: 255
@@ -323,6 +323,7 @@ ActiveRecord::Schema.define(version: 20151116220729) do
     t.string   "email_type",          limit: 255
     t.datetime "created_at",                                      null: false
     t.datetime "updated_at",                                      null: false
+    t.integer  "attempts_made",       limit: 4,   default: 0
   end
 
   create_table "events", force: :cascade do |t|
@@ -852,18 +853,18 @@ ActiveRecord::Schema.define(version: 20151116220729) do
   add_index "taggit_taggeditem", ["tag_id"], name: "taggit_taggeditem_3747b463", using: :btree
 
   create_table "tags", force: :cascade do |t|
-    t.string   "title",          limit: 255
-    t.string   "slug",           limit: 255
-    t.text     "description",    limit: 65535
-    t.boolean  "is_featured"
+    t.string   "title",       limit: 255
+    t.string   "slug",        limit: 255
+    t.text     "description", limit: 65535
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.datetime "began_at"
-    t.datetime "most_recent_at"
+    t.string   "image",       limit: 255
+    t.string   "tag_type",    limit: 255,   default: "Keyword"
+    t.integer  "parent_id",   limit: 4
+    t.string   "parent_type", limit: 255
   end
 
   add_index "tags", ["created_at"], name: "index_tags_on_created_at", using: :btree
-  add_index "tags", ["is_featured"], name: "index_tags_on_is_featured", using: :btree
   add_index "tags", ["slug"], name: "index_tags_on_slug", using: :btree
 
   create_table "user_permissions", force: :cascade do |t|
