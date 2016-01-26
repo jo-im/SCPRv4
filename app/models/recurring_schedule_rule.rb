@@ -199,15 +199,28 @@ class RecurringScheduleRule < ActiveRecord::Base
   end
 
   def problems
-    occurrences = schedule_occurrences.future(:unsaved)
-    if occurrences.empty?
-      occurrences = schedule_occurrences.future
-    end
-      .concat(
+    occurrences = build_two_weeks_of_occurrences.to_a.reject!(&:id)
+    occurrences.concat(
         ScheduleOccurrence.future.where.not(recurring_schedule_rule_id: self.id)
         )
-      .sort_by(&:starts_at)
-    ScheduleOccurrence.find_problems(occurrences)
+      .sort_by!(&:starts_at)
+    problems = ScheduleOccurrence.find_problems(occurrences)
+    matcher = Proc.new {|p| p[0].recurring_schedule_rule_id == self.id || p[1].recurring_schedule_rule_id == self.id}
+    problems = {
+      related: {
+        gaps: problems[:gaps].select(&matcher),
+        overlaps: problems[:overlaps].select(&matcher)
+      },
+      other: {
+        gaps: problems[:gaps].reject(&matcher),
+        overlaps: problems[:overlaps].reject(&matcher),
+      },
+      all: problems,
+      any?: problems[:any?]
+    }
+    problems[:related][:any?] = problems[:related][:gaps].any? || problems[:related][:overlaps].any?
+    problems[:other][:any?]   = problems[:other][:gaps].any? || problems[:other][:overlaps].any?
+    problems
   end
 
   private

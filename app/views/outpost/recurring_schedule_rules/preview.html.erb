@@ -1,26 +1,22 @@
-<% if @overlaps.any? || @gaps.any? %>
-  <h3>Looks like you got a few issues, dawg</h3>
+<div class="container">
+  <div class="row">
+    <div class="col-md-6 col-md-offset-3">
+      <% if @problems[:any?] %>
+      <h2>Looks like you got a few issues, dawg.</h2>
+      <hr />
+        <% if @problems[:related][:any?] %>
+          <h3>Related Problems</h3>
+          <hr />
+          <%= render partial: "problems", locals: {gaps: @problems[:related][:gaps], overlaps: @problems[:related][:overlaps]} %>
+        <% elsif @problems[:other][:any?] %>
 
-  <% if @overlaps.any? %>
-    <h2>Overlaps</h2>
-      <ul>
-        <% @overlaps.each do |overlap| %>
-          <li>
-            <strong><%= overlap[0].display_name %></strong> ends at <%= overlap[0].ends_at.try(:strftime, "%I:%M%P %-m/%-d") %> but <strong><%= overlap[1].display_name %></strong> starts at <%= overlap[1].starts_at.try(:strftime, "%I:%M%P %-m/%-d") %>
-          </li>
+          <h3>Other Problems</h3>
+          <hr />
+          <%= render partial: "problems", locals: {gaps: @problems[:other][:gaps], overlaps: @problems[:other][:overlaps]} %>
         <% end %>
-      </ul>
-  <% end %>
-  <% if @gaps.any? %>
-    <h2>Gaps</h2>
-    <ul>
-      <% @gaps.each do |gap| %>
-        <li>
-          <strong><%= gap[0].display_name %></strong> ends at <%= gap[0].ends_at.try(:strftime, "%I:%M%P %-m/%-d") %> but <strong><%= gap[1].display_name %></strong> starts at <%= gap[1].starts_at.try(:strftime, "%I:%M%P %-m/%-d") %>
-        </li>
+      <% else %>
+        <h2>Lookin' good, bro.</h2>
       <% end %>
-    </ul>
-  <% end %>
-<% else %>
-  <h3>Lookin' good, bro.</h3>
-<% end %>
+    </div>
+  </div>
+</div>

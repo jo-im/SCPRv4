@@ -1,0 +1,8 @@
+<% if overlaps.any? %>
+  <h4>Overlaps</h4>
+  <%= render partial: "problem_table", locals: {problems: overlaps, problem_type: "overlaps"} %>
+<% end %>
+<% if gaps.any? %>
+  <h4>Gaps</h4>
+  <%= render partial: "problem_table", locals: {problems: gaps, problem_type: "gaps"} %>
+<% end %>

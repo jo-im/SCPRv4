@@ -1,14 +1,3 @@
-<% if record.problems && (record.problems[:gaps].any? || record.problems[:overlaps].any?) %>
-  <%= form_block "Problems" do %>
-    <% record.problems[:gaps].each do |problem| %>
-      <%= problem %>
-    <% end %>
-    <% record.problems[:overlaps].each do |problem| %>
-      <%= problem %>
-    <% end %>
-  <% end %>
-<% end %>
-
 <%= form_block "Rule" do %>
 
   <%= f.input :interval, required: true do %>
@@ -32,4 +21,10 @@
 <%= form_block "Program" do %>
   <%= f.input :program_obj_key, required: true, label: "Program",
     collection: ScheduleOccurrence.program_select_collection %>
+<% end %>
+
+<% content_for :preview_button do %>
+  <div class="btn-group dropup" id="preview-submit">
+    <a href="#" class="btn btn-info js-preview-btn" data-window-options="width=1460,height=1000">Show Conflicts</a>
+  </div>
 <% end %>

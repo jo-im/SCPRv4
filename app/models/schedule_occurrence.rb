@@ -23,6 +23,7 @@ class ScheduleOccurrence < ActiveRecord::Base
       all.to_a.select{|o| o.starts_at > Time.zone.now}.reject(&:id)
     end
   end
+  
   scope :past,    -> { before(Time.zone.now) }
   scope :current, -> { at(Time.zone.now) }
 
@@ -115,13 +116,15 @@ class ScheduleOccurrence < ActiveRecord::Base
     end
 
     def find_problems occurrences
-      probs = {gaps: [], overlaps: []}
+      probs = {gaps: [], overlaps: [], any?: false}
       occurrences.each_cons(2) do |pair|
         next if pair.length < 2
         if pair[0].ends_at.to_i < pair[1].starts_at.to_i
           probs[:gaps] << pair
+          probs[:any?] = true
         elsif pair[0].ends_at.to_i > pair[1].starts_at.to_i
           probs[:overlaps] << pair
+          probs[:any?] = true
         end
       end
       probs     
@@ -180,7 +183,7 @@ class ScheduleOccurrence < ActiveRecord::Base
   end
 
   def display_name
-    [program.try(:title), recurring_schedule_rule_id, event_title].compact.join(" - ")
+    [program.try(:title), event_title].compact.join(" - ")
   end
 
   private
