@@ -20,12 +20,12 @@ Scprv4::Application.configure do
   config.action_mailer.delivery_method       = :smtp
   config.action_mailer.raise_delivery_errors = true
 
-config.dbsync = {
-      :local => "~/dbsync-scpr.sql",
-      :remote => "ftp://backups.i.scprdev.org/database/scpr-latest.sql.gz",
-      :strategy => :curl,
-      :bin_opts => "--netrc"
-    }
+  config.dbsync = {
+    :local => "~/dbsync-scpr.sql",
+    :remote => "ftp://backups.i.scprdev.org/database/scpr-latest.sql.gz",
+    :strategy => :curl,
+    :bin_opts => "--netrc"
+  }
 
   config.x.scpr.host          = ENV["SCPRV4_HOST"]              || "scprv4.dev"
   config.x.scpr.audio_root    = ENV["SCPRV4_AUDIO_ROOT"]        || false
