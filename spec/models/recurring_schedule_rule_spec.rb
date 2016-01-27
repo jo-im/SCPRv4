@@ -225,4 +225,35 @@ describe RecurringScheduleRule do
       rule.schedule_occurrences.last.starts_at.wday.should eq 2
     end
   end
+
+  describe '#problems' do
+    let(:rule1){
+      build :recurring_schedule_rule, days: [1], start_time: "1:00", end_time: "2:00"
+    }
+    let(:rule2){
+      build :recurring_schedule_rule, days: [1], start_time: "0:00", end_time: "3:00"
+    }
+    let(:rule3){
+      build :recurring_schedule_rule, days: [1], start_time: "2:00", end_time: "4:00"
+    }
+
+    before do
+      Time.stub(:now) { Time.zone.local(2013, 7, 1) }
+      rule1.save!
+      rule2.save!
+      rule3.save!
+    end
+
+    it 'returns its own problems' do
+      rule1.problems[:related][:overlaps].any?{|p| p[0].recurring_schedule_rule_id == rule1.id || p[1].recurring_schedule_rule_id == rule1.id}.should eq true
+      rule1.problems[:related][:overlaps].all?{|p| p[0].recurring_schedule_rule_id == rule1.id || p[1].recurring_schedule_rule_id == rule1.id}.should eq true
+      rule1.problems[:related][:overlaps].any?{|p| p[0].recurring_schedule_rule_id == rule3.id || p[1].recurring_schedule_rule_id == rule3.id}.should eq false
+    end
+    it 'returns existing problems' do
+      rule1.problems[:other][:overlaps].any?.should eq false
+      rule1.problems[:other][:gaps].any?{|p| p[0].recurring_schedule_rule_id == rule1.id || p[1].recurring_schedule_rule_id == rule1.id}.should eq false
+      rule1.problems[:other][:gaps].all?{|p| p[0].recurring_schedule_rule_id == rule1.id || p[1].recurring_schedule_rule_id == rule1.id}.should eq false
+      rule1.problems[:other][:gaps].any?{|p| p[0].recurring_schedule_rule_id == rule3.id || p[1].recurring_schedule_rule_id == rule3.id}.should eq true
+    end
+  end
 end
