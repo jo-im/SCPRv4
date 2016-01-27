@@ -12,18 +12,7 @@ class ScheduleOccurrence < ActiveRecord::Base
 
   scope :after,   ->(time) { where("starts_at > ?", time).order("starts_at") }
   scope :before,  ->(time) { where("ends_at < ?", time).order("starts_at") }
-  scope :future,  ->(*args) do 
-    unless args.include?(:unsaved)
-      after(Time.zone.now)
-    else
-      ## This might get time consuming
-      ## but should be okay in general
-      ## since we have a job that prunes
-      ## old schedule occurrences.
-      all.to_a.select{|o| o.starts_at > Time.zone.now}.reject(&:id)
-    end
-  end
-  
+  scope :future,  -> { after(Time.zone.now) }
   scope :past,    -> { before(Time.zone.now) }
   scope :current, -> { at(Time.zone.now) }
 
