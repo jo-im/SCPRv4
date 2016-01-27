@@ -1,18 +1,16 @@
 <div class="container">
-  <div class="row">
-    <div class="col-md-6 col-md-offset-3">
+  <div class="row-fluid">
+    <div class="span10 offset1">
       <% if @problems[:any?] %>
-      <h2>Looks like you got a few issues, dawg.</h2>
-      <hr />
+        <h2>Looks like you got a few issues, dawg.</h2>
         <% if @problems[:related][:any?] %>
           <h3>Related Problems</h3>
           <hr />
           <%= render partial: "problems", locals: {gaps: @problems[:related][:gaps], overlaps: @problems[:related][:overlaps]} %>
-        <% elsif @problems[:other][:any?] %>
-
-          <h3>Other Problems</h3>
+        <% elsif @problems[:existing][:any?] %>
+          <h3>Existing Problems</h3>
           <hr />
-          <%= render partial: "problems", locals: {gaps: @problems[:other][:gaps], overlaps: @problems[:other][:overlaps]} %>
+          <%= render partial: "problems", locals: {gaps: @problems[:existing][:gaps], overlaps: @problems[:existing][:overlaps]} %>
         <% end %>
       <% else %>
         <h2>Lookin' good, bro.</h2>

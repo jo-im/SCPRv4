@@ -250,10 +250,10 @@ describe RecurringScheduleRule do
       rule1.problems[:related][:overlaps].any?{|p| p[0].recurring_schedule_rule_id == rule3.id || p[1].recurring_schedule_rule_id == rule3.id}.should eq false
     end
     it 'returns existing problems' do
-      rule1.problems[:other][:overlaps].any?.should eq false
-      rule1.problems[:other][:gaps].any?{|p| p[0].recurring_schedule_rule_id == rule1.id || p[1].recurring_schedule_rule_id == rule1.id}.should eq false
-      rule1.problems[:other][:gaps].all?{|p| p[0].recurring_schedule_rule_id == rule1.id || p[1].recurring_schedule_rule_id == rule1.id}.should eq false
-      rule1.problems[:other][:gaps].any?{|p| p[0].recurring_schedule_rule_id == rule3.id || p[1].recurring_schedule_rule_id == rule3.id}.should eq true
+      rule1.problems[:existing][:overlaps].any?.should eq false
+      rule1.problems[:existing][:gaps].any?{|p| p[0].recurring_schedule_rule_id == rule1.id || p[1].recurring_schedule_rule_id == rule1.id}.should eq false
+      rule1.problems[:existing][:gaps].all?{|p| p[0].recurring_schedule_rule_id == rule1.id || p[1].recurring_schedule_rule_id == rule1.id}.should eq false
+      rule1.problems[:existing][:gaps].any?{|p| p[0].recurring_schedule_rule_id == rule3.id || p[1].recurring_schedule_rule_id == rule3.id}.should eq true
     end
   end
 end

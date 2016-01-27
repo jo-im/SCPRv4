@@ -212,7 +212,7 @@ class RecurringScheduleRule < ActiveRecord::Base
         gaps: problems[:gaps].select(&matcher),
         overlaps: problems[:overlaps].select(&matcher)
       },
-      other: {
+      existing: {
         gaps: problems[:gaps].reject(&matcher),
         overlaps: problems[:overlaps].reject(&matcher),
       },
@@ -220,7 +220,7 @@ class RecurringScheduleRule < ActiveRecord::Base
       any?: problems[:any?]
     }
     problems[:related][:any?] = problems[:related][:gaps].any? || problems[:related][:overlaps].any?
-    problems[:other][:any?]   = problems[:other][:gaps].any? || problems[:other][:overlaps].any?
+    problems[:existing][:any?]   = problems[:existing][:gaps].any? || problems[:existing][:overlaps].any?
     problems
   end
 
