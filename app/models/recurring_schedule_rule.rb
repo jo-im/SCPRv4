@@ -117,7 +117,7 @@ class RecurringScheduleRule < ActiveRecord::Base
   def build_schedule
     self.schedule = ScheduleBuilder.build_schedule(
       interval:         self.interval,
-      days:             self.days,
+      days:             self.days.map(&:to_i),
       start_time:       self.start_time,
       end_time:         self.end_time,
     )
@@ -199,7 +199,8 @@ class RecurringScheduleRule < ActiveRecord::Base
   end
 
   def problems
-    occurrences = build_two_weeks_of_occurrences.to_a.reject!(&:id)
+    build_schedule
+    occurrences = build_two_weeks_of_occurrences.to_a.reject!(&:id) || []
     occurrences.concat(
         ScheduleOccurrence.future.where.not(recurring_schedule_rule_id: self.id)
         )
