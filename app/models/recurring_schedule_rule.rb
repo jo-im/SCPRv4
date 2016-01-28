@@ -199,13 +199,7 @@ class RecurringScheduleRule < ActiveRecord::Base
   end
 
   def problems
-    build_schedule
-    occurrences = build_two_weeks_of_occurrences.to_a.reject!(&:id) || []
-    occurrences.concat(
-        ScheduleOccurrence.future.where.not(recurring_schedule_rule_id: self.id)
-        )
-      .sort_by!(&:starts_at)
-    problems = ScheduleOccurrence.find_problems(occurrences)
+    problems = ScheduleOccurrence.problems
     matcher = Proc.new {|p| p[0].recurring_schedule_rule_id == self.id || p[1].recurring_schedule_rule_id == self.id}
     problems = {
       related: {
