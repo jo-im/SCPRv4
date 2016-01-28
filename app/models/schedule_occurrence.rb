@@ -115,6 +115,7 @@ class ScheduleOccurrence < ActiveRecord::Base
 
       occurrences
     end
+  end
 
   def wday
     self.starts_at.wday
