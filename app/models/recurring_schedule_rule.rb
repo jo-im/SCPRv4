@@ -117,7 +117,7 @@ class RecurringScheduleRule < ActiveRecord::Base
   def build_schedule
     self.schedule = ScheduleBuilder.build_schedule(
       interval:         self.interval,
-      days:             self.days,
+      days:             self.days.map(&:to_i),
       start_time:       self.start_time,
       end_time:         self.end_time,
     )
@@ -198,6 +198,26 @@ class RecurringScheduleRule < ActiveRecord::Base
     end
   end
 
+  def problems
+    problems = ScheduleOccurrence.problems
+    matcher = Proc.new {|p| p[0].recurring_schedule_rule_id == self.id || p[1].recurring_schedule_rule_id == self.id}
+    problems = {
+      related: {
+        gaps: problems[:gaps].select(&matcher),
+        overlaps: problems[:overlaps].select(&matcher)
+      },
+      existing: {
+        gaps: problems[:gaps].reject(&matcher),
+        overlaps: problems[:overlaps].reject(&matcher),
+      },
+      all: problems,
+      any?: problems[:any?]
+    }
+    problems[:related][:any?] = problems[:related][:gaps].any? || problems[:related][:overlaps].any?
+    problems[:existing][:any?]   = problems[:existing][:gaps].any? || problems[:existing][:overlaps].any?
+    problems
+  end
+
   private
 
   def execute_then_destroy_old_occurrences &block
@@ -265,5 +285,7 @@ class RecurringScheduleRule < ActiveRecord::Base
 
     existing
   end
+
+
 
 end

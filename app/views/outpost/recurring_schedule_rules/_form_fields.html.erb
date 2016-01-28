@@ -1,4 +1,5 @@
 <%= form_block "Rule" do %>
+
   <%= f.input :interval, required: true do %>
     Every <%= f.input_field :interval, value: record.interval || RecurringScheduleRule::DEFAULT_INTERVAL, type: 'number', class: "tiny" %> Week(s)
   <% end %>
@@ -20,4 +21,10 @@
 <%= form_block "Program" do %>
   <%= f.input :program_obj_key, required: true, label: "Program",
     collection: ScheduleOccurrence.program_select_collection %>
+<% end %>
+
+<% content_for :preview_button do %>
+  <div class="btn-group dropup" id="preview-submit">
+    <a href="#" class="btn btn-info js-preview-btn" data-window-options="width=1460,height=1000">Show Conflicts</a>
+  </div>
 <% end %>
