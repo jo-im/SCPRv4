@@ -13,7 +13,6 @@ class Outpost::RecurringScheduleRulesController < Outpost::ResourceController
   def preview
     @rule = Outpost.obj_by_key(params[:obj_key]) || RecurringScheduleRule.new
     with_rollback @rule do
-      @rule.schedule_occurrences.future.delete_all
       @rule.update(params[:recurring_schedule_rule])
       if @rule.unconditionally_valid?
         @problems = @rule.problems
