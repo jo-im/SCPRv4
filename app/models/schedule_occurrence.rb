@@ -33,7 +33,19 @@ class ScheduleOccurrence < ActiveRecord::Base
   scope :filtered_by_date, ->(date) { where("DATE(starts_at) = ?", date) }
 
   scope :problems, ->{
-    find_problems future.order("starts_at ASC")
+    occurrences =  future.order("starts_at ASC")
+    probs = {gaps: [], overlaps: [], any?: false}
+    occurrences.each_cons(2) do |pair|
+      next if pair.length < 2
+      if pair[0].ends_at.to_i < pair[1].starts_at.to_i
+        probs[:gaps] << pair
+        probs[:any?] = true
+      elsif pair[0].ends_at.to_i > pair[1].starts_at.to_i
+        probs[:overlaps] << pair
+        probs[:any?] = true
+      end
+    end
+    probs   
   }
 
 ############################
@@ -103,27 +115,6 @@ class ScheduleOccurrence < ActiveRecord::Base
 
       occurrences
     end
-
-    def find_problems occurrences
-      probs = {gaps: [], overlaps: [], any?: false}
-      occurrences.each_cons(2) do |pair|
-        next if pair.length < 2
-        if pair[0].ends_at.to_i < pair[1].starts_at.to_i
-          probs[:gaps] << pair
-          probs[:any?] = true
-        elsif pair[0].ends_at.to_i > pair[1].starts_at.to_i
-          probs[:overlaps] << pair
-          probs[:any?] = true
-        end
-      end
-      probs     
-    end
-
-  end
-
-  def find_problems occurrences
-    self.class.find_problems occurrences
-  end
 
   def wday
     self.starts_at.wday
