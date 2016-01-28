@@ -1,6 +1,5 @@
 class Outpost::RecurringScheduleRulesController < Outpost::ResourceController
   outpost_controller
-  skip_before_filter :require_login
   before_filter :clean_days, only: [:create, :update]
 
   define_list do |l|
