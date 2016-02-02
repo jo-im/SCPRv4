@@ -69,6 +69,7 @@ gem 'npr', '~> 2.0', github:"scpr/npr"
 gem 'asset_host_client', github:"scpr/asset_host_client", tag:"v2.0.0"
 gem 'audio_vision', '~> 1.0'
 gem 'slack-notifier'
+gem 'aws-sdk', '~> 2'
 
 ## Assets
 gem "eco", "~> 1.0"

@@ -162,6 +162,20 @@ namespace :scprv4 do
     end
   end
 
+  desc "Prune Versions Table"
+  task :prune_versions => [:environment] do
+    require 'csv'
+    export_versions_to_csv Secretary::Version.last(10)
+  end
+
+  def export_versions_to_csv versions
+    CSV.open("#{Rails.root}/tmp/versions.csv", "wb", headers: true) do |csv|
+      csv << Secretary::Version.attribute_names
+      versions.each do |version|
+        csv << version.attributes.values
+      end
+    end
+  end
 
   def log(msg)
     puts "*** [#{Time.zone.now}] #{msg}"
