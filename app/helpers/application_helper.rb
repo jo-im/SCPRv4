@@ -492,5 +492,20 @@ module ApplicationHelper
     }
     doc.css('body').children.to_s.html_safe
   end
+
+  class ActionView::Helpers::FormBuilder
+    include ActionView::Helpers::TagHelper
+    include ActionView::Helpers::FormTagHelper
+    include ActionView::Helpers::FormOptionsHelper
+    include ActionView::Helpers::CaptureHelper
+    include ActionView::Helpers::AssetTagHelper
+    # This just makes it easy to create a check box
+    # that will also send a false value
+    def boolean_checkbox *args
+      self.input *args do
+        @template.check_box self.object.class.name.underscore, args[0], {checked: self.object.send(args[0])}, "1", "0"
+      end
+    end
+  end
   
 end

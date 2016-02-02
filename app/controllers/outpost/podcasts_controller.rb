@@ -19,4 +19,5 @@ class Outpost::PodcastsController < Outpost::ResourceController
       :title        => "Listed?",
       :collection   => :boolean
   end
+
 end
