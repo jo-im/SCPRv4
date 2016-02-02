@@ -80,8 +80,8 @@ GIT
       yajl-ruby
 
 GIT
-  remote: git@github.com:circleci/rspec_junit_formatter.git
-  revision: 7b098c8ab2ac5e5f78190b51629ed6d67a9de4d1
+  remote: https://github.com/circleci/rspec_junit_formatter.git
+  revision: 6885218137afbadf560c922114767866953f8cbf
   specs:
     rspec_junit_formatter (0.2.0)
       builder (< 4)
@@ -530,4 +530,4 @@ DEPENDENCIES
   yajl-ruby
 
 BUNDLED WITH
-   1.10.6
+   1.11.2
