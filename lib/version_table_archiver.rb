@@ -24,7 +24,7 @@ module VersionTableArchiver
     private
     def populate_csv(file:)
       CSV.open(file, "wb", headers: true) do |csv|
-        csv << Secretary::Version.attribute_names # add headers
+        csv << Version.attribute_names # add headers
         Version.where("created_at < ?", 1.year.ago).find_in_batches do |batch|
           batch.each do |version|
             csv << version.attributes.values
