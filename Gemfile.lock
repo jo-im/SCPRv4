@@ -52,6 +52,15 @@ GIT
       trollop (~> 1.16)
 
 GIT
+  remote: git://github.com/circleci/rspec_junit_formatter.git
+  revision: 6885218137afbadf560c922114767866953f8cbf
+  specs:
+    rspec_junit_formatter (0.2.0)
+      builder (< 4)
+      rspec (>= 2, < 4)
+      rspec-core (!= 2.12.0)
+
+GIT
   remote: git://github.com/scpr/asset_host_client.git
   revision: b097a1f9b5b78390bd2bb33f43625c2ea5e43936
   tag: v2.0.0
@@ -78,15 +87,6 @@ GIT
       faraday
       faraday_middleware
       yajl-ruby
-
-GIT
-  remote: git@github.com:circleci/rspec_junit_formatter.git
-  revision: 7b098c8ab2ac5e5f78190b51629ed6d67a9de4d1
-  specs:
-    rspec_junit_formatter (0.2.0)
-      builder (< 4)
-      rspec (>= 2, < 4)
-      rspec-core (!= 2.12.0)
 
 GEM
   remote: https://rubygems.org/
@@ -388,6 +388,7 @@ GEM
     rspec-support (3.2.2)
     ruby-mp3info (0.8.4)
     ruby-prof (0.15.2)
+    rubyzip (1.1.7)
     rufus-scheduler (3.0.9)
       tzinfo
     safe_yaml (1.0.3)
@@ -521,6 +522,7 @@ DEPENDENCIES
   rspec_junit_formatter!
   ruby-mp3info (~> 0.8.2)
   ruby-prof
+  rubyzip
   rufus-scheduler
   sanitize (~> 2.0)
   sass-rails (= 5.0.0beta1)
@@ -538,4 +540,4 @@ DEPENDENCIES
   yajl-ruby
 
 BUNDLED WITH
-   1.10.6
+   1.11.2

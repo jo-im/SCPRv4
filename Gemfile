@@ -49,6 +49,7 @@ gem "recaptcha", require: "recaptcha/rails"
 gem "yajl-ruby" # Faster JSON parsing
 gem "rack-utf8_sanitizer"
 gem "rufus-scheduler"
+gem 'rubyzip', require: false
 
 
 ## HTTP
@@ -109,6 +110,6 @@ group :test do
   gem 'webmock'
   gem 'test_after_commit'
   gem 'elasticsearch-extensions'
-  gem 'rspec_junit_formatter', :git => 'git@github.com:circleci/rspec_junit_formatter.git'
+  gem 'rspec_junit_formatter', :github => 'circleci/rspec_junit_formatter'
   gem 'timecop'
 end
