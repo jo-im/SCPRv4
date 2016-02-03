@@ -1,3 +1,4 @@
+require 'rake'
 module Job
   class ArchiveVersions < Base
     @priority = :low
