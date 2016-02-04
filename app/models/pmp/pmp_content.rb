@@ -16,7 +16,7 @@ class PmpContent < ActiveRecord::Base
 
   def href
     if guid
-      "#{PMPCONFIG['endpoint']}#{guid}"
+      "#{PMPCONFIG['endpoint']}docs/#{guid}"
     else
       nil
     end
