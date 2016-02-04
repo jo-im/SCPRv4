@@ -36,6 +36,7 @@ describe Concern::Associations::PmpContentAssociation do
       context 'content has california-counts tag' do
         it 'returns a link' do
           tag = Tag.create slug: 'california-counts', title: "California Counts", description: "California Counts"
+          group = PmpGroup.create(title: "California Counts", guid: "123456789")
           story = create :news_story, tags: [tag]
           expect(story.pmp_permission_groups.pop.class).to eq PMP::Link
         end
