@@ -16,7 +16,6 @@ class ScheduleOccurrence < ActiveRecord::Base
   scope :past,    -> { before(Time.zone.now) }
   scope :current, -> { at(Time.zone.now) }
 
-
   scope :between, ->(start_date, end_date) {
     where("starts_at < ? and ends_at > ?", end_date, start_date)
     .order("starts_at")
@@ -34,16 +33,19 @@ class ScheduleOccurrence < ActiveRecord::Base
   scope :filtered_by_date, ->(date) { where("DATE(starts_at) = ?", date) }
 
   scope :problems, ->{
-    probs = {gaps: [], overlaps: []}
-    future.order("starts_at ASC").each_cons(2) do |pair|
+    occurrences =  future.order("starts_at ASC")
+    probs = {gaps: [], overlaps: [], any?: false}
+    occurrences.each_cons(2) do |pair|
       next if pair.length < 2
       if pair[0].ends_at.to_i < pair[1].starts_at.to_i
         probs[:gaps] << pair
+        probs[:any?] = true
       elsif pair[0].ends_at.to_i > pair[1].starts_at.to_i
         probs[:overlaps] << pair
+        probs[:any?] = true
       end
     end
-    probs 
+    probs   
   }
 
 ############################
@@ -113,9 +115,7 @@ class ScheduleOccurrence < ActiveRecord::Base
 
       occurrences
     end
-
   end
-
 
   def wday
     self.starts_at.wday
@@ -166,7 +166,6 @@ class ScheduleOccurrence < ActiveRecord::Base
   def display_name
     [program.try(:title), event_title].compact.join(" - ")
   end
-
 
   private
 

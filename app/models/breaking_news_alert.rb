@@ -116,7 +116,7 @@ class BreakingNewsAlert < ActiveRecord::Base
     push = Parse::Push.new({
       :title      => "KPCC - #{self.break_type}",
       :alert      => alert_subject,
-      :badge      => "Increment",
+      :badge      => badge,
       :alertId    => self.id
     })
     push.channels = self.alert_type == "audio" ? [IPHONE_CHANNEL,IPAD_CHANNEL] : [IPAD_CHANNEL]
@@ -162,6 +162,11 @@ class BreakingNewsAlert < ActiveRecord::Base
     }
   end
 
+  def badge
+    unless alert_type == "audio"
+      "Increment"
+    end
+  end
 
   private
 

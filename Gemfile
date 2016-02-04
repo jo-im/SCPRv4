@@ -17,7 +17,7 @@ gem 'render_anywhere'
 gem 'dalli'
 
 ## Outpost
-gem 'outpost-cms', github: "SCPR/outpost", branch: "inline_assets"
+gem 'outpost-cms', github: "SCPR/outpost", tag: "v0.2.0"
 gem 'outpost-publishing'
 gem 'outpost-asset_host', github: "SCPR/outpost-asset_host", branch: "inline_assets"
 gem 'outpost-aggregator', github: "SCPR/outpost-aggregator", tag: "v2.0.1"
@@ -109,7 +109,7 @@ group :test do
   gem 'webmock'
   gem 'test_after_commit'
   gem 'elasticsearch-extensions'
-  gem 'rspec_junit_formatter', :git => 'git@github.com:circleci/rspec_junit_formatter.git'
+  gem 'rspec_junit_formatter', :git => 'https://github.com/circleci/rspec_junit_formatter.git'
   gem 'timecop'
   gem 'faker'
 end

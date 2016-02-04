@@ -9,6 +9,24 @@ class Outpost::RecurringScheduleRulesController < Outpost::ResourceController
     l.column :schedule, header: "Rule", display: ->(r) { r.schedule.to_s }
   end
 
+  def preview
+    @rule = Outpost.obj_by_key(params[:obj_key]) || RecurringScheduleRule.new
+    with_rollback @rule do
+      clean_days
+      @rule.update(params[:recurring_schedule_rule])
+      if @rule.unconditionally_valid?
+        @problems = @rule.problems
+        render "outpost/recurring_schedule_rules/preview",
+          :locals => {
+            :record   => @rule,
+            :problems => @problems
+          },
+          :layout => "outpost/recurring_schedule_rules/preview"
+      else
+        render_preview_validation_errors(@rule)
+      end
+    end
+  end
 
   private
 

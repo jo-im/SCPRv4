@@ -266,7 +266,7 @@ Scprv4::Application.routes.draw do
   end
 
   namespace :outpost do
-    resources :recurring_schedule_rules, concerns: [:search]
+    resources :recurring_schedule_rules, concerns: [:preview, :search]
     resources :schedule_occurrences, concerns: [:search]
     resources :podcasts, concerns: [:search]
     resources :breaking_news_alerts, concerns: [:search]

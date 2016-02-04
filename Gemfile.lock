@@ -32,8 +32,8 @@ GIT
 
 GIT
   remote: git://github.com/SCPR/outpost.git
-  revision: 3428659d422f6438c0aefaaeef5fb1b9e9aa5e3c
-  branch: inline_assets
+  revision: 510e2c8a151e022e211bb09c59bc216d3fd0c9f1
+  tag: v0.2.0
   specs:
     outpost-cms (0.1.7)
       bcrypt-ruby (>= 3.0.0, < 4)
@@ -80,8 +80,8 @@ GIT
       yajl-ruby
 
 GIT
-  remote: git@github.com:circleci/rspec_junit_formatter.git
-  revision: 7b098c8ab2ac5e5f78190b51629ed6d67a9de4d1
+  remote: https://github.com/circleci/rspec_junit_formatter.git
+  revision: 6885218137afbadf560c922114767866953f8cbf
   specs:
     rspec_junit_formatter (0.2.0)
       builder (< 4)
