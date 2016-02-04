@@ -20,10 +20,10 @@ module Concern
 
       def pmp_permission_groups
         groups = []
+        # If we need different behavior for other tags,
+        # we should change this to ask the tags for these permissions
         if respond_to?(:tags) && tags.where(slug: "california-counts").any?
-          groups.concat [
-            PMP::Link.new(href: Rails.application.secrets.api['pmp']['permission_groups']['california_counts'], operation: "read")
-          ]
+          groups.concat PmpGroup.where(title: "California Counts").map(&:link).to_a
         end
         groups
       end
