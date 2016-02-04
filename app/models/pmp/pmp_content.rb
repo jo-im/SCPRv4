@@ -1,6 +1,6 @@
 class PmpContent < ActiveRecord::Base
 
-  belongs_to :content, polymorphic: true, required: true
+  belongs_to :content, polymorphic: true
   belongs_to :parent, class_name: :PmpContent, foreign_key: :pmp_content_id
   has_many :children, foreign_key: :pmp_content_id, class_name: :PmpContent
   after_initialize :set_profile
