@@ -43,15 +43,11 @@ class PmpContent < ActiveRecord::Base
 
   class << self
     def pmp action="read"
-
-      client = PMP::Client.new({
+      PMP::Client.new({
         :client_id        => PMPCONFIG[action]['client_id'],
         :client_secret    => PMPCONFIG[action]['client_secret'],
         :endpoint         => PMPCONFIG['endpoint']
       })
-
-      client.root.retrieve
-      client
     end
   end
 

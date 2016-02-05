@@ -59,11 +59,11 @@ module Concern
       end
 
       def plaintext_body
-        output = Nokogiri::HTML(body).xpath("//text()").to_s
+        ContentRenderer.new(self).render_plaintext
       end
 
       def rendered_body
-        Nokogiri::HTML(ApplicationHelper.render_with_inline_assets(self, kpcc_only: true)).at('body').children.to_s
+        ContentRenderer.new(self).render_with_assets
       end
 
       ["story", "audio", "image", "episode"].each do |profile_name|
@@ -79,6 +79,28 @@ module Concern
           self.const_set "PMP_PROFILE", profile_name
         end
         self.const_set "#{profile_name.capitalize}Profile", mod
+      end
+
+      private
+
+      class ContentRenderer < ActionView::Base
+        include ApplicationHelper
+        def initialize content
+          content.reload
+          @content = content
+          @pmp_content = content.pmp_content
+          super(ActionController::Base.view_paths, {})
+        end
+
+        def render_with_assets
+          render(template: "pmp/#{@pmp_content.profile}", layout: false, locals: {content: @content})
+        end
+        def render_plaintext
+          Nokogiri::HTML(@content.body).xpath("//text()").to_s
+        end
+        def render_templated
+          @content.body
+        end
       end
 
     end

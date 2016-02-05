@@ -115,6 +115,8 @@ module ApplicationHelper
 
     asset = options[:asset] || nil
 
+    return if asset && options[:kpcc_only] && !asset.owner.try(:include?, "KPCC")
+
     if !asset && article.assets.empty?
       html = if options[:fallback]
         render("shared/assets/#{context}/fallback", article: article)
@@ -168,7 +170,6 @@ module ApplicationHelper
       # we have to fall back to original_object here to get the full list of
       # assets. in any case where we're rendering a body, we'll already have
       # the original object loaded, so that's ok
-
       asset = content.original_object.assets.find_by(asset_id:asset_id)
 
       ## If kpcc_only is true, only render if the owner of the asset is KPCC
