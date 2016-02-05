@@ -9,12 +9,9 @@ class Cache < ActiveRecord::Base
       end
     end
     def write key, value
-      if return_value = Rails.cache.write(key, value)
-        return_value
-      else
-        create key: key, value: value
-        value
-      end
+      Rails.cache.write(key, value)
+      create key: key, value: value
+      value
     end
     def clear
       delete_all
