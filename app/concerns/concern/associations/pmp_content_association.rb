@@ -1,0 +1,108 @@
+module Concern
+  module Associations
+    module PmpContentAssociation
+
+      def publish_to_pmp
+        if @publish_to_pmp.nil?
+          pmp_content ? true : false
+        else
+          [true, "true", 1, "1", "yes"].include? @publish_to_pmp
+        end
+      end
+
+      def published_to_pmp?
+        if pmp_content && pmp_content.published?
+          true
+        else
+          false
+        end
+      end
+
+      def pmp_permission_groups
+        groups = []
+        # If we need different behavior for other tags,
+        # we should change this to ask the tags for these permissions
+        if respond_to?(:tags) && tags.where(slug: "california-counts").any?
+          groups.concat PmpGroup.where(title: "California Counts").map(&:link).to_a
+        end
+        groups
+      end
+
+      alias_method :publish_to_pmp?, :publish_to_pmp
+
+      def destroy_pmp_content
+        if !publish_to_pmp?
+          pmp_content.try(:destroy)
+        end
+      end
+
+      def build_pmp_content
+        if valid? && publish_to_pmp? && !pmp_content
+          content = create_pmp_content profile: self.class::PMP_PROFILE
+        end
+      end
+
+      def publish_pmp_content
+        if valid?
+          content = pmp_content
+          if publish_to_pmp && content && (try(:published?) || try(:publishing?))
+            async_publish_pmp_content
+          end
+        end
+      end
+
+      def async_publish_pmp_content
+        content = pmp_content
+        if (published_to_pmp? && changed?) || !published_to_pmp?
+          content.async_publish
+        end
+      end
+
+      def plaintext_body
+        ContentRenderer.new(self).render_plaintext
+      end
+
+      def rendered_body
+        ContentRenderer.new(self).render_with_assets
+      end
+
+      ["story", "audio", "image", "episode"].each do |profile_name|
+        mod = Module.new do
+          extend ActiveSupport::Concern
+          included do
+            attr_writer :publish_to_pmp
+            has_one :pmp_content, as: :content, dependent: :destroy
+            has_one "pmp_#{profile_name}".to_sym, as: :content, foreign_key: :content_id
+            after_save :destroy_pmp_content, :build_pmp_content, :publish_pmp_content
+          end
+          include PmpContentAssociation
+          self.const_set "PMP_PROFILE", profile_name
+        end
+        self.const_set "#{profile_name.capitalize}Profile", mod
+      end
+
+      private
+
+      class ContentRenderer < ActionView::Base
+        include ApplicationHelper
+        def initialize content
+          content.reload
+          @content = content
+          @pmp_content = content.pmp_content
+          super(ActionController::Base.view_paths, {})
+        end
+
+        def render_with_assets
+          render(template: "pmp/#{@pmp_content.profile}", layout: false, locals: {content: @content})
+        end
+        def render_plaintext
+          Nokogiri::HTML(@content.body).xpath("//text()").to_s
+        end
+        def render_templated
+          @content.body
+        end
+      end
+
+    end
+  end
+end

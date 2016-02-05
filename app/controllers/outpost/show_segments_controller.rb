@@ -18,6 +18,8 @@ class Outpost::ShowSegmentsController < Outpost::ResourceController
       :sortable                   => true,
       :default_order_direction    => DESCENDING
 
+    l.column :published_to_pmp?, display: :display_pmp_status
+
     l.filter :show_id, collection: -> { KpccProgram.select_collection }
     l.filter :bylines, collection: -> { Bio.select_collection }
     l.filter :status, collection: -> { ShowSegment.status_select_collection }

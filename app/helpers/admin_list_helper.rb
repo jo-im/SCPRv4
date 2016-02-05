@@ -21,6 +21,11 @@ module AdminListHelper
       Audio.status_id(:none)      => "list-status label",
       Audio.status_id(:waiting)   => "list-status label label-warning",
       Audio.status_id(:live)      => "list-status label label-success"
+    },
+
+    :pmp => {
+      true => "list-status label label-success",
+      false => "list-status label"
     }
   }
 
@@ -63,6 +68,11 @@ module AdminListHelper
     }
   end
 
+  def display_pmp_status(status, record)
+    content_tag :div, {true => "Published", false => "Unpublished"}[status], {
+      :class => STATUS_BOOTSTRAP_MAP[:pmp][status]
+    }
+  end
 
   def display_air_status(air_status)
     KpccProgram::PROGRAM_STATUS[air_status]

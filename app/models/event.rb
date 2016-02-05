@@ -16,6 +16,7 @@ class Event < ActiveRecord::Base
   include Concern::Associations::MissedItContentAssociation
   include Concern::Associations::VerticalArticleAssociation
   include Concern::Associations::ProgramArticleAssociation
+  include Concern::Associations::PmpContentAssociation::StoryProfile
   include Concern::Callbacks::GenerateSlugCallback
   include Concern::Callbacks::GenerateTeaserCallback
   include Concern::Model::Searchable
@@ -188,7 +189,7 @@ class Event < ActiveRecord::Base
       :body               => self.body,
       :assets             => self.assets.top,
       :audio              => self.audio.select(&:available?),
-      :byline             => "KPCC",
+      :byline             => self.byline,
       :edit_path          => self.admin_edit_path,
       :public_path        => self.public_path,
       :created_at         => self.created_at,
@@ -208,5 +209,9 @@ class Event < ActiveRecord::Base
       :slug           => self.persisted_record.slug,
       :trailing_slash => true
     }
+  end
+
+  def byline
+    "KPCC"
   end
 end

@@ -18,6 +18,8 @@ class Outpost::BlogEntriesController < Outpost::ResourceController
       :sortable                   => true,
       :default_order_direction    => DESCENDING
 
+    l.column :published_to_pmp?, display: :display_pmp_status
+
     l.filter :blog_id, collection: -> { Blog.select_collection }
     l.filter :bylines, collection: -> { Bio.select_collection }
     l.filter :status, collection: -> { BlogEntry.status_select_collection }

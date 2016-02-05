@@ -4,6 +4,10 @@
   <%= f.input :article_published_at, hint: "The date that the article was originally published at the source." %>
 <% end %>
 
+<%= form_block "Short Details" do %>
+  <%= f.pmp_checkbox %>
+<% end %>
+
 <%= form_block "Summary" do %>
   <%= f.input :headline, input_html: { class: "wide" }, wrapper_html: { class: "field-counter", data: { target: 50, fuzziness: 10 } } %>
   <%= f.association :category %>

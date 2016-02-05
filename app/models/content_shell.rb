@@ -19,6 +19,7 @@ class ContentShell < ActiveRecord::Base
   include Concern::Associations::EditionsAssociation
   include Concern::Associations::VerticalArticleAssociation
   include Concern::Validations::PublishedAtValidation
+  include Concern::Associations::PmpContentAssociation::StoryProfile
   #include Concern::Callbacks::CacheExpirationCallback
   include Concern::Callbacks::PublishNotificationCallback
   include Concern::Model::Searchable
@@ -33,6 +34,8 @@ class ContentShell < ActiveRecord::Base
   validates :body, presence: true, if: :should_validate?
   validates :url, url: true, presence: true, if: :should_validate?
   validates :site, presence: true, if: :should_validate?
+
+  alias_attribute :teaser, :body
 
   scope :with_article_includes, ->() { includes(:assets,:category,:tags,:bylines,bylines:[:user]) }
 

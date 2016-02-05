@@ -18,6 +18,8 @@ class Outpost::AbstractsController < Outpost::ResourceController
       :sortable                   => true,
       :default_order_direction    => DESCENDING
 
+    l.column :published_to_pmp?, display: :display_pmp_status
+
     l.filter :source, collection: -> { Abstract.sources_select_collection }
   end
 end
