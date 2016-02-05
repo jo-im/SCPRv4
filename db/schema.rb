@@ -140,7 +140,7 @@ ActiveRecord::Schema.define(version: 20160205232526) do
 
   create_table "caches", force: :cascade do |t|
     t.string "key",   limit: 255
-    t.string "value", limit: 255
+    t.text   "value", limit: 4294967295
   end
 
   add_index "caches", ["key"], name: "index_caches_on_key", using: :btree

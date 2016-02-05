@@ -10,10 +10,12 @@ describe Cache do
     context "value exists in cache store" do
       before :each do
         Rails.cache.clear
-        Rails.cache.write('somekey', '12345')
         Cache.clear
+        Rails.cache.write('somekey', '12345')
       end
       it 'returns the value from the cache store' do
+        allow(Rails.cache).to receive(:read).and_return("12345")
+        expect(Rails.cache).to receive(:read)
         Cache.read('somekey').should eq '12345'
       end
       it 'should not touch the database' do
@@ -43,6 +45,7 @@ describe Cache do
     it 'writes a value to both the cache store and the cache table' do
       Cache.write "testkey", "whoohoo"
       Rails.cache.read('testkey').should eq "whoohoo"
+      Cache.read("testkey").should eq "whoohoo"
     end
   end
 end
