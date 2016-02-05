@@ -58,7 +58,7 @@ class ShowSegment < ActiveRecord::Base
     :source     => :episode,
     :autosave   => true
 
-  alias_attribute :url, :public_path
+  alias_attribute :url, :public_url
 
   validates :show, presence: true
 
