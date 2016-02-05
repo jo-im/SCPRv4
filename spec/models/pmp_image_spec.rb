@@ -8,20 +8,27 @@ describe PmpImage do
         to_return(:status => 200, :body => "", :headers => {})
     end
     context "asset that belongs to KPCC" do
-      xit "gets published" do
+      it "gets published" do
         pmp_image = build :pmp_image
         pmp_image.stub(:content) {
-
+          OpenStruct.new({
+            owner: "KPCC"
+          })
         }
+        pmp_image.stub(:build_doc){
+          OpenStruct.new({
+            save: true
+          })
+        }
+        expect(pmp_image).to receive(:build_doc)
         pmp_image.publish
-        expect(pmp_image.published?).to eq true
       end
     end
     context "asset that belongs to someone else" do
-      xit "does not get published" do
+      it "does not get published" do
         pmp_image = create :pmp_image
+        expect(pmp_image).not_to receive(:build_doc)
         pmp_image.publish
-        expect(pmp_image.published?).to eq false
       end
     end
   end
