@@ -89,7 +89,7 @@ module Concern
           content.reload
           @content = content
           @pmp_content = content.pmp_content
-          super(ActionController::Base.view_paths, {})
+          super ActionController::Base.view_paths, {}, ActionController::Base.new
         end
 
         def render_with_assets
@@ -100,6 +100,9 @@ module Concern
         end
         def render_templated
           @content.body
+        end
+        def params
+          {} # ActionView expects this, but we obviously it isn't useful in this context.
         end
       end
 
