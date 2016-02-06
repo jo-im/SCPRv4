@@ -41,7 +41,7 @@
 
             </div><!--/ .prose-body -->
 
-            <%= raw Rails.cache.read("views/popular/#{@entry.blog.slug}") %>
+            <%= raw Cache.read("views/popular/#{@entry.blog.slug}") %>
 
             <%= render 'shared/widgets/short_list_subscribe' %>
 

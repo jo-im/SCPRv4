@@ -36,14 +36,14 @@
     <div class="span8">
       <div class="section">
         <h6>Latest News</h6>
-        <%= raw Rails.cache.read("masthead-latest-news") %>
+        <%= raw Cache.read("masthead-latest-news") %>
       </div> <!-- section -->
     </div> <!-- span -->
 
     <div class="span10">
       <div class="section">
         <h6>From Our Blogs</h6>
-        <%= raw Rails.cache.read("masthead-latest-blogs") %>
+        <%= raw Cache.read("masthead-latest-blogs") %>
       </div> <!-- section -->
     </div> <!-- span -->
   </div> <!-- row fluid -->
