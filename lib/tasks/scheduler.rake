@@ -24,6 +24,10 @@ task :scheduler => [:environment] do
     Job::ReportScheduleProblems.enqueue
   end
 
+  scheduler.every '1m' do |job|
+    Job::ArchiveVersions.enqueue
+  end
+
   # -- Caches -- #
 
   # most whatevers...

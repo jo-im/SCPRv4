@@ -49,6 +49,7 @@ gem "recaptcha", require: "recaptcha/rails"
 gem "yajl-ruby" # Faster JSON parsing
 gem "rack-utf8_sanitizer"
 gem "rufus-scheduler"
+gem 'rubyzip', require: false
 
 
 ## HTTP
@@ -70,6 +71,7 @@ gem 'npr', '~> 2.0', github:"scpr/npr"
 gem 'asset_host_client', github:"scpr/asset_host_client", tag:"v2.0.0"
 gem 'audio_vision', '~> 1.0'
 gem 'slack-notifier'
+gem 'aws-sdk', '~> 2'
 
 ## Assets
 gem "eco", "~> 1.0"
@@ -109,7 +111,7 @@ group :test do
   gem 'webmock'
   gem 'test_after_commit'
   gem 'elasticsearch-extensions'
-  gem 'rspec_junit_formatter', :git => 'https://github.com/circleci/rspec_junit_formatter.git'
+  gem 'rspec_junit_formatter', :github => 'circleci/rspec_junit_formatter'
   gem 'timecop'
   gem 'faker'
 end
