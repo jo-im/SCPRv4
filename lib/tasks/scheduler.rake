@@ -24,7 +24,7 @@ task :scheduler => [:environment] do
     Job::ReportScheduleProblems.enqueue
   end
 
-  scheduler.every '1m' do |job|
+  scheduler.cron '0 0 1 * *' do |job|
     Job::ArchiveVersions.enqueue
   end
 
