@@ -61,6 +61,7 @@ Scprv4::Application.routes.draw do
   # Events
   get '/events/forum/archive/'            => redirect('/events/kpcc-in-person/archive')
   get '/events/forum/'                    => redirect("/events/kpcc-in-person")
+  get '/forum'                            => redirect('/events/kpcc-in-person')
 
   get '/events/kpcc-in-person/archive/'            => 'events#archive',    as: :kpcc_in_person_events_archive
   get '/events/kpcc-in-person/'                    => 'events#kpcc_in_person',      as: :kpcc_in_person_events

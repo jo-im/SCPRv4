@@ -47,12 +47,12 @@ describe EventsController do
 
   #-----------------
 
-  describe "GET /forum" do
+  describe "GET /kpcc_in_person" do
     describe "view" do
       render_views
 
       it "renders the view" do
-        get :forum
+        get :kpcc_in_person
       end
     end
 
@@ -61,7 +61,7 @@ describe EventsController do
         past_event    = create :event, :published, starts_at: 2.hours.ago, ends_at: 1.hour.ago, event_type: 'comm'
         current_event = create :event, :published, starts_at: 2.hours.ago, ends_at: 2.hours.from_now, event_type: 'comm'
         future_event  = create :event, :published, starts_at: 2.hours.from_now, ends_at: 3.hours.from_now, event_type: 'comm'
-        get :forum
+        get :kpcc_in_person
         assigns(:upcoming_events).should eq [current_event,future_event]
       end
     end

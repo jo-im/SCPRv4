@@ -61,7 +61,7 @@ class Event < ActiveRecord::Base
 
 
   scope :published, -> { where(status: self.status_id(:live)) }
-  scope :forum,     -> { published.where("event_type IN (?)", InPersonTypes) }
+  scope :kpcc_in_person,     -> { published.where("event_type IN (?)", InPersonTypes) }
   scope :sponsored, -> { published.where("event_type = ?", "spon") }
 
   scope :upcoming, -> {
