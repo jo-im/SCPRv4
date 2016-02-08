@@ -2,7 +2,7 @@ class EventsController < ApplicationController
   def index
     @scoped_events = Event.upcoming_and_current
 
-    if params[:list] == "forum"
+    if params[:list] == "kpcc_in_person" || params[:list] == "forum"
       @scoped_events = @scoped_events.kpcc_in_person
     elsif params[:list] == "sponsored"
       @scoped_events = @scoped_events.sponsored

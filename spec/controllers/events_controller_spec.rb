@@ -25,8 +25,8 @@ describe EventsController do
           @spon  = create :event, :published, :future, event_type: "spon"
         end
 
-        it "scopes by forum if requested" do
-          get :index, list: "forum"
+        it "scopes by kpcc_in_person if requested" do
+          get :index, list: "kpcc_in_person"
           assigns(:scoped_events).should eq [@forum]
         end
 
