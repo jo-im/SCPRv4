@@ -17,6 +17,8 @@ class Outpost::ContentShellsController < Outpost::ResourceController
       :sortable                   => true,
       :default_order_direction    => DESCENDING
 
+    l.column :published_to_pmp?, display: :display_pmp_status
+
     l.filter :site, collection: -> { ContentShell.sites_select_collection }
     l.filter :status, collection: -> { ContentShell.status_select_collection }
   end

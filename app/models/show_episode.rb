@@ -13,6 +13,7 @@ class ShowEpisode < ActiveRecord::Base
   include Concern::Associations::RelatedLinksAssociation
   include Concern::Associations::BylinesAssociation
   include Concern::Associations::EditionsAssociation
+  include Concern::Associations::PmpContentAssociation::StoryProfile
   include Concern::Callbacks::SetPublishedAtCallback
   #include Concern::Callbacks::CacheExpirationCallback
   include Concern::Callbacks::PublishNotificationCallback

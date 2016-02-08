@@ -17,6 +17,8 @@ class Outpost::ShowEpisodesController < Outpost::ResourceController
       :sortable                   => true,
       :default_order_direction    => DESCENDING
 
+    l.column :published_to_pmp?, display: :display_pmp_status
+
     l.filter :show_id, collection: -> { KpccProgram.select_collection }
     l.filter :status, collection: -> { ShowEpisode.status_select_collection }
   end

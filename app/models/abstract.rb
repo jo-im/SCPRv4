@@ -48,6 +48,7 @@ class Abstract < ActiveRecord::Base
   include Concern::Associations::AssetAssociation
   include Concern::Associations::AudioAssociation
   include Concern::Associations::EditionsAssociation
+  include Concern::Associations::PmpContentAssociation::StoryProfile
   include Concern::Callbacks::TouchCallback
   include Concern::Sanitizers::Url
   include Concern::Model::Searchable
@@ -63,7 +64,13 @@ class Abstract < ActiveRecord::Base
 
   before_save ->{ sanitize_urls :url }
 
+  alias_attribute :public_url, :url
+
   attr_accessor :original_object
+
+  alias_attribute :teaser, :summary
+  alias_attribute :byline, :source
+  alias_attribute :body,   :summary
 
   class << self
     def sources_select_collection
