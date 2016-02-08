@@ -28,10 +28,11 @@ describe Cache do
     context 'cache store got wiped but there is a table record' do
       before :each do
         Cache.clear
-        Rails.cache.clear
         Cache.create key: 'lostkey', value: '456'
+        Rails.cache.clear
       end
       it 'writes the value back to the now online cache store' do
+        Rails.cache.read('lostkey').should be_nil
         Cache.read('lostkey')
         Rails.cache.read('lostkey').should eq '456'
       end

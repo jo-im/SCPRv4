@@ -13,7 +13,7 @@ module Job
         comments  = task.fetch
         articles  = task.parse(comments).map(&:to_article)
 
-        Rails.cache.write("popular/commented", articles)
+        Cache.write("popular/commented", articles)
 
         self.cache(articles,
           "/shared/widgets/cached/popular",
