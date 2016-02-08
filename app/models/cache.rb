@@ -3,7 +3,7 @@ class Cache < ActiveRecord::Base
     def read key
       if value = Rails.cache.read(key)
         value
-      elsif value = where(key: key).limit(1).pluck(:value).pop
+      elsif value = find_by(key: key).try(:value)
         Rails.cache.write key, value
         value
       end
