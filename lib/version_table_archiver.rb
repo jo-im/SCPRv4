@@ -45,7 +45,7 @@ module VersionTableArchiver
 
     def upload(file:, name:)
       s3 = Aws::S3::Resource.new
-      obj = s3.bucket(Rails.application.secrets.api['aws']['s3']['buckets']['versions']).object(name)
+      obj = s3.bucket(Rails.application.secrets.api['aws']['s3']['buckets']['versions']).object("versions/#{name}")
       obj.upload_file(file.path)
     end
   end
