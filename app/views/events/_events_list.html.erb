@@ -31,7 +31,7 @@
             <div class="row-fluid">
               <div class="span24">
                 <% if event.location_name.present? %>
-                  <span class="event-location<%= " forum" if event.is_forum_event? %>"><%= event.location_name %></span>
+                  <span class="event-location<%= " forum" if event.is_kpcc_in_person_event? %>"><%= event.location_name %></span>
                 <% end %>
               </div>
             </div> <!-- row fluid -->

@@ -59,8 +59,12 @@ Scprv4::Application.routes.draw do
 
 
   # Events
-  get '/events/forum/archive/'            => 'events#archive',    as: :forum_events_archive
-  get '/events/forum/'                    => 'events#forum',      as: :forum_events
+  get '/events/forum/archive/'            => redirect('/events/kpcc-in-person/archive')
+  get '/events/forum/'                    => redirect("/events/kpcc-in-person")
+
+  get '/events/kpcc-in-person/archive/'            => 'events#archive',    as: :kpcc_in_person_events_archive
+  get '/events/kpcc-in-person/'                    => 'events#kpcc_in_person',      as: :kpcc_in_person_events
+
   get '/events/sponsored/'                => 'events#index',      as: :sponsored_events,      defaults: { list: "sponsored" }
   get '/events/:year/:month/:day/:id/:slug/'  => 'events#show',   as: :event,                 constraints: { year: /\d{4}/, month: /\d{2}/, day: /\d{2}/, id: /\d+/, slug: /[\w_-]+/ }
   get '/events/(list/:list)'              => 'events#index',      as: :events,                defaults: { list: "all" }

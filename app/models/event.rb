@@ -32,16 +32,16 @@ class Event < ActiveRecord::Base
   self.disqus_identifier_base = "events"
   self.public_route_key = "event"
 
-  ForumTypes = [
+  InPersonTypes = [
     "comm",
     "cult",
     "hall"
   ]
 
   EVENT_TYPES = {
-    'comm' => 'Forum: Community Engagement',
-    'cult' => 'Forum: Cultural',
-    'hall' => 'Forum: Town Hall',
+    'comm' => 'KPCC In Person: Community Engagement',
+    'cult' => 'KPCC In Person: Cultural',
+    'hall' => 'KPCC In Person: Town Hall',
     'spon' => 'Sponsored',
     'pick' => 'Staff Picks'
   }
@@ -61,7 +61,7 @@ class Event < ActiveRecord::Base
 
 
   scope :published, -> { where(status: self.status_id(:live)) }
-  scope :forum,     -> { published.where("event_type IN (?)", ForumTypes) }
+  scope :forum,     -> { published.where("event_type IN (?)", InPersonTypes) }
   scope :sponsored, -> { published.where("event_type = ?", "spon") }
 
   scope :upcoming, -> {
@@ -173,8 +173,8 @@ class Event < ActiveRecord::Base
   end
 
 
-  def is_forum_event?
-    ForumTypes.include? self.event_type
+  def is_kpcc_in_person_event?
+    InPersonTypes.include? self.event_type
   end
 
 

@@ -92,13 +92,13 @@
       <section class="social">
         <h3>Follow Us on Social Media</h3>
         <div class="banners">
-          <a href="https://www.facebook.com/pages/KPCCs-Crawford-Family-Forum/172994359388346" class="facebook">Like the Crawford Family Forum on Facebook</a><br />
-          <a href="http://twitter.com/KPCCForum" class="twitter">Follow the Crawford Family Forum on Twitter</a>
+          <a href="https://www.facebook.com/pages/KPCCs-Crawford-Family-Forum/172994359388346" class="facebook">Like KPCC In Person on Facebook</a><br />
+          <a href="http://twitter.com/KPCCForum" class="twitter">Follow KPCC In Person on Twitter</a>
         </div>
 
         <!-- TWITTER -->
         <% if cached_tweets = Rails.cache.fetch("twitter:KPCCForum") %>
-          <a class="twitter-peeker" href="http://twitter.com/KPCCForum"><h3>Tweets from the Crawford Family Forum</h3></a>
+          <a class="twitter-peeker" href="http://twitter.com/KPCCForum"><h3>Tweets from the KPCC In Person</h3></a>
           <%= cached_tweets %>
         <% end %>
       </section>
@@ -120,7 +120,7 @@
     <section class="archive-strip">
       <h6 class="more-news-title">
         Events from the Archive
-        <span class="more-link"><%= link_to "More", forum_events_archive_path %></span>
+        <span class="more-link"><%= link_to "More", kpcc_in_person_events_archive_path %></span>
       </h6>
       <div class="row-fluid">
         <% @past_events.each do |event| %>

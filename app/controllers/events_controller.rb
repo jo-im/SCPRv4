@@ -3,7 +3,7 @@ class EventsController < ApplicationController
     @scoped_events = Event.upcoming_and_current
 
     if params[:list] == "forum"
-      @scoped_events = @scoped_events.forum
+      @scoped_events = @scoped_events.kpcc_in_person
     elsif params[:list] == "sponsored"
       @scoped_events = @scoped_events.sponsored
     end
@@ -12,7 +12,7 @@ class EventsController < ApplicationController
   end
 
   def archive
-    @events = Event.forum.past.page(params[:page]).per(10)
+    @events = Event.kpcc_in_person.past.page(params[:page]).per(10)
   end
 
   def show
@@ -28,14 +28,14 @@ class EventsController < ApplicationController
       redirect_to @event.public_path and return
     end
 
-    @more_events = Event.forum.upcoming.where("id != ?", @event.id).limit(2)
+    @more_events = Event.kpcc_in_person.upcoming.where("id != ?", @event.id).limit(2)
   end
 
-  def forum
-    @upcoming_events = Event.forum.upcoming_and_current.limit(3)
+  def kpcc_in_person
+    @upcoming_events = Event.kpcc_in_person.upcoming_and_current.limit(3)
     @closest_event   = @upcoming_events.first
     @future_events   = @upcoming_events[1..-1]
-    @past_events     = Event.forum.past.limit(3)
-    render layout: 'forum'
+    @past_events     = Event.kpcc_in_person.past.limit(3)
+    render layout: 'kpcc_in_person'
   end
 end
