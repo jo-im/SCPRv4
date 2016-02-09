@@ -48,5 +48,14 @@ describe Cache do
       Rails.cache.read('testkey').should eq "whoohoo"
       Cache.read("testkey").should eq "whoohoo"
     end
+    it 'overwrites a value for an existing key' do
+      Cache.write 'existingkey', 12345678
+      ## In this case, only one key should exist
+      Cache.count.should eq 1
+      Cache.read('existingkey').should eq 12345678
+      Cache.write 'existingkey', 9875432
+      Cache.count.should eq 1
+      Cache.read('existingkey').should eq 9875432
+    end
   end
 end
