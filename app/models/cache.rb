@@ -10,7 +10,7 @@ class Cache < ActiveRecord::Base
     end
     def write key, value
       Rails.cache.write(key, value)
-      where(key: key).first_or_create(value: value)
+      where(key: key).first_or_create.update(value: value)
       value
     end
     def clear

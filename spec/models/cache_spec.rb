@@ -38,24 +38,34 @@ describe Cache do
       end
     end
   end
+
   describe '#write' do
     before :each do
       Rails.cache.clear
       Cache.clear
     end
+
     it 'writes a value to both the cache store and the cache table' do
       Cache.write "testkey", "whoohoo"
       Rails.cache.read('testkey').should eq "whoohoo"
       Cache.read("testkey").should eq "whoohoo"
     end
-    it 'overwrites a value for an existing key' do
-      Cache.write 'existingkey', 12345678
+
+    it 'overwrites a value for an existing key in the database' do
+      value1 = "12345678"
+      value2 = "9875432"
+
+      Cache.write 'existingkey', value1
       ## In this case, only one key should exist
       Cache.count.should eq 1
-      Cache.read('existingkey').should eq 12345678
-      Cache.write 'existingkey', 9875432
+      record = Cache.last
+      record.value.should eq value1
+
+      Cache.write 'existingkey', value2
       Cache.count.should eq 1
-      Cache.read('existingkey').should eq 9875432
+      record.reload
+      record.value.should eq value2
     end
+
   end
 end
