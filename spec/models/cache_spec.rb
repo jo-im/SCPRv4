@@ -56,7 +56,6 @@ describe Cache do
       value2 = "9875432"
 
       Cache.write 'existingkey', value1
-      ## In this case, only one key should exist
       Cache.count.should eq 1
       record = Cache.find_by(key: 'existingkey')
       record.value.should eq value1
