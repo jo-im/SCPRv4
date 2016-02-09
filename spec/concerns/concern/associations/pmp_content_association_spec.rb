@@ -101,5 +101,15 @@ describe Concern::Associations::PmpContentAssociation do
         end
       end
     end
+
+    describe 'rendering' do
+      describe 'rendered body' do
+        it "renders html" do
+          story = create :news_story, status: 0, publish_to_pmp: true, body: "Lorem ipsum dolor sit amet"
+          rendered_body = story.rendered_body
+          expect(Nokogiri::HTML(story.rendered_body).css("article").inner_text).to include story.body
+        end
+      end
+    end
   end
 end

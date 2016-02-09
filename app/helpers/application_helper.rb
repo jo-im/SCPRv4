@@ -181,8 +181,7 @@ module ApplicationHelper
         placeholder.replace Nokogiri::HTML::DocumentFragment.parse("")
       end
     end
-
-    doc.to_s.html_safe
+    doc.css("body").children.to_s.html_safe
   end
 
   #----------

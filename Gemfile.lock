@@ -52,6 +52,15 @@ GIT
       trollop (~> 1.16)
 
 GIT
+  remote: git://github.com/circleci/rspec_junit_formatter.git
+  revision: 6885218137afbadf560c922114767866953f8cbf
+  specs:
+    rspec_junit_formatter (0.2.0)
+      builder (< 4)
+      rspec (>= 2, < 4)
+      rspec-core (!= 2.12.0)
+
+GIT
   remote: git://github.com/scpr/asset_host_client.git
   revision: b097a1f9b5b78390bd2bb33f43625c2ea5e43936
   tag: v2.0.0
@@ -78,15 +87,6 @@ GIT
       faraday
       faraday_middleware
       yajl-ruby
-
-GIT
-  remote: https://github.com/circleci/rspec_junit_formatter.git
-  revision: 6885218137afbadf560c922114767866953f8cbf
-  specs:
-    rspec_junit_formatter (0.2.0)
-      builder (< 4)
-      rspec (>= 2, < 4)
-      rspec-core (!= 2.12.0)
 
 GEM
   remote: https://rubygems.org/
@@ -132,6 +132,12 @@ GEM
     audio_vision (1.0.0)
       faraday (~> 0.8.8)
       faraday_middleware (~> 0.9.0)
+    aws-sdk (2.2.14)
+      aws-sdk-resources (= 2.2.14)
+    aws-sdk-core (2.2.14)
+      jmespath (~> 1.0)
+    aws-sdk-resources (2.2.14)
+      aws-sdk-core (= 2.2.14)
     bcrypt (3.1.10)
     bcrypt-ruby (3.1.5)
       bcrypt (>= 3.1.3)
@@ -234,6 +240,7 @@ GEM
     jbuilder (1.5.3)
       activesupport (>= 3.0.0)
       multi_json (>= 1.2.0)
+    jmespath (1.1.3)
     jquery-rails (3.1.3)
       railties (>= 3.0, < 5.0)
       thor (>= 0.14, < 2.0)
@@ -383,6 +390,7 @@ GEM
     rspec-support (3.2.2)
     ruby-mp3info (0.8.4)
     ruby-prof (0.15.2)
+    rubyzip (1.1.7)
     rufus-scheduler (3.0.9)
       tzinfo
     safe_yaml (1.0.3)
@@ -459,6 +467,7 @@ PLATFORMS
 DEPENDENCIES
   asset_host_client!
   audio_vision (~> 1.0)
+  aws-sdk (~> 2)
   bcrypt-ruby (~> 3.1.0)
   better_errors
   binding_of_caller
@@ -516,6 +525,7 @@ DEPENDENCIES
   rspec_junit_formatter!
   ruby-mp3info (~> 0.8.2)
   ruby-prof
+  rubyzip
   rufus-scheduler
   sanitize (~> 2.0)
   sass-rails (= 5.0.0beta1)
@@ -533,4 +543,4 @@ DEPENDENCIES
   yajl-ruby
 
 BUNDLED WITH
-   1.10.6
+   1.11.2
