@@ -16,7 +16,7 @@ class ApplicationController < ActionController::Base
   private
 
   def get_popular_articles
-    @popular_articles = Rails.cache.read("popular/viewed")
+    @popular_articles = Cache.read("popular/viewed")
   end
 
   #----------

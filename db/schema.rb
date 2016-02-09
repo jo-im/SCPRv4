@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160204215547) do
+ActiveRecord::Schema.define(version: 20160205232526) do
 
   create_table "abstracts", force: :cascade do |t|
     t.string   "source",               limit: 255
@@ -137,6 +137,13 @@ ActiveRecord::Schema.define(version: 20160204215547) do
   add_index "blogs_entry", ["status", "published_at"], name: "index_blogs_entry_on_status_and_published_at", using: :btree
   add_index "blogs_entry", ["status"], name: "index_blogs_entry_on_status", using: :btree
   add_index "blogs_entry", ["updated_at"], name: "index_blogs_entry_on_updated_at", using: :btree
+
+  create_table "caches", force: :cascade do |t|
+    t.string "key",   limit: 255
+    t.text   "value", limit: 4294967295
+  end
+
+  add_index "caches", ["key"], name: "index_caches_on_key", using: :btree
 
   create_table "category_articles", force: :cascade do |t|
     t.integer  "position",     limit: 4
@@ -830,13 +837,6 @@ ActiveRecord::Schema.define(version: 20160204215547) do
   add_index "shows_segment", ["status", "published_at"], name: "index_shows_segment_on_status_and_published_at", using: :btree
   add_index "shows_segment", ["status"], name: "index_shows_segment_on_status", using: :btree
   add_index "shows_segment", ["updated_at"], name: "index_shows_segment_on_updated_at", using: :btree
-
-  create_table "sql_store", force: :cascade do |t|
-    t.string "key",   limit: 255,      null: false
-    t.binary "value", limit: 16777215
-  end
-
-  add_index "sql_store", ["key"], name: "index_sql_store_on_key", using: :btree
 
   create_table "taggings", force: :cascade do |t|
     t.string   "taggable_type", limit: 255
