@@ -2,19 +2,19 @@
 
 <%= render 'shared/header/document_header' %>
 
-<body class="forum">
+<body class="kpcc-in-person">
 <div class="viewport">
   <%= render "shared/masthead/layout_header" %>
   <%= yield :masthead %>
 
-  <div id="forum" class="container-fluid main-content">
+  <div id="kpcc-in-person" class="container-fluid main-content">
     <div class="row-fluid">
-      <div id="forum-span-content" class="span18">
+      <div id="kpcc-in-person-span-content" class="span18">
         <%= yield %>
       </div>
 
       <!-- SIDEBAR -->
-      <div id="forum-span-sidebar" class="span6">
+      <div id="kpcc-in-person-span-sidebar" class="span6">
         <div id="sidebar">
           <% if content_for?(:sidebar) %>
             <%= yield :sidebar %>
@@ -52,7 +52,7 @@
 
     <%= yield :bottom %>
     <%= render "shared/audio/inpage_audio_player" %>
-  </div> <!-- container-fluid forum -->
+  </div> <!-- container-fluid kpcc-in-person -->
 
   <%= render "shared/footer/layout_footer" %>
 </div> <!-- viewport -->
