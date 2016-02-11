@@ -391,53 +391,23 @@ nav.section-nav {
             position: relative; // to make opacity happy in IE
             height:468px;
             &#hero-1 {
-              background-image:image-url("event-headers/kpcc-in-person-hero-10.jpg");
-              .slide-text{
-                background: image-url("event-headers/kpcc-in-person-horiz-negative.png") no-repeat left top;
-                h3 {
-                  color: #FFFFFF;
-                }
-              }
+              background-image:image-url("event-headers/KPCCInPerson_Slide1.jpg");
             }
             &#hero-2 {
-              background-image:image-url("event-headers/kpcc-in-person-hero-20.jpg");
+              background-image:image-url("event-headers/KPCCInPerson_Slide2.jpg");
               margin-top:-468px;
-              .slide-text{
-                background: image-url("event-headers/kpcc-in-person-horiz-negative.png") no-repeat left top;
-                h3 {
-                  color: #FFFFFF;
-                }
-              }
             }
             &#hero-3 {
-              background-image: image-url("event-headers/kpcc-in-person-hero-30.jpg");
+              background-image: image-url("event-headers/KPCCInPerson_Slide3.jpg");
               margin-top:-468px;
-              .slide-text{
-                background: image-url("event-headers/kpcc-in-person-horiz-negative.png") no-repeat left top;
-                h3 {
-                  color: #FFFFFF;
-                }
-              }
             }
             &#hero-4 {
-              background-image: image-url("event-headers/kpcc-in-person-hero-40.jpg");
+              background-image: image-url("event-headers/KPCCInPerson_Slide4.jpg");
               margin-top:-468px;
-              .slide-text{
-                background: image-url("event-headers/kpcc-in-person-horiz-negative.png") no-repeat left top;
-                h3 {
-                  color: #FFFFFF;
-                }
-              }
             }
             &#hero-5 {
-              background-image: image-url("event-headers/kpcc-in-person-hero-50.jpg");
+              background-image: image-url("event-headers/KPCCInPerson_Slide5.jpg");
               margin-top:-468px;
-              .slide-text{
-                background: image-url("event-headers/kpcc-in-person-horiz-negative.png") no-repeat left top;
-                h3 {
-                  color: #FFFFFF;
-                }
-              }
             }
             h3 {
                 padding-left: 200px;
@@ -457,11 +427,14 @@ nav.section-nav {
                 width: 523px;
                 text-align: left;
                 padding: 35px 0 0 37px;
+                background: image-url("event-headers/kpcc-in-person-horiz-negative.png") no-repeat left top;
+
                 h3 {
                     font:34px/48px "Museo Slab", sans-serif;
                     font-weight: 500;
                     margin:0;
                     text-shadow:0 1px 0 rgba(0,0,0,0.75);
+                    color: #FFFFFF;
                 }
                 p {
                     color:#fff;
