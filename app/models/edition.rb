@@ -171,7 +171,7 @@ class Edition < ActiveRecord::Base
   end
 
   def should_send_monday_email?
-    published? && !monday_email_sent? && Date.today.monday?
+    published? && !monday_email_sent? && Time.zone.now.to_date.monday?
   end
 
   def should_send_email?

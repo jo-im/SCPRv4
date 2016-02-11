@@ -37,6 +37,7 @@ class ShowSegment < ActiveRecord::Base
   include Concern::Methods::CommentMethods
   include Concern::Methods::AssetDisplayMethods
   include Concern::Sanitizers::Content
+  include Concern::Associations::PmpContentAssociation::StoryProfile
 
   self.disqus_identifier_base = "shows/segment"
   self.public_route_key = "segment"
@@ -57,6 +58,7 @@ class ShowSegment < ActiveRecord::Base
     :source     => :episode,
     :autosave   => true
 
+  alias_attribute :url, :public_url
 
   validates :show, presence: true
 

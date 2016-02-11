@@ -8,7 +8,8 @@ module Scprv4
     # Custom directories with classes and modules you want to be autoloadable.
     config.autoload_paths += [
       "#{config.root}/lib",
-      "#{config.root}/lib/validators"
+      "#{config.root}/lib/validators",
+      "#{config.root}/app/models/pmp"
     ]
 
     config.assets.version = '2.0'

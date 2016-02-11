@@ -71,7 +71,7 @@ module Api::Public::V2
 
 
     def most_viewed
-      @articles = Rails.cache.read("popular/viewed")
+      @articles = Cache.read("popular/viewed")
 
       if !@articles
         render_service_unavailable(
@@ -86,7 +86,7 @@ module Api::Public::V2
 
 
     def most_commented
-      @articles = Rails.cache.read("popular/commented")
+      @articles = Cache.read("popular/commented")
 
       if !@articles
         render_service_unavailable(

@@ -27,7 +27,7 @@ module Job
           -obj.public_datetime.to_i
         }
 
-        Rails.cache.write("popular/viewed", articles)
+        Cache.write("popular/viewed", articles)
 
         self.cache(
           articles,

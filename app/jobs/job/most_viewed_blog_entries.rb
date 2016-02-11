@@ -27,7 +27,7 @@ module Job
           data = silence_stream(STDOUT) { task.fetch(api_params(blog)) }
           if blog_entry = task.parse(data['rows'])
             article = blog_entry.to_article
-            Rails.cache.write("popular/#{blog}", article)
+            Cache.write("popular/#{blog}", article)
             self.cache(
               article,
               "/shared/widgets/cached/popular_blog",

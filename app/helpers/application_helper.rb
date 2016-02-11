@@ -1,4 +1,4 @@
-module ApplicationHelper
+module ApplicationHelper 
   include Twitter::Autolink
 
   def add_ga_tracking_to(url)
@@ -115,6 +115,8 @@ module ApplicationHelper
 
     asset = options[:asset] || nil
 
+    return if asset && options[:kpcc_only] && !asset.owner.try(:include?, "KPCC")
+
     if !asset && article.assets.empty?
       html = if options[:fallback]
         render("shared/assets/#{context}/fallback", article: article)
@@ -168,10 +170,10 @@ module ApplicationHelper
       # we have to fall back to original_object here to get the full list of
       # assets. in any case where we're rendering a body, we'll already have
       # the original object loaded, so that's ok
-
       asset = content.original_object.assets.find_by(asset_id:asset_id)
 
-      if asset
+      ## If kpcc_only is true, only render if the owner of the asset is KPCC
+      if asset && (!options[:kpcc_only] || asset.owner.try(:include?, "KPCC"))
         rendered_asset = render_asset content, context: context, display: display, asset:asset
         placeholder.replace Nokogiri::HTML::DocumentFragment.parse(rendered_asset)
       else
@@ -179,8 +181,7 @@ module ApplicationHelper
         placeholder.replace Nokogiri::HTML::DocumentFragment.parse("")
       end
     end
-
-    doc.to_s.html_safe
+    doc.css("body").children.to_s.html_safe
   end
 
   #----------
@@ -499,6 +500,7 @@ module ApplicationHelper
     include ActionView::Helpers::FormOptionsHelper
     include ActionView::Helpers::CaptureHelper
     include ActionView::Helpers::AssetTagHelper
+
     # This just makes it easy to create a check box
     # that will also send a false value
     def boolean_checkbox *args
@@ -506,6 +508,14 @@ module ApplicationHelper
         @template.check_box self.object.class.name.underscore, args[0], {checked: self.object.send(args[0])}, "1", "0"
       end
     end
-  end
   
+    def pmp_checkbox
+      self.input :publish_to_pmp, label: "Publish to PMP", hint: "Make available in Public Media Platform?" do
+        @template.check_box self.object.class.name.underscore, :publish_to_pmp, {checked: self.object.publish_to_pmp?}, "true", "false"
+      end
+    end
+
+  end
+
+  extend self
 end

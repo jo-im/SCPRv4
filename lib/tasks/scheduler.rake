@@ -24,6 +24,10 @@ task :scheduler => [:environment] do
     Job::ReportScheduleProblems.enqueue
   end
 
+  scheduler.cron '0 0 1 * *' do |job|
+    Job::ArchiveVersions.enqueue
+  end
+
   # -- Caches -- #
 
   # most whatevers...
