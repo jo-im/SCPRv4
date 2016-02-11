@@ -11,7 +11,7 @@ module Concern
         prev_klass = nil
 
         begin
-          @popular_articles = Rails.cache.read("popular/viewed")
+          @popular_articles = Cache.read("popular/viewed")
         rescue ArgumentError => e
           klass = e.message.match(/undefined class\/module (.+)\z/)[1]
 
