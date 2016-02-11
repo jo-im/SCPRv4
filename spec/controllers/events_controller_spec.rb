@@ -26,7 +26,7 @@ describe EventsController do
         end
 
         it "scopes by kpcc_in_person if requested" do
-          get :index, list: "kpcc_in_person"
+          get :index, list: "kpcc-in-person"
           assigns(:scoped_events).should eq [@forum]
         end
 
