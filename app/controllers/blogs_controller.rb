@@ -76,7 +76,7 @@ class BlogsController < ApplicationController
     prev_klass = nil
 
     begin
-      @popular_blog_entry = Rails.cache.read("popular/#{@blog.slug}")
+      @popular_blog_entry = Cache.read("popular/#{@blog.slug}")
     rescue ArgumentError => e
       klass = e.message.match(/undefined class\/module (.+)\z/)[1]
 

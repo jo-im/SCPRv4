@@ -469,6 +469,10 @@ ActiveRecord::Schema.define(version: 20160208220816) do
     t.boolean  "mobile_notification_sent",                    default: false, null: false
     t.integer  "status",                   limit: 4
     t.datetime "published_at"
+    t.datetime "starts_at"
+    t.datetime "ends_at"
+    t.boolean  "should_rewind",                               default: false
+    t.boolean  "bypass_preroll",                              default: false
   end
 
   add_index "layout_breakingnewsalert", ["alert_type"], name: "index_layout_breakingnewsalert_on_alert_type", using: :btree

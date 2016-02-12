@@ -45,7 +45,7 @@ class CacheController < AbstractController::Base
   private
 
   def write(key, value)
-    Rails.cache.write(key, value)
+    Cache.write(key, value)
     true
   end
 end
