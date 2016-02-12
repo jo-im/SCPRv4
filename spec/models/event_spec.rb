@@ -215,13 +215,13 @@ describe Event do
       end
     end
 
-    describe "forum" do
-      it "only selects events of types in ForumTypes array" do
+    describe "kpcc_in_person" do
+      it "only selects events of types in InPersonTypes array" do
         spon_event   = create :event, :published, event_type: "spon" # "spon" = sponsored
         pick_event   = create :event, :published, event_type: "pick"
         comm_event   = create :event, :published, event_type: "comm"
-        forum_events = Event.forum
-        forum_events.should eq [comm_event]
+        kpcc_in_person_events = Event.kpcc_in_person
+        kpcc_in_person_events.should eq [comm_event]
       end
     end
 
@@ -239,16 +239,16 @@ describe Event do
   #-------------------
 
   describe "#is_forum_event" do
-    it "is true if event type in the ForumTypes variable" do
-      Event::ForumTypes.each do |event_type|
+    it "is true if event type in the InPersonTypes variable" do
+      Event::InPersonTypes.each do |event_type|
         event = build :event, event_type: event_type
-        event.is_forum_event?.should eq true
+        event.is_kpcc_in_person_event?.should eq true
       end
     end
 
     it "is false if event is something else" do
       event = build :event, event_type: "spon"
-      event.is_forum_event?.should eq false
+      event.is_kpcc_in_person_event?.should eq false
     end
   end
 

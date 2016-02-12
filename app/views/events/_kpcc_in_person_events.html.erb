@@ -1,7 +1,7 @@
-<% events = upcoming_events_forum() %>
-<%= cache ["events","forum"]+events do %>
-  <div class="events-forum" data-vr-zone="Upcoming Forum Events">
-    <h6>Events at the Crawford Family Forum</h6>
+<% events = upcoming_events_kpcc_in_person %>
+<%= cache ["events","kpcc-in-person"]+events do %>
+  <div class="events-kpcc-in-person" data-vr-zone="Upcoming KPCC In Person Events">
+    <h6>Events with KPCC In Person</h6>
     <% events.each do |event| %>
       <div class="span12 cbase">
         <div class="event future" data-vr-contentbox>
@@ -18,6 +18,6 @@
         </div> <!-- event future -->
       </div> <!-- span -->
     <% end %>
-    <p class="more"><a href="/events/forum">View More Forum Events</a></p>
-  </div> <!-- events-forum -->
+    <p class="more"><a href="/events/kpcc-in-person">View More KPCC In Person Events</a></p>
+  </div> <!-- events-kpcc-in-person -->
 <% end %>

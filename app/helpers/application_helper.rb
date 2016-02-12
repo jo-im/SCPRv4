@@ -303,8 +303,8 @@ module ApplicationHelper
     BlogEntry.published.includes(:blog).limit(limit)
   end
 
-  def upcoming_events_forum
-    Event.published.includes(:assets).upcoming.forum.limit(2)
+  def upcoming_events_kpcc_in_person
+    Event.published.includes(:assets).upcoming.kpcc_in_person.limit(2)
   end
 
   def upcoming_events_sponsored

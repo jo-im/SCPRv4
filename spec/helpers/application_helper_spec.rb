@@ -60,9 +60,9 @@ describe ApplicationHelper do
   end
 
   describe "content helpers" do
-    it "sets upcoming forum events" do
+    it "sets upcoming kpcc in person events" do
       event = create :event, :published, :future, event_type: "comm"
-      helper.upcoming_events_forum.should eq [event]
+      helper.upcoming_events_kpcc_in_person.should eq [event]
     end
 
     it "sets upcoming sponsored events" do

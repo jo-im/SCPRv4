@@ -380,8 +380,8 @@ $navHeight: 36px;
             text-transform:none;
         }
 
-        // A lazy way to make the events-forum widget look better in the masthead
-        .events-forum .event > .row-fluid {
+        // A lazy way to make the events-kpcc-in-person widget look better in the masthead
+        .events-kpcc-in-person .event > .row-fluid {
             > .span8 { @include gridFluidSpan(6); }
             > .span16 { @include gridFluidSpan(18); }
         }

@@ -7,9 +7,9 @@ module Job
 
     FEEDS = [
       {
-        screenname: "KPCCForum",
+        screenname: "KPCCInPerson",
         partial:    "/shared/widgets/cached/tweets",
-        cache_key:  "twitter:KPCCForum",
+        cache_key:  "twitter:KPCCInPerson",
       },
       {
         screenname: "kpcc",

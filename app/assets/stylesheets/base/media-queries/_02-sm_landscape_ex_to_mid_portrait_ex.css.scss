@@ -5,18 +5,18 @@
     }
 
     // Set new widths for main columns in CFF layout
-        #forum {
-            #forum-span-content { // main content
+        #kpcc-in-person {
+            #kpcc-in-person-span-content { // main content
                 @include gridFluidSpan(14);
             }
-            #forum-span-sidebar { // sidebar
+            #kpcc-in-person-span-sidebar { // sidebar
                 @include gridFluidSpan(10);
             }
 
-            #forum-span-upcoming-events { // upcoming events
+            #kpcc-in-person-span-upcoming-events { // upcoming events
                 @include gridFluidSpan(24);
             }
-            #forum-span-social { // social media
+            #kpcc-in-person-span-social { // social media
                 display: none;
             }
         }

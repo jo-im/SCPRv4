@@ -58,7 +58,7 @@ span.fake-link {
     }
 }
 
-#forum { @include event-headers; }
+#kpcc-in-person { @include event-headers; }
 
 .event {
     @include event-headers;
@@ -260,7 +260,7 @@ span.fake-link {
                 @include font-sans-serif(normal, 11px);
                 color: $gray;
                 text-transform: uppercase;
-                &.forum {
+                &.kpcc-in-person {
                     color:$orangeDark;
                 }
             }
@@ -312,7 +312,7 @@ nav.section-nav {
     }
 }
 
-.forum nav.section-nav.vertical {
+.kpcc-in-person nav.section-nav.vertical {
     margin-bottom:10px;
 }
 
@@ -322,7 +322,7 @@ nav.section-nav {
 
 /* FADER */
 
-.forum .nav-primary {
+.kpcc-in-person .nav-primary {
     @include box-shadow(0 6px 10px rgba(0,0,0,.5));
 }
 
@@ -334,7 +334,7 @@ nav.section-nav {
     margin-bottom: 20px;
     margin-top: -22px;
     img {
-        max-width: 95%;
+        max-width: 55%;
         margin: 10px 10px 5px 10px;
     }
 }
@@ -391,19 +391,26 @@ nav.section-nav {
             position: relative; // to make opacity happy in IE
             height:468px;
             &#hero-1 {
-              background-image:image-url("event-headers/hero-1.jpg");
+              background-image:image-url("event-headers/KPCCInPerson_Slide1.jpg");
             }
             &#hero-2 {
-              background-image:image-url("event-headers/hero-2.jpg");
+              background-image:image-url("event-headers/KPCCInPerson_Slide2.jpg");
               margin-top:-468px;
             }
             &#hero-3 {
-              background-image: image-url("event-headers/hero-3.jpg");
+              background-image: image-url("event-headers/KPCCInPerson_Slide3.jpg");
               margin-top:-468px;
             }
             &#hero-4 {
-              background-image: image-url("event-headers/hero-4.jpg");
+              background-image: image-url("event-headers/KPCCInPerson_Slide4.jpg");
               margin-top:-468px;
+            }
+            &#hero-5 {
+              background-image: image-url("event-headers/KPCCInPerson_Slide5.jpg");
+              margin-top:-468px;
+            }
+            h3 {
+                padding-left: 200px;
             }
             img {
                 width: 100%;
@@ -412,20 +419,22 @@ nav.section-nav {
             }
             .slide-text {
                 position: absolute;
+                height: 350px;
                 z-index: 20;
-                top: 45px;
-                left: 5%;
+                top: 55px;
+                left: 10%;
                 left: 200px\9;
                 width: 523px;
                 text-align: left;
                 padding: 35px 0 0 37px;
-                background: image-url("event-headers/cff-logo.png") no-repeat left top;
+                background: image-url("event-headers/kpcc-in-person-horiz-negative.png") no-repeat left top;
+
                 h3 {
-                    color:#00b9f3;
                     font:34px/48px "Museo Slab", sans-serif;
                     font-weight: 500;
                     margin:0;
                     text-shadow:0 1px 0 rgba(0,0,0,0.75);
+                    color: #FFFFFF;
                 }
                 p {
                     color:#fff;
@@ -473,7 +482,7 @@ h3.section-nav-header {
     margin-top:10px;
 }
 
-.forum #sidebar {
+.kpcc-in-person #sidebar {
     .widget {
         display: block;
         p {

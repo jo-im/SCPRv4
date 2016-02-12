@@ -26,11 +26,11 @@
   <div class="fold events-fold" id="fold">
     <%= render "shared/related_content_and_links", content: @event %>
 
-    <% if @more_events.present? && (@event.upcoming? || @event.current?) && @event.is_forum_event? %>
+    <% if @more_events.present? && (@event.upcoming? || @event.current?) && @event.is_kpcc_in_person_event? %>
       <aside class="more-events" id="more-events">
         <div class="row-fluid">
           <div class="span6 row-title">
-            <h6>More Events at the Crawford Family Forum</h6>
+            <h6>More Events with KPCC In Person</h6>
           </div>
           <div class="span18">
             <div class="row-fluid">

@@ -1,8 +1,8 @@
 <nav class="filters events">
   <ul class="clearfix">
     <li class="heading">View:</li>
-    <li><%= link_to(raw("All Events<span class='active-arrow'></span>"), events_path(list: "all"), id: "all", class: %w{sponsored forum}.include?(params[:list]) ? nil : "active") %></li>
-    <li><%= link_to(raw("Crawford Family Forum Events<span class='active-arrow'></span>"), events_path(list: "forum"), id: "forum", class: params[:list] == "forum" ? "active" : nil) %></li>
+    <li><%= link_to(raw("All Events<span class='active-arrow'></span>"), events_path(list: "all"), id: "all", class: %w{sponsored kpcc-in-person}.include?(params[:list]) ? nil : "active") %></li>
+    <li><%= link_to(raw("KPCC In Person<span class='active-arrow'></span>"), events_path(list: "kpcc-in-person"), id: "kpcc-in-person", class: params[:list] == "kpcc-in-person" ? "active" : nil) %></li>
     <li><%= link_to(raw("Sponsored Events<span class='active-arrow'></span>"), sponsored_events_path, id: "sponsored", class: params[:list] == "sponsored" ? "active" : nil) %></li>
   </ul>
 </nav>
