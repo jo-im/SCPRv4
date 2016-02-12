@@ -296,6 +296,7 @@ Scprv4::Application.routes.draw do
     resources :news_stories, concerns: [:preview, :search]
     resources :blog_entries, concerns: [:preview, :search]
     resources :events, concerns: [:preview, :search]
+    resources :pledge_drives, concerns: [:search]
 
     resources :remote_articles, only: [:index], concerns: [:search] do
       member do

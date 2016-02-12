@@ -469,6 +469,10 @@ ActiveRecord::Schema.define(version: 20160205232526) do
     t.boolean  "mobile_notification_sent",                    default: false, null: false
     t.integer  "status",                   limit: 4
     t.datetime "published_at"
+    t.datetime "starts_at"
+    t.datetime "ends_at"
+    t.boolean  "should_rewind",                               default: false
+    t.boolean  "bypass_preroll",                              default: false
   end
 
   add_index "layout_breakingnewsalert", ["alert_type"], name: "index_layout_breakingnewsalert_on_alert_type", using: :btree
@@ -607,6 +611,17 @@ ActiveRecord::Schema.define(version: 20160205232526) do
   add_index "pij_query", ["query_type"], name: "index_pij_query_on_query_type", using: :btree
   add_index "pij_query", ["slug"], name: "slug", unique: true, using: :btree
   add_index "pij_query", ["status"], name: "index_pij_query_on_status", using: :btree
+
+  create_table "pledge_drives", force: :cascade do |t|
+    t.datetime "starts_at",                  null: false
+    t.datetime "ends_at",                    null: false
+    t.boolean  "enabled",    default: false
+    t.datetime "created_at",                 null: false
+    t.datetime "updated_at",                 null: false
+  end
+
+  add_index "pledge_drives", ["ends_at"], name: "index_pledge_drives_on_ends_at", using: :btree
+  add_index "pledge_drives", ["starts_at"], name: "index_pledge_drives_on_starts_at", using: :btree
 
   create_table "pmp_contents", force: :cascade do |t|
     t.integer  "content_id",     limit: 4

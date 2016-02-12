@@ -501,6 +501,14 @@ module ApplicationHelper
     include ActionView::Helpers::CaptureHelper
     include ActionView::Helpers::AssetTagHelper
 
+    # This just makes it easy to create a check box
+    # that will also send a false value
+    def boolean_checkbox *args
+      self.input *args do
+        @template.check_box self.object.class.name.underscore, args[0], {checked: self.object.send(args[0])}, "1", "0"
+      end
+    end
+  
     def pmp_checkbox
       self.input :publish_to_pmp, label: "Publish to PMP", hint: "Make available in Public Media Platform?" do
         @template.check_box self.object.class.name.underscore, :publish_to_pmp, {checked: self.object.publish_to_pmp?}, "true", "false"

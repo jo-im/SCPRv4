@@ -45,7 +45,7 @@ class ListenController < ApplicationController
   private
 
   def check_pledge_status
-    return redirect_to("/listen_live/pledge-free/off-air") if !PLEDGE_DRIVE
+    return redirect_to("/listen_live/pledge-free/off-air") unless PledgeDrive.happening?
   end
 
   def require_pledge_token

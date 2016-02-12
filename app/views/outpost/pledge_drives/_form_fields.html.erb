@@ -1,0 +1,5 @@
+<%= form_block "Details" do %>
+  <%= f.input :starts_at %>
+  <%= f.input :ends_at %>
+  <%= f.boolean_checkbox :enabled, hint: "The pledge drive will not take effect unless this checked." %>
+<% end %>
