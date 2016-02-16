@@ -17,4 +17,18 @@ class Cache < ActiveRecord::Base
       delete_all
     end
   end
+
+  class MarshalSerializer
+    class << self
+      include Marshal
+      def load string
+        super if string
+      end
+      def dump string
+        super if string
+      end
+    end
+  end
+
+  serialize :value, MarshalSerializer
 end
