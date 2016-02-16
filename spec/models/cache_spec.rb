@@ -68,5 +68,10 @@ describe Cache do
       Rails.cache.read('existingkey').should eq value2
     end
 
+    it 'writes arrays' do
+      test_array = ['one', 2, 'three', 4, 'five']
+      Cache.write 'testarray', ['one', 2, 'three', 4, 'five']
+      Cache.read('testarray').should eq test_array
+    end
   end
 end
