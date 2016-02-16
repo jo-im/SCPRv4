@@ -279,7 +279,7 @@ class scpr.ListenLive
                 .done (script,status) =>
                     @nolcmb = new NOLCMB?.ggInitialize
                         sfcode: "drm"
-                        apid  : "T4FA39C01-1BC0-41C3-A309-06ED295D84D2"
+                        apid  : "P4FA39C01-1BC0-41C3-A309-06ED295D84D2"
                         apn   : "kpcc-live-stream-browser"
 
                     @nolcmb.ggPM e... for e in @_queued
