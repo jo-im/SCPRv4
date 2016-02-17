@@ -1,5 +1,5 @@
 <div class="cbase thumbnail">
-  <h3 class="story-headline"><%= link_to article.short_title, article.public_url %></h3>
+  <h3 class="story-headline"><%= link_to article.short_title, article.public_url, "data-ga-category" => '@currentCategory', "data-ga-action" => "Article", "data-ga-label" => '@scrollDepth', class: "track-event" %></h3>
   <span class="byline">
     <%= article.byline %>
     | <%= format_date article.public_datetime, format: :full_date, time: true %>

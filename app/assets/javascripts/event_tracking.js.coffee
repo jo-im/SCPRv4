@@ -1,32 +1,102 @@
 class scpr.EventTracking
     chooser: ".track-event"
-    constructor: ->
-        new scpr.EventTrackingLink($ link) for link in $(@chooser)
+    constructor: (@options={})->
+        @parseOptions(@options)
+        new scpr.EventTrackingLink($(link), @options) for link in $(@chooser)
+        
+    parseOptions: (opts)->
+        for option of opts
+            @options[option] = opts[option]
 
-class scpr.EventTrackingLink
-    attributes:
-        category: "data-ga-category"
-        action:   "data-ga-action"
-        label:    "data-ga-label"
-        nonInteraction: "data-non-interaction"
+        if @options.trackScrollDepth
+            new scpr.ScrollTracker(@options)
 
-    defaults:
-        nonInteraction: 0
+    @Helpers:
+        scrollDepth: ->
+            docHeight = $(document).height()
+            winHeight =  $(window).height()
+            scrollDistance = $(window).scrollTop() + winHeight
+            percentages = 
+                '25%' : parseInt(docHeight * 0.25, 10)
+                '50%' : parseInt(docHeight * 0.50, 10)
+                '75%' : parseInt(docHeight * 0.75, 10)
+                # Cushion to trigger 100% event in iOS
+                '100%': docHeight - 5
+            for percentage in Object.keys(percentages)
+                if scrollDistance <= percentages[percentage]
+                    return percentage
 
-    constructor: (@el) ->
-        @category = @el.attr(@attributes.category)
-        @action   = @el.attr(@attributes.action)
-        @label    = @el.attr(@attributes.label)
+        currentCategory: ->
+            @options.currentCategory
 
-        @nonInteraction = parseInt(@el.attr(@attributes.nonInteraction)) || @defaults.nonInteraction
+    class scpr.EventTrackingLink
+        attributes:
+            category: "data-ga-category"
+            action:   "data-ga-action"
+            label:    "data-ga-label"
+            nonInteraction: "data-non-interaction"
 
-        # Setup click event
-        if @nonInteraction == 1
-          @_gapush()
-        else
-          @el.on click: =>
-            @_gapush()
+        defaults:
+            nonInteraction: 0
 
+        constructor: (@el, @options={}) ->
+            @nonInteraction = parseInt(@el.attr(@attributes.nonInteraction)) || @defaults.nonInteraction
 
-    _gapush: ->
-        ga('send', 'event', @category, @action, @label, {'nonInteraction': @nonInteraction});
+            # Setup click event
+            if @nonInteraction == 1
+              @_gapush()
+            else
+              @el.on click: =>
+                @_gapush()
+
+        category: ->
+            @_evalString @el.attr(@attributes.category)
+
+        action: ->
+            @_evalString @el.attr(@attributes.action)
+
+        label: ->
+            @_evalString @el.attr(@attributes.label)
+
+        _gapush: ->
+            category = @category() 
+            action   = @action()
+            label    = @label()
+            # Don't send event unless we have all 3 pieces of data (which could happen if no current category is set)
+            if category && action && label
+                ga('send', 'event', category, action, label, {'nonInteraction': @nonInteraction});
+                console.log([@category(), @action(), @label()]) if @options.verbose
+
+        _evalString: (str) ->
+            # If the string begins with an @ symbol, use it to call a helper function
+            if @_shouldEvalAttribute(str)
+                attr = scpr.EventTracking.Helpers["#{str.replace(/^@/, '')}"]
+                if (typeof attr) == "function"
+                    return attr.bind(this).call()
+                else
+                    return attr
+            else
+                return str
+
+        _shouldEvalAttribute: (str) ->
+            str[0] == "@"
+
+    class scpr.ScrollTracker
+        constructor: (@options={})->
+            @enable()
+        enable: ->
+            # Only track if we have a category we can use
+            if @options.currentCategory
+                $.scrollDepth
+                    gtmOverride: true
+                    elements: [@chooser]
+                    userTiming: false
+                    pixelDepth: false
+                    percentage: true
+                    eventHandler: (data)=>
+                        ga('send', 'event', @options.currentCategory, 'Scroll Depth', data.eventLabel, {'nonInteraction': 1});
+                        console.log([@options.currentCategory, 'Scroll Depth', data.eventLabel]) if @options.verbose
+                    nonInteraction: 1
+
+        disable: ->
+            $.scrollDepth.reset()

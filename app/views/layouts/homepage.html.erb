@@ -161,6 +161,11 @@
 $(document).ready(function(){
   scpr.VisualCampaign.enqueue('pushdown-global', $('#global-pushdown'));
   scpr.VisualCampaign.enqueue('pushdown-homepage', $('#homepage-pushdown'));
+  eventTracking.parseOptions({
+    currentCategory: "Homepage",
+    trackScrollDepth: true,
+    verbose: true
+  });
 });
 </script>
 

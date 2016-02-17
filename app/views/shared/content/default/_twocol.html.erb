@@ -4,7 +4,7 @@
       <%= render_asset article, display: "large" %>
     </div>
     <div class="span12">
-      <h1 class="story-headline"><%= link_to article.short_title, article.public_url %></h1>
+      <h1 class="story-headline"><%= link_to article.short_title, article.public_url, "data-ga-category" => '@currentCategory', "data-ga-action" => "Article", "data-ga-label" => '@scrollDepth', class: "track-event" %></h1>
       <span class="byline">
         <%= article.byline %>
         <%= smart_date_js article.public_datetime, "data-relative" => "2h" %>
