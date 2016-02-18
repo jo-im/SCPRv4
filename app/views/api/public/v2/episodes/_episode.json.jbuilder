@@ -34,4 +34,10 @@ json.cache! [Api::Public::V2::VERSION, "v3", episode] do
   end
 
   json.teaser episode.summary.to_s.html_safe # Deprecated
+
+  json.content do
+    json.partial! 'api/public/v2/articles/collection',
+      articles: episode.published_content.map(&:to_article)
+  end
+
 end

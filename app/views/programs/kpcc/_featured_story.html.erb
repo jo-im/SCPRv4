@@ -42,18 +42,18 @@
         <h2>In this episode</h2>
         <nav>
           <ul>
-            <% story_segments = featured_story.original_object.segments.first(8).map(&:to_article) %>
-            <% story_segments.each do |segment| %>
-              <li><a href="<%= segment.public_path %>"><%= segment.short_title %></a></li>
+            <% story_content = featured_story.original_object.content.first(8).map(&:to_article) %>
+            <% story_content.each do |content| %>
+              <li><a href="<%= content.public_path %>"><%= content.short_title %></a></li>
             <% end %>
           </ul>
         </nav>
         <footer>
-          <% if story_segments.count > 8 %>
+          <% if story_content.count > 8 %>
             <a href="<%= featured_story.public_path %>">
               <figure>
                 <mark>See all from <%= format_date(featured_story.public_datetime, with: "%B %e") %></mark>
-                <% story_count = (story_segments - story_segments.first(8)).count %>
+                <% story_count = (story_content - story_content.first(8)).count %>
                 <% if story_count > 0 %>
                   <figcaption><span><%= story_count %></span> more <%= 'story'.pluralize(story_count) %></figcaption>
                 <% end %>

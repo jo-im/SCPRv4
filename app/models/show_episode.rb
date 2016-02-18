@@ -121,6 +121,10 @@ class ShowEpisode < ActiveRecord::Base
     rundowns.map(&:content)
   end
 
+  def published_content
+    content.select(&:published?)
+  end
+
   def to_article
     return nil if !self.show
     @to_article ||= Article.new({

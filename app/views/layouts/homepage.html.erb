@@ -47,10 +47,10 @@
                   <!-- Segments -->
                   <ul class="cbase">
 
-                  <% episode.segments.published.each_with_index do |segment, i| %>
+                  <% episode.published_content.each_with_index do |content, i| %>
                     <li>
-                      <h5 class="headline"><%= link_to segment.short_headline, segment.public_path, :class => 'track-event', :data => {'ga-category' => 'Broadcast Bar', 'ga-action' => 'Episode Guide', 'ga-label' => "#{i==0 ? 'Lead' : 'Offlead'} Segment"} %></h5>
-                      <%= comment_count_for segment %>
+                      <h5 class="headline"><%= link_to content.short_headline, content.public_path, :class => 'track-event', :data => {'ga-category' => 'Broadcast Bar', 'ga-action' => 'Episode Guide', 'ga-label' => "#{i==0 ? 'Lead' : 'Offlead'} Segment"} %></h5>
+                      <%= comment_count_for content %>
                     </li>
                   <% end %>
 

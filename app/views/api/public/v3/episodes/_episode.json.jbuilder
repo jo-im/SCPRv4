@@ -25,4 +25,10 @@ json.cache! [Api::Public::V3::VERSION, "v2", episode] do
     json.partial! api_view_path("articles", "collection"),
       articles: episode.segments.map(&:to_article)
   end
+
+  json.content do
+    json.partial! api_view_path("articles", "collection"),
+      articles: episode.published_content.map(&:to_article)
+  end
+
 end

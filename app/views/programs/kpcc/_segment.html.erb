@@ -51,9 +51,9 @@
                 <h1><%= link_to article.published_episode.headline, article.published_episode.public_path %></h1>
                 <nav>
                   <ul>
-                    <% article.episode_segments.each do |segment| %>
-                      <li class="<%= ("selected" if article.id == segment.id) %>">
-                        <%= link_to segment.short_headline, segment.public_path %>
+                    <% article.episode.published_content.each do |content| %>
+                      <li class="<%= ("selected" if article.id == content.id) %>">
+                        <%= link_to content.short_headline, content.public_path %>
                       </li>
                     <% end %>
                   </ul>
