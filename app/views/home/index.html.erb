@@ -25,7 +25,7 @@
     <div id="most-popular" class="span12">
       <h6>Most Popular</h6>
       <div class="tab-content">
-        <div class="tab-pane active popular" id="pop_tab1" data-vr-zone="Most Popular">
+        <div class="tab-pane active popular track-event" id="pop_tab1" data-vr-zone="Most Popular" data-ga-category="@currentCategory" data-ga-action="Article" data-ga-label="@scrollDepth">
           <%= raw Cache.read("views/popular/viewed") %>
         </div>
       </div>
@@ -47,7 +47,7 @@
           <a class="next track-event" data-ga-category="Homepage" data-ga-action="In Cast You Missed It" data-ga-label="Nav Next"></a>
         </div>
       </h6>
-      <div class="carousel" data-current-page="1" data-vr-zone="In Case You Missed It"></div>
+      <div class="carousel track-event" data-current-page="1" data-vr-zone="In Case You Missed It" data-ga-category="@currentCategory" data-ga-action="Article" data-ga-label="@scrollDepth"></div>
     </div> <!-- missed-it-bucket -->
 
     <% content_for :footer do %>
