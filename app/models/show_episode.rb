@@ -79,11 +79,18 @@ class ShowEpisode < ActiveRecord::Base
     dependent:    :destroy,
     before_add:   :set_rundown_position
 
-  has_many :segments,
-    -> { order('shows_rundown.position') },
-    :class_name     => "ShowSegment",
-    :foreign_key    => "segment_id",
-    :through        => :rundowns
+  ## Rundown type relations
+
+  [:show_segments,:news_stories,:content_shells,:blogs,:show_episodes,:abstracts,:events,:pij_queries].each do |content_type|
+    model_name = content_type.to_s.singularize.camelize
+    has_many content_type,
+      -> { where('shows_rundown.content_type' => model_name).order('shows_rundown.position') },
+      :through        => :rundowns,
+      :source         => :content,
+      :source_type    => model_name
+  end
+
+  alias_attribute :segments, :show_segments
 
 
   accepts_json_input_for :rundowns
@@ -110,6 +117,9 @@ class ShowEpisode < ActiveRecord::Base
     self.update_attributes(status: self.class.status_id(:live))
   end
 
+  def content
+    rundowns.map(&:content)
+  end
 
   def to_article
     return nil if !self.show
@@ -181,11 +191,9 @@ class ShowEpisode < ActiveRecord::Base
   end
 
   def build_rundown_association(rundown_hash, segment)
-    if segment.is_a? ShowSegment
-      ShowRundown.new(
-        :position => rundown_hash["position"].to_i,
-        :segment  => segment
-      )
-    end
+    ShowRundown.new(
+      :position => rundown_hash["position"].to_i,
+      :content => segment
+    )
   end
 end

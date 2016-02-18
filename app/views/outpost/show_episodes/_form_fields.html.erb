@@ -24,17 +24,17 @@
   <%= f.input :rundowns_json, as: :hidden, input_html: { id: "rundowns_json" } %>
 
   <% content_for :footer do %>
-    <script>
+    <script id="rundowns-aggregator">
       aggregator = new outpost.Aggregator(
         {
           el: "#segmented-aggregator", 
           inputEl: "#rundowns_json",
-          collection: <%= render_json('api/private/v2/articles/collection', articles: record.segments.map(&:to_article)) %>,
+          collection: <%= render_json('api/private/v2/articles/collection', articles: record.content.map(&:to_article)) %>,
           apiType: "private",
           params: {
             limit: 20,
             token: "<%= Rails.configuration.x.api.kpcc.private.api_token %>",
-            types: "segments",
+            types: 'segments,news,shells,blogs,episodes',
             order: "updated_at", // Don't use published_at - we're finding unpublished content too.
             sort_mode: "desc",
             with: {
