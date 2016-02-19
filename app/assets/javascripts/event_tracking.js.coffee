@@ -13,18 +13,7 @@ class scpr.EventTracking
 
     @Helpers:
         scrollDepth: ->
-            docHeight = $(document).height()
-            winHeight =  $(window).height()
-            scrollDistance = $(window).scrollTop() + winHeight
-            percentages = 
-                '25%' : parseInt(docHeight * 0.25, 10)
-                '50%' : parseInt(docHeight * 0.50, 10)
-                '75%' : parseInt(docHeight * 0.75, 10)
-                # Cushion to trigger 100% event in iOS
-                '100%': docHeight - 5
-            for percentage in Object.keys(percentages)
-                if scrollDistance <= percentages[percentage]
-                    return percentage
+            $.scrollDepth.calculateScrollPercentageFromMarks()
 
         currentCategory: ->
             @options.currentCategory
@@ -84,6 +73,8 @@ class scpr.EventTracking
     class scpr.ScrollTracker
         constructor: (@options={})->
             @enable()
+            # Register the scroll depth position the page loads at.
+            $(window).trigger("scroll.scrollDepth") 
         enable: ->
             # Only track if we have a category we can use
             if @options.currentCategory
@@ -97,6 +88,7 @@ class scpr.EventTracking
                         ga('send', 'event', @options.currentCategory, 'Scroll Depth', data.eventLabel, {'nonInteraction': 1});
                         console.log([@options.currentCategory, 'Scroll Depth', data.eventLabel]) if @options.verbose
                     nonInteraction: 1
+                    container: @options.scrollDepthContainer
 
         disable: ->
             $.scrollDepth.reset()

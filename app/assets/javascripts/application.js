@@ -47,4 +47,4 @@
 //= require page_mapping
 
 //= require short-list-modules.js
-//= require jquery.scrolldepth.min
+//= require jquery.scrolldepth
