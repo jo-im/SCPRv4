@@ -44,13 +44,13 @@
                   <h6><%= link_to episode.headline, episode.public_path, :class => 'track-event', :data => {'ga-category' => 'Broadcast Bar', 'ga-action' => 'Episode Guide', 'ga-label' => 'Current Episode'} %></h6>
                   <%= render_asset episode, display: 'thumbnail' %>
 
-                  <!-- Segments -->
+                  <!-- Content -->
                   <ul class="cbase">
 
-                  <% episode.published_content.each_with_index do |content, i| %>
+                  <% episode.published_content.map(&:to_article).each_with_index do |content, i| %>
                     <li>
-                      <h5 class="headline"><%= link_to content.short_headline, content.public_path, :class => 'track-event', :data => {'ga-category' => 'Broadcast Bar', 'ga-action' => 'Episode Guide', 'ga-label' => "#{i==0 ? 'Lead' : 'Offlead'} Segment"} %></h5>
-                      <%= comment_count_for content %>
+                      <h5 class="headline"><%= link_to content.short_title, content.public_path, :class => 'track-event', :data => {'ga-category' => 'Broadcast Bar', 'ga-action' => 'Episode Guide', 'ga-label' => "#{i==0 ? 'Lead' : 'Offlead'} Content"} %></h5>
+                      <%= comment_count_for content.original_object %>
                     </li>
                   <% end %>
 
