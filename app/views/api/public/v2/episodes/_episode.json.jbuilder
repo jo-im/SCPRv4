@@ -37,7 +37,7 @@ json.cache! [Api::Public::V2::VERSION, "v3", episode] do
 
   json.content do
     json.partial! 'api/public/v2/articles/collection',
-      articles: episode.published_content.map(&:to_article)
+      articles: episode.content.map(&:to_article)
   end
 
 end

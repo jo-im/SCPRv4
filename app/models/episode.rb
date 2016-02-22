@@ -10,7 +10,8 @@ class Episode
     :assets,
     :audio,
     :program,
-    :segments
+    :segments,
+    :content
 
 
   def initialize(attributes={})
@@ -23,6 +24,7 @@ class Episode
     @assets           = Array(attributes[:assets])
     @audio            = Array(attributes[:audio])
     @segments         = Array(attributes[:segments])
+    @content          = Array(attributes[:content])
   end
 
   def to_episode
