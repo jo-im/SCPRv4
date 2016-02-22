@@ -118,7 +118,7 @@ class ShowEpisode < ActiveRecord::Base
   end
 
   def content
-    rundowns.map(&:content)
+    rundowns.includes(:content).map(&:content)
   end
 
   def published_content
