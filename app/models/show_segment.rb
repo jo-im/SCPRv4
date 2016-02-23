@@ -49,7 +49,8 @@ class ShowSegment < ActiveRecord::Base
 
   has_many :rundowns,
     :class_name     => "ShowRundown",
-    :foreign_key    => "segment_id",
+    :foreign_key    => "content_id",
+    :as             => "content",
     :dependent      => :destroy
 
   has_many :episodes,
