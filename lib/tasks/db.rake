@@ -29,6 +29,7 @@ namespace :db do
     end
   end
   task :start do
+    puts `docker-machine start #{DOCKER_MACHINE_NAME}`
     container_id = `#{DOCKER_MACHINE_ENV} && docker ps --filter "status=exited" | grep #{DOCKER_CONTAINER_NAME}`.match(/^(\w*)\ +/).try(:[], 0)
     puts `#{DOCKER_MACHINE_ENV} && docker start #{container_id}`
   end
