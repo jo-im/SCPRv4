@@ -1,3 +1,4 @@
+`eval $(docker-machine env default)`
 Scprv4::Application.configure do
   config.cache_classes  = false
   config.eager_load     = false
