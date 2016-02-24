@@ -1,7 +1,9 @@
 development:
   adapter: mysql2
   reconnect: true
-  database: scprv4
+  database: scpr
+  host: <%= URI(ENV['DOCKER_HOST']).host %>
+  port: 3306
 test:
   adapter: mysql2
   reconnect: true
