@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160216223149) do
+ActiveRecord::Schema.define(version: 20160224005558) do
 
   create_table "abstracts", force: :cascade do |t|
     t.string   "source",               limit: 255
@@ -83,19 +83,17 @@ ActiveRecord::Schema.define(version: 20160216223149) do
   add_index "bios_bio", ["slug"], name: "index_bios_bio_on_slug", using: :btree
 
   create_table "blogs_blog", force: :cascade do |t|
-    t.string   "name",                limit: 255
-    t.string   "slug",                limit: 255
-    t.text     "description",         limit: 4294967295
-    t.boolean  "is_active",                              default: false, null: false
-    t.string   "teaser",              limit: 255
-    t.integer  "missed_it_bucket_id", limit: 4
-    t.datetime "created_at",                                             null: false
-    t.datetime "updated_at",                                             null: false
-    t.string   "twitter_handle",      limit: 255
+    t.string   "name",           limit: 255
+    t.string   "slug",           limit: 255
+    t.text     "description",    limit: 4294967295
+    t.boolean  "is_active",                         default: false, null: false
+    t.string   "teaser",         limit: 255
+    t.datetime "created_at",                                        null: false
+    t.datetime "updated_at",                                        null: false
+    t.string   "twitter_handle", limit: 255
   end
 
   add_index "blogs_blog", ["is_active"], name: "index_blogs_blog_on_is_active", using: :btree
-  add_index "blogs_blog", ["missed_it_bucket_id"], name: "blogs_blog_d12628ce", using: :btree
   add_index "blogs_blog", ["name"], name: "index_blogs_blog_on_name", using: :btree
   add_index "blogs_blog", ["slug"], name: "slug", unique: true, using: :btree
 
@@ -250,15 +248,6 @@ ActiveRecord::Schema.define(version: 20160216223149) do
   add_index "contentbase_featuredcommentbucket", ["created_at"], name: "index_contentbase_featuredcommentbucket_on_created_at", using: :btree
   add_index "contentbase_featuredcommentbucket", ["title"], name: "index_contentbase_featuredcommentbucket_on_title", using: :btree
   add_index "contentbase_featuredcommentbucket", ["updated_at"], name: "index_contentbase_featuredcommentbucket_on_updated_at", using: :btree
-
-  create_table "contentbase_misseditbucket", force: :cascade do |t|
-    t.string   "title",      limit: 255, null: false
-    t.datetime "created_at",             null: false
-    t.datetime "updated_at",             null: false
-    t.string   "slug",       limit: 255
-  end
-
-  add_index "contentbase_misseditbucket", ["title"], name: "index_contentbase_misseditbucket_on_title", using: :btree
 
   create_table "contentbase_misseditcontent", force: :cascade do |t|
     t.integer  "bucket_id",    limit: 4,                null: false
@@ -469,10 +458,6 @@ ActiveRecord::Schema.define(version: 20160216223149) do
     t.boolean  "mobile_notification_sent",                    default: false, null: false
     t.integer  "status",                   limit: 4
     t.datetime "published_at"
-    t.datetime "starts_at"
-    t.datetime "ends_at"
-    t.boolean  "should_rewind",                               default: false
-    t.boolean  "bypass_preroll",                              default: false
   end
 
   add_index "layout_breakingnewsalert", ["alert_type"], name: "index_layout_breakingnewsalert_on_alert_type", using: :btree
@@ -483,15 +468,13 @@ ActiveRecord::Schema.define(version: 20160216223149) do
   add_index "layout_breakingnewsalert", ["visible"], name: "index_layout_breakingnewsalert_on_visible", using: :btree
 
   create_table "layout_homepage", force: :cascade do |t|
-    t.string   "base",                limit: 255
+    t.string   "base",         limit: 255
     t.datetime "published_at"
-    t.integer  "status",              limit: 4,   null: false
-    t.integer  "missed_it_bucket_id", limit: 4
-    t.datetime "created_at",                      null: false
-    t.datetime "updated_at",                      null: false
+    t.integer  "status",       limit: 4,   null: false
+    t.datetime "created_at",               null: false
+    t.datetime "updated_at",               null: false
   end
 
-  add_index "layout_homepage", ["missed_it_bucket_id"], name: "layout_homepage_d12628ce", using: :btree
   add_index "layout_homepage", ["published_at"], name: "index_layout_homepage_on_published_at", using: :btree
   add_index "layout_homepage", ["status", "published_at"], name: "index_layout_homepage_on_status_and_published_at", using: :btree
   add_index "layout_homepage", ["updated_at"], name: "index_layout_homepage_on_updated_at", using: :btree
@@ -501,6 +484,7 @@ ActiveRecord::Schema.define(version: 20160216223149) do
     t.integer "content_id",   limit: 4
     t.integer "position",     limit: 4,   default: 99,       null: false
     t.string  "content_type", limit: 255
+    t.string  "size",         limit: 255, default: "medium"
   end
 
   add_index "layout_homepagecontent", ["content_id", "content_type"], name: "index_layout_homepagecontent_on_content_id_and_content_type", using: :btree
@@ -817,14 +801,15 @@ ActiveRecord::Schema.define(version: 20160216223149) do
   add_index "shows_episode", ["status"], name: "index_shows_episode_on_status", using: :btree
 
   create_table "shows_rundown", force: :cascade do |t|
-    t.integer "episode_id", limit: 4, null: false
-    t.integer "segment_id", limit: 4, null: false
-    t.integer "position",   limit: 4, null: false
+    t.integer "episode_id",   limit: 4,   null: false
+    t.integer "content_id",   limit: 4,   null: false
+    t.integer "position",     limit: 4,   null: false
+    t.string  "content_type", limit: 255
   end
 
+  add_index "shows_rundown", ["content_id"], name: "shows_rundown_segment_id", using: :btree
   add_index "shows_rundown", ["episode_id"], name: "shows_rundown_episode_id", using: :btree
   add_index "shows_rundown", ["position"], name: "index_shows_rundown_on_segment_order", using: :btree
-  add_index "shows_rundown", ["segment_id"], name: "shows_rundown_segment_id", using: :btree
 
   create_table "shows_segment", force: :cascade do |t|
     t.integer  "show_id",          limit: 4,          null: false

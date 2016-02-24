@@ -46,24 +46,6 @@ class HomeController < ApplicationController
     raise StandardError, "This is a test error. It works (or does it?)"
   end
 
-  #----------
-
-  def missed_it_content
-    @homepage = Homepage.includes(:missed_it_bucket).find(params[:id])
-
-    # This action shouldn't be called if there isn't a missed it bucket.
-    # But just in case, to avoid errors...
-    if !@homepage.missed_it_bucket
-      render text: "", status: :not_found and return
-    end
-
-    @carousel_contents = @homepage.missed_it_bucket
-      .content.includes(:content).page(params[:page]).per(6)
-
-    render 'missed_it_content', formats: [:js]
-  end
-
-
   private
 
   def generate_homepage

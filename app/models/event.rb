@@ -13,7 +13,6 @@ class Event < ActiveRecord::Base
   include Concern::Associations::FeaturedCommentAssociation
   include Concern::Associations::QuoteAssociation
   include Concern::Associations::HomepageContentAssociation
-  include Concern::Associations::MissedItContentAssociation
   include Concern::Associations::VerticalArticleAssociation
   include Concern::Associations::ProgramArticleAssociation
   include Concern::Associations::PmpContentAssociation::StoryProfile

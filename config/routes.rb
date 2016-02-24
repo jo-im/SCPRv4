@@ -3,8 +3,6 @@ require "resque/server"
 Scprv4::Application.routes.draw do
   # Homepage
   root to: "home#index"
-  get '/homepage/:id/missed-it-content/' => 'home#missed_it_content', as: :homepage_missed_it_content
-
 
   # Listen Live
   get '/listen_live/' => 'listen#index', as: :listen
@@ -278,7 +276,6 @@ Scprv4::Application.routes.draw do
     resources :featured_comment_buckets, concerns: [:search]
     resources :categories, concerns: [:search]
     resources :topics, concerns: [:search]
-    resources :missed_it_buckets, concerns: [:search]
     resources :external_programs, concerns: [:search]
     resources :kpcc_programs, concerns: [:search]
     resources :blogs, concerns: [:search]

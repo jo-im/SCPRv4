@@ -70,22 +70,4 @@ describe HomeController do
     end
   end
 
-
-  describe 'XHR GET /missed_it_content' do
-    it "sets the homepage" do
-      homepage = create :homepage, :published
-      xhr :get, :missed_it_content, id: homepage.id
-      assigns(:homepage).should eq homepage
-    end
-
-    it "sets the carousel contents" do
-      bucket = create :missed_it_bucket
-      story = create :news_story
-      bucket.content.create(content: story)
-      homepage = create :homepage, :published, missed_it_bucket: bucket
-
-      xhr :get, :missed_it_content, id: homepage.id
-      assigns(:carousel_contents).should eq bucket.content.to_a
-    end
-  end
 end

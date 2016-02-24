@@ -50,8 +50,6 @@ class Homepage < ActiveRecord::Base
   accepts_json_input_for :content
   tracks_association :content
 
-  belongs_to :missed_it_bucket
-
   validates \
     :base,
     :status,

@@ -25,7 +25,6 @@ Outpost::Config.configure do |config|
     "Flatpage",
     "Homepage",
     "KpccProgram",
-    "MissedItBucket",
     "NewsStory",
     "PijQuery",
     "Podcast",
