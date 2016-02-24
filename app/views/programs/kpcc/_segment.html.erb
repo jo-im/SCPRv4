@@ -51,10 +51,12 @@
                 <h1><%= link_to article.published_episode.headline, article.published_episode.public_path %></h1>
                 <nav>
                   <ul>
-                    <% article.episode.published_content.map(&:to_article).each do |content| %>
-                      <li class="<%= ("selected" if article.id == content.id) %>">
-                        <%= link_to content.short_title, content.public_path %>
-                      </li>
+                    <%= cache ["segment", "content", article.episode] do %>
+                      <% article.episode.published_content.map(&:to_article).each do |content| %>
+                        <li class="<%= ("selected" if article.id == content.id) %>">
+                          <%= link_to content.short_title, content.public_path %>
+                        </li>
+                      <% end %>
                     <% end %>
                   </ul>
                 </nav>

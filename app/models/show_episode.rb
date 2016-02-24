@@ -14,6 +14,7 @@ class ShowEpisode < ActiveRecord::Base
   include Concern::Associations::BylinesAssociation
   include Concern::Associations::EditionsAssociation
   include Concern::Associations::PmpContentAssociation::StoryProfile
+  include Concern::Associations::EpisodeRundownAssociation
   include Concern::Callbacks::SetPublishedAtCallback
   #include Concern::Callbacks::CacheExpirationCallback
   include Concern::Callbacks::PublishNotificationCallback
@@ -187,12 +188,6 @@ class ShowEpisode < ActiveRecord::Base
 
   def generate_body
     self.body = self.teaser
-  end
-
-  def set_rundown_position(rundown)
-    if !rundown.position
-      rundown.position = self.rundowns.length + 1
-    end
   end
 
   def build_rundown_association(rundown_hash, segment)
