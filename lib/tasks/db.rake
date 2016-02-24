@@ -14,18 +14,22 @@ end
 
 namespace :db do
   task :pull do
-    token = ARGV[1]
-    shell_command do |cmds|
-      machine = `docker-machine ls | grep #{DOCKER_MACHINE_NAME}`
-      if machine.empty?
-        cmds << "docker-machine create --driver virtualbox --virtualbox-memory 2048 #{DOCKER_MACHINE_NAME}"
+    if token = ARGV[1]
+      shell_command do |cmds|
+        machine = `docker-machine ls | grep #{DOCKER_MACHINE_NAME}`
+        if machine.empty?
+          cmds << "docker-machine create --driver virtualbox --virtualbox-memory 2048 #{DOCKER_MACHINE_NAME}"
+        end
+        cmds << "docker-machine start #{DOCKER_MACHINE_NAME}"
+        cmds << "docker pull scpr/restore-percona-backup"
+        cmds << "echo '###### You may want to detach the process at this point in your shell (Ctrl+z and then execute `bg`) ######'"
+        cmds << "docker stop -f #{DOCKER_CONTAINER_NAME}"
+        cmds << "docker rm -f #{DOCKER_CONTAINER_NAME}"
+        cmds << "docker run -p 3306:3306 --name #{DOCKER_CONTAINER_NAME} scpr/restore-percona-backup #{token}"
       end
-      cmds << "docker-machine start #{DOCKER_MACHINE_NAME}"
-      cmds << "docker pull scpr/restore-percona-backup"
-      cmds << "echo '###### You may want to detach the process at this point in your shell (Ctrl+z and then execute `bg`) ######'"
-      cmds << "docker stop -f #{DOCKER_CONTAINER_NAME}"
-      cmds << "docker rm -f #{DOCKER_CONTAINER_NAME}"
-      cmds << "docker run -p 3306:3306 --name #{DOCKER_CONTAINER_NAME} scpr/restore-percona-backup #{token}"
+    else
+      puts "No token supplied!  Try again with a Deploybot token."
+      puts "(e.g. `rake db:pull [DEPLOYBOT TOKEN HERE]`)"
     end
   end
   task :start do
