@@ -86,12 +86,6 @@ group :development do
   gem 'binding_of_caller'
 end
 
-
-group :development, :staging do
-  gem "dbsync", '>= 1.0.0.beta4'
-end
-
-
 group :test, :development do
   gem "rspec-rails", "~> 3.2.1"
   gem 'rb-fsevent', '~> 0.9'
