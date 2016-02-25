@@ -29,39 +29,41 @@
 
         <section class="episode-enumeration">
 
-          <h1>Segments From This Episode</h1>
+          <h1>From This Episode</h1>
 
-          <%= any_to_list? @segments, title: "Segments" do %>
-            <%= cache ["segment-teasers", @segments.to_a] do %>
-              <% @segments.each.with_index do |segment, index| %>
+          <%= any_to_list? @content, title: "Content" do %>
+            <%= cache ["segment-teasers", @content.to_a] do %>
+              <% @content.each.with_index do |content, index| %>
               <article class="clearfix">
-                <a href="<%= segment.public_path %>">
+                <a href="<%= content.public_path %>">
                   <figure class="asset">
                     <mark class="order"><%= index + 1 %></mark>
                     <div class="ratio">
                       <div class="fill"></div>
                       <b class="img-contain">
-                        <% if segment.asset.present? %>
-                        <img src="<%= segment.asset.full.url %>" alt="" data-width="<%= segment.asset.full.width %>" data-height="<%= segment.asset.full.height %>" />
+                        <% if content.asset.present? %>
+                        <img src="<%= content.asset.full.url %>" alt="" data-width="<%= content.asset.full.width %>" data-height="<%= content.asset.full.height %>" />
                         <% end %>
                       </b>
                     </div>
                   </figure>
                 </a>
                 <div class="exposition">
-                  <a href="<%= segment.public_path %>">
-                    <h1><%= segment.short_headline %></h1>
+                  <a href="<%= content.public_path %>">
+                    <h1><%= content.short_title %></h1>
                   </a>
                   <div class="precis">
-                    <p><a href="<%= segment.public_path %>"><%= segment.teaser.html_safe %></a></p>
+                    <p><a href="<%= content.public_path %>"><%= content.teaser.html_safe %></a></p>
                     <aside class="meta">
                       <ul>
-                        <li><%= comment_widget_for segment, partial: "new/comment_count_small", to_article: false, non_zero: true %></li>
-                        <li class="play"><%= content_widget "primary_audio", segment, context: segment.show.slug %></li>
+                        <li><%= comment_widget_for content, partial: "new/comment_count_small", to_article: false, non_zero: true %></li>
+                        <% if content.original_object.is_a?(ShowSegment) %>
+                          <li class="play"><%= content_widget "primary_audio", content, context: content.show.slug %></li>
+                        <% end %>
                       </li>
                     </aside>
                   </div>
-                  <%= timestamp_if_segment_is_legacy segment.published_at, @episode.air_date %>
+                  <%= timestamp_if_segment_is_legacy content.public_datetime, @episode.air_date %>
                 </div><!--/ .exposition -->
               </article>
 

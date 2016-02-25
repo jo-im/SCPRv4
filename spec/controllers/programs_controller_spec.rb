@@ -271,11 +271,10 @@ describe ProgramsController do
       assigns(:episode).should eq episode
     end
 
-    it "gets the episode's segments" do
-      episode.rundowns.create(segment: segment)
+    it "gets the episode's content" do
+      episode.rundowns.create(content: segment)
       get :episode, params
-
-      assigns(:segments).to_a.should eq [segment]
+      assigns(:content).to_a.should eq [segment.to_article]
     end
   end
 

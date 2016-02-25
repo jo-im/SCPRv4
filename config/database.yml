@@ -1,7 +1,10 @@
 development:
   adapter: mysql2
   reconnect: true
-  database: scprv4
+  database: scpr
+  host: <%= ENV['SCPRV4_DEVELOPMENT_DATABASE_IP'] %>
+  port: 3306
+  username: root
 test:
   adapter: mysql2
   reconnect: true

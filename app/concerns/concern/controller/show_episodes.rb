@@ -3,7 +3,7 @@ module Concern
     module ShowEpisodes
       extend ActiveSupport::Concern
       def render_kpcc_episode
-        @segments   = @episode.segments.published
+        @content = @episode.published_content.map(&:to_article)
         @featured_programs = KpccProgram.where.not(id: @program.id, is_featured: false).first(4)
         if @program.is_segmented?
           @episodes = @program.episodes.published.order("air_date").first(4)
