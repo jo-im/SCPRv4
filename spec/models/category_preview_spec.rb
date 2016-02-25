@@ -89,23 +89,4 @@ describe CategoryPreview, :indexing do
       preview.bottom_articles.should eq [story1].map(&:to_article)
     end
   end
-
-  describe '#featured_object' do
-    it 'returns the candidate with the highest score' do
-      # Slideshow
-      story1 = create :news_story, category: category
-      create :asset, content: story1
-
-      # Segment
-      segment = create :show_segment
-
-      # Featured Comment
-      bucket = create :featured_comment_bucket
-      category.comment_bucket = bucket
-      comment = create :featured_comment, bucket: bucket, content: segment
-
-      preview = CategoryPreview.new(category)
-      preview.featured_object.should eq comment
-    end
-  end
 end

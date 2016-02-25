@@ -28,12 +28,6 @@ describe HomeController do
       assigns(:homepage).should eq nil
     end
 
-    it "gets the featured comment" do
-      comment = create :featured_comment
-      get :index
-      assigns(:featured_comment).should eq comment
-    end
-
     context "with a current schedule item" do
       let(:schedule_current) {
         create :schedule_occurrence,

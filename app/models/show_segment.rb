@@ -16,7 +16,6 @@ class ShowSegment < ActiveRecord::Base
   include Concern::Associations::FeatureAssociation
   include Concern::Associations::CategoryAssociation
   include Concern::Associations::HomepageContentAssociation
-  include Concern::Associations::FeaturedCommentAssociation
   include Concern::Associations::QuoteAssociation
   include Concern::Associations::EditionsAssociation
   include Concern::Associations::VerticalArticleAssociation

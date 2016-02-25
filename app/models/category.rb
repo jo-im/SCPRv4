@@ -17,7 +17,6 @@ class Category < ActiveRecord::Base
 
 
   has_many :events
-  belongs_to :comment_bucket, class_name: "FeaturedCommentBucket"
 
   validates :title, presence: true
 

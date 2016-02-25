@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160224005558) do
+ActiveRecord::Schema.define(version: 20160225171355) do
 
   create_table "abstracts", force: :cascade do |t|
     t.string   "source",               limit: 255
@@ -222,44 +222,6 @@ ActiveRecord::Schema.define(version: 20160224005558) do
   add_index "contentbase_contentshell", ["status", "published_at"], name: "index_contentbase_contentshell_on_status_and_published_at", using: :btree
   add_index "contentbase_contentshell", ["status"], name: "index_contentbase_contentshell_on_status", using: :btree
   add_index "contentbase_contentshell", ["updated_at"], name: "index_contentbase_contentshell_on_updated_at", using: :btree
-
-  create_table "contentbase_featuredcomment", force: :cascade do |t|
-    t.integer  "bucket_id",    limit: 4,          null: false
-    t.integer  "content_id",   limit: 4
-    t.integer  "status",       limit: 4,          null: false
-    t.string   "username",     limit: 255,        null: false
-    t.text     "excerpt",      limit: 4294967295, null: false
-    t.string   "content_type", limit: 255
-    t.datetime "created_at",                      null: false
-    t.datetime "updated_at",                      null: false
-  end
-
-  add_index "contentbase_featuredcomment", ["bucket_id"], name: "contentbase_featuredcomment_25ef9024", using: :btree
-  add_index "contentbase_featuredcomment", ["content_type", "content_id"], name: "index_contentbase_featuredcomment_on_content_type_and_content_id", using: :btree
-  add_index "contentbase_featuredcomment", ["created_at"], name: "index_contentbase_featuredcomment_on_created_at", using: :btree
-  add_index "contentbase_featuredcomment", ["status"], name: "index_contentbase_featuredcomment_on_status", using: :btree
-
-  create_table "contentbase_featuredcommentbucket", force: :cascade do |t|
-    t.string   "title",      limit: 255, null: false
-    t.datetime "created_at",             null: false
-    t.datetime "updated_at",             null: false
-  end
-
-  add_index "contentbase_featuredcommentbucket", ["created_at"], name: "index_contentbase_featuredcommentbucket_on_created_at", using: :btree
-  add_index "contentbase_featuredcommentbucket", ["title"], name: "index_contentbase_featuredcommentbucket_on_title", using: :btree
-  add_index "contentbase_featuredcommentbucket", ["updated_at"], name: "index_contentbase_featuredcommentbucket_on_updated_at", using: :btree
-
-  create_table "contentbase_misseditcontent", force: :cascade do |t|
-    t.integer  "bucket_id",    limit: 4,                null: false
-    t.integer  "content_id",   limit: 4
-    t.integer  "position",     limit: 4,   default: 99, null: false
-    t.string   "content_type", limit: 255
-    t.datetime "created_at",                            null: false
-    t.datetime "updated_at",                            null: false
-  end
-
-  add_index "contentbase_misseditcontent", ["bucket_id"], name: "contentbase_misseditcontent_25ef9024", using: :btree
-  add_index "contentbase_misseditcontent", ["content_type", "content_id"], name: "index_contentbase_misseditcontent_on_content_type_and_content_id", using: :btree
 
   create_table "data_points", force: :cascade do |t|
     t.string   "group_name", limit: 255
@@ -480,11 +442,10 @@ ActiveRecord::Schema.define(version: 20160224005558) do
   add_index "layout_homepage", ["updated_at"], name: "index_layout_homepage_on_updated_at", using: :btree
 
   create_table "layout_homepagecontent", force: :cascade do |t|
-    t.integer "homepage_id",  limit: 4,                      null: false
+    t.integer "homepage_id",  limit: 4,                null: false
     t.integer "content_id",   limit: 4
-    t.integer "position",     limit: 4,   default: 99,       null: false
+    t.integer "position",     limit: 4,   default: 99, null: false
     t.string  "content_type", limit: 255
-    t.string  "size",         limit: 255, default: "medium"
   end
 
   add_index "layout_homepagecontent", ["content_id", "content_type"], name: "index_layout_homepagecontent_on_content_id_and_content_type", using: :btree

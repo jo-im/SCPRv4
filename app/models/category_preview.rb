@@ -42,12 +42,6 @@ class CategoryPreview
   def find_candidates
     candidates = []
 
-    # No need to try featured comment if the category
-    # doesn't have a comment bucket.
-    if @category.comment_bucket.present?
-      candidates << FeatureCandidate::FeaturedComment.new(@category)
-    end
-
     candidates << FeatureCandidate::Slideshow.new(@category, exclude: @excludes)
     candidates << FeatureCandidate::Segment.new(@category, exclude: @excludes)
 

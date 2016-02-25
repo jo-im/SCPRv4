@@ -20,8 +20,6 @@ Outpost::Config.configure do |config|
     "Edition",
     "Event",
     "ExternalProgram",
-    "FeaturedComment",
-    "FeaturedCommentBucket",
     "Flatpage",
     "Homepage",
     "KpccProgram",
