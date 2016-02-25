@@ -22,6 +22,7 @@ class NewsStory < ActiveRecord::Base
   include Concern::Associations::EditionsAssociation
   include Concern::Associations::VerticalArticleAssociation
   include Concern::Associations::ProgramArticleAssociation
+  include Concern::Associations::EpisodeRundownAssociation
   include Concern::Validations::ContentValidation
   include Concern::Callbacks::SetPublishedAtCallback
   include Concern::Callbacks::GenerateShortHeadlineCallback

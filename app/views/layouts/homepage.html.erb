@@ -46,12 +46,13 @@
 
                   <!-- Content -->
                   <ul class="cbase">
-
-                  <% episode.published_content.map(&:to_article).each_with_index do |content, i| %>
-                    <li>
-                      <h5 class="headline"><%= link_to content.short_title, content.public_path, :class => 'track-event', :data => {'ga-category' => 'Broadcast Bar', 'ga-action' => 'Episode Guide', 'ga-label' => "#{i==0 ? 'Lead' : 'Offlead'} Content"} %></h5>
-                      <%= comment_count_for content.original_object %>
-                    </li>
+                  <%= cache ["homepage", "content", episode] do %>
+                    <% episode.published_content.map(&:to_article).each_with_index do |content, i| %>
+                      <li>
+                        <h5 class="headline"><%= link_to content.short_title, content.public_path, :class => 'track-event', :data => {'ga-category' => 'Broadcast Bar', 'ga-action' => 'Episode Guide', 'ga-label' => "#{i==0 ? 'Lead' : 'Offlead'} Content"} %></h5>
+                        <%= comment_count_for content.original_object %>
+                      </li>
+                    <% end %>
                   <% end %>
 
                     <li class="more"><a href="<%= p.program.public_path %>">More <%= p.program.title %></a></li>

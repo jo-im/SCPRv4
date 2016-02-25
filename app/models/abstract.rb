@@ -49,6 +49,7 @@ class Abstract < ActiveRecord::Base
   include Concern::Associations::AudioAssociation
   include Concern::Associations::EditionsAssociation
   include Concern::Associations::PmpContentAssociation::StoryProfile
+  include Concern::Associations::EpisodeRundownAssociation
   include Concern::Callbacks::TouchCallback
   include Concern::Sanitizers::Url
   include Concern::Model::Searchable
