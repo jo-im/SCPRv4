@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160218003730) do
+ActiveRecord::Schema.define(version: 20160229171922) do
 
   create_table "abstracts", force: :cascade do |t|
     t.string   "source",               limit: 255
@@ -167,6 +167,44 @@ ActiveRecord::Schema.define(version: 20160218003730) do
 
   add_index "category_reporters", ["bio_id"], name: "index_category_reporters_on_bio_id", using: :btree
   add_index "category_reporters", ["vertical_id"], name: "index_category_reporters_on_vertical_id", using: :btree
+
+  create_table "content", force: :cascade do |t|
+    t.string   "content_type",     limit: 255
+    t.integer  "content_id",       limit: 4
+    t.string   "title",            limit: 255
+    t.string   "short_title",      limit: 255
+    t.string   "summary",          limit: 255
+    t.text     "teaser",           limit: 4294967295
+    t.text     "body",             limit: 4294967295
+    t.string   "slug",             limit: 255
+    t.string   "news_agency",      limit: 255
+    t.string   "source",           limit: 255
+    t.string   "byline",           limit: 255
+    t.integer  "status",           limit: 4
+    t.integer  "size",             limit: 4
+    t.integer  "duration",         limit: 4,          default: 0
+    t.integer  "position",         limit: 4,          default: 0
+    t.integer  "parent_id",        limit: 4
+    t.integer  "parent_type",      limit: 4
+    t.boolean  "featured",                            default: false
+    t.boolean  "is_from_pij",                         default: false, null: false
+    t.integer  "category_id",      limit: 4
+    t.integer  "feature_type_id",  limit: 4
+    t.integer  "asset_display_id", limit: 4
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.datetime "published_at"
+    t.datetime "air_date"
+  end
+
+  add_index "content", ["category_id"], name: "index_content_on_category_id", using: :btree
+  add_index "content", ["content_id"], name: "index_content_on_content_id", using: :btree
+  add_index "content", ["content_type"], name: "index_content_on_content_type", using: :btree
+  add_index "content", ["parent_id"], name: "index_content_on_parent_id", using: :btree
+  add_index "content", ["parent_type"], name: "index_content_on_parent_type", using: :btree
+  add_index "content", ["published_at"], name: "index_content_on_published_at", using: :btree
+  add_index "content", ["slug"], name: "index_content_on_slug", using: :btree
+  add_index "content", ["status"], name: "index_content_on_status", using: :btree
 
   create_table "contentbase_category", force: :cascade do |t|
     t.string   "title",             limit: 255
@@ -493,11 +531,10 @@ ActiveRecord::Schema.define(version: 20160218003730) do
   add_index "layout_homepage", ["updated_at"], name: "index_layout_homepage_on_updated_at", using: :btree
 
   create_table "layout_homepagecontent", force: :cascade do |t|
-    t.integer "homepage_id",  limit: 4,                      null: false
+    t.integer "homepage_id",  limit: 4,                null: false
     t.integer "content_id",   limit: 4
-    t.integer "position",     limit: 4,   default: 99,       null: false
+    t.integer "position",     limit: 4,   default: 99, null: false
     t.string  "content_type", limit: 255
-    t.string  "size",         limit: 255, default: "medium"
   end
 
   add_index "layout_homepagecontent", ["content_id", "content_type"], name: "index_layout_homepagecontent_on_content_id_and_content_type", using: :btree
@@ -741,6 +778,18 @@ ActiveRecord::Schema.define(version: 20160218003730) do
   end
 
   add_index "recurring_schedule_rules", ["program_id", "program_type"], name: "index_recurring_schedule_rules_on_program_id_and_program_type", using: :btree
+
+  create_table "related_content", force: :cascade do |t|
+    t.integer "content_a_id",   limit: 4
+    t.string  "content_a_type", limit: 255
+    t.integer "content_b_id",   limit: 4
+    t.string  "content_b_type", limit: 255
+  end
+
+  add_index "related_content", ["content_a_id"], name: "index_related_content_on_content_a_id", using: :btree
+  add_index "related_content", ["content_a_type"], name: "index_related_content_on_content_a_type", using: :btree
+  add_index "related_content", ["content_b_id"], name: "index_related_content_on_content_b_id", using: :btree
+  add_index "related_content", ["content_b_type"], name: "index_related_content_on_content_b_type", using: :btree
 
   create_table "related_links", force: :cascade do |t|
     t.string   "title",        limit: 255, default: ""
