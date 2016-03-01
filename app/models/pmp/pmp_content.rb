@@ -29,6 +29,8 @@ class PmpContent < ActiveRecord::Base
         self.update guid: nil
       end
     end
+  rescue RuntimeError => err
+    NewRelic.log_error(err)
   end
 
   def retrieve action="read"
