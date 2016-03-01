@@ -1,7 +1,7 @@
 class FixOrphanedImmigrationArticles < ActiveRecord::Migration
   def up
     tag = Tag.where(slug: "immigration").first!
-
+    # Models supported by API controller for Articles
     ["NewsStory","ShowSegment","BlogEntry","ContentShell"].
     each do |c|
       contents = c.constantize.where(category_id: 16)
