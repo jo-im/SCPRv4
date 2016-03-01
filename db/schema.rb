@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160218003730) do
+ActiveRecord::Schema.define(version: 20160229171922) do
 
   create_table "abstracts", force: :cascade do |t|
     t.string   "source",               limit: 255
@@ -493,11 +493,10 @@ ActiveRecord::Schema.define(version: 20160218003730) do
   add_index "layout_homepage", ["updated_at"], name: "index_layout_homepage_on_updated_at", using: :btree
 
   create_table "layout_homepagecontent", force: :cascade do |t|
-    t.integer "homepage_id",  limit: 4,                      null: false
+    t.integer "homepage_id",  limit: 4,                null: false
     t.integer "content_id",   limit: 4
-    t.integer "position",     limit: 4,   default: 99,       null: false
+    t.integer "position",     limit: 4,   default: 99, null: false
     t.string  "content_type", limit: 255
-    t.string  "size",         limit: 255, default: "medium"
   end
 
   add_index "layout_homepagecontent", ["content_id", "content_type"], name: "index_layout_homepagecontent_on_content_id_and_content_type", using: :btree
