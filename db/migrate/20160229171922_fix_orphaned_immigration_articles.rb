@@ -7,7 +7,9 @@ class FixOrphanedImmigrationArticles < ActiveRecord::Migration
       contents = c.constantize.where(category_id: 16)
       if contents.last.respond_to?(:tags)
         contents.each do |content|
-          content.tags << tag
+          if !content.tags.include?(tag)
+            content.tags << tag
+          end
           content.update category_id: nil
         end
       end
