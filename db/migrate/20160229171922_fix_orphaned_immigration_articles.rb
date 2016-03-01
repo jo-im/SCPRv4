@@ -1,6 +1,6 @@
 class FixOrphanedImmigrationArticles < ActiveRecord::Migration
   def up
-    tag = Tag.find(69)
+    tag = Tag.where(slug: "immigration").first!
 
     ["NewsStory","ShowSegment","BlogEntry","ContentShell"].
     each do |c|
