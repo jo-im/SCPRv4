@@ -17,7 +17,7 @@ class PmpStory < PmpContent
       title:            content.headline,
       teaser:           content.teaser,
       byline:           content.byline,
-      tags:             content.try(:tags).try(:map, &:slug) || [],
+      tags:             content.try(:tags).try(:map, &:pmp_alias) || [],
       published:        content.try(:published_at) || content.created_at,
       guid:             guid,
       description:      content.plaintext_body,
