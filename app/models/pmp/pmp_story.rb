@@ -22,7 +22,7 @@ class PmpStory < PmpContent
       guid:             guid,
       description:      content.plaintext_body,
       contentencoded:   content.rendered_body,
-      contenttemplated: content.body,
+      contenttemplated: content.templated_body,
     })
     doc.links['permissions'] = permissions
     doc.links['alternate']   = content.public_url

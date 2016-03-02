@@ -66,6 +66,12 @@ module Concern
         ContentRenderer.new(self).render_with_assets
       end
 
+      def templated_body
+        # Returns the straight body
+        # except without specific tags
+        ContentRenderer.new(self).render_templated
+      end
+
       ["story", "audio", "image", "episode"].each do |profile_name|
         mod = Module.new do
           extend ActiveSupport::Concern
@@ -99,7 +105,10 @@ module Concern
           Nokogiri::HTML(@content.body).xpath("//text()").to_s
         end
         def render_templated
-          @content.body
+          banned_tags = "iframe script"
+          doc = Nokogiri::HTML::DocumentFragment.parse(@content.body)
+          doc.css(banned_tags).each{|t| t.replace(Nokogiri::HTML::DocumentFragment.parse(''))}
+          doc.to_s.html_safe
         end
         def params
           {} # ActionView expects this, but we obviously it isn't useful in this context.
