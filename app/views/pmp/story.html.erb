@@ -1,7 +1,7 @@
 <% article = content.to_article %>
-
-<%= render_asset article.original_object, context:"news", display: "photo", fallback:true, kpcc_only: true %>
-
+<% unless should_inline_top_asset_for(article.original_object) %>
+    <%= render partial: "pmp/lead_asset", locals: {asset: article.original_object.asset} %>
+<% end %>
 <article>
     <div>
         <% if should_inline_top_asset_for(article.original_object) %>

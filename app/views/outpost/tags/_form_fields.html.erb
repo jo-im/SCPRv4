@@ -1,6 +1,7 @@
 <%= form_block "Details" do %>
   <%= f.input :title, input_html: { class: "sluggable" } %>
   <%= f.input :slug, hint: "This is not automatically generated." %>
+  <%= f.input :pmp_alias, hint: "This is the tag name that gets used if a piece of related content is published to the PMP." %>
   <%= f.input :description, input_html: { class: "tiny" } %>
   <%= f.input :tag_type, collection: Tag::TYPES, as: :select %>
   <%= f.input :parent_id, collection: KpccProgram.all, include_blank: true, label_method: :title, value_method: :id %>

@@ -59,4 +59,8 @@ class ContentAsset < ActiveRecord::Base
     end
   end
 
+  def kpcc?
+    (owner || "").include? "KPCC"
+  end
+
 end

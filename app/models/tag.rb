@@ -20,6 +20,14 @@ class Tag < ActiveRecord::Base
     taggables(options)
   end
 
+  def pmp_alias
+    super || slug
+  end
+
+  def pmp_alias= new_alias
+    super unless pmp_alias == new_alias
+  end
+
   class << self
     def by_type
       list = []
