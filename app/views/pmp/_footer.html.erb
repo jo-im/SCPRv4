@@ -1,0 +1,9 @@
+<% if article.original_object.respond_to?(:joined_bylines) && article.original_object.joined_bylines[:contributing].present? %>
+    <footer class="contributor">
+        <p><%= render_contributing_byline article.original_object %></p>
+    </footer>
+<% elsif article.byline %>
+    <footer class="contributor">
+        <p><%= article.byline %></p>
+    </footer>
+<% end %>
