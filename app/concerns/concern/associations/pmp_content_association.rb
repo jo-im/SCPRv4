@@ -105,7 +105,7 @@ module Concern
           Nokogiri::HTML(@content.body).xpath("//text()").to_s
         end
         def render_templated
-          banned_tags = "iframe script"
+          banned_tags = "iframe,script"
           doc = Nokogiri::HTML::DocumentFragment.parse(@content.body)
           doc.css(banned_tags).each{|t| t.replace(Nokogiri::HTML::DocumentFragment.parse(''))}
           doc.to_s.html_safe
