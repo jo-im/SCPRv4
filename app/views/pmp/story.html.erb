@@ -1,19 +1,16 @@
-<% article = content.to_article %>
-<% unless should_inline_top_asset_for(article.original_object) %>
-    <%= render partial: "pmp/lead_asset", locals: {asset: article.original_object.asset} %>
-<% end %>
 <article>
-    <div>
+    <% article = content.to_article %>
+    <% unless should_inline_top_asset_for(article.original_object) %>
+        <%= render partial: "pmp/lead_asset", locals: {asset: article.original_object.asset} %>
+    <% end %>
+    <div class="article-content">
         <% if should_inline_top_asset_for(article.original_object) %>
           <% render_asset article, context:"news", display:"inline", kpcc_only: true %>
         <% end %>
-
         <%= render_with_inline_assets article, kpcc_only: true %>
-        <% if article.original_object.joined_bylines[:contributing].present? %>
-            <footer class="contributor">
-                <p><%= render_contributing_byline article.original_object %></p>
-            </footer>
+        <%= render partial: "pmp/footer", locals: {article: article} %>
+        <% if article.original_object.respond_to?(:is_from_pij?) %>
+            <%= pij_source(article.original_object) %>
         <% end %>
-        <%= pij_source(article.original_object) %>
     </div>
 </article>
