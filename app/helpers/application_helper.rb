@@ -115,7 +115,7 @@ module ApplicationHelper
 
     asset = options[:asset] || nil
 
-    return if asset && options[:kpcc_only] && !asset.kpcc?
+    return if asset && options[:kpcc_only] && !asset.owner.try(:include?, "KPCC")
 
     if !asset && article.assets.empty?
       html = if options[:fallback]

@@ -1,4 +1,4 @@
-<% if asset.kpcc? %>
+<% if asset.owner.try(:include?, "KPCC") %>
   <figure class="asset <%= asset.orientation %>">
       <b><%= image_tag asset.asset.full.url, alt: asset.caption %></b>
       <% if asset.caption %>
