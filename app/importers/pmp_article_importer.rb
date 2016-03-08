@@ -187,7 +187,7 @@ module PmpArticleImporter
               asset = AssetHost::Asset.create(
                 :url     => primary_image.href,
                 :title   => pmp_story.title,
-                :owner   => "Marketplace",
+                :owner   => article.news_agency,
                 :note    => "Imported from PMP: #{pmp_story.guid}"
               )
 
