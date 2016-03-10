@@ -45,7 +45,7 @@ module Concern
       def publish_pmp_content
         if valid?
           content = pmp_content
-          if publish_to_pmp && content && (try(:published?) || try(:publishing?))
+          if publish_to_pmp && content && pmp_publishable?
             async_publish_pmp_content
           end
         end
@@ -88,6 +88,11 @@ module Concern
       end
 
       private
+
+      def pmp_publishable?
+        ## This just tells us whether or not we have the right status to publish.
+        try(:pending?) || try(:published?) || try(:publishing?)
+      end
 
       class ContentRenderer < ActionView::Base
         include ApplicationHelper

@@ -64,6 +64,16 @@ describe Concern::Associations::PmpContentAssociation do
           story.update status: 5
         end
       end
+      context 'news story is pending' do
+        it 'queues up a pmp content publish' do
+          story = create :news_story, status: 0, publish_to_pmp: true
+          allow(Resque).to receive(:enqueue).and_return nil
+          allow(Resque).to receive(:enqueue).and_return nil
+          expect(Resque).to receive(:enqueue).with(
+            Job::PublishPmpContent, "story", story.pmp_content.id).ordered
+          story.update status: 3
+        end
+      end
       context 'news story is updated' do 
         it 'queues up a pmp content publish' do
           story = create :news_story, status: 5, publish_to_pmp: true
