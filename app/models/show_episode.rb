@@ -145,9 +145,9 @@ class ShowEpisode < ActiveRecord::Base
       :updated_at         => self.updated_at,
       :published          => self.published?,
       :show               => self.show,
+      :related_content    => self.published_content.map(&:to_article).map(&:to_reference)
     })
   end
-
 
   def route_hash
     return {} if !self.persisted? || !self.persisted_record.published?

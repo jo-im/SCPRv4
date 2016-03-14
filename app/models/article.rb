@@ -54,7 +54,9 @@ class Article
     :updated_at,
     :published,
     :blog,
-    :show
+    :show,
+    :related_content
+
 
   def initialize(attributes={})
     super
@@ -152,6 +154,10 @@ class Article
     (@audio||[]).collect do |a|
       Audio.new(a.to_hash)
     end
+  end
+
+  def related_content
+    @related_content || []
   end
 
   def attributions
@@ -256,6 +262,19 @@ class Article
       public_path:      @public_path,
       blog:             @blog,
       show:             @show,
+      related_content:  @related_content
+    }
+  end
+
+  def to_reference
+    { 
+      id:          @id, 
+      public_path: @public_path, 
+      title:       @title, 
+      short_title: @short_title,
+      category:    @category,
+      has_audio?:  @audio.any?,
+      has_assets?: @assets.any?
     }
   end
 
