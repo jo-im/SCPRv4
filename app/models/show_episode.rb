@@ -149,6 +149,10 @@ class ShowEpisode < ActiveRecord::Base
     })
   end
 
+  def get_article
+    @get_article ||= ContentBase.find(obj_key) || to_article
+  end
+
   def route_hash
     return {} if !self.persisted? || !self.persisted_record.published?
     {

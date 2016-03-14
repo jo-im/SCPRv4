@@ -229,6 +229,13 @@ module ContentBase
   end
 
   #--------------------
+
+  def find obj_key
+    class_name = obj_key.split('-').first.camelize
+    ContentBase.search(classes: [class_name], limit: 1, with:{obj_key: obj_key}).first
+  end
+
+  #--------------------
   # Generate a teaser from the passed-in text.
   # If the text is blank, return an empty string.
   # If the first paragraph is <= target length, return
