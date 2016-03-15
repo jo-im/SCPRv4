@@ -150,7 +150,14 @@ class ShowEpisode < ActiveRecord::Base
   end
 
   def get_article
-    @get_article ||= ContentBase.find(obj_key) || to_article
+    ## retrieve article from content_base, else perform #to_article and index for future
+    @get_article ||=
+      if article = ContentBase.find(obj_key)
+        article
+      else
+        Job::Indexer.enqueue(self.class.to_s, id, :create) 
+        to_article
+      end
   end
 
   def route_hash

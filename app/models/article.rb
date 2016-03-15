@@ -175,6 +175,12 @@ class Article
 
   # -- setters -- #
 
+  def related_content=(content)
+    @related_content = (content||[]).collect do |c|
+      Hashie::Mash.new(c)
+    end
+  end
+
   def assets=(assets)
     @assets = (assets||[]).collect do |a|
       Hashie::Mash.new(asset_id:a.asset_id, caption:a.caption, position:a.position, inline: a.inline)
@@ -265,6 +271,8 @@ class Article
       related_content:  @related_content
     }
   end
+
+  alias_method :to_h, :to_hash
 
   def to_reference
     { 

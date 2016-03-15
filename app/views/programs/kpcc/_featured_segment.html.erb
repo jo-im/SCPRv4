@@ -1,4 +1,4 @@
-<% episode_article = program.episodes.published.first.to_article %>
+<% episode_article = program.episodes.published.first.get_article %>
 <section class="exordium curated-segment">
   <header class="bound">
     <h1><a href="<%= featured_story.public_path %>"><%= featured_story.title %></a></h1>
