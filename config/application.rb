@@ -9,7 +9,8 @@ module Scprv4
     config.autoload_paths += [
       "#{config.root}/lib",
       "#{config.root}/lib/validators",
-      "#{config.root}/app/models/pmp"
+      "#{config.root}/app/models/pmp",
+      "#{config.root}/app/models/content_base"
     ]
 
     config.assets.version = '2.0'

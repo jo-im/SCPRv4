@@ -27,6 +27,7 @@ require 'zlib'
 #
 # This should pretty much match up with what our client API
 # response is, but it doesn't necessarily have to.
+
 class Article
   #include Concern::Methods::AbstractModelMethods
   include ActiveModel::Model

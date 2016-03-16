@@ -1,5 +1,5 @@
-class NewsStory < ActiveRecord::Base
-  self.table_name = 'news_story'
+class ShowSegment < ActiveRecord::Base
+  self.table_name = 'shows_segment'
   outpost_model
   has_secretary
 
@@ -22,12 +22,14 @@ class NewsStory < ActiveRecord::Base
   include Concern::Associations::EditionsAssociation
   include Concern::Associations::VerticalArticleAssociation
   include Concern::Associations::ProgramArticleAssociation
+  include Concern::Associations::PmpContentAssociation::StoryProfile
   include Concern::Associations::EpisodeRundownAssociation
   include Concern::Validations::ContentValidation
   include Concern::Callbacks::SetPublishedAtCallback
+  include Concern::Callbacks::GenerateSlugCallback
   include Concern::Callbacks::GenerateShortHeadlineCallback
   include Concern::Callbacks::GenerateTeaserCallback
-  include Concern::Callbacks::GenerateSlugCallback
+  include Concern::Callbacks::GenerateBodyCallback
   #include Concern::Callbacks::CacheExpirationCallback
   include Concern::Callbacks::PublishNotificationCallback
   include Concern::Model::Searchable
@@ -37,35 +39,58 @@ class NewsStory < ActiveRecord::Base
   include Concern::Methods::CommentMethods
   include Concern::Methods::AssetDisplayMethods
   include Concern::Sanitizers::Content
-  include Concern::Associations::PmpContentAssociation::StoryProfile
 
-  self.disqus_identifier_base = "news/story"
-  self.public_route_key = "news_story"
+  self.disqus_identifier_base = "shows/segment"
+  self.public_route_key = "segment"
 
-  SOURCES = [
-    ['KPCC',                        'kpcc'],
-    ['KPCC & wires',                'kpcc_plus_wire'],
-    ['AP',                          'ap'],
-    ['KPCC wire services',          'kpcc_wire'],
-    ['NPR',                         'npr'],
-    ['NPR & wire services',         'npr_wire'],
-    ['New America Media',           'new_america'],
-    ['NPR & KPCC',                  'npr_kpcc'],
-    ['Center for Health Reporting', 'chr'],
-    ['Marketplace',                 'marketplace'],
-    ['American Homefront Project',  'american_homefront_project']
-  ]
 
-  scope :with_article_includes, ->() { includes(:category,:assets,:audio,:tags,:bylines,bylines:[:user]) }
+  belongs_to :show,
+    :class_name   => "KpccProgram",
+    :touch        => true
 
+  alias_attribute :url, :public_url
+
+  validates :show, presence: true
+
+  scope :with_article_includes, ->() { includes(:show,:category,:assets,:audio,:tags,:bylines,bylines:[:user]) }
 
   def needs_validation?
     self.pending? || self.published?
   end
 
+
+  def episode
+    @episode ||= episodes.first
+  end
+
+  def published_episode
+    @published_episode ||= episodes.published.first
+  end
+
+  def episode_segments
+    @episode_segments ||= begin
+      if episodes.present?
+        episode.segments.published
+      else
+        show.segments.published
+          .where("shows_segment.id != ?", self.id).limit(5)
+      end
+    end
+  end
+
+  def recent_show_segments
+    self.class.published.where("show_id = ? and id <> ?", self.show_id, self.id).includes(:assets).first(3)
+  end
+
+  def byline_extras
+    [self.show.title]
+  end
+
+
   def route_hash
     return {} if !self.persisted? || !self.persisted_record.published?
     {
+      :show           => self.persisted_record.show.slug,
       :year           => self.persisted_record.published_at.year.to_s,
       :month          => "%02d" % self.persisted_record.published_at.month,
       :day            => "%02d" % self.persisted_record.published_at.day,
@@ -74,12 +99,6 @@ class NewsStory < ActiveRecord::Base
       :trailing_slash => true
     }
   end
-
-
-  def byline_extras
-    Array(self.news_agency)
-  end
-
 
   def to_article
     @to_article ||= Article.new({
@@ -102,9 +121,9 @@ class NewsStory < ActiveRecord::Base
       :created_at         => self.created_at,
       :updated_at         => self.updated_at,
       :published          => self.published?,
+      :show               => self.show,
     })
   end
-
 
   def to_abstract
     @to_abstract ||= Abstract.new({
@@ -119,5 +138,4 @@ class NewsStory < ActiveRecord::Base
       :article_published_at   => self.published_at
     })
   end
-
 end

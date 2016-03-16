@@ -7,7 +7,7 @@ module Concern::Model::Searchable
 
     [:create,:update,:destroy].each do |a|
       after_commit on:a do
-        Job::Indexer.enqueue self.class.to_s, self.id, a.to_s
+        async_index action: a.to_s
       end
     end
 
@@ -21,5 +21,50 @@ module Concern::Model::Searchable
         h
       end
     end
+
+    # def to_article
+    #   raise "#to_article method not implemented in model.  This is required for Article and indexing."
+    # end
+
+    def get_article
+      ## retrieve article from content_base, else perform #to_article and index for future
+      @get_article ||=
+        if article = ContentBase.find(obj_key)
+          article
+        else
+          async_index
+          to_article
+        end
+    end
+
+    def to_reference
+      a = get_article
+      { 
+        id:              a.id, 
+        public_path:     a.public_path, 
+        title:           a.title, 
+        short_title:     a.short_title,
+        category:        a.category,
+        public_datetime: a.public_datetime,
+        has_audio?:      a.audio.any?,
+        has_assets?:     a.assets.any?
+      }
+    end
+
+    def async_index action: :create 
+      Job::Indexer.enqueue(self.class.to_s, id, action)
+    end
+
+    def index
+      # the models index (used in Outpost)
+       __elasticsearch__.index_document
+
+      # update the Article index if appropriate
+      if respond_to?(:to_article)
+        # eh, a one-item bulk operation? Not very bulk...
+        ContentBase.es_client.bulk body: to_article.to_es_bulk_operation
+      end   
+    end
+
   end
 end

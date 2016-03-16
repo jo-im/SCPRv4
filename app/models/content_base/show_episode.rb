@@ -113,7 +113,6 @@ class ShowEpisode < ActiveRecord::Base
     self.pending? || self.published?
   end
 
-
   def publish
     self.update_attributes(status: self.class.status_id(:live))
   end
@@ -145,19 +144,8 @@ class ShowEpisode < ActiveRecord::Base
       :updated_at         => self.updated_at,
       :published          => self.published?,
       :show               => self.show,
-      :related_content    => self.published_content.map(&:to_article).map(&:to_reference)
+      :related_content    => self.published_content.map(&:get_article).map(&:to_reference)
     })
-  end
-
-  def get_article
-    ## retrieve article from content_base, else perform #to_article and index for future
-    @get_article ||=
-      if article = ContentBase.find(obj_key)
-        article
-      else
-        Job::Indexer.enqueue(self.class.to_s, id, :create) 
-        to_article
-      end
   end
 
   def route_hash
@@ -186,7 +174,6 @@ class ShowEpisode < ActiveRecord::Base
       :content            => self.published_content.map(&:to_article)
     })
   end
-
 
   private
 

@@ -196,6 +196,7 @@ class Event < ActiveRecord::Base
       :created_at         => self.created_at,
       :updated_at         => self.updated_at,
       :published          => self.published?,
+      :related_content    => self.related_content.map(&:get_article).map(&:to_reference)
     })
   end
 
