@@ -1,4 +1,4 @@
-<% article = article.to_article %>
+<% article = article.get_article %>
 
 <%= render_asset article.original_object, context:"news", fallback:true %>
 

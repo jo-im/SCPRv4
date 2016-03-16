@@ -59,7 +59,7 @@
         <% elsif @category.present? %>
             <%
             content = @category.content(@content_params)
-            category_articles = content.map { |a| a.to_article }
+            category_articles = content.map { |a| a.get_article }
             %>
 
             <aside class="see-more topic">

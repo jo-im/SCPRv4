@@ -56,7 +56,7 @@
                     <p><a href="<%= content.public_path %>"><%= content.teaser.html_safe %></a></p>
                     <aside class="meta">
                       <ul>
-                        <li><%= comment_widget_for content, partial: "new/comment_count_small", to_article: false, non_zero: true %></li>
+                        <li><%= comment_widget_for content, partial: "new/comment_count_small", get_article: false, non_zero: true %></li>
                         <% if content.original_object.is_a?(ShowSegment) %>
                           <li class="play"><%= content_widget "primary_audio", content, context: content.show.slug %></li>
                         <% end %>

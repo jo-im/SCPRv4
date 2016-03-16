@@ -1,6 +1,6 @@
 <%= content_for(:body_class, "single") %>
 
-<% article = @entry.to_article %>
+<% article = @entry.get_article %>
 <%= render_asset article.original_object, context:"news", fallback:true %>
 
 <div class="report">
