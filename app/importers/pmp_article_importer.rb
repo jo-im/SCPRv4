@@ -112,7 +112,7 @@ module PmpArticleImporter
       # Is "alternate" always going to be a usable link?
       # I guess we'll find out eventually.
       # For now it seems that it's used to point to the live article.
-      link = pmp_story.alternate.first
+      link = (pmp_story.alternate || []).first
       if link && link.href
         related_link = RelatedLink.new(
           :link_type    => "website",
