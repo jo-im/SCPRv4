@@ -68,8 +68,11 @@ class Article
     #@tags             = Array(attributes[:tags])
   end
 
-
   def to_article
+    self
+  end
+
+  def get_article
     self
   end
 
