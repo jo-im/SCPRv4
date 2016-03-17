@@ -291,7 +291,7 @@
         if(options.container){
           return $(options.container);
         } else {
-          return $(document);
+          return $(document.body);
         }      
     }
 
