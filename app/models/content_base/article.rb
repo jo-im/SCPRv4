@@ -56,7 +56,9 @@ class Article
     :published,
     :blog,
     :show,
-    :related_content
+    :related_content,
+    :links,
+    :asset_display
 
 
   def initialize(attributes={})
@@ -142,6 +144,10 @@ class Article
 
   # -- getters -- #
 
+  def asset_display
+    @asset_display || "photo"
+  end
+
   def assets
     (@assets||[]).collect do |a|
       ContentAsset.new(a.to_hash.merge({id:a.asset_id, inline: a.inline}))
@@ -164,6 +170,10 @@ class Article
     @related_content || []
   end
 
+  def links
+    @links || []
+  end
+
   def attributions
     (@attributions||[])
   end
@@ -181,6 +191,12 @@ class Article
 
   def related_content=(content)
     @related_content = (content||[]).collect do |c|
+      Hashie::Mash.new(c)
+    end
+  end
+
+  def links=(content)
+    @links = (content || []).collect do |c|
       Hashie::Mash.new(c)
     end
   end
@@ -272,22 +288,26 @@ class Article
       public_path:      @public_path,
       blog:             @blog,
       show:             @show,
-      related_content:  @related_content
+      related_content:  related_content,
+      links:            links,
+      asset_display:    asset_display
     }
   end
 
   alias_method :to_h, :to_hash
 
   def to_reference
-    { 
-      id:          @id, 
-      public_path: @public_path, 
-      title:       @title, 
-      short_title: @short_title,
-      category:    @category,
+    Hashie::Mash.new({ 
+      id:           @id, 
+      public_path:  @public_path, 
+      title:        @title, 
+      short_title:  @short_title,
+      category:     @category,
+      feature: Hashie::Mash.new({name: (feature.try(:name) || "Article"), _key: (feature.try(:key) || "article")}),
       has_audio?:  (@audio || []).any?,
-      has_assets?: (@assets || []).any?
-    }
+      has_assets?: (@assets || []).any?,
+      has_links?:  (@links || []).any?
+    })
   end
 
   #----------

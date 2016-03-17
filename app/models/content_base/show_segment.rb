@@ -122,6 +122,8 @@ class ShowSegment < ActiveRecord::Base
       :updated_at         => self.updated_at,
       :published          => self.published?,
       :show               => self.show,
+      :links              => related_links.map(&:to_hash),
+      :asset_display      => asset_display
     })
   end
 

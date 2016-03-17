@@ -110,7 +110,7 @@ module ApplicationHelper
   # * shared/assets/story/default
   # * shared/assets/default/default
   def render_asset(content, options={})
-    article = content.to_article
+    article = content.get_article
     context = options[:context] || "default"
 
     asset = options[:asset] || nil

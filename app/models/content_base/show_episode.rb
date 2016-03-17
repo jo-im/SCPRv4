@@ -145,7 +145,9 @@ class ShowEpisode < ActiveRecord::Base
       :updated_at         => self.updated_at,
       :published          => self.published?,
       :show               => self.show,
-      :related_content    => related_content
+      :related_content    => related_content,
+      :links              => related_links.map(&:to_hash),
+      :asset_display      => asset_display
     })
   end
 

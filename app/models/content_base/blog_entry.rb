@@ -171,7 +171,9 @@ class BlogEntry < ActiveRecord::Base
       :updated_at         => self.updated_at,
       :published          => self.published?,
       :blog               => self.blog,
-      :related_content    => to_article_called_more_than_twice? ? [] : self.related_content.map(&:to_reference)
+      :related_content    => to_article_called_more_than_twice? ? [] : self.related_content.map(&:to_reference),
+      :links              => related_links.map(&:to_hash),
+      :asset_display      => asset_display
     })
   end
 

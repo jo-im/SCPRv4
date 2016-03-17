@@ -73,8 +73,8 @@ module Concern::Model::Searchable
       ## be here to prevent infinite recursion with content that has both
       ## outgoing and incoming references.  Also not certain yet whether
       ## or not this needs to be the default.
-      stack_level = caller.select{|s| s.include?("`to_article'") && s.include?(__FILE__)}.count
-      stack_level < 3
+      stack_level = caller.select{|s| s.include?("`to_article'")}.count
+      stack_level > 2
     end
 
   end
