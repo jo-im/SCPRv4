@@ -36,7 +36,7 @@
               
               <%= render 'shared/widgets/short_list_subscribe' %>
 
-              <%= render 'shared/cwidgets/related_links', content:article %>
+              <%= render 'shared/cwidgets/related_links', content: article.get_article %>
 
               <% if article.published_episode.present? %>
               <aside class="ancillary episode-contents">
