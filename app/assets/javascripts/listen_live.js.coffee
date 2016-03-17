@@ -1,4 +1,4 @@
-#= require xml2json
+#= require x2js/xml2json.min
 
 class scpr.ListenLive
 
