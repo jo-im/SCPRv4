@@ -66,5 +66,16 @@ module Concern::Model::Searchable
       end   
     end
 
+    private
+
+    def to_article_called_more_than_twice?
+      ## Not sure if there's a better way to do this, but this needs to
+      ## be here to prevent infinite recursion with content that has both
+      ## outgoing and incoming references.  Also not certain yet whether
+      ## or not this needs to be the default.
+      stack_level = caller.select{|s| s.include?("`to_article'") && s.include?(__FILE__)}.count
+      stack_level < 3
+    end
+
   end
 end

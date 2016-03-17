@@ -87,7 +87,7 @@ module ApplicationHelper
         cache(["content",context,article,tmplt_digest], skip_digest:true) do
           self.output_buffer << render(
             "shared/content/#{partial}",
-            :article => article.to_article,
+            :article => article.get_article,
             :options => options
           ).html_safe
         end

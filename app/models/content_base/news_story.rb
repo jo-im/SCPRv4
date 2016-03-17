@@ -82,6 +82,7 @@ class NewsStory < ActiveRecord::Base
 
 
   def to_article
+    related_content = to_article_called_more_than_twice? ? [] : self.related_content.map(&:to_reference)
     @to_article ||= Article.new({
       :original_object    => self,
       :id                 => self.obj_key,
@@ -102,7 +103,7 @@ class NewsStory < ActiveRecord::Base
       :created_at         => self.created_at,
       :updated_at         => self.updated_at,
       :published          => self.published?,
-      :related_content    => self.related_content.map(&:get_article).map(&:to_reference)
+      :related_content    => related_content
     })
   end
 

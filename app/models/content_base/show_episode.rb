@@ -127,6 +127,7 @@ class ShowEpisode < ActiveRecord::Base
 
   def to_article
     return nil if !self.show
+    related_content = to_article_called_more_than_twice? ? [] : self.published_content.map(&:get_article).map(&:to_reference)
     @to_article ||= Article.new({
       :original_object    => self,
       :id                 => self.obj_key,
@@ -144,7 +145,7 @@ class ShowEpisode < ActiveRecord::Base
       :updated_at         => self.updated_at,
       :published          => self.published?,
       :show               => self.show,
-      :related_content    => self.published_content.map(&:get_article).map(&:to_reference)
+      :related_content    => related_content
     })
   end
 

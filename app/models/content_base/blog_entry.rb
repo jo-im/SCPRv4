@@ -149,6 +149,7 @@ class BlogEntry < ActiveRecord::Base
   end
 
   def to_article
+    related_content = to_article_called_more_than_twice? ? [] : self.related_content.map(&:to_reference)
     @to_article ||= Article.new({
       :original_object    => self,
       :id                 => self.obj_key,
@@ -170,7 +171,7 @@ class BlogEntry < ActiveRecord::Base
       :updated_at         => self.updated_at,
       :published          => self.published?,
       :blog               => self.blog,
-      :related_content    => self.related_content.map(&:get_article).map(&:to_reference)
+      :related_content    => to_article_called_more_than_twice? ? [] : self.related_content.map(&:to_reference)
     })
   end
 

@@ -285,8 +285,8 @@ class Article
       title:       @title, 
       short_title: @short_title,
       category:    @category,
-      has_audio?:  @audio.any?,
-      has_assets?: @assets.any?
+      has_audio?:  (@audio || []).any?,
+      has_assets?: (@assets || []).any?
     }
   end
 
