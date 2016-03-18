@@ -22,13 +22,9 @@ module Concern::Model::Searchable
       end
     end
 
-    # def to_article
-    #   raise "#to_article method not implemented in model.  This is required for Article and indexing."
-    # end
-
     def get_article
       ## retrieve article from content_base, else perform #to_article and index for future
-      @get_article ||=
+      @to_article ||=
         if article = ContentBase.find(obj_key)
           article
         else
