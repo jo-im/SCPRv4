@@ -22,8 +22,8 @@ module Concern::Model::Searchable
     def as_indexed_json(opts={})
       model = self.class.name.underscore
       h = as_json(opts)
-      h.delete('needs_reindex') #grumble
       if h[ model ]
+        h[model].delete('needs_reindex') #grumble
         {}.merge(h[ model ]).merge(h).except(model)
       else
         h
