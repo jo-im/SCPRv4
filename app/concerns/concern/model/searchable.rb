@@ -11,6 +11,14 @@ module Concern::Model::Searchable
       end
     end
 
+    after_initialize :lazy_index
+
+    class << self
+      def set_to_reindex
+        update_all needs_reindex: true
+      end
+    end
+
     def as_indexed_json(opts={})
       model = self.class.name.underscore
       h = as_json(opts)
@@ -60,6 +68,16 @@ module Concern::Model::Searchable
         # eh, a one-item bulk operation? Not very bulk...
         ContentBase.es_client.bulk body: to_article.to_es_bulk_operation
       end   
+    end
+
+    def lazy_index
+      # rather than run a lengthy job to index all articles
+      # just reindex the object after initialization if
+      # #needs_reindex? returns true.
+      if try(:needs_reindex?)
+        index
+        update_attribute :needs_reindex, false
+      end
     end
 
     private
