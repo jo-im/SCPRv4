@@ -2,9 +2,9 @@ There seem to be a few problems with the current SCPR program schedule:
 
 <% if @overlaps.any? %>
   <h2>Overlaps</h2>
-  <%= render partial: "outpost/recurring_schedule_rules/overlaps_table", locals: {problems: @overlaps} %>
+  <%= render partial: "outpost/recurring_schedule_rules/overlaps_table", locals: {problems: @overlaps, problem_type: "overlaps"} %>
 <% end %>
 <% if @gaps.any? %>
   <h2>Gaps</h2>
-  <%= render partial: "outpost/recurring_schedule_rules/problem_table", locals: {problems: @gaps} %>
+  <%= render partial: "outpost/recurring_schedule_rules/problem_table", locals: {problems: @gaps, problem_type: "gaps"} %>
 <% end %>
