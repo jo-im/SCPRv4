@@ -1,0 +1,26 @@
+<table class="table table-striped problems <%= problem_type %>">
+  <thead>
+    <tr>
+      <td></td>
+    </tr>
+  </thead>
+  <tbody>
+    <% problems.each do |problem| %>
+      <% overlapper = problem.shift %>
+      <tr>
+        <td>
+          <p>
+            <strong><%= overlapper.display_name %></strong> from <%= overlapper.display_starts_at%> to <%= overlapper.display_ends_at%> overlaps the following: 
+          </p>
+          <ul>
+            <% problem.each do |o| %>
+              <li>
+                <strong><%= "#{o.display_name}" %></strong> | <%= o.starts_at.try(:strftime, "%I:%M%P %-m/%-d") %> - <%= o.ends_at.try(:strftime, "%I:%M%P %-m/%-d") %>
+              </li>
+            <% end %>
+          </ul>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

@@ -2,21 +2,9 @@ There seem to be a few problems with the current SCPR program schedule:
 
 <% if @overlaps.any? %>
   <h2>Overlaps</h2>
-    <ul>
-      <% @overlaps.each do |overlap| %>
-        <li>
-          <%= overlap[0].display_name %> ends at <strong><%= overlap[0].ends_at.try(:strftime, "%I:%M%P %-m/%-d") %></strong> but <%= overlap[1].display_name %> starts at <strong><%= overlap[1].starts_at.try(:strftime, "%I:%M%P %-m/%-d") %></strong>
-        </li>
-      <% end %>
-    </ul>
+  <%= render partial: "outpost/recurring_schedule_rules/overlaps_table", locals: {problems: @overlaps} %>
 <% end %>
 <% if @gaps.any? %>
   <h2>Gaps</h2>
-  <ul>
-    <% @gaps.each do |gap| %>
-      <li>
-        <%= gap[0].display_name %> ends at <strong><%= gap[0].ends_at.try(:strftime, "%I:%M%P %-m/%-d") %></strong> but <%= gap[1].display_name %> starts at <strong><%= gap[1].starts_at.try(:strftime, "%I:%M%P %-m/%-d") %></strong>
-      </li>
-    <% end %>
-  </ul>
+  <%= render partial: "outpost/recurring_schedule_rules/problem_table", locals: {problems: @gaps} %>
 <% end %>

@@ -200,7 +200,9 @@ class RecurringScheduleRule < ActiveRecord::Base
 
   def problems
     problems = ScheduleOccurrence.problems
-    matcher = Proc.new {|p| p[0].recurring_schedule_rule_id == self.id || p[1].recurring_schedule_rule_id == self.id}
+    matcher = Proc.new do |p|
+      p.any?{|o| o.recurring_schedule_rule_id == self.id}
+    end
     problems = {
       related: {
         gaps: problems[:gaps].select(&matcher),
