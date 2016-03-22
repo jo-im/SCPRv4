@@ -77,9 +77,9 @@ module Concern::Model::Searchable
       # needs to be synchronous, else a template may show
       # no related content(for example) because it is a 
       # new attribute that has not yet been indexed.
-      if try(:needs_reindex?)
+      if has_attribute?(:needs_reindex) && needs_reindex?
         index
-        update_attribute :needs_reindex, false
+        update_attribute(:needs_reindex, false)
       end
     end
 
