@@ -58,7 +58,8 @@ class Article
     :show,
     :related_content,
     :links,
-    :asset_display
+    :asset_display,
+    :disqus_identifier
 
 
   def initialize(attributes={})
@@ -143,6 +144,10 @@ class Article
   end
 
   # -- getters -- #
+
+  def disqus_identifier
+    @disqus_identifier ||= original_object.try(:disqus_identifier)
+  end
 
   def asset_display
     @asset_display || "photo"
@@ -290,7 +295,8 @@ class Article
       show:             @show,
       related_content:  related_content,
       links:            links,
-      asset_display:    asset_display
+      asset_display:    asset_display,
+      disqus_identifier: disqus_identifier
     }
   end
 
@@ -306,7 +312,8 @@ class Article
       feature: Hashie::Mash.new({name: (feature.try(:name) || "Article"), _key: (feature.try(:key) || "article")}),
       has_audio?:  (@audio || []).any?,
       has_assets?: (@assets || []).any?,
-      has_links?:  (@links || []).any?
+      has_links?:  (@links || []).any?,
+      disqus_identifier: @disqus_identifier
     })
   end
 

@@ -199,7 +199,8 @@ class Event < ActiveRecord::Base
       :published          => self.published?,
       :related_content    => related_content,
       :links              => related_links.map(&:to_hash),
-      :asset_display      => asset_display
+      :asset_display      => asset_display,
+      :disqus_identifier  => self.disqus_identifier
     })
   end
 
