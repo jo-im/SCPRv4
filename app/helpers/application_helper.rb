@@ -405,9 +405,7 @@ module ApplicationHelper
     if has_comments?(object)
       options[:class] = "comment_link social_disq #{options[:class]}"
       options["data-objkey"] = object.disqus_identifier
-
-      link_to("Add your comments",
-        object.public_path(anchor: "comments", ), options)
+      link_to("Add your comments", (object.public_path + "#comments"), options)
     end
   end
 
