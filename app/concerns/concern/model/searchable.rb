@@ -73,7 +73,10 @@ module Concern::Model::Searchable
     def lazy_index
       # rather than run a lengthy job to index all articles
       # just reindex the object after initialization if
-      # #needs_reindex? returns true.
+      # #needs_reindex? returns true.  The call to #index
+      # needs to be synchronous, else a template may show
+      # no related content(for example) because it is a 
+      # new attribute that has not yet been indexed.
       if try(:needs_reindex?)
         index
         update_attribute :needs_reindex, false
