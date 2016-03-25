@@ -84,7 +84,7 @@ class RssProgramImporter
   def episode_exists?(item)
     ExternalEpisode.exists?(
       :external_program_id    => @external_program.id,
-      :external_id            => item.guid.content
+      :title                  => item.title
     )
   end
 
