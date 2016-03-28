@@ -6,7 +6,7 @@ module Concern
         if @publish_to_pmp.nil?
           pmp_content ? true : false
         else
-          [true, "true", 1, "1", "yes"].include? @publish_to_pmp
+          is_true? @publish_to_pmp
         end
       end
 
@@ -72,6 +72,16 @@ module Concern
         ContentRenderer.new(self).render_templated
       end
 
+      def __versioned_changes
+        old_value = pmp_content.present?
+        new_value = is_true?(@publish_to_pmp)
+        if new_value != old_value
+          super.merge({'publish_to_pmp' => [old_value.to_s, new_value.to_s]})
+        else
+          super
+        end
+      end
+
       ["story", "audio", "image", "episode"].each do |profile_name|
         mod = Module.new do
           extend ActiveSupport::Concern
@@ -89,6 +99,12 @@ module Concern
 
       private
 
+      def is_true? value
+        # in the context of how we are treating a value we 
+        # are getting from a form
+        [true, "true", 1, "1", "yes"].include? value
+      end
+
       def pmp_publishable?
         ## This just tells us whether or not we have the right status to publish.
         try(:pending?) || try(:published?) || try(:publishing?)
@@ -102,7 +118,6 @@ module Concern
           @pmp_content = content.pmp_content
           super ActionController::Base.view_paths, {}, ActionController::Base.new
         end
-
         def render_with_assets
           render(template: "pmp/#{@pmp_content.profile}", layout: false, locals: {content: @content})
         end
