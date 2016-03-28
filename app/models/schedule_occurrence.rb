@@ -34,7 +34,7 @@ class ScheduleOccurrence < ActiveRecord::Base
 
   scope :problems, ->{
     occurrences = future.order("starts_at ASC")
-    analyzer = ScheduleAnalyzer.new(occurrences)
+    analyzer = Schedulizer.new(occurrences)
     analyzer.problems
   }
 
@@ -166,7 +166,19 @@ class ScheduleOccurrence < ActiveRecord::Base
     end
   end
 
+  def to_schedulizer_occurrence
+    Schedulizer::Occurrence.new guid: id, starts_at: starts_at.to_i, ends_at: ends_at.to_i, precedence: schedulizer_precedence, created_at: created_at, metadata: {original_object: self, display_name: display_name}
+  end
+
   private
+
+  def schedulizer_precedence
+    if recurring?
+      0
+    else
+      1
+    end
+  end
 
   def detach_from_recurring_rule
     self.recurring_schedule_rule = nil

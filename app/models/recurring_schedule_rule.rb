@@ -201,7 +201,7 @@ class RecurringScheduleRule < ActiveRecord::Base
   def problems
     problems = ScheduleOccurrence.problems
     matcher = Proc.new do |p|
-      p.any?{|o| o.recurring_schedule_rule_id == self.id}
+      p.any?{|o| o.metadata.original_object.recurring_schedule_rule_id == self.id}
     end
     problems = {
       related: {

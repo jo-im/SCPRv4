@@ -10,12 +10,12 @@
       <tr>
         <td>
           <p>
-            <strong><%= overlapper.display_name %></strong> from <%= overlapper.display_starts_at%> to <%= overlapper.display_ends_at%> overlaps the following: 
+            <strong><%= overlapper.metadata.display_name %></strong> from <%= overlapper.display_starts_at%> to <%= overlapper.display_ends_at%> overlaps the following: 
           </p>
           <ul>
             <% problem.each do |o| %>
               <li>
-                <strong><%= "#{o.display_name}" %></strong> | <%= o.starts_at.try(:strftime, "%I:%M%P %-m/%-d") %> - <%= o.ends_at.try(:strftime, "%I:%M%P %-m/%-d") %>
+                <strong><%= o.metadata.display_name %></strong> | <%= o.display_starts_at %> - <%= o.display_ends_at %>
               </li>
             <% end %>
           </ul>
