@@ -203,21 +203,21 @@ class RecurringScheduleRule < ActiveRecord::Base
     matcher = Proc.new do |p|
       p.any?{|o| o.metadata.original_object.recurring_schedule_rule_id == self.id}
     end
-    problems = {
+    rule_problems = {
       related: {
-        gaps: problems[:gaps].select(&matcher),
+        gaps:     problems[:gaps].select(&matcher),
         overlaps: problems[:overlaps].select(&matcher)
       },
       existing: {
-        gaps: problems[:gaps].reject(&matcher),
+        gaps:     problems[:gaps].reject(&matcher),
         overlaps: problems[:overlaps].reject(&matcher),
       },
       all: problems,
       any?: problems[:any?]
     }
-    problems[:related][:any?] = problems[:related][:gaps].any? || problems[:related][:overlaps].any?
-    problems[:existing][:any?]   = problems[:existing][:gaps].any? || problems[:existing][:overlaps].any?
-    problems
+    rule_problems[:related][:any?]    = rule_problems[:related][:gaps].any?  || rule_problems[:related][:overlaps].any?
+    rule_problems[:existing][:any?]   = rule_problems[:existing][:gaps].any? || rule_problems[:existing][:overlaps].any?
+    rule_problems
   end
 
   private

@@ -37,13 +37,7 @@ class Schedulizer < Array
   def gaps
     select_pairs do |a, b|
       ends_before?(a,b)
-    end   
-    # not sure why the below is needed now?
-    # .map do |group|
-    #   group.map do |occurrence|
-    #     find {|o| o.id == occurrence.id}
-    #   end
-    # end 
+    end
   end
   def overlaps
     select_groups do |a, b|
@@ -75,7 +69,7 @@ class Schedulizer < Array
     output    
   end
   def duplicate
-    self.class.new map(&:dup)
+    self.class.new to_a.map(&:duplicate)
   end
   def reify
     # makes the schedule "realistic", so that all occurrences are
