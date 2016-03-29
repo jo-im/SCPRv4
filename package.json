@@ -13,12 +13,12 @@
   },
   "homepage": "https://github.com/SCPR/SCPRv4#readme",
   "license": "MIT",
-  "dependencies": {
+  "devDependencies": {
     "browserify": "~> 10.2.4",
     "browserify-incremental": "^3.0.1",
     "coffeeify": "~> 0.6"
   },
-  "devDependencies": {
+  "dependencies": {
     "fastclick": "^1.0.6",
     "handlebars": "^1.0.2-beta",
     "history": "^2.0.1",
