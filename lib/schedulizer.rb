@@ -69,7 +69,7 @@ class Schedulizer < Array
     output    
   end
   def duplicate
-    self.class.new to_a.map(&:duplicate)
+    self.class.new to_a.map(&:dup)
   end
   def reify
     # makes the schedule "realistic", so that all occurrences are
