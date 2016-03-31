@@ -167,7 +167,12 @@ class ScheduleOccurrence < ActiveRecord::Base
   end
 
   def to_schedulizer_occurrence
-    Schedulizer::Occurrence.new guid: id, starts_at: starts_at.to_i, ends_at: ends_at.to_i, precedence: schedulizer_precedence, created_at: created_at, metadata: {original_object: self, display_name: display_name}
+    Schedulizer::Occurrence.new guid: id, 
+                                starts_at: starts_at.to_i, 
+                                ends_at: ends_at.to_i, 
+                                precedence: schedulizer_precedence, 
+                                created_at: created_at, 
+                                metadata: {original_object: self, display_name: display_name}
   end
 
   private

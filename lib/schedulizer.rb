@@ -1,5 +1,10 @@
 require 'securerandom'
 class Schedulizer < Array
+  ## Schedulizer is just a collection that can be used to
+  ## analyze a schedule for gaps and overlaps.  To use,
+  ## pass in objects that respond to #to_schedulizer_occurrence
+  ## , which would be a method that returns a Schedulizer::Occurrence
+  ## representation of your object.
   class << self
     def compare a, b
     # this is really only here to make it easier for testing
@@ -92,27 +97,27 @@ class Schedulizer < Array
     between?(a,b) || overlaps_starts_at?(a,b) || overlaps_ends_at?(a,b) || completely_engulfing?(a,b)
   end
   def between? a, b # is a between b?
-    (a.starts_at.to_i > b.starts_at.to_i) && (a.ends_at.to_i < b.ends_at.to_i)
+    (a.starts_at > b.starts_at) && (a.ends_at < b.ends_at)
   end
   def overlaps_starts_at? a, b
-    (a.starts_at.to_i < b.starts_at.to_i) && (a.ends_at.to_i > b.starts_at.to_i)
+    (a.starts_at < b.starts_at) && (a.ends_at > b.starts_at)
   end
   def overlaps_ends_at? a, b
-    (a.starts_at.to_i < b.ends_at.to_i) && (a.ends_at.to_i > b.ends_at.to_i)
+    (a.starts_at < b.ends_at) && (a.ends_at > b.ends_at)
   end
   def overlaps_edge? a, b
     overlaps_starts_at?(a, b) || overlaps_ends_at?(a, b)
   end
   def completely_engulfing? a, b
-    (a.starts_at.to_i < b.starts_at.to_i) && (a.ends_at.to_i > b.ends_at.to_i)
+    (a.starts_at < b.starts_at) && (a.ends_at > b.ends_at)
   end
   def larger_or_starts_before? a, b
-    a_size = (a.ends_at.to_i - a.starts_at.to_i)
-    b_size = (b.ends_at.to_i - b.starts_at.to_i)
-    (a_size > b_size) || (a_size == b_size && a.starts_at.to_i < b.starts_at.to_i)
+    a_size = (a.ends_at - a.starts_at)
+    b_size = (b.ends_at - b.starts_at)
+    (a_size > b_size) || (a_size == b_size && a.starts_at < b.starts_at)
   end
   def ends_before? a, b
-    (a.ends_at.to_i < b.starts_at.to_i) && (a.ends_at.to_i != b.starts_at.to_i)
+    (a.ends_at < b.starts_at) && (a.ends_at != b.starts_at)
   end
   def larger_than? a, b
     a_size = a.ends_at - a.starts_at
@@ -205,7 +210,7 @@ class Schedulizer < Array
     end
     [:starts_at, :ends_at].each do |n|
       define_method "display_#{n}" do
-        Time.at(send(n)).try(:strftime, "%I:%M%P %-m/%-d")
+        Time.zone.at(send(n)).try(:strftime, "%I:%M%P %-m/%-d")
       end
     end
   end
