@@ -1,0 +1,141 @@
+class outpost.Autosave
+  constructor: (options={}) ->
+    @options = 
+      _id           : 'new'
+      id            : undefined  # this is the ID 
+      author        : 'anonymous'
+      type          : 'document'
+      databaseName  : 'scprv4_outpost'
+      autoCompaction: true
+      revsLimit     : 100
+    for option of options
+      @options[option] = options[option]
+    @db         = new PouchDB(@options.databaseName, {auto_compaction: @options.autoCompaction, revs_limit: @options.revsLimit})
+    @document   = $(document)
+    @fields     = $('#main input[id], #main textarea[id]').not(':button').not(':hidden').not('#autosave-revisions')
+    @doc        = undefined
+    @events = {}
+
+  listen: ->
+    callback = (e) =>
+      console.log 'change made'
+      @_cancelTimeout()
+      @_waitAndSave()
+    for event in ['keydown', 'keyup', 'change']  # this is because keypress isn't triggered by backspace
+      @document.on event, callback
+
+  unlisten: ->
+    @_cancelTimeout()
+    @fields.off 'change'
+
+  getDoc: (options={}, callback) ->
+    if typeof options is 'function'
+      callback = options
+      options  = {}
+    options.revs ||= true
+    @db.get @options._id, options, (error, doc)=>
+      unless error
+        @doc = doc
+        @updateRevisions()
+        callback(error, doc) if callback
+      else
+        callback(error) if callback
+        throw error
+
+  saveDoc: (options={}, callback)->
+    if typeof options is 'function'
+      callback = options
+      options  = {}
+    options.revs     ||= true
+    @getDoc options, (error, doc) =>
+      if error?.status is 404
+        doc  = @_newDoc()
+      else if error
+        throw error 
+      mdoc = @_mergeDocs @_serialize(), (doc or {})
+      @db.put mdoc, options, (error, doc) =>
+        unless error
+          @options._id = doc.id
+          @getDoc()
+          callback(error, doc) if callback
+        else
+          callback(error) if callback
+          throw error
+
+  checkForChanges: ->
+    @getDoc (error, doc) =>
+      unless error
+        for field in @fields
+          field = $(field)
+          field_id = field.attr('id')
+          if field.val() isnt doc[field_id]
+            @_changesHaveBeenMade()
+            return true
+    false
+
+  updateRevisions: ->
+    selectElement = $('select#autosave-revisions')
+    selectElement.html('')
+    for revision in @revisions()
+      selectElement[0].innerHTML += "<option value='#{revision}'>#{revision}</option>"
+    selectElement.val (@doc._rev or '').match(revision)
+
+  revisions: ->
+    @doc?._revisions?.ids or []
+
+  on: (name, callback) ->
+    @events[name] ||= []
+    @events[name].push callback
+
+  # private
+
+  _newDoc: ->
+    {_id: @options._id, id: @options.id, type: @options.type, author: @options.author}
+
+  _waitAndSave: ->
+    @timeout = setTimeout =>
+      @saveDoc()
+    , 1000 
+
+  _cancelTimeout: ->
+    clearTimeout(@timeout) if @timeout
+
+  _mergeDocs: (a, b) ->
+    # changes from a merge into b
+    # not destructive
+    mergedDoc = {}
+    for key of b
+      mergedDoc[key] = b[key]
+    for key of a
+      mergedDoc[key] = a[key]
+    mergedDoc
+
+  _changesHaveBeenMade: ->
+    message = "Autosaver has recovered unsaved changes you made to the body of this article.\n
+            Click OK to RESTORE your unsaved changes.\n
+            Click CANCEL to LOSE your unsaved changes.\n
+            HINT: If your computer or browser crashed and you need to get your work back, click OK.\n
+            It's always safer to click OK."
+    if confirm(message)
+      @_writeDocToFields()
+
+  _writeDocToFields: ->
+    @getDoc (error, doc) =>
+      unless error
+        @_trigger('reflect', doc)
+        for key of doc
+          $("#main ##{key}").val(doc[key])
+
+  _trigger: (name, doc) ->
+    @events[name] ||= []
+    for f in @events[name]
+      f(doc)
+
+  _serialize: ->
+    doc = {}
+    for field in @fields
+      field         = $(field)
+      field_id      = field.attr('id')
+      doc[field_id] = field.val()
+      @_trigger('serialize', doc)
+    doc

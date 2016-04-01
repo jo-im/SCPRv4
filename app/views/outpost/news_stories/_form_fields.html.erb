@@ -17,3 +17,4 @@
 <%= f.section "audio" %>
 <%= f.section "related_links" %>
 <%= f.section "related_content" %>
+<%= render partial: 'outpost/shared/sections/autosave', locals: {id: f.object.id, obj_key: f.object.obj_key, type: f.object.class.to_s.underscore} %>
