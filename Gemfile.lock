@@ -72,9 +72,9 @@ GIT
 
 GIT
   remote: git://github.com/scpr/npr.git
-  revision: 8d423d530d287ba4852b705999085dfe7c1e2895
+  revision: 6a6a650e92eb9ed0acb2f51d0958685fcf97d931
   specs:
-    npr (2.0.2)
+    npr (3.0.0)
       faraday (~> 0.8.0)
       faraday_middleware (~> 0.9.0)
 
@@ -493,7 +493,7 @@ DEPENDENCIES
   launchy
   mysql2 (~> 0.3.14)
   newrelic_rpm (~> 3.7)
-  npr (~> 2.0)!
+  npr (~> 3.0)!
   oauth2 (~> 0.8)
   outpost-aggregator!
   outpost-asset_host!

@@ -67,7 +67,7 @@ gem 'parse-ruby-client', github: "sheerun/parse-ruby-client", ref: "a4eb5618c816
 # gem 'pmp', '0.4.0'
 gem 'pmp', '0.5.6'
 #gem "npr", path:"../npr"
-gem 'npr', '~> 2.0', github:"scpr/npr"
+gem 'npr', '~> 3.0', github:"scpr/npr"
 gem 'asset_host_client', github:"scpr/asset_host_client", tag:"v2.0.0"
 gem 'audio_vision', '~> 1.0'
 gem 'slack-notifier'
