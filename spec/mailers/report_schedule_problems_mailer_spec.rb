@@ -4,11 +4,11 @@ describe ReportScheduleProblemsMailer do
   describe "#send_notification" do
 
     let(:gaps) {       
-      [[create(:schedule_occurrence), create(:schedule_occurrence)]]
+      [[create(:schedule_occurrence).to_schedulizer_occurrence, create(:schedule_occurrence).to_schedulizer_occurrence]]
     }
 
     let(:overlaps) {       
-      [[create(:schedule_occurrence), create(:schedule_occurrence)]]
+      [[create(:schedule_occurrence).to_schedulizer_occurrence, create(:schedule_occurrence).to_schedulizer_occurrence]]
     }    
 
     it "sends the email" do
