@@ -12,15 +12,23 @@ class outpost.Autosave
       @options[option] = options[option]
     @db         = new PouchDB(@options.databaseName, {auto_compaction: @options.autoCompaction, revs_limit: @options.revsLimit})
     @document   = $(document)
-    @fields     = $('#main input[id], #main textarea[id]').not(':button').not(':hidden').not('#autosave-revisions')
+    @elementNames = [
+      'input'
+      'textarea'
+      'select'
+    ]
+    query = []
+    query.push("#main #{elName}[id]") for elName in @elementNames
+    @query = query.join(", ")
+    @fields     = $(@query).not(':button').not(':hidden').not('#autosave-revisions')
     @doc        = undefined
-    @events = {}
+    @events     = {}
 
   listen: ->
     callback = (e) =>
-      console.log 'change made'
-      @_cancelTimeout()
-      @_waitAndSave()
+      unless e.target.id is 'autosave-revisions'
+        @_cancelTimeout()
+        @_waitAndSave()
     for event in ['keydown', 'keyup', 'change']  # this is because keypress isn't triggered by backspace
       @document.on event, callback
 
@@ -47,20 +55,36 @@ class outpost.Autosave
       callback = options
       options  = {}
     options.revs     ||= true
+    @_writeDialog 'Storing a local copy...'
     @getDoc options, (error, doc) =>
       if error?.status is 404
         doc  = @_newDoc()
       else if error
         throw error 
       mdoc = @_mergeDocs @_serialize(), (doc or {})
+      mdoc.updatedAt = new Date()
       @db.put mdoc, options, (error, doc) =>
         unless error
           @options._id = doc.id
-          @getDoc()
+          @getDoc (error, doc) =>
+            @_writeDialog "Local copy saved @ #{doc.updatedAt}"
           callback(error, doc) if callback
         else
           callback(error) if callback
           throw error
+
+  removeDoc: (options={}, callback) ->
+    if typeof options is 'function'
+      callback = options
+      options  = {}
+    options.revs     ||= true
+    @db.remove @doc, options, (error, doc) =>
+      unless error
+        console.log 'doc removed'
+        callback(error, doc) if callback
+      else
+        callback(error) if callback
+        throw error if error
 
   checkForChanges: ->
     @getDoc (error, doc) =>
@@ -78,10 +102,18 @@ class outpost.Autosave
     selectElement.html('')
     for revision in @revisions()
       selectElement[0].innerHTML += "<option value='#{revision}'>#{revision}</option>"
-    selectElement.val (@doc._rev or '').match(revision)
+    selectElement.select2 'val', (@doc._rev or '').match(/-(.*)/)[1]
+    selectElement.on 'change', =>
+      @getDoc({rev: selectElement.val()})
 
   revisions: ->
-    @doc?._revisions?.ids or []
+    revisionIds        = (@doc?._revisions?.ids or [])
+    i = revisionIds.length + 1
+    numerizedRevisions = []
+    for revisionId in revisionIds
+      numerizedRevisions.push "#{i}-#{revisionId}"
+      i--
+    numerizedRevisions
 
   on: (name, callback) ->
     @events[name] ||= []
@@ -93,9 +125,8 @@ class outpost.Autosave
     {_id: @options._id, id: @options.id, type: @options.type, author: @options.author}
 
   _waitAndSave: ->
-    @timeout = setTimeout =>
-      @saveDoc()
-    , 1000 
+    callback = => @saveDoc()
+    @timeout = setTimeout callback, 1000 
 
   _cancelTimeout: ->
     clearTimeout(@timeout) if @timeout
@@ -117,25 +148,62 @@ class outpost.Autosave
             HINT: If your computer or browser crashed and you need to get your work back, click OK.\n
             It's always safer to click OK."
     if confirm(message)
-      @_writeDocToFields()
-
-  _writeDocToFields: ->
-    @getDoc (error, doc) =>
-      unless error
-        @_trigger('reflect', doc)
-        for key of doc
-          $("#main ##{key}").val(doc[key])
+      @_reflect()
+    else
+      @removeDoc()
 
   _trigger: (name, doc) ->
     @events[name] ||= []
     for f in @events[name]
       f(doc)
 
+  _reflect: ->
+    @getDoc (error, doc) =>
+      unless error
+        @_trigger('reflect', doc)
+        for key of doc
+          el    = $("#main ##{key}")
+          if el.length > 0
+            type  = el.attr('type') or el.prop("tagName")?.toLowerCase()
+            value = doc[key]
+            @DefaultReflectors["#{type}Reflector"]?(el, value)
+
   _serialize: ->
     doc = {}
     for field in @fields
       field         = $(field)
-      field_id      = field.attr('id')
-      doc[field_id] = field.val()
-      @_trigger('serialize', doc)
+      if field.length > 0
+        fieldId       = field.attr('id')
+        type          = field.attr('type') or field.prop("tagName")?.toLowerCase()
+        doc[fieldId]  = @DefaultSerializers["#{type}Serializer"]?(field)
+    @_trigger('serialize', doc)
     doc
+
+  _writeDialog: (text) ->
+    $(".submit-row span#dialog").text text
+
+  DefaultSerializers: 
+    ## Serializers are used to convert a field element
+    ## to a value in a PouchDB document.
+    ## The return value is assigned to the field.
+    checkboxSerializer: (el) ->
+      el.prop('checked')
+    textSerializer: (el) ->
+      el.val()
+    textareaSerializer: (el) ->
+      el.val()
+    selectSerializer: (el) ->
+      el.val()
+
+  DefaultReflectors:
+    ## Reflectors are used to take values stored in a
+    ## document and display them properly in the DOM.
+    ## Assign the value to the element according to type.
+    checkboxReflector: (el, value) ->
+      el.prop 'checked', value
+    textReflector: (el, value) ->
+      el.prop 'value', value
+    textareaReflector: (el, value) ->
+      el.val value
+    selectReflector: (el, value) ->
+      el.select2('val', value)
