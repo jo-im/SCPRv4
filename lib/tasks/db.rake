@@ -6,8 +6,11 @@ def shell_command &block
   cmds = []
   yield cmds
   cmds.each do |c| 
-    IO.popen("#{DOCKER_MACHINE_ENV} && #{c}").each do |line|
-      puts line
+    IO.popen("#{DOCKER_MACHINE_ENV} && #{c}") do |process| 
+      process.each do |line|
+        puts line
+        process.detach if line.include?("mysqld: ready for connections")
+      end
     end
   end
 end
