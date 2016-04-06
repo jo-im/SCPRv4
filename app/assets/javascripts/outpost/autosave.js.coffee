@@ -145,17 +145,19 @@ class outpost.Autosave
     mergedDoc
 
   _changesHaveBeenMade: ->
-    message = "Autosaver has recovered unsaved changes you made to the body of this article.\n
-            Click OK to RESTORE your unsaved changes.\n
-            Click CANCEL to LOSE your unsaved changes.\n
-            HINT: If your computer or browser crashed and you need to get your work back, click OK.\n
-            It's always safer to click OK."
+    timestamp = moment(@doc.updatedAt).strftime('%m/%d/%y %I:%M %p')
+    message   = "Outpost has recovered unsaved changes you made on #{timestamp}.\n
+            Click YES to RESTORE your unsaved changes.\n
+            Click NO  to LOSE your unsaved changes.\n
+            HINT: If your computer or browser crashed and you need to get your work back, click YES.\n
+            It's always safer to click YES."
     @_createModal 'You have some unsaved changes.', message
 
   _createModal: (title, body) ->
     modalSource   = $('#autosave-modal-template').html()
     modalTemplate = Handlebars.compile(modalSource)
-    modalHTML     = modalTemplate({title: title, body: body})
+    bodyTemplate  = Handlebars.compile(body)
+    modalHTML     = modalTemplate({title: title, body: bodyTemplate()})
     $('body').append modalHTML
     modal         = $('#autosave-modal')
     modal.one 'click', 'button', (e) =>
@@ -163,6 +165,7 @@ class outpost.Autosave
         @_reflect()
       else if e.target.id is 'no'
         @removeDoc()
+      modal.remove()
     modal.modal({show: true, background: true})
 
   _trigger: (name, doc) ->
