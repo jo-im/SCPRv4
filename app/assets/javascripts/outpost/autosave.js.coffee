@@ -69,7 +69,7 @@ class outpost.Autosave
         unless error
           @options._id = doc.id
           @getDoc (error, doc) =>
-            timestamp = moment(doc.updatedAt).strftime('%m/%d/%y %I:%M %p')
+            timestamp = moment(doc.updatedAt).strftime('%m/%d/%y %I:%M:%S %p')
             @_writeDialog "Local copy stored @ #{timestamp}"
           callback(error, doc) if callback
         else
