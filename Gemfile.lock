@@ -72,9 +72,9 @@ GIT
 
 GIT
   remote: git://github.com/scpr/npr.git
-  revision: 8d423d530d287ba4852b705999085dfe7c1e2895
+  revision: 6a6a650e92eb9ed0acb2f51d0958685fcf97d931
   specs:
-    npr (2.0.2)
+    npr (3.0.0)
       faraday (~> 0.8.0)
       faraday_middleware (~> 0.9.0)
 
@@ -149,6 +149,8 @@ GEM
       debug_inspector (>= 0.0.1)
     bootstrap-sass (2.3.2.2)
       sass (~> 3.2)
+    browserify-rails (1.1.0)
+      railties (>= 4.0.0, < 5.0)
     builder (3.2.2)
     capybara (2.4.4)
       mime-types (>= 1.16)
@@ -466,6 +468,7 @@ DEPENDENCIES
   better_errors
   binding_of_caller
   bootstrap-sass (~> 2.2)
+  browserify-rails
   capybara (~> 2.0)
   carrierwave (~> 0.6)
   coffee-rails (~> 4.0.0)
@@ -493,7 +496,7 @@ DEPENDENCIES
   launchy
   mysql2 (~> 0.3.14)
   newrelic_rpm (~> 3.7)
-  npr (~> 2.0)!
+  npr (~> 3.0)!
   oauth2 (~> 0.8)
   outpost-aggregator!
   outpost-asset_host!

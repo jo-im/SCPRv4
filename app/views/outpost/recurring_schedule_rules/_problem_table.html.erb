@@ -10,10 +10,10 @@
   <tbody>
     <% problems.each do |problem| %>
     <tr>
-      <td><strong><%= problem[0].display_name %></strong></td>
-      <td><%= problem[0].ends_at.try(:strftime, "%I:%M%P %-m/%-d") %></td>
-      <td><strong><%= problem[1].display_name %></strong></td>
-      <td><%= problem[1].starts_at.try(:strftime, "%I:%M%P %-m/%-d") %></td>
+      <td><strong><%= problem[0].metadata.display_name %></strong></td>
+      <td><%= problem[0].display_ends_at %></td>
+      <td><strong><%= problem[1].metadata.display_name %></strong></td>
+      <td><%= problem[1].display_starts_at %></td>
     </tr>
     <% end %>
   </tbody>

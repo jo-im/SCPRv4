@@ -27,6 +27,8 @@ module Scprv4
       "*.eot", "*.ttf", "*.woff" # Font files
     ]
 
+    config.browserify_rails.commandline_options = "-t coffeeify --extension=\".js.coffee\""
+
     config.time_zone = 'Pacific Time (US & Canada)'
     config.active_record.default_timezone = :local
 
@@ -44,5 +46,11 @@ module Scprv4
       :unencrypted_password,
       :auth_token
     ]
+
+    config.assets.paths << Rails.root.join("node_modules")
+
+    # Dir.glob("#{Rails.root}/node_modules/**/").each do |path|
+    #   config.assets.paths << path
+    # end
   end
 end

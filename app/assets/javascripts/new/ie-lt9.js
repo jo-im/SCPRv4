@@ -1,1 +1,1 @@
-//= require selectivizr
+//= require selectivizr/selectivizr

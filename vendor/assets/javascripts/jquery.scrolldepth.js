@@ -13,6 +13,8 @@
  */
 ;(function ( $, window, document, undefined ) {
 
+  $ = window.jQuery; /* Somehow, the $ variable sometimes gets overwritten with something else that only ever returns the document. */
+
   "use strict";
 
   var defaults = {
@@ -291,7 +293,7 @@
         if(options.container){
           return $(options.container);
         } else {
-          return $(document);
+          return $(document.body);
         }      
     }
 

@@ -107,9 +107,11 @@ In production, assetsync runs on a worker instance.
 ## Getting Started
 
 * Install Ruby 2.1.x
+* Install Node.js 5.x
 * Install MySQL (5.6.x should be fine) / Elasticsearch (1.5.x) / Redis
 * Install Docker & Docker-Machine (for development only)
-* Get a Deploybot token for a *full* DB backup and run `rake db:pull (DEPLOYBOT TOKEN HERE)`
 * Acquire a `secrets.yml` file via the wiki
+* `bundle install` and `npm install`
+* Get a Deploybot token for a *full* DB backup and run `rake db:pull (DEPLOYBOT TOKEN HERE)`
 * `rake scprv4:index_all` to index articles and models into Elasticsearch
 * `rake scprv4:cache:all` to cache homepage, tweets, etc

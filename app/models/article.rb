@@ -57,12 +57,10 @@ class Article
     :show
 
   def initialize(attributes={})
-    super
-
-    #@assets           = Array(attributes[:assets])
-    #@audio            = Array(attributes[:audio])
-    #@attributions     = Array(attributes[:attributions])
-    #@tags             = Array(attributes[:tags])
+    attributes.each do |attr, value|
+      self.public_send("#{attr}=", value) if respond_to?("#{attr}=")
+    end if attributes
+    super()
   end
 
 
