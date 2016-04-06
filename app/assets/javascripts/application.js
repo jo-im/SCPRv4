@@ -1,7 +1,5 @@
 //= require modernizr.custom
 //= require jplayer/dist/jplayer/jquery.jplayer.min
-//= require moment-strftime/build/moment-strftime.min
-//= require moment-twitter/moment-twitter
 //= require waypoints/lib/jquery.waypoints.min
 //= require windowtamer/widowtamer-min
 //= require jQuery-ajaxTransport-XDomainRequest/jquery.xdomainrequest.min
@@ -50,3 +48,4 @@
 //= require jquery.scrolldepth
 
 moment = require('moment-strftime');
+moment = require('moment-twitter');
