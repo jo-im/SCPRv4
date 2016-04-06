@@ -1,4 +1,6 @@
 class outpost.Autosave
+  Handlebars = require 'handlebars'
+  moment     = require('moment-strftime')
   constructor: (options={}) ->
     @options = 
       _id           : 'new'
@@ -55,7 +57,7 @@ class outpost.Autosave
       callback = options
       options  = {}
     options.revs     ||= true
-    @_writeDialog 'Storing a local copy...'
+    # @_writeDialog 'Storing a local copy...'
     @getDoc options, (error, doc) =>
       if error?.status is 404
         doc  = @_newDoc()
@@ -67,7 +69,8 @@ class outpost.Autosave
         unless error
           @options._id = doc.id
           @getDoc (error, doc) =>
-            @_writeDialog "Local copy saved @ #{doc.updatedAt}"
+            timestamp = moment(doc.updatedAt).strftime('%m/%d/%y %I:%M %p')
+            @_writeDialog "Local copy stored @ #{timestamp}"
           callback(error, doc) if callback
         else
           callback(error) if callback
@@ -147,10 +150,20 @@ class outpost.Autosave
             Click CANCEL to LOSE your unsaved changes.\n
             HINT: If your computer or browser crashed and you need to get your work back, click OK.\n
             It's always safer to click OK."
-    if confirm(message)
-      @_reflect()
-    else
-      @removeDoc()
+    @_createModal 'You have some unsaved changes.', message
+
+  _createModal: (title, body) ->
+    modalSource   = $('#autosave-modal-template').html()
+    modalTemplate = Handlebars.compile(modalSource)
+    modalHTML     = modalTemplate({title: title, body: body})
+    $('body').append modalHTML
+    modal         = $('#autosave-modal')
+    modal.one 'click', 'button', (e) =>
+      if e.target.id is 'yes'
+        @_reflect()
+      else if e.target.id is 'no'
+        @removeDoc()
+    modal.modal({show: true, background: true})
 
   _trigger: (name, doc) ->
     @events[name] ||= []
