@@ -19,22 +19,6 @@
   </div>
 </script>
 
-<fieldset class="form-block dockable" id="form-block-autosave-revisions">
-  <legend>Autosave Revisions</legend>
-  <style>
-    #autosave-revisions{
-      width: 100%;
-      height: 150px;
-      overflow: auto;
-      overflow-y: scroll;
-      overflow-x: scroll;
-    }
-  </style>
-  <select id="autosave-revisions" />
-</fieldset>
-<br /><br /><br /><br /><br /><br /><br />
-
-
 <script>
   autosaver = new outpost.Autosave({
     _id:  '<%= obj_key %>',
@@ -42,16 +26,10 @@
     type: '<%= type %>'
   });
   autosaver.on('serialize', function(doc){
-    console.log('serialize event successfully fired')
-    // doc.assets = window.assetManager.assets.toJSON();
-    doc.assets = []
+
   })
   autosaver.on('reflect', function(doc){
-    // console.log('reflecting')
-    // assetJSONElement = $("#asset_json");
-    // assetJSONElement.val(doc.assets);
-    // assetManager.assets = new outpost.AssetHost.Assets(doc.assets)
-    // window.assetManager.assetsView.render();
+
   })
   autosaver.checkForChanges();
   autosaver.listen();

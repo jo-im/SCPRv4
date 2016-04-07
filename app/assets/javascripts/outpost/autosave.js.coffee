@@ -1,6 +1,7 @@
 class outpost.Autosave
   Handlebars = require 'handlebars'
-  moment     = require('moment-strftime')
+  moment     = require 'moment-strftime'
+
   constructor: (options={}) ->
     @options = 
       _id           : 'new'
@@ -57,7 +58,6 @@ class outpost.Autosave
       callback = options
       options  = {}
     options.revs     ||= true
-    # @_writeDialog 'Storing a local copy...'
     @getDoc options, (error, doc) =>
       if error?.status is 404
         doc  = @_newDoc()
