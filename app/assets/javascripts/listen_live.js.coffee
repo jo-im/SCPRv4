@@ -57,8 +57,6 @@ class scpr.ListenLive
                     clearTimeout @_pause_timeout
                     @_pause_timeout = null
 
-                @adResponse?.touchImpressions()
-
                 @nielsen?.play() if !@_inPreroll
 
             @player.on $.jPlayer.event.pause, (evt) =>
@@ -74,6 +72,7 @@ class scpr.ListenLive
                     @_play()
 
             @player.on $.jPlayer.event.ended, (evt) =>
+                @adResponse?.touchImpressions() if @_inPreroll
                 @_shouldTryAd = false
                 @_inPreroll   = false
                 @_play()
