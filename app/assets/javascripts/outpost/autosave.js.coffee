@@ -68,9 +68,10 @@ class outpost.Autosave
       @db.put mdoc, options, (error, doc) =>
         unless error
           @options._id = doc.id
-          @getDoc (error, doc) =>
-            timestamp = moment(doc.updatedAt).strftime('%m/%d/%y %I:%M:%S %p')
-            @_writeDialog "Local copy stored @ #{timestamp}"
+          @getDoc()
+          # @getDoc (error, doc) =>
+          #   timestamp = moment(doc.updatedAt).strftime('%m/%d/%y %I:%M:%S %p')
+          #   @_writeDialog "Local copy stored @ #{timestamp}"
           callback(error, doc) if callback
         else
           callback(error) if callback
@@ -102,12 +103,13 @@ class outpost.Autosave
 
   updateRevisions: ->
     selectElement = $('select#autosave-revisions')
-    selectElement.html('')
-    for revision in @revisions()
-      selectElement[0].innerHTML += "<option value='#{revision}'>#{revision}</option>"
-    selectElement.select2 'val', (@doc._rev or '').match(/-(.*)/)[1]
-    selectElement.on 'change', =>
-      @getDoc({rev: selectElement.val()})
+    if selectElement.length > 0
+      selectElement.html('')
+      for revision in @revisions()
+        selectElement[0].innerHTML += "<option value='#{revision}'>#{revision}</option>"
+      selectElement.select2 'val', (@doc._rev or '').match(/-(.*)/)[1]
+      selectElement.on 'change', =>
+        @getDoc({rev: selectElement.val()})
 
   revisions: ->
     revisionIds        = (@doc?._revisions?.ids or [])
@@ -145,20 +147,19 @@ class outpost.Autosave
     mergedDoc
 
   _changesHaveBeenMade: ->
-    timestamp = moment(@doc.updatedAt).strftime('%m/%d/%y %I:%M %p')
-    message   = "Outpost has recovered unsaved changes you made on #{timestamp}.\n
-            Click YES to RESTORE your unsaved changes.\n
-            Click NO  to LOSE your unsaved changes.\n
-            HINT: If your computer or browser crashed and you need to get your work back, click YES.\n
-            It's always safer to click YES."
-    @_createModal 'You have some unsaved changes.', message
+    modalHTML = @_render
+      template: '#autosave-recovery-modal-body-template'
+      locals: 
+        timestamp: moment(@doc.updatedAt).strftime('%m/%d/%y %I:%M %p')
+    @_createModal 'You have some unsaved changes.', modalHTML
 
   _createModal: (title, body) ->
-    modalSource   = $('#autosave-modal-template').html()
-    modalTemplate = Handlebars.compile(modalSource)
-    bodyTemplate  = Handlebars.compile(body)
-    modalHTML     = modalTemplate({title: title, body: bodyTemplate()})
-    $('body').append modalHTML
+    html = @_render
+      template: '#autosave-modal-template'
+      locals:
+        title: title
+        body: body
+    $('body').append html
     modal         = $('#autosave-modal')
     modal.one 'click', 'button', (e) =>
       if e.target.id is 'yes'
@@ -167,6 +168,14 @@ class outpost.Autosave
         @removeDoc()
       modal.remove()
     modal.modal({show: true, background: true})
+
+  _render: (options={}) ->
+    ## Pass in a tag ID through the `template` option.
+    options.locals ||= {}
+    if options.template
+      source   = $(options.template).html()
+      template = Handlebars.compile(source)
+      template(options.locals)
 
   _trigger: (name, doc) ->
     @events[name] ||= []

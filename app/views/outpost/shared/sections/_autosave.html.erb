@@ -8,15 +8,28 @@
           <h4 class="modal-title">{{title}}</h4>
         </div>
         <div class="modal-body">
-          <p>{{body}}</p>
+          <p>{{{body}}}</p>
         </div>
         <div class="modal-footer">
-          <button id='no'  type="button" class="btn btn-default no" data-dismiss="modal">No</button>
-          <button id='yes' type="button" class="btn btn-success yes" data-dismiss="modal">Yes</button>
+          <button id='no'  type="button" class="btn btn-default no" data-dismiss="modal">Dismiss</button>
+          <button id='yes' type="button" class="btn btn-success yes" data-dismiss="modal">Restore Changes</button>
         </div>
       </div>
     </div>
   </div>
+</script>
+
+<!-- Recovery Modal Body -->
+<script id="autosave-recovery-modal-body-template" type="text/x-handlebars-template">
+  <p>
+    Outpost has recovered unsaved changes you made on <strong>{{timestamp}}</strong>.
+  </p>
+  <p>
+    Would you like to restore these changes?
+  </p>
+  <p>
+    <strong>HINT:</strong> If your computer or browser crashed and you need to get your work back, click Restore Changes.  This is always the safest option.
+  </p>
 </script>
 
 <script>
