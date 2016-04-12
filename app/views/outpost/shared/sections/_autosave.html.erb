@@ -38,8 +38,9 @@
     id:   '<%= id %>',
     type: '<%= type %>',
     collections: ['aggregator.baseView', 'assetManager.assetsView'],
-    elements: ['tbody#bylines-fields', 'fieldset#form-block-audio']
+    elements: ['tbody#bylines-fields', 'fieldset#form-block-audio', 'fieldset#form-block-related-links tbody']
   });
+
   autosaver.checkForChanges();
   autosaver.listen();
 </script>

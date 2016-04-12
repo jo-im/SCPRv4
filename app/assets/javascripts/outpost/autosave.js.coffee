@@ -6,7 +6,6 @@ class outpost.Autosave
     @options = 
       _id           : 'new'
       id            : undefined  # this is the ID 
-      author        : 'anonymous'
       type          : 'document'
       databaseName  : 'scprv4_outpost'
       autoCompaction: true
@@ -28,16 +27,17 @@ class outpost.Autosave
   listen: ->
     # Listens for keypress and change events on our form.
     callback = (e) =>
-      unless e.target.id is 'autosave-revisions'
-        @shouldWarn = true
-        @_cancelTimeout()
-        @_waitAndSave()
+      @shouldWarn = true
+      @_cancelTimeout()
+      @_waitAndSave()
     for event in ['keydown', 'keyup', 'change']  # this is because keypress isn't triggered by backspace
       @document.on event, callback
 
   unlisten: ->
     @_cancelTimeout()
-    @fields().off 'change'
+    # @fields().off 'change'
+    for event in ['keydown', 'keyup', 'change']  # this is because keypress isn't triggered by backspace
+      @document.off event
 
   getDoc: (options={}, callback) ->
     if typeof options is 'function'
@@ -47,13 +47,12 @@ class outpost.Autosave
     @db.get @options._id, options, (error, doc)=>
       unless error
         @doc = doc
-        @updateRevisions()
         callback(error, doc) if callback
       else
         callback(error) if callback
         throw error
 
-  saveDoc: (options={}, callback)->
+  saveDoc: (options={}, callback) ->
     if typeof options is 'function'
       callback = options
       options  = {}
@@ -113,25 +112,6 @@ class outpost.Autosave
             return true
     false
 
-  updateRevisions: ->
-    selectElement = $('select#autosave-revisions')
-    if selectElement.length > 0
-      selectElement.html('')
-      for revision in @revisions()
-        selectElement[0].innerHTML += "<option value='#{revision}'>#{revision}</option>"
-      selectElement.select2 'val', (@doc._rev or '').match(/-(.*)/)[1]
-      selectElement.on 'change', =>
-        @getDoc({rev: selectElement.val()})
-
-  revisions: ->
-    revisionIds        = (@doc?._revisions?.ids or [])
-    i = revisionIds.length + 1
-    numerizedRevisions = []
-    for revisionId in revisionIds
-      numerizedRevisions.push "#{i}-#{revisionId}"
-      i--
-    numerizedRevisions
-
   on: (name, callback) ->
     @events[name] ||= []
     @events[name].push callback
@@ -150,10 +130,9 @@ class outpost.Autosave
       _id: @options._id
       id: @options.id
       type: @options.type
-      author: @options.author
       fields: {}
       collections: {}
-      markup: {}
+      elements: {}
     }
 
   _watchCollections: ->
@@ -177,7 +156,6 @@ class outpost.Autosave
     $(window).on 'beforeunload', =>
       if @shouldWarn
         return 'This content has unsaved changes.  If you want to keep these changes, you can stay on the page and click \'Save\'.'
-
 
   _waitAndSave: ->
     ## Will save the document after 1 second unless
@@ -247,23 +225,31 @@ class outpost.Autosave
     @getDoc (error, doc) =>
       unless error
         @_trigger('reflect', doc)
+        # elements  
+        # NOTE: This should happen before field reflection.
+        for selector of (doc.elements ||= {})
+          el = $(selector)
+          if el.length > 0
+            @DefaultReflectors["elementReflector"]?(el, doc.elements[selector])
+            @_trigger('elementReflect', el, doc.elements[selector])
         # fields
+        ## Not sure of a better way to do this.
+        $("select").not('[data-disable-select2="true"]').select2
+          placeholder: " "
+          allowClear: true
         for key of (doc.fields ||= {})
           el    = $("#main ##{key}")
           if el.length > 0
             type  = el.attr('type') or el.prop("tagName")?.toLowerCase()
             value = doc.fields[key]
             @DefaultReflectors["#{type}Reflector"]?(el, value)
+            @_trigger('fieldReflect', el, value)
         # collections
         for name of (doc.collections ||= {})
           if collectionView = eval("window.#{name}")
             collection = collectionView.collection
             @DefaultReflectors["collectionReflector"]?(name, collection, doc.collections[name])
-        # elements
-        for selector of (doc.elements ||= {})
-          el = $(selector)
-          if el.length > 0
-            @DefaultReflectors["elementReflector"]?(el, doc.elements[selector])
+            @_trigger('collectionReflect', name, collection, doc.collections[name])
 
   _serialize: ->
     # Convert the form fields on the page to a JSON
@@ -279,15 +265,18 @@ class outpost.Autosave
         fieldId       = field.attr('id')
         type          = field.attr('type') or field.prop("tagName")?.toLowerCase()
         doc.fields[fieldId]  = @DefaultSerializers["#{type}Serializer"]?(field)
+        @_trigger('fieldSerialize', field)
     # collections (e.g. asset manager, content aggregator)
     for name in (@options.collections or [])
       if collectionView = eval("window.#{name}")
         doc.collections[name] = @DefaultSerializers["collectionSerializer"]?(name, collectionView.collection)
+        @_trigger('collectionSerialize', name, collectionView.collection)
     # elements (e.g. stuff like bylines where fields might be dynamically appended)
-    for selector of (@options.elements or [])
+    for selector in (@options.elements or [])
       el = $(selector)
       if el.length > 0
-        doc.elements[selector] = @DefaultSerializers["elementSerializer"]?($(selector))
+        doc.elements[selector] = @DefaultSerializers["elementSerializer"]?(el)
+        @_trigger('elementSerialize', el)
     @_trigger('serialize', doc)
     doc
 
@@ -311,7 +300,11 @@ class outpost.Autosave
     collectionSerializer: (name, collection) ->
       collection.toJSON()
     elementSerializer: (el) ->
-      el.html()
+      shadowCopy = el.clone()
+      shadowCopy.find('.select2-container').remove() # strip select2 elements
+      shadowCopy.find('select.select2-offscreen').removeClass('select2-offscreen')
+      shadowCopy.find('script').remove() # remove script tags
+      shadowCopy.html()
 
   DefaultReflectors:
     ## Reflectors are used to take values stored in a
@@ -329,5 +322,11 @@ class outpost.Autosave
       collection.update json
       if collectionView = eval("window.#{name}")
         collectionView.render()
-    elementReflector: (el, value) ->
-      el.html doc.elements[selector]
+    elementReflector: (el, value) =>
+      recursiveDestroy = (el) ->
+        while el.firstChild
+          recursiveDestroy el.firstChild
+          el.removeChild el.firstChild
+      recursiveDestroy el[0]
+      el = $(el[0])
+      el.html value
