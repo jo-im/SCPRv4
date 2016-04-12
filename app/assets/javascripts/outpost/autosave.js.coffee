@@ -22,15 +22,11 @@ class outpost.Autosave
     ]
     @doc         = undefined
     @events      = {}
-    @shouldWarn  = false
-    $("form.simple_form").on 'submit', =>
-      @shouldWarn = false
-      true
-    $(window).on 'beforeunload', =>
-      if @shouldWarn
-        return 'This content has unsaved changes.  If you want to keep these changes, you can stay on the page and click \'Save\'.'
+    @_watchCollections()
+    @_initializeWarning()
 
   listen: ->
+    # Listens for keypress and change events on our form.
     callback = (e) =>
       unless e.target.id is 'autosave-revisions'
         @shouldWarn = true
@@ -95,6 +91,9 @@ class outpost.Autosave
         throw error if error
 
   checkForChanges: ->
+    ## Checks to see if the form values differ
+    ## from those in the autosave snapshot. 
+
     mapToIds = (collection) ->
       ids = $.map collection, (model) ->
         model.id
@@ -138,6 +137,7 @@ class outpost.Autosave
     @events[name].push callback
 
   fields: ->
+    # Returns all input fields we should be looking at.
     query = []
     query.push("#main #{elName}[id]") for elName in @elementNames
     query = query.join(", ")
@@ -156,7 +156,32 @@ class outpost.Autosave
       markup: {}
     }
 
+  _watchCollections: ->
+    # Observes changes to collections so
+    # we can know when to serialize them.
+    $(document).ready =>
+      for collectionName in (@options.collections or [])
+        if collection = eval("window.#{collectionName}").collection 
+          collection.on 'change', =>
+            @_waitAndSave()
+
+  _initializeWarning: ->
+    # This displays a warning window if a user tries to leave
+    # the page while they have unsaved changes.  The warning
+    # should not display if they have clicked 'Save', or if
+    # no changes have occurred.
+    @shouldWarn  = false
+    $("form.simple_form").on 'submit', =>
+      @shouldWarn = false
+      true
+    $(window).on 'beforeunload', =>
+      if @shouldWarn
+        return 'This content has unsaved changes.  If you want to keep these changes, you can stay on the page and click \'Save\'.'
+
+
   _waitAndSave: ->
+    ## Will save the document after 1 second unless
+    ## the timeout is cancelled by more typing.
     callback = => @saveDoc()
     @timeout = setTimeout callback, 1000 
 
@@ -174,6 +199,8 @@ class outpost.Autosave
     mergedDoc
 
   _changesHaveBeenMade: ->
+    # Displays modal if changes are detected
+    # in the autosaved document on page load.
     @shouldWarn = true
     modalHTML = @_render
       template: '#autosave-recovery-modal-body-template'
@@ -182,6 +209,7 @@ class outpost.Autosave
     @_createModal 'You have some unsaved changes.', modalHTML
 
   _createModal: (title, body) ->
+    # General purpose method for displaying a modal.
     html = @_render
       template: '#autosave-modal-template'
       locals:
@@ -198,7 +226,9 @@ class outpost.Autosave
     modal.modal({show: true, background: true})
 
   _render: (options={}) ->
+    ## Renders a Handlebars template.
     ## Pass in a tag ID through the `template` option.
+    ## Pass variables through the `locals` option.
     options.locals ||= {}
     if options.template
       source   = $(options.template).html()
@@ -211,6 +241,9 @@ class outpost.Autosave
       f(doc)
 
   _reflect: ->
+    # Take an autosaved document, if it exists,
+    # and display the values of its fields
+    # in the form on the page.
     @getDoc (error, doc) =>
       unless error
         @_trigger('reflect', doc)
@@ -233,6 +266,8 @@ class outpost.Autosave
             @DefaultReflectors["elementReflector"]?(el, doc.elements[selector])
 
   _serialize: ->
+    # Convert the form fields on the page to a JSON
+    # document that can be used to save to PouchDB.
     doc = 
       fields:      {}
       collections: {}
@@ -257,6 +292,8 @@ class outpost.Autosave
     doc
 
   _writeDialog: (text) ->
+    # Writes a snippet of text to the submit-row.
+    # Could be useful to display status.
     $(".submit-row span#dialog").text text    
 
   DefaultSerializers: 

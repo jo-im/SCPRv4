@@ -40,18 +40,6 @@
     collections: ['aggregator.baseView', 'assetManager.assetsView'],
     elements: ['tbody#bylines-fields', 'fieldset#form-block-audio']
   });
-  $(document).ready(function(){
-    window.assetManager.assetsView.collection.on('change', function(){
-      autosaver._waitAndSave()
-    })
-    window.aggregator.baseView.collection.on('change', function(){
-      autosaver._waitAndSave()
-    })
-  })
-  autosaver.on('serialize', function(doc){
-  })
-  autosaver.on('reflect', function(doc){
-  })
   autosaver.checkForChanges();
   autosaver.listen();
 </script>
