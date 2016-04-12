@@ -1,7 +1,7 @@
 class outpost.Autosave
-  Handlebars = require 'handlebars'
-  moment     = require 'moment-strftime'
-
+  Handlebars   = require 'handlebars'
+  moment       = require 'moment-strftime'
+  PouchDB.plugin require 'pouchdb-upsert'
   constructor: (options={}) ->
     @options = 
       _id           : 'new'
@@ -13,23 +13,27 @@ class outpost.Autosave
       revsLimit     : 100
     for option of options
       @options[option] = options[option]
-    @db         = new PouchDB(@options.databaseName, {auto_compaction: @options.autoCompaction, revs_limit: @options.revsLimit})
-    @document   = $(document)
+    @db           = new PouchDB(@options.databaseName, {auto_compaction: @options.autoCompaction, revs_limit: @options.revsLimit})
+    @document     = $(document)
     @elementNames = [
       'input'
       'textarea'
       'select'
     ]
-    query = []
-    query.push("#main #{elName}[id]") for elName in @elementNames
-    @query = query.join(", ")
-    @fields     = $(@query).not(':button').not(':hidden').not('#autosave-revisions')
-    @doc        = undefined
-    @events     = {}
+    @doc         = undefined
+    @events      = {}
+    @shouldWarn  = false
+    $("form.simple_form").on 'submit', =>
+      @shouldWarn = false
+      true
+    $(window).on 'beforeunload', =>
+      if @shouldWarn
+        return 'This content has unsaved changes.  If you want to keep these changes, you can stay on the page and click \'Save\'.'
 
   listen: ->
     callback = (e) =>
       unless e.target.id is 'autosave-revisions'
+        @shouldWarn = true
         @_cancelTimeout()
         @_waitAndSave()
     for event in ['keydown', 'keyup', 'change']  # this is because keypress isn't triggered by backspace
@@ -37,7 +41,7 @@ class outpost.Autosave
 
   unlisten: ->
     @_cancelTimeout()
-    @fields.off 'change'
+    @fields().off 'change'
 
   getDoc: (options={}, callback) ->
     if typeof options is 'function'
@@ -69,13 +73,13 @@ class outpost.Autosave
         unless error
           @options._id = doc.id
           @getDoc()
-          # @getDoc (error, doc) =>
-          #   timestamp = moment(doc.updatedAt).strftime('%m/%d/%y %I:%M:%S %p')
-          #   @_writeDialog "Local copy stored @ #{timestamp}"
           callback(error, doc) if callback
         else
-          callback(error) if callback
-          throw error
+          if error.status is 409
+            @db.upsert @options._id, -> doc
+          else
+            callback(error) if callback
+            throw error
 
   removeDoc: (options={}, callback) ->
     if typeof options is 'function'
@@ -91,12 +95,21 @@ class outpost.Autosave
         throw error if error
 
   checkForChanges: ->
+    mapToIds = (collection) ->
+      ids = $.map collection, (model) ->
+        model.id
+      ids.sort()
+
     @getDoc (error, doc) =>
       unless error
-        for field in @fields
-          field = $(field)
-          field_id = field.attr('id')
-          if field.val() isnt doc[field_id]
+        docA = @_serialize()
+        docB = doc
+        for key of docA.fields
+          if docA.fields[key] isnt docB.fields[key]
+            @_changesHaveBeenMade()
+            return true
+        for key of docA.collections
+          if mapToIds(docA.collections[key]).toString() isnt mapToIds(docB.collections[key]).toString()
             @_changesHaveBeenMade()
             return true
     false
@@ -124,10 +137,24 @@ class outpost.Autosave
     @events[name] ||= []
     @events[name].push callback
 
+  fields: ->
+    query = []
+    query.push("#main #{elName}[id]") for elName in @elementNames
+    query = query.join(", ")
+    $(query).not(':button').not('[type=hidden]').not('#autosave-revisions')
+
   # private
 
   _newDoc: ->
-    {_id: @options._id, id: @options.id, type: @options.type, author: @options.author}
+    {
+      _id: @options._id
+      id: @options.id
+      type: @options.type
+      author: @options.author
+      fields: {}
+      collections: {}
+      markup: {}
+    }
 
   _waitAndSave: ->
     callback = => @saveDoc()
@@ -147,6 +174,7 @@ class outpost.Autosave
     mergedDoc
 
   _changesHaveBeenMade: ->
+    @shouldWarn = true
     modalHTML = @_render
       template: '#autosave-recovery-modal-body-template'
       locals: 
@@ -186,26 +214,50 @@ class outpost.Autosave
     @getDoc (error, doc) =>
       unless error
         @_trigger('reflect', doc)
-        for key of doc
+        # fields
+        for key of (doc.fields ||= {})
           el    = $("#main ##{key}")
           if el.length > 0
             type  = el.attr('type') or el.prop("tagName")?.toLowerCase()
-            value = doc[key]
+            value = doc.fields[key]
             @DefaultReflectors["#{type}Reflector"]?(el, value)
+        # collections
+        for name of (doc.collections ||= {})
+          if collectionView = eval("window.#{name}")
+            collection = collectionView.collection
+            @DefaultReflectors["collectionReflector"]?(name, collection, doc.collections[name])
+        # elements
+        for selector of (doc.elements ||= {})
+          el = $(selector)
+          if el.length > 0
+            @DefaultReflectors["elementReflector"]?(el, doc.elements[selector])
 
   _serialize: ->
-    doc = {}
-    for field in @fields
+    doc = 
+      fields:      {}
+      collections: {}
+      elements:    {}
+    # fields
+    for field in @fields()
       field         = $(field)
       if field.length > 0
         fieldId       = field.attr('id')
         type          = field.attr('type') or field.prop("tagName")?.toLowerCase()
-        doc[fieldId]  = @DefaultSerializers["#{type}Serializer"]?(field)
+        doc.fields[fieldId]  = @DefaultSerializers["#{type}Serializer"]?(field)
+    # collections (e.g. asset manager, content aggregator)
+    for name in (@options.collections or [])
+      if collectionView = eval("window.#{name}")
+        doc.collections[name] = @DefaultSerializers["collectionSerializer"]?(name, collectionView.collection)
+    # elements (e.g. stuff like bylines where fields might be dynamically appended)
+    for selector of (@options.elements or [])
+      el = $(selector)
+      if el.length > 0
+        doc.elements[selector] = @DefaultSerializers["elementSerializer"]?($(selector))
     @_trigger('serialize', doc)
     doc
 
   _writeDialog: (text) ->
-    $(".submit-row span#dialog").text text
+    $(".submit-row span#dialog").text text    
 
   DefaultSerializers: 
     ## Serializers are used to convert a field element
@@ -219,6 +271,10 @@ class outpost.Autosave
       el.val()
     selectSerializer: (el) ->
       el.val()
+    collectionSerializer: (name, collection) ->
+      collection.toJSON()
+    elementSerializer: (el) ->
+      el.html()
 
   DefaultReflectors:
     ## Reflectors are used to take values stored in a
@@ -232,3 +288,9 @@ class outpost.Autosave
       el.val value
     selectReflector: (el, value) ->
       el.select2('val', value)
+    collectionReflector: (name, collection, json) ->
+      collection.update json
+      if collectionView = eval("window.#{name}")
+        collectionView.render()
+    elementReflector: (el, value) ->
+      el.html doc.elements[selector]
