@@ -2,6 +2,9 @@ class outpost.Autosave
   Handlebars   = require 'handlebars'
   moment       = require 'moment-strftime'
   PouchDB.plugin require 'pouchdb-upsert'
+  safeEval     = (code) ->
+    eval("try{\n#{code};\n}catch(err){};")   
+
   constructor: (options={}) ->
     @options = 
       _id           : 'new'
@@ -140,7 +143,7 @@ class outpost.Autosave
     # we can know when to serialize them.
     $(document).ready =>
       for collectionName in (@options.collections or [])
-        if collection = eval("window.#{collectionName}").collection 
+        if collection = safeEval("window.#{collectionName}")?.collection 
           collection.on 'change', =>
             @_waitAndSave()
 
@@ -246,7 +249,7 @@ class outpost.Autosave
             @_trigger('fieldReflect', el, value)
         # collections
         for name of (doc.collections ||= {})
-          if collectionView = eval("window.#{name}")
+          if collectionView = safeEval("window.#{name}")
             collection = collectionView.collection
             @DefaultReflectors["collectionReflector"]?(name, collection, doc.collections[name])
             @_trigger('collectionReflect', name, collection, doc.collections[name])
@@ -268,8 +271,7 @@ class outpost.Autosave
         @_trigger('fieldSerialize', field)
     # collections (e.g. asset manager, content aggregator)
     for name in (@options.collections or [])
-      try collectionView = eval("window.#{name}")
-      if collectionView
+      if collectionView = safeEval("window.#{name}")
         doc.collections[name] = @DefaultSerializers["collectionSerializer"]?(name, collectionView.collection)
         @_trigger('collectionSerialize', name, collectionView.collection)
     # elements (e.g. stuff like bylines where fields might be dynamically appended)
@@ -321,8 +323,7 @@ class outpost.Autosave
       el.select2('val', value)
     collectionReflector: (name, collection, json) ->
       collection.update json
-      try collectionView = eval("window.#{name}")
-      if collectionView
+      if collectionView = safeEval("window.#{name}")
         collectionView.render()
     elementReflector: (el, value) =>
       recursiveDestroy = (el) ->
