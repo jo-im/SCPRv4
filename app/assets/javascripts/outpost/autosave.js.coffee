@@ -268,7 +268,8 @@ class outpost.Autosave
         @_trigger('fieldSerialize', field)
     # collections (e.g. asset manager, content aggregator)
     for name in (@options.collections or [])
-      if collectionView = eval("window.#{name}")
+      try collectionView = eval("window.#{name}")
+      if collectionView
         doc.collections[name] = @DefaultSerializers["collectionSerializer"]?(name, collectionView.collection)
         @_trigger('collectionSerialize', name, collectionView.collection)
     # elements (e.g. stuff like bylines where fields might be dynamically appended)
@@ -320,7 +321,8 @@ class outpost.Autosave
       el.select2('val', value)
     collectionReflector: (name, collection, json) ->
       collection.update json
-      if collectionView = eval("window.#{name}")
+      try collectionView = eval("window.#{name}")
+      if collectionView
         collectionView.render()
     elementReflector: (el, value) =>
       recursiveDestroy = (el) ->
