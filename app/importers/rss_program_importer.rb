@@ -74,6 +74,8 @@ class RssProgramImporter
     end
 
     @external_program.save!
+    # temporary measure to prevent duplicates until we can figure out where the problem lies
+    @external_program.episodes.duplicates.destroy_all
   end
 
   add_transaction_tracer :sync, category: :task
