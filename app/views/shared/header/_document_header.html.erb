@@ -13,7 +13,9 @@
   <meta property="fb:app_id" content="129848480405753" />
   <meta name="description" content="<%= @META_DESCRIPT || "Member-supported public radio for Southern California. Award-winning local news and cultural programming alongside the best of NPR." %>"/>
   <meta name="author" content="<%= @META_AUTHOR || "Southern California Public Radio" %>"/>
-
+  <% if Rails.env.staging? %>
+    <meta name="robots" content="noindex">
+  <% end %>
   <%= yield :opengraph %>
 
   <meta property="og:image" content="http://scpr.org<%=image_path('kpcc-twitter-logo.png')%>" />
