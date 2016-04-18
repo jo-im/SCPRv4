@@ -17,9 +17,9 @@
     <meta property="og:site_name" content="Southern California Public Radio" />
     <%= tag "meta", name: "keywords", content: meta_information[:keywords] || "KPCC, California, Southern California, Los Angeles, Pasadena, SCPR, Southern California Public Radio" %>
     <meta name="author" content="Southern California Public Radio" />
-      <% if Rails.env.staging? %>
-        <meta name="robots" content="noindex">
-      <% end %>
+    <% if Rails.env.staging? %>
+      <meta name="robots" content="noindex">
+    <% end %>
     <%= yield :opengraph %>
 
     <%= csrf_meta_tags %>
