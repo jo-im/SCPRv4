@@ -266,6 +266,7 @@ class outpost.Autosave
       field         = $(field)
       if field.length > 0
         fieldId       = field.attr('id')
+        # debugger if fieldId.match('related_links')
         type          = field.attr('type') or field.prop("tagName")?.toLowerCase()
         doc.fields[fieldId]  = @DefaultSerializers["#{type}Serializer"]?(field)
         @_trigger('fieldSerialize', field)
@@ -302,6 +303,8 @@ class outpost.Autosave
       el.val()
     collectionSerializer: (name, collection) ->
       collection.toJSON()
+    urlSerializer: (el) ->
+      el.val()
     elementSerializer: (el) ->
       shadowCopy = el.clone()
       shadowCopy.find('.select2-container').remove() # strip select2 elements
@@ -316,6 +319,8 @@ class outpost.Autosave
     checkboxReflector: (el, value) ->
       el.prop 'checked', value
     textReflector: (el, value) ->
+      el.prop 'value', value
+    urlReflector: (el, value) ->
       el.prop 'value', value
     textareaReflector: (el, value) ->
       el.val value
