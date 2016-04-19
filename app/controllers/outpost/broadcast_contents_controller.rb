@@ -5,7 +5,7 @@ class Outpost::BroadcastContentsController < Outpost::ResourceController
     l.default_order_attribute   = "updated_at"
     l.default_order_direction   = DESCENDING
 
-    l.column :title
+    l.column :headline
     l.column :audio
 
     # l.column :published_to_pmp?, display: :display_pmp_status

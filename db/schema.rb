@@ -141,10 +141,11 @@ ActiveRecord::Schema.define(version: 20160419160426) do
   add_index "blogs_entry", ["updated_at"], name: "index_blogs_entry_on_updated_at", using: :btree
 
   create_table "broadcast_contents", force: :cascade do |t|
-    t.string   "title",        limit: 255
-    t.text     "script",       limit: 65535
+    t.string   "headline",     limit: 255
+    t.text     "body",         limit: 65535
     t.integer  "content_id",   limit: 4
     t.string   "content_type", limit: 255
+    t.integer  "status",       limit: 4,     null: false
     t.datetime "created_at",                 null: false
     t.datetime "updated_at",                 null: false
   end
