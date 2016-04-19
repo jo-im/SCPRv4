@@ -266,7 +266,6 @@ class outpost.Autosave
       field         = $(field)
       if field.length > 0
         fieldId       = field.attr('id')
-        # debugger if fieldId.match('related_links')
         type          = field.attr('type') or field.prop("tagName")?.toLowerCase()
         doc.fields[fieldId]  = @DefaultSerializers["#{type}Serializer"]?(field)
         @_trigger('fieldSerialize', field)
