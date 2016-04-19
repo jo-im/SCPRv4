@@ -106,7 +106,11 @@ class outpost.Autosave
         docA = @_serialize()
         docB = doc
         for key of docA.fields
-          if docA.fields[key] isnt docB.fields[key]
+          ## Blank fields are serialized as blank strings, but this is
+          ## equivalent to an undefined field in an autosaved doc, so
+          ## we had might as well consider a blank string the default 
+          ## for a non-value.
+          if (docA.fields[key] or '') isnt (docB.fields[key] or '')
             @_changesHaveBeenMade()
             return true
         for key of docA.collections
