@@ -1,6 +1,7 @@
 //= require jquery-ui-1.10.0.custom.min
 //= require date.min
 //= require select2
+//= require pouchdb/dist/pouchdb
 
 //= require bootstrap-scrollspy
 //= require bootstrap-alert
@@ -35,3 +36,4 @@
 //= require outpost/aggregator
 //= require outpost/ckeditor/inline_assets
 //= require outpost/dockable
+//= require outpost/autosave

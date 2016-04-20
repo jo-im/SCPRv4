@@ -26,4 +26,5 @@
   <script>
     preview = new outpost.Preview({baseUrl: '<%= model.admin_index_path %>'});
   </script>
+  <%= render partial: 'outpost/shared/sections/autosave', locals: {id: @record.id, obj_key: @record.obj_key, type: @record.class.to_s.underscore} %>
 <% end %>

@@ -6,6 +6,9 @@ machine:
     version:
       '2.1.1'
 
+  node:
+    version: '5.1.0'
+
   environment:
     ES_INCLUDE: /home/ubuntu/elasticsearch-1.5.2/bin/elasticsearch.in.sh
 
@@ -22,3 +25,4 @@ database:
     - cp config/templates/database.yml.ci config/database.yml
     - cp config/templates/secrets.yml.ci config/secrets.yml
     - bundle exec rake db:create db:schema:load
+    - npm install --dev
