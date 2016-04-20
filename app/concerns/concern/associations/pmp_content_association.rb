@@ -6,7 +6,7 @@ module Concern
         if @publish_to_pmp.nil?
           pmp_content ? true : false
         else
-          [true, "true", 1, "1", "yes"].include? @publish_to_pmp
+          is_true? @publish_to_pmp
         end
       end
 
@@ -45,7 +45,7 @@ module Concern
       def publish_pmp_content
         if valid?
           content = pmp_content
-          if publish_to_pmp && content && (try(:published?) || try(:publishing?))
+          if publish_to_pmp && content && pmp_publishable?
             async_publish_pmp_content
           end
         end
@@ -66,6 +66,22 @@ module Concern
         ContentRenderer.new(self).render_with_assets
       end
 
+      def templated_body
+        # Returns the straight body
+        # except without specific tags
+        ContentRenderer.new(self).render_templated
+      end
+
+      def __versioned_changes
+        old_value = pmp_content.present?
+        new_value = is_true?(@publish_to_pmp)
+        if new_value != old_value
+          super.merge({'publish_to_pmp' => [old_value.to_s, new_value.to_s]})
+        else
+          super
+        end
+      end
+
       ["story", "audio", "image", "episode"].each do |profile_name|
         mod = Module.new do
           extend ActiveSupport::Concern
@@ -83,6 +99,17 @@ module Concern
 
       private
 
+      def is_true? value
+        # in the context of how we are treating a value we 
+        # are getting from a form
+        [true, "true", 1, "1", "yes"].include? value
+      end
+
+      def pmp_publishable?
+        ## This just tells us whether or not we have the right status to publish.
+        try(:pending?) || try(:published?) || try(:publishing?)
+      end
+
       class ContentRenderer < ActionView::Base
         include ApplicationHelper
         def initialize content
@@ -91,7 +118,6 @@ module Concern
           @pmp_content = content.pmp_content
           super ActionController::Base.view_paths, {}, ActionController::Base.new
         end
-
         def render_with_assets
           render(template: "pmp/#{@pmp_content.profile}", layout: false, locals: {content: @content})
         end
@@ -99,7 +125,10 @@ module Concern
           Nokogiri::HTML(@content.body).xpath("//text()").to_s
         end
         def render_templated
-          @content.body
+          banned_tags = "iframe,script"
+          doc = Nokogiri::HTML::DocumentFragment.parse(@content.body)
+          doc.css(banned_tags).each{|t| t.replace(Nokogiri::HTML::DocumentFragment.parse(''))}
+          doc.to_s.html_safe
         end
         def params
           {} # ActionView expects this, but we obviously it isn't useful in this context.

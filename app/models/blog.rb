@@ -6,6 +6,7 @@ class Blog < ActiveRecord::Base
   include Concern::Validations::SlugValidation
   include Concern::Associations::RelatedLinksAssociation
   include Concern::Associations::PmpContentAssociation::StoryProfile
+  include Concern::Associations::EpisodeRundownAssociation
 
   include Concern::Model::Searchable
 

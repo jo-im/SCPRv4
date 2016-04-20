@@ -14,4 +14,16 @@ describe Tag, :indexing do
     end
   end
 
+  describe '#pmp_alias' do
+    it "defaults to the slug" do
+      tag = create :tag
+      expect(tag.pmp_alias).to eq tag.slug 
+    end
+    it "assigns a custom alias" do
+      tag = create :tag
+      tag.pmp_alias = "green-eggs-and-ham"
+      tag.save && tag.reload
+      expect(tag.pmp_alias).to eq "green-eggs-and-ham"
+    end
+  end
 end

@@ -17,12 +17,12 @@ class PmpStory < PmpContent
       title:            content.headline,
       teaser:           content.teaser,
       byline:           content.byline,
-      tags:             content.try(:tags).try(:map, &:slug) || [],
-      published:        content.try(:published_at) || content.created_at,
+      tags:             content.try(:tags).try(:map, &:pmp_alias) || [],
+      published:        content.try(:published_at) || content.updated_at,
       guid:             guid,
       description:      content.plaintext_body,
       contentencoded:   content.rendered_body,
-      contenttemplated: content.body,
+      contenttemplated: content.templated_body,
     })
     doc.links['permissions'] = permissions
     doc.links['alternate']   = content.public_url

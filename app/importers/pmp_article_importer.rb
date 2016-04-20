@@ -22,15 +22,19 @@ module PmpArticleImporter
       ## concatenated to the stories array.
       stories.concat download_stories("Marketplace", tag: "marketplace")
       stories.concat download_stories("American Homefront Project", collection: "4c6e24e5-484f-49e8-be8d-452cfddd6252")
-
+      stories.concat download_stories("California Counts", tag: "CACounts", creator: "!aa9342f6-6e25-4ea2-93e3-31d89a010668") # stories that are not our own
       stories
+    end
+
+    def query query={}
+      pmp.root.query['urn:collectiondoc:query:docs']
+        .where({profile: PROFILE, limit: LIMIT}.merge(query))
+        .retrieve.items
     end
 
     def download_stories news_agency_name, query={}
       added = []
-      stories = pmp.root.query['urn:collectiondoc:query:docs']
-        .where({profile: PROFILE, limit: LIMIT}.merge(query))
-        .retrieve.items
+      stories = query(query)
       log "#{stories.size} PMP stories from #{news_agency_name} found"
       stories.reject { |s|
         RemoteArticle.exists?(source: SOURCE, article_id: s.guid)
@@ -108,7 +112,7 @@ module PmpArticleImporter
       # Is "alternate" always going to be a usable link?
       # I guess we'll find out eventually.
       # For now it seems that it's used to point to the live article.
-      link = pmp_story.alternate.first
+      link = (pmp_story.alternate || []).first
       if link && link.href
         related_link = RelatedLink.new(
           :link_type    => "website",
@@ -183,7 +187,7 @@ module PmpArticleImporter
               asset = AssetHost::Asset.create(
                 :url     => primary_image.href,
                 :title   => pmp_story.title,
-                :owner   => "Marketplace",
+                :owner   => article.news_agency,
                 :note    => "Imported from PMP: #{pmp_story.guid}"
               )
 

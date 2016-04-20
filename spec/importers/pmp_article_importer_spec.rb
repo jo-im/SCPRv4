@@ -28,6 +28,11 @@ describe PmpArticleImporter do
           :content_type => "application/json",
           :body => load_fixture('api/pmp/ahp_stories.json')
         })
+      stub_request(:get, %r|pmp\.io/docs|)
+          .with(query: {"tag" => "CACounts", "limit" => "10", "profile" => "story"}).to_return({
+          :content_type => "application/json",
+          :body => load_fixture('api/pmp/ahp_stories.json')
+        })
     end
 
     it 'builds cached articles from the API response' do

@@ -17,7 +17,9 @@
     <meta property="og:site_name" content="Southern California Public Radio" />
     <%= tag "meta", name: "keywords", content: meta_information[:keywords] || "KPCC, California, Southern California, Los Angeles, Pasadena, SCPR, Southern California Public Radio" %>
     <meta name="author" content="Southern California Public Radio" />
-
+    <% if Rails.env.staging? %>
+      <meta name="robots" content="noindex">
+    <% end %>
     <%= yield :opengraph %>
 
     <%= csrf_meta_tags %>
@@ -76,8 +78,8 @@
         $('head').append('<meta name="apple-itunes-app" content="app-id=293825085"/>');
       }
     </script>
-    <script type="text/javascript" src="//nexus.ensighten.com/mogointeractive/1078/Bootstrap.js"></script>
-    <%= render "shared/header/ad_scripts" %>
+
+      <%= render "shared/header/ad_scripts" %>
 
     <%= yield :head_tag %>
 </head>

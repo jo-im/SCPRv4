@@ -32,6 +32,38 @@ describe Concern::Associations::PmpContentAssociation do
       end
     end
 
+    describe 'versions' do
+      context 'published_to_pmp? changes' do
+        context 'from false to true' do
+          it 'is included in a version' do
+            content = create :news_story
+            content.update publish_to_pmp: true
+            expect(content.versions.last.object_changes['publish_to_pmp']).to eq ['false', 'true']
+          end
+        end
+        context 'from true to false' do
+          it 'is included in a version' do
+            content = create :news_story, publish_to_pmp: true
+            content.update publish_to_pmp: false
+            expect(content.versions.last.object_changes['publish_to_pmp']).to eq ['true', 'false']
+          end
+        end
+        it 'is included with other changes in version' do
+          content = create :news_story
+          content.update publish_to_pmp: true, headline: "a new headline"
+          expect(content.versions.last.object_changes['publish_to_pmp']).to be
+          expect(content.versions.last.object_changes['headline']).to include('a new headline')
+        end
+      end
+      context 'published_to_pmp? does not change' do
+        it 'is not included in a version' do
+          content = create :news_story, publish_to_pmp: true
+          content.update headline: "Title changed"
+          expect(content.versions.last.object_changes['publish_to_pmp']).to eq nil
+        end
+      end
+    end
+
     describe '#pmp_permission_groups' do
       context 'content has california-counts tag' do
         it 'returns a link' do
@@ -62,6 +94,16 @@ describe Concern::Associations::PmpContentAssociation do
           expect(Resque).to receive(:enqueue).with(
             Job::PublishPmpContent, "story", story.pmp_content.id).ordered
           story.update status: 5
+        end
+      end
+      context 'news story is pending' do
+        it 'queues up a pmp content publish' do
+          story = create :news_story, status: 0, publish_to_pmp: true
+          allow(Resque).to receive(:enqueue).and_return nil
+          allow(Resque).to receive(:enqueue).and_return nil
+          expect(Resque).to receive(:enqueue).with(
+            Job::PublishPmpContent, "story", story.pmp_content.id).ordered
+          story.update status: 3
         end
       end
       context 'news story is updated' do 

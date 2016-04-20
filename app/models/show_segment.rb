@@ -20,6 +20,8 @@ class ShowSegment < ActiveRecord::Base
   include Concern::Associations::EditionsAssociation
   include Concern::Associations::VerticalArticleAssociation
   include Concern::Associations::ProgramArticleAssociation
+  include Concern::Associations::PmpContentAssociation::StoryProfile
+  include Concern::Associations::EpisodeRundownAssociation
   include Concern::Validations::ContentValidation
   include Concern::Callbacks::SetPublishedAtCallback
   include Concern::Callbacks::GenerateSlugCallback
@@ -35,7 +37,6 @@ class ShowSegment < ActiveRecord::Base
   include Concern::Methods::CommentMethods
   include Concern::Methods::AssetDisplayMethods
   include Concern::Sanitizers::Content
-  include Concern::Associations::PmpContentAssociation::StoryProfile
 
   self.disqus_identifier_base = "shows/segment"
   self.public_route_key = "segment"
@@ -44,18 +45,6 @@ class ShowSegment < ActiveRecord::Base
   belongs_to :show,
     :class_name   => "KpccProgram",
     :touch        => true
-
-  has_many :rundowns,
-    :class_name     => "ShowRundown",
-    :foreign_key    => "content_id",
-    :as             => "content",
-    :dependent      => :destroy
-
-  has_many :episodes,
-    -> { order('status desc,air_date desc') },
-    :through    => :rundowns,
-    :source     => :episode,
-    :autosave   => true
 
   alias_attribute :url, :public_url
 

@@ -16,6 +16,7 @@ class ContentShell < ActiveRecord::Base
   include Concern::Associations::QuoteAssociation
   include Concern::Associations::EditionsAssociation
   include Concern::Associations::VerticalArticleAssociation
+  include Concern::Associations::EpisodeRundownAssociation
   include Concern::Validations::PublishedAtValidation
   include Concern::Associations::PmpContentAssociation::StoryProfile
   #include Concern::Callbacks::CacheExpirationCallback

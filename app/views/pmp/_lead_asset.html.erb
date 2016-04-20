@@ -1,0 +1,12 @@
+<% if asset.owner.try(:include?, "KPCC") %>
+  <figure class="asset <%= asset.orientation %>">
+      <b><%= image_tag asset.asset.full.url, alt: asset.caption %></b>
+      <% if asset.caption %>
+        <figcaption>
+            <span>
+                <%= asset.caption %><mark> <%= asset.asset.owner if asset.asset.owner.present? %></mark>
+            </span>
+        </figcaption>
+      <% end %>
+  </figure>
+<% end %>
