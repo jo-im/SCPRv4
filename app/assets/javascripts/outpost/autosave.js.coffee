@@ -86,6 +86,7 @@ class outpost.Autosave
     options.revs     ||= true
     @db.remove @doc, options, (error, doc) =>
       unless error
+        @doc = undefined
         console.log 'doc removed'
         callback(error, doc) if callback
       else
