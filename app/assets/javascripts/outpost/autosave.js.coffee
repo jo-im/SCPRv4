@@ -128,7 +128,7 @@ class outpost.Autosave
     query = []
     query.push("#main #{elName}[id]") for elName in @elementNames
     query = query.join(", ")
-    $(query).not(':button').not('[type=hidden]').not('#autosave-revisions')
+    $(query).not(':button').not(':hidden').not('#autosave-revisions')
 
   # private
 
@@ -290,7 +290,7 @@ class outpost.Autosave
   _writeDialog: (text) ->
     # Writes a snippet of text to the submit-row.
     # Could be useful to display status.
-    $(".submit-row span#dialog").text text    
+    $(".submit-row span#dialog").text text
 
   DefaultSerializers: 
     ## Serializers are used to convert a field element
