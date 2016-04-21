@@ -24,6 +24,10 @@ class ExternalEpisode < ActiveRecord::Base
 
   scope :published, -> { order("air_date desc") }
 
+  scope :duplicates, -> { 
+    where.not(id: select("MAX(id) as id").group([:title, :external_program_id]).pluck(:id))
+  }
+
   # This needs to match ShowEpisode
   def route_hash
     return {} if !self.persisted?
