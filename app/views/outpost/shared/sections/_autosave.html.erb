@@ -38,7 +38,7 @@
     id:   '<%= id %>',
     type: '<%= type %>',
     collections: ['aggregator.baseView', 'assetManager.assetsView'],
-    elements: ['tbody#bylines-fields', 'fieldset#form-block-audio', 'fieldset#form-block-related-links tbody']
+    elements: ['tbody#bylines-fields', 'fieldset#form-block-related-links tbody'] //removed 'fieldset#form-block-audio' until we can figure out how to deal with it.
   });
 
   autosaver.checkForChanges();
