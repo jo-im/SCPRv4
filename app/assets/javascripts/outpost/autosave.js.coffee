@@ -206,6 +206,7 @@ class outpost.Autosave
       if e.target.id is 'yes'
         @_reflect()
       else if e.target.id is 'no'
+        @shouldWarn = false
         @removeDoc()
       modal.remove()
     modal.modal({show: true, background: true})
