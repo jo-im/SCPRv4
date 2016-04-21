@@ -1,4 +1,4 @@
-//= require fastclick
+//= require fastclick/lib/fastclick
 //= require slideshow/new_slideshow
 
 //= require new/behaviors

@@ -1,13 +1,11 @@
 //= require modernizr.custom
-//= require jquery.jplayer.min
-//= require moment-strftime
-//= require moment-twitter
-//= require waypoints.min
-//= require widowtamer-min
-//= require jquery-ajax-xdomain
+//= require jplayer/dist/jplayer/jquery.jplayer.min
+//= require waypoints/lib/jquery.waypoints.min
+//= require windowtamer/widowtamer-min
+//= require jQuery-ajaxTransport-XDomainRequest/jquery.xdomainrequest.min
 
 //= require_directory ./t_listen/
-//= require swfobject.min
+//= require swfobject/index.js
 
 //= require_tree ./slideshow/templates
 
@@ -48,3 +46,6 @@
 
 //= require short-list-modules.js
 //= require jquery.scrolldepth
+
+moment = require('moment-strftime');
+moment = require('moment-twitter');

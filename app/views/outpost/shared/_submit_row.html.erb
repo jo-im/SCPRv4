@@ -13,6 +13,10 @@
     </div>
 
     <div class="pull-right">
+      <span id="dialog">
+        <!-- This is for scripts that can take advantage of the 
+             submit row to display a piece of information -->
+      </span>
       <% if content_for :preview_button %>
         <%= content_for :preview_button %>
       <% else %>
