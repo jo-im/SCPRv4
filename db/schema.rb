@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160322172046) do
+ActiveRecord::Schema.define(version: 20160422231747) do
 
   create_table "abstracts", force: :cascade do |t|
     t.string   "source",               limit: 255
@@ -20,8 +20,9 @@ ActiveRecord::Schema.define(version: 20160322172046) do
     t.text     "summary",              limit: 16777215
     t.integer  "category_id",          limit: 4
     t.datetime "article_published_at"
-    t.datetime "created_at",                            null: false
-    t.datetime "updated_at",                            null: false
+    t.datetime "created_at",                                            null: false
+    t.datetime "updated_at",                                            null: false
+    t.boolean  "needs_reindex",                         default: false
   end
 
   add_index "abstracts", ["article_published_at"], name: "index_abstracts_on_article_published_at", using: :btree
@@ -58,6 +59,13 @@ ActiveRecord::Schema.define(version: 20160322172046) do
   add_index "auth_user", ["is_superuser"], name: "index_auth_user_on_is_superuser", using: :btree
   add_index "auth_user", ["name"], name: "index_auth_user_on_name", using: :btree
   add_index "auth_user", ["username", "can_login"], name: "index_auth_user_on_username_and_can_login", using: :btree
+
+  create_table "better_homepages", force: :cascade do |t|
+    t.datetime "published_at"
+    t.integer  "status",       limit: 4, null: false
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
+  end
 
   create_table "bios_bio", force: :cascade do |t|
     t.integer  "user_id",        limit: 4
@@ -125,6 +133,7 @@ ActiveRecord::Schema.define(version: 20160322172046) do
     t.boolean  "is_from_pij",                         default: false, null: false
     t.integer  "feature_type_id",  limit: 4
     t.integer  "asset_display_id", limit: 4
+    t.boolean  "needs_reindex",                       default: false
   end
 
   add_index "blogs_entry", ["asset_display_id"], name: "index_blogs_entry_on_asset_display_id", using: :btree
@@ -135,6 +144,18 @@ ActiveRecord::Schema.define(version: 20160322172046) do
   add_index "blogs_entry", ["status", "published_at"], name: "index_blogs_entry_on_status_and_published_at", using: :btree
   add_index "blogs_entry", ["status"], name: "index_blogs_entry_on_status", using: :btree
   add_index "blogs_entry", ["updated_at"], name: "index_blogs_entry_on_updated_at", using: :btree
+
+  create_table "broadcast_contents", force: :cascade do |t|
+    t.string   "headline",     limit: 255
+    t.text     "body",         limit: 65535
+    t.integer  "content_id",   limit: 4
+    t.string   "content_type", limit: 255
+    t.integer  "status",       limit: 4,     null: false
+    t.datetime "created_at",                 null: false
+    t.datetime "updated_at",                 null: false
+  end
+
+  add_index "broadcast_contents", ["content_type", "content_id"], name: "index_broadcast_contents_on_content_type_and_content_id", using: :btree
 
   create_table "caches", force: :cascade do |t|
     t.string "key",   limit: 255
@@ -205,14 +226,15 @@ ActiveRecord::Schema.define(version: 20160322172046) do
   create_table "contentbase_contentshell", force: :cascade do |t|
     t.string   "headline",        limit: 255
     t.string   "site",            limit: 255
-    t.text     "body",            limit: 4294967295,             null: false
+    t.text     "body",            limit: 4294967295,                 null: false
     t.string   "url",             limit: 255
-    t.integer  "status",          limit: 4,          default: 0, null: false
+    t.integer  "status",          limit: 4,          default: 0,     null: false
     t.datetime "published_at"
-    t.datetime "created_at",                                     null: false
-    t.datetime "updated_at",                                     null: false
+    t.datetime "created_at",                                         null: false
+    t.datetime "updated_at",                                         null: false
     t.integer  "category_id",     limit: 4
     t.integer  "feature_type_id", limit: 4
+    t.boolean  "needs_reindex",                      default: false
   end
 
   add_index "contentbase_contentshell", ["category_id"], name: "contentbase_contentshell_42dc49bc", using: :btree
@@ -314,6 +336,7 @@ ActiveRecord::Schema.define(version: 20160322172046) do
     t.string   "hashtag",             limit: 255
     t.integer  "category_id",         limit: 4
     t.integer  "asset_display_id",    limit: 4
+    t.boolean  "needs_reindex",                          default: false
   end
 
   add_index "events", ["asset_display_id"], name: "index_events_on_asset_display_id", using: :btree
@@ -442,10 +465,11 @@ ActiveRecord::Schema.define(version: 20160322172046) do
   add_index "layout_homepage", ["updated_at"], name: "index_layout_homepage_on_updated_at", using: :btree
 
   create_table "layout_homepagecontent", force: :cascade do |t|
-    t.integer "homepage_id",  limit: 4,                null: false
-    t.integer "content_id",   limit: 4
-    t.integer "position",     limit: 4,   default: 99, null: false
-    t.string  "content_type", limit: 255
+    t.integer "homepage_id",   limit: 4,                null: false
+    t.integer "content_id",    limit: 4
+    t.integer "position",      limit: 4,   default: 99, null: false
+    t.string  "content_type",  limit: 255
+    t.string  "homepage_type", limit: 255
   end
 
   add_index "layout_homepagecontent", ["content_id", "content_type"], name: "index_layout_homepagecontent_on_content_id_and_content_type", using: :btree
@@ -518,6 +542,7 @@ ActiveRecord::Schema.define(version: 20160322172046) do
     t.boolean  "is_from_pij",                         default: false, null: false
     t.integer  "feature_type_id",  limit: 4
     t.integer  "asset_display_id", limit: 4
+    t.boolean  "needs_reindex",                       default: false
   end
 
   add_index "news_story", ["asset_display_id"], name: "index_news_story_on_asset_display_id", using: :btree
@@ -538,17 +563,18 @@ ActiveRecord::Schema.define(version: 20160322172046) do
   add_index "permissions", ["resource"], name: "index_permissions_on_resource_and_action", using: :btree
 
   create_table "pij_query", force: :cascade do |t|
-    t.string   "slug",         limit: 255
-    t.string   "headline",     limit: 255
-    t.text     "teaser",       limit: 4294967295
-    t.text     "body",         limit: 4294967295
-    t.string   "query_type",   limit: 255
+    t.string   "slug",          limit: 255
+    t.string   "headline",      limit: 255
+    t.text     "teaser",        limit: 4294967295
+    t.text     "body",          limit: 4294967295
+    t.string   "query_type",    limit: 255
     t.datetime "published_at"
-    t.boolean  "is_featured",                     default: false, null: false
-    t.datetime "created_at",                                      null: false
-    t.datetime "updated_at",                                      null: false
-    t.string   "pin_query_id", limit: 255
-    t.integer  "status",       limit: 4
+    t.boolean  "is_featured",                      default: false, null: false
+    t.datetime "created_at",                                       null: false
+    t.datetime "updated_at",                                       null: false
+    t.string   "pin_query_id",  limit: 255
+    t.integer  "status",        limit: 4
+    t.boolean  "needs_reindex",                    default: false
   end
 
   add_index "pij_query", ["is_featured"], name: "index_pij_query_on_is_featured", using: :btree
@@ -740,17 +766,18 @@ ActiveRecord::Schema.define(version: 20160322172046) do
   add_index "schedule_occurrences", ["updated_at"], name: "index_schedule_occurrences_on_updated_at", using: :btree
 
   create_table "shows_episode", force: :cascade do |t|
-    t.integer  "show_id",             limit: 4,          null: false
+    t.integer  "show_id",             limit: 4,                          null: false
     t.datetime "air_date"
     t.string   "headline",            limit: 255
     t.text     "teaser",              limit: 4294967295
     t.datetime "published_at"
-    t.integer  "status",              limit: 4,          null: false
-    t.datetime "created_at",                             null: false
-    t.datetime "updated_at",                             null: false
+    t.integer  "status",              limit: 4,                          null: false
+    t.datetime "created_at",                                             null: false
+    t.datetime "updated_at",                                             null: false
     t.text     "body",                limit: 65535
     t.integer  "asset_display_id",    limit: 4
     t.integer  "original_segment_id", limit: 4
+    t.boolean  "needs_reindex",                          default: false
   end
 
   add_index "shows_episode", ["air_date"], name: "index_shows_episode_on_air_date", using: :btree
@@ -773,20 +800,21 @@ ActiveRecord::Schema.define(version: 20160322172046) do
   add_index "shows_rundown", ["position"], name: "index_shows_rundown_on_segment_order", using: :btree
 
   create_table "shows_segment", force: :cascade do |t|
-    t.integer  "show_id",          limit: 4,          null: false
+    t.integer  "show_id",          limit: 4,                          null: false
     t.string   "headline",         limit: 255
     t.string   "slug",             limit: 255
     t.text     "teaser",           limit: 4294967295
     t.text     "body",             limit: 4294967295
-    t.datetime "created_at",                          null: false
-    t.integer  "status",           limit: 4,          null: false
+    t.datetime "created_at",                                          null: false
+    t.integer  "status",           limit: 4,                          null: false
     t.string   "short_headline",   limit: 255
     t.datetime "published_at"
-    t.datetime "updated_at",                          null: false
+    t.datetime "updated_at",                                          null: false
     t.integer  "category_id",      limit: 4
     t.boolean  "is_from_pij"
     t.integer  "feature_type_id",  limit: 4
     t.integer  "asset_display_id", limit: 4
+    t.boolean  "needs_reindex",                       default: false
   end
 
   add_index "shows_segment", ["asset_display_id"], name: "index_shows_segment_on_asset_display_id", using: :btree

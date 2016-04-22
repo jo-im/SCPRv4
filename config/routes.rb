@@ -298,6 +298,8 @@ Scprv4::Application.routes.draw do
     resources :events, concerns: [:preview, :search]
     resources :pledge_drives, concerns: [:search]
 
+    resources :better_homepages, concerns: [:preview, :search]
+
     resources :remote_articles, only: [:index], concerns: [:search] do
       member do
         post "import", as: :import

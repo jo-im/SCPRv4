@@ -1,9 +1,7 @@
-class Homepage < ActiveRecord::Base
-  self.table_name = "layout_homepage"
+class BetterHomepage < ActiveRecord::Base
   outpost_model
   has_secretary
   has_status
-
 
   include Concern::Scopes::PublishedScope
   include Concern::Associations::ContentAlarmAssociation
@@ -12,16 +10,6 @@ class Homepage < ActiveRecord::Base
   include Concern::Model::Searchable
   include Concern::Callbacks::HomepageCachingCallback
   include Concern::Callbacks::TouchCallback
-
-
-  TEMPLATES = {
-    "default"    => "Visual Left",
-    "lead_right" => "Visual Right",
-    "wide"       => "Large Visual Top"
-  }
-
-  TEMPLATE_OPTIONS = TEMPLATES.invert
-
 
   status :draft do |s|
     s.id = 0
@@ -41,7 +29,6 @@ class Homepage < ActiveRecord::Base
     s.published!
   end
 
-
   has_many :content,
     -> { order('position') },
     :class_name   => "HomepageContent",
@@ -52,7 +39,6 @@ class Homepage < ActiveRecord::Base
   tracks_association :content
 
   validates \
-    :base,
     :status,
     presence: true
 
@@ -60,20 +46,17 @@ class Homepage < ActiveRecord::Base
     self.update_attributes(status: self.class.status_id(:live))
   end
 
-
   def articles
     @articles ||= self.content.includes(:content).map do |c|
       c.content.to_article
     end
   end
 
-
   def category_previews
     @category_previews ||= begin
       Category.previews(exclude: self.articles)
     end
   end
-
 
   private
 

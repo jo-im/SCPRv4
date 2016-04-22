@@ -15,5 +15,5 @@ class HomepageContent < ActiveRecord::Base
     -> { where(status: ContentBase::STATUS_LIVE) },
     :polymorphic    => true
 
-  belongs_to :homepage
+  belongs_to :homepage, polymorphic: true
 end
