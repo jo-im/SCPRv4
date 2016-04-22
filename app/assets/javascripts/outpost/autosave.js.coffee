@@ -195,7 +195,7 @@ class outpost.Autosave
     $("form.simple_form").on 'submit', =>
       @shouldWarn = false
       true
-    $(window).on 'beforeunload', =>
+    $(window).one 'beforeunload', =>
       if @shouldWarn
         return 'This content has unsaved changes.  If you want to keep these changes, you can stay on the page and click \'Save\'.'
 
