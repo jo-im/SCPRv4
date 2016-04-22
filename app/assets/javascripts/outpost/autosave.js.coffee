@@ -13,6 +13,7 @@ class outpost.Autosave
       databaseName  : 'scprv4_outpost'
       autoCompaction: true
       revsLimit     : 100
+      exclude       : []
     for option of options
       @options[option] = options[option]
     @db           = new PouchDB(@options.databaseName, {auto_compaction: @options.autoCompaction, revs_limit: @options.revsLimit})
@@ -23,26 +24,49 @@ class outpost.Autosave
       'select'
     ]
     @doc         = undefined
+    @form        = $('form.simple_form[id]')
+    # Populate elements we are tracking for DOM changes.
+    @elements    = new outpost.Autosave.Elements
+    for selector in (@options.elements or [])
+      @elements.push new outpost.Autosave.Element(selector)
+    # Populate inputs & textareas that we are going to track changes for.
+    @fields      = new outpost.Autosave.Elements
+      find: [("#main #{elName}[id]" for elName in @elementNames).join(", ")]
+      not: [':button', '[type=hidden]', '.datetime:hidden']
     @events      = {}
     @_watchCollections()
     @_initializeWarning()
+    @_checkForChangesThenListen()
 
   listen: ->
-    # Listens for keypress and change events on our form.
-    callback = (e) =>
+    # Listens for changes to our form.
+    changeCallback = (e) =>
+      console.log 'change made'
       @shouldWarn = true
       @_cancelTimeout()
       @_waitAndSave()
-    for event in ['keydown', 'keyup', 'change']  # this is because keypress isn't triggered by backspace
-      @document.on event, callback
+    domChangeCallback = (e) =>
+      console.log 'dom change callback'
+      @fields.reload().one 'input', changeCallback
+    @fields.one 'input', changeCallback
+    @on 'elementReflect', domChangeCallback
+    @elements.on 'mutate', domChangeCallback
 
   unlisten: ->
+    # Stops listening to form changes.
     @_cancelTimeout()
-    # @fields().off 'change'
-    for event in ['keydown', 'keyup', 'change']  # this is because keypress isn't triggered by backspace
-      @document.off event
+    @off 'elementReflect'
+    @fields.off 'input'
+    @elements.off 'mutate'
 
   getDoc: (options={}, callback) ->
+    ## This retrieves a document from PouchDB
+    ## and returns it to a callback, if provided.
+    ## It also assigns the returned document to
+    ## our @doc variable.  The @doc is considered
+    ## the "current" document, as there really is
+    ## no case where we need to deal with multiple
+    ## live documents.
     if typeof options is 'function'
       callback = options
       options  = {}
@@ -56,6 +80,11 @@ class outpost.Autosave
         throw error
 
   saveDoc: (options={}, callback) ->
+    ## Retrieve the document, in case it already exists from PouchDB.
+    ## If it doesn't exist, create a new one so that we have a doc
+    ## with an ID that we can continually write to.  Then write our
+    ## serialized form data to it.
+    ## Essentially, this is an "upsert".
     if typeof options is 'function'
       callback = options
       options  = {}
@@ -80,6 +109,8 @@ class outpost.Autosave
             throw error
 
   removeDoc: (options={}, callback) ->
+    # Destroy the document in PouchDB and
+    # execute a callback, fi there is one.
     if typeof options is 'function'
       callback = options
       options  = {}
@@ -93,9 +124,18 @@ class outpost.Autosave
         callback(error) if callback
         throw error if error
 
-  checkForChanges: ->
+  on: (name, callback) ->
+    ## Adds callbacks to our event stack, kinda like jQuery.@
+    @events[name] ||= []
+    @events[name].push callback
+
+  # private
+
+  _checkForChangesThenListen: ->
     ## Checks to see if the form values differ
     ## from those in the autosave snapshot. 
+    ## Then we start listening for changes to
+    ## the form once we are done.
 
     mapToIds = (collection) ->
       ids = $.map collection, (model) ->
@@ -111,29 +151,20 @@ class outpost.Autosave
           ## equivalent to an undefined field in an autosaved doc, so
           ## we had might as well consider a blank string the default 
           ## for a non-value.
-          if (docA.fields[key] or '') isnt (docB.fields[key] or '')
+          if (docA.fields[key] or '').toString() isnt (docB.fields[key] or '').toString()
             @_changesHaveBeenMade()
             return true
         for key of docA.collections
           if mapToIds(docA.collections[key]).toString() isnt mapToIds(docB.collections[key]).toString()
             @_changesHaveBeenMade()
             return true
+      # Start listening to changes if autosave isn't different.
+      @listen()
     false
 
-  on: (name, callback) ->
-    @events[name] ||= []
-    @events[name].push callback
-
-  fields: ->
-    # Returns all input fields we should be looking at.
-    query = []
-    query.push("#main #{elName}[id]") for elName in @elementNames
-    query = query.join(", ")
-    $(query).not(':button').not(':hidden').not('#autosave-revisions')
-
-  # private
-
   _newDoc: ->
+    ## Just an empty "doc" that we can populate when
+    ## we serialize.
     {
       _id: @options._id
       id: @options.id
@@ -195,7 +226,7 @@ class outpost.Autosave
     @_createModal 'You have some unsaved changes.', modalHTML
 
   _createModal: (title, body) ->
-    # General purpose method for displaying a modal.
+    # Method for displaying our recovery modal.
     html = @_render
       template: '#autosave-modal-template'
       locals:
@@ -210,6 +241,7 @@ class outpost.Autosave
         @shouldWarn = false
         @removeDoc()
       modal.remove()
+      @listen()
     modal.modal({show: true, background: true})
 
   _render: (options={}) ->
@@ -242,6 +274,7 @@ class outpost.Autosave
             @DefaultReflectors["elementReflector"]?(el, doc.elements[selector])
             @_trigger('elementReflect', el, doc.elements[selector])
         # fields
+        @fields.reload()
         ## Not sure of a better way to do this.
         $("select").not('[data-disable-select2="true"]').select2
           placeholder: " "
@@ -268,12 +301,13 @@ class outpost.Autosave
       collections: {}
       elements:    {}
     # fields
-    for field in @fields()
-      field         = $(field)
+    for field in @fields
+      field         = field.$
       if field.length > 0
         fieldId       = field.attr('id')
         type          = field.attr('type') or field.prop("tagName")?.toLowerCase()
         doc.fields[fieldId]  = @DefaultSerializers["#{type}Serializer"]?(field)
+        # debugger if field.attr('id') is 'news_story_bylines_attributes_0_name'
         @_trigger('fieldSerialize', field)
     # collections (e.g. asset manager, content aggregator)
     for name in (@options.collections or [])
@@ -343,3 +377,157 @@ class outpost.Autosave
       recursiveDestroy el[0]
       el = $(el[0])
       el.html value
+
+  class @Elements extends Array
+    ## This is a collection for our own Element class.
+    constructor: (selector) ->
+      @selector = selector
+      @refresh()
+      
+    refresh: ->
+      @off()
+      @.length = 0 # clear
+      for el in (new outpost.Autosave.Element(e) for e in @_query())
+        @push(el)
+      @
+
+    reload: ->
+      for el in (new outpost.Autosave.Element(e) for e in @_query())
+        if i = @_exists(el)
+          @[i].$ = el.$
+        else
+          @push el
+      @
+
+    on: (event, callback) ->
+      for element in @
+        element.on(event, callback)
+
+    one: (event, callback) ->
+      for element in @
+        element.one(event, callback)
+
+    off: (event, callback) ->
+      for element in @
+        element.off(event, callback)
+
+    _exists: (element) ->
+      # Returns array index if exists, else false.
+      i = 0
+      for el in @
+        if element.guid is el.guid
+          return i
+        i++
+      false
+
+    _isFunction: (object) ->
+      typeof object is 'function'
+
+    _query: ->
+      selection = $(document)
+      for key of @selector
+        for val in @selector[key]
+          selection = selection[key](val)
+      selection
+
+
+  class @Element
+    ## This is here to make event tracking uniform
+    ## across different DOM elements.  For example,
+    ## a custom onchange 'observer' is added to 
+    ## textarea so that, even if its own oninput/onchage
+    ## events aren't triggered because of CKEDITOR, we
+    ## can still track its value changes.  This also
+    ## provides a 'mutate' event which adds a MutationObserver
+    ## to a DOM element so we can track whether it has had
+    ## any children inserted or removed.
+    constructor: (selector) ->
+      @$ = $(selector)
+      @guid = @$.prop('tagName') + @$.prop('id') + @$.prop('name') + @$.prop('type')
+      @value  = @getVal()
+      @callbacks = {}
+      @observers = {}
+      @_shim()
+
+    on: (event, callback) ->
+      callbacks = (@callbacks[event] ||= [])
+      callbacks.push callback
+      @_shim event
+      true
+
+    one: (event, callback) ->
+      # This only adds an event to the stack if no
+      # others exist under that name.  Kind of crufty
+      # but it works for our particular need.
+      callbacks = (@callbacks[event] ||= [])
+      unless callbacks.length
+        callbacks.push callback
+        @_shim event
+      true
+
+    getVal: ->
+      type = @$.prop('type')
+      if type is 'checkbox'
+        @$.prop('checked')
+      else
+        @$.val()
+
+    off: (event, callback) ->
+      # Passing a callback here doesn't actually
+      # schedule it to perform; if you have an 
+      # existing callback, you can pass it here
+      # and turn it off specifically.  Otherwise,
+      # all callbacks for the event are removed.
+      clearInterval(@changeObserver) if event is 'change'
+      @mutationObserver?.disconnect() if event is 'mutate'
+      if !event
+        @callbacks = {}
+        return true
+      callbacks = (@callbacks[event] ||= [])
+      unless callback
+        callbacks.length = 0
+      else
+        i = 0
+        for cb in callbacks
+          if cb is callback
+            callbacks.splice(i, 1)
+          i++
+      true
+
+    trigger: (event) ->
+      callbacks = (@callbacks[event] ||= [])
+      for callback in callbacks
+        setTimeout => 
+          callback({event: event, target: @})
+        , 0
+      true
+
+    _needsOnChangeSupport: ->
+      @$.prop("tagName") is 'TEXTAREA'
+
+    _shim: (event) ->
+      # Shim specific events, or pass the event on to jQuery.
+      if event?.match(/change|input/) and @_needsOnChangeSupport()
+        @changeObserver = setInterval =>
+          a = @getVal()
+          b = @value
+          if Array.isArray(a) and Array.isArray(b)
+            isntEqual = !@_arrayCompare(a, b)
+          else
+            isntEqual = a isnt b
+          if isntEqual 
+            @trigger(event)
+            @value = a # the new current value
+        , 1000
+      else if event?.match(/mutate/)
+        callback = => @trigger(event)
+        (@mutationObserver ||= new(window.MutationObserver || window.WebKitMutationObserver || window.MozMutationObserver)(callback))?.observe @$[0],
+          attributes: true
+          childList: true
+          characterData: true
+      else
+        @$.on event, =>
+          @trigger(event)
+
+    _arrayCompare: (a, b) ->
+      (a.length == b.length) and a.every (element, index) -> element is b[index]
