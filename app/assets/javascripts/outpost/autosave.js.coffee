@@ -47,8 +47,10 @@ class outpost.Autosave
       @_waitAndSave()
     domChangeCallback = (e) =>
       console.log 'dom change callback'
-      @fields.reload().one 'input', changeCallback
-    @fields.one 'input', changeCallback
+      @fields.reload()
+      @fields.off 'change'
+      @fields.one 'change', changeCallback
+    @fields.reload().one 'change', changeCallback
     @on 'elementReflect', domChangeCallback
     @elements.on 'mutate', domChangeCallback
 
@@ -56,7 +58,7 @@ class outpost.Autosave
     # Stops listening to form changes.
     @_cancelTimeout()
     @off 'elementReflect'
-    @fields.off 'input'
+    @fields.reload().off 'change'
     @elements.off 'mutate'
 
   getDoc: (options={}, callback) ->
@@ -151,11 +153,11 @@ class outpost.Autosave
           ## equivalent to an undefined field in an autosaved doc, so
           ## we had might as well consider a blank string the default 
           ## for a non-value.
-          if (docA.fields[key] or '').toString() isnt (docB.fields[key] or '').toString()
+          if (docA?.fields?[key] or '').toString() isnt (docB?.fields?[key] or '').toString()
             @_changesHaveBeenMade()
             return true
         for key of docA.collections
-          if mapToIds(docA.collections[key]).toString() isnt mapToIds(docB.collections[key]).toString()
+          if mapToIds(docA?.collections?[key]).toString() isnt mapToIds(docB?.collections?[key]).toString()
             @_changesHaveBeenMade()
             return true
       # Start listening to changes if autosave isn't different.
@@ -181,6 +183,7 @@ class outpost.Autosave
       for collectionName in (@options.collections or [])
         if collection = safeEval("window.#{collectionName}")?.collection 
           collection.on 'change', =>
+            @shouldWarn = true
             @_waitAndSave()
 
   _initializeWarning: ->
@@ -274,7 +277,6 @@ class outpost.Autosave
             @DefaultReflectors["elementReflector"]?(el, doc.elements[selector])
             @_trigger('elementReflect', el, doc.elements[selector])
         # fields
-        @fields.reload()
         ## Not sure of a better way to do this.
         $("select").not('[data-disable-select2="true"]').select2
           placeholder: " "
@@ -460,9 +462,9 @@ class outpost.Autosave
       # others exist under that name.  Kind of crufty
       # but it works for our particular need.
       callbacks = (@callbacks[event] ||= [])
-      unless callbacks.length
-        callbacks.push callback
-        @_shim event
+      callbacks.pop()
+      callbacks.push callback
+      @_shim event
       true
 
     getVal: ->
@@ -481,17 +483,20 @@ class outpost.Autosave
       clearInterval(@changeObserver) if event is 'change'
       @mutationObserver?.disconnect() if event is 'mutate'
       if !event
-        @callbacks = {}
+        for e of @callbacks
+          @off e
         return true
+
       callbacks = (@callbacks[event] ||= [])
       unless callback
-        callbacks.length = 0
+        callbacks.pop() while callbacks.length > 0
       else
         i = 0
         for cb in callbacks
           if cb is callback
             callbacks.splice(i, 1)
           i++
+      @$.off event
       true
 
     trigger: (event) ->
@@ -502,32 +507,44 @@ class outpost.Autosave
         , 0
       true
 
-    _needsOnChangeSupport: ->
-      @$.prop("tagName") is 'TEXTAREA'
+    _needsOnChangeShim: ->
+      # Text areas have an oninput event, but this is not triggered
+      # because CKEDITOR dynamically inserts edits to the textarea that
+      # it keeps in the background.  Time pickers have a similar issue.
+      @$.prop("tagName").match('TEXTAREA') or @$.hasClass('timestamp-el')
+
+    _needsOnChangeAsInput: ->
+      @$.prop("type").match('checkbox') or @$.prop("tagName").match('SELECT')
+
+    _shimOnChange: (event='change')->
+      @changeObserver = setInterval =>
+        a = @getVal()
+        b = @value
+        if Array.isArray(a) and Array.isArray(b)
+          isntEqual = !@_arrayCompare(a, b)
+        else
+          isntEqual = a isnt b
+        if isntEqual 
+          @trigger(event)
+          @value = a # the new current value
+      , 1000
 
     _shim: (event) ->
       # Shim specific events, or pass the event on to jQuery.
-      if event?.match(/change|input/) and @_needsOnChangeSupport()
-        @changeObserver = setInterval =>
-          a = @getVal()
-          b = @value
-          if Array.isArray(a) and Array.isArray(b)
-            isntEqual = !@_arrayCompare(a, b)
-          else
-            isntEqual = a isnt b
-          if isntEqual 
-            @trigger(event)
-            @value = a # the new current value
-        , 1000
+      if event?.match(/change|input/)
+        if @_needsOnChangeShim()
+          @_shimOnChange()
+        else
+          @$.on 'change input', => @trigger(event)
       else if event?.match(/mutate/)
         callback = => @trigger(event)
-        (@mutationObserver ||= new(window.MutationObserver || window.WebKitMutationObserver || window.MozMutationObserver)(callback))?.observe @$[0],
-          attributes: true
-          childList: true
-          characterData: true
+        if element  = @$[0]
+          (@mutationObserver ||= new(window.MutationObserver || window.WebKitMutationObserver || window.MozMutationObserver)(callback))?.observe element,
+            attributes: true
+            childList: true
+            characterData: true
       else
-        @$.on event, =>
-          @trigger(event)
+        @$.on event, => @trigger(event)
 
     _arrayCompare: (a, b) ->
       (a.length == b.length) and a.every (element, index) -> element is b[index]
