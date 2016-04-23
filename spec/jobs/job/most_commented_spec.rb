@@ -8,7 +8,9 @@ describe Job::MostCommented do
     it "fetches, parses, and caches the popular articles" do
       stub_request(:get, %r|disqus|).to_return({
         :body => JSON.parse(load_fixture("api/disqus/listPopular.json")),
-        :content_type => "application/json"
+        :headers => {
+          :content_type   => "application/json"
+        }
       })
 
       story = create :news_story

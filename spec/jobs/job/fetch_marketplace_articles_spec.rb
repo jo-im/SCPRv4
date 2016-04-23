@@ -7,7 +7,9 @@ describe Job::FetchMarketplaceArticles do
   before :each do
     stub_request(:get, "http://www.marketplace.org/latest-stories/long-feed.xml")
     .to_return({
-      :content_type   => 'text/xml',
+      :headers => {
+        :content_type   => "text/xml"
+      },
       :body           => load_fixture('rss/marketplace.xml')
     })
   end
