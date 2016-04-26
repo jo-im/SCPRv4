@@ -21,6 +21,7 @@ class Outpost::BetterHomepagesController < Outpost::ResourceController
   #--------------------
 
   def preview
+    binding.pry
     @homepage = Outpost.obj_by_key(params[:obj_key]) || BetterHomepage.new
 
     with_rollback @homepage do
@@ -29,7 +30,7 @@ class Outpost::BetterHomepagesController < Outpost::ResourceController
       if @homepage.unconditionally_valid?
         @title = @homepage.to_title
 
-        render "home/_#{@homepage.base}",
+        render "outpost/better_homepages/preview",
           :layout => "outpost/preview/application",
           :locals => { homepage: @homepage }
 
