@@ -246,6 +246,7 @@ Scprv4::Application.routes.draw do
     end
 
     concern :preview do
+      get 'preview', on: :member
       put "preview", on: :member
       patch "preview", on: :member
       post "preview", on: :collection

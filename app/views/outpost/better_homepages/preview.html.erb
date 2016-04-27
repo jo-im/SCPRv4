@@ -1,2 +1,21 @@
 <h1>Hello World</h1>
-<% binding.pry %>
+<!-- Modal -->
+<script id="ContentsComponentTemplate" type="text/x-handlebars-template">
+  <ul>
+    {{#each model.models as |content index|}}
+      {{component 'ContentComponent' content}}
+    {{/each}}
+  </ul>
+</script>
+
+<script id="ContentComponentTemplate" type="text/x-handlebars-template">
+  <li {{action 'shutmeup'}}>{{model.attributes.content_type}}</li>
+</script>
+
+<div id="homepage-content"></div>
+
+<%= javascript_include_tag "outpost/homepage/application" %>
+
+<script>
+  window.homepageEditor = new outpost.HomepageEditor(<%= @homepage.content.to_json %>)
+</script>

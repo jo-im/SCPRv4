@@ -24,18 +24,18 @@ class Outpost::BetterHomepagesController < Outpost::ResourceController
     @homepage = Outpost.obj_by_key(params[:obj_key]) || BetterHomepage.new
 
     with_rollback @homepage do
-      @homepage.assign_attributes(params[:better_homepage])
+      @homepage.assign_attributes(params[:better_homepage] || {})
 
-      if @homepage.unconditionally_valid?
+      # if @homepage.unconditionally_valid?
         @title = @homepage.to_title
 
         render "outpost/better_homepages/preview",
           :layout => false, # "outpost/preview/application",
           :locals => { homepage: @homepage }
 
-      else
-        render_preview_validation_errors(@homepage)
-      end
+      # else
+      #   render_preview_validation_errors(@homepage)
+      # end
     end
   end
 end
