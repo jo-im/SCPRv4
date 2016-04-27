@@ -14,33 +14,18 @@ class outpost.App
   class @Component extends Backbone.View
     tagName: 'div'
 
-    constructor: (model, options={}) ->
-      @model = model
-      @className = this.constructor.name
-      Handlebars.registerHelper 'action', (context, options) =>
-        new Handlebars.SafeString "data-action-click=#{context} data-component=#{@className} data-component-id=#{@cid}"
-      super()
-
     initialize: ->
-      @template = Handlebars.compile $("##{@className}Template").text()
-      $(document).on 'click', "[data-action-click][data-component=#{@className}][data-component-id=#{@cid}]", (e) =>
-        target = $(e.target)
-        className = target.attr('data-component')
-        if actionName = target.attr('data-action-click')
-          @actions?[actionName]?(e, @)
+      @name     = this.constructor.name
+      @template = Handlebars.compile $("##{@name}Template").text()
       @listenTo @model, "change", @render
 
     toHTML: (locals={}) ->
       @template
-        model: @model
+        model: (@model or @attributes)
 
-    render: (container) ->
-      element = $ @toHTML()
-      container?.html?(element)
-      externalElement = $("[data-action-click][data-component=#{@className}][data-component-id=#{@cid}]")
-      if externalElement.length
-        externalElement.replaceWith element
-      element
+    render: ->
+      @$el?.html @toHTML()
+      @
 
   constructor: ->
     Handlebars.registerHelper 'component', (context, options) =>
@@ -55,24 +40,34 @@ class outpost.HomepageEditor extends outpost.App
     json = JSON.parse("[{\"homepage_content\":{\"id\":66086,\"homepage_id\":387,\"content_id\":1858,\"position\":1,\"content_type\":\"Event\",\"homepage_type\":\"Homepage\",\"asset_scheme\":null}},{\"homepage_content\":{\"id\":66087,\"homepage_id\":387,\"content_id\":57796,\"position\":2,\"content_type\":\"NewsStory\",\"homepage_type\":\"Homepage\",\"asset_scheme\":null}},{\"homepage_content\":{\"id\":66088,\"homepage_id\":387,\"content_id\":57798,\"position\":3,\"content_type\":\"NewsStory\",\"homepage_type\":\"Homepage\",\"asset_scheme\":null}},{\"homepage_content\":{\"id\":66089,\"homepage_id\":387,\"content_id\":57789,\"position\":4,\"content_type\":\"NewsStory\",\"homepage_type\":\"Homepage\",\"asset_scheme\":null}},{\"homepage_content\":{\"id\":66090,\"homepage_id\":387,\"content_id\":57786,\"position\":5,\"content_type\":\"NewsStory\",\"homepage_type\":\"Homepage\",\"asset_scheme\":null}}]")
     json = (obj['homepage_content'] for obj in json)
     collection = new ContentCollection(json)
-    component  = new ContentsComponent(collection)
-    component.render($('#homepage-content'))
+    component  = new ContentsComponent
+      model: collection
+      el: $('#homepage-content')
+    component.render()
 
   class ContentComponent extends @Component
-    actions:
-      shutmeup: (e, component) =>
-        # target = $(e.target) 
-        # target.text target.text()?.toLowerCase()
-        title = component.model.get('content_type')
-        component.model.set 'content_type', title.toLowerCase()
-        # debugger
+    tagName: 'li'
+    events:
+      "click": "_downcaseLi"
+    _downcaseLi: (e) ->
+      title = @model.get('content_type')
+      @model.set 'content_type', title.toLowerCase()
+
 
   class ContentsComponent extends @Component
+    tagName: 'ul'
 
+    render: ->
+      super()
+      # Take each of our models, render them, and append to our UL
+      el = @$el?.find('ul')
+      if el and el.length
+        for model in @model.toArray()
+          modelComponent = new ContentComponent
+            model: model
+          # debugger
+          el.append modelComponent.render().$el
 
-  components:
-    ContentComponent: ContentComponent
-    ContentsComponent: ContentsComponent
 
   class Content extends @Model
 
