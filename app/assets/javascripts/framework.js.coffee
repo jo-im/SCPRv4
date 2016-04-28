@@ -1,11 +1,28 @@
-# This is a simple framework based on Backbone and Handlebars
+# This is a simple "framework" based on Backbone and Handlebars
 # with the intention to reduce the friction in writing frontend
 # code while still remaining light-weight.
+# 
+# To create a new app based on the framework, you simply create
+# a new object(or class in coffeescript) and extend from the
+# framework.
+#
+# Example:
+#
+# ```
+# class App extends scpr.Framework
+#   class Picture extends @Component
+#
+#   constructor: ->
+#     super()
+#     picture = new Picture
+#       el: "#picture"
+#     picture.render()
+# ```
 
 class scpr.Framework
 
   safeEval: (code) ->
-    eval("try{\n#{code};\n}catch(err){};")   
+    eval("try{\n#{code};\n}catch(err){};")
 
   class @Model extends Backbone.Model
 
@@ -16,7 +33,7 @@ class scpr.Framework
     # makes an assumption about which template to 
     # use.  For example, if this component is called
     # 'StoryComponent', it will look for a script tag
-    # with the id 'StoryComponentTemplate' and render
+    # with the id 'StoryComponent' and render
     # the Handlebars markup in that tag.  However, a
     # template isn't required.
     #
@@ -29,23 +46,40 @@ class scpr.Framework
       # Either inject components as dependencies after
       # initialize or override your inherited initialize
       # function.
-      @components = {}
+      @components ||= {}
       @Handlebars = require 'handlebars/dist/handlebars'
       @_registerHelpers(@Handlebars)
       @name       = this.constructor.name
       templateEl = $("script##{@name}[type='text/x-handlebars-template']")
       if templateEl.length
         @template = @Handlebars.compile templateEl.text()
+      # A component also makes the assumption that you
+      # want it to re-render when its model changes.
       @listenTo @model, "change", @render
+
+    defineComponents: (components={}) ->
+      ## Add child components to the current component
+      ## and automatically create helpers for them.
+      for name, component of components
+        @components[name] = component
+        helper = (context, options={}) ->
+          parentComponent = this.component
+          componentName   = '{{name}}'
+          options.context = context
+          component = new parentComponent?.components?[componentName]?(this, options)
+          if component
+            new component.Handlebars.SafeString component.toHTML()
+        ## This is a workaround for the helper to have access to its own name.
+        ## Not sure why this isn't already possible in Handlebars.
+        @Handlebars.registerHelper name, eval("(" + helper.toString().replace(/{{name}}/, name) + ")")
+
 
     toHTML: (locals={}) ->
       # This generates HTML from the template
       # but does not actually render it to
       # the component's element. 
       if @template
-        @template
-          model: (@model or @attributes)
-          component: @
+        @template @_params()
       else
         ""
 
@@ -54,6 +88,17 @@ class scpr.Framework
       @
 
     # private
+
+    _params: ->
+      ## This is what gets passed on to templates
+      ## and child components.  Include an 'attributes'
+      ## method on the component to add more parameters.
+      params =
+        model: (@model or @attributes)
+        component: @
+      for name, attr of (@attributes?() or {})
+        params[name] = attr
+      params
 
     _registerHelpers: (Handlebars) ->
       ## One caveat here: the component gets "rendered", but its events

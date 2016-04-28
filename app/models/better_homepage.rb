@@ -72,12 +72,14 @@ class BetterHomepage < ActiveRecord::Base
   private
 
   def build_content_association(content_hash, content)
-    if content.published?
-      HomepageContent.new(
-        :position => content_hash["position"].to_i,
-        :content  => content,
-        :homepage => self
-      )
-    end
+    ## These are defaults, but otherwise the content
+    ## model should be able to receive whatever 
+    ## attributes we throw at it.
+    attrs = content_hash.merge({
+      content: content,
+      homepage: self,
+      position: content_hash["position"].to_i
+    })
+    HomepageContent.new(attrs) if content.published?
   end
 end

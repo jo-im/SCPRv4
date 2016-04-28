@@ -1,12 +1,18 @@
 <%= form_block "Content" do %>
   <ul class="nav nav-tabs">
     <li class='active'><a href="#arrange" data-toggle="tab">Arrange</a></li>
-    <li><a href="#modify" data-toggle="tab">Modify</a></li>
+    <li><a href="#appearance" data-toggle="tab">Appearance</a></li>
   </ul>
 
   <div class="tab-content">
     <div class="tab-pane active" id="arrange"><div id="aggregator" class="aggregator"></div></div>
-    <div class="tab-pane" id="modify"><div id="homepage-content"></div></div>
+    <div class="tab-pane" id="appearance">
+      <i>Click on each story to cycle through asset display schemes.</i>
+      <br /><br />
+      <div id="homepage-editor-frame">
+        <div id="homepage-editor"></div>
+      </div>
+    </div>
   </div>
 
   <div id="aggregator" class="aggregator"></div>
@@ -40,7 +46,7 @@
   </script>
 <% end %>
 
-<%= render partial: "outpost/better_homepages/editor" %>
+<%= render partial: "outpost/better_homepages/editor" %> <!-- This needs to happen after the aggregator has initialized. -->
 
 <%= form_block "Details" do %>
   <%= f.input :status, collection: Homepage.status_select_collection, include_blank: false, input_html: { id: "status-select" } %>

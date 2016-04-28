@@ -28,9 +28,13 @@ class HomepageContent < ActiveRecord::Base
 
   after_initialize :set_default_asset_display
 
+  def simple_json
+    @simple_json = super.merge({'asset_display' => self.asset_display})
+  end
+
   private
 
   def set_default_asset_display
-    self.asset_display ||= ASSET_DISPLAY[:default]
+    @asset_display ||= ASSET_DISPLAY[:default]
   end
 end

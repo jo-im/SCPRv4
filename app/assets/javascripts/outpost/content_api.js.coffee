@@ -17,8 +17,9 @@ class outpost.ContentAPI
             
         simpleJSON: ->
             {
-                id:       @get 'id'
-                position: @get 'position'
+                id:            @get 'id'
+                position:      @get 'position'
+                asset_display: @get 'asset_display'
             }
 
     #-----------------------------
