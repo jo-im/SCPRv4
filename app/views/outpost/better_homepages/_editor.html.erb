@@ -1,0 +1,27 @@
+<!-- Modal -->
+<script id="ContentComponent" type="text/x-handlebars-template">
+  {{component 'asset' 'large'}}
+  <div class="media__container clearfix">
+    <div class="media__content">
+      {{component 'asset' 'medium'}}
+      <h2 class="media__headline"><a>{{model.attributes.title}}</a></h2>
+      <div class="media__summary">{{model.attributes.teaser}}</div>
+    </div>
+    <aside class="media__metadata">
+    </aside>
+  </div>
+</script>
+
+<script id="AssetComponent" type="text/x-handlebars-template">
+  {{#ifMedium}}
+    <a target="_blank"  class="media__image-parent">
+      <img src="https://placeholdit.imgix.net/~text?txtsize=33&txt=250%C3%97150&w=250&h=150" class="media__image medium">
+    </a>
+  {{/ifMedium}}
+  {{#ifLarge}}
+    BIG
+    <a target="_blank"  class="media__image-parent">
+      <img src="https://placeholdit.imgix.net/~text?txtsize=33&txt=250%C3%97150&w=250&h=150" class="media__image large">
+    </a>
+  {{/ifLarge}}
+</script>

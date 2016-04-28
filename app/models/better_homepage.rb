@@ -58,6 +58,17 @@ class BetterHomepage < ActiveRecord::Base
     end
   end
 
+  def content_articles
+    ## This converts homepage content to 
+    ## articles and includes the asset display
+    ## scheme with it.
+    content.includes(:content).map do |c| 
+      article               = c.content.to_article
+      article.asset_display = c.asset_display
+      article
+    end
+  end
+
   private
 
   def build_content_association(content_hash, content)

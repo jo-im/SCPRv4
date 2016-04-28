@@ -1,6 +1,15 @@
 class HomepageContent < ActiveRecord::Base
   include Outpost::Aggregator::SimpleJson
 
+  ASSET_DISPLAY = {
+    default: 'medium',
+    display_types: [
+      'none',
+      'medium',
+      'large'
+    ]
+  }
+
   self.table_name = "layout_homepagecontent"
   self.versioned_attributes = ["content_type", "content_id", "position"]
 
@@ -16,4 +25,12 @@ class HomepageContent < ActiveRecord::Base
     :polymorphic    => true
 
   belongs_to :homepage, polymorphic: true
+
+  after_initialize :set_default_asset_display
+
+  private
+
+  def set_default_asset_display
+    self.asset_display ||= ASSET_DISPLAY[:default]
+  end
 end

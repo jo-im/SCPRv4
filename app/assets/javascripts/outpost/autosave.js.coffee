@@ -1,5 +1,5 @@
 class outpost.Autosave
-  Handlebars   = require 'handlebars'
+  Handlebars   = require 'handlebars/dist/handlebars'
   moment       = require 'moment-strftime'
   PouchDB.plugin require 'pouchdb-upsert'
   safeEval     = (code) ->

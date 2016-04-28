@@ -54,15 +54,25 @@ class Article
     :updated_at,
     :published,
     :blog,
-    :show
+    :show,
+    :asset_display
 
   def initialize(attributes={})
     attributes.each do |attr, value|
-      self.public_send("#{attr}=", value) if respond_to?("#{attr}=")
+      self.public_send("#{attr}=", value)
     end if attributes
     super()
   end
 
+  def method_missing method_name, *args
+    if method_name.match(/\w*=$/)
+      ## Define an accessor if it doesn't already exist.
+      class_eval{attr_accessor method_name.to_s.gsub("=", "")} unless respond_to?(method_name)
+      send(method_name, *args)
+    else
+      super
+    end
+  end
 
   def to_article
     self
