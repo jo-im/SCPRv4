@@ -32,6 +32,18 @@ class HomepageContent < ActiveRecord::Base
     @simple_json = super.merge({'asset_display' => self.asset_display})
   end
 
+  def label
+    if content
+      return "KPCC In Person" if content.try(:is_kpcc_event)
+      tags = (content.try(:tags) || [])
+      keyword = tags.find{|t| t.try(:tag_type).try(:include?, 'Keyword')}
+      program = content.try(:show).try(:title)
+      series  = tags.find{|t| t.try(:tag_type).try(:include?, 'Series')}
+      beat    = tags.find{|t| t.try(:tag_type).try(:include?, 'Beat')}
+      [beat, series, program, keyword].compact.map(&:title).first
+    end
+  end
+
   private
 
   def set_default_asset_display
