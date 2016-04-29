@@ -19,7 +19,7 @@ class outpost.HomepageEditor extends scpr.Framework
     initialize: ->
       super()
       @defineComponents
-        asset: AssetComponent
+        asset: new AssetComponent model: @model
 
     toggleAssetDisplay: (e) ->
       display = @model.get('asset_display')
@@ -40,8 +40,9 @@ class outpost.HomepageEditor extends scpr.Framework
   class ContentsComponent extends @Component
     initialize: ->
       super()
-      @components = 
-        content: ContentComponent
+      @defineComponents
+        asset: new ContentComponent model: @model
+
       @_fixPageScroll()
 
     render: ->
@@ -51,8 +52,7 @@ class outpost.HomepageEditor extends scpr.Framework
       el = @$el#?.find('ul')
       if el and el.length
         for model in (_.sortBy @model.toArray(), (m) => m.attributes.position)
-          modelComponent = new ContentComponent
-            model: model
+          modelComponent = new ContentComponent model: model
           el.append modelComponent.render().$el
 
     # private
@@ -69,17 +69,17 @@ class outpost.HomepageEditor extends scpr.Framework
           $this.scrollTop() + $this.innerHeight() < $this[0].scrollHeight
 
   class AssetComponent extends @Component
-    initialize: (attributes, options) ->
-      @display = options.context or 'medium'
+    initialize: ->
+      @display ||= 'medium' #options.context or 'medium'
       super
       @model.url = $(@model.get('thumbnail')).attr('src')
       @Handlebars.registerHelper 'ifMedium', (context, options) ->
-        if @component.display is 'medium' and @model.get('asset_display') is 'medium'
+        if @component.options?.context is 'medium' and @model.get('asset_display') is 'medium'
           arguments[arguments.length - 1]?.fn?(@)
         else
           ''
       @Handlebars.registerHelper 'ifLarge', (context, options) ->
-        if @component.display is 'large' and @model.get('asset_display') is 'large'
+        if @component.options?.context is 'large' and @model.get('asset_display') is 'large'
           arguments[arguments.length - 1]?.fn?(@)
         else
           ''

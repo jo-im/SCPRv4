@@ -47,6 +47,7 @@ class scpr.Framework
       # initialize or override your inherited initialize
       # function.
       @components ||= {}
+      @options    ||= {}
       @Handlebars = require 'handlebars/dist/handlebars'
       @_registerHelpers(@Handlebars)
       @name       = this.constructor.name
@@ -66,20 +67,23 @@ class scpr.Framework
           parentComponent = this.component
           componentName   = '{{name}}'
           options.context = context
-          component = new parentComponent?.components?[componentName]?(this, options)
-          if component
-            new component.Handlebars.SafeString component.toHTML()
+          if component = parentComponent?.components?[componentName]
+            new component.Handlebars.SafeString component.toHTML(this, options)
         ## This is a workaround for the helper to have access to its own name.
         ## Not sure why this isn't already possible in Handlebars.
         @Handlebars.registerHelper name, eval("(" + helper.toString().replace(/{{name}}/, name) + ")")
 
 
-    toHTML: (locals={}) ->
+    toHTML: (locals={}, options={}) ->
       # This generates HTML from the template
       # but does not actually render it to
-      # the component's element. 
+      # the component's element.
+      @options = options # store the options passed from the caller
       if @template
-        @template @_params()
+        @template @_params() # pass our attributes to the template
+        # Think of it as telling the template what local variables
+        # to have, vs the options we set above, which is changing
+        # the state of our component.
       else
         ""
 
@@ -89,7 +93,7 @@ class scpr.Framework
 
     # private
 
-    _params: ->
+    _params: (externalParams={})->
       ## This is what gets passed on to templates
       ## and child components.  Include an 'attributes'
       ## method on the component to add more parameters.
@@ -97,6 +101,8 @@ class scpr.Framework
         model: (@model or @attributes)
         component: @
       for name, attr of (@attributes?() or {})
+        params[name] = attr
+      for name, attr of externalParams
         params[name] = attr
       params
 
