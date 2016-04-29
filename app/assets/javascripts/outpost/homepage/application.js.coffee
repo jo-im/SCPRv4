@@ -43,7 +43,7 @@ class outpost.HomepageEditor extends scpr.Framework
       @defineComponents
         asset: new ContentComponent model: @model
 
-      @_fixPageScroll()
+      # @_fixPageScroll()
 
     render: ->
       # Render our base element.
