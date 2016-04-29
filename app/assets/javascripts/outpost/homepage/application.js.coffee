@@ -2,58 +2,21 @@
 
 class outpost.HomepageEditor extends scpr.Framework
 
-  scroll = require 'jquery.scrollto'
-
-  constructor: (json)->
-    super()
+  init: (json)->
     collection = window.aggregator.baseView.collection
     component  = new ContentsComponent
-      model: collection
+      collection: collection
       el: $('#homepage-editor')
     component.render()
 
-  class ContentComponent extends @Component
-    className: 'media'
-    events:
-      "click": "toggleAssetDisplay"
-    initialize: ->
-      super()
-      @defineComponents
-        asset: new AssetComponent model: @model
-
-    toggleAssetDisplay: (e) ->
-      display = @model.get('asset_display')
-      if display == 'large'
-        @model.set 'asset_display', 'medium'
-      else if display == 'medium'
-        @model.set 'asset_display', 'none'
-      else if display == 'none'
-        @model.set 'asset_display', 'large'
-      window.aggregator.baseView.dropZone.updateInput()
-
-    attributes: ->
-      {
-        title: @model.get('title')
-        teaser: @model.get('teaser')
-      }
-
   class ContentsComponent extends @Component
-    initialize: ->
-      super()
+    init: ->
       @defineComponents
-        asset: new ContentComponent model: @model
-
-      # @_fixPageScroll()
-
-    render: ->
-      # Render our base element.
-      super()
-      # Take each of our models, render them, and append to our UL
-      el = @$el#?.find('ul')
-      if el and el.length
-        for model in (_.sortBy @model.toArray(), (m) => m.attributes.position)
-          modelComponent = new ContentComponent model: model
-          el.append modelComponent.render().$el
+        content: ContentComponent
+      if @collection
+        @collection.comparator = 'position'
+        @listenTo @collection, "reset update change", =>
+          @collection.sort()
 
     # private
 
@@ -68,23 +31,68 @@ class outpost.HomepageEditor extends scpr.Framework
         else
           $this.scrollTop() + $this.innerHeight() < $this[0].scrollHeight
 
+  class ContentComponent extends @Component
+    className: 'media'
+    events:
+      "click": "toggleAssetDisplay"
+
+    init: ->
+      # @$el.on 'click', => @toggleAssetDisplay()
+      @defineComponents
+        asset: new AssetComponent model: @model
+
+    toggleAssetDisplay: (e) ->
+      display = @model.get('asset_display')
+      if display == 'large'
+        @model.set 'asset_display', 'medium'
+      else if display == 'medium'
+        @model.set 'asset_display', 'none'
+      else if display == 'none'
+        @model.set 'asset_display', 'large'
+      else
+        # Some models seem to be coming in with 
+        # asset_display names like 'photo'. 
+        # Maybe we have a naming conflict, so we
+        # have to do this for now.
+        @model.set 'asset_display', 'medium'
+      window.aggregator.baseView.dropZone.updateInput()
+
+    properties: ->
+      {
+        title: @model.get('title')
+        teaser: @model.get('teaser')
+      }
+
   class AssetComponent extends @Component
-    initialize: ->
+    tagName: 'a'
+    className: 'media__image-parent'
+    attributes:
+      target: '_blank'
+
+    init: ->
       @display ||= 'medium' #options.context or 'medium'
-      super
       @model.url = $(@model.get('thumbnail')).attr('src')
-      @Handlebars.registerHelper 'ifMedium', (context, options) ->
-        if @component.options?.context is 'medium' and @model.get('asset_display') is 'medium'
-          arguments[arguments.length - 1]?.fn?(@)
+
+    helpers:
+      displayIf: (context, options) ->
+        debugger
+        if this.model.get('asset_display') is context
+          debugger
+          options.fn?(this) # run block if true
         else
           ''
-      @Handlebars.registerHelper 'ifLarge', (context, options) ->
-        if @component.options?.context is 'large' and @model.get('asset_display') is 'large'
-          arguments[arguments.length - 1]?.fn?(@)
+      ifMedium: (context, options) ->
+        if context?.data?.root?.component?.options?.context is 'medium' and this.model.get('asset_display') is 'medium'
+          arguments[arguments.length - 1]?.fn?(this) # run block if true
+        else
+          ''
+      ifLarge: (context, options) ->
+        if context?.data?.root?.component?.options?.context is 'large' and this.model.get('asset_display') is 'large'
+          arguments[arguments.length - 1]?.fn?(this) # run block if true
         else
           ''
 
-    attributes: ->
+    properties: ->
       {
-        url: $(@model.get('thumbnail')).attr('src')
+        url: $(@model.get('thumbnail')).attr('src') or 'http://placehold.it/640x480'
       }

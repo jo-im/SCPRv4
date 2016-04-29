@@ -1,4 +1,10 @@
 <!-- Modal -->
+<script id="ContentsComponent" type="text/x-handlebars-template">
+  {{#each collection.models}}
+    {{content}}
+  {{/each}}
+</script>
+
 <script id="ContentComponent" type="text/x-handlebars-template">
   {{asset 'large'}}
   <div class="media__container clearfix">
@@ -14,13 +20,9 @@
 
 <script id="AssetComponent" type="text/x-handlebars-template">
   {{#ifMedium}}
-    <a target="_blank"  class="media__image-parent">
-      <img src="{{url}}" class="media__image medium">
-    </a>
+    <img src="{{url}}" class="media__image medium">
   {{/ifMedium}}
   {{#ifLarge}}
-    <a target="_blank"  class="media__image-parent">
-      <img src="{{url}}" class="media__image large">
-    </a>
+    <img src="{{url}}" class="media__image large">
   {{/ifLarge}}
 </script>
