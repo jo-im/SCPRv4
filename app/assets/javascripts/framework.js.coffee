@@ -168,10 +168,12 @@ class scpr.Framework
       super()
 
     clearActiveComponents: ->
-      for i of @activeComponents
+      for x in @activeComponents
         component = @activeComponents.pop()
-        component.clearActiveComponents()
-        component.remove()
+        setTimeout =>
+          component.clearActiveComponents()
+          component.remove()
+        , 0
       @trigger 'clean_up'
 
     # private
