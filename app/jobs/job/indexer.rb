@@ -12,16 +12,7 @@ module Job
           if !obj
             raise "Failed to find object for indexing: #{klass}/#{id}"
           end
-
-          # the models index (used in Outpost)
-          obj.__elasticsearch__.index_document
-
-          # update the Article index if appropriate
-          if obj.respond_to?(:to_article)
-            # eh, a one-item bulk operation? Not very bulk...
-            ContentBase.es_client.bulk body:obj.to_article.to_es_bulk_operation
-          end
-
+          obj.index # index to ES
         when :destroy
           k = klass.constantize
           k.__elasticsearch__.client.delete({

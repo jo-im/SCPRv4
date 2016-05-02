@@ -2,7 +2,7 @@
   <h1>Recently on <cite><%= program.title %></cite></h1>
   <div class="series clearfix">
     <% episodes.first(14).each do |episode| %>
-      <% article_episode = episode.to_article %>
+      <% article_episode = episode.get_article %>
       <figure>
           <div class="photo ratio">
             <a href="<%= article_episode.public_path %>">

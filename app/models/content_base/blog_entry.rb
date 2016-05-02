@@ -1,5 +1,5 @@
-class ShowSegment < ActiveRecord::Base
-  self.table_name = 'shows_segment'
+class BlogEntry < ActiveRecord::Base
+  self.table_name = "blogs_entry"
   outpost_model
   has_secretary
 
@@ -24,71 +24,119 @@ class ShowSegment < ActiveRecord::Base
   include Concern::Associations::EpisodeRundownAssociation
   include Concern::Validations::ContentValidation
   include Concern::Callbacks::SetPublishedAtCallback
-  include Concern::Callbacks::GenerateSlugCallback
   include Concern::Callbacks::GenerateShortHeadlineCallback
   include Concern::Callbacks::GenerateTeaserCallback
-  include Concern::Callbacks::GenerateBodyCallback
+  include Concern::Callbacks::GenerateSlugCallback
   #include Concern::Callbacks::CacheExpirationCallback
   include Concern::Callbacks::PublishNotificationCallback
-  include Concern::Model::Searchable
   include Concern::Callbacks::HomepageCachingCallback
   include Concern::Callbacks::TouchCallback
   include Concern::Methods::ArticleStatuses
   include Concern::Methods::CommentMethods
   include Concern::Methods::AssetDisplayMethods
+
+  include Concern::Model::Searchable
+
   include Concern::Sanitizers::Content
 
-  self.disqus_identifier_base = "shows/segment"
-  self.public_route_key = "segment"
+  self.disqus_identifier_base = "blogs/entry"
+  self.public_route_key = "blog_entry"
+
+  belongs_to :blog
+
+  validates_presence_of :blog, if: :should_validate?
 
 
-  belongs_to :show,
-    :class_name   => "KpccProgram",
-    :touch        => true
-
-  alias_attribute :url, :public_url
-
-  validates :show, presence: true
-
-  scope :with_article_includes, ->() { includes(:show,:category,:assets,:audio,:tags,:bylines,bylines:[:user]) }
+  scope :with_article_includes, ->() { includes(:blog,:category,:assets,:audio,:tags,:bylines,bylines:[:user]) }
 
   def needs_validation?
     self.pending? || self.published?
   end
 
 
-  def episode
-    @episode ||= episodes.first
-  end
-
-  def published_episode
-    @published_episode ||= episodes.published.first
-  end
-
-  def episode_segments
-    @episode_segments ||= begin
-      if episodes.present?
-        episode.segments.published
-      else
-        show.segments.published
-          .where("shows_segment.id != ?", self.id).limit(5)
-      end
+  # Need to work around multi-american until we can figure
+  # out how to merge those comments in with kpcc
+  def disqus_identifier
+    if dsq_thread_id.present? && wp_id.present?
+      "#{wp_id} http://multiamerican.scpr.org/?p=#{wp_id}"
+    else
+      super
     end
   end
 
-  def recent_show_segments
-    self.class.published.where("show_id = ? and id <> ?", self.show_id, self.id).includes(:assets).first(3)
+
+  def disqus_shortname
+    if dsq_thread_id.present? && wp_id.present?
+      'scprmultiamerican'
+    else
+      super
+    end
   end
 
+
+  # Blog Entries don't need the "KPCC" credit,
+  # so override the default +byline_extras+
+  # behavior to return empty array
   def byline_extras
-    [self.show.title]
+    []
+  end
+
+
+  def previous
+    self.class.published
+      .where(
+        "published_at < ? and blog_id = ?", self.published_at, self.blog_id
+      ).first
+  end
+
+
+  def next
+    self.class.published
+      .where(
+        "published_at > ? and blog_id = ?", self.published_at, self.blog_id
+      ).first
+  end
+
+  def sister_blog_entries
+    self.class.published.where.not(blog_id: self.blog_id).first(4)
+  end
+
+  def recent_blog_entries
+    self.class.published.where("blog_id = ? and id <> ?", self.blog_id, self.id).first(3)
+  end
+
+  # This was made for the blog list pages - showing the full body
+  # was too long, but just the teaser was too short.
+  #
+  # It should probably be in a presenter.
+  def extended_teaser(*args)
+    target      = args[0] || 800
+    more_text   = args[1] || "Read More..."
+    break_class = "story-break"
+
+    content         = Nokogiri::HTML::DocumentFragment.parse(self.body)
+    extended_teaser = Nokogiri::HTML::DocumentFragment.parse(nil)
+
+    content.children.each do |child|
+      if (child.attributes["class"].to_s == break_class) ||
+      (extended_teaser.content.length >= target)
+        break
+      end
+
+      extended_teaser.add_child child
+    end
+
+    extended_teaser.add_child(
+      "<p><a href=\"#{self.public_path}\">#{more_text}</a></p>")
+
+    return extended_teaser.to_html
   end
 
 
   def route_hash
     return {} if !self.persisted? || !self.persisted_record.published?
     {
-      :show           => self.persisted_record.show.slug,
+      :blog           => self.persisted_record.blog.slug,
       :year           => self.persisted_record.published_at.year.to_s,
       :month          => "%02d" % self.persisted_record.published_at.month,
       :day            => "%02d" % self.persisted_record.published_at.day,
@@ -98,9 +146,8 @@ class ShowSegment < ActiveRecord::Base
     }
   end
 
-
   def to_article
-    return nil if !self.show
+    related_content = to_article_called_more_than_twice? ? [] : self.related_content.map(&:to_reference)
     @to_article ||= Article.new({
       :original_object    => self,
       :id                 => self.obj_key,
@@ -121,9 +168,14 @@ class ShowSegment < ActiveRecord::Base
       :created_at         => self.created_at,
       :updated_at         => self.updated_at,
       :published          => self.published?,
-      :show               => self.show,
+      :blog               => self.blog,
+      :related_content    => to_article_called_more_than_twice? ? [] : self.related_content.map(&:to_reference),
+      :links              => related_links.map(&:to_hash),
+      :asset_display      => asset_display,
+      :disqus_identifier  => self.disqus_identifier
     })
   end
+
 
   def to_abstract
     @to_abstract ||= Abstract.new({

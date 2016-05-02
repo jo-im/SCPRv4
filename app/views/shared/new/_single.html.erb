@@ -1,4 +1,4 @@
-<% article = article.to_article %>
+<% article = article.get_article %>
 
 <%= render_asset article.original_object, context:"news", fallback:true %>
 
@@ -43,7 +43,7 @@
 
             <%= render 'shared/widgets/short_list_subscribe' %>
 
-            <%= render 'shared/cwidgets/related_links', content:article.original_object %>
+            <%= render 'shared/cwidgets/related_links', content: article %>
 
             <div class="article-conclusion-sharing">
               <%= render 'shared/new/social_share', article: article, cssClass: "share" %>

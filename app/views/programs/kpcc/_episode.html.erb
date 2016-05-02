@@ -17,7 +17,7 @@
         <div class="story-body">
           <div class="visible-reader"><%= content_widget "primary_audio", episode, context: episode.show.slug %></div>
           <%= render_asset episode %>
-          <%= render_with_inline_assets episode.to_article %>
+          <%= render_with_inline_assets episode.get_article %>
           <br style="clear: both"/>
         </div>
 

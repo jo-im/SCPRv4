@@ -87,7 +87,7 @@ module ApplicationHelper
         cache(["content",context,article,tmplt_digest], skip_digest:true) do
           self.output_buffer << render(
             "shared/content/#{partial}",
-            :article => article.to_article,
+            :article => article.get_article,
             :options => options
           ).html_safe
         end
@@ -110,7 +110,7 @@ module ApplicationHelper
   # * shared/assets/story/default
   # * shared/assets/default/default
   def render_asset(content, options={})
-    article = content.to_article
+    article = content.get_article
     context = options[:context] || "default"
 
     asset = options[:asset] || nil
@@ -405,9 +405,7 @@ module ApplicationHelper
     if has_comments?(object)
       options[:class] = "comment_link social_disq #{options[:class]}"
       options["data-objkey"] = object.disqus_identifier
-
-      link_to("Add your comments",
-        object.public_path(anchor: "comments", ), options)
+      link_to("Add your comments", (object.public_path + "#comments"), options)
     end
   end
 

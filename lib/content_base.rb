@@ -4,6 +4,13 @@
 # A set of definitions, collections, and utilities for
 # content in the application.
 #
+    NewsStory
+    ShowSegment
+    BlogEntry
+    ContentShell
+    Event
+    PijQuery
+    ShowEpisode
 module ContentBase
   @@es_client = ES_CLIENT
   @@es_index  = ES_ARTICLES_INDEX
@@ -24,7 +31,6 @@ module ContentBase
     "PijQuery",
     "ShowEpisode"
   ]
-
 
   #--------------------
   # URLS to match in ::obj_by_url
@@ -226,6 +232,13 @@ module ContentBase
     end
 
     return articles
+  end
+
+  #--------------------
+
+  def find obj_key
+    class_name = obj_key.split('-').first.camelize
+    ContentBase.search(classes: [class_name], limit: 1, with:{obj_key: obj_key}).first
   end
 
   #--------------------

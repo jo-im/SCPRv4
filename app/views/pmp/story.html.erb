@@ -1,5 +1,5 @@
 <article>
-    <% article = content.to_article %>
+    <% article = content.get_article %>
     <% unless should_inline_top_asset_for(article.original_object) %>
         <%= render partial: "pmp/lead_asset", locals: {asset: article.original_object.asset} %>
     <% end %>

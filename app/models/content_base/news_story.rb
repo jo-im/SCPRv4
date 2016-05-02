@@ -1,5 +1,5 @@
-class BlogEntry < ActiveRecord::Base
-  self.table_name = "blogs_entry"
+class NewsStory < ActiveRecord::Base
+  self.table_name = 'news_story'
   outpost_model
   has_secretary
 
@@ -20,7 +20,6 @@ class BlogEntry < ActiveRecord::Base
   include Concern::Associations::EditionsAssociation
   include Concern::Associations::VerticalArticleAssociation
   include Concern::Associations::ProgramArticleAssociation
-  include Concern::Associations::PmpContentAssociation::StoryProfile
   include Concern::Associations::EpisodeRundownAssociation
   include Concern::Validations::ContentValidation
   include Concern::Callbacks::SetPublishedAtCallback
@@ -29,114 +28,42 @@ class BlogEntry < ActiveRecord::Base
   include Concern::Callbacks::GenerateSlugCallback
   #include Concern::Callbacks::CacheExpirationCallback
   include Concern::Callbacks::PublishNotificationCallback
+  include Concern::Model::Searchable
   include Concern::Callbacks::HomepageCachingCallback
   include Concern::Callbacks::TouchCallback
   include Concern::Methods::ArticleStatuses
   include Concern::Methods::CommentMethods
   include Concern::Methods::AssetDisplayMethods
-
-  include Concern::Model::Searchable
-
   include Concern::Sanitizers::Content
+  include Concern::Associations::PmpContentAssociation::StoryProfile
 
-  self.disqus_identifier_base = "blogs/entry"
-  self.public_route_key = "blog_entry"
+  self.disqus_identifier_base = "news/story"
+  self.public_route_key = "news_story"
 
-  belongs_to :blog
+  SOURCES = [
+    ['KPCC',                        'kpcc'],
+    ['KPCC & wires',                'kpcc_plus_wire'],
+    ['AP',                          'ap'],
+    ['KPCC wire services',          'kpcc_wire'],
+    ['NPR',                         'npr'],
+    ['NPR & wire services',         'npr_wire'],
+    ['New America Media',           'new_america'],
+    ['NPR & KPCC',                  'npr_kpcc'],
+    ['Center for Health Reporting', 'chr'],
+    ['Marketplace',                 'marketplace'],
+    ['American Homefront Project',  'american_homefront_project']
+  ]
 
-  validates_presence_of :blog, if: :should_validate?
+  scope :with_article_includes, ->() { includes(:category,:assets,:audio,:tags,:bylines,bylines:[:user]) }
 
-
-  scope :with_article_includes, ->() { includes(:blog,:category,:assets,:audio,:tags,:bylines,bylines:[:user]) }
 
   def needs_validation?
     self.pending? || self.published?
   end
 
-
-  # Need to work around multi-american until we can figure
-  # out how to merge those comments in with kpcc
-  def disqus_identifier
-    if dsq_thread_id.present? && wp_id.present?
-      "#{wp_id} http://multiamerican.scpr.org/?p=#{wp_id}"
-    else
-      super
-    end
-  end
-
-
-  def disqus_shortname
-    if dsq_thread_id.present? && wp_id.present?
-      'scprmultiamerican'
-    else
-      super
-    end
-  end
-
-
-  # Blog Entries don't need the "KPCC" credit,
-  # so override the default +byline_extras+
-  # behavior to return empty array
-  def byline_extras
-    []
-  end
-
-
-  def previous
-    self.class.published
-      .where(
-        "published_at < ? and blog_id = ?", self.published_at, self.blog_id
-      ).first
-  end
-
-
-  def next
-    self.class.published
-      .where(
-        "published_at > ? and blog_id = ?", self.published_at, self.blog_id
-      ).first
-  end
-
-  def sister_blog_entries
-    self.class.published.where.not(blog_id: self.blog_id).first(4)
-  end
-
-  def recent_blog_entries
-    self.class.published.where("blog_id = ? and id <> ?", self.blog_id, self.id).first(3)
-  end
-
-  # This was made for the blog list pages - showing the full body
-  # was too long, but just the teaser was too short.
-  #
-  # It should probably be in a presenter.
-  def extended_teaser(*args)
-    target      = args[0] || 800
-    more_text   = args[1] || "Read More..."
-    break_class = "story-break"
-
-    content         = Nokogiri::HTML::DocumentFragment.parse(self.body)
-    extended_teaser = Nokogiri::HTML::DocumentFragment.parse(nil)
-
-    content.children.each do |child|
-      if (child.attributes["class"].to_s == break_class) ||
-      (extended_teaser.content.length >= target)
-        break
-      end
-
-      extended_teaser.add_child child
-    end
-
-    extended_teaser.add_child(
-      "<p><a href=\"#{self.public_path}\">#{more_text}</a></p>")
-
-    return extended_teaser.to_html
-  end
-
-
   def route_hash
     return {} if !self.persisted? || !self.persisted_record.published?
     {
-      :blog           => self.persisted_record.blog.slug,
       :year           => self.persisted_record.published_at.year.to_s,
       :month          => "%02d" % self.persisted_record.published_at.month,
       :day            => "%02d" % self.persisted_record.published_at.day,
@@ -146,7 +73,14 @@ class BlogEntry < ActiveRecord::Base
     }
   end
 
+
+  def byline_extras
+    Array(self.news_agency)
+  end
+
+
   def to_article
+    related_content = to_article_called_more_than_twice? ? [] : self.related_content.map(&:to_reference)
     @to_article ||= Article.new({
       :original_object    => self,
       :id                 => self.obj_key,
@@ -167,7 +101,10 @@ class BlogEntry < ActiveRecord::Base
       :created_at         => self.created_at,
       :updated_at         => self.updated_at,
       :published          => self.published?,
-      :blog               => self.blog,
+      :related_content    => related_content,
+      :links              => related_links.map(&:to_hash),
+      :asset_display      => asset_display,
+      :disqus_identifier  => self.disqus_identifier
     })
   end
 
@@ -185,4 +122,5 @@ class BlogEntry < ActiveRecord::Base
       :article_published_at   => self.published_at
     })
   end
+
 end

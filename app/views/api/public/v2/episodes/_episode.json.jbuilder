@@ -23,9 +23,9 @@ json.cache! [Api::Public::V2::VERSION, "v3", episode] do
   # ShowSegments used to wrap themselves in an episode with to_episode,
   # but we removed that. This is here to keep API v2 the same.
   if episode.program.is_segmented?
-    segments = episode.segments.map(&:to_article)
+    segments = episode.segments.map(&:get_article)
   else
-    segments = Array(episode.original_object.to_article)
+    segments = Array(episode.original_object.get_article)
   end
 
   json.segments do
@@ -37,7 +37,7 @@ json.cache! [Api::Public::V2::VERSION, "v3", episode] do
 
   json.content do
     json.partial! 'api/public/v2/articles/collection',
-      articles: episode.content.map(&:to_article)
+      articles: episode.content.map(&:get_article)
   end
 
 end

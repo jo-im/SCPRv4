@@ -14,7 +14,7 @@
             <%= content_widget "new/primary_audio", article, context: article.show.slug %>
 
 
-            <%= render 'shared/new/social_share', article: article.to_article, cssClass: "pinned" %>
+            <%= render 'shared/new/social_share', article: article.get_article, cssClass: "pinned" %>
 
 
             <div class="prose-columns clearfix">
@@ -25,7 +25,7 @@
 
 
               <div class="prose-body">
-                  <%= render_with_inline_assets article.to_article %>
+                  <%= render_with_inline_assets article.get_article %>
                   <% if article.joined_bylines[:contributing].present? %>
                       <footer class="contributor">
                           <p><%= render_contributing_byline article %></p>
@@ -36,7 +36,7 @@
               
               <%= render 'shared/widgets/short_list_subscribe' %>
 
-              <%= render 'shared/cwidgets/related_links', content:article %>
+              <%= render 'shared/cwidgets/related_links', content: article.get_article %>
 
               <% if article.published_episode.present? %>
               <aside class="ancillary episode-contents">
@@ -50,9 +50,10 @@
                 </header>
                 <h1><%= link_to article.published_episode.headline, article.published_episode.public_path %></h1>
                 <nav>
+                  <% episode_article = article.episode.try(:get_article) %>
                   <ul>
-                    <%= cache ["segment", "content", article.episode] do %>
-                      <% article.episode.published_content.map(&:to_article).each do |content| %>
+                    <%= cache ["segment", "content", episode_article] do %>
+                      <% episode_article.related_content.each do |content| %>
                         <li class="<%= ("selected" if article.id == content.id) %>">
                           <%= link_to content.short_title, content.public_path %>
                         </li>
@@ -70,7 +71,7 @@
 
             <div class="secondary">
 
-              <%= render 'shared/new/social_share', article: article.to_article %>
+              <%= render 'shared/new/social_share', article: article.get_article %>
 
               <div class="buddy-pairing clearfix">
                 <%= content_widget 'new/comment_count', article %>

@@ -27,6 +27,7 @@ require 'zlib'
 #
 # This should pretty much match up with what our client API
 # response is, but it doesn't necessarily have to.
+
 class Article
   #include Concern::Methods::AbstractModelMethods
   include ActiveModel::Model
@@ -55,7 +56,10 @@ class Article
     :published,
     :blog,
     :show,
-    :asset_display
+    :related_content,
+    :links,
+    :asset_display,
+    :disqus_identifier
 
   def initialize(attributes={})
     attributes.each do |attr, value|
@@ -75,6 +79,10 @@ class Article
   end
 
   def to_article
+    self
+  end
+
+  def get_article
     self
   end
 
@@ -144,6 +152,14 @@ class Article
 
   # -- getters -- #
 
+  def disqus_identifier
+    @disqus_identifier ||= original_object.try(:disqus_identifier)
+  end
+
+  def asset_display
+    @asset_display || "photo"
+  end
+
   def assets
     (@assets||[]).collect do |a|
       ContentAsset.new(a.to_hash.merge({id:a.asset_id, inline: a.inline}))
@@ -162,6 +178,14 @@ class Article
     end
   end
 
+  def related_content
+    @related_content || []
+  end
+
+  def links
+    @links || []
+  end
+
   def attributions
     (@attributions||[])
   end
@@ -176,6 +200,18 @@ class Article
   end
 
   # -- setters -- #
+
+  def related_content=(content)
+    @related_content = (content||[]).collect do |c|
+      Hashie::Mash.new(c)
+    end
+  end
+
+  def links=(content)
+    @links = (content || []).collect do |c|
+      Hashie::Mash.new(c)
+    end
+  end
 
   def assets=(assets)
     @assets = (assets||[]).collect do |a|
@@ -264,7 +300,28 @@ class Article
       public_path:      @public_path,
       blog:             @blog,
       show:             @show,
+      related_content:  related_content,
+      links:            links,
+      asset_display:    asset_display,
+      disqus_identifier: disqus_identifier
     }
+  end
+
+  alias_method :to_h, :to_hash
+
+  def to_reference
+    Hashie::Mash.new({ 
+      id:           @id, 
+      public_path:  @public_path, 
+      title:        @title, 
+      short_title:  @short_title,
+      category:     @category,
+      feature: Hashie::Mash.new({name: (feature.try(:name) || "Article"), _key: (feature.try(:key) || "article")}),
+      has_audio?:  (@audio || []).any?,
+      has_assets?: (@assets || []).any?,
+      has_links?:  (@links || []).any?,
+      disqus_identifier: @disqus_identifier
+    })
   end
 
   #----------

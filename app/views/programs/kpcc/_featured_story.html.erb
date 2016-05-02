@@ -42,7 +42,7 @@
         <h2>In this episode</h2>
         <nav>
           <ul>
-            <% story_content = featured_story.original_object.content.first(8).map(&:to_article) %>
+            <% story_content = featured_story.related_content %>
             <% story_content.each do |content| %>
               <li><a href="<%= content.public_path %>"><%= content.short_title %></a></li>
             <% end %>
