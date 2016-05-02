@@ -44,6 +44,24 @@ class HomepageContent < ActiveRecord::Base
     end
   end
 
+  def to_index
+    if article = content.try(:to_article)
+      {
+        id: article.id,
+        headline: article.title,
+        short_headline: article.short_title,
+        teaser: article.teaser,
+        asset: article.asset,
+        public_datetime: article.public_datetime,
+        public_path: article.public_path,
+        position: self.position,
+        label: label
+      }
+    else
+      {}
+    end
+  end
+
   private
 
   def set_default_asset_display

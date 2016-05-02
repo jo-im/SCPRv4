@@ -21,7 +21,7 @@ class outpost.HomepageEditor extends scpr.Framework
 
     render: (locals={}, options={}) ->
       super(locals, options)
-      @reloadComponents()      
+      @reloadComponents()
 
     # private
 
