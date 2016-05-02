@@ -49,7 +49,7 @@ class scpr.Framework
 
     initialize: (context={}, options={}) ->
       @uuid       = @_generateUUID()
-      @name       = this.constructor.name
+      @name       = @constructor.componentName
       @$el.attr('data-framework-component-id', @uuid)
       @$el.attr('data-framework-component-name', @name)
       # By default, if the component's element has no content,

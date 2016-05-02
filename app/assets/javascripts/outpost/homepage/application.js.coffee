@@ -11,6 +11,7 @@ class outpost.HomepageEditor extends scpr.Framework
     component.render()
 
   class ContentsComponent extends @Component
+    @componentName: 'contents-component'
     init: ->
       @defineComponents
         content: ContentComponent
@@ -48,6 +49,7 @@ class outpost.HomepageEditor extends scpr.Framework
     className: 'media'
     events:
       "click": "toggleAssetDisplay"
+    @componentName: 'content-component'
 
     init: ->
       @defineComponents
@@ -76,6 +78,7 @@ class outpost.HomepageEditor extends scpr.Framework
   class AssetComponent extends @Component
     tagName: 'a'
     className: 'media__image-parent'
+    @componentName: 'asset-component'
     attributes:
       target: '_blank'
 

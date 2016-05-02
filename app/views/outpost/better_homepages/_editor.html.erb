@@ -1,5 +1,5 @@
 <!-- Modal -->
-<script id="ContentsComponent" type="text/x-handlebars-template">
+<script id="contents-component" type="text/x-handlebars-template">
   {{#each collection.models as |model index|}}
     {{#firstDown index}}
       <aside class="ad">
@@ -15,7 +15,7 @@
   {{/each}}
 </script>
 
-<script id="ContentComponent" type="text/x-handlebars-template">
+<script id="content-component" type="text/x-handlebars-template">
   {{asset 'large'}}
   <div class="media__container clearfix">
     <div class="media__content">
@@ -28,7 +28,7 @@
   </div>
 </script>
 
-<script id="AssetComponent" type="text/x-handlebars-template">
+<script id="asset-component" type="text/x-handlebars-template">
   {{#displayIf 'medium'}}
     <img src="{{url}}" class="media__image medium">
   {{/displayIf}}
