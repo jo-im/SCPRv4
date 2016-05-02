@@ -12,12 +12,12 @@ class BetterHomepageController < ApplicationController
     }
 
   def index
-    @homepage         = BetterHomepage.published.first
+    @homepage         = BetterHomepage.published.first || Missing
   end
 
   private
 
   def generate_homepage
-    Job::HomepageCache.perform
+    Job::BetterHomepageCache.perform
   end
 end

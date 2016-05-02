@@ -14,6 +14,7 @@ class outpost.HomepageEditor extends scpr.Framework
     init: ->
       @defineComponents
         content: ContentComponent
+
         @listenTo @collection, "change:position", =>
           @collection.comparator = 'position'
           @collection.sort()
@@ -22,6 +23,13 @@ class outpost.HomepageEditor extends scpr.Framework
     render: (locals={}, options={}) ->
       super(locals, options)
       @reloadComponents()
+      
+    helpers: 
+      firstDown: (index, options) ->
+        options.fn?(this) if index is 0
+      seventhDown: (index, options) ->
+        options.fn?(this) if index is 6
+
 
     # private
 
@@ -84,3 +92,17 @@ class outpost.HomepageEditor extends scpr.Framework
 
     properties: ->
       url: $(@model.get('thumbnail')).attr('src') or 'http://placehold.it/640x480'
+
+
+  # class AsideAdComponent extends @Component
+  #   tagName: 'aside'
+  #   className: 'ad'
+
+  #   init: (options) ->
+  #     @index = options.index
+
+  #   helpers: 
+  #     firstDown: (index, options) ->
+  #       options.fn?(this) if index is 0
+  #     seventhDown: (index, options) ->
+  #       options.fn?(this) if index is 6

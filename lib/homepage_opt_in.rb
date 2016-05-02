@@ -6,11 +6,11 @@ class HomepageOptIn
 
   def call env
     request = ActionDispatch::Request.new(env)
-
-    if true #request.cookie_jar.signed[:beta_opt_in]
+    if request.cookie_jar[:beta_opt_in]
       change_named_route :root, controller: 'better_homepage'
+    else
+      change_named_route :root, controller: 'home'
     end
-
     @app.call env
   end
 
@@ -27,5 +27,4 @@ class HomepageOptIn
       end
     end
   end
-
 end

@@ -1,1 +1,99 @@
-<h2>Hello World</h2>
+<!doctype html>
+<html>
+  <head>
+    <meta content="IE=edge" http-equiv="X-UA-Compatible">
+    <meta charset="utf-8">
+    <meta content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" name="viewport">
+
+    <!-- Use title if it's in the page YAML frontmatter -->
+    <title>KPCC</title>
+
+    <link href='//fonts.googleapis.com/css?family=Lato:300,400' rel='stylesheet' type='text/css'>
+
+    <%= stylesheet_link_tag 'better_homepage/application' %>
+    <%= javascript_include_tag 'better_homepage/application' %>
+  </head>
+
+  <body class="">
+    <header class="header">
+      <div class="bound full-width clearfix">
+        <div class="branding">
+          <img src="http://projects.scpr.org/officer-involved/images/logo_kpcc-black.svg" alt="89.3 KPCC" class="desaturate">
+          <hr class="pipe">
+          <ul class="nav__links">
+            <li>
+              <a href="#">
+                <%= image_tag '/better_homepage/listen-live.svg' %>
+                Listen Live 
+                <span class="program-title">- Morning Edition</span>
+              </a>
+            </li>
+          </ul>
+        </div>
+        <nav class="nav">
+          <ul class="nav__links">
+            <li><a href="#">News</a></li>
+            <li><a href="#">Programs</a></li>
+            <li><a href="#">Events</a></li>
+            <li><a href="#">Support</a></li>
+            <li><a href="#">About</a></li>
+            <li><a href="#"><%= image_tag 'images/better_homepage/search.svg' %></a></li>
+          </ul>
+          <hr class="pipe">
+          <ul class="nav__links">
+            <li><%= render partial: 'shared/better_homepage/opt_out' %></li>
+            <li><a href="#"><%= image_tag 'better_homepage/donate' %> Donate</a></li>
+            <li><a href="#"><%= image_tag 'better_homepage/user' %> Sign In</a></li>
+          </ul>
+        </nav>
+      </div>
+    </header>
+    <aside class="ad first">
+      <img src="http://placehold.it/728x91?text=Position+A" alt="Position A">
+    </aside> 
+    <section class="broadcast-bar">
+      <%= image_tag 'better_homepage/listen-live.svg' %>
+      <h5>Listen Live</h5>
+      <h6>- Morning Edition</h6>
+    </section>
+    <%= yield %>
+    <footer class="footer">
+      <%= image_tag 'better_homepage/cheese.svg' %>
+    </footer>
+    <script>
+      jQuery(document).ready(function() {
+        jQuery.timeago.settings.strings = {
+                suffixAgo: " ago",
+                minute: "about a minute",
+                minutes: "%dm",
+                hour: "about 1h",
+                hours: "%dh",
+                day: "1d",
+                days: "%dd",
+                month: "1mo",
+                months: "%dmo"
+            };
+        jQuery("time.timeago").timeago();
+        function isScrolledIntoView(elem) {
+            var docViewTop = $(window).scrollTop();
+            var docViewBottom = docViewTop + $(window).height();
+            var elemTop = $(elem).offset().top;
+            var elemBottom = elemTop + $(elem).height();
+            return ((elemBottom <= docViewBottom) && (elemTop >= docViewTop));
+        }
+        $(window).scroll(function () {
+           $('.unread').each(function () {
+              if (isScrolledIntoView(this) === true) {
+                  $(this).fadeOut(1500);
+              }
+           });
+           $('.status').each(function () {
+              if (isScrolledIntoView(this) === true) {
+                  $(this).removeClass("notify");
+              }
+           });
+        });
+      });
+    </script>
+  </body>
+</html>

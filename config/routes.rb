@@ -2,6 +2,10 @@ require "resque/server"
 
 Scprv4::Application.routes.draw do
   # Homepage
+  ## see lib/homepage_opt_in for dynamic routing to
+  ## the new homepage controller.  it has to work
+  ## this way because constraints don't work with
+  ## named routes. :(
   root to: "home#index"
 
   # Listen Live

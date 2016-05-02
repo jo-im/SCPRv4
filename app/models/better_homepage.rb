@@ -69,6 +69,16 @@ class BetterHomepage < ActiveRecord::Base
     end
   end
 
+  def to_index
+    OpenStruct.new(
+      {
+        content:         content.map(&:to_index),
+        public_datetime: updated_at,
+        published_at:    published_at
+      }
+    )
+  end
+
   private
 
   def build_content_association(content_hash, content)

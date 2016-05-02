@@ -1,0 +1,7 @@
+<button class='btn btn-primary' id="beta-opt-in">Try Our New Homepage</button>
+<script>
+  $('#beta-opt-in').on("click", function(){
+    document.cookie = "beta_opt_in=true";
+    location.reload();
+  });
+</script>

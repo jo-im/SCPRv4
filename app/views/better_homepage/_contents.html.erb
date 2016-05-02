@@ -1,0 +1,26 @@
+<% object.each_with_index do |p, index| %>
+
+  <% tag = if p.source != "KPCC"
+              p.source
+           elsif p.tags__title?
+              p.tags__title
+           elsif p.program?
+              p.program
+           elsif p.category__title?
+              p.category__title
+           end
+  %>
+
+  <% if index == 1 %>
+    <aside class="ad">
+      <img src="http://placehold.it/300x250?text=Position+B" alt="Position B">
+    </aside>
+  <% elsif index == 7 %>
+    <aside class="ad">
+      <img src="http://placehold.it/300x250?text=Position+C" alt="Position C">
+    </aside>
+  <% end %>
+
+  <%= render partial: "content", locals: {p: p, index: index} %>
+    
+<% end %>

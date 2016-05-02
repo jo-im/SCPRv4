@@ -37,7 +37,7 @@ class HomepageContent < ActiveRecord::Base
       return "KPCC In Person" if content.try(:is_kpcc_event)
       tags = (content.try(:tags) || [])
       keyword = tags.find{|t| t.try(:tag_type).try(:include?, 'Keyword')}
-      program = content.try(:show).try(:title)
+      program = content.try(:show)
       series  = tags.find{|t| t.try(:tag_type).try(:include?, 'Series')}
       beat    = tags.find{|t| t.try(:tag_type).try(:include?, 'Beat')}
       [beat, series, program, keyword].compact.map(&:title).first
@@ -46,17 +46,20 @@ class HomepageContent < ActiveRecord::Base
 
   def to_index
     if article = content.try(:to_article)
-      {
-        id: article.id,
-        headline: article.title,
-        short_headline: article.short_title,
-        teaser: article.teaser,
-        asset: article.asset,
-        public_datetime: article.public_datetime,
-        public_path: article.public_path,
-        position: self.position,
-        label: label
-      }
+      OpenStruct.new(
+        {
+          id: article.id,
+          headline: article.title,
+          short_headline: article.short_title,
+          teaser: article.teaser,
+          asset_display: self.asset_display,
+          asset_url: article.asset.asset.full.url,
+          public_datetime: article.public_datetime,
+          public_path: article.public_path,
+          position: self.position,
+          label: label
+        }
+      )
     else
       {}
     end

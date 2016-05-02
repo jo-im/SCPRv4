@@ -1,6 +1,16 @@
 <!-- Modal -->
 <script id="ContentsComponent" type="text/x-handlebars-template">
-  {{#each collection.models}}
+  {{#each collection.models as |model index|}}
+    {{#firstDown index}}
+      <aside class="ad">
+        <img src="http://placehold.it/300x250?text=Position+B" alt="Position B">
+      </aside>
+    {{/firstDown}}
+    {{#seventhDown index}}
+      <aside class="ad">
+        <img src="http://placehold.it/300x250?text=Position+C" alt="Position C">
+      </aside>
+    {{/seventhDown}}
     {{content}}
   {{/each}}
 </script>
@@ -25,13 +35,4 @@
   {{#displayIf 'large'}}
     <img src="{{url}}" class="media__image large">
   {{/displayIf}}
-</script>
-
-<script id="_AssetComponent" type="text/x-handlebars-template">
-  {{#ifMedium}}
-    <img src="{{url}}" class="media__image medium">
-  {{/ifMedium}}
-  {{#ifLarge}}
-    <img src="{{url}}" class="media__image large">
-  {{/ifLarge}}
 </script>

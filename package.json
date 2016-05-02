@@ -26,10 +26,12 @@
     "jplayer": "= 2.8.4",
     "moment-strftime": "= 0.1.5",
     "moment-twitter": "= 0.2.0",
+    "normalize.css": "^4.1.1",
     "pouchdb": "= 5.3.1",
     "pouchdb-upsert": "^2.0.0",
     "selectivizr": "= 1.0.3",
     "swfobject": "= 2.2",
+    "timeago": "^1.5.1",
     "waypoints": "= 3.1.1",
     "windowtamer": "git+https://github.com/Ravenstine/widowtamer.git#beccad6ecc3404795e26efd9839f5a6b002b2e52",
     "x2js": "git+https://github.com/abdmob/x2js.git#185e410b3fa621070fea1f86a389b477afa216b9"

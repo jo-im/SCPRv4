@@ -1,0 +1,11 @@
+<% content.each do |r| %>
+  <a class="media--subordinate clearfix<% if r.teaser? %> full<% end %>" href="<%= r.public_url %>">
+    <img class="media__image--thumb" src="<%= r.image_src %>" alt="">
+    <div class="media__content">
+      <h4 class="media__headline--subordinate"><%= r.short_title %></h4>
+      <% if r.teaser? %>
+        <p class="media__summary--subordinate"><%= r.teaser %></p>
+      <% end %>
+    </div>
+  </a>
+<% end %>

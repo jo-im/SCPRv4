@@ -47,7 +47,7 @@ class scpr.Framework
 
     tagName: 'div'
 
-    initialize: ->
+    initialize: (context={}, options={}) ->
       @uuid       = @_generateUUID()
       @name       = this.constructor.name
       @$el.attr('data-framework-component-id', @uuid)
@@ -84,7 +84,7 @@ class scpr.Framework
       # Call `init` function, which allows for a similar
       # initialization without having to call `super` 
       # every time you extend Component.
-      @init?()
+      @init?(options)
 
 
     defineComponents: (components={}) ->
@@ -102,7 +102,7 @@ class scpr.Framework
             ## we initialize a new one.  This is for cases where
             ## the number of child components is unpredictable.
             if component.isComponentClass
-              component  = new component model: @
+              component  = new component({model: @}, context.hash)
             component.render(this, options)
             parentComponent.activeComponents?.push component
             new component.Handlebars.SafeString component.html()
@@ -137,7 +137,6 @@ class scpr.Framework
 
     render: (locals={}, options={}) ->
       # Inserts generated HTML into its element.
-      console.log 'render'
       @clearActiveComponents()
       @$el?.html @renderHTML(locals, options)
 

@@ -1,0 +1,73 @@
+<div class="media">
+  <% if p.asset_url? && p.asset_display == "large" %>
+    <a href="<%= p.public_url %>" class="media__image-parent">
+      <img src="<%= p.asset_url %>" class="media__image large">
+    </a>
+  <% end %>
+  <div class="media__container clearfix">
+    <div class="media__content">
+      <% if p.asset_url? && p.asset_display == "med" %>
+        <a href="<%= p.public_url %>" class="media__image-parent">
+          <img src="<%= p.asset_url %>" class="media__image med">
+        </a>
+      <% end %>
+      <h2 class="media__headline <%= p.asset_display %>">
+        <a href="<%= p.public_url %>">
+          <% if index == 0 || 1 || 2 %>
+            <svg class="unread" width="12px" height="12px" viewBox="0 0 12 12" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:sketch="http://www.bohemiancoding.com/sketch/ns">
+                <title>Unread</title>
+                <g id="Delightful-Features" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" sketch:type="MSPage">
+                    <g id="Let-me-know-how-recently-this-page-has-been-updated-(from-my-perspective)" sketch:type="MSArtboardGroup" transform="translate(-581.000000, -282.000000)" fill="#00C2FF">
+                        <g id="Unread-Story" sketch:type="MSLayerGroup" transform="translate(581.000000, 282.000000)">
+                            <circle id="Oval-7" sketch:type="MSShapeGroup" cx="6" cy="6" r="6"></circle>
+                        </g>
+                    </g>
+                </g>
+            </svg>
+          <% end %>
+          <svg class="checkmark" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:sketch="http://www.bohemiancoding.com/sketch/ns" width="16" height="15" viewBox="0 0 16 15" version="1.1">
+            <title>
+              checkmark
+            </title>
+            <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" sketch:type="MSPage">
+              <g id="checkmark" sketch:type="MSLayerGroup" fill="#fff">
+                <path d="M15.87 1.79L13.76 0.13C13.7 0.07 13.62 0.03 13.53 0.03 13.43 0.03 13.35 0.07 13.28 0.13L5.62 9.98C5.62 9.98 2.61 7.08 2.52 6.99 2.44 6.91 2.33 6.77 2.16 6.77 1.99 6.77 1.91 6.89 1.83 6.98 1.76 7.04 0.69 8.17 0.16 8.73 0.13 8.77 0.11 8.79 0.08 8.81 0.03 8.88 0 8.95 0 9.03 0 9.12 0.03 9.19 0.08 9.25L0.19 9.35C0.19 9.35 5.53 14.48 5.62 14.57 5.71 14.66 5.82 14.77 5.97 14.77 6.13 14.77 6.25 14.61 6.33 14.53L15.88 2.26C15.93 2.19 15.96 2.12 15.96 2.03 15.96 1.94 15.92 1.86 15.87 1.79L15.87 1.79Z" id="Shape" sketch:type="MSShapeGroup"/>
+              </g>
+            </g>
+          </svg>
+
+          <%= p.short_title %>
+        </a>
+      </h2>
+      <div class="media__summary"><%= simple_format(p.summary) %></div>
+      <% if p.related_content? %>
+        <h5 class="media__related-heading">More in <%= p.label %></h5>
+        <%= render partial: "related_content", locals: {content: p.related_content} %>
+      <% elsif p.program? %>
+        <a class="media__appeal" href="<%= p.public_url %>">
+          <% if p.program == "AirTalk" %>
+            <img src="images/conversation.svg">
+            Join the conversation
+          <% elsif p.program == "KPCC In Person" %>
+            <img src="images/event.svg">
+            RSVP for this event
+          <% else %>
+            <img src="images/podcast.svg">
+            Love <%= p.program %>? Subscribe to the podcast!
+          <% end %>
+        </a>
+      <% end %>
+    </div>
+    <aside class="media__metadata">
+      <% if p.label != nil %>
+        <span class="media__category">
+          <%= p.label %>
+          <% if p.source != "KPCC" %>
+            <img src="images/outbound.svg">
+          <% end %>
+        </span>
+      <% end %>
+      <time class="media__timestamp timeago" datetime="<%= p.published_at %>"><%= p.published_at %></time>
+    </aside>
+  </div>
+</div>
