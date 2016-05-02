@@ -22,9 +22,6 @@ class scpr.Framework
 
   Handlebars = require 'handlebars/dist/handlebars'
 
-  safeEval: (code) ->
-    eval("try{\n#{code};\n}catch(err){};")
-
   constructor: (options={}) ->
     # Call init function, to stay uniform with
     # the rest of the framework.
@@ -83,14 +80,12 @@ class scpr.Framework
         @$el?.attr name, value
       # A component also makes the assumption that you
       # want it to re-render when its model changes.
-      if @model
-        @listenTo @model, "add remove change destroy", @render
-      if @collection
-        @listenTo @collection, "add remove reset update sort change", @render
+      @_listen()
       # Call `init` function, which allows for a similar
       # initialization without having to call `super` 
       # every time you extend Component.
       @init?()
+
 
     defineComponents: (components={}) ->
       ## Add child components to the current component
@@ -116,8 +111,10 @@ class scpr.Framework
         @Handlebars.registerHelper name, eval @Handlebars.compile('(' + helper.toString() + ')')({name: name})
 
     html: ->
-      # outerHTML of the current element
-      # irrespective of rendering
+      # outerHTML representation of the current element
+      # irrespective of rendering.  This is what finally
+      # gets inserted into the DOM if the component is a
+      # child of another component.
       return '' if !@empty and !@$el.html().trim().length
       @$el?.prop('outerHTML')
 
@@ -139,6 +136,8 @@ class scpr.Framework
         ""
 
     render: (locals={}, options={}) ->
+      # Inserts generated HTML into its element.
+      console.log 'render'
       @clearActiveComponents()
       @$el?.html @renderHTML(locals, options)
 
@@ -164,6 +163,15 @@ class scpr.Framework
       @trigger 'clean_up'
 
     # private
+
+    _unlisten: ->
+      @stopListening (@model or @collection)
+
+    _listen: ->
+      if @model
+        @listenTo @model, "change destroy", @render
+      if @collection
+        @listenTo @collection, "add remove reset", @render
 
     _registerHelpers: ->
       for name, helper of (@helpers or {})

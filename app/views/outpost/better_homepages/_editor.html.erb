@@ -19,6 +19,15 @@
 </script>
 
 <script id="AssetComponent" type="text/x-handlebars-template">
+  {{#displayIf 'medium'}}
+    <img src="{{url}}" class="media__image medium">
+  {{/displayIf}}
+  {{#displayIf 'large'}}
+    <img src="{{url}}" class="media__image large">
+  {{/displayIf}}
+</script>
+
+<script id="_AssetComponent" type="text/x-handlebars-template">
   {{#ifMedium}}
     <img src="{{url}}" class="media__image medium">
   {{/ifMedium}}

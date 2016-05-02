@@ -14,15 +14,14 @@ class outpost.HomepageEditor extends scpr.Framework
     init: ->
       @defineComponents
         content: ContentComponent
-      if @collection
-        @collection.comparator = 'position'
-        @listenTo @collection, "reset update change", =>
+        @listenTo @collection, "change:position", =>
+          @collection.comparator = 'position'
           @collection.sort()
+          @render()
 
     render: (locals={}, options={}) ->
       super(locals, options)
       @reloadComponents()      
-
 
     # private
 
@@ -63,10 +62,8 @@ class outpost.HomepageEditor extends scpr.Framework
       window.aggregator.baseView.dropZone.updateInput()
 
     properties: ->
-      {
-        title: @model.get('title')
-        teaser: @model.get('teaser')
-      }
+      title: @model.get('title')
+      teaser: @model.get('teaser')
 
   class AssetComponent extends @Component
     tagName: 'a'
@@ -80,22 +77,10 @@ class outpost.HomepageEditor extends scpr.Framework
 
     helpers:
       displayIf: (context, options) ->
-        if this.model.get('asset_display') is context
+        if options?.data?.root?.component?.options?.context is context and this.model.get('asset_display') is context
           options.fn?(this) # run block if true
-        else
-          ''
-      ifMedium: (context, options) ->
-        if context?.data?.root?.component?.options?.context is 'medium' and this.model.get('asset_display') is 'medium'
-          arguments[arguments.length - 1]?.fn?(this) # run block if true
-        else
-          ''
-      ifLarge: (context, options) ->
-        if context?.data?.root?.component?.options?.context is 'large' and this.model.get('asset_display') is 'large'
-          arguments[arguments.length - 1]?.fn?(this) # run block if true
         else
           ''
 
     properties: ->
-      {
-        url: $(@model.get('thumbnail')).attr('src') or 'http://placehold.it/640x480'
-      }
+      url: $(@model.get('thumbnail')).attr('src') or 'http://placehold.it/640x480'
