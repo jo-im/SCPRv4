@@ -7,6 +7,7 @@ class outpost.HomepageEditor extends scpr.Framework
     component  = new ContentsComponent
       collection: collection
       el: $('#homepage-editor')
+      empty: true
     component.render()
 
   class ContentsComponent extends @Component
@@ -17,6 +18,11 @@ class outpost.HomepageEditor extends scpr.Framework
         @collection.comparator = 'position'
         @listenTo @collection, "reset update change", =>
           @collection.sort()
+
+    render: (locals={}, options={}) ->
+      super(locals, options)
+      @reloadComponents()      
+
 
     # private
 
@@ -37,7 +43,6 @@ class outpost.HomepageEditor extends scpr.Framework
       "click": "toggleAssetDisplay"
 
     init: ->
-      # @$el.on 'click', => @toggleAssetDisplay()
       @defineComponents
         asset: new AssetComponent model: @model
 
@@ -75,9 +80,7 @@ class outpost.HomepageEditor extends scpr.Framework
 
     helpers:
       displayIf: (context, options) ->
-        debugger
         if this.model.get('asset_display') is context
-          debugger
           options.fn?(this) # run block if true
         else
           ''

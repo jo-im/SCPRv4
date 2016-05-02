@@ -22,13 +22,6 @@ class scpr.Framework
 
   Handlebars = require 'handlebars/dist/handlebars'
 
-  # class JavaScriptCompiler extends Handlebars.JavaScriptCompiler
-  #   invokeHelper: (paramSize, name, isSimple) ->
-  #     super()
-  #     console.log('hello world')
-
-  # Handlebars.JavaScriptCompiler = JavaScriptCompiler
-
   safeEval: (code) ->
     eval("try{\n#{code};\n}catch(err){};")
 
@@ -58,7 +51,15 @@ class scpr.Framework
     tagName: 'div'
 
     initialize: ->
-      # @uuid = @_generateUUID()
+      @uuid       = @_generateUUID()
+      @name       = this.constructor.name
+      @$el.attr('data-framework-component-id', @uuid)
+      @$el.attr('data-framework-component-name', @name)
+      # By default, if the component's element has no content,
+      # the element will render blank.  Set the attribute 
+      # `empty` to true if the element should be rendered,
+      # despite having no child nodes.
+      @empty      = false
       # Either inject components as dependencies after
       # initialize or override your inherited initialize
       # function.
@@ -67,15 +68,11 @@ class scpr.Framework
       # Components that are currently being used, including
       # any that were generated from a constructor.
       @activeComponents = []
-      # Stores current renderings by UUID to be referenced
-      # when the component elements are inserted into the DOM.
-      @activeRenderings = {}
       # Scope Handlebars ENV to this component.
       @Handlebars = Handlebars.create()
       # Goes through the `helpers` hash registers the
       # functions with Handlebars.
       @_registerHelpers()
-      @name       = this.constructor.name
       # Find designated template in the DOM, if it exists.
       # This would be a Handlebars template in a script tag.
       templateEl = $("script##{@name}[type='text/x-handlebars-template']")
@@ -87,16 +84,13 @@ class scpr.Framework
       # A component also makes the assumption that you
       # want it to re-render when its model changes.
       if @model
-        @listenTo @model, "add change destroy", @render
+        @listenTo @model, "add remove change destroy", @render
       if @collection
-        @listenTo @collection, "reset update sort change", @render
+        @listenTo @collection, "add remove reset update sort change", @render
       # Call `init` function, which allows for a similar
       # initialization without having to call `super` 
       # every time you extend Component.
       @init?()
-
-
-
 
     defineComponents: (components={}) ->
       ## Add child components to the current component
@@ -114,13 +108,18 @@ class scpr.Framework
             ## the number of child components is unpredictable.
             if component.isComponentClass
               component  = new component model: @
-            renderId = component.render(this, options)
+            component.render(this, options)
             parentComponent.activeComponents?.push component
-            new component.Handlebars.SafeString component.placeholder(renderId)
+            new component.Handlebars.SafeString component.html()
         ## This is a workaround for the helper to have access to its own name.
         ## Not sure why this isn't already possible in Handlebars.
         @Handlebars.registerHelper name, eval @Handlebars.compile('(' + helper.toString() + ')')({name: name})
 
+    html: ->
+      # outerHTML of the current element
+      # irrespective of rendering
+      return '' if !@empty and !@$el.html().trim().length
+      @$el?.prop('outerHTML')
 
     renderHTML: (locals={}, options={}) ->
       # This generates HTML from the template
@@ -128,52 +127,40 @@ class scpr.Framework
       # the component's element.
       #
       # For internal use only.
-      @options = options # store the options passed from the caller
       if @template
-        @template @_params() # pass our properties to the template
+        @options = options # store the options passed from the caller
+        output = @template @_params() # pass our properties to the template
+        @options = undefined # get rid of options
+        output
         # Think of it as telling the template what local variables
         # to have, vs the options we set above, which is changing
         # the state of our component.
       else
         ""
 
-    renderComponents: (locals={}, options={})->
-      @clearActiveComponents()
-      html = @renderHTML(locals, options) # generating the HTML will run the helpers that will re-populate the active components
-      @$el?.html html
-      for component in @activeComponents
-        for id, rendering of component.activeRenderings
-          placeholder = @$el.find("script##{id}[type='text/x-framework-component-placeholder']")
-          if id is placeholder.attr('id')
-            # Replace the placeholder tag with a new node
-            # that has the designated event handlers copied
-            # with it so that component-defined behavior
-            # remains.
-            placeholder.replaceWith component.$el.clone(true).html(rendering)
-        component.activeRenderings = {} # Okay, child.  You don't need your renderings anymore. :)
-      @$el.find("script[type='text/x-framework-component-placeholder']").remove() # clear any dead-end placeholders
-      @
-
     render: (locals={}, options={}) ->
-      # Here, we render the component and store the output with an ID.
-      id = @_generateUUID()
-      @activeRenderings[id] = @renderComponents(locals, options)?.$el?.html() # spit out the markup, but not the element
-      id
+      @clearActiveComponents()
+      @$el?.html @renderHTML(locals, options)
 
-    placeholder: (id) ->
-      new @Handlebars.SafeString "<script id='#{id}' type='text/x-framework-component-placeholder'></script>"
+    reloadComponents: ->
+      for component in @activeComponents
+        newElement = @$el.find("[data-framework-component-name='#{component.name}'][data-framework-component-id='#{component.uuid}']").first()
+        if newElement.length
+          component.setElement newElement
+          component.reloadComponents()
 
     remove: ->
       @trigger 'clean_up'
       super()
 
     clearActiveComponents: ->
-      for x in @activeComponents
-        component = @activeComponents.pop()
-        setTimeout =>
-          component.clearActiveComponents()
-          component.remove()
-        , 0
+      for component in @activeComponents
+        component.clearActiveComponents()
+        component.unbind()
+        delete (component.model or component.collection or {}).options #= undefined
+        delete component.components
+        component.remove()
+      @activeComponents = []
       @trigger 'clean_up'
 
     # private
