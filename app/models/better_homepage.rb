@@ -70,7 +70,7 @@ class BetterHomepage < ActiveRecord::Base
   end
 
   def to_index
-    Hashie::Mash.new(
+    OpenStruct.new(
       {
         content:         content.map(&:to_index),
         public_datetime: updated_at,

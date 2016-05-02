@@ -1,12 +1,12 @@
 <div class="media">
-  <% if p.asset_url? && p.asset_display == "large" %>
+  <% if p.asset_url && p.asset_display == "large" %>
     <a href="<%= p.public_url %>" class="media__image-parent">
       <img src="<%= p.asset_url %>" class="media__image large">
     </a>
   <% end %>
   <div class="media__container clearfix">
     <div class="media__content">
-      <% if p.asset_url? && p.asset_display == "med" %>
+      <% if p.asset_url && p.asset_display == "medium" %>
         <a href="<%= p.public_url %>" class="media__image-parent">
           <img src="<%= p.asset_url %>" class="media__image med">
         </a>
@@ -36,11 +36,11 @@
             </g>
           </svg>
 
-          <%= p.short_title %>
+          <%= p.short_headline %>
         </a>
       </h2>
-      <div class="media__summary"><%= simple_format(p.summary) %></div>
-      <% if p.related_content? %>
+      <div class="media__summary"><%= simple_format(p.teaser) %></div>
+      <% if p.related_content %>
         <h5 class="media__related-heading">More in <%= p.label %></h5>
         <%= render partial: "related_content", locals: {content: p.related_content} %>
       <% elsif p.program? %>

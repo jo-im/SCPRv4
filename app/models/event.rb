@@ -178,7 +178,7 @@ class Event < ActiveRecord::Base
 
 
   def to_article
-    related_content = to_article_called_more_than_twice? ? [] : self.related_content.map(&:to_reference)
+    related_content = to_article_called_more_than_twice? ? [] : self.related_content.map(&:to_reference).compact
     @to_article ||= Article.new({
       :original_object    => self,
       :id                 => self.obj_key,

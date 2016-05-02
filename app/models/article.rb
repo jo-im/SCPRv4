@@ -204,7 +204,7 @@ class Article
   def related_content=(content)
     @related_content = (content||[]).collect do |c|
       Hashie::Mash.new(c)
-    end
+    end.compact
   end
 
   def links=(content)
