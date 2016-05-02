@@ -45,8 +45,8 @@ class HomepageContent < ActiveRecord::Base
   end
 
   def to_index
-    if article = content.try(:to_article)
-      OpenStruct.new(
+    if article = content.try(:get_article)
+      Hashie::Mash.new(
         {
           id: article.id,
           headline: article.title,
@@ -57,7 +57,8 @@ class HomepageContent < ActiveRecord::Base
           public_datetime: article.public_datetime,
           public_path: article.public_path,
           position: self.position,
-          label: label
+          label: label,
+          related_content: article.related_content.map(&:to_reference)
         }
       )
     else
