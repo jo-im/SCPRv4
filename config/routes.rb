@@ -2,11 +2,9 @@ require "resque/server"
 
 Scprv4::Application.routes.draw do
   # Homepage
-  ## see lib/homepage_opt_in for dynamic routing to
-  ## the new homepage controller.  it has to work
-  ## this way because constraints don't work with
-  ## named routes. :(
-  root to: "home#index"
+  get '/' => 'home#index', constraints: lambda { |request| !request.cookie_jar[:beta_opt_in]}, as: :root
+  get '/' => 'better_homepage#index', constraints: lambda { |request| request.cookie_jar[:beta_opt_in]}
+
 
   # Listen Live
   get '/listen_live/' => 'listen#index', as: :listen
