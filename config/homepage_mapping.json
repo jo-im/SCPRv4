@@ -1,0 +1,26 @@
+{
+  "_default_": {
+    "dynamic": false,
+    "properties": {
+      "content": {
+        "type": "nested",
+        "include_in_parent": true,
+        "properties": {
+          "obj_key": { "type":"string" },
+          "content_id": { "type": "integer" },
+          "asset_display": { "type": "string" },
+          "position": { "type": "integer" },
+          "label": { "type": "string" }
+        }
+      },
+      "public_datetime": {
+        "type": "date",
+        "format": "date_optional_time"
+      },
+      "published_at": {
+        "type": "date",
+        "format": "date_time"
+      }
+    }
+  }
+}

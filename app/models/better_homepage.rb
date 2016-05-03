@@ -8,7 +8,7 @@ class BetterHomepage < ActiveRecord::Base
   include Concern::Callbacks::SetPublishedAtCallback
   include Concern::Callbacks::PublishNotificationCallback
   include Concern::Model::Searchable
-  include Concern::Callbacks::HomepageCachingCallback
+  # include Concern::Callbacks::HomepageCachingCallback
   include Concern::Callbacks::TouchCallback
 
   status :draft do |s|
@@ -41,6 +41,10 @@ class BetterHomepage < ActiveRecord::Base
   validates \
     :status,
     presence: true
+
+  after_create :async_create_index
+  after_update :async_update_index
+  after_destroy :async_destroy_index
 
   def publish
     self.update_attributes(status: self.class.status_id(:live))
@@ -80,6 +84,25 @@ class BetterHomepage < ActiveRecord::Base
   end
 
   private
+
+  def async_create_index
+    # Only index if homepage is live.
+    if status == self.class.status_id(:live)
+      Job::HomepageIndexer.enqueue id, :create
+    end
+  end
+
+  def async_update_index
+    if status == self.class.status_id(:live)
+      async_create_index
+    else
+      async_destroy_index
+    end
+  end
+
+  def async_destroy_index
+    Job::HomepageIndexer.enqueue id, :destroy
+  end
 
   def build_content_association(content_hash, content)
     ## These are defaults, but otherwise the content
