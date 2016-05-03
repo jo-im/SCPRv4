@@ -10,7 +10,8 @@
           "content_id": { "type": "integer" },
           "asset_display": { "type": "string" },
           "position": { "type": "integer" },
-          "label": { "type": "string" }
+          "label": { "type": "string" },
+          "call_to_action": {"type":"string"}
         }
       },
       "public_datetime": {

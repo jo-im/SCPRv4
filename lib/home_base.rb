@@ -1,5 +1,8 @@
 module HomeBase
-  ## Used for indexing new Homepages.
+  ## This is a simple module for taking care of 
+  ## indexing of the new homepage model.  These functions
+  ## are generally called asynchronously by the 
+  ## HomepageIndexer job.
   ESClient = ES_CLIENT
   ESIndex  = ES_HOMEPAGES_INDEX
   class << self

@@ -43,20 +43,10 @@
       <% if content.article.related_content %>
         <h5 class="media__related-heading">More in <%= content.label %></h5>
         <%= render partial: "related_content", locals: {content: content.article.related_content} %>
-      <% elsif content.program? %>
-        <a class="media__appeal" href="<%= content.article.public_url %>">
-          <% if content.program == "AirTalk" %>
-            <%= image_tag 'better_homepage/conversation.svg' %>
-            Join the conversation
-          <% elsif content.program == "KPCC In Person" %>
-            <%= image_tag 'better_homepage/event.svg' %>
-            RSVP for this event
-          <% else %>
-            <%= image_tag 'better_homepage/podcast.svg' %>
-            Love <%= content.program %>? Subscribe to the podcast!
-          <% end %>
-        </a>
+      <% else %>
+        <%= render partial: "call_to_action", locals: {content: content } %>
       <% end %>
+      <%= render partial: "call_to_action", locals: {content: content } %>
     </div>
     <aside class="media__metadata">
       <% if content.label != nil %>

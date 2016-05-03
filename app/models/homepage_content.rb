@@ -44,6 +44,22 @@ class HomepageContent < ActiveRecord::Base
     end
   end
 
+  def call_to_action
+    return if !content
+    case content_type
+    when "ShowSegment"
+      if content.show.try(:slug) == 'airtalk'
+        "conversation"
+      else
+        "podcast"
+      end
+    when "Event"
+      if !(content.rsvp_url || "").empty?
+        "event"
+      end
+    end
+  end
+
   def to_indexable
     if content
       OpenStruct.new(
@@ -52,7 +68,8 @@ class HomepageContent < ActiveRecord::Base
           content_id: content_id,
           asset_display: asset_display,
           position: position,
-          label: label
+          label: label,
+          call_to_action: call_to_action
         }
       )
     else
