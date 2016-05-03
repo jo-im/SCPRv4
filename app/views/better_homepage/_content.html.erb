@@ -43,8 +43,6 @@
       <% if content.article.related_content %>
         <h5 class="media__related-heading">More in <%= content.label %></h5>
         <%= render partial: "related_content", locals: {content: content.article.related_content} %>
-      <% else %>
-        <%= render partial: "call_to_action", locals: {content: content } %>
       <% end %>
       <%= render partial: "call_to_action", locals: {content: content } %>
     </div>
