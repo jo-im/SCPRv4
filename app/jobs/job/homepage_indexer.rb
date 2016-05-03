@@ -9,9 +9,9 @@ module Job
 
         case action.to_sym
         when :create,:update
-          obj.index # index to ES
+          HomeBase.index obj
         when :destroy
-          obj.unindex
+          HomeBase.unindex obj
         else
           raise "Unknown action type for Job::HomepageIndexer: #{action} (id:#{id})"
         end
@@ -19,7 +19,7 @@ module Job
         # I don't like putting this here, but I'm not sure how else to do
         # it at the moment.
         if Rails.env.test?
-          BetterHomepage.es_client.indices.refresh index:"_all"
+          HomeBase::ESClient.indices.refresh index:"_all"
         end
 
       rescue ActiveRecord::RecordNotFound

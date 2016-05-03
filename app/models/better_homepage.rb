@@ -42,8 +42,8 @@ class BetterHomepage < ActiveRecord::Base
     :status,
     presence: true
 
-  after_create :async_create_index
-  after_update :async_update_index
+  after_create  :async_create_index
+  after_update  :async_update_index
   after_destroy :async_destroy_index
 
   def publish
