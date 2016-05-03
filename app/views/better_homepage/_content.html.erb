@@ -46,13 +46,13 @@
       <% elsif content.program? %>
         <a class="media__appeal" href="<%= content.article.public_url %>">
           <% if content.program == "AirTalk" %>
-            <img src="images/conversation.svg">
+            <%= image_tag 'better_homepage/conversation.svg' %>
             Join the conversation
           <% elsif content.program == "KPCC In Person" %>
-            <img src="images/event.svg">
+            <%= image_tag 'better_homepage/event.svg' %>
             RSVP for this event
           <% else %>
-            <img src="images/podcast.svg">
+            <%= image_tag 'better_homepage/podcast.svg' %>
             Love <%= content.program %>? Subscribe to the podcast!
           <% end %>
         </a>
@@ -63,7 +63,7 @@
         <span class="media__category">
           <%= content.label %>
           <% if content.source != "KPCC" %>
-            <img src="images/outbound.svg">
+            <%= image_tag 'better_homepage/outbound.svg' %>
           <% end %>
         </span>
       <% end %>
