@@ -44,7 +44,7 @@ class HomepageContent < ActiveRecord::Base
     end
   end
 
-  def to_index
+  def to_indexable
     if content
       OpenStruct.new(
         {

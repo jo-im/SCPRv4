@@ -66,16 +66,16 @@ class BetterHomepage < ActiveRecord::Base
     ## articles and includes the asset display
     ## scheme with it.
     content.includes(:content).map do |c| 
-      article               = c.content.to_article
-      article.asset_display = c.asset_display
+      article               = c.content.get_article
+      article.asset_display = c.asset_display # here, we hijack the asset_display attribute for now.
       article
     end
   end
 
-  def to_index
+  def to_indexable
     OpenStruct.new(
       {
-        content:         content.map(&:to_index),
+        content:         content.map(&:to_indexable),
         public_datetime: updated_at,
         published_at:    published_at
       }
@@ -83,7 +83,8 @@ class BetterHomepage < ActiveRecord::Base
   end
 
   def index
-    @@es_client.index index: @@es_index, type: 'homepage', id: id, body: to_index
+    # Adds this homepage to the homepages index in ElasticSearch.
+    @@es_client.index index: @@es_index, type: 'homepage', id: id, body: to_indexable
   end
 
   def retrieve
