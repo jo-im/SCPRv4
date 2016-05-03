@@ -12,7 +12,8 @@ class BetterHomepageController < ApplicationController
     }
 
   def index
-    @homepage         = (BetterHomepage.published.first || Missing).to_index
+    @homepage         = (BetterHomepage.published.first || Missing)
+    @content          = @homepage.retrieve
   end
 
   private

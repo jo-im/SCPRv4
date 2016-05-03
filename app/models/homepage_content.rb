@@ -45,20 +45,14 @@ class HomepageContent < ActiveRecord::Base
   end
 
   def to_index
-    if article = content.try(:get_article)
+    if content
       OpenStruct.new(
         {
-          id: article.id,
-          headline: article.title,
-          short_headline: article.short_title,
-          teaser: article.teaser,
-          asset_display: self.asset_display,
-          asset_url: article.asset.asset.full.url,
-          public_datetime: article.public_datetime,
-          public_path: article.public_path,
-          position: self.position,
-          label: label,
-          related_content: article.related_content
+          obj_key: content.obj_key,
+          content_id: content_id,
+          asset_display: asset_display,
+          position: position,
+          label: label
         }
       )
     else

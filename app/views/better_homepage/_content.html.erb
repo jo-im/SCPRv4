@@ -1,18 +1,18 @@
 <div class="media">
-  <% if p.asset_url && p.asset_display == "large" %>
-    <a href="<%= p.public_url %>" class="media__image-parent">
-      <img src="<%= p.asset_url %>" class="media__image large">
+  <% if (asset_url = content.article.asset.full.url) && content.asset_display == "large" %>
+    <a href="<%= content.public_url %>" class="media__image-parent">
+      <img src="<%= asset_url %>" class="media__image large">
     </a>
   <% end %>
   <div class="media__container clearfix">
     <div class="media__content">
-      <% if p.asset_url && p.asset_display == "medium" %>
-        <a href="<%= p.public_url %>" class="media__image-parent">
-          <img src="<%= p.asset_url %>" class="media__image med">
+      <% if (asset_url = content.article.asset.full.url) && content.asset_display == "medium" %>
+        <a href="<%= content.public_url %>" class="media__image-parent">
+          <img src="<%= asset_url %>" class="media__image med">
         </a>
       <% end %>
-      <h2 class="media__headline <%= p.asset_display %>">
-        <a href="<%= p.public_url %>">
+      <h2 class="media__headline <%= content.asset_display %>">
+        <a href="<%= content.public_url %>">
           <% if index == 0 || 1 || 2 %>
             <svg class="unread" width="12px" height="12px" viewBox="0 0 12 12" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:sketch="http://www.bohemiancoding.com/sketch/ns">
                 <title>Unread</title>
@@ -36,38 +36,38 @@
             </g>
           </svg>
 
-          <%= p.short_headline %>
+          <%= content.article.short_title %>
         </a>
       </h2>
-      <div class="media__summary"><%= simple_format(p.teaser) %></div>
-      <% if p.related_content %>
-        <h5 class="media__related-heading">More in <%= p.label %></h5>
-        <%= render partial: "related_content", locals: {content: p.related_content} %>
-      <% elsif p.program? %>
-        <a class="media__appeal" href="<%= p.public_url %>">
-          <% if p.program == "AirTalk" %>
+      <div class="media__summary"><%= simple_format(content.teaser) %></div>
+      <% if content.article.related_content %>
+        <h5 class="media__related-heading">More in <%= content.label %></h5>
+        <%= render partial: "related_content", locals: {content: content.article.related_content} %>
+      <% elsif content.program? %>
+        <a class="media__appeal" href="<%= content.article.public_url %>">
+          <% if content.program == "AirTalk" %>
             <img src="images/conversation.svg">
             Join the conversation
-          <% elsif p.program == "KPCC In Person" %>
+          <% elsif content.program == "KPCC In Person" %>
             <img src="images/event.svg">
             RSVP for this event
           <% else %>
             <img src="images/podcast.svg">
-            Love <%= p.program %>? Subscribe to the podcast!
+            Love <%= content.program %>? Subscribe to the podcast!
           <% end %>
         </a>
       <% end %>
     </div>
     <aside class="media__metadata">
-      <% if p.label != nil %>
+      <% if content.label != nil %>
         <span class="media__category">
-          <%= p.label %>
-          <% if p.source != "KPCC" %>
+          <%= content.label %>
+          <% if content.source != "KPCC" %>
             <img src="images/outbound.svg">
           <% end %>
         </span>
       <% end %>
-      <time class="media__timestamp timeago" datetime="<%= p.published_at %>"><%= p.published_at %></time>
+      <time class="media__timestamp timeago" datetime="<%= content.article.public_datetime %>"><%= content.article.public_datetime %></time>
     </aside>
   </div>
 </div>
