@@ -1,5 +1,5 @@
 {
-  "_default_": {
+  "homepages": {
     "dynamic": false,
     "properties": {
       "content": {

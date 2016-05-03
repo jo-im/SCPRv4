@@ -40,14 +40,11 @@ module HomeBase
     end
     private
 
+    def create_index
+      ESClient.indices.create index: ESIndex
+    end
+
     def put_index_mapping
-      ESClient.indices.put_template name:"#{ES_PREFIX}-settings", body:{
-        template:"#{ES_PREFIX}-*",
-        settings:{
-          'index.number_of_shards'    => 5,
-          'index.number_of_replicas'  => 1
-        },
-      }
       mapping = JSON.parse(File.read("#{Rails.root}/config/homepage_mapping.json"))
       ESClient.indices.put_template name:"#{ES_PREFIX}-homepages", body:{template:"#{ES_PREFIX}-homepages-*",mappings:mapping}
     end
