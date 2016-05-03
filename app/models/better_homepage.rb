@@ -3,9 +3,6 @@ class BetterHomepage < ActiveRecord::Base
   has_secretary
   has_status
 
-  @@es_client = ES_CLIENT
-  @@es_index  = ES_HOMEPAGES_INDEX
-
   include Concern::Scopes::PublishedScope
   include Concern::Associations::ContentAlarmAssociation
   include Concern::Callbacks::SetPublishedAtCallback
@@ -80,20 +77,6 @@ class BetterHomepage < ActiveRecord::Base
         published_at:    published_at
       }
     )
-  end
-
-  def index
-    # Adds this homepage to the homepages index in ElasticSearch.
-    @@es_client.index index: @@es_index, type: 'homepage', id: id, body: to_indexable
-  end
-
-  def retrieve
-    results = @@es_client.search index: @@es_index, id: id #body: { query: { match: { id: id } } }
-    results = results['hits']['hits'][0]['_source']['table']['content'].map do |r|
-      row = Hashie::Mash.new r['table']
-      row.article = ContentBase.find row.obj_key
-      row
-    end
   end
 
   private
