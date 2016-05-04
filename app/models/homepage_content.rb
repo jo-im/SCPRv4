@@ -26,10 +26,10 @@ class HomepageContent < ActiveRecord::Base
 
   belongs_to :homepage, polymorphic: true
 
-  after_initialize :set_default_asset_display
+  after_initialize :set_default_asset_scheme
 
   def simple_json
-    @simple_json = super.merge({'asset_display' => self.asset_display})
+    @simple_json = super.merge({'asset_scheme' => self.asset_scheme})
   end
 
   def label
@@ -68,7 +68,7 @@ class HomepageContent < ActiveRecord::Base
         {
           obj_key: content.obj_key,
           content_id: content_id,
-          asset_display: asset_display,
+          asset_scheme: asset_scheme,
           position: position,
           label: label,
           call_to_action: call_to_action
@@ -81,7 +81,7 @@ class HomepageContent < ActiveRecord::Base
 
   private
 
-  def set_default_asset_display
-    @asset_display ||= ASSET_DISPLAY[:default]
+  def set_default_asset_scheme
+    @asset_scheme ||= ASSET_DISPLAY[:default]
   end
 end

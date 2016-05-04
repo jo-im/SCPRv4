@@ -1,17 +1,17 @@
 <div class="media">
-  <% if (asset_url = content.article.asset.full.url) && content.asset_display == "large" %>
+  <% if (asset_url = content.article.asset.full.url) && content.asset_scheme == "large" %>
     <a href="<%= content.public_url %>" class="media__image-parent">
       <img src="<%= asset_url %>" class="media__image large">
     </a>
   <% end %>
   <div class="media__container clearfix">
     <div class="media__content">
-      <% if (asset_url = content.article.asset.full.url) && content.asset_display == "medium" %>
+      <% if (asset_url = content.article.asset.full.url) && content.asset_scheme == "medium" %>
         <a href="<%= content.public_url %>" class="media__image-parent">
           <img src="<%= asset_url %>" class="media__image med">
         </a>
       <% end %>
-      <h2 class="media__headline <%= content.asset_display %>">
+      <h2 class="media__headline <%= content.asset_scheme %>">
         <a href="<%= content.public_url %>">
           <% if index == 0 || 1 || 2 %>
             <svg class="unread" width="12px" height="12px" viewBox="0 0 12 12" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:sketch="http://www.bohemiancoding.com/sketch/ns">

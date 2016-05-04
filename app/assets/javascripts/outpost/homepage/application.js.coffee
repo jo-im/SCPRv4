@@ -48,27 +48,28 @@ class outpost.HomepageEditor extends scpr.Framework
   class ContentComponent extends @Component
     className: 'media'
     events:
-      "click": "toggleAssetDisplay"
+      "click": "toggleAssetScheme"
     @componentName: 'content-component'
 
     init: ->
+      # If the content comes in without an asset scheme,
+      # which it will if it just came from the aggregator,
+      # give it a default value of 'medium'.
+      if ['medium', 'none', 'large'].indexOf(@model.get('asset_scheme')) is -1
+        @model.set 'asset_scheme', 'medium' 
       @defineComponents
         asset: new AssetComponent model: @model
 
-    toggleAssetDisplay: (e) ->
-      display = @model.get('asset_display')
+    toggleAssetScheme: (e) ->
+      display = @model.get('asset_scheme')
       if display == 'large'
-        @model.set 'asset_display', 'medium'
+        @model.set 'asset_scheme', 'medium'
       else if display == 'medium'
-        @model.set 'asset_display', 'none'
+        @model.set 'asset_scheme', 'none'
       else if display == 'none'
-        @model.set 'asset_display', 'large'
+        @model.set 'asset_scheme', 'large'
       else
-        # Some models seem to be coming in with 
-        # asset_display names like 'photo'. 
-        # Maybe we have a naming conflict, so we
-        # have to do this for now.
-        @model.set 'asset_display', 'medium'
+        @model.set 'asset_scheme', 'medium'
       window.aggregator.baseView.dropZone.updateInput()
 
     properties: ->
@@ -88,7 +89,7 @@ class outpost.HomepageEditor extends scpr.Framework
 
     helpers:
       displayIf: (context, options) ->
-        if options?.data?.root?.component?.options?.context is context and this.model.get('asset_display') is context
+        if options?.data?.root?.component?.options?.context is context and this.model.get('asset_scheme') is context
           options.fn?(this) # run block if true
         else
           ''
