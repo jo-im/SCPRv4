@@ -1,7 +1,7 @@
 class HomepageContent < ActiveRecord::Base
   include Outpost::Aggregator::SimpleJson
 
-  ASSET_DISPLAY = {
+  ASSET_SCHEMES = {
     default: 'medium',
     display_types: [
       'none',
@@ -82,6 +82,6 @@ class HomepageContent < ActiveRecord::Base
   private
 
   def set_default_asset_scheme
-    @asset_scheme ||= ASSET_DISPLAY[:default]
+    @asset_scheme ||= ASSET_SCHEMES[:default]
   end
 end

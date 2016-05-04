@@ -13,13 +13,13 @@ class outpost.ContentAPI
         # we care about for SCPRv4. Everything else will
         # filled out server-side.
         defaults: 
-            asset_display: 'medium'
+            asset_scheme: 'medium'
             
         simpleJSON: ->
             {
                 id:            @get 'id'
                 position:      @get 'position'
-                asset_display: @get 'asset_display'
+                asset_scheme:  @get 'asset_scheme'
             }
 
     #-----------------------------
