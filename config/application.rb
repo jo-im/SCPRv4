@@ -3,6 +3,13 @@ require 'rails/all'
 
 Bundler.require(:default, Rails.env)
 
+if Rails.env.development? or Rails.env.test?
+  ## Initialize Docker Machine environment variables so
+  ## that database.yml can pick up the MySQL database host
+  `docker-machine env default`.scan(/(\w+)="(.*)"/).each{|p| ENV[p[0]] = p[1]}
+  ENV['SCPRV4_DEVELOPMENT_DATABASE_IP'] = URI(ENV['DOCKER_HOST']).host
+end
+
 module Scprv4
   class Application < Rails::Application
     # Custom directories with classes and modules you want to be autoloadable.
