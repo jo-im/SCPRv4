@@ -32,7 +32,7 @@ class outpost.Autosave
     # Populate inputs & textareas that we are going to track changes for.
     @fields      = new outpost.Autosave.Elements
       find: [("#main #{elName}[id]" for elName in @elementNames).join(", ")]
-      not: [':button', '[type=hidden]', '.datetime:hidden']
+      not: [':button', '[type=hidden]', '.datetime:hidden'].concat @options.exclude
     @events      = {}
     @_watchCollections()
     @_initializeWarning()
