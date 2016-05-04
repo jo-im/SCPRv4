@@ -18,16 +18,16 @@ module HomeBase
       else
         id = obj
       end
-      search(id: id)[0]
+      result = ESClient.get index: ESIndex, type: 'homepage', id: id
+      format_result result
     end
-    def search id:nil, query:{}
-      search_hash = {index: ESIndex, body: query}
-      search_hash[:id] = id if id
-      format ESClient.search search_hash
+    def search body:{}
+      search_hash = {index: ESIndex, type: 'homepage', body: body}
+      format_results ESClient.search search_hash
     end
     def current
       # Returns index entry for current homepage.
-      search(query: {
+      search(body: {
         query: {
           match_all: {}
         },
@@ -41,6 +41,7 @@ module HomeBase
         ]        
       })[0]
     end
+
     private
 
     def create_index
@@ -52,16 +53,20 @@ module HomeBase
       ESClient.indices.put_template name:"#{ES_PREFIX}-homepages", body:{template:"#{ES_PREFIX}-homepages-*",mappings:mapping}
     end
 
-    def format results
+    def format_result result
+      result = result['_source']['table']
+      result['content'].map! do |r|
+        row = Hashie::Mash.new r['table']
+        row.article = ContentBase.find row.obj_key
+        row
+      end.compact # if an article was arbitrarily deleted, it should not show up in our results
+      # even if referenced in the homepage index entry.
+      Hashie::Mash.new result
+    end
+
+    def format_results results
       results['hits']['hits'].map do |hit|
-        hit = hit['_source']['table']
-        hit['content'].map! do |r|
-          row = Hashie::Mash.new r['table']
-          row.article = ContentBase.find row.obj_key
-          row
-        end.compact # if an article was arbitrarily deleted, it should not show up in our results
-        # even if referenced in the homepage index entry.
-        Hashie::Mash.new hit
+        format_result hit
       end    
     end
   end
