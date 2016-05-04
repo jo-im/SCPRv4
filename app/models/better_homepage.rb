@@ -68,7 +68,7 @@ class BetterHomepage < ActiveRecord::Base
     ## scheme with it.
     content.includes(:content).map do |c| 
       article               = c.content.get_article
-      article.asset_display = c.asset_display # here, we hijack the asset_display attribute for now.
+      article.asset_scheme  = c.asset_scheme
       article
     end
   end
