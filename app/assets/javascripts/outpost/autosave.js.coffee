@@ -32,7 +32,7 @@ class outpost.Autosave
     # Populate inputs & textareas that we are going to track changes for.
     @fields      = new outpost.Autosave.Elements
       find: [("#main #{elName}[id]" for elName in @elementNames).join(", ")]
-      not: [':button', '[type=hidden]', '.datetime:hidden']
+      not: [':button', '[type=hidden]', '.datetime:hidden'].concat @options.exclude
     @events      = {}
     @_watchCollections()
     @_initializeWarning()
@@ -182,7 +182,7 @@ class outpost.Autosave
     $(document).ready =>
       for collectionName in (@options.collections or [])
         if collection = safeEval("window.#{collectionName}")?.collection 
-          collection.on 'change', =>
+          collection.on 'change destroy add remove update sort', =>
             @shouldWarn = true
             @_waitAndSave()
 
@@ -193,6 +193,12 @@ class outpost.Autosave
     # no changes have occurred.
     @shouldWarn  = false
     $("form.simple_form").on 'submit', =>
+      if @options._id.match('-new') or @options._id is 'new'
+        @removeDoc() # this is the only way that I can think of
+        # preventig the modal from coming up after a new document
+        # has been saved, since we don't want old data to show up
+        # when we are creating a new content.  can you think of a
+        # better way to achieve this?
       @shouldWarn = false
       true
     $(window).one 'beforeunload', =>
