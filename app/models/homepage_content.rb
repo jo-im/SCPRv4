@@ -36,11 +36,13 @@ class HomepageContent < ActiveRecord::Base
     if content
       return "KPCC In Person" if content.try(:is_kpcc_event)
       tags = (content.try(:tags) || [])
-      keyword = tags.find{|t| t.try(:tag_type).try(:include?, 'Keyword')}
-      program = content.try(:show)
-      series  = tags.find{|t| t.try(:tag_type).try(:include?, 'Series')}
-      beat    = tags.find{|t| t.try(:tag_type).try(:include?, 'Beat')}
-      [beat, series, program, keyword].compact.map(&:title).first
+      (
+        tags.find{|t| t.try(:tag_type).try(:include?, 'Keyword')} ||  # keyword
+        content.try(:show) ||                                         # program
+        tags.find{|t| t.try(:tag_type).try(:include?, 'Series')} ||   # series
+        tags.find{|t| t.try(:tag_type).try(:include?, 'Beat')} ||     # beat
+        content.try(:category)                                        # category
+      ).try(:title)
     end
   end
 
