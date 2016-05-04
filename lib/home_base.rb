@@ -35,7 +35,7 @@ module HomeBase
         sort: [
           {
             published_at: {
-              order: "desc"
+              order: "asc"
             }
           }
         ]        
