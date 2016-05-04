@@ -182,7 +182,7 @@ class outpost.Autosave
     $(document).ready =>
       for collectionName in (@options.collections or [])
         if collection = safeEval("window.#{collectionName}")?.collection 
-          collection.on 'change', =>
+          collection.on 'change destroy add remove update sort', =>
             @shouldWarn = true
             @_waitAndSave()
 
