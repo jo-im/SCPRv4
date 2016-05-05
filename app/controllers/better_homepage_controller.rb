@@ -12,7 +12,7 @@ class BetterHomepageController < ApplicationController
     }
 
   def index
-    @homepage         = (HomeBase.current || Missing)
+    @homepage         = (HomeBase.current || BetterHomepage.order('published_at DESC').limit(1).first.try(:to_indexable) || Missing)
     @content          = @homepage.content
   end
 
