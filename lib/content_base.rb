@@ -109,7 +109,7 @@ module ContentBase
     query_string  = args[0].to_s
 
     options.reverse_merge!({
-      :classes     => [NewsStory, ShowSegment, BlogEntry, ContentShell],
+      :classes     => [NewsStory, ShowSegment, BlogEntry, ContentShell, Event],
       :page        => 1,
       :order       => "public_datetime #{DESCENDING}"
     })
