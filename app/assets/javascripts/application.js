@@ -46,6 +46,3 @@
 
 //= require short-list-modules.js
 //= require jquery.scrolldepth
-
-//= require moment-strftime/lib/moment-strftime.js
-//= require moment-twitter/moment-twitter.js

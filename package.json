@@ -24,6 +24,7 @@
     "history": "= 2.0.1",
     "jQuery-ajaxTransport-XDomainRequest": "git+https://github.com/MoonScript/jQuery-ajaxTransport-XDomainRequest.git#47de50fd4c1376642e8386ee1154b35694b60afe",
     "jplayer": "= 2.8.4",
+    "moment": "~2.10.3",
     "moment-strftime": "= 0.1.5",
     "moment-twitter": "= 0.2.0",
     "pouchdb": "= 5.3.1",
