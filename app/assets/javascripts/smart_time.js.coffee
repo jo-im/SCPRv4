@@ -1,6 +1,6 @@
 class scpr.SmartTime
 
-    moment = require('moment/min/moment-with-locales')
+    moment = require('moment')
     moment.fn extends require('moment-twitter').fn extends require('moment-strftime').fn
 
     DefaultOptions:
@@ -115,6 +115,7 @@ class scpr.SmartTime
                     @$el.text 'Just Now'
                 else
                     # relative formatting
+                    debugger
                     @$el.text "" + @options.prefix + @time.fromNow()
 
             else
