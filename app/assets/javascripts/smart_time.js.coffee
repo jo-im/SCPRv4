@@ -1,6 +1,6 @@
 class scpr.SmartTime
 
-    moment = require('moment')
+    moment = require('moment/min/moment-with-locales')
     moment.fn extends require('moment-twitter').fn extends require('moment-strftime').fn
 
     DefaultOptions:
