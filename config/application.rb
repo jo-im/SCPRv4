@@ -7,7 +7,11 @@ if Rails.env.development? or Rails.env.test?
   ## Initialize Docker Machine environment variables so
   ## that database.yml can pick up the MySQL database host
   `docker-machine env default`.scan(/(\w+)="(.*)"/).each{|p| ENV[p[0]] = p[1]}
-  ENV['SCPRV4_DEVELOPMENT_DATABASE_IP'] = URI(ENV['DOCKER_HOST']).host
+  begin
+    ENV['SCPRV4_DEVELOPMENT_DATABASE_IP'] = URI(ENV['DOCKER_HOST']).host
+  rescue ArgumentError
+    puts "WARNING: Development Database IP Not Defined"
+  end
 end
 
 module Scprv4
