@@ -40,7 +40,7 @@
         </a>
       </h2>
       <div class="media__summary"><%= simple_format(content.teaser) %></div>
-      <% if content.article.related_content %>
+      <% if content.content_type != "Event" && content.article.related_content %>
         <h5 class="media__related-heading">More in <%= content.label %></h5>
         <%= render partial: "related_content", locals: {content: content.article.related_content} %>
       <% end %>
