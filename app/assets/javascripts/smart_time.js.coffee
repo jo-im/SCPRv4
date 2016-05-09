@@ -1,4 +1,8 @@
 class scpr.SmartTime
+
+    moment = require('moment')
+    moment.fn extends require('moment-twitter').fn extends require('moment-strftime').fn
+
     DefaultOptions:
         finder:             ".smarttime"
         time_format:        "%I:%M %p"
@@ -24,6 +28,7 @@ class scpr.SmartTime
     #----------
 
     class SmartTime.Instance
+
         constructor: (el,options) ->
             @$el = $(el)
             @options = options
@@ -110,6 +115,7 @@ class scpr.SmartTime
                     @$el.text 'Just Now'
                 else
                     # relative formatting
+                    debugger
                     @$el.text "" + @options.prefix + @time.fromNow()
 
             else

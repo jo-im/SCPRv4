@@ -46,6 +46,3 @@
 
 //= require short-list-modules.js
 //= require jquery.scrolldepth
-
-moment = require('moment-strftime');
-moment = require('moment-twitter');

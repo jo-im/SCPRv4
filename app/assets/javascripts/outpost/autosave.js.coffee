@@ -193,12 +193,12 @@ class outpost.Autosave
     # no changes have occurred.
     @shouldWarn  = false
     $("form.simple_form").on 'submit', =>
-      if @options._id.match('-new') or @options._id is 'new'
-        @removeDoc() # this is the only way that I can think of
-        # preventig the modal from coming up after a new document
-        # has been saved, since we don't want old data to show up
-        # when we are creating a new content.  can you think of a
-        # better way to achieve this?
+      # if @options._id.match('-new') or @options._id is 'new'
+      @removeDoc() # this is the only way that I can think of
+      # preventig the modal from coming up after a new document
+      # has been saved, since we don't want old data to show up
+      # when we are creating a new content.  can you think of a
+      # better way to achieve this?
       @shouldWarn = false
       true
     $(window).one 'beforeunload', =>
