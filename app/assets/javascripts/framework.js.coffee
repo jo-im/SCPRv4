@@ -28,7 +28,7 @@ class Framework
 
   class @Model extends Backbone.Model
     initialize: ->
-      @beforeInit?()
+      @beforeInit?() # before and after are hooks mainly for mixins
       @init?()
       @afterInit?()
 
