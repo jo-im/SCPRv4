@@ -1,4 +1,4 @@
-#= require framework
+scpr.Framework = require 'framework'
 
 class outpost.HomepageEditor extends scpr.Framework
 
@@ -11,15 +11,15 @@ class outpost.HomepageEditor extends scpr.Framework
     component.render()
 
   class ContentsComponent extends @Component
-    @componentName: 'contents-component'
+    @_name: 'contents-component'
     init: ->
       @defineComponents
         content: ContentComponent
 
-        @listenTo @collection, "change:position", =>
-          @collection.comparator = 'position'
-          @collection.sort()
-          @render()
+      @listenTo @collection, "change:position", =>
+        @collection.comparator = 'position'
+        @collection.sort()
+        @render()
 
     render: (locals={}, options={}) ->
       super(locals, options)
@@ -49,7 +49,7 @@ class outpost.HomepageEditor extends scpr.Framework
     className: 'media'
     events:
       "click": "toggleAssetScheme"
-    @componentName: 'content-component'
+    @_name: 'content-component'
 
     init: ->
       # If the content comes in without an asset scheme,
@@ -79,7 +79,7 @@ class outpost.HomepageEditor extends scpr.Framework
   class AssetComponent extends @Component
     tagName: 'a'
     className: 'media__image-parent'
-    @componentName: 'asset-component'
+    @_name: 'asset-component'
     attributes:
       target: '_blank'
 

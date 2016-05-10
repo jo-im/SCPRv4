@@ -4,3 +4,5 @@
 //= require jquery.scrolldepth
 //= require page_mapping
 //= require timeago
+//= require shared
+//= require better_homepage/article_tracking

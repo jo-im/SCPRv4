@@ -8,5 +8,7 @@
   </header>
 
   <%= render partial: 'contents', locals: {object: @content} %>
-
+  <script>
+    new scpr.ArticleTracking('section.bound')
+  </script>
 </section><!-- .welcome -->

@@ -18,9 +18,8 @@
 #     picture.render()
 # ```
 
-class scpr.Framework
-
-  Handlebars = require 'handlebars/dist/handlebars'
+class Framework
+  Handlebars            = require 'handlebars/dist/handlebars'
 
   constructor: (options={}) ->
     # Call init function, to stay uniform with
@@ -28,8 +27,16 @@ class scpr.Framework
     @init?(options)
 
   class @Model extends Backbone.Model
+    initialize: ->
+      @beforeInit?()
+      @init?()
+      @afterInit?()
 
   class @Collection extends Backbone.Collection
+    initialize: ->
+      @beforeInit?()
+      @init?()
+      @afterInit?()
 
   class @Component extends Backbone.View
     # A component is basically a Backbone View that
@@ -49,7 +56,7 @@ class scpr.Framework
 
     initialize: (context={}, options={}) ->
       @uuid       = @_generateUUID()
-      @name       = @constructor.componentName
+      @name       = @constructor._name
       @$el.attr('data-framework-component-id', @uuid)
       @$el.attr('data-framework-component-name', @name)
       # By default, if the component's element has no content,
@@ -78,13 +85,13 @@ class scpr.Framework
       # Set element attributes
       for name, value of (@tagAttributes or {})
         @$el?.attr name, value
-      # A component also makes the assumption that you
-      # want it to re-render when its model changes.
-      @_listen()
       # Call `init` function, which allows for a similar
       # initialization without having to call `super` 
       # every time you extend Component.
       @init?(options)
+      # A component also makes the assumption that you
+      # want it to re-render when its model changes.
+      @_listen()
 
 
     defineComponents: (components={}) ->
@@ -138,7 +145,12 @@ class scpr.Framework
     render: (locals={}, options={}) ->
       # Inserts generated HTML into its element.
       @clearActiveComponents()
-      @$el?.html @renderHTML(locals, options)
+      # Set headless to true in global component
+      # options to prevent rendering out, or 
+      # simply overwrite the render function to
+      # do your own thing.
+      unless @options?.headless
+        @$el?.html @renderHTML(locals, options)
 
     reloadComponents: ->
       for component in @activeComponents
@@ -167,6 +179,7 @@ class scpr.Framework
       @stopListening (@model or @collection)
 
     _listen: ->
+      @_unlisten()
       if @model
         @listenTo @model, "change destroy", @render
       if @collection
@@ -198,3 +211,69 @@ class scpr.Framework
         (if c == 'x' then r else r & 0x3 | 0x8).toString 16
       )
       uuid
+
+
+  @Persistent =
+    # Extend your model or collection off this if
+    # you want to persist to localStorage.
+    _instance: 
+      beforeInit: ->
+        @storage = @constructor.storage
+      save: ->
+        @storage?.setItem @itemKey(), @stringify()
+      stringify: ->
+        JSON.stringify @toJSON()
+      load: ->
+        # Uses the current object and retrieves any
+        # data that is in localStorage
+        if json = @storage?.getItem(@itemKey()) 
+          if props = JSON.parse(json)
+            @set(props) # tries for a collection and then a model
+      itemKey: ->
+        "#{@constructor._name}-#{@id}"
+    _class:
+      storage: window.localStorage or window.sessionStorage
+      find: (id) ->
+        if json = @storage?.getItem(@itemKey(id))
+          new @ json
+      findAll: (ids) ->
+        @select (k, v) ->
+          v.id is id
+      saveAll: ->
+        # If this is a collection, save all the models
+        # individually instead of one stringified
+        # collection.
+        for model in (@models or [])
+          @save model
+      select: (filter, collection) ->
+        results = []
+        for key, value of @storage
+          results.push(value) if key.match("#{@_name}-") and filter(key, JSON.parse(value))
+        if collection
+          collection.reset results
+          collection
+        else
+          results
+      itemKey: (id) ->
+        "#{@_name}-#{id}"
+
+  # Implements a mixin pattern for our entities.
+  # It's useful for when you need to inherit properties
+  # and behavior from multiple sources.
+  #
+  # For example, if you need to create a model that also
+  # has behavior from the Persistence mixin, you'd use
+  # the follwing syntax:
+  #
+  # `class Thing extends @Model.mixin(@Persistent)
+  @Model.mixin        =
+    @Collection.mixin =
+    @Component.mixin  = (props) -> @extend(props._instance, props._class)
+
+
+if typeof module != 'undefined' and module.exports # if node.js/browserify
+  module.exports = Framework
+else if typeof define == 'function' and define.amd # if AMD
+  define -> Framework
+else
+  window.scpr.Framework = Framework
