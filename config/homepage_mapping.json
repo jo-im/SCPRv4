@@ -12,6 +12,11 @@
           "position": { "type": "integer" },
           "label": { "type": "string" },
           "call_to_action": {"type":"string"}
+        },
+        "check_it_out": {
+          "title": {"type": "string"},
+          "url": {"type": "string"},
+          "link_type": {"type": "string"}
         }
       },
       "public_datetime": {

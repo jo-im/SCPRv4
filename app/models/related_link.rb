@@ -59,4 +59,8 @@ class RelatedLink < ActiveRecord::Base
       link_type: link_type
     }
   end
+
+  def to_indexable
+    Hashie::Mash.new(to_hash)
+  end
 end
