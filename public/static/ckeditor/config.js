@@ -13,6 +13,7 @@ CKEDITOR.editorConfig = function(config) {
   config.format_tags = 'p;h2;h3';
 
   config.extraPlugins = [
+    'autosave',
     'image', // This plugin has custom changes so we didn't include it in the build
     'embed-placeholder',
     'webkit-span-fix',
