@@ -1,5 +1,6 @@
 <%= form_block "Full Details" do %>
   <%= f.input :headline, input_html: { class: "wide sluggable" } %>
   <%= f.input :body, input_html: { class: "cke-editor-restrictive" } %>
+  <%= f.input(:abstract, input_html: { class: "cke-editor-basic" }) if f.object.respond_to?(:abstract) %>
   <%= extra %>
 <% end %>
