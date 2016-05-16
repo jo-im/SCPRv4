@@ -1,14 +1,12 @@
-<section class="bound">
-  <header class="status notify">
-    <p class="status__message">
-      <%= image_tag 'better_homepage/notification.svg' %>
-      <b>3 new posts</b> 
-      since 6:22 AM
-    </p>
-  </header>
-
+<section id="content" class="container container--med">
+  <aside class="c-ad">
+    <div class="c-ad__container">
+      <img src="http://placehold.it/728x91?text=Position+A" alt="Position A">
+      <a class="c-ad__attribution" href="http://www.scpr.org/support/underwriting/">Become a KPCC Sponsor</a>
+    </div>
+  </aside>
   <%= render partial: 'contents', locals: {object: @content} %>
   <script>
-    new scpr.ArticleTracking('section.bound')
+    new scpr.ArticleTracking('section#content')
   </script>
 </section><!-- .welcome -->

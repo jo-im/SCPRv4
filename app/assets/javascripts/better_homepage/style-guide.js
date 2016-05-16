@@ -1,0 +1,1 @@
+require('scpr-style-guide')

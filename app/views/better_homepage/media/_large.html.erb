@@ -1,0 +1,7 @@
+<div class="media media--hp-large">
+  <%= render partial: "better_homepage/media/shared/figure_widescreen", locals: {url: content.article.public_url, asset_url: content.article.asset.full.url} %>
+  <div class="media__content">
+    <%= render partial: "better_homepage/media/shared/headline", locals: {headline: content.article.short_title, url: content.article.public_url} %>
+    <%= render partial: "better_homepage/media/shared/teaser", locals: {teaser: content.article.teaser} %>
+  </div>
+</div>

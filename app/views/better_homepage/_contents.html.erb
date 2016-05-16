@@ -1,26 +1,32 @@
-<% object.each_with_index do |p, index| %>
+<% object.each_with_index do |content, index| %>
 
-  <% tag = if p.source != "KPCC"
-              p.source
-           elsif p.tags__title?
-              p.tags__title
-           elsif p.program?
-              p.program
-           elsif p.category__title?
-              p.category__title
+  <% tag = if content.source != "KPCC"
+              content.source
+           elsif content.tags__title?
+              content.tags__title
+           elsif content.program?
+              content.program
+           elsif content.category__title?
+              content.category__title
            end
   %>
 
   <% if index == 1 %>
-    <aside class="ad">
-      <img src="http://placehold.it/300x250?text=Position+B" alt="Position B">
+    <aside class="c-ad">
+      <div class="c-ad__container">
+        <img class="c-ad__banner" src="http://placehold.it/300x250" />
+        <a class="c-ad__attribution" href="http://www.scpr.org/support/underwriting/">Become a KPCC Sponsor</a>
+      </div>
     </aside>
   <% elsif index == 7 %>
-    <aside class="ad">
-      <img src="http://placehold.it/300x250?text=Position+C" alt="Position C">
+    <aside class="c-ad">
+      <div class="c-ad__container">
+        <img class="c-ad__banner" src="http://placehold.it/300x250" />
+        <a class="c-ad__attribution" href="http://www.scpr.org/support/underwriting/">Become a KPCC Sponsor</a>
+      </div>
     </aside>
   <% end %>
+   
+  <%= render partial: "better_homepage/content", locals: {content: content, index: index} %>
 
-  <%= render partial: "content", locals: {content: p, index: index} %>
-    
 <% end %>

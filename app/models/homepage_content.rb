@@ -72,11 +72,23 @@ class HomepageContent < ActiveRecord::Base
           content_type: content_type,
           position: position,
           label: label,
-          call_to_action: call_to_action
+          call_to_action: call_to_action,
+          media_class: media_class
         }
       )
     else
       {}
+    end
+  end
+
+  def media_class
+    case asset_scheme
+    when 'large'
+      'media--hp-large'
+    when 'block'
+      'media--block'
+    else
+      'media--hp'
     end
   end
 

@@ -49,6 +49,7 @@ module Concern::Model::Searchable
         title:           a.title, 
         short_title:     a.short_title,
         category:        a.category,
+        thumbnail:       self.try(:asset).try(:asset).try(:json).try(:[], 'urls').try(:[], 'thumb'),
         public_datetime: a.public_datetime,
         has_audio?:      a.audio.any?,
         has_assets?:     a.assets.any?

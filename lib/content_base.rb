@@ -4,13 +4,7 @@
 # A set of definitions, collections, and utilities for
 # content in the application.
 #
-    NewsStory
-    ShowSegment
-    BlogEntry
-    ContentShell
-    Event
-    PijQuery
-    ShowEpisode
+
 module ContentBase
   @@es_client = ES_CLIENT
   @@es_index  = ES_ARTICLES_INDEX

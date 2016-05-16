@@ -1,5 +1,5 @@
 <a class="media__appeal" href="<%= content.article.public_url %>">
-  <% case content.call_to_action %>
+  <% case call_to_action %>
   <% when 'conversation'%>
     <%= image_tag 'better_homepage/conversation.svg' %>
     Join the conversation
@@ -9,6 +9,6 @@
   <% when 'podcast' %>
     <%= image_tag 'better_homepage/podcast.svg' %>
     <% show_name = content.article.try(:show).try(:title) || "this show" %>
-    Love <%= show_name%>? Subscribe to the podcast!
+    Love <%= show_name %>? Subscribe to the podcast!
   <% end %>
 </a>

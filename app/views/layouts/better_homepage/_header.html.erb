@@ -1,0 +1,24 @@
+<header class="header">
+  <div class="bound full-width clearfix">
+    <div class="branding">
+      <img src="http://projects.scpr.org/officer-involved/images/logo_kpcc-black.svg" alt="89.3 KPCC" class="desaturate">
+      <hr class="pipe">
+      <%= render partial: "layouts/better_homepage/broadcast_bar" %>
+    </div>
+    <nav class="nav">
+      <ul id="nav-left" class="nav__links c-list c-list--horiz">
+        <li><a href="#">News</a></li>
+        <li><a href="#">Programs</a></li>
+        <li><a href="#">Events</a></li>
+        <li><a href="#">Support</a></li>
+        <li><a href="#">About</a></li>
+        <li><a href="#"><%= image_tag 'better_homepage/search.svg' %></a></li>
+      </ul>
+      <!-- <hr class="pipe"> -->
+      <ul id="nav-right" class="nav__links c-list c-list--horiz">
+        <li><a href="#"><%= image_tag 'better_homepage/donate.svg' %> Donate</a></li>
+        <li><a href="#"><%= image_tag 'better_homepage/user.svg' %> Sign In</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>

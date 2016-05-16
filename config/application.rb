@@ -61,6 +61,7 @@ module Scprv4
     ]
 
     config.assets.paths << Rails.root.join("node_modules")
+    config.assets.paths << Rails.root.join("node_modules/scpr-style-guide/public")
 
     # Dir.glob("#{Rails.root}/node_modules/**/").each do |path|
     #   config.assets.paths << path
