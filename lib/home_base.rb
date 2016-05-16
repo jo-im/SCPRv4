@@ -55,21 +55,24 @@ module HomeBase
 
     def decorate_result result
       result   = result['_source']['table']
-      content  = result['content']
-      content.map!{|r| Hashie::Mash.new(r['table'])}
-      obj_keys = content.map(&:obj_key)
-      articles = ContentBase.search(with: { obj_key: obj_keys })
+      decorate_related_article_collection (result['content'] || [])
+      Hashie::Mash.new result
+    end
 
-      # attach articles to their respective homepage contents
+    def decorate_related_article_collection collection
+      # if a provided collection is a list of records that
+      # reference articles, this will find the related
+      # articles and append them to their respective records
+      # in the collection.
+      collection.map!{|r| Hashie::Mash.new(r['table'])}
+      obj_keys = collection.map(&:obj_key)
+      articles = ContentBase.search(with: { obj_key: obj_keys })
       articles.each do |article|
-        if c = content.find{|c| c.obj_key == article.obj_key}
+        if c = collection.find{|c| c.obj_key == article.obj_key}
           c.article = article
         end
       end
-
-      content.select!(&:article) # if an article was arbitrarily deleted, it should not show up in our results
-
-      Hashie::Mash.new result
+      collection.select!(&:article) # if an article was arbitrarily deleted, it should not show up in our results
     end
 
     def decorate_results results

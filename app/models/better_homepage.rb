@@ -10,6 +10,7 @@ class BetterHomepage < ActiveRecord::Base
   include Concern::Model::Searchable
   # include Concern::Callbacks::HomepageCachingCallback
   include Concern::Callbacks::TouchCallback
+  include Concern::Associations::RelatedLinksAssociation
 
   status :draft do |s|
     s.id = 0
@@ -73,10 +74,13 @@ class BetterHomepage < ActiveRecord::Base
     end
   end
 
+  alias_method :check_it_out, :related_links
+
   def to_indexable
     OpenStruct.new(
       {
         content:         content.map(&:to_indexable),
+        check_it_out:    check_it_out.map(&:to_indexable),
         public_datetime: updated_at,
         published_at:    published_at
       }
@@ -115,4 +119,5 @@ class BetterHomepage < ActiveRecord::Base
     })
     HomepageContent.new(attrs) if content.published?
   end
+
 end
