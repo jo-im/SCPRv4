@@ -150,6 +150,15 @@ class Article
     @obj_key_crc32 ||= Zlib.crc32(self.id)
   end
 
+  def related_content_articles
+    article_ids = related_content.map(&:id)
+    ContentBase.search(with: { obj_key: article_ids })
+  end
+
+  def thumbnail
+    asset.try(:asset).try(:json).try(:[], 'urls').try(:[], 'thumb')
+  end
+
   # -- getters -- #
 
   def disqus_identifier

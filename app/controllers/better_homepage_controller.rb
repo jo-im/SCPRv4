@@ -14,6 +14,7 @@ class BetterHomepageController < ApplicationController
   def index
     @homepage         = (HomeBase.current || BetterHomepage.order('published_at DESC').limit(1).first.try(:to_indexable) || Missing)
     @content          = @homepage.content
+    @current_program  = ScheduleOccurrence.current.first
   end
 
   private

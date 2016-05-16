@@ -1,10 +1,10 @@
-<div class="media media--hp">
+<div class="media media media--hp">
   <h4 class="label"><%= content.label %></h4>
   <%= render partial: "better_homepage/media/shared/figure_widescreen", locals: {url: content.article.public_url, asset_url: content.article.asset.full.url, asset_scheme: content.asset_scheme} %>
   <div class="media__content">
     <%= render partial: "better_homepage/media/shared/meta", locals: {audio: content.article.audio, public_datetime: content.article.public_datetime} %>
     <%= render partial: "better_homepage/media/shared/headline", locals: {headline: content.article.short_title, url: content.article.public_url} %>
     <%= render partial: "better_homepage/media/shared/teaser", locals: {teaser: content.article.teaser} %>
-    <%= render partial: "better_homepage/media/shared/related", locals: {content: content.article.related_content} %>
+    <%= render partial: "better_homepage/media/shared/related", locals: {content: content.article.related_content_articles} %>
   </div>
 </div>
