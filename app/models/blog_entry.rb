@@ -172,7 +172,8 @@ class BlogEntry < ActiveRecord::Base
       :related_content    => to_article_called_more_than_twice? ? [] : self.related_content.map(&:to_reference),
       :links              => related_links.map(&:to_hash),
       :asset_display      => asset_display,
-      :disqus_identifier  => self.disqus_identifier
+      :disqus_identifier  => self.disqus_identifier,
+      :abstract           => self.abstract
     })
   end
 

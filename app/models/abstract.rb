@@ -111,6 +111,7 @@ class Abstract < ActiveRecord::Base
       :published          => self.published?,
       :created_at         => self.created_at,
       :updated_at         => self.updated_at,
+      :abstract           => self.abstract
     })
   end
 

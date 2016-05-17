@@ -59,7 +59,8 @@ class Article
     :related_content,
     :links,
     :asset_display,
-    :disqus_identifier
+    :disqus_identifier,
+    :abstract
 
   def initialize(attributes={})
     attributes.each do |attr, value|
@@ -208,6 +209,14 @@ class Article
     @category
   end
 
+  def abstract
+    if @abstract && !@abstract.empty?
+      @abstract
+    else
+      teaser
+    end
+  end
+
   # -- setters -- #
 
   def related_content=(content)
@@ -312,7 +321,8 @@ class Article
       related_content:  related_content,
       links:            links,
       asset_display:    asset_display,
-      disqus_identifier: disqus_identifier
+      disqus_identifier: disqus_identifier,
+      abstract:         abstract
     }
   end
 
