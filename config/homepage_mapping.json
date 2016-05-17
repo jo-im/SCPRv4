@@ -8,7 +8,7 @@
         "properties": {
           "obj_key": { "type":"string" },
           "content_id": { "type": "integer" },
-          "asset_display": { "type": "string" },
+          "asset_scheme": { "type": "string" },
           "position": { "type": "integer" },
           "label": { "type": "string" },
           "call_to_action": {"type":"string"}

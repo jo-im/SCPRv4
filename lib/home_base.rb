@@ -40,9 +40,13 @@ module HomeBase
           }
         ]        
       })[0]
+    rescue Elasticsearch::Transport::Transport::Errors::BadRequest
+      nil
     end
 
-    private
+    def delete_index
+      ESClient.indices.delete index: ESIndex
+    end
 
     def create_index
       ESClient.indices.create index: ESIndex
