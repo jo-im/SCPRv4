@@ -14,14 +14,14 @@
   <% if index == 1 %>
     <aside class="c-ad">
       <div class="c-ad__container">
-        <img class="c-ad__banner" src="http://placehold.it/300x250" />
+        <%= render "shared/ads/dfp", ad_key: "slot_b" %>
         <a class="c-ad__attribution" href="http://www.scpr.org/support/underwriting/">Become a KPCC Sponsor</a>
       </div>
     </aside>
   <% elsif index == 7 %>
     <aside class="c-ad">
       <div class="c-ad__container">
-        <img class="c-ad__banner" src="http://placehold.it/300x250" />
+        <%= render "shared/ads/dfp", ad_key: "slot_c" %>
         <a class="c-ad__attribution" href="http://www.scpr.org/support/underwriting/">Become a KPCC Sponsor</a>
       </div>
     </aside>
