@@ -1,20 +1,23 @@
 <header class="header">
   <div class="bound full-width clearfix">
     <div class="branding">
-      <img src="http://projects.scpr.org/officer-involved/images/logo_kpcc-black.svg" alt="89.3 KPCC">
+      <%= link_to "/" do %>
+        <img src="http://projects.scpr.org/officer-involved/images/logo_kpcc-black.svg" alt="89.3 KPCC">
+      <% end %>
 <!--       <hr class="pipe">
  -->      
       <%= render partial: "layouts/better_homepage/broadcast_bar" , locals: {program: @current_program}%>
     </div>
     <nav class="nav">
+      <%= render partial: "shared/better_homepage/opt_out" %>
       <ul class="nav__links c-list c-list--horiz">
-        <li><a href="#">News</a></li>
-        <li><a href="#">Programs</a></li>
-        <li><a href="#">Events</a></li>
-        <li><a href="#">Support</a></li>
-        <li><a href="#">About</a></li>
-        <li><a href="#"><%= image_tag 'better_homepage/search.svg' %></a></li>
-        <li><a href="#"><%= image_tag 'better_homepage/donate.svg' %></a></li>
+        <li><a href="/news">News</a></li>
+        <li><a href="/programs">Programs</a></li>
+        <li><a href="/events">Events</a></li>
+        <li><a href="/support">Support</a></li>
+        <li><a href="/about">About</a></li>
+        <li><a href="/search"><%= image_tag 'better_homepage/search.svg' %></a></li>
+        <li><a href="https://scprcontribute.publicradio.org/contribute.php?_ga=1.60744367.328263087.1463088655"><%= image_tag 'better_homepage/donate.svg' %></a></li>
       </ul>
     </nav>
   </div>
