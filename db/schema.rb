@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160504215603) do
+ActiveRecord::Schema.define(version: 20160512163049) do
 
   create_table "abstracts", force: :cascade do |t|
     t.string   "source",               limit: 255
@@ -134,6 +134,7 @@ ActiveRecord::Schema.define(version: 20160504215603) do
     t.integer  "feature_type_id",  limit: 4
     t.integer  "asset_display_id", limit: 4
     t.boolean  "needs_reindex",                       default: false
+    t.text     "abstract",         limit: 65535
   end
 
   add_index "blogs_entry", ["asset_display_id"], name: "index_blogs_entry_on_asset_display_id", using: :btree
@@ -174,6 +175,13 @@ ActiveRecord::Schema.define(version: 20160504215603) do
 
   add_index "category_reporters", ["bio_id"], name: "index_category_reporters_on_bio_id", using: :btree
   add_index "category_reporters", ["vertical_id"], name: "index_category_reporters_on_vertical_id", using: :btree
+
+  create_table "check_it_out", force: :cascade do |t|
+    t.integer "homepage_id",  limit: 4,                null: false
+    t.integer "content_id",   limit: 4
+    t.string  "content_type", limit: 255
+    t.integer "position",     limit: 4,   default: 99, null: false
+  end
 
   create_table "contentbase_category", force: :cascade do |t|
     t.string   "title",             limit: 255
@@ -223,6 +231,7 @@ ActiveRecord::Schema.define(version: 20160504215603) do
     t.integer  "category_id",     limit: 4
     t.integer  "feature_type_id", limit: 4
     t.boolean  "needs_reindex",                      default: false
+    t.text     "abstract",        limit: 65535
   end
 
   add_index "contentbase_contentshell", ["category_id"], name: "contentbase_contentshell_42dc49bc", using: :btree
@@ -325,6 +334,7 @@ ActiveRecord::Schema.define(version: 20160504215603) do
     t.integer  "category_id",         limit: 4
     t.integer  "asset_display_id",    limit: 4
     t.boolean  "needs_reindex",                          default: false
+    t.text     "abstract",            limit: 65535
   end
 
   add_index "events", ["asset_display_id"], name: "index_events_on_asset_display_id", using: :btree
@@ -532,6 +542,7 @@ ActiveRecord::Schema.define(version: 20160504215603) do
     t.integer  "feature_type_id",  limit: 4
     t.integer  "asset_display_id", limit: 4
     t.boolean  "needs_reindex",                       default: false
+    t.text     "abstract",         limit: 65535
   end
 
   add_index "news_story", ["asset_display_id"], name: "index_news_story_on_asset_display_id", using: :btree
@@ -564,6 +575,7 @@ ActiveRecord::Schema.define(version: 20160504215603) do
     t.string   "pin_query_id",  limit: 255
     t.integer  "status",        limit: 4
     t.boolean  "needs_reindex",                    default: false
+    t.text     "abstract",      limit: 65535
   end
 
   add_index "pij_query", ["is_featured"], name: "index_pij_query_on_is_featured", using: :btree
@@ -767,6 +779,7 @@ ActiveRecord::Schema.define(version: 20160504215603) do
     t.integer  "asset_display_id",    limit: 4
     t.integer  "original_segment_id", limit: 4
     t.boolean  "needs_reindex",                          default: false
+    t.text     "abstract",            limit: 65535
   end
 
   add_index "shows_episode", ["air_date"], name: "index_shows_episode_on_air_date", using: :btree
@@ -804,6 +817,7 @@ ActiveRecord::Schema.define(version: 20160504215603) do
     t.integer  "feature_type_id",  limit: 4
     t.integer  "asset_display_id", limit: 4
     t.boolean  "needs_reindex",                       default: false
+    t.text     "abstract",         limit: 65535
   end
 
   add_index "shows_segment", ["asset_display_id"], name: "index_shows_segment_on_asset_display_id", using: :btree
