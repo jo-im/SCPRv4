@@ -7,3 +7,4 @@
 //= require timeago
 //= require shared
 //= require better_homepage/article_tracking
+//= require smart_time
