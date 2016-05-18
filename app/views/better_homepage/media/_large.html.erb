@@ -10,6 +10,6 @@
       <%= render partial: "better_homepage/media/shared/headline_large", locals: {headline: content.article.short_title, url: content.article.public_url} %>
     <% end %>
     <%= render partial: "better_homepage/media/shared/teaser", locals: {teaser: content.article.abstract} %>
-    <%= render partial: "better_homepage/media/shared/related", locals: {content: content.article.related_content_articles} %>
+    <%= render partial: "better_homepage/media/shared/extra", locals: {content: content} %>
   </div>
 </div>

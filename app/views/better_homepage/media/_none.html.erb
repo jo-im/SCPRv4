@@ -4,6 +4,6 @@
     <%= render partial: "better_homepage/media/shared/meta", locals: {audio: content.article.audio, public_datetime: content.article.public_datetime} %>
     <%= render partial: "better_homepage/media/shared/headline", locals: {headline: content.article.short_title, url: content.article.public_url} %>
     <%= render partial: "better_homepage/media/shared/teaser", locals: {teaser: content.article.abstract} %>
-    <%= render partial: "better_homepage/media/shared/related", locals: {content: content.article.related_content_articles} %>
+    <%= render partial: "better_homepage/media/shared/extra", locals: {content: content} %>
   </div>
 </div>
