@@ -8,3 +8,4 @@
 //= require shared
 //= require better_homepage/article_tracking
 //= require smart_time
+//= require better_homepage/time_settings
