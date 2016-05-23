@@ -7,5 +7,7 @@
       Audio
     </span>
   <% end %>
-  <span class="media__timestamp"><%= smart_date_js public_datetime %></span>
+  <% if updated_at && updated_at > public_datetime %>
+    <span class="media__timestamp">LAST UPDATED <%= smart_date_js updated_at %></span>
+  <% end %> 
 </div>

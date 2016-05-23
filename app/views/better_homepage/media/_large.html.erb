@@ -5,7 +5,7 @@
   <h4 class="label"><%= content.label %></h4>
   <%= render partial: "better_homepage/media/shared/figure_widescreen", locals: {url: content.article.public_url, asset_url: content.article.asset.full.url, asset_scheme: content.asset_scheme} %>
   <div class="media__content">
-    <%= render partial: "better_homepage/media/shared/meta", locals: {audio: content.article.audio, public_datetime: content.article.public_datetime} %>
+    <%= render partial: "better_homepage/media/shared/meta", locals: {audio: content.article.audio, public_datetime: content.article.public_datetime, updated_at: content.article.updated_at} %>
     <% if index != 0 %>
       <%= render partial: "better_homepage/media/shared/headline_large", locals: {headline: content.article.short_title, url: content.article.public_url} %>
     <% end %>
