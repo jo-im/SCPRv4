@@ -1,13 +1,12 @@
 <div class="media__meta">
-  <% if audio.any? %>
-    <span class="media__label">
-      <svg class="icon icon--size-sm">
-        <use class="icon--line icon--color-primary" xlink:href="#icon_line-audio"/>
-      </svg>
-      Audio
-    </span>
-  <% end %>
   <% if updated_at && updated_at > public_datetime %>
     <span class="media__timestamp">LAST UPDATED <%= smart_date_js updated_at %></span>
+  <% elsif feature %>
+    <span class="media__label">
+      <svg class="icon icon--size-sm">
+        <use class="icon--line icon--color-primary" xlink:href="#icon_line-<%= feature %>"/>
+      </svg>
+      <%= feature %>
+    </span>
   <% end %> 
 </div>

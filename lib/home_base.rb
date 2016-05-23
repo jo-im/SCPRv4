@@ -70,7 +70,7 @@ module HomeBase
       # in the collection.
       collection.map!{|r| Hashie::Mash.new(r['table'])}
       obj_keys = collection.map(&:obj_key)
-      articles = ContentBase.search(with: { obj_key: obj_keys })
+      articles = ContentBase.search(with: { obj_key: obj_keys }, per_page: 60)
       articles.each do |article|
         if c = collection.find{|c| c.obj_key == article.obj_key}
           c.article = article
