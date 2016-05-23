@@ -1,5 +1,5 @@
 <% if content.content_type == "NewsStory" %>
-  <%= render partial: "better_homepage/media/shared/related", locals: {content: content.article.related_content_articles} %>
+  <%= render partial: "better_homepage/media/shared/related", locals: {content: recent_related_content(content.article)} %>
 <% else %>
   <%= render partial: "better_homepage/media/shared/call_to_action", locals: {content: content} %>
 <% end %>
