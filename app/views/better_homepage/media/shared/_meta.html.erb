@@ -1,12 +1,12 @@
 <div class="media__meta">
-  <% if updated_at && updated_at > public_datetime %>
-    <span class="media__timestamp">LAST UPDATED <%= smart_date_js updated_at %></span>
-  <% elsif feature %>
+  <span class="media__timestamp"><%= smart_date_js public_datetime, "data-window" => "8h", "data-relative" => "2h" %></span>
+  <% if feature_name = feature.try(:name) %>
+    <span class="media__label" data-media-label="<%= feature_name %>">
+  <% else %>
     <span class="media__label">
-      <svg class="icon icon--size-sm">
-        <use class="icon--line icon--color-primary" xlink:href="#icon_line-<%= feature %>"/>
-      </svg>
-      <%= feature %>
-    </span>
-  <% end %> 
+  <% end %>
+    <svg class="icon icon--size-sm">
+      <use class="icon--line icon--color-primary" xlink:href="#icon_line-audio"/>
+    </svg>
+  </span>
 </div>

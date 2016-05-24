@@ -29,6 +29,11 @@ class scpr.ArticleTracking extends scpr.Framework
     init: ->
       @$el.addClass @model.get('state')
       $(window).scroll => @markAsSeen() if @isScrolledIntoView()
+      # If no timestamp is present(which can change on conditions),
+      # display the feature type.
+      unless @$el.find('time').text().length
+        label = @$el.find(".media__meta .media__label")
+        label.append label.attr('data-media-label')
 
     markAsSeen: ->
       @model.set 'state', 'seen'

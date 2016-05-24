@@ -1,4 +1,4 @@
-<div class="media media media--hp">
+<div class="media media media--hp" data-obj-key='<%= content.article.obj_key %>'>
   <h4 class="label"><%= content.label %></h4>
   <%= render partial: "better_homepage/media/shared/figure_widescreen", locals: {url: content.article.public_url, asset_url: content.article.asset.full.url, asset_scheme: content.asset_scheme} %>
   <div class="media__content">

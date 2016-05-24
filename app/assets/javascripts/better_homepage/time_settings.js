@@ -10,9 +10,11 @@ jQuery(document).ready(function() {
     month: "1mo",
     months: "%dmo"
   }
-  
+
   jQuery("time.timeago").timeago()
 
   new scpr.ArticleTracking('section#content')
-  var smartTime = new scpr.SmartTime();
+  var smartTime = new scpr.SmartTime({
+    prefix: "Last Updated "
+  });
 })

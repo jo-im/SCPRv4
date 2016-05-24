@@ -1,4 +1,4 @@
-<div class="media media media--hp">
+<div class="media media media--hp" data-obj-key='<%= content.article.obj_key %>'>
   <h4 class="label"><%= content.label %></h4>
   <div class="media__content">
     <%= render partial: "better_homepage/media/shared/meta", locals: {feature: content.article.feature, public_datetime: content.article.public_datetime, updated_at: content.article.updated_at} %>
