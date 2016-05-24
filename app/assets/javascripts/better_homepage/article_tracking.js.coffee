@@ -33,7 +33,9 @@ class scpr.ArticleTracking extends scpr.Framework
       # display the feature type.
       unless @$el.find('time').text().length
         label = @$el.find(".media__meta .media__label")
-        label.append label.attr('data-media-label')
+        if label.attr('data-media-label')
+          label.append label.attr('data-media-label')
+          label.find('use').attr('xlink:href', "#icon_line-audio")
 
     markAsSeen: ->
       @model.set 'state', 'seen'
