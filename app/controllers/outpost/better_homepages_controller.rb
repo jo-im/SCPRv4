@@ -1,6 +1,8 @@
 class Outpost::BetterHomepagesController < Outpost::ResourceController
   outpost_controller
 
+  prepend_view_path 'app/views/better_homepage'
+
   define_list do |l|
     l.default_order_attribute   = "updated_at"
     l.default_order_direction   = DESCENDING
@@ -21,21 +23,22 @@ class Outpost::BetterHomepagesController < Outpost::ResourceController
   #--------------------
 
   def preview
-    @homepage = Outpost.obj_by_key(params[:obj_key]) || BetterHomepage.new
+    home = Outpost.obj_by_key(params[:obj_key]) || BetterHomepage.new
 
-    with_rollback @homepage do
-      @homepage.assign_attributes(params[:better_homepage] || {})
+    with_rollback home do
+      home.id = params[:id]
+      home.assign_attributes(params[:better_homepage] || {})
+      @homepage = home.to_indexable
+      @content  = @homepage.content.map do |c| 
+        c.article = ContentBase.safe_obj_by_key(c.obj_key).try(:to_article) || Article.new
+        c
+      end
+      @current_program  = ScheduleOccurrence.current.first
 
-      # if @homepage.unconditionally_valid?
-        @title = @homepage.to_title
-
-        render "outpost/better_homepages/preview",
-          :layout => false, # "outpost/preview/application",
-          :locals => { homepage: @homepage }
-
-      # else
-      #   render_preview_validation_errors(@homepage)
-      # end
+      @title = @homepage.to_title
+      render "better_homepage/index",
+        :layout => 'layouts/better_homepage', # "outpost/preview/application",
+        :locals => { homepage: @homepage }
     end
   end
 end
