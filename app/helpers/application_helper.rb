@@ -426,6 +426,17 @@ module ApplicationHelper
   end
 
   #---------------
+
+  def hidden_gem
+    path = Rails.root.join('app', 'views', 'better_homepage', 'hidden_gems')
+    hidden_gems = Dir.glob("#{path}/*").select{|f| File.file?(f)}
+    hidden_gem  = hidden_gems.sample
+    if hidden_gem
+      render hidden_gem
+    end
+  end
+
+  #---------------
   # These two methods are taken from EscapeUtils
   def html_escape(string)
     EscapeUtils.escape_html(string.to_s).html_safe
