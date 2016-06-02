@@ -1,7 +1,7 @@
-<a class="media__appeal" href="<%= content.article.public_url %>">
+<a class="link link--callout" href="<%= content.article.public_url %>">
   <% case content.call_to_action %>
   <% when 'conversation'%>
-    <%= image_tag 'better_homepage/conversation.svg' %>
+    <img src="img/icon_line-comment.svg" />
     Join the conversation
   <% when 'event' %>
     <%= image_tag 'better_homepage/event.svg' %>

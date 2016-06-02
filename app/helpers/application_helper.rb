@@ -428,11 +428,12 @@ module ApplicationHelper
   #---------------
 
   def hidden_gem
+    # Renders a hidden gem
     path = Rails.root.join('app', 'views', 'better_homepage', 'hidden_gems')
     hidden_gems = Dir.glob("#{path}/*").select{|f| File.file?(f)}
     hidden_gem  = hidden_gems.sample
     if hidden_gem
-      render hidden_gem
+      render file: hidden_gem
     end
   end
 
