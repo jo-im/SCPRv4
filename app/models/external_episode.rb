@@ -65,8 +65,7 @@ class ExternalEpisode < ActiveRecord::Base
       :teaser             => self.summary,
       :body               => self.summary,
       :audio              => self.audio,
-      :byline             => self.program.title,
-      :abstract           => self.abstract
+      :byline             => self.program.title
     })
   end
 
