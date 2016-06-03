@@ -1,14 +1,20 @@
-<a class="link link--callout" href="<%= content.article.public_url %>">
+<a href="<%= content.article.public_url %>">
   <% case content.call_to_action %>
   <% when 'conversation'%>
-    <img src="img/icon_line-comment.svg" />
-    Join the conversation
+    <svg class="icon icon--size-med icon--left">
+      <use class="icon--line icon--color-link" xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon_line-article"></use>
+    </svg>
+    <span class="link link--callout">Join the conversation</span>
   <% when 'event' %>
-    <%= image_tag 'better_homepage/event.svg' %>
-    RSVP for this event
+    <svg class="icon icon--size-med icon--left">
+      <use class="icon--line icon--color-link" xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon_line-article"></use>
+    </svg>
+    <span class="link link--callout">RSVP for this event</span>
   <% when 'podcast' %>
-    <%= image_tag 'better_homepage/podcast.svg' %>
+    <svg class="icon icon--size-med icon--left">
+      <use class="icon--line icon--color-link" xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon_line-article"></use>
+    </svg>
     <% show_name = content.article.try(:show).try(:title) || "this show" %>
-    Love <%= show_name %>? Subscribe to the podcast!
+    <span class="link link--callout">Love <%= show_name %>? Subscribe to the podcast!</span>
   <% end %>
 </a>

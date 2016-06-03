@@ -14,7 +14,7 @@ class scpr.ArticleTracking extends scpr.Framework
     init: ->
       @load() # get saved attributes from localstorage, if any
       @listenTo @, 'change', =>
-        @save()
+        @save()        
 
   class ArticleCollection extends @Collection
     @_name = 'article-collection'
@@ -27,7 +27,7 @@ class scpr.ArticleTracking extends scpr.Framework
     events:
       "click a" : "markAsRead"
     init: ->
-      @$el.addClass @model.get('state')
+      @render()
       $(window).scroll => @markAsSeen() if @isScrolledIntoView()
       # If no timestamp is present(which can change on conditions),
       # display the feature type.
@@ -37,10 +37,14 @@ class scpr.ArticleTracking extends scpr.Framework
           label.append label.attr('data-media-label')
           label.find('use').attr('xlink:href', "#icon_line-audio")
 
+    stateToMediaClass: ->
+      @stateTranslation[@model.get('state')] or ''
+
+    stateTranslation:
+      new: 'media--new-and-unread'
+
     markAsSeen: ->
       @model.set 'state', 'seen'
-      @$el.find('.unread').fadeOut 1500
-      @$el.find('.status').removeClass 'notify'
 
     markAsRead: (e) ->
       @model.set 'state', 'read'
@@ -54,8 +58,8 @@ class scpr.ArticleTracking extends scpr.Framework
       elemBottom <= docViewBottom and elemTop >= docViewTop
 
     render: ->
-      @$el.removeClass 'new seen read'
-      @$el.addClass @model.get('state')
+      @$el.removeClass (klass for state, klass of @stateTranslation).join(' ')
+      @$el.addClass @stateToMediaClass()
 
   class ArticlesComponent extends @Component
     @_name: 'articles-component'
