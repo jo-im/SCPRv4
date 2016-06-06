@@ -46,3 +46,4 @@
 
 //= require short-list-modules.js
 //= require jquery.scrolldepth
+//= require election-results
