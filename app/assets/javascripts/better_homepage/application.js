@@ -6,6 +6,7 @@
 //= require timeago
 //= require shared
 //= require smart_time
+//= require event_tracking
 //= require better_homepage/article_tracking
 
 jQuery(document).ready(function() {
