@@ -39,6 +39,8 @@ module Scprv4
       "*.eot", "*.ttf", "*.woff" # Font files
     ]
 
+    config.assets.precompile += %w( better_homepage/style-guide.js )
+
     config.browserify_rails.commandline_options = "-t coffeeify --extension=\".js.coffee\""
 
     config.time_zone = 'Pacific Time (US & Canada)'
