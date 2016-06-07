@@ -1,11 +1,21 @@
 @import 'scpr-style-guide/src/css/main.scss'
 
 #check-it-out
-  padding-top: 0.8em
-  padding-bottom: 0em
+  $padding: 10px
+  padding-top: $padding
+  padding-bottom: $padding
   overflow: hidden
   ul
-    height: 2.5em
+    // height: 0px
+    li
+      h5
+        margin: 0
+
+.media .media__content .media__label__sm
+  text-transform: uppercase
+  color: #01AED5
+  font-size: 0.9rem
+  font-weight: 500
 
 #side-prompt
   #side-prompt-slim

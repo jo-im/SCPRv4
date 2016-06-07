@@ -1,4 +1,3 @@
-//= require better_homepage/style-guide
 //= require jquery
 //= require fastclick/lib/fastclick
 // require slideshow/new_slideshow

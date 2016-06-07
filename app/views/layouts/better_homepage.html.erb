@@ -22,5 +22,6 @@
     <%= yield %>
     <%= render partial: "layouts/better_homepage/footer" %>
     <%= render partial: "shared/footer/tracking_scripts" %>
+    <%= javascript_include_tag "better_homepage/style-guide", :async => true %>
   </body>
 </html>
