@@ -6,3 +6,55 @@
   overflow: hidden
   ul
     height: 2.5em
+
+#side-prompt
+  #side-prompt-slim
+    text-align: center
+    background-color: white
+    padding-top: 10px
+    .description
+      padding-bottom: 10px
+      p
+        font-size: 14px
+    border-width: 2px
+    border-color: #99d8ea
+    border-bottom-style: solid
+    @media (min-width: 1310px)
+      display: none
+    .buttons
+      padding-bottom: 10px
+  #side-prompt-block
+    height: 150px
+    border-color: #99d8ea
+    border-style: solid
+    border-width: 1px
+    border-left-style: none
+    border-right-style: none
+    padding: 20px
+    padding-left: 0px
+    padding-right: 0px
+    text-align: center
+    background-color: white
+    @media (min-width: 1406px)
+      position: fixed
+      right: 0
+      top: 150px
+      width: 250px
+    @media (max-width: 1405px)
+      position: fixed
+      right: 0
+      top: 150px
+      width: 210px
+    @media (max-width: 1310px)
+      display: none
+
+    .description
+      padding-bottom: 18px
+      p
+        font-size: 14px
+    .beta-opt-out
+      color: #7c7c7c
+      font-size: 12px
+      text-decoration: underline
+    .link
+      padding-top: 30px

@@ -1,0 +1,36 @@
+<div id='side-prompt'>
+  <div id='side-prompt-block'>
+    <div class='description'>
+      <p>
+        You're seeing a beta preview of 
+      </p>
+      <p>
+        the new KPCC homepage.  
+      </p>
+    </div>
+    <a href="https://docs.google.com/forms/d/1HWEEPZ4B-BIXP9ZkmtmVKXmUdcHFpLuVV0U_dI4LClU/edit" class="c-btn c-btn--outline-secondary">Tell Us What You Think</a>
+    <p class='link'>
+      <a class='beta-opt-out' href='#'>Or, go back to the old homepage.</a>
+    </p>
+  </div>
+
+  <div id="side-prompt-slim">
+    <div class='description'>
+      <p>
+        You're seeing a beta preview of the new KPCC homepage.  
+      </p>
+    </div>
+    <div class='buttons'>
+      <a href="https://docs.google.com/forms/d/1HWEEPZ4B-BIXP9ZkmtmVKXmUdcHFpLuVV0U_dI4LClU/edit" class="c-btn c-btn--outline-secondary c-btn--small">Tell Us What You Think</a>
+      <a class='beta-opt-out c-btn c-btn--outline-secondary c-btn--small' href='#'>Go To The Old Homepage</a>
+    </div>
+  </div>
+
+  <script>
+    $('#side-prompt a.beta-opt-out').on("click", function(){
+      document.cookie = 'beta_opt_in' + '=;expires=Thu, 01 Jan 1970 00:00:01 GMT;';
+      location.reload();
+    });
+  </script>
+
+</div>

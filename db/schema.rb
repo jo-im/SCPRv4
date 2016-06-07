@@ -176,13 +176,6 @@ ActiveRecord::Schema.define(version: 20160512163049) do
   add_index "category_reporters", ["bio_id"], name: "index_category_reporters_on_bio_id", using: :btree
   add_index "category_reporters", ["vertical_id"], name: "index_category_reporters_on_vertical_id", using: :btree
 
-  create_table "check_it_out", force: :cascade do |t|
-    t.integer "homepage_id",  limit: 4,                null: false
-    t.integer "content_id",   limit: 4
-    t.string  "content_type", limit: 255
-    t.integer "position",     limit: 4,   default: 99, null: false
-  end
-
   create_table "contentbase_category", force: :cascade do |t|
     t.string   "title",             limit: 255
     t.string   "slug",              limit: 255
