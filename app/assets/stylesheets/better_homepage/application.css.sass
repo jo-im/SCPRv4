@@ -11,11 +11,15 @@
       h5
         margin: 0
 
-.media .media__content .media__label__sm
-  text-transform: uppercase
-  color: #01AED5
-  font-size: 0.9rem
-  font-weight: 500
+.media 
+  .media__content 
+    .media__label__sm
+      text-transform: uppercase
+      color: #01AED5
+      font-size: 0.9rem
+      font-weight: 500
+  .media__headline--top
+    color: #017397
 
 #side-prompt
   #side-prompt-slim
@@ -34,6 +38,7 @@
     .buttons
       padding-bottom: 10px
   #side-prompt-block
+    $position: 50%
     height: 150px
     border-color: #99d8ea
     border-style: solid
@@ -48,12 +53,12 @@
     @media (min-width: 1406px)
       position: fixed
       right: 0
-      top: 150px
+      top: $position
       width: 250px
     @media (max-width: 1405px)
       position: fixed
       right: 0
-      top: 150px
+      top: $position
       width: 210px
     @media (max-width: 1310px)
       display: none
