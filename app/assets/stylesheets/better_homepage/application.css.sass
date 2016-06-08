@@ -1,5 +1,8 @@
 @import 'scpr-style-guide/src/css/main.scss'
 
+$xsSize: 56rem
+$smSize: 84rem
+
 #check-it-out
   $padding: 10px
   padding-top: $padding
@@ -9,6 +12,14 @@
     li
       h5
         margin: 0
+  @media (max-width: $smSize)
+    position: absolute 
+    width: 100%
+    top: 5.91rem
+  @media (max-width: $xsSize)
+    position: inherit 
+    width: 100%
+    top: none
 
 .media 
   .media__content 
@@ -36,6 +47,16 @@
       display: none
     .buttons
       padding-bottom: 10px
+    @media (max-width: $smSize)
+      position: absolute 
+      width: 100%
+      top: 8.66rem
+    @media (max-width: $xsSize)
+      position: inherit 
+      width: 100%
+      top: none
+
+
   #side-prompt-block
     $position: 50%
     height: 150px
