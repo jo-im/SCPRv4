@@ -22,6 +22,9 @@ $smSize: 84rem
     top: none
 
 .media 
+  &.media--visited-and-read // adds a checkmark for now until this is officialized
+    .media__headline
+      position: relative
   .media__content 
     .media__label__sm
       text-transform: uppercase
@@ -30,6 +33,8 @@ $smSize: 84rem
       font-weight: 500
   .media__headline--top
     color: #017397
+
+
 
 #side-prompt
   #side-prompt-slim

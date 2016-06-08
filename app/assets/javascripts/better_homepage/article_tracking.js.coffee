@@ -42,9 +42,11 @@ class scpr.ArticleTracking extends scpr.Framework
 
     stateTranslation:
       new: 'media--new-and-unread'
+      read: 'media--visited-and-read'
 
     markAsSeen: ->
-      @model.set 'state', 'seen'
+      unless @model.get('state') is 'read'
+        @model.set 'state', 'seen'
 
     markAsRead: (e) ->
       @model.set 'state', 'read'
