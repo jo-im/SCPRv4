@@ -517,6 +517,15 @@ module ApplicationHelper
     ## the first 2.
   end
 
+  def include_handlebars_template path
+    # Inserts an .hbs template wrapped in a script tag for framework.js.
+    # The found file should have the .hbs extension as well as the name
+    # matching the corresponding component.  The provided file path
+    # need not include the extension.
+    name = path.split(/.hbs|\//).last
+    content_tag(:script, render(file: path.gsub(/.hbs$/, '').concat('.hbs')), id: name, type: "text/x-handlebars-template")
+  end
+
   class ActionView::Helpers::FormBuilder
     include ActionView::Helpers::TagHelper
     include ActionView::Helpers::FormTagHelper

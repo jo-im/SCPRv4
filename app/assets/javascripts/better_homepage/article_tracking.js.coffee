@@ -1,4 +1,4 @@
-scpr.Framework = require 'framework'
+scpr.Framework = require 'frameworkv2'
 
 class scpr.ArticleTracking extends scpr.Framework
 
@@ -6,29 +6,57 @@ class scpr.ArticleTracking extends scpr.Framework
     new ArticlesComponent
       el: $(selector).first()
 
+  class WhatsNextComponent extends @Component
+    name: 'whats-next-component'
+    init: ->
+      @render()
+    properties: ->
+      stories: @model.whatsNext()
+    helpers: 
+      hasNone: (array) ->
+        array.length <= 0
+
   class Article extends @Model.mixin(@Persistent)
-    @_name = 'article'
+    self = @
+    name: 'article'
     states: ['new', 'seen', 'read']
     defaults:
       state: 'new'
     init: ->
       @load() # get saved attributes from localstorage, if any
       @listenTo @, 'change', =>
-        @save()        
+        @save()
+    whatsNext: ->
+      collection         = (@collection or new ArticleCollection)
+      thisIndex          = collection.indexOf @
+      filteredCollection = collection.filter (model, index) => (index > 2) and (index > thisIndex) and (model isnt @)
+      limitedCollection  = _.last _.shuffle(filteredCollection), 3
+      _.sortBy limitedCollection, (model) => model.cid
 
   class ArticleCollection extends @Collection
-    @_name = 'article-collection'
+    name: 'article-collection'
     model: Article
-    init: ->
-      window.coll = @
 
   class ArticleComponent extends @Component
-    @_name: 'article-component'
+    name: 'article-component'
     events:
       "click a" : "markAsRead"
+    inView: false
     init: ->
+      @addActiveComponent new WhatsNextComponent
+        el: $('#whats-next')
+        model: @model
       @render()
-      $(window).scroll => @markAsSeen() if @isScrolledIntoView()
+      $(window).scroll =>
+        # this is set up to prevent needless re-rendering
+        # upon every scroll event firing.
+        if @isScrolledIntoView()
+          @markAsSeen()
+          @renderActiveComponents() unless @inView
+          @inView = true
+        else
+          @inView = false
+
       # If no timestamp is present(which can change on conditions),
       # display the feature type.
       unless @$el.find('time').text().length
@@ -36,6 +64,9 @@ class scpr.ArticleTracking extends scpr.Framework
         if label.attr('data-media-label')
           label.append label.attr('data-media-label')
           label.find('use').attr('xlink:href', "#icon_line-audio")
+
+    updateWhatsNext: ->
+
 
     stateToMediaClass: ->
       @stateTranslation[@model.get('state')] or ''
@@ -63,15 +94,16 @@ class scpr.ArticleTracking extends scpr.Framework
       @$el.removeClass (klass for state, klass of @stateTranslation).join(' ')
       @$el.addClass @stateToMediaClass()
 
+
   class ArticlesComponent extends @Component
-    @_name: 'articles-component'
+    name: 'articles-component'
+    components:
+      article: ArticleComponent
     init: (options={}) ->
       @options.headless = true
       @collection = new ArticleCollection()
-      @defineComponents
-        article: ArticleComponent
       articleEls = @$el.find('[data-obj-key]')
-      @collection.reset ({'id': $(el).attr('data-obj-key')} for el in articleEls)
+      @collection.reset ({'id': $(el).attr('data-obj-key'), title: $(el).find('a.headline__link').text()} for el in articleEls)
 
       for model in @collection.models
         objKey = model.get('id')

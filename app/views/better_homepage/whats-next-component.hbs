@@ -1,0 +1,11 @@
+{{#unless (hasNone stories)}}
+  <div class='whats-next-content'>
+    <strong>What's Next?</strong>
+    <hr />
+    <ul>
+      {{#each stories as |story|}}
+        <li>{{story.attributes.title}}</li>
+      {{/each}}
+    </ul>
+  </div>
+{{/unless}}
