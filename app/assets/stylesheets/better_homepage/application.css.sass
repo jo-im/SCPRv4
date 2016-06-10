@@ -35,16 +35,16 @@ $smSize: 84rem
     color: #017397
 
 #whats-next
+  @media (min-width: $xsSize)
+    display: block
+  @media (max-width: $xsSize)
+    display: none
   .whats-next-content
     left: 0
     position: fixed
     width: 278px
     padding: 34px
     background-color: white
-    @media (min-width: $xsSize)
-      display: block
-    @media (max-width: $xsSize)
-      display: none
 
 #side-prompt
   #side-prompt-slim

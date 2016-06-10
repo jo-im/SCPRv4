@@ -11,7 +11,11 @@ class scpr.ArticleTracking extends scpr.Framework
     init: ->
       @render()
     properties: ->
-      stories: @model.whatsNext()
+      # take a cue from the css and only
+      # do the work if our component is
+      # visible(i.e. display: block;)
+      stories: (=> if @$el.is(':visible') then @model.whatsNext() else [])()
+
     helpers: 
       hasNone: (array) ->
         array.length <= 0
