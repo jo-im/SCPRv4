@@ -10,12 +10,10 @@ class scpr.ArticleTracking extends scpr.Framework
     name: 'whats-next-component'
     init: ->
       @render()
+    isVisible: ->
+      @$el.is(':visible')
     properties: ->
-      # take a cue from the css and only
-      # do the work if our component is
-      # visible(i.e. display: block;)
-      stories: (=> if @$el.is(':visible') then @model.whatsNext() else [])()
-
+      stories: @model.whatsNext()
     helpers: 
       hasNone: (array) ->
         array.length <= 0
@@ -28,8 +26,7 @@ class scpr.ArticleTracking extends scpr.Framework
       state: 'new'
     init: ->
       @load() # get saved attributes from localstorage, if any
-      @listenTo @, 'change', =>
-        @save()
+      @listenTo @, 'change', => @save()
     whatsNext: ->
       collection         = (@collection or new ArticleCollection)
       thisIndex          = collection.indexOf @
@@ -45,9 +42,9 @@ class scpr.ArticleTracking extends scpr.Framework
     name: 'article-component'
     events:
       "click a" : "markAsRead"
-    inView: false
+    inView: false # This is used to prevent extra work from being done in scroll events.
     init: ->
-      @addActiveComponent new WhatsNextComponent
+      whatsNext = new WhatsNextComponent
         el: $('#whats-next')
         model: @model
       @render()
@@ -56,8 +53,16 @@ class scpr.ArticleTracking extends scpr.Framework
         # upon every scroll event firing.
         if @isScrolledIntoView()
           @markAsSeen()
-          @renderActiveComponents() unless @inView
-          @inView = true
+          # take a cue from the css and only
+          # do the work if our whats-next is
+          # visible(i.e. display: block;)
+          #
+          # This is important on mobile, since 
+          # we aren't displaying the component
+          # at that size.  Or will we?  Dun dun dun...
+          unless !whatsNext.isVisible() or @inView
+            whatsNext.render()
+            @inView = true
         else
           @inView = false
 
@@ -68,9 +73,6 @@ class scpr.ArticleTracking extends scpr.Framework
         if label.attr('data-media-label')
           label.append label.attr('data-media-label')
           label.find('use').attr('xlink:href', "#icon_line-audio")
-
-    updateWhatsNext: ->
-
 
     stateToMediaClass: ->
       @stateTranslation[@model.get('state')] or ''
