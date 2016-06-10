@@ -84,8 +84,7 @@ class Framework
     initialize: (context={}, options={}) ->
       @beforeInit?()
       @uuid       = @_generateUUID()
-      @$el.attr('data-framework-component-id', @uuid)
-      @$el.attr('data-framework-component-name', @name)
+      @insertFrameworkAttributes()
       # By default, if the component's element has no content,
       # the element will render blank.  Set the attribute 
       # `empty` to true if the element should be rendered,
@@ -147,6 +146,12 @@ class Framework
       # want it to re-render when its model changes.
       @_listen()
       @afterInit?()
+
+    insertFrameworkAttributes: ->
+      # This add a unique identifier to the element, which
+      # allows deeply-nested components to scope behavior.
+      @$el.attr('data-framework-component-id', @uuid)
+      @$el.attr('data-framework-component-name', @name)
 
     defineComponents: (components={}) ->
       ## Add child components to the current component
@@ -220,6 +225,7 @@ class Framework
       # simply overwrite the render function to
       # do your own thing.
       unless @options?.headless
+        @insertFrameworkAttributes()
         @$el?.html @renderHTML(locals, options)
 
     reloadComponents: ->
