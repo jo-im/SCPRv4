@@ -82,7 +82,16 @@ class scpr.ArticleTracking extends scpr.Framework
           label.find('use').attr('xlink:href', "#icon_line-audio")
 
     shouldShowWhatsNext: ->
-      @$el.next().hasClass('media') and !@$el.next().hasClass('media--hp-large')
+      # This is mainly a simple way of preventing the
+      # whats next component from overlapping things
+      # that get in the way like ads and articles
+      # with large images.
+      previous = @$el.prev()
+      next     = @$el.next()
+      previous.hasClass('media') and 
+      next.hasClass('media') and
+      !previous.hasClass('media--hp-large') and
+      !next.hasClass('media--hp-large')
 
     stateToMediaClass: ->
       @stateTranslation[@model.get('state')] or ''
