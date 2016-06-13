@@ -28,6 +28,6 @@ jQuery(document).ready(function() {
     prefix: "Last Updated "
   });
 
-  new scpr.BetterHomepage('section#content')
+  new scpr.BetterHomepage({el: $('section#content')})
 
 })

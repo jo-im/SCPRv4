@@ -2,7 +2,7 @@ scpr.Framework = require 'frameworkv2'
 
 class scpr.BetterHomepage extends scpr.Framework
 
-  init: (selector) ->
+  init: (options={}) ->
     $.fn.isOnScreen = ->
       win = $(window)
       viewport = 
@@ -15,8 +15,23 @@ class scpr.BetterHomepage extends scpr.Framework
       bounds.bottom = bounds.top + @outerHeight()
       !(viewport.right < bounds.left or viewport.left > bounds.right or viewport.bottom < bounds.top or viewport.top > bounds.bottom)
 
-    new ArticlesComponent
-      el: $(selector).first()
+    # create a collection based on the articles in the DOM
+    @collection = new ArticleCollection()
+    articleEls = @$el.find('[data-obj-key]')
+    @collection.reset ({'id': $(el).attr('data-obj-key'), title: $(el).find('a.headline__link').text()} for el in articleEls)
+    @collection.toArray().forEach (m) => 
+      m.set 'state', 'new'
+      m.save()
+
+    # make our article components
+    @articlesComponent = new ArticlesComponent
+      el: @$el
+      collection: @collection
+
+    # pass the same collection to a 'whats next' component
+    @whatsNext = new WhatsNextComponent
+      el: $('#whats-next')
+      collection: @collection
 
   class WhatsNextComponent extends @Component
     name: 'whats-next-component'
@@ -28,9 +43,7 @@ class scpr.BetterHomepage extends scpr.Framework
       $(window).scroll =>
         @hideIfBlocked()
         @render() unless @isVisible()
-      @collection = options.collection
-      @collection.on 'change', => @render()
-      # @render()
+      @collection = new ArticleCollection options.collection.whatsNext()
     hideIfBlocked: ->
       if @isBlocked()
         @$el.hide()
@@ -43,7 +56,7 @@ class scpr.BetterHomepage extends scpr.Framework
       # story image is in the way(i.e. visible on screen)
       docViewTop    = $(window).scrollTop()
       docViewBottom = docViewTop + $(window).height()
-      for element in $('.b-ad, .c-ad, .media--hp-large .media__figure--widescreen')
+      for element in $('.b-ad, .c-ad, .media--hp-large .media__figure--widescreen, footer')
         el = $(element)
         if el.isOnScreen()
           return true
@@ -132,16 +145,6 @@ class scpr.BetterHomepage extends scpr.Framework
       article: ArticleComponent
     init: (options={}) ->
       @options.headless = true
-      @collection = new ArticleCollection()
-      articleEls = @$el.find('[data-obj-key]')
-      @collection.reset ({'id': $(el).attr('data-obj-key'), title: $(el).find('a.headline__link').text()} for el in articleEls)
-      @collection.toArray().forEach (m) => 
-        m.set 'state', 'new'
-        m.save()
-
-      whatsNext = new WhatsNextComponent
-        el: $('#whats-next')
-        collection: new ArticleCollection(@collection.whatsNext()) # generate our table of contents
 
       for model in @collection.models
         objKey = model.get('id')

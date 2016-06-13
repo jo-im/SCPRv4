@@ -25,6 +25,10 @@ class Framework
     # Call init function, to stay uniform with
     # the rest of the framework.
     @beforeInit?()
+    # The framework app can accept an element.
+    if options.el
+      @el  = options.el
+      @$el = $(@el) 
     @init?(options)
     @afterInit?()
 
@@ -40,16 +44,6 @@ class Framework
       @beforeInit?() # before and after are hooks mainly for mixins
       @init?()
       @afterInit?()
-
-    # @Collection: ->
-    #   self = @
-    #   class extends Backbone.Collection
-    #     model: self
-    #     name: self + '-collection'
-    #     initialize: ->
-    #       @beforeInit?()
-    #       @init?()
-    #       @afterInit?()
 
   class @Component extends Backbone.View
     # A component is basically a Backbone View that
@@ -277,7 +271,7 @@ class Framework
       if @model
         @listenTo @model, "change destroy", @render
       if @collection
-        @listenTo @collection, "add remove reset", @render
+        @listenTo @collection, "add remove reset change", @render
 
     _registerHelpers: ->
       for name, helper of (@helpers or {})
