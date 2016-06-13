@@ -139,6 +139,10 @@ class scpr.BetterHomepage extends scpr.Framework
       @collection = new ArticleCollection()
       articleEls = @$el.find('[data-obj-key]')
       @collection.reset ({'id': $(el).attr('data-obj-key'), title: $(el).find('a.headline__link').text()} for el in articleEls)
+      @collection.toArray().forEach (m) => 
+        m.set 'state', 'new'
+        m.save()
+
       whatsNext = new WhatsNextComponent
         el: $('#whats-next')
         collection: new ArticleCollection(@collection.whatsNext()) # generate our table of contents
