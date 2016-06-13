@@ -27,6 +27,9 @@ class scpr.BetterHomepage extends scpr.Framework
       # often
       callback = => @hideIfBlocked()
       $(window).scroll callback
+      @collection = options.collection
+      @collection.on 'change', => @render()
+      @render()
     hideIfBlocked: ->
       if @isBlocked()
         @$el.hide()
@@ -45,7 +48,7 @@ class scpr.BetterHomepage extends scpr.Framework
           return true
       false
     properties: ->
-      stories: @model.whatsNext()
+      stories: @collection.where({state: 'new'})
     helpers: 
       hasNone: (array) ->
         array.length <= 0
@@ -60,19 +63,15 @@ class scpr.BetterHomepage extends scpr.Framework
       @load() # get saved attributes from localstorage, if any
       @listenTo @, 'change', => @save()
     whatsNext: ->
-      collection         = (@collection or new ArticleCollection)
-      thisIndex          = collection.indexOf @
-      filteredCollection = collection.filter (model, index) => 
-        (thisIndex > 1) and      # appears below the first story
-        (index > 2) and          # is below the top 3 stories
-        (index > thisIndex) and  # is not before this story
-        (model isnt @)           # is not this story (redundant?)
-      limitedCollection  = _.last _.shuffle(filteredCollection), 3
-      _.sortBy limitedCollection, (model) => model.cid
+      (@collection or new ArticleCollection).whatsNext()
 
   class ArticleCollection extends @Collection
     name: 'article-collection'
     model: Article
+    whatsNext: ->
+      filteredCollection = @filter (model, index) =>  ( index > 2 ) and model.get('state') == 'new' # is below the top 3 stories
+      limitedCollection  = _.last _.shuffle(filteredCollection), 3
+      _.sortBy limitedCollection, (model) => model.cid      
 
   class ArticleComponent extends @Component
     name: 'article-component'
@@ -80,11 +79,7 @@ class scpr.BetterHomepage extends scpr.Framework
       "click a" : "markAsRead"
     inView: false # This is used to prevent extra work from being done in scroll events.
     init: (options)->
-      @whatsNext = options.whatsNext
-      # whatsNext = new WhatsNextComponent
-      #   el: $('#whats-next')
-      #   model: @model
-      #   component: @
+      # @whatsNext = options.whatsNext
       @render()
       $(window).scroll =>
         # this is set up to prevent needless re-rendering
@@ -98,10 +93,10 @@ class scpr.BetterHomepage extends scpr.Framework
           # This is important on mobile, since 
           # we aren't displaying the component
           # at that size.  Or will we?  Dun dun dun...
-          unless !@whatsNext.isVisible() or @inView
-            @whatsNext.model = @model
-            @whatsNext.render()
-            @inView = true
+          # unless !@whatsNext.isVisible() or @inView
+          #   @whatsNext.model = @model
+          #   @whatsNext.render()
+          #   @inView = true
         else
           @inView = false
 
@@ -144,13 +139,12 @@ class scpr.BetterHomepage extends scpr.Framework
       @collection = new ArticleCollection()
       articleEls = @$el.find('[data-obj-key]')
       @collection.reset ({'id': $(el).attr('data-obj-key'), title: $(el).find('a.headline__link').text()} for el in articleEls)
-
       whatsNext = new WhatsNextComponent
         el: $('#whats-next')
+        collection: new ArticleCollection(@collection.whatsNext()) # generate our table of contents
 
       for model in @collection.models
         objKey = model.get('id')
         new ArticleComponent
           model: model
           el: @$el.find("[data-obj-key='#{objKey}']")
-          whatsNext: whatsNext
