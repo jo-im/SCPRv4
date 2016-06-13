@@ -1,21 +1,51 @@
 scpr.Framework = require 'frameworkv2'
 
-class scpr.ArticleTracking extends scpr.Framework
+class scpr.BetterHomepage extends scpr.Framework
 
   init: (selector) ->
+    $.fn.isOnScreen = ->
+      win = $(window)
+      viewport = 
+        top: win.scrollTop()
+        left: win.scrollLeft()
+      viewport.right = viewport.left + win.width()
+      viewport.bottom = viewport.top + win.height()
+      bounds = @offset()
+      bounds.right = bounds.left + @outerWidth()
+      bounds.bottom = bounds.top + @outerHeight()
+      !(viewport.right < bounds.left or viewport.left > bounds.right or viewport.bottom < bounds.top or viewport.top > bounds.bottom)
+
     new ArticlesComponent
       el: $(selector).first()
 
   class WhatsNextComponent extends @Component
     name: 'whats-next-component'
     init: (options)->
-      @component = options.component
-      @render()
+      # we handle showing and hiding
+      # with the scroll event because
+      # render doesn't get fired that
+      # often
+      callback = => @hideIfBlocked()
+      $(window).scroll callback
+    hideIfBlocked: ->
+      if @isBlocked()
+        @$el.hide()
+      else
+        @$el.show()
     isVisible: ->
       @$el.is(':visible')
+    isBlocked: ->
+      # tells us whether or not an ad or a huge
+      # story image is in the way(i.e. visible on screen)
+      docViewTop    = $(window).scrollTop()
+      docViewBottom = docViewTop + $(window).height()
+      for element in $('.b-ad, .c-ad, .media--hp-large .media__figure--widescreen')
+        el = $(element)
+        if el.isOnScreen()
+          return true
+      false
     properties: ->
       stories: @model.whatsNext()
-      shouldDisplay: @component.shouldShowWhatsNext()
     helpers: 
       hasNone: (array) ->
         array.length <= 0
@@ -49,11 +79,12 @@ class scpr.ArticleTracking extends scpr.Framework
     events:
       "click a" : "markAsRead"
     inView: false # This is used to prevent extra work from being done in scroll events.
-    init: ->
-      whatsNext = new WhatsNextComponent
-        el: $('#whats-next')
-        model: @model
-        component: @
+    init: (options)->
+      @whatsNext = options.whatsNext
+      # whatsNext = new WhatsNextComponent
+      #   el: $('#whats-next')
+      #   model: @model
+      #   component: @
       @render()
       $(window).scroll =>
         # this is set up to prevent needless re-rendering
@@ -67,8 +98,9 @@ class scpr.ArticleTracking extends scpr.Framework
           # This is important on mobile, since 
           # we aren't displaying the component
           # at that size.  Or will we?  Dun dun dun...
-          unless !whatsNext.isVisible() or @inView
-            whatsNext.render()
+          unless !@whatsNext.isVisible() or @inView
+            @whatsNext.model = @model
+            @whatsNext.render()
             @inView = true
         else
           @inView = false
@@ -80,18 +112,6 @@ class scpr.ArticleTracking extends scpr.Framework
         if label.attr('data-media-label')
           label.append label.attr('data-media-label')
           label.find('use').attr('xlink:href', "#icon_line-audio")
-
-    shouldShowWhatsNext: ->
-      # This is mainly a simple way of preventing the
-      # whats next component from overlapping things
-      # that get in the way like ads and articles
-      # with large images.
-      previous = @$el.prev()
-      next     = @$el.next()
-      previous.hasClass('media') and 
-      next.hasClass('media') and
-      !previous.hasClass('media--hp-large') and
-      !next.hasClass('media--hp-large')
 
     stateToMediaClass: ->
       @stateTranslation[@model.get('state')] or ''
@@ -108,12 +128,7 @@ class scpr.ArticleTracking extends scpr.Framework
       @model.set 'state', 'read'
 
     isScrolledIntoView: ->
-      docViewTop    = $(window).scrollTop()
-      docViewBottom = docViewTop + $(window).height()
-      headline      = @$el.find('.media__headline')
-      elemTop       = headline.offset().top
-      elemBottom    = elemTop + headline.height()
-      elemBottom <= docViewBottom and elemTop >= docViewTop
+      @$el.find('.media__headline').isOnScreen()
 
     render: ->
       @$el.removeClass (klass for state, klass of @stateTranslation).join(' ')
@@ -130,9 +145,12 @@ class scpr.ArticleTracking extends scpr.Framework
       articleEls = @$el.find('[data-obj-key]')
       @collection.reset ({'id': $(el).attr('data-obj-key'), title: $(el).find('a.headline__link').text()} for el in articleEls)
 
+      whatsNext = new WhatsNextComponent
+        el: $('#whats-next')
+
       for model in @collection.models
         objKey = model.get('id')
-
         new ArticleComponent
           model: model
           el: @$el.find("[data-obj-key='#{objKey}']")
+          whatsNext: whatsNext
