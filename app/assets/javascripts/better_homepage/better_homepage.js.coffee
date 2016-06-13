@@ -70,9 +70,11 @@ class scpr.BetterHomepage extends scpr.Framework
     name: 'article-collection'
     model: Article
     whatsNext: ->
-      filteredCollection = @filter (model, index) =>  ( index > 2 ) and model.get('state') == 'new' # is below the top 3 stories
-      limitedCollection  = _.last _.shuffle(filteredCollection), 3
-      _.sortBy limitedCollection, (model) => model.cid      
+      fc = @filter (model, index) => model.get('state') == 'new' # is below the top 3 stories
+      firstIndex  = Math.round(fc.length * 0.5) - 1
+      secondIndex = Math.round(fc.length * 0.75) - 1
+      thirdIndex  = fc.length - 1
+      [fc[firstIndex], fc[secondIndex], fc[thirdIndex]]
 
   class ArticleComponent extends @Component
     name: 'article-component'
