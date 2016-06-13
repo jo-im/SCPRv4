@@ -25,11 +25,12 @@ class scpr.BetterHomepage extends scpr.Framework
       # with the scroll event because
       # render doesn't get fired that
       # often
-      callback = => @hideIfBlocked()
-      $(window).scroll callback
+      $(window).scroll =>
+        @hideIfBlocked()
+        @render() unless @isVisible()
       @collection = options.collection
       @collection.on 'change', => @render()
-      @render()
+      # @render()
     hideIfBlocked: ->
       if @isBlocked()
         @$el.hide()
@@ -77,7 +78,6 @@ class scpr.BetterHomepage extends scpr.Framework
     name: 'article-component'
     events:
       "click a" : "markAsRead"
-    inView: false # This is used to prevent extra work from being done in scroll events.
     init: (options)->
       # @whatsNext = options.whatsNext
       @render()
@@ -93,12 +93,6 @@ class scpr.BetterHomepage extends scpr.Framework
           # This is important on mobile, since 
           # we aren't displaying the component
           # at that size.  Or will we?  Dun dun dun...
-          # unless !@whatsNext.isVisible() or @inView
-          #   @whatsNext.model = @model
-          #   @whatsNext.render()
-          #   @inView = true
-        else
-          @inView = false
 
       # If no timestamp is present(which can change on conditions),
       # display the feature type.
