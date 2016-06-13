@@ -8,12 +8,14 @@ class scpr.ArticleTracking extends scpr.Framework
 
   class WhatsNextComponent extends @Component
     name: 'whats-next-component'
-    init: ->
+    init: (options)->
+      @component = options.component
       @render()
     isVisible: ->
       @$el.is(':visible')
     properties: ->
       stories: @model.whatsNext()
+      shouldDisplay: @component.shouldShowWhatsNext()
     helpers: 
       hasNone: (array) ->
         array.length <= 0
@@ -51,6 +53,7 @@ class scpr.ArticleTracking extends scpr.Framework
       whatsNext = new WhatsNextComponent
         el: $('#whats-next')
         model: @model
+        component: @
       @render()
       $(window).scroll =>
         # this is set up to prevent needless re-rendering
@@ -77,6 +80,9 @@ class scpr.ArticleTracking extends scpr.Framework
         if label.attr('data-media-label')
           label.append label.attr('data-media-label')
           label.find('use').attr('xlink:href', "#icon_line-audio")
+
+    shouldShowWhatsNext: ->
+      @$el.next().hasClass('media') and !@$el.next().hasClass('media--hp-large')
 
     stateToMediaClass: ->
       @stateTranslation[@model.get('state')] or ''

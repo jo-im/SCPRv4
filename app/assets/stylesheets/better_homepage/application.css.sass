@@ -21,7 +21,9 @@ $smSize: 84rem
     width: 100%
     top: none
 
-.media 
+.media
+  &.media--hp
+    border-top: none // override because the border clashes with the 'whats next' component
   &.media--visited-and-read // adds a checkmark for now until this is officialized
     .media__headline
       position: relative

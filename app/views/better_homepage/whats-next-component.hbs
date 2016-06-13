@@ -1,11 +1,13 @@
-{{#unless (hasNone stories)}}
-  <div class='whats-next-content'>
-    <strong>What's Next?</strong>
-    <hr />
-    <ul class='c-list c-list--vert c-list--bullet'>
-      {{#each stories as |story|}}
-        <li>{{story.attributes.title}}</li>
-      {{/each}}
-    </ul>
-  </div>
-{{/unless}}
+{{#if shouldDisplay}}
+  {{#unless (hasNone stories)}}
+    <div class='whats-next-content'>
+      <strong>What's Next?</strong>
+      <hr />
+      <ul class='c-list c-list--vert c-list--bullet'>
+        {{#each stories as |story|}}
+          <li>{{story.attributes.title}}</li>
+        {{/each}}
+      </ul>
+    </div>
+  {{/unless}}
+{{/if}}

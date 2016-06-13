@@ -81,7 +81,7 @@ class Framework
     # is mostly used to reference a corresponding template.
     name   : 'component'
 
-    initialize: (context={}, options={}) ->
+    initialize: (options={}) ->
       @beforeInit?()
       @uuid       = @_generateUUID()
       @insertFrameworkAttributes()
