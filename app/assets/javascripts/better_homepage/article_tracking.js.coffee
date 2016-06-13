@@ -30,7 +30,11 @@ class scpr.ArticleTracking extends scpr.Framework
     whatsNext: ->
       collection         = (@collection or new ArticleCollection)
       thisIndex          = collection.indexOf @
-      filteredCollection = collection.filter (model, index) => (index > 2) and (index > thisIndex) and (model isnt @)
+      filteredCollection = collection.filter (model, index) => 
+        (thisIndex > 1) and      # appears below the first story
+        (index > 2) and          # is below the top 3 stories
+        (index > thisIndex) and  # is not before this story
+        (model isnt @)           # is not this story (redundant?)
       limitedCollection  = _.last _.shuffle(filteredCollection), 3
       _.sortBy limitedCollection, (model) => model.cid
 
