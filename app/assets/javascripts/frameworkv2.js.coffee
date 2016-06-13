@@ -288,6 +288,10 @@ class Framework
       ## and child components.  Include an 'properties'
       ## method on the component to add more parameters.
       #
+      ## Properties, unlike other attributes on the 
+      ## component, are computed at render-time, since
+      ## properties is a function.
+      #
       # You probably don't want to meddle with this.
       params =
         model: (@model or @properties)
