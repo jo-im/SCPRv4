@@ -1,4 +1,4 @@
-scpr.Framework = require 'frameworkv2'
+scpr.Framework = require 'framework'
 
 class outpost.HomepageEditor extends scpr.Framework
 
