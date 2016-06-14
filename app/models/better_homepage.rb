@@ -92,7 +92,11 @@ class BetterHomepage < ActiveRecord::Base
   def async_create_index
     # Only index if homepage is live.
     if status == self.class.status_id(:live)
-      Job::HomepageIndexer.enqueue id, :create
+      if Rails.env.development?
+        Job::HomepageIndexer.perform id, :create
+      else
+        Job::HomepageIndexer.enqueue id, :create
+      end
     end
   end
 
