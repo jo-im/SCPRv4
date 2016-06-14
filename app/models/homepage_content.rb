@@ -82,6 +82,7 @@ class HomepageContent < ActiveRecord::Base
   end
 
   def media_class
+    ## Not sure if this is needed anymore?
     case asset_scheme
     when 'large'
       'media--hp-large'

@@ -1,4 +1,4 @@
-scpr.Framework = require 'frameworkv2'
+scpr.Framework = require 'framework'
 
 class scpr.BetterHomepage extends scpr.Framework
 
@@ -35,6 +35,7 @@ class scpr.BetterHomepage extends scpr.Framework
 
   class WhatsNextComponent extends @Component
     name: 'whats-next-component'
+    collectionEvents: "add remove reset change"
     init: (options)->
       # we handle showing and hiding
       # with the scroll event because
@@ -94,20 +95,12 @@ class scpr.BetterHomepage extends scpr.Framework
     events:
       "click a" : "markAsRead"
     init: (options)->
-      # @whatsNext = options.whatsNext
       @render()
       $(window).scroll =>
         # this is set up to prevent needless re-rendering
         # upon every scroll event firing.
         if @isScrolledIntoView()
           @markAsSeen()
-          # take a cue from the css and only
-          # do the work if our whats-next is
-          # visible(i.e. display: block;)
-          #
-          # This is important on mobile, since 
-          # we aren't displaying the component
-          # at that size.  Or will we?  Dun dun dun...
 
       # If no timestamp is present(which can change on conditions),
       # display the feature type.
@@ -145,7 +138,6 @@ class scpr.BetterHomepage extends scpr.Framework
       article: ArticleComponent
     init: (options={}) ->
       @options.headless = true
-
       for model in @collection.models
         objKey = model.get('id')
         new ArticleComponent

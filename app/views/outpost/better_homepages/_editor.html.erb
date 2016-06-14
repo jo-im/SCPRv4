@@ -16,10 +16,10 @@
 </script>
 
 <script id="content-component" type="text/x-handlebars-template">
-  {{asset 'large'}}
+  {{largeAsset}}
   <div class="media__container clearfix">
     <div class="media__content">
-      {{asset 'medium'}}
+      {{mediumAsset}}
       <h2 class="media__headline"><a>{{title}}</a></h2>
       <div class="media__summary">{{teaser}}</div>
     </div>
@@ -29,10 +29,10 @@
 </script>
 
 <script id="asset-component" type="text/x-handlebars-template">
-  {{#displayIf 'medium'}}
-    <img src="{{url}}" class="media__image medium">
-  {{/displayIf}}
-  {{#displayIf 'large'}}
+  {{#if (largeScheme)}}
     <img src="{{url}}" class="media__image large">
-  {{/displayIf}}
+  {{/if}}
+  {{#if (mediumScheme)}}
+    <img src="{{url}}" class="media__image medium">
+  {{/if}}
 </script>

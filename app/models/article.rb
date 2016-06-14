@@ -60,7 +60,8 @@ class Article
     :links,
     :asset_display,
     :disqus_identifier,
-    :abstract
+    :abstract,
+    :asset_scheme
 
   def initialize(attributes={})
     attributes.each do |attr, value|

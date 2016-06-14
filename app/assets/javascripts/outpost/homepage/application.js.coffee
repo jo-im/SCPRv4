@@ -1,4 +1,4 @@
-scpr.Framework = require 'framework'
+scpr.Framework = require 'frameworkv2'
 
 class outpost.HomepageEditor extends scpr.Framework
 
@@ -11,18 +11,16 @@ class outpost.HomepageEditor extends scpr.Framework
     component.render()
 
   class ContentsComponent extends @Component
-    @_name: 'contents-component'
+    name: 'contents-component'
     init: ->
-      @defineComponents
+      @listenTo @collection, "change:position", => @render()
+      @components =
         content: ContentComponent
 
-      @listenTo @collection, "change:position", =>
-        @collection.comparator = 'position'
-        @collection.sort()
-        @render()
-
-    render: (locals={}, options={}) ->
-      super(locals, options)
+    render: (options={}) ->
+      @collection.comparator = 'position'
+      @collection.sort()
+      super(options)
       @reloadComponents()
       
     helpers: 
@@ -30,7 +28,6 @@ class outpost.HomepageEditor extends scpr.Framework
         options.fn?(this) if index is 0
       seventhDown: (index, options) ->
         options.fn?(this) if index is 6
-
 
     # private
 
@@ -46,19 +43,19 @@ class outpost.HomepageEditor extends scpr.Framework
           $this.scrollTop() + $this.innerHeight() < $this[0].scrollHeight
 
   class ContentComponent extends @Component
+    name: 'content-component'
     className: 'media'
     events:
       "click": "toggleAssetScheme"
-    @_name: 'content-component'
-
     init: ->
-      # If the content comes in without an asset scheme,
-      # which it will if it just came from the aggregator,
-      # give it a default value of 'medium'.
-      if ['medium', 'none', 'large'].indexOf(@model.get('asset_scheme')) is -1
-        @model.set 'asset_scheme', 'medium' 
+      # # If the content comes in without an asset scheme,
+      # # which it will if it just came from the aggregator,
+      # # give it a default value of 'medium'.
+      # if ['medium', 'none', 'large'].indexOf(@model.get('asset_scheme')) is -1
+      #   @model.set 'asset_scheme', 'medium' 
       @defineComponents
-        asset: new AssetComponent model: @model
+        largeAsset: new AssetComponent model: @model, scheme: 'large'
+        mediumAsset: new AssetComponent model: @model, scheme: 'medium'
 
     toggleAssetScheme: (e) ->
       display = @model.get('asset_scheme')
@@ -77,22 +74,26 @@ class outpost.HomepageEditor extends scpr.Framework
       teaser: @model.get('teaser')
 
   class AssetComponent extends @Component
+    name: 'asset-component'
     tagName: 'a'
     className: 'media__image-parent'
-    @_name: 'asset-component'
     attributes:
       target: '_blank'
 
-    init: ->
+    init: (options)->
+      @scheme = options.scheme
       @display ||= 'medium' #options.context or 'medium'
       @model.url = $(@model.get('thumbnail')).attr('src')
 
     helpers:
-      displayIf: (context, options) ->
-        if options?.data?.root?.component?.options?.context is context and this.model.get('asset_scheme') is context
-          options.fn?(this) # run block if true
-        else
-          ''
+      largeScheme: (context, options) ->
+        # yeah, I know, I've gotta figure out why this has to be complicated
+        scheme = context?.data?.root?.scheme or options?.data?.root?.scheme
+        (this.model.get('asset_scheme') is 'large') and (scheme is 'large')
+      mediumScheme: (context, options) ->
+        scheme = context?.data?.root?.scheme or options?.data?.root?.scheme
+        (this.model.get('asset_scheme') is 'medium') and (scheme is 'medium')
 
     properties: ->
       url: $(@model.get('thumbnail')).attr('src') or 'http://placehold.it/640x480'
+      scheme: @scheme
