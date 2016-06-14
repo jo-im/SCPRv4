@@ -7,6 +7,46 @@ section#content
   @media (min-width: $xsSize) and (max-width: $smSize)
     margin-top: 10em
 
+  .media
+    &.media--hp
+      border-top: none // override because the border clashes with the 'whats next' component
+    &.media--visited-and-read // adds a checkmark for now until this is officialized
+      .media__headline
+        position: relative
+    .media__content 
+      .media__label__sm
+        text-transform: uppercase
+        color: #01AED5
+        font-size: 0.9rem
+        font-weight: 500
+    .media__headline--top
+      color: #017397
+
+  #whats-next
+    @media (min-width: $xsSize)
+      display: block
+    @media (max-width: $xsSize)
+      display: none
+    .whats-next-content
+      position: fixed
+      width: 11.35em
+      padding: 34px
+      top: 25%
+      ul
+        font-size: 14px
+        li::before
+          background-color: #f97e21
+
+      .title
+        color: #898989
+        text-align: center
+        font-weight: 700
+        border-style: solid
+        border-width: 0 0 2px 0
+        border-color: #74b1c4
+        padding-bottom: 15px
+        margin-bottom: 15px
+
 #check-it-out
   $padding: 10px
   padding-top: $padding
@@ -24,45 +64,6 @@ section#content
     position: inherit 
     width: 100%
     top: none
-
-.media
-  &.media--hp
-    border-top: none // override because the border clashes with the 'whats next' component
-  &.media--visited-and-read // adds a checkmark for now until this is officialized
-    .media__headline
-      position: relative
-  .media__content 
-    .media__label__sm
-      text-transform: uppercase
-      color: #01AED5
-      font-size: 0.9rem
-      font-weight: 500
-  .media__headline--top
-    color: #017397
-
-#whats-next
-  @media (min-width: $xsSize)
-    display: block
-  @media (max-width: $xsSize)
-    display: none
-  .whats-next-content
-    position: fixed
-    width: 11.35em
-    padding: 34px
-    ul
-      font-size: 14px
-      li::before
-        background-color: #f97e21
-
-    .title
-      color: #898989
-      text-align: center
-      font-weight: 700
-      border-style: solid
-      border-width: 0 0 2px 0
-      border-color: #74b1c4
-      padding-bottom: 15px
-      margin-bottom: 15px
 
 #side-prompt
   #side-prompt-slim
