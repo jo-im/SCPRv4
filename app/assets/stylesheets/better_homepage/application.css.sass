@@ -13,7 +13,9 @@ section#content
     &.media--visited-and-read // adds a checkmark for now until this is officialized
       .media__headline
         position: relative
-    .media__content 
+    .media__content
+      ul 
+        @extend .c-list--bullet // workaround until this can happen with ckeditor
       .media__label__sm
         text-transform: uppercase
         color: #01AED5
