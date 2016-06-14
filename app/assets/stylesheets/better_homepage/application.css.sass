@@ -1,10 +1,7 @@
 @import 'scpr-style-guide/src/css/main.scss'
 
-$xsSize: 56rem
-$smSize: 84rem
-
 section#content
-  @media (min-width: $xsSize) and (max-width: $smSize)
+  @media (min-width: $media-tablet) and (max-width: $media-wide)
     margin-top: 10em
 
   .media
@@ -25,9 +22,9 @@ section#content
       color: #017397
 
   #whats-next
-    @media (min-width: $xsSize)
+    @media (min-width: $media-tablet)
       display: block
-    @media (max-width: $xsSize)
+    @media (max-width: $media-tablet)
       display: none
     .whats-next-content
       position: fixed
@@ -58,11 +55,11 @@ section#content
     li
       h5
         margin: 0
-  @media (max-width: $smSize)
+  @media (max-width: $media-wide)
     position: absolute 
     width: 100%
     top: 5.91rem
-  @media (max-width: $xsSize)
+  @media (max-width: $media-tablet)
     position: inherit 
     width: 100%
     top: none
@@ -83,11 +80,11 @@ section#content
       display: none
     .buttons
       padding-bottom: 10px
-    @media (max-width: $smSize)
+    @media (max-width: $media-wide)
       position: absolute 
       width: 100%
       top: 8.66rem
-    @media (max-width: $xsSize)
+    @media (max-width: $media-tablet)
       position: inherit 
       width: 100%
       top: none
