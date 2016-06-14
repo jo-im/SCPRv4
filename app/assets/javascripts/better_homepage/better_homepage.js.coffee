@@ -41,10 +41,13 @@ class scpr.BetterHomepage extends scpr.Framework
       # with the scroll event because
       # render doesn't get fired that
       # often
-      $(window).scroll =>
-        @hideIfBlocked()
-        @render() unless @isVisible()
+      $(window).scroll => @renderify()
       @collection = new ArticleCollection options.collection.whatsNext()
+      @renderify()
+    renderify: ->
+      # can't think of a better name. LOL
+      @hideIfBlocked()
+      @render() unless @isVisible()  
     hideIfBlocked: ->
       if @isBlocked()
         @$el.hide()
@@ -115,6 +118,7 @@ class scpr.BetterHomepage extends scpr.Framework
 
     stateTranslation:
       new: 'media--new-and-unread'
+      seen: 'media--seen-and-unread'
       read: 'media--visited-and-read'
 
     markAsSeen: ->
@@ -128,7 +132,7 @@ class scpr.BetterHomepage extends scpr.Framework
       @$el.find('.media__headline').isOnScreen()
 
     render: ->
-      @$el.removeClass (klass for state, klass of @stateTranslation).join(' ')
+      # @$el.removeClass (klass for state, klass of @stateTranslation).join(' ')
       @$el.addClass @stateToMediaClass()
 
 
