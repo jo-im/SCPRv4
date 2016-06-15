@@ -33,6 +33,31 @@ class scpr.BetterHomepage extends scpr.Framework
       el: $('#whats-next')
       collection: @collection
 
+    # feedback element
+    @feedback  = new FeedbackComponent
+      el: $('#feedback-block')
+
+  class FeedbackComponent extends @Component
+    name: 'feedback-component'
+    events:
+      'click a.beta-opt-out': 'optOut'
+    init: ->
+      @adaptVisibility()
+    optOut: ->
+      document.cookie = 'beta_opt_in' + '=;expires=Thu, 01 Jan 1970 00:00:01 GMT;'
+      location.reload()
+    adaptVisibility: ->
+      # This seems to work fine for now, though maybe something
+      # based on scrollStop would be preferable.  This at least
+      # takes care of onLoad.
+      if $('footer.footer').isOnScreen()
+        @$el.addClass 'hidden'
+      else
+        @$el.removeClass 'hidden'
+      setTimeout =>
+        @adaptVisibility()
+      , 500
+
   class WhatsNextComponent extends @Component
     name: 'whats-next-component'
     collectionEvents: "add remove reset change"

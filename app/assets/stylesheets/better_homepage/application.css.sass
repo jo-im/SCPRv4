@@ -77,8 +77,8 @@ section#content
     width: 100%
     top: none
 
-#side-prompt
-  #side-prompt-slim
+#feedback
+  #feedback-slim
     text-align: center
     background-color: white
     padding-top: 10px
@@ -103,7 +103,7 @@ section#content
       top: none
 
 
-  #side-prompt-block
+  #feedback-block
     $position: 50%
     height: 150px
     border-color: #99d8ea
@@ -116,6 +116,11 @@ section#content
     padding-right: 0px
     text-align: center
     background-color: white
+    transition: all .4s linear
+    opacity: 1
+    &.hidden
+      opacity: 0
+      z-index: -1
     @media (min-width: 1406px)
       position: fixed
       right: 0
