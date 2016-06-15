@@ -68,11 +68,17 @@ class scpr.BetterHomepage extends scpr.Framework
       # often
       $(window).scroll => @renderify()
       @collection = new ArticleCollection options.collection.whatsNext()
-      @renderify()
+      # @renderify()
+      @continuousRender()
     renderify: ->
       # can't think of a better name. LOL
       @hideIfBlocked()
-      @render() unless @isVisible()  
+      @render() unless @isVisible()
+    continuousRender: ->
+      @renderify()
+      setTimeout => 
+        @continuousRender
+      , 500      
     hideIfBlocked: ->
       if @isBlocked()
         @$el.hide()
@@ -85,7 +91,7 @@ class scpr.BetterHomepage extends scpr.Framework
       # story image is in the way(i.e. visible on screen)
       docViewTop    = $(window).scrollTop()
       docViewBottom = docViewTop + $(window).height()
-      for element in $('.b-ad, .c-ad, .media--hp-large .media__figure--widescreen, footer')
+      for element in $('.b-ad, .c-ad, .media--hp-large .media__figure--widescreen, .hidden-gem, footer')
         el = $(element)
         if el.isOnScreen()
           return true
