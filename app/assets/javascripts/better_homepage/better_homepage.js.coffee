@@ -58,9 +58,20 @@ class scpr.BetterHomepage extends scpr.Framework
         @adaptVisibility()
       , 500
 
+  class WhatsNextHeadlineComponent extends @Component
+    tagName: 'li'
+    name: 'whats-next-headline-component'
+    beforeDestroy: (callback) ->
+      if this.model.get('state') isnt 'new'
+        @reloadEl()
+        @$el.fadeOut 400, callback
+      else
+        super(callback)
+
   class WhatsNextComponent extends @Component
     name: 'whats-next-component'
     collectionEvents: "add remove reset change"
+    className: 'hidden'
     init: (options)->
       # we handle showing and hiding
       # with the scroll event because
@@ -68,12 +79,20 @@ class scpr.BetterHomepage extends scpr.Framework
       # often
       $(window).scroll => @renderify()
       @collection = new ArticleCollection options.collection.whatsNext()
-      # @renderify()
-      @continuousRender()
+      @components = 
+        headline: WhatsNextHeadlineComponent
+      
+      $(window).one 'scroll', =>
+        @continuousRender()
     renderify: ->
       # can't think of a better name. LOL
-      @hideIfBlocked()
-      @render() unless @isVisible()
+      unless @hasNone()
+        @hideIfBlocked()
+        @render() unless @isVisible()
+      else
+        @$el.addClass 'hidden'
+    hasNone: ->
+      @collection.where({state: 'new'}).length is 0
     continuousRender: ->
       @renderify()
       setTimeout => 
@@ -81,11 +100,11 @@ class scpr.BetterHomepage extends scpr.Framework
       , 500      
     hideIfBlocked: ->
       if @isBlocked()
-        @$el.hide()
+        @$el.addClass 'hidden'
       else
-        @$el.show()
+        @$el.removeClass 'hidden'
     isVisible: ->
-      @$el.is(':visible')
+      !@$el.hasClass('hidden') and @$el.is(':visible')
     isBlocked: ->
       # tells us whether or not an ad or a huge
       # story image is in the way(i.e. visible on screen)
@@ -103,7 +122,6 @@ class scpr.BetterHomepage extends scpr.Framework
         array.length <= 0
 
   class Article extends @Model.mixin(@Persistent)
-    self = @
     name: 'article'
     states: ['new', 'seen', 'read']
     defaults:

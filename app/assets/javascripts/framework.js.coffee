@@ -79,6 +79,9 @@ class Framework
       @beforeInit?()
       @uuid       = @_generateUUID()
       @insertFrameworkAttributes()
+      # Assign parent component object, if it is
+      # passed in.
+      @parentComponent = options.parentComponent if options.parentComponent
       # By default, if the component's element has no content,
       # the element will render blank.  Set the attribute 
       # `empty` to true if the element should be rendered,
@@ -129,6 +132,10 @@ class Framework
       # Set element attributes
       for name, value of (@tagAttributes or {})
         @$el?.attr name, value
+      # Add class name(s) to the element in case
+      # our element is passed in and we aren't
+      # auto-generating it.
+      @$el?.addClass @className
       # Call `init` function, which allows for a similar
       # initialization without having to call `super` 
       # every time you extend Component.
@@ -182,7 +189,7 @@ class Framework
               # The model, in this case, is the current context of the
               # component helper call which, in the Handlebars world,
               # is probably the model.
-              component  = new component({model: @, context: context.hash})
+              component  = new component({model: @, context: context.hash, parentComponent: parentComponent})
             component.render(this, options)
             parentComponent.addActiveComponent component
             new component.Handlebars.SafeString component.html()
@@ -225,21 +232,47 @@ class Framework
 
     render: (options={}) ->
       # Inserts generated HTML into its element.
-      @clearActiveComponents()
-      # Set headless to true in global component
-      # options to prevent rendering out, or 
-      # simply overwrite the render function to
-      # do your own thing.
-      unless @options?.headless
-        @insertFrameworkAttributes()
-        @$el?.html @renderHTML(options)
+      @clearActiveComponents =>
+        # Set headless to true in global component
+        # options to prevent rendering out, or 
+        # simply overwrite the render function to
+        # do your own thing.
+        unless @options?.headless
+          @insertFrameworkAttributes()
+          html = @renderHTML(options)
+          # If something needs to happen before the
+          # generated HTML is inserted into the element.
+          # This is ideal to use when the resulting
+          # HTML needs to be pre-processed.  Outside
+          # the normal rendering pipeline.
+          @beforeRender?(html)
+          @$el?.html html
 
     reloadComponents: ->
       for component in @activeComponents
-        newElement = @$el.find("[data-framework-component-name='#{component.name}'][data-framework-component-id='#{component.uuid}']").first()
-        if newElement.length
-          component.setElement newElement
+        if component.reloadEl()
           component.reloadComponents()
+
+    scope: (selector) ->
+      # This returns the DOM 'scope' that the component
+      # should search for elements within.  This assumes
+      # a parent component, but defaults to the document.
+      el = @parentComponent?.$el or $(document)
+      if selector
+        el.find(selector)
+      else
+        el
+    
+    reloadEl: ->
+      # Reloads the component's element based on its
+      # name and ID, in case the DOM got re-rendered
+      # by another component.
+      newElement = @scope("[data-framework-component-name='#{@name}'][data-framework-component-id='#{@uuid}']").first()
+      if newElement.length
+        @setElement newElement
+        true
+      else
+        false
 
     remove: ->
       @trigger 'clean_up'
@@ -252,26 +285,49 @@ class Framework
       # to render.
       component.render() for component in @activeComponents
 
-    clearActiveComponents: (comp)->
+    beforeDestroy: (callback) ->
+      # Override this function to perform something
+      # before the component is removed.  This can 
+      # be useful for applying animations to components
+      # that represent models that no longer exist
+      # in the current context.
+      callback?()
+
+    destroy: (callback) ->
+      @beforeDestroy =>
+        @unbind()
+        delete (@model or {}).options
+        delete (@collection or {}).options
+        delete @components
+        @remove()
+        callback?()
+
+    clearActiveComponents: (callback) ->
       # Effectively 'garbage collects' components in the
       # case that we are no longer using them.  This is to
       # make it easy for us to not have a bunch of components
       # build up on the heap.
-      for component in @activeComponents
+      onComplete = =>
+        @trigger 'clean_up'
+        callback?()
+
+      numberOfComponents = @activeComponents.length
+      i = 0
+      while i < numberOfComponents
         # If a component object is provided as an argument,
         # only clear that specific one.
-        continue if comp and (component != comp)
+        # continue if comp and (component != comp)
+        i++
+        component = @activeComponents.pop()
         component.clearActiveComponents()
-        component.unbind()
-        # I've heard some people say that the delete operator
-        # should be avoided.  However, it's a part of future
-        # ECMAScript editions, and is a clear way of expressing
-        # what is intended to happen here.
-        delete (component.model or component.collection or {}).options #= undefined
-        delete component.components
-        component.remove()
-      @activeComponents = []
-      @trigger 'clean_up'
+        component.destroy =>      
+          if i is numberOfComponents
+            # Execute callback if we have
+            # completed destroying
+            onComplete()
+      # Execute callback if we have no components
+      if i is 0
+        onComplete()
 
     # These are the default events we listen to in order
     # to trigger renders.  This can be overrided, for

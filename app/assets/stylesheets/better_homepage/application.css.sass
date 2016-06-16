@@ -22,7 +22,6 @@ section#content
           transition: all 0.8s linear
           opacity: 0
 
-
     .media__content
       ul 
         @extend .c-list--bullet // workaround until this can happen with ckeditor
@@ -35,10 +34,13 @@ section#content
       color: #017397
 
   #whats-next
-    @media (min-width: $media-tablet)
-      display: block
+    transition: opacity .4s linear
     @media (max-width: $media-tablet)
       display: none
+    &.hidden
+      transition: opacity .4s linear
+      opacity: 0
+      z-index: -1
     .whats-next-content
       position: fixed
       width: 11.35em
@@ -48,7 +50,6 @@ section#content
         font-size: 14px
         li::before
           background-color: #f97e21
-
       .title
         color: #898989
         text-align: center
