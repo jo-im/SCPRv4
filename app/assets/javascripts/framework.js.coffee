@@ -151,6 +151,8 @@ class Framework
     insertFrameworkAttributes: ->
       # This add a unique identifier to the element, which
       # allows deeply-nested components to scope behavior.
+      #
+      # The component-id is always instance-specific.
       @$el.attr('data-framework-component-id', @uuid)
       @$el.attr('data-framework-component-name', @name)
 
@@ -221,7 +223,7 @@ class Framework
       # For internal use only.
       if @template
         @options = options # store the options passed from the caller
-        output = @template @_params() # pass our properties to the template
+        output   = @template @_params() # pass our properties to the template
         @options = undefined # get rid of options
         output
         # Think of it as telling the template what local variables
@@ -230,7 +232,22 @@ class Framework
       else
         ""
 
-    render: (options={}) ->
+    beforeRender: (html, callback) ->
+      # If the generated HTML that is being passed
+      # to this component's element needs to be pre-processed,
+      # or perhaps rendered in a different way entirely,
+      # this is where you do it.
+      callback?(html)
+
+    afterRender: ->
+      # Useful for post-render animations.
+
+    render: (options={}, callback) ->
+      # assume that if we pass in only a callback
+      # and no options, the options value
+      # now becomes the callback
+      if (typeof options is 'function') and !callback
+        callback = options
       # Inserts generated HTML into its element.
       @clearActiveComponents =>
         # Set headless to true in global component
@@ -245,18 +262,22 @@ class Framework
           # This is ideal to use when the resulting
           # HTML needs to be pre-processed.  Outside
           # the normal rendering pipeline.
-          @beforeRender?(html)
-          @$el?.html html
+          @beforeRender html, (html) =>
+            @$el?.html(html)
+            @afterRender?()
+            callback?()
 
     reloadComponents: ->
       for component in @activeComponents
         if component.reloadEl()
           component.reloadComponents()
+          @afterInsert()
 
     scope: (selector) ->
       # This returns the DOM 'scope' that the component
-      # should search for elements within.  This assumes
-      # a parent component, but defaults to the document.
+      # should search for adjacent elements within.  
+      # It assumes a parent component, but defaults 
+      # to the document.
       el = @parentComponent?.$el or $(document)
       if selector
         el.find(selector)
@@ -273,6 +294,17 @@ class Framework
         true
       else
         false
+
+    afterInsert: ->
+      # This function gets fired after the component's
+      # element gets "inserted", or rather reloaded.
+      #
+      # Useful for animations that happen after the
+      # element finally appears.
+      #
+      # A similar effect could be accomplished with 
+      # #init or #afterInit, but that would not work with
+      # a component that is "static".(i.e. non-disposable)
 
     remove: ->
       @trigger 'clean_up'

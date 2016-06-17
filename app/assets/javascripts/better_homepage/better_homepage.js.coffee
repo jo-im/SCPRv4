@@ -29,12 +29,12 @@ class scpr.BetterHomepage extends scpr.Framework
       collection: @collection
 
     # pass the same collection to a 'whats next' component
-    @whatsNext = new WhatsNextComponent
+    @whatsNext         = new WhatsNextComponent
       el: $('#whats-next')
       collection: @collection
 
     # feedback element
-    @feedback  = new FeedbackComponent
+    @feedback          = new FeedbackComponent
       el: $('#feedback-block')
 
   class FeedbackComponent extends @Component
@@ -81,37 +81,30 @@ class scpr.BetterHomepage extends scpr.Framework
       @collection = new ArticleCollection options.collection.whatsNext()
       @components = 
         headline: WhatsNextHeadlineComponent
-      $(window).one 'scroll', => @render()
-        # @continuousRender()
-        # @render()
-
+    afterInit: ->
+      # This has to happen here because our
+      # components don't get registered until
+      # after init.
+      @render()
     render: ->
       unless @hasNone()
         # @hideIfBlocked()
         super() #unless @isVisible()
       else
         @$el.addClass 'hidden'
-    # renderify: ->
-    #   # can't think of a better name. LOL
-    #   unless @hasNone()
-    #     @hideIfBlocked()
-    #     @render() unless @isVisible()
-    #   else
-    #     @$el.addClass 'hidden'
     hasNone: ->
-      @collection.where({state: 'new'}).length is 0
-    # continuousRender: ->
-    #   @renderify()
-    #   setTimeout => 
-    #     @continuousRender
-    #   , 500      
+      @collection.where({state: 'new'}).length is 0   
     hideIfBlocked: ->
       if @isBlocked()
+        @$el.removeClass 'visible'
         @$el.addClass 'hidden'
       else
-        @$el.removeClass('hidden') unless @hasNone()
+        unless @hasNone()
+          @$el.removeClass 'hidden'
+          @$el.addClass 'visible'
     isVisible: ->
-      !@$el.hasClass('hidden') and @$el.is(':visible')
+      # !@$el.hasClass('hidden') and @$el.is(':visible')
+      @$el.hasClass('visible')
     isBlocked: ->
       # tells us whether or not an ad or a huge
       # story image is in the way(i.e. visible on screen)
@@ -124,9 +117,6 @@ class scpr.BetterHomepage extends scpr.Framework
       false
     properties: ->
       stories: @collection.where({state: 'new'})
-    helpers: 
-      hasNone: (array) ->
-        array.length <= 0
 
   class Article extends @Model.mixin(@Persistent)
     name: 'article'
