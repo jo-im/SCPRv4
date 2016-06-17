@@ -12,23 +12,27 @@ class HomeController < ApplicationController
     }
 
   def index
-    @homepage         = Homepage.published.first
-    @featured_comment = FeaturedComment.published.includes(:content).first
-
-    # Load a collapsed schedule for the next 8 hours
-    @schedule = ScheduleOccurrence.block(
-      (Time.zone.now - 8.hours), 16.hours, true
-    ).reject { |o| o.ends_at < Time.zone.now }
-
-    if !@schedule.any?
-      @schedule_current = Missing
-      @schedule_next    = Missing
-    elsif @schedule[0].starts_at < Time.zone.now
-      @schedule_current = @schedule[0]
-      @schedule_next    = @schedule[1] || Missing
+    if cookies[:beta_opt_in] == "true"
+      redirect_to beta_homepage_url
     else
-      @schedule_current = Missing
-      @schedule_next    = @schedule[0]
+      @homepage         = Homepage.published.first
+      @featured_comment = FeaturedComment.published.includes(:content).first
+
+      # Load a collapsed schedule for the next 8 hours
+      @schedule = ScheduleOccurrence.block(
+        (Time.zone.now - 8.hours), 16.hours, true
+      ).reject { |o| o.ends_at < Time.zone.now }
+
+      if !@schedule.any?
+        @schedule_current = Missing
+        @schedule_next    = Missing
+      elsif @schedule[0].starts_at < Time.zone.now
+        @schedule_current = @schedule[0]
+        @schedule_next    = @schedule[1] || Missing
+      else
+        @schedule_current = Missing
+        @schedule_next    = @schedule[0]
+      end
     end
   end
 

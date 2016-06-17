@@ -39,8 +39,8 @@ class scpr.BetterHomepage extends scpr.Framework
 
   class FeedbackComponent extends @Component
     name: 'feedback-component'
-    events:
-      'click a.beta-opt-out': 'optOut'
+    # events:
+    #   'click a.beta-opt-out': 'optOut'
     init: ->
       @adaptVisibility()
     optOut: ->

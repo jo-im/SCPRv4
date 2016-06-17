@@ -2,10 +2,13 @@ require "resque/server"
 
 Scprv4::Application.routes.draw do
   # Homepage
-  get '/' => 'home#index', constraints: lambda { |request| !request.cookie_jar[:beta_opt_in]}, as: :root
-  get '/' => 'better_homepage#index', constraints: lambda { |request| request.cookie_jar[:beta_opt_in]}
+  # get '/' => 'home#index', constraints: lambda { |request| !request.cookie_jar[:beta_opt_in]}, as: :root
+  # get '/' => 'better_homepage#index', constraints: lambda { |request| request.cookie_jar[:beta_opt_in]}
+  get '/' => 'home#index', as: :root
+  get '/beta-homepage' => 'better_homepage#index', as: :beta_homepage
   get '/homepage/:id/missed-it-content/' => 'home#missed_it_content', as: :homepage_missed_it_content
   get '/beta-opt-in' => 'better_homepage#opt_in'
+  get '/beta-opt-out' => 'better_homepage#opt_out'
 
 
   # Listen Live
