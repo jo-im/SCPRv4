@@ -77,32 +77,39 @@ class scpr.BetterHomepage extends scpr.Framework
       # with the scroll event because
       # render doesn't get fired that
       # often
-      $(window).scroll => @renderify()
+      $(window).scroll => @hideIfBlocked()
       @collection = new ArticleCollection options.collection.whatsNext()
       @components = 
         headline: WhatsNextHeadlineComponent
-      
-      $(window).one 'scroll', =>
-        @continuousRender()
-    renderify: ->
-      # can't think of a better name. LOL
+      $(window).one 'scroll', => @render()
+        # @continuousRender()
+        # @render()
+
+    render: ->
       unless @hasNone()
-        @hideIfBlocked()
-        @render() unless @isVisible()
+        # @hideIfBlocked()
+        super() #unless @isVisible()
       else
         @$el.addClass 'hidden'
+    # renderify: ->
+    #   # can't think of a better name. LOL
+    #   unless @hasNone()
+    #     @hideIfBlocked()
+    #     @render() unless @isVisible()
+    #   else
+    #     @$el.addClass 'hidden'
     hasNone: ->
       @collection.where({state: 'new'}).length is 0
-    continuousRender: ->
-      @renderify()
-      setTimeout => 
-        @continuousRender
-      , 500      
+    # continuousRender: ->
+    #   @renderify()
+    #   setTimeout => 
+    #     @continuousRender
+    #   , 500      
     hideIfBlocked: ->
       if @isBlocked()
         @$el.addClass 'hidden'
       else
-        @$el.removeClass 'hidden'
+        @$el.removeClass('hidden') unless @hasNone()
     isVisible: ->
       !@$el.hasClass('hidden') and @$el.is(':visible')
     isBlocked: ->
