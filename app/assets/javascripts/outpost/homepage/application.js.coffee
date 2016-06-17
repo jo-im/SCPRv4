@@ -12,15 +12,18 @@ class outpost.HomepageEditor extends scpr.Framework
 
   class ContentsComponent extends @Component
     name: 'contents-component'
+    collectionEvents: "add remove reset change:position"
     init: ->
-      @listenTo @collection, "change:position", => @render()
       @components =
         content: ContentComponent
 
-    render: (options={}) ->
+    beforeRender: ->
+      console.log 'kaboom'
       @collection.comparator = 'position'
       @collection.sort()
-      super(options)
+
+    afterRender: ->
+      console.log "whoom"
       @reloadComponents()
       
     helpers: 

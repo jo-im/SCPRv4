@@ -232,7 +232,7 @@ class Framework
       else
         ""
 
-    beforeRender: (html, callback) ->
+    renderFilter: (html, callback) ->
       # If the generated HTML that is being passed
       # to this component's element needs to be pre-processed,
       # or perhaps rendered in a different way entirely,
@@ -243,6 +243,7 @@ class Framework
       # Useful for post-render animations.
 
     render: (options={}, callback) ->
+      @beforeRender?()
       # assume that if we pass in only a callback
       # and no options, the options value
       # now becomes the callback
@@ -262,7 +263,7 @@ class Framework
           # This is ideal to use when the resulting
           # HTML needs to be pre-processed.  Outside
           # the normal rendering pipeline.
-          @beforeRender html, (html) =>
+          @renderFilter html, (html) =>
             @$el?.html(html)
             @afterRender?()
             callback?()
