@@ -18,7 +18,7 @@ class BetterHomepageController < ApplicationController
   end
 
   def opt_in
-    cookies[:beta_opt_in] = "true"
+    cookies.permanent[:beta_opt_in] = "true"
     redirect_to root_url
   end
 
