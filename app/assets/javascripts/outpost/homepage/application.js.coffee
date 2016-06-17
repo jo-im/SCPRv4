@@ -18,12 +18,10 @@ class outpost.HomepageEditor extends scpr.Framework
         content: ContentComponent
 
     beforeRender: ->
-      console.log 'kaboom'
       @collection.comparator = 'position'
       @collection.sort()
 
     afterRender: ->
-      console.log "whoom"
       @reloadComponents()
       
     helpers: 
