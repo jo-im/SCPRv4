@@ -3,6 +3,6 @@ class AddBetterHomepagePermission < ActiveRecord::Migration
     Permission.where(resource: "BetterHomepage").first_or_create
   end
   def down
-    Permission.where(resource: "BetterHomepage").destroy_all
+    Permission.where(resource: "BetterHomepage").delete_all
   end
 end
