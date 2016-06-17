@@ -5,6 +5,7 @@ Scprv4::Application.routes.draw do
   get '/' => 'home#index', constraints: lambda { |request| !request.cookie_jar[:beta_opt_in]}, as: :root
   get '/' => 'better_homepage#index', constraints: lambda { |request| request.cookie_jar[:beta_opt_in]}
   get '/homepage/:id/missed-it-content/' => 'home#missed_it_content', as: :homepage_missed_it_content
+  get '/beta-opt-in' => 'better_homepage#opt_in'
 
 
   # Listen Live

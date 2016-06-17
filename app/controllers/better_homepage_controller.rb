@@ -17,6 +17,11 @@ class BetterHomepageController < ApplicationController
     @current_program  = ScheduleOccurrence.current.first
   end
 
+  def opt_in
+    cookies[:beta_opt_in] = "true"
+    redirect_to root_url
+  end
+
   private
 
   def generate_homepage
