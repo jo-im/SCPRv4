@@ -517,6 +517,7 @@ ActiveRecord::Schema.define(version: 20160614184550) do
     t.string  "content_type",  limit: 255
     t.string  "homepage_type", limit: 255
     t.string  "asset_scheme",  limit: 255
+    t.string  "size",         limit: 255, default: "medium"
   end
 
   add_index "layout_homepagecontent", ["content_id", "content_type"], name: "index_layout_homepagecontent_on_content_id_and_content_type", using: :btree

@@ -284,6 +284,7 @@ Scprv4::Application.routes.draw do
     resources :kpcc_programs, concerns: [:search]
     resources :blogs, concerns: [:search]
     resources :content_shells, concerns: [:search]
+    resources :featured_comments, concerns: [:search]
     resources :quotes, concerns: [:search]
     resources :data_points, concerns: [:search]
     resources :bios, concerns: [:search]

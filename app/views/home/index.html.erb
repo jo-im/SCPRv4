@@ -11,6 +11,14 @@
     end
   %>
 <% end %>
+  
+<% if @featured_comment %>
+
+  <div class="join-conversation-container home">
+    <%= render 'shared/featured_comment/home', comment: @featured_comment %>
+  </div> 
+
+<% end %>
 
 <div class="more-content">
   <div class="row-fluid">

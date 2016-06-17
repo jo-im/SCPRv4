@@ -13,6 +13,7 @@ class HomeController < ApplicationController
 
   def index
     @homepage         = Homepage.published.first
+    @featured_comment = FeaturedComment.published.includes(:content).first
 
     # Load a collapsed schedule for the next 8 hours
     @schedule = ScheduleOccurrence.block(
