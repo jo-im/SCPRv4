@@ -14,6 +14,7 @@ class ContentShell < ActiveRecord::Base
   include Concern::Associations::CategoryAssociation
   include Concern::Associations::HomepageContentAssociation
   include Concern::Associations::QuoteAssociation
+  include Concern::Associations::MissedItContentAssociation
   include Concern::Associations::EditionsAssociation
   include Concern::Associations::VerticalArticleAssociation
   include Concern::Associations::EpisodeRundownAssociation

@@ -1,0 +1,21 @@
+<%= cache ["missed_it",bucket,contents] do %>
+  <div class="carousel-section">
+    <div class="row-fluid">
+      <% contents.each do |c| %>
+        <%= cache ["missed_it",c.content] do %>
+          <% article = c.content.to_article %>
+          <div class="span4">
+            <div class="carousel-item" data-vr-contentbox="">
+              <%= render_asset article, display: "thumbnail", fallback: true %>
+              <span class="title"><%= link_to article.short_title, article.public_url, "data-ga-category" => '@currentCategory', "data-ga-action" => "Article", "data-ga-label" => '@scrollDepth', class: "track-event" %></span>
+
+              <%= render 'shared/feature_trait', article: article %>
+
+            </div>
+          </div> <!-- span -->
+        <% end %>
+        <hr />
+      <% end %>
+    </div> <!-- row fluid -->
+  </div> <!-- carousel-section -->
+<% end %>

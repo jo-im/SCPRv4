@@ -4,6 +4,7 @@ Scprv4::Application.routes.draw do
   # Homepage
   get '/' => 'home#index', constraints: lambda { |request| !request.cookie_jar[:beta_opt_in]}, as: :root
   get '/' => 'better_homepage#index', constraints: lambda { |request| request.cookie_jar[:beta_opt_in]}
+  get '/homepage/:id/missed-it-content/' => 'home#missed_it_content', as: :homepage_missed_it_content
 
 
   # Listen Live
@@ -275,8 +276,10 @@ Scprv4::Application.routes.draw do
     resources :schedule_occurrences, concerns: [:search]
     resources :podcasts, concerns: [:search]
     resources :breaking_news_alerts, concerns: [:search]
+    resources :featured_comment_buckets, concerns: [:search]
     resources :categories, concerns: [:search]
     resources :topics, concerns: [:search]
+    resources :missed_it_buckets, concerns: [:search]
     resources :external_programs, concerns: [:search]
     resources :kpcc_programs, concerns: [:search]
     resources :blogs, concerns: [:search]

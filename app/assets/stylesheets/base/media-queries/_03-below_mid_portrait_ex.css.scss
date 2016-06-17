@@ -73,6 +73,14 @@
         .homepage-top {
             border-bottom: none !important;
             margin-bottom: 0 !important;
+
+            .missed-it-bucket {
+                .row-fluid hr:nth-of-type(3) { display: block; }
+                .span4 {
+                    @include gridFluidSpan(8);
+                    &:nth-of-type(4) { margin-left: 0; }
+                }
+            }
         }
     }
 

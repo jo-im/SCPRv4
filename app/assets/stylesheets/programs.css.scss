@@ -164,6 +164,13 @@ header.episode {
     @include font-heading($size: 12px, $weight: 600);
 }
 
+.missed-it {
+    display: none; /* temporary */
+    li {
+        list-style: none;
+    }
+}
+
 .show-video {
     .video-player {
         margin: 10px 0;

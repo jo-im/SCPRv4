@@ -4,6 +4,8 @@ module TestClass
     has_secretary on: ["program_id"]
 
     include Concern::Associations::HomepageContentAssociation
+    include Concern::Associations::MissedItContentAssociation
+    include Concern::Associations::FeaturedCommentAssociation
     include Concern::Associations::QuoteAssociation
     include Concern::Associations::RelatedContentAssociation
     include Concern::Associations::AssetAssociation

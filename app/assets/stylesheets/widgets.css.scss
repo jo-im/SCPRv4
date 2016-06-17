@@ -616,6 +616,16 @@ a.with-icon {
     }
 }
 
+
+.missed-it-bucket {
+    a {
+        @include font-headline();
+        @include font-shorthand(600, 15px);
+        color:$nearBlack;
+    }
+    h4 { text-transform: none; }
+}
+
 .pager-nav {
     float: right;
     a {

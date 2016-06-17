@@ -19,7 +19,7 @@ class HomepageContent < ActiveRecord::Base
   # I suppose we could just switch back to always referencing ContentBase
   # _only_ for the "live" statuses. Not great but right now it's dangerous,
   # if someone changes one of those status numbers on another class then
-  # that class won't show up on the Homepage.
+  # that class won't show up on the Homepage, Missed it bucket, etc.
   belongs_to :content,
     -> { where(status: ContentBase::STATUS_LIVE) },
     :polymorphic    => true
