@@ -1,4 +1,5 @@
-scpr.Framework = require 'framework'
+scpr.Framework      = require 'framework'
+scpr.EventTracking  = require 'event_tracking'
 
 class scpr.BetterHomepage extends scpr.Framework
 
@@ -36,6 +37,11 @@ class scpr.BetterHomepage extends scpr.Framework
     # feedback element
     @feedback          = new FeedbackComponent
       el: $('#feedback-block')
+
+    @eventTracking     = new scpr.EventTracking
+      trackScrollDepth: true
+      currentCategory: 'Homepage'
+      scrollDepthContainer: @$el
 
   class FeedbackComponent extends @Component
     name: 'feedback-component'
