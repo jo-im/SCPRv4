@@ -113,7 +113,6 @@ class ShowEpisode < ActiveRecord::Base
     self.pending? || self.published?
   end
 
-
   def publish
     self.update_attributes(status: self.class.status_id(:live))
   end
@@ -128,6 +127,7 @@ class ShowEpisode < ActiveRecord::Base
 
   def to_article
     return nil if !self.show
+    related_content = to_article_called_more_than_twice? ? [] : self.published_content.map(&:get_article).map(&:to_reference)
     @to_article ||= Article.new({
       :original_object    => self,
       :id                 => self.obj_key,
@@ -145,9 +145,13 @@ class ShowEpisode < ActiveRecord::Base
       :updated_at         => self.updated_at,
       :published          => self.published?,
       :show               => self.show,
+      :related_content    => related_content,
+      :links              => related_links.map(&:to_hash),
+      :asset_display      => asset_display,
+      :disqus_identifier  => self.disqus_identifier,
+      :abstract           => self.abstract
     })
   end
-
 
   def route_hash
     return {} if !self.persisted? || !self.persisted_record.published?
@@ -175,7 +179,6 @@ class ShowEpisode < ActiveRecord::Base
       :content            => self.published_content.map(&:to_article)
     })
   end
-
 
   private
 

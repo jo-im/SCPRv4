@@ -1,0 +1,32 @@
+<% object.each_with_index do |content, index| %>
+
+  <% tag = if content.source != "KPCC"
+              content.source
+           elsif content.tags__title?
+              content.tags__title
+           elsif content.program?
+              content.program
+           elsif content.category__title?
+              content.category__title
+           end
+  %>
+
+  <% if index == 1 %>
+    <aside class="c-ad">
+      <div class="c-ad__container">
+        <%= render "shared/ads/dfp", ad_key: "slot_b" %>
+        <a class="c-ad__attribution" href="http://www.scpr.org/support/underwriting/">Become a KPCC Sponsor</a>
+      </div>
+    </aside>
+  <% elsif index == 7 %>
+    <aside class="c-ad">
+      <div class="c-ad__container">
+        <%= render "shared/ads/dfp", ad_key: "slot_c" %>
+        <a class="c-ad__attribution" href="http://www.scpr.org/support/underwriting/">Become a KPCC Sponsor</a>
+      </div>
+    </aside>
+  <% end %>
+
+  <%= render partial: "better_homepage/media/#{content.asset_scheme}", locals: {content: content, index: index} %>
+
+<% end %>

@@ -33,7 +33,7 @@
           {
             el: "#featured_articles_aggregator", 
             inputEl: "#program_articles_json",
-            collection: <%= render_json("api/private/v2/articles/collection", articles: record.program_articles.includes(:article).map {|a| a.article.to_article}) %>,
+            collection: <%= render_json("api/private/v2/articles/collection", articles: record.program_articles.includes(:article).map {|a| a.article.get_article}) %>,
             apiType: "private",
             view: {
               dropMaxLimit: 6,

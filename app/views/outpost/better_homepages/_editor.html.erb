@@ -1,0 +1,38 @@
+<!-- Modal -->
+<script id="contents-component" type="text/x-handlebars-template">
+  {{#each collection.models as |model index|}}
+    {{#firstDown index}}
+      <aside class="ad">
+        <img src="http://placehold.it/300x250?text=Position+B" alt="Position B">
+      </aside>
+    {{/firstDown}}
+    {{#seventhDown index}}
+      <aside class="ad">
+        <img src="http://placehold.it/300x250?text=Position+C" alt="Position C">
+      </aside>
+    {{/seventhDown}}
+    {{content}}
+  {{/each}}
+</script>
+
+<script id="content-component" type="text/x-handlebars-template">
+  {{largeAsset}}
+  <div class="media__container clearfix">
+    <div class="media__content">
+      {{mediumAsset}}
+      <h2 class="media__headline"><a>{{title}}</a></h2>
+      <div class="media__summary">{{teaser}}</div>
+    </div>
+    <aside class="media__metadata">
+    </aside>
+  </div>
+</script>
+
+<script id="asset-component" type="text/x-handlebars-template">
+  {{#if (largeScheme)}}
+    <img src="{{url}}" class="media__image large">
+  {{/if}}
+  {{#if (mediumScheme)}}
+    <img src="{{url}}" class="media__image medium">
+  {{/if}}
+</script>

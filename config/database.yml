@@ -9,3 +9,6 @@ test:
   adapter: mysql2
   reconnect: true
   database: scprv4_test
+  host: <%= ENV['SCPRV4_DEVELOPMENT_DATABASE_IP'] %>
+  port: 3306
+  username: root

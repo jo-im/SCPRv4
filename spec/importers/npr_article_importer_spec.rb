@@ -4,7 +4,9 @@ describe NprArticleImporter do
   describe '::sync' do
     before :each do
       stub_request(:get, %r|api\.npr|).to_return({
-        :content_type => "application/json",
+        :headers => {
+          :content_type   => "application/json"
+        },
         :body => load_fixture('api/npr/stories.json')
       })
     end
@@ -20,7 +22,9 @@ describe NprArticleImporter do
   describe '#import' do
     before :each do
       stub_request(:get, %r|api\.npr|).to_return({
-        :content_type => "application/json",
+        :headers => {
+          :content_type   => "application/json"
+        },
         :body => load_fixture('api/npr/story.json')
       })
     end

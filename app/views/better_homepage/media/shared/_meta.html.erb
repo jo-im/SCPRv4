@@ -1,0 +1,10 @@
+<div class="media__meta">
+  <span class="media__timestamp"><%= smart_date_js public_datetime, "data-window" => "8h", "data-relative" => "2h" %></span>
+  <% if feature_name = feature.try(:name) %>
+    <span class="media__label" data-media-label="<%= feature_name %>">
+    <svg class="icon icon--size-sm">
+      <use class="icon--line icon--color-primary" xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon_line-audio"></use>
+    </svg>
+    </span>
+  <% end %>
+</div>

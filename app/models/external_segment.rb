@@ -30,7 +30,7 @@ class ExternalSegment < ActiveRecord::Base
       :created_at         => self.created_at,
       :updated_at         => self.updated_at,
       :published          => true,
-      :public_path        => self.external_url,
+      :public_path        => self.external_url
     })
   end
 

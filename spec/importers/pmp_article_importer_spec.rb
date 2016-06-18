@@ -6,12 +6,16 @@ describe PmpArticleImporter do
     PMP::CollectionDocument.any_instance.stub(:oauth_token) { "token" }
 
     stub_request(:get, %r|pmp\.io/?$|).to_return({
-      :content_type => "application/json",
+      :headers => {
+        :content_type   => "application/json"
+      },
       :body => load_fixture('api/pmp/root.json')
     })
 
     stub_request(:get, %r|api.publicradio.org/audio/v2|).to_return({
-      :content_type => "application/json",
+      :headers => {
+        :content_type   => "application/json"
+      },
       :body => load_fixture('api/pmp/audio.json')
     })
   end
@@ -20,17 +24,23 @@ describe PmpArticleImporter do
     before do
       stub_request(:get, %r|pmp\.io/docs|)
         .with(query: {"limit" => "10", "profile" => "story", "tag" => "marketplace"}).to_return({
-          :content_type => "application/json",
+          :headers => {
+            :content_type   => "application/json"
+          },
           :body => load_fixture('api/pmp/marketplace_stories.json')
         })
       stub_request(:get, %r|pmp\.io/docs|)
           .with(query: {"collection" => '4c6e24e5-484f-49e8-be8d-452cfddd6252', "limit" => "10", "profile" => "story"}).to_return({
-          :content_type => "application/json",
+          :headers => {
+            :content_type   => "application/json"
+          },
           :body => load_fixture('api/pmp/ahp_stories.json')
         })
       stub_request(:get, %r|pmp\.io/docs|)
           .with(query: {"tag" => "CACounts", "limit" => "10", "profile" => "story"}).to_return({
-          :content_type => "application/json",
+          :headers => {
+            :content_type   => "application/json"
+          },
           :body => load_fixture('api/pmp/ahp_stories.json')
         })
     end
@@ -52,7 +62,9 @@ describe PmpArticleImporter do
     context "multiple enclosures" do
       before :each do
         stub_request(:get, %r|pmp\.io/docs\?guid=.+|).to_return({
-          :content_type => "application/json",
+          :headers => {
+            :content_type   => "application/json"
+          },
           :body => load_fixture('api/pmp/story.json')
         })
       end
@@ -111,7 +123,9 @@ describe PmpArticleImporter do
       context "ahp story" do
         it "adds audio if it's available" do
           stub_request(:get, %r|pmp\.io/docs\?guid=.+|).to_return({
-            :content_type => "application/json",
+            :headers => {
+              :content_type   => "application/json"
+            },
             :body => load_fixture('api/pmp/ahp_story.json')
           })
           remote_article = create :pmp_article, news_agency: "American Homefront Project"
@@ -135,7 +149,9 @@ describe PmpArticleImporter do
     context "single enclosure" do
       before :each do
         stub_request(:get, %r|pmp\.io/docs\?guid=.+|).to_return({
-          :content_type => "application/json",
+          :headers => {
+            :content_type   => "application/json"
+          },
           :body => load_fixture('api/pmp/story_single_enclosure.json')
         })
       end
@@ -152,7 +168,9 @@ describe PmpArticleImporter do
     context "No items" do
       before do
         stub_request(:get, %r|pmp\.io/docs\?guid=.+|).to_return({
-          :content_type => "application/json",
+          :headers => {
+            :content_type   => "application/json"
+          },
           :body => load_fixture('api/pmp/story_no_items.json')
         })
       end

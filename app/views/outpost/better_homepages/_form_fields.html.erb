@@ -1,0 +1,57 @@
+<%= form_block "Content" do %>
+  <ul class="nav nav-tabs">
+    <li class='active'><a href="#arrange" data-toggle="tab">Arrange</a></li>
+    <li><a href="#appearance" data-toggle="tab">Appearance</a></li>
+  </ul>
+
+  <div class="tab-content">
+    <div class="tab-pane active" id="arrange"><div id="aggregator" class="aggregator"></div></div>
+    <div class="tab-pane" id="appearance">
+      <i>Click on each story to cycle through asset display schemes.</i>
+      <br /><br />
+      <div id="homepage-editor-frame">
+        <div id="homepage-editor"></div>
+      </div>
+    </div>
+  </div>
+
+  <div id="aggregator" class="aggregator"></div>
+  <%= f.input :content_json, as: :hidden, input_html: { id: "content_json" } %>
+<% end %>
+<%= f.section "related_links", {title: "Check It Out"} %>
+<% content_for :footer do %>
+  <script>
+    aggregator = new outpost.Aggregator(
+      {
+        el: "#aggregator",
+        inputEl: "#content_json",
+        collection: <%= render_json("api/private/v2/articles/collection", articles: record.content_articles) %>,
+        apiType: "private",
+        view: {
+            dropMinLimit: 4
+        },
+        params: {
+          limit: 20,
+          types: "news,blogs,segments,shells,queries,events",
+          token: "<%= Rails.configuration.x.api.kpcc.private.api_token %>",
+          order: "public_datetime",
+          sort_mode: "desc",
+          with: { published: true }
+        }
+      }
+    );
+    window.homepageEditor = new outpost.HomepageEditor()
+
+  </script>
+<% end %>
+
+<%= render partial: "outpost/better_homepages/editor" %> <!-- This needs to happen after the aggregator has initialized. -->
+
+<%= form_block "Details" do %>
+  <%= f.input :status, collection: Homepage.status_select_collection, include_blank: false, input_html: { id: "status-select" } %>
+  <%= f.section 'content_alarm' %>
+  <%= f.section 'auto_published_at' %>
+  <div id="scheduled_status" class="notification block"></div>
+<% end %>
+
+<br /><br /><br /><br />

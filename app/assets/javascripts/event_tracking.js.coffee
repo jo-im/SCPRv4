@@ -92,3 +92,7 @@ class scpr.EventTracking
 
         disable: ->
             $.scrollDepth.reset()
+
+
+if typeof module != 'undefined' and module.exports # if node.js/browserify
+  module.exports = scpr.EventTracking

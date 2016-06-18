@@ -1,0 +1,27 @@
+#appearance
+  overflow: auto
+  overflow-y: hidden
+
+  #homepage-editor-frame
+    overflow: visible
+    min-height: 500px
+    background-color: #f2f2f2
+
+    #homepage-editor
+      overflow: visible
+      transform: scale(0.6,0.6)
+      transform-origin: center top
+      @import "better_homepage/prototype"
+
+      // added
+      .media
+        background-color: white
+        cursor: pointer
+        padding-right: 5%
+        -moz-user-select: none
+        -khtml-user-select: none
+        -webkit-user-select: none
+        -ms-user-select: none
+        user-select: none
+
+

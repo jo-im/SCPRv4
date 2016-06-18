@@ -1,6 +1,6 @@
 <div class="carousel-section">
   <div class="row-fluid">
-  <% contents.map(&:to_article).each do |article| %>
+  <% contents.map(&:get_article).each do |article| %>
     <div class="span6">
       <div class="carousel-item">
         <%= render_asset article, display: 'thumbnail', fallback: true %>

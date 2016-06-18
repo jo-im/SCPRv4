@@ -1,4 +1,4 @@
-<% article = article.to_article %>
+<% article = article.get_article %>
 
 <%= render_asset article.original_object, context:"news", fallback:true %>
 <div class="report">
@@ -45,12 +45,12 @@
 
             <%= render 'shared/widgets/short_list_subscribe' %>
 
-            <%= render 'shared/cwidgets/related_links', content:article.original_object %>
+            <%= render 'shared/cwidgets/related_links', content: article %>
 
             <%= render 'shared/new/social_share', article: article, cssClass: "share" %>
 
             <% if @entry.previous.present? %>
-                <% previous_article = @entry.previous.to_article %>
+                <% previous_article = @entry.previous.get_article %>
                 <aside class="previously">
                     <header><h1>Previously in <%= @entry.blog.name %></h1></header>
                     <nav>

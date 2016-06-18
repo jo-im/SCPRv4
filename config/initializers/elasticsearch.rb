@@ -6,7 +6,9 @@ ES_CLIENT = Elasticsearch::Client.new(
 
 ES_PREFIX = Rails.configuration.x.scpr.elasticsearch_prefix || Rails.application.secrets.elasticsearch_prefix
 
-ES_ARTICLES_INDEX = "#{ES_PREFIX}-articles-all"
+ES_ARTICLES_INDEX  = "#{ES_PREFIX}-articles-all"
+
+ES_HOMEPAGES_INDEX = "#{ES_PREFIX}-homepages-all"
 
 Elasticsearch::Model.client = ES_CLIENT
 

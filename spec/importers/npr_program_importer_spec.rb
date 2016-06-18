@@ -5,19 +5,25 @@ describe NprProgramImporter do
     context 'with available audio' do
       before :each do
         stub_request(:get, %r{api\.npr\.org}).to_return({
-          :content_type   => 'application/json',
+          :headers => {
+            :content_type   => "application/json"
+          },
           :body           => load_fixture('api/npr/program.json')
         })
       end
 
       it "requests more if there are 20 stories in the initial response" do
         stub_request(:get, %r{api\.npr\.org/.+startNum=1}).to_return({
-          :content_type   => 'application/json',
+          :headers => {
+            :content_type   => "application/json"
+          },
           :body           => load_fixture('api/npr/program_pg1.json')
         })
 
         stub_request(:get, %r{api\.npr\.org/.+startNum=21}).to_return({
-          :content_type   => 'application/json',
+          :headers => {
+            :content_type   => "application/json"
+          },
           :body           => load_fixture('api/npr/program_pg2.json')
         })
 
@@ -68,7 +74,9 @@ describe NprProgramImporter do
     context 'without available audio' do
       it "doesn't import the episode if the audio isn't available" do
         stub_request(:get, %r{api\.npr\.org}).to_return({
-          :content_type => 'application/json',
+          :headers => {
+            :content_type   => "application/json"
+          },
           :body => load_fixture('api/npr/program_audio_unavailable.json')
         })
 
@@ -79,7 +87,9 @@ describe NprProgramImporter do
 
       it "doesn't import the episode if the audio doesn't grant stream permissions" do
         stub_request(:get, %r{api\.npr\.org}).to_return({
-          :content_type => 'application/json',
+          :headers => {
+            :content_type   => "application/json"
+          },
           :body => load_fixture('api/npr/program_audio_nostream.json')
         })
 

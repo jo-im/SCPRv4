@@ -82,7 +82,7 @@
                 </header>
                 <ul class="previews">
                     <% @entry.recent_blog_entries.each do |entry| %>
-                        <% blog_article = entry.to_article %>
+                        <% blog_article = entry.get_article %>
                         <li>
                             <%= link_to blog_article.public_path, class: "track-event", data: {"ga-category" => "Article", "ga-action" => "Clickthrough", "ga-label" => "More Sidebar Blog"} do %>
                                 <figure class="ratio-pairing clearfix">
@@ -116,7 +116,7 @@
    <header><h1 class="bound"><span>Enjoy reading <%= @blog.name %>?</span> <span>You might like KPCC’s other blogs.</span></h1></header>
     <div class="highlights bound clearfix">
         <% @entry.sister_blog_entries.each do |entry| %>
-            <% sister_article = entry.to_article %>
+            <% sister_article = entry.get_article %>
             <article>
                 <header>
                     <%= link_to sister_article.public_path, class: "track-event", data: {"ga-category" => "Article", "ga-action" => "Clickthrough", "ga-label" => "More Other Blogs"} do %>

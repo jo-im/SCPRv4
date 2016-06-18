@@ -23,7 +23,6 @@ class ProgramsController < ApplicationController
     render layout: "application"
   end
 
-
   def show
     @episodes = @program.episodes.published
 

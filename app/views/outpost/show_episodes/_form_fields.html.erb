@@ -29,7 +29,7 @@
         {
           el: "#segmented-aggregator", 
           inputEl: "#rundowns_json",
-          collection: <%= render_json('api/private/v2/articles/collection', articles: record.content.map(&:to_article)) %>,
+          collection: <%= render_json('api/private/v2/articles/collection', articles: record.content.map(&:get_article)) %>,
           apiType: "private",
           params: {
             limit: 20,

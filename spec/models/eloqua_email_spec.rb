@@ -38,17 +38,23 @@ describe EloquaEmail do
     describe "#publish_email" do
       before do
         stub_request(:post, %r|assets/email|).to_return({
-          :content_type   => "application/json",
+          :headers => {
+            :content_type   => "application/json"
+          },
           :body           => load_fixture("api/eloqua/email.json")
         })
 
         stub_request(:post, %r|assets/campaign/active|).to_return({
-          :content_type   => "application/json",
+          :headers => {
+            :content_type   => "application/json"
+          },
           :body           => load_fixture("api/eloqua/campaign_activated.json")
         })
 
         stub_request(:post, %r|assets/campaign\z|).to_return({
-          :content_type   => "application/json",
+          :headers => {
+            :content_type   => "application/json"
+          },
           :body           => load_fixture("api/eloqua/email.json")
         })
 

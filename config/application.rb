@@ -3,13 +3,25 @@ require 'rails/all'
 
 Bundler.require(:default, Rails.env)
 
+if Rails.env.development?
+  ## Initialize Docker Machine environment variables so
+  ## that database.yml can pick up the MySQL database host
+  `docker-machine env default`.scan(/(\w+)="(.*)"/).each{|p| ENV[p[0]] = p[1]}
+  begin
+    ENV['SCPRV4_DEVELOPMENT_DATABASE_IP'] = URI(ENV['DOCKER_HOST']).host
+  rescue ArgumentError
+    puts "WARNING: Development Database IP Not Defined"
+  end
+end
+
 module Scprv4
   class Application < Rails::Application
     # Custom directories with classes and modules you want to be autoloadable.
     config.autoload_paths += [
       "#{config.root}/lib",
       "#{config.root}/lib/validators",
-      "#{config.root}/app/models/pmp"
+      "#{config.root}/app/models/pmp",
+      "#{config.root}/app/models/content_base"
     ]
 
     config.assets.version = '2.0'
@@ -27,6 +39,8 @@ module Scprv4
       "*.eot", "*.ttf", "*.woff" # Font files
     ]
 
+    config.assets.precompile += %w( better_homepage/style-guide.js )
+
     config.browserify_rails.commandline_options = "-t coffeeify --extension=\".js.coffee\""
 
     config.time_zone = 'Pacific Time (US & Canada)'
@@ -35,6 +49,7 @@ module Scprv4
     config.i18n.enforce_available_locales = false
     config.encoding = "utf-8"
     config.middleware.insert 0, Rack::UTF8Sanitizer
+    # config.middleware.use 'HomepageOptIn'
     config.middleware.use "SafeFilename"
 
     # Temporary until we can go into the controllers and set
@@ -48,6 +63,7 @@ module Scprv4
     ]
 
     config.assets.paths << Rails.root.join("node_modules")
+    config.assets.paths << Rails.root.join("node_modules/scpr-style-guide/public")
 
     # Dir.glob("#{Rails.root}/node_modules/**/").each do |path|
     #   config.assets.paths << path
