@@ -1,4 +1,4 @@
-<%= form_block "Related Links" do %>
+<%= form_block options[:title] || "Related Links" do %>
   <% record.related_links.build %>
 
   <table class="field-rows">

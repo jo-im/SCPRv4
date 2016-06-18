@@ -1,0 +1,17 @@
+<script id="ContentsComponentTemplate" type="text/x-handlebars-template">
+  <ul>
+
+  </ul>
+</script>
+
+<script id="ContentComponentTemplate" type="text/x-handlebars-template">
+  <li>{{model.attributes.content_type}}</li>
+</script>
+
+<div id="homepage-content"></div>
+
+<%= javascript_include_tag "outpost/homepage/application" %>
+
+<script>
+  window.homepageEditor = new outpost.HomepageEditor(<%= @homepage.content.to_json %>)
+</script>

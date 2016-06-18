@@ -51,4 +51,16 @@ class RelatedLink < ActiveRecord::Base
   def is_twitter?
     link_type == "twitter"
   end
+
+  def to_hash
+    {
+      title: title,
+      url: url,
+      link_type: link_type
+    }
+  end
+
+  def to_indexable
+    Hashie::Mash.new(to_hash)
+  end
 end

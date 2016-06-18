@@ -1,0 +1,42 @@
+<footer class="footer">
+  <% tag :img, :src => "http://scpr.github.io/scpr-homepage-prototype/images/cheese.svg" %>
+</footer>
+
+<script>
+  jQuery(document).ready(function() {
+    jQuery.timeago.settings.strings = {
+            suffixAgo: " ago",
+            minute: "about a minute",
+            minutes: "%dm",
+            hour: "about 1h",
+            hours: "%dh",
+            day: "1d",
+            days: "%dd",
+            month: "1mo",
+            months: "%dmo"
+        };
+    jQuery("time.timeago").timeago();
+
+    function isScrolledIntoView(elem) {
+        var docViewTop = $(window).scrollTop();
+        var docViewBottom = docViewTop + $(window).height();
+
+        var elemTop = $(elem).offset().top;
+        var elemBottom = elemTop + $(elem).height();
+
+        return ((elemBottom <= docViewBottom) && (elemTop >= docViewTop));
+    }
+    $(window).scroll(function () {
+       $('.unread').each(function () {
+          if (isScrolledIntoView(this) === true) {
+              $(this).fadeOut(1500);
+          }
+       });
+       $('.status').each(function () {
+          if (isScrolledIntoView(this) === true) {
+              $(this).removeClass("notify");
+          }
+       });
+    });
+  });
+</script>

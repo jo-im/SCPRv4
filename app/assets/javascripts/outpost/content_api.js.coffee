@@ -12,10 +12,14 @@ class outpost.ContentAPI
         # simpleJSON is an object of just the attributes
         # we care about for SCPRv4. Everything else will
         # filled out server-side.
+        defaults: 
+            asset_scheme: 'medium'
+            
         simpleJSON: ->
             {
-                id:       @get 'id'
-                position: @get 'position'
+                id:            @get 'id'
+                position:      @get 'position'
+                asset_scheme:  @get 'asset_scheme'
             }
 
     #-----------------------------

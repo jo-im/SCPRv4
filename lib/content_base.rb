@@ -4,6 +4,7 @@
 # A set of definitions, collections, and utilities for
 # content in the application.
 #
+
 module ContentBase
   @@es_client = ES_CLIENT
   @@es_index  = ES_ARTICLES_INDEX
@@ -24,7 +25,6 @@ module ContentBase
     "PijQuery",
     "ShowEpisode"
   ]
-
 
   #--------------------
   # URLS to match in ::obj_by_url
@@ -103,7 +103,7 @@ module ContentBase
     query_string  = args[0].to_s
 
     options.reverse_merge!({
-      :classes     => [NewsStory, ShowSegment, BlogEntry, ContentShell],
+      :classes     => [NewsStory, ShowSegment, BlogEntry, ContentShell, Event],
       :page        => 1,
       :order       => "public_datetime #{DESCENDING}"
     })
@@ -226,6 +226,13 @@ module ContentBase
     end
 
     return articles
+  end
+
+  #--------------------
+
+  def find obj_key
+    class_name = obj_key.split('-').first.camelize
+    ContentBase.search(classes: [class_name], limit: 1, with:{obj_key: obj_key}).first
   end
 
   #--------------------

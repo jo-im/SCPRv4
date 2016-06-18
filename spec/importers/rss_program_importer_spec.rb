@@ -4,7 +4,9 @@ describe RssProgramImporter do
   describe '::sync' do
     before :each do
       stub_request(:get, %r{californiareport}).to_return({
-        :content_type   => 'text/xml',
+        :headers => {
+          :content_type   => "text/xml"
+        },
         :body           => load_fixture('rss/rss_feed.xml')
       })
     end

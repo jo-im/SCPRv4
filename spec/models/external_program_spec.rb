@@ -15,7 +15,9 @@ describe ExternalProgram do
   describe '::sync' do
     before :each do
       stub_request(:get, %r{podcast\.com}).to_return({
-        :content_type   => 'text/xml',
+        :headers => {
+          :content_type   => "text/xml"
+        },
         :body           => load_fixture('rss/rss_feed.xml')
       })
     end
@@ -55,7 +57,9 @@ describe ExternalProgram do
     context 'for npr' do
       before :each do
         stub_request(:get, %r{api\.npr\.org}).to_return({
-          :content_type   => 'application/json',
+          :headers => {
+            :content_type   => "application/json"
+          },
           :body           => load_fixture('api/npr/program.json')
         })
       end
@@ -71,7 +75,9 @@ describe ExternalProgram do
     context 'for rss' do
       before :each do
         stub_request(:get, %r{rss\.com}).to_return({
-          :content_type   => 'text/xml',
+          :headers => {
+            :content_type   => "text/xml"
+          },
           :body           => load_fixture('rss/rss_feed.xml')
         })
       end

@@ -110,7 +110,7 @@ class Abstract < ActiveRecord::Base
       :public_path        => self.public_path,
       :published          => self.published?,
       :created_at         => self.created_at,
-      :updated_at         => self.updated_at,
+      :updated_at         => self.updated_at
     })
   end
 

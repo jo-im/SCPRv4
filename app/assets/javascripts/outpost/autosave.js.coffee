@@ -1,5 +1,5 @@
 class outpost.Autosave
-  Handlebars   = require 'handlebars'
+  Handlebars   = require 'handlebars/dist/handlebars'
   moment       = require 'moment-strftime'
   PouchDB.plugin require 'pouchdb-upsert'
   safeEval     = (code) ->
@@ -209,7 +209,7 @@ class outpost.Autosave
     ## Will save the document after 1 second unless
     ## the timeout is cancelled by more typing.
     callback = => @saveDoc()
-    @timeout = setTimeout callback, 1000 
+    @timeout = setTimeout callback, 1000
 
   _cancelTimeout: ->
     clearTimeout(@timeout) if @timeout

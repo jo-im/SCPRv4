@@ -1,0 +1,7 @@
+<button class='btn btn--small' id="beta-opt-out">Go back to Classic Homepage</button>
+<script>
+  $('#beta-opt-out').on("click", function(){
+    document.cookie = 'beta_opt_in' + '=;expires=Thu, 01 Jan 1970 00:00:01 GMT;';
+    location.reload();
+  });
+</script>

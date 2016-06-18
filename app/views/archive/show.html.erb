@@ -25,7 +25,7 @@
     <%= cache ["archive"]+news_content do %>
     <% news_content.each do |content| %>
       <%= cache ["archive",content] do %>
-        <% article = content.to_article %>
+        <% article = content.get_article %>
         <div class="teaser cbase">
           <div class="row-fluid">
             <% if article.assets.present? %>

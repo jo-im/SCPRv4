@@ -100,9 +100,7 @@ class ShowSegment < ActiveRecord::Base
     }
   end
 
-
   def to_article
-    return nil if !self.show
     @to_article ||= Article.new({
       :original_object    => self,
       :id                 => self.obj_key,
@@ -124,6 +122,10 @@ class ShowSegment < ActiveRecord::Base
       :updated_at         => self.updated_at,
       :published          => self.published?,
       :show               => self.show,
+      :links              => related_links.map(&:to_hash),
+      :asset_display      => asset_display,
+      :disqus_identifier  => self.disqus_identifier,
+      :abstract           => self.abstract
     })
   end
 

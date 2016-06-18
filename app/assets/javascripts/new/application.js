@@ -11,3 +11,4 @@
 //= require new/jquery.ba-throttle-debounce.min
 //= require jquery.scrolldepth
 //= require page_mapping
+//= require timeago/jquery.timeago

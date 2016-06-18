@@ -7,6 +7,8 @@ json.body             article.body.html_safe
 json.public_url       article.public_url
 json.edit_url         article.edit_url
 json.byline           article.byline
+json.asset_display    article.asset_display
+json.asset_scheme     article.asset_scheme
 
 if article.asset.present?
   json.thumbnail article.asset.lsquare.tag

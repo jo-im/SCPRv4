@@ -63,7 +63,7 @@
           <% @latest_activities.each do |version| %>
             <% record = version.versioned %>
             <tr>
-              <td><%= guarded_link_to record.class, record.to_title, record.admin_edit_path %></td>
+              <td><%= guarded_link_to record.try(:class), record.try(:to_title), record.try(:admin_edit_path) %></td>
               <td><%= display_datetime(version.created_at) %></td>
               <td><%= version.description %></td>
               <td><%= version.user.to_title %></td>

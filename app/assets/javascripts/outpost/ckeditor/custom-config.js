@@ -49,4 +49,14 @@ $(function() {
     ].join(";")
   });
 
+  // For abstract fields.
+  $('.cke-editor-basic').ckeditor({
+    extraAllowedContent: [
+      "strong",
+      "b",
+      "ul",
+      "li"
+    ].join(";")
+  });
+
 });

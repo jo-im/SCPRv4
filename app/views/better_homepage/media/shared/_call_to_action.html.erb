@@ -1,0 +1,20 @@
+<a href="<%= content.article.public_url %>">
+  <% case content.call_to_action %>
+  <% when 'conversation'%>
+    <svg class="icon icon--size-med icon--left">
+      <use class="icon--line icon--color-link" xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon_line-article"></use>
+    </svg>
+    <span class="link link--callout">Join the conversation</span>
+  <% when 'event' %>
+    <svg class="icon icon--size-med icon--left">
+      <use class="icon--line icon--color-link" xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon_line-comment"></use>
+    </svg>
+    <span class="link link--callout">RSVP for this event</span>
+  <% when 'podcast' %>
+    <svg class="icon icon--size-med icon--left">
+      <use class="icon--line icon--color-link" xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon_line-listen-live"></use>
+    </svg>
+    <% show_name = content.article.try(:show).try(:title) || "this show" %>
+    <span class="link link--callout">Love <%= show_name %>? Subscribe to the podcast!</span>
+  <% end %>
+</a>

@@ -36,4 +36,5 @@
 //= require outpost/aggregator
 //= require outpost/ckeditor/inline_assets
 //= require outpost/dockable
-// require outpost/autosave
+//  require outpost/autosave
+//= require outpost/homepage/application

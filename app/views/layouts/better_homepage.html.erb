@@ -1,0 +1,26 @@
+<!doctype html>
+<html>
+  <head>
+    <meta content="IE=edge" http-equiv="X-UA-Compatible">
+    <meta charset="utf-8">
+    <meta content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" name="viewport">
+
+    <!-- Use title if it's in the page YAML frontmatter -->
+    <title>KPCC</title>
+    <%= render "shared/ads/dfp_script_config", key_override: "/homepage" %>
+    <%= render "shared/header/ad_scripts" %>
+    <script src="https://use.typekit.net/cka2qre.js"></script>
+    <script>try{Typekit.load({ async: true });}catch(e){}</script>
+    <%= stylesheet_link_tag 'better_homepage/application' %>
+    <%= javascript_include_tag 'better_homepage/application' %>
+  </head>
+
+  <body class="">
+    <%= render partial: "layouts/better_homepage/header" %>
+    <%= render partial: "layouts/better_homepage/check_it_out", locals: {links: @homepage.check_it_out}  %>
+    <%= yield %>
+    <%= render partial: "layouts/better_homepage/footer" %>
+    <%= render partial: "shared/footer/tracking_scripts" %>
+    <%= javascript_include_tag "better_homepage/style-guide", :async => true %>
+  </body>
+</html>

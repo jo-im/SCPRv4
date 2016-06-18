@@ -87,7 +87,7 @@ module ApplicationHelper
         cache(["content",context,article,tmplt_digest], skip_digest:true) do
           self.output_buffer << render(
             "shared/content/#{partial}",
-            :article => article.to_article,
+            :article => article.get_article,
             :options => options
           ).html_safe
         end
@@ -110,7 +110,7 @@ module ApplicationHelper
   # * shared/assets/story/default
   # * shared/assets/default/default
   def render_asset(content, options={})
-    article = content.to_article
+    article = content.get_article
     context = options[:context] || "default"
 
     asset = options[:asset] || nil
@@ -405,9 +405,7 @@ module ApplicationHelper
     if has_comments?(object)
       options[:class] = "comment_link social_disq #{options[:class]}"
       options["data-objkey"] = object.disqus_identifier
-
-      link_to("Add your comments",
-        object.public_path(anchor: "comments", ), options)
+      link_to("Add your comments", (object.public_path + "#comments"), options)
     end
   end
 
@@ -425,6 +423,18 @@ module ApplicationHelper
       :article  => article,
       :options  => options,
     })
+  end
+
+  #---------------
+
+  def hidden_gem
+    # Renders a hidden gem
+    path = Rails.root.join('app', 'views', 'better_homepage', 'hidden_gems')
+    hidden_gems = Dir.glob("#{path}/*").select{|f| File.file?(f)}
+    hidden_gem  = hidden_gems.sample
+    if hidden_gem
+      render file: hidden_gem
+    end
   end
 
   #---------------
@@ -492,6 +502,28 @@ module ApplicationHelper
       placeholder.replace Nokogiri::HTML::DocumentFragment.parse("")
     }
     doc.css('body').children.to_s.html_safe
+  end
+
+  def recent_related_content article
+    ## This is mainly for display purposes on the new homepage
+    ## where we want to get the latest 2 related contents for 
+    ## a given article if said related contents were published
+    ## in the last 48 hours.
+    article.related_content_articles.select do |article|
+      (article.public_datetime || 10.years.ago) > 48.hours.ago
+    end
+    .first(2) ## We can assume here that we are already getting 
+    ## content in the correct order(DESC), so we can just grab
+    ## the first 2.
+  end
+
+  def include_handlebars_template path
+    # Inserts an .hbs template wrapped in a script tag for framework.js.
+    # The found file should have the .hbs extension as well as the name
+    # matching the corresponding component.  The provided file path
+    # need not include the extension.
+    name = path.split(/.hbs|\//).last
+    content_tag(:script, render(file: path.gsub(/.hbs$/, '').concat('.hbs')), id: name, type: "text/x-handlebars-template")
   end
 
   class ActionView::Helpers::FormBuilder

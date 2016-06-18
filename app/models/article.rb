@@ -27,6 +27,7 @@ require 'zlib'
 #
 # This should pretty much match up with what our client API
 # response is, but it doesn't necessarily have to.
+
 class Article
   #include Concern::Methods::AbstractModelMethods
   include ActiveModel::Model
@@ -54,17 +55,36 @@ class Article
     :updated_at,
     :published,
     :blog,
-    :show
+    :show,
+    :related_content,
+    :links,
+    :asset_display,
+    :disqus_identifier,
+    :abstract,
+    :asset_scheme
 
   def initialize(attributes={})
     attributes.each do |attr, value|
-      self.public_send("#{attr}=", value) if respond_to?("#{attr}=")
+      self.public_send("#{attr}=", value)
     end if attributes
     super()
   end
 
+  def method_missing method_name, *args
+    if method_name.match(/\w*=$/)
+      ## Define an accessor if it doesn't already exist.
+      class_eval{attr_accessor method_name.to_s.gsub("=", "")} unless respond_to?(method_name)
+      send(method_name, *args)
+    else
+      super
+    end
+  end
 
   def to_article
+    self
+  end
+
+  def get_article
     self
   end
 
@@ -132,7 +152,24 @@ class Article
     @obj_key_crc32 ||= Zlib.crc32(self.id)
   end
 
+  def related_content_articles
+    article_ids = related_content.map(&:id)
+    ContentBase.search(with: { obj_key: article_ids })
+  end
+
+  def thumbnail
+    asset.try(:asset).try(:json).try(:[], 'urls').try(:[], 'thumb')
+  end
+
   # -- getters -- #
+
+  def disqus_identifier
+    @disqus_identifier ||= original_object.try(:disqus_identifier)
+  end
+
+  def asset_display
+    @asset_display || "photo"
+  end
 
   def assets
     (@assets||[]).collect do |a|
@@ -152,6 +189,14 @@ class Article
     end
   end
 
+  def related_content
+    @related_content || []
+  end
+
+  def links
+    @links || []
+  end
+
   def attributions
     (@attributions||[])
   end
@@ -165,7 +210,27 @@ class Article
     @category
   end
 
+  def abstract
+    if @abstract && !@abstract.empty?
+      @abstract
+    else
+      teaser
+    end
+  end
+
   # -- setters -- #
+
+  def related_content=(content)
+    @related_content = (content||[]).collect do |c|
+      Hashie::Mash.new(c)
+    end.compact
+  end
+
+  def links=(content)
+    @links = (content || []).collect do |c|
+      Hashie::Mash.new(c)
+    end
+  end
 
   def assets=(assets)
     @assets = (assets||[]).collect do |a|
@@ -254,7 +319,29 @@ class Article
       public_path:      @public_path,
       blog:             @blog,
       show:             @show,
+      related_content:  related_content,
+      links:            links,
+      asset_display:    asset_display,
+      disqus_identifier: disqus_identifier,
+      abstract:         abstract
     }
+  end
+
+  alias_method :to_h, :to_hash
+
+  def to_reference
+    Hashie::Mash.new({ 
+      id:           @id, 
+      public_path:  @public_path, 
+      title:        @title, 
+      short_title:  @short_title,
+      category:     @category,
+      feature: Hashie::Mash.new({name: (feature.try(:name) || "Article"), _key: (feature.try(:key) || "article")}),
+      has_audio?:  (@audio || []).any?,
+      has_assets?: (@assets || []).any?,
+      has_links?:  (@links || []).any?,
+      disqus_identifier: @disqus_identifier
+    })
   end
 
   #----------

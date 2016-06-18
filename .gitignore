@@ -17,3 +17,4 @@ dump.rdb
 .rbenv-vars
 config/secrets.yml
 /node_modules
+
