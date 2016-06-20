@@ -36,7 +36,6 @@ class scpr.BetterHomepage extends scpr.Framework
 
     # pass the same collection to a 'whats next' component
     @whatsNext         = new WhatsNextComponent
-      el: $('#whats-next')
       collection: @collection
 
     # feedback element
@@ -83,7 +82,10 @@ class scpr.BetterHomepage extends scpr.Framework
     name: 'whats-next-component'
     collectionEvents: "add remove reset change"
     className: 'hidden'
+    attributes:
+      id: 'whats-next'
     init: (options)->
+      $('section#content').prepend @$el
       # we handle showing and hiding
       # with the scroll event because
       # render doesn't get fired that
@@ -120,7 +122,7 @@ class scpr.BetterHomepage extends scpr.Framework
       # story image is in the way(i.e. visible on screen)
       docViewTop    = $(window).scrollTop()
       docViewBottom = docViewTop + $(window).height()
-      for element in $('.b-ad, .c-ad, .media--hp-large .media__figure--widescreen, .hidden-gem, footer')
+      for element in $('.media--hp-large .media__figure--widescreen, .hidden-gem, footer')
         el = $(element)
         if el.isOnScreen()
           return true

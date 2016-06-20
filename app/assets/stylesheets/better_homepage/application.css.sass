@@ -38,36 +38,47 @@ section#content
       color: #017397
 
   #whats-next
-    opacity: 0
+    $fadeTime: 0.4s
+    $zIndex: 2
+    @mixin fadeOut
+      transition-property: opacity, z-index
+      transition-duration: $fadeTime, 0s
+      transition-delay: 0s, $fadeTime
+      transition-timing-function:linear
+    @mixin fadeIn
+      transition-property: z-index, opacity
+      transition-duration: 0s, $fadeTime
+      transition-delay: 0s, 0s
+      transition-timing-function:linear
     z-index: -1
+    opacity: 0
+    position: fixed
+    width: 11.35em
+    padding: 34px
+    top: 25%
+    ul
+      font-size: 14px
+      li::before
+        background-color: #f97e21
+    .title
+      color: #898989
+      text-align: center
+      font-weight: 700
+      border-style: solid
+      border-width: 0 0 2px 0
+      border-color: #74b1c4
+      padding-bottom: 15px
+      margin-bottom: 15px
     @media (max-width: $media-tablet)
       display: none
     &.hidden
-      transition: opacity .4s linear
+      @include fadeOut
       opacity: 0
       z-index: -1
     &.visible
-      transition: opacity .4s linear
+      @include fadeIn
       opacity: 1
-      z-index: 1
-    .whats-next-content
-      position: fixed
-      width: 11.35em
-      padding: 34px
-      top: 25%
-      ul
-        font-size: 14px
-        li::before
-          background-color: #f97e21
-      .title
-        color: #898989
-        text-align: center
-        font-weight: 700
-        border-style: solid
-        border-width: 0 0 2px 0
-        border-color: #74b1c4
-        padding-bottom: 15px
-        margin-bottom: 15px
+      z-index: $zIndex
 
 #check-it-out
   $padding: 10px
