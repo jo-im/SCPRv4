@@ -8,12 +8,10 @@ section#content
     margin-top: 10em
 
   .media
-
     .media__figure--widescreen, .media--hp-large
       z-index: 3
     .media__headline
       position: relative
-
     &.media--visited-and-read // adds a checkmark for now until this is officialized
       .media__headline
         position: relative
@@ -38,6 +36,8 @@ section#content
         font-weight: 500
     .media__headline--top
       color: #017397
+    .media__indicator-visited
+      display: none
 
   #whats-next
     $fadeTime: 0.4s
