@@ -445,12 +445,20 @@ class Framework
         @storage?.removeItem @itemKey()
       stringify: ->
         JSON.stringify @toJSON()
-      load: ->
+      load: (attributes) ->
         # Uses the current object and retrieves any
         # data that is in localStorage
+        #
+        # If an array of attributes is provided, 
+        # then only those attributes get loaded.
         if json = @storage?.getItem(@itemKey())
           if props = JSON.parse(json)
-            @set(props) # tries for a collection and then a model
+            if attributes
+              for key, value of props
+                if _.contains attributes, key
+                  @set key, value
+            else
+              @set(props) # tries for a collection and then a model
             props
       itemKey: ->
         "#{@name}-#{@id}"

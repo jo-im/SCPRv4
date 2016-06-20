@@ -139,7 +139,7 @@ class scpr.BetterHomepage extends scpr.Framework
     defaults:
       state: 'new'
     init: ->
-      @load() # get saved attributes from localstorage, if any
+      @load(['state']) # get saved attributes from localstorage, if any
       @listenTo @, 'change', => @save()
     whatsNext: ->
       (@collection or new ArticleCollection).whatsNext()
