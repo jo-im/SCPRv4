@@ -22,6 +22,7 @@ class Framework
   Handlebars            = require 'handlebars/dist/handlebars'
 
   constructor: (options={}) ->
+    @beforeInit?()
     # As a convention, `options.debug` is intended
     # to enable console logging in areas where it 
     # is useful.  `options.development` is meant
@@ -29,7 +30,12 @@ class Framework
     # like resetting localStorage values(as an
     # example.)  This convention should be reflected
     # in all framework classes.
-    @beforeInit?()
+    #
+    # For further convenience, options for development
+    # purposes can be saved to localStorage and loaded
+    # automatically.
+    for option, value of JSON.parse(window.localStorage.getItem('framework-options') or "{}")
+      options[option] = value
     # The framework app can accept an element.
     if options.el
       @el  = options.el
