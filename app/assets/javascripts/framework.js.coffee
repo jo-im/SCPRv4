@@ -22,13 +22,20 @@ class Framework
   Handlebars            = require 'handlebars/dist/handlebars'
 
   constructor: (options={}) ->
-    # Call init function, to stay uniform with
-    # the rest of the framework.
+    # As a convention, `options.debug` is intended
+    # to enable console logging in areas where it 
+    # is useful.  `options.development` is meant
+    # to enable code for development convenience,
+    # like resetting localStorage values(as an
+    # example.)  This convention should be reflected
+    # in all framework classes.
     @beforeInit?()
     # The framework app can accept an element.
     if options.el
       @el  = options.el
       @$el = $(@el) 
+    # Call init function, to stay uniform with
+    # the rest of the framework.
     @init?(options)
     @afterInit?()
 
@@ -433,9 +440,10 @@ class Framework
       load: ->
         # Uses the current object and retrieves any
         # data that is in localStorage
-        if json = @storage?.getItem(@itemKey()) 
+        if json = @storage?.getItem(@itemKey())
           if props = JSON.parse(json)
             @set(props) # tries for a collection and then a model
+            props
       itemKey: ->
         "#{@name}-#{@id}"
     _class:

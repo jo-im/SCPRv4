@@ -20,9 +20,14 @@ class scpr.BetterHomepage extends scpr.Framework
     @collection = new ArticleCollection()
     articleEls = @$el.find('[data-obj-key]')
     @collection.reset ({'id': $(el).attr('data-obj-key'), title: $(el).find('a.headline__link').text()} for el in articleEls)
-    @collection.toArray().forEach (m) => 
-      m.set 'state', 'new'
-      m.save()
+
+    # reset stories to 'new' if development is set to true.
+    # I'm sure there's a better way to apply properties
+    # to all models in a collection.
+    if options.development
+      @collection.toArray().forEach (m) => 
+        m.set 'state', 'new'
+        m.save()
 
     # make our article components
     @articlesComponent = new ArticlesComponent
@@ -94,8 +99,7 @@ class scpr.BetterHomepage extends scpr.Framework
       @render()
     render: ->
       unless @hasNone()
-        # @hideIfBlocked()
-        super() #unless @isVisible()
+        super()
       else
         @$el.addClass 'hidden'
     hasNone: ->
@@ -143,7 +147,7 @@ class scpr.BetterHomepage extends scpr.Framework
       firstIndex  = Math.round(fc.length * 0.5) - 1
       secondIndex = Math.round(fc.length * 0.75) - 1
       thirdIndex  = fc.length - 1
-      [fc[firstIndex], fc[secondIndex], fc[thirdIndex]]
+      _.reject [fc[firstIndex], fc[secondIndex], fc[thirdIndex]], (m) => m is undefined 
 
   class ArticleComponent extends @Component
     name: 'article-component'
