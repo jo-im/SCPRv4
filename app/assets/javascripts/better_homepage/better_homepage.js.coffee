@@ -19,7 +19,7 @@ class scpr.BetterHomepage extends scpr.Framework
     # create a collection based on the articles in the DOM
     @collection = new ArticleCollection()
     articleEls = @$el.find('[data-obj-key]')
-    @collection.reset ({'id': $(el).attr('data-obj-key'), title: $(el).find('a.headline__link').text()} for el in articleEls)
+    @collection.reset ({'id': $(el).attr('data-obj-key'), title: $.trim($(el).find('.headline').text())} for el in articleEls)
 
     # reset stories to 'new' if development is set to true.
     # I'm sure there's a better way to apply properties
@@ -36,7 +36,6 @@ class scpr.BetterHomepage extends scpr.Framework
 
     # pass the same collection to a 'whats next' component
     @whatsNext         = new WhatsNextComponent
-      el: $('#whats-next')
       collection: @collection
 
     # feedback element
@@ -83,7 +82,10 @@ class scpr.BetterHomepage extends scpr.Framework
     name: 'whats-next-component'
     collectionEvents: "add remove reset change"
     className: 'hidden'
+    attributes:
+      id: 'whats-next'
     init: (options)->
+      $('section#content').prepend @$el
       # we handle showing and hiding
       # with the scroll event because
       # render doesn't get fired that
@@ -105,7 +107,7 @@ class scpr.BetterHomepage extends scpr.Framework
     hasNone: ->
       @collection.where({state: 'new'}).length is 0   
     hideIfBlocked: ->
-      if @isBlocked()
+      if @isBlocked() or !@isBelowPositionB()
         @$el.removeClass 'visible'
         @$el.addClass 'hidden'
       else
@@ -120,11 +122,14 @@ class scpr.BetterHomepage extends scpr.Framework
       # story image is in the way(i.e. visible on screen)
       docViewTop    = $(window).scrollTop()
       docViewBottom = docViewTop + $(window).height()
-      for element in $('.b-ad, .c-ad, .media--hp-large .media__figure--widescreen, .hidden-gem, footer')
+      for element in $('.hidden-gem, footer')
         el = $(element)
         if el.isOnScreen()
           return true
       false
+    isBelowPositionB: ->
+      positionB = $('#ad-position-b').first()
+      $(window).scrollTop() > (positionB?.position()?.top + positionB?.height())
     properties: ->
       stories: @collection.where({state: 'new'})
 

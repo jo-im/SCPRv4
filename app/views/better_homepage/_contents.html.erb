@@ -12,7 +12,7 @@
   %>
 
   <% if index == 1 %>
-    <aside class="c-ad c-ad--hp">
+    <aside id='ad-position-b' class="c-ad c-ad--hp">
       <div class="c-ad__container c-ad__container--hp">
         <div class="c-ad__banner c-ad__banner--align-left">
           <%= render "shared/ads/dfp", ad_key: "slot_b" %>
@@ -21,7 +21,7 @@
       </div>
     </aside>
   <% elsif index == 7 %>
-    <aside class="c-ad c-ad--hp">
+    <aside id='ad-position-c' class="c-ad c-ad--hp">
       <div class="c-ad__container c-ad__container--hp">
         <div class="c-ad__banner c-ad__banner--align-left">
           <%= render "shared/ads/dfp", ad_key: "slot_c" %>
