@@ -1,12 +1,13 @@
 @import 'scpr-style-guide/src/css/main.scss'
 
 section#content
+  .icon--color-link
+    color: #01AED5
+
   @media (min-width: $media-tablet) and (max-width: $media-wide)
     margin-top: 10em
 
   .media
-    &.media--hp
-      border-top: none // override because the border clashes with the 'whats next' component
 
     &.media--visited-and-read // adds a checkmark for now until this is officialized
       .media__headline
@@ -23,7 +24,7 @@ section#content
           opacity: 0
 
     .media__content
-      ul 
+      ul
         @extend .c-list--bullet // workaround until this can happen with ckeditor
       .media__label__sm
         text-transform: uppercase
@@ -75,11 +76,11 @@ section#content
       h5
         margin: 0
   @media (max-width: $media-wide)
-    position: absolute 
+    position: absolute
     width: 100%
     top: 5.91rem
   @media (max-width: $media-tablet)
-    position: inherit 
+    position: inherit
     width: 100%
     top: none
 
@@ -100,11 +101,11 @@ section#content
     .buttons
       padding-bottom: 10px
     @media (max-width: $media-wide)
-      position: absolute 
+      position: absolute
       width: 100%
       top: 8.66rem
     @media (max-width: $media-tablet)
-      position: inherit 
+      position: inherit
       width: 100%
       top: none
 
