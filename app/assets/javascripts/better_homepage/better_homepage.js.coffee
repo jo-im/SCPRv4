@@ -19,15 +19,13 @@ class scpr.BetterHomepage extends scpr.Framework
     # create a collection based on the articles in the DOM
     @collection = new ArticleCollection()
     articleEls = @$el.find('[data-obj-key]')
-    @collection.reset ({'id': $(el).attr('data-obj-key'), title: $(el).find('a.headline__link').text()} for el in articleEls)
+    @collection.reset ({'id': $(el).attr('data-obj-key'), title: $.trim($(el).find('.headline').text())} for el in articleEls)
 
-    # reset stories to 'new' if development is set to true.
+    # clears story data if development is set to true.
     # I'm sure there's a better way to apply properties
     # to all models in a collection.
     if options.development
-      @collection.toArray().forEach (m) => 
-        m.set 'state', 'new'
-        m.save()
+      @collection.toArray().forEach (m) => m.destroy()
 
     # make our article components
     @articlesComponent = new ArticlesComponent

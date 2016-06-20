@@ -441,6 +441,8 @@ class Framework
         @storage = @constructor.storage
       save: ->
         @storage?.setItem @itemKey(), @stringify()
+      destroy: ->
+        @storage?.removeItem @itemKey()
       stringify: ->
         JSON.stringify @toJSON()
       load: ->
