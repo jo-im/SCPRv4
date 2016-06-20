@@ -74,7 +74,12 @@ class scpr.BetterHomepage extends scpr.Framework
     beforeDestroy: (callback) ->
       if this.model.get('state') isnt 'new'
         @reloadEl()
-        @$el.fadeOut 400, callback
+        @$el.one "transitionend webkitTransitionEnd oTransitionEnd MSTransitionEnd", (e) => 
+          # if we finished the last transition
+          if e.originalEvent.propertyName is 'margin-bottom'
+            callback()
+          console.log('the goggles!  they do nothing!')
+        @$el.addClass 'read' # this class creates an animated transition
       else
         super(callback)
 

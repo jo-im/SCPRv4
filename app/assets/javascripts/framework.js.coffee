@@ -252,34 +252,38 @@ class Framework
       # this is where you do it.
       callback?(html)
 
+    beforeRender: (callback) ->
+      # Useful for pre-render actions.
+      callback?()
+
     afterRender: ->
       # Useful for post-render animations.
 
     render: (options={}, callback) ->
-      @beforeRender?()
-      # assume that if we pass in only a callback
-      # and no options, the options value
-      # now becomes the callback
-      if (typeof options is 'function') and !callback
-        callback = options
-      # Inserts generated HTML into its element.
-      @clearActiveComponents =>
-        # Set headless to true in global component
-        # options to prevent rendering out, or 
-        # simply overwrite the render function to
-        # do your own thing.
-        unless @options?.headless
-          @insertFrameworkAttributes()
-          html = @renderHTML(options)
-          # If something needs to happen before the
-          # generated HTML is inserted into the element.
-          # This is ideal to use when the resulting
-          # HTML needs to be pre-processed.  Outside
-          # the normal rendering pipeline.
-          @renderFilter html, (html) =>
-            @$el?.html(html)
-            @afterRender?()
-            callback?()
+      @beforeRender =>
+        # assume that if we pass in only a callback
+        # and no options, the options value
+        # now becomes the callback
+        if (typeof options is 'function') and !callback
+          callback = options
+        # Inserts generated HTML into its element.
+        @clearActiveComponents =>
+          # Set headless to true in global component
+          # options to prevent rendering out, or 
+          # simply overwrite the render function to
+          # do your own thing.
+          unless @options?.headless
+            @insertFrameworkAttributes()
+            html = @renderHTML(options)
+            # If something needs to happen before the
+            # generated HTML is inserted into the element.
+            # This is ideal to use when the resulting
+            # HTML needs to be pre-processed.  Outside
+            # the normal rendering pipeline.
+            @renderFilter html, (html) =>
+              @$el?.html(html)
+              @afterRender?()
+              callback?()
 
     reloadComponents: ->
       for component in @activeComponents

@@ -60,8 +60,19 @@ section#content
     top: 25%
     ul
       font-size: 14px
-      li::before
-        background-color: #f97e21
+      li
+        max-height: 100px
+        &::before
+          background-color: #f97e21
+        &.read
+          $fadeTime: 0.4s
+          transition-property: opacity, max-height, margin-bottom
+          transition-duration: $fadeTime, $fadeTime, $fadeTime
+          transition-delay: 0s, $fadeTime, $fadeTime
+          transition-timing-function:linear
+          opacity: 0
+          max-height: 0
+          margin-bottom: 0em
     .title
       color: #898989
       text-align: center
