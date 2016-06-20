@@ -107,7 +107,7 @@ class scpr.BetterHomepage extends scpr.Framework
     hasNone: ->
       @collection.where({state: 'new'}).length is 0   
     hideIfBlocked: ->
-      if @isBlocked()
+      if @isBlocked() or !@isBelowPositionB()
         @$el.removeClass 'visible'
         @$el.addClass 'hidden'
       else
@@ -122,11 +122,14 @@ class scpr.BetterHomepage extends scpr.Framework
       # story image is in the way(i.e. visible on screen)
       docViewTop    = $(window).scrollTop()
       docViewBottom = docViewTop + $(window).height()
-      for element in $('.media--hp-large .media__figure--widescreen, .hidden-gem, footer')
+      for element in $('.hidden-gem, footer')
         el = $(element)
         if el.isOnScreen()
           return true
       false
+    isBelowPositionB: ->
+      positionB = $('#ad-position-b').first()
+      $(window).scrollTop() > (positionB?.position()?.top + positionB?.height())
     properties: ->
       stories: @collection.where({state: 'new'})
 
