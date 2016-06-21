@@ -158,6 +158,7 @@ class scpr.BetterHomepage extends scpr.Framework
     events:
       "click a" : "markAsRead"
     init: (options)->
+      @insertTracking()
       @render()
       $(window).scroll =>
         # this is set up to prevent needless re-rendering
@@ -172,6 +173,18 @@ class scpr.BetterHomepage extends scpr.Framework
         if label.attr('data-media-label')
           label.append label.attr('data-media-label')
           label.find('use').attr('xlink:href', "#icon_line-audio")
+
+    insertTracking: ->
+      # I'd prefer to do this here because it's a pain
+      # to edit these attributes in all the templages
+      # if we ever have to change anything.  Since this
+      # is behavior, I think this should be handled in
+      # the component instead of the templates.
+      headline = @$el.find('.headline a')
+      headline.addClass('track-event')
+      headline.attr('data-ga-category', "@currentCategory")
+      headline.attr('data-ga-action', "Article")
+      headline.attr('data-ga-label', "@scrollDepth")
 
     stateToMediaClass: ->
       @stateTranslation[@model.get('state')] or ''

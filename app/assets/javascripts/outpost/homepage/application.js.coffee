@@ -25,7 +25,7 @@ class outpost.HomepageEditor extends scpr.Framework
     afterRender: ->
       @reloadComponents()
       
-    helpers: 
+    helpers:
       firstDown: (index, options) ->
         options.fn?(this) if index is 0
       seventhDown: (index, options) ->
