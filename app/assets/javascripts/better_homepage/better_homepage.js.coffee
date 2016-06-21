@@ -199,6 +199,12 @@ class scpr.BetterHomepage extends scpr.Framework
       related.attr('data-ga-action', "Related Content")
       related.attr('data-ga-label', "@scrollDepth")
 
+      callToAction = @$el.find('a.call-to-action')
+      callToAction.addClass('track-event')
+      callToAction.attr('data-ga-category', "@currentCategory")
+      callToAction.attr('data-ga-action', "Call To Action")
+      callToAction.attr('data-ga-label', "@scrollDepth")
+
 
     stateToMediaClass: ->
       @stateTranslation[@model.get('state')] or ''
