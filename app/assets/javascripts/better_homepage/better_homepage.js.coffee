@@ -64,11 +64,11 @@ class scpr.BetterHomepage extends scpr.Framework
         @adaptVisibility()
       , 500
     insertTracking: ->
-      headline = @$el.find('a.beta-opt-out')
-      headline.addClass('track-event')
-      headline.attr('data-ga-category', "@currentCategory")
-      headline.attr('data-ga-action', "Opt-Out")
-      headline.attr('data-ga-label', "@scrollDepth")
+      link = @$el.find('a.beta-opt-out')
+      link.addClass('track-event')
+      link.attr('data-ga-category', "@currentCategory")
+      link.attr('data-ga-action', "Opt-Out")
+      link.attr('data-ga-label', "@scrollDepth")
 
   class WhatsNextHeadlineComponent extends @Component
     tagName: 'li'
