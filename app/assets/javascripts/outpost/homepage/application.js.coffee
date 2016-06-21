@@ -17,9 +17,10 @@ class outpost.HomepageEditor extends scpr.Framework
       @components =
         content: ContentComponent
 
-    beforeRender: ->
+    beforeRender: (callback)->
       @collection.comparator = 'position'
       @collection.sort()
+      callback()
 
     afterRender: ->
       @reloadComponents()
