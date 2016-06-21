@@ -50,6 +50,7 @@ class scpr.BetterHomepage extends scpr.Framework
   class FeedbackComponent extends @Component
     name: 'feedback-component'
     init: ->
+      @insertTracking()
       @adaptVisibility()
     adaptVisibility: ->
       # This seems to work fine for now, though maybe something
@@ -62,6 +63,12 @@ class scpr.BetterHomepage extends scpr.Framework
       setTimeout =>
         @adaptVisibility()
       , 500
+    insertTracking: ->
+      headline = @$el.find('a.beta-opt-out')
+      headline.addClass('track-event')
+      headline.attr('data-ga-category', "@currentCategory")
+      headline.attr('data-ga-action', "Opt-Out")
+      headline.attr('data-ga-label', "@scrollDepth")
 
   class WhatsNextHeadlineComponent extends @Component
     tagName: 'li'
