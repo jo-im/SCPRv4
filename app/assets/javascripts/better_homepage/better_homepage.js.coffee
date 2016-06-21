@@ -29,23 +29,32 @@ class scpr.BetterHomepage extends scpr.Framework
         m.set 'state', 'new'
         m.save()
 
-    # make our article components
-    @articlesComponent = new ArticlesComponent
-      el: @$el
-      collection: @collection
+    @components =
+      # make our article components
+      'articles': new ArticlesComponent
+        el: @$el
+        collection: @collection
 
-    # pass the same collection to a 'whats next' component
-    @whatsNext         = new WhatsNextComponent
-      collection: @collection
+      # pass the same collection to a 'whats next' component
+      'whats-next': new WhatsNextComponent
+        collection: @collection
 
-    # feedback element
-    @feedback          = new FeedbackComponent
-      el: $('#feedback-block')
+      # feedback element
+      'feedback': new FeedbackComponent
+        el: $('#feedback-block')
 
     @eventTracking     = new scpr.EventTracking
       trackScrollDepth: true
       currentCategory: 'Homepage'
       scrollDepthContainer: @$el
+
+    checkItOut = @$el.find('#check-it-out a')
+    checkItOut.addClass('track-event')
+    checkItOut.attr('data-ga-category', "@currentCategory")
+    checkItOut.attr('data-ga-action', "Check It Out")
+    checkItOut.attr('data-ga-label', "Link")
+
+    # @render()
 
   class FeedbackComponent extends @Component
     name: 'feedback-component'
