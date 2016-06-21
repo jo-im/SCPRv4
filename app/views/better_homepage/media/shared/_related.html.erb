@@ -1,5 +1,5 @@
 <% if (content || []).any? %>
-  <div class="media__related-content">
+  <div class="related-content media__related-content">
     <h6 class="heading heading--h6 heading--uppercase u-text-color--gray">More in <%= label %></h6>
     <% content.each do |r| %>
       <%= render partial: "better_homepage/media/shared/related_content", locals: {url: r.public_url, headline: r.short_title, asset_url: r.thumbnail} %>
