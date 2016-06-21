@@ -214,7 +214,6 @@ class scpr.BetterHomepage extends scpr.Framework
       callToAction.attr('data-ga-action', "Call To Action")
       callToAction.attr('data-ga-label', "@scrollDepth")
 
-
     stateToMediaClass: ->
       @stateTranslation[@model.get('state')] or ''
 

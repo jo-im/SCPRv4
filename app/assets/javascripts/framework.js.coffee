@@ -111,8 +111,8 @@
       # Add class name(s) to the element in case
       # our element is passed in and we aren't
       # auto-generating it.
-      # if (className or undefined)
-      #   @$el?.addClass className
+      if @className
+        @$el?.addClass @className
       # Call `init` function, which allows for a similar
       # initialization without having to call `super` 
       # every time you extend Component.
@@ -406,7 +406,8 @@
     # An app is actually just a component that
     # is set to automatically reload its child
     # components after it finishes rendering.
-    name   : 'app'
+    name      : 'app'
+    isAppClass: true
     initialize: (options={}) ->
       # For further convenience, options for development
       # purposes can be saved to localStorage and loaded
