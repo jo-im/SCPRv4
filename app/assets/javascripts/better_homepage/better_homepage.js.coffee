@@ -49,13 +49,8 @@ class scpr.BetterHomepage extends scpr.Framework
 
   class FeedbackComponent extends @Component
     name: 'feedback-component'
-    # events:
-    #   'click a.beta-opt-out': 'optOut'
     init: ->
       @adaptVisibility()
-    optOut: ->
-      document.cookie = 'beta_opt_in' + '=;expires=Thu, 01 Jan 1970 00:00:01 GMT;'
-      location.reload()
     adaptVisibility: ->
       # This seems to work fine for now, though maybe something
       # based on scrollStop would be preferable.  This at least
@@ -78,7 +73,6 @@ class scpr.BetterHomepage extends scpr.Framework
           # if we finished the last transition
           if e.originalEvent.propertyName is 'margin-bottom'
             callback()
-          console.log('the goggles!  they do nothing!')
         @$el.addClass 'read' # this class creates an animated transition
       else
         super(callback)

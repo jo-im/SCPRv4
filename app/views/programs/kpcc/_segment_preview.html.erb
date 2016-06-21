@@ -12,11 +12,7 @@
 
         <article class="prose">
 
-<<<<<<< HEAD
-            <%= render_asset article, context:"segments" %>
-=======
-            <%= render_asset article.get_article, context:"segments" %>
->>>>>>> cb_indexing
+            <%= render_asset article.to_article, context:"segments" %>
 
             <%= content_widget "new/primary_audio", article, context: article.show.slug %>
 
