@@ -29,27 +29,37 @@ class scpr.BetterHomepage extends scpr.Framework
         m.set 'state', 'new'
         m.save()
 
-    # make our article components
-    @articlesComponent = new ArticlesComponent
-      el: @$el
-      collection: @collection
+    @components =
+      # make our article components
+      'articles': new ArticlesComponent
+        el: @$el
+        collection: @collection
 
-    # pass the same collection to a 'whats next' component
-    @whatsNext         = new WhatsNextComponent
-      collection: @collection
+      # pass the same collection to a 'whats next' component
+      'whats-next': new WhatsNextComponent
+        collection: @collection
 
-    # feedback element
-    @feedback          = new FeedbackComponent
-      el: $('#feedback-block')
+      # feedback element
+      'feedback': new FeedbackComponent
+        el: $('#feedback-block')
 
     @eventTracking     = new scpr.EventTracking
       trackScrollDepth: true
       currentCategory: 'Homepage'
       scrollDepthContainer: @$el
 
+    checkItOut = @$el.find('#check-it-out a')
+    checkItOut.addClass('track-event')
+    checkItOut.attr('data-ga-category', "@currentCategory")
+    checkItOut.attr('data-ga-action', "Check It Out")
+    checkItOut.attr('data-ga-label', "Link")
+
+    # @render()
+
   class FeedbackComponent extends @Component
     name: 'feedback-component'
     init: ->
+      @insertTracking()
       @adaptVisibility()
     adaptVisibility: ->
       # This seems to work fine for now, though maybe something
@@ -62,6 +72,12 @@ class scpr.BetterHomepage extends scpr.Framework
       setTimeout =>
         @adaptVisibility()
       , 500
+    insertTracking: ->
+      link = @$el.find('a.beta-opt-out')
+      link.addClass('track-event')
+      link.attr('data-ga-category', "@currentCategory")
+      link.attr('data-ga-action', "Opt-Out")
+      link.attr('data-ga-label', "@scrollDepth")
 
   class WhatsNextHeadlineComponent extends @Component
     tagName: 'li'
@@ -158,6 +174,7 @@ class scpr.BetterHomepage extends scpr.Framework
     events:
       "click a" : "markAsRead"
     init: (options)->
+      @insertTracking()
       @render()
       $(window).scroll =>
         # this is set up to prevent needless re-rendering
@@ -172,6 +189,30 @@ class scpr.BetterHomepage extends scpr.Framework
         if label.attr('data-media-label')
           label.append label.attr('data-media-label')
           label.find('use').attr('xlink:href', "#icon_line-audio")
+
+    insertTracking: ->
+      # I'd prefer to do this here because it's a pain
+      # to edit these attributes in all the templages
+      # if we ever have to change anything.  Since this
+      # is behavior, I think this should be handled in
+      # the component instead of the templates.
+      headline = @$el.find('.headline a')
+      headline.addClass('track-event')
+      headline.attr('data-ga-category', "@currentCategory")
+      headline.attr('data-ga-action', "Article")
+      headline.attr('data-ga-label', "@scrollDepth")
+
+      related = @$el.find('.related-content a')
+      related.addClass('track-event')
+      related.attr('data-ga-category', "@currentCategory")
+      related.attr('data-ga-action', "Related Content")
+      related.attr('data-ga-label', "@scrollDepth")
+
+      callToAction = @$el.find('a.call-to-action')
+      callToAction.addClass('track-event')
+      callToAction.attr('data-ga-category', "@currentCategory")
+      callToAction.attr('data-ga-action', "Call To Action")
+      callToAction.attr('data-ga-label', "@scrollDepth")
 
     stateToMediaClass: ->
       @stateTranslation[@model.get('state')] or ''

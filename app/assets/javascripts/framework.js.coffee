@@ -18,47 +18,10 @@
 #     picture.render()
 # ```
 
-class Framework
+(->
   Handlebars            = require 'handlebars/dist/handlebars'
 
-  constructor: (options={}) ->
-    @beforeInit?()
-    # As a convention, `options.debug` is intended
-    # to enable console logging in areas where it 
-    # is useful.  `options.development` is meant
-    # to enable code for development convenience,
-    # like resetting localStorage values(as an
-    # example.)  This convention should be reflected
-    # in all framework classes.
-    #
-    # For further convenience, options for development
-    # purposes can be saved to localStorage and loaded
-    # automatically.
-    for option, value of JSON.parse(window.localStorage.getItem('framework-options') or "{}")
-      options[option] = value
-    # The framework app can accept an element.
-    if options.el
-      @el  = options.el
-      @$el = $(@el) 
-    # Call init function, to stay uniform with
-    # the rest of the framework.
-    @init?(options)
-    @afterInit?()
-
-  class @Collection extends Backbone.Collection
-    initialize: ->
-      @beforeInit?()
-      @init?()
-      @afterInit?()
-
-  class @Model extends Backbone.Model
-    name: 'model'
-    initialize: ->
-      @beforeInit?() # before and after are hooks mainly for mixins
-      @init?()
-      @afterInit?()
-
-  class @Component extends Backbone.View
+  class Component extends Backbone.View
     # A component is basically a Backbone View that
     # uses Handlebars templates and can contain other
     # components that maintain their own scoped behavior.
@@ -148,7 +111,8 @@ class Framework
       # Add class name(s) to the element in case
       # our element is passed in and we aren't
       # auto-generating it.
-      @$el?.addClass @className
+      if @className
+        @$el?.addClass @className
       # Call `init` function, which allows for a similar
       # initialization without having to call `super` 
       # every time you extend Component.
@@ -437,78 +401,106 @@ class Framework
       uuid
 
 
-  @Persistent =
-    # Extend your model or collection off this if
-    # you want to persist to localStorage.
-    _instance: 
-      beforeInit: ->
-        @storage = @constructor.storage
-      save: ->
-        @storage?.setItem @itemKey(), @stringify()
-      destroy: ->
-        @storage?.removeItem @itemKey()
-      stringify: ->
-        JSON.stringify @toJSON()
-      load: (attributes) ->
-        # Uses the current object and retrieves any
-        # data that is in localStorage
-        #
-        # If an array of attributes is provided, 
-        # then only those attributes get loaded.
-        if json = @storage?.getItem(@itemKey())
-          if props = JSON.parse(json)
-            if attributes
-              for key, value of props
-                if _.contains attributes, key
-                  @set key, value
-            else
-              @set(props) # tries for a collection and then a model
-            props
-      itemKey: ->
-        "#{@name}-#{@id}"
-    _class:
-      storage: window.localStorage or window.sessionStorage
-      find: (id) ->
-        if json = @storage?.getItem(@itemKey(id))
-          new @ json
-      findAll: (ids) ->
-        @select (k, v) ->
-          v.id is id
-      saveAll: ->
-        # If this is a collection, save all the models
-        # individually instead of one stringified
-        # collection.
-        for model in (@models or [])
-          @save model
-      select: (filter, collection) ->
-        results = []
-        for key, value of @storage
-          results.push(value) if key.match("#{@prototype.name}-") and filter(key, JSON.parse(value))
-        if collection
-          collection.reset results
-          collection
-        else
-          results
-      itemKey: (id) ->
-        "#{@prototype.name}-#{id}"
 
-  # Implements a mixin pattern for our entities.
-  # It's useful for when you need to inherit properties
-  # and behavior from multiple sources.
-  #
-  # For example, if you need to create a model that also
-  # has behavior from the Persistence mixin, you'd use
-  # the follwing syntax:
-  #
-  # `class Thing extends @Model.mixin(@Persistent)
-  @Model.mixin        =
-    @Collection.mixin =
-    @Component.mixin  = (props) -> @extend(props._instance, props._class)
+  class App extends Component
+    # An app is actually just a component that
+    # is set to automatically reload its child
+    # components after it finishes rendering.
+    name      : 'app'
+    isAppClass: true
+    initialize: (options={}) ->
+      # For further convenience, options for development
+      # purposes can be saved to localStorage and loaded
+      # automatically.
+      for option, value of JSON.parse(window.localStorage.getItem('framework-options') or "{}")
+        options[option] = value
+      super(options)
+    afterRender: ->
+      @reloadComponents()
 
+    class @Component extends Component
 
-if typeof module != 'undefined' and module.exports # if node.js/browserify
-  module.exports = Framework
-else if typeof define == 'function' and define.amd # if AMD
-  define -> Framework
-else
-  window.scpr.Framework = Framework
+    class @Collection extends Backbone.Collection
+      initialize: ->
+        @beforeInit?()
+        @init?()
+        @afterInit?()
+
+    class @Model extends Backbone.Model
+      name: 'model'
+      initialize: ->
+        @beforeInit?() # before and after are hooks mainly for mixins
+        @init?()
+        @afterInit?()
+
+    @Persistent =
+      # Extend your model or collection off this if
+      # you want to persist to localStorage.
+      _instance: 
+        beforeInit: ->
+          @storage = @constructor.storage
+        save: ->
+          @storage?.setItem @itemKey(), @stringify()
+        destroy: ->
+          @storage?.removeItem @itemKey()
+        stringify: ->
+          JSON.stringify @toJSON()
+        load: (attributes) ->
+          # Uses the current object and retrieves any
+          # data that is in localStorage
+          #
+          # If an array of attributes is provided, 
+          # then only those attributes get loaded.
+          if json = @storage?.getItem(@itemKey())
+            if props = JSON.parse(json)
+              if attributes
+                for key, value of props
+                  if _.contains attributes, key
+                    @set key, value
+              else
+                @set(props) # tries for a collection and then a model
+              props
+        itemKey: ->
+          "#{@name}-#{@id}"
+      _class:
+        storage: window.localStorage or window.sessionStorage
+        find: (id) ->
+          if json = @storage?.getItem(@itemKey(id))
+            new @ json
+        findAll: (ids) ->
+          @select (k, v) ->
+            v.id is id
+        saveAll: ->
+          # If this is a collection, save all the models
+          # individually instead of one stringified
+          # collection.
+          for model in (@models or [])
+            @save model
+        select: (filter, collection) ->
+          results = []
+          for key, value of @storage
+            results.push(value) if key.match("#{@prototype.name}-") and filter(key, JSON.parse(value))
+          if collection
+            collection.reset results
+            collection
+          else
+            results
+        itemKey: (id) ->
+          "#{@prototype.name}-#{id}"
+
+    # Implements a mixin pattern for our entities.
+    # It's useful for when you need to inherit properties
+    # and behavior from multiple sources.
+    #
+    # For example, if you need to create a model that also
+    # has behavior from the Persistence mixin, you'd use
+    # the follwing syntax:
+    #
+    # `class Thing extends @Model.mixin(@Persistent)
+    @Model.mixin        =
+      @Collection.mixin =
+      @Component.mixin  = (props) -> @extend(props._instance, props._class)
+
+  module.exports = App
+
+)(module or ({}).__defineSetter__ 'exports', (x)-> window.Framework = x; return x;)
