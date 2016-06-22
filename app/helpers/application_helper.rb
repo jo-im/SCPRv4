@@ -85,9 +85,15 @@ module ApplicationHelper
 
       html << with_output_buffer do
         cache(["content",context,article,tmplt_digest], skip_digest:true) do
+          # NOTE: The following was formerly calling #get_article and has
+          # been switched back to #to_article because of a job ordering
+          # issue where the homepage cache calls #get_article before 
+          # the article index for the content has been updated on content
+          # save.  Not sure why this is, but it explains why content on 
+          # the classic homepage would only update after a second save.
           self.output_buffer << render(
             "shared/content/#{partial}",
-            :article => article.get_article,
+            :article => article.to_article,
             :options => options
           ).html_safe
         end
@@ -110,7 +116,7 @@ module ApplicationHelper
   # * shared/assets/story/default
   # * shared/assets/default/default
   def render_asset(content, options={})
-    article = content.get_article
+    article = content.to_article
     context = options[:context] || "default"
 
     asset = options[:asset] || nil
