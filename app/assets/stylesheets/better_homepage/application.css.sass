@@ -10,19 +10,19 @@ section#content
   .media.story
     .media__figure--widescreen, .media--hp-large
       z-index: 3
-    .media__headline
+    .media__headline.headline
       position: relative
     &.media--visited-and-read // adds a checkmark for now until this is officialized
-      .media__headline
+      .media__headline.headline
         position: relative
         &::before
           opacity: 1
     // fade animation
     &.media--new-and-unread
-      .media__headline:before
+      .media__headline.headline:before
         transition: all .5s linear
       &.media--seen-and-unread // also unofficial
-        .media__headline::before
+        .media__headline.headline::before
           transition: all 0.8s linear
           opacity: 0
 
@@ -34,6 +34,10 @@ section#content
         color: #01AED5
         font-size: 0.9rem
         font-weight: 500
+      .related-content
+        .media__headline::before
+          display: none // this is to override the fact that any media__headlines nested under
+          // media--new-and-unread gets the 'new' status indicator
     .media__headline--top
       color: #017397
     .media__indicator-visited
