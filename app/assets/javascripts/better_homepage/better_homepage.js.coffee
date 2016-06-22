@@ -31,7 +31,7 @@ class scpr.BetterHomepage extends scpr.Framework
 
     @components =
       # make our article components
-      'articles': new ArticlesComponent
+      articles: new ArticlesComponent
         el: @$el
         collection: @collection
 
@@ -40,7 +40,7 @@ class scpr.BetterHomepage extends scpr.Framework
         collection: @collection
 
       # feedback element
-      'feedback': new FeedbackComponent
+      feedback: new FeedbackComponent
         el: $('#feedback-block')
 
     @eventTracking     = new scpr.EventTracking
@@ -230,7 +230,7 @@ class scpr.BetterHomepage extends scpr.Framework
       @model.set 'state', 'read'
 
     isScrolledIntoView: ->
-      @$el.find('.media__headline').isOnScreen()
+      @$el.find('.headline').isOnScreen()
 
     render: ->
       # @$el.removeClass (klass for state, klass of @stateTranslation).join(' ')
