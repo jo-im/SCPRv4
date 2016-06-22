@@ -1,4 +1,4 @@
-module ApplicationHelper 
+module ApplicationHelper
   include Twitter::Autolink
 
   def add_ga_tracking_to(url)
@@ -203,7 +203,7 @@ module ApplicationHelper
   end
 
   def should_inline_top_asset_for(article)
-    (asset = article.assets.top.first) && 
+    (asset = article.assets.top.first) &&
     ((article.asset_display == :photo_deemphasized) || (article.asset_display.blank? && !below_standard_ratio(width: asset.full.width, height: asset.full.height)) || (article.asset_display == :photo_emphasized && !below_standard_ratio(width: asset.full.width, height: asset.full.height)))
   end
 
@@ -241,7 +241,7 @@ module ApplicationHelper
     end
 
     if elements[:contributing].present?
-      "With contributions by #{elements[:contributing]}".html_safe
+      "With contributions from #{elements[:contributing]}".html_safe
     else
       ""
     end
@@ -486,7 +486,7 @@ module ApplicationHelper
     # purposes besides audio, since there isn't really a reason why
     # we would use this parameter for URLs we don't own.
     if !((hostname = uri.hostname) && hostname.include?("scpr.org"))
-      params.delete(:via) 
+      params.delete(:via)
     end
     query = URI.decode_www_form(uri.query.to_s)
 
@@ -498,7 +498,7 @@ module ApplicationHelper
 
   def strip_inline_assets body
     doc = Nokogiri::HTML(body.force_encoding('ASCII-8BIT'))
-    doc.css("img.inline-asset").each{|placeholder| 
+    doc.css("img.inline-asset").each{|placeholder|
       placeholder.replace Nokogiri::HTML::DocumentFragment.parse("")
     }
     doc.css('body').children.to_s.html_safe
@@ -506,13 +506,13 @@ module ApplicationHelper
 
   def recent_related_content article
     ## This is mainly for display purposes on the new homepage
-    ## where we want to get the latest 2 related contents for 
+    ## where we want to get the latest 2 related contents for
     ## a given article if said related contents were published
     ## in the last 48 hours.
     article.related_content_articles.select do |article|
       (article.public_datetime || 10.years.ago) > 48.hours.ago
     end
-    .first(2) ## We can assume here that we are already getting 
+    .first(2) ## We can assume here that we are already getting
     ## content in the correct order(DESC), so we can just grab
     ## the first 2.
   end
@@ -540,7 +540,7 @@ module ApplicationHelper
         @template.check_box self.object.class.name.underscore, args[0], {checked: self.object.send(args[0])}, "1", "0"
       end
     end
-  
+
     def pmp_checkbox
       self.input :publish_to_pmp, label: "Publish to PMP", hint: "Make available in Public Media Platform?" do
         @template.check_box self.object.class.name.underscore, :publish_to_pmp, {checked: self.object.publish_to_pmp?}, "true", "false"
