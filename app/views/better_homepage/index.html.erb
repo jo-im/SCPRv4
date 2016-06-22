@@ -1,12 +1,14 @@
-<%= render partial: 'better_homepage/feedback' %>
-<section id="content" class="container container--med">
-  <aside class="c-ad">
-    <div class="c-ad__container">
-      <%= render "shared/ads/dfp", ad_key: "slot_a" %>
-      <a class="c-ad__attribution" href="http://www.scpr.org/support/underwriting/">Become a KPCC Sponsor</a>
-    </div>
-  </aside>
-  <%= render partial: 'better_homepage/contents', locals: {object: @content} %>
-</section><!-- .welcome -->
-<%= include_handlebars_template 'better_homepage/whats-next-component' %>
-<%= include_handlebars_template 'better_homepage/whats-next-headline-component' %>
+<% cache ['better-homepage', @content], expires_in: 5.minutes do %> 
+  <%= render partial: 'better_homepage/feedback' %>
+  <section id="content" class="container container--med">
+    <aside class="c-ad">
+      <div class="c-ad__container">
+        <%= render "shared/ads/dfp", ad_key: "slot_a" %>
+        <a class="c-ad__attribution" href="http://www.scpr.org/support/underwriting/">Become a KPCC Sponsor</a>
+      </div>
+    </aside>
+    <%= render partial: 'better_homepage/contents', locals: {object: @content} %>
+  </section><!-- .welcome -->
+  <%= include_handlebars_template 'better_homepage/whats-next-component' %>
+  <%= include_handlebars_template 'better_homepage/whats-next-headline-component' %>
+<% end %>
