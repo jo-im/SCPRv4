@@ -20,6 +20,8 @@
         <a class="c-ad__attribution" href="http://www.scpr.org/support/underwriting/">Become a KPCC Sponsor</a>
       </div>
     </aside>
+  <% elsif index == 2 %>
+    <div id='whats-next-initial' class='boundary' data-scroll-up='freeze' data-scroll-down='unfreeze' data-offset='-400'></div>
   <% elsif index == 7 %>
     <aside id='ad-position-c' class="c-ad c-ad--hp">
       <div class="c-ad__container c-ad__container--hp">
@@ -34,3 +36,4 @@
   <%= render partial: "better_homepage/media/#{content.asset_scheme}", locals: {content: content, index: index} %>
 
 <% end %>
+<div class='boundary' data-scroll-up='unfreeze' data-scroll-down='freeze'></div>

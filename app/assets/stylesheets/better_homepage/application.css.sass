@@ -1,5 +1,10 @@
 @import 'scpr-style-guide/src/css/main.scss'
-
+.boundary
+  height: 1px
+  // background-color: red
+  position: absolute
+  width: 100%
+  z-index: 100
 section#content
   .icon--color-link
     color: #01AED5
@@ -46,6 +51,7 @@ section#content
   #whats-next
     $fadeTime: 0.4s
     $zIndex: 2
+    $top: 25%
     @mixin fadeOut
       transition-property: opacity, z-index
       transition-duration: $fadeTime, 0s
@@ -61,7 +67,43 @@ section#content
     position: fixed
     width: 11.35em
     padding: 34px
-    top: 25%
+    top: $top
+    &.frozen
+      position: absolute
+    &:not(.frozen)
+      &.rollup
+        @-webkit-keyframes rollup
+          0%
+            top: 100%
+          100%
+            top: $top
+          // 100%
+          //   top: auto
+        -webkit-animation-name: rollup
+        -webkit-animation-duration: 0.5s
+        -webkit-animation-timing-function: ease
+        -webkit-animation-iteration-count: 1
+        -webkit-animation-direction: normal
+        -webkit-animation-delay: 0
+        -webkit-animation-play-state: running
+        -webkit-animation-fill-mode: forwards
+      &.rolldown
+        @-webkit-keyframes rolldown
+          0%
+            top: -50%
+          100%
+            top: $top
+          // 100%
+          //   top: auto
+        -webkit-animation-name: rolldown
+        -webkit-animation-duration: 0.5s
+        -webkit-animation-timing-function: ease
+        -webkit-animation-iteration-count: 1
+        -webkit-animation-direction: normal
+        -webkit-animation-delay: 0
+        -webkit-animation-play-state: running
+        -webkit-animation-fill-mode: forwards
+
     ul
       font-size: 14px
       li
@@ -96,6 +138,9 @@ section#content
       @include fadeIn
       opacity: 1
       z-index: $zIndex
+    &.invisible //just get it off the screen asap
+      z-index: -1
+      opacity: 0
 
 #check-it-out
   $padding: 10px

@@ -93,19 +93,49 @@ class scpr.BetterHomepage extends scpr.Framework
       else
         super(callback)
 
+  class Boundary
+    constructor: (el) ->
+      @el = el
+      @scrollUp = @el.attr('data-scroll-up')
+      @scrollDown = @el.attr('data-scroll-down')
+      @offset = parseInt(@el.attr('data-offset')) or 0
+      @el.css 'margin-top', @offset
+      @wasInView = @isInView()
+    top: ->
+      @el.position().top
+    isInView: ->
+      position  = @el.position()
+      top       = position.top + @offset
+      wind      = $(window)
+      winTop    = wind.scrollTop()
+      winBottom = (wind.scrollTop() + wind.height())
+      top > winTop and top < winBottom
+    isOutOfView: ->
+      !@isInView()
+    hasCrossed: ->
+      @wasInView isnt @isInView()
+    isAbove: ->
+      position  = @el.position()
+      top       = position.top + @offset
+      wind      = $(window)
+      top < (wind.scrollTop() + wind.height())
+    isBelow: ->
+      !@isAbove()
+
   class WhatsNextComponent extends @Component
     name: 'whats-next-component'
     collectionEvents: "add remove reset change"
-    className: 'hidden'
+    className: 'hidden frozen visible'
     attributes:
       id: 'whats-next'
     init: (options)->
+      initialBoundary = new Boundary($('#whats-next-initial.boundary'))
+      @$el.css 'top', initialBoundary.top() - 400 # creates an offset that prevents "bounce"
       $('section#content').prepend @$el
       # we handle showing and hiding
       # with the scroll event because
       # render doesn't get fired that
       # often
-      $(window).scroll => @hideIfBlocked()
       @collection = new ArticleCollection options.collection.whatsNext()
       @components = 
         headline: WhatsNextHeadlineComponent
@@ -114,39 +144,86 @@ class scpr.BetterHomepage extends scpr.Framework
       # components don't get registered until
       # after init.
       @render()
+      @findBoundaries()
+      $(window).on 'DOMMouseScroll mousewheel resize', (e) => 
+        @detectCollision(e) unless @hasCompleted or not @isVisible()# so that we don't do extra work when we don't need to
     render: ->
       unless @hasNone()
         super()
       else
-        @$el.addClass 'hidden'
-    hasNone: ->
-      @collection.where({state: 'new'}).length is 0   
-    hideIfBlocked: ->
-      if @isBlocked() or !@isBelowPositionB()
         @$el.removeClass 'visible'
         @$el.addClass 'hidden'
-      else
-        unless @hasNone()
-          @$el.removeClass 'hidden'
-          @$el.addClass 'visible'
+        @hasCompleted = true
+    hasNone: ->
+      @collection.where({state: 'new'}).length is 0   
+
     isVisible: ->
       # !@$el.hasClass('hidden') and @$el.is(':visible')
       @$el.hasClass('visible')
-    isBlocked: ->
-      # tells us whether or not an ad or a huge
-      # story image is in the way(i.e. visible on screen)
-      docViewTop    = $(window).scrollTop()
-      docViewBottom = docViewTop + $(window).height()
-      for element in $('.hidden-gem, footer')
-        el = $(element)
-        if el.isOnScreen()
-          return true
-      false
-    isBelowPositionB: ->
-      positionB = $('#ad-position-b').first()
-      $(window).scrollTop() > (positionB?.position()?.top + positionB?.height())
+
     properties: ->
       stories: @collection.where({state: 'new'})
+
+    detectCollision: (e) ->
+      # delta     = (e.originalEvent.detail or e.originalEvent.wheelDelta)
+      for boundary in (@boundaries or [])
+        if boundary.hasCrossed()
+          if boundary.isInView() and boundary.lastDirection isnt 'scrollDown'
+            direction = 'scrollDown'
+          else if boundary.isBelow() #and boundary.lastDirection isnt 'scrollDown'
+            direction = 'scrollUp'
+          if direction
+            boundary.lastDirection = direction
+            for action in (boundary[direction] or '').split(' ')
+              @[action]?(boundary)
+        boundary.wasInView = boundary.isInView()
+      
+    show: ->
+      unless @hasNone()
+        @$el.removeClass('invisible')
+        @$el.removeClass('hidden')
+        @$el.addClass('visible')
+      else
+        @$el.removeClass('visible')
+        @$el.addClass('hidden')
+
+    hide: ->
+      @$el.removeClass('visible')
+      @$el.addClass('hidden')
+
+    hideQuickly: ->
+      @$el.removeClass('visible')
+      @$el.addClass('invisible')
+
+    freeze: (boundary) ->
+      if !@$el.hasClass('frozen')
+        offset = @$el.offset()
+        @$el.css 'top', offset.top
+        @$el.css 'left', offset.left
+        @$el.addClass 'frozen'
+
+    unfreeze: (boundary) ->
+      if @$el.hasClass('frozen')
+        @$el.css 'top', ''
+        @$el.css 'left', ''
+        @$el.removeClass 'frozen'
+
+    rollup: ->
+      @$el.one 'webkitAnimationEnd oanimationend msAnimationEnd animationend',  (e) =>
+        @$el.removeClass 'rollup'
+      @$el.addClass 'rollup'
+
+    rolldown: ->
+      @$el.one 'webkitAnimationEnd oanimationend msAnimationEnd animationend',  (e) =>
+        @$el.removeClass 'rolldown'
+      @$el.addClass 'rolldown'
+
+    findBoundaries: ->
+      @boundaries = []
+      for el in $('.boundary')
+        el = $(el)
+        @boundaries.push new Boundary $(el)
+
 
   class Article extends @Model.mixin(@Persistent)
     name: 'article'

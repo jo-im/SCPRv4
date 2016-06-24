@@ -2,7 +2,13 @@
   <% if index == 0 %>
     <%= render partial: "better_homepage/media/shared/headline_top", locals: {headline: content.article.short_title, url: content.article.public_url} %>
   <% end %>
+  <% unless index == 0 %>
+    <div class='boundary' data-scroll-up='unfreeze rolldown' data-scroll-down='freeze'></div>
+  <% end %>
   <%= render partial: "better_homepage/media/shared/figure_widescreen", locals: {url: content.article.public_url, asset_url: content.article.asset.full.url, asset_scheme: content.asset_scheme} %>
+  <% unless index == 0 %>
+    <div class='boundary' data-scroll-up='freeze' data-scroll-down='unfreeze rollup' data-offset='600'></div>
+  <% end %>
   <div class="media__content">
     <% if index != 0 %>
       <%= render partial: "better_homepage/media/shared/label", locals: {label: content.label} %>
