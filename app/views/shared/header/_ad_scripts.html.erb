@@ -33,7 +33,7 @@
     <% if current_page?(:listen) || current_page?(:listen_pledge_free) %>
 
       // Listen Live Position A
-      gptadslots[4]= googletag.defineSlot(key, [[728,90],[300,50]],'dfp-slot_live_a').setTargeting('pos',['top']).addService(googletag.pubads());
+      gptadslots[4]= googletag.defineSlot(key, [[300,50]],'dfp-slot_live_a').setTargeting('pos',['top']).addService(googletag.pubads());
 
       // Listen Live Position B
       gptadslots[5]= googletag.defineSlot(key, [[300,50]],'dfp-slot_live_b').setTargeting('pos',['middle']).addService(googletag.pubads());
@@ -43,8 +43,17 @@
 
     <% else %>
 
+      var positionAMapping = googletag.sizeMapping()
+        .addSize([300, 50])
+        .addSize([728, 90])
+        .build();
+
       // Position A
-      gptadslots[3]= googletag.defineSlot(key, [[728,90],[300,50]],'dfp-slot_a').setTargeting('pos',['banner-top']).addService(googletag.pubads());
+      gptadslots[3]= googletag.defineSlot(key, [[300,50]],'dfp-slot_a')
+        .defineSizeMapping(positionAMapping)
+        .collapseEmptyDivs(true)
+        .setTargeting('pos',['banner-top'])
+        .addService(googletag.pubads());
 
       // Position B
       gptadslots[1]= googletag.defineSlot(key, [[300,250]],'dfp-slot_b').setTargeting('pos',['mr-top']).addService(googletag.pubads());
