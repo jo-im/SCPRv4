@@ -1,7 +1,7 @@
 @import 'scpr-style-guide/src/css/main.scss'
 .boundary
   height: 1px
-  // background-color: red
+  background-color: red
   position: absolute
   width: 100%
   z-index: 100
@@ -68,8 +68,10 @@ section#content
     width: 11.35em
     padding: 34px
     top: $top
+    margin-left: -0.4em
     &.frozen
       position: absolute
+      margin-left: auto
     &:not(.frozen)
       &.rollup
         @-webkit-keyframes rollup
@@ -138,6 +140,12 @@ section#content
       @include fadeIn
       opacity: 1
       z-index: $zIndex
+      &.unfrozen
+        transition-property: top
+        transition-duration: $fadeTime
+        transition-delay: 0s
+        transition-timing-function: linear
+        top: $top
     &.invisible //just get it off the screen asap
       z-index: -1
       opacity: 0

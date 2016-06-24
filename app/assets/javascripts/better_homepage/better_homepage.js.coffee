@@ -102,7 +102,7 @@ class scpr.BetterHomepage extends scpr.Framework
       @el.css 'margin-top', @offset
       @wasInView = @isInView()
     top: ->
-      @el.position().top
+      @el.offset().top
     isInView: ->
       position  = @el.position()
       top       = position.top + @offset
@@ -125,13 +125,18 @@ class scpr.BetterHomepage extends scpr.Framework
   class WhatsNextComponent extends @Component
     name: 'whats-next-component'
     collectionEvents: "add remove reset change"
-    className: 'hidden frozen visible'
+    className: 'frozen visible'
     attributes:
       id: 'whats-next'
     init: (options)->
       initialBoundary = new Boundary($('#whats-next-initial.boundary'))
-      @$el.css 'top', initialBoundary.top() - 400 # creates an offset that prevents "bounce"
+      pos      = $(window).height() * 0.50 # try to figure out vertical center
+      top      = initialBoundary.top() - pos
+      @$el.css 'top', top # creates an offset that prevents "bounce"
       $('section#content').prepend @$el
+      # debugger
+      if $(window).scrollTop() > top
+        @unfreeze()
       # we handle showing and hiding
       # with the scroll event because
       # render doesn't get fired that
@@ -147,6 +152,7 @@ class scpr.BetterHomepage extends scpr.Framework
       @findBoundaries()
       $(window).on 'DOMMouseScroll mousewheel resize', (e) => 
         @detectCollision(e) unless @hasCompleted or not @isVisible()# so that we don't do extra work when we don't need to
+
     render: ->
       unless @hasNone()
         super()
@@ -175,7 +181,7 @@ class scpr.BetterHomepage extends scpr.Framework
           if direction
             boundary.lastDirection = direction
             for action in (boundary[direction] or '').split(' ')
-              @[action]?(boundary)
+              @[action]?(boundary, e)
         boundary.wasInView = boundary.isInView()
       
     show: ->
@@ -198,24 +204,32 @@ class scpr.BetterHomepage extends scpr.Framework
     freeze: (boundary) ->
       if !@$el.hasClass('frozen')
         offset = @$el.offset()
+        # percent = (offset.top / $(document).height()) * 100
+        # @$el.css 'top', "#{percent}%"
         @$el.css 'top', offset.top
         @$el.css 'left', offset.left
         @$el.addClass 'frozen'
 
-    unfreeze: (boundary) ->
+    unfreeze: (boundary, e={}) ->
+      delta     = (e.originalEvent?.detail or e.originalEvent?.wheelDelta) or 0
       if @$el.hasClass('frozen')
-        @$el.css 'top', ''
-        @$el.css 'left', ''
-        @$el.removeClass 'frozen'
+        @$el.css 'top', (@$el.css('top') - delta)
+        setTimeout =>
+          @$el.css 'top', ''
+          @$el.css 'left', ''
+          @$el.removeClass 'frozen'
+        , 0
 
-    rollup: ->
+    rollup: (callback) ->
       @$el.one 'webkitAnimationEnd oanimationend msAnimationEnd animationend',  (e) =>
         @$el.removeClass 'rollup'
+        callback?(e)
       @$el.addClass 'rollup'
 
-    rolldown: ->
+    rolldown: (callback) ->
       @$el.one 'webkitAnimationEnd oanimationend msAnimationEnd animationend',  (e) =>
         @$el.removeClass 'rolldown'
+        callback?(e)
       @$el.addClass 'rolldown'
 
     findBoundaries: ->
