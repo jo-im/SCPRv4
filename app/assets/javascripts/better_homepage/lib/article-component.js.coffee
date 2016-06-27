@@ -1,0 +1,67 @@
+Framework = require('framework')
+module.exports = class ArticleComponent extends Framework.Component
+  name: 'article-component'
+  events:
+    "click a" : "markAsRead"
+  init: (options)->
+    @insertTracking()
+    @render()
+    $(window).scroll =>
+      # this is set up to prevent needless re-rendering
+      # upon every scroll event firing.
+      if @isScrolledIntoView()
+        @markAsSeen()
+
+    # If no timestamp is present(which can change on conditions),
+    # display the feature type.
+    unless @$el.find('time').text().length
+      label = @$el.find(".media__meta .media__label")
+      if label.attr('data-media-label')
+        label.append label.attr('data-media-label')
+        label.find('use').attr('xlink:href', "#icon_line-audio")
+
+  insertTracking: ->
+    # I'd prefer to do this here because it's a pain
+    # to edit these attributes in all the templages
+    # if we ever have to change anything.  Since this
+    # is behavior, I think this should be handled in
+    # the component instead of the templates.
+    headline = @$el.find('.headline a')
+    headline.addClass('track-event')
+    headline.attr('data-ga-category', "@currentCategory")
+    headline.attr('data-ga-action', "Article")
+    headline.attr('data-ga-label', "@scrollDepth")
+
+    related = @$el.find('.related-content a')
+    related.addClass('track-event')
+    related.attr('data-ga-category', "@currentCategory")
+    related.attr('data-ga-action', "Related Content")
+    related.attr('data-ga-label', "@scrollDepth")
+
+    callToAction = @$el.find('a.call-to-action')
+    callToAction.addClass('track-event')
+    callToAction.attr('data-ga-category', "@currentCategory")
+    callToAction.attr('data-ga-action', "Call To Action")
+    callToAction.attr('data-ga-label', "@scrollDepth")
+
+  stateToMediaClass: ->
+    @stateTranslation[@model.get('state')] or ''
+
+  stateTranslation:
+    new: 'media--new-and-unread'
+    seen: 'media--seen-and-unread'
+    read: 'media--visited-and-read'
+
+  markAsSeen: ->
+    unless @model.get('state') is 'read'
+      @model.set 'state', 'seen'
+
+  markAsRead: (e) ->
+    @model.set 'state', 'read'
+
+  isScrolledIntoView: ->
+    @$el.find('.headline').isOnScreen()
+
+  render: ->
+    # @$el.removeClass (klass for state, klass of @stateTranslation).join(' ')
+    @$el.addClass @stateToMediaClass()
