@@ -125,17 +125,18 @@ class scpr.BetterHomepage extends scpr.Framework
   class WhatsNextComponent extends @Component
     name: 'whats-next-component'
     collectionEvents: "add remove reset change"
-    className: 'frozen visible'
+    className: 'hidden'
     attributes:
       id: 'whats-next'
     init: (options)->
       initialBoundary = new Boundary($('#whats-next-initial.boundary'))
       pos      = $(window).height() * 0.50 # try to figure out vertical center
       top      = initialBoundary.top() - pos
-      @$el.css 'top', top # creates an offset that prevents "bounce"
+      # @$el.css 'top', top # creates an offset that prevents "bounce"
       $('section#content').prepend @$el
       # debugger
       if $(window).scrollTop() > top
+        @show()
         @unfreeze()
       # we handle showing and hiding
       # with the scroll event because
@@ -151,7 +152,7 @@ class scpr.BetterHomepage extends scpr.Framework
       @render()
       @findBoundaries()
       $(window).on 'DOMMouseScroll mousewheel resize', (e) => 
-        @detectCollision(e) unless @hasCompleted or not @isVisible()# so that we don't do extra work when we don't need to
+        @detectCollision(e) unless @hasCompleted #or not @isVisible()# so that we don't do extra work when we don't need to
 
     render: ->
       unless @hasNone()
