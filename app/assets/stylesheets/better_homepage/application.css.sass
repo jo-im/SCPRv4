@@ -185,20 +185,34 @@ section#content
       padding-top: 30px
 
 .c-gem
+  background-color: $color-black
   background-repeat: repeat-x
   background-position: left top
   border-top: 1px solid $color-secondary
+  position: relative
+
+  &__container
+    overflow: hidden
 
   &__badge
+    display: none
     left: -100px
     position: absolute
     top: -15px
+
+  &__badge-desktop
+    left: 50%
+    margin-left: -34rem
+    position: absolute
+    top: -15px
+    z-index: 20
 
   &__overline
     color: $color-primary
     font-family: $font-sans-alt
     font-size: ms(3)
     font-weight: 300
+    margin-bottom: $base-line-height
 
   &__title
     font-family: $font-serif-titling
@@ -240,6 +254,21 @@ section#content
     overflow: hidden
     position: relative
 
+  &__bg-photo
+    background-size: cover
+    height: 100%
+    position: absolute
+    top: 0
+    width: 100%
+
+    &--left
+      background-position: right top
+      left: -100%
+
+    &--right
+      background-position: left top
+      right: -100%
+
   &__photo
     display: none
 
@@ -271,10 +300,13 @@ section#content
     position: relative
 
   @media (max-width: 1200px)
-    background: none !important
+    background-color: $color-white
 
     .container
       padding: 1rem 2rem
+
+    &__container
+      overflow: visible
 
     &__content-container
       padding: 0
@@ -283,21 +315,30 @@ section#content
       display: none
 
     &__badge
+      display: block
       left: 2rem
       height: 90px
       top: -15px
       width: 90px
 
+    &__badge-desktop
+      display: none
+
     &__overline
       margin-bottom: $base-line-height
       margin-left: 100px
+
+    &__bg-photo
+      display: none
 
     &__photo
       background-position: center center
       background-size: cover
       display: block
       height: 36rem
-      margin-bottom: 2rem
+      margin: 0 -2rem 2rem
+      padding-left: 2rem
+      padding-right: 2rem
       width: 100%
 
     &__details, &__share, &__attribution
