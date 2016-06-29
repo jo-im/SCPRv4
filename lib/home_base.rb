@@ -24,7 +24,7 @@ module HomeBase
     def search body:{}
       search_hash = {index: ESIndex, type: 'homepage', body: body}
       response    = ESClient.search search_hash
-      cache_key = ['better-homepage', 'es-response', response['hits']['hits'][0]['_source']['table']['published_at']].join('')
+      cache_key = ['better-homepage', 'es-response', response['hits']['hits'][0]['_source']['table']['public_datetime']].join('')
       # Prevents doing extra work if we already have retrieved the same homepage before.
       if Rails.cache.exist? cache_key
         Rails.cache.read cache_key
