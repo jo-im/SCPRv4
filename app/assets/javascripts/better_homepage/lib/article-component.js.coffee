@@ -14,11 +14,12 @@ module.exports = class ArticleComponent extends Framework.Component
 
     # If no timestamp is present(which can change on conditions),
     # display the feature type.
-    unless @$el.find('time').text().length
+    if @$el.find('time').text().length
       label = @$el.find(".media__meta .media__label")
-      if label.attr('data-media-label')
-        label.append label.attr('data-media-label')
-        label.find('use').attr('xlink:href', "#icon_line-audio")
+      label.addClass 'hidden'
+      # if label.attr('data-media-label')
+      #   label.append label.attr('data-media-label')
+      #   label.find('use').attr('xlink:href', "#icon_line-audio")
 
   insertTracking: ->
     # I'd prefer to do this here because it's a pain

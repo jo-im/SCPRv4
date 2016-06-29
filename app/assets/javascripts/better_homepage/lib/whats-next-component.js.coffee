@@ -14,9 +14,9 @@ module.exports = class extends Framework.Component
     # @$el.css 'top', top # creates an offset that prevents "bounce"
     $('section#content').prepend @$el
     # debugger
-    if $(window).scrollTop() > top
-      @show()
-      @unfreeze()
+    # if $(window).scrollTop() > top
+    #   @show()
+    #   @unfreeze()
     # we handle showing and hiding
     # with the scroll event because
     # render doesn't get fired that

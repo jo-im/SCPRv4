@@ -11,8 +11,12 @@
         <div class="inner bound">
             <h1><a href="http://scpr.org" title="Southern California Public Radio">89.3 KPCC</a></h1>
             <h2>
-                <span>89.1 KUOR</span>
-                <span>90.3 KVLA</span>
+                <% if content_for? :footer_tagline %>
+                    <%= content_for :footer_tagline %>
+                <% else %>
+                    <span>89.1 KUOR</span>
+                    <span>90.3 KVLA</span>                    
+                <% end %>
             </h2>
             <aside class="pledge">
                 <p><span>Support the voices you trust!</span> <a href="https://scprcontribute.publicradio.org/contribute.php">Pledge Now</a></p>
