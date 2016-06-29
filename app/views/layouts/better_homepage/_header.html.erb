@@ -18,7 +18,9 @@
       </svg>
     </a>
     <span class="mast__divider"></span>
-    <%= render partial: "layouts/better_homepage/broadcast_bar" , locals: {program: @current_program}%>
+    <% cache ['better-homepage', @current_program], expires_in: 5.minutes do%>
+      <%= render partial: "layouts/better_homepage/broadcast_bar" , locals: {program: @current_program}%>
+    <% end %>
   </div>
   <nav class="mast__nav js-mast__menu-mobile">
     <ul class="c-nav mast__nav-sections js-search--hide">
