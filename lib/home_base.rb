@@ -23,7 +23,16 @@ module HomeBase
     end
     def search body:{}
       search_hash = {index: ESIndex, type: 'homepage', body: body}
-      decorate_results ESClient.search search_hash
+      response    = ESClient.search search_hash
+      cache_key = ['better-homepage', 'es-response', response['hits']['hits'][0]['_source']['table']['public_datetime']].join('')
+      # Prevents doing extra work if we already have retrieved the same homepage before.
+      if Rails.cache.exist? cache_key
+        Rails.cache.read cache_key
+      else
+        decorated_results = decorate_results(ESClient.search(search_hash))
+        Rails.cache.write cache_key, decorated_results
+        decorated_results
+      end
     end
     def current
       # Returns index entry for current homepage.

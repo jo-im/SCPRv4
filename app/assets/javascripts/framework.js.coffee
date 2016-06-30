@@ -503,4 +503,4 @@
 
   module.exports = App
 
-)(module or ({}).__defineSetter__ 'exports', (x)-> window.Framework = x; return x;)
+)(module or ({}).__defineSetter__ 'exports', (x)-> window.scpr ?= {}; window.scpr.Framework = x; return x;)
