@@ -1,4 +1,4 @@
-<%= cache ['better-homepage', 'content', @content], expires_in: 5.minutes do %>
+<%= cache ['better-homepage', 'content', @content] do %>
   <%= render partial: 'better_homepage/feedback' %>
   <section id="content" class="container container--med">
     <aside class="c-ad">
