@@ -62,23 +62,8 @@ class HomepageContent < ActiveRecord::Base
     end
   end
 
-  def to_indexable
-    if content
-      OpenStruct.new(
-        {
-          obj_key: content.obj_key,
-          content_id: content_id,
-          asset_scheme: asset_scheme,
-          content_type: content_type,
-          position: position,
-          label: label,
-          call_to_action: call_to_action,
-          media_class: media_class
-        }
-      )
-    else
-      {}
-    end
+  def article
+    content.try(:get_article) || Article.new
   end
 
   def media_class
