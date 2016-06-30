@@ -30,7 +30,7 @@
     "normalize.css": "^4.1.1",
     "pouchdb": "= 5.3.1",
     "pouchdb-upsert": "^2.0.0",
-    "scpr-style-guide": "=0.2.3",
+    "scpr-style-guide": "=0.2.5",
     "selectivizr": "= 1.0.3",
     "swfobject": "= 2.2",
     "timeago": "= 1.5.1",
