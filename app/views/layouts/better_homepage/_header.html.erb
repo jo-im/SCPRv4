@@ -18,7 +18,7 @@
       </svg>
     </a>
     <span class="mast__divider"></span>
-    <% cache ['better-homepage', 'broadcast-bar', @current_program], expires_in: 5.minutes do%>
+    <% cache ['better-homepage', 'broadcast-bar', @current_program] do%>
       <%= render partial: "layouts/better_homepage/broadcast_bar" , locals: {program: @current_program}%>
     <% end %>
   </div>
