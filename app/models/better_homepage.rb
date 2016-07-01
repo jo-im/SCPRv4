@@ -43,9 +43,9 @@ class BetterHomepage < ActiveRecord::Base
     :status,
     presence: true
 
-  after_create  :async_create_index
-  after_update  :async_update_index
-  after_destroy :async_destroy_index
+  after_commit :cache
+
+  scope :current, ->{ where(status: 5).order('published_at DESC').limit(1) }
 
   def publish
     self.update_attributes(status: self.class.status_id(:live))
@@ -76,40 +76,29 @@ class BetterHomepage < ActiveRecord::Base
 
   alias_method :check_it_out, :related_links
 
-  def to_indexable
-    OpenStruct.new(
-      {
-        content:         content.map(&:to_indexable),
-        check_it_out:    check_it_out.map(&:to_indexable),
-        public_datetime: updated_at,
-        published_at:    published_at
-      }
-    )
+  def current?
+    self.class.current.include?(self)
   end
 
   private
 
-  def async_create_index
-    # Only index if homepage is live.
-    if status == self.class.status_id(:live)
+  def cache
+    # Only index if homepage is current.
+    if current?
       if Rails.env.development?
-        Job::HomepageIndexer.perform id, :create
+        sync_cache
       else
-        Job::HomepageIndexer.enqueue id, :create
+        async_cache
       end
     end
   end
 
-  def async_update_index
-    if status == self.class.status_id(:live)
-      async_create_index
-    else
-      async_destroy_index
-    end
+  def sync_cache
+    Job::BetterHomepageCache.perform
   end
 
-  def async_destroy_index
-    Job::HomepageIndexer.enqueue id, :destroy
+  def async_cache
+    Job::BetterHomepageCache.enqueue
   end
 
   def build_content_association(content_hash, content)

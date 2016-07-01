@@ -5,6 +5,7 @@
   position: absolute
   // width: 100%
   z-index: 100
+
 section#content
   .icon--color-link
     color: #01AED5
@@ -25,10 +26,10 @@ section#content
     // fade animation
     &.media--new-and-unread
       .media__headline.headline:before
-        transition: all .5s linear
+        transition: all .5s linear 2s
       &.media--seen-and-unread // also unofficial
         .media__headline.headline::before
-          transition: all 0.8s linear
+          transition: all 0.8s linear 2s
           opacity: 0
 
     .media__content
