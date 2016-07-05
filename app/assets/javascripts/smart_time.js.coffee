@@ -12,6 +12,7 @@ class scpr.SmartTime
         timecut:            "36h"
         window:             null
         class:              "sttime"
+        wrapText:           false
 
     constructor: (options) ->
         @options = _.defaults options||{}, @DefaultOptions
@@ -55,7 +56,7 @@ class scpr.SmartTime
             # We'll leave off Prefix too, since it would break the twitter
             # format.
             if @$el.attr("twitter-format")
-              @$el.text @time.twitterShort()
+              @render @time.twitterShort()
 
             else
                 # -- look for display limits -- #
@@ -66,6 +67,17 @@ class scpr.SmartTime
                 # -- now figure out our display -- #
 
                 @update()
+
+        #----------
+
+        render: (text) ->
+            if (text and text.length)
+                if @options.wrapText
+                    @$el.html "<span>#{text}</span>"
+                else
+                    @$el.text text
+            else
+                @$el.text ""
 
         #----------
 
@@ -91,7 +103,7 @@ class scpr.SmartTime
                 #
                 #   @time is outside (before) the windowLimit, so don't show anything
                 #
-                @$el.text ''
+                @render ''
                 @$el.removeClass @options.class if @options.class
                 return true
 
@@ -112,11 +124,10 @@ class scpr.SmartTime
                 # then display "Just Now". This can happen just because of slight
                 # discrepancies between server and client times.
                 if now.diff(@time, "seconds") < 0
-                    @$el.text 'Just Now'
+                    @render 'Just Now'
                 else
                     # relative formatting
-                    debugger
-                    @$el.text "" + @options.prefix + @time.fromNow()
+                    @render "" + @options.prefix + @time.fromNow()
 
             else
                 # @time is outside of the relativeLimit
@@ -138,7 +149,7 @@ class scpr.SmartTime
                 # time), then just show the date.
                 if @time < timecutLimit
                     # use date-only format
-                      @$el.text "" + @options.prefix + @time.strftime "#{@options.date_format + ' %Y'}"
+                      @render "" + @options.prefix + @time.strftime "#{@options.date_format + ' %Y'}"
                 else
                     # If @time is inside (after) the timecutLimit, then always show time,
                     # and decide whether or not to show date:
@@ -149,9 +160,9 @@ class scpr.SmartTime
                     # show the date.
                     if @window and @window[1] <= 12
                         # use time format only
-                        @$el.text "" + @options.prefix + @time.strftime "#{@options.time_format}"
+                        @render "" + @options.prefix + @time.strftime "#{@options.time_format}"
                     else
                         # use date, time format
-                        @$el.text "" + @options.prefix + @time.strftime "#{@options.date_format}, #{@options.time_format}"
+                        @render "" + @options.prefix + @time.strftime "#{@options.date_format}, #{@options.time_format}"
 
             @$el.addClass @options.class if @options.class

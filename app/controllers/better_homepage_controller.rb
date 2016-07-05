@@ -12,6 +12,7 @@ class BetterHomepageController < ApplicationController
     }
 
   def index
+    @homepage         = BetterHomepage.current.last
     @current_program  = ScheduleOccurrence.current.first
   end
 

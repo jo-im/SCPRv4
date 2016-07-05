@@ -133,6 +133,11 @@
       @$el.attr('data-framework-component-id', @uuid)
       @$el.attr('data-framework-component-name', @name)
 
+    # component: (name, params={}) ->
+    #   comp = {}
+    #   comp[name] = (require('./#{name}'))(params)
+    #   @defineComponents comp
+
     defineComponents: (components={}) ->
       ## Add child components to the current component
       ## and automatically create helpers for them.

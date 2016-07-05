@@ -12,6 +12,10 @@ module.exports = class ArticleComponent extends Framework.Component
       if @isScrolledIntoView()
         @markAsSeen()
 
+    @$el.find('time.timeago').timeago()
+    @smartTime = new (scpr.SmartTime)
+      prefix: 'Last Updated '
+      finder: @$el.find('.media__meta time')
     # If no timestamp is present(which can change on conditions),
     # display the feature type.
     if @$el.find('time').text().length
@@ -20,6 +24,7 @@ module.exports = class ArticleComponent extends Framework.Component
       # if label.attr('data-media-label')
       #   label.append label.attr('data-media-label')
       #   label.find('use').attr('xlink:href', "#icon_line-audio")
+
 
   insertTracking: ->
     # I'd prefer to do this here because it's a pain
@@ -61,7 +66,11 @@ module.exports = class ArticleComponent extends Framework.Component
     @model.set 'state', 'read'
 
   isScrolledIntoView: ->
-    @$el.find('.headline').isOnScreen()
+    headline = @$el.find('.headline')#.isOnScreen()
+    headlinePosition = headline.position().top
+    wind = $(window)
+    winTop     = wind.scrollTop()
+    windBottom = winTop + wind.height() 
 
   render: ->
     # @$el.removeClass (klass for state, klass of @stateTranslation).join(' ')

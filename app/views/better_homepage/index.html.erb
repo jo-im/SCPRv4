@@ -6,6 +6,7 @@
       <a class="c-ad__attribution" href="http://www.scpr.org/support/underwriting/">Become a KPCC Sponsor</a>
     </div>
   </aside>
+  <span id="homepage-timestamp" class="media__timestamp"><%= smart_date_js @homepage.updated_at, "data-window" => "1h", "data-relative" => "1h" %></span>
   <%= precached "better_homepage/contents", preview: @content %>
 </section><!-- .welcome -->
 <%= include_handlebars_template 'better_homepage/whats-next-component' %>
