@@ -71,7 +71,7 @@ module.exports = class ArticleComponent extends Framework.Component
     wind             = $(window)
     winTop           = wind.scrollTop()
     winBottom        = winTop + (wind.height() * 0.2)
-    headlinePosition < winBottom
+    (headlinePosition < winBottom) and (headlinePosition > winTop)
 
   render: ->
     # @$el.removeClass (klass for state, klass of @stateTranslation).join(' ')

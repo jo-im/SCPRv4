@@ -34,6 +34,9 @@ section#content
       z-index: 3
     .media__headline.headline
       position: relative
+      &::before
+        @media (max-width: $media-wide)
+          margin-left: 0.11em
     &.media--visited-and-read // adds a checkmark for now until this is officialized
       .media__headline.headline
         position: relative
