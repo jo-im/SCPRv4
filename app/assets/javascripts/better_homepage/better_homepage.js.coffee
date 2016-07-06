@@ -16,6 +16,23 @@ class scpr.BetterHomepage extends scpr.Framework
       bounds.bottom = bounds.top + @outerHeight()
       !(viewport.right < bounds.left or viewport.left > bounds.right or viewport.bottom < bounds.top or viewport.top > bounds.bottom)
 
+    $.timeago.settings.strings =
+      suffixAgo: ' ago'
+      minute: 'about a minute'
+      minutes: '%dm'
+      hour: 'about 1h'
+      hours: '%dh'
+      day: '1d'
+      days: '%dd'
+      month: '1mo'
+      months: '%dmo'
+
+    @$el.find('#homepage-timestamp time.timeago').timeago()
+    @smartTime = new (scpr.SmartTime)
+      prefix: "Today's Top Stories <span class='divider'>|</span> Last Updated "
+      finder: ['#homepage-timestamp time']
+      wrapText: true
+
     # create a collection based on the articles in the DOM
     @collection = new (require('./lib/article-collection'))()
     articleEls = @$el.find('[data-obj-key]')

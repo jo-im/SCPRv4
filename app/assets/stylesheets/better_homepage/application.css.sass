@@ -7,6 +7,22 @@
   z-index: 100
 
 section#content
+
+  span#homepage-timestamp
+    time:not(:empty)
+      display: block
+      text-align: center
+      margin-top: 30px
+      width: 100%
+      border-bottom: 1px solid $color-gray-light
+      line-height: 0.1em
+      span
+        background-color: white
+        padding: 10px
+        &.divider
+          // color: $color-gray-light
+          padding: 5px
+
   .icon--color-link
     color: #01AED5
 
@@ -26,10 +42,10 @@ section#content
     // fade animation
     &.media--new-and-unread
       .media__headline.headline:before
-        transition: all .5s linear 2s
+        transition: all .5s linear
       &.media--seen-and-unread // also unofficial
         .media__headline.headline::before
-          transition: all 0.8s linear 2s
+          transition: all 0.8s linear
           opacity: 0
 
     .media__content
