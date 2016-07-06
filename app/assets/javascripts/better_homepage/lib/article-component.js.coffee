@@ -66,11 +66,12 @@ module.exports = class ArticleComponent extends Framework.Component
     @model.set 'state', 'read'
 
   isScrolledIntoView: ->
-    headline = @$el.find('.headline')#.isOnScreen()
-    headlinePosition = headline.position().top
-    wind = $(window)
-    winTop     = wind.scrollTop()
-    windBottom = winTop + wind.height() 
+    headline         = @$el.find('.headline')
+    headlinePosition = headline.offset().top
+    wind             = $(window)
+    winTop           = wind.scrollTop()
+    winBottom        = winTop + (wind.height() * 0.2)
+    headlinePosition < winBottom
 
   render: ->
     # @$el.removeClass (klass for state, klass of @stateTranslation).join(' ')
