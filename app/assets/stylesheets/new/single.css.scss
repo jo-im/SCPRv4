@@ -743,6 +743,7 @@ body.single .comments {
 
 
     .kpcc-table {
+        width: 100%;
         th {
           border-top: 1px solid $orange;
           background: #f5f5f5;
@@ -776,7 +777,6 @@ body.single .comments {
         @media screen and (max-width: 550px) {
           border-top: 3px solid $orange;
           border-bottom: 3px solid black;
-          width: 100%;
           thead             { display: none; }
           tbody,tr,td       { width: 100%; }
           td {
