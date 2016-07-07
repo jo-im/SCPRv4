@@ -8,6 +8,11 @@
 
 section#content
 
+  // Unsure why this couldn't be nested.
+  @media (max-width: $media-wide)
+    span#homepage-timestamp
+      font-size: 10px
+
   span#homepage-timestamp
     time:not(:empty)
       display: block
