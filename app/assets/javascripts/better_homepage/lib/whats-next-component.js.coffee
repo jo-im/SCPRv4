@@ -1,5 +1,6 @@
 Framework = require('framework')
-Boundary = require('./boundary')
+Boundary  = require('./boundary')
+bowser   = require('bowser')
 
 module.exports = class extends Framework.Component
   name: 'whats-next-component'
@@ -30,8 +31,23 @@ module.exports = class extends Framework.Component
     # after init.
     @render()
     @findBoundaries()
-    $(window).on 'DOMMouseScroll mousewheel resize', (e) => 
-      @detectCollision(e) unless @hasCompleted #or not @isVisible()# so that we don't do extra work when we don't need to
+
+    callback = (e) => @detectCollision(e) unless @hasCompleted #or not @isVisible()# so that we don't do extra work when we don't need to
+    interval = =>
+      callback()
+      setTimeout interval, 100
+
+    # Safari has this bizarre issue with scroll events
+    # not getting fired in the same way that Chrome 
+    # fires them.  This workaround isn't exactly the
+    # most performant thing in the world, but I'd rather
+    # see this problem go away in production before I
+    # figure out a better way to polyfill scrolling.
+    if bowser.safari
+      interval()
+    else
+      $(window).on 'DOMMouseScroll mousewheel resize', callback
+    
 
   render: ->
     unless @hasNone()
