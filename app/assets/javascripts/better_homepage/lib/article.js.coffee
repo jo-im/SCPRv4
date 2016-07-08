@@ -10,3 +10,5 @@ module.exports = class extends Framework.Model.mixin(Framework.Persistent)
     @listenTo @, 'change', => @save()
   whatsNext: ->
     (@collection or new ArticleCollection).whatsNext()
+  isLastArticle: ->
+    @collection.last() is @

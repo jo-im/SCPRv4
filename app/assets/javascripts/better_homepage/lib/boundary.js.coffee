@@ -4,6 +4,7 @@ module.exports = class
     @scrollUp = @el.attr('data-scroll-up')
     @scrollDown = @el.attr('data-scroll-down')
     @offset = parseInt(@el.attr('data-offset')) or 0
+    @components = (@el.attr('data-components') or '').split(' ')
     @el.css 'margin-top', @offset
     @wasInView = @isInView()
   top: ->

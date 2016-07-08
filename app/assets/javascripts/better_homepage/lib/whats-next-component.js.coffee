@@ -1,5 +1,4 @@
 Framework = require('framework')
-Boundary = require('./boundary')
 
 module.exports = class extends Framework.Component
   name: 'whats-next-component'
@@ -8,30 +7,13 @@ module.exports = class extends Framework.Component
   attributes:
     id: 'whats-next'
   init: (options)->
-    initialBoundary = new Boundary($('#whats-next-initial.boundary'))
-    pos      = $(window).height() * 0.50 # try to figure out vertical center
-    top      = initialBoundary.top() - pos
-    # @$el.css 'top', top # creates an offset that prevents "bounce"
     $('section#content').prepend @$el
-    # debugger
-    # if $(window).scrollTop() > top
-    #   @show()
-    #   @unfreeze()
-    # we handle showing and hiding
-    # with the scroll event because
-    # render doesn't get fired that
-    # often
     @collection = new (require('./article-collection'))(options.collection.whatsNext())
     @components = 
       headline: require('./whats-next-headline-component')
+
   afterInit: ->
-    # This has to happen here because our
-    # components don't get registered until
-    # after init.
     @render()
-    @findBoundaries()
-    $(window).on 'DOMMouseScroll mousewheel resize', (e) => 
-      @detectCollision(e) unless @hasCompleted #or not @isVisible()# so that we don't do extra work when we don't need to
 
   render: ->
     unless @hasNone()
@@ -40,6 +22,7 @@ module.exports = class extends Framework.Component
       @$el.removeClass 'visible'
       @$el.addClass 'hidden'
       @hasCompleted = true
+
   hasNone: ->
     @collection.where({state: 'new'}).length is 0   
 
@@ -50,20 +33,6 @@ module.exports = class extends Framework.Component
   properties: ->
     stories: @collection.where({state: 'new'})
 
-  detectCollision: (e) ->
-    # delta     = (e.originalEvent.detail or e.originalEvent.wheelDelta)
-    for boundary in (@boundaries or [])
-      if boundary.hasCrossed()
-        if boundary.isInView() and boundary.lastDirection isnt 'scrollDown'
-          direction = 'scrollDown'
-        else if boundary.isBelow() #and boundary.lastDirection isnt 'scrollDown'
-          direction = 'scrollUp'
-        if direction
-          boundary.lastDirection = direction
-          for action in (boundary[direction] or '').split(' ')
-            @[action]?(boundary, e)
-      boundary.wasInView = boundary.isInView()
-    
   show: ->
     unless @hasNone()
       @$el.removeClass('invisible')
@@ -111,9 +80,3 @@ module.exports = class extends Framework.Component
       @$el.removeClass 'rolldown'
       callback?(e)
     @$el.addClass 'rolldown'
-
-  findBoundaries: ->
-    @boundaries = []
-    for el in $('.boundary')
-      el = $(el)
-      @boundaries.push new Boundary $(el)

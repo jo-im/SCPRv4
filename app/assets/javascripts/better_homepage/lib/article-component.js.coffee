@@ -67,10 +67,11 @@ module.exports = class ArticleComponent extends Framework.Component
 
   isScrolledIntoView: ->
     headline         = @$el.find('.headline')
+    view             = if @model.isLastArticle() then 1 else 0.2
     headlinePosition = headline.offset().top
     wind             = $(window)
     winTop           = wind.scrollTop()
-    winBottom        = winTop + (wind.height() * 0.2)
+    winBottom        = winTop + (wind.height() * view)
     (headlinePosition < winBottom) and (headlinePosition > winTop)
 
   render: ->
