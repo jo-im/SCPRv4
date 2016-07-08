@@ -67,6 +67,7 @@ module.exports = class ArticleComponent extends Framework.Component
 
   isScrolledIntoView: ->
     headline         = @$el.find('.headline')
+    view             = @model.isLastArticle() ? 1 : 0.2
     headlinePosition = headline.offset().top
     wind             = $(window)
     winTop           = wind.scrollTop()

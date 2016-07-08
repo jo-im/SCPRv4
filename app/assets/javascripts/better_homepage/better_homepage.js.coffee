@@ -1,5 +1,6 @@
 scpr.Framework      = require 'framework'
 scpr.EventTracking  = require 'event_tracking'
+Boundary            = require './lib/boundary'
 
 class scpr.BetterHomepage extends scpr.Framework
 
@@ -71,4 +72,38 @@ class scpr.BetterHomepage extends scpr.Framework
     checkItOut.attr('data-ga-action', "Check It Out")
     checkItOut.attr('data-ga-label', "Link")
 
-    # @render()
+    @findBoundaries()
+    @detectCollision()
+
+  detectCollision: (e) ->
+    boundaryCount = @boundaries.length
+    i = 0
+    while i < boundaryCount
+      ((i) =>
+        boundary = @boundaries[i]
+        setTimeout =>
+          if boundary.hasCrossed()
+            if boundary.isInView() and boundary.lastDirection isnt 'scrollDown'
+              direction = 'scrollDown'
+            else if boundary.isBelow() #and boundary.lastDirection isnt 'scrollDown'
+              direction = 'scrollUp'
+            if direction
+              boundary.lastDirection = direction
+              for action in (boundary[direction] or '').split(' ')
+                for cname in boundary.components
+                  @components[cname]?[action]?(boundary, e)
+          if i is (boundaryCount - 1)
+            setTimeout =>
+              @detectCollision()
+            , 10
+          boundary.wasInView = boundary.isInView()
+        , 0
+      )(i)
+      i++
+
+  findBoundaries: ->
+    @boundaries = []
+    for el in $('.boundary')
+      el = $(el)
+      @boundaries.push new Boundary $(el)
+      , 0
