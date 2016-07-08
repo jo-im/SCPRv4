@@ -1,5 +1,4 @@
 Framework = require('framework')
-bowser   = require('bowser')
 
 module.exports = class extends Framework.Component
   name: 'whats-next-component'
