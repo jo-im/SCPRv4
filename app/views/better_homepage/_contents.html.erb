@@ -1,4 +1,5 @@
-<% content.each_with_index do |content, index| %>
+<% contents = content %>
+<% contents.each_with_index do |content, index| %>
 
   <% source = content.content.try(:source) 
     tag = if source != "KPCC" or source != 'kpcc'
@@ -34,7 +35,7 @@
     </aside>
   <% end %>
 
-  <%= render partial: "better_homepage/media/#{content.asset_scheme}", locals: {content: content, index: index} %>
+  <%= render partial: "better_homepage/media/#{content.asset_scheme}", locals: {content: content, index: index, contents: contents} %>
 
 <% end %>
 <div class='boundary' data-components='whats-next' data-scroll-up='show' data-scroll-down='hide'></div>
