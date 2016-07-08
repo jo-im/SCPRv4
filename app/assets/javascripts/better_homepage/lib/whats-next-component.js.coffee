@@ -12,6 +12,7 @@ module.exports = class extends Framework.Component
     @collection = new (require('./article-collection'))(options.collection.whatsNext())
     @components = 
       headline: require('./whats-next-headline-component')
+
   afterInit: ->
     @render()
 
@@ -22,6 +23,7 @@ module.exports = class extends Framework.Component
       @$el.removeClass 'visible'
       @$el.addClass 'hidden'
       @hasCompleted = true
+
   hasNone: ->
     @collection.where({state: 'new'}).length is 0   
 
