@@ -3,6 +3,6 @@
   <div class="media__content">
     <%= render partial: "better_homepage/media/shared/meta", locals: {feature: content.article.feature, public_datetime: content.article.public_datetime, updated_at: content.article.updated_at} %>
     <%= render partial: "better_homepage/media/shared/headline", locals: {headline: content.article.short_title, url: content.article.public_url} %>
-    <%= render partial: "better_homepage/media/shared/extra", locals: {content: content} %>
+    <%= render partial: "better_homepage/media/shared/extra", locals: {content: content, contents: contents} %>
   </div>
 </div>

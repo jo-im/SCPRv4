@@ -12,6 +12,6 @@
     <% end %>
     <%= render partial: "better_homepage/media/shared/teaser", locals: {teaser: content.article.abstract} %>
     <%= render partial: "better_homepage/media/shared/meta", locals: {feature: content.article.feature, public_datetime: content.article.public_datetime, public_datetime: content.article.public_datetime} %>
-    <%= render partial: "better_homepage/media/shared/extra", locals: {content: content} %>
+    <%= render partial: "better_homepage/media/shared/extra", locals: {content: content, contents: contents} %>
   </div>
 </div>

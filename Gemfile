@@ -80,6 +80,7 @@ gem 'bootstrap-sass', '~> 2.2'
 gem 'coffee-rails', "~> 4.0.0"
 gem 'uglifier', '>= 1.3'
 gem "browserify-rails"
+gem "autoprefixer-rails"
 
 group :development do
   gem 'pry'

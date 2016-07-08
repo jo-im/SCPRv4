@@ -11,4 +11,5 @@ module BetterHomepageHelper
       render(partial: key, object: options[:preview], as: options[:local])
     end
   end
+
 end

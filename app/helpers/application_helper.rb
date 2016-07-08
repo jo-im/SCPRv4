@@ -510,13 +510,21 @@ module ApplicationHelper
     doc.css('body').children.to_s.html_safe
   end
 
-  def recent_related_content article
+  def filter_related_content content, contents
+    homepage_content = contents.map{|c| c.content.to_article}
+    @related_content_manifest ||= []
     ## This is mainly for display purposes on the new homepage
     ## where we want to get the latest 2 related contents for
     ## a given article if said related contents were published
     ## in the last 48 hours.
-    article.related_content_articles.select do |article|
-      (article.public_datetime || 10.years.ago) > 48.hours.ago
+    #
+    # We are also filtering out anything that has already been
+    # displayed, or is part of the series of homepage contents.
+    content.article.related_content_articles.select do |article|
+      !@related_content_manifest.include?(article) &&
+      !homepage_content.include?(article) && 
+      ((article.public_datetime || 10.years.ago) > 48.hours.ago) &&
+      @related_content_manifest.push(article)
     end
     .first(2) ## We can assume here that we are already getting
     ## content in the correct order(DESC), so we can just grab
