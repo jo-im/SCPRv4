@@ -1,26 +1,25 @@
-<a class='call-to-action' href="<%= content.article.public_url %>">
-  <% case content.call_to_action %>
-  <% when 'conversation'%>
-    <span class="icon--color-link">
-      <svg class="icon icon--size-med icon--left">
-        <use class="icon--line" xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon_line-comment"></use>
-      </svg>
-    </span>
-    <span class="link link--callout">Join the conversation</span>
-  <% when 'event' %>
-    <span class="icon--color-link">
-      <svg class="icon icon--size-med icon--left">
-        <use class="icon--line icon--color-link" xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon_line-article"></use>
-      </svg>
-    </span>
-    <span class="link link--callout">RSVP for this event</span>
-  <% when 'podcast' %>
-    <span class="icon--color-link">
-      <svg class="icon icon--size-med icon--left icon--color-link">
-        <use class="icon--line " xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon_line-listen-live"></use>
-      </svg>
-    </span>
-    <% show_name = content.article.try(:show).try(:title) || "this show" %>
-    <span class="link link--callout">Love <%= show_name %>? Subscribe to the podcast!</span>
-  <% end %>
+<% 
+ c = content.content
+ case content.call_to_action 
+ when 'conversation'
+    icon    = 'comment'
+    link    = "#{c.public_url}#comments"
+    caption = "Join the conversation"
+ when 'event' 
+    icon    = 'article'
+    link    = c.try(:rsvp_url)
+    caption = "RSVP for this event"
+ when 'podcast' 
+    show_name = c.get_article.try(:show).try(:title) || "this show"
+    icon    = 'listen-live'
+    link    = c.try(:show).try(:podcast_url) || c.public_url
+    caption = "Love #{show_name}? Subscribe to the podcast!"
+ end 
+%>
+<a class='call-to-action' href="<%= link %>">
+<span class="icon--color-link">
+  <svg class="icon icon--size-med icon--left icon--color-link">
+    <use class="icon--line " xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon_line-<%= icon %>"></use>
+  </svg>
+  <span class="link link--callout"><%= caption %></span>
 </a>

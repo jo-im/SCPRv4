@@ -1,6 +1,5 @@
-<% if content.content_type == "NewsStory" %>
-  <%= render partial: "better_homepage/media/shared/related", locals: {label: content.label, content: filter_related_content(content, contents)} %>
+<% if (related = filter_related_content(content, contents)).any? %>
+  <%= render partial: "better_homepage/media/shared/related", locals: {label: content.label, content: related} %>
 <% else %>
-  <br />
   <%= render partial: "better_homepage/media/shared/call_to_action", locals: {content: content} %>
 <% end %>
