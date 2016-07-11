@@ -16,10 +16,12 @@
     caption = "Love #{show_name}? Subscribe to the podcast!"
  end 
 %>
-<a class='call-to-action' href="<%= link %>">
-<span class="icon--color-link">
-  <svg class="icon icon--size-med icon--left icon--color-link">
-    <use class="icon--line " xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon_line-<%= icon %>"></use>
-  </svg>
-  <span class="link link--callout"><%= caption %></span>
-</a>
+<% if content.call_to_action %>
+  <a class='call-to-action' href="<%= link %>">
+    <span class="icon--color-link">
+      <svg class="icon icon--size-med icon--left icon--color-link">
+        <use class="icon--line " xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon_line-<%= icon %>"></use>
+      </svg>
+      <span class="link link--callout"><%= caption %></span>
+  </a>
+<% end %>
