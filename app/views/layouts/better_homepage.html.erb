@@ -17,7 +17,9 @@
 
   <body class="">
     <%= render partial: "layouts/better_homepage/header" %>
-    <%= precached "layouts/better_homepage/check_it_out" %>
+    <div id='check-it-out-wide'>
+        <%= precached "layouts/better_homepage/check_it_out" %>
+    </div>
     <%= yield %>
     <%= render partial: "layouts/better_homepage/footer" %>
     <%= render partial: "shared/footer/tracking_scripts" %>

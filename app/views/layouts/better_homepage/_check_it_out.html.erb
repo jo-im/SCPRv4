@@ -1,6 +1,6 @@
 <% if (content || []).any? %>
-  <div id="check-it-out" class="c-well c-well--info">
-    <ul class="c-list c-list--horiz u-text-size--sm">
+  <div class="check-it-out c-well c-well--info">
+    <ul class="c-list u-text-size--sm">
       <li><h5 class="heading heading--h5 heading--inline u-text-color--sec-dk">Check It Out</h5></li>
       <% content.each do |link| %>
         <li><%= link_to link.title, link.url %></li>

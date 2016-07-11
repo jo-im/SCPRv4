@@ -419,6 +419,14 @@ module ApplicationHelper
     object.respond_to?(:disqus_identifier)
   end
 
+  def precached key, options={}
+    unless options[:preview]
+      raw Cache.read(key)
+    else
+      options.reverse_merge!(local: :content)
+      render(partial: key, object: options[:preview], as: options[:local])
+    end
+  end
 
   #----------
 
