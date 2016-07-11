@@ -23,14 +23,14 @@ class Outpost::BetterHomepagesController < Outpost::ResourceController
   #--------------------
 
   def preview
-    @preview_homepage = Outpost.obj_by_key(params[:obj_key]) || BetterHomepage.new
+    @homepage = Outpost.obj_by_key(params[:obj_key]) || BetterHomepage.new
 
-    with_rollback @preview_homepage do
-      @preview_homepage.id = params[:id]
-      @preview_homepage.assign_attributes(params[:better_homepage] || {})
+    with_rollback @homepage do
+      @homepage.id = params[:id]
+      @homepage.assign_attributes(params[:better_homepage] || {})
       @current_program  = ScheduleOccurrence.current.first
-      @content = @preview_homepage.content
-      @title = @preview_homepage.to_title
+      @content = @homepage.content
+      @title = @homepage.to_title
       render "better_homepage/index", layout: 'layouts/better_homepage'
     end
   end
