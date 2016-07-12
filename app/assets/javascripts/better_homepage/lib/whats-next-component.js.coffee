@@ -16,9 +16,7 @@ module.exports = class extends Framework.Component
     @render()
 
   afterRender: ->
-    # debugger
     @reloadComponents()
-    # @activeComponents.forEach (c) => c.reloadEl()
 
   render: (c)->
     unless @hasNone()
@@ -52,6 +50,7 @@ module.exports = class extends Framework.Component
     @$el.addClass('hidden')
 
   hideQuickly: ->
+    @$el.removeClass('hidden')
     @$el.removeClass('visible')
     @$el.addClass('invisible')
 

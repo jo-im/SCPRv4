@@ -39,6 +39,9 @@
   <% end %>
 
   <%= render partial: "better_homepage/media/#{content.asset_scheme}", locals: {content: content, index: index, contents: contents} %>
+  <% if index == 0 %>
+    <div class='boundary' data-components='whats-next' data-scroll-up='hideQuickly'></div>
+  <% end %>
 
 <% end %>
 <div class='boundary' data-components='whats-next' data-scroll-up='show' data-scroll-down='hide'></div>

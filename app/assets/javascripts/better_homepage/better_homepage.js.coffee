@@ -95,7 +95,7 @@ class scpr.BetterHomepage extends scpr.Framework
           if i is (boundaryCount - 1)
             setTimeout =>
               @detectCollision()
-            , 10
+            , 0
           boundary.wasInView = boundary.isInView()
         , 0
       )(i)

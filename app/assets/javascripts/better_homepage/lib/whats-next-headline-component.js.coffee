@@ -5,7 +5,8 @@ module.exports = class extends Framework.Component
   events:
     click: 'scrollToStory'
   beforeDestroy: (callback) ->
-    # only destroy if we actually want to destroy
+    # only destroy element if the story has been seen
+    # this is just to prevent an animation glitch
     if this.model.get('state') isnt 'new'
       @reloadEl()
       @$el.one "transitionend webkitTransitionEnd oTransitionEnd MSTransitionEnd", (e) => 
