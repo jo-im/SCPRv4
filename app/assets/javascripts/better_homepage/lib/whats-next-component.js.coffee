@@ -15,9 +15,14 @@ module.exports = class extends Framework.Component
   afterInit: ->
     @render()
 
-  render: ->
+  afterRender: ->
+    # debugger
+    @reloadComponents()
+    # @activeComponents.forEach (c) => c.reloadEl()
+
+  render: (c)->
     unless @hasNone()
-      super()
+      super(c)
     else
       @$el.removeClass 'visible'
       @$el.addClass 'hidden'
