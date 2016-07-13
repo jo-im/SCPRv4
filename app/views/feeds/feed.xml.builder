@@ -10,7 +10,7 @@ xml.rss(RSS_SPEC) do
       :type   => "application/rss+xml"
     }
 
-    xml << render_content(@content.first(15), "feedxml", {
+    xml << render_content(@content.first(40), "feedxml", {
       :enclosure_type   => :image,
       :context          => 'news'
     })
