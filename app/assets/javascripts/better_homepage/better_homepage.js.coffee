@@ -42,7 +42,9 @@ class scpr.BetterHomepage extends scpr.Framework
     # reset stories to 'new' if development is set to true.
     # I'm sure there's a better way to apply properties
     # to all models in a collection.
-    if options.development
+    console.log @params('dev')
+
+    if options.development or @params('dev')
       @collection.toArray().forEach (m) => 
         m.set 'state', 'new'
         m.save()
@@ -95,7 +97,7 @@ class scpr.BetterHomepage extends scpr.Framework
           if i is (boundaryCount - 1)
             setTimeout =>
               @detectCollision()
-            , 10
+            , 0
           boundary.wasInView = boundary.isInView()
         , 0
       )(i)

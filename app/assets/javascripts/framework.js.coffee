@@ -405,7 +405,7 @@
       )
       uuid
 
-
+  queryString = require('query-string')
 
   class App extends Component
     # An app is actually just a component that
@@ -422,6 +422,12 @@
       super(options)
     afterRender: ->
       @reloadComponents()
+    params: (key) ->
+      parameters = queryString.parse(location.search)
+      if `key in parameters` and parameters[key] is null
+        return true
+      else
+        parameters[key]
 
     class @Component extends Component
 

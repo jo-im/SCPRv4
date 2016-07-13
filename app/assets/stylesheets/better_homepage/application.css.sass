@@ -6,6 +6,20 @@
   // width: 100%
   z-index: 100
 
+#check-it-out
+  &-wide
+    @media (min-width: $media-mobile)
+      display: block
+    display: none
+    ul
+      @extend .c-list--horiz
+  &-block
+    @media (max-width: $media-mobile)
+      display: block
+    display: none
+    ul
+      @extend .c-list--vert
+
 section#content
 
   // Unsure why this couldn't be nested.
@@ -146,6 +160,9 @@ section#content
         max-height: 100px
         &::before
           background-color: #f97e21
+        &:hover
+          cursor: pointer
+          text-decoration: underline
         &.read
           $fadeTime: 0.4s
           transition-property: opacity, max-height, margin-bottom

@@ -2,7 +2,11 @@ Framework = require('framework')
 module.exports = class extends Framework.Component
   tagName: 'li'
   name: 'whats-next-headline-component'
+  events:
+    click: 'scrollToStory'
   beforeDestroy: (callback) ->
+    # only destroy element if the story has been seen
+    # this is just to prevent an animation glitch
     if this.model.get('state') isnt 'new'
       @reloadEl()
       @$el.one "transitionend webkitTransitionEnd oTransitionEnd MSTransitionEnd", (e) => 
@@ -10,5 +14,10 @@ module.exports = class extends Framework.Component
         if e.originalEvent.propertyName is 'margin-bottom'
           callback()
       @$el.addClass 'read' # this class creates an animated transition
-    else
-      super(callback)
+
+  scrollToStory: ->
+    objKey = @model.get('id')
+    if position = $("[data-obj-key='#{objKey}']").offset()?.top
+      $('html, body').animate
+        scrollTop: position
+      , 2000

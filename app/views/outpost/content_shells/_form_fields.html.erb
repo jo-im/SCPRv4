@@ -4,6 +4,7 @@
   <%= f.section "remote_published_at" %>
   <%= f.input :headline, label: "Short Headline", input_html: { class: "wide" }, wrapper_html: { class: "field-counter", data: { target: 50, fuzziness: 10 } } %>
   <%= f.input :body, label: "Teaser", input_html: { class: "tiny" }, wrapper_html: { class: "field-counter", data: { target: 145, fuzziness: 20 } } %>
+  <%= f.input(:abstract, input_html: { class: "cke-editor-basic" }) if f.object.respond_to?(:abstract) %>
   <%= f.association :tags, as: :grouped_select, collection: Tag.by_type, group_method: :tags, group_label_method: :name, input_html: { :multiple => true } %>
   <%= f.section "category" %>
   <%= f.pmp_checkbox %>

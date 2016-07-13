@@ -15,9 +15,12 @@ module.exports = class extends Framework.Component
   afterInit: ->
     @render()
 
-  render: ->
+  afterRender: ->
+    @reloadComponents()
+
+  render: (c)->
     unless @hasNone()
-      super()
+      super(c)
     else
       @$el.removeClass 'visible'
       @$el.addClass 'hidden'
@@ -47,6 +50,7 @@ module.exports = class extends Framework.Component
     @$el.addClass('hidden')
 
   hideQuickly: ->
+    @$el.removeClass('hidden')
     @$el.removeClass('visible')
     @$el.addClass('invisible')
 
