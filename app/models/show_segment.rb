@@ -101,6 +101,7 @@ class ShowSegment < ActiveRecord::Base
   end
 
   def to_article
+    related_content = to_article_called_more_than_twice? ? [] : self.related_content.map(&:to_reference)
     @to_article ||= Article.new({
       :original_object    => self,
       :id                 => self.obj_key,
@@ -125,7 +126,8 @@ class ShowSegment < ActiveRecord::Base
       :links              => related_links.map(&:to_hash),
       :asset_display      => asset_display,
       :disqus_identifier  => self.disqus_identifier,
-      :abstract           => self.abstract
+      :abstract           => self.abstract,
+      :related_content    => related_content
     })
   end
 
