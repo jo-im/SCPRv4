@@ -2,7 +2,7 @@
   <%= render 'outpost/shared/help_blocks/publishing' %>
   <%= f.section 'status' %>
   <%= f.section('content_alarm') if record.respond_to?(:alarm) %>
-  <%= f.section 'auto_published_at' %>
+  <%= f.section('auto_published_at') if record.respond_to?(:published_at) %>
 
   <div id="scheduled_status" class="notification block"></div>
 
