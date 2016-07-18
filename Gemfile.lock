@@ -9,8 +9,8 @@ GIT
 
 GIT
   remote: git://github.com/SCPR/outpost-aggregator.git
-  revision: 6db288266918768a13a50d7a417b38e8d52b8c12
-  tag: v2.0.1
+  revision: 0ddb35922584b978eecaed00c0a9a89d895f6912
+  tag: v2.1.0
   specs:
     outpost-aggregator (2.0.0)
 
