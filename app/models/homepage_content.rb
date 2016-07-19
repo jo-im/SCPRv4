@@ -66,6 +66,18 @@ class HomepageContent < ActiveRecord::Base
     content.try(:get_article) || Article.new
   end
 
+  # This way, we can treat homepage_content as a proxy
+  # to the actual content, so that we don't always have
+  # to call for it when we need it.
+  def method_missing mname, *args
+    @content ||= content
+    if @content && @content.respond_to?(mname)
+      @content.send(mname, *args)
+    else
+      super
+    end
+  end
+
   def media_class
     ## Not sure if this is needed anymore?
     case asset_scheme
