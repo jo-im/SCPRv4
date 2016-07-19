@@ -11,6 +11,12 @@
   <%= render "shared/masthead/layout_header" %>
 
   <!-- BROADCAST BAR -->
+<div id='beta-opt-in'>
+  <a href="/beta-opt-in" class="c-btn c-btn--secondary c-btn--small" data-ga-category="@currentCategory" data-ga-action="Beta Opt In" data-ga-label="@scrollDepth">
+    Try out a new version of our homepage!
+  </a>
+</div>
+
 <% if @schedule_current.present? %>
 
 <%= cache ["broadcastbar", "v2", @schedule_current, @schedule_current.program, @schedule_next] do %>
