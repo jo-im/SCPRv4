@@ -6,7 +6,7 @@ xml.rss({
 }) do
   xml.channel do
     xml.title       "89.3 | KPCC"
-    xml.link        "http://www.jollypod.com", rel: "canonical"
+    xml.link        "http://#{Rails.application.default_url_options[:host]}", rel: "canonical"
     xml.description "Southern California Public Radio"
 
     @content.each do |content|
