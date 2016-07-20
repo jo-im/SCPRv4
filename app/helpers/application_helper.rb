@@ -528,7 +528,8 @@ module ApplicationHelper
     #
     # We are also filtering out anything that has already been
     # displayed, or is part of the series of homepage contents.
-    content.related_content.select do |article|
+    related_content = content.related_content || []
+    related_content.select do |article|
       !@related_content_manifest.include?(article) &&
       !homepage_content_ids.include?(article.obj_key) && 
       ((article.public_datetime || 10.years.ago) > 48.hours.ago) &&

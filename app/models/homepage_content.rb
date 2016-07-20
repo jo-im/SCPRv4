@@ -71,23 +71,18 @@ class HomepageContent < ActiveRecord::Base
   # to call for it when we need it.
   def method_missing mname, *args
     @content ||= content
-    if @content && @content.respond_to?(mname)
-      @content.send(mname, *args)
+    if @content
+      @content.try mname, *args
     else
       super
     end
   end
 
-  def media_class
-    ## Not sure if this is needed anymore?
-    case asset_scheme
-    when 'large'
-      'media--hp-large'
-    when 'block'
-      'media--block'
-    else
-      'media--hp'
-    end
+  def related_content
+    # Will at least return an array
+    # if the content does not support
+    # related content.
+    (@content ||= content).try(:related_content) || []
   end
 
   private
