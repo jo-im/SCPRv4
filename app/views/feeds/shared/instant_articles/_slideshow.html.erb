@@ -1,0 +1,10 @@
+<figure class="op-slideshow">
+  <% content.assets.each do |asset| %>
+    <figure>
+      <img src="<%= asset.eight.url %>" />
+      <% if asset.caption.present? %>
+        <figcaption><%= asset.caption %></figcaption>
+      <% end %>
+    </figure>
+  <% end %>
+</figure>

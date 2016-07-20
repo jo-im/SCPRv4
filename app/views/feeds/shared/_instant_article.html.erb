@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en" prefix="op: http://media.facebook.com/op#">
+  <head>
+    <meta charset="utf-8">
+    <link rel="canonical" href="<%= content.public_url %>">
+    <meta property="op:markup_version" content="v1.0">
+    <title><%= content.title %></title>
+    <meta property="fb:article_style" content="default">
+  </head>
+  <body>
+    <article>
+      <header>
+        <h1><%= content.title %></h1>
+        <h2><%= content.teaser %></h2>
+
+        <%= time_tag content.public_datetime, class: "op-published" %>
+        <%= time_tag content.updated_at, class: "op-modified" %>
+
+        <address>
+          <a><%= content.byline %></a>
+        </address>
+
+        <% path = Rails.root.join('app', 'views', 'feeds', 'shared', 'instant_articles') %>
+        <% asset_display = Dir.glob("#{path}/*").join("").include?(content.feature.try(:asset_display) || 'NO_ASSET') ? content.feature.try(:asset_display) : 'default' %>
+        <%= render partial: "feeds/shared/instant_articles/#{asset_display}", locals: {content: content} %>
+
+      </header>
+      
+      <p> <%= render_with_inline_assets content %> </p> 
+
+      <footer>
+        <small>© 2016 Southern California Public Radio</small>
+      </footer>
+    </article>
+  </body>
+</html>
