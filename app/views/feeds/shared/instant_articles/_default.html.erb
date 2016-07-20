@@ -1,5 +1,7 @@
 <% asset ||= content.asset %>
-<figure>
-  <img src="<%= asset.full.url %>" />
-  <figcaption><%= asset.caption %></figcaption>
-</figure>
+<% unless (asset.title || "").include?("Asset Unavailable") %>
+  <figure>
+    <img src="<%= asset.full.url %>" />
+    <figcaption><%= asset.caption %></figcaption>
+  </figure>
+<% end %>

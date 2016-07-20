@@ -1,11 +1,6 @@
 <% assets ||= content.assets %>
 <figure class="op-slideshow">
   <% assets.each do |asset| %>
-    <figure>
-      <img src="<%= asset.eight.url %>" />
-      <% if asset.caption.present? %>
-        <figcaption><%= asset.caption %></figcaption>
-      <% end %>
-    </figure>
+    <%= render partial: "feeds/shared/instant_articles/default", locals: {asset: asset} %>
   <% end %>
 </figure>
