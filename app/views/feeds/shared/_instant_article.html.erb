@@ -20,13 +20,11 @@
           <a><%= content.byline %></a>
         </address>
 
-        <% path = Rails.root.join('app', 'views', 'feeds', 'shared', 'instant_articles') %>
-        <% asset_display = Dir.glob("#{path}/*").join("").include?(content.feature.try(:asset_display) || 'NO_ASSET') ? content.feature.try(:asset_display) : 'default' %>
-        <%= render partial: "feeds/shared/instant_articles/#{asset_display}", locals: {content: content} %>
+        <%= render_lead_asset content %>
 
       </header>
-      
-      <p> <%= render_with_inline_assets content %> </p> 
+
+      <p> <%= render_body content %> </p> 
 
       <footer>
         <small>© 2016 Southern California Public Radio</small>

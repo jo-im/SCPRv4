@@ -1,4 +1,5 @@
+<% asset ||= content.asset %>
 <figure>
-  <img src="<%= content.asset.full.url %>" />
-  <figcaption><%= content.asset.caption %></figcaption>
+  <img src="<%= asset.full.url %>" />
+  <figcaption><%= asset.caption %></figcaption>
 </figure>

@@ -54,7 +54,8 @@ class FeedsController < ApplicationController
     end
     render template: 'feeds/npr_ingest.xml.builder', format: :xml
   end
-
+  
+  helper InstantArticlesHelper
   def facebook_ingest
     response.headers["Content-Type"] = 'text/xml'
 
