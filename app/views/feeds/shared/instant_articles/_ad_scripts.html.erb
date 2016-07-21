@@ -1,0 +1,59 @@
+<!-- <!-- Start: GPT Async -->
+<script type='text/javascript'>
+  var gptadslots=[];
+  var googletag = googletag || {};
+  googletag.cmd = googletag.cmd || [];
+  (function(){ var gads = document.createElement('script');
+    gads.async = true; gads.type = 'text/javascript';
+    var useSSL = 'https:' == document.location.protocol;
+    gads.src = (useSSL ? 'https:' : 'http:') + '//www.googletagservices.com/tag/js/gpt.js';
+    var node = document.getElementsByTagName('script')[0];
+    node.parentNode.insertBefore(gads, node);
+  })();
+</script>
+
+<script type="text/javascript">
+  googletag.cmd.push(function() {
+
+    var keySuffix, key;
+
+    // if (typeof DFP_KEY_SUFFIX_OVERRIDE !== "undefined") {
+    //   keySuffix = DFP_KEY_SUFFIX_OVERRIDE
+    // } else {
+    //   keySuffix = "/" + window.location.pathname.split("/").filter(function(v){return v!==''}).splice(0, 2).join("/")
+    // }
+
+    key = '/3468/ibs.scpr.scpr' //+ keySuffix;
+
+    // Only print the Ad Slots we need for the given page,
+    // or else the empty ad requests will count against us in DFP
+
+    var positionAMapping = googletag.sizeMapping()
+      .addSize([840, 100],[728,90])
+      .addSize([0,0], [300, 50])
+      .build();
+
+    // Position A
+    gptadslots[3]= googletag.defineSlot(key, [[300,50],[728,90]],'dfp-slot_a')
+      .defineSizeMapping(positionAMapping)
+      .setTargeting('pos',['banner-top'])
+      .addService(googletag.pubads());
+
+    // Position B
+    gptadslots[1]= googletag.defineSlot(key, [[300,250]],'dfp-slot_b').setTargeting('pos',['mr-top']).addService(googletag.pubads());
+
+    // Position C
+    gptadslots[2]= googletag.defineSlot(key, [[300,250]],'dfp-slot_c').setTargeting('pos',['mr-bottom']).addService(googletag.pubads());
+
+    googletag.pubads().enableSingleRequest();
+
+    // If this page is an article and has a category, add in the targeting tag
+    if (typeof DFP_CATEGORY !== "undefined") {
+      googletag.pubads().setTargeting('category',[DFP_CATEGORY]);
+    }
+
+    googletag.pubads().enableAsyncRendering();
+    googletag.enableServices();
+  });
+</script>
+<!-- End: GPT --> -->
