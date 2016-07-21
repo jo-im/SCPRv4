@@ -13,12 +13,12 @@ xml.rss({
         xml.title content.title
         xml.description content.teaser
         xml.tag! 'content:encoded' do
-          xml.cdata! render(
+          xml.cdata! relaxed_sanitize(render(
             partial: 'feeds/shared/instant_article', 
             formats: ['html'],
             layout: false, 
             locals: {content: content}
-          ).gsub("\n", "")
+          ).gsub("\n", ""))
         end
         xml.guid  content.public_url
         xml.link  content.public_url
