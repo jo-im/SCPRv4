@@ -23,7 +23,7 @@ module InstantArticlesHelper
   end
 
   def render_body content
-    relaxed_sanitize strip_embeds insert_inline_assets content
+    strip_embeds insert_inline_assets content
   end
 
   def strip_embeds body
@@ -31,6 +31,7 @@ module InstantArticlesHelper
     doc.css(".embed-placeholder, .embed-wrapper").each{|placeholder|
       placeholder.replace Nokogiri::HTML::DocumentFragment.parse("")
     }
+    doc.xpath('//comment()').remove
     doc.css('body').children.to_s.html_safe
   end
 
