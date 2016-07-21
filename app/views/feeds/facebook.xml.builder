@@ -1,6 +1,5 @@
 xml.rss({
   "version" => "2.0",
-  "xmlns:source" => "http://source.smallpict.com/2014/07/12/theSourceNamespace.html",
   "xmlns:content" => "http://purl.org/rss/1.0/modules/content/",
   "xmlns:IA" => "http://rss2.io/ia/"
 }) do
