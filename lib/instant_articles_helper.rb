@@ -23,7 +23,7 @@ module InstantArticlesHelper
   end
 
   def render_body content
-    strip_embeds insert_inline_assets content
+    relaxed_sanitize strip_embeds insert_inline_assets content
   end
 
   def strip_embeds body
