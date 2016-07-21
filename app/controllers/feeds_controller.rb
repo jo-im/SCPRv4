@@ -1,6 +1,6 @@
 class FeedsController < ApplicationController
   layout false
-
+  helper InstantArticlesHelper
   def all_news
     response.headers["Content-Type"] = 'text/xml'
 
@@ -54,4 +54,25 @@ class FeedsController < ApplicationController
     end
     render template: 'feeds/npr_ingest.xml.builder', format: :xml
   end
+  
+  def facebook_ingest
+    response.headers["Content-Type"] = 'text/xml'
+
+    @feed = {
+      :title       => "Instant Articles | 89.3 KPCC",
+      :description => "Instant Articles from KPCC's reporters, bloggers and shows."
+    }
+
+    # Anything with a news category is eligible
+    @content = ContentBase.search({
+      :classes    => [NewsStory, ContentShell, BlogEntry, ShowSegment],
+      :limit      => 15,
+      :with       => { "category.slug" => true }
+    })
+
+    xml = render_to_string(action: "facebook", formats: :xml)
+
+    render text: xml, format: :xml
+  end
+
 end
