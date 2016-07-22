@@ -63,46 +63,8 @@ class FeedsController < ApplicationController
       :description => "Instant Articles from KPCC's reporters, bloggers and shows."
     }
 
-    # Anything with a news category is eligible
-    @content = ContentBase.query({
-      from: 0,
-      size: 15,
-      sort: [
-        {
-          public_datetime: {
-            order: "desc"
-          }
-        }
-      ],
-      query: {
-        bool: {
-          must: {
-            bool: {
-              must: [
-                {
-                  bool: {
-                    must_not: {
-                      wildcard: {
-                        byline: "*NPR*"
-                      }
-                    }
-                  }
-                },
-                {
-                  bool: {
-                    must_not: {
-                      wildcard: {
-                        byline: "*AP*"
-                      }
-                    }
-                  }
-                }
-              ]
-            }
-          }
-        }
-      }
-    }, {type: ['news_story', 'blog_entry']})
+    records = NewsStory.published.where(source: "kpcc").order("published_at DESC").limit(15).concat BlogEntry.published.order('published_at DESC').limit(15)
+    @content = records.map(&:get_article).sort_by(&:published_at).reverse.first(15)
 
     xml = render_to_string(action: "facebook", formats: :xml)
 
