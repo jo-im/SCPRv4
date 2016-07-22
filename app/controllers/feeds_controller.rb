@@ -67,7 +67,13 @@ class FeedsController < ApplicationController
     @content = ContentBase.query({
       from: 0,
       size: 15,
-      limit: 15,
+      sort: [
+        {
+          public_datetime: {
+            order: "desc"
+          }
+        }
+      ],
       query: {
         bool: {
           must: {
