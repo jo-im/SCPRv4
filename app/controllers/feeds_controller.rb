@@ -64,7 +64,7 @@ class FeedsController < ApplicationController
     }
 
     records = NewsStory.published.where(source: "kpcc").order("published_at DESC").limit(15).concat BlogEntry.published.order('published_at DESC').limit(15)
-    @content = records.map(&:get_article).sort_by(&:published_at).reverse.first(15)
+    @content = records.map(&:get_article).sort_by(&:public_datetime).reverse.first(15)
 
     xml = render_to_string(action: "facebook", formats: :xml)
 
