@@ -103,8 +103,6 @@ module ContentBase
   # documentation or Elasticsearch-SQL.
 
   def query query={}, options={}
-    @@es_client.search({index:@@es_index, body: query}.merge(options))
-
     begin
       results = Hashie::Mash.new(@@es_client.search({index:@@es_index, body: query}.merge(options)))
     rescue Elasticsearch::Transport::Transport::Errors::BadRequest
@@ -238,7 +236,7 @@ module ContentBase
       from: from
     }
 
-    query body, ignore_unavailable: true, types: types
+    query body, ignore_unavailable: true, type: types
   end
 
   #--------------------
