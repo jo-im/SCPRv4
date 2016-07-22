@@ -23,13 +23,19 @@ module InstantArticlesHelper
   end
 
   def render_body content
-    remove_empty_tags strip_embeds insert_inline_assets content
+    strip_comments remove_empty_tags strip_embeds insert_inline_assets content
   end
 
   def strip_embeds body
     process_markup body, ".embed-placeholder, .embed-wrapper" do |placeholder|
       placeholder.remove
     end
+  end
+
+  def strip_comments body
+    doc = Nokogiri::HTML(body.force_encoding('ASCII-8BIT'))
+    doc.xpath('//comment()').remove
+    doc.css("body").children.to_s.html_safe
   end
 
   def remove_empty_tags body
