@@ -23,16 +23,25 @@ module InstantArticlesHelper
   end
 
   def render_body content
-    strip_embeds insert_inline_assets content
+    strip_comments remove_empty_tags strip_embeds insert_inline_assets content
   end
 
   def strip_embeds body
+    process_markup body, ".embed-placeholder, .embed-wrapper" do |placeholder|
+      placeholder.remove
+    end
+  end
+
+  def strip_comments body
     doc = Nokogiri::HTML(body.force_encoding('ASCII-8BIT'))
-    doc.css(".embed-placeholder, .embed-wrapper").each{|placeholder|
-      placeholder.replace Nokogiri::HTML::DocumentFragment.parse("")
-    }
     doc.xpath('//comment()').remove
-    doc.css('body').children.to_s.html_safe
+    doc.css("body").children.to_s.html_safe
+  end
+
+  def remove_empty_tags body
+    process_markup body, "p" do |tag|
+      tag.remove if tag.content.strip.empty?
+    end
   end
 
   def insert_inline_assets content, options={}
@@ -52,5 +61,15 @@ module InstantArticlesHelper
       end
     end
     doc.css("body").children.to_s.html_safe
+  end
+
+  private
+
+  def process_markup html, selector, &block
+    doc = Nokogiri::HTML(html.force_encoding('ASCII-8BIT'))
+    doc.css(selector).each{|element|
+      yield element
+    }
+    doc.css('body').children.to_s.html_safe
   end
 end

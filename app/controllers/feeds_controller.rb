@@ -64,11 +64,45 @@ class FeedsController < ApplicationController
     }
 
     # Anything with a news category is eligible
-    @content = ContentBase.search({
-      :classes    => [NewsStory, ContentShell, BlogEntry, ShowSegment],
-      :limit      => 15,
-      :with       => { "category.slug" => true }
-    })
+    @content = ContentBase.query({
+      from: 0,
+      size: 15,
+      sort: [
+        {
+          public_datetime: {
+            order: "desc"
+          }
+        }
+      ],
+      query: {
+        bool: {
+          must: {
+            bool: {
+              must: [
+                {
+                  bool: {
+                    must_not: {
+                      wildcard: {
+                        byline: "*NPR*"
+                      }
+                    }
+                  }
+                },
+                {
+                  bool: {
+                    must_not: {
+                      wildcard: {
+                        byline: "*AP*"
+                      }
+                    }
+                  }
+                }
+              ]
+            }
+          }
+        }
+      }
+    }, {type: ['news_story', 'blog_entry']})
 
     xml = render_to_string(action: "facebook", formats: :xml)
 
