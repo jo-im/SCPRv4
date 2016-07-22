@@ -97,6 +97,73 @@ module ContentBase
   end
 
   #--------------------
+  # This is for making "raw" Elasticsearch queries.
+  # Useful if #search isn't doing what you want, or 
+  # for testing out query structures copied from
+  # documentation or Elasticsearch-SQL.
+
+  def query query={}, options={}
+    @@es_client.search({index:@@es_index, body: query}.merge(options))
+
+    begin
+      results = Hashie::Mash.new(@@es_client.search({index:@@es_index, body: query}.merge(options)))
+    rescue Elasticsearch::Transport::Transport::Errors::BadRequest
+      return []
+    end
+
+    # -- convert results into Article objects -- #
+
+    articles = results.hits.hits.collect do |r|
+      # turn ES _source into Article
+      Article.new(r._source.merge({
+        id:               r._source.obj_key,
+        public_datetime:  r._source.public_datetime ? Time.zone.parse(r._source.public_datetime) : nil,
+        created_at:       Time.zone.parse(r._source.created_at),
+        updated_at:       Time.zone.parse(r._source.updated_at),
+      }).except(:obj_key))
+    end
+
+    # -- inject pagination bits into the array -- #
+
+    articles.instance_variable_set :@_body, query
+
+    articles.instance_variable_set :@_pagination, Hashie::Mash.new({
+      per_page:       (query[:size] || 10),
+      offset:         (query[:from] || 0),
+      total_results:  results.hits.total,
+    })
+
+    articles.singleton_class.class_eval do
+      define_method :current_page do
+        ( @_pagination.offset / @_pagination.per_page ).floor + 1
+      end
+
+      define_method :total_pages do
+        ( @_pagination.total_results.to_f / @_pagination.per_page.to_f ).ceil
+      end
+
+      define_method :offset_value do
+        @_pagination.offset
+      end
+
+      define_method :limit_value do
+        @_pagination.per_page
+      end
+
+      define_method :last_page? do
+        @_pagination.current_page >= @_pagination.total_pages
+      end
+
+      define_method :results do
+        @_pagination.total_results
+      end
+    end
+
+    articles    
+
+  end
+
+  #--------------------
 
   def search(*args)
     options       = args.extract_options!
@@ -171,61 +238,7 @@ module ContentBase
       from: from
     }
 
-    begin
-      results = Hashie::Mash.new(@@es_client.search index:@@es_index, ignore_unavailable:true, type:types, body:body)
-    rescue Elasticsearch::Transport::Transport::Errors::BadRequest
-      return []
-    end
-
-    # -- convert results into Article objects -- #
-
-    articles = results.hits.hits.collect do |r|
-      # turn ES _source into Article
-      Article.new(r._source.merge({
-        id:               r._source.obj_key,
-        public_datetime:  r._source.public_datetime ? Time.zone.parse(r._source.public_datetime) : nil,
-        created_at:       Time.zone.parse(r._source.created_at),
-        updated_at:       Time.zone.parse(r._source.updated_at),
-      }).except(:obj_key))
-    end
-
-    # -- inject pagination bits into the array -- #
-
-    articles.instance_variable_set :@_body, body
-
-    articles.instance_variable_set :@_pagination, Hashie::Mash.new({
-      per_page:       options[:per_page],
-      offset:         from,
-      total_results:  results.hits.total,
-    })
-
-    articles.singleton_class.class_eval do
-      define_method :current_page do
-        ( @_pagination.offset / @_pagination.per_page ).floor + 1
-      end
-
-      define_method :total_pages do
-        ( @_pagination.total_results.to_f / @_pagination.per_page.to_f ).ceil
-      end
-
-      define_method :offset_value do
-        @_pagination.offset
-      end
-
-      define_method :limit_value do
-        @_pagination.per_page
-      end
-
-      define_method :last_page? do
-        @_pagination.current_page >= @_pagination.total_pages
-      end
-
-      define_method :results do
-        @_pagination.total_results
-      end
-    end
-
-    return articles
+    query body, ignore_unavailable: true, types: types
   end
 
   #--------------------
@@ -233,6 +246,15 @@ module ContentBase
   def find obj_key
     class_name = obj_key.split('-').first.camelize
     ContentBase.search(classes: [class_name], limit: 1, with:{obj_key: obj_key}).first
+  end
+
+  #---------------------
+
+  def bulk_find obj_keys
+    if obj_keys[0].respond_to?(:obj_key)
+      obj_keys = obj_keys.map(&:obj_key)
+    end
+    ContentBase.search(with: { obj_key: obj_keys }, per_page: 60)
   end
 
   #--------------------
