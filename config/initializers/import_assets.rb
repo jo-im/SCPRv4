@@ -1,5 +1,5 @@
 # Only import our assets on server start.
-if Rails.const_defined? 'Server'
+unless Rails.const_defined? 'Console'
   Rails.application.load_tasks
   Rake::Task["assets:import"].invoke
 end
