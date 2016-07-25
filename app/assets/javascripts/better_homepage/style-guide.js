@@ -1,2 +1,2 @@
-//ASSETS_PATH = "/static/"
+ASSETS_PATH = "/assets/"
 require('scpr-style-guide')
