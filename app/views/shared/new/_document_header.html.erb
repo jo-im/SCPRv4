@@ -31,7 +31,8 @@
     <%= tag "meta", name: "twitter:url", content: meta_information[:url] || "http://scpr.org" %>
     <%= tag "meta", name: "twitter:domain", content: meta_information[:url] || "http://scpr.org" %>
     <%= tag "meta", name: "twitter:title", content: h(meta_information[:title] || page_title) %>
-    <%= tag "meta", name: "twitter:description", content: h(meta_information[:description] || "Member-supported public radio for Southern California. Award-winning local news and cultural programming alongside the best of NPR.") %>
+    <% meta_information[:description] ||= "Member-supported public radio for Southern California. Award-winning local news and cultural programming alongside the best of NPR." %>
+    <%= tag "meta", name: "twitter:description", content: h(meta_information[:description]) %>
 
     <%= tag "link", rel: "alternate", type: "application/rss+xml", title: "RSS", href: meta_information[:rss_feed] || "http://scpr.org/feeds/all_news" %>
 

@@ -66,16 +66,23 @@ class HomepageContent < ActiveRecord::Base
     content.try(:get_article) || Article.new
   end
 
-  def media_class
-    ## Not sure if this is needed anymore?
-    case asset_scheme
-    when 'large'
-      'media--hp-large'
-    when 'block'
-      'media--block'
+  # This way, we can treat homepage_content as a proxy
+  # to the actual content, so that we don't always have
+  # to call for it when we need it.
+  def method_missing mname, *args
+    @content ||= content
+    if @content
+      @content.try mname, *args
     else
-      'media--hp'
+      super
     end
+  end
+
+  def related_content
+    # Will at least return an array
+    # if the content does not support
+    # related content.
+    (@content ||= content).try(:related_content) || []
   end
 
   private

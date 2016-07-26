@@ -519,7 +519,7 @@ module ApplicationHelper
   end
 
   def filter_related_content content, contents
-    homepage_content = contents.map{|c| c.content.to_article}
+    homepage_content_ids = contents.map(&:obj_key)
     @related_content_manifest ||= []
     ## This is mainly for display purposes on the new homepage
     ## where we want to get the latest 2 related contents for
@@ -528,9 +528,10 @@ module ApplicationHelper
     #
     # We are also filtering out anything that has already been
     # displayed, or is part of the series of homepage contents.
-    content.article.related_content_articles.select do |article|
+    related_content = content.related_content || []
+    related_content.select do |article|
       !@related_content_manifest.include?(article) &&
-      !homepage_content.include?(article) && 
+      !homepage_content_ids.include?(article.obj_key) && 
       ((article.public_datetime || 10.years.ago) > 48.hours.ago) &&
       @related_content_manifest.push(article)
     end
