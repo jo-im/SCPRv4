@@ -1,5 +1,6 @@
 <% @META_DESCRIPT = h(strip_tags(article.teaser)) %>
 <% @META_AUTHOR = article.byline %>
+<% meta_information[:description] ||= h(strip_tags(article.teaser)) %>
 
 <%= cache ["opengraph", "v2", article] do %>
   <meta property="og:description" content="<%= h(strip_tags(article.teaser)) %>">
@@ -10,9 +11,7 @@
   <meta name="twitter:site" value="@kpcc">
   <meta name="twitter:url" value="<%= article.public_url %>">
   <meta name="twitter:title" value="<%= h(article.short_title) %>">
-  <% meta_information[:description] ||= h(strip_tags(article.teaser)) %>
   <meta name="twitter:description" value="<%= meta_information[:description] %>">
-
   <meta property="article:published_time" content="<%=article.public_datetime%>" />
   <meta property="article:modified_time" content="<%=article.updated_at%>" />
 
