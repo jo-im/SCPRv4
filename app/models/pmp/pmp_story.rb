@@ -3,6 +3,7 @@ class PmpStory < PmpContent
   default_scope ->{where("pmp_contents.profile = 'story'")}
   has_many :pmp_audio, dependent: :destroy, foreign_key: :pmp_content_id, class_name: :PmpAudio
   has_many :pmp_images, dependent: :destroy, foreign_key: :pmp_content_id
+  has_many :pmp_broadcast, dependent: :destroy, foreign_key: :pmp_content_id, class_name: :PmpBroadcast
 
   def publish
     doc = build_docs
@@ -50,6 +51,15 @@ class PmpStory < PmpContent
           image_content.publish unless image_content.published?
           image_content.link
         end
+      end.compact)
+    end
+    if content.respond_to?(:broadcast_contents)
+      doc.links['item'].concat(content.broadcast_contents.map do |b|
+        # Remember that, since broadcast content is related through related_content,
+        # only published broadcast contents will show up here.
+        broadcast_content = pmp_broadcast.where(content: b).first_or_create
+        broadcast_content.publish unless broadcast_content.published?
+        broadcast_content.link
       end.compact)
     end
     doc

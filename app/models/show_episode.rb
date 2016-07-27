@@ -80,6 +80,8 @@ class ShowEpisode < ActiveRecord::Base
     dependent:    :destroy,
     before_add:   :set_rundown_position
 
+  has_one :broadcast_content, as: :content
+
   ## Rundown type relations
 
   [:show_segments,:news_stories,:content_shells,:blogs,:show_episodes,:abstracts,:events,:pij_queries].each do |content_type|

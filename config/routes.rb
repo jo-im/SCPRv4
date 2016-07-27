@@ -308,6 +308,7 @@ Scprv4::Application.routes.draw do
     resources :blog_entries, concerns: [:preview, :search]
     resources :events, concerns: [:preview, :search]
     resources :pledge_drives, concerns: [:search]
+    resources :broadcast_contents, concerns: [:search]
 
     resources :better_homepages, concerns: [:preview, :search]
 

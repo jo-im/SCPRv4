@@ -90,12 +90,17 @@ module Concern
             has_one :pmp_content, as: :content, dependent: :destroy
             has_one "pmp_#{profile_name}".to_sym, as: :content, foreign_key: :content_id
             after_save :destroy_pmp_content, :build_pmp_content, :publish_pmp_content
+            if profile_name == 'story'
+              has_many :broadcast_contents, through: :incoming_references, source: :content, source_type: "BroadcastContent"
+            end
           end
           include PmpContentAssociation
           self.const_set "PMP_PROFILE", profile_name
         end
         self.const_set "#{profile_name.capitalize}Profile", mod
       end
+
+
 
       private
 
@@ -131,7 +136,7 @@ module Concern
           doc.to_s.html_safe
         end
         def params
-          {} # ActionView expects this, but we obviously it isn't useful in this context.
+          {} # ActionView expects this, but obviously it isn't useful in this context.
         end
       end
 
