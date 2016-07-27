@@ -10,6 +10,11 @@ class PmpContent < ActiveRecord::Base
 
   PMPCONFIG = Rails.configuration.x.api.pmp
 
+  ## This model should act like an abstract class, even though I didn't
+  ## syntactically write it as an abstract class.  PMP models that represent
+  ## a profile should inherit from this class and each have their own #publish
+  ## method which constructs their doc and saves the doc to the PMP.
+
   def published?
     guid ? true : false
   end

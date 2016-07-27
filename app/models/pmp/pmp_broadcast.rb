@@ -10,6 +10,10 @@ class PmpBroadcast < PmpContent
       # the broadcast profile once it has been created.
       # The audio profile will suffice for now.
       bdoc         = pmp('write').doc_of_type("audio")
+      # Since we are using a custom profile, we inject it here.
+      bdoc.profile = PMP::Link.new({
+        href: "#{PMPCONFIG['endpoint']}docs/#{PMPCONFIG['profiles']['broadcast']['guid']}"
+      })
       bdoc.title   = b.headline
       bdoc.script  = b.body
       bdoc.links ||= {}
