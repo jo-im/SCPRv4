@@ -82,7 +82,7 @@ module Concern
         end
       end
 
-      ["story", "audio", "image", "episode", "broadcast"].each do |profile_name|
+      ["story", "audio", "image", "episode"].each do |profile_name|
         mod = Module.new do
           extend ActiveSupport::Concern
           included do
@@ -90,7 +90,7 @@ module Concern
             has_one :pmp_content, as: :content, dependent: :destroy
             has_one "pmp_#{profile_name}".to_sym, as: :content, foreign_key: :content_id
             after_save :destroy_pmp_content, :build_pmp_content, :publish_pmp_content
-            if profile_name == 'broadcast'
+            if profile_name == 'story'
               has_many :broadcast_contents, through: :incoming_references, source: :content, source_type: "BroadcastContent"
             end
           end
