@@ -14,7 +14,6 @@
     <meta property="fb:app_id" content="129848480405753" />
     <link rel="publisher" href="https://plus.google.com/108872361044769229886/" />
 
-    <meta property="og:site_name" content="Southern California Public Radio" />
     <%= tag "meta", name: "keywords", content: meta_information[:keywords] || "KPCC, California, Southern California, Los Angeles, Pasadena, SCPR, Southern California Public Radio" %>
     <meta name="author" content="Southern California Public Radio" />
     <% if Rails.env.staging? %>
@@ -23,16 +22,6 @@
     <%= yield :opengraph %>
 
     <%= csrf_meta_tags %>
-
-
-    <meta name="twitter:site" content="@kpcc"/>
-    <meta name="twitter:card" content="summary"/>
-
-    <%= tag "meta", name: "twitter:url", content: meta_information[:url] || "http://scpr.org" %>
-    <%= tag "meta", name: "twitter:domain", content: meta_information[:url] || "http://scpr.org" %>
-    <%= tag "meta", name: "twitter:title", content: h(meta_information[:title] || page_title) %>
-    <% meta_information[:description] ||= "Member-supported public radio for Southern California. Award-winning local news and cultural programming alongside the best of NPR." %>
-    <%= tag "meta", name: "twitter:description", content: h(meta_information[:description]) %>
 
     <%= tag "link", rel: "alternate", type: "application/rss+xml", title: "RSS", href: meta_information[:rss_feed] || "http://scpr.org/feeds/all_news" %>
 

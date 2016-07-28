@@ -1,38 +1,50 @@
 <% @META_DESCRIPT = h(strip_tags(article.teaser)) %>
 <% @META_AUTHOR = article.byline %>
-<% meta_information[:description] ||= h(strip_tags(article.teaser)) %>
 
-<%= cache ["opengraph", "v2", article] do %>
-  <meta property="og:description" content="<%= h(strip_tags(article.teaser)) %>">
-  <meta property="og:title" content="<%= h(article.short_title) %>">
-  <meta property="og:type" content="<%= @OG_TYPE || "article" %>">
-  <meta property="og:url" content="<%= article.public_url %>"/>
-  <meta name="twitter:card" value="summary_large_image">
-  <meta name="twitter:site" value="@kpcc">
-  <meta name="twitter:url" value="<%= article.public_url %>">
-  <meta name="twitter:title" value="<%= h(article.short_title) %>">
-  <meta name="twitter:description" value="<%= meta_information[:description] %>">
-  <meta property="article:published_time" content="<%=article.public_datetime%>" />
-  <meta property="article:modified_time" content="<%=article.updated_at%>" />
+<meta property="og:site_name" content="Southern California Public Radio" />
+<%= tag "meta", name: "twitter:domain", content: meta_information[:url] || "http://scpr.org" %>
+<meta name="twitter:site" content="@kpcc"/>
 
-  <% if article.category %>
-  <meta property="article:section" content="<%=h(article.category.title)%>" />
+<% if article %>
+
+  <%= cache ["opengraph", "v2", article] do %>
+    <meta property="og:description" content="<%= h(strip_tags(article.teaser)) %>">
+    <meta property="og:title" content="<%= h(article.short_title) %>">
+    <meta property="og:type" content="<%= @OG_TYPE || "article" %>">
+    <meta property="og:url" content="<%= article.public_url %>"/>
+    <meta name="twitter:card" value="summary_large_image">
+    <meta name="twitter:site" value="@kpcc">
+    <meta name="twitter:url" value="<%= article.public_url %>">
+    <meta name="twitter:title" value="<%= h(article.short_title) %>">
+    <meta name="twitter:description" value="<%= h(strip_tags(article.teaser)) %>">
+    <meta property="article:published_time" content="<%=article.public_datetime%>" />
+    <meta property="article:modified_time" content="<%=article.updated_at%>" />
+
+    <% if article.category %>
+    <meta property="article:section" content="<%=h(article.category.title)%>" />
+    <% end %>
+
+
+    <% if article.assets.present? %>
+        <% article.assets.map(&:full).each do |image| %>
+          <meta property="og:image" content="<%=image.url%>" />
+          <meta property="og:image:type" content="image/jpeg" />
+          <meta property="og:image:width" content="<%=image.width%>" />
+          <meta property="og:image:height" content="<%=image.height%>" />
+        <% end %> <%# assets %>
+
+      <link rel="image_src" href="<%= article.asset.full.url %>" />
+      <meta name="twitter:image" content="<%= article.asset.full.url || "http://scpr.org/assets/kpcc-twitter-logo.png" %>">
+    <% else %>
+      <meta property="og:image" content="http://scpr.org<%=image_path('kpcc-twitter-logo.png')%>" />
+      <meta name="twitter:image" content="http://scpr.org<%=image_path('kpcc-twitter-logo.png')%>">
+    <% end %>
+
   <% end %>
 
-
-  <% if article.assets.present? %>
-      <% article.assets.map(&:full).each do |image| %>
-        <meta property="og:image" content="<%=image.url%>" />
-        <meta property="og:image:type" content="image/jpeg" />
-        <meta property="og:image:width" content="<%=image.width%>" />
-        <meta property="og:image:height" content="<%=image.height%>" />
-      <% end %> <%# assets %>
-
-    <link rel="image_src" href="<%= article.asset.full.url %>" />
-    <meta name="twitter:image" content="<%= article.asset.full.url || "http://scpr.org/assets/kpcc-twitter-logo.png" %>">
-  <% else %>
-    <meta property="og:image" content="http://scpr.org<%=image_path('kpcc-twitter-logo.png')%>" />
-    <meta name="twitter:image" content="http://scpr.org<%=image_path('kpcc-twitter-logo.png')%>">
-  <% end %>
-
+<% else %>
+    <meta name="twitter:card" content="summary"/>
+    <%= tag "meta", name: "twitter:url", content: meta_information[:url] || "http://scpr.org" %>
+    <%= tag "meta", name: "twitter:title", content: h(meta_information[:title] || page_title) %>
+    <%= tag "meta", name: "twitter:description", content: "Member-supported public radio for Southern California. Award-winning local news and cultural programming alongside the best of NPR." %>
 <% end %>
