@@ -3,7 +3,7 @@ require 'rails/all'
 
 Bundler.require(:default, Rails.env)
 
-if Rails.env.development?
+if Rails.env.development? || ENV['USE_DOCKER_MACHINE']
   ## Initialize Docker Machine environment variables so
   ## that database.yml can pick up the MySQL database host
   `docker-machine env default`.scan(/(\w+)="(.*)"/).each{|p| ENV[p[0]] = p[1]}

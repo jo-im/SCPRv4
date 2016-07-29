@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <link rel="canonical" href="<%= content.public_url %>">
+    <meta property="op:markup_version" content="v1.0">
+    <meta property="og:locale" content='en-us'/>
+    <meta name='author' property='article:author' itemprop='author' value='<%= content.byline %>' />
+    <% if asset = content.asset %>
+      <meta property='og:image' itemprop='thumbnailUrl' content="<%= asset.full.url %>" />
+      <meta property="og:image:type" content="image/jpeg" />
+      <meta property="og:image:width" content="<%= asset.full.width %>" />
+      <meta property="og:image:height" content="<%= asset.full.height%>" />
+    <% end %>
+    <title><%= content.title %></title>
+  </head>
+  <body>
+    <article>
+      <%= render_body content %>
+      <footer>
+        <small>© 2016 Southern California Public Radio</small>
+      </footer>
+    </article>
+  </body>
+</html>
