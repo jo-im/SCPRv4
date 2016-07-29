@@ -26,6 +26,7 @@ class ContentAsset < ActiveRecord::Base
     :eight,
     :full,
     :wide,
+    :three,
     to: :asset
 
   alias_attribute :primary, :full
