@@ -1,9 +1,8 @@
 module InstantArticlesHelper
 
   def render_asset(content, options={})
-    # For now, we're only going to render any assets that we own.
     asset = options[:asset] || nil
-    return if asset && !asset.owner.try(:include?, "KPCC")
+    return if options[:kpcc_only] && asset && !asset.owner.try(:include?, "KPCC")
     if options[:asset_display]
       asset_display = options[:asset_display]
     else 
