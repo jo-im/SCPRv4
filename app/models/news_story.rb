@@ -31,6 +31,7 @@ class NewsStory < ActiveRecord::Base
   #include Concern::Callbacks::CacheExpirationCallback
   include Concern::Callbacks::PublishNotificationCallback
   include Concern::Callbacks::ExpireIngestFeedCacheCallback
+  include Concern::Callbacks::AppleNewsCallback
   include Concern::Model::Searchable
   include Concern::Callbacks::HomepageCachingCallback
   include Concern::Callbacks::TouchCallback
