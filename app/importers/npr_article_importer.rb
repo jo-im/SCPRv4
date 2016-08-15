@@ -36,8 +36,16 @@ module NprArticleImporter
 
       added = []
 
-      npr_stories.reject { |s|
-        RemoteArticle.exists?(source: SOURCE, article_id: s.id)
+      fetched_story_ids    = npr_stories.map(&:id)
+
+      existing_story_ids   = RemoteArticle.where(article_id: fetched_story_ids, source: SOURCE)
+        .pluck(:article_id)
+        .compact
+        .map(&:to_s)
+
+      npr_stories.reject{ |s| 
+        # Reject the story if the id is already present in our database.
+        existing_story_ids.include?(s.id.to_s)
       }.each do |npr_story|
         cached_article = RemoteArticle.new(
           :source       => SOURCE,
