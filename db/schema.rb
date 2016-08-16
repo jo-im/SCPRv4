@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160727220239) do
+ActiveRecord::Schema.define(version: 20160816202513) do
 
   create_table "abstracts", force: :cascade do |t|
     t.string   "source",               limit: 255
@@ -29,6 +29,18 @@ ActiveRecord::Schema.define(version: 20160727220239) do
   add_index "abstracts", ["category_id"], name: "index_abstracts_on_category_id", using: :btree
   add_index "abstracts", ["source"], name: "index_abstracts_on_source", using: :btree
   add_index "abstracts", ["updated_at"], name: "index_abstracts_on_updated_at", using: :btree
+
+  create_table "apple_news_articles", force: :cascade do |t|
+    t.integer  "record_id",   limit: 4
+    t.string   "record_type", limit: 255
+    t.string   "uuid",        limit: 255
+    t.string   "revision",    limit: 255
+    t.datetime "created_at",              null: false
+    t.datetime "updated_at",              null: false
+  end
+
+  add_index "apple_news_articles", ["record_id"], name: "index_apple_news_articles_on_record_id", using: :btree
+  add_index "apple_news_articles", ["record_type"], name: "index_apple_news_articles_on_record_type", using: :btree
 
   create_table "assethost_contentasset", force: :cascade do |t|
     t.integer "content_id",   limit: 4
@@ -799,7 +811,7 @@ ActiveRecord::Schema.define(version: 20160727220239) do
     t.string   "news_agency",  limit: 255
   end
 
-  add_index "remote_articles", ["article_id", "source"], name: "index_remote_articles_on_article_id_and_source", using: :btree
+  add_index "remote_articles", ["article_id", "source"], name: "index_remote_articles_on_article_id_and_source", unique: true, using: :btree
   add_index "remote_articles", ["published_at"], name: "index_remote_articles_on_published_at", using: :btree
   add_index "remote_articles", ["source"], name: "index_remote_articles_on_source", using: :btree
 

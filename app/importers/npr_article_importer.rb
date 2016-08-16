@@ -57,13 +57,18 @@ module NprArticleImporter
           :is_new       => true
         )
 
-        if cached_article.save
-          added.push cached_article
-          log "Saved NPR Story ##{npr_story.id} as " \
-              "RemoteArticle ##{cached_article.id}"
-        else
-          log "Couldn't save NPR Story ##{npr_story.id}"
+        begin
+          if cached_article.save
+            added.push cached_article
+            log "Saved NPR Story ##{npr_story.id} as " \
+                "RemoteArticle ##{cached_article.id}"
+          else
+            log "Couldn't save NPR Story ##{npr_story.id}"
+          end
+        rescue ActiveRecord::RecordNotUnique
+          log "NPR Story ##{npr_story.id} already exists"
         end
+
       end # each
 
       added
