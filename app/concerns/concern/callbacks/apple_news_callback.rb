@@ -15,6 +15,8 @@ module Concern
           identifier: obj_key,
           title: headline,
           subtitle: teaser,
+          createdAt: published_at,
+          modifiedAt: updated_at,
           language: "en_US",
           layout: {
             columns: 7,
@@ -66,6 +68,10 @@ module Concern
         if ((respond_to?(:source) && source == "kpcc") || true) && (published? || publishing?)
           Job::PublishAppleNewsContent.perform self.class.to_s, self.id, :upsert
         end
+      end
+
+      def retrieve_from_apple_news
+        Job::PublishAppleNewsContent.get self
       end
 
       def delete_from_apple_news

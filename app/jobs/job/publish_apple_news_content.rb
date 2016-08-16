@@ -24,6 +24,14 @@ module Job
         NewRelic.log_error(e)
       end
       private
+      def find uuid
+        client.get_article uuid
+      end
+      def get record
+        if record.apple_news_article
+          find record.apple_news_article.uuid
+        end
+      end
       def insert record
         open_json_file_for record do |file, path, record|
           response = client.publish_article({'channel_id' => channel_id, file_name: path.basename.to_s}, path.dirname.to_s)
