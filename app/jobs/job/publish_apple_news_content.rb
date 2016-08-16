@@ -10,7 +10,7 @@ module Job
         # The gem provided by Apple expects a JSON file.  Specifically, it wants a file called
         # 'article.json', and refuses any file that has a different name.  Since we don't really
         # want to manage a bunch of JSON files, I've modified the gem to take in a file with any
-        # name we give it, but it still tells the API that it's called "article.json" upon request.
+        # name we specify, but it still tells the API that it's called "article.json" upon request.
         if action == :upsert
           unless record.apple_news_article
             insert record
@@ -31,6 +31,7 @@ module Job
             data = JSON.parse(response.to_s)["data"]
             record.apple_news_article = AppleNewsArticle.create uuid: data["id"], revision: data["revision"]
           end
+          response
         end
       end
       def update record
@@ -42,7 +43,10 @@ module Job
               data = JSON.parse(response.to_s)["data"]
               article.update revision: data["revision"]
             end
+            response
           end
+        else
+          nil
         end
       end
       def delete record
@@ -53,6 +57,9 @@ module Job
           if response.code == 204
             article.destroy
           end
+          response
+        else
+          nil
         end
       end
       def client
@@ -70,7 +77,7 @@ module Job
           f.write record.to_apple.to_json
           f.rewind
           path      = Pathname.new(f.path)
-          yield f, path, record
+          return yield f, path, record
         end
       end
     end
