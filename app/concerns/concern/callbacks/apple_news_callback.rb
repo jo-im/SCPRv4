@@ -1,3 +1,5 @@
+require 'reverse_markdown'
+require 'htmlentities'
 module Concern
   module Callbacks
     module AppleNewsCallback
@@ -11,31 +13,37 @@ module Concern
 
       def to_apple
         {
-          version: "1.2",
+          version: "1.0",
           identifier: obj_key,
           title: headline,
-          subtitle: teaser,
-          createdAt: published_at,
-          modifiedAt: updated_at,
-          language: "en_US",
+          language: "en",
           layout: {
             columns: 7,
             width: 1024,
-            margin: 75,
-            gutter: 20
+            margin: 70,
+            gutter: 40
+          },
+          subtitle: teaser,
+          metadata: {
+            excerpt: teaser,
+            thumbnailURL: asset.asset.thumb.url
+          },
+          documentStyle: {
+            backgroundColor: "#f6f6f6"
           },
           components: [
             {
               role: "title",
+              layout: "titleLayout",
               text: headline,
-              textStyle: "title"
+              textStyle: "titleStyle"
             },
-            {
-              role: "body",
-              text: text_body,
-              layout: "bodyLayout",
-              textStyle: "bodyStyle"
-            },
+            # {
+            #   role: "intro",
+            #   layout: "introLayout",
+            #   text: teaser,
+            #   textStyle: "introStyle"
+            # },
             {
               role: "header",
               layout: "headerImageLayout",
@@ -50,44 +58,49 @@ module Concern
             },
             {
               role: "author",
-              layout: "bylineLayout",
+              layout: "authorLayout",
               text: byline,
               textStyle: "authorStyle"
             },
+            {
+              role: "body",
+              text: markdown_body,
+              layout: "bodyLayout",
+              textStyle: "bodyStyle",
+              format: "markdown"
+            }
           ],
-          documentStyle: {
-            backgroundColor: "#F7F7F7"
-          },
           componentTextStyles: {
-            default: {
-              fontName: "Helvetica",
-              fontSize: 13,
-              linkStyle: {
-                textColor: "#428bca"
-              }
+            titleStyle: {
+              textAlignment: "left",
+              fontName: "Georgia-Bold",
+              fontSize: 44,
+              lineHeight: 54,
+              textAlignment: "center",
+              textColor: "#212121"
             },
-            title: {
-              fontName: "Helvetica-Bold",
-              fontSize: 30,
-              hyphenation: false
+            introStyle: {
+              textAlignment: "left",
+              fontName: "AvenirNext-Regular",
+              fontSize: 15,
+              textColor: "#363636"
             },
             authorStyle: {
               textAlignment: "left",
-              fontName: "HelveticaNeue-Bold",
-              fontSize: 16,
-              textColor: "#000"
-            },
-            :"default-body" => {
-              fontName: "Helvetica",
-              fontSize: 13
+              fontName: "AvenirNext-Regular",
+              fontSize: 14,
+              textColor: "#a6a6a6"
             },
             bodyStyle: {
               textAlignment: "left",
               fontName: "Georgia",
               fontSize: 18,
               lineHeight: 26,
-              textColor: "#000"
-            },
+              textColor: "#313131",
+              linkStyle: {
+                textColor: "#31aad3"
+              },
+            }
           },
           componentLayouts: {
             headerImageLayout: {
@@ -100,7 +113,23 @@ module Concern
                 bottom: 15
               }
             },
-            bylineLayout: {
+            titleLayout: {
+              columnStart: 0,
+              columnSpan: 7,
+              margin: {
+                top: 50,
+                bottom: 10
+              }
+            },
+            # introLayout: {
+            #   columnStart: 0,
+            #   columnSpan: 7,
+            #   margin: {
+            #     top: 15,
+            #     bottom: 15
+            #   }
+            # },
+            authorLayout: {
               columnStart: 0,
               columnSpan: 7,
               margin: {
@@ -110,7 +139,7 @@ module Concern
             },
             bodyLayout: {
               columnStart: 0,
-              columnSpan: 5,
+              columnSpan: 7,
               margin: {
                 top: 15,
                 bottom: 15
@@ -136,6 +165,15 @@ module Concern
       end
 
       private
+
+      def markdown_body
+        # Apple News format does support inline styling, but this is done by creating
+        # ranges and adding it to a list of inlineTextStyles.  Unfortunately, Apple News
+        # does not support HTML, and it would be a shame to expend effort on a parser
+        # for this one task.  However, Apple News does support Markdown, and converting
+        # HTML to Markdown is fairly trivial.
+        HTMLEntities.new.decode ReverseMarkdown.convert Nokogiri::HTML::DocumentFragment.parse(body).to_s, unknown_tags: :drop
+      end
 
       def text_body
         Nokogiri::HTML::DocumentFragment.parse(Nokogiri::HTML(body.force_encoding('ASCII-8BIT')).xpath('//text()').to_s)

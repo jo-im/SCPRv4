@@ -51,6 +51,8 @@ gem "rack-utf8_sanitizer"
 gem "rufus-scheduler"
 gem 'rubyzip', require: false
 gem 'pygments.rb'
+gem 'reverse_markdown', require: false
+gem 'htmlentities', require: false
 
 
 ## HTTP
