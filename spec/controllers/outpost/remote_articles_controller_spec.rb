@@ -59,7 +59,7 @@ describe Outpost::RemoteArticlesController do
       end
 
       it "only gets new records" do
-        oldrecord = create :npr_article, is_new: false
+        oldrecord = create :npr_article, is_new: false, article_id: (RemoteArticle.last.article_id.to_i + 1)
         get :index
         assigns(:records).should_not include oldrecord
       end
