@@ -32,12 +32,28 @@ module Concern
             },
             {
               role: "body",
-              text: strict_body
+              text: text_body,
+              layout: "bodyLayout",
+              textStyle: "bodyStyle"
             },
             {
-              role: "photo",
-              :"URL" => asset.full.url
-            }
+              role: "header",
+              layout: "headerImageLayout",
+              style: {
+                fill: {
+                  type: "image",
+                  :"URL" => asset.full.url,
+                  fillMode: "cover",
+                  verticalAlignment: "center"
+                }
+              }
+            },
+            {
+              role: "author",
+              layout: "bylineLayout",
+              text: byline,
+              textStyle: "authorStyle"
+            },
           ],
           documentStyle: {
             backgroundColor: "#F7F7F7"
@@ -55,9 +71,50 @@ module Concern
               fontSize: 30,
               hyphenation: false
             },
+            authorStyle: {
+              textAlignment: "left",
+              fontName: "HelveticaNeue-Bold",
+              fontSize: 16,
+              textColor: "#000"
+            },
             :"default-body" => {
               fontName: "Helvetica",
               fontSize: 13
+            },
+            bodyStyle: {
+              textAlignment: "left",
+              fontName: "Georgia",
+              fontSize: 18,
+              lineHeight: 26,
+              textColor: "#000"
+            },
+          },
+          componentLayouts: {
+            headerImageLayout: {
+              columnStart: 0,
+              columnSpan: 7,
+              ignoreDocumentMargin: true,
+              minimumHeight: "40vh",
+              margin: {
+                top: 15,
+                bottom: 15
+              }
+            },
+            bylineLayout: {
+              columnStart: 0,
+              columnSpan: 7,
+              margin: {
+                top: 15,
+                bottom: 15
+              }
+            },
+            bodyLayout: {
+              columnStart: 0,
+              columnSpan: 5,
+              margin: {
+                top: 15,
+                bottom: 15
+              }
             }
           }
         }
@@ -79,6 +136,13 @@ module Concern
       end
 
       private
+
+      def text_body
+        Nokogiri::HTML::DocumentFragment.parse(Nokogiri::HTML(body.force_encoding('ASCII-8BIT')).xpath('//text()').to_s)
+          .to_s
+          .split(/\r\n?/)
+          .join("\n")
+      end
 
       def strict_body
         # strips out all tags and converts newlines to p tags
