@@ -1,5 +1,6 @@
 require 'reverse_markdown'
 require 'htmlentities'
+require 'digest'
 module Concern
   module Callbacks
     module AppleNewsCallback
@@ -31,45 +32,7 @@ module Concern
           documentStyle: {
             backgroundColor: "#f6f6f6"
           },
-          components: [
-            {
-              role: "title",
-              layout: "titleLayout",
-              text: headline,
-              textStyle: "titleStyle"
-            },
-            # {
-            #   role: "intro",
-            #   layout: "introLayout",
-            #   text: teaser,
-            #   textStyle: "introStyle"
-            # },
-            {
-              role: "header",
-              layout: "headerImageLayout",
-              style: {
-                fill: {
-                  type: "image",
-                  :"URL" => asset.full.url,
-                  fillMode: "cover",
-                  verticalAlignment: "center"
-                }
-              }
-            },
-            {
-              role: "author",
-              layout: "authorLayout",
-              text: byline,
-              textStyle: "authorStyle"
-            },
-            {
-              role: "body",
-              text: markdown_body,
-              layout: "bodyLayout",
-              textStyle: "bodyStyle",
-              format: "markdown"
-            }
-          ],
+          components: to_components,
           componentTextStyles: {
             titleStyle: {
               textAlignment: "left",
@@ -166,26 +129,114 @@ module Concern
 
       private
 
-      def markdown_body
-        # Apple News format does support inline styling, but this is done by creating
-        # ranges and adding it to a list of inlineTextStyles.  Unfortunately, Apple News
-        # does not support HTML, and it would be a shame to expend effort on a parser
-        # for this one task.  However, Apple News does support Markdown, and converting
-        # HTML to Markdown is fairly trivial.
-        HTMLEntities.new.decode ReverseMarkdown.convert Nokogiri::HTML::DocumentFragment.parse(body).to_s, unknown_tags: :drop
+      def elements_to_components html
+        processed_html = preprocess(html) # Mostly insert inline assets
+        Nokogiri::HTML::DocumentFragment.parse(processed_html).children.to_a.map do |element|
+          element_to_component element
+        end.flatten # we expect components to always come in as arrays, as some of them
+        # realistically require two elements(e.g. a figure needs a separate caption element)
       end
 
-      def text_body
-        Nokogiri::HTML::DocumentFragment.parse(Nokogiri::HTML(body.force_encoding('ASCII-8BIT')).xpath('//text()').to_s)
-          .to_s
-          .split(/\r\n?/)
-          .join("\n")
+      def element_to_component element
+        if element.name == 'img'
+          img_to_figure_component element
+        else
+          element_to_body_component element
+        end
       end
 
-      def strict_body
-        # strips out all tags and converts newlines to p tags
-        doc = Nokogiri::HTML(body.force_encoding('ASCII-8BIT'))
-        doc.xpath('//text()').to_s.split(/\r\n?/).reject(&:empty?).map{|l| "<p>#{l}</p>"}.join('')
+      def img_to_figure_component element
+        [
+          {
+            role: "figure",
+            :"URL" => element['src'],
+            caption: (element['alt'] || element['title']),
+            identifier: 'inline-asset'
+          },
+          {
+            role: "caption",
+            text: (element['alt'] || element['title']),
+          }   
+        ]
+      end
+
+      def element_to_body_component element
+        markup   = element.to_s
+        markdown = html_to_markdown(markup)
+        output = []
+        unless markdown.blank?
+          output << {
+            role: "body",
+            text: markdown,
+            layout: "bodyLayout",
+            textStyle: "bodyStyle",
+            format: "markdown"
+          }
+        end
+        output
+      end
+
+      def html_to_markdown html
+        HTMLEntities.new.decode ReverseMarkdown.convert html, unknown_tags: :drop
+      end
+
+      def preprocess html
+        insert_inline_assets html
+      end
+
+      def insert_inline_assets html
+        process_markup html, 'img.inline-asset[data-asset-id]' do |element|
+          asset = assets.find_by asset_id: element['data-asset-id']
+          if asset && asset.owner.try(:include?, "KPCC")
+            element['src'] = asset.full.url
+            element['alt'] = asset.caption
+          else
+            element.remove
+          end
+        end
+      end
+
+      def process_markup html, selector, &block
+        doc = Nokogiri::HTML(html.force_encoding('ASCII-8BIT'))
+        doc.css(selector).each{|element|
+          yield element
+        }
+        doc.css('body').children.to_s.html_safe
+      end
+
+      def to_components
+        [
+          {
+            role: "title",
+            layout: "titleLayout",
+            text: headline,
+            textStyle: "titleStyle"
+          },
+          # {
+          #   role: "intro",
+          #   layout: "introLayout",
+          #   text: teaser,
+          #   textStyle: "introStyle"
+          # },
+          {
+            role: "header",
+            layout: "headerImageLayout",
+            style: {
+              fill: {
+                type: "image",
+                :"URL" => asset.full.url,
+                fillMode: "cover",
+                verticalAlignment: "center"
+              }
+            }
+          },
+          {
+            role: "author",
+            layout: "authorLayout",
+            text: byline,
+            textStyle: "authorStyle"
+          }
+        ].concat(elements_to_components(body)).compact
       end
 
     end
