@@ -22,12 +22,22 @@ module InstantArticlesHelper
   end
 
   def render_body content
-    strip_comments remove_empty_tags strip_embeds insert_inline_assets content
+    strip_comments remove_empty_paragraphs strip_embed_placeholders insert_inline_assets content
   end
 
-  def strip_embeds body
+  def strip_embed_placeholders body
     process_markup body, ".embed-placeholder, .embed-wrapper" do |placeholder|
-      placeholder.remove
+      unless placeholder.name == "a"
+        placeholder.remove
+      end
+    end
+  end
+
+  def process_iframes body
+    process_markup body, 'iframe' do |iframe|
+      figure = Nokogiri::HTML::DocumentFragment.parse("<figure class='op-interactive'></figure>")
+      figure.children << iframe
+      iframe.replace figure
     end
   end
 
@@ -37,7 +47,7 @@ module InstantArticlesHelper
     doc.css("body").children.to_s.html_safe
   end
 
-  def remove_empty_tags body
+  def remove_empty_paragraphs body
     process_markup body, "p" do |tag|
       tag.remove if tag.content.strip.empty?
     end
