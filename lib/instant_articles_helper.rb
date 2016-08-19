@@ -22,7 +22,9 @@ module InstantArticlesHelper
   end
 
   def render_body content
-    strip_comments remove_empty_paragraphs strip_embed_placeholders insert_inline_assets content
+    # This contains the pipeline for filtering
+    # the HTML body of the article.
+    translate_headings strip_comments remove_empty_paragraphs strip_embed_placeholders insert_inline_assets content
   end
 
   def strip_embed_placeholders body
@@ -50,6 +52,18 @@ module InstantArticlesHelper
   def remove_empty_paragraphs body
     process_markup body, "p" do |tag|
       tag.remove if tag.content.strip.empty?
+    end
+  end
+
+  def translate_headings body
+    # For whatever reason, Facebook only allows h1 and h2 tags.
+    # H3 is reserved for "kickers", but it's unclear why others
+    # are not permitted.  
+    # While they will automatically translate h(n>2) tags to
+    # h2, a warning is still displayed next to each story.
+    # We will translate the tags here to prevent that warning.
+    process_markup body, "h3, h4, h5, h6" do |heading|
+      heading.name = "em"
     end
   end
 
