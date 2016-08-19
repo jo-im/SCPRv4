@@ -2,7 +2,7 @@ module InstantArticlesHelper
 
   def render_asset(content, options={})
     asset = options[:asset] || nil
-    return if options[:kpcc_only] && asset && !asset.owner.try(:include?, "KPCC")
+    # return if options[:kpcc_only] && asset && !asset.owner.try(:include?, "KPCC")
     if options[:asset_display]
       asset_display = options[:asset_display]
     else 
@@ -61,7 +61,6 @@ module InstantArticlesHelper
     doc.css(cssPath).each do |placeholder|
       asset_id = placeholder.attribute('data-asset-id').value
       asset = content.original_object.assets.find_by(asset_id:asset_id)
-      ## If kpcc_only is true, only render if the owner of the asset is KPCC
       if asset
         rendered_asset = render_asset content, context: context, display: display, asset:asset
         placeholder.replace Nokogiri::HTML::DocumentFragment.parse(rendered_asset)
