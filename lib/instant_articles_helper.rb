@@ -62,8 +62,11 @@ module InstantArticlesHelper
     # While they will automatically translate h(n>2) tags to
     # h2, a warning is still displayed next to each story.
     # We will translate the tags here to prevent that warning.
-    process_markup body, "h3, h4, h5, h6" do |heading|
-      heading.name = "em"
+    process_markup body, "h1, h2, h3, h4, h5, h6" do |heading|
+      heading.inner_html = heading.text # Headings shouldn't contain other tags.
+      unless ['h1', 'h2'].include?(heading.name.downcase)
+        heading.name = "em"
+      end
     end
   end
 
