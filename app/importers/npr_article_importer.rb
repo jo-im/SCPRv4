@@ -10,7 +10,8 @@ module NprArticleImporter
     '93559255',  # Planet Money (blog)
     '93568166',  # Monkey See (blog)
     '15709577',  # All Songs Considered (blog)
-    '173754155'  # Code Switch (blog)
+    '173754155',  # Code Switch (blog)
+    '102920358'  # All Tech Considered (blog)
   ]
 
 
@@ -43,7 +44,7 @@ module NprArticleImporter
         .compact
         .map(&:to_s)
 
-      npr_stories.reject{ |s| 
+      npr_stories.reject{ |s|
         # Reject the story if the id is already present in our database.
         existing_story_ids.include?(s.id.to_s)
       }.each do |npr_story|
