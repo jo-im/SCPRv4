@@ -43,7 +43,22 @@ class IngestFeedController < ApplicationController
     @content = cache "ingest-feed-controller", skip_digest: true do
       # Cache should be expiring whenever a news story or a blog entry is published or modified(after publish).
       records = NewsStory.published.where(source: "kpcc").order("published_at DESC").limit(15).concat BlogEntry.published.order('published_at DESC').limit(15)
-      records.map(&:get_article).sort_by(&:public_datetime).reverse.first(15)
+      records = records.map(&:get_article).sort_by(&:public_datetime).reverse.first(15)
+      records.reject{|r| contains_anchors?(r.body)}
     end
   end
+
+  def contains_anchors? content
+    # Facebook doesn't like anchor tags that link to 
+    # elements in the body, so this will tell us if 
+    # they are included here.
+
+    Nokogiri::HTML::DocumentFragment.parse(content).css("a").each do |a| 
+      if (a.attribute("href") || "").to_s.lstrip.match(/^#/)
+        return true
+      end
+    end 
+    false
+  end
+  
 end
