@@ -10,7 +10,7 @@ module NprArticleImporter
     '93559255',  # Planet Money (blog)
     '93568166',  # Monkey See (blog)
     '15709577',  # All Songs Considered (blog)
-    '173754155'  # Code Switch (blog)
+    '173754155',  # Code Switch (blog)
     '102920358'  # All Tech Considered (blog)
   ]
 
