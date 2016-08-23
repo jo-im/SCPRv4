@@ -2,7 +2,7 @@ module InstantArticlesHelper
 
   def render_asset(content, options={})
     asset = options[:asset] || nil
-    return if options[:kpcc_only] && asset && !asset.owner.try(:include?, "KPCC")
+    # return if options[:kpcc_only] && asset && !asset.owner.try(:include?, "KPCC")
     if options[:asset_display]
       asset_display = options[:asset_display]
     else 
@@ -22,12 +22,24 @@ module InstantArticlesHelper
   end
 
   def render_body content
-    strip_comments remove_empty_tags strip_embeds insert_inline_assets content
+    # This contains the pipeline for filtering
+    # the HTML body of the article.
+    translate_headings strip_comments remove_empty_paragraphs strip_embed_placeholders insert_inline_assets content
   end
 
-  def strip_embeds body
+  def strip_embed_placeholders body
     process_markup body, ".embed-placeholder, .embed-wrapper" do |placeholder|
-      placeholder.remove
+      unless placeholder.name == "a"
+        placeholder.remove
+      end
+    end
+  end
+
+  def process_iframes body
+    process_markup body, 'iframe' do |iframe|
+      figure = Nokogiri::HTML::DocumentFragment.parse("<figure class='op-interactive'></figure>")
+      figure.children << iframe
+      iframe.replace figure
     end
   end
 
@@ -37,9 +49,24 @@ module InstantArticlesHelper
     doc.css("body").children.to_s.html_safe
   end
 
-  def remove_empty_tags body
+  def remove_empty_paragraphs body
     process_markup body, "p" do |tag|
       tag.remove if tag.content.strip.empty?
+    end
+  end
+
+  def translate_headings body
+    # For whatever reason, Facebook only allows h1 and h2 tags.
+    # H3 is reserved for "kickers", but it's unclear why others
+    # are not permitted.  
+    # While they will automatically translate h(n>2) tags to
+    # h2, a warning is still displayed next to each story.
+    # We will translate the tags here to prevent that warning.
+    process_markup body, "h1, h2, h3, h4, h5, h6" do |heading|
+      heading.inner_html = heading.text # Headings shouldn't contain other tags.
+      unless ['h1', 'h2'].include?(heading.name.downcase)
+        heading.name = "em"
+      end
     end
   end
 
@@ -51,7 +78,6 @@ module InstantArticlesHelper
     doc.css(cssPath).each do |placeholder|
       asset_id = placeholder.attribute('data-asset-id').value
       asset = content.original_object.assets.find_by(asset_id:asset_id)
-      ## If kpcc_only is true, only render if the owner of the asset is KPCC
       if asset
         rendered_asset = render_asset content, context: context, display: display, asset:asset
         placeholder.replace Nokogiri::HTML::DocumentFragment.parse(rendered_asset)

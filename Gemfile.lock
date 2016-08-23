@@ -1,6 +1,7 @@
 GIT
   remote: git://github.com/SCPR/embeditor-rails.git
-  revision: ec6f1eb29a076fc4e5febc67fad4016a97f003a0
+  revision: b7e17b642b5066a59ced5039efa3d7b6d7295f48
+  tag: v2.0.3
   specs:
     embeditor-rails (2.1.0)
       actionpack (>= 3.2.0, < 5)
@@ -564,4 +565,4 @@ DEPENDENCIES
   yajl-ruby
 
 BUNDLED WITH
-   1.11.2
+   1.12.5

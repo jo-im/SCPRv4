@@ -22,6 +22,10 @@ class RemoteArticle < ActiveRecord::Base
     "pmp" => "PmpArticleImporter"
   }
 
+  scope :duplicates, -> { 
+    where.not(id: select("MAX(id) as id").group([:source, :article_id]).pluck(:id))
+  }
+
   #---------------
 
   class << self
