@@ -42,6 +42,12 @@ module Concern
               textAlignment: "center",
               textColor: "#212121"
             },
+            figcaptionStyle: {
+              textAlignment: "left",
+              fontName: "AvenirNext-Regular",
+              fontSize: 16,
+              textColor: "#a6a6a6"
+            },
             introStyle: {
               textAlignment: "left",
               fontName: "AvenirNext-Regular",
@@ -156,6 +162,7 @@ module Concern
           {
             role: "caption",
             text: (element['alt'] || element['title']),
+            textStyle: "figcaptionStyle",
           }   
         ]
       end
