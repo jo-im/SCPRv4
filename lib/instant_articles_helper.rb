@@ -33,7 +33,7 @@ module InstantArticlesHelper
       html = @embeditor.process body
       process_markup html, '.embed-wrapper' do |embed, doc|
         # This will later be wrapped in an op-interactive figure along with any other iframes.
-        figure = Nokogiri::HTML::DocumentFragment.parse("<iframe>#{embed.inner_html}</iframe>").children[0]
+        figure = Nokogiri::HTML::DocumentFragment.parse("<iframe>#{embed.to_s}</iframe>").children[0]
         embed.replace figure
       end
     else
@@ -46,7 +46,7 @@ module InstantArticlesHelper
     # This will take care of our dynamic embeds as well as iframes inserted
     # by the author.
     process_markup body, 'iframe' do |iframe|
-      figure = Nokogiri::HTML::DocumentFragment.parse("<figure class='op-interactive'>#{iframe.inner_html}</figure>").children[0]
+      figure = Nokogiri::HTML::DocumentFragment.parse("<figure class='op-interactive'>#{iframe.to_s}</figure>").children[0]
       iframe.replace figure
     end
   end
