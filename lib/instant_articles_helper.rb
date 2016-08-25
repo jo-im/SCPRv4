@@ -24,21 +24,29 @@ module InstantArticlesHelper
   def render_body content
     # This contains the pipeline for filtering
     # the HTML body of the article.
-    translate_headings strip_comments remove_empty_paragraphs strip_embed_placeholders insert_inline_assets content
+    translate_headings strip_comments remove_empty_paragraphs wrap_iframes process_embeds insert_inline_assets content
   end
 
-  def strip_embed_placeholders body
-    process_markup body, ".embed-placeholder, .embed-wrapper" do |placeholder|
-      unless placeholder.name == "a"
-        placeholder.remove
+  def process_embeds body
+    # Passes the HTML through an instance of Embeditor running in Node.js
+    if @embeditor
+      html = @embeditor.process body
+      process_markup html, '.embed-wrapper' do |embed, doc|
+        # This will later be wrapped in an op-interactive figure along with any other iframes.
+        figure = Nokogiri::HTML::DocumentFragment.parse("<iframe>#{embed.inner_html}</iframe>").children[0]
+        embed.replace figure
       end
+    else
+      body # Do nothing if we have no embeditor instance.
     end
   end
 
-  def process_iframes body
+  def wrap_iframes body
+    # Iframes should be embedded in a figure tag with op-interactive class.
+    # This will take care of our dynamic embeds as well as iframes inserted
+    # by the author.
     process_markup body, 'iframe' do |iframe|
-      figure = Nokogiri::HTML::DocumentFragment.parse("<figure class='op-interactive'></figure>")
-      figure.children << iframe
+      figure = Nokogiri::HTML::DocumentFragment.parse("<figure class='op-interactive'>#{iframe.inner_html}</figure>").children[0]
       iframe.replace figure
     end
   end
@@ -88,12 +96,34 @@ module InstantArticlesHelper
     doc.css("body").children.to_s.html_safe
   end
 
+  def paragraphatize content
+    # Sometimes we don't have paragraphs but <br> tags!  Blech.
+    # I suspect content comes in this way from people cutting
+    # and pasting, but that's just a guess.  I've seen this happen
+    # a few times.  If we can convert breaks to paragraphs, we should.
+    
+    # P tags can only contain inline elements, so this is a list of them all.
+    inline_tags = %w(b big i small tt abbr acronym cite code dfn em kbd strong samp time var a bdo br img map object q script span sub sup button input label select textarea)
+    line_splitter = /\r?\n|<br\s*\/*>|<\/*p\s*>/ # split by newlines, br, and p
+    lines = content.split(line_splitter).reject(&:empty?)
+    lines.map do |line|
+      tags = line.scan(/<\s*(\w+)?.*>/).to_a.flatten
+      # if line contains only inline elements
+      if tags.map{|t| inline_tags.include?(t.downcase)}.all?{|t| t}
+        "<p>#{line}</p>"
+      else
+        # if line contains block elements
+        "#{line}<br>"
+      end
+    end.join("")
+  end
+
   private
 
   def process_markup html, selector, &block
     doc = Nokogiri::HTML(html.force_encoding('ASCII-8BIT'))
     doc.css(selector).each{|element|
-      yield element
+      yield element, doc
     }
     doc.css('body').children.to_s.html_safe
   end
