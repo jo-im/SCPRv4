@@ -4,29 +4,34 @@ module Embeditor
   class Processor
     attr_accessor :stdin, :stdout
     class EmbeditorError < StandardError; end
-    def initialize
+    def initialize options={}
+      args = []
+      options.each_pair do |k, v|
+        v = nil if v == true
+        args << "--#{[k, v].compact.join('-')}"
+      end
+      @arguments = args.join(" ")
       open
     end
     def process html
       Timeout.timeout(5) do
         @stdin.write html
-        while (output = @stdout.gets("\x04")) || (error = @stderr.gets("\x04"))
-          unless error
-            return output.gsub("\x04", "") # remove our "end of transmission" signifier
-          else
-            raise EmbeditorError.new(error)
-          end
+        # We expect to receive at least an EOT byte from both stdout and stderr
+        output, error = [@stdout.gets("\x04"), @stderr.gets("\x04")].map{|o| o.gsub("\x04", "")}.map{|o| o.blank? ? nil : o}
+        unless error
+          raise EmbeditorError.new("No output received.") if output.blank?
+          return output.gsub("\x04", "") # remove our "end of transmission" signifier
+        else
+          raise EmbeditorError.new(error)
         end
       end
-      output
     rescue Timeout::Error, EmbeditorError, Errno::EPIPE => e
-      puts e
       close
       open
       html # just return original markup in case of failure
     end
     def open
-      @stdin, @stdout, @stderr, @wait_thr = Open3.popen3("bin/embeditor")
+      @stdin, @stdout, @stderr, @wait_thr = Open3.popen3("bin/embeditor #{@arguments}")
       @pid = @wait_thr.pid
     end
     def closed?

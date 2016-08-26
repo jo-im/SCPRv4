@@ -1,4 +1,4 @@
-require "#{Rails.root}/lib/embeditor_processor"
+require "#{Rails.root}/lib/embeditor/embeditor_processor"
 
 class IngestFeedController < ApplicationController
   layout false
