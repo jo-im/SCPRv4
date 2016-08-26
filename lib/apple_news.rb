@@ -23,20 +23,34 @@ module AppleNews
 
   def anchor_to_component element
     if (element.attributes["class"].value.include?("embed-placeholder") &&
-      element.attributes['data-service'].value == "twitter" &&
+      element.attributes['data-service'].value &&
       element.attributes['href'])
-      url = element.attributes['href'].value
-      id_matcher = /^(?<url>https?:\/\/twitter\.com\/(?<username>[-a-zA-Z0-9+&@#%?=~_|!:,.;]+)\/status(es){0,1}\/(?<tweetId>\d+)\/{0,1})/i
-      if url = url.match(id_matcher)[:url]
-        [
-          {
-            role: "tweet",
-            :"URL" => url
-          }
-        ]
-      else
-        element_to_body_component element
+      embed_placeholder_to_component element
+    else
+      element_to_body_component element
+    end
+  end
+
+  def embed_placeholder_to_component element
+    url     = element.attributes['href'].try(:value)
+    role    = element.attributes['data-service'].try(:value)
+    if url  && role && %w(twitter instagram youtube facebook).include?(role) # limit it to compatible providers
+      if role == "twitter"
+        role = "tweet"
+        id_matcher = /^(?<url>https?:\/\/twitter\.com\/(?<username>[-a-zA-Z0-9+&@#%?=~_|!:,.;]+)\/status(es){0,1}\/(?<tweetId>\d+)\/{0,1})/i
+        url = url.match(id_matcher)[:url]
+        if !url
+          element_to_body_component element
+        end
+      elsif role == 'youtube'
+        role = "embedwebvideo"
+      elsif role == 'facebook'
+        role = 'facebook_post'
       end
+      [{
+        role: role,
+        :"URL" => url
+      }]
     else
       element_to_body_component element
     end
