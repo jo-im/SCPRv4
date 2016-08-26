@@ -33,7 +33,7 @@ module InstantArticlesHelper
       html = @embeditor.process body
       process_markup html, '.embed-wrapper' do |embed, doc|
         # This will later be wrapped in an op-interactive figure along with any other iframes.
-        figure = Nokogiri::HTML::DocumentFragment.parse("<iframe>#{embed.to_s}</iframe>").children[0]
+        figure = Nokogiri::HTML::DocumentFragment.parse("<iframe class='column-width'>#{embed.to_s}</iframe>").children[0]
         embed.replace figure
       end
     else
