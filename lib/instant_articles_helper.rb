@@ -124,7 +124,7 @@ module InstantArticlesHelper
   private
 
   def process_markup html, selector, &block
-    doc = Nokogiri::HTML(html.force_encoding('ASCII-8BIT'))
+    doc = Nokogiri::HTML(html)
     doc.css(selector).each{|element|
       yield element, doc
     }
