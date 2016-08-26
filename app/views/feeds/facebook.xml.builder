@@ -28,3 +28,5 @@ xml.rss({
     end
   end
 end
+
+# @embeditor.close

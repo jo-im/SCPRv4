@@ -1,3 +1,5 @@
+require "#{Rails.root}/lib/embeditor/embeditor_processor"
+
 class IngestFeedController < ApplicationController
   layout false
   helper InstantArticlesHelper
@@ -8,6 +10,7 @@ class IngestFeedController < ApplicationController
   before_action :retrieve_content
 
   def facebook_ingest
+    @embeditor = Embeditor::Processor.new
     response.headers["Content-Type"] = 'text/xml'
 
     @feed = {
@@ -18,6 +21,8 @@ class IngestFeedController < ApplicationController
     xml = render_to_string(template: 'feeds/facebook.xml.builder', formats: :xml)
 
     render text: xml, format: :xml
+  ensure
+    @embeditor.close
   end
 
   def apple_ingest
