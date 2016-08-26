@@ -59,7 +59,7 @@ module InstantArticlesHelper
 
   def remove_empty_paragraphs body
     process_markup body, "p" do |tag|
-      contents = tag.contents
+      contents = tag.content
       if tag.content.strip.empty? || tag.content.strip == "&nbsp;"
         tag.remove if tag.content.strip.empty?
       end
