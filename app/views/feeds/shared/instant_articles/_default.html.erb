@@ -2,7 +2,7 @@
 <% unless (asset.title || "").include?("Asset Unavailable") %>
   <figure>
     <img src="<%= asset.full.url %>" />
-    <% if asset.caption %>
+    <% if asset.caption && !asset.caption.blank? %>
       <figcaption><%= asset.caption %></figcaption>
     <% end %>
   </figure>
