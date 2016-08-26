@@ -1,6 +1,3 @@
-require 'reverse_markdown'
-require 'htmlentities'
-require 'digest'
 module Concern
   module Callbacks
     module AppleNewsCallback
@@ -135,81 +132,7 @@ module Concern
 
       private
 
-      def elements_to_components html
-        processed_html = preprocess(html) # Mostly insert inline assets
-        Nokogiri::HTML::DocumentFragment.parse(processed_html).children.to_a.map do |element|
-          element_to_component element
-        end.flatten # we expect components to always come in as arrays, as some of them
-        # realistically require two elements(e.g. a figure needs a separate caption element)
-      end
-
-      def element_to_component element
-        if element.name == 'img'
-          img_to_figure_component element
-        else
-          element_to_body_component element
-        end
-      end
-
-      def img_to_figure_component element
-        [
-          {
-            role: "figure",
-            :"URL" => element['src'],
-            caption: (element['alt'] || element['title']),
-            identifier: 'inline-asset'
-          },
-          {
-            role: "caption",
-            text: (element['alt'] || element['title']),
-            textStyle: "figcaptionStyle",
-          }   
-        ]
-      end
-
-      def element_to_body_component element
-        markup   = element.to_s
-        markdown = html_to_markdown(markup)
-        output = []
-        unless markdown.blank?
-          output << {
-            role: "body",
-            text: markdown,
-            layout: "bodyLayout",
-            textStyle: "bodyStyle",
-            format: "markdown"
-          }
-        end
-        output
-      end
-
-      def html_to_markdown html
-        HTMLEntities.new.decode ReverseMarkdown.convert html, unknown_tags: :drop
-      end
-
-      def preprocess html
-        insert_inline_assets html
-      end
-
-      def insert_inline_assets html
-        process_markup html, 'img.inline-asset[data-asset-id]' do |element|
-          asset = assets.find_by asset_id: element['data-asset-id']
-          if asset && asset.owner.try(:include?, "KPCC")
-            element['src'] = asset.full.url
-            element['alt'] = asset.caption
-          else
-            element.remove
-          end
-        end
-      end
-
-      def process_markup html, selector, &block
-        doc = Nokogiri::HTML(html.force_encoding('ASCII-8BIT'))
-        doc.css(selector).each{|element|
-          yield element
-        }
-        doc.css('body').children.to_s.html_safe
-      end
+      include AppleNews
 
       def to_components
         [
