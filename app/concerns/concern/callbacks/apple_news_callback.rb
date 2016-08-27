@@ -117,8 +117,9 @@ module Concern
 
       def publish_to_apple_news
         # Only publish our own content
+        act = Rails.env.development? ? :perform : :enqueue # Perform synchronously in development
         if ((respond_to?(:source) && source == "kpcc") || true) && (published? || publishing?)
-          Job::PublishAppleNewsContent.perform self.class.to_s, self.id, :upsert
+          Job::PublishAppleNewsContent.send act, self.class.to_s, self.id, :upsert
         end
       end
 
@@ -127,7 +128,8 @@ module Concern
       end
 
       def delete_from_apple_news
-        Job::PublishAppleNewsContent.perform self.class.to_s, self.id, :delete
+        act = Rails.env.development? ? :perform : :enqueue
+        Job::PublishAppleNewsContent.send act, self.class.to_s, self.id, :delete
       end
 
       private
