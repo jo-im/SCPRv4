@@ -118,9 +118,13 @@ module Concern
       def publish_to_apple_news async: true
         # Only publish our own content
         act = async ? :perform : :enqueue # Perform synchronously in development
-        if ((respond_to?(:source) && source == "kpcc") || true) && (published? || publishing?)
+        if should_publish_to_apple_news?
           Job::PublishAppleNewsContent.send act, self.class.to_s, self.id, :upsert
         end
+      end
+
+      def should_publish_to_apple_news?
+        ((respond_to?(:source) && source == "kpcc") || true) && (published? || publishing?)
       end
 
       def retrieve_from_apple_news
