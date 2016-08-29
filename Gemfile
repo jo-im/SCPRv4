@@ -50,12 +50,16 @@ gem "yajl-ruby" # Faster JSON parsing
 gem "rack-utf8_sanitizer"
 gem "rufus-scheduler"
 gem 'rubyzip', require: false
+gem 'pygments.rb'
+gem 'reverse_markdown', require: false
+gem 'htmlentities', require: false
 
 
 ## HTTP
 gem "faraday", "~> 0.8"
 gem "faraday_middleware", "~> 0.8"
 gem "hashie", "~> 1.2.0"
+gem "rest-client"
 
 
 ## APIs
