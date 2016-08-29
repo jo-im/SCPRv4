@@ -109,7 +109,7 @@ module Job
         # article.json.
         Dir.mktmpdir do |dir|
           doc = record.to_apple
-          thumb_url  = record.try(:asset).try(:square).try(:url)
+          thumb_url  = record.try(:asset).try(:three).try(:url)
           if thumb_url
           # The thumbnail, unlike images in the article itself,
           # must be a part of the bundle, so we have to download
