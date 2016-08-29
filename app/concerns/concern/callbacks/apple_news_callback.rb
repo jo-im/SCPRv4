@@ -117,7 +117,7 @@ module Concern
 
       def publish_to_apple_news async: true
         # Only publish our own content
-        act = async ? :perform : :enqueue # Perform synchronously in development
+        act = async ? :enqueue : :perform # Perform synchronously in development
         if should_publish_to_apple_news?
           Job::PublishAppleNewsContent.send act, self.class.to_s, self.id, :upsert
         end
@@ -132,7 +132,7 @@ module Concern
       end
 
       def delete_from_apple_news  async: true
-        act = async ? :perform : :enqueue
+        act = async ? :enqueue : :perform
         Job::PublishAppleNewsContent.send act, self.class.to_s, self.id, :delete
       end
 
