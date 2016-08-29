@@ -115,9 +115,9 @@ module Concern
         }
       end
 
-      def publish_to_apple_news
+      def publish_to_apple_news async: true
         # Only publish our own content
-        act = Rails.env.development? ? :perform : :enqueue # Perform synchronously in development
+        act = async ? :perform : :enqueue # Perform synchronously in development
         if ((respond_to?(:source) && source == "kpcc") || true) && (published? || publishing?)
           Job::PublishAppleNewsContent.send act, self.class.to_s, self.id, :upsert
         end
