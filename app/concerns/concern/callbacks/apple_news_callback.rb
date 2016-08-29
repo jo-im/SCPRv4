@@ -23,7 +23,8 @@ module Concern
           },
           subtitle: teaser,
           metadata: {
-            excerpt: teaser
+            excerpt: teaser,
+            thumbnailURL: asset.full.url
           },
           documentStyle: {
             backgroundColor: "#f6f6f6"
@@ -127,7 +128,8 @@ module Concern
 
       def should_publish_to_apple_news?
         if respond_to?(:source)
-          (source == "kpcc") && (published? || publishing?) # is it one of our own stories and is it published?
+          # is it one of our own stories and is it published?  and is it a recent story?
+          (source == "kpcc") && (published? || publishing?) && (published_at > 48.hours.ago) 
         else
           true # assume that no source means that it's our own content
         end

@@ -109,15 +109,15 @@ module Job
         # article.json.
         Dir.mktmpdir do |dir|
           doc = record.to_apple
-          thumb_url  = record.try(:asset).try(:three).try(:url)
-          if thumb_url
-          # The thumbnail, unlike images in the article itself,
-          # must be a part of the bundle, so we have to download
-          # it and include it as a file with a specific name.
-            if download_from_to(thumb_url, "#{dir}/thumbnail.jpg")
-              doc[:metadata][:thumbnailURL] = "bundle://thumbnail.jpg"
-            end
-          end
+          # thumb_url  = record.try(:asset).try(:small).try(:url)
+          # if thumb_url
+          # # The thumbnail, unlike images in the article itself,
+          # # must be a part of the bundle, so we have to download
+          # # it and include it as a file with a specific name.
+          #   if download_from_to(thumb_url, "#{dir}/thumbnail.jpg")
+          #     doc[:metadata][:thumbnailURL] = "bundle://thumbnail.jpg"
+          #   end
+          # end
           File.open("#{dir}/article.json", "w") do |f|
             f.write doc.to_json
             f.rewind
