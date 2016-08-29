@@ -23,8 +23,7 @@ module Concern
           },
           subtitle: teaser,
           metadata: {
-            excerpt: teaser,
-            thumbnailURL: asset.asset.thumb.url
+            excerpt: teaser
           },
           documentStyle: {
             backgroundColor: "#f6f6f6"
@@ -120,6 +119,9 @@ module Concern
         act = async ? :enqueue : :perform # Perform synchronously in development
         if should_publish_to_apple_news?
           Job::PublishAppleNewsContent.send act, self.class.to_s, self.id, :upsert
+          true
+        else
+          false
         end
       end
 

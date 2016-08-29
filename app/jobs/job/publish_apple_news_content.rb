@@ -1,5 +1,7 @@
 require "#{Rails.root}/vendor/lib/apple-news/papi-client/api"
 require 'tempfile'
+require 'tmpdir'
+require 'open-uri'
 
 module Job
   class PublishAppleNewsContent < Base
@@ -33,8 +35,8 @@ module Job
         end
       end
       def insert record
-        open_json_file_for record do |file, path, record|
-          response = client.publish_article({'channel_id' => channel_id, file_name: path.basename.to_s}, path.dirname.to_s)
+        open_bundle_for record do |file, dir, record|
+          response = client.publish_article({'channel_id' => channel_id, file_name: "article.json"}, dir)
           if response.code == 201
             data = JSON.parse(response.to_s)["data"]
             record.apple_news_article = AppleNewsArticle.create uuid: data["id"], revision: data["revision"]
@@ -45,8 +47,8 @@ module Job
       def update record
         article = record.apple_news_article
         if article.uuid
-          open_json_file_for record do |file, path, record|
-            response = client.update_article(article.uuid, article.revision, {'channel_id' => channel_id, file_name: path.basename.to_s, "article_dir" => path.dirname.to_s})
+          open_bundle_for record do |file, dir, record|
+            response = client.update_article(article.uuid, article.revision, {'channel_id' => channel_id, file_name: "article.json", "article_dir" => dir})
             if response.code == 200
               data = JSON.parse(response.to_s)["data"]
               article.update revision: data["revision"]
@@ -88,6 +90,42 @@ module Job
           return yield f, path, record
         end
       end
+
+      def download_from_to url, dest
+        open(dest, 'wb') do |file|
+          begin  
+            file << open(url).read
+          rescue SocketError
+            return false
+          end
+        end        
+        true
+      end
+
+      def open_bundle_for record, &block
+        # This opens a temporary directory for our "bundle",
+        # which is where we will include all the files required
+        # to publish our article, the most important one being
+        # article.json.
+        Dir.mktmpdir do |dir|
+          doc = record.to_apple
+          thumb_url  = record.try(:asset).try(:square).try(:url)
+          if thumb_url
+          # The thumbnail, unlike images in the article itself,
+          # must be a part of the bundle, so we have to download
+          # it and include it as a file with a specific name.
+            if download_from_to(thumb_url, "#{dir}/thumbnail.jpg")
+              doc[:metadata][:thumbnailURL] = "bundle://thumbnail.jpg"
+            end
+          end
+          File.open("#{dir}/article.json", "w") do |f|
+            f.write doc.to_json
+            f.rewind
+            return yield f, dir, record
+          end
+        end
+      end
+
     end
   end
 end
