@@ -124,7 +124,11 @@ module Concern
       end
 
       def should_publish_to_apple_news?
-        ((respond_to?(:source) && source == "kpcc") || true) && (published? || publishing?)
+        if respond_to?(:source)
+          (source == "kpcc") && (published? || publishing?) # is it one of our own stories and is it published?
+        else
+          true # assume that no source means that it's our own content
+        end
       end
 
       def retrieve_from_apple_news
