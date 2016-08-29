@@ -127,8 +127,8 @@ module Concern
         Job::PublishAppleNewsContent.get self
       end
 
-      def delete_from_apple_news
-        act = Rails.env.development? ? :perform : :enqueue
+      def delete_from_apple_news  async: true
+        act = async ? :perform : :enqueue
         Job::PublishAppleNewsContent.send act, self.class.to_s, self.id, :delete
       end
 
