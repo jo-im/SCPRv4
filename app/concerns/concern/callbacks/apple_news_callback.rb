@@ -5,8 +5,8 @@ module Concern
 
       included do
         has_one :apple_news_article, as: :record
-        after_save :publish_to_apple_news
-        after_destroy :delete_from_apple_news
+        after_save :async_publish_to_apple_news
+        after_destroy :async_delete_from_apple_news
       end
 
       def to_apple
@@ -115,14 +115,26 @@ module Concern
         }
       end
 
-      def publish_to_apple_news async: true
-        # Only publish our own content
-        act = async ? :enqueue : :perform # Perform synchronously in development
-        if should_publish_to_apple_news?
-          Job::PublishAppleNewsContent.send act, self.class.to_s, self.id, :upsert
-        else
-          false
-        end
+      def async_publish_to_apple_news
+        Job::PublishAppleNewsContent.enqueue self.class.to_s, self.id, "upsert"
+      end
+
+      def async_delete_from_apple_news
+        Job::PublishAppleNewsContent.enqueue self.class.to_s, self.id, "delete"
+      end
+
+      def publish_to_apple_news
+        apple_news_api_call "upsert"
+      end
+
+      def delete_from_apple_news
+        apple_news_api_call "delete"
+      end
+
+      def apple_news_api_call action
+        return false if (action == "upsert") && !should_publish_to_apple_news?
+        publisher = AppleNews::Publisher.new(self)
+        publisher.perform action
       end
 
       def should_publish_to_apple_news?
@@ -135,12 +147,8 @@ module Concern
       end
 
       def retrieve_from_apple_news
-        Job::PublishAppleNewsContent.get self
-      end
-
-      def delete_from_apple_news  async: true
-        act = async ? :enqueue : :perform
-        Job::PublishAppleNewsContent.send act, self.class.to_s, self.id, :delete
+        publisher = AppleNews::Publisher.new(self)
+        publisher.get self
       end
 
       private
