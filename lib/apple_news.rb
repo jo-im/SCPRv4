@@ -5,10 +5,23 @@ module AppleNews
   # A collection of methods that are useful to the Apple News publishing callback.
   def elements_to_components html
     processed_html = preprocess(html) # Mostly insert inline assets
-    Nokogiri::HTML::DocumentFragment.parse(processed_html).children.to_a.map do |element|
+    components = Nokogiri::HTML::DocumentFragment.parse(processed_html).children.to_a.map do |element|
       element_to_component element
     end.flatten # we expect components to always come in as arrays, as some of them
-    # realistically require two elements(e.g. a figure needs a separate caption element)
+                # realistically require two elements(e.g. a figure needs a separate caption element)      
+    insert_advertisement components
+  end
+
+  def insert_advertisement components
+    # find an appropriate place to put an ad.
+    components.each_with_index do |component, index|
+      if (index > 2) && component.role == "body"
+        components.insert(index, {
+          role: "medium_rectangle_advertisement"
+        })
+      end
+    end
+    components
   end
 
   def element_to_component element
