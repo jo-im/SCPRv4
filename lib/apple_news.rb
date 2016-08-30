@@ -61,8 +61,7 @@ module AppleNews
       {
         role: "figure",
         :"URL" => element['src'],
-        caption: (element['alt'] || element['title']),
-        identifier: 'inline-asset'
+        caption: (element['alt'] || element['title'])
       },
       {
         role: "caption",
