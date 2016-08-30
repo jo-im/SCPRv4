@@ -1,8 +1,3 @@
-require "#{Rails.root}/vendor/lib/apple-news/papi-client/api"
-require 'tempfile'
-require 'tmpdir'
-require 'open-uri'
-
 module Job
   class PublishAppleNewsContent < Base
     # @priority = :mid

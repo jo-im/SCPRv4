@@ -146,6 +146,10 @@ module AppleNews
   end
 
   class Publisher
+    require "#{Rails.root}/vendor/lib/apple-news/papi-client/api"
+    require 'tempfile'
+    require 'tmpdir'
+    require 'open-uri'
     # Used for interacting with the Apple News API
     # and should be called during background job.
     def initialize record
