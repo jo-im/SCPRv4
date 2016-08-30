@@ -22,8 +22,8 @@ module AppleNews
   end
 
   def anchor_to_component element
-    if (element.attributes["class"].value.include?("embed-placeholder") &&
-      element.attributes['data-service'].value &&
+    if (element.attributes["class"].try(:value).try(:include?, "embed-placeholder") &&
+      element.attributes['data-service'].try(:value) &&
       element.attributes['href'])
       embed_placeholder_to_component element
     else

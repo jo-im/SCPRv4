@@ -5,7 +5,7 @@ require 'open-uri'
 
 module Job
   class PublishAppleNewsContent < Base
-    @priority = :low
+    @priority = :mid
     class << self
       def perform content_type, id, action
         record = content_type.constantize.find(id)
@@ -22,8 +22,6 @@ module Job
         elsif action == :delete
           delete record
         end
-      rescue => e
-        NewRelic.log_error(e)
       end
       private
       def find uuid
@@ -107,23 +105,23 @@ module Job
         # which is where we will include all the files required
         # to publish our article, the most important one being
         # article.json.
-        Dir.mktmpdir do |dir|
-          doc = record.to_apple
-          # thumb_url  = record.try(:asset).try(:small).try(:url)
-          # if thumb_url
-          # # The thumbnail, unlike images in the article itself,
-          # # must be a part of the bundle, so we have to download
-          # # it and include it as a file with a specific name.
-          #   if download_from_to(thumb_url, "#{dir}/thumbnail.jpg")
-          #     doc[:metadata][:thumbnailURL] = "bundle://thumbnail.jpg"
-          #   end
-          # end
-          File.open("#{dir}/article.json", "w") do |f|
-            f.write doc.to_json
-            f.rewind
-            return yield f, dir, record
-          end
+        dir = Dir.mktmpdir
+        doc = record.to_apple
+        # thumb_url  = record.try(:asset).try(:small).try(:url)
+        # if thumb_url
+        # # The thumbnail, unlike images in the article itself,
+        # # must be a part of the bundle, so we have to download
+        # # it and include it as a file with a specific name.
+        #   if download_from_to(thumb_url, "#{dir}/thumbnail.jpg")
+        #     doc[:metadata][:thumbnailURL] = "bundle://thumbnail.jpg"
+        #   end
+        # end
+        File.open("#{dir}/article.json", "w") do |f|
+          f.write doc.to_json
+          f.rewind
+          return yield f, dir, record
         end
+        Dir.delete dir
       end
 
     end

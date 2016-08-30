@@ -120,7 +120,6 @@ module Concern
         act = async ? :enqueue : :perform # Perform synchronously in development
         if should_publish_to_apple_news?
           Job::PublishAppleNewsContent.send act, self.class.to_s, self.id, :upsert
-          true
         else
           false
         end
