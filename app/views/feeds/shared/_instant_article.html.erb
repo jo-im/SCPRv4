@@ -17,7 +17,7 @@
         <%= time_tag content.updated_at, class: "op-modified" %>
 
         <address>
-          <a><%= content.byline %></a>
+          <a><%= content.byline.any? ? content.byline : 'KPCC Staff' %></a>
         </address>
 
         <%= render_lead_asset content %>

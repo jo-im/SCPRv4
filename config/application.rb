@@ -20,6 +20,7 @@ module Scprv4
     config.autoload_paths += [
       "#{config.root}/lib",
       "#{config.root}/lib/validators",
+      "#{config.root}/lib/core_ext",
       "#{config.root}/app/models/pmp",
       "#{config.root}/app/models/content_base"
     ]
@@ -65,8 +66,5 @@ module Scprv4
     config.assets.paths << Rails.root.join("node_modules")
     config.assets.paths << Rails.root.join("node_modules/scpr-style-guide/public")
 
-    # Dir.glob("#{Rails.root}/node_modules/**/").each do |path|
-    #   config.assets.paths << path
-    # end
   end
 end
