@@ -65,6 +65,7 @@ CKEDITOR.editorConfig = function(config) {
   config.bodyClass        = 'ckeditor-body';
   config.contentsCss      = APPLICATION_CSS;
   config.baseHref         = BASE_HREF;
+  config.removeFormatTags = 'br';
 
   return true;
 };
