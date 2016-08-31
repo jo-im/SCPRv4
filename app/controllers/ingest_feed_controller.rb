@@ -1,5 +1,5 @@
 require "#{Rails.root}/lib/embeditor/embeditor_processor"
-
+require "core_ext/string"
 class IngestFeedController < ApplicationController
   layout false
   helper InstantArticlesHelper
@@ -23,20 +23,6 @@ class IngestFeedController < ApplicationController
     render text: xml, format: :xml
   ensure
     @embeditor.close
-  end
-
-  def apple_ingest
-    response.headers["Content-Type"] = 'text/xml'
-
-    @feed = {
-      :title       => "Apple News | 89.3 KPCC",
-      :description => "Apple News articles from KPCC's reporters, bloggers and shows.",
-      :url         => apple_ingest_feed_url(format: :xml)
-    }
-
-    xml = render_to_string(template: 'feeds/apple.xml.builder', formats: :xml)
-
-    render text: xml, format: :xml
   end
 
   private

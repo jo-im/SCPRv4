@@ -27,7 +27,6 @@ Scprv4::Application.routes.draw do
   get '/feeds/take_two'        => 'feeds#take_two',    as: :take_two_feed # Deprecated, delete once replaced with npr_ingest
   get '/feeds/npr_ingest'      => 'feeds#npr_ingest',  as: :npr_ingest_feed
   get '/feeds/facebook_ingest' => 'ingest_feed#facebook_ingest',  as: :facebook_ingest_feed
-  get '/feeds/apple_ingest'    => 'ingest_feed#apple_ingest',  as: :apple_ingest_feed
   get '/feeds/*feed_path', to: redirect { |params, request| "/#{params[:feed_path]}.xml" }
 
 
