@@ -34,7 +34,8 @@ class IngestFeedController < ApplicationController
     @content = cache "ingest-feed-controller", skip_digest: true do
       # Cache should be expiring whenever a news story or a blog entry is published or modified(after publish).
       records = NewsStory.published.where(source: "kpcc").order("published_at DESC").limit(15).concat BlogEntry.published.order('published_at DESC').limit(15)
-      records = records.map(&:get_article).sort_by(&:public_datetime).reverse.first(15)
+      # records = records.map(&:get_article).sort_by(&:public_datetime).reverse.first(15)
+      records = records.sort_by(&:published_at).reverse.first(15)
       records.reject{|r| contains_anchors?(r.body)}
     end
   end

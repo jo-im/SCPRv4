@@ -30,6 +30,10 @@ module Embeditor
       open
       html # just return original markup in case of failure
     end
+    def reload
+      close
+      open
+    end
     def open
       @stdin, @stdout, @stderr, @wait_thr = Open3.popen3("bin/embeditor #{@arguments}")
       @pid = @wait_thr.pid
@@ -43,6 +47,9 @@ module Embeditor
       rescue Errno::ESRCH
         # Process is already dead so do nothing.
       end
+      @stdin  = nil
+      @stdout = nil
+      @stderr = nil
       @wait_thr.value if @wait_thr # Process::Status object returned.
     end
   end

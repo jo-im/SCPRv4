@@ -10,7 +10,7 @@ xml.rss({
 
     @content.each do |content|
       xml.item do
-        xml.title content.title
+        xml.title content.headline
         xml.description content.teaser
         xml.tag! 'content:encoded' do
           xml.cdata! render(
@@ -23,7 +23,7 @@ xml.rss({
         xml.guid  content.public_url
         xml.link  content.public_url
         xml.author content.byline
-        xml.pubDate content.public_datetime.iso8601
+        xml.pubDate content.published_at.iso8601
       end
     end
   end

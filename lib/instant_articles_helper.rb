@@ -31,6 +31,7 @@ module InstantArticlesHelper
     # Passes the HTML through an instance of Embeditor running in Node.js
     if @embeditor
       html = @embeditor.process body
+      @embeditor.reload
       process_markup html, '.embed-wrapper' do |embed, doc|
         # This will later be wrapped in an op-interactive figure along with any other iframes.
         figure = Nokogiri::HTML::DocumentFragment.parse("<iframe class='column-width'>#{embed.to_s}</iframe>").children[0]
@@ -88,7 +89,7 @@ module InstantArticlesHelper
     doc = Nokogiri::HTML(content.body)
     doc.css(cssPath).each do |placeholder|
       asset_id = placeholder.attribute('data-asset-id').value
-      asset = content.original_object.assets.find_by(asset_id:asset_id)
+      asset = content.assets.find_by(asset_id:asset_id)
       if asset
         rendered_asset = render_asset content, context: context, display: display, asset:asset
         placeholder.replace Nokogiri::HTML::DocumentFragment.parse(rendered_asset)
