@@ -1,0 +1,6 @@
+<%= cache ['amp-single', @amp_record] do %>
+  <% processor = Embeditor::Processor.new %>
+  <% body = processor.process @amp_record.body %>
+  <% processor.close %>
+  <%= sanitize body, scrubber: AmpSanitizer.new %>
+<% end %>
