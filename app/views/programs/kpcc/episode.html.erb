@@ -31,7 +31,7 @@
 
           <h1>From This Episode</h1>
 
-          <%= any_to_list? @content, title: "Content" do %>
+          <%= any_to_list? @content, title: "Content", message: "No segments from this episode are available yet. " do %>
             <%= cache ["segment-teasers", @content.to_a] do %>
               <% @content.each.with_index do |content, index| %>
               <article class="clearfix">
@@ -111,7 +111,7 @@
         </div><!--/ .articles -->
       </section><!--/ .recents -->
     <% end %>
-    <%= render partial: 'programs/shared/archive_browser', locals: {program: @program} %> 
+    <%= render partial: 'programs/shared/archive_browser', locals: {program: @program} %>
 
   </div><!--/ .bound -->
 </div><!--/ .episode-postlude -->
