@@ -1,6 +1,20 @@
 module Filter
   class InstantArticlesFilter < HTML::Pipeline::Filter
+
+    class ContentRenderer < ActionView::Base
+      include ApplicationHelper
+      include InstantArticlesHelper
+      def initialize content
+        @content = content
+        super ActionController::Base.view_paths, {}, ActionController::Base.new
+      end
+      def params
+        {} # ActionView expects this, but obviously it isn't useful in this context.
+      end
+    end
+
     def call
+      wrap_inline_assets context[:content]
       wrap_embeds
       wrap_iframes
       translate_headings
@@ -9,11 +23,25 @@ module Filter
 
     private
 
+    def wrap_inline_assets content
+      doc.search('img.inline-asset[data-asset-id]').each do |img|
+        return img.remove if !content
+        asset_id = img.attribute('data-asset-id').value
+        asset = content.assets.find_by(asset_id:asset_id)
+        if asset
+          rendered_asset = ContentRenderer.new(context[:content]).render_asset content, asset:asset
+          img.replace Nokogiri::HTML::DocumentFragment.parse(rendered_asset)
+        else
+          img.remove
+        end
+      end
+    end
+
     def wrap_iframes
       # Iframes should be embedded in a figure tag with op-interactive class.
       # This will take care of our dynamic embeds as well as iframes inserted
       # by the author.
-      doc.search('iframe') do |iframe|
+      doc.search('iframe').each do |iframe|
         figure = Nokogiri::HTML::DocumentFragment.parse("<figure class='op-interactive'>#{iframe.to_s}</figure>").children[0]
         iframe.replace figure
       end

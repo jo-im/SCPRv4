@@ -24,8 +24,7 @@ module InstantArticlesHelper
   def pipeline_filter record
     pipeline = ::HTML::Pipeline.new([
       Filter::CleanupFilter, 
-      Filter::EmbeditorFilter, 
-      Filter::InlineAssetsFilter, 
+      Filter::EmbeditorFilter,
       Filter::InstantArticlesFilter
       ], content: record)
     raw pipeline.call(record.body)[:output].to_s
