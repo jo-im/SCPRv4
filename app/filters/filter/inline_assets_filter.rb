@@ -36,7 +36,7 @@ module Filter
         return if !context[:content]
         doc.css('img.inline-asset[data-asset-id]').each do |element|
           asset = context[:content].assets.find_by asset_id: element['data-asset-id']
-          if asset && asset.owner.try(:include?, "KPCC")
+          if asset
             element['src'] = asset.full.url
             element['alt'] = asset.caption
           else
