@@ -6,9 +6,11 @@ class NewsController < ApplicationController
 
   PER_PAGE = 11
 
+  extend Concern::Controller::Amp
+
   def story
     @story = NewsStory.published.find(params[:id])
-    @amp_record = @story
+
     @content_params = {
       page:         params[:page].to_i,
       per_page:     PER_PAGE
@@ -25,8 +27,6 @@ class NewsController < ApplicationController
     respond_with template: "news/story"
   end
 
-  extend Concern::Controller::Amp::ClassMethods
-  include Concern::Controller::Amp::InstanceMethods
-  amplify :story
+  amplify :story, expose: {'@amp_record' => "@story"}
 
 end

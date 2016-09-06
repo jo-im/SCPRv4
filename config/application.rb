@@ -24,6 +24,7 @@ module Scprv4
       "#{config.root}/app/models/pmp",
       "#{config.root}/app/models/content_base",
       "#{config.root}/app/sanitizers",
+      "#{config.root}/app/filters",
       "#{config.root}/lib/embeditor"
     ]
 

@@ -107,42 +107,8 @@ module AppleNews
   end
 
   def preprocess html
-    unwrap_embed_placeholders insert_inline_assets html
-  end
-
-  def unwrap_embed_placeholders html
-    # Embed placeholders are often wrapped in paragraph tags, which
-    # is confusing because the end result is not a block element, and
-    # because the paragraph is processed first, it assumes that all
-    # its contents are span elements and therefore turns the contents
-    # into markdown, which we don't want to have happen in this case.
-    # Better just to remove the paragraphs beforehand.
-    process_markup html, "a.embed-placeholder" do |element|
-      parent = element.parent
-      if parent && parent.name == "p"
-        parent.replace element
-      end
-    end
-  end
-
-  def insert_inline_assets html
-    process_markup html, 'img.inline-asset[data-asset-id]' do |element|
-      asset = assets.find_by asset_id: element['data-asset-id']
-      if asset && asset.owner.try(:include?, "KPCC")
-        element['src'] = asset.full.url
-        element['alt'] = asset.caption
-      else
-        element.remove
-      end
-    end
-  end
-
-  def process_markup html, selector, &block
-    doc = Nokogiri::HTML(html.force_encoding('ASCII-8BIT'))
-    doc.css(selector).each{|element|
-      yield element
-    }
-    doc.css('body').children.to_s.html_safe
+    pipeline = HTML::Pipeline.new([Filter::InlineAssetsFilter::Simple, Filter::CleanupFilter])
+    pipeline.call(html)[:output].to_s
   end
 
   class Publisher
