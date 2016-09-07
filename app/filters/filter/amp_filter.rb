@@ -1,13 +1,22 @@
 module Filter
   class AmpFilter < HTML::Pipeline::Filter
     TAG_MAPPINGS = {
-      'img' => lambda { |node|
-        if node['width'] && node['height']
-          node.name = 'amp-img'
-          node['layout'] = 'responsive'
-          node['srcset'] = node['src']
+      'img' => lambda { |img|
+        if img['data-width'] && img['data-height']
+          img.name = "amp-img"
+          img['layout'] = 'responsive'
+          img['srcset'] = img['src']
+          img['width']  = img['data-width']
+          img['height'] = img['data-height']
+          figstring = "<figure>#{img.to_s}"
+          if caption = img.attribute('alt') ? img.attribute('alt').value : nil
+            figstring += "<figcaption>#{caption}</figcaption>"
+          end
+          figstring += "</figure>"
+          figure = Nokogiri::HTML::DocumentFragment.parse(figstring).children[0]
+          img.replace figure
         else
-          node.remove
+          img.remove
         end
       },
       'iframe' => lambda { |node|
@@ -27,20 +36,25 @@ module Filter
     }.freeze
 
     def call
-      @tags = %w(a em p span h1 h2 h3 h4 h5 h6 div strong s u br blockquote)
-      doc.traverse do |node|
-        scrub node
-      end
+      map_tags
+      # convert_images
+      # wrap_images
       doc
     end
 
   private
+
+    def map_tags
+      @tags = %w(a em p span h1 h2 h3 h4 h5 h6 div strong s u br blockquote)
+      doc.traverse do |node|
+        scrub node
+      end      
+    end
     def scrub node
       if node.name.in?(TAG_MAPPINGS.keys)
         remap node, TAG_MAPPINGS[node.name]
       end
     end
-
     def remap node, filter
       case filter
       when String

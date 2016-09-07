@@ -3,8 +3,7 @@ module Filter
   class EmbeditorFilter < HTML::Pipeline::Filter
     def call
       embeditor = Embeditor::Processor.new
-      @doc = Nokogiri::HTML.fragment embeditor.process doc.to_s
-      doc
+      Nokogiri::HTML.fragment embeditor.process doc.to_s
     ensure
       embeditor.close
     end

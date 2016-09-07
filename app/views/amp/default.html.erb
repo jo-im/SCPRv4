@@ -1,1 +1,18 @@
-<%= raw pipeline_filter @amp_record.body %>
+<article>
+  <header>
+    <h1><%= @amp_record.headline %></h1>
+
+    <%= time_tag @amp_record.published_at, class: "op-published" %>
+
+    <address>
+      <a><%= !@amp_record.byline.empty? ? @amp_record.byline : 'KPCC Staff' %></a>
+    </address>
+
+  </header>
+
+  <%= raw pipeline_filter @amp_record  %>
+
+  <footer>
+    <small>&copy; 2016 Southern California Public Radio</small>
+  </footer>
+</article>

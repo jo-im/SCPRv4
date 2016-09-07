@@ -22,7 +22,7 @@ module Concern
             "default-src *", 
             "script-src *", 
             "style-src * 'unsafe-inline'",
-            "img-src 'self' data:",
+            "img-src * data:",
             "font-src *"
           ]
         }
@@ -70,6 +70,7 @@ module Concern
         merged_render_options  = default_render_options.merge(options)
         _add_helpers
         define_method name do
+          @amp_enabled = true
           if params.has_key?(:amp)
             fc = self.class._headless(request, response, params)
             omethod.bind(fc).call # bind original method to headless controller
@@ -92,15 +93,20 @@ module Concern
       end
 
       def _add_helpers
+        # Right now, this just adds the #pipeline_filter
+        # helper method, and is essentially a workaround
+        # so that we don't have to both extend and include
+        # from this module.  Would like to find a better
+        # way than this.
         unless defined? pipeline_filter
           define_method :pipeline_filter do |record|
             pipeline = ::HTML::Pipeline.new([
               Filter::CleanupFilter, 
               Filter::EmbeditorFilter, 
-              Filter::InlineAssetsFilter, 
+              Filter::InlineAssetsFilter,
               Filter::AmpFilter
               ], content: record)
-            pipeline.call(record)[:output].to_s
+            pipeline.call(record.body)[:output].to_s
           end
           helper_method :pipeline_filter
         end

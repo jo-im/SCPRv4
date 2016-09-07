@@ -452,6 +452,16 @@ module ApplicationHelper
   end
 
   #---------------
+
+  # If this is a page with Google AMP enabled
+  # include this link tag in HEAD.
+  def amp_head_link
+    if @amp_enabled
+      tag :link, rel: "amphtml", href: "#{request.original_url}?amp"
+    end
+  end
+
+  #---------------
   # These two methods are taken from EscapeUtils
   def html_escape(string)
     EscapeUtils.escape_html(string.to_s).html_safe

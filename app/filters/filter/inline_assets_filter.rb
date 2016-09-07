@@ -15,6 +15,10 @@ module Filter
         if asset
           element['src'] = asset.full.url
           element['alt'] = asset.caption
+          # In case a later process needs this information
+          # but has no access to the asset object.
+          element['data-width']  = asset.full.width
+          element['data-height'] = asset.full.height
         else
           element.remove
         end
