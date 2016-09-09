@@ -1,18 +1,26 @@
-<article>
-  <header>
-    <h1><%= @amp_record.headline %></h1>
 
-    <%= time_tag @amp_record.published_at, class: "op-published" %>
-
-    <address>
-      <a><%= !@amp_record.byline.empty? ? @amp_record.byline : 'KPCC Staff' %></a>
-    </address>
-
+  <header class="scpr-style">
+    <div class="media media--hp-large">
+      <div class="media__meta meta">
+        <span>
+        <span class="media__overline byline"><%= render_byline @amp_record %></span>
+        <span class="divider">|</span>
+        <span class="media__timestamp timestamp"><%= amp_timestamp(@amp_record.published_at) %></span>
+        </span>
+      </div>
+      <h3 class="media__headline media__headline--h1 u-text-align--center">
+        <a class="media__headline-link" href="#"><%= @amp_record.headline %></a>
+      </h3>
+      <figure class="media--hp-large">
+        <div class="media__figure media__figure--widescreen">
+          <%= amp_asset @amp_record.asset, layout: "responsive" %>
+        </div>
+        <figcaption class="media__caption text--light">
+          <%= @amp_record.asset.caption %> <span class="credit"><%= @amp_record.asset.owner %></span>
+        </figcaption>
+      </figure>
+    </div>
   </header>
-
-  <%= raw pipeline_filter @amp_record  %>
-
-  <footer>
-    <small>&copy; 2016 Southern California Public Radio</small>
-  </footer>
-</article>
+  <main>
+    <%= raw pipeline_filter @amp_record  %>
+  </main>

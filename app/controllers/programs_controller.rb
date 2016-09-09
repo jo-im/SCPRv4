@@ -6,6 +6,7 @@ class ProgramsController < ApplicationController
 
   include Concern::Controller::GetPopularArticles
   include Concern::Controller::ShowEpisodes
+  extend Concern::Controller::Amp
 
   layout 'new/single', only: [:segment]
 
@@ -103,6 +104,8 @@ class ProgramsController < ApplicationController
 
     render 'programs/kpcc/segment' and return
   end
+
+  amplify :segment, expose: {'@amp_record' => "@segment"}
 
   def episode
     if @program.is_a?(KpccProgram)

@@ -102,7 +102,7 @@ module Concern
           define_method :pipeline_filter do |record|
             pipeline = ::HTML::Pipeline.new([
               Filter::CleanupFilter, 
-              Filter::EmbeditorFilter, 
+              # Filter::EmbeditorFilter, 
               Filter::InlineAssetsFilter,
               Filter::AmpFilter
               ], content: record)
