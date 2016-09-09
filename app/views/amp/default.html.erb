@@ -8,9 +8,9 @@
         <span class="media__timestamp timestamp"><%= amp_timestamp(@amp_record.published_at) %></span>
         </span>
       </div>
-      <h3 class="media__headline media__headline--h1 u-text-align--center">
+      <h1 class="media__headline media__headline--h1 u-text-align--center">
         <a class="media__headline-link" href="#"><%= @amp_record.headline %></a>
-      </h3>
+      </h1>
       <figure class="media--hp-large">
         <div class="media__figure media__figure--widescreen">
           <%= amp_asset @amp_record.asset, layout: "responsive" %>
