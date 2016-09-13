@@ -2,6 +2,8 @@ class Tag < ActiveRecord::Base
   outpost_model
   has_secretary
 
+  include Concern::Associations::RelatedContentAssociation
+
   validates :slug, uniqueness: true
   validates :title, presence: true
   validates :description, presence: true
@@ -26,6 +28,22 @@ class Tag < ActiveRecord::Base
 
   def pmp_alias= new_alias
     super unless pmp_alias == new_alias
+  end
+
+  def featured_content omit=[]
+    # omit is a list of model records to exclude from the results,
+    # probably coming from a homepage object
+    related_omissions = omit.map{|m| "(related_type NOT LIKE '#{m.class}' AND related_id <> #{m.id})"}.join(" AND ")
+    tagging_omissions = omit.map{|m| "(taggable_type NOT LIKE '#{m.class}' AND taggable_id <> #{m.id})"}.join(" AND ")
+    if outgoing_references.count > 3
+      outgoing_references.order("position ASC")
+        .where(related_omissions)
+        .limit(3).map(&:related).map(&:to_article)
+    elsif taggings.count > 3
+      taggings.order("created_at DESC")
+        .where(tagging_omissions)
+        .limit(3).map(&:taggable).map(&:to_article)
+    end
   end
 
   class << self

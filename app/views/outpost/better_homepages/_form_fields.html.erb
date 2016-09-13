@@ -49,6 +49,7 @@
 <%= render partial: "outpost/better_homepages/editor" %> <!-- This needs to happen after the aggregator has initialized. -->
 
 <%= form_block "Details" do %>
+  <%= f.association :tags, as: :grouped_select, collection: Tag.by_type, group_method: :tags, group_label_method: :name, input_html: { :multiple => true } %>
   <%= f.input :status, collection: Homepage.status_select_collection, include_blank: false, input_html: { id: "status-select" } %>
   <%= f.section 'content_alarm' %>
   <%= f.section 'auto_published_at' %>
