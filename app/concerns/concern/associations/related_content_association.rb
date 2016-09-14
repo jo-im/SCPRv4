@@ -16,7 +16,7 @@ module Concern
           :dependent    => :destroy
 
         has_many :incoming_references,
-          -> { order('position').where(content_type: ContentBase::SAFE_CLASSES) },
+          -> { order('position').where.not(content_type: ["Tag", "BroadcastContent"]) },
           :as           => :related,
           :class_name   => "Related",
           :dependent    => :destroy
