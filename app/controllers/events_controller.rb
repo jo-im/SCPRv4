@@ -1,4 +1,5 @@
 class EventsController < ApplicationController
+
   def index
     @scoped_events = Event.upcoming_and_current
 
