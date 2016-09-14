@@ -1,0 +1,25 @@
+<header class="scpr-style">
+  <div class="media media--hp-large">
+    <div class="media__meta meta">
+      <span>
+      <span class="media__overline byline"><%= render_byline @amp_record %></span>
+      <span class="divider">|</span>
+      <span class="media__timestamp timestamp"><%= amp_timestamp(@amp_record.try(:published_at) || @amp_record.try(:updated_at)) %></span>
+      </span>
+    </div>
+    <h1 class="media__headline media__headline--h1 u-text-align--center">
+      <a class="media__headline-link" href="#"><%= @amp_record.headline %></a>
+    </h1>
+    <figure class="media--hp-large">
+      <div class="media__figure media__figure--widescreen">
+        <%= amp_asset @amp_record.asset, layout: "responsive" %>
+      </div>
+      <figcaption class="media__caption text--light">
+        <%= @amp_record.asset.caption %> <span class="credit"><%= @amp_record.asset.owner %></span>
+      </figcaption>
+    </figure>
+  </div>
+</header>
+<main>
+  <%= raw pipeline_filter @amp_record  %>
+</main>

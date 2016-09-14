@@ -1,0 +1,30 @@
+<header class="scpr-style">
+  <div class="media media--hp-large">
+    <div class="media__meta meta">
+      <span>
+      <span class="media__overline byline"><%= render_byline @amp_record %></span>
+      <span class="divider">|</span>
+      <span class="media__timestamp timestamp"><%= amp_timestamp(@amp_record.try(:published_at) || @amp_record.try(:updated_at)) %></span>
+      </span>
+    </div>
+    <h1 class="media__headline media__headline--h1 u-text-align--center">
+      <a class="media__headline-link" href="#"><%= @amp_record.headline %></a>
+    </h1>
+
+    <% if audio = @amp_record.audio.first %>
+
+      <% url = url_with_params(audio.url, via: 'website') %>
+      <aside class="audio">
+        <amp-audio width="400" height="50" src="<%= url.gsub('http:', '') %>">
+          <div fallback>
+            <p>Your browser doesn’t support HTML5 audio</p>
+          </div>
+        </amp-audio>
+      </aside>
+    <% end %>
+
+  </div>
+</header>
+<main>
+  <%= raw pipeline_filter @amp_record  %>
+</main>

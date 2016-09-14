@@ -1,0 +1,72 @@
+@import 'scpr-style-guide/src/css/util/all'
+@import 'scpr-style-guide/src/css/base/all'
+@import 'scpr-style-guide/src/css/components/all'
+
+.media__figure
+  clear: both
+  &::before
+    padding-top: 0 // not sure why we have a lot of padding, but it seems to be incompatible with amp-img
+
+.media__caption
+  font-size: 12px
+
+span.credit
+  color: $color-link
+
+amp-img.grey-placeholder
+  background-color: grey
+
+@mixin amp-center-column ()
+  max-width: 800px
+  margin: 0 auto
+
+#inline-deps
+  display: none
+      
+header
+  @include amp-center-column
+  padding-bottom: 10px
+  .media__headline
+    margin-bottom: 0
+
+  div.meta
+    background-color: white
+    padding: 10px
+    text-align: center
+    padding-top: 0
+    .byline
+      display: inline
+    .timestamp
+      margin-top: 1px
+    span.divider
+      color: $color-gray-light
+      padding-left: 5px
+      padding-right: 5px
+      margin-top: -4px
+  aside.audio
+    text-align: center
+
+figcaption
+  padding: 15px
+
+main
+  h1, h2, h3, h4, h5, h6
+    @extend .media__headline
+    margin-top: 1.125rem
+  @include amp-center-column
+  padding-left: 10px
+  padding-right: 10px
+  line-height: 1.4
+  p
+    @extend .text--serif
+    padding-top: 5px
+    padding-bottom: 5px
+    a
+      @extend .link--callout
+
+  figure
+    padding-top: 10px
+    padding-bottom: 10px
+
+footer
+  margin-top: 25px

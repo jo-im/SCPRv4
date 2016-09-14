@@ -6,6 +6,7 @@ class ProgramsController < ApplicationController
 
   include Concern::Controller::GetPopularArticles
   include Concern::Controller::ShowEpisodes
+  extend Concern::Controller::Amp
 
   layout 'new/single', only: [:segment]
 
@@ -104,9 +105,15 @@ class ProgramsController < ApplicationController
     render 'programs/kpcc/segment' and return
   end
 
+  amplify :segment, expose: {'@amp_record' => "@segment"}, template: "amp/audio"
+
   def episode
     if @program.is_a?(KpccProgram)
-      @episode    = @program.episodes.find(params[:id])
+      @amp_enabled = true
+      @amp_record = @episode = @program.episodes.find(params[:id])
+      # The #amplify method can't be used here because of the unusual way that this
+      # action is written.  Another good reason to refactor this cludgy controller.
+      return render(layout: "application.amp.erb", template: "amp/audio") if params.has_key?(:amp)
       render_kpcc_episode
     end
 

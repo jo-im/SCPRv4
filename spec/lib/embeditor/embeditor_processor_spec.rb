@@ -1,5 +1,5 @@
 require 'spec_helper'
-require "#{Rails.root}/lib/embeditor/embeditor_processor"
+require "#{Rails.root}/lib/embeditor/processor"
 
 describe Embeditor::Processor do
   describe '#process' do

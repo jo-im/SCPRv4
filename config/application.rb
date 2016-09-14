@@ -22,7 +22,10 @@ module Scprv4
       "#{config.root}/lib/validators",
       "#{config.root}/lib/core_ext",
       "#{config.root}/app/models/pmp",
-      "#{config.root}/app/models/content_base"
+      "#{config.root}/app/models/content_base",
+      "#{config.root}/app/sanitizers",
+      "#{config.root}/app/filters",
+      "#{config.root}/lib/embeditor"
     ]
 
     config.assets.version = '2.0'
@@ -37,7 +40,8 @@ module Scprv4
       "new/application.css",
       "new/ie-lt9.js",  # For ie < 9, separate include
       "new/ie-lt9.css", # For ie < 9, separate include
-      "*.eot", "*.ttf", "*.woff" # Font files
+      "*.eot", "*.ttf", "*.woff", # Font files
+      "amp/application.css.sass"
     ]
 
     config.assets.precompile += %w( better_homepage/style-guide.js )

@@ -35,7 +35,8 @@
     <%= csrf_meta_tags %>
 
     <%= tag "link", rel: "alternate", type: "application/rss+xml", title: "RSS", href: meta_information[:rss_feed] || "http://scpr.org/feeds/all_news" %>
-
+    <%= amp_head_link %>
+    
     <%= favicon_link_tag '/favicon.ico' %>
 
     <!-- Start Visual Website Optimizer Asynchronous Code -->
