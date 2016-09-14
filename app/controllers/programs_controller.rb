@@ -109,6 +109,7 @@ class ProgramsController < ApplicationController
 
   def episode
     if @program.is_a?(KpccProgram)
+      @amp_enabled = true
       @amp_record = @episode = @program.episodes.find(params[:id])
       # The #amplify method can't be used here because of the unusual way that this
       # action is written.  Another good reason to refactor this cludgy controller.
