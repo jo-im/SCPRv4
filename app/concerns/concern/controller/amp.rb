@@ -34,7 +34,7 @@ module Concern
         # render methods.
         klass = Class.new(self) do
           attr_accessor :params, :amp_record, :request, :response
-          newrelic_ignore_enduser
+
           def initialize request:, response:, params:{}
             method(__method__).parameters.each{|p| instance_variable_set("@#{p[1]}", binding.local_variable_get(p[1]))}
           end
@@ -71,6 +71,7 @@ module Concern
         merged_render_options  = default_render_options.merge(options)
         _add_helpers
         define_method name do
+          newrelic_ignore_enduser
           @amp_enabled = true
           if params.has_key?(:amp)
             fc = self.class._headless(request, response, params)
