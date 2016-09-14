@@ -34,6 +34,7 @@ module Concern
         # render methods.
         klass = Class.new(self) do
           attr_accessor :params, :amp_record, :request, :response
+          newrelic_ignore_enduser
           def initialize request:, response:, params:{}
             method(__method__).parameters.each{|p| instance_variable_set("@#{p[1]}", binding.local_variable_get(p[1]))}
           end
