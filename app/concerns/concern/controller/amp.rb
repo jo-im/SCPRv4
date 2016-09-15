@@ -6,6 +6,8 @@ module Concern
     module Amp
       extend ActiveSupport::Concern
 
+      before_action :newrelic_ignore_enduser, if: ->(){ params.has_key?(:amp) }
+
       def amplify *args
         helper_method :pipeline_filter
         args.last.is_a?(Hash) ? (options = args.pop) : (options = {})
@@ -34,7 +36,6 @@ module Concern
         # render methods.
         klass = Class.new(self) do
           attr_accessor :params, :amp_record, :request, :response
-
           def initialize request:, response:, params:{}
             method(__method__).parameters.each{|p| instance_variable_set("@#{p[1]}", binding.local_variable_get(p[1]))}
           end
@@ -71,7 +72,6 @@ module Concern
         merged_render_options  = default_render_options.merge(options)
         _add_helpers
         define_method name do
-          newrelic_ignore_enduser
           @amp_enabled = true
           if params.has_key?(:amp)
             fc = self.class._headless(request, response, params)
