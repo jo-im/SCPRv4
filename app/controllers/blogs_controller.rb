@@ -10,7 +10,7 @@ class BlogsController < ApplicationController
   PER_PAGE = 11
   #----------
 
-  extend Concern::Controller::Amp
+  include Concern::Controller::Amp
 
   def index
     @blogs = Blog.active.order("name")

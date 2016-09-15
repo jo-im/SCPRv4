@@ -6,7 +6,7 @@ class NewsController < ApplicationController
 
   PER_PAGE = 11
 
-  extend Concern::Controller::Amp
+  include Concern::Controller::Amp
 
   def story
     @story = NewsStory.published.find(params[:id])
