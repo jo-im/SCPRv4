@@ -17,6 +17,7 @@
     <script async custom-element="amp-instagram" src="https://cdn.ampproject.org/v0/amp-instagram-0.1.js"></script>
     <script async custom-element="amp-twitter" src="https://cdn.ampproject.org/v0/amp-twitter-0.1.js"></script>
     <script async custom-element="amp-audio" src="https://cdn.ampproject.org/v0/amp-audio-0.1.js"></script>
+    <title><%= ["89.3 KPCC", content_for(:title)].join(" | ") %></title>
   </head>
   <body class="amp">
     <div id="inline-deps">
@@ -34,7 +35,7 @@
             "request": "pageview",
             "vars": {
               "title": "<%= content_for :title %>",
-              "ampdocUrl": "<%= @amp_record.public_url %>?amp"
+              "ampdocUrl": "<%= content_for :public_url %>?amp"
             }
           }
         }

@@ -6,7 +6,7 @@ class ProgramsController < ApplicationController
 
   include Concern::Controller::GetPopularArticles
   include Concern::Controller::ShowEpisodes
-  extend Concern::Controller::Amp
+  include Concern::Controller::Amp
 
   layout 'new/single', only: [:segment]
 

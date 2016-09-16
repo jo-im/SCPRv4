@@ -1,3 +1,5 @@
+<% content_for :title, @amp_record.try(:headline) || @amp_record.try(:title) %>
+<% content_for :public_url, @amp_record.public_url %>
 <header class="scpr-style">
   <div class="media media--hp-large">
     <div class="media__meta meta">
