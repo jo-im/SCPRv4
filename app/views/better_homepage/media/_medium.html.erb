@@ -1,10 +1,10 @@
 <div class="story media media media--hp" data-obj-key='<%= content.article.obj_key %>'>
-  <%= render partial: "better_homepage/media/shared/figure_widescreen", locals: {url: content.article.public_url, asset_url: content.article.asset.full.url, asset_scheme: content.asset_scheme} %>
+  <%= media_figure "widescreen", url: content.article.public_url, asset_url: content.article.asset.full.url, asset_scheme: content.asset_scheme %>
   <div class="media__content">
-    <%= render partial: "better_homepage/media/shared/label", locals: {label: content.label} %>
-    <%= render partial: "better_homepage/media/shared/headline", locals: {headline: content.article.short_title, url: content.article.public_url} %>
-    <%= render partial: "better_homepage/media/shared/teaser", locals: {teaser: content.article.abstract} %>
-    <%= render partial: "better_homepage/media/shared/meta", locals: {feature: content.article.feature, public_datetime: content.article.public_datetime, updated_at: content.article.updated_at} %>
-    <%= render partial: "better_homepage/media/shared/extra", locals: {content: content, contents: contents} %>
+    <%= media_label content.label %>
+    <%= media_headline content.article.short_title, content.article.public_url %>
+    <%= media_teaser content.article.abstract %>
+    <%= media_meta feature: content.article.feature, public_datetime: content.article.public_datetime, updated_at: content.article.updated_at %>
+    <% media_extra content, contents %>
   </div>
 </div>

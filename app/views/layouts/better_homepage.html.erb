@@ -17,10 +17,12 @@
 
   <body class="">
     <%= render partial: "layouts/better_homepage/header" %>
-    <div id='check-it-out-wide'>
-        <%= precached "layouts/better_homepage/check_it_out" %>
-    </div>
-    <%= yield %>
+    <main class="flex-grid">
+        <aside id="left-side" class="col"></aside>
+        <%= yield %>
+        <aside id="right-side"  class="col"></aside>
+    </main>
+    <%= hidden_gem %>
     <%= render partial: "layouts/better_homepage/footer" %>
     <%= render partial: "shared/footer/tracking_scripts" %>
     <%= javascript_include_tag "better_homepage/style-guide", :async => true %>

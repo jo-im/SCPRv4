@@ -1,0 +1,33 @@
+.flex-grid
+  display: flex
+.flex-grid .col
+  flex: 1
+.flex-grid-thirds
+  display: flex
+  justify-content: space-between
+.flex-grid-thirds .col
+  width: 32%
+
+@mixin centerize()
+  display: block
+  .col
+    width: 100%
+    margin: 0 0 10px 0
+
+.centerize
+  @include centerize()
+
+@media (max-width: $media-mobile)
+  .flex-grid,
+  .flex-grid-thirds
+    @include centerize()
+
+*
+  box-sizing: border-box
+body
+  padding: 20px
+.flex-grid 
+  margin: 0 0 20px 0
+.col
+  // background: grey
+  padding: 20px
