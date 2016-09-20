@@ -3,8 +3,8 @@ require 'htmlentities'
 require 'digest'
 module AppleNews
   # A collection of methods that are useful to the Apple News publishing callback.
-  def elements_to_components html
-    processed_html = preprocess(html) # Mostly insert inline assets
+  def elements_to_components
+    processed_html = preprocess(body) # Mostly insert inline assets
     components = Nokogiri::HTML::DocumentFragment.parse(processed_html).children.to_a.map do |element|
       element_to_component element
     end.flatten # we expect components to always come in as arrays, as some of them
@@ -107,7 +107,7 @@ module AppleNews
   end
 
   def preprocess html
-    pipeline = HTML::Pipeline.new([Filter::InlineAssetsFilter::Simple, Filter::CleanupFilter])
+    pipeline = HTML::Pipeline.new([Filter::InlineAssetsFilter, Filter::CleanupFilter], content: self)
     pipeline.call(html)[:output].to_s
   end
 

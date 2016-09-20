@@ -187,7 +187,7 @@ module Concern
             text: byline,
             textStyle: "authorStyle"
           }
-        ].concat(elements_to_components(body)).compact
+        ].concat(elements_to_components).compact
       end
 
     end
