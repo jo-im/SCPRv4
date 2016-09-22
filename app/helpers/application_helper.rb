@@ -457,7 +457,7 @@ module ApplicationHelper
   # include this link tag in HEAD.
   def amp_head_link
     if @amp_enabled
-      tag :link, rel: "amphtml", href: "#{request.original_url}?amp"
+      tag :link, rel: "amphtml", href: "#{request.original_url.split('/').join('/')}.amp"
     end
   end
 
