@@ -7,7 +7,7 @@ module Concern
       extend ActiveSupport::Concern
 
       def self.included(base)
-        base.send :before_filter, :before_amp, if: ->(){ params.has_key?(:amp)}
+        base.send :before_filter, :before_amp, if: :amp_request?
         base.extend(ClassMethods)
       end
 
@@ -15,6 +15,10 @@ module Concern
         NewRelic::Agent.ignore_transaction
         NewRelic::Agent.ignore_apdex
         NewRelic::Agent.ignore_enduser
+      end
+
+      def amp_request?
+        request.path_parameters[:format] == "amp"
       end
 
       module ClassMethods
@@ -84,7 +88,7 @@ module Concern
           _add_helpers
           define_method name do
             @amp_enabled = true
-            if params.has_key?(:amp)
+            if amp_request?
               fc = self.class._headless(request, response, params)
               omethod.bind(fc).call # bind original method to headless controller
               if options[:expose]
