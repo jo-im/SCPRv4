@@ -44,7 +44,7 @@ xml.item do
         article.public_url
       )
     )
-  when NewsStory, BlogEntry, ShowSegment
+  else
     description << content_tag(:p,
       link_to(
         "This content is from Southern California Public Radio. View the original story at SCPR.org.".html_safe,
