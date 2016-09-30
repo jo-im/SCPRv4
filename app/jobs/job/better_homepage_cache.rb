@@ -11,7 +11,6 @@ module Job
         content  = homepage.content
 
         self.cache(content, "better_homepage/contents", "better_homepage/contents")
-        self.cache(homepage.check_it_out, "layouts/better_homepage/check_it_out", "layouts/better_homepage/check_it_out")
       end
     end
   end

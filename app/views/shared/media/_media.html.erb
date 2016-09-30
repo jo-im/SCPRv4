@@ -1,0 +1,29 @@
+<div class="story o-media o-media--<%= size %>" data-obj-key='<%= content.article.obj_key %>'>  
+  <% if size == "med" %>
+    <%= media_label content.label %>
+    <%= media_headline "3", content.article.short_title, content.article.public_url %>
+  <% end %>
+
+  <% nofigure ||= false %>
+  <% unless nofigure %>
+    <%= media_figure "widescreen", url: content.article.public_url, asset_url: content.article.asset.full.url, asset_scheme: content.asset_scheme %>
+  <% end %>
+
+  <% if size == "lg" %>
+    <%= media_label content.label %>
+    <% if index && index == 0 %>
+      <%= media_headline "1", content.article.short_title, content.article.public_url %>
+    <% else %>
+      <%= media_headline "2", content.article.short_title, content.article.public_url %>
+    <% end %>
+  <% end %>
+
+  <% if size == "sm" %>
+    <%= media_headline "5", content.article.short_title, content.article.public_url %>
+  <% end %>
+
+  <%= media_teaser content.article.abstract %>
+  <%= media_meta feature: content.article.feature, public_datetime: content.article.public_datetime, updated_at: content.article.updated_at %>
+  <%= media_extra content, contents %>
+
+</div>

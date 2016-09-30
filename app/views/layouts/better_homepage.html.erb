@@ -17,14 +17,10 @@
 
   <body class="">
     <%= render partial: "layouts/better_homepage/header" %>
-    <main class="flex-grid">
-        <aside id="left-side" class="col"></aside>
-        <%= yield %>
-        <aside id="right-side"  class="col"></aside>
-    </main>
-    <%= hidden_gem %>
-    <%= render partial: "layouts/better_homepage/footer" %>
-    <%= render partial: "shared/footer/tracking_scripts" %>
+    <%= yield %>
+    <% hidden_gem %>
+    <% render partial: "layouts/better_homepage/footer" %>
+    <% render partial: "shared/footer/tracking_scripts" %>
     <%= javascript_include_tag "better_homepage/style-guide", :async => true %>
   </body>
 </html>

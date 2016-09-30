@@ -12,27 +12,28 @@
               content.category__title
            end
   %>
-
-  <% if index == 1 %>
-    <div id='ad-position-b' class="col c-ad c-ad--hp">
-      <div class="c-ad__container c-ad__container--hp">
-        <div class="c-ad__banner c-ad__banner--align-left">
-          <%= render "shared/ads/dfp", ad_key: "slot_b" %>
-        </div>
-        <a class="c-ad__attribution" href="http://www.scpr.org/support/underwriting/">Become a KPCC Sponsor</a>
-      </div>
-    </div>
-  <% elsif index == 7 %>
-    <div id='ad-position-c' class="col c-ad c-ad--hp">
-      <div class="c-ad__container c-ad__container--hp">
-        <div class="c-ad__banner">
-          <%= render "shared/ads/dfp", ad_key: "slot_c" %>
-        </div>
-        <a class="c-ad__attribution" href="http://www.scpr.org/support/underwriting/">Become a KPCC Sponsor</a>
-      </div>
-    </div>
-  </div>
-  <div class="col">
+  <div class="hp-story l-col l-col--sm-12 l-col--med-7">
     <%= media_object content.asset_scheme, content: content, index: index, contents: contents %>
   </div>
+  <aside class="right-aside l-col l-col--sm-12 l-col--med-3">
+    <% if index == 1 %>
+      <div class="c-ad">
+        <div class="c-ad__container c-ad__container">
+          <div class="c-ad__banner">
+            <%= render "shared/ads/dfp", ad_key: "slot_b" %>
+          </div>
+          <a class="c-ad__attribution" href="http://www.scpr.org/support/underwriting/">Become a KPCC Sponsor</a>
+        </div>
+      </div>
+    <% elsif index == 7 %>
+      <div class="c-ad">
+        <div class="c-ad__container c-ad__container">
+          <div class="c-ad__banner">
+            <%= render "shared/ads/dfp", ad_key: "slot_c" %>
+          </div>
+          <a class="c-ad__attribution" href="http://www.scpr.org/support/underwriting/">Become a KPCC Sponsor</a>
+        </div>
+      </div>
+    <% end %>
+  </aside>
 <% end %>

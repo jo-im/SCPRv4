@@ -1,5 +1,6 @@
 module ApplicationHelper
   include Twitter::Autolink
+  include HomepageHelper
 
   def add_ga_tracking_to(url)
     analytics_params = "?utm_source=kpcc&utm_medium=email&utm_campaign=short-list"
