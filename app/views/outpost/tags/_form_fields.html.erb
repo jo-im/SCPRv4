@@ -6,3 +6,4 @@
   <%= f.input :tag_type, collection: Tag::TYPES, as: :select %>
   <%= f.input :parent_id, collection: KpccProgram.all, include_blank: true, label_method: :title, value_method: :id %>
 <% end %>
+<%= f.section "related_content" %>

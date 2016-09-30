@@ -16,14 +16,24 @@ module Concern
           :dependent    => :destroy
 
         has_many :incoming_references,
-          -> { order('position') },
+          -> { order('position').where.not(content_type: ["Tag", "BroadcastContent"]) },
           :as           => :related,
           :class_name   => "Related",
           :dependent    => :destroy
-
+        # ^^^
+        # Sometimes we use the related content association to relate
+        # content to non-content, like Tags and BroadcastContent.  However,
+        # since we need to convert our references to articles here, and 
+        # since said non-content does not convert to an article, we need to
+        # only include objects that are of content models.
+        #
+        # I'd like to find a better way to relate content to non-content but,
+        # for now, I see no reason why content would need to be aware of
+        # its related non-content.  Usually, we only need non-content to
+        # be able to have a list of content it can reference.
 
         after_save :_destroy_incoming_references,
-          :if => -> { self.unpublishing? }
+          :if => -> { respond_to?(:unpublishing?) ? self.unpublishing? : true }
 
         accepts_json_input_for :outgoing_references
 
