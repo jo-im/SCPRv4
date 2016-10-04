@@ -1,6 +1,19 @@
 @import 'scpr-style-guide/src/css/main.scss'
 @import 'hidden-gem'
 
+.o-mast
+  @media (max-width: $media-wide)
+    margin-bottom: 0
+
+.o-header
+  padding-top: $gutter / 2
+  padding-bottom: $gutter
+  text-align: center
+  &__logo
+    display: inline-block
+    height: 22px
+    width: 150px
+
 .o-broadcast
   > .c-tile
     border-style: solid
@@ -74,6 +87,9 @@ footer.o-footer
 
 // SMALL SCREENS
 @media all and (max-width: $media-tablet)
+
+  .o-header
+    display: none
 
   article.hp-story, aside.right-aside, aside.left-aside
     &.l-col--sm-12
