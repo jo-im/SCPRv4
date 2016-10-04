@@ -1,0 +1,13 @@
+<%= render "shared/ads/dfp", ad_key: 'slot_a' %>
+<h6 class="b-heading b-heading--h6 b-heading--uppercase u-text-color--gray b-heading--bold">Latest Headlines</h6>
+<ul class="c-list c-list--vert">
+  <% latest_stories(content).each do |article| %>
+    <li>
+      <div class="o-media o-media--small">
+        <h4>
+          <%= link_to article.headline, article.public_url %>
+        </h4>
+      </div>
+    </li>
+  <% end %>
+</ul>

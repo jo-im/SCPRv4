@@ -7,10 +7,7 @@ module Job
       def perform
         homepage = ::BetterHomepage.current.last
         return if !homepage
-
-        content  = homepage.content
-
-        self.cache(content, "better_homepage/contents", "better_homepage/contents")
+        self.cache(homepage, "better_homepage/contents", "better_homepage/contents")
       end
     private
       def latest_headlines homepage

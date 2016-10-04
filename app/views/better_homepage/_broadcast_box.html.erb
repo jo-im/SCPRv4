@@ -1,0 +1,29 @@
+<div class="o-broadcast">
+  <h6 class="b-heading b-heading--h6 b-heading--uppercase u-text-color--gray b-heading--bold">Listen Live</h6>
+  <div class="c-tile">
+    <div class="c-tile--circular">
+      <div class="c-image">
+        <img src="<%= schedule_current.program.podcast_tile %>" />
+        <%= link_to "/listen_live", target: "_blank" do %>
+          <%= render file: "#{Rails.root}/public/static/images/listen-live-play.svg" %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+  <% if schedule_current.present? %>
+    <% present schedule_current, BroadcastBarPresenter do |p| %>
+      <div class="c-schedule">
+        <h6 class="b-heading--h6 b-heading--uppercase u-text-color--gray b-heading--medium">On Now | <%= p.start_time.gsub(/[a-zA-Z]/, "") %> - <%= p.end_time %></h6>
+        <%= link_to schedule_current.title, schedule_current.public_url, class: "b-heading--medium" %>
+      </div>
+    <% end %>
+    <% if schedule_next.present? %>
+      <% present schedule_next, BroadcastBarPresenter do |p| %>
+        <div class="c-schedule">
+          <h6 class="b-heading--h6 b-heading--uppercase u-text-color--gray b-heading--medium">Up Next | <%= p.start_time.gsub(/[a-zA-Z]/, "") %> - <%= p.end_time %></h6>
+          <%= link_to schedule_next.title, schedule_next.public_url, class: "b-heading--medium" %>
+        </div>
+      <% end %>
+    <% end %>
+  <% end %>
+</div>

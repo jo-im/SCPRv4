@@ -87,9 +87,9 @@ class BetterHomepage < ActiveRecord::Base
     # Only index if homepage is current.
     if current?
       if Rails.env.development?
-        sync_cache
+        # sync_cache
       else
-        async_cache
+        # async_cache
       end
     end
   end

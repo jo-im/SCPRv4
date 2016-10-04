@@ -1,24 +1,165 @@
 @import 'scpr-style-guide/src/css/main.scss'
+@import 'hidden-gem'
+
+.o-broadcast
+  > .c-tile
+    border-style: solid
+    border-width: 1px
+    border-color: $color-gray-light
+    padding: 7px
+    .c-tile--circular
+      overflow: hidden
+      border-width: 2px
+      border-color: $color-gray-lightest
+      padding: 4px
+      border-style: solid
+      > .c-image
+        overflow: hidden
+        position:  relative
+        img
+          opacity: 0.3
+        #listen-live-play
+          position: absolute
+          transform: translateY(-50%) translateX(-50%)
+          top: 50%
+          left: 50%
+          overflow: visible
+          $breathe-scale: 1.075
+          #outer-ring
+            transition: all .5s cubic-bezier(.3,0,.1,1)
+            transform: scale(1,1)
+            transform-origin: center
+          &:hover
+            #outer-ring
+              transform: scale($breathe-scale, $breathe-scale)
+
+  .c-schedule
+    margin-bottom: 13px
+
+  .c-image--circular
+    // border-radius: 50%
+    overflow: hidden
+    border-width: 1px
+    border-style: solid
+
+aside.right-aside
+  #dfp-slot_a
+    margin-bottom: 3.125rem
+    // iframe
+      // max-width: 100%
+
+.call-to-action
+  @extend .o-media__meta
+
+section.c-gem
+  // This is a fix for elements that come after
+  // our main content, because of the "interesting"
+  // method we have taken to meshing the 
+  // asides with our stories.
+  float: right
+  // width: 100%
+
+footer.o-footer
+  // This is a fix for elements that come after
+  // our main content, because of the "interesting"
+  // method we have taken to meshing the 
+  // asides with our stories.
+  float: left
+  width: 100%
 
 
+
+
+
+
+// SMALL SCREENS
 @media all and (max-width: $media-tablet)
-  .hp-story
-    border-bottom: 2px solid $color-gray-light
-    margin-bottom: 2.25rem
-    margin-left: $gutter * 2
-    padding-bottom: 2.25rem
 
+  article.hp-story, aside.right-aside, aside.left-aside
+    &.l-col--sm-12
+      width: 100%
+    > *
+      padding-left: $gutter
+      padding-right: $gutter
+
+  article.hp-story
+    margin-bottom: 2.25rem
+    padding-bottom: 2.25rem
+    &.none
+      // presentation specifically for
+      // stories that have no asset
+      padding-top: 2.25rem
+      margin-top: -2.25rem
+      border-top: 2px solid $color-gray-light
+    .story
+      border: none 
+      padding: 0
+      > .o-media__figure
+        left: -0.005rem // unclear why there's space on the left so I have to negate it.
+        // padding: 0
+        // margin-left: -$gutter
+      > *
+        padding-left: $gutter
+        padding-right: $gutter
+      a.call-to-action
+        margin-top: $gutter
+
+  aside.right-aside
+    background-color: $color-gray-lightest
+    padding-top: 1.875rem
+    padding-bottom: 1.875rem
+    margin-bottom: 3.75rem
+
+    &:empty
+      display: none
+
+    #dfp-slot_a
+      // margin-top: 3.125rem
+      iframe
+        margin: 0 auto
+        display: inherit
+
+    .c-list:last-child
+      margin-bottom: 0
+
+  .o-broadcast
+    display: none
+
+
+
+// LARGE SCREENS
 @media all and (min-width: $media-tablet)
+
+  #content.l-container
+    margin-left: $gutter
+    margin-right: $gutter
+
+  nav.o-mast__nav
+    // force navbar menu links to appear on the left
+    // and the action items on the right
+    margin-left: 0
+    width: 100%
+    .c-nav
+      &.o-mast__nav-actions
+        float: right
+
+
   aside.left-aside
     position: absolute
     // max-width: 15.08296%
   .hp-story
     float: left
-    margin-left: (2 / $grid-columns * 100%) - ($gutter / 2)
+    // with the margin, we are assuming that large-screen stories
+    // will always have a column size of 3.
+    margin-left: ($col * 3) + ($gutter / 2)
     border-bottom: 2px solid $color-gray-light
     margin-bottom: 3.75rem
-    // width: 60%
-    // max-width: 60%
+    .story:first-child
+      margin-top: 0
+    .o-media__meta
+      > *
+        margin-bottom: 1rem
+
   aside.right-aside
     float: right
     // max-width: 23.41629%
@@ -26,6 +167,12 @@
   //   min-width: 100%
   //   margin-left: 0px
   //   margin-right: 0px
+
+  .o-mast
+    &__currently-airing
+      display: none
+    &__logo
+      display: none
 
   item
     margin-bottom: 4px

@@ -1,4 +1,7 @@
-<% contents = content %>
+<% contents = homepage.content %>
+<aside class="right-aside l-col l-col--sm-12 l-col--med-3">
+  <%= render partial: "better_homepage/latest_headlines", locals: {content: content} %>
+</aside>
 <% contents.each_with_index do |content, index| %>
 
   <% source = content.content.try(:source) 
@@ -12,28 +15,8 @@
               content.category__title
            end
   %>
-  <div class="hp-story l-col l-col--sm-12 l-col--med-7">
+  <article class="hp-story l-col l-col--sm-12 l-col--med-7">
     <%= media_object content.asset_scheme, content: content, index: index, contents: contents %>
-  </div>
-  <aside class="right-aside l-col l-col--sm-12 l-col--med-3">
-    <% if index == 1 %>
-      <div class="c-ad">
-        <div class="c-ad__container c-ad__container">
-          <div class="c-ad__banner">
-            <%= render "shared/ads/dfp", ad_key: "slot_b" %>
-          </div>
-          <a class="c-ad__attribution" href="http://www.scpr.org/support/underwriting/">Become a KPCC Sponsor</a>
-        </div>
-      </div>
-    <% elsif index == 7 %>
-      <div class="c-ad">
-        <div class="c-ad__container c-ad__container">
-          <div class="c-ad__banner">
-            <%= render "shared/ads/dfp", ad_key: "slot_c" %>
-          </div>
-          <a class="c-ad__attribution" href="http://www.scpr.org/support/underwriting/">Become a KPCC Sponsor</a>
-        </div>
-      </div>
-    <% end %>
-  </aside>
+  </article>
+  <%= render_right_aside index %>
 <% end %>

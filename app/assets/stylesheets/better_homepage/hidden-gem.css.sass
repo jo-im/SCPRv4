@@ -1,0 +1,185 @@
+.c-gem
+  background-color: $color-black
+  background-repeat: repeat-x
+  background-position: left top
+  border-top: 1px solid $color-secondary
+  position: relative
+
+  &__container
+    overflow: hidden
+
+  &__badge
+    display: none
+    left: -100px
+    position: absolute
+    top: -15px
+
+  &__badge-desktop
+    left: 50%
+    margin-left: -34rem
+    position: absolute
+    top: -15px
+    z-index: 20
+
+  &__overline
+    color: $color-primary
+    font-family: $font-sans-alt
+    font-size: ms(3)
+    font-weight: 300
+    margin-bottom: $base-line-height
+
+  &__title
+    font-family: $font-serif-titling
+    font-size: ms(5)
+    font-style: italic
+    font-weight: 800
+    line-height: 1.2em
+
+  &__wrapper
+    background-color: $color-white
+    display: flex
+
+  &__header
+    margin-bottom: $base-line-height
+
+  &__share
+    font-size: ms(-1)
+    padding: 1rem 2rem
+
+    > *
+      margin-right: 0.5rem
+
+    .c-btn
+      vertical-align: middle
+
+  &__attribution
+    color: $color-gray
+    font-size: ms(-2)
+    font-weight: 500
+    padding: 1rem 2rem
+    text-transform: uppercase
+
+  &__content-container
+    flex: 3 0 0
+    padding: 2rem
+
+  &__map-container
+    margin-left: 2rem
+    width: 26%
+    overflow: hidden
+    position: relative
+
+  &__bg-photo
+    background-size: cover
+    height: 100%
+    position: absolute
+    top: 0
+    width: 100%
+
+    &--left
+      background-position: right top
+      left: -100%
+
+    &--right
+      background-position: left top
+      right: -100%
+
+  &__photo
+    display: none
+
+  &__details
+    color: $color-gray-dark
+    font-size: ms(-1)
+    line-height: 1.666666667em
+    padding: 1rem 2rem
+
+  &__label
+    display: inline
+    font-weight: 700
+    text-transform: uppercase
+
+  &__description
+    display: inline
+
+  &__map
+    background-position: center center
+    background-size: cover
+    bottom: 0
+    left: 0
+    position: absolute
+    right: 0
+    top: 0
+
+  .container
+    padding: 0
+    position: relative
+
+  @media (max-width: 1200px)
+    background-color: $color-white
+
+    .container
+      padding: 1rem 2rem
+
+    &__container
+      overflow: visible
+
+    &__content-container
+      padding: 0
+
+    &__map-container
+      display: none
+
+    &__badge
+      display: block
+      left: 2rem
+      height: 90px
+      top: -15px
+      width: 90px
+
+    &__badge-desktop
+      display: none
+
+    &__overline
+      margin-bottom: $base-line-height
+      margin-left: 100px
+
+    &__bg-photo
+      display: none
+
+    &__photo
+      background-position: center center
+      background-size: cover
+      display: block
+      height: 36rem
+      margin: 0 -2rem 2rem
+      padding-left: 2rem
+      padding-right: 2rem
+      width: 100%
+
+    &__details, &__share, &__attribution
+      padding: 1rem 0
+
+  @media (max-width: 660px)
+
+    &__photo
+      height: 28rem
+
+  @media (max-width: 560px)
+
+    &__badge
+      left: 8px
+      top: -10px
+
+    &__header
+      margin-bottom: 1rem
+
+    &__overline
+      font-size: ms(2)
+      margin-bottom: 1rem
+      margin-left: 75px
+
+    &__title
+      font-size: ms(3)
+
+    &__photo
+      height: 20rem

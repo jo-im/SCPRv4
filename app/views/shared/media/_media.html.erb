@@ -6,7 +6,7 @@
 
   <% nofigure ||= false %>
   <% unless nofigure %>
-    <%= media_figure "widescreen", url: content.article.public_url, asset_url: content.article.asset.full.url, asset_scheme: content.asset_scheme %>
+    <%= media_figure "widescreen", url: content.article.public_url, asset_url: content.article.asset.full.url, asset_scheme: content.asset_scheme, aspect: "widescreen" %>
   <% end %>
 
   <% if size == "lg" %>

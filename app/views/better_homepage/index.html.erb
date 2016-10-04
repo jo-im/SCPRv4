@@ -1,6 +1,27 @@
-<div id="content" class="l-container l-container--xl">
-  <div class="l-row l-row--med-noflex">
-    <aside class="left-aside l-col l-col--sm-12 l-col--med-2">LEFT SIDE</aside>
-    <%= precached "better_homepage/contents", preview: @content %>
-  </div>
-</div><!-- .welcome -->
+<div id="content" class="l-container">
+
+  <aside class="left-aside l-col l-col--sm-12 l-col--med-2">
+    <%= render partial: "better_homepage/broadcast_box", locals: {schedule_current: @schedule_current, schedule_next: @schedule_next} %>
+  </aside>
+
+  <% @homepage.content.each_with_index do |content, index| %>
+    <% source = content.content.try(:source) 
+      tag = if source != "KPCC" or source != 'kpcc'
+                source
+             elsif content.tags__title?
+                content.tags__title
+             elsif content.program?
+                content.program
+             elsif content.category__title?
+                content.category__title
+             end
+    %>
+    <article class="hp-story <%= content.asset_scheme %> l-col l-col--sm-12 l-col--med-7">
+      <%= media_object content.asset_scheme, content: content, index: index, contents: @homepage.content %>
+    </article>
+    <%= render_right_aside index %>
+  <% end %>
+
+</div>
+
+<%= hidden_gem %>
