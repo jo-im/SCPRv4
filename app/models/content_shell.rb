@@ -38,6 +38,8 @@ class ContentShell < ActiveRecord::Base
   validates :site, presence: true, if: :should_validate?
 
   alias_attribute :teaser, :body
+  alias_attribute :short_headline, :headline
+  alias_attribute :public_datetime, :published_at
 
   scope :with_article_includes, ->() { includes(:assets,:category,:tags,:bylines,bylines:[:user]) }
 

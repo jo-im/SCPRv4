@@ -1,29 +1,32 @@
-<div class="story o-media o-media--<%= size %>" data-obj-key='<%= content.article.obj_key %>'>  
+<% story = (content.try(:content) || content) %>
+<div class="story o-media o-media--<%= size %> <%= klass %>" data-obj-key='<%= story.obj_key %>'>  
   <% if size == "med" %>
     <%= media_label content.label %>
-    <%= media_headline "3", content.article.short_title, content.article.public_url %>
+    <%= media_headline "3", story.short_headline, story.public_url %>
   <% end %>
 
   <% nofigure ||= false %>
   <% unless nofigure %>
-    <%= media_figure "widescreen", url: content.article.public_url, asset_url: content.article.asset.full.url, asset_scheme: content.asset_scheme, aspect: "widescreen" %>
+    <%= media_figure "widescreen", url: story.public_url, asset_url: story.asset.full.url, asset_scheme: content.asset_scheme, aspect: "widescreen" %>
   <% end %>
 
   <% if size == "lg" %>
     <%= media_label content.label %>
     <% if index && index == 0 %>
-      <%= media_headline "1", content.article.short_title, content.article.public_url %>
+      <%= media_headline "1", story.short_headline, story.public_url %>
     <% else %>
-      <%= media_headline "2", content.article.short_title, content.article.public_url %>
+      <%= media_headline "2", story.short_headline, story.public_url %>
     <% end %>
   <% end %>
 
   <% if size == "sm" %>
-    <%= media_headline "5", content.article.short_title, content.article.public_url %>
+    <%= media_headline "5", story.short_headline, story.public_url %>
   <% end %>
 
-  <%= media_teaser content.article.abstract %>
-  <%= media_meta feature: content.article.feature, public_datetime: content.article.public_datetime, updated_at: content.article.updated_at %>
-  <%= media_extra content, contents %>
+  <% if size != "sm" %>
+    <%= media_teaser(story.abstract || story.teaser) %>
+    <%= media_meta feature: story.feature, public_datetime: story.public_datetime, updated_at: story.updated_at %>
+    <%= media_extra content, contents %>
+  <% end %>
 
 </div>

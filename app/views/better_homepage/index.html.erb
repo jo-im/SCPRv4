@@ -15,7 +15,7 @@
   </aside>
 
   <% @homepage.content.each_with_index do |content, index| %>
-    <% source = content.content.try(:source) 
+    <% source = content.content.try(:source)
       tag = if source != "KPCC" or source != 'kpcc'
                 source
              elsif content.tags__title?

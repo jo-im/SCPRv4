@@ -12,7 +12,9 @@ module HomepageHelper
       "none" => "med"
     }
     options[:nofigure] = true if size.to_s == "none"
-    options[:size] = translation[size.to_s]
+    options[:size]     = translation[size.to_s]
+    options[:klass]    = options[:class]
+    options.delete     :class
     render partial: "shared/media/media", locals: options
   end
   def media_figure aspect, options={}
