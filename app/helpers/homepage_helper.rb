@@ -30,7 +30,7 @@ module HomepageHelper
   def media_teaser teaser
     render partial: "shared/media/components/teaser", locals: {teaser: teaser}
   end
-  def media_meta feature:, public_datetime:, updated_at:
+  def media_meta(feature:, public_datetime:, updated_at:)
     render partial: "shared/media/components/meta", locals: {feature: feature, public_datetime: public_datetime, updated_at: updated_at}
   end
   def media_extra content, contents
