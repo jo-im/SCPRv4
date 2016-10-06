@@ -55,7 +55,7 @@ module HomepageHelper
     end 
   end  
   def render_right_aside index, &block
-    klass = "right-aside l-col l-col--sm-12 l-col--med-3"
+    klass = "right l-col l-col--sm-12 l-col--med-3"
     if block_given?
       content_tag :aside, class: klass do
         yield
@@ -79,4 +79,23 @@ module HomepageHelper
       end
     end
   end
+
+  def render_tag_cluster
+    @_tag_cluster_order ||= 8 # On mobile, we start displaying these at the 8th position.
+    klass = "right l-col l-col--sm-12 l-col--med-3"
+    @tags ||= @homepage.tags.to_a
+    content_tag :aside, class: klass, style: "order: #{@_tag_cluster_order};" do
+      render partial: "better_homepage/tag_cluster", locals: {tag: @tags.shift, omit: [@homepage]}
+    end
+  ensure
+    @_tag_cluster_order += 4 # Display the next one 4 positions down.
+  end
+
+  def for_each_tag! &block
+    @tags ||= @homepage.tags.to_a
+    @tags.length.times do
+      yield
+    end
+  end
+
 end

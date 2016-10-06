@@ -8,11 +8,29 @@
   <hr class="rule" />
 </header>
 
-<div id="content" class="l-container">
-
-  <aside class="left-aside l-col l-col--sm-12 l-col--med-2">
+<div class="hp-content l-container">
+  <div class="l-row l-row--med-noflex" >
+  <aside class="left l-col l-col--sm-12 l-col--med-2">
     <%= render partial: "better_homepage/broadcast_box", locals: {schedule_current: @schedule_current, schedule_next: @schedule_next} %>
   </aside>
+
+  <div class="l-vertical-rail l-col--med-7"></div>
+
+  <aside class="right hp-latest-headlines l-col l-col--sm-12 l-col--med-3" style="order:2;">
+    <%= render partial: "better_homepage/latest_headlines", locals: {content: @homepage.content} %>
+  </aside>
+  <aside class="right l-col l-col--sm-12 l-col--med-3" style="order:6;">
+    <%= render partial: "better_homepage/c_ad", locals: {slot: "b"} %>
+  </aside>
+  <%= render_tag_cluster %>
+  <%= render_tag_cluster %>
+  <aside class="right l-col l-col--sm-12 l-col--med-3" style="order:9;">
+    <%= render partial: "better_homepage/c_ad", locals: {slot: "c"} %>
+  </aside>
+  <% for_each_tag! do %>
+    <%= render_tag_cluster %>
+  <% end %>
+
 
   <% @homepage.content.each_with_index do |content, index| %>
     <% source = content.content.try(:source)
@@ -26,12 +44,15 @@
                 content.category__title
              end
     %>
-    <article class="hp-story <%= content.asset_scheme %> l-col l-col--sm-12 l-col--med-7">
+    <article class="center hp-story <%= content.asset_scheme %> l-col l-col--sm-12 l-col--med-7" style="order:<%= index %>;">
       <%= media_object content.asset_scheme, content: content, index: index, contents: @homepage.content %>
     </article>
-    <%= render_right_aside index %>
   <% end %>
-
+  <div class="l-hp--bottom">
+    <%= hidden_gem %>
+  </div>
+  <div class="l-hp--bottom">
+    <%= render partial: "layouts/better_homepage/footer" %>
+  </div>
+  </div>
 </div>
-
-<%= hidden_gem %>
