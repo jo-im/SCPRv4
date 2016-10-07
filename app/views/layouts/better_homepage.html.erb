@@ -12,8 +12,7 @@
     <%= stylesheet_link_tag 'better_homepage/application' %>
     <%= javascript_include_tag 'better_homepage/application' %>
     <%= render "shared/ads/dfp_script_config", key_override: "/homepage" %>
-    <!-- NOTE: The following 'responsive' value was changed to false because of a problem with position_a.  See about bringing this back. -->
-    <%= render partial: "shared/header/ad_scripts", locals: {responsive: false} %>
+    <%= render partial: "shared/header/ad_scripts" %>
   </head>
 
   <body class="">

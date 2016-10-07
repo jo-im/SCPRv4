@@ -37,7 +37,6 @@ class scpr.adSizer
             for i in [1..7]
                 @sizedCheck(i)
 
-
     resize: (element) ->
         $(element).css
             "max-width": "100%",
@@ -58,7 +57,7 @@ class scpr.adSizer
 
                 if $(ad).length
                     @resize(ad)
-                    $(iframe).closest(".ad .dfp").addClass("adSized")
+                    $(iframe).closest(".ad .dfp, .c-ad .dfp").addClass("adSized")
 
     removeFixedDimensions: (element) ->
         $(element).removeAttr("width").removeAttr("height")

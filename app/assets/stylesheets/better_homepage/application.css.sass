@@ -1,46 +1,14 @@
 @import 'scpr-style-guide/src/css/main.scss'
 @import 'hidden-gem'
 
-
-// .ad
-//   text-align:center
-//   overflow: hidden
-//   img, object, embed, .dfp, iframe
-//     max-width: 100% !important
-//     min-height: 0
+.c-ad
+  text-align:center
+  overflow: hidden
+  padding: 0
+  img, object, embed, .dfp, iframe
+    max-width: 100% !important
+    min-height: 0
   
-//     &:first-child
-//       padding-top: 0
-    
-//     p
-//       margin-bottom: 5px
-//       margin-top: -7px
-//       a
-//         color: #999
-  
-//     .appeal    
-//       margin-bottom: 10px 
-//     .appeal a     
-//       color: gray
-//       display: inline 
-//     .appeal a:hover
-//       color: black 
-//       text-decoration: underline 
-
-// .dfp
-//   margin: 0 auto 20px
-//   padding-bottom: 20px
-//   overflow: hidden
-//   text-align: center
-//   // center ads on Listen Live page
-//   .listen &
-//     border-bottom: 0
-//     margin: 0 auto
-//     width: 300px
-   
-
-
-
 .o-mast
   // For some reason, the masthead creates a
   // margin on sizes smaller than large,
@@ -104,12 +72,8 @@
     border-style: solid
 
 aside.right
-  // .dfp
-  //   min-width: 100px
   #dfp-slot_a
     margin-bottom: 3.125rem
-    // iframe
-      // max-width: 100%
 
 .call-to-action
   @extend .o-media__meta
@@ -279,14 +243,14 @@ footer.o-footer
     aside.right
       float: right
       overflow-x: hidden
+      margin-bottom: 3.75rem
+
 
     .l-hp--bottom
       @extend .center
-      // $spacing: $gutter
-      // margin-left: -$spacing
-      // width: 100% + ($spacing * 2)
       margin-left: -$gutter
-      width: (100% + $gutter + $gutter) + ($gutter / 3) // don't ask me why
+      // add width equal to the two side gutters plus the size of the sidebar
+      width: (100% + ($gutter * 2)) + ($gutter / 3)
 
       .c-gem
         width: 100% + $gutter + $gutter
