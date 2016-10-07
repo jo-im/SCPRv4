@@ -8,7 +8,7 @@ module Concern
       end
 
       def podcast_tile
-        podcast.try(:image_url) || "/static/images/default-listen-live-tile.png"
+        podcast.try(:image_url) || "/static/images/default-listen-live-tile.jpg"
       end
 
     end
