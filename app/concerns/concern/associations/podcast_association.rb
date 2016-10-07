@@ -8,7 +8,7 @@ module Concern
       end
 
       def podcast_tile
-        podcast.try(:image_url) || "http://media.scpr.org/assets/images/podcasts/kpcc-podcast-cover-theride.jpg"
+        podcast.try(:image_url) || "/static/images/default-listen-live-tile.png"
       end
 
     end
