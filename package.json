@@ -36,7 +36,7 @@
     "pouchdb": "= 5.3.1",
     "pouchdb-upsert": "^2.0.0",
     "query-string": "^4.2.2",
-    "scpr-style-guide": "scpr/scpr-style-guide#media-objects",
+    "scpr-style-guide": "https://github.com/SCPR/scpr-style-guide.git#media-objects",
     "selectivizr": "= 1.0.3",
     "swfobject": "= 2.2",
     "timeago": "= 1.5.1",
