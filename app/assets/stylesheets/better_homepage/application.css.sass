@@ -1,8 +1,5 @@
 @import 'scpr-style-guide/src/css/main.scss'
 
-.media__img
-  min-height: 100%
-
 .boundary
   height: 1px
   // background-color: red
@@ -25,6 +22,10 @@
       @extend .c-list--vert
 
 section#content
+  .story
+    .media__figure
+      .media__img
+        min-height: 100%
 
   // Unsure why this couldn't be nested.
   @media (max-width: $media-wide)
