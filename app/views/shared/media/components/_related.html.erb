@@ -1,6 +1,12 @@
 <% if (content || []).any? %>
   <div class="related-content o-media__related-content">
-    <h5 class="heading heading--h5 heading--uppercase u-text-color--gray">More In <%= label %></h5>
+    <h5 class="heading heading--h5 heading--uppercase u-text-color--gray">
+      <% if label_path %>
+        <%= link_to "More In #{label}", label_path %>
+      <% else %>
+        More In <%= label %>
+      <% end %>
+    </h5>
     <ul class="c-list c-list--vert c-list--bullet">
       <% content.each do |record| %>
         <li class="o-media__teaser o-media__teaser--bullet">

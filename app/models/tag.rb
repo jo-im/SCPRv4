@@ -30,6 +30,10 @@ class Tag < ActiveRecord::Base
     super unless pmp_alias == new_alias
   end
 
+  def public_path
+    "/topics/#{slug}" if slug
+  end
+
   def featured_content omit=[]
     # omit is a list of model records to exclude from the results,
     # probably coming from a homepage object

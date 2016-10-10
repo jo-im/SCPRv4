@@ -1,1 +1,7 @@
-<h6 class="o-media__overline"><%= label %></h6>
+<h6 class="o-media__overline">
+  <% if path %>
+    <%= link_to label, path %>
+  <% else %>
+    <%= label %>
+  <% end %>
+</h6>

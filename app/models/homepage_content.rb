@@ -35,14 +35,27 @@ class HomepageContent < ActiveRecord::Base
   def label
     if content
       return "KPCC In Person" if content.try(:is_kpcc_event)
-      tags = (content.try(:tags) || [])
-      (
-        tags.find{|t| t.try(:tag_type).try(:include?, 'Keyword')} ||  # keyword
-        content.try(:show) ||                                         # program
-        tags.find{|t| t.try(:tag_type).try(:include?, 'Series')} ||   # series
-        tags.find{|t| t.try(:tag_type).try(:include?, 'Beat')} ||     # beat
-        content.try(:category)                                        # category
-      ).try(:title)
+      umbrella.try(:title)
+    end
+  end
+
+  def umbrella
+    # Whatever tag or program or category represents this content.
+    tags = (content.try(:tags) || [])
+    (
+      tags.find{|t| t.try(:tag_type).try(:include?, 'Keyword')} ||  # keyword
+      content.try(:show) ||                                         # program
+      tags.find{|t| t.try(:tag_type).try(:include?, 'Series')} ||   # series
+      tags.find{|t| t.try(:tag_type).try(:include?, 'Beat')} ||     # beat
+      content.try(:category)                                        # category
+    )
+  end
+
+  def label_path
+    if label == "KPCC In Person"
+      Rails.application.routes.url_helpers.kpcc_in_person_events_path
+    else
+      umbrella.try(:public_path)
     end
   end
 

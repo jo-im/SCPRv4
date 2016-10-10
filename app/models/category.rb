@@ -77,6 +77,9 @@ class Category < ActiveRecord::Base
     ContentBase.search(args)
   end
 
+  def public_path
+    "/#{slug}" if slug
+  end
 
   def route_hash
     return {} if !self.persisted?

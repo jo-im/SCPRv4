@@ -21,8 +21,8 @@ module HomepageHelper
     options[:aspect] ||= aspect
     render partial: "shared/media/components/figure", locals: options
   end
-  def media_label label
-    render partial: "shared/media/components/label", locals: {label: label}
+  def media_label label, path=nil
+    render partial: "shared/media/components/label", locals: {label: label, path: path}
   end
   def media_headline size, headline, url
     render partial: "shared/media/components/headline", locals: {size: size, headline: headline, url: url}

@@ -1,7 +1,7 @@
 <% story = (content.try(:content) || content) %>
 <div class="story o-media o-media--<%= size %> <%= klass %>" data-obj-key='<%= story.obj_key %>'>  
   <% if size == "med" %>
-    <%= media_label content.label %>
+    <%= media_label content.label, content.try(:label_path) %>
     <%= media_headline "3", story.short_headline, story.public_url %>
   <% end %>
 
@@ -11,7 +11,7 @@
   <% end %>
 
   <% if size == "lg" %>
-    <%= media_label content.label %>
+    <%= media_label content.label, content.try(:label_path) %>
     <% if index && index == 0 %>
       <%= media_headline "1", story.short_headline, story.public_url %>
     <% else %>
