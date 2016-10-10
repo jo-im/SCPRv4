@@ -1,22 +1,22 @@
 <% content_for :title, @amp_record.try(:headline) || @amp_record.try(:title) %>
 <% content_for :public_url, @amp_record.public_url %>
 <header class="scpr-style">
-  <div class="media media--hp-large">
-    <div class="media__meta meta">
+  <div class="o-media o-media--lg">
+    <div class="o-media__meta meta">
       <span>
-      <span class="media__overline byline"><%= render_byline @amp_record %></span>
+      <span class="o-media__overline byline"><%= render_byline @amp_record %></span>
       <span class="divider">|</span>
-      <span class="media__timestamp timestamp"><%= amp_timestamp(@amp_record.try(:published_at) || @amp_record.try(:updated_at)) %></span>
+      <span class="o-media__timestamp timestamp"><%= amp_timestamp(@amp_record.try(:published_at) || @amp_record.try(:updated_at)) %></span>
       </span>
     </div>
-    <h1 class="media__headline media__headline--h1 u-text-align--center">
-      <a class="media__headline-link" href="#"><%= @amp_record.headline %></a>
+    <h1 class="o-media__headline o-media__headline--h1 u-text-align--center">
+      <a class="o-media__headline-link" href="#"><%= @amp_record.headline %></a>
     </h1>
-    <figure class="media--hp-large">
-      <div class="media__figure media__figure--widescreen">
+    <figure class="o-media--lg">
+      <div class="o-media__figure">
         <%= amp_asset @amp_record.asset, layout: "responsive" %>
       </div>
-      <figcaption class="media__caption text--light">
+      <figcaption class="o-media__caption">
         <%= @amp_record.asset.caption %> <span class="credit"><%= @amp_record.asset.owner %></span>
       </figcaption>
     </figure>
