@@ -37,8 +37,8 @@ gem 'sanitize', "~> 2.0"
 gem 'escape_utils', '~> 1.0.1'
 gem 'simple_form', "~> 3.1.0"
 gem 'jbuilder', '~> 1.5.3'
-
 gem 'embeditor-rails', github: 'SCPR/embeditor-rails', tag:"v2.0.3"
+gem 'html-pipeline', require: "html/pipeline"
 
 
 ## Utility
@@ -66,7 +66,7 @@ gem "rest-client"
 gem "twitter", "~> 4.1"
 gem "oauth2", "~> 0.8"
 gem 'postmark-rails', "~> 0.6.0"
-gem 'newrelic_rpm', '~> 3.7'
+gem 'newrelic_rpm', '~> 3.16'
 gem 'parse-ruby-client', github: "sheerun/parse-ruby-client", ref: "a4eb5618c8167e88857b449cd522b23a8b0c02e9"
 # gem 'pmp', '0.4.0'
 gem 'pmp', '0.5.6'

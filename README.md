@@ -114,4 +114,4 @@ In production, assetsync runs on a worker instance.
 * `bundle install` and `npm install`
 * Get a Deploybot token for a *full* DB backup and run `rake db:pull (DEPLOYBOT TOKEN HERE)`
 * `rake scprv4:index_all` to index articles and models into Elasticsearch
-* `rake scprv4:cache:all` to cache homepage, tweets, etc
+* `rake scprv4:cache` to cache homepage, tweets, etc

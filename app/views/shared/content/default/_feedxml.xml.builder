@@ -28,21 +28,30 @@ xml.item do
     end
   end
 
-
   description = ""
-
   description << render_asset(article, template: "default/feedxml")
+  if article.byline && !article.byline.empty?
+    description << content_tag(:p) do
+      content_tag(:address, article.byline.html_safe)
+    end
+  end
   description << relaxed_sanitize(article.body)
-
-  if article.original_object.is_a? ContentShell
+  case article.original_object
+  when ContentShell
     description << content_tag(:p,
       link_to(
         "Read the full article at #{article.original_object.site}".html_safe,
         article.public_url
       )
     )
+  else
+    description << content_tag(:p,
+      link_to(
+        "This content is from Southern California Public Radio. View the original story at SCPR.org.".html_safe,
+        article.public_url
+      )
+    )
   end
-
 
   xml.description description
   xml.pubDate article.public_datetime.rfc822

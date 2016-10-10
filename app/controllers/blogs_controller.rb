@@ -10,6 +10,8 @@ class BlogsController < ApplicationController
   PER_PAGE = 11
   #----------
 
+  include Concern::Controller::Amp
+
   def index
     @blogs = Blog.active.order("name")
     render layout: "application"
@@ -32,6 +34,8 @@ class BlogsController < ApplicationController
 
     respond_with template: "blogs/entry"
   end
+
+  amplify :entry, expose: {'@amp_record' => "@entry"}
 
   #----------
 

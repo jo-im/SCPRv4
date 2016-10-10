@@ -32,6 +32,7 @@
   <meta property="og:image" content="http://scpr.org<%=image_path('kpcc-twitter-logo.png')%>" />
 
   <%= tag "link", rel: "alternate", type: "application/rss+xml", title: "RSS", href: meta_information[:rss_feed] || "http://scpr.org/feeds/all_news" %>
+  <%= amp_head_link %>
 
   <%= favicon_link_tag '/favicon.ico' %>
   <%= favicon_link_tag 'icons/apple-touch-icon.png', rel: 'apple-touch-icon-precomposed', type: 'image/png' %>

@@ -453,6 +453,18 @@ module ApplicationHelper
   end
 
   #---------------
+
+  # If this is a page with Google AMP enabled
+  # include this link tag in HEAD.
+  def amp_head_link
+    if @amp_enabled
+      uri = URI.parse(request.original_url)
+      uri.path = "#{uri.path.split('/').join('/')}.amp"
+      tag :link, rel: "amphtml", href: uri.to_s
+    end
+  end
+
+  #---------------
   # These two methods are taken from EscapeUtils
   def html_escape(string)
     EscapeUtils.escape_html(string.to_s).html_safe
