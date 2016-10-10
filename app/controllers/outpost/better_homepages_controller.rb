@@ -28,7 +28,7 @@ class Outpost::BetterHomepagesController < Outpost::ResourceController
     with_rollback @homepage do
       @homepage.id = params[:id]
       @homepage.assign_attributes(params[:better_homepage] || {})
-      @current_program  = ScheduleOccurrence.current.first
+      @schedule_current  = ScheduleOccurrence.current.first
       @content = @homepage.content
       @title = @homepage.to_title
       render "better_homepage/index", layout: 'layouts/better_homepage'

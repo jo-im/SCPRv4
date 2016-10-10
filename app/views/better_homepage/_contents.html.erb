@@ -1,10 +1,25 @@
-<% contents = homepage.content %>
-<aside class="right-aside l-col l-col--sm-12 l-col--med-3">
-  <%= render partial: "better_homepage/latest_headlines", locals: {content: content} %>
+<aside class="right hp-latest-headlines l-col l-col--sm-12 l-col--med-3" style="order:2;">
+  <%= render partial: "better_homepage/latest_headlines", locals: {content: @homepage.content} %>
 </aside>
-<% contents.each_with_index do |content, index| %>
 
-  <% source = content.content.try(:source) 
+<aside class="right ad l-col l-col--sm-12 l-col--med-3" style="order:6;">
+  <%= render partial: "better_homepage/c_ad", locals: {slot: "b"} %>
+</aside>
+
+<%= render_tag_cluster %>
+
+<%= render_tag_cluster %>
+
+<aside class="right ad l-col l-col--sm-12 l-col--med-3" style="order:9;">
+  <%= render partial: "better_homepage/c_ad", locals: {slot: "c"} %>
+</aside>
+
+<% for_each_tag! do %>
+  <%= render_tag_cluster %>
+<% end %>
+
+<% @homepage.content.each_with_index do |content, index| %>
+  <% source = content.content.try(:source)
     tag = if source != "KPCC" or source != 'kpcc'
               source
            elsif content.tags__title?
@@ -15,8 +30,17 @@
               content.category__title
            end
   %>
-  <article class="hp-story l-col l-col--sm-12 l-col--med-7">
-    <%= media_object content.asset_scheme, content: content, index: index, contents: contents %>
+
+  <article class="center hp-story <%= content.asset_scheme %> l-col l-col--sm-12 l-col--med-7" style="order:<%= index %>;">
+    <%= media_object content.asset_scheme, content: content, index: index, contents: @homepage.content %>
   </article>
-  <%= render_right_aside index %>
+
 <% end %>
+
+<div class="l-hp--bottom">
+  <%= hidden_gem %>
+</div>
+
+<div class="l-hp--bottom">
+  <%= render partial: "layouts/better_homepage/footer" %>
+</div>

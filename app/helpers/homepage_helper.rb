@@ -45,8 +45,12 @@ module HomepageHelper
     # the latest stories excluding the first two
     # stories on the homepage for visual reasons.
     ignore_obj_keys = content
-      .order("position ASC")
-      .limit(2).map{|c| "#{c.class.to_s.underscore}-#{c.id}"}
+      .sort_by{|i| i.position}
+      .first(2)
+      .map{|c| "#{c.class.to_s.underscore}-#{c.id}"}
+    # ^^^ Just doing a ruby sort here because we 
+    # don't actually have anything to query against
+    # when we are previewing a homepage.
     ContentBase.active_query do |query|
       query
         .where("status = 5", "category_id IS NOT NULL")

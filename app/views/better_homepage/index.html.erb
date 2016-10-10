@@ -1,4 +1,5 @@
 <div class="hp-content l-container">
+
   <header class="o-header">
     <a href="/" class="o-mast__logo-link">
       <svg class="o-header__logo">
@@ -8,50 +9,13 @@
     <h6 class="b-heading b-heading--h6 b-heading--light">Member-supported news for Southern California</h6>
     <hr class="rule" />
   </header>
+
   <div class="l-row l-row--med-noflex" >
-  <aside class="left l-col l-col--sm-12 l-col--med-2">
-    <%= render partial: "better_homepage/broadcast_box", locals: {schedule_current: @schedule_current, schedule_next: @schedule_next} %>
-  </aside>
+    <aside class="left l-col l-col--sm-12 l-col--med-2">
+      <%= render partial: "better_homepage/broadcast_box", locals: {schedule_current: @schedule_current, schedule_next: @schedule_next} %>
+    </aside>
 
-  <div class="l-vertical-rail l-col--med-7"></div>
-
-  <aside class="right hp-latest-headlines l-col l-col--sm-12 l-col--med-3" style="order:2;">
-    <%= render partial: "better_homepage/latest_headlines", locals: {content: @homepage.content} %>
-  </aside>
-  <aside class="right ad l-col l-col--sm-12 l-col--med-3" style="order:6;">
-    <%= render partial: "better_homepage/c_ad", locals: {slot: "b"} %>
-  </aside>
-  <%= render_tag_cluster %>
-  <%= render_tag_cluster %>
-  <aside class="right ad l-col l-col--sm-12 l-col--med-3" style="order:9;">
-    <%= render partial: "better_homepage/c_ad", locals: {slot: "c"} %>
-  </aside>
-  <% for_each_tag! do %>
-    <%= render_tag_cluster %>
-  <% end %>
-
-
-  <% @homepage.content.each_with_index do |content, index| %>
-    <% source = content.content.try(:source)
-      tag = if source != "KPCC" or source != 'kpcc'
-                source
-             elsif content.tags__title?
-                content.tags__title
-             elsif content.program?
-                content.program
-             elsif content.category__title?
-                content.category__title
-             end
-    %>
-    <article class="center hp-story <%= content.asset_scheme %> l-col l-col--sm-12 l-col--med-7" style="order:<%= index %>;">
-      <%= media_object content.asset_scheme, content: content, index: index, contents: @homepage.content %>
-    </article>
-  <% end %>
-  <div class="l-hp--bottom">
-    <%= hidden_gem %>
-  </div>
-  <div class="l-hp--bottom">
-    <%= render partial: "layouts/better_homepage/footer" %>
-  </div>
+    <div class="l-vertical-rail l-col--med-7"></div>
+    <%= precached "better_homepage/contents", preview: @homepage %>
   </div>
 </div>

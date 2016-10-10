@@ -15,8 +15,6 @@ class BetterHomepageController < ApplicationController
     only: :index
 
   def index
-    @homepage                 = BetterHomepage.current.last
-    @current_program          = ScheduleOccurrence.current.first
   end
 
   def opt_in

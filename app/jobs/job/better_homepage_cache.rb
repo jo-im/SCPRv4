@@ -5,9 +5,13 @@ module Job
       def queue; QUEUES[:mid_priority]; end
 
       def perform
-        homepage = ::BetterHomepage.current.last
+        homepage  = ::BetterHomepage.current.last
+        @homepage = homepage
         return if !homepage
-        self.cache(homepage, "better_homepage/contents", "better_homepage/contents")
+        key       = "better_homepage/contents"
+        cacher.rendering_controller.instance_variable_set(:@homepage, homepage)
+        cached    = cacher.render partial: key
+        cacher.send :write, key, cached
       end
     private
       def latest_headlines homepage
