@@ -4,7 +4,7 @@
     <div class="c-tile--circular">
       <div class="c-image">
         <img src="<%= schedule_current.program.podcast_tile %>" />
-        <%= link_to "/listen_live", target: "_blank" do %>
+        <%= link_to "javascript:void(0)", onclick: "open_popup('/listen_live/');", id: "listen-live"  do %>
           <%= render file: "#{Rails.root}/public/static/images/listen-live-play.svg" %>
         <% end %>
       </div>

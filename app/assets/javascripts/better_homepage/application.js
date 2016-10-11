@@ -6,6 +6,7 @@
 //= require shared
 //= require better_homepage/better_homepage
 //= require ../utilities
+//= require ../open_popup
 
 new scpr.adSizer()
 
