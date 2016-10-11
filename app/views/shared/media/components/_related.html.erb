@@ -2,7 +2,7 @@
   <div class="related-content o-media__related-content">
     <h5 class="heading heading--h5 heading--uppercase u-text-color--gray">
       <% if label_path %>
-        <%= link_to "More In #{label}", label_path %>
+        <%= link_to "More In #{label}", label_path, class: "o-media__headline-link" %>
       <% else %>
         More In <%= label %>
       <% end %>
