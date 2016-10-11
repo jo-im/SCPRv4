@@ -10,4 +10,4 @@ module.exports   = class extends Framework.Component
       objKey = model.get('id')
       new ArticleComponent
         model: model
-        el: @$el.find("[data-obj-key='#{objKey}']")
+        el: @$el.find(".story[data-obj-key='#{objKey}']")

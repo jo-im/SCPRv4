@@ -24,8 +24,8 @@ class scpr.BetterHomepage extends scpr.Framework
 
     # create a collection based on the articles in the DOM
     @collection = new (require('./lib/article-collection'))()
-    articleEls = @$el.find('[data-obj-key]')
-    @collection.reset ({'id': $(el).attr('data-obj-key'), title: $.trim($(el).find('.headline').text())} for el in articleEls)
+    articleEls = @$el.find('article.hp-story > .story[data-obj-key]')
+    @collection.reset ({'id': $(el).attr('data-obj-key'), title: $.trim($(el).find('> .headline').text())} for el in articleEls)
 
     # reset stories to 'new' if development is set to true.
     # I'm sure there's a better way to apply properties

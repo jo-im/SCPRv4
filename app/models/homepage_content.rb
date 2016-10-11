@@ -32,6 +32,10 @@ class HomepageContent < ActiveRecord::Base
     @simple_json = super.merge({'asset_scheme' => self.asset_scheme})
   end
 
+  def obj_key
+    content.try(:obj_key)
+  end
+
   def label
     if content
       return "KPCC In Person" if content.try(:is_kpcc_event)

@@ -11,5 +11,5 @@
 new scpr.adSizer()
 
 jQuery(document).ready(function() {
-  new scpr.BetterHomepage({el: $('section#content')})
+  new scpr.BetterHomepage({el: $('.hp-content')})
 })

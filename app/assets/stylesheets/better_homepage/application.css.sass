@@ -107,7 +107,16 @@ footer.o-footer
     width: 100%
 
 
-
+// fade animation
+.o-media--new-and-unread
+  .o-media__headline
+    &::before
+      transition: all .5s linear
+  &.o-media--seen-and-unread
+    .o-media__headline
+      &::before
+        transition: all 0.8s linear
+        opacity: 0
 
 
 
@@ -151,6 +160,13 @@ footer.o-footer
       > *
         padding-left: $gutter
         padding-right: $gutter
+
+      .o-media__headline
+        @media (max-width: $media-tablet)
+          &::before
+            margin-left: 1.1rem
+            transform: scale(0.85) translateY(0.53em) rotate(45deg)
+  
       a.call-to-action
         margin-top: $gutter
 
