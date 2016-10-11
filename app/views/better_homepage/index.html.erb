@@ -12,7 +12,9 @@
 
   <div class="l-row l-row--med-noflex" >
     <aside class="left l-col l-col--sm-12 l-col--med-2">
-      <%= render partial: "better_homepage/broadcast_box", locals: {schedule_current: @schedule_current, schedule_next: @schedule_next} %>
+      <% cache ["better_homepage/broadcast_box", @schedule_current, @schedule_next] do %>
+        <%= render partial: "better_homepage/broadcast_box", locals: {schedule_current: @schedule_current, schedule_next: @schedule_next} %>
+      <% end %>
     </aside>
 
     <div class="l-vertical-rail l-col--med-7"></div>
