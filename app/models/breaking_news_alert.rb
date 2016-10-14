@@ -141,9 +141,9 @@ class BreakingNewsAlert < ActiveRecord::Base
         alert: alert_subject.to_s,
         alert_id: self.id.to_s
       },
-      ios_badgeType: badge
+      ios_badgeType: badge,
+      included_segments: ["Active Users"]
     }
-    params[:included_segments] = self.alert_type == "audio" ? ["iPhone Users", "iPad Users"] : ["iPad Users"]
     OneSignal::Notification.create(params: params)
   end
 
