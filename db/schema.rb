@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161014160047) do
+ActiveRecord::Schema.define(version: 20161014164827) do
 
   create_table "abstracts", force: :cascade do |t|
     t.string   "source",               limit: 255
@@ -552,7 +552,7 @@ ActiveRecord::Schema.define(version: 20161014160047) do
     t.string   "content_type", limit: 255
     t.datetime "created_at",                                  null: false
     t.datetime "updated_at",                                  null: false
-    t.string   "url",          limit: 255
+    t.string   "url",          limit: 512
     t.integer  "status",       limit: 4
   end
 
