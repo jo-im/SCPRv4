@@ -112,7 +112,17 @@ class BreakingNewsAlert < ActiveRecord::Base
   # Publish a mobile notification
   def publish_mobile_notification
     return false if !should_send_mobile_notification?
+    parse_push  # Since we are going to move to OneSignal, we're not going to worry much about whether this succeeds.
+    result = one_signal_push 
 
+    if result.code == "201" || result.code == "200"
+      self.update_column(:mobile_notification_sent, true)
+    else
+      # TODO: Handle errors from OneSignal
+    end
+  end
+
+  def parse_push
     push = Parse::Push.new({
       :title      => "KPCC - #{self.break_type}",
       :alert      => alert_subject,
@@ -121,12 +131,20 @@ class BreakingNewsAlert < ActiveRecord::Base
     })
     push.channels = self.alert_type == "audio" ? [IPHONE_CHANNEL,IPAD_CHANNEL] : [IPAD_CHANNEL]
     result = push.save
+  end
 
-    if result["result"] == true
-      self.update_column(:mobile_notification_sent, true)
-    else
-      # TODO: Handle errors from Parse
-    end
+  def one_signal_push
+    params = {
+      app_id:     Rails.application.secrets.api['one_signal']['app_id'],
+      contents: {
+        title: "KPCC - #{self.break_type}",
+        alert: alert_subject.to_s,
+        alert_id: self.id.to_s
+      },
+      ios_badgeType: badge,
+      included_segments: ["Active Users"]
+    }
+    OneSignal::Notification.create(params: params)
   end
 
   add_transaction_tracer :publish_mobile_notification, category: :task

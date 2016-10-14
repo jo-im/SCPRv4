@@ -5,7 +5,7 @@ describe Job::SendMobileNotification do
   it { subject.queue.should eq Job::QUEUES[:mid_priority] }
 
   before :each do
-    stub_request(:post, %r|api\.parse\.com|)
+    stub_request(:post, /(api\.parse\.com)|(onesignal.com)/)
     .to_return(body: { result: true }.to_json)
   end
 
