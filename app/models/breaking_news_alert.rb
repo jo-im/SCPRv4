@@ -112,13 +112,13 @@ class BreakingNewsAlert < ActiveRecord::Base
   # Publish a mobile notification
   def publish_mobile_notification
     return false if !should_send_mobile_notification?
-    parse_push
-    one_signal_push
+    parse_push  # Since we are going to move to OneSignal, we're not going to worry much about whether this succeeds.
+    result = one_signal_push 
 
-    if result["result"] == true
+    if result.code == "201" || result.code == "200"
       self.update_column(:mobile_notification_sent, true)
     else
-      # TODO: Handle errors from Parse
+      # TODO: Handle errors from OneSignal
     end
   end
 
