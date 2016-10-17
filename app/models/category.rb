@@ -77,7 +77,7 @@ class Category < ActiveRecord::Base
     ContentBase.search(args)
   end
 
-  def public_path
+  def public_path *args
     "/#{slug}" if slug
   end
 
