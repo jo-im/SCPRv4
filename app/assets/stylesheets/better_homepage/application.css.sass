@@ -152,8 +152,13 @@ footer.o-footer
   min-width: 100%
 
 
+
 // SMALL SCREENS
 @media all and (max-width: $media-tablet)
+
+  // HACK
+  .o-media__teaser
+    width: 85%
 
   #feedback
     display: none
@@ -268,6 +273,14 @@ footer.o-footer
 
 // LARGE SCREENS
 @media all and (min-width: $media-tablet)
+
+
+  // HACK
+  .o-media__teaser
+    width: 85%
+  .o-media--med .o-media__figure + .o-media__teaser
+    width: 57.434% * 0.85
+    float: left
 
   nav.o-mast__nav
     // force navbar menu links to appear on the left
