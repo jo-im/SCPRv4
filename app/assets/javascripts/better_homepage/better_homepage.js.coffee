@@ -43,6 +43,10 @@ class scpr.BetterHomepage extends scpr.Framework
         el: @$el
         collection: @collection
 
+      # feedback element
+      feedback: new (require('./lib/feedback-component'))
+        el: $('#feedback-block')
+
     @eventTracking     = new scpr.EventTracking
       trackScrollDepth: true
       currentCategory: 'Homepage'
