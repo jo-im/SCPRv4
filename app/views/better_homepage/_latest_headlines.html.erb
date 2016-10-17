@@ -11,7 +11,7 @@
     <li>
       <div class="o-media o-media--small">
         <h4>
-          <%= link_to article.headline, article.public_url %>
+          <%= link_to article.headline, article.original_object.try(:public_url) %>
         </h4>
       </div>
     </li>
