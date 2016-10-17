@@ -1,0 +1,1 @@
+OneSignal::OneSignal.api_key = Rails.application.secrets.api["one_signal"]["api_key"]

@@ -76,6 +76,7 @@ gem 'asset_host_client', github:"scpr/asset_host_client", tag:"v2.0.0"
 gem 'audio_vision', '~> 1.0'
 gem 'slack-notifier'
 gem 'aws-sdk', '~> 2'
+gem 'one_signal'
 
 ## Assets
 gem "eco", "~> 1.0"
