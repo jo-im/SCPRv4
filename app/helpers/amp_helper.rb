@@ -25,8 +25,8 @@ module AmpHelper
     }
     attributes[:srcset] = full_asset.url
     attributes[:srcset] = [
-      asset.small,
-      asset.large
+      asset.try(:small),
+      asset.try(:large)
     ].compact.map do |asset|
       "#{asset.url} #{asset.width}w"
     end.join(', ')
