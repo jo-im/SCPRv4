@@ -133,6 +133,8 @@ footer.o-footer
     float: right
 
 
+// HACKS
+
 // bug patch for the weird spacing between images and the border-bottom
 // it's still not clear what actually causes that empty space
 .o-media--lg .o-media__figure--widescreen::after
@@ -141,6 +143,13 @@ footer.o-footer
   width: 100%
   content: ''
   background-color: $color-primary-alt
+
+// .o-media--lg
+//   .o-media__teaser
+//     column-count: 2
+
+[class*='o-media__figure--'] .o-media__img
+  min-width: 100%
 
 
 // SMALL SCREENS

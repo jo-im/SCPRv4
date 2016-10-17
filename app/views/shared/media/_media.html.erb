@@ -24,7 +24,8 @@
   <% end %>
 
   <% if size != "sm" %>
-    <%= media_teaser(story.abstract || story.teaser) %>
+    <% teaser_text = story.abstract || story.teaser || "" %>
+    <%= media_teaser teaser_text, columns: ((size != 'med' && teaser_text.length > 500) ? true : false) %>
     <%= media_meta feature: story.feature, public_datetime: story.public_datetime, updated_at: story.updated_at %>
     <%= media_extra content, contents %>
   <% end %>

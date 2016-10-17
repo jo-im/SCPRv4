@@ -27,8 +27,12 @@ module HomepageHelper
   def media_headline size, headline, url
     render partial: "shared/media/components/headline", locals: {size: size, headline: headline, url: url}
   end
-  def media_teaser teaser
-    render partial: "shared/media/components/teaser", locals: {teaser: teaser}
+  def media_teaser teaser, options={}
+    locals = {teaser: teaser, klass: ""}
+    if options[:columns]
+      locals[:klass] = "text-columns--med-2"
+    end
+    render partial: "shared/media/components/teaser", locals: locals
   end
   def media_meta(feature:, public_datetime:, updated_at:)
     render partial: "shared/media/components/meta", locals: {feature: feature, public_datetime: public_datetime, updated_at: updated_at}
