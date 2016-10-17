@@ -18,7 +18,6 @@
   <div id="aggregator" class="aggregator"></div>
   <%= f.input :content_json, as: :hidden, input_html: { id: "content_json" } %>
 <% end %>
-<%= f.section "related_links", {title: "Check It Out"} %>
 <% content_for :footer do %>
   <script>
     aggregator = new outpost.Aggregator(
