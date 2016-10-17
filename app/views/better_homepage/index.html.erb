@@ -1,14 +1,24 @@
 <%= render partial: 'better_homepage/feedback' %>
-<section id="content" class="container container--med">
-  <aside class="c-ad">
-    <div class="c-ad__container">
-      <%= render "shared/ads/dfp", ad_key: "slot_a" %>
-      <a class="c-ad__attribution" href="http://www.scpr.org/support/underwriting/">Become a KPCC Sponsor</a>
-    </div>
-  </aside>
-  <span id="homepage-timestamp" class="media__timestamp"><%= smart_date_js @homepage.updated_at, "data-window" => "1h", "data-relative" => "1h" %></span>
-  <%= precached "better_homepage/contents", preview: @content %>
-</section><!-- .welcome -->
-<%= hidden_gem %>
-<%= include_handlebars_template 'better_homepage/whats-next-component' %>
-<%= include_handlebars_template 'better_homepage/whats-next-headline-component' %>
+<div class="hp-content l-container">
+
+  <header class="o-header">
+    <a href="/" class="o-mast__logo-link">
+      <svg class="o-header__logo">
+        <use class="" xlink:href="/img/scpr-sprite.svg#logo_kpcc-black"/>
+      </svg>
+    </a>
+    <h6 class="b-heading b-heading--h6 b-heading--light">Member-supported news for Southern California</h6>
+    <hr class="rule" />
+  </header>
+
+  <div class="l-row l-row--med-noflex" >
+    <aside class="left l-col l-col--sm-12 l-col--med-2">
+      <% cache ["better_homepage/broadcast_box", @schedule_current, @schedule_next] do %>
+        <%= render partial: "better_homepage/broadcast_box", locals: {schedule_current: @schedule_current, schedule_next: @schedule_next} %>
+      <% end %>
+    </aside>
+
+    <div class="l-vertical-rail l-col--med-7"></div>
+    <%= precached "better_homepage/contents", preview: @homepage %>
+  </div>
+</div>

@@ -1,7 +1,25 @@
-<% contents = content %>
-<% contents.each_with_index do |content, index| %>
+<aside class="right hp-latest-headlines l-col l-col--sm-12 l-col--med-3" style="order:2;">
+  <%= render partial: "better_homepage/latest_headlines", locals: {content: @homepage.content} %>
+</aside>
 
-  <% source = content.content.try(:source) 
+<aside class="right ad l-col l-col--sm-12 l-col--med-3" style="order:6;">
+  <%= render partial: "better_homepage/c_ad", locals: {slot: "b"} %>
+</aside>
+
+<%= render_tag_cluster %>
+
+<%= render_tag_cluster %>
+
+<aside class="right ad l-col l-col--sm-12 l-col--med-3" style="order:9;">
+  <%= render partial: "better_homepage/c_ad", locals: {slot: "c"} %>
+</aside>
+
+<% for_each_tag! do %>
+  <%= render_tag_cluster %>
+<% end %>
+
+<% @homepage.content.each_with_index do |content, index| %>
+  <% source = content.content.try(:source)
     tag = if source != "KPCC" or source != 'kpcc'
               source
            elsif content.tags__title?
@@ -13,35 +31,16 @@
            end
   %>
 
-  <% if index == 1 %>
-    <aside id='ad-position-b' class="c-ad c-ad--hp">
-      <div class="c-ad__container c-ad__container--hp">
-        <div class="c-ad__banner c-ad__banner--align-left">
-          <%= render "shared/ads/dfp", ad_key: "slot_b" %>
-        </div>
-        <a class="c-ad__attribution" href="http://www.scpr.org/support/underwriting/">Become a KPCC Sponsor</a>
-      </div>
-    </aside>
-    <div id='check-it-out-block'>
-      <%= precached "layouts/better_homepage/check_it_out" %>
-    </div>
-  <% elsif index == 2 %>
-    <div id='whats-next-initial' data-components='whats-next' class='boundary' data-scroll-up='hide' data-scroll-down='show' data-offset='-400'></div>
-  <% elsif index == 7 %>
-    <aside id='ad-position-c' class="c-ad c-ad--hp">
-      <div class="c-ad__container c-ad__container--hp">
-        <div class="c-ad__banner">
-          <%= render "shared/ads/dfp", ad_key: "slot_c" %>
-        </div>
-        <a class="c-ad__attribution" href="http://www.scpr.org/support/underwriting/">Become a KPCC Sponsor</a>
-      </div>
-    </aside>
-  <% end %>
-
-  <%= render partial: "better_homepage/media/#{content.asset_scheme}", locals: {content: content, index: index, contents: contents} %>
-  <% if index == 0 %>
-    <div class='boundary' data-components='whats-next' data-scroll-up='hideQuickly'></div>
-  <% end %>
+  <article class="center hp-story <%= content.asset_scheme %> l-col l-col--sm-12 l-col--med-7" style="order:<%= index %>;">
+    <%= media_object content.asset_scheme, content: content, index: index, contents: @homepage.content %>
+  </article>
 
 <% end %>
-<div class='boundary' data-components='whats-next' data-scroll-up='show' data-scroll-down='hide'></div>
+
+<div class="l-hp--bottom">
+  <%= hidden_gem %>
+</div>
+
+<div class="l-hp--bottom">
+  <%= render partial: "layouts/better_homepage/footer" %>
+</div>

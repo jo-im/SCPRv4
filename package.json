@@ -14,9 +14,9 @@
   "license": "MIT",
   "devDependencies": {
     "browserify": "~> 10.2.4",
-    "browserify-incremental": "^3.0.1",
+    "browserify-incremental": "= 3.1.1",
     "coffeeify": "~> 0.6",
-    "webpack": "^1.12.14"
+    "webpack": "~> 1.12.14"
   },
   "dependencies": {
     "coffee-script": "^1.10.0",
@@ -36,7 +36,7 @@
     "pouchdb": "= 5.3.1",
     "pouchdb-upsert": "^2.0.0",
     "query-string": "^4.2.2",
-    "scpr-style-guide": "=0.2.6",
+    "scpr-style-guide": "^2.2.0",
     "selectivizr": "= 1.0.3",
     "swfobject": "= 2.2",
     "timeago": "= 1.5.1",

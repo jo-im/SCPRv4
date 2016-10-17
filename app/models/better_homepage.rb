@@ -11,6 +11,7 @@ class BetterHomepage < ActiveRecord::Base
   # include Concern::Callbacks::HomepageCachingCallback
   include Concern::Callbacks::TouchCallback
   include Concern::Associations::RelatedLinksAssociation
+  include Concern::Associations::TagsAssociation
 
   status :draft do |s|
     s.id = 0

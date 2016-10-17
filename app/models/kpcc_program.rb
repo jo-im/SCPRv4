@@ -5,6 +5,7 @@ class KpccProgram < ActiveRecord::Base
 
   include Concern::Validations::SlugValidation
   include Concern::Associations::RelatedLinksAssociation
+  include Concern::Associations::PodcastAssociation
   include Concern::Model::Searchable
   include Concern::Model::Programs
 

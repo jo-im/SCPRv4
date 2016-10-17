@@ -25,6 +25,7 @@ class ExternalProgram < ActiveRecord::Base
   include ::NewRelic::Agent::Instrumentation::ControllerInstrumentation
   include Concern::Validations::SlugValidation
   include Concern::Associations::RelatedLinksAssociation
+  include Concern::Associations::PodcastAssociation
   include Concern::Model::Searchable
   include Concern::Model::Programs
   include Concern::Sanitizers::Url
@@ -48,7 +49,6 @@ class ExternalProgram < ActiveRecord::Base
   has_many :recurring_schedule_rules, as: :program, dependent: :destroy
   has_many :episodes, dependent: :destroy, class_name: :ExternalEpisode
   has_many :segments, class_name: :ExternalSegment
-
 
   #-------------------
   # Validations

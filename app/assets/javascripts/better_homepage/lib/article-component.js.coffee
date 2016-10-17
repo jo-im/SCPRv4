@@ -1,4 +1,4 @@
-Framework = require('framework')
+Framework   = require('framework')
 SmarterTime = require('better_homepage/smarter-time')
 
 module.exports = class ArticleComponent extends Framework.Component
@@ -44,7 +44,7 @@ module.exports = class ArticleComponent extends Framework.Component
     # if we ever have to change anything.  Since this
     # is behavior, I think this should be handled in
     # the component instead of the templates.
-    headline = @$el.find('.headline a')
+    headline = @$el.find('> .headline a')
     headline.addClass('track-event')
     headline.attr('data-ga-category', "@currentCategory")
     headline.attr('data-ga-action', "Article")
@@ -66,9 +66,9 @@ module.exports = class ArticleComponent extends Framework.Component
     @stateTranslation[@model.get('state')] or ''
 
   stateTranslation:
-    new: 'media--new-and-unread'
-    seen: 'media--seen-and-unread'
-    read: 'media--visited-and-read'
+    new: 'o-media--new-and-unread'
+    seen: 'o-media--seen-and-unread'
+    read: 'o-media--visited-and-read'
 
   markAsSeen: ->
     unless @model.get('state') is 'read'
@@ -78,7 +78,7 @@ module.exports = class ArticleComponent extends Framework.Component
     @model.set 'state', 'read'
 
   isScrolledIntoView: ->
-    headline         = @$el.find('.headline')
+    headline         = @$el.find('> .headline')
     view             = if @model.isLastArticle() then 1 else 0.2
     headlinePosition = headline.offset().top
     wind             = $(window)

@@ -75,6 +75,23 @@ module ContentBase
     end
   end
 
+  def active_query &block
+    # This is a way to uniformly query content from our MySQL database as Articles.
+    #
+    # Provide your ActiveRecord query inside a block:
+    #
+    # `active_query {|query| query.where('id = ?', 3).limit(3)}`
+    #
+    ## obj_key(as id), headline, short_headline, teaser, body, category_id, status_id, published_at
+    selects = [
+      yield(NewsStory.select(   "CONCAT('news_story-', id) AS id",    :headline, :short_headline,              :teaser,              :body, :category_id, :status, :published_at)).to_sql,
+      yield(ShowSegment.select( "CONCAT('show_segment-', id) AS id",  :headline, :short_headline,              :teaser,              :body, :category_id, :status, :published_at)).to_sql,
+      yield(BlogEntry.select(   "CONCAT('blog_entry-', id) AS id",    :headline, :short_headline,              :teaser,              :body, :category_id, :status, :published_at)).to_sql,
+      yield(ContentShell.select("CONCAT('content_shell-', id) AS id", :headline, "headline AS short_headline", "headline AS teaser", :body, :category_id, :status, :published_at)).to_sql
+    ].map{|s| "(#{s})"}.join(" UNION ")
+    ActiveRecord::Base.connection.exec_query(yield(NewsStory.select("*").from("(#{selects}) AS items")).to_sql).map{|i| Article.new(i)}
+  end
+
   def histogram content_type, match, options={}
     query = {:query=>
       {:filtered=>

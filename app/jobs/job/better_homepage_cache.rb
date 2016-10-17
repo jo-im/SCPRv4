@@ -5,14 +5,26 @@ module Job
       def queue; QUEUES[:mid_priority]; end
 
       def perform
-        homepage = ::BetterHomepage.current.last
+        homepage  = ::BetterHomepage.current.last
+        @homepage = homepage
         return if !homepage
-
-        content  = homepage.content
-
-        self.cache(content, "better_homepage/contents", "better_homepage/contents")
-        self.cache(homepage.check_it_out, "layouts/better_homepage/check_it_out", "layouts/better_homepage/check_it_out")
+        key       = "better_homepage/contents"
+        cacher.rendering_controller.instance_variable_set(:@homepage, homepage)
+        cached    = cacher.render partial: key
+        cacher.send :write, key, cached
       end
+    private
+      def latest_headlines homepage
+        ignore_obj_keys = homepage.content
+          .order("position ASC")
+          .limit(2).map{|c| "#{c.class.to_s.underscore}-#{c.id}"}
+        ContentBase.active_query do |query|
+          query
+            .where("status = 5", "category_id IS NOT NULL")
+            .where("id NOT IN (?)", ignore_obj_keys)
+            .order("published_at DESC").limit(5)
+        end 
+      end  
     end
   end
 end

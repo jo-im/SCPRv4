@@ -107,6 +107,12 @@ class Event < ActiveRecord::Base
     :allowed        => [URI::HTTP, URI::MailTo]
   }
 
+  alias_attribute :short_headline, :headline
+  alias_attribute :public_datetime, :starts_at
+
+  def feature
+  end
+
 
   def needs_validation?
     self.published?

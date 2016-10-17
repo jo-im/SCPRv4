@@ -1,0 +1,18 @@
+<% if (content || []).any? %>
+  <div class="related-content o-media__related-content">
+    <h5 class="heading heading--h5 heading--uppercase u-text-color--gray">
+      <% if label_path %>
+        <%= link_to "More In #{label}", label_path, class: "o-media__headline-link" %>
+      <% else %>
+        More In <%= label %>
+      <% end %>
+    </h5>
+    <ul class="c-list c-list--vert c-list--bullet">
+      <% content.each do |record| %>
+        <li class="o-media__teaser o-media__teaser--bullet">
+          <%= media_object "sm", content: record, class: "o-media--horizontal", nofigure: true %>
+        </li>
+      <% end %>
+    </ul>
+  </div>
+<% end %>

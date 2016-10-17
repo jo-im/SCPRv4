@@ -49,6 +49,8 @@ class ShowSegment < ActiveRecord::Base
     :touch        => true
 
   alias_attribute :url, :public_url
+  alias_attribute :public_datetime, :published_at
+
 
   validates :show, presence: true
 

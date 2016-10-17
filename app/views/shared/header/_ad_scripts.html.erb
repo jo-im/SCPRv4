@@ -1,4 +1,3 @@
-<% responsive ||= false %>
 <!-- Start: GPT Async -->
 <script type='text/javascript'>
   var gptadslots=[];
@@ -42,24 +41,6 @@
       // Listen Live Position C
       gptadslots[6]= googletag.defineSlot(key, [[300,50]],'dfp-slot_live_c').setTargeting('pos',['bottom']).addService(googletag.pubads());
 
-
-    <% elsif responsive %>
-      var positionAMapping = googletag.sizeMapping()
-        .addSize([840, 100],[728,90])
-        .addSize([0,0], [300, 50])
-        .build();
-
-      // Position A
-      gptadslots[3]= googletag.defineSlot(key, [[300,50],[728,90]],'dfp-slot_a')
-        .defineSizeMapping(positionAMapping)
-        .setTargeting('pos',['banner-top'])
-        .addService(googletag.pubads());
-
-      // Position B
-      gptadslots[1]= googletag.defineSlot(key, [[300,250]],'dfp-slot_b').setTargeting('pos',['mr-top']).addService(googletag.pubads());
-
-      // Position C
-      gptadslots[2]= googletag.defineSlot(key, [[300,250]],'dfp-slot_c').setTargeting('pos',['mr-bottom']).addService(googletag.pubads());
 
     <% else %>
 

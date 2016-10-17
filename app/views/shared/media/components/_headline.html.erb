@@ -1,0 +1,9 @@
+<%= content_tag("h#{size}", class: "headline o-media__headline o-media__headline--h#{size}") do %>
+  <%= link_to url, class: "o-media__headline-link track-event", "data-ga-category" => '@currentCategory', "data-ga-action" => "Article", "data-ga-label" => '@scrollDepth' do %>
+    <!-- add status symbol here -->
+    <%= headline %>
+  <% end %>
+<% end %>
+
+
+

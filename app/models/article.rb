@@ -63,6 +63,8 @@ class Article
     :abstract,
     :asset_scheme
 
+  alias_attribute :short_headline, :short_title
+
   def initialize(attributes={})
     attributes.each do |attr, value|
       self.public_send("#{attr}=", value)

@@ -13,6 +13,8 @@ machine:
     ES_INCLUDE: /home/ubuntu/elasticsearch-1.5.2/bin/elasticsearch.in.sh
 
 dependencies:
+  pre:
+    - npm install -g npm
   cache_directories:
     - ~/elasticsearch-1.5.2
   post:

@@ -1,6 +1,5 @@
 scpr.Framework      = require 'framework'
 scpr.EventTracking  = require 'event_tracking'
-Boundary            = require './lib/boundary'
 SmarterTime         = require './smarter-time'
 
 class scpr.BetterHomepage extends scpr.Framework
@@ -25,8 +24,8 @@ class scpr.BetterHomepage extends scpr.Framework
 
     # create a collection based on the articles in the DOM
     @collection = new (require('./lib/article-collection'))()
-    articleEls = @$el.find('[data-obj-key]')
-    @collection.reset ({'id': $(el).attr('data-obj-key'), title: $.trim($(el).find('.headline').text())} for el in articleEls)
+    articleEls = @$el.find('article.hp-story > .story[data-obj-key]')
+    @collection.reset ({'id': $(el).attr('data-obj-key'), title: $.trim($(el).find('> .headline').text())} for el in articleEls)
 
     # reset stories to 'new' if development is set to true.
     # I'm sure there's a better way to apply properties
@@ -44,10 +43,6 @@ class scpr.BetterHomepage extends scpr.Framework
         el: @$el
         collection: @collection
 
-      # pass the same collection to a 'whats next' component
-      'whats-next': new (require('./lib/whats-next-component'))
-        collection: @collection
-
       # feedback element
       feedback: new (require('./lib/feedback-component'))
         el: $('#feedback-block')
@@ -56,45 +51,3 @@ class scpr.BetterHomepage extends scpr.Framework
       trackScrollDepth: true
       currentCategory: 'Homepage'
       scrollDepthContainer: @$el
-
-    checkItOut = @$el.find('#check-it-out a')
-    checkItOut.addClass('track-event')
-    checkItOut.attr('data-ga-category', "@currentCategory")
-    checkItOut.attr('data-ga-action', "Check It Out")
-    checkItOut.attr('data-ga-label', "Link")
-
-    @findBoundaries()
-    @detectCollision()
-
-  detectCollision: (e) ->
-    boundaryCount = @boundaries.length
-    i = 0
-    while i < boundaryCount
-      ((i) =>
-        boundary = @boundaries[i]
-        setTimeout =>
-          if boundary.hasCrossed()
-            if boundary.isInView() and boundary.lastDirection isnt 'scrollDown'
-              direction = 'scrollDown'
-            else if boundary.isBelow() #and boundary.lastDirection isnt 'scrollDown'
-              direction = 'scrollUp'
-            if direction
-              boundary.lastDirection = direction
-              for action in (boundary[direction] or '').split(' ')
-                for cname in boundary.components
-                  @components[cname]?[action]?(boundary, e)
-          if i is (boundaryCount - 1)
-            setTimeout =>
-              @detectCollision()
-            , 0
-          boundary.wasInView = boundary.isInView()
-        , 0
-      )(i)
-      i++
-
-  findBoundaries: ->
-    @boundaries = []
-    for el in $('.boundary')
-      el = $(el)
-      @boundaries.push new Boundary $(el)
-      , 0

@@ -1,0 +1,16 @@
+<% if tag %>
+  <h6 class="b-heading b-heading--h6 b-heading--uppercase u-text-color--gray b-heading--bold o-media__headline-link"><%= link_to "Learn More About #{tag.title}", topic_url(tag.slug) %></h6>
+  <ul class="c-list c-list--horiz">
+    <% omit ||= [] %>
+    <% tag.featured_content(omit).each do |feature| %>
+      <div class="o-media o-media--horizontal o-media--sm">
+        <div class="o-media__figure o-media__figure--four-by-three">
+          <img class="o-media__img" src="<%= feature.asset.asset.thumb.url %>">
+        </div>
+        <h4>
+          <%= link_to feature.title, feature.public_url %>
+        </h4>
+      </div>
+    <% end %>
+  </ul>
+<% end %>
