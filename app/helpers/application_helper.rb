@@ -545,7 +545,7 @@ module ApplicationHelper
     related_content.select do |article|
       !@related_content_manifest.include?(article) &&
       !homepage_content_ids.include?(article.obj_key) && 
-      ((article.public_datetime || 10.years.ago)) &&
+      ((article.public_datetime || 10.years.ago) > 48.hours.ago) &&
       @related_content_manifest.push(article)
     end
     .first(2) ## We can assume here that we are already getting
