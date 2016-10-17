@@ -25,6 +25,8 @@
     display: inline-block
     height: 22px
     width: 150px
+  .o-mast__logo-link
+    float: initial
 
 .o-broadcast
   > .c-tile
@@ -119,7 +121,22 @@ footer.o-footer
         opacity: 0
 
 
+#o-mast__search-toggler-checkbox:checked ~ .o-mast .o-mast__nav .o-mast__nav-actions
+  float: right
+  display: block
+  width: 100%
+  .o-mast__search
+    float: right
 
+
+// bug patch for the weird spacing between images and the border-bottom
+// it's still not clear what actually causes that empty space
+.o-media--lg .o-media__figure--widescreen::after
+  display: block
+  height: 1px
+  width: 100%
+  content: ''
+  background-color: $color-primary-alt
 
 
 // SMALL SCREENS
@@ -133,6 +150,26 @@ footer.o-footer
 
   .o-header
     display: none
+
+  .o-mast__currently-airing
+    position: absolute
+    top: 3.36215rem
+    width: 100%
+    left: 0
+    text-align: center
+    padding-top: 0.25rem
+    height: 1.25rem
+
+  #o-mast__menu-toggler-checkbox:checked ~ .o-mast
+    z-index: 99999
+    // hide when menu opened
+    .o-mast__currently-airing
+      display: none
+
+
+  .c-nav__dropdown
+    font-size: 0.78125rem
+
 
   article.hp-story, aside.right, aside.left
     &.l-col--sm-12
@@ -225,10 +262,15 @@ footer.o-footer
       &.o-mast__nav-actions
         float: right
 
+  .c-nav__dropdown
+    font-size: 1rem
+
   .o-mast
     &__currently-airing
       display: none
     &__logo
+      display: none
+    &__branding-caption
       display: none
 
   .hp-content
