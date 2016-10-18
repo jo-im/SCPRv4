@@ -160,8 +160,8 @@ footer.o-footer
   .hp-story .story > .o-media__teaser
     width: 85%
 
-  #feedback
-    display: none
+  // #feedback
+  //   display: none
 
   .l-row
     margin: 0
@@ -174,7 +174,8 @@ footer.o-footer
 
   .o-mast__currently-airing
     position: absolute
-    top: 3.36215rem
+    // top: 3.36215rem
+    top: 8.55rem // this one is to offset the feedback box at top on mobile
     width: 100%
     left: 0
     text-align: center
@@ -265,15 +266,8 @@ footer.o-footer
 
 
 
-
-
-
-
-
-
 // LARGE SCREENS
 @media all and (min-width: $media-tablet)
-
 
   // HACK
   .hp-story .story > .o-media__teaser
@@ -352,67 +346,68 @@ footer.o-footer
         width: 100% + $gutter + $gutter
 
 
-  #feedback
-    #feedback-slim
-      text-align: center
-      background-color: white
-      padding-top: 10px
-      .description
-        padding-bottom: 10px
-        p
-          font-size: 14px
-      border-width: 2px
-      border-color: #99d8ea
-      border-bottom-style: solid
-      @media (min-width: 1310px)
-        display: none
-      .buttons
-        padding-bottom: 10px
-      @media (max-width: $media-tablet)
-        position: inherit
-        width: 100%
-        top: none
+#feedback
+  #feedback-slim
+    text-align: center
+    background-color: white
+    padding-top: 10px
+    .description
+      @extend .text--small
+      padding-bottom: 10px
+      p
+        font-size: 14px
+    border-width: 2px
+    border-color: #99d8ea
+    border-bottom-style: solid
+    @media (min-width: 1310px)
+      display: none
+    .buttons
+      padding-bottom: 10px
+    @media (max-width: $media-tablet)
+      position: inherit
+      width: 100%
+      top: none
 
 
-    #feedback-block
-      $position: 75%
-      height: 150px
-      border-color: #99d8ea
-      border-style: solid
-      border-width: 1px
-      border-left-style: none
-      border-right-style: none
-      padding: 20px
-      padding-left: 0px
-      padding-right: 0px
-      text-align: center
-      background-color: white
-      transition: all .4s linear
-      opacity: 1
-      z-index: 700
-      &.hidden
-        opacity: 0
-        z-index: -1
-      @media (min-width: 1406px)
-        position: fixed
-        left: 0
-        top: $position
-        width: 250px
-      @media (max-width: 1405px)
-        position: fixed
-        left: 0
-        top: $position
-        width: 210px
-      @media (max-width: 1310px)
-        display: none
+#feedback-block
+  $position: 75%
+  height: 150px
+  border-color: #99d8ea
+  border-style: solid
+  border-width: 1px
+  border-left-style: none
+  border-right-style: none
+  padding: 20px
+  padding-left: 0px
+  padding-right: 0px
+  text-align: center
+  background-color: white
+  transition: all .4s linear
+  opacity: 1
+  z-index: 700
+  &.hidden
+    opacity: 0
+    z-index: -1
+  @media (min-width: 1406px)
+    position: fixed
+    left: 0
+    top: $position
+    width: 250px
+  @media (max-width: 1405px)
+    position: fixed
+    left: 0
+    top: $position
+    width: 210px
+  @media (max-width: 1310px)
+    display: none
 
-      .description
-        padding-bottom: 18px
-        p
-          font-size: 14px
-      .beta-opt-out
-        color: #7c7c7c
-        font-size: 12px
-        text-decoration: underline
-      .link
-        padding-top: 30px
+  .description
+    padding-bottom: 18px
+    p
+      font-size: 14px
+  .beta-opt-out
+    color: #7c7c7c
+    font-size: 12px
+    text-decoration: underline
+  .link
+    padding-top: 30px
