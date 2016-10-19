@@ -8,8 +8,9 @@
 //= require ../utilities
 //= require ../open_popup
 
-new scpr.adSizer()
+new scpr.adSizer();
 
 jQuery(document).ready(function() {
-  new scpr.BetterHomepage({el: $('.hp-content')})
+  require('svg4everybody')();
+  new scpr.BetterHomepage({el: $('.hp-content')});
 })
