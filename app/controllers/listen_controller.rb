@@ -24,14 +24,14 @@ class ListenController < ApplicationController
     elsif params.has_key?(:pledgeToken)
 
       pledge_token = params[:pledgeToken]
-      parse_user_query = Parse::Query.new("PfsUser")
+      parse_user_query = Farse::Query.new("PfsUser")
       parse_user_query.eq("pledgeToken", params[:pledgeToken])
       authorized_user = parse_user_query.get.first
 
       # redirect to flat page if we can't find a valid user
       return redirect_to '/listen_live/pledge-free/error' unless authorized_user.present?
 
-      authorized_user["viewsLeft"] = Parse::Increment.new(-1)
+      authorized_user["viewsLeft"] = Farse::Increment.new(-1)
       authorized_user.save
       if authorized_user["viewsLeft"] == 0
          authorized_user["pledgeToken"] = nil
