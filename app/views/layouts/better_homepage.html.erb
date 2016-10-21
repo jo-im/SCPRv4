@@ -16,9 +16,11 @@
   </head>
 
   <body class="">
-    <%= render partial: "layouts/better_homepage/header" %>
-    <%= yield %>
-    <%= render partial: "shared/footer/tracking_scripts" %>
-    <%= javascript_include_tag "better_homepage/style-guide", :async => true %>
+    <div class='l-page'>
+      <%= render partial: "layouts/better_homepage/header" %>
+      <%= yield %>
+      <%= render partial: "shared/footer/tracking_scripts" %>
+      <%= javascript_include_tag "better_homepage/style-guide", :async => true %>
+    </div>
   </body>
 </html>

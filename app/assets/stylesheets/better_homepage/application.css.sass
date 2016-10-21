@@ -274,6 +274,11 @@ footer.o-footer
 // LARGE SCREENS
 @media all and (min-width: $media-tablet)
 
+  .l-page
+    width: 100%
+    position: absolute
+    overflow-y: hidden
+
   // HACK
   .hp-story .story > .o-media__teaser
     width: 85%
@@ -311,7 +316,7 @@ footer.o-footer
       margin-left: $gutter
       margin-right: $gutter
 
-    $vertical-rail-height: 312.5rem
+    $vertical-rail-height: 8000px
     // The vertical rail height should be enough height to
     // encompass the right column but not exceed the height
     // of the center content.  The above number seems like

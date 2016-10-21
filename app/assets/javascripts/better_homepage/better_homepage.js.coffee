@@ -12,7 +12,7 @@ class scpr.BetterHomepage extends scpr.Framework
         left: win.scrollLeft()
       viewport.right = viewport.left + win.width()
       viewport.bottom = viewport.top + win.height()
-      bounds = @offset()
+      bounds = @offset() or {left: -99999, top: -99999}
       bounds.right = bounds.left + @outerWidth()
       bounds.bottom = bounds.top + @outerHeight()
       !(viewport.right < bounds.left or viewport.left > bounds.right or viewport.bottom < bounds.top or viewport.top > bounds.bottom)
