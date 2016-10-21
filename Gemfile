@@ -53,6 +53,7 @@ gem 'rubyzip', require: false
 gem 'pygments.rb'
 gem 'reverse_markdown', require: false
 gem 'htmlentities', require: false
+gem 'honeybadger', '~> 2.0'
 
 
 ## HTTP
