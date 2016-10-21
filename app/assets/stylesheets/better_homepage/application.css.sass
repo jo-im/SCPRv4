@@ -29,6 +29,11 @@
     display: inline-block
     height: 22px
     width: 150px
+  .o-header__logo-container
+    // For IE11 support
+    display: flex
+    justify-content: center
+    text-align: center
   .o-mast__logo-link
     float: initial
 
@@ -269,6 +274,11 @@ footer.o-footer
 // LARGE SCREENS
 @media all and (min-width: $media-tablet)
 
+  .l-page
+    width: 100%
+    position: absolute
+    overflow-y: hidden
+
   // HACK
   .hp-story .story > .o-media__teaser
     width: 85%
@@ -298,13 +308,19 @@ footer.o-footer
 
   .hp-content
     height: 100%
+    max-width: 100%
+    width: 100% - $gutter - $gutter
     position: absolute
 
     &.l-container
       margin-left: $gutter
       margin-right: $gutter
 
-    $vertical-rail-height: 312.5rem // this number is arbitrary
+    $vertical-rail-height: 8000px
+    // The vertical rail height should be enough height to
+    // encompass the right column but not exceed the height
+    // of the center content.  The above number seems like
+    // a good one.
     $left-rail-width: ($col * 3) + ($gutter / 2)
 
     .l-vertical-rail

@@ -38,6 +38,7 @@
     "query-string": "^4.2.2",
     "scpr-style-guide": "^2.2.0",
     "selectivizr": "= 1.0.3",
+    "svg4everybody": "^2.1.0",
     "swfobject": "= 2.2",
     "timeago": "= 1.5.1",
     "underscore": "^1.8.3",
