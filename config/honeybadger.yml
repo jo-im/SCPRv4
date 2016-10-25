@@ -1,2 +1,5 @@
 ---
 api_key: "<%= Rails.application.secrets.api['honeybadger']['api_key'] %>"
+exceptions:
+  ignore:
+    - !ruby/regexp '/SIGTERM$/'
