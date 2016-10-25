@@ -12,7 +12,7 @@
 new scpr.adSizer();
 
 jQuery(document).ready(function() {
-  require('svg4everybody')();
+  require('svgxuse');
   require('better_homepage/page-adjuster');
   new scpr.BetterHomepage({el: $('.hp-content')});
 })
