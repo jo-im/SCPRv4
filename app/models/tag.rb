@@ -47,6 +47,8 @@ class Tag < ActiveRecord::Base
       taggings.order("created_at DESC")
         .where(tagging_omissions)
         .limit(3).map(&:taggable).map(&:to_article)
+    else
+      []
     end
   end
 
