@@ -50,6 +50,7 @@ class BlogEntry < ActiveRecord::Base
 
   validates_presence_of :blog, if: :should_validate?
 
+  alias_attribute :public_datetime, :published_at
 
   scope :with_article_includes, ->() { includes(:blog,:category,:assets,:audio,:tags,:bylines,bylines:[:user]) }
 
