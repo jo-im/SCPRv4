@@ -1,5 +1,5 @@
 <input type="checkbox" class="state-checkbox" id="o-mast__search-toggler-checkbox" />
-<input type="checkbox" id="o-mast__menu-toggler-checkbox" />
+<input type="checkbox" class="state-checkbox" id="o-mast__menu-toggler-checkbox" />
 <div class="o-mast">
   <nav class="o-mast__nav">
     <div class="o-mast__branding">
@@ -27,11 +27,11 @@
     </div>
     <ul class="c-nav o-mast__nav-sections">
       <li class="c-nav__item c-nav__item--hover-highlight">
-        <a class="c-nav__link" href="/news">News</a>
-        <div class="c-nav__dropdown">
+        <a class="c-nav__link" href="#">News</a>
+        <div class="c-nav__dropdown text--small">
           <div class="l-container">
             <div class="l-row l-row--sm-between">
-              <div class="c-nav__section l-col--sm-6">
+              <div class="c-nav__section l-col--med-6 l-col--sm-12">
                 <h6 class="c-nav__section-heading">Covering SoCal</h6>
                 <ul class="c-list c-list--vert text-columns--sm-2 text-columns--med-3">
                   <li>
@@ -69,7 +69,7 @@
                   </li>
                 </ul>
               </div>
-              <div class="c-nav__section l-col--sm-4">
+              <div class="c-nav__section l-col--med-4 l-col--sm-12">
                 <h6 class="c-nav__section-heading">Categories</h6>
                 <ul class="c-list c-list--vert text-columns--sm-2">
                   <li>
@@ -101,7 +101,7 @@
                   </li>
                 </ul>
               </div>
-              <div class="c-nav__section l-col--sm-2">
+              <div class="c-nav__section l-col--med-2  l-col--sm-12">
                 <h6 class="c-nav__section-heading">More</h6>
                 <ul class="c-list c-list--vert">
                   <li>
@@ -117,8 +117,8 @@
         </div>
       </li>
       <li class="c-nav__item c-nav__item--hover-highlight">
-        <a class="c-nav__link" href="/programs">Programs</a>
-        <div class="c-nav__dropdown">
+        <a class="c-nav__link" href="#">Programs</a>
+        <div class="c-nav__dropdown text--small">
           <div class="l-container">
             <div class="l-row l-row--sm-between">
               <div class="c-nav__section l-col--sm-6">
@@ -156,8 +156,8 @@
         </div>
       </li>
       <li class="c-nav__item c-nav__item--hover-highlight">
-        <a class="c-nav__link" href="/events">Events</a>
-        <div class="c-nav__dropdown">
+        <a class="c-nav__link" href="#">Events</a>
+        <div class="c-nav__dropdown text--small">
           <div class="l-container">
             <div class="l-row l-row--sm-between">
               <div class="c-nav__section l-col--sm-6">
@@ -184,20 +184,24 @@
         </div>
       </li>
       <li class="c-nav__item c-nav__item--hover-highlight">
-        <a class="c-nav__link" href="/support">Support Us</a>
-        <div class="c-nav__dropdown">
+        <a class="c-nav__link" href="#">Support Us</a>
+        <div class="c-nav__dropdown text--small">
           <div class="l-container">
             <div class="l-row l-row--sm-between">
               <div class="c-nav__section l-col--sm-6">
                 <h6 class="c-nav__section-heading">Membership</h6>
-                <div class="l-row l-row--sm-vertical l-row--sm-between">
-                  <a href="https://scprcontribute.publicradio.org/contribute.php?refId=sustainers&_ga=1.214946964.2096948162.1473892732">
-                    <div class="l-col--sm-8 c-btn c-btn--outline-secondary">Become a Sustainer</div>
-                  </a>
-                  <a href="https://scprcontribute.publicradio.org/contribute.php?refId=onetime&_ga=1.214946964.2096948162.1473892732">
-                    <div class="l-col--sm-8 c-btn c-btn--outline-secondary">Become a Member</div>
-                  </a>
-                </div>
+                <ul class="c-list c-list--vert">
+                  <li>
+                    <a href="https://scprcontribute.publicradio.org/contribute.php?refId=sustainers&_ga=1.214946964.2096948162.1473892732">
+                      <div class="l-col--sm-8 c-btn c-btn--outline-secondary">Become a Sustainer</div>
+                    </a>
+                  </li>
+                  <li>
+                    <a href="https://scprcontribute.publicradio.org/contribute.php?refId=onetime&_ga=1.214946964.2096948162.1473892732">
+                      <div class="l-col--sm-8 c-btn c-btn--outline-secondary">Become a Member</div>
+                    </a>
+                  </li>
+                </ul>
               </div>
               <div class="c-nav__section l-col--sm-6">
                 <ul class="c-list c-list--vert">
@@ -218,8 +222,8 @@
       </li>
 
       <li class="c-nav__item c-nav__item--hover-highlight">
-        <a class="c-nav__link" href="/about">About Us</a>
-        <div class="c-nav__dropdown">
+        <a class="c-nav__link" href="#">About Us</a>
+        <div class="c-nav__dropdown text--small">
           <div class="l-container">
             <div class="l-row l-row--sm-between">
               <div class="c-nav__section l-col--sm-6">
@@ -277,7 +281,15 @@
     
     <ul class="c-nav o-mast__nav-actions">
       <li class="c-nav__item o-mast__search">
-        <div class="c-search">
+        <div class="c-search c-nav__link">
+          <label for="o-mast__search-toggler-checkbox" class="o-mast__search-link clickable" href="#">
+            <svg class="icon icon--search-open icon--size-med icon--size-med@mobile-tablet">
+              <use class="icon--line icon--color-gray" xlink:href="#icon_line-search"/>
+            </svg>
+            <svg class="icon icon--search-close icon--size-med icon--size-med@mobile-tablet">
+              <use class="icon--line icon--color-gray" xlink:href="#icon_line-close"/>
+            </svg>
+          </label>
           <form method="get" action="/search/" id="site-search">
             <input type="text" class=" input-text input--align-bottom input--focused-placeholder" placeholder="Enter your search here" name="q" id="q" />
             <button type="submit" class="c-btn c-btn--icon c-btn--outline-secondary">
@@ -287,16 +299,8 @@
             </button>
           </form>
         </div>
-        <label for="o-mast__search-toggler-checkbox" class="o-mast__search-link c-nav__link clickable" href="#">
-          <svg class="icon icon--search-open icon--size-med icon--size-med@mobile-tablet">
-            <use class="icon--line icon--color-gray" xlink:href="#icon_line-search"/>
-          </svg>
-          <svg class="icon icon--search-close icon--size-med icon--size-med@mobile-tablet">
-            <use class="icon--line icon--color-gray" xlink:href="#icon_line-close"/>
-          </svg>
-        </label>
       </li>
-      <li class="c-nav__item">
+      <li class="c-nav__item o-mast__donate">
         <a class="o-mast__donate-link c-nav__link c-nav__link--action" href="https://scprcontribute.publicradio.org/contribute.php?_ga=1.210106262.2096948162.1473892732">
           <svg class="icon icon--size-med icon--left">
             <use class="icon--line icon--color-link" xlink:href="#icon_line-donate"/>
@@ -304,14 +308,16 @@
           <span class="c-nav__item-caption">Donate</span>
         </a>
       </li>
-      <li class="c-nav__item">
+      <li class="c-nav__item o-mast__menu">
         <label class="c-nav__link o-mast__menu-toggler clickable" for="o-mast__menu-toggler-checkbox">
-          <span class="o-mast__menu-toggler-open">
-            <svg class="icon icon--size-med">
-              <use class="icon--line icon--color-gray-dark " xlink:href="#icon_line-menu"/>
-            </svg>
-            <span class="c-nav__item-caption">Menu</span>
-          </span>
+          <svg class="icon icon--size-lg o-mast__menu-icon--closed">
+            <use class="icon--line  icon--color-gray-dark " xlink:href="#icon_line-menu"/>
+          </svg>
+          <svg class="icon icon--size-sm o-mast__menu-icon--opened">
+            <use class="icon--line  icon--color-gray-dark " xlink:href="#icon_line-close"/>
+          </svg>
+          <span class="o-mast__menu-toggler-caption c-nav__item-caption o-mast__menu-toggler-caption--closed">Menu</span>
+          <span class="o-mast__menu-toggler-caption c-nav__item-caption o-mast__menu-toggler-caption--opened">Close</span>
         </label>
       </li>
     </ul>
