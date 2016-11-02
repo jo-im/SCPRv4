@@ -1,3 +1,18 @@
+<% cache ['better_homepage/broadcast_bar', @schedule_current] do %>
+  <% if @schedule_current.present? %>
+    <ul class="o-mast__currently-airing c-nav js-search--hide c-well c-well--info">
+      <li class="c-nav__item">
+        <%= link_to "javascript:void(0)", onclick: "open_popup('/listen_live/');", id: "listen-live", class: "o-mast__currently-airing-label c-nav__link c-nav__link--action c-nav__link--inline"  do %>
+          <svg class="icon icon--size-lg icon--size-lg@mobile-tablet icon--left">
+            <use class="icon--line icon--color-link" xlink:href="#icon_line-listen-live"/>
+          </svg>
+          Listen Live
+          <span class="o-mast__currently-airing-program">- <%= @schedule_current.title %></span>
+        <% end %>
+      </li>
+    </ul>
+  <% end %>
+<% end %>
 <%= render partial: 'better_homepage/feedback' %>
 <div class="hp-content l-container">
 

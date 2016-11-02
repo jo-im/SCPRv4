@@ -9,21 +9,6 @@
         </svg>
       </a>
       <h6 class="o-mast__branding-caption b-heading b-heading--h6 b-heading--light">Member-supported news for Southern California</h6>
-      <% cache ['better_homepage/broadcast_bar', @schedule_current] do %>
-        <% if @schedule_current.present? %>
-          <ul class="o-mast__currently-airing c-nav js-search--hide">
-            <li class="c-nav__item">
-              <%= link_to "javascript:void(0)", onclick: "open_popup('/listen_live/');", id: "listen-live", class: "o-mast__currently-airing-label c-nav__link c-nav__link--action c-nav__link--inline"  do %>
-                <svg class="icon icon--size-lg icon--size-lg@mobile-tablet icon--left">
-                  <use class="icon--line icon--color-link" xlink:href="#icon_line-listen-live"/>
-                </svg>
-                Listen Live
-                <span class="o-mast__currently-airing-program">- <%= @schedule_current.title %></span>
-              <% end %>
-            </li>
-          </ul>
-        <% end %>
-      <% end %>
     </div>
     <ul class="c-nav o-mast__nav-sections">
       <li class="c-nav__item c-nav__item--hover-highlight">
@@ -204,6 +189,7 @@
                 </ul>
               </div>
               <div class="c-nav__section l-col--sm-6">
+                <h6 class="c-nav__section-heading">&nbsp;</h6>
                 <ul class="c-list c-list--vert">
                   <li>
                     <a href="http://www.scpr.org/support/sustaining_memberships/">About sustaining membership</a>
