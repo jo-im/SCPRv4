@@ -40,13 +40,20 @@ class Tag < ActiveRecord::Base
     related_omissions = omit.map{|m| "(related_type NOT LIKE '#{m.class}' AND related_id <> #{m.id})"}.join(" AND ")
     tagging_omissions = omit.map{|m| "(taggable_type NOT LIKE '#{m.class}' AND taggable_id <> #{m.id})"}.join(" AND ")
     if outgoing_references.count > 3
-      outgoing_references.order("position ASC")
+      outgoing_references
+        .published
+        .order("position ASC")
         .where(related_omissions)
         .limit(3).map(&:related).map(&:to_article)
     elsif taggings.count > 3
-      taggings.order("created_at DESC")
+      taggings
+        .order("created_at DESC")
         .where(tagging_omissions)
-        .limit(3).map(&:taggable).map(&:to_article)
+        .limit(10)
+        .map(&:taggable)
+        .map(&:to_article)
+        .select{|a| a.try(:public_datetime)}
+        .first(3)
     else
       []
     end
