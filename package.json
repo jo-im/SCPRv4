@@ -36,7 +36,7 @@
     "pouchdb": "= 5.3.1",
     "pouchdb-upsert": "^2.0.0",
     "query-string": "^4.2.2",
-    "scpr-style-guide": "^2.2.0",
+    "scpr-style-guide": "^3.0.0",
     "selectivizr": "= 1.0.3",
     "svgxuse": "^1.1.22",
     "swfobject": "= 2.2",

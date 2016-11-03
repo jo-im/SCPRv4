@@ -89,6 +89,7 @@ aside.right
 
 .call-to-action
   @extend .o-media__meta
+  margin-bottom: 1rem
 
 section#content
   .story
@@ -178,14 +179,15 @@ footer.o-footer
     display: none
 
   .o-mast__currently-airing
-    position: absolute
+    // position: absolute
     // top: 3.36215rem
     top: 8.55rem // this one is to offset the feedback box at top on mobile
     width: 100%
     left: 0
     text-align: center
     padding-top: 0.25rem
-    height: 1.25rem
+    height: 2rem
+    box-sizing: border-box
 
   #o-mast__menu-toggler-checkbox:checked ~ .o-mast
     z-index: 99999
@@ -379,6 +381,9 @@ footer.o-footer
       display: none
     .buttons
       padding-bottom: 10px
+      @media (max-width: $media-mobile)
+        display: flex
+        justify-content: space-around
     @media (max-width: $media-tablet)
       position: inherit
       width: 100%
