@@ -20,3 +20,17 @@ observer.observe document.querySelector('html'), { attributes: true }
 observer = new MutationObserver pageAdjuster
 observer.observe document.querySelector('.dfp'), { childList: true }
 
+# Observe election results
+observer = new MutationObserver pageAdjuster
+
+$("#hero-election-2016").one 'DOMNodeInserted', ->
+  $("#hero-election-2016 iframe").on 'DOMSubtreeModified', ->
+    pageAdjuster()
+  # observer.observe document.querySelector('.hero-election-2016 iframe'),
+  #   childList: true
+  #   attributes: true
+  #   characterData: true
+  #   attributeOldValue: true
+  #   characterDataOldValue: true
+  #   attributeFilter: true
+  #   subtree: true
