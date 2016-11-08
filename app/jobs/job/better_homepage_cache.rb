@@ -6,6 +6,11 @@ module Job
 
       def perform
         homepage  = ::BetterHomepage.current.last
+        cache_contents homepage
+        cache_right_asides homepage
+      end
+    private
+      def cache_contents homepage
         @homepage = homepage
         return if !homepage
         key       = "better_homepage/contents"
@@ -13,7 +18,14 @@ module Job
         cached    = cacher.render partial: key
         cacher.send :write, key, cached
       end
-    private
+      def cache_right_asides homepage
+        @homepage = homepage
+        return if !homepage
+        key       = "better_homepage/right_asides"
+        cacher.rendering_controller.instance_variable_set(:@homepage, homepage)
+        cached    = cacher.render partial: key
+        cacher.send :write, key, cached        
+      end
       def latest_headlines homepage
         ignore_obj_keys = homepage.content
           .order("position ASC")

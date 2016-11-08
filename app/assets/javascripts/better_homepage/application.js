@@ -8,6 +8,7 @@
 //= require ../utilities
 //= require ../open_popup
 //= require better_homepage/html-collection-foreach-polyfill
+//= require ../election-results
 
 new scpr.adSizer();
 
