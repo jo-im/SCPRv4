@@ -41,7 +41,11 @@
                 <%= pij_source(article.original_object) %>
             </div><!--/ .prose-body -->
 
-            <%= render 'shared/widgets/short_list_subscribe' %>
+            <% if article.show.slug == "the-frame" %>
+              <%= render 'shared/widgets/the_frame_subscribe' %>
+            <% else %>
+              <%= render 'shared/widgets/short_list_subscribe' %>
+            <% end %>
 
             <%= render 'shared/cwidgets/related_links', content: article %>
 
