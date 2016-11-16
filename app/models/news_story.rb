@@ -62,6 +62,8 @@ class NewsStory < ActiveRecord::Base
 
   alias_attribute :public_datetime, :published_at
 
+  after_save :syndicate, if: -> { published? || publishing? }
+
   def needs_validation?
     self.pending? || self.published?
   end
@@ -83,6 +85,62 @@ class NewsStory < ActiveRecord::Base
     Array(self.news_agency)
   end
 
+  def syndicate
+    sqs = Aws::SQS::Client.new({
+      region: "us-west-1",
+      credentials: Aws::Credentials.new(Rails.application.secrets.empyrean["access_key_id"], Rails.application.secrets.empyrean["secret_access_key"])
+    })
+
+    response = sqs.send_message({
+      message_attributes: {
+        _id: {
+          data_type: "String",
+          string_value: obj_key
+        },
+        publisher: {
+          data_type: "String",
+          string_value: "scprv4"
+        },
+        adapters: {
+          data_type: "String",
+          string_value: "facebook"
+        },
+        method: {
+          data_type: "String",
+          string_value: "post"
+        },
+        sentAt: {
+          data_type: "String",
+          string_value: Time.zone.now.to_s
+        }
+      },
+      message_body: render_facebook, 
+      queue_url: Rails.application.secrets.empyrean["queue_url"]
+    })
+  end
+
+  class ContentRenderer < ActionView::Base
+    include ApplicationHelper
+    include InstantArticlesHelper
+    def initialize
+      super ActionController::Base.view_paths, {}, ActionController::Base.new
+    end
+    def render_for_facebook content
+      render(
+        partial: 'feeds/shared/instant_article_single', 
+        formats: ['html'],
+        layout: false, 
+        locals: {content: content}
+      ).gsub("\n", "")
+    end
+    def params
+      {} # ActionView expects this, but obviously it isn't useful in this context.
+    end
+  end
+
+  def render_facebook
+    ContentRenderer.new.render_for_facebook(self)
+  end
 
   def to_article
     related_content = to_article_called_more_than_twice? ? [] : self.related_content.map(&:to_reference)
