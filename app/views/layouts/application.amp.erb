@@ -35,13 +35,34 @@
             "request": "pageview",
             "vars": {
               "title": "<%= content_for :title %>",
-              "ampdocUrl": "<%= content_for :public_url %>?amp"
+              "ampdocUrl": "<%= content_for :public_url %>.amp"
             }
           }
         }
       }
       </script>      
     </amp-analytics>
+
+    <amp-analytics type="comscore" id="analytics2">
+      <script type="application/json">
+      {
+        "vars": {
+          "c2": "6035974"
+        },
+        "triggers": {
+          "trackPageview": {
+            "on": "visible",
+            "request": "pageview",
+            "vars": {
+              "title": "<%= content_for :title %>",
+              "ampdocUrl": "<%= content_for :public_url %>.amp"
+            }
+          }
+        }
+      }
+      </script>      
+    </amp-analytics>
+
     <%= render partial: "layouts/amp/masthead" %>
     <article>
       <%= yield %>
