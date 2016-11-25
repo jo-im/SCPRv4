@@ -20,7 +20,6 @@ class scpr.VisualCampaign
                 keys: _.keys(@queue).join(",")
 
             success: (data, textStatus, jqXHR) =>
-                debugger
                 for key, element of @queue
                     attributes = data["visual_campaigns"][key]
                     continue unless attributes
