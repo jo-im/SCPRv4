@@ -5,7 +5,7 @@
     <% tag.featured_content(omit).each do |feature| %>
       <div class="o-media o-media--horizontal o-media--sm">
         <div class="o-media__figure o-media__figure--four-by-three">
-          <img class="o-media__img" src="<%= feature.asset.asset.thumb.url %>">
+          <img class="o-media__img" src="<%= begin feature.asset.asset.thumb.url rescue '/static/images/fallback-img-square.png' end %>">
         </div>
         <h4>
           <%= link_to feature.title, feature.public_url %>
