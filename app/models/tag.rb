@@ -10,7 +10,11 @@ class Tag < ActiveRecord::Base
 
   has_many :taggings, dependent: :destroy
 
+  has_many :better_homepages, through: :taggings, source: :taggable, source_type: "BetterHomepage"
+
   belongs_to :parent, polymorphic: true
+
+  after_commit :update_better_homepage_cache, if: :on_current_homepage?
 
   TYPES = ["Beat", "Series", "Keyword"]
 
@@ -41,7 +45,6 @@ class Tag < ActiveRecord::Base
     tagging_omissions = omit.map{|m| "(taggable_type NOT LIKE '#{m.class}' AND taggable_id <> #{m.id})"}.join(" AND ")
     if outgoing_references.count > 3
       outgoing_references
-        .published
         .order("position ASC")
         .where(related_omissions)
         .limit(3).map(&:related).map(&:to_article)
@@ -57,6 +60,27 @@ class Tag < ActiveRecord::Base
     else
       []
     end
+  end
+
+  def update_better_homepage_cache
+    if homepage = homepage_if_on_current
+      homepage.touch
+    end
+  end
+
+  def on_current_homepage?
+    better_homepages.current.include? BetterHomepage.current.last
+  end
+
+  def homepage_if_on_current
+    homepage = BetterHomepage.current.last
+    if better_homepages.current.include? homepage
+      homepage
+    end
+  end
+
+  def _destroy_homepage_contents
+    self.homepage_contents.clear
   end
 
   class << self
