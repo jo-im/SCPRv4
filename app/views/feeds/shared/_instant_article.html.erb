@@ -30,6 +30,7 @@
         <footer>
           <small>&copy; 2016 Southern California Public Radio</small>
         </footer>
+        <%= render partial: "feeds/shared/instant_articles/tracking_scripts", locals: {title: content.headline} %>
       </article>
     </body>
   </html>
