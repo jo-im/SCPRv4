@@ -51,7 +51,7 @@ module HomepageHelper
     ignore_obj_keys = content
       .sort_by{|i| i.position}
       .first(2)
-      .map{|c| "#{c.class.to_s.underscore}-#{c.content_id}"}
+      .map{|c| c.content_id}
     # ^^^ Just doing a ruby sort here because we 
     # don't actually have anything to query against
     # when we are previewing a homepage.
