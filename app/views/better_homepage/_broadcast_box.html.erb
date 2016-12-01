@@ -3,7 +3,7 @@
   <div class="c-tile">
     <div class="c-tile--circular">
       <div class="c-image">
-        <img src="<%= schedule_current.program.podcast_tile %>" />
+        <img src="<%= (schedule_current.program || KpccProgram.new).try(:podcast_tile) %>" />
         <%= link_to "javascript:void(0)", onclick: "open_popup('/listen_live/');", id: "listen-live"  do %>
           <%= render file: "#{Rails.root}/public/static/images/listen-live-play.svg" %>
         <% end %>
