@@ -111,7 +111,7 @@ module HomepageHelper
       tile_path = "/program-tiles/#{program.slug}.jpg"
       if File.exist? File.expand_path "#{Rails.root}/public#{tile_path}"
         return tile_path
-      elsif program.try(:podcast) && podcast_tile_url = podcast.try(:image_url)
+      elsif podcast_tile_url = program.try(:podcast).try(:image_url)
         return podcast_tile_url
       end
     end
