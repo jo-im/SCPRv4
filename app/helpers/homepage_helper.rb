@@ -51,7 +51,7 @@ module HomepageHelper
     ignore_obj_keys = content
       .sort_by{|i| i.position}
       .first(2)
-      .map{|c| "#{c.class.to_s.underscore}-#{c.id}"}
+      .map{|c| c.content_id}
     # ^^^ Just doing a ruby sort here because we 
     # don't actually have anything to query against
     # when we are previewing a homepage.
@@ -104,6 +104,18 @@ module HomepageHelper
     @tags.length.times do
       yield
     end
+  end
+
+  def listen_live_tile schedule_occurrence
+    if program = schedule_occurrence.try(:program)
+      tile_path = "/program-tiles/#{program.slug}.jpg"
+      if File.exist? File.expand_path "#{Rails.root}/public#{tile_path}"
+        return tile_path
+      elsif program.try(:podcast) && podcast_tile_url = podcast.try(:image_url)
+        return podcast_tile_url
+      end
+    end
+    "/static/images/default-listen-live-tile.jpg" # Return the fallback tile if we don't break out of the method.
   end
 
 end

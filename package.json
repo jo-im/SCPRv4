@@ -31,6 +31,7 @@
     "moment": "~2.10.3",
     "moment-strftime": "= 0.1.5",
     "moment-twitter": "= 0.2.0",
+    "mutationobserver-shim": "^0.3.2",
     "najax": "^0.7.1",
     "normalize.css": "^4.1.1",
     "pouchdb": "= 5.3.1",

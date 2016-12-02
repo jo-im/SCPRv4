@@ -9,11 +9,17 @@
 //= require ../open_popup
 //= require better_homepage/html-collection-foreach-polyfill
 //= require ../election-results
+//= require ../visual_campaign
+//= require ../../../../node_modules/mutationobserver-shim/dist/mutationobserver.min
 
 new scpr.adSizer();
 
 jQuery(document).ready(function() {
+  history.navigationMode = 'compatible';
   require('svgxuse');
   require('better_homepage/page-adjuster');
   new scpr.BetterHomepage({el: $('.hp-content')});
-})
+  scpr.VisualCampaign.enqueue('pushdown-global', $('#global-pushdown'));
+  scpr.VisualCampaign.enqueue('pushdown-homepage', $('#homepage-pushdown'));
+  scpr.VisualCampaign.fetchQueue();
+});

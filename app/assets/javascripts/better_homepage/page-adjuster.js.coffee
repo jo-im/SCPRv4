@@ -8,6 +8,7 @@
 
 footerEl     = $('.o-footer')
 pageAdjuster = =>
+  $('.l-page').addClass('l-page--adjusted');
   $('.l-page').height footerEl.offset().top + footerEl.height() + parseInt($('.o-footer').css('padding-top'))
 
 $(window).on 'resize', pageAdjuster
@@ -23,9 +24,12 @@ observer.observe document.querySelector('.dfp'), { childList: true }
 # Observe election results
 observer = new MutationObserver pageAdjuster
 
-$("#hero-election-2016").one 'DOMNodeInserted', ->
-  $("#hero-election-2016 iframe").on 'DOMSubtreeModified', ->
-    pageAdjuster()
+pageAdjuster();
+
+## Just leaving this here for future reference.  Might save me a few minutes. :grin:
+# $("#hero-election-2016").one 'DOMNodeInserted', ->
+#   $("#hero-election-2016 iframe").on 'DOMSubtreeModified', ->
+#     pageAdjuster()
   # observer.observe document.querySelector('.hero-election-2016 iframe'),
   #   childList: true
   #   attributes: true
