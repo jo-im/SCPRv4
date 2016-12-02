@@ -24,7 +24,7 @@ observer.observe document.querySelector('.dfp'), { childList: true }
 # Observe election results
 observer = new MutationObserver pageAdjuster
 
-pageAdjsuter();
+pageAdjuster();
 
 ## Just leaving this here for future reference.  Might save me a few minutes. :grin:
 # $("#hero-election-2016").one 'DOMNodeInserted', ->
