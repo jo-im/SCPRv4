@@ -107,11 +107,11 @@ module HomepageHelper
   end
 
   def listen_live_tile schedule_occurrence
-    if program = schedule_occurrence.program
+    if program = schedule_occurrence.try(:program)
       tile_path = "/program-tiles/#{program.slug}.jpg"
       if File.exist? File.expand_path "#{Rails.root}/public#{tile_path}"
         return tile_path
-      elsif program.podcast && podcast_tile_url = podcast.try(:image_url)
+      elsif program.try(:podcast) && podcast_tile_url = podcast.try(:image_url)
         return podcast_tile_url
       end
     end
