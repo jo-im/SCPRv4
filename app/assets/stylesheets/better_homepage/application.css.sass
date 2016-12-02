@@ -21,9 +21,11 @@
   @media (max-width: $media-wide)
     margin-bottom: 0
 
-  .support-section .c-nav__section
+  .c-nav__section
     @media (min-width: $media-tablet)
       margin-right: $gutter
+
+
 
   li.social-links
     height: 20px
@@ -296,7 +298,8 @@ footer.o-footer
   .l-page
     width: 100%
     position: absolute
-    overflow-y: hidden
+    &--adjusted
+      overflow-y: hidden
 
   // HACK
   .hp-story .story > .o-media__teaser
