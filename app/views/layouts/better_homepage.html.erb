@@ -17,6 +17,11 @@
 
   <body onunload="console.log()">
     <div class='l-page'>
+      <% if alert = BreakingNewsAlert.latest_visible_alert %>
+        <%= cache ["breaking_alert",alert] do %>
+          <%= render "breaking_news/breaking_news_alert", alert:alert %>
+        <% end %>
+      <% end %>
       <div id="global-pushdown"></div>
       <div id="homepage-pushdown"></div>
       <%= render partial: "layouts/better_homepage/header" %>
