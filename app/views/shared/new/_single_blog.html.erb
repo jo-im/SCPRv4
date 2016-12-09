@@ -43,6 +43,12 @@
 
             <%= raw Cache.read("views/popular/#{@entry.blog.slug}") %>
 
+            <% if article.try(:show).try(:slug) == "the-frame" %>
+              <%= render 'shared/widgets/the_frame_subscribe' %>
+            <% else %>
+              <%= render 'shared/widgets/short_list_subscribe' %>
+            <% end %>
+
             <%= render 'shared/widgets/short_list_subscribe' %>
 
             <%= render 'shared/cwidgets/related_links', content: article %>

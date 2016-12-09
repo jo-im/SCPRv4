@@ -4,44 +4,15 @@ Scprv4::Application.routes.draw do
   # Homepage
   # get '/' => 'home#index', constraints: lambda { |request| !request.cookie_jar[:beta_opt_in]}, as: :root
   # get '/' => 'better_homepage#index', constraints: lambda { |request| request.cookie_jar[:beta_opt_in]}
-  get '/' => 'home#index', as: :root
-  get '/beta-homepage' => 'better_homepage#index', as: :beta_homepage
+  get '/' => 'better_homepage#index', as: :root
+  get '/beta-homepage', to: redirect("/"), as: :beta_homepage
   get '/homepage/:id/missed-it-content/' => 'home#missed_it_content', as: :homepage_missed_it_content
-  get '/beta-opt-in' => 'better_homepage#opt_in'
-  get '/beta-opt-out' => 'better_homepage#opt_out'
-
 
   # Listen Live
   get '/listen_live/' => 'listen#index', as: :listen
   get '/listen_live/pledge-free' => 'listen#pledge_free_stream', as: :listen_pledge_free
   get '/listen_live/pledge-free/off-air' => 'listen#pledge_free_off_air', as: :listen_pledge_free_off_air
   get '/listen_live/pledge-free/error' => 'listen#pledge_free_error', as: :listen_pledge_free_error
-
-  # Hard Redirects
-  # Any time we need to redirect very specific URLS
-  # they can go here.
-  get "/programs/take-two/2016/09/28/52409/companies-focus-diversity-training-on-white-men/" ,    to: redirect("/programs/take-two/2016/09/28/52373/companies-focus-diversity-training-on-white-men/")
-  get "/programs/airtalk/2016/09/28/52418/weighing-severity-of-sec-kerrys-ultimatum-to-russi/" ,  to: redirect("/programs/airtalk/2016/09/28/52380/weighing-severity-of-sec-kerrys-ultimatum-to-russi/")
-  get "/programs/airtalk/2016/09/28/52412/on-trumpterruptions-mansplaining-and-gender-lingui/" ,  to: redirect("/programs/airtalk/2016/09/28/52383/on-trumpterruptions-mansplaining-and-gender-lingui/")
-  get "/programs/take-two/2016/09/28/52415/lost-champions-four-men-two-teams-and-the-breaking/" , to: redirect("/programs/take-two/2016/09/28/52388/lost-champions-four-men-two-teams-and-the-breaking/")
-  get "/news/2016/09/28/65211/these-women-discovered-it-wasn-t-just-fat-it-was-l/" ,              to: redirect("/news/2016/09/28/65215/these-women-discovered-it-wasn-t-just-fat-it-was-l/")
-  get "/news/2016/09/28/65209/hear-something-say-something-navigating-the-world/" ,               to: redirect("/news/2016/09/28/65216/hear-something-say-something-navigating-the-world/")
-  get "/news/2016/09/28/65205/shimon-peres-the-last-of-israel-s-founding-leaders/" ,              to: redirect("/news/2016/09/28/65218/shimon-peres-the-last-of-israel-s-founding-leaders/")
-  get "/blogs/health/2016/09/28/18191/prop-61-the-drug-pricing-initiative-explained/" ,           to: redirect("/blogs/health/2016/09/28/18190/prop-61-the-drug-pricing-initiative-explained/")
-  get "/news/2016/09/28/65197/following-jail-suicide-lapd-says-it-s-taking-bette/" ,              to: redirect("/news/2016/09/28/65210/following-jail-suicide-lapd-says-it-s-taking-bette/")
-  get "/news/2016/09/27/65193/lao-recommends-ending-college-grant-program-for-ca/" ,              to: redirect("/news/2016/09/27/65165/lao-recommends-ending-college-grant-program-for-ca/")
-  get "/news/2016/09/27/65195/la-mayor-eric-garcetti-trump-s-third-world-comment/" ,              to: redirect("/news/2016/09/27/65172/la-mayor-eric-garcetti-trumps-third-world-comments/")
-  get "/news/2016/09/27/65185/gov-brown-signs-into-law-the-right-to-try-experime/" ,              to: redirect("/news/2016/09/27/65184/gov-brown-signs-into-law-the-right-to-try-experime/")
-  get "/news/2016/09/27/65183/how-will-small-growers-stay-competitive-if-califor/" ,              to: redirect("/news/2016/09/27/65191/how-will-small-marijuana-growers-stay-competitive/")
-  get "/news/2016/09/27/65173/teaching-middle-schoolers-climate-change-without-t/" ,              to: redirect("/news/2016/09/27/65199/teaching-middle-schoolers-climate-change-without-t/")
-  get "/programs/take-two/2016/09/27/52393/california-s-new-voter-registration-system-is-onli/" , to: redirect("/programs/take-two/2016/09/27/52397/california-s-new-voter-registration-system-is-onli/")
-  get "/programs/take-two/2016/09/27/52400/tuesday-reviewsday-latin-grammy-nominee-recap/" ,      to: redirect("/programs/take-two/2016/09/27/52399/tuesday-reviewsday-latin-grammy-nominee-recap/")
-  get "/news/2016/09/27/65166/2-charged-in-murder-of-couple-couple-s-friend-in-f/" ,              to: redirect("/news/2016/09/27/65203/2-charged-in-murder-of-fullerton-couple-and-their/")
-  get "/programs/airtalk/2016/09/27/52381/analysis-what-mattered-most-to-voters-in-the-trump/" ,  to: redirect("/programs/airtalk/2016/09/27/52401/analysis-what-mattered-most-to-voters-in-the-trump/")
-  get "/news/2016/09/27/65159/loma-fire-norcal-mountain-communities-evacuated-as/" ,              to: redirect("/news/2016/09/27/65204/loma-fire-norcal-mountain-communities-evacuated-as/")
-  get "/news/2016/09/27/65151/how-california-s-issues-played-out-in-the-presiden/" ,              to: redirect("/news/2016/09/27/65206/how-california-s-issues-played-out-in-the-presiden/")
-  get "/news/2016/09/27/65120/irvine-unified-gets-surprise-20-million-for-arts-a/" ,              to: redirect("/news/2016/09/27/65208/irvine-unified-gets-surprise-20-million-for-arts-a/")
-
 
   # Sections
   get '/category/carousel-content/:object_class/:id' => 'category#carousel_content',  as: :category_carousel, defaults: { format: :js }

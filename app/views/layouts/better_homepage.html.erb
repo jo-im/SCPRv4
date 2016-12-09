@@ -15,8 +15,16 @@
     <%= render partial: "shared/header/ad_scripts" %>
   </head>
 
-  <body class="">
+  <body onunload="console.log()">
     <div class='l-page'>
+      <!-- figure out a better place to put this later -->
+      <% if alert = BreakingNewsAlert.latest_visible_alert %>
+        <%= cache ["breaking_alert",alert] do %>
+          <%= render "breaking_news/breaking_news_alert", alert:alert %>
+        <% end %>
+      <% end %>
+      <div id="global-pushdown"></div>
+      <div id="homepage-pushdown"></div>
       <%= render partial: "layouts/better_homepage/header" %>
       <%= yield %>
       <%= render partial: "shared/footer/tracking_scripts" %>

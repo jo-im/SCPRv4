@@ -1,0 +1,58 @@
+.live-update {
+    background-color:$color-gray-dark;
+    border-bottom:1px solid $color-gray-light;
+    border-top:1px solid $color-gray-light;
+    color:$color-black;
+    // @include font-headline();
+    font-size:18px;
+    font-weight:600;
+    vertical-align:text-bottom;
+    .inner-container {
+        padding:6px 6px;
+        a {
+            color:$color-white;
+            display:inline-block;
+            max-width:800px;
+        }
+        strong {
+            background-color:$color-gray;
+            // @include border-radius(4px);
+            // @include ie-inline-block();
+            // @include font-heading(600, 13px);
+            color:$color-white;
+            margin:2px 8px 2px 0;
+            padding:3px 6px;
+            text-shadow:0 1px 0 rgba(0,0,0,0.35);
+            text-transform:uppercase;
+            vertical-align:top;
+        }
+        .newsletter-sign-up {
+          background:image-url('icons/newsletter-subscribe-white.png') no-repeat 4px 3px;
+          // @include font-heading();
+          display:inline-block;
+          float:right;
+          font-size:13px;
+          font-weight:600;
+          margin-top:2px;
+          padding:3px 0 3px 28px;
+        }
+    }
+    &.break {
+        border-top:3px solid #bf0a0a;
+        strong {
+            background-color:#bf0a0a;
+        }
+    }
+    &.now {
+        border-top:3px solid #f37a00;
+        strong {
+            background-color:#f37a00;
+        }
+    }
+    &.audio {
+        border-top:3px solid #00b9f3;
+        strong {
+            background-color:#00b9f3;
+        }
+    }
+}
