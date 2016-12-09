@@ -89,7 +89,7 @@ class NewsStory < ActiveRecord::Base
     sqs = Aws::SQS::Client.new({
       region: "us-west-1",
       credentials: Aws::Credentials.new(Rails.application.secrets.empyrean["access_key_id"], Rails.application.secrets.empyrean["secret_access_key"])
-    })
+    });
 
     response = sqs.send_message({
       message_attributes: {
@@ -101,7 +101,7 @@ class NewsStory < ActiveRecord::Base
           data_type: "String",
           string_value: "scprv4"
         },
-        adapters: {
+        adapter: {
           data_type: "String",
           string_value: "facebook"
         },
@@ -109,14 +109,33 @@ class NewsStory < ActiveRecord::Base
           data_type: "String",
           string_value: "post"
         },
-        sentAt: {
+        channel: {
           data_type: "String",
-          string_value: Time.zone.now.to_s
+          string_value: "1218940351526100"
+        },
+        castType: {
+          data_type: "String",
+          string_value: "instant-article"
         }
       },
-      message_body: render_facebook, 
+      message_body: grand_central_article,
       queue_url: Rails.application.secrets.empyrean["queue_url"]
     })
+  end
+
+  def grand_central_article
+    {
+      _id: obj_key,
+      type: "news-story",
+      title: headline,
+      shortTitle: short_headline,
+      teaser: teaser,
+      body: body,
+      abstract: abstract,
+      source: "scpr.org",
+      publishedAt: published_at,
+      byline: "grandcentral-test"
+    }.to_json
   end
 
   class ContentRenderer < ActionView::Base
