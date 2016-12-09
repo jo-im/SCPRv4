@@ -162,7 +162,7 @@ class Edition < ActiveRecord::Base
     send "#{email_type}_email_sent"
   end
 
-  private
+
 
   # We can't use `publishing?` here because this gets checked in
   # a background worker.
@@ -177,6 +177,8 @@ class Edition < ActiveRecord::Base
   def should_send_email?
     should_send_shortlist_email? || should_send_monday_email?
   end
+
+  private
 
   def build_slot_association(slot_hash, item)
     if item.published?
