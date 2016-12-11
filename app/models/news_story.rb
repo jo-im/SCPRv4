@@ -124,6 +124,7 @@ class NewsStory < ActiveRecord::Base
   end
 
   def grand_central_article
+
     {
       _id: obj_key,
       type: "news-story",
@@ -135,6 +136,14 @@ class NewsStory < ActiveRecord::Base
         href: public_url,
         type: "text/html"
       },
+      assets: [
+        {
+          title: asset.try(:title),
+          description: asset.try(:description),
+          href: asset.try(:full).try(:url),
+          type: "image/jpeg"
+        }
+      ],
       body: body,
       abstract: abstract,
       source: "scpr.org",
