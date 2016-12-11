@@ -111,7 +111,7 @@ class NewsStory < ActiveRecord::Base
         },
         channel: {
           data_type: "String",
-          string_value: "1218940351526100"
+          string_value: "1033729520070511"
         },
         castType: {
           data_type: "String",
@@ -130,10 +130,16 @@ class NewsStory < ActiveRecord::Base
       title: headline,
       shortTitle: short_headline,
       teaser: teaser,
+      link: {
+        title: headline,
+        href: public_url,
+        type: "text/html"
+      },
       body: body,
       abstract: abstract,
       source: "scpr.org",
-      publishedAt: published_at,
+      publishedAt: published_at.iso8601,
+      updatedAt: updated_at.iso8601,
       byline: "grandcentral-test"
     }.to_json
   end
@@ -190,7 +196,6 @@ class NewsStory < ActiveRecord::Base
       :abstract           => self.abstract
     })
   end
-
 
   def to_abstract
     @to_abstract ||= Abstract.new({
