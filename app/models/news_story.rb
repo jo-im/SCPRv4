@@ -139,7 +139,7 @@ class NewsStory < ActiveRecord::Base
       assets: [
         {
           title: asset.try(:title),
-          description: asset.try(:description),
+          description: asset.try(:description) || asset.try(:title) || "An asset.",
           href: asset.try(:full).try(:url),
           type: "image/jpeg"
         }
