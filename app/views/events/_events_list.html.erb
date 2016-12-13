@@ -1,9 +1,13 @@
 <% title ||= "" %>
 <% cssClass ||= "" %>
 <% direction ||= :asc %>
-
 <h2><%= title %></h2>
-<%= any_to_list? events, title: title do %>
+<% if params["list"] == "kpcc-in-person" %>
+  <% message = "We'll have more KPCC In Person events scheduled soon. Subscribe to our newsletter and get notified about the next one, straight from your inbox!" %>
+<% else %>
+  <% message = "We'll have more events scheduled soon. Subscribe to our newsletter and get notified about the next one, straight from your inbox!" %>
+<% end %>
+<%= any_to_list? events, title: title, message: message do %>
 <section class="events-list <%= cssClass %>">
 
 <% Event.sorted(events, direction).each do |event| %>
@@ -20,7 +24,6 @@
         <% else %>
           <div class="span24">
         <% end %>
-
 
           <div class="event-details">
             <div class="row-fluid">
@@ -47,3 +50,5 @@
 </section>
 <% end %>
 <%= paginate events %>
+<hr />
+<%= render partial: "shared/widgets/events_subscribe", locals: {klass: "events-newsletter-centered"} %>
