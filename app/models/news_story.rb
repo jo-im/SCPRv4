@@ -66,7 +66,7 @@ class NewsStory < ActiveRecord::Base
 
   after_update :put, if: -> { published? }
 
-  after_delete :yank, if: -> { published? } 
+  after_destroy :yank, if: -> { published? } 
 
   def needs_validation?
     self.pending? || self.published?
