@@ -62,7 +62,11 @@ class NewsStory < ActiveRecord::Base
 
   alias_attribute :public_datetime, :published_at
 
-  after_save :syndicate, if: -> { published? || publishing? }
+  after_create :post, if: -> { published? || publishing? }
+
+  after_update :put, if: -> { published? }
+
+  after_delete :yank, if: -> { published? } 
 
   def needs_validation?
     self.pending? || self.published?
@@ -85,7 +89,7 @@ class NewsStory < ActiveRecord::Base
     Array(self.news_agency)
   end
 
-  def syndicate
+  def post
     sqs = Aws::SQS::Client.new({
       region: "us-west-1",
       credentials: Aws::Credentials.new(Rails.application.secrets.empyrean["access_key_id"], Rails.application.secrets.empyrean["secret_access_key"])
@@ -155,7 +159,153 @@ class NewsStory < ActiveRecord::Base
       queue_url: Rails.application.secrets.empyrean["queue_url"]
     }
 
-    [sqs.send_message(apple_message)]
+    [sqs.send_message(facebook_message), sqs.send_message(apple_message)]
+  end
+
+  def put
+    sqs = Aws::SQS::Client.new({
+      region: "us-west-1",
+      credentials: Aws::Credentials.new(Rails.application.secrets.empyrean["access_key_id"], Rails.application.secrets.empyrean["secret_access_key"])
+    });
+
+    message_body = grand_central_article
+
+    facebook_message = {
+      message_attributes: {
+        _id: {
+          data_type: "String",
+          string_value: obj_key
+        },
+        publisher: {
+          data_type: "String",
+          string_value: "scprv4"
+        },
+        adapter: {
+          data_type: "String",
+          string_value: "facebook"
+        },
+        method: {
+          data_type: "String",
+          string_value: "post"
+        },
+        channel: {
+          data_type: "String",
+          string_value: "1033729520070511"
+        },
+        castType: {
+          data_type: "String",
+          string_value: "instant-article"
+        }
+      },
+      message_body: message_body,
+      queue_url: Rails.application.secrets.empyrean["queue_url"]
+    }
+
+    apple_message = {
+      message_attributes: {
+        _id: {
+          data_type: "String",
+          string_value: obj_key
+        },
+        publisher: {
+          data_type: "String",
+          string_value: "scprv4"
+        },
+        adapter: {
+          data_type: "String",
+          string_value: "apple-news"
+        },
+        method: {
+          data_type: "String",
+          string_value: "put"
+        },
+        channel: {
+          data_type: "String",
+          string_value: Rails.application.secrets.api["apple_news"]["channels"]["kpcc"]["id"]
+        },
+        castType: {
+          data_type: "String",
+          string_value: "news-story"
+        }
+      },
+      message_body: message_body,
+      queue_url: Rails.application.secrets.empyrean["queue_url"]
+    }
+
+    [sqs.send_message(facebook_message), sqs.send_message(apple_message)]
+  end
+
+  def yank
+    sqs = Aws::SQS::Client.new({
+      region: "us-west-1",
+      credentials: Aws::Credentials.new(Rails.application.secrets.empyrean["access_key_id"], Rails.application.secrets.empyrean["secret_access_key"])
+    });
+
+    message_body = grand_central_article
+
+    facebook_message = {
+      message_attributes: {
+        _id: {
+          data_type: "String",
+          string_value: obj_key
+        },
+        publisher: {
+          data_type: "String",
+          string_value: "scprv4"
+        },
+        adapter: {
+          data_type: "String",
+          string_value: "facebook"
+        },
+        method: {
+          data_type: "String",
+          string_value: "delete"
+        },
+        channel: {
+          data_type: "String",
+          string_value: "1033729520070511"
+        },
+        castType: {
+          data_type: "String",
+          string_value: "instant-article"
+        }
+      },
+      message_body: "{}",
+      queue_url: Rails.application.secrets.empyrean["queue_url"]
+    }
+
+    apple_message = {
+      message_attributes: {
+        _id: {
+          data_type: "String",
+          string_value: obj_key
+        },
+        publisher: {
+          data_type: "String",
+          string_value: "scprv4"
+        },
+        adapter: {
+          data_type: "String",
+          string_value: "apple-news"
+        },
+        method: {
+          data_type: "String",
+          string_value: "delete"
+        },
+        channel: {
+          data_type: "String",
+          string_value: Rails.application.secrets.api["apple_news"]["channels"]["kpcc"]["id"]
+        },
+        castType: {
+          data_type: "String",
+          string_value: "news-story"
+        }
+      },
+      message_body: "{}",
+      queue_url: Rails.application.secrets.empyrean["queue_url"]
+    }
+
+    [sqs.send_message(facebook_message), sqs.send_message(apple_message)]
   end
 
   def grand_central_article
