@@ -91,7 +91,9 @@ class NewsStory < ActiveRecord::Base
       credentials: Aws::Credentials.new(Rails.application.secrets.empyrean["access_key_id"], Rails.application.secrets.empyrean["secret_access_key"])
     });
 
-    response = sqs.send_message({
+    message_body = grand_central_article
+
+    facebook_message = {
       message_attributes: {
         _id: {
           data_type: "String",
@@ -118,9 +120,42 @@ class NewsStory < ActiveRecord::Base
           string_value: "instant-article"
         }
       },
-      message_body: grand_central_article,
+      message_body: message_body,
       queue_url: Rails.application.secrets.empyrean["queue_url"]
-    })
+    }
+
+    apple_message = {
+      message_attributes: {
+        _id: {
+          data_type: "String",
+          string_value: obj_key
+        },
+        publisher: {
+          data_type: "String",
+          string_value: "scprv4"
+        },
+        adapter: {
+          data_type: "String",
+          string_value: "apple-news"
+        },
+        method: {
+          data_type: "String",
+          string_value: "post"
+        },
+        channel: {
+          data_type: "String",
+          string_value: Rails.application.secrets.api["apple_news"]["channels"]["kpcc"]["id"]
+        },
+        castType: {
+          data_type: "String",
+          string_value: "news-story"
+        }
+      },
+      message_body: message_body,
+      queue_url: Rails.application.secrets.empyrean["queue_url"]
+    }
+
+    [sqs.send_message(apple_message)]
   end
 
   def grand_central_article
