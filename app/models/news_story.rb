@@ -172,8 +172,8 @@ class NewsStory < ActiveRecord::Base
       },
       assets: [
         {
-          title: asset.try(:title),
-          description: asset.try(:description) || asset.try(:title) || "An asset.",
+          title: asset.try(:title) || "An asset.",
+          description: asset.try(:description),
           href: asset.try(:full).try(:url),
           type: "image/jpeg"
         }.delete_if{|k, v| v.nil?}
