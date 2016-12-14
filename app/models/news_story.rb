@@ -159,7 +159,6 @@ class NewsStory < ActiveRecord::Base
   end
 
   def grand_central_article
-
     {
       _id: obj_key,
       type: "news-story",
@@ -177,7 +176,7 @@ class NewsStory < ActiveRecord::Base
           description: asset.try(:description) || asset.try(:title) || "An asset.",
           href: asset.try(:full).try(:url),
           type: "image/jpeg"
-        }
+        }.delete_if{|k, v| v.nil?}
       ],
       body: body,
       abstract: abstract,
