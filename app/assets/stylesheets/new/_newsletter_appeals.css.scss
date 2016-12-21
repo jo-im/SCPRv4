@@ -161,7 +161,7 @@
 a.appeal-link {
     @extend .appeal-submit;
     box-sizing: border-box;
-    color: white !important;
+    color: white !important; // hrm
     display: inline-block;
     line-height: 40px;
     vertical-align: bottom;
@@ -169,4 +169,44 @@ a.appeal-link {
     width: initial;
     padding-left: 15px;
     padding-right: 15px;
+}
+
+.segment .appeal-content h3.appeal-heading.appeal-heading-adaptive {
+    // display: inline-table;
+    font-size: 2.0rem;
+    span {
+        white-space: nowrap;
+    }
+    @media (max-width: 1294px) {
+        display: inline-table;
+        transform: scale(0.9, 0.9) translateX(-6%);
+    }
+    @media (max-width: 1232px) {
+        display: inline-table;
+        transform: scale(0.8, 0.8) translateX(-9%);
+    }
+    @media (max-width: 1109px) {
+        display: inline-table;
+        transform: scale(0.8, 0.8) translateX(-3.5%);
+    }
+    @media (max-width: 870px) {
+        display: inline-table;
+        transform: scale(0.8, 0.8) translateX(0%);
+    }
+    @media (max-width: 562px) {
+        display: inline-table;
+        transform: scale(0.7, 0.7) translateX(-16%);
+    }
+    @media (max-width: 488px) {
+        // display: inline-table;
+        transform: scale(0.6, 0.6) translateX(-27%);
+    }
+
+}
+
+.appeal-newsletter.donate-cta.ancillary {
+    .appeal-heading, .bound {
+        // padding: 0;
+        // margin: 0;
+    }
 }
