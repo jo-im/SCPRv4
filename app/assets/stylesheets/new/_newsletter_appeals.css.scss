@@ -157,3 +157,13 @@
         margin: 14px 0 0;
     }
 }
+
+a.appeal-link {
+    @extend .appeal-submit;
+    box-sizing: border-box;
+    color: white !important;
+    display: inline-block;
+    line-height: 40px;
+    vertical-align: bottom;
+    text-align: center;
+}
