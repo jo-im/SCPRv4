@@ -1,6 +1,11 @@
 @import 'scpr-style-guide/src/css/main.scss'
 @import 'better_homepage/breaking-news-dropdown'
 @import 'hidden-gem'
+@import 'three-columns'
+
+.hp-content
+  +columns-single
+  +columns-three($media-tablet,  16%,60%,24%)
 
 .c-ad
   text-align:center
@@ -19,23 +24,14 @@
     // This keeps buttons from messing up their size on smaller screens.
     // Consider this as part of an effort to canonicalize a way to make
     // certain texts adaptive.
-    // @media(max-width: $media-tablet)
-    //   font-size: 3vw
     font-size: 1vw
     @media only screen and (max-width: $media-desktop)
       font-size: 1.5vw
     @media only screen and (max-width: 895px)
       font-size: 2vw
-    // @media only screen and (max-width: 544px)
-    //   font-size: 2vw
     @media only screen and (max-width: 570px)
       font-size: 3vw
-    // @media(min-width: $media-desktop)
-    //   font-size: 1vw
-    // @media(max-width: $media-tablet)
-    //   font-size: 2vw
-    // @media(max-width: $media-desktop)
-    //   font-size: 1vw
+
 
 .o-mast
   // For some reason, the masthead creates a
@@ -198,12 +194,12 @@ footer.o-footer
   content: ''
   background-color: $color-primary-alt
 
-// .o-media--lg
-//   .o-media__teaser
-//     column-count: 2
 
 [class*='o-media__figure--'] .o-media__img
   min-width: 100%
+
+
+
 
 
 
@@ -247,14 +243,6 @@ footer.o-footer
   .c-nav__dropdown
     font-size: 0.78125rem
 
-
-  article.hp-story, aside.right, aside.left
-    &.l-col--sm-12
-      width: 100%
-    > *
-      padding-left: $gutter
-      padding-right: $gutter
-
   article.hp-story
     margin-bottom: 2.25rem / 2
     padding-bottom: 2.25rem
@@ -269,8 +257,7 @@ footer.o-footer
       padding: 0
       > .o-media__figure
         left: -0.005rem // unclear why there's space on the left so I have to negate it.
-        // padding: 0
-        // margin-left: -$gutter
+
       > *
         padding-left: $gutter
         padding-right: $gutter
@@ -297,7 +284,6 @@ footer.o-footer
       background-color: initial
 
     #dfp-slot_a
-      // margin-top: 3.125rem
       iframe
         margin: 0 auto
         display: inherit
@@ -309,13 +295,6 @@ footer.o-footer
     display: none
 
 
-  .l-hp--bottom
-    width: 100%
-    order: 2000 // we are never going to have that many main items
-    // so this quarantees that it stays at the bottom of the document
-
-
-
 
 
 
@@ -324,11 +303,23 @@ footer.o-footer
 // LARGE SCREENS
 @media all and (min-width: $media-tablet)
 
-  .l-page
-    width: 100%
-    position: absolute
-    &--adjusted
-      overflow-y: hidden
+  .o-header
+    box-sizing: border-box
+    padding-left: $gutter
+    padding-right: $gutter
+
+  .hp-content
+    box-sizing: border-box
+    padding-left: $gutter
+    padding-right: $gutter
+    .left
+      padding-right: $gutter / 2
+    .center
+      padding-left: $gutter / 2
+      padding-right: $gutter / 2
+    .right
+      padding-left: $gutter / 2
+
 
   // HACK
   .hp-story .story > .o-media__teaser
@@ -358,35 +349,6 @@ footer.o-footer
       display: none
 
   .hp-content
-    height: 100%
-    max-width: 100%
-    width: 100% - $gutter - $gutter
-    position: absolute
-
-    &.l-container
-      margin-left: $gutter
-      margin-right: $gutter
-
-    $vertical-rail-height: 8000px
-    // The vertical rail height should be enough height to
-    // encompass the right column but not exceed the height
-    // of the center content.  The above number seems like
-    // a good one.
-    $left-rail-width: ($col * 3) + ($gutter / 2)
-
-    .l-vertical-rail
-      float: left
-      height: $vertical-rail-height
-      margin-left: $left-rail-width
-
-    aside.left
-      position: absolute
-      // max-width: 15.08296%
-
-    .center
-      float: left
-      margin-left: $left-rail-width
-      transform: translateY(-$vertical-rail-height)
 
     .hp-story
       border-bottom: 2px solid $color-gray-light
@@ -398,19 +360,11 @@ footer.o-footer
           margin-bottom: 1rem
 
     aside.right
-      float: right
       overflow-x: hidden
       margin-bottom: 3.75rem
 
 
-    .l-hp--bottom
-      @extend .center
-      margin-left: -$gutter
-      // add width equal to the two side gutters plus the size of the sidebar
-      width: (100% + ($gutter * 2)) + ($gutter / 3)
 
-      .c-gem
-        width: 100% + $gutter + $gutter
 
 
 #feedback
