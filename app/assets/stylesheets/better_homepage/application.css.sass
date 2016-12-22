@@ -13,7 +13,30 @@
 .c-nav__dropdown
   box-sizing: border-box
   width: 100%
-  
+
+  .c-btn
+    // HACK
+    // This keeps buttons from messing up their size on smaller screens.
+    // Consider this as part of an effort to canonicalize a way to make
+    // certain texts adaptive.
+    // @media(max-width: $media-tablet)
+    //   font-size: 3vw
+    font-size: 1vw
+    @media only screen and (max-width: $media-desktop)
+      font-size: 1.5vw
+    @media only screen and (max-width: 895px)
+      font-size: 2vw
+    // @media only screen and (max-width: 544px)
+    //   font-size: 2vw
+    @media only screen and (max-width: 570px)
+      font-size: 3vw
+    // @media(min-width: $media-desktop)
+    //   font-size: 1vw
+    // @media(max-width: $media-tablet)
+    //   font-size: 2vw
+    // @media(max-width: $media-desktop)
+    //   font-size: 1vw
+
 .o-mast
   // For some reason, the masthead creates a
   // margin on sizes smaller than large,
@@ -26,8 +49,6 @@
     @media (min-width: $media-tablet)
       margin-right: $gutter
 
-
-
   li.social-links
     height: 20px
     a
@@ -35,6 +56,13 @@
       &:last-child
         margin-top: 3px
         margin-left: 17px
+
+.section-current-members
+  // HACK
+  // We need this one to be a little wider on medium.
+  // This will just go away when I remake the masthead entirely.
+  @media (min-width: $media-tablet) and (max-width: $media-desktop)
+    width: 17%
 
 
 .o-header
