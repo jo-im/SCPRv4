@@ -26,6 +26,12 @@
     @media (min-width: $media-tablet)
       margin-right: $gutter
 
+.section-current-members
+  // HACK
+  // We need this one to be a little wider on medium.
+  // This will just go away when I remake the masthead entirely.
+  @media (max-width: $media-desktop)
+    width: 17%
 
 
   li.social-links
