@@ -1,11 +1,9 @@
 @import 'scpr-style-guide/src/css/main.scss'
 @import 'better_homepage/breaking-news-dropdown'
-@import 'hidden-gem'
 @import 'three-columns'
+@import 'feedback'
+@import 'hidden-gem'
 
-.hp-content
-  +columns-single
-  +columns-three($media-tablet,  16%,60%,24%)
 
 .c-ad
   text-align:center
@@ -194,7 +192,6 @@ footer.o-footer
   content: ''
   background-color: $color-primary-alt
 
-
 [class*='o-media__figure--'] .o-media__img
   min-width: 100%
 
@@ -210,14 +207,14 @@ footer.o-footer
   .hp-story .story > .o-media__teaser
     width: 85%
 
-  // #feedback
-  //   display: none
-
   .l-row
     margin: 0
 
   .hp-content
     overflow-x: hidden
+    .left, .right
+      padding-left: $gutter
+      padding-right: $gutter
 
   .o-header
     display: none
@@ -301,7 +298,7 @@ footer.o-footer
 
 
 // LARGE SCREENS
-@media all and (min-width: $media-tablet)
+@media all and (min-width: 56.0625rem)
 
   .o-header
     box-sizing: border-box
@@ -365,73 +362,6 @@ footer.o-footer
 
 
 
-
-
-#feedback
-  #feedback-slim
-    text-align: center
-    background-color: white
-    padding-top: 10px
-    .description
-      @extend .text--small
-      padding-bottom: 10px
-      p
-        font-size: 14px
-    border-width: 2px
-    border-color: #99d8ea
-    border-bottom-style: solid
-    @media (min-width: 1310px)
-      display: none
-    .buttons
-      padding-bottom: 10px
-      @media (max-width: $media-mobile)
-        display: flex
-        justify-content: space-around
-    @media (max-width: $media-tablet)
-      position: inherit
-      width: 100%
-      top: none
-
-
-#feedback-block
-  $position: 78.5%
-  height: 115px
-  border-color: #99d8ea
-  border-style: solid
-  border-width: 1px
-  border-left-style: none
-  border-right-style: none
-  padding: 20px
-  padding-left: 0px
-  padding-right: 0px
-  text-align: center
-  background-color: white
-  transition: all .4s linear
-  opacity: 1
-  z-index: 700
-  &.hidden
-    opacity: 0
-    z-index: -1
-  @media (min-width: 1406px)
-    position: fixed
-    left: 0
-    top: $position
-    width: 250px
-  @media (max-width: 1405px)
-    position: fixed
-    left: 0
-    top: $position
-    width: 210px
-  @media (max-width: 1310px)
-    display: none
-
-  .description
-    padding-bottom: 18px
-    p
-      font-size: 14px
-  .beta-opt-out
-    color: #7c7c7c
-    font-size: 12px
-    text-decoration: underline
-  .link
-    padding-top: 30px
+.hp-content
+  +columns-single
+  +columns-three(56.0625rem,  16%,60%,24%)
