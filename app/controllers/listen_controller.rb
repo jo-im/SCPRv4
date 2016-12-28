@@ -32,6 +32,7 @@ class ListenController < ApplicationController
       return redirect_to '/listen_live/pledge-free/error' unless authorized_user.present?
 
       authorized_user["viewsLeft"] = Farse::Increment.new(-1)
+      cast_booleans(authorized_user)
       authorized_user.save
       if authorized_user["viewsLeft"] == 0
          authorized_user["pledgeToken"] = nil
@@ -43,6 +44,32 @@ class ListenController < ApplicationController
   end
 
   private
+
+  def cast_booleans user
+    truth = {
+      "TRUE" => true,
+      "FALSE" => false,
+      "true" => true,
+      "false" => false,
+      "True" => true,
+      "False" => false,
+      true => true,
+      false => false,
+      1 => true,
+      0 => false,
+      "1" => true,
+      "0" => false,
+      nil => false,
+      "NULL" => false,
+      "null" => false,
+      "undefined" => false
+    }
+    user["emailSent"]   = truth[user["emailSent"]]
+    user["pfsSelected"] = truth[user["pfsSelected"]]
+    user
+  rescue
+    user
+  end
 
   def check_pledge_status
     return redirect_to("/listen_live/pledge-free/off-air") unless PledgeDrive.happening?
