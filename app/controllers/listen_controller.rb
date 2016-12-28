@@ -32,11 +32,10 @@ class ListenController < ApplicationController
       return redirect_to '/listen_live/pledge-free/error' unless authorized_user.present?
 
       authorized_user["viewsLeft"] = Farse::Increment.new(-1)
-      sanitize_user(authorized_user)
-      authorized_user.save
+      authorized_user.save rescue nil
       if authorized_user["viewsLeft"] == 0
          authorized_user["pledgeToken"] = nil
-         authorized_user.save
+         authorized_user.save rescue nil
       end
       cookies.permanent[:member_session] = params[:pledgeToken]
       render layout: false
@@ -45,32 +44,6 @@ class ListenController < ApplicationController
 
   private
 
-  def sanitize_user user
-    truth = {
-      "TRUE" => true,
-      "FALSE" => false,
-      "true" => true,
-      "false" => false,
-      "True" => true,
-      "False" => false,
-      true => true,
-      false => false,
-      1 => true,
-      0 => false,
-      "1" => true,
-      "0" => false,
-      nil => false,
-      "NULL" => false,
-      "null" => false,
-      "undefined" => false
-    }
-    user["emailSent"]   = truth[user["emailSent"]]
-    user["pfsSelected"] = truth[user["pfsSelected"]]
-    user["pledgeID"]    = user["pledgeID"] ? user["pledgeID"].to_s : nil
-    user
-  rescue
-    user
-  end
 
   def check_pledge_status
     return redirect_to("/listen_live/pledge-free/off-air") unless PledgeDrive.happening?
