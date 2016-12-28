@@ -31,19 +31,18 @@ class ListenController < ApplicationController
       # redirect to flat page if we can't find a valid user
       return redirect_to '/listen_live/pledge-free/error' unless authorized_user.present?
 
-      authorized_user["viewsLeft"] = Farse::Increment.new(-1)
-      authorized_user.save rescue nil
-      if authorized_user["viewsLeft"] == 0
-         authorized_user["pledgeToken"] = nil
-         authorized_user.save rescue nil
-      end
+      # authorized_user["viewsLeft"] = Farse::Increment.new(-1)
+      # authorized_user.save
+      # if authorized_user["viewsLeft"] == 0
+      #    authorized_user["pledgeToken"] = nil
+      #    authorized_user.save
+      # end
       cookies.permanent[:member_session] = params[:pledgeToken]
       render layout: false
     end
   end
 
   private
-
 
   def check_pledge_status
     return redirect_to("/listen_live/pledge-free/off-air") unless PledgeDrive.happening?
