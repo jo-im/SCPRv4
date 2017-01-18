@@ -93,6 +93,7 @@ group :development do
   gem 'pry'
   gem 'better_errors'
   gem 'binding_of_caller'
+  gem 'browser_sync_rails'
 end
 
 group :test, :development do
