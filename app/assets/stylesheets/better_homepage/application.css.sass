@@ -139,21 +139,9 @@ section#content
   ul
     @extend .c-list--bullet
 
-section.c-gem
-  // This is a fix for elements that come after
-  // our main content, because of the "interesting"
-  // method we have taken to meshing the 
-  // asides with our stories.
-  float: right
-  // width: 100%
 
-footer.o-footer
-  // This is a fix for elements that come after
-  // our main content, because of the "interesting"
-  // method we have taken to meshing the 
-  // asides with our stories.
-  float: right
-  width: 100%
+
+
 
 .o-media
   .related-content
@@ -195,6 +183,8 @@ footer.o-footer
 [class*='o-media__figure--'] .o-media__img
   min-width: 100%
 
+.o-media--lg
+  margin-top: 0  // not sure why the initial margin exists but it doesn't look good on the homepage
 
 
 
