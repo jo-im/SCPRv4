@@ -31,12 +31,20 @@ class ListenController < ApplicationController
       # redirect to flat page if we can't find a valid user
       return redirect_to '/listen_live/pledge-free/error' unless authorized_user.present?
 
-      # authorized_user["viewsLeft"] = Farse::Increment.new(-1)
-      # authorized_user.save
-      # if authorized_user["viewsLeft"] == 0
-      #    authorized_user["pledgeToken"] = nil
-      #    authorized_user.save
-      # end
+      begin
+        # Since we already have a token, we don't want
+        # some further issue with simply incrementing viewsLeft
+        # to raise an error and prevent the user from
+        # viewing the PFS player.
+        authorized_user["viewsLeft"] = Farse::Increment.new(-1)
+        authorized_user.save
+        if authorized_user["viewsLeft"] == 0
+           authorized_user["pledgeToken"] = nil
+           authorized_user.save
+        end
+      rescue => err
+        NewRelic.log_error(err)
+      end
       cookies.permanent[:member_session] = params[:pledgeToken]
       render layout: false
     end
