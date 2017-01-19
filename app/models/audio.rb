@@ -235,8 +235,7 @@ class Audio < ActiveRecord::Base
     # We'll use a temp file so that it gets garbage collected and deleted.
     @file ||= begin
       tmp = Tempfile.new('scprv4-audio', encoding: "ascii-8bit")
-      open(self.url, read_timeout: TIMEOUT) { |f| tmp.write(f.read) }
-
+      open(self.url, read_timeout: TIMEOUT, allow_redirections: :all) { |f| tmp.write(f.read) }
       tmp.rewind
       tmp
     rescue OpenURI::HTTPError, Timeout::Error, Errno::ENOENT

@@ -90,7 +90,7 @@ module HomepageHelper
 
   def render_tag_cluster
     @_tag_cluster_order ||= 8 # On mobile, we start displaying these at the 8th position.
-    klass = "right l-col l-col--sm-12 l-col--med-3"
+    klass = "right"
     @tags ||= @homepage.tags.to_a
     content_tag :aside, class: klass, style: "order: #{@_tag_cluster_order};" do
       render partial: "better_homepage/tag_cluster", locals: {tag: @tags.shift, omit: [@homepage]}

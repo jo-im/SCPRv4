@@ -6,6 +6,10 @@ a.event-link {
     background: image-url("icons/calendar-icon.png") no-repeat left top;
 }
 
+.events-newsletter.events-newsletter-centered {
+    text-align: center;
+}
+
 span.fake-link {
   color: $linkColor;
   text-decoration: none;
