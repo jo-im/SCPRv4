@@ -4,8 +4,8 @@ module Concern
       extend ActiveSupport::Concern
 
       included do
-        after_create  -> () { grand_central_request(:post) }, if: -> () { published? || publishing? }
-        after_update  -> () { grand_central_request(:put) }, if: -> () { published? }
+        after_create  -> () { grand_central_request(:post) },   if: -> () { published? || publishing? }
+        after_update  -> () { grand_central_request(:put) },    if: -> () { published? }
         after_update  -> () { grand_central_request(:delete) }, if: -> () { changes['status'] == 5 }
         after_destroy -> () { grand_central_request(:delete) }, if: -> () { published? }
       end
@@ -59,7 +59,7 @@ module Concern
             },
             castType: {
               data_type: "String",
-              string_value: id.split("-")[0].gsub("_", "-")
+              string_value: obj_key.split("-")[0].gsub("_", "-")
             }
           },
           message_body: to_grand_central_article,
