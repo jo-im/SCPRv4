@@ -63,12 +63,6 @@ class NewsStory < ActiveRecord::Base
 
   alias_attribute :public_datetime, :published_at
 
-  after_create :post, if: -> { published? || publishing? }
-
-  after_update :put, if: -> { published? }
-
-  after_destroy :yank, if: -> { published? } 
-
   def needs_validation?
     self.pending? || self.published?
   end
@@ -89,9 +83,6 @@ class NewsStory < ActiveRecord::Base
   def byline_extras
     Array(self.news_agency)
   end
-
-
-
 
 
   class ContentRenderer < ActionView::Base
