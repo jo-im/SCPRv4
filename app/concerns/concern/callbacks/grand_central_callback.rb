@@ -32,6 +32,8 @@ module Concern
         else
           []
         end
+      rescue => err
+        NewRelic.log_error(err)
       end
 
       def grand_central_message adapter_name:"", method_name:"", channel:""
