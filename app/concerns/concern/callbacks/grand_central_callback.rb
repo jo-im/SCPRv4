@@ -13,7 +13,7 @@ module Concern
       private
 
       def to_grand_central_article
-        get_article.try(:to_grand_central_article)
+        to_article.try(:to_grand_central_article)
       end
 
       def grand_central_request method_name
