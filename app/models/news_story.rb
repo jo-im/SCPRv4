@@ -32,6 +32,7 @@ class NewsStory < ActiveRecord::Base
   include Concern::Callbacks::PublishNotificationCallback
   include Concern::Callbacks::ExpireIngestFeedCacheCallback
   include Concern::Callbacks::AppleNewsCallback
+  include Concern::Callbacks::GrandCentralCallback
   include Concern::Model::Searchable
   include Concern::Callbacks::HomepageCachingCallback
   include Concern::Callbacks::TouchCallback
@@ -83,7 +84,6 @@ class NewsStory < ActiveRecord::Base
     Array(self.news_agency)
   end
 
-
   def to_article
     related_content = to_article_called_more_than_twice? ? [] : self.related_content.map(&:to_reference)
     @to_article ||= Article.new({
@@ -113,7 +113,6 @@ class NewsStory < ActiveRecord::Base
       :abstract           => self.abstract
     })
   end
-
 
   def to_abstract
     @to_abstract ||= Abstract.new({

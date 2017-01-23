@@ -1,0 +1,72 @@
+module Concern
+  module Callbacks
+    module GrandCentralCallback
+      extend ActiveSupport::Concern
+
+      included do
+        after_create  -> () { grand_central_request(:post) },   if: -> () { published? || publishing? }
+        after_update  -> () { grand_central_request(:put) },    if: -> () { published? }
+        after_update  -> () { grand_central_request(:delete) }, if: -> () { changes['status'] == 5 }
+        after_destroy -> () { grand_central_request(:delete) }, if: -> () { published? }
+      end
+
+      private
+
+      def to_grand_central_article
+        get_article.try(:to_grand_central_article)
+      end
+
+      def grand_central_request method_name
+        if Rails.env == "production" || Rails.env == "staging"
+          sqs = Aws::SQS::Client.new({
+            region: "us-west-1",
+            credentials: Aws::Credentials.new(Rails.application.secrets.empyrean["access_key_id"], Rails.application.secrets.empyrean["secret_access_key"])
+          });
+
+          message_body     = get_article.to_grand_central_article
+
+          facebook_message = grand_central_message(adapter_name: 'facebook', method_name: method_name, channel: Rails.application.secrets.api["instant_articles"]["channels"]["kpcc"]["id"])
+          apple_message   = grand_central_message(adapter_name: 'apple-news', method_name: method_name, channel: Rails.application.secrets.api["apple_news"]["channels"]["kpcc"]["id"])
+
+          [sqs.send_message(facebook_message), sqs.send_message(apple_message)]
+        else
+          []
+        end
+      end
+
+      def grand_central_message adapter_name:"", method_name:"", channel:""
+        {
+          message_attributes: {
+            _id: {
+              data_type: "String",
+              string_value: obj_key
+            },
+            publisher: {
+              data_type: "String",
+              string_value: "scprv4"
+            },
+            adapter: {
+              data_type: "String",
+              string_value: adapter_name
+            },
+            method: {
+              data_type: "String",
+              string_value: method_name
+            },
+            channel: {
+              data_type: "String",
+              string_value: channel
+            },
+            castType: {
+              data_type: "String",
+              string_value: obj_key.split("-")[0].gsub("_", "-")
+            }
+          },
+          message_body: to_grand_central_article,
+          queue_url: Rails.application.secrets.empyrean["queue_url"]
+        }
+      end
+
+    end
+  end
+end
