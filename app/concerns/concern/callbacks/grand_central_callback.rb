@@ -13,6 +13,7 @@ module Concern
       private
 
       def to_grand_central_article
+        return if respond_to?(:source) && source != "kpcc"
         to_article.try(:to_grand_central_article)
       end
 
