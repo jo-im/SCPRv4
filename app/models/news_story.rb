@@ -84,30 +84,6 @@ class NewsStory < ActiveRecord::Base
     Array(self.news_agency)
   end
 
-
-  class ContentRenderer < ActionView::Base
-    include ApplicationHelper
-    include InstantArticlesHelper
-    def initialize
-      super ActionController::Base.view_paths, {}, ActionController::Base.new
-    end
-    def render_for_facebook content
-      render(
-        partial: 'feeds/shared/instant_article_single', 
-        formats: ['html'],
-        layout: false, 
-        locals: {content: content}
-      ).gsub("\n", "")
-    end
-    def params
-      {} # ActionView expects this, but obviously it isn't useful in this context.
-    end
-  end
-
-  def render_facebook
-    ContentRenderer.new.render_for_facebook(self)
-  end
-
   def to_article
     related_content = to_article_called_more_than_twice? ? [] : self.related_content.map(&:to_reference)
     @to_article ||= Article.new({
