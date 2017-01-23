@@ -23,10 +23,10 @@ module Concern
             credentials: Aws::Credentials.new(Rails.application.secrets.empyrean["access_key_id"], Rails.application.secrets.empyrean["secret_access_key"])
           });
 
-          message_body     = get_article.to_grand_central_article
+          message_body     = to_grand_central_article
 
           facebook_message = grand_central_message(adapter_name: 'facebook', method_name: method_name, channel: Rails.application.secrets.api["instant_articles"]["channels"]["kpcc"]["id"])
-          apple_message   = grand_central_message(adapter_name: 'apple-news', method_name: method_name, channel: Rails.application.secrets.api["apple_news"]["channels"]["kpcc"]["id"])
+          apple_message    = grand_central_message(adapter_name: 'apple-news', method_name: method_name, channel: Rails.application.secrets.api["apple_news"]["channels"]["kpcc"]["id"])
 
           [sqs.send_message(facebook_message), sqs.send_message(apple_message)]
         else
