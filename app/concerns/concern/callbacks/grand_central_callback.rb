@@ -25,8 +25,8 @@ module Concern
 
           message_body     = get_article.to_grand_central_article
 
-          facebook_message = grand_central_message(adapter_name: 'facebook', method_name: method_name)
-          apple_message   = grand_central_message(adapter_name: 'apple-news', method_name: method_name)
+          facebook_message = grand_central_message(adapter_name: 'facebook', method_name: method_name, channel: Rails.application.secrets.api["instant_articles"]["channels"]["kpcc"]["id"])
+          apple_message   = grand_central_message(adapter_name: 'apple-news', method_name: method_name, channel: Rails.application.secrets.api["apple_news"]["channels"]["kpcc"]["id"])
 
           [sqs.send_message(facebook_message), sqs.send_message(apple_message)]
         else
@@ -34,7 +34,7 @@ module Concern
         end
       end
 
-      def grand_central_message adapter_name:"", method_name:""
+      def grand_central_message adapter_name:"", method_name:"", channel:""
         {
           message_attributes: {
             _id: {
@@ -55,7 +55,7 @@ module Concern
             },
             channel: {
               data_type: "String",
-              string_value: Rails.application.secrets.api["apple_news"]["channels"]["kpcc"]["id"]
+              string_value: channel
             },
             castType: {
               data_type: "String",
