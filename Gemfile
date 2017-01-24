@@ -61,6 +61,7 @@ gem "faraday", "~> 0.8"
 gem "faraday_middleware", "~> 0.8"
 gem "hashie", "~> 1.2.0"
 gem "rest-client"
+gem "open_uri_redirections"
 
 
 ## APIs
@@ -92,6 +93,7 @@ group :development do
   gem 'pry'
   gem 'better_errors'
   gem 'binding_of_caller'
+  gem 'browser_sync_rails'
 end
 
 group :test, :development do

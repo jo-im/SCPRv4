@@ -1,6 +1,9 @@
 @import 'scpr-style-guide/src/css/main.scss'
 @import 'better_homepage/breaking-news-dropdown'
+@import 'three-columns'
+@import 'feedback'
 @import 'hidden-gem'
+
 
 .c-ad
   text-align:center
@@ -13,7 +16,21 @@
 .c-nav__dropdown
   box-sizing: border-box
   width: 100%
-  
+
+  .c-btn
+    // HACK
+    // This keeps buttons from messing up their size on smaller screens.
+    // Consider this as part of an effort to canonicalize a way to make
+    // certain texts adaptive.
+    font-size: 1vw
+    @media only screen and (max-width: $media-desktop)
+      font-size: 1.5vw
+    @media only screen and (max-width: 895px)
+      font-size: 2vw
+    @media only screen and (max-width: 570px)
+      font-size: 3vw
+
+
 .o-mast
   // For some reason, the masthead creates a
   // margin on sizes smaller than large,
@@ -26,8 +43,6 @@
     @media (min-width: $media-tablet)
       margin-right: $gutter
 
-
-
   li.social-links
     height: 20px
     a
@@ -35,6 +50,13 @@
       &:last-child
         margin-top: 3px
         margin-left: 17px
+
+.section-current-members
+  // HACK
+  // We need this one to be a little wider on medium.
+  // This will just go away when I remake the masthead entirely.
+  @media (min-width: $media-tablet) and (max-width: $media-desktop)
+    width: 17%
 
 
 .o-header
@@ -117,21 +139,9 @@ section#content
   ul
     @extend .c-list--bullet
 
-section.c-gem
-  // This is a fix for elements that come after
-  // our main content, because of the "interesting"
-  // method we have taken to meshing the 
-  // asides with our stories.
-  float: right
-  // width: 100%
 
-footer.o-footer
-  // This is a fix for elements that come after
-  // our main content, because of the "interesting"
-  // method we have taken to meshing the 
-  // asides with our stories.
-  float: right
-  width: 100%
+
+
 
 .o-media
   .related-content
@@ -170,12 +180,13 @@ footer.o-footer
   content: ''
   background-color: $color-primary-alt
 
-// .o-media--lg
-//   .o-media__teaser
-//     column-count: 2
-
 [class*='o-media__figure--'] .o-media__img
   min-width: 100%
+
+.o-media--lg
+  margin-top: 0  // not sure why the initial margin exists but it doesn't look good on the homepage
+
+
 
 
 
@@ -186,14 +197,14 @@ footer.o-footer
   .hp-story .story > .o-media__teaser
     width: 85%
 
-  // #feedback
-  //   display: none
-
   .l-row
     margin: 0
 
   .hp-content
     overflow-x: hidden
+    .left, .right
+      padding-left: $gutter
+      padding-right: $gutter
 
   .o-header
     display: none
@@ -219,14 +230,6 @@ footer.o-footer
   .c-nav__dropdown
     font-size: 0.78125rem
 
-
-  article.hp-story, aside.right, aside.left
-    &.l-col--sm-12
-      width: 100%
-    > *
-      padding-left: $gutter
-      padding-right: $gutter
-
   article.hp-story
     margin-bottom: 2.25rem / 2
     padding-bottom: 2.25rem
@@ -241,8 +244,7 @@ footer.o-footer
       padding: 0
       > .o-media__figure
         left: -0.005rem // unclear why there's space on the left so I have to negate it.
-        // padding: 0
-        // margin-left: -$gutter
+
       > *
         padding-left: $gutter
         padding-right: $gutter
@@ -269,7 +271,6 @@ footer.o-footer
       background-color: initial
 
     #dfp-slot_a
-      // margin-top: 3.125rem
       iframe
         margin: 0 auto
         display: inherit
@@ -281,26 +282,34 @@ footer.o-footer
     display: none
 
 
-  .l-hp--bottom
-    width: 100%
-    order: 2000 // we are never going to have that many main items
-    // so this quarantees that it stays at the bottom of the document
 
 
-
-
-
-
-
+@media all and (max-width: 896px)
+  .o-media--med .o-media__figure
+    max-width: 100%
+    padding-top: 56.25%
 
 // LARGE SCREENS
-@media all and (min-width: $media-tablet)
+@media all and (min-width: 56.0625rem)
 
-  .l-page
-    width: 100%
-    position: absolute
-    &--adjusted
-      overflow-y: hidden
+  .o-header
+    box-sizing: border-box
+    padding-left: $gutter
+    padding-right: $gutter
+
+  .hp-content
+    box-sizing: border-box
+    padding-left: $gutter
+    padding-right: $gutter
+    .left
+      padding-right: $gutter / 2
+    .center
+      padding-left: $gutter / 2
+      padding-right: $gutter / 2
+    .right
+      padding-left: $gutter / 2
+
+
 
   // HACK
   .hp-story .story > .o-media__teaser
@@ -330,35 +339,6 @@ footer.o-footer
       display: none
 
   .hp-content
-    height: 100%
-    max-width: 100%
-    width: 100% - $gutter - $gutter
-    position: absolute
-
-    &.l-container
-      margin-left: $gutter
-      margin-right: $gutter
-
-    $vertical-rail-height: 8000px
-    // The vertical rail height should be enough height to
-    // encompass the right column but not exceed the height
-    // of the center content.  The above number seems like
-    // a good one.
-    $left-rail-width: ($col * 3) + ($gutter / 2)
-
-    .l-vertical-rail
-      float: left
-      height: $vertical-rail-height
-      margin-left: $left-rail-width
-
-    aside.left
-      position: absolute
-      // max-width: 15.08296%
-
-    .center
-      float: left
-      margin-left: $left-rail-width
-      transform: translateY(-$vertical-rail-height)
 
     .hp-story
       border-bottom: 2px solid $color-gray-light
@@ -370,86 +350,11 @@ footer.o-footer
           margin-bottom: 1rem
 
     aside.right
-      float: right
       overflow-x: hidden
       margin-bottom: 3.75rem
 
 
-    .l-hp--bottom
-      @extend .center
-      margin-left: -$gutter
-      // add width equal to the two side gutters plus the size of the sidebar
-      width: (100% + ($gutter * 2)) + ($gutter / 3)
 
-      .c-gem
-        width: 100% + $gutter + $gutter
-
-
-#feedback
-  #feedback-slim
-    text-align: center
-    background-color: white
-    padding-top: 10px
-    .description
-      @extend .text--small
-      padding-bottom: 10px
-      p
-        font-size: 14px
-    border-width: 2px
-    border-color: #99d8ea
-    border-bottom-style: solid
-    @media (min-width: 1310px)
-      display: none
-    .buttons
-      padding-bottom: 10px
-      @media (max-width: $media-mobile)
-        display: flex
-        justify-content: space-around
-    @media (max-width: $media-tablet)
-      position: inherit
-      width: 100%
-      top: none
-
-
-#feedback-block
-  $position: 78.5%
-  height: 115px
-  border-color: #99d8ea
-  border-style: solid
-  border-width: 1px
-  border-left-style: none
-  border-right-style: none
-  padding: 20px
-  padding-left: 0px
-  padding-right: 0px
-  text-align: center
-  background-color: white
-  transition: all .4s linear
-  opacity: 1
-  z-index: 700
-  &.hidden
-    opacity: 0
-    z-index: -1
-  @media (min-width: 1406px)
-    position: fixed
-    left: 0
-    top: $position
-    width: 250px
-  @media (max-width: 1405px)
-    position: fixed
-    left: 0
-    top: $position
-    width: 210px
-  @media (max-width: 1310px)
-    display: none
-
-  .description
-    padding-bottom: 18px
-    p
-      font-size: 14px
-  .beta-opt-out
-    color: #7c7c7c
-    font-size: 12px
-    text-decoration: underline
-  .link
-    padding-top: 30px
+.hp-content
+  +columns-single
+  +columns-three(56.0625rem,  16%,60%,24%)

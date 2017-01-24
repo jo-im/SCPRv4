@@ -104,6 +104,34 @@ class Article
     })
   end
 
+  def to_grand_central_article
+    {
+      _id: obj_key,
+      title: title,
+      shortTitle: short_title,
+      teaser: teaser,
+      link: {
+        title: title,
+        href: public_url,
+        type: "text/html"
+      },
+      assets: [
+        {
+          title: asset.try(:title) || "An asset.",
+          description: asset.try(:description),
+          href: asset.try(:full).try(:url),
+          type: "image/jpeg"
+        }.delete_if{|k, v| v.nil?}
+      ],
+      body: body,
+      abstract: abstract,
+      source: "scpr.org",
+      publishedAt: public_datetime.iso8601,
+      updatedAt: updated_at.iso8601,
+      byline: byline
+    }.to_json
+  end
+
   def original_object
     @original_object ||= Outpost.obj_by_key(self.id)
   end
