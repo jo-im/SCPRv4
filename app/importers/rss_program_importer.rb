@@ -1,4 +1,5 @@
 require 'rss'
+require 'open-uri'
 
 # We assume that the RSS feeds (podcast) contain an entire episode in each
 # item. I don't know if this is always necessarily true.
@@ -21,8 +22,11 @@ class RssProgramImporter
 
   # We're only going to bother with the first 5 episodes
   def sync
+    feed = nil
     begin
-      feed = RSS::Parser.parse(@external_program.podcast_url, false)
+      open(@external_program.podcast_url, :allow_redirections => :all) do |rss|
+        feed = RSS::Parser.parse(rss, false)
+      end
     rescue => e
       warn "Error caught in RSSProgramImporter.sync: #{e}"
       self.log "Could not import from the given RSS feed: #{e}"
