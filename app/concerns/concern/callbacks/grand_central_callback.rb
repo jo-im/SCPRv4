@@ -13,11 +13,11 @@ module Concern
       private
 
       def to_grand_central_article
-        return if respond_to?(:source) && source != "kpcc"
         to_article.try(:to_grand_central_article)
       end
 
       def grand_central_request method_name
+        return [] if respond_to?(:source) && source != "kpcc"
         if Rails.env == "production" || Rails.env == "staging"
           sqs = Aws::SQS::Client.new({
             region: "us-west-1",
