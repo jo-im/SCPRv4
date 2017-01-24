@@ -562,6 +562,12 @@ module ApplicationHelper
     content_tag(:script, render(file: path.gsub(/.hbs$/, '').concat('.hbs')), id: name, type: "text/x-handlebars-template")
   end
 
+  def safe_json string
+    # Removes some naughty characters that are bad for when
+    # the browser tries to parse JSON that's within markup.
+    raw (string || "").gsub(Regexp.new("\u2028|\u2029"), "")
+  end
+
   class ActionView::Helpers::FormBuilder
     include ActionView::Helpers::TagHelper
     include ActionView::Helpers::FormTagHelper

@@ -14,7 +14,7 @@
 
   <script>
     $(document).ready(function() {
-      window.assetManager = new outpost.AssetManager(<%= raw record.assets.to_json %>, "#asset_bucket");
+      window.assetManager = new outpost.AssetManager(<%= safe_json record.assets.to_json %>, "#asset_bucket");
     });
   </script>
 <% end %>
