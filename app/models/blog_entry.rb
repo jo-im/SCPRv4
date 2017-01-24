@@ -29,6 +29,7 @@ class BlogEntry < ActiveRecord::Base
   include Concern::Callbacks::GenerateShortHeadlineCallback
   include Concern::Callbacks::GenerateTeaserCallback
   include Concern::Callbacks::GenerateSlugCallback
+  include Concern::Callbacks::GrandCentralCallback
   #include Concern::Callbacks::CacheExpirationCallback
   include Concern::Callbacks::PublishNotificationCallback
   include Concern::Callbacks::HomepageCachingCallback
