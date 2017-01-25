@@ -38,7 +38,7 @@ module Concern
       end
 
       def grand_central_message adapter_name:"", method_name:"", channel:""
-        {
+        message = {
           message_attributes: {
             _id: {
               data_type: "String",
@@ -58,7 +58,7 @@ module Concern
             },
             channel: {
               data_type: "String",
-              string_value: channel
+              string_value: "#{channel}"
             },
             castType: {
               data_type: "String",
