@@ -30,7 +30,6 @@ class NewsStory < ActiveRecord::Base
   include Concern::Callbacks::GenerateSlugCallback
   #include Concern::Callbacks::CacheExpirationCallback
   include Concern::Callbacks::PublishNotificationCallback
-  include Concern::Callbacks::ExpireIngestFeedCacheCallback
   include Concern::Callbacks::GrandCentralCallback
   include Concern::Model::Searchable
   include Concern::Callbacks::HomepageCachingCallback
