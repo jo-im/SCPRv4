@@ -66,7 +66,7 @@ module Concern
             }
           },
           message_body: to_grand_central_article,
-          queue_url: Rails.application.secrets.empyrean["queue_url"]
+          queue_url: Rails.application.secrets.grand_central["queue_url"]
         }
       end
 

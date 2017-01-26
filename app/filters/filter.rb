@@ -6,6 +6,5 @@ end
 
 require "filter/cleanup_filter"
 require "filter/embeditor_filter"
-require "filter/instant_articles_filter"
 require "filter/inline_assets_filter"
 require "filter/amp_filter"

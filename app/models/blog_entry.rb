@@ -38,7 +38,6 @@ class BlogEntry < ActiveRecord::Base
   include Concern::Methods::ArticleStatuses
   include Concern::Methods::CommentMethods
   include Concern::Methods::AssetDisplayMethods
-  include Concern::Callbacks::AppleNewsCallback
 
   include Concern::Model::Searchable
 
