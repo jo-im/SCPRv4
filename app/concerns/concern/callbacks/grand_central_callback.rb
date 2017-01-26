@@ -21,7 +21,7 @@ module Concern
         if Rails.env == "production" || Rails.env == "staging"
           sqs = Aws::SQS::Client.new({
             region: "us-west-1",
-            credentials: Aws::Credentials.new(Rails.application.secrets.empyrean["access_key_id"], Rails.application.secrets.empyrean["secret_access_key"])
+            credentials: Aws::Credentials.new(Rails.application.secrets.grand_central["access_key_id"], Rails.application.secrets.grand_central["secret_access_key"])
           });
 
           message_body     = to_grand_central_article
