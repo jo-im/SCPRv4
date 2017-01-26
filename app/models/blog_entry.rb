@@ -34,11 +34,9 @@ class BlogEntry < ActiveRecord::Base
   include Concern::Callbacks::PublishNotificationCallback
   include Concern::Callbacks::HomepageCachingCallback
   include Concern::Callbacks::TouchCallback
-  include Concern::Callbacks::ExpireIngestFeedCacheCallback
   include Concern::Methods::ArticleStatuses
   include Concern::Methods::CommentMethods
   include Concern::Methods::AssetDisplayMethods
-  include Concern::Callbacks::AppleNewsCallback
 
   include Concern::Model::Searchable
 
