@@ -59,10 +59,12 @@ Scprv4::Application.routes.draw do
   get '/schedule/'                                    => 'programs#schedule',   as: :schedule
 
 
+
   # Events
-  get '/events/forum/archive/'            => redirect('/events/kpcc-in-person/archive')
-  get '/events/forum/'                    => redirect("/events/kpcc-in-person")
-  get '/forum'                            => redirect('/events/kpcc-in-person')
+  get '/events/2015/12/05/1766/scpr-gala/' => redirect('/events/2017/03/18/2192/Gala/')
+  get '/events/forum/archive/'             => redirect('/events/kpcc-in-person/archive')
+  get '/events/forum/'                     => redirect("/events/kpcc-in-person")
+  get '/forum'                             => redirect('/events/kpcc-in-person')
 
   get '/events/kpcc-in-person/archive/'            => 'events#archive',    as: :kpcc_in_person_events_archive
   get '/events/kpcc-in-person/'                    => 'events#kpcc_in_person',      as: :kpcc_in_person_events

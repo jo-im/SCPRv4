@@ -1,6 +1,0 @@
-<% assets ||= content.assets %>
-<figure class="op-slideshow">
-  <% assets.each do |asset| %>
-    <%= render partial: "feeds/shared/instant_articles/default", locals: {asset: asset} %>
-  <% end %>
-</figure>
