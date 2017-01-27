@@ -4,7 +4,7 @@ module Job
   class FetchMarketplaceArticles < Base
     @priority = :low
 
-    RSS_URL   = "http://www.marketplace.org/latest-stories/long-feed.xml"
+    RSS_URL   = "https://feeds.publicradio.org/public_feeds/marketplace-all-stories/rss/rss"
     LIMIT     = 4
 
     class << self
