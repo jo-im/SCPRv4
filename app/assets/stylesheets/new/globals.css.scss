@@ -45,8 +45,8 @@ $featuredPrograms: ("offramp","airtalk","the-frame","take-two","filmweek");
   &[data-host="airtalk"]        { background-size: 250px 170px; /* Larry's different */ }
   &[data-host="filmweek"]       { background-size: 250px 170px; /* Larry's different */ }
   &[data-host="take-two"]  {
-    background-size: 240px 169px;
-    background-position: right 3px bottom 0; /* A&A are different */
+    background-size: 180px 191px;
+    background-position: right 20px bottom 0; /* A&A are different */
     p,footer                    { padding-right: 245px; }
   //-------------------------------------------------------------------------------------
     @media screen and (min-width: 871px) and (max-width: 1340px)  {
