@@ -5,7 +5,7 @@ describe Job::FetchMarketplaceArticles do
   it { subject.queue.should eq Job::QUEUES[:low_priority] }
 
   before :each do
-    stub_request(:get, "http://www.marketplace.org/latest-stories/long-feed.xml")
+    stub_request(:get, Job::FetchMarketplaceArticles::RSS_URL)
     .to_return({
       :headers => {
         :content_type   => "text/xml"
