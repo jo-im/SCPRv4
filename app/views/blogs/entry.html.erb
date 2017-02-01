@@ -9,7 +9,7 @@
     <%= render :partial => 'shared/new/masthead/blog_titling' %>
 <% end %>
 
-<%= cache ["show", "blog-content","v18", @entry] do %>
+<%= cache ["show", "blog-content","v19", @entry] do %>
   <%= render "shared/new/single_blog", article: @entry, full: true %>
 <% end %>
 
