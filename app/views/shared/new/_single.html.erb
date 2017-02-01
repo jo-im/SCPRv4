@@ -41,10 +41,10 @@
                 <%= pij_source(article.original_object) %>
             </div><!--/ .prose-body -->
 
-            <% if article.try(:show).try(:slug) == "the-frame" %>
-              <%= render 'shared/widgets/the_frame_subscribe' %>
+            <% if article.try(:show).try(:newsletter_form_name) && !article.try(:show).try(:newsletter_form_name).empty? %>
+              <%= render partial: 'shared/widgets/program_newsletter_subscribe', locals: {program: article.try(:show)} %>
             <% else %>
-              <%= render 'shared/widgets/donate' %>
+              <%= render 'shared/widgets/short_list_subscribe' %>
             <% end %>
 
             <%= render 'shared/cwidgets/related_links', content: article %>

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170127185948) do
+ActiveRecord::Schema.define(version: 20170201174631) do
 
   create_table "abstracts", force: :cascade do |t|
     t.string   "source",               limit: 255
@@ -733,21 +733,22 @@ ActiveRecord::Schema.define(version: 20170127185948) do
   add_index "program_reporters", ["program_id"], name: "index_program_reporters_on_program_id", using: :btree
 
   create_table "programs_kpccprogram", force: :cascade do |t|
-    t.string   "slug",         limit: 255,                      null: false
-    t.string   "title",        limit: 255,                      null: false
-    t.text     "teaser",       limit: 16777215
-    t.text     "description",  limit: 16777215
-    t.string   "host",         limit: 255
-    t.string   "airtime",      limit: 255
-    t.string   "air_status",   limit: 255,                      null: false
-    t.text     "sidebar",      limit: 16777215
-    t.boolean  "is_segmented",                  default: true,  null: false
-    t.integer  "blog_id",      limit: 4
-    t.string   "audio_dir",    limit: 255
-    t.datetime "created_at",                                    null: false
-    t.datetime "updated_at",                                    null: false
-    t.boolean  "is_featured",                   default: false, null: false
-    t.integer  "quote_id",     limit: 4
+    t.string   "slug",                 limit: 255,                      null: false
+    t.string   "title",                limit: 255,                      null: false
+    t.text     "teaser",               limit: 16777215
+    t.text     "description",          limit: 16777215
+    t.string   "host",                 limit: 255
+    t.string   "airtime",              limit: 255
+    t.string   "air_status",           limit: 255,                      null: false
+    t.text     "sidebar",              limit: 16777215
+    t.boolean  "is_segmented",                          default: true,  null: false
+    t.integer  "blog_id",              limit: 4
+    t.string   "audio_dir",            limit: 255
+    t.datetime "created_at",                                            null: false
+    t.datetime "updated_at",                                            null: false
+    t.boolean  "is_featured",                           default: false, null: false
+    t.integer  "quote_id",             limit: 4
+    t.string   "newsletter_form_name", limit: 255
   end
 
   add_index "programs_kpccprogram", ["air_status"], name: "index_programs_kpccprogram_on_air_status", using: :btree
