@@ -9,7 +9,7 @@
 <% end %>
 
 
-<%= cache ["show", "article-content", "v14", @segment, @segment.published_episode] do %>
+<%= cache ["show", "article-content", "v14", @program, @segment, @segment.published_episode] do %>
     <%= render "programs/kpcc/segment", article: @segment, full: true %>
 <% end %>
 
