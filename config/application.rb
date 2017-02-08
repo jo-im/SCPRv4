@@ -1,5 +1,6 @@
 require File.expand_path('../boot', __FILE__)
 require 'rails/all'
+require "./lib/actionpack/lib/action_controller/metal/url_for"
 
 Bundler.require(:default, Rails.env)
 
