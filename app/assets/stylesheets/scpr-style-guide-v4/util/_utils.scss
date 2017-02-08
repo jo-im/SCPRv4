@@ -1,0 +1,57 @@
+
+// Utilities: utility classes for abstracting common styling needs.
+//
+// .u-text-align--center  - Center-aligns a text block.
+// .u-text-align--right   - Right-aligns a text block.
+//
+// .u-text-size--sm       - Sizes text one step down the modular scale.
+//
+// .u-text-color--white   - Set text color to white.
+// .u-text-color--gray    - Set text color to gray.
+// .u-text-color--sec-dk  - Set text color to dark blue.
+//
+// Styleguide 0.1.0
+
+.u-text-align {
+
+  &--center {
+    text-align: center;
+  }
+
+  &--right {
+    text-align: right;
+  }
+
+}
+
+.u-text-color {
+
+  &--white {
+    color: $color-white;
+  }
+
+  &--gray {
+    color: $color-gray;
+  }
+
+  &--gray-warm {
+    color: $color-gray-warm;
+  }
+
+  &--sec {
+    color: $color-secondary;
+  }
+
+  &--sec-dk {
+    color: $color-secondary-dark;
+  }
+
+}
+
+.u-text-size {
+
+  &--sm {
+    font-size: ms(-1);
+  }
+
+}

@@ -1,0 +1,27 @@
+.l-listen-live
+  max-width: 1024px
+  min-width: 320px
+  margin: 0 auto
+  position: relative
+  display: flex
+  flex-direction: column
+  flex: 1 0 auto
+  #live_ad
+    margin-top: 24px !important
+  #live_ad_sponsor-appeal
+    align-self: center
+    margin-bottom: 13px
+  .o-listen-live__footer
+    position: absolute
+    left: 0
+    bottom: 0
+
+  @media all and (max-width: $media-mobile)
+    .o-audio-player__interface
+      flex-direction: column
+      .c-audio-player__button
+        width: 100%
+        margin-bottom: $margin
+      .o-listen-live__meta-data
+        margin-left: $margin
+        margin-right: $margin

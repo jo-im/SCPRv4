@@ -1,0 +1,38 @@
+.o-upcoming-events__event
+  align-items: center
+  display: flex
+  margin-bottom: $margin-in-pixels / 2
+  @media (max-width: $media-tablet)
+    justify-content: space-between
+
+.o-upcoming-events__event:last-of-type
+  margin-bottom: 0px
+
+.o-upcoming-events__figure
+  max-width: 240px
+  margin-bottom: 0px
+  margin-right: $gutter-in-pixels
+  width: 100%
+  @media (max-width: $media-tablet)
+    width: 25%
+  @media (max-width: $media-mobile)
+    width: 35%
+
+.o-upcoming-events__description
+  @media (max-width: $media-tablet)
+    width: 70%
+  @media (max-width: $media-tablet)
+    width: 60%
+
+.o-upcoming-events__event-headline
+  font-size: 22px
+  font-weight: 700
+  line-height: 36px
+  margin-bottom: 10px
+  @media (max-width: $media-tablet)
+    font-size: 20px
+    line-height: 30px
+
+.o-upcoming-events__description .b-link
+  font-size: 15px
+  font-weight: 600

@@ -1,0 +1,65 @@
+.o-resources
+  background: $color-gray-lightest
+  display: flex
+  flex-direction: row
+  margin-bottom: $margin-in-pixels
+  padding-left: $margin
+  padding-right: $margin
+  padding-top: $margin-in-pixels
+  @media (max-width: $media-tablet)
+    flex-direction: column
+
+.o-resources__header
+  margin-bottom: $margin-in-pixels
+  margin-right: $page-gutter
+  width: ($page-col * 4) + ($page-gutter * 3)
+
+.o-resources__heading
+  color: $color-primary
+  font-weight: 700
+  font-family: $font-serif-titling
+  font-size: 37px
+  font-style: italic
+  line-height: 42px
+  margin-bottom: $gutter-in-pixels / 2
+  @media (max-width: $media-tablet)
+    font-size: 29px
+    line-height: 36px
+
+.o-resources__subheading
+  font-size: 22px
+  font-weight: 500
+  line-height: 30px
+  margin-bottom: 9px
+  @media (max-width: $media-tablet)
+    font-size: 20px
+
+.o-resources__description
+  color: $color-gray
+  font-size: 22px
+  font-weight: 400
+  line-height: 30px
+  @media (max-width: $media-tablet)
+    font-size: 20px
+
+.o-resources__articles
+  display: flex
+  justify-content: space-between
+  margin-bottom: $margin-in-pixels / 2
+  width: ($page-col * 8) + ($page-gutter * 7)
+  @media (max-width: $media-mobile)
+    flex-direction: column
+  li
+    width: (25% - $page-gutter * 1.25)
+    @media (max-width: $media-mobile)
+      margin-bottom: $margin-in-pixels / 2
+
+    .o-figure__img
+      padding-top: 105%
+
+.o-resources__figure__caption
+  color: $color-gray-dark
+  font-size: 18px
+  font-weight: 400
+  line-height: 24px
+  margin-top: 16px

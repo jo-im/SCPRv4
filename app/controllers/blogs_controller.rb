@@ -1,5 +1,5 @@
 class BlogsController < ApplicationController
-  layout 'new/single', only: [:entry]
+  # layout 'new/single', only: [:entry]
 
   respond_to :html, :xml, :rss
 
@@ -30,7 +30,8 @@ class BlogsController < ApplicationController
   #----------
 
   def entry
-    @entry = BlogEntry.published.includes(:blog).find(params[:id])
+    @entry   = BlogEntry.published.includes(:blog).find(params[:id])
+    @article = @entry.to_article
 
     respond_with template: "blogs/entry"
   end

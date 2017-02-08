@@ -1,0 +1,6 @@
+<div class="c-audio c-audio-widget" data-ga-category="Article" data-ga-action="Load" data-ga-label="Player">
+  <a href="<%= audio_file.url %>" class="c-play__button c-audio__button"  title="<%= model.try(:title) || model.try(:headline) %>" data-duration="<%= audio_file.duration %>" data-ga-category="Article" data-ga-action="Play" data-ga-label="Player"></a>
+  <div class="c-audio__text">
+    <div class="c-audio__duration"><%= audio_file.duration ? format_duration(audio_file.duration) : nil %></div>
+  </div>
+</div>

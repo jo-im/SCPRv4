@@ -1,45 +1,100 @@
-<% add_to_page_title @program.title %>
-<% add_to_page_title @segment.headline %>
-<% content_for :body_class, 'interior single segment' %>
+<!-- <script src="//cdn.optimizely.com/js/1611751335.js"></script> -->
+<% add_to_page_title @program.try(:title) %>
+<% add_to_page_title @segment.feature.present? ? "#{@segment.feature.name}: #{@segment.headline}" : @segment.headline %>
 <% content_for :opengraph do %><%= render_content @segment, "opengraph" %><% end %>
-<%= render 'shared/ads/dfp_script_config', category: @segment.category %>
+<% content_for :main_class, "o-article o-article--segment" %>
+<%= render 'shared/ads/dfp_script_config', category: @category %>
 
-<% content_for :titling do %>
-    <%= render :partial => 'shared/new/masthead/program_content_titling' %>
+<% content_for :header do %>
+  <section id="o-prologue--program__segment" class="o-prologue o-prologue--program">
+    <a class="o-prologue__logo" href="/programs/<%= @program.try(:slug) %>"><%= image_tag "show-logos/#{@program.try(:slug)}.svg" %></a>
+    <span class="o-prologue__description">
+      <div class="o-prologue__teaser">
+        <%= @program.try(:teaser) %>
+      </div>
+      <address>Hosted by <%= @program.try(:host) %></address>
+      <div class="o-prologue__airtime">
+        <div>Airs <%= @program.try(:airtime) %></div>
+        <div class="o-prologue__social-icons">
+          <% present @program, ProgramPresenter do |p| %>
+            <% ['twitter', 'facebook', 'podcast', 'email', 'rss'].each do |social| %>
+              <% if p.send("#{social}_link").present? %>
+                <a class="o-prologue__social-icon" href="<%= p.send("#{social}_link") %>" target="_blank">
+                  <svg class="b-icon b-icon--size-sm b-icon--left">
+                    <use class="b-icon--color-link" xlink:href="<%= "/static/images/scpr-sprite.svg#icon_line-#{social}" %>" />
+                  </svg>
+                </a>
+              <% end %>
+            <% end %>
+          <% end %>
+        </div>
+      </div>
+    </span>
+  </section>
 <% end %>
 
+<!-- LEFT ASIDE -->
+<aside class="l-column--left l--centerize" style="order: -1;">
+  <%= cell :article_audio, @article %>
+  <%= cell :social_tools, @article, display: 'vert' %>
+</aside>
 
-<%= cache ["show", "article-content", "v14", @program, @segment, @segment.published_episode] do %>
-    <%= render "programs/kpcc/segment", article: @segment, full: true %>
-<% end %>
+<!-- HEADLINE -->
+<%= cell :article_headline, @article %>
 
-<% cache ["show", "article-supportive", "v16", @segment] do %>
-    <%= render "programs/kpcc/program_supportive" %>
+<!-- RIGHT ASIDES -->
+<%= cell(:ad, slot: "a", class: "l-column--right", id: "c-ad--a", attribution: false, order: -1).show do
+  '<hr class="b-rule l-column--right" style="order: 5;" />'
+end %>
 
-  </div>
-</div><!--/ .report -->
+<%= cell(:ad, slot: "b", class: "l-column--right", order: 1000).show do
+  '<hr class="b-rule l-column--right" style="order: 12;" />'
+end %>
 
-<!-- AdHost Slot: Membership Appeals -->
-<div id="article-membership-appeal"></div>
+<%= cell :recent_content, @program, class: "l-column--right", order: 1000 %>
 
-<div class="placard-waystation"></div>
-<% end %>
+<hr class="b-rule l-column--right" />
 
-<%= comments_for @segment, header: false %>
+<%= cell(:program_overview, @program, class: "l-column--right", order: 1000).show do
+  '<hr class="b-rule l-column--right" />'
+end %>
 
+<%= cell :ad, slot: "c", class: "l-column--right", order: 1001 %>
 
-<%= render 'programs/kpcc/featured_programs' %>
+<!-- CENTER CONTENT-->
+<%= cell :article, @article, type: 'story', headline: false %>
 
-<% if @popular_articles %>
-  <%= render 'shared/new/popular_articles',
-      articles: @popular_articles.first(4),
-      header: 'Popular Now on KPCC' %>
-<% end %>
+<%= cell :newsletter_appeal, nil, order: 999 %>
+
+<hr class="o-article__rule--ending b-rule b-rule--primary-lightest b-rule--padded" style="order: 999;" />
+
+<%= cell :related_links, @article, order: 999 %>
+
+<%= cell :more_from_episode, @episode, order: 999 %>
+
+<%= cell :social_tools, @article, display: 'horiz', order: 999 %>
+
+<!-- FOOTER CONTENT -->
+<hr class="o-article__rule--ending b-rule b-rule--secondary-alt b-rule--padded l-column--boundless" style="order: 1001;" />
+
+<%= cell :comments, @article, order: 1000 %>
+
+<%= cell :featured_programs, @program, class: "l-column--boundless", order: 1001 %>
+
+<%= cell :popular_articles, @program, class: "l-column--boundless o-popular-stories--horiz", order: 1001 %>
+
+<%= cell :epilogue, @article, class: "l-column--boundless", order: 1001 %>
+
 <% if @modal || @is_pledge_time %>
   <div id='exit-modal' class='exit-modal--hidden' data-ga-modal-label="<%= @google_analytics_label %>">
     <div class='exit-modal__underlay'></div>
       <div class='exit-modal__modal'>
-        <span class='exit-modal__close-button'>X</span>
+        <span class='exit-modal__close-button'>
+          <svg value="close" class="b-icon jp-stop o-audio-bar__collapse" data-ga-category="Article" data-ga-action="Volume" data-ga-label="Player">
+            <use class="" xlink:href="/static/images/scpr-sprite.svg#icon_line-close"/>
+            X
+          </svg>
+        </span>
         <div id='exit-modal__content'>
           <% if @modal %>
             <%= @modal.content.html_safe %>

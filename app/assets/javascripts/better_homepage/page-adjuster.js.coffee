@@ -1,8 +1,8 @@
 # This adjusts the height of the page to fit the content.
-# Not the greatest thing in the world, but enables us to 
+# Not the greatest thing in the world, but enables us to
 # very easily arrange items on the homepage using only CSS.
 #
-# It's mostly an issue on IE and Firefox.  Webkit/Blink based 
+# It's mostly an issue on IE and Firefox.  Webkit/Blink based
 # browsers clear the whitespace at the bottom of the page after
 # transform:translateY for some reason.
 

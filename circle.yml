@@ -27,4 +27,4 @@ database:
     - cp config/templates/database.yml.ci config/database.yml
     - cp config/templates/secrets.yml.ci config/secrets.yml
     - bundle exec rake db:create db:schema:load
-    - npm install --dev
+    - npm install --only=dev

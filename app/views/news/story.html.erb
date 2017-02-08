@@ -1,128 +1,45 @@
-<script src="//cdn.optimizely.com/js/1611751335.js"></script>
+<!-- <script src="//cdn.optimizely.com/js/1611751335.js"></script> -->
 <% add_to_page_title @story.feature.present? ? "#{@story.feature.name}: #{@story.headline}" : @story.headline %>
 <% content_for :opengraph do %><%= render_content @story, "opengraph" %><% end %>
+<% content_for :main_class, "o-article" %>
 <%= render 'shared/ads/dfp_script_config', category: @category %>
-<% content_for :membership_copy, @category.present? ? @category.title : 'Lorem Ipsum' %>
-<% content_for :body_class, 'interior single' %>
-<% content_for :titling do %>
-    <%= render :partial => 'shared/new/masthead/news_titling' %>
-<% end %>
 
-<%= cache ["show", "article-content", "v19", @story] do %>
-  <%= render "shared/new/single", article: @story, full: true %>
-<% end %>
+<!-- LEFT ASIDE -->
+<aside class="l-column--left l--centerize" style="order: -1;">
+  <%= cell :article_audio, @article %>
+  <%= cell :social_tools, @article, display: 'vert' %>
+</aside>
 
-<% cache ["show", "article-supportive", "v16", @story] do %>
-    <section class="supportive">
-        <aside class="placard">
-            <div class="ad widget">
-                <%= render "shared/ads/dfp", ad_key: 'slot_a' %>
-            </div>
-        </aside>
+<!-- RIGHT ASIDES -->
+<%= cell(:ad, id: "c-ad--a", slot: "a", class: "l-column--right", attribution: false, order: -1).show do
+  '<hr class="b-rule l-column--right" style="order: 5;" />'
+end %>
 
-        <aside class="placard">
-            <div class="ad widget">
-                <%= render "shared/ads/dfp", ad_key: 'slot_b' %>
-                <p class="appeal"><a href="/support/underwriting/">Become a KPCC Sponsor</a></p>
-            </div>
-        </aside>
+<%= cell(:ad, slot: "b", class: "l-column--right", order: 995).show do
+  '<hr class="b-rule l-column--right" style="order: 12;" />'
+end %>
 
-        <% if tag = @story.tags.first %>
-            <aside class="see-more topic">
-                <header>
-                    <h1>More from this Topic</h1>
-                    <h2 class="clearfix">
-                        <span><%= link_to tag.title, topic_path(tag.slug) %></span>
-                    </h2>
-                </header>
-                <ul class="previews">
-                    <% if tag_articles = tag.articles.first(3) %>
-                        <% tag_articles.each do |article| %>
-                            <li>
-                            <%= link_to article.public_path, class: "track-event", data: {"ga-category" => "Article", "ga-action" => "Clickthrough", "ga-label" => "More Sidebar Topic"} do %>
-                                <figure class="ratio-pairing clearfix">
-                                    <div class="ratio">
-                                        <div class="fill"></div>
-                                        <b class="img-contain"><%= image_tag article.asset.lsquare.url %></b>
-                                    </div><!--/ .ratio -->
-                                    <figcaption>
-                                        <%= smart_date_js article.public_datetime %>
-                                        <mark><%= article.short_title %></mark>
-                                    </figcaption>
-                                </figure><!--/ .ratio-pairing -->
-                            <% end %>
-                            </li>
-                        <% end %>
-                    <% end %>
-                </ul>
-            </aside>
-        <% elsif @category.present? %>
-            <%
-            content = @category.content(@content_params)
-            category_articles = content.map { |a| a.get_article }
-            %>
+<%= cell(:category_cluster, @article.category, class: "l-column--right", order: 996, category: "Article", label: "More Sidebar Category") %>
 
-            <aside class="see-more topic">
-                <header>
-                    <h1>More from this Category</h1>
-                    <h2 class="clearfix">
-                        <span><%= link_to @category.title, @category.public_path %></span>
-                        <mark><%= link_to 'See All', @category.public_path %></mark>
-                    </h2>
-                </header>
-                <ul class="previews">
-                    <% category_articles.first(3).each do |article| %>
-                        <li>
-                        <%= link_to article.public_path, class: "track-event", data: {"ga-category" => "Article", "ga-action" => "Clickthrough", "ga-label" => "More Sidebar Category"} do %>
-                            <figure class="ratio-pairing clearfix">
-                                <div class="ratio">
-                                    <div class="fill"></div>
-                                    <b class="img-contain"><%= image_tag article.asset.lsquare.url %></b>
-                                </div><!--/ .ratio -->
-                                <figcaption>
-                                    <%= smart_date_js article.public_datetime %>
-                                    <mark><%= article.short_title %></mark>
-                                </figcaption>
-                            </figure><!--/ .ratio-pairing -->
-                        <% end %>
-                        </li>
-                    <% end %>
-                </ul>
-            </aside>
-        <% end %>
-            <aside class="see-more">
-                <header>
-                    <h1>Popular now on KPCC</h1>
-                </header>
-                <ul class="previews">
-                  <% if @popular_articles.present? %>
-                    <% @popular_articles.first(3).each do |article| %>
-                      <li>
-                        <%= link_to article.public_path, class: "track-event", data: {"ga-category" => "Article", "ga-action" => "Clickthrough", "ga-label" => "Popular Now Sidebar"} do %>
-                              <figure class="ratio-pairing clearfix">
-                                  <div class="ratio">
-                                      <div class="fill"></div>
-                                      <b class="img-contain"><%= image_tag article.asset.lsquare.url %></b>
-                                  </div><!--/ .ratio -->
-                                  <figcaption>
-                                      <%= smart_date_js article.public_datetime %>
-                                      <mark><%= article.short_title %></mark>
-                                  </figcaption>
-                              </figure><!--/ .ratio-pairing -->
-                        <% end %>
-                      </li>
-                    <% end %>
-                  <% end %>
-                </ul>
-            </aside>
-        </section>
-    </div>
-</div><!--/ .report -->
+<%= cell(:popular_articles, @popular_articles.try(:first, 3), class: "l-column--right", order: 997, category: "Article", label: "Popular Now Sidebar").call(:trio) %>
 
-<!-- AdHost Slot: Membership Appeals -->
-<div id="article-membership-appeal"></div>
+<%= cell :ad, slot: "c", class: "l-column--right", order: 1000 %>
 
-<%= comments_for @story %>
+<!-- ARTICLE BODY -->
+<%= cell :article, @article, type: 'story' %>
 
-<div class="placard-waystation"></div>
-<% end %>
+<!-- MOAR STUFF -->
+<%= cell :newsletter_appeal, nil, order: 991 %>
+
+<hr class="o-article__rule--ending b-rule b-rule--primary-lightest", style="order: 992;" />
+
+<%= cell :related_links, @article, order: 993 %>
+
+<%= cell :social_tools, @article, display: 'horiz', order: 994 %>
+
+<!-- FOOTER CONTENT -->
+<hr class="o-article__rule--footer b-rule b-rule--secondary-alt b-rule--padded l-column--boundless" style="order: 998;" />
+
+<%= cell :comments, @article, order: 999 %>
+
+<%= cell :epilogue, @article, class: "l-column--boundless", order: 1001 %>

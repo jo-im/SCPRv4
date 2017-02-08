@@ -1,0 +1,67 @@
+.o-event-list__heading
+  font-family: $font-serif-titling
+  font-size: 54px
+  line-height: 60px
+  margin-bottom: $margin-in-pixels / 2
+  @media (max-width: $media-tablet)
+    font-size: 36px
+    line-height: 36px
+
+.o-event-list__item
+  display: flex
+  justify-content: space-between
+  margin-bottom: $margin-in-pixels / 2
+
+.o-event-list__item-headline
+  font-family: $font-serif-titling
+  font-size: 26px
+  line-height: 36px
+  margin-bottom: 14px
+  @media (max-width: $media-tablet)
+    font-size: 23px
+    line-height: 30px
+
+.o-event-list__item-figure
+  margin-bottom: 0px
+  width: percentage(189/756)
+  @media (max-width: $media-mobile)
+    display: none
+
+.o-event-list__item-details
+  width: percentage(526/756)
+  @media (max-width: $media-mobile)
+    width: initial
+
+  .o-event-list__item-location-name
+    font-weight: 700
+
+  .o-event-list__item-timestamp
+    display: inline-block
+
+  .o-event-list__item-location-name, .c-byline__pipe, .c-byline__timestamp
+    color: $color-gray
+    font-size: 15px
+    line-height: 18px
+    @media (max-width: $media-tablet)
+      font-size: 16px
+      line-height: 24px
+
+.o-event-list__item-teaser
+  display: block
+  font-size: 18px
+  font-weight: 300
+  line-height: 24px
+  margin-bottom: 14px
+  margin-top: 0.25em
+
+.o-event-list__item-link
+  display: block
+  margin-bottom: 14px
+  color: $color-link
+  cursor: pointer
+  font-weight: bold
+  word-wrap: break-word
+
+.pagination
+  color: $color-link
+  text-align: center

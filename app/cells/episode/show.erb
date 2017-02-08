@@ -1,0 +1,38 @@
+<section class="o-featured-episode__headers" style="order: 1">
+  <h6 class="b-heading--h6 b-heading--uppercase u-text-color--gray"><%= program.try(:title) %> FOR <%= air_date %></h6>
+  <h2 class="o-featured-episode__title b-heading b-heading--h1 b-heading--serif">
+    <%= title %>
+  </h2>
+  <%= cell(:article_audio, model, type: 'episode').call(:horizontal) %>
+</section>
+<div class="o-featured-episode__center" style="order: 3">
+  <h6 class="o-featured-episode__list-heading b-heading--h6 b-heading--uppercase u-text-color--gray">From this episode</h6>
+  <% if related_content.any? %>
+    <% related_content.each do |segment| %>
+    <div class="o-featured-episode__segment">
+      <figure class="o-featured-episode__segment-figure"><img src="<%= asset_path segment %>" style="background-image:url(<%= asset_path segment %>);"></figure>
+      <div class="o-featured-episode__segment-description c-audio-widget">
+        <h3 class="o-featured-episode__segment-title"><%= link_to segment.short_title, segment.public_path %></h3>
+        <div class="o-featured-episode__segment-teaser"><%= segment.teaser %></div>
+        <% if audio_file(segment) %>
+          <a href="<%= audio_file(segment).try(:url) %>" class="c-play__button" title="<%= segment.try(:title) || segment.try(:headline) %>" data-duration="<%= audio_file(segment).try(:duration) %>" data-ga-category="Article" data-ga-action="Play" data-ga-label="Player">
+            <span class="o-featured-episode__segment-audio">
+              <%= image_tag("o-audio-bar/Miniplayer-Play@2x.png", class: "o-featured-episode__segment-icon") %>
+              <%= format_clip_duration(audio_file(segment).try(:duration)) %>
+            </span>
+          </a>
+        <% end %>
+        <span class="o-featured-episode__segment-comments <%= options[:non_zero] ? 'non-zero' : '' %>">
+          <a href="<%= segment.try(:public_path) %>#comments">
+            <svg class="o-featured-episode__segment-icon">
+              <use class="" xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/static/images/scpr-sprite.svg#icon_line-comment"></use>
+            </svg>
+            COMMENTS (<%= comment_count_for segment %>)
+          </a>
+        </span>
+      </div>
+    </div>
+    <% end %>
+  </ul>
+  <% end %>
+</div>

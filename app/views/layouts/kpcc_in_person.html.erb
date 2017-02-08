@@ -1,61 +1,38 @@
-<% add_to_page_title "KPCC In Person" %>
+<!doctype html>
+<html>
+  <head>
+    <meta content="IE=edge" http-equiv="X-UA-Compatible">
+    <meta charset="utf-8">
+    <meta content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" name="viewport">
+    <!-- Use title if it's in the page YAML frontmatter -->
+    <title>89.3 KPCC - Southern California Public Radio</title>
+    <script src="https://use.typekit.net/cka2qre.js"></script>
+    <script>try{Typekit.load({ async: true });}catch(e){}</script>
+    <%= stylesheet_link_tag 'application' %>
+    <%= render "shared/ads/dfp_script_config" %>
+    <%= render partial: "shared/header/ad_scripts" %>
+    <%= javascript_include_tag 'aplicayshun' %>
+  </head>
 
-<%= render 'shared/header/document_header' %>
+  <body class="<%= content_for :body_class %>">
+    <% if alert = BreakingNewsAlert.latest_visible_alert %>
+      <%= cell :breaking_news_alert, alert %>
+    <% end %>
+    <div id="global-pushdown"></div>
+    <header class="<%= content_for :header_class %>">
+      <%= cell :masthead %>
+      <%= content_for :header %>
+    </header>
+    <main class="<%= content_for :main_class %>">
+      <%= yield %>
+    </main>
+    <footer class="<%= content_for :footer_class %>">
+      <%= content_for :footer %>
+      <%= cell :footer %>
+    </footer>
+    <%= cell :audio_player %>
+    <%= render "shared/footer/document_footer" %>
 
-<body class="kpcc-in-person">
-<iframe src="https://www.googletagmanager.com/ns.html?id=GTM-585PL29" height="0" width="0" style="display:none;visibility:hidden"></iframe>
-<div class="viewport">
-  <%= render "shared/masthead/layout_header" %>
-  <%= yield :masthead %>
-
-  <div id="kpcc-in-person" class="container-fluid main-content">
-    <div class="row-fluid">
-      <div id="kpcc-in-person-span-content" class="span18">
-        <%= yield %>
-      </div>
-
-      <!-- SIDEBAR -->
-      <div id="kpcc-in-person-span-sidebar" class="span6">
-        <div id="sidebar">
-          <% if content_for?(:sidebar) %>
-            <%= yield :sidebar %>
-          <% else %>
-            <%= render 'events/nav', navClass: "vertical" %>
-
-            <div class="mq-row-fluid">
-              <div class="span8">
-                <div id="getting-there" class="widget">
-                  <h3>Finding the Crawford Family Forum</h3>
-                  <p><a href='/events/forum/directions'>Get directions, parking and public transit info</a></p>
-                </div>
-              </div>
-
-              <div class="span8">
-                <div id="community-partnerships" class="widget">
-                  <h3>Partner with us</h3>
-                  <p>We seek events that open dialogue and deepen the relationships and understanding of Southern California’s diverse communities.</p>
-                  <p><a href='/events/forum/space'>Learn more about community partnership</a></p>
-                </div>
-              </div>
-
-              <div class="span8">
-                <div class="ad widget">
-                  <a href="https://scprcontribute.publicradio.org">
-                      <%= image_tag 'support-forum.png', alt: "Donate now to become a KPCC member" %>
-                  </a>
-                </div>
-              </div>
-            </div>
-          <% end %> <!-- /SIDEBAR -->
-        </div> <!-- sidebar -->
-      </div> <!-- span6 -->
-    </div> <!-- row fluid -->
-
-    <%= yield :bottom %>
-    <%= render "shared/audio/inpage_audio_player" %>
-  </div> <!-- container-fluid kpcc-in-person -->
-
-  <%= render "shared/footer/layout_footer" %>
-</div> <!-- viewport -->
-
-<%= render "shared/footer/document_footer" %>
+    <%= javascript_include_tag "better_homepage/style-guide", :async => true %>
+  </body>
+</html>

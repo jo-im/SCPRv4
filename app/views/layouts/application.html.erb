@@ -1,55 +1,41 @@
-<%= render 'shared/header/document_header' %>
+<!DOCTYPE html>
+<html>
+  <head>
+    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start': new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src= 'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f); })(window,document,'script','dataLayer','GTM-585PL29');</script>
+    <!-- Use title if it's in the page YAML frontmatter -->
+    <% add_to_page_title @TITLE_ELEMENTS.present? ? "89.3 KPCC" : "89.3 KPCC - Southern California Public Radio" %>
+    <title><%= page_title %></title>
+    <title>89.3 KPCC - Southern California Public Radio</title>
+    <script src="https://use.typekit.net/cka2qre.js"></script>
+    <script>try{Typekit.load({ async: true });}catch(e){}</script>
 
-<body>
-<iframe src="https://www.googletagmanager.com/ns.html?id=GTM-585PL29" height="0" width="0" style="display:none;visibility:hidden"></iframe>
-<div class="viewport">
-  <div id="global-pushdown"></div>
+    <%= render "shared/new/meta_header" %>
+    <%= stylesheet_link_tag 'application' %>
+    <%= render "shared/ads/dfp_script_config" %>
+    <%= render partial: "shared/header/ad_scripts" %>
+    <%= javascript_include_tag 'aplicayshun' %>
+  </head>
 
-  <%= render "shared/masthead/layout_header" %>
+  <body>
+    <iframe src="https://www.googletagmanager.com/ns.html?id=GTM-585PL29" height="0" width="0" style="display:none;visibility:hidden"></iframe>
+    <% if alert = BreakingNewsAlert.latest_visible_alert %>
+      <%= cell :breaking_news_alert, alert %>
+    <% end %>
+    <div id="global-pushdown"></div>
+    <header class="<%= content_for :header_class %>">
+      <%= cell :masthead %>
+      <%= content_for :header %>
+    </header>
+    <main class="<%= content_for :main_class %>">
+      <%= yield %>
+    </main>
+    <footer class="<%= content_for :footer_class %>">
+      <%= content_for :footer %>
+      <%= cell :footer %>
+    </footer>
+    <%= cell :audio_player %>
+    <%= render "shared/footer/document_footer" %>
 
-  <div id="main" class="container-fluid main-content">
-    <%= yield :title_bar %>
-    <div class="row-fluid">
-      <article class="span16 relative">
-        <%= content_for?(:content) ? yield(:content) : yield %>
-        <div class="vert-divider"></div>
-      </article>
-
-      <div class="span8">
-        <div id="sidebar">
-          <% if content_for?(:sidebar) %>
-            <%= yield(:sidebar) %>
-          <% else %>
-            <%= yield :sidebar_top %>
-            <%= render "shared/ads/dfp", ad_key: 'slot_a' %>
-            <div class="ad">
-              <%= render "shared/ads/dfp", ad_key: 'slot_b' %>
-              <p class="appeal"><a href="/support/underwriting/">Become a KPCC Sponsor</a></p>
-            </div>
-            <%= yield :sidebar_middle %>
-            <%= render "shared/widgets/breaking_news_subscribe" %>
-            <%= render "shared/widgets/most_popular" %>
-            <div class="ad">
-              <%= render "shared/ads/dfp", ad_key: 'slot_c' %>
-              <p class="appeal"><a href="/support/underwriting/">Become a KPCC Sponsor</a></p>
-            </div>
-          <% end %>
-        </div> <!-- sidebar -->
-      </div> <!-- span8 -->
-    </div> <!-- row-fluid -->
-    <%= render "shared/audio/inpage_audio_player" %>
-  </div> <!-- container fluid main -->
-
-  <%= render "shared/footer/layout_footer" %>
-
-<% content_for :footer do %>
-  <script type="text/javascript">
-    $(document).ready(function(){
-      scpr.VisualCampaign.enqueue('pushdown-global', $('#global-pushdown'));
-    });
-  </script>
-<% end %>
-
-</div> <!-- viewport -->
-
-<%= render "shared/footer/document_footer" %>
+    <%= javascript_include_tag "better_homepage/style-guide", :async => true %>
+  </body>
+</html>

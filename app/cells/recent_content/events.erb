@@ -1,0 +1,16 @@
+<aside class="o-content-cluster o-recent-events-cluster <%= @options[:class] %>" <%= order %> >
+  <h4 class="o-recent-events-cluster__heading b-heading--uppercase u-text-color--gray b-heading--medium">Recent Events</h4>
+  <a href="/events/kpcc-in-person/archive" class="o-recent-events-cluster__heading-link">See the KPCC In Person archive</a>
+  <ul class="o-content-cluster c-list c-list--horiz">
+    <% model.each do |event| %>
+      <li class="o-recent-events__content">
+        <div class="o-recent-events__content-description">
+          <span>
+            <%= link_to event.headline, event.public_url %>
+          </span>
+          <div class="o-recent-events__datetime"><%= event.starts_at.try(:strftime, "%B %-d, %Y") %></div>
+        </div>
+      </li>
+    <% end %>
+  </ul>
+</aside>

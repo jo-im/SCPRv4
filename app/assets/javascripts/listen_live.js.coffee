@@ -4,7 +4,7 @@ class scpr.ListenLive
 
     class @CurrentGen
         DefaultOptions:
-            url:                "http://live.scpr.org/kpcclive?ua=SCPRWEB&preskip=true"
+            url:                "https://live.scpr.org/kpcclive?ua=SCPRWEB&preskip=true"
             player:             "#jquery_jplayer_1"
             swf_path:           "/assets-flash"
             pause_timeout:      300
@@ -41,6 +41,17 @@ class scpr.ListenLive
             @player.jPlayer
                 swfPath: @options.swf_path
                 supplied: "mp3"
+                noVolume:
+                  ipad: null
+                  iphone: null
+                  ipod: null
+                  android_pad: null
+                  android_phone: null
+                  blackberry: null
+                  windows_ce: null
+                  iemobile: null
+                  webos: null
+                  playbook: null
                 ready: =>
                     @_playerReady = true
 
@@ -113,7 +124,7 @@ class scpr.ListenLive
                 # hit our ad endpoint and see if there is something to play
                 $.ajax
                     type:       "GET"
-                    url:        "http://adserver.adtechus.com/?adrawdata/3.0/5511.1/3590535/0/0/header=yes;adct=text/xml;cors=yes"
+                    url:        "https://adserver.adtechus.com/?adrawdata/3.0/5511.1/3590535/0/0/header=yes;adct=text/xml;cors=yes"
                     dataType:   "xml"
                     xhrFields:
                         withCredentials: true
@@ -264,7 +275,7 @@ class scpr.ListenLive
                     return false
         touchImpressions: ->
             impressions = @impressions()
-            _.each impressions, (url) =>      
+            _.each impressions, (url) =>
                 # create an img and append it to our DOM
                 img = $("<img src='#{url}'>").css("display:none")
                 $('body').append(img)

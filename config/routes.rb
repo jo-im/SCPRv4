@@ -47,11 +47,9 @@ Scprv4::Application.routes.draw do
 
 
   # Programs / Segments
-  # This route is hard-coded to constrain only The Frame and Take Two to render with our new featured program design.
-  # We can remove this as soon as all featured programs get the same red-carpet treatment.
-  get '/programs/:show' => "programs#featured_program", constraints: { show: /(the-frame|take-two|airtalk|offramp)/ }
+  get '/programs/:show' => "programs#show"
+  get '/programs/:show/featured' => "programs#show", as: :featured_show
   # This route is for displaying a clone of the old layout for featured programs for an index of episodes and segments
-  get '/programs/:show/featured' => "programs#featured_show", as: :featured_show
   # Legacy route for old Episode URLs
   get '/programs/:show/:year/:month/:day/' => "programs#episode", constraints: { year: /\d{4}/, month: /\d{2}/, day: /\d{2}/ }
 
@@ -61,8 +59,7 @@ Scprv4::Application.routes.draw do
   get '/programs/:show/:year/:month/:day/:id/:slug/'  => "programs#segment",    as: :segment,           constraints: { year: /\d{4}/, month: /\d{2}/, day: /\d{2}/, id: /\d+/, slug: /[\w_-]+/}
   get '/programs/:show'                               => 'programs#show',       as: :program
   get '/programs/'                                    => 'programs#index',      as: :programs
-  get '/schedule/'                                    => 'programs#schedule',   as: :schedule
-
+  get '/schedule(/:year/:month/:day)'                 => 'programs#schedule',   as: :schedule,          constraints: { year: /\d{4}/, month: /\d{2}/, day: /\d{2}/ }
 
 
   # Events
@@ -72,13 +69,16 @@ Scprv4::Application.routes.draw do
   get '/forum'                             => redirect('/events/kpcc-in-person')
 
   get '/events/kpcc-in-person/archive/'            => 'events#archive',    as: :kpcc_in_person_events_archive
+  get '/events/kpcc-in-person/:subtype'            => 'events#kpcc_in_person'
   get '/events/kpcc-in-person/'                    => 'events#kpcc_in_person',      as: :kpcc_in_person_events
 
   get '/events/sponsored/'                => 'events#index',      as: :sponsored_events,      defaults: { list: "sponsored" }
   get '/events/:year/:month/:day/:id/:slug/'  => 'events#show',   as: :event,                 constraints: { year: /\d{4}/, month: /\d{2}/, day: /\d{2}/, id: /\d+/, slug: /[\w_-]+/ }
-  get '/events/(list/:list)'              => 'events#index',      as: :events,                defaults: { list: "all" }
+  get '/events/(list/:list)'              => 'events#kpcc_in_person',      as: :events,                defaults: { list: "all" }
 
   # Short List
+  post '/short-list/archive'                     => "editions#archive"
+  get '/short-list/:year/:month/:day'            => "editions#latest", constraints: { year: /\d{4}/, month: /\d{2}/, day: /\d{2}/ }
   get '/short-list/:year/:month/:day/:id/:slug/' => "editions#short_list", as: :short_list, constraints: { year: /\d{4}/, month: /\d{2}/, day: /\d{2}/, id: /\d+/, slug: /[\w-]+/ }
   get '/short-list/latest'                       => "editions#latest"
   get '/short-list/'                             => redirect("/short-list/latest")
@@ -88,11 +88,7 @@ Scprv4::Application.routes.draw do
 
 
   # Topics
-  get 'topics/:slug' => 'topics#show', as: :topic
-  ## Deprecated show page route
-  get 'issues/:slug', to: redirect { |params, request| "/topics/#{params[:slug]}" }
-  ## Deprecated index path redirects to home page
-  get '/issues' => redirect("/")
+  get '/topics/:slug' => 'topics#show', as: :topic
   get '/topics' => redirect("/")
 
 
@@ -313,6 +309,7 @@ Scprv4::Application.routes.draw do
     end
 
     resources :verticals
+    resources :landing_pages
     resources :tags, concerns: [:search]
 
     resources :homepages, concerns: [:preview, :search]

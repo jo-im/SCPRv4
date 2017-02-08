@@ -1,0 +1,10 @@
+<aside class="o-related-links <%= @options[:class] %>" <%= order %>>
+  <h6 class="b-heading b-heading--h6 b-heading--uppercase u-text-color--gray">Related links</h6>
+  <ul class="c-list c-list--vert c-list--bullet c-list--bullet-lightest">
+    <% links.each do |link| %>
+      <li class="b-heading--medium">
+        <%= link_to link.title, link.url %>
+      </li>
+    <% end %>
+  </ul>
+</aside>

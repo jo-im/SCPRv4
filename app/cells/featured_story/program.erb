@@ -1,0 +1,45 @@
+<section class="o-featured-story o-featured-story--program" style="order: <%= @options[:order] %>">
+
+  <h6 class="o-featured-story__program-heading b-heading b-heading--h5 b-heading--uppercase u-text-color--gray"><%= program_title %> FOR <%= air_date %></h6>
+  <h2 class="o-featured-story__headline b-heading b-heading--h1 b-heading--serif">
+    <a class="b-link" href="<%= public_path %>"><%= title %></a>
+  </h2>
+
+  <div class="o-featured-story__left">
+    <%= cell(:article_audio, model, type: 'episode').call(:horizontal) %>
+    <div class="o-featured-story__description">
+      <span class="o-feautured-story__description-teaser"><%= teaser %></span>
+      <a class="o-featured-story__link b-link b-link--callout" href="<%= public_path %>">See full episode ></a>
+    </div>
+  </div>
+
+  <div class="o-featured-story__center">
+    <figure class="o-featured-story__figure o-figure o-figure--widescreen">
+      <img class="o-figure__img" src="<%= asset_path %>" style="background-image:url(<%= asset_path %>);">
+    </figure>
+    <div class="o-featured-story__right--inside">
+      <% if related_content.try(:any?) %>
+      <h6 class="o-featured-story__related-list__heading b-heading b-heading--h6 b-heading--uppercase u-text-color--gray">IN THIS EPISODE</h6>
+      <ul class="o-featured-story__related-list c-list c-list--bullet">
+        <% related_content.try(:each) do |article| %>
+        <li><%= link_to article.try(:short_title), article.try(:public_path) %></li>
+        <% end %>
+      </ul>
+      <% end %>
+    </div>
+  </div>
+
+  <div class="o-featured-story__right--outside">
+    <% if related_content.try(:any?) %>
+    <h6 class="o-featured-story__related-list__heading b-heading b-heading--h6 b-heading--uppercase u-text-color--gray">IN THIS EPISODE</h6>
+    <ul class="o-featured-story__related-list c-list c-list--bullet">
+      <% related_content.try(:each) do |article| %>
+      <li><%= link_to article.try(:short_title), article.try(:public_path) %></li>
+      <% end %>
+    </ul>
+    <% end %>
+  </div>
+
+</section>
+
+

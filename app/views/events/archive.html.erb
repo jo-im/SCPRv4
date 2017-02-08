@@ -1,3 +1,34 @@
-<% add_to_page_title "Archive" %>
+<% content_for :main_class, "l-events" %>
+<% add_to_page_title "Archive | Events" %>
 
-<%= render 'events_list', events: @events, title: "Past KPCC In Person Events", cssClass: "past-events", direction: :desc %>
+<% content_for :header do %>
+<section class="o-prologue o-prologue--in-person">
+  <a class="o-prologue__logo" href="/events/kpcc-in-person"><%= image_tag "event-headers/kpcc-in-person-logo.svg", alt: @landing_page.try(:title) %></a>
+  <span class="o-prologue__description">
+    <div class="o-prologue__teaser">
+      <%= @landing_page.try(:description) %>
+    </div>
+    <span class="o-prologue__pipe">|</span>
+    <div class="o-prologue__social-icons">
+      <a class="o-prologue__social-icon" href="https://www.facebook.com/KPCCInPerson">
+        <svg class="b-icon b-icon--size-sm b-icon--left">
+          <use class="b-icon--color-link" xlink:href="/static/images/scpr-sprite.svg#icon_line-facebook" />
+        </svg>
+      </a>
+      <a class="o-prologue__social-icon" href="https://twitter.com/KPCCInPerson">
+        <svg class="b-icon b-icon--size-sm b-icon--left">
+          <use class="b-icon--color-link" xlink:href="/static/images/scpr-sprite.svg#icon_line-twitter" />
+        </svg>
+      </a>
+    </div>
+  </span>
+</section>
+<% end %>
+
+<%= cell :ad, slot: "a", id: "o-ad--pos-a", attribution: false, order: -1 %>
+<%= cell :ad, slot: "b", id: "o-ad--pos-b", order: 994 %>
+<%= cell(:recent_content, @past_events, order: 995).call(:events) %>
+<%= cell(:appeal, nil, class: "o-appeal--in-person_side-bar", order: 996).call(:in_person_newsletter) %>
+<%= cell :ad, slot: "c", id: "o-ad--pos-c", order: 997 %>
+<%= cell :event_list, @events, title: "Past KPCC In Person Events" %>
+<%= paginate @events %>

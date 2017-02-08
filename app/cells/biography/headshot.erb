@@ -1,0 +1,23 @@
+<h1 class="o-biography__header b-heading--h1 b-heading--bold b-heading--serif" style="order: <%= @options[:order] %>">
+  <%= model.name %>
+</h1>
+<h3 class="o-biography__sub-header b-heading b-heading--h3 b-heading--serif" style="order: <%= @options[:order] %>"><%= model.title %></h3>
+
+<div class="o-biography__detail" style="order: <%= @options[:order] %>">
+  <% if model.headshot %>
+    <figure class="o-biography__figure o-figure o-figure--portrait">
+      <img class="o-figure__img" src="<%= model.headshot.small.url %>" role="img" style="background-image:url(<%= model.headshot.small.url %>);" />
+      <div class="o-biography__contact">
+        <strong>Contact <%= model.name %></strong>
+        <ul>
+          <% if model.twitter_handle.present? %><li><%= link_to "@#{model.twitter_handle}", twitter_profile_url(model.twitter_handle), target: "_blank" %></li><% end %>
+          <% if model.email.present? %><li><%= mail_to model.email, "Email", :encode => "javascript" %></li><% end %>
+          <% if model.phone_number.present? %><li>Phone: <%= model.phone_number %></li><% end %>
+        </ul>
+      </div>
+    </figure>
+  <% end %>
+  <div class="o-biography__description">
+    <%= model.bio.html_safe %>
+  </div>
+</div>

@@ -195,7 +195,7 @@ class Event < ActiveRecord::Base
       :public_datetime    => self.starts_at,
       :teaser             => self.teaser,
       :body               => self.body,
-      :assets             => self.assets.top,
+      :assets             => self.assets,
       :audio              => self.audio.select(&:available?),
       :byline             => self.byline,
       :edit_path          => self.admin_edit_path,
@@ -207,7 +207,8 @@ class Event < ActiveRecord::Base
       :links              => related_links.map(&:to_hash),
       :asset_display      => asset_display,
       :disqus_identifier  => self.disqus_identifier,
-      :abstract           => self.abstract
+      :abstract           => self.abstract,
+      :from_pij           => self.is_from_pij?
     })
   end
 

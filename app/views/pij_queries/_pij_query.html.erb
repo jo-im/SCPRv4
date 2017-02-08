@@ -14,7 +14,7 @@
         <%= render "shared/related_content_and_links", content: @query %>
       </div>
 
-      <div id="pin-query-<%=query.pin_query_id%>" class="pin-query-container"></div>
+      <div id="pin-query-<%=query.pin_query_id%>" class="o-pin-query-container"></div>
     </div>
 
     <footer>
@@ -49,7 +49,7 @@
 
 
 <% content_for :footer do %>
-  <script>$('.pin-query-container').spin();</script>
+  <script>$('.o-pin-query-container').spin();</script>
 
   <script type="text/javascript" src="https://www.publicinsightnetwork.org/air2/js/pinform.js"></script>
 
@@ -63,7 +63,7 @@
       // If the form has shown up, then stop the spinner
       // and then interval.
       if($(".pin-form").length) {
-        $('.pin-query-container').spin(false);
+        $('.o-pin-query-container').spin(false);
         clearInterval(pinCheck);
       }
     }, 100);

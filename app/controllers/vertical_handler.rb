@@ -11,11 +11,7 @@ module VerticalHandler
   def handle_vertical_default
     load_vertical_associations
     template = "verticals/#{@vertical.slug}"
-
-    render(
-      :layout   => 'new/landing',
-      :template => template_exists?(template) ? template : 'verticals/default'
-    )
+    render template: template_exists?(template) ? template : 'verticals/default'
   end
 
 
@@ -25,14 +21,18 @@ module VerticalHandler
     @category   = @vertical.category
     @blog       = @vertical.blog
     @quote      = @vertical.quote
-    @events     = @category.events.published.upcoming
+    @upcoming_events     = Array(@category.events.published.upcoming.limit(2))
+    @past_events = Array(@category.events.published.limit(2))
     @tags       = @vertical.tags.order("updated_at desc")
+    @category_articles = Array(vertical_articles)
+    @vertical_blog_articles = Array(vertical_blog_articles)
   end
 
 
   # Get any content with this category, excluding the lead article,
   # and map them to articles
   def vertical_articles
+    ## Hmmmm... why is this a helper and not just assigned to a variable?
     return @category_content if @category_content
 
     content_params = {

@@ -1,10 +1,11 @@
-<% add_to_page_title "Blogs" %>
+<% content_for :main_class, "l-blogs" %>
 
-<h1>KPCC Blogs</h1>
-<div class="row-fluid">
-  <div class="span24">
-    <div class="directory">
-      <%= render partial: "/blogs/blog_module", collection: @blogs, as: :blog %>
-    </div>
-  </div>
-</div> <!-- .row -->
+<%= cell :ad, slot: "a", id: "o-ad--pos-a", attribution: false, order: -1 %>
+<%= cell :ad, slot: "b", id: "o-ad--pos-b", order: 3 %>
+<%= cell(:appeal, nil, order: 4).call(:breaking_news) %>
+<%= cell(:popular_articles, nil, order: 5).call(:side_bar) %>
+<%= cell :ad, order: 6, slot: "c", id: "o-ad--pos-c" %>
+
+<h1 class="c-blog-index__heading b-heading b-heading--h1 b-heading--serif" style="order: 1">KPCC Blogs</h1>
+<%= cell :blog_index, @blogs, order: 2 %>
+

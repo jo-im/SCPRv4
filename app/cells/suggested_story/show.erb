@@ -1,0 +1,14 @@
+<section class="o-suggested-story" style="order: <%= @options[:order] %>">
+  <figure class="o-suggested-story__figure o-figure o-figure--four-by-three">
+    <a href="<%= model.try(:public_path) %>">
+      <img class="o-figure__img" src="<%= asset_path %>" style="background-image: url(<%= asset_path %>);">
+    </a>
+  </figure>
+  <h6 class="o-suggested-story__heading b-heading b-heading--h4 b-heading--uppercase u-text-color--gray b-heading--bold">New to <%= program_title %>? We suggest starting with this episode.</h6>
+  <h2 class="o-suggested-story__headline b-heading b-heading--h1 b-heading--serif">
+    <a class="b-link" href="<%= model.try(:public_path) %>"><%= model.try(:short_title) %></a>
+  </h2>
+  <%= timestamp %>
+  <span class="o-suggested-story__teaser"><%= model.try(:teaser) %></span>
+</section>
+

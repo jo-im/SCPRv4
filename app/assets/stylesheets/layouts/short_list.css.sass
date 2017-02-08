@@ -1,0 +1,80 @@
+.l-short-list
+  display: block
+  max-width: 1440px
+  margin: 0 auto
+  overflow-y: auto
+  padding-top: $margin-in-pixels
+  .o-social-tools
+    float: left
+    margin-left: $margin
+    margin-right: $gutter
+    width: $col
+    text-align: center
+
+  .o-short-list__featured-image, .o-short-list__abstract, .o-short-list__featured-image-owner, .o-appeal, .b-rule
+    margin-left: $margin + $col + $gutter
+    width: ($col * 6) + ($gutter * 5)
+
+  .o-short-list__featured-image
+    margin-bottom: 0px
+
+  #o-ad--pos-a, #o-ad--pos-b, #o-ad--pos-c, .o-short-list__side-bar, .o-archive--small
+    float: right
+    width: ($col * 3) + ($gutter * 2)
+    margin-right: $gutter + $col + $margin
+    clear: right
+
+  #o-ad--pos-a
+    border-bottom: 1px solid $color-gray-secondary-light
+    margin-bottom: $margin-in-pixels * 0.75
+    padding-bottom: $margin-in-pixels * 0.75
+
+  #o-ad--pos-b
+    border-bottom: 1px solid $color-gray-secondary-light
+    margin-bottom: $margin-in-pixels
+    padding-bottom: $margin-in-pixels
+
+  .o-appeal
+    margin-bottom: $margin-in-pixels
+
+  @media (max-width: $media-wide)
+    .o-short-list__featured-image, .o-short-list__abstract, .o-short-list__featured-image-owner, .o-appeal, .b-rule
+      width: ($col * 6) + ($gutter * 6)
+
+    #o-ad--pos-a, #o-ad--pos-b, #o-ad--pos-c, .o-short-list__side-bar, .o-archive--small
+      margin-right: $margin
+      width: ($col * 3) + ($gutter * 3)
+
+  @media (max-width: $media-desktop)
+    #o-ad--pos-a, #o-ad--pos-b, #o-ad--pos-c, .o-short-list__side-bar, .o-archive--small
+      width: ($col * 4) + ($gutter * 3)
+
+  @media all and (max-width: $media-tablet)
+    display: flex
+    flex-direction: column
+    padding-top: $margin-in-pixels / 2
+    .o-short-list__abstract, .o-short-list__side-bar, .o-short-list__featured-image,
+    .o-short-list__featured-image-owner, .o-archive--small,
+    #o-ad--pos-a, #o-ad--pos-b, #o-ad--pos-c
+      width: ($col * 12) + ($gutter * 11)
+      margin-left: $margin
+      margin-right: $margin
+    .o-appeal
+      width: initial
+      margin-left: 0px
+      margin-right: 0px
+    .o-social-tools--vert
+      display: none
+    #o-ad--pos-a, #o-ad--pos-b
+      margin-bottom: $margin-in-pixels
+      padding-bottom: $margin-in-pixels
+    #o-ad--pos-c
+      border-bottom: 1px solid $color-gray-secondary-light
+      margin-bottom: $margin-in-pixels
+      padding-bottom: $margin-in-pixels
+    .o-short-list__abstract
+      margin-bottom: $margin-in-pixels
+      padding-bottom: $margin-in-pixels
+      padding-top: 0px
+    .o-short-list__abstract:last-of-type
+      border-bottom: 1px solid $color-gray-secondary-light

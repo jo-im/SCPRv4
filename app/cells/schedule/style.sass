@@ -1,0 +1,67 @@
+.o-schedule__header
+  font-family: $font-serif-titling
+  font-size: 54px
+  line-height: 60px
+  @media (max-width: $media-tablet)
+    font-size: 36px
+    line-height: 36px
+
+.o-schedule__list-item
+  align-items: center
+  border-bottom: 1px solid $color-gray-light
+  display: flex
+  justify-content: space-between
+  padding-bottom: 15px
+  padding-top: 15px
+
+.o-schedule__list-date-header
+  border-bottom: 1px solid $color-gray-light
+  padding-top: 1em
+  padding-bottom: 1em
+  display: flex
+  justify-content: space-between
+  align-items: center
+
+  .o-schedule__list-date-header__current-date
+    color: $color-gray
+    display: inline
+    text-transform: uppercase
+    font-size: 22px
+    font-weight: 500
+    line-height: 30px
+    text-align: center
+    width: 60%
+    @media (max-width: $media-tablet)
+      font-size: 20px
+      line-height: 30px
+
+    span
+      display: inline-block
+
+.o-schedule__list-item__program
+  color: $color-link
+  font-size: 18px
+  font-weight: 500
+  line-height: 18px
+  width: percentage(300/414)
+  @media (max-width: $media-tablet)
+    font-size: 18px
+    line-height: 24px
+
+.o-schedule__list-item__time
+  color: $color-gray
+  font-size: 15px
+  font-weight: 400
+  line-height: 18px
+  text-align: right
+  width: percentage(93/414)
+
+.o-schedule__list-date-header__navigation
+  color: $color-gray-warm
+  font-size: 15px
+  font-weight: 400
+  line-height: 30px
+  text-transform: uppercase
+  @media (max-width: $media-tablet)
+    font-size: 16px
+    line-height: 24px

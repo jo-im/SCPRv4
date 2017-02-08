@@ -1,0 +1,6 @@
+<div class="o-program-list__sub-list" style="order: <%= @options[:order] %>">
+  <h4 class="b-heading b-heading--medium b-heading--h4 b-heading--uppercase u-text-color--gray"><%= @options[:title] %></h4>
+  <% model.each do |program| %>
+    <p class="o-program-list__sub-list__item"><%= link_to program.title, program.public_path %></p>
+  <% end %>
+</div>

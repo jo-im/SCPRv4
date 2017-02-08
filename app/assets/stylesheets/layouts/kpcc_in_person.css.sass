@@ -1,0 +1,92 @@
+.l-kpcc-in-person
+  display: block
+  max-width: 1440px
+  margin: 0 auto
+  overflow-y: auto
+  padding-top: $margin-in-pixels
+
+  #o-ad--pos-a, #o-ad--pos-b, #o-ad--pos-c, .o-appeal--in-person, .o-recent-events-cluster
+    float: right
+    width: ($col * 3) + ($gutter * 2)
+    margin-right: $margin
+    clear: right
+
+  #o-ad--pos-a
+    border-bottom: 1px solid $color-gray-light
+    margin-bottom: $margin-in-pixels * 0.75
+    padding-bottom: $margin-in-pixels * 0.75
+
+  #o-ad--pos-b
+    border-bottom: 1px solid $color-gray-light
+    padding-bottom: $margin-in-pixels
+
+  #o-ad--pos-c
+    padding-bottom: $margin-in-pixels
+
+  .o-appeal--in-person
+    margin-bottom: $margin-in-pixels
+
+  .b-rule
+    margin-top: 0px
+    margin-bottom: 60px
+
+  .o-popular-stories
+    margin-left: $margin
+    margin-right: $margin
+    margin-bottom: $margin-in-pixels
+
+  .o-epilogue, .o-popular-stories, .o-in-person-map, .o-in-person-source-appeal
+    clear: both
+
+  .o-in-person-source-appeal, .o-in-person-map
+    margin-bottom: $margin-in-pixels
+
+  .o-highlighted-events, hr, .o-upcoming-events
+    margin-left: $margin
+    width: ($col * 8) + ($gutter * 7)
+
+  .o-meet-the-team
+    margin-left: $margin
+    margin-bottom: $margin-in-pixels
+    width: ($col * 8) + ($gutter * 8)
+
+  @media (max-width: $media-desktop)
+    .o-highlighted-events, hr, .o-upcoming-events
+      width: ($col * 8) + ($gutter * 8)
+
+    #o-ad--pos-a, #o-ad--pos-b, #o-ad--pos-c, .o-appeal--in-person, .o-recent-events-cluster
+      margin-right: $margin
+      width: ($col * 3) + ($gutter * 3)
+
+  @media all and (max-width: $media-tablet)
+    display: flex
+    flex-direction: column
+    padding-top: $margin-in-pixels / 2
+
+    .o-highlighted-events--in-person, .b-rule, .o-upcoming-events, .o-meet-the-team,
+    .o-appeal--in-person, .o-recent-events-cluster
+      width: ($col * 12) + ($gutter * 11)
+      margin-left: $margin
+      margin-right: $margin
+
+    #o-ad--pos-a, #o-ad--pos-b, #o-ad--pos-c
+      margin-left: $margin
+      margin-right: $margin
+      width: ($col * 12) + ($gutter * 11)
+
+    #o-ad---pos-a
+      padding-bottom: $margin-in-pixels / 2
+
+    #o-ad--pos-b
+      padding-bottom: $margin-in-pixels
+      padding-top: $margin-in-pixels / 2
+
+    #o-ad--pos-c
+      margin-bottom: 0px
+      margin-top: 0px
+
+    .o-meet-the-team
+      margin-bottom: $margin-in-pixels / 2
+
+    .o-in-person-map
+      margin-bottom: $margin-in-pixels / 2

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170810193354) do
+ActiveRecord::Schema.define(version: 20171031210028) do
 
   create_table "abstracts", force: :cascade do |t|
     t.string   "source",               limit: 255
@@ -458,6 +458,7 @@ ActiveRecord::Schema.define(version: 20170810193354) do
     t.integer  "days_to_expiry",   limit: 4
     t.string   "description_text", limit: 255
     t.string   "phone_number",     limit: 255
+    t.boolean  "is_featured"
   end
 
   add_index "external_programs", ["air_status"], name: "index_external_programs_on_air_status", using: :btree
@@ -497,6 +498,30 @@ ActiveRecord::Schema.define(version: 20170810193354) do
   add_index "flatpages_flatpage", ["is_public"], name: "index_flatpages_flatpage_on_is_public", using: :btree
   add_index "flatpages_flatpage", ["path"], name: "django_flatpage_url", using: :btree
   add_index "flatpages_flatpage", ["updated_at"], name: "index_flatpages_flatpage_on_updated_at", using: :btree
+
+  create_table "landing_page_contents", force: :cascade do |t|
+    t.integer  "position",        limit: 4
+    t.integer  "article_id",      limit: 4
+    t.string   "article_type",    limit: 255
+    t.integer  "landing_page_id", limit: 4
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "landing_page_reporters", force: :cascade do |t|
+    t.integer  "bio_id",          limit: 4
+    t.integer  "landing_page_id", limit: 4
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "landing_pages", force: :cascade do |t|
+    t.string   "title",       limit: 255
+    t.text     "description", limit: 65535
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.string   "slug",        limit: 255
+  end
 
   create_table "layout_breakingnewsalert", force: :cascade do |t|
     t.string   "headline",                 limit: 255,                        null: false
@@ -571,9 +596,9 @@ ActiveRecord::Schema.define(version: 20170810193354) do
     t.datetime "updated_at",                           null: false
   end
 
-  add_index "lists", ["ends_at"], name: "index_lists_on_ends_at", using: :btree
+  add_index "lists", ["ends_at"], name: "index_lists_on_end_time", using: :btree
   add_index "lists", ["published_at"], name: "index_lists_on_published_at", using: :btree
-  add_index "lists", ["starts_at"], name: "index_lists_on_starts_at", using: :btree
+  add_index "lists", ["starts_at"], name: "index_lists_on_start_time", using: :btree
   add_index "lists", ["status"], name: "index_lists_on_status", using: :btree
 
   create_table "media_audio", force: :cascade do |t|

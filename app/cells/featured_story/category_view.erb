@@ -1,0 +1,23 @@
+<section class="o-featured-story o-featured-story--category" style="order: <%= order %>">
+
+  <h2 class="o-featured-story__headline b-heading b-heading--h2 b-heading--serif">
+    <a class="b-link" href="<%= public_path %>"><%= title %></a>
+  </h2>
+
+  <figure class="o-featured-story__figure o-figure o-figure--widescreen">
+    <img class="o-figure__img" src="<%= asset_path %>" style="background-image:url(<%= asset_path %>);">
+    <figcaption class="o-figure__caption o-figure__attribution">
+      <%= asset_attribution %>
+    </figcaption>
+  </figure>
+
+  <div class="o-featured-story__description">
+    <span class="o-story-list__item-byline"><%= byline %></span>
+    <span class="o-story-list__item-pipe">|</span>
+    <time class="o-story-list__item-timestamp"><%= model.try(:public_datetime).try(:strftime, "%B %d, %I:%M %p") %></time>
+    <span class="o-story-list__item-teaser"><%= teaser %></span>
+  </div>
+
+</section>
+
+

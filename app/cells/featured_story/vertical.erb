@@ -1,0 +1,70 @@
+<section class="o-featured-story o-featured-story--vertical", style="order: <%= @options[:order] %>">
+
+  <h1 class="o-featured-story__headline b-heading b-heading--serif">
+    <a class="b-link" href="<%= public_path %>"><%= title %></a>
+  </h1>
+
+
+  <div class="o-featured-story__left">
+    <div class="o-featured-story__description">
+      <%= teaser %>
+      <span class="o-featured-story__byline"><%= byline %></span>
+    </div>
+    <% if tag && topic_articles.any? %>
+      <h6 class="o-featured-story__related-list__heading b-heading b-heading--h6 b-heading--uppercase u-text-color--gray">More from <%= link_to tag.title, topic_path(tag.slug) %></h6>
+      <ul class="o-featured-story__related-list c-list c-list--bullet">
+        <% topic_articles.each do |article| %>
+          <li><%= link_to article.short_title, article.public_path %></li>
+        <% end %>
+      </ul>
+
+    <% elsif related_content.try(:any?) %>
+      <%# Bug: There is nothing in here that is breaking the
+      category cache, so if one of the related articles gets
+      their headline or something changed, it's possible that
+      it won't get updated on this page right away. We could
+      fix this by touching all related articles when an article
+      is saved, but I'm not sure this is worth the overhead. %>
+      <h6 class="o-featured-story__related-list__heading b-heading b-heading--h6 b-heading--uppercase u-text-color--gray">Related</h6>
+      <ul class="o-featured-story__related-list c-list c-list--bullet">
+        <% related_content[0..1].try(:each) do |article| %>
+          <li><%= link_to article.try(:short_title), article.try(:public_path) %></li>
+        <% end %>
+      </ul>
+    <% end %>
+  </div>
+
+
+  <div class="o-featured-story__center">
+    <figure class="o-featured-story__figure o-figure o-figure--widescreen">
+      <img class="o-figure__img" src="<%= asset_path %>" style="background-image:url(<%= asset_path %>);">
+      <figcaption class="o-figure__caption o-figure__attribution">
+        <%= asset_attribution %>
+      </figcaption>
+    </figure>
+  </div>
+
+
+  <div class="o-featured-story__right">
+    <% if blog_content.try(:any?) %>
+    <div class="o-featured-story__blog-content">
+      <h6 class="o-featured-story__related-list__heading b-heading b-heading--h6 b-heading--uppercase u-text-color--gray">LATEST FROM <%= link_to blog.try(:name), blog.try(:public_url) %></h6>
+      <ul class="o-featured-story__related-list c-list">
+        <% blog_content.try(:each) do |content| %>
+        <li class="o-featured-story__related-list__item">
+          <a href="<%= content.try(:public_path) %>"><%= content.try(:short_headline) %></a>
+          <span class="o-featured-story__related-list__byline"><%= content.try(:byline) %></span>
+        </li>
+        <% end %>
+      </ul>
+    </div>
+    <% end %>
+    <div class="o-featured-story__events">
+      <h6 class="o-featured-story__events-heading b-heading b-heading--h6 b-heading--uppercase u-text-color--gray"><%= category_title %> Events at KPCC</h6>
+      <p class="o-featured-story__events-description">
+        KPCC hosts free events that open dialogue and deepen the understanding of vital issues affecting Southern California. <%= link_to 'See our in-studio events.', kpcc_in_person_events_path %>
+      </p>
+    </div>
+  </div>
+
+</section>

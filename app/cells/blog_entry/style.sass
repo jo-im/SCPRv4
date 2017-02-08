@@ -1,0 +1,72 @@
+.o-blog-list__heading
+  font-family: $font-serif-titling
+  margin-bottom: $gutter
+
+.o-blog-list__article
+  display: flex
+  justify-content: space-between
+  border-bottom: 2px solid $color-gray-light
+  padding-bottom: $gutter
+  margin-bottom: $gutter
+  .o-blog-list__article-interactive
+    align-items: center
+    display: flex
+    flex-direction: column
+    margin-right: percentage(42/756)
+    width: percentage(72/756)
+    .o-blog-list__article-social-tools
+      display: flex
+      flex-direction: column
+      align-items: center
+    .c-audio, .o-social-tools
+      margin-bottom: $margin-in-pixels
+    .o-blog-list__article-add-comment
+      text-align: center
+      font-size: 0.8em
+      font-weight: 500
+      color: $color-link
+      line-height: 1.2em
+      margin: 0.2em
+  aside
+    width: 85%
+
+.o-blog-list__content
+  .c-byline, p
+    line-height: 1.6em
+    margin-bottom: 1em
+  .o-figure--portrait
+    float: right
+    width: 25%
+  .o-figure--portrait ~ .c-byline,
+  .o-figure--portrait ~ p
+    width: 65%
+  h2
+    @extend .b-heading, .b-heading--h5, .b-heading--uppercase, .u-text-color--gray
+    margin: 0
+  a
+    color: $color-link
+
+.o-blog-list-pagination
+  a
+    display: inline-block
+    color: $color-link
+    padding: 0.5em 1em
+    border: 1px solid $color-link
+  a:hover
+    color: white
+    background-color: $color-link
+  a:last-of-type
+    float: right
+
+.o-blog-list__article-comments
+  display: flex
+  align-items: center
+  font-size: 0.8em
+  font-weight: 500
+  color: $color-link
+  line-height: 1.2em
+  .o-blog-list__article-icon
+    display: inline
+    width: 1.4em
+    height: 1.4em
+    margin-right: 0.4em

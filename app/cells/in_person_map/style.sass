@@ -1,0 +1,61 @@
+.o-in-person-map
+  background-color: $color-gray-lightest
+  display: flex
+  justify-content: space-between
+  padding-bottom: $margin-in-pixels
+  padding-left: $margin
+  padding-right: $margin
+  padding-top: $margin-in-pixels
+  @media (max-width: $media-tablet)
+    flex-direction: column-reverse
+
+  .o-in-person-map__info
+    margin-right: $page-gutter
+    width: ($page-col * 5) + ($page-gutter * 4)
+    @media (max-width: $media-tablet)
+      margin: 0px
+      width: initial
+
+  .o-in-person-map__contact
+    color: $color-link
+    display: block
+    font-size: 0.8em
+    font-weight: bold
+
+  iframe
+    max-height: 474px
+    width: ($page-col * 7) + ($page-gutter * 6)
+    @media (max-width: $media-tablet)
+      margin: 0px
+      width: initial
+
+  h3
+    color: $color-gray
+    font-size: 26px
+    font-weight: 500
+    line-height: 36px
+    margin: 1em 0
+    text-transform: uppercase
+    @media (max-width: $media-tablet)
+      font-size: 23px
+      line-height: 30px
+
+  h1
+    color: $color-primary
+    font-family: $font-serif-titling
+    font-size: 37px
+    font-style: italic
+    font-weight: bold
+    line-height: 42px
+    @media (max-width: $media-tablet)
+      font-size: 29px
+      line-height: 36px
+
+  p
+    font-size: 18px
+    line-height: 30px
+    margin-top: 1em
+
+  b
+    line-height: 30px
+    font-weight: 500

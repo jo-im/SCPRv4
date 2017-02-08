@@ -1,0 +1,27 @@
+<aside class="<%= @options[:class] %>" <%= order %> >
+  <ul class="o-social-tools o-social-tools--<%= @options[:display] %>">
+    <% if obj_key %>
+    <li class="email">
+      <a href="/content/share?obj_key=<%= obj_key %>" class="social_email b-popup__link track-event email" target="_blank" data-key="<%= obj_key %>" data-ga-category="Article" data-ga-action="Share" data-ga-label="Email">
+        <svg class="b-icon">
+          <use class="b-icon--color-gray-light" xlink:href="/static/images/scpr-sprite.svg#icon_line-email"/>
+        </svg>
+      </a>
+    </li>
+    <% end %>
+    <li class="facebook">
+      <a href="#" class="social_fb b-popup__link track-event facebook" data-ga-category="Article" data-ga-action="Share" data-ga-label="Facebook" data-url="<%= public_url %>">
+        <svg class="b-icon">
+          <use class="b-icon--color-gray-light" xlink:href="/static/images/scpr-sprite.svg#icon_line-facebook-inverted"/>
+        </svg>
+      </a>
+    </li>
+    <li class="twitter">
+      <a href="#" class="social_twit b-popup__link track-event twitter" data-ga-category="Article" data-ga-action="Share" data-ga-label="Twitter" data-url="<%= public_url %>" data-text="<%= u(title) %>">
+        <svg class="b-icon">
+          <use class="b-icon--color-gray-light" xlink:href="/static/images/scpr-sprite.svg#icon_line-twitter"/>
+        </svg>
+      </a>
+    </li>
+  </ul>
+</aside>

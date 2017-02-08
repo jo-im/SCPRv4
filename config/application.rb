@@ -33,9 +33,12 @@ module Scprv4
       "*.eot", "*.ttf", "*.woff", # Font files
       "amp/application.css.sass",
       "programs.js",
+      "aplicayshun.js"
     ]
 
     config.assets.precompile += %w( better_homepage/style-guide.js )
+
+    config.assets.paths += [Rails.root.join("app/cells")]
 
     config.browserify_rails.commandline_options = "-t coffeeify --extension=\".js.coffee\""
 

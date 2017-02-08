@@ -1,5 +1,5 @@
 class scpr.EventTracking
-    chooser: ".track-event"
+    chooser: "*[data-ga-category]"
     constructor: (@options={})->
         @parseOptions(@options)
         new scpr.EventTrackingLink($(link), @options) for link in $(@chooser)

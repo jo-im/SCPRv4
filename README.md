@@ -30,7 +30,7 @@ SCPRv4 basically integrates a CMS and frontend. CMS conventions are provided
 through [Outpost](https://github.com/scpr/outpost), but all data models are
 here inside the SCPRv4 project.
 
-And speaking of data models... there are a lot of them, and some of them might
+And speaking of data models... there is a lot of them, and some of them might
 seem like they overlap.
 
 ### Content Models

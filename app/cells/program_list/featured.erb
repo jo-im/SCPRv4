@@ -1,0 +1,19 @@
+<div class="o-program-list" style="order: <%= @options[:order] %>">
+  <h1 class="o-program-list__heading">Featured Programs</h1>
+  <% model.each do |program| %>
+    <section class="o-program-list__item">
+        <figure class="o-program-list__featured-figure">
+          <a href="<%= program.public_path %>">
+            <img class="o-figure__img" src="<%= asset_path("programs/#{program.slug}.jpg") %>" style="background-image: url(<%= asset_path("programs/#{program.slug}.jpg") %>);">
+          </a>
+        </figure>
+
+      <section class="o-program-list__featured-description">
+        <h1 class="o-program-list__item-heading">
+          <a href="<%= program.public_path %>"><%= program.title %></a>
+        </h1>
+        <span><%= program.teaser.html_safe %></span>
+      </section>
+    </section>
+  <% end %>
+</div>

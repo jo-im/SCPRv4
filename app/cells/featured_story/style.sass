@@ -1,0 +1,285 @@
+.o-featured-story
+  // overflow: auto
+  // display: none
+
+.o-featured-story--category
+  border-bottom: 1px solid $color-gray-light
+  display: flex
+  flex-direction: row
+  flex-wrap: wrap
+  justify-content: space-between
+  margin-bottom: $margin-in-pixels / 2
+  padding-bottom: $margin-in-pixels / 2
+  @media (max-width: $media-tablet)
+    margin-bottom: $margin-in-pixels
+    padding-bottom: $margin-in-pixels
+
+  .o-featured-story__figure
+    margin-bottom: 0px
+    width: percentage(414/756)
+    @media (max-width: $media-mobile)
+      width: initial
+
+    .o-figure__img
+      padding-top: (100 / 1.53) * 1%
+
+  .o-featured-story__description
+    font-size: 15px
+    line-height: 30px
+    width: percentage(300/756)
+    @media (max-width: $media-mobile)
+      width: initial
+
+    .o-story-list__item-timestamp
+      font-size: 15px
+      line-height: 30px
+
+    .o-story-list__item-teaser
+      display: block
+      @media (max-width: $media-tablet)
+        font-size: 20px
+        line-height: 30px
+
+  .o-featured-story__headline
+    font-weight: 800
+    line-height: 42px
+    @media (max-width: $media-tablet)
+      font-size: 29px
+      line-height: 36px
+
+  .o-story-list__item-teaser
+    font-size: 22px
+    line-height: 30px
+
+.o-featured-story--vertical
+  display: flex
+  justify-content: space-between
+  flex-direction: row
+  flex-wrap: wrap
+  margin-bottom: $margin-in-pixels / 2
+
+  .o-featured-story__headline
+    flex: 0 1 100%
+    font-size: 54px
+    line-height: 60px
+    margin-bottom: 25px
+    width: 100%
+    @media (max-width: $media-tablet)
+      font-size: 36px
+      line-height: 36px
+
+  .o-featured-story__left
+    width: ($page-col * 3) + ($page-gutter * 2)
+
+  .o-featured-story__center
+    width: ($page-col * 6) + ($page-gutter * 5)
+    .o-featured-story__figure img
+      padding-top: (100 / 1.50117) * 1%
+
+  .o-featured-story__right
+    width: ($page-col * 3) + ($page-gutter * 2)
+    @media (max-width: $media-desktop)
+      display: flex
+      justify-content: space-between
+    @media (max-width: $media-tablet)
+      flex-direction: column
+
+    .o-featured-story__related-list
+      margin-left: 0px
+
+  .o-featured-story__byline
+    color: $color-secondary
+    display: block
+    font-size: 15px
+    font-weight: 500
+    margin-top: 10px
+    @media (max-width: $media-tablet)
+      font-size: 16px
+      line-height: 24px
+
+  .o-featured-story__description
+    border-bottom: 1px solid $color-gray-light
+    font-size: 22px
+    line-height: 30px
+    margin-bottom: 30px
+    padding-bottom: $margin-in-pixels / 2
+    @media (max-width: $media-tablet)
+      font-size: 20px
+      margin-bottom: $margin-in-pixels / 2
+
+  .o-featured-story__related-list
+    margin-bottom: $margin-in-pixels
+    margin-left: -18px
+    @media (max-width: $media-mobile)
+      margin-left: 0px
+
+  .o-featured-story__related-list li
+    font-size: 18px
+    line-height: 24px
+    margin-bottom: 20px
+
+  .o-featured-story__related-list__heading
+    line-height: 18px
+    margin-bottom: 10px
+    a
+      color: $color-link
+
+  .o-featured-story__events-heading
+    margin-bottom: 10px
+
+  .o-featured-story__events-description
+    font-size: 13px
+    font-weight: 500
+    line-height: 18px
+    margin-bottom: $margin-in-pixels
+
+    a
+      color: $color-link
+
+  .o-featured-story__related-list__byline
+    color: $color-gray
+    display: block
+    font-size: 13px
+    margin-top: 4px
+    font-weight: 500
+
+  .o-featured-story__blog-content, .o-featured-story__events
+    @media (max-width: $media-desktop)
+      width: 45%
+    @media (max-width: $media-tablet)
+      width: initial
+
+
+
+.o-featured-story--program
+  display: flex
+  flex-wrap: wrap
+
+  .o-featured-story__program-heading
+    flex: 0 1 100%
+    line-height: 30px
+    margin-bottom: $margin-in-pixels / 8
+    margin-left: $margin + $col + $gutter
+    margin-right: $margin + $col + $gutter
+    width: 100%
+    @media (max-width: $media-tablet)
+      font-size: 20px
+      margin-left: 0px
+      margin-right: 0px
+      order: 1
+      width: initial
+
+  .o-featured-story__headline
+    flex: 0 1 100%
+    line-height: 48px
+    margin-bottom: $margin-in-pixels / 2
+    margin-left: $margin + $col + $gutter
+    margin-right: $margin + $col + $gutter
+    width: 100%
+    @media (max-width: $media-tablet)
+      font-size: 32px
+      line-height: 36px
+      margin-left: 0px
+      margin-right: 0px
+      order: 2
+      width: initial
+    @media (max-width: $media-mobile)
+      font-size: 26px
+      line-height: 30px
+
+  .o-featured-story__left
+    margin-left: $margin + $col + $gutter
+    margin-right: $gutter
+    width: ($col * 3) + ($gutter * 2)
+    @media (max-width: $media-tablet)
+      margin-left: 0px
+      margin-right: 0px
+      order: 4
+      width: initial
+  .o-featured-story__center
+    margin-right: $margin + $col + $gutter
+    width: ($col * 7) + ($gutter * 6)
+    @media (max-width: $media-tablet)
+      margin-left: 0px
+      margin-right: 0px
+      order: 3
+      width: initial
+  .o-featured-story__right--inside
+    display: block
+    @media (max-width: $media-tablet)
+      display: none
+  .o-featured-story__right--outside
+    display: none
+    @media (max-width: $media-tablet)
+      display: block
+      margin-left: 0px
+      margin-right: 0px
+      order: 5
+      width: initial
+
+  .o-featured-story__byline
+    color: $color-secondary
+    display: block
+    font-size: 14px
+    font-weight: 500
+    margin-top: 10px
+
+  .o-featured-story__link
+    font-size: 18px
+    font-weight: 400
+    display: inline-block
+    line-height: 18px
+    margin-top: 7px
+    @media (max-width: $media-tablet)
+      font-size: 18px
+      line-height: 24px
+
+  .o-featured-story__description
+    font-size: 22px
+    line-height: 30px
+    padding-bottom: 60px
+    @media (max-width: $media-tablet)
+      font-size: 20px
+
+  .o-feautured-story__description-teaser
+    display: -webkit-box
+    max-height: 360px
+    overflow: hidden
+    -webkit-line-clamp: 12
+    -webkit-box-orient: vertical
+
+  .o-featured-story__related-list
+    display: flex
+    flex-wrap: wrap
+    margin-left: -18px
+    @media (max-width: $media-tablet)
+      margin-left: 0px
+
+  .o-featured-story__related-list li
+    font-size: 18px
+    margin-bottom: 24px
+    flex: 1 0 (50% - $margin * 2)
+    @media (max-width: $media-tablet)
+      flex: initial
+
+    &:nth-child(odd)
+      margin-right: $margin * 2
+
+  .o-featured-story__related-list__heading
+    margin-bottom: 10px
+    a
+      color: $color-link
+
+  .o-featured-story__events-heading
+    margin-bottom: 10px
+
+  .o-featured-story__events-description
+    font-size: 14px
+    font-style: italic
+
+  .o-featured-story__related-list__byline
+    color: $color-gray
+    display: block
+    font-size: 13px
+    margin-top: 4px
+    font-weight: 500

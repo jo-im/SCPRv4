@@ -1,0 +1,46 @@
+<!-- <script src="//cdn.optimizely.com/js/1611751335.js"></script> -->
+<% add_to_page_title @program.try(:title) %>
+
+<% content_for :main_class, "l-program" %>
+<% content_for :header do %>
+  <section class="o-prologue o-prologue--program">
+    <a class="o-prologue__logo" href="/programs/<%= @program.try(:slug) %>"><%= image_tag "show-logos/#{@program.try(:slug)}.svg" %></a>
+    <span class="o-prologue__description">
+      <div class="o-prologue__teaser">
+        <%= @program.try(:teaser) %>
+      </div>
+      <address>Hosted by <%= @program.try(:host) %></address>
+      <div class="o-prologue__airtime">
+        <div>Airs <%= @program.try(:airtime) %></div>
+        <div class="o-prologue__social-icons">
+          <% present @program, ProgramPresenter do |p| %>
+            <% ['twitter', 'facebook', 'podcast', 'email', 'rss'].each do |social| %>
+              <% if p.send("#{social}_link").present? %>
+                <a class="o-prologue__social-icon" href="<%= p.send("#{social}_link") %>" target="_blank">
+                  <svg class="b-icon b-icon--size-sm b-icon--left">
+                    <use class="b-icon--color-link" xlink:href="<%= "/static/images/scpr-sprite.svg#icon_line-#{social}" %>" />
+                  </svg>
+                </a>
+              <% end %>
+            <% end %>
+          <% end %>
+        </div>
+      </div>
+    </span>
+  </section>
+<% end %>
+
+<%= cell(:featured_story, @featured_story_article, order: 1).call(:program) %>
+<hr class="b-rule b-rule--padded b-rule--primary-lightest" style="order: 2">
+<%= cell :story_list, @program.try(:segments).order("published_at DESC").try(:limit, 14).map(&:to_article), heading: "Recently on #{@program.title}", class: "o-story-list--program o-story-list--two-col o-story-list--nobg", asset_aspect: "square", order: 4 %>
+<%= cell :ad, slot: "a", id: "o-ad--pos-a", attribution: false, order: 3 %>
+<%= cell :ad, slot: "b", id: "o-ad--pos-b", order: 5 %>
+<%= cell :recent_episodes_list, @episodes, program: @program, order: 6 %>
+<%= cell :archive_picker, @program, base_url: "/programs/" + @program.slug + "/archive", header: "Find a specific episode from " + @program.try(:title) + "'s archive", type: "full", order: 6 %>
+<%= cell(:appeal, @program, order: 4).call(:podcast) %>
+<%= cell :suggested_story, @suggested_story_article, order: 7 %>
+<%= cell :ad, slot: "c", id: "o-ad--pos-c", order: 7 %>
+<%= cell :meet_the_team, @program, order: 6 %>
+<%= cell :featured_programs, @program, order: 11 %>
+<%= cell :popular_articles, @program, class: "o-popular-stories--horiz", order: 1001 %>
+<%= cell :epilogue, @program, order: 1001 %>

@@ -1,0 +1,105 @@
+.o-prologue--program
+  background: $color-white
+  border-bottom: 1px solid #27A9D5
+  flex-wrap: wrap
+  height: $margin-in-pixels * 3.5
+  @media (max-width: $media-mobile)
+    height: $margin-in-pixels * 2
+
+  .o-prologue__social-icons
+    margin-top: 7px
+    @media (max-width: $media-tablet)
+      float: right
+    @media (max-width: $media-mobile)
+      float: left
+
+  .o-prologue__social-icon
+    margin-right: 15px
+    @media (max-width: $media-tablet)
+      margin-right: 7px
+
+  .o-prologue__description
+    float: right
+    font-size: 22px
+    font-weight: 300
+    letter-spacing: -0.25px
+    line-height: 30px
+    margin-right: $gutter + $col + $margin
+    width: ($col * 8) + ($gutter * 7)
+    @media (max-width: $media-tablet)
+      font-size: 20px
+      line-height: 30px
+      margin-right: $margin
+      width: ($col * 9) + ($gutter * 8)
+    @media (max-width: $media-mobile)
+      font-size: 12px
+      line-height: 14px
+      width: 47%
+
+    address
+      display: block
+
+  .o-prologue__teaser
+    @media (max-width: $media-mobile)
+      display: none
+
+  .o-prologue__title
+    font-family: $font-serif-titling
+    font-size: 40px
+    font-style: italic
+    color: $color-black
+    @media (max-width: $media-tablet)
+      font-size: 30px
+
+  .o-prologue__logo
+    @media (max-width: $media-mobile)
+      margin-left: $margin
+      margin-right: $margin
+      width: 40%
+
+    img
+      color: $color-secondary
+      font-family: $font-serif-titling
+      font-size: 45px
+      font-weight: 800
+      line-height: 48px
+      @media (max-width: $media-wide)
+        font-size: 32px
+        line-height: 36px
+      @media (max-width: $media-tablet)
+        font-size: 26px
+        line-height: 30px
+
+#o-prologue--program__episode, #o-prologue--program__segment
+  height: 120px
+
+  .o-prologue__logo
+    width: ($col * 2) + $gutter
+    @media (max-width: $media-mobile)
+      margin-left: $margin
+      margin-right: $margin
+      width: 40%
+
+  .o-prologue__description
+    margin-right: $margin
+    width: ($col * 10) + ($gutter * 9)
+    @media (max-width: $media-mobile)
+      width: 47%
+
+    .o-prologue__teaser, address
+      display: inline
+
+    .o-prologue__teaser
+      @media (max-width: $media-mobile)
+        display: none
+
+  .o-prologue__airtime
+    display: none
+    @media (max-width: $media-mobile)
+      display: block
+
+#o-prologue--program__segment
+  .o-prologue__description
+    text-align: right
+    @media (max-width: $media-mobile)
+      text-align: left

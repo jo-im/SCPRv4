@@ -1,0 +1,35 @@
+<section class="o-popular-stories-side-bar"  style="order: <%= order %>">
+  <h6 class="o-popular-stories__heading b-heading b-heading--h6 b-heading--uppercase u-text-color--gray b-heading--medium">Popular now on KPCC</h6>
+  <input checked type="radio" name="tab" id="o-popular-stories-side-bar__input-viewed" class="o-popular-stories-side-bar__input" />
+  <label class="o-popular-stories-side-bar__label" for="o-popular-stories-side-bar__input-viewed">VIEWED</label>
+  <input type="radio" name="tab" id="o-popular-stories-side-bar__input-discussed" class="o-popular-stories-side-bar__input"/>
+  <label class="o-popular-stories-side-bar__label" for="o-popular-stories-side-bar__input-discussed">DISCUSSED</label>
+  <div id="o-popular-stories-side-bar__tab-viewed" class="o-popular-stories-side-bar__tab">
+    <% popular_articles_viewed.each do |article| %>
+    <div class="o-popular-stories-side-bar__item">
+      <%= link_to article.public_path, class: "track-event", data: {"ga-category" => "Article", "ga-action" => "Clickthrough", "ga-label" => "Popular Now Quadrant"} do %>
+      <figure class="o-popular-stories-side-bar__figure o-figure">
+        <img class="o-popular-stories-side-bar__item-image o-figure__img" src="<%= article.asset.small.url %>" style="background-image: url(<%= article.asset.small.url %>)" />
+      </figure>
+      <span class="o-popular-stories-side-bar__item-caption">
+        <%= article.short_title %>
+      </span>
+      <% end %>
+    </div>
+    <% end %>
+  </div>
+  <div id="o-popular-stories-side-bar__tab-discussed" class="o-popular-stories-side-bar__tab">
+    <% popular_articles_discussed.each do |article| %>
+      <div class="o-popular-stories-side-bar__item">
+        <%= link_to article.public_path, class: "track-event", data: {"ga-category" => "Article", "ga-action" => "Clickthrough", "ga-label" => "Popular Now Quadrant"} do %>
+        <figure class="o-popular-stories-side-bar__figure o-figure">
+          <img class="o-popular-stories-side-bar__item-image o-figure__img" src="<%= article.asset.small.url %>" style="background-image: url(<%= article.asset.small.url %>)" />
+        </figure>
+        <span class="o-popular-stories-side-bar__item-caption">
+          <%= article.short_title %>
+        </span>
+        <% end %>
+      </div>
+    <% end %>
+  </div>
+</section>

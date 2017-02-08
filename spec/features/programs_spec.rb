@@ -9,7 +9,10 @@ describe "Episode page" do
       episode.save!
 
       visit episode.public_url
-      page.should have_content segment.title
+
+      within "#o-standard-program-episode__episode__segment-list" do
+        page.should have_content segment.title
+      end
     end
   end
 
@@ -21,7 +24,10 @@ describe "Episode page" do
       episode.segments << segment
 
       visit episode.public_url
-      page.should have_content segment.headline
+
+      within "#o-standard-program-episode__episode__segment-list" do
+        page.should have_content segment.headline
+      end
     end
   end
 end
@@ -34,7 +40,7 @@ describe "Program page" do
 
       visit program.public_path
 
-      within "section.show-feature" do
+      within ".o-standard-program__episode-list" do
         page.should have_content "xxCurrentEpisode--"
       end
     end
@@ -54,7 +60,7 @@ describe "Program page" do
 
       visit program.public_path
 
-      within "section.show-episodes" do
+      within ".o-standard-program__episode-list" do
         page.should have_content "xxLastEpisode--"
       end
     end

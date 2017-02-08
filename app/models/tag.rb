@@ -34,7 +34,7 @@ class Tag < ActiveRecord::Base
     super unless pmp_alias == new_alias
   end
 
-  def public_path
+  def public_path *args
     "/topics/#{slug}" if slug
   end
 

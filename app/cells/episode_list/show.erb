@@ -1,0 +1,33 @@
+<% if model.any? %>
+<div id="<%= @options[:id] %>" class="o-featured-episode__center <%= @options[:class] %>" style="order: 3">
+  <h6 class="o-featured-episode__list-heading b-heading--h6 b-heading--uppercase u-text-color--gray"><%= model.try(:length) > 1 ? @options[:header] : nil %></h6>
+    <% model.each do |episode| %>
+    <div class="o-featured-episode__segment">
+      <div class="o-featured-episode__segment-description">
+        <h3 class="o-featured-episode__segment-title"><%= link_to episode.try(:title), episode.try(:public_path) || episode.try(:external_url) %></h3>
+        <time class="o-story-list__item-timestamp"><%= episode.try(:published_at).try(:strftime, "%a %B %d") || episode.try(:air_date).try(:strftime, "%a %B %d") %></time>
+        <div class="o-featured-episode__segment-teaser"><%= episode.try(:summary) || episode.try(:teaser) %></div>
+        <% if audio_file(episode) && @options[:multiple] != false %>
+          <div class="c-audio-widget">
+            <a href="<%= audio_file(episode).try(:url) %>" class="c-play__button" title="<%= episode.try(:title) || episode.try(:headline) %>" data-duration="<%= audio_file(episode).try(:duration) %>" data-ga-category="Article" data-ga-action="Play" data-ga-label="Player">
+              <span class="o-featured-episode__segment-audio">
+                <%= image_tag("o-audio-bar/Miniplayer-Play@2x.png", class: "o-featured-episode__segment-icon") %>
+                <%= format_clip_duration(audio_file(episode).try(:duration)) %>
+              </span>
+            </a>
+          </div>
+        <% end %>
+        <% if @options[:multiple] == false %>
+          <%= cell(:article_audio, episode, type: 'episode').call(:horizontal) %>
+          <%= cell :social_tools, episode.to_article, display: 'horiz', order: 999 %>
+          <% if episode.try(:body) %>
+          <div class="o-article">
+            <%= episode.try(:body) %>
+          </div>
+          <% end %>
+        <% end %>
+      </div>
+    </div>
+    <% end %>
+</div>
+<% end %>

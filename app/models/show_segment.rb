@@ -112,7 +112,7 @@ class ShowSegment < ActiveRecord::Base
       :teaser             => self.teaser,
       :body               => self.body,
       :category           => self.category,
-      :assets             => self.assets.top,
+      :assets             => self.assets,
       :audio              => self.audio.select(&:available?),
       :attributions       => self.bylines,
       :byline             => self.byline,
@@ -127,7 +127,8 @@ class ShowSegment < ActiveRecord::Base
       :links              => related_links.map(&:to_hash),
       :asset_display      => asset_display,
       :disqus_identifier  => self.disqus_identifier,
-      :abstract           => self.abstract
+      :abstract           => self.abstract,
+      :from_pij           => self.is_from_pij?
     })
   end
 
@@ -138,7 +139,7 @@ class ShowSegment < ActiveRecord::Base
       :summary                => !(self.abstract || "").empty? ? self.abstract : self.teaser,
       :source                 => self.abstract_source,
       :url                    => self.public_url,
-      :assets                 => self.assets.top,
+      :assets                 => self.assets,
       :audio                  => self.audio.available,
       :category               => self.category,
       :article_published_at   => self.published_at

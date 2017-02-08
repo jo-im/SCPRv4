@@ -1,0 +1,38 @@
+.o-flatpage__title
+  font-size: 54px
+  font-family: $font-serif-titling
+  line-height: 60px
+  @media (max-width: $media-tablet)
+    font-size: 36px
+    line-height: 36px
+
+.o-flatpage
+  ul
+    list-style: none
+    margin-left: 1.6em
+    font-size: 0.9em
+
+  li
+    margin: 1em 0
+    padding-left: 1em
+    text-indent: -0.5em
+
+  li::before
+    color: #D4D4D4
+    content: "•"
+    display: inline-block
+    width: 0.5em
+
+  a
+    color: $color-link
+
+  p
+    margin: 1em 0
+
+  h1
+    font-family: $font-serif-titling
+
+  h2, h3, h4, h5, h6
+    @extend .b-heading
+    font-family: $font-serif-titling
+    font-weight: bold

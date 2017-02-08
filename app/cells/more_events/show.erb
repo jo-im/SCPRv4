@@ -1,0 +1,10 @@
+<aside class="o-more-events <%= @options[:class] %>" <%= order %>>
+  <h6 class="b-heading b-heading--h6 b-heading--uppercase u-text-color--gray">More events with KPCC In Person</h6>
+  <ul class="c-list c-list--vert c-list--bullet c-list--bullet-lightest">
+    <% recent_content.try(:each) do |link| %>
+      <li class="b-heading--bold">
+        <%= link_to link.headline, link.public_url, :data => { :ga_category => @options[:category], :ga_action => "Clickthrough", :ga_label => @options[:label] } %>
+      </li>
+    <% end %>
+  </ul>
+</aside>

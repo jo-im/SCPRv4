@@ -17,7 +17,7 @@ describe List, type: :model do
     context 'a list with a date range starting in the future' do
       it 'is not visible' do
         list = List.create({
-          title: "test", 
+          title: "test",
           status: 5,
           starts_at: Time.now + 10.hours,
           ends_at: Time.now + 11.hours
@@ -28,7 +28,7 @@ describe List, type: :model do
     context 'a list with a date range overlapping the current time' do
       it 'is visible' do
         list = List.create({
-          title: "test", 
+          title: "test",
           status: 5,
           starts_at: Time.now - 10.hours,
           ends_at: Time.now + 11.hours
@@ -39,7 +39,7 @@ describe List, type: :model do
     context 'a list with a start time but no end time' do
       it 'is visible' do
         list = List.create({
-          title: "test", 
+          title: "test",
           status: 5,
           starts_at: Time.now - 10.hours
         })

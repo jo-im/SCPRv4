@@ -1,0 +1,81 @@
+.o-prologue--in-person
+  background: $color-white
+  border-bottom: 1px solid #27A9D5
+  display: flex
+  height: $margin-in-pixels * 3.5
+  @media (max-width: $media-tablet)
+    height: $margin-in-pixels * 2
+
+  .o-prologue__logo
+    max-width: 295px
+    width: ($col * 3) + ($gutter * 2)
+    @media (max-width: $media-mobile)
+      margin-left: $margin
+      margin-right: $margin
+      width: 40%
+
+  .o-prologue__description
+    font-size: 22px
+    letter-spacing: -0.25px
+    line-height: 30px
+    position: relative
+    text-align: left
+    width: ($col * 8) + ($gutter * 7)
+    @media (max-width: $media-tablet)
+      font-size: 14px
+      line-height: 18px
+      width: ($col * 9) + ($gutter * 8)
+    @media all and (max-width: $media-mobile)
+      font-size: 12px
+      line-height: 14px
+      margin-right: $margin
+
+    .o-prologue__teaser
+      @media (max-width: $media-mobile)
+        display: none
+
+    .o-prologue__pipe
+      display: none
+      @media (max-width: $media-mobile)
+        display: block
+        float: left
+
+    .o-prologue__social-icons
+      display: flex
+      justify-content: flex-end
+      position: absolute
+      right: 0px
+      @media (max-width: $media-mobile)
+        position: relative
+
+      .o-prologue__social-icon
+        margin-right: 15px
+        @media (max-width: $media-tablet)
+          margin-right: 7px
+        @media (max-width: $media-mobile)
+          margin-left: 7px
+
+#o-prologue--in-person__event
+  height: 120px
+
+  .o-prologue__logo
+    width: ($col * 2) + $gutter
+    @media (max-width: $media-tablet)
+      width: ($col * 3) + ($gutter * 2)
+    @media (max-width: $media-mobile)
+      margin-left: $margin
+      margin-right: $margin
+      width: 40%
+
+  .o-prologue__description
+    text-align: right
+    width: ($col * 10) + ($gutter * 9)
+    @media (max-width: $media-tablet)
+      font-size: 18px
+      line-height: 24px
+      width: ($col * 9) + ($gutter * 8)
+
+  .o-prologue__social-icons
+    display: none
+    @media (max-width: $media-mobile)
+      display: block

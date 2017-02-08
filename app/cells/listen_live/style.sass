@@ -1,0 +1,177 @@
+$listen-live-col: percentage(24/504)
+
+.o-listen-live__mast
+  height: 46px
+  justify-content: space-between
+  padding-left: $listen-live-col
+  padding-right: $listen-live-col
+
+  .o-mast__logo
+    width: 116px
+
+    svg
+      min-width: inherit
+      width: 100%
+
+.o-listen-live__footer
+  background-color: $color-gray-dark
+  color: $color-gray
+  font-size: 12px
+  font-weight: 400
+  line-height: 24px
+  padding: 0.5em
+  text-align: center
+
+#listen-live-play
+  position: absolute
+  overflow: visible
+  $breathe-scale: 1.075
+  .outer-ring
+    transition: all .5s cubic-bezier(.3,0,.1,1)
+    transform: scale(1,1)
+    transform-origin: center
+  &:hover
+    .outer-ring
+      transform: scale($breathe-scale, $breathe-scale)
+
+#listen-live-pause
+  position: absolute
+  overflow: visible
+  $breathe-scale: 1.075
+  .outer-ring
+    transition: all .5s cubic-bezier(.3,0,.1,1)
+    transform: scale(1,1)
+    transform-origin: center
+  &:hover
+    .outer-ring
+      transform: scale($breathe-scale, $breathe-scale)
+
+.o-audio-player__interface
+  border-bottom: 1px solid $color-gray-light
+  display: flex
+  justify-content: space-between
+  margin-left: $listen-live-col
+  margin-right: $listen-live-col
+  padding-bottom: 24px
+  padding-top: 24px
+  .c-audio-player__button
+    align-items: center
+    display: flex
+    flex-direction: column
+    position: relative
+    width: ($listen-live-col * 4)
+
+    .jp-play, .jp-pause
+      @media (max-width: $media-mobile)
+        width: 50%
+
+    #listen-live-play
+      align-self: center
+      justify-self: center
+      max-width: 96px
+      position: relative
+      transform-origin: center center
+      width: 100%
+      @media (max-width: $media-mobile)
+        max-width: none
+
+    #listen-live-pause
+      align-self: center
+      justify-content: center
+      max-width: 96px
+      position: relative
+      transform-origin: center center
+      width: 100%
+      @media (max-width: $media-mobile)
+        max-width: none
+
+    .c-volume-control
+      align-items: center
+      display: flex
+      justify-content: center
+      width: 100%
+      @media (max-width: $media-mobile)
+        margin-top: 18px
+        width: 95%
+
+      .jp-volume-bar
+        background-color: $color-gray-light
+        cursor: pointer
+        height: 7px
+        margin: 15px 5px
+        width: 115px
+        border-radius: 6px
+        @media (max-width: $media-mobile)
+          height: 14px
+          width: 100%
+
+        .jp-volume-bar-value
+          background-color: $color-gray
+          border-radius: 6px
+          height: 7px
+          position: relative
+          @media (max-width: $media-mobile)
+            height: 14px
+
+      .jp-mute, .jp-unmute
+        display: flex
+        align-items: center
+        padding-bottom: 2px
+        @media (max-width: $media-mobile)
+          height: 1.5em
+          width: 1.5em
+
+          svg
+            height: 100%
+            width: 100%
+
+  .o-listen-live__meta-data
+    float: left
+    margin-top: 7px
+    width: ($listen-live-col * 16)
+    @media (max-width: $media-mobile)
+      width: initial
+
+    .o-listen-live__on-now__header
+      font-weight: 800
+      line-height: 36px
+      margin-bottom: 3px
+      @media (max-width: $media-mobile)
+        font-size: 23px
+        line-height: 30px
+    .o-listen-live__on-now__timeslot
+      color: $color-gray
+      display: block
+      font-size: 15px
+      font-weight: 400
+      line-height: 18px
+      margin-bottom: 3px
+      @media (max-width: $media-mobile)
+        font-size: 16px
+        line-height: 24px
+    .o-listen-live__up-next__timeslot
+      color: $color-gray
+      font-size: 13px
+      line-height: 18px
+      margin-bottom: 27px
+    .o-listen-live__up-next__title
+      font-size: 13px
+      line-height: 18px
+  .o-listen-live__links
+    font-size: 12px
+    line-height: 14px
+    margin-top: 18px
+    text-align: right
+    .o-listen-live__links-preface
+      color: $color-gray
+      float: left
+    .pipe
+      margin-left: 0.4em
+      margin-right: 0.4em
+    a
+      text-align: right
+
+#live_ad_sponsor-appeal
+  color: $color-gray
+  font-size: 12px
+  line-height: 18px

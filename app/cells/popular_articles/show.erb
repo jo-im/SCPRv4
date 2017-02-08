@@ -1,0 +1,17 @@
+<section class="o-popular-stories <%= @options[:class] %>" style="order: <%= order %>">
+  <h4 class="o-popular-stories__heading b-heading b-heading--h4 b-heading--uppercase u-text-color--gray-warm b-heading--medium">What's popular now on KPCC</h4>
+  <% articles.each do |article| %>
+    <div class="o-popular-stories__story track-event">
+      <figure class="o-popular-stories__figure o-figure o-figure--four-by-three">
+        <%= link_to article.public_path, data: {"ga-category" => "Article", "ga-action" => "Clickthrough", "ga-label" => "Popular Now Quadrant"} do %>
+        <img class="o-figure__img" src="<%= asset_path article %>" style="background-image: url(<%= asset_path article %>)" />
+        <% end %>
+        <figcaption class="o-popular-stories__caption">
+          <%= link_to article.public_path, data: {"ga-category" => "Article", "ga-action" => "Clickthrough", "ga-label" => "Popular Now Quadrant"} do %>
+          <%= article.short_title %>
+          <% end %>
+        </figcaption>
+      </figure>
+    </div>
+  <% end %>
+</section>

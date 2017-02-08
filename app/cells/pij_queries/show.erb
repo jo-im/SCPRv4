@@ -1,0 +1,20 @@
+<% @options[:css_class]   ||= nil %>
+<% feature    ||= 5 %>
+<% top, bottom  = split_collection(model, feature) %>
+
+<h2 class="o-pin__section_header" style="order: <%= @options[:order] %>"><%= @options[:header] %></h2>
+
+<% top.each_with_index do |query, index| %>
+  <section class="o-pin__question" style="order: <%= @options[:order].to_i + index + 1 %>">
+    <h3 class="o-pin__description_header"><%= link_to query.headline, pij_query_path(query.slug) %></h3>
+    <p class="o-pin__description_body"><%= query.teaser.html_safe %></p>
+  </section>
+<% end %>
+
+<% bottom.each_with_index do |query, index| %>
+  <section class="o-pin__question o-pin__question--collapsed o-pin__question--<%= @options[:class] %>" style="order: <%= top.size + @options[:order].to_i + index %>">
+    <h3 class="o-pin__description_header"><%= link_to query.headline, pij_query_path(query.slug) %></h3>
+    <p class="o-pin__description_body"><%= query.teaser.html_safe %></p>
+  </section>
+<% end %>
+<h4 class="o-pin__more-toggle" data-target="<%= @options[:class] %>" style="order: <%= @options[:order] + model.size %>"><span class="o-pin__more-toggle_caret"></span><%= @options[:more] %></h4>

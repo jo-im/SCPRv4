@@ -1,0 +1,391 @@
+// by default, a story list is vertical
+// with descriptions to the right of
+// the figures
+
+.o-story-list
+  background: $color-gray-lightest
+  display: flex
+  flex-direction: column
+  margin-bottom: $margin-in-pixels
+
+.o-story-list--nobg
+  background: none
+
+.o-story-list__item
+  clear: both
+  display: flex
+  margin-bottom: $margin-in-pixels
+
+.o-story-list__item-figure
+  float: left
+  margin-right: $gutter
+  max-width: 300px
+  margin-bottom: 0px
+
+.o-story-list__item-description
+  float: left
+  max-width: 510px
+  .o-media__label
+    margin-right: 0.4em
+    .icon
+      width: 1em
+      height: 1em
+
+.o-story-list__item-pipe
+  display: inline-block
+  color: $color-gray-light
+  font-size: 16px
+  padding-left: 10px
+  padding-right: 10px
+
+.o-story-list__item-byline
+  color: $color-link
+  font-weight: 600
+
+.o-story-list__item-timestamp
+  color: $color-gray
+  display: inline-block
+  font-size: 18px
+  font-weight: 300
+  line-height: 30px
+  @media (max-width: $media-desktop)
+    font-size: 18px
+    line-height: 24px
+
+.o-story-list__item-heading
+  font-family: $font-serif-titling
+  font-size: 22px
+  line-height: 30px
+  margin-bottom: 20px
+
+.o-story-list__item-teaser
+  font-size: 18px
+  line-height: 24px
+  margin-top: 15px
+
+.o-story-list__item-feature
+  align-items: center
+  color: $color-primary
+  display: flex
+  font-size: 15px
+  font-weight: 500
+  text-transform: uppercase
+  .o-media__label
+    height: 15px
+    .icon
+      height: 15px
+
+.o-story-list__heading
+  display: inline-block
+  flex: 1 0 100%
+  // font-weight: 500
+  margin-bottom: 40px
+
+.o-story-list--horiz
+  flex-direction: row
+  flex-wrap: wrap
+  padding-top: $margin-in-pixels
+  @media (max-width: $media-tablet)
+    flex-direction: column
+
+  .o-story-list__item
+    flex-direction: column
+    float: left
+    flex: 1 0 31%
+    margin-bottom: $margin-in-pixels
+    @media (max-width: $media-tablet)
+      flex-direction: row
+      justify-content: space-between
+    @media (max-width: $media-mobile)
+      flex-direction: column
+
+    &:not(:last-child)
+      margin-right: $gutter
+
+  .o-story-list__item-figure
+    max-width: none
+    margin-bottom: 25px
+    margin-right: 0px
+    @media (max-width: $media-tablet)
+      width: 25%
+    @media (max-width: $media-mobile)
+      width: initial
+
+  .o-story-list__item-description
+    max-width: none
+    @media (max-width: $media-tablet)
+      width: 70%
+    @media (max-width: $media-mobile)
+      width: initial
+
+  .o-story-list__item-heading
+    font-weight: 800
+
+  .o-story-list__item-pipe
+    display: inline-block
+
+  .o-story-list__item-teaser
+    font-size: 15px
+    line-height: 18px
+
+.o-story-list--quad
+  flex-direction: row
+  flex-wrap: wrap
+  justify-content: space-between
+  @media (max-width: $media-tablet)
+    flex-direction: column
+
+
+  .o-story-list__item
+    float: left
+    flex-basis: 50% - $gutter
+    margin-bottom: 60px
+    justify-content: space-between
+
+    &:nth-child(odd)
+      margin-right: $gutter
+      @media (max-width: $media-tablet)
+        margin-right: 0px
+
+  .o-story-list__item-figure
+    max-width: none
+    margin-right: $gutter
+    width: 47%
+    @media (max-width: $media-tablet)
+      margin-right: 0px
+      width: 25%
+    @media (max-width: $media-mobile)
+      display: none
+
+
+  .o-story-list__item-description
+    float: right
+    font-size: 16px
+    max-width: none
+    width: 52% - $gutter
+    @media (max-width: $media-tablet)
+      width: 70%
+    @media (max-width: $media-mobile)
+      width: initial
+
+
+  .o-story-list__item-heading
+    font-size: 25px
+
+  .o-story-list__item-pipe
+    // the pipe, in this case, serves a dual
+    // purpose of forcing the timestamp
+    // to the next line
+    display: block
+    height: 0px
+    opacity: 0
+
+
+.o-story-list--two-col
+  $story-list-col: 7.89473684%
+  $story-list-gutter: 4.60526316%
+  flex-direction: row
+  flex-wrap: wrap
+  justify-content: flex-start
+  margin-left: $margin
+  margin-right: $margin
+  width: ($col * 8) + ($gutter * 8)
+  @media (max-width: $media-tablet)
+    justify-content: flex-start
+    width: initial
+
+
+  @media (max-width: $media-mobile)
+    justify-content: space-between
+
+  .o-story-list__item:nth-child(3n+1)
+    @media (max-width: $media-wide)
+      margin-right: 0px
+
+  .o-story-list__item
+    $story-list-item-col: 17.47572816%
+    $story-list-item-gutter: 10.19417475%
+    float: left
+    margin-bottom: 60px
+    margin-right: percentage(42/912)
+    overflow: visible
+    width: ($story-list-col * 4) + ($story-list-gutter * 3)
+    @media (max-width: $media-wide)
+      display: block
+      margin-bottom: $margin-in-pixels / 2
+      margin-left: 0px
+      margin-right: 4.5%
+      width: 30%
+    @media (max-width: $media-mobile)
+      display: flex
+      margin-right: 0px
+      width: initial
+
+    .o-story-list__item-figure
+      max-width: none
+      margin-right: $story-list-item-gutter
+      width: ($story-list-item-col * 2) + $story-list-item-gutter
+      @media (max-width: $media-wide)
+        margin-bottom: $margin-in-pixels / 4
+        width: 100%
+      @media (max-width: $media-mobile)
+        display: none
+
+    .o-story-list__item-byline
+      display: none
+
+    .o-story-list__item-description
+      display: flex
+      flex-direction: column
+      float: right
+      font-size: 16px
+      max-width: none
+      width: ($story-list-item-col * 2) + $story-list-item-gutter
+      @media (max-width: $media-wide)
+        width: 100%
+      @media (max-width: $media-mobile)
+        width: initial
+
+    .o-story-list__item-teaser
+      display: none
+
+    .o-story-list__item-heading
+      font-size: 22px
+      line-height: 30px
+      @media (max-width: $media-desktop)
+        font-size: 20px
+      @media (max-width: $media-tablet)
+
+    .o-story-list__item-pipe
+      // the pipe, in this case, serves a dual
+      // purpose of forcing the timestamp
+      // to the next line
+      display: block
+      height: 0px
+      opacity: 0
+
+    .o-story-list__item-timestamp
+      font-weight: 500
+      margin-bottom: 5px
+      order: -1
+      text-transform: uppercase
+
+.o-story-list--program
+  border-bottom: 0
+  margin-bottom: 0
+  @media (max-width: $media-tablet)
+    padding-top: $margin-in-pixels
+
+  .b-heading
+    font-size: 26px
+    @media (max-width: $media-tablet)
+      font-size: 23px
+
+.o-story-list--vert
+  margin-bottom: 0px
+
+  .b-heading
+    @media (max-width: $media-tablet)
+      font-size: 23px
+      line-height: 30px
+
+  .o-story-list__item
+    justify-content: space-between
+
+  .o-story-list__item-figure
+    margin-right: 0px
+    width: percentage(300/756)
+    @media (max-width: $media-tablet)
+      margin-right: 0px
+      max-width: none
+      width: 25%
+    @media (max-width: $media-mobile)
+      display: none
+
+    .o-figure__img
+      padding-top: (100 / 1.66) * 1%
+
+  .o-story-list__item-description
+    width: percentage(414/756)
+    @media (max-width: $media-tablet)
+      max-width: none
+      width: 70%
+    @media (max-width: $media-mobile)
+      width: initial
+
+  .o-story-list__item-heading
+    font-size: 26px
+    line-height: 36px
+    @media (max-width: $media-tablet)
+      font-size: 23px
+      line-height: 30px
+
+  .o-story-list__item-byline, .o-story-list__item-pipe, .o-story-list__item-timestamp
+    font-size: 15px
+    line-height: 30px
+    @media (max-width: $media-tablet)
+      font-size: 16px
+      line-height: 24px
+
+  .o-story-list__item-teaser
+    -webkit-line-clamp: 2
+
+  .o-story-list__item-feature
+    margin-top: 15px
+
+.o-story-list--vertical-last
+  .o-story-list__item-figure
+    margin-right: percentage(42/870)
+    width: percentage(300/870)
+
+  .o-story-list__item-description
+    max-width: none
+    width: percentage(526/870)
+    @media (max-width: $media-mobile)
+      width: initial
+
+.o-recent-coverage .b-heading
+  font-size: 22px
+  line-height: 30px
+
+.o-recent-coverage
+  .o-story-list__item
+    .o-story-list__item-description
+      .o-story-list__item-heading
+        font-size: 31px
+        line-height: 36px
+        @media (max-width: $media-tablet)
+          font-size: 26px
+          line-height: 30px
+
+      .o-story-list__item-byline
+        font-size: 15px
+        line-height: 30px
+        @media (max-width: $media-tablet)
+          font-size: 16px
+          line-height: 24px
+
+      .o-story-list__item-timestamp
+        font-size: 15px
+        font-weight: 300
+        line-height: 30px
+        @media (max-width: $media-tablet)
+          font-size: 16px
+          line-height: 24px
+
+      .o-story-list__item-teaser
+        font-size: 18px
+        line-height: 24px
+
+      .o-story-list__item-feature
+        display: none
+
+.o-recent-coverage .o-story-list__item .o-story-list__item-description .o-story-list__item-byline
+  font-size: 15px
+  line-height: 30px
+
+.o-story-list--no-label .o-story-list__item .o-story-list__item-description .o-story-list__item-heading
+  font-size: 22px
+  line-height: 30px
+  @media (max-width: $media-tablet)
+    font-size: 20px

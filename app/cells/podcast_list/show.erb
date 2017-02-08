@@ -1,0 +1,23 @@
+<h1 class="o-podcast-list__heading" style="order: <%= @options[:order] %>">Podcasts</h1>
+<span class="o-podcast-list__description" style="order: <%= @options[:order] + 1 %>">A podcast is a way for you to subscribe to a program and listen to it when and where you want.</span>
+<span class="o-podcast-list__description" style="order: <%= @options[:order] + 2 %>">Once you've subscribed to a program's podcast, your podcasting application checks on a regular basis for new episodes of the program and makes them available for download to your computer.</span>
+<hr class="o-podcast-list__b-rule b-rule b-rule--padded-small" style="order: <%= @options[:order] + 3 %>">
+
+<% model.each_with_index do |podcast, index| %>
+  <div class="o-podcast-list__item" style="order: <%= index + 5 %>">
+    <figure class="o-podcast-list__item-figure o-figure o-figure--<%= asset_aspect %>">
+      <img class="o-figure__img" src="<%= podcast.image_url %>" style="background-image: url(<%= podcast.image_url %>)">
+    </figure>
+
+    <header class="o-podcast-list__item-details">
+      <h4 class="o-podcast-list__item-heading"><%= podcast.title %></h4>
+      <span class="o-podcast-list__item-description"><%= podcast.description %></span>
+      <% if podcast.itunes_url.present? %>
+        <a class="o-podcast-list__item-link" href="<%= podcast.itunes_url %>">Subscribe via iTunes&trade;</a>
+      <% end %>
+      <% if podcast.podcast_url.present? %>
+        <a class="o-podcast-list__item-link" href="<%= podcast.podcast_url %>"><%= podcast.podcast_url %></a>
+      <% end %>
+    </header>
+  </div>
+<% end %>

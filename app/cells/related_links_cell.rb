@@ -1,0 +1,65 @@
+class RelatedLinksCell < Cell::ViewModel
+  include Orderable
+
+  def show
+    render if links.any?
+  end
+
+  def links
+    # There's some legacy code here, but I'm keeping it because
+    # just having it extracted from the template is an improvement,
+    # and who knows if we might want to start using some of these
+    # returned attributes again in the future.
+    @links ||= (model.original_object.related_content + model.links).map do |content|
+      classes     = "track-event"
+      url         = nil
+      title       = nil
+      descriptor  = nil
+      is_pij      = false
+      if content.respond_to?(:link_type)
+        begin
+          domain = URI.parse(content.url.sub(/^([^\?]+)\?.*/,'\1')).host.sub(/^www\./, '')
+        rescue
+          domain = "Link"
+        end
+
+        kpcc_link = domain.split(".").include?("scpr")
+
+        if content.link_type == "query"
+          classes     += " query"
+          descriptor  = "Contribute Your Voice"
+          is_pij      = true
+        elsif kpcc_link
+          descriptor  = "Article"
+        else
+          classes     += " outbound" if !kpcc_link
+          descriptor  = "Source: #{domain}"
+        end
+
+        url     = content.url
+        title   = content.title
+      else
+        # hopefully these are content...
+        if content.try(:feature).try(:_key).present?
+          classes += " #{content.feature._key.to_s}"
+        elsif content.try(:feature).try(:key).present?
+          classes += " #{content.feature.key.to_s}"
+        end
+
+        url     = content.public_path
+        title   = content.short_title
+
+        descriptor = content.feature.try(:name) || "Article"
+      end
+
+      OpenStruct.new({
+        url: url,
+        title: title,
+        descriptor: descriptor,
+        clases: classes,
+        is_pij: is_pij
+      })
+    end
+  end
+
+end

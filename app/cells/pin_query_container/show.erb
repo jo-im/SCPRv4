@@ -1,0 +1,36 @@
+<div id="pin-query-<%=model.pin_query_id%>" class="o-pin-query-container" style="order: <%= @options[:order] %>"></div>
+
+
+<script>$('.o-pin-query-container').spin();</script>
+<script type="text/javascript" src="https://www.publicinsightnetwork.org/air2/js/pinform.js"></script>
+<script>
+var PIN_QUERY; // The form JS needs to be aware of this variable.
+
+(function(){
+  var pinCheck, queryId;
+
+  pinCheck = setInterval(function() {
+    // If the form has shown up, then stop the spinner
+    // and then interval.
+    if($(".pin-form").length) {
+      $('.o-pin-query-container').spin(false);
+      clearInterval(pinCheck);
+    }
+  }, 100);
+
+  queryId   = "<%=model.pin_query_id%>";
+  PIN_QUERY = {
+      uuid: queryId,
+      divId: "pin-query-"+queryId,
+      baseUrl: "https://www.publicinsightnetwork.org/air2",
+      opts: {
+        showIntro: false,
+        includeLegalFooter: false
+      }
+  };
+}());
+
+$(document).ready(function() {
+  PIN.Form.render(PIN_QUERY);
+});
+</script>

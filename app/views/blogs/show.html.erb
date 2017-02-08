@@ -1,11 +1,37 @@
-<div class="blog-landing">
-  <%= any_to_list? @entries, message: @MESSAGE do %>
-    <%= cache ["blog",@blog]+@entries do %>
-    <%= render partial: "/blogs/entry", collection: @entries, as: :entry, locals: { blog: @blog } %>
-    <% end %>
+<% content_for :main_class, "l-blog-landing" %>
+<% add_to_page_title "Blog" %>
+
+<% content_for :header do %>
+<section class="o-prologue o-prologue--secondary o-prologue--blog">
+    <span class="o-prologue__title"><%= @blog.try(:name) %></span>
+    <span class="o-prologue__pipe">|</span>
+    <span class="o-prologue__description"><%= @blog.try(:teaser) %></span>
+  </section>
+<% end %>
+
+<%= cell :ad, slot: "a", id: "o-ad--pos-a", attribution: false, order: 2 %>
+<%= cell :ad, slot: "b", id: "o-ad--pos-b", order: 3 %>
+<aside class="o-overview l-column--right" style="order: 901;" >
+  <h6 class="o-overview__heading b-heading b-heading--h6 b-heading--uppercase u-text-color--gray b-heading--bold">
+    <a class="b-link b-link--callout" href="<%= @blog.public_url %>"><%= @blog.name %></a>
+  </h6>
+  <span class="o-overview__description"><%= @blog.description %></span>
+</aside>
+<%= cell :archive_picker, @blog, base_url: '/blogs/' + @blog.slug + '/process_archive_select', header: 'BROWSE THE ARCHIVE', order: 901 %>
+<%= cell :blog_hosts, @blog, class: "l-column--right", order: 902 %>
+<%= cell :recent_content, @entries.try(:first).try(:sister_blog_entries), class: "l-column--right", blog: @blog.name, order: 999 %>
+<%= cell(:appeal, order: 1000).call(:breaking_news) %>
+<%= cell(:popular_articles, order: 1001).call(:side_bar) %>
+<%= cell :ad, slot: "c", id: "o-ad--pos-c", order: 4 %>
+
+<%= any_to_list? @entries, message: @MESSAGE do %>
+  <% @entries.each_with_index do |entry, index| %>
+    <%= cell :blog_entry, entry, entry: entry, locals: { blog: @blog }, order: index + 1 %>
   <% end %>
+<% end %>
+
+<div class="o-blog-list-pagination" style="order: 900">
+  <%= link_to_previous_page @entries, 'Previous' %>
+  <%= link_to_next_page @entries, 'Next' %>
 </div>
 
-<div class="span18 blog-pag">
-  <%= paginate @entries %>
-</div>

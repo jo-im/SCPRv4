@@ -1,38 +1,22 @@
-<h2>Search Results</h2>
-<div id="search-area">
-  <input type="text" id="query_input"/>
-  <span class="help-text">Search results automatically appear below as you type</span>
+<% content_for :main_class, "l-search" %>
+<% add_to_page_title "Search" %>
+
+<%= cell :ad, slot: "a", id: "o-ad--pos-a", attribution: false, order: -1 %>
+<%= cell :ad, slot: "b", id: "o-ad--pos-b", order: 6 %>
+<%= cell(:appeal, nil, order: 7).call(:breaking_news) %>
+<%= cell(:popular_articles, nil, order: 8).call(:side_bar) %>
+<%= cell :ad, slot: "c", id: "o-ad--pos-c", order: 9 %>
+<div id="o-search__search-area" style="order: 1">
+  <h3 class="o-search__search-area__heading b-heading b-heading--h3 b-heading--serif b-heading--bold">Search Results</h3>
+  <input type="text" id="o-search__query_input" placeholder="Enter your search here"/>
+  <svg class="o-search__search-area__icon b-icon b-icon--search-open">
+    <use class="b-icon--line b-icon--color-gray" xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/static/images/scpr-sprite.svg#icon_line-search"></use>
+  </svg>
+  <span class="o-search__help-text">Search results automatically appear below as you type</span>
+  <hr class="b-rule b-rule--padded-small" style="order: 2">
+  <div class='o-search__results-header' style="order: 2">Programs</div>
+  <div id="o-search__program-results" style="order: 3"></div>
+  <div class='o-search__results-header' style="order: 4">Posts</div>
+  <div id="o-search__results" style="order: 5"></div>
 </div>
-
-<div class="hr"></div>
-
-<div id="results"></div>
-
-<script type="text/javascript" src="https://www.google.com/jsapi"></script>
-<script type="text/javascript">
-
-  google.load('search', '1');
-
-  function onLoad() {
-
-    // Create a Custom Search control that uses a CSE restricted to code.google.com
-    // Change the customSearchId string to the ID of your own Custom Search engine.
-    var customSearchControl = new google.search.CustomSearchControl('015616661084601392604:c7j-ryla-rw');
-
-    // Set drawing options to use my text box as input instead of having the library create one.
-    var options = new google.search.DrawOptions();
-    options.setInput(document.getElementById('query_input'));
-    options.setAutoComplete(true);
-    // Draw the control in content div
-    customSearchControl.draw('results', options);
-
-  query = document.location.search.substring(3)
-  if (query != ""){
-    customSearchControl.execute(decodeURIComponent(query.replace(/\+/g,  " ")));
-  }
-
-  }
-
-  google.setOnLoadCallback(onLoad);
-
-</script>
+<%= cell :search %>

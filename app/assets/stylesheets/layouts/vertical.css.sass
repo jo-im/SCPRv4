@@ -1,0 +1,132 @@
+.l-vertical
+  // we're talking about the Vertical model
+  // and not in a display sense
+  display: block
+  max-width: 1440px
+  margin: 0 auto
+
+  padding-top: $margin-in-pixels
+
+  .o-featured-story
+    margin-left: $margin
+    margin-right: $margin
+
+  .o-vertical-topics
+    display: inline-block
+    margin-left: $margin
+    width: ($col * 3) + ($gutter * 2)
+    .o-topic-cluster
+      margin-bottom: $margin-in-pixels
+
+  .o-featured-interactive, .o-featured-quote, .o-upcoming-events
+    clear: both
+    margin-right: $margin
+    float: right
+    width: ($col * 8) + ($gutter * 7)
+    margin-bottom: $margin-in-pixels
+    padding-bottom: $margin-in-pixels
+
+  .o-featured-interactive, .o-featured-quote
+    border-bottom: 1px solid $color-gray-light
+
+  .o-story-list
+    padding-left: $margin
+    padding-right: $margin
+
+  .o-story-list--horiz
+    clear: both // makes sure the two above columns push it down
+
+  .o-story-list--quad
+    padding-top: $margin-in-pixels
+    padding-bottom: 0px
+
+  .o-story-list--vertical-last
+    width: ($col * 8) + ($gutter * 7)
+    padding-bottom: 0px
+
+  .o-host-list
+    float: right
+    margin-right: $margin
+    margin-bottom: $margin-in-pixels
+    width: ($col * 3) + ($gutter * 2)
+
+  .o-category-events
+    float: left
+    margin-right: 0
+    margin-left: $margin
+    margin-bottom: 0
+    width: $col * 16
+    border-bottom: none
+
+  @media all and (max-width: $media-wide)
+    .o-vertical-topics
+      width: ($col * 3) + ($gutter * 3)
+
+  @media all and (max-width: $media-desktop)
+    .o-featured-story
+      justify-content: flex-end
+      .o-featured-story__left
+        margin-right: 7%
+      .o-featured-story__left, .o-featured-story__center
+        height: 480px
+      .o-featured-story__center, .o-featured-story__right
+        width: 70%
+
+    .o-vertical-topics
+      width: ($col * 3) + ($gutter * 4)
+
+  @media all and (max-width: $media-tablet)
+    padding-top: $margin-in-pixels / 2
+    display: flex
+    flex-direction: column
+    .o-featured-story, .o-featured-interactive, .o-featured-quote, .o-story-list--nobg, .o-upcoming-events
+      padding: 0px
+      width: ($col * 12) + ($gutter * 11)
+      margin-left: $margin
+      margin-right: $margin
+    .o-featured-interactive, .o-featured-quote
+      padding-bottom: $margin-in-pixels
+    .o-host-list
+      padding: 0px
+      width: 75%
+      margin-left: $margin
+      margin-right: $margin
+    .o-vertical-topics
+      padding: 0px
+      margin-left: 0px
+      margin-right: 0px
+      width: initial
+    .o-featured-story
+      display: flex
+      flex-direction: column
+      margin-bottom: $margin
+      .o-featured-story__headline, .o-featured-story__left, .o-featured-story__center, .o-featured-story__right
+        height: auto
+        width: 100%
+      .o-featured-story__headline
+        order: 1
+      .o-featured-story__center
+        order: 2
+      .o-featured-story__left
+        order: 3
+      .o-featured-story__right
+        order: 4
+
+    .o-resources
+      padding-left: $margin
+      padding-right: $margin
+      .o-resources__header, .o-resources__articles
+        width: 100%
+
+  @media all and (max-width: $media-mobile)
+    .o-resources__description
+      font-size: 18px
+    .o-resources
+      .o-resources__articles
+        flex-direction: row
+        flex-wrap: wrap
+        justify-content: space-between
+        li
+          width: 47.5%
+        li a figure
+          margin-bottom: $gutter * 2

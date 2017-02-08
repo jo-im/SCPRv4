@@ -10,6 +10,9 @@ class ExternalEpisode < ActiveRecord::Base
 
   belongs_to :program, class_name: :ExternalProgram, foreign_key: "external_program_id"
 
+  alias_attribute :show, :program
+  alias_attribute :teaser, :summary
+
   has_many :external_episode_segments,
     -> { order('external_episode_segments.position asc') }
 
@@ -65,7 +68,8 @@ class ExternalEpisode < ActiveRecord::Base
       :teaser             => self.summary,
       :body               => self.summary,
       :audio              => self.audio,
-      :byline             => self.program.title
+      :byline             => self.program.title,
+      :public_path        => self.public_path
     })
   end
 

@@ -39,6 +39,10 @@ gem 'simple_form', "~> 3.1.0"
 gem 'jbuilder', '~> 1.5.3'
 gem 'embeditor-rails', github: 'SCPR/embeditor-rails', tag:"v2.0.4"
 gem 'html-pipeline', require: "html/pipeline"
+gem 'cells-rails'
+gem 'cells-erb'
+gem 'cells-handlebars', github: 'PeerStreet/cells-handlebars'
+gem 'cells-capture'
 
 
 ## Utility

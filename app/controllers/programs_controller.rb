@@ -8,8 +8,6 @@ class ProgramsController < ApplicationController
   include Concern::Controller::ShowEpisodes
   include Concern::Controller::Amp
 
-  layout 'new/single', only: [:segment]
-
   before_filter :get_program, only: [:show, :episode, :archive, :featured_program, :featured_show]
   before_filter :get_popular_articles, only: [:featured_program, :segment]
 
@@ -17,83 +15,62 @@ class ProgramsController < ApplicationController
 
 
   def index
-    @featured_programs = KpccProgram.where(is_featured: true)
+    @featured_programs = (KpccProgram.where(is_featured: true) + ExternalProgram.where(is_featured: true)).try(:sort_by!) { |program| program.title }
     @kpcc_programs     = KpccProgram.active.order("title")
     @external_programs = ExternalProgram.active.order("title")
-
-    render layout: "application"
   end
 
   def show
-    @episodes = @program.episodes.published
-
-    if @program.is_a?(KpccProgram)
-      # KPCC Program
-
-      path = 'programs/kpcc/old/show'
-      respond_with do |format|
-        format.html do
-          @current_episode = @episodes.first
-          @episodes = (@current_episode ? @episodes.where.not(id:@current_episode.id) : @episodes).page(params[:page]).per(6)
-
-          render path
-        end
-        format.xml do
-          render path
-        end
-      end
-    else
-      @episodes = @episodes.page(params[:page]).per(6)
-
-      # External Program
-      respond_with do |format|
-        format.html do
-          render 'programs/external/show', layout: 'application'
-        end
-        format.xml do
-          redirect_to @program.podcast_url
-        end
-      end
-    end
-  end
-
-  def featured_program
     @segments = @program.segments.published.includes(:audio)
     @episodes = @program.episodes.published
-    @featured_programs = KpccProgram.where.not(id: @program.id,is_featured: false)
-    if @program.featured_articles.present?
+    @featured_programs = KpccProgram.where.not(id: @program.id, is_featured: false)
+    if @program.try(:featured_articles).try(:present?)
       if @program.featured_articles.size > 1
         @featured_story = @program.featured_articles.first
-        @subfeatured_story = @program.featured_articles.first(2)[1]
+        @suggested_story = @program.featured_articles.first(2)[1]
         @episodes = @episodes.where.not(id: [@featured_story.original_object.id, @episodes.first.id])
         if @featured_story.original_object.is_a?(ShowSegment)
           @segments = @segments - [@featured_story.original_object]
         end
       else
         @featured_story = @episodes.first
-        @subfeatured_story = @program.featured_articles.first
-        @episodes = @episodes.where.not(id: @episodes.first.id)
+        @suggested_story = @program.featured_articles.first
+        @episodes = @episodes.where.not(id: @episodes.try(:first).try(:id))
       end
-
     else
       @featured_story = @episodes.first
-      @episodes = @episodes.where.not(id: @episodes.first.id)
+      @suggested_story = @episodes.second
+      @episodes = @episodes.where.not(id: @episodes.try(:first).try(:id))
     end
+    @featured_story_article  = @featured_story.try(:to_article)
+    @suggested_story_article = @suggested_story.try(:to_article)
     respond_to do |format|
-      format.html {
-        render(
-            :layout   => 'new/landing',
-            :template => 'programs/kpcc/featured_program'
-          )
-      }
+      format.html do
+        @current_episode = @featured_story
 
-      format.xml { render 'programs/kpcc/old/show' }
+        if @program.is_a?(KpccProgram) && @program.try(:is_featured?) && @program.try(:is_segmented?)
+          @episodes = (@current_episode ? @episodes.where.not(id:@current_episode.id) : @episodes).page(params[:page]).per(6)
+          render
+        else
+          @episodes = @program.episodes.published.page(params[:page]).per(6)
+          render 'standard_program'
+        end
+      end
+      format.xml do
+        if @program.is_a?(KpccProgram)
+          render
+        else
+          redirect_to @program.podcast_url
+        end
+      end
     end
   end
 
 
   def segment
     @segment = ShowSegment.published.includes(:show).find(params[:id])
+    @article = @segment.to_article
+    @episode = @segment.episode
     @program = @kpcc_program = @segment.show
     @featured_programs = KpccProgram.where.not(id: @program.id, is_featured: false).first(4)
     @url = request.original_url
@@ -129,46 +106,17 @@ class ProgramsController < ApplicationController
       # The #amplify method can't be used here because of the unusual way that this
       # action is written.  Another good reason to refactor this cludgy controller.
       return render(layout: "application.amp.erb", template: "amp/segment") if params.has_key?(:amp)
-      render_kpcc_episode
+
+      if @program.is_featured?
+        render_kpcc_episode
+      else
+        render_standard_episode
+      end
     end
 
     if @program.is_a?(ExternalProgram)
       @episode  = @program.episodes.find(params[:id])
-      render_external_episode
-    end
-  end
-
-  def featured_show
-    if @program.is_a?(KpccProgram) && @program.is_featured?
-      @view_type = params[:view]
-      @segments = @program.segments.published
-      @episodes = @program.episodes.published
-
-      respond_with do |format|
-        format.html do
-          if @current_episode = @episodes.first
-            @episodes = @episodes.where.not(id: @current_episode.id)
-
-            segments = @current_episode.segments.published.to_a
-            @segments = @segments.where.not(id: segments.map(&:id))
-          end
-
-          @segments = @segments.page(params[:page]).per(10)
-          @episodes = @episodes.page(params[:page]).per(6)
-
-          render 'programs/kpcc/old/featured_show'
-        end
-
-        format.xml { render 'programs/kpcc/old/show' }
-      end
-
-      return
-    else
-      if @program.public_path
-        redirect_to @program.public_path
-      else
-        redirect_to program_url(@program.slug)
-      end
+      render_standard_episode
     end
   end
 
@@ -190,10 +138,17 @@ class ProgramsController < ApplicationController
   end
 
   def schedule
-    @schedule_occurrences = ScheduleOccurrence.block(
-      Time.zone.now.beginning_of_week, 1.week, true
-    )
+    @date = Time.zone.now.beginning_of_day
 
+    if valid_date_from_params?
+      @date = Time.zone.local(
+        params[:year].to_i,
+        params[:month].to_i,
+        params[:day].to_i
+      )
+    end
+
+    @schedule_occurrences = ScheduleOccurrence.block(@date, 1.day, true)
     # We can't cache all of them together, since there are too many.
     # So we'll just use the most recently updated one to cache.
     @cache_object = @schedule_occurrences.sort_by(&:updated_at).last
@@ -212,6 +167,22 @@ class ProgramsController < ApplicationController
       render_error(404, ActionController::RoutingError.new("Not Found"))
       return false
     end
+  end
+
+  def valid_date_from_params?
+    year = params[:year]
+    month = params[:month]
+    day = params[:day]
+    date_string = "#{year}-#{month}-#{day}"
+
+    begin
+       Date.parse(date_string)
+    rescue ArgumentError
+       # handle invalid date
+       return false
+    end
+
+    return true
   end
 
 end

@@ -1,0 +1,48 @@
+<h1 class="o-blog-list__heading" style="order: <%= @options[:order] %>"><%= link_to model.headline, model.public_path %></h1>
+<section class="o-blog-list__article" style="order: <%= @options[:order] %>">
+  <aside class="o-blog-list__article-interactive">
+    <%= cell :article_audio, model %>
+    <div class="o-blog-list__article-social-tools">
+      <%= cell :social_tools, model, display: 'vert' %>
+      <span class="o-blog-list__article-comments <%= options[:non_zero] ? 'non-zero' : '' %>">
+        <svg class="o-blog-list__article-icon">
+          <use class="" xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/static/images/scpr-sprite.svg#icon_line-comment"></use>
+        </svg>
+        <%= comment_count_for model %>
+      </span>
+      <a href="<%= model.public_path %>#comments" class="o-blog-list__article-add-comment">Add your comments</a>
+    </div>
+  </aside>
+  <section class="o-blog-list__content">
+    <figure class="o-blog-list__figure o-figure o-figure--<%= aspect %>">
+      <img class="o-figure__img" src="<%= asset_path %>" style="background-image: url(<%= asset_path %>)">
+      <% if model.try(:asset).try(:caption) || model.try(:asset).try(:owner) %>
+        <figcaption class="o-figure__caption">
+          <% if model.try(:asset).try(:caption) %>
+            <%= model.asset.caption %>
+          <% end %>
+          <% if model.try(:asset).try(:owner) %>
+            <address class="o-figure__attribution"><%= model.asset.owner %></address>
+          <% end %>
+        </figcaption>
+      <% end %>
+    </figure>
+    <%= cell :article_audio, model %>
+    <div class="c-byline">
+      <span class="c-byline__name"><%= byline %></span>
+      <span class="c-byline__pipe">|</span>
+      <span class="c-byline__timestamp"><%= timestamp %></span>
+    </div>
+    <%= model.extended_teaser.html_safe %>
+    <div class="o-blog-list__article-social-tools--horiz">
+      <%= cell :social_tools, model, class: 'o-blog-list__content_social-tools', display: 'horiz' %>
+      <span class="o-blog-list__article-comments <%= options[:non_zero] ? 'non-zero' : '' %>">
+        <svg class="o-blog-list__article-icon">
+          <use class="" xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/static/images/scpr-sprite.svg#icon_line-comment"></use>
+        </svg>
+        <%= comment_count_for model %>
+        <a href="<%= model.public_path %>#comments" class="o-blog-list__article-add-comment">Add your comments</a>
+      </span>
+    </div>
+  </section>
+</section>

@@ -1,0 +1,30 @@
+.o-meet-the-team
+  $meet-the-team-col: 7.89473684%
+  $meet-the-team-gutter: 4.60526316%
+  display: flex
+  flex-wrap: wrap
+
+  .o-meet-the-team__heading
+    flex: 1 0 100%
+    @media (max-width: $media-tablet)
+      font-size: 23px
+      line-height: 30px
+
+  .o-meet-the-team__figure
+    width: ($meet-the-team-col * 2) + $meet-the-team-gutter
+    margin-right: $meet-the-team-gutter
+    margin-bottom: $margin-in-pixels / 2
+    @media (max-width: $media-tablet)
+      width: 30.2%
+      &:nth-child(3n+1)
+        margin-right: 0px
+
+  .o-meet-the-team__figure .o-figure__img
+    background-position-y: top
+    padding-top: 117%
+
+  .o-meet-the-team__caption
+    color: $color-black
+    display: block
+    font-size: 18px
+    text-align: center

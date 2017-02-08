@@ -1,0 +1,82 @@
+<section id="<%= model.slug %>-archive-browser" class="archive-browser" style="order: <%= @options[:order] %>">
+  <h1 class="o-archive-browser__header b-heading--h6 b-heading--uppercase u-text-color--gray b-heading--bold"><span>Browse the <%= model.title %> Archives</span></h1>
+    <div class="columns">
+
+      <!--
+      ==========================================================
+      Okay, here's what's up.
+      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+      Liminal-Picker has a very temporary, ephemeral, cosmetic
+      job to do: He only appears for tablet-and-wider users,
+      and only passes choices on to *the actual form,* which
+      is what handheld users see, and which fires off the
+      actual, useful Ajax request.
+      ==========================================================
+      -->
+      <aside class="liminal-picker" aria-hidden="true">
+        <div class="years">
+          <ul></ul>
+        </div>
+        <div class="months">
+          <ul></ul>
+        </div>
+      </aside><!--/ .liminal-picker -->
+
+      <div class="directory">
+        <aside class="standard-picker">
+          <form>
+            <div class="fields clearfix">
+              <div class="field years">
+                <select autocomplete="off">
+                </select>
+              </div>
+              <div class="field months">
+                <select autocomplete="off">
+                </select>
+              </div>
+            </div><!--/ .fields -->
+          </form>
+        </aside><!--/ .standard-picker -->
+        <div class="results">
+          <ul></ul>
+        </div><!--/ .results -->
+      </div><!--/ .directory -->
+
+    </div><!--/ .columns -->
+</section><!--/ .archive-browser -->
+
+<script id="episodeView" type="text/template">
+  <li><a href="<%%= public_url %>"><time datetime="<%%= air_date %>"><%%= day %></time> <span><%%= title %></span></a></li>
+</script>
+
+<script id="liminalPicker" type="text/template">
+  <div class="years">
+    <ul>
+    </ul>
+  </div>
+  <div class="months">
+    <ul>
+    </ul>
+  </div>
+</script>
+
+<script id="standardPicker" type="text/template">
+  <form>
+    <div class="fields clearfix">
+      <div class="field years">
+        <select autocomplete="off">
+        </select>
+      </div>
+      <div class="field months">
+        <select autocomplete="off">
+        </select>
+      </div>
+    </div><!--/ .fields -->
+  </form>
+</script>
+
+<script>
+  $(document).on('ready', function(){
+        window.archive_browser = new scpr.ArchiveBrowser('#<%= model.slug %>-archive-browser', '<%= model.slug %>')
+  });
+</script>

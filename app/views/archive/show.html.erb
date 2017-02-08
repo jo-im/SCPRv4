@@ -1,197 +1,115 @@
-<% if !@date %>
-  <h1><%= add_to_page_title "Archive" %></h1>
-  <strong>Select a date:</strong>
-<% else %>
+<% content_for :main_class, "l-archive" %>
 
-<h1><%= add_to_page_title "Archive for #{format_date @date, format: :full_date}" %></h1>
+<%= cell :ad, slot: "a", id: "o-ad--pos-a", attribution: false, order: -1 %>
+<%= cell :ad, slot: "b", id: "o-ad--pos-b", order: 998 %>
+<%= cell(:appeal, @news_stories, order: 999).call(:breaking_news) %>
+<%= cell(:popular_articles, @news_stories, order: 1000).call(:side_bar) %>
+<%= cell :ad, slot: "c", id: "o-ad--pos-c", order: 1001 %>
 
-<nav class="filters">
-  <ul class="clearfix" id="archive_nav">
-    <li class="heading">View:</li>
-    <li class="active"><a href="#news" data-toggle="tab">News</a></li>
-    <li><a href="#blogs" data-toggle="tab">Blogs</a></li>
-    <li><a href="#programs" data-toggle="tab">Programs</a></li>
-  </ul>
-</nav>
+<% if @date %>
+<h1 class="o-archive__page-heading b-heading--h1 b-heading--serif" style="order: 1"><%= add_to_page_title "Archive for #{format_date @date, format: :full_date}" %></h1>
 
-<div class="tab-content" id="archive_tabs">
+<form class="o-archive__tab-inputs" style="order: 2">
+  <input checked type="radio" name="tab" id="o-archive__input-news" class="o-archive__input" value="news" />
+  <label class="o-archive__label" for="o-archive__input-news">NEWS</label>
+  <input type="radio" name="tab" id="o-archive__input-blogs" class="o-archive__input" value="blogs"/>
+  <label class="o-archive__label" for="o-archive__input-blogs">BLOGS</label>
+  <input type="radio" name="tab" id="o-archive__input-programs" class="o-archive__input" value="programs"/>
+  <label class="o-archive__label" for="o-archive__input-programs">PROGRAMS</label>
+</form>
 
 <!-- News Stories -->
-<div id="news" class="tab-pane active">
-  <h2>News</h2>
-
   <% news_content = @news_stories + @content_shells%>
-  <%= any_to_list? news_content, message: "There was no News published on this date." do %>
+  <%= any_to_list? news_content, message: "<p class='o-archive-tab__news o-archive-tab__item o-archive__item' style='order: 3'>There were no news published on this date.</p>" do %>
     <%= cache ["archive"]+news_content do %>
-    <% news_content.each do |content| %>
+    <% news_content.each_with_index do |content, index| %>
       <%= cache ["archive",content] do %>
         <% article = content.get_article %>
-        <div class="teaser cbase">
-          <div class="row-fluid">
-            <% if article.assets.present? %>
-              <div class="span4">
-                <%= render_asset article, display: 'thumbnail' %>
-              </div>
-              <div class="span20">
-            <% else %>
-              <div class="span24">
-            <% end %>
-              <div class="info">
-                <h3><%= link_to article.short_title, article.public_url %></h3>
-                <span class="byline">
-                  <% if article.category %>
-                    <span class="categories"><%= link_to article.category.title, article.category.public_path %></span>
-                    <span class="pipe">|</span>
-                  <% end %>
-                  <%= timestamp(article.public_datetime) %>
-                  <span class="pipe">|</span>
-                  <%= render_byline article.original_object %>
-                </span>
-              </div>
-
-              <%= article.teaser.html_safe %>
-            </div> <!-- span18/24 -->
-          </div>
-        </div>
+        <%= cell(:archive_tab, article, order: index + 3).call(:news) %>
         <% end %>
       <% end %>
     <% end %>
   <% end %>
-</div>
 <!-- /news-stories -->
 
 
 <!-- Blog Entries -->
-<div id="blogs" class="tab-pane">
-  <h2>Blogs</h2>
-
-  <%= any_to_list? @blog_entries, message: "There were no blog entries published on this date." do %>
+  <%= any_to_list? @blog_entries, message: "<p class='o-archive-tab__blogs o-archive-tab__item o-archive__item' style='order: 3'>There were no blog entries published on this date.</p>" do %>
     <%= cache ["archive"]+@blog_entries do %>
-      <% @blog_entries.each do |content| %>
+      <% @blog_entries.each_with_index do |content, index| %>
         <%= cache ["archive",content] do %>
-          <div class="teaser cbase">
-            <div class="row-fluid">
-              <% if content.assets.present? %>
-                <div class="span4">
-                  <%= render_asset content, display: 'thumbnail' %>
-                </div>
-                <div class="span20">
-              <% else %>
-                <div class="span24">
-              <% end %>
-                <div class="info">
-                  <h3><%= link_to content.short_headline, content.public_path %></h3>
-                  <span class="byline">
-                    <span class="blog-title"><%= link_to content.blog.name, blog_path(content.blog.slug) %></span>
-                    <span class="pipe">|</span>
-                    <%= timestamp(content.published_at) %>
-                    <span class="pipe">|</span>
-                    <%= render_byline content %>
-                  </span>
-                </div>
-
-                <%= content.teaser.html_safe %>
-              </div> <!-- span18/24 -->
-            </div>
-          </div>
+          <%= cell(:archive_tab, content, order: index + 3).call(:blogs) %>
         <% end %>
       <% end %>
     <% end %>
   <% end %>
-</div>
 <!-- /blog-entries -->
 
 
 <!-- Programs -->
-<div id="programs" class="tab-pane programs">
+<%= any_to_list? @show_episodes, message: "<p class='o-archive-tab__programs o-archive-tab__item o-archive__item' style='order: 3'>There were no news programs published on this date.</p>" do %>
+
   <% grouped = (@show_episodes + @show_segments).group_by { |c| c.show.title } %>
 
-  <h2>Programs</h2>
-  <div class="jump-nav">
-    <ul>
-      <li><strong>Jump to:</strong></li>
+  <div class="o-archive-tab__programs o-archive__item o-archive__jump-nav" style="order: 3">
+      <span class="o-archive__jump-nav_program"><strong>Jump to:</strong></span>
       <% grouped.each do |g| %>
-        <li><%= link_to g[0], "##{g[0].parameterize}" %></li>
+        <span class="o-archive__jump-nav_program"><%= link_to g[0], "##{g[0].parameterize}" %></span>
+        <span class="o-pipe"> | </span>
       <% end %>
-      </ul>
   </div> <!-- jump-nav -->
 
+  <% idx = 3 %>
   <% grouped.each do |show, contents| %>
     <% type_group = contents.group_by { |c| c.class.name } %>
 
     <%= cache ["archive"]+contents do %>
-      <div class="program-group">
-        <h3 id="<%=show.parameterize%>" class="show-title"><%= show %></h3>
+      <div class="o-archive-tab__programs o-archive__program-group" style="order: <%= idx += 1 %>">
+        <h6 id="<%=show.parameterize%>" class="o-archive__show-title o-archive-tab__programs o-archive__item b-heading--h4 b-heading--uppercase b-heading--medium u-text-color--gray"><%= show %></h6>
 
         <% if type_group["ShowEpisode"].present? %>
           <% type_group["ShowEpisode"].each do |content| %>
-            <h5>Episode: <%= link_to content.headline, content.public_path %></h5>
+            <div class="o-archive__episode-headline o-archive-tab__programs o-archive__item b-heading--uppercase b-heading--medium u-text-color--gray">Episode: <%= link_to content.headline, content.public_path %></div>
           <% end %>
         <% end %>
 
         <% if type_group["ShowSegment"].present? %>
           <% type_group["ShowSegment"].each do |content| %>
             <%= cache ["archive",content] do %>
-              <div class="teaser cbase">
-                <div class="row-fluid">
-                  <% if content.assets.present? %>
-                    <div class="span4">
-                      <%= render_asset content, display: 'thumbnail' %>
-                    </div>
-                    <div class="span20">
-                  <% else %>
-                    <div class="span24">
-                  <% end %>
-                    <div class="info">
-                      <h3><%= link_to content.short_headline, content.public_path %></h3>
-                      <span class="byline">
-                        <% if content.category.present? %>
-                          <span class="categories"><%= link_to content.category.title, content.category.public_path %></span>
-                          <span class="pipe">|</span>
-                        <% end %>
-                        <%= timestamp(content.published_at) %>
-                        <span class="pipe">|</span>
-                        <%= render_byline content %>
-                      </span>
-                    </div>
-
-                    <%= content.teaser.html_safe %>
-                  </div> <!-- span18/24 -->
-                </div> <!-- row fluid -->
-              </div> <!-- teaser -->
+              <%= cell(:archive_tab, content).call(:programs) %>
             <% end %>
           <% end %> <%# each ShowSegment %>
         <% end %> <%# ShowSegment.present?%>
-      </div> <!-- program-group -->
+      </div>
     <% end %>
   <% end %> <%# each grouped %>
-</div>
+<% end %>
 <!-- /programs -->
 
-</div> <!-- tab-content -->
-
 <script type="text/javascript">
-  // deep linking
-  var query, keyval;
-  var params = {};
-  query = _(window.location.search.substring(1).split("&")).each(function(pair) { keyval = pair.split("="); params[keyval[0]] = keyval[1]; });
+  $('.o-archive__input').click(function() {
+    var section = $(this).val();
+    window.history.replaceState({ section: section }, document.title + ": " + section, window.location.pathname + "?section=" + section);
+    $('.o-archive__item').hide();
+    $('.o-archive-tab__' + section).show();
+  });
 
-  tab = $("#archive_nav a[href='#"+params['section']+"']")
-  if(tab) tab.tab('show');
+  function getUrlParameter(name, url) {
+      name = name.replace(/[\[]/, '\\[').replace(/[\]]/, '\\]');
+      var regex = new RegExp('[\\?&]' + name + '=([^&#]*)');
+      var results = regex.exec(window.location.search);
+      return results === null ? '' : decodeURIComponent(results[1].replace(/\+/g, ' '));
+  }
 
-  $("#archive_nav a").on({
-    click: function(event) {
-      target = $(event.target).attr("href").substr(1);
-      if (window.history.replaceState) {
-        window.history.replaceState({ section: target }, document.title + ": " + target, window.location.pathname + "?section=" + target);
-      } else {
-        window.location.hash = target;
-      }
-    }
-  })
+  $('.o-archive-tab__item').hide();
+  var section = getUrlParameter('section');
+
+  if (section) {
+    $('#o-archive__input-' + section).click();
+  } else {
+    $('#o-archive__input-news').click();
+  }
 </script>
 
 <% end %> <%# @date? %>
-
-<hr />
-<%= render 'shared/widgets/archive' %>
+<%= cell :archive_picker, nil, base_url: '/archive/process', header: 'BROWSE OUR NEWS ARCHIVE', type: 'full', order: 901 %>

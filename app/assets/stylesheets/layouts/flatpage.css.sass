@@ -1,0 +1,103 @@
+.l-flatpage
+  display: block
+  max-width: 1440px
+  margin: 0 auto
+  overflow-y: auto
+  padding-top: $margin-in-pixels
+  .o-social-tools
+    float: left
+    margin-left: $margin
+    margin-top: 70px
+    text-align: right
+    width: $col
+
+  .o-flatpage
+    margin-bottom: $margin-in-pixels
+
+  .o-flatpage, .o-flatpage__title
+    margin-left: $margin + $col + $gutter
+
+  #o-ad--pos-a, #o-ad--pos-b, #o-ad--pos-c, .o-appeal--breaking-news, .o-popular-stories-side-bar
+    clear: right
+    float: right
+    margin-right: $gutter + $col + $margin
+    width: ($col * 3) + ($gutter * 2)
+
+  #o-ad--pos-a
+    border-bottom: 1px solid $color-gray-light
+    margin-bottom: $margin-in-pixels * 0.75
+    padding-bottom: $margin-in-pixels * 0.75
+
+  #o-ad--pos-b, .o-popular-stories-side-bar
+    border-bottom: 1px solid $color-gray-light
+    padding-bottom: $margin-in-pixels
+
+  .o-popular-stories-side-bar
+    margin-bottom: $margin-in-pixels
+    padding-bottom: $margin-in-pixels / 2
+    padding-top: $margin-in-pixels / 2
+
+  .o-flatpage--full, .o-flatpage--none
+    margin-right: $gutter + $col + $margin
+    width: ($col * 10) + ($gutter * 9)
+
+  .o-flatpage--inherit, .o-flatpage--kpcc_in_person, .o-flatpage__title
+    width: ($col * 6) + ($gutter * 5)
+
+  @media (max-width: $media-wide)
+    .o-flatpage--inherit, .o-flatpage--kpcc_in_person, .o-flatpage__title
+      width: ($col * 6) + ($gutter * 6)
+
+    #o-ad--pos-a, #o-ad--pos-b, #o-ad--pos-c, .o-appeal--breaking-news, .o-popular-stories-side-bar
+      margin-right: $margin
+      width: ($col * 3) + ($gutter * 3)
+
+  @media (max-width: $media-desktop)
+    #o-ad--pos-a, #o-ad--pos-b, #o-ad--pos-c, .o-appeal--breaking-news, .o-popular-stories-side-bar
+      width: ($col * 4) + ($gutter * 3)
+
+  @media all and (max-width: $media-tablet)
+    display: flex
+    flex-direction: column
+    font-size: 0.9em
+    padding-top: $margin-in-pixels / 2
+    .o-social-tools
+      flex-direction: row
+      margin-left: $margin
+      margin-top: 0
+      margin-bottom: 0
+
+      li
+        margin-right: 15px
+
+    .o-flatpage__title, .o-flatpage,
+    #o-ad--pos-a, #o-ad--pos-b, #o-ad--pos-c, .o-appeal--breaking-news, .o-popular-stories-side-bar
+      width: ($col * 12) + ($gutter * 11)
+      margin-left: $margin
+      margin-right: $margin
+    #o-ad--pos-a
+      padding-bottom: $margin-in-pixels / 2
+      margin-bottom: $margin-in-pixels / 2
+    #o-ad--pos-b
+      margin-top: 0px
+    #o-ad--pos-c
+      margin-bottom: $margin-in-pixels
+
+  @media all and (max-width: $media-mobile)
+    .o-flatpage
+      p, span
+        font-size: 14px
+      h1
+        font-size: 28px
+      h2
+        font-size: 24px
+      h3
+        font-size: 22px
+      h4
+        font-size: 20px
+      h5
+        font-size: 18px
+      h6
+        font-size: 16px
+    .o-popular-stories-side-bar__item-caption
+      font-size: 0.8em

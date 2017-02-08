@@ -1,9 +1,10 @@
+<% content_for :main_class, "l-latest-news" %>
 <% add_to_page_title "Latest News" %>
 
-<h1>Latest News</h1>
-<div class="news-top">
-  <%= render_content @top, "twocol" %>
-</div>
-<section class="more-news-container">
-  <%= render partial: "home/cached/sections_sec", collection: @sections, as: :section %>
-</section>
+<%= cell :ad, slot: "a", id: "o-ad--pos-a", attribution: false, order: -1 %>
+<%= cell :ad, slot: "b", id: "o-ad--pos-b", order: 998 %>
+<%= cell(:appeal, nil, order: 1000).call(:breaking_news) %>
+<%= cell(:popular_articles, nil, order: 1001).call(:side_bar) %>
+<%= cell :ad, slot: "c", id: "o-ad--pos-c", order: 1002 %>
+<%= cell(:latest_news, @top).call(:featured) %>
+<%= cell(:latest_news, @sections).call(:categories) %>

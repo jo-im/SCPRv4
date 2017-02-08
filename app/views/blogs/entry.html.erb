@@ -1,148 +1,65 @@
 <% add_to_page_title @entry.feature.present? ? "#{@entry.feature.name}: #{@entry.headline}" : @entry.headline %>
 <% content_for :opengraph do %><%= render_content @entry, "opengraph" %><% end %>
-<%= render 'shared/ads/dfp_script_config', category: @entry.category %>
-<% content_for :membership_copy, @category.present? ? @category.title : 'Lorem Ipsum' %>
-<% content_for :body_class, 'interior single' %>
+<% content_for :main_class, "o-article" %>
 
-<% content_for :masthead_class, "blog" %>
-<% content_for :titling do %>
-    <%= render :partial => 'shared/new/masthead/blog_titling' %>
+<% content_for :header do %>
+  <section class="o-prologue o-prologue--secondary o-prologue--blog">
+    <span class="o-prologue__title"><%= @entry.blog.try(:name) %></span>
+    <span class="o-prologue__pipe">|</span>
+    <span class="o-prologue__description"><%= @entry.blog.try(:teaser) %></span>
+  </section>
 <% end %>
 
-<%= cache ["show", "blog-content","v19", @entry] do %>
-  <%= render "shared/new/single_blog", article: @entry, full: true %>
-<% end %>
+<!-- LEFT ASIDE -->
+<aside class="l-column--left l--centerize" style="order: -1;">
+  <%= cell :article_audio, @article %>
+  <%= cell :social_tools, @article, display: 'vert' %>
+</aside>
 
-<% cache ["show", "blog-supportive", "v16", @entry] do %>
-        <section class="supportive">
+<!-- RIGHT ASIDES -->
+<%= cell(:ad, slot: "a", class: "l-column--right", id: 'c-ad--a', attribution: false, order: -1).show do
+  '<hr class="b-rule b-rule--bold l-column--right" style="order: 5;" />'
+end %>
 
-            <aside class="placard">
-                <div class="ad widget">
-                    <%= render "shared/ads/dfp", ad_key: 'slot_a' %>
-                </div>
-            </aside>
+<%= cell(:ad, slot: "b", class: "l-column--right", order: 999).show do
+  '<hr class="b-rule b-rule--bold l-column--right" style="order: 12;" />'
+end %>
 
-            <aside class="placard">
-                <div class="ad widget">
-                    <%= render "shared/ads/dfp", ad_key: 'slot_b' %>
-                    <p class="appeal"><a href="/support/underwriting/">Become a KPCC Sponsor</a></p>
-                </div>
-            </aside>
-            <aside class="about-this-blog">
-                <header>
-                    <h1><%= link_to @blog.name, @blog.public_path %></h1>
-                </header>
-                <div class="description">
-                    <p><%= @blog.description %></p>
-                </div>
-                <div class="archives">
-                    <h2>Browse the <%= @blog.name %> archive</h2>
-                    <%= form_tag blog_process_archive_select_path(@blog.slug), id: "archive_date_select", class: "archive-date-select" do %>
-                        <%= date_select 'archive', 'date',
-                            :order      => [:month, :year],
-                            :start_year => @blog.created_at.year,
-                            :end_year   => Time.zone.now.year %>
-                        <%= submit_tag "Go", class: "btn" %>
-                    <% end %>
-                </div>
+<%= cell :ad, slot: "c", class: "l-column--right", order: 1002 %>
 
-                <% bios = @blog.authors %>
-                <% if bios.present? %>
-                    <div class="hosts">
-                        <h2>Your host<%= 's' unless bios.length == 1 %></h2>
-                        <% bios.each do |author| %>
-                            <% cache ["bios", author] do %>
-                                <figure class="clearfix">
-                                    <div class="photo ratio">
-                                        <%= link_to author.public_path, class: "track-event", data: {"ga-category" => "Article", "ga-action" => "Clickthrough", "ga-label" => "Bios Hosts"} do %>
-                                            <div class="fill"></div>
-                                            <% if author.headshot.present? %>
-                                            <b class="img-contain"><%= author.headshot.eight.tag %></b>
-                                            <% end %>
-                                        <% end %>
-                                    </div>
-                                    <figcaption>
-                                        <h3><%= link_to author.name, author.public_path %></h3>
-                                        <ul>
-                                            <li class="portfolio"><%= link_to "All posts by #{author.name.split(" ").first()}", author.public_path %></li>
-                                            <li class="twitter"><%= link_to "Follow @#{author.twitter_handle}", twitter_profile_url(author.twitter_handle) if author.twitter_handle.present? %></li>
-                                            <li class="contact"><%= mail_to author.email, "Email #{author.name.split(" ").first()}" %></li>
-                                        </ul>
-                                    </figcaption>
-                                </figure>
-                            <% end %>
-                        <% end %>
-                    </div>
-                <% end %>
-            </aside>
+<aside class="o-overview l-column--right" style="order: 999;" >
+  <h6 class="o-overview__heading b-heading b-heading--h6 b-heading--uppercase u-text-color--gray b-heading--bold">
+    <a class="b-link b-link--callout" href="<%= @blog.public_url %>"><%= @blog.name %></a>
+  </h6>
+  <span class="o-overview__description"><%= @blog.description %></span>
+</aside>
 
-            <aside class="see-more">
-                <header>
-                    <h1>Recently on <%= @blog.name %></h1>
-                </header>
-                <ul class="previews">
-                    <% @entry.recent_blog_entries.each do |entry| %>
-                        <% blog_article = entry.get_article %>
-                        <li>
-                            <%= link_to blog_article.public_path, class: "track-event", data: {"ga-category" => "Article", "ga-action" => "Clickthrough", "ga-label" => "More Sidebar Blog"} do %>
-                                <figure class="ratio-pairing clearfix">
-                                    <div class="ratio">
-                                        <div class="fill"></div>
-                                        <b class="img-contain"><%= image_tag blog_article.asset.lsquare.url, alt: blog_article.asset.caption %></b>
-                                    </div><!--/ .ratio -->
-                                    <figcaption>
-                                        <%= smart_date_js blog_article.public_datetime %>
-                                        <mark><%= blog_article.short_title %></mark>
-                                    </figcaption>
-                                </figure><!--/ .ratio-pairing -->
-                            <% end %>
-                        </li>
-                    <% end %>
-                </ul>
-            </aside>
-        </section>
-    </div>
-</div><!--/ .report -->
+<%= cell :blog_hosts, @blog, class: "l-column--right", order: 999 %>
 
-<!-- AdHost Slot: Membership Appeals -->
-<div id="article-membership-appeal"></div>
+<%= cell :recent_content, @entry.sister_blog_entries, class: "l-column--right o-recent-content--blog-entry", blog: @blog.name, order: 1000 %>
 
-<%= comments_for @entry %>
+<!-- ARTICLE BODY -->
+<%= cell :article, @article, popular_blog: @popular_blog_entry %>
 
-    <div class="placard-waystation">
-    </div>
+<!-- MOAR STUFF -->
+<%= cell :newsletter_appeal, nil, order: 998 %>
 
-<section class="blog-sampler">
-   <header><h1 class="bound"><span>Enjoy reading <%= @blog.name %>?</span> <span>You might like KPCC’s other blogs.</span></h1></header>
-    <div class="highlights bound clearfix">
-        <% @entry.sister_blog_entries.each do |entry| %>
-            <% sister_article = entry.get_article %>
-            <article>
-                <header>
-                    <%= link_to sister_article.public_path, class: "track-event", data: {"ga-category" => "Article", "ga-action" => "Clickthrough", "ga-label" => "More Other Blogs"} do %>
-                        <h2><%= sister_article.short_title %></h2>
-                        <%= smart_date_js sister_article.public_datetime %>
-                    <% end %>
-                </header>
-                <aside class="clearfix">
-                    <div class="about">
-                        <h3><%= link_to entry.blog.name, entry.blog.public_path %></h3>
-                        <p><%= entry.blog.teaser %></p>
-                    </div>
-                    <div class="photo ratio">
-                        <div class="fill"></div>
-                        <div class="img-contain"><%= image_tag sister_article.asset.lsquare.url, alt: sister_article.asset.caption %></div>
-                    </div>
-                </aside>
-            </article>
-        <% end %>
-    </div><!--/ .highlights -->
-    <footer class="bound"><a href="/blogs/">See all of our blogs &amp; news coverage</a></footer>
-</section><!--/ .sampler -->
+<hr class="o-article__rule--ending b-rule b-rule--primary-lightest b-rule--bold b-rule--padded" style="order: 998;" />
 
-    <% if @popular_articles %>
-        <%= render 'shared/new/popular_articles',
-            articles: @popular_articles.first(4),
-            header: 'Popular Now on KPCC' %>
-    <% end %>
-<% end %>
+<%= cell :related_links, @article, order: 998 %>
+
+<%= cell :social_tools, @article, display: 'horiz', order: 998 %>
+
+<%= cell :previously, @entry.sister_blog_entries.first(1), blog: @blog.name, order: 998 %>
+
+<!-- FOOTER CONTENT -->
+<hr class="b-rule b-rule--secondary-alt b-rule--bold b-rule--padded l-column--boundless" style="order: 1001;" />
+
+<%= cell :comments, @article, order: 1001 %>
+
+<%= cell :featured_blogs, @entry.sister_blog_entries.first(4), blog: @blog.name, class: "l-column--boundless", order: 1002 %>
+
+<%= cell :popular_articles, @program, class: "l-column--boundless o-popular-stories--horiz", order: 1002 %>
+
+<%= cell :epilogue, @article, class: "l-column--boundless", order: 1003%>
+

@@ -1,0 +1,54 @@
+.c-audio__text-listen
+  color: $color-link
+  font-size: 22px
+  font-weight: 500
+  line-height: 30px
+  text-transform: uppercase
+  @media (max-width: $media-tablet)
+    font-size: 22px
+
+.c-audio__download
+  color: $color-gray
+  font-size: 15px
+  line-height: 18px
+  margin-bottom: $margin-in-pixels / 2
+  @media (max-width: $media-tablet)
+    font-size: 16px
+    line-height: 24px
+
+  a
+    font-weight: 400
+
+    span
+      font-weight: 500
+
+.c-audio__text
+  text-align: left
+
+.c-audio__duration
+  color: $color-secondary
+  font-size: 13px
+  font-weight: 500
+  line-height: 30px
+
+.c-audio--horiz
+  align-items: center
+  display: flex
+  display: -ms-flex-box
+  display: -webkit-box
+  justify-content: flex-start
+  margin-bottom: 7px
+  .c-audio__text
+    margin-left: 15px
+
+.c-audio--vert
+  .c-audio__text
+    text-align: center
+
+    .c-audio__text-listen
+      font-size: 18px
+      line-height: 18px
+
+  .c-audio__duration
+    font-size: 13px
+    line-height: 30px

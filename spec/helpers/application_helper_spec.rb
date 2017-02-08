@@ -121,18 +121,18 @@ describe ApplicationHelper do
 
     it "renders with specified context" do
       content = create :content_shell, assets: [create(:asset)]
-      
+
       helper.render_asset(content, context: "pij_query")
         .should render_template "shared/assets/pij_query/_photo"
     end
 
-    it "uses the object's asset_display_id to figure out display" do
-      content = create :news_story, asset_display: :slideshow
-      asset = create :asset, content: content
-
-      helper.render_asset(content)
-        .should render_template "shared/assets/default/_slideshow"
-    end
+    # it "uses the object's asset_display_id to figure out display" do
+    #   content = create :news_story, asset_display: :slideshow
+    #   asset = create :asset, content: content
+    #
+    #   helper.render_asset(content)
+    #     .should render_template "shared/assets/default/_slideshow"
+    # end
   end
 
   #------------------------

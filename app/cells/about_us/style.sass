@@ -1,0 +1,265 @@
+.o-about-us__introduction
+  text-align: center
+  a
+    color: $color-link
+  .o-about-us__introduction-header
+    margin-bottom: $margin-in-pixels * 1.5
+    font-family: $font-serif-titling
+    font-size: 54px
+    font-weight: 800
+    line-height: 60px
+    @media (max-width: $media-tablet)
+      font-size: 36px
+      line-height: 36px
+      margin-bottom: $margin-in-pixels / 2
+  .o-about-us__introduction-description
+    font-size: 26px
+    line-height: 36px
+    margin-bottom: $margin-in-pixels * 0.75
+    @media (max-width: $media-tablet)
+      font-size: 23px
+      line-height: 30px
+      margin-bottom: $margin-in-pixels
+
+.o-about-us__navigation
+  display: flex
+  justify-content: center
+  background-color: $color-gray-lightest
+  border-bottom: 1px solid $color-gray-light
+  border-top: 1px solid $color-primary-light
+
+  .o-pipe
+    color: $color-gray
+    display: none
+    margin-left: 1em
+    margin-right: 1em
+    @media (max-width: $media-tablet)
+      display: block
+    @media (max-width: $media-mobile)
+      display: none
+
+  .o-about-us__navigation-list
+    display: flex
+    flex-wrap: wrap
+    justify-content: space-between
+    width: ($page-col * 10) + ($page-gutter * 9)
+    @media (max-width: $media-tablet)
+      justify-content: center
+    @media (max-width: $media-mobile)
+      flex-direction: column
+
+    .o-about-us__navigation-item, .o-pipe
+      font-size: 18px
+      line-height: 18px
+      padding-bottom: 21px
+      padding-top: 21px
+      @media (max-width: $media-tablet)
+        padding-bottom: 12px
+        padding-top: 12px
+      @media (max-width: $media-mobile)
+        border-bottom: 1px solid $color-gray-light
+        padding-bottom: 21px
+        padding-top: 21px
+        width: 100%
+
+    .o-about-us__navigation-item:last-of-type
+      @media (max-width: $media-tablet)
+        border-bottom: 0px
+
+.o-about-us__description
+  align-items: center
+  border-bottom: 1px solid $color-gray-light
+  display: flex
+  justify-content: space-between
+  margin: 0 $margin
+  padding-bottom: $margin-in-pixels
+  padding-top: $margin-in-pixels
+  @media (max-width: $media-tablet)
+    flex-direction: column-reverse
+
+  .o-about-us__description-text
+    width: percentage(641/1098)
+    @media (max-width: $media-tablet)
+      width: 100%
+
+    p
+      font-size: 18px
+      margin-bottom: 15px
+      line-height: 30px
+
+    p:last-of-type
+      margin-bottom: 0px
+
+    a
+      color: $color-link
+
+    ul
+      list-style: none
+      @media (max-width: $media-tablet)
+        padding-left: 0px
+
+    li
+      font-size: 18px
+      line-height: 30px
+      margin-bottom: 0.5em
+      margin-left: 2.5em
+
+    h3
+      color: $color-gray
+      font-size: 22px
+      line-height: 30px
+      margin-bottom: $margin-in-pixels / 2
+      @media (max-width: $media-tablet)
+        font-size: 20px
+        line-height: 30px
+        margin-bottom: 15px
+
+  .o-about-us__description-image
+    margin-bottom: 0px
+    width: percentage(414/1098)
+    @media (max-width: $media-tablet)
+      margin-bottom: 30px
+      width: initial
+
+    .o-figure__img
+      padding-top: (100/1.38) * 1%
+
+  .o-about-us__description-image--right
+    float: right
+
+  .o-about-us__description-image--left
+    float: left
+
+  .o-about-us__description-text--right
+    float: right
+
+  .o-about-us__description-text--left
+    float: left
+
+.o-about-us__connect
+  padding-top: $margin-in-pixels
+  border-bottom: 1px solid $color-gray-light
+  @media (max-width: $media-tablet)
+    padding-bottom: $margin-in-pixels / 2
+
+  h3
+    color: $color-gray
+    font-size: 22px
+    line-height: 30px
+    margin-bottom: $margin-in-pixels / 2
+    text-align: center
+    @media (max-width: $media-tablet)
+      font-size: 20px
+      line-height: 30px
+      margin-bottom: 15px
+
+  .o-about-us__connect-list
+    display: flex
+    flex-wrap: wrap
+
+    .o-about-us__connect-icon
+      align-items: center
+      box-sizing: border-box
+      display: flex
+      height: $margin-in-pixels
+      margin-bottom: $margin-in-pixels
+      padding-left: 30px
+      width: 33%
+      @media (max-width: $media-tablet)
+        margin-bottom: $margin-in-pixels / 2
+        width: 50%
+      @media (max-width: $media-mobile)
+        padding-left: 0px
+        width: initial
+
+      svg
+        margin-left: 15px
+        margin-right: 15px
+        width: 56px
+        height: 56px
+
+      a
+        font-size: 18px
+        line-height: 22px
+
+
+.o-about-us__stations
+  border-bottom: 1px solid $color-gray-light
+  display: flex
+  flex-wrap: wrap
+  justify-content: space-between
+  padding-bottom: $margin-in-pixels / 2
+  padding-top: $margin-in-pixels
+  @media (max-width: $media-tablet)
+    flex-direction: column
+
+  h3
+    color: $color-gray
+    font-size: 22px
+    line-height: 30px
+    margin-bottom: $margin-in-pixels / 2
+    text-align: center
+    width: 100%
+    @media (max-width: $media-tablet)
+      font-size: 20px
+      line-height: 30px
+      margin-bottom: 15px
+
+  .o-about-us__stations-text
+    width: percentage(525/1098)
+    @media (max-width: $media-tablet)
+      width: initial
+
+    p
+      font-size: 18px
+      line-height: 30px
+      margin-bottom: $margin-in-pixels / 2
+
+    a
+      color: $color-link
+
+    ul
+      list-style: circle
+      margin: 2em 0
+
+    li
+      font-size: 0.9em
+      margin: 1em 3em
+
+    h4
+      font-weight: 700
+      text-transform: uppercase
+
+  .o-about-us__stations-image
+    width: percentage(525/1098)
+    @media (max-width: $media-tablet)
+      margin-bottom: $margin-in-pixels / 2
+      width: initial
+
+  .o-about-us__stations-image--right
+    float: right
+
+  .o-about-us__stations-image--left
+    float: left
+
+  .o-about-us__stations-text--right
+    float: right
+
+  .o-about-us__stations-text--left
+    float: left
+
+.o-about-us__stations-text--orange
+  color: #f37a00
+.o-about-us__stations-text--red
+  color: #be0101
+.o-about-us__stations-text--purple
+  color: #79246b
+.o-about-us__stations-text--blue
+  color: #0078a1
+.o-about-us__stations-text--lightblue
+  color: #009fbd
+
+#transparency, #careers
+  flex-direction: row-reverse
+  @media (max-width: $media-tablet)
+    flex-direction: column-reverse

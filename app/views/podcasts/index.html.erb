@@ -1,37 +1,9 @@
+<% content_for :main_class, "l-podcasts" %>
 <% add_to_page_title "Podcasts" %>
 
-<h1>Podcasts</h1>
-
-<div class="row-fluid">
-  <div class="span6">
-    <p style="font-style: italic">A podcast is a way for you to subscribe to a program and listen to it when and where you want.</p>
-    <p style="font-style: italic">Once you've subscribed to a program's podcast, your podcasting application checks on a regular basis for new episodes of the program and makes them available for download to your computer.</p>
-  </div>
-
-  <div class="span18">
-    <% @podcasts.each do |p| %>
-      <h3><%= p.title %></h3>
-      <div class="row-fluid">
-        <div class="span4">
-          <img src="<%= p.image_url %>" style="width: 100%; max-width: 88px;"/>
-        </div>
-        <div class="span20">
-          <p><%= p.description %></p>
-          <ul>
-            <% if p.itunes_url.present? %>
-              <li>
-                <a href="<%= p.itunes_url %>">Subscribe via Apple Podcasts&trade;</a>
-              </li>
-            <% end %>
-
-            <% if p.podcast_url.present? %>
-              <li>
-                <a href="<%= p.podcast_url %>"><%= p.podcast_url %></a>
-              </li>
-            <% end %>
-          </ul>
-        </div>
-      </div>
-    <% end %>
-  </div>
-</div>
+<%= cell :ad, slot: "a", id: "o-ad--pos-a", attribution: false, order: -1 %>
+<%= cell :ad, slot: "b", id: "o-ad--pos-b", order: 998 %>
+<%= cell(:appeal, nil, order: 999).call(:breaking_news) %>
+<%= cell(:popular_articles, order: 1000).call(:side_bar) %>
+<%= cell :ad, slot: "c", id: "o-ad--pos-c", order: 1001 %>
+<%= cell :podcast_list, @podcasts, order: 1 %>

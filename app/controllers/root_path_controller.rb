@@ -41,6 +41,7 @@ class RootPathController < ApplicationController
       handle_category and return
     end
 
+
     # If we haven't returned by now, then render a 404.
     render_error(404, ActionController::RoutingError.new("Not Found"))
     return false

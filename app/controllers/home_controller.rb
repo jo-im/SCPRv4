@@ -1,5 +1,4 @@
 class HomeController < ApplicationController
-  layout "homepage"
 
   # Just for development purposes
   # Pass ?regenerate to the URL to regenerate the homepage category blocks
@@ -39,7 +38,7 @@ class HomeController < ApplicationController
   #----------
 
   def about_us
-    render layout: "app_nosidebar"
+    render "about_us"
   end
 
   def not_found

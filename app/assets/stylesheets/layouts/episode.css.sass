@@ -1,0 +1,90 @@
+.l-episode
+  display: block
+  max-width: 1440px
+  margin: 0 auto
+  overflow-y: auto
+  overflow-x: hidden
+  padding-top: $margin-in-pixels
+  .c-audio
+    float: left
+    margin-left: $margin
+    width: $col
+
+  .o-featured-episode__headers, .o-featured-episode__center
+    margin-left: $margin + $col + $gutter
+    margin-right: $gutter
+    width: ($col * 6) + ($gutter * 5)
+
+  #o-ad--pos-a, #o-ad--pos-b, #o-ad--pos-c, .o-program-overview, .o-recent-segments-cluster
+    float: right
+    width: ($col * 3) + ($gutter * 2)
+    margin-right: $gutter + $col + $margin
+    clear: right
+
+  #o-ad--pos-a, #o-ad--pos-b
+    padding-bottom: $gutter
+    border-bottom: 1px solid $color-gray-light
+
+  #o-ad--pos-b, .o-program-overview
+    margin-top: $margin-in-pixels / 2
+
+  #o-ad--pos-c
+    margin-bottom: $margin-in-pixels
+
+  .o-recent-segments-cluster
+    padding-top: $margin-in-pixels
+
+  .o-program-overview
+    margin-bottom: $margin-in-pixels
+
+  .o-featured-programs
+    margin-bottom: 0px
+
+  .archive-browser
+    margin-bottom: 60px
+    margin-left: $margin
+    float: left
+    width: ($col * 7) + ($gutter * 6)
+
+  @media all and (max-width: $media-wide)
+    .c-audio
+      display: none
+
+  @media all and (max-width: $media-tablet)
+    display: flex
+    flex-direction: column
+    padding-top: $margin-in-pixels / 2
+    .c-audio
+      display: none
+    #o-ad--pos-a, #o-ad--pos-b, #o-ad--pos-c
+      margin-left: $margin
+      margin-right: $margin
+      width: ($col * 12) + ($gutter * 11)
+
+    #o-ad--pos-a
+      margin-bottom: $margin-in-pixels / 2
+      padding-bottom: $margin-in-pixels / 2
+
+    #o-ad--pos-b
+      margin-top: 0px
+      padding-bottom: $margin-in-pixels
+
+    .o-program-overview
+      margin-top: $margin-in-pixels
+
+    .o-featured-episode__headers, .o-featured-episode__center, .o-program-overview, .o-recent-segments-cluster
+      margin-left: $margin
+      margin-right: $margin
+      width: initial
+
+    .o-recent-episodes-list--horiz
+      .o-recent-episodes
+        display: block
+        .o-recent-episodes__item
+          width: 100%
+          margin-bottom: $gutter
+
+    .archive-browser
+      width: 90%
+
+

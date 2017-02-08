@@ -23,7 +23,8 @@ module ContentBase
     "ContentShell",
     "Event",
     "PijQuery",
-    "ShowEpisode"
+    "ShowEpisode",
+    "Edition"
   ]
 
   #--------------------
@@ -115,7 +116,7 @@ module ContentBase
 
   #--------------------
   # This is for making "raw" Elasticsearch queries.
-  # Useful if #search isn't doing what you want, or 
+  # Useful if #search isn't doing what you want, or
   # for testing out query structures copied from
   # documentation or Elasticsearch-SQL.
 
@@ -174,7 +175,7 @@ module ContentBase
       end
     end
 
-    articles    
+    articles
 
   end
 

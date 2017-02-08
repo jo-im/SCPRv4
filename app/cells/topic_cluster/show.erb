@@ -1,0 +1,19 @@
+<aside class="o-topic-cluster <%= @options[:class] %>" <%= order %> >
+  <h6 class="b-heading b-heading--h6 b-heading--uppercase u-text-color--gray b-heading--bold o-media__headline-link"><%= link_to "#{tag.title}", topic_url(tag.slug) %></h6>
+  <ul class="c-list c-list--horiz">
+    <% content.each do |feature| %>
+      <% href = begin feature.asset.thumb.url rescue '/static/images/fallback-img-square.png' end %>
+      <li class="o-topic-cluster__content">
+        <figure class="o-topic-cluster__thumb o-figure o-figure--four-by-three">
+          <img class="o-figure__img" src="<%= href %>" style="background-image: url(<%= href %>);">
+        </figure>
+        <div class="o-topic-cluster__content-description">
+          <h4>
+            <%= link_to feature.title, feature.public_url %>
+          </h4>
+          <div class="o-topic-cluster__datetime"><%= feature.public_datetime.try(:strftime, "%B %-d, %Y") %></div>
+        </div>
+      </li>
+    <% end %>
+  </ul>
+</aside>

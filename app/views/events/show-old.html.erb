@@ -1,0 +1,60 @@
+<% content_for :opengraph do %><%= render_content @event, "opengraph" %><% end %>
+<%= render 'shared/ads/dfp_script_config', category: @event.category %>
+
+<% present @event do |p| %>
+  <% add_to_page_title p.headline %>
+
+  <% content_for :footer do %>
+    <script src="http://maps.googleapis.com/maps/api/js?key=<%=Rails.configuration.x.api.google.maps%>&amp;sensor=true"></script>
+
+    <script>gmapsLoader = new scpr.GMapsLoader()</script>
+  <% end %>
+
+  <%# move this... %>
+  <%
+    expires = nil
+    if @event.ends_at.to_i > Time.zone.now.to_i
+      expires = @event.ends_at - Time.zone.now
+    end
+  %>
+
+  <%# Automagically expire this cache when it ends %>
+  <%= cache ["show", "v9", @event], expires_in: expires do %>
+    <%= render "events/event", event: @event %>
+  <% end %>
+
+  <div class="fold events-fold" id="fold">
+    <%= render "shared/related_content_and_links", content: @event %>
+
+    <% if @more_events.present? && (@event.upcoming? || @event.current?) && @event.is_kpcc_in_person_event? %>
+      <aside class="more-events" id="more-events">
+        <div class="row-fluid">
+          <div class="span6 row-title">
+            <h6>More Events with KPCC In Person</h6>
+          </div>
+          <div class="span18">
+            <div class="row-fluid">
+              <div class="span12">
+                <%= render 'small_event', event: @more_events.first %>
+              </div>
+              <div class="span12">
+                <%= render 'small_event', event: @more_events.last %>
+              </div>
+            </div> <!-- row fluid -->
+          </div> <!-- span -->
+        </div> <!-- row fluid -->
+      </aside> <!-- more events -->
+    <% end %>
+
+    <div class="row-fluid">
+      <div class="span6" id="fold-comments-count-widget">
+        <%= content_widget "comment_count", @event, cssClass: "left-side" %>
+      </div>
+      <div class="span18 mq-solo-span">
+        <%= content_widget "comments", @event, header: false, templateLayout: "old" %>
+      </div>
+    </div> <!-- row-fluid -->
+  </div>
+<% end %>
+
+<%= render 'shared/scripts/embedder' %>

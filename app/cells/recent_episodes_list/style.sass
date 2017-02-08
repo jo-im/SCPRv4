@@ -1,0 +1,68 @@
+.o-recent-episodes-list
+  padding-top: $margin-in-pixels
+
+.o-recent-episodes-list__archive-link
+  display: inline-block
+  font-size: 15px
+  line-height: 18px
+  margin-bottom: 20px
+  @media (max-width: $media-tablet)
+    font-size: 16px
+    line-height: 24px
+
+.o-recent-episodes-list__item
+  margin-bottom: 20px
+
+.o-recent-episodes__figure
+  margin-bottom: 30px
+
+.o-recent-episodes-list__item-headline
+  font-size: 18px
+  line-height: 24px
+
+.o-recent-episodes-list__item-datetime
+  color: $color-gray
+  display: block
+  font-size: 13px
+  font-weight: 500
+  line-height: 30px
+
+.o-recent-episodes-list--horiz
+  background-color: $color-gray-lightest
+  width: 100%
+  clear: both
+  padding-top: $margin-in-pixels
+  margin-bottom: $margin-in-pixels
+  .o-recent-episodes-list__heading
+    margin-bottom: $margin-in-pixels / 2
+    @media (max-width: $media-tablet)
+      font-size: 23px
+      line-height: 30px
+  .o-recent-episodes
+    display: flex
+    justify-content: space-between
+  .o-recent-episodes, .o-recent-episodes__list--horiz__headers
+    margin-left: $margin
+    margin-right: $margin
+  .o-recent-episodes__item
+    padding-bottom: $margin-in-pixels
+    width: ($page-col * 4) + ($page-gutter * 3)
+    .o-recent-episodes__item-headline
+      font-family: $font-serif-titling
+      font-weight: 800
+      line-height: 36px
+      @media (max-width: $media-tablet)
+        font-size: 26px
+        line-height: 30px
+    .o-recent-episodes__item-datetime
+      color: $color-gray
+      display: block
+      font-weight: 400
+      font-size: 15px
+      line-height: 30px
+      margin-top: 15px
+      margin-bottom: 15px
+      text-transform: uppercase
+    .o-recent-episodes__item-teaser
+      font-size: 18px
+      line-height: 24px

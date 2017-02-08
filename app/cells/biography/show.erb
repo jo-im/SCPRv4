@@ -1,0 +1,16 @@
+<% if bylines.present? %>
+  <div class="o-biography__stories" style="order: <%= @options[:order] %>">
+    <h6 class="b-heading b-heading--h6 b-heading--uppercase u-text-color--gray b-heading--medium">Stories by <%= model.name %></h6>
+    <% bylines.each do |byline| %>
+      <div class="o-biography__story">
+        <h3 class="o-biography__story-heading b-heading--h4 b-heading--serif"><%= link_to byline.short_title, byline.public_url %></h3>
+        <div class="c-byline">
+          <span class="c-byline__name"><%= byline.byline %></span>
+          <span class="c-byline__pipe">|</span>
+          <span class="c-byline__timestamp"><%= byline.public_datetime.strftime('%B %d %Y, %l:%M %p') %></span>
+        </div>
+        <p><%= byline.teaser.html_safe %></p>
+      </div>
+    <% end %>
+  </div>
+<% end %>

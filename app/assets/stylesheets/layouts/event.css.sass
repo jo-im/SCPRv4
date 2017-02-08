@@ -1,0 +1,98 @@
+.l-event
+  display: block
+  max-width: 1440px
+  margin: 0 auto
+  overflow-y: auto
+  overflow-x: hidden
+  padding-top: $margin-in-pixels
+  .o-event__body, .o-event__RSVP, .o-event__figure, .o-event__headline, .o-event__type, .o-appeal, .o-more-events, .o-event__social-tools, .o-comments, .o-event__rule--ending
+    margin-left: $margin + $col + $gutter
+    margin-right: $margin
+    width: ($col * 6) + ($gutter * 5)
+
+  .o-social-tools--vert
+    float: left
+    margin-left: $margin
+    margin-top: $margin-in-pixels / 2
+    width: $col
+    text-align: right
+
+  #o-ad--pos-a, #o-ad--pos-b, #o-ad--pos-c, .o-recent-events-cluster
+    float: right
+    width: ($col * 3) + ($gutter * 2)
+    margin-right: $gutter + $col + $margin
+    clear: right
+
+  #o-ad--pos-a, #o-ad--pos-b
+    border-bottom: 1px solid $color-gray-light
+
+  #o-ad--pos-a
+    padding-bottom: $margin-in-pixels * 0.75
+
+  #o-ad--pos-b
+    padding-top: $margin-in-pixels * 0.75
+    padding-bottom: $margin-in-pixels
+
+  #o-ad--pos-c
+    padding-top: $margin-in-pixels
+    padding-bottom: $margin-in-pixels
+
+  .o-event__rule--ending
+    margin-bottom: $margin-in-pixels / 2
+
+  .o-event__rule--footer
+    margin-bottom: $margin-in-pixels
+
+  .o-event__figure
+    img
+      height: auto
+
+  .o-comments
+    clear: both
+
+  .o-epilogue
+    clear: both
+
+  @media (max-width: $media-wide)
+    .o-event__body, .o-event__RSVP, .o-event__figure, .o-event__headline, .o-event__type, .o-appeal, .o-more-events, .o-event__social-tools, .o-comments, .o-event__rule--ending
+      width: ($col * 6) + ($gutter * 6)
+
+    #o-ad--pos-a, #o-ad--pos-b, #o-ad--pos-c, .o-recent-events-cluster
+      margin-right: $margin
+      width: ($col * 3) + ($gutter * 3)
+
+  @media (max-width: $media-desktop)
+    #o-ad--pos-a, #o-ad--pos-b, #o-ad--pos-c, .o-recent-events-cluster
+      width: ($col * 4) + ($gutter * 3)
+
+  @media all and (max-width: $media-tablet)
+    display: flex
+    flex-direction: column
+    padding-top: 0px
+    .o-event__type, .o-event__headline, .o-event__figure, .o-event__RSVP, .o-event__body,
+    .o-more-events, .o-event__social-tools, .o-comments, .o-event__rule--ending,
+    #o-ad--pos-a, #o-ad--pos-b, #o-ad--pos-c, .o-recent-events-cluster
+      width: ($col * 12) + ($gutter * 11)
+      margin-left: $margin
+    #o-ad--pos-a
+      padding-top: $margin-in-pixels / 2
+      padding-bottom: $margin-in-pixels / 2
+    #o-ad--pos-c
+      padding-top: 0px
+      padding-bottom: $margin-in-pixels
+    .o-appeal--in-person
+      margin: 0px
+      width: 100%
+    .o-more-events
+      margin-bottom: 30px
+    .o-social-tools--horiz
+      margin-bottom: 0px
+    .o-social-tools--vert
+      display: none
+    .o-event__type
+      margin-top: 1em
+  @media all and (max-width: $media-mobile)
+    .o-event__RSVP
+      flex-direction: column !important
+      div
+        width: initial

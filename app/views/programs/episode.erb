@@ -1,0 +1,41 @@
+<% content_for :main_class, "l-episode" %>
+<% content_for :opengraph do %><%= render_content @episode, "opengraph" %><% end %>
+<% content_for :header do %>
+  <section id="o-prologue--program__episode" class="o-prologue o-prologue--program">
+    <a class="o-prologue__logo" href="/programs/<%= @program.try(:slug) %>"><%= image_tag "show-logos/#{@program.try(:slug)}.svg" %></a>
+    <span class="o-prologue__description">
+      <div class="o-prologue__teaser">
+        <%= @program.try(:teaser) %>
+      </div>
+      <address>Hosted by <%= @program.try(:host) %></address>
+      <div class="o-prologue__airtime">
+        <div>Airs <%= @program.try(:airtime) %></div>
+        <div class="o-prologue__social-icons">
+          <% present @program, ProgramPresenter do |p| %>
+            <% ['twitter', 'facebook', 'podcast', 'email', 'rss'].each do |social| %>
+              <% if p.send("#{social}_link").present? %>
+                <a class="o-prologue__social-icon" href="<%= p.send("#{social}_link") %>" target="_blank">
+                  <svg class="b-icon b-icon--size-sm b-icon--left">
+                    <use class="b-icon--color-link" xlink:href="<%= "/static/images/scpr-sprite.svg#icon_line-#{social}" %>" />
+                  </svg>
+                </a>
+              <% end %>
+            <% end %>
+          <% end %>
+        </div>
+      </div>
+    </span>
+  </section>
+<% end %>
+
+<%= cell(:article_audio, @episode, type: 'episode').call(:vertical) %>
+<%= cell :ad, slot: "a", id: "o-ad--pos-a", attribution: false, order: -1 %>
+<%= cell :ad, slot: "b", id: "o-ad--pos-b", order: 998 %>
+<%= cell :recent_content, @program, class: "o-recent-segments-cluster", order: 999 %>
+<%= cell :program_overview, @program, order: 1000 %>
+<%= cell :episode, @episode, program: @program, order: 1 %>
+<%= cell(:recent_episodes_list, @episodes, program: @program, order: 1001).call(:horizontal) %>
+<%= cell :archive_browser, @program, order: 1002 %>
+<%= cell :ad, slot: "c", id: "o-ad--pos-c", order: 1003 %>
+<%= cell :featured_programs, @program, class: "l-column--boundless", order: 1004 %>
+<%= cell :epilogue, @program, order: 1005 %>

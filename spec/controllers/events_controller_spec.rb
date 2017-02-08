@@ -62,7 +62,7 @@ describe EventsController do
         current_event = create :event, :published, starts_at: 2.hours.ago, ends_at: 2.hours.from_now, event_type: 'comm'
         future_event  = create :event, :published, starts_at: 2.hours.from_now, ends_at: 3.hours.from_now, event_type: 'comm'
         get :kpcc_in_person
-        assigns(:upcoming_events).should eq [current_event,future_event]
+        assigns(:all_upcoming_events).should eq [future_event]
       end
     end
   end

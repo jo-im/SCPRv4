@@ -1,0 +1,23 @@
+<aside class="o-topic-cluster o-topic-cluster--vertical <%= @options[:class] %>" <%= order %> >
+  <h6 class="o-topic-cluster__heading b-heading b-heading--h6 b-heading--uppercase u-text-color--gray b-heading--medium o-media__headline-link"><%= link_to "#{tag.title}", topic_url(tag.slug) %></h6>
+  <h6 class="o-topic-cluster__subheading b-heading b-heading--h6 u-text-color--gray b-heading--bold o-media__headline-link">
+    <a href="<%= topic_url(tag.slug) %>">See all</a>
+  </h6>
+  <ul class="c-list c-list--horiz">
+    <% content.each do |feature| %>
+      <% href = begin feature.asset.thumb.url rescue '/static/images/fallback-img-square.png' end %>
+      <li class="o-topic-cluster__content">
+        <figure class="o-topic-cluster__thumb o-figure o-figure--four-by-three">
+          <img class="o-figure__img" src="<%= href %>" style="background-image: url(<%= href %>);">
+        </figure>
+        <div class="o-topic-cluster__content-description">
+          <h4 class="o-topic-cluster__headline">
+            <a class="o-media__headline-link" href="<%= feature.public_url %>"><%= feature.short_title %></a>
+          </h4>
+          <div class="o-topic-cluster__byline"><%= feature.byline %></div>
+          <div class="o-topic-cluster__datetime"><%= feature.public_datetime.try(:strftime, "%B %-d, %Y") %></div>
+        </div>
+      </li>
+    <% end %>
+  </ul>
+</aside>

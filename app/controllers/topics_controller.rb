@@ -1,5 +1,4 @@
 class TopicsController < ApplicationController
-  layout 'new/ronin'
   respond_to :html, :xml, :rss
 
   PER_PAGE = 8

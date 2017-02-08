@@ -1,0 +1,19 @@
+<aside class="o-recent-episodes-list" style="order: <%= @options[:order] %>">
+  <h6 class="o-recent-episodes-list__heading b-heading--h6 b-heading--uppercase u-text-color--gray b-heading--medium">Recent Episodes</h6>
+  <a class="o-recent-episodes-list__archive-link b-link b-link--callout" href="/programs/<%= program.slug %>/featured?view=episodes">
+    See <%= program.title %>&rsquo;s episode archive
+  </a>
+  <ul class="o-recent-episodes">
+    <% model.first(5).each do |episode| %>
+      <li class="o-recent-episodes-list__item">
+        <a class="b-link" href="<%= episode.public_path %>">
+          <span class="o-recent-episodes-list__item-headline"><%= episode.try(:headline) %></span>
+          <time class="o-recent-episodes-list__item-datetime" datetime="<%= format_date(episode.air_date, with:'%F') %>">
+            <%= episode.air_date.strftime("%A, %B %-d, %Y") %>
+          </time>
+        </a>
+      </li>
+    <% end %>
+  </ul>
+</aside>
+

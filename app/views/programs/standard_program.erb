@@ -1,0 +1,39 @@
+<% content_for :main_class, "l-standard-program" %>
+<% content_for :header do %>
+  <section class="o-prologue o-prologue--standard-program">
+    <a class="o-prologue__logo" href="/programs/<%= @program.try(:slug) %>"><%= image_tag "show-logos/#{@program.try(:slug)}.svg" %></a>
+    <span class="o-prologue__description">
+      <div class="o-prologue__teaser">
+        <%= @program.try(:teaser) %>
+      </div>
+      <address>Hosted by <%= @program.try(:host) %></address>
+      <div class="o-prologue__airtime">
+        <div>Airs <%= @program.try(:airtime) %></div>
+        <div class="o-prologue__social-icons">
+          <% present @program, ProgramPresenter do |p| %>
+            <% ['twitter', 'facebook', 'podcast', 'email', 'rss'].each do |social| %>
+              <% if p.send("#{social}_link").present? %>
+                <a class="o-prologue__social-icon" href="<%= p.send("#{social}_link") %>" target="_blank">
+                  <svg class="b-icon b-icon--size-sm b-icon--left">
+                    <use class="b-icon--color-link" xlink:href="<%= "/static/images/scpr-sprite.svg#icon_line-#{social}" %>" />
+                  </svg>
+                </a>
+              <% end %>
+            <% end %>
+          <% end %>
+        </div>
+      </div>
+    </span>
+  </section>
+<% end %>
+<%= cell :ad, slot: "a", id: "o-ad--pos-a", attribution: false, order: 3 %>
+<%= cell :ad, slot: "b", id: "o-ad--pos-b", order: 5 %>
+<%= cell(:popular_articles, @content, order: 6).call(:side_bar) %>
+<%= cell :archive_picker, @program, base_url: "/programs/" + @program.slug + "/archive", header: "Find a specific episode from " + @program.try(:title) + "'s archive", type: "full", order: 6 %>
+<%= cell(:appeal, @program, order: 4).call(:podcast) %>
+<%= cell :ad, slot: "c", id: "o-ad--pos-c", order: 7 %>
+<%= cell :episode_list, @episodes, class: 'o-standard-program__episode-list', program: @program, header: 'Recent episodes', order: 1 %>
+<%= paginate @episodes %>
+<%= cell :featured_programs, @program, order: 11 %>
+<%= cell :popular_articles, @program, class: "o-popular-stories--horiz", order: 1001 %>
+<%= cell :epilogue, @program, order: 1001 %>

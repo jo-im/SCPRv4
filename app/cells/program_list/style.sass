@@ -1,0 +1,60 @@
+.o-program-list__heading
+  font-family: $font-serif-titling
+  font-size: 54px
+  line-height: 60px
+  margin-bottom: $margin-in-pixels / 2
+  @media (max-width: $media-tablet)
+    font-size: 36px
+    line-height: 36px
+
+.o-program-list__item
+  display: flex
+  justify-content: space-between
+  margin-bottom: $margin-in-pixels / 2
+
+  .o-program-list__featured-figure
+    margin: 0
+    width: percentage(300/756)
+    float: left
+    clear: left
+
+    .o-figure__img
+      padding-top: (100 / 2.5) * 1%
+
+  .o-program-list__featured-description
+    width: percentage(414/756)
+    float: left
+    clear: right
+
+    .o-program-list__item-heading
+      color: $color-link
+      font-family: $font-serif-titling
+      font-weight: bold
+      font-size: 31px
+      line-height: 42px
+      margin-bottom: 18px
+      @media (max-width: $media-tablet)
+        font-size: 26px
+        line-height: 30px
+
+.o-program-list__full-list
+  display: flex
+  justify-content: space-between
+  flex-wrap: wrap
+
+.o-program-list__sub-list
+  margin-bottom: $margin-in-pixels
+  width: percentage(300/756)
+  @media (max-width: $media-mobile)
+    width: 100%
+
+  .b-heading
+    margin-bottom: $margin-in-pixels / 2
+    @media (max-width: $media-tablet)
+      font-size: 23px
+      line-height: 30px
+
+.o-program-list__sub-list__item
+  font-size: 18px
+  line-height: 24px
+  margin-bottom: 15px

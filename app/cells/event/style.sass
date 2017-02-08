@@ -1,0 +1,122 @@
+.l-event
+  p
+    margin-bottom: $margin-in-pixels / 4
+    a
+      color: $color-link
+  p:last-of-type
+    margin-bottom: $margin-in-pixels
+
+.o-event__body
+  display: inline-block
+  font-size: 18px
+  line-height: 30px
+
+.o-event__figure
+  font-size: 0.8em
+  .o-figure__details
+    display: flex
+    justify-content: space-between
+    .o-figure__owner
+      color: $color-secondary
+      display: inline
+      text-transform: uppercase
+      margin-right: 1em
+    .o-figure__caption
+      display: block
+      margin: 0
+      text-align: right
+
+.o-event__RSVP-button
+  background: none
+  border: 2px solid $color-secondary
+  color: $color-secondary
+  cursor: pointer
+  font-size: 15px
+  font-weight: bold
+  line-height: 46px
+  margin-top: $margin-in-pixels / 4
+  text-align: center
+  transition: 0.08s ease-in
+
+
+.o-event__RSVP-button:hover
+  background-color: $color-secondary
+  color: whitesmoke
+
+
+.o-event__RSVP
+  border-bottom: 1px solid $color-gray-light
+  display: flex
+  margin-bottom: 30px
+  padding-bottom: 30px
+  width: 100%
+  span
+    display: block
+  p
+    color: $color-link
+
+
+.o-event__RSVP-date
+  display: flex
+  flex-direction: column
+  width: 48%
+  margin-right: 42px
+  @media (max-width: $media-tablet)
+    margin-bottom: $margin-in-pixels / 4
+    margin-right: 0px
+  .o-event__RSVP-datetime
+    color: $color-gray
+    font-size: 18px
+    line-height: 30px
+  .o-event__RSVP-button
+    font-size: 15px
+    @media (max-width: $media-tablet)
+      font-size: 16px
+
+.o-event__RSVP-address
+  font-size: 15px
+  line-height: 18px
+  width: 48%
+  @media (max-width: $media-tablet)
+    font-size: 16px
+    line-height: 24px
+  .o-event__RSVP-address-name
+    color: $color-link
+    font-weight: bold
+
+.o-event__type
+  color: $color-gray
+  line-height: 30px
+
+.o-event__headline
+  font-family: $font-serif-titling
+  font-size: 54px
+  line-height: 60px
+  margin-bottom: 30px
+  @media (max-width: $media-tablet)
+    font-size: 36px
+    line-height: 36px
+
+.o-event__figure-caption
+  margin-top: 15px
+
+#o-event__map-link
+  color: $color-link
+  display: inline-block
+  margin-top: $margin-in-pixels / 4
+
+.o-event__body__first-paragraph
+  font-size: 22px
+  line-height: 30px
+
+.o-event__appeal
+  .o-appeal__heading
+    font-size: 37px
+    line-height: 42px
+  .o-appeal__newsletters-link
+    display: none
+  .o-appeal__submit
+    padding-bottom: 0.5rem
+    padding-left: 0.75em
+    padding-right: 0.75em
+    padding-top: 0.5rem

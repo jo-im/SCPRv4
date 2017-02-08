@@ -61,7 +61,8 @@ class Article
     :asset_display,
     :disqus_identifier,
     :abstract,
-    :asset_scheme
+    :asset_scheme,
+    :from_pij
 
   alias_attribute :short_headline, :short_title
 
@@ -218,9 +219,17 @@ class Article
   end
 
   def assets
+    # Assets that are meant to be displayed outside the article body. i.e. not inline
     (@assets||[]).collect do |a|
       ContentAsset.new(a.to_hash.merge({id:a.asset_id, inline: a.inline}))
-    end
+    end.reject(&:inline)
+  end
+
+  def inline_assets
+    # Only assets that appear within the body of the article.
+    (@assets||[]).collect do |a|
+      ContentAsset.new(a.to_hash.merge({id:a.asset_id, inline: a.inline}))
+    end.select(&:inline)
   end
 
   def tags
@@ -262,6 +271,10 @@ class Article
     else
       teaser
     end
+  end
+
+  def from_pij?
+    @from_pij || false
   end
 
   # -- setters -- #
@@ -369,17 +382,18 @@ class Article
       links:            links,
       asset_display:    asset_display,
       disqus_identifier: disqus_identifier,
-      abstract:         abstract
+      abstract:         abstract,
+      from_pij:         from_pij?
     }
   end
 
   alias_method :to_h, :to_hash
 
   def to_reference
-    Hashie::Mash.new({ 
-      id:           @id, 
-      public_path:  @public_path, 
-      title:        @title, 
+    Hashie::Mash.new({
+      id:           @id,
+      public_path:  @public_path,
+      title:        @title,
       short_title:  @short_title,
       category:     @category,
       feature: Hashie::Mash.new({name: (feature.try(:name) || "Article"), _key: (feature.try(:key) || "article")}),

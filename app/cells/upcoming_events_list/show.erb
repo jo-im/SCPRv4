@@ -1,0 +1,21 @@
+<section class="o-events-list o-events-list--quad o-upcoming-events-list__tab o-upcoming-events-list__tab-<%= tab %>">
+  <% if model.any? %>
+    <% model.each do |article| %>
+      <div class="o-events-list__item">
+
+        <figure class="o-events-list__item-figure o-figure o-figure--<%= asset_aspect %>">
+          <img class="o-figure__img" src="<%= asset_path article %>" style="background-image: url(<%= asset_path article %>)">
+        </figure>
+
+        <header class="o-events-list__item-description">
+          <time class="o-events-list__item-timestamp"><%= date article %></time></time>
+          <h4 class="o-events-list__item-heading"><%= link_to article.headline, article.public_path %></h4>
+        </header>
+
+      </div>
+
+    <% end %>
+  <% else %>
+    <p class="o-events-list__item">There are no upcoming events in the selected category.</p>
+  <% end %>
+</section>

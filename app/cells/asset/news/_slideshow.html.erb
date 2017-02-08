@@ -1,0 +1,84 @@
+<section class="prologue">
+    <div class="grating">
+        <div class="inner bound clearfix">
+            <div class="prose">
+                <h1 class="title"><span><%= article.title %></span></h1>
+                <aside class="byline">
+                    <h2 class="author"><%= render_byline article.original_object %></h2>
+                    <%= smart_date_js article.public_datetime %>
+                </aside>
+                <aside class="caption">
+                    <button>Caption</button>
+                    <p class='caption-text'><%= article.asset.caption %></p>
+                    <mark class="credit"><%= article.asset.owner %></mark>
+                </aside>
+            </div><!--/ .prose -->
+            <div class="asset">
+
+                <% html_safe_id = article.id.parameterize %>
+
+                <div id="asset_new_slideshow_<%=html_safe_id%>" class="slideview track-event" data-ga-category="Article" data-ga-action="Load" data-ga-label="Slideshow" data-non-interaction="1">
+                    <div class="static-slides">
+                        <% article.assets.each_with_index do |asset, index| %>
+                            <div class="slide">
+                                <div class="asset-block">
+                                    <div class="contentasset ratio">
+                                        <div class="fill"></div>
+                                        <b class="img-contain" data-caption="<%= asset.caption %>" data-owner="<%= asset.owner %>">
+                                            <a href="<%= article.public_url %>">
+                                                <% class_options = below_vertical_ratio(height: asset.full.height, width: asset.full.width) ? "not-wide" : "" %>
+                                                <% if index <= 1 %>
+                                                    <%= image_tag asset.full.url, width: asset.full.width, height: asset.full.height, class: "loaded #{class_options}" %>
+                                                <% else %>
+                                                    <img class="<%= "lazy-load #{class_options}" %>" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-height="<%= asset.full.height %>" data-width="<%= asset.full.width %>" data-original="<%= asset.full.url %>" />
+                                                <% end %>
+                                            </a>
+                                        </b>
+                                    </div>
+                                </div>
+                            </div>
+                        <% end %>
+                    </div>
+                </div>
+
+            </div><!--/ .asset -->
+        </div>
+    </div>
+    <div class="ephemera"><%= image_tag article.asset.full.url %></div>
+</section><!--/ .prologue -->
+
+
+
+
+
+
+<script type="text/javascript">
+  (function() {
+    var query, keyval;
+    var params = {};
+    query = _(window.location.search.substring(1).split("&")).each(function(pair) { keyval = pair.split("="); params[keyval[0]] = keyval[1]; });
+
+    var slideshow;
+    slideshow = new scpr.NewSlideshow({
+        <% if params[:id].present? %>
+          start: params["slide"],
+          deeplink: true,
+        <% end %>
+          el: "#asset_new_slideshow_<%=html_safe_id%>",
+          staticSlides: "staticSlides_<%=html_safe_id%>",
+          assets: <%= article.assets.to_json.html_safe %>,
+          showOverlay: true
+    });
+
+    slideshow.bind("switch", function(idx) {
+        // (1.) add slide change listener for analytics
+        if(typeof(_gaq) != 'undefined') {
+            _gaq.push(['_trackPageview',window.location.pathname + 'photos/' + (Number(idx) + 1)]);
+            dcsMultiTrack(
+                'DCS.dcsuri', window.location.pathname + 'photos/' + (Number(idx) + 1),
+                'WT.ti', 'SlideShow PageView'
+            );
+        }
+    });
+  }());
+</script>

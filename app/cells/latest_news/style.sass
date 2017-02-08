@@ -1,0 +1,133 @@
+.o-latest-news__featured
+  .o-latest-news__header
+    font-size: 54px
+    line-height: 60px
+    margin-bottom: $margin
+    @media (max-width: $media-tablet)
+      font-size: 36px
+      line-height: 36px
+
+  .o-latest-news__featured-headline
+    font-size: 37px
+    font-weight: bold
+    line-height: 42px
+    @media (max-width: $media-tablet)
+      font-size: 29px
+      line-height: 36px
+
+  .o-latest-news__featured-preview
+    display: flex
+    width: 100%
+    padding-bottom: $margin-in-pixels / 2
+    border-bottom: 1px solid $color-gray-light
+    .o-latest-news__featured-image
+      width: percentage(414/756)
+    .o-latest-news__featured-description
+      margin-left: percentage(42/756)
+      width: percentage(300/756)
+      .o-latest-news__featured-description_body
+        margin-top: $margin
+        font-size: 22px
+        line-height: 30px
+        @media (max-width: $media-tablet)
+          font-size: 20px
+
+        .o-latest-news__media-type
+          display: inline-block
+
+    @media all and (max-width: $media-mobile)
+      flex-direction: column
+      align-items: center
+      .o-latest-news__featured-image, .o-latest-news__featured-description
+        margin: 0
+        width: initial
+
+.o-latest-news__category-title
+  color: $color-link
+  font-size: 26px
+  font-weight: 500
+  line-height: 30px
+  margin-bottom: 1em
+  margin-top: 30px
+  text-transform: uppercase
+  @media (max-width: $media-tablet)
+    font-size: 23px
+    line-height: 30px
+    margin-top: $margin-in-pixels
+
+.o-latest-news__category
+  display: flex
+  justify-content: space-between
+  border-bottom: 1px solid $color-gray-light
+  .o-latest-news__category-description
+    width: percentage(414/756)
+    .o-latest-news__category_featured-title
+      font-family: $font-serif-titling
+      font-size: 22px
+      line-height: 30px
+      margin-bottom: 15px
+      @media (max-width: $media-tablet)
+        font-size: 20px
+        line-height: 30px
+    .c-byline
+      margin-bottom: 15px
+    .o-latest-news__category_featured-description
+      font-size: 18px
+      line-height: 24px
+      padding-bottom: $margin-in-pixels / 2
+    .o-latest-news__category_story-list
+      border-top: 1px solid $color-primary-lightest
+      padding-top: $margin-in-pixels / 2
+      padding-bottom: $margin-in-pixels / 2
+      p
+        font-size: 18px
+        line-height: 24px
+        margin-bottom: 15px
+      time
+        color: $color-gray
+        font-size: 0.8em
+  .o-latest-news__category-image
+    margin-bottom: $margin-in-pixels / 2
+    margin-left: percentage(42/756)
+    width: percentage(300/756)
+    @media (max-width: $media-tablet)
+      margin-bottom: $margin-in-pixels
+    .o-latest-news__category-image_figure
+      margin-bottom: $gutter
+      @media (max-width: $media-mobile)
+        display: none
+
+      figcaption
+        margin-top: 0px
+
+    img
+      width: 100%
+    .o-latest-news__category-image__program
+      margin-bottom: 10px
+    .o-figure__owner
+      color: $color-secondary
+      display: block
+      text-transform: uppercase
+      font-size: 0.7em
+  @media all and (max-width: $media-mobile)
+    flex-direction: column
+    .o-latest-news__category-description, .o-latest-news__category-image
+      margin-left: 0px
+      margin-right: 0px
+      width: initial
+
+.o-latest-news__category:last-of-type
+  border-bottom: 0px
+
+.o-latest-news__media-type
+  color: $color-primary
+  font-size: 15px
+  font-weight: 500
+  line-height: 30px
+  text-transform: uppercase
+  svg
+    height: 20px
+    width: 24px
+
+.o-latest-news__category_side-title
+  font-family: $font-serif-titling

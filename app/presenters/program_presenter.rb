@@ -30,47 +30,31 @@ class ProgramPresenter < ApplicationPresenter
 
   def facebook_link
     if link = program.get_link("facebook")
-      h.content_tag :li, class: "facebook" do
-        h.link_to "Facebook", link,
-          :class  => "facebook with-icon"
-      end
+      link
     end
   end
 
   def podcast_link
     if link = abstract_program.podcast_url
-      h.content_tag :li, class: "podcast" do
-        h.link_to "Podcast", link,
-          :class  => "podcast with-icon"
-      end
+      link
     end
   end
 
   def rss_link
     if link = abstract_program.rss_url
-      h.content_tag :li, class: "rss" do
-        h.link_to "RSS", link,
-          :class  => "rss with-icon"
-      end
+      link
     end
   end
 
   def twitter_link
     if link = program.get_link("twitter")
-      h.content_tag :li, class: "twitter" do
-        h.link_to "@#{link}",
-          h.twitter_profile_url(link),
-          :class  => "twitter with-icon"
-      end
+      link
     end
   end
 
   def email_link
     if link = program.get_link("email")
-      h.content_tag :li, class: "email" do
-        h.link_to "Email", link,
-          :class  => "email with-icon"
-      end
+      link
     end
   end
 

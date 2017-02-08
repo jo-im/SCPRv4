@@ -1,34 +1,43 @@
-<%= render 'shared/header/document_header' %>
-
-<body class="minimal">
-  <iframe src="https://www.googletagmanager.com/ns.html?id=GTM-585PL29" height="0" width="0" style="display:none;visibility:hidden"></iframe>
-  <header>
-    <div class="container-fluid">
-      <h3 id="site-title"><a href="/">KPCC 89.3</a></h3>
-      <a class="home-link" href="/">Back to KPCC Home</a>
-    </div>
-  </header>
-
-  <div class="content-container">
-    <div class="container-fluid">
-      <div class="box">
-        <%= yield %>
+<!doctype html>
+<html>
+  <head>
+    <meta content="IE=edge" http-equiv="X-UA-Compatible">
+    <meta charset="utf-8">
+    <meta content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" name="viewport">
+    <script src="https://use.typekit.net/cka2qre.js"></script>
+    <script>try{Typekit.load({ async: true });}catch(e){}</script>
+    <%= stylesheet_link_tag 'application' %>
+    <%= javascript_include_tag "shared", "application" %>
+    <script type="text/javascript" src="https://<%= Rails.configuration.x.assethost.server %>/assets/client.js?bust=20130523"></script>
+    <%= javascript_include_tag "svgxuse/svgxuse.min" %>
+    <%= javascript_include_tag "new/application" %>
+  </head>
+  <body style="display: flex; flex-direction: column; height: 100vh">
+    <nav class="o-mast o-listen-live__mast" style="flex-shrink: 0">
+      <div class="o-mast__logo">
+        <a href="/" class="o-mast__logo-link" class="track-event" data-ga-category="Menu" data-ga-action="Clickthrough" data-ga-label="Home">
+          <svg>
+            <use class="" xlink:href="/static/images/scpr-sprite.svg#logo_kpcc-black"/>
+          </svg>
+        </a>
       </div>
-
-      <div class="floating-shadow">&nbsp;</div>
-      </div> <!-- container-fluid -->
-  </div>
-
-  <footer>
-    <div class="container-fluid">
-      <ul>
-        <li><a href="/terms/">Terms &amp; Conditions</a></li>
-        <li><a href="/privacy/">Privacy</a></li>
-        <li><a href="/web_site_feedback">Website Feedback</a></li>
-        <li>Copyright 2001 &copy; Southern California Public Radio</li>
-      </ul>
+      <div class="o-mast__action o-mast__donate">
+        <a class="o-mast__donate-link" target="_blank" href="https://scprcontribute.publicradio.org/contribute.php?_ga=1.210106262.2096948162.1473892732"  data-ga-category="Menu" data-ga-action="Clickthrough" data-ga-label="Donate">
+          <svg class="b-icon b-icon--size-med b-icon--left">
+            <use class="b-icon--line b-icon--color-link" xlink:href="/static/images/scpr-sprite.svg#icon_line-donate"/>
+          </svg>
+          <span class="o-mast__item-caption">Donate</span>
+        </a>
+      </div>
+    </nav>
+    <section class="l-content-share">
+      <%= yield %>
+    </section>
+    <div class="o-listen-live__footer">
+      <a href="/terms/" target="_blank">Terms & Conditions</a> |
+      <a href="/privacy/" target="_blank">Privacy</a> |
+      <a href="/web_site_feedback" target="_blank">Website Feedback</a> |
+      <span>Copyright 2017 &copy Southern California Public Radio</span>
     </div>
-  </footer>
-
-</body>
+  </body>
 </html>

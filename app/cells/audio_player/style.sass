@@ -1,0 +1,123 @@
+.o-audio-bar
+  box-shadow: none
+  box-sizing: border-box
+  border-top: 1px solid $color-secondary
+  height: 80px
+  padding-left: $margin
+  padding-right: $margin
+  padding-bottom: 15px
+  padding-top: 15px
+
+  .o-audio-bar__container
+    align-items: center
+    display: flex
+    height: 50px
+
+    .o-audio-bar__playback-controls
+      margin-right: 15px
+
+    .o-audio-bar__controls-play
+      background-size: contain
+      cursor: pointer
+
+    .o-audio-bar__controls-pause
+      background-size: contain
+      cursor: pointer
+
+    .o-audio-bar__timeline
+      width: 90%
+
+    .o-audio-bar__download-icon, .o-audio-bar__mute, .o-audio-bar__unmute, .o-audio-bar__collapse
+      height: 20px
+      width: 20px
+
+    .o-audio-bar__title
+      font-size: 18px
+      letter-spacing: -0.2px
+      line-height: 30px
+      overflow: hidden
+      text-overflow: ellipsis
+      white-space: nowrap
+      width: 90%
+      @media all and (max-width: $media-tablet)
+        font-size: 16px
+        line-height: 24px
+      @media all and (max-width: $media-mobile)
+        font-size: 16px
+        line-height: 18px
+        margin-bottom: 10px
+
+    .o-audio-bar__markers
+      color: $color-gray
+      display: inline-block
+      font-size: 12px
+      line-height: 14px
+      @media all and (max-width: $media-mobile)
+        display: block
+
+    .o-audio-bar__meter
+      display: inline-block
+      width: percentage(829/1140)
+      background-color: #EDF2F4
+      border-radius: 20px
+      height: 6px
+      margin-left: 7px
+      position: relative
+      @media all and (max-width: $media-mobile)
+        display: none
+
+      .jp-seek-bar
+        position: absolute
+        left: 0
+        bottom: 0
+        z-index: 3
+        cursor: pointer
+
+      .jp-play-bar
+        position: absolute
+        left: 0
+        bottom: 0
+        height: 100%
+        border-radius: 20px
+        background-color: #B5BEC0
+
+      .jp-play-bar::after
+        content: ''
+        width: 10px
+        height: 10px
+        background-color: $color-gray-warm
+        position: absolute
+        right: -5px
+        top: -2.25px
+        border-radius: 20px
+
+      .jp-current-time
+        color: $color-gray-warm
+
+      .jp-duration
+        color: #B5BEC0
+
+    .o-audio-bar__buttons
+      align-items: center
+      display: flex
+      @media all and (max-width: $media-mobile)
+        flex-direction: column-reverse
+        justify-content: space-between
+        height: 100px
+
+      .o-audio-bar__collapse, .o-audio-bar__mute, .o-audio-bar__unmute
+        cursor: pointer
+        margin-left: 15px
+
+      .o-audio-bar__collapse
+        @media all and (max-width: $media-tablet)
+          padding-left: 0.5em !important
+          padding-right: 0.5em !important
+          border: 0 !important
+          font-size: 1.4em
+
+    .o-audio-bar__download
+      @media all and (max-width: $media-tablet)
+        display: none
+
+

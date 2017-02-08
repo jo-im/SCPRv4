@@ -1,0 +1,111 @@
+.o-popular-stories
+  display: flex
+  flex-wrap: wrap
+
+.o-popular-stories--horiz
+  justify-content: flex-start
+  @media (max-width: $media-tablet)
+    display: block
+    margin-bottom: 60px
+
+  .o-popular-stories__heading
+    line-height: 36px
+    @media (max-width: $media-tablet)
+      font-size: 23px
+      line-height: 30px
+
+  .o-popular-stories__caption
+    font-size: 22px
+    line-height: 30px
+    @media (max-width: $media-tablet)
+      font-size: 20px
+      line-height: 30px
+
+  .o-popular-stories__story
+    @media (max-width: $media-tablet)
+      margin: 0px
+      width: 50% - ($margin / 2)
+      .o-popular-stories__caption
+        margin-top: 15px
+
+.o-popular-stories__story
+  display: block
+  width: 22.62443439%
+  margin-right: 3.16742081%
+  @media (max-width: $media-tablet)
+    display: inline-block
+
+.o-popular-stories__story:nth-child(odd)
+  @media (max-width: $media-tablet)
+    float: right
+
+.o-popular-stories__story:nth-child(even)
+  @media (max-width: $media-tablet)
+    clear: both
+    float: left
+
+.o-popular-stories__story:last-of-type
+  margin-right: 0px
+
+.o-popular-stories__heading
+  width: 100%
+
+.o-popular-stories__caption
+  margin-top: 30px
+
+.o-popular-stories-side-bar__label
+  cursor: pointer
+  display: inline-block
+  font-size: 16px
+  line-height: 19px
+  padding: 10px 0
+  text-align: center
+  width: 40%
+
+.o-popular-stories-side-bar__input
+  display: none
+
+#o-popular-stories-side-bar__input-viewed:checked ~ #o-popular-stories-side-bar__tab-viewed,
+#o-popular-stories-side-bar__input-discussed:checked ~ #o-popular-stories-side-bar__tab-discussed,
+  display: block
+  @media (max-width: $media-tablet)
+    display: flex
+    flex-wrap: wrap
+    justify-content: space-between
+  @media (max-width: $media-mobile)
+    flex-direction: column
+
+.o-popular-stories-side-bar__input:checked + label
+  border-bottom: 6px solid $color-primary
+
+.o-popular-stories-side-bar__tab
+  border-top: 1px solid $color-gray-light
+  padding-top: $margin-in-pixels / 2
+  display: none
+
+.o-popular-stories-side-bar__item
+  display: flex
+  margin-bottom: 30px
+  clear: both
+  @media (max-width: $media-tablet)
+    width: 45%
+  @media (max-width: $media-mobile)
+    width: initial
+
+  a
+    width: 100%
+    display: flex
+    .o-popular-stories-side-bar__figure
+      width: percentage(72/300)
+      margin-bottom: 0px
+      margin-right: percentage(42/300)
+      .o-popular-stories-side-bar__item-image
+        padding-top: (100 / 1.2) * 1%
+
+.o-popular-stories-side-bar__item-caption
+  display: block
+  float: left
+  font-size: 18px
+  line-height: 24px
+  width: percentage(186/300)
+  word-wrap: break-word

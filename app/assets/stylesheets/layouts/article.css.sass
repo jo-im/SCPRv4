@@ -1,0 +1,165 @@
+.o-article
+  display: block
+  max-width: 1440px
+  margin: 0 auto
+  padding-top: $margin-in-pixels
+  width: initial
+
+  .l-column--left
+    clear: left
+    float: left
+    margin-left: $margin
+    width: $col
+
+  .l-column--right
+    clear: right
+    float: right
+    margin-right: $gutter + $col + $margin
+    width: ($col * 3) + ($gutter * 2)
+
+
+  .o-article__category, .o-article__title, .o-article__hero-figure, .c-byline, .o-article__b-rule,
+  .o-article__body, .o-newsletter-appeal, .o-related-links, .o-article__rule--ending, .o-comments,
+  .contributor, .content-partners, .o-more-from-episode
+    margin-left: $margin + $col + $gutter
+    width: ($col * 6) + ($gutter * 5)
+
+  .o-article__b-rule
+    display: block
+
+  p a
+    // paragraph links
+    color: $color-secondary
+
+  > ul
+    list-style: circle
+    padding-left: 3em
+    font-size: 0.9em
+    margin-bottom: 27.68px
+    li
+      margin: 1em 0
+
+  > h2
+    font-size: 22px
+    font-weight: 400
+
+  > h3:not(.o-article__title)
+    font-size: 18px
+    font-weight: 600
+    text-transform: uppercase
+
+  > h6
+    @extend .b-heading, .b-heading--h6, .b-heading--uppercase, .u-text-color--gray-warm, .b-heading--book
+    margin-bottom: 0
+
+  > .o-article__body
+    color: $color-gray-dark
+    font-family: $font-sans-base
+    line-height: 30px
+    margin-bottom: $margin-in-pixels / 2
+
+  > p:first-of-type
+    font-size: 22px
+    line-height: 30px
+    @media (max-width: $media-tablet)
+      font-size: 20px
+
+  > p:last-of-type
+    @media (max-width: $media-tablet)
+      margin-bottom: 60px
+
+  > blockquote
+    p
+      border-left: 6px solid $color-primary
+      padding-bottom: $margin-in-pixels / 2
+      margin-left: percentage(31/642)
+      padding-left: percentage(31/642)
+    p:last-of-type
+      padding-bottom: 0px
+
+  > img.o-article__body
+    @media (max-width: $media-tablet)
+      width: 100% - ($margin * 2) !important
+
+  .o-article__body .o-figure__img
+    padding-top: 100%
+
+  .o-article__body iframe
+    width: 100%
+
+  .c-audio--horiz, .c-audio__download, .o-social-tools--horiz:first-of-type
+    display: none
+
+  .o-popular-stories
+    width: initial
+    margin-left: $margin
+    margin-right: $margin
+    margin-bottom: $margin-in-pixels
+
+  .o-article__popular-on-blog
+    float: right
+    margin-left: 42px !important
+    margin-top: 60px
+    margin-bottom: 60px
+    width: $col * 4 !important
+    border-top: 2px solid $color-primary-light
+    border-bottom: 2px solid $color-primary-light
+    padding-top: 30px
+    padding-bottom: 30px
+    .o-figure
+      margin-bottom: $gutter
+
+  .o-related-links
+    margin-bottom: $margin-in-pixels
+
+  @media (max-width: $media-wide)
+    .o-article__category, .o-article__title, .o-article__hero-figure, .c-byline, .o-article__b-rule,
+    .o-article__body, .o-newsletter-appeal, .o-related-links, .o-article__rule--ending, .o-comments,
+    .contributor, .content-partners, .o-more-from-episode
+      width: ($col * 6) + ($gutter * 6)
+
+    .l-column--right
+      margin-right: $margin
+      width: ($col * 3) + ($gutter * 3)
+
+  @media (max-width: $media-desktop)
+    .l-column--right
+      width: ($col * 4) + ($gutter * 3)
+
+  @media all and (max-width: $media-tablet)
+    display: flex
+    flex-direction: column
+    font-size: 0.9em
+    padding-top: $margin-in-pixels / 2
+
+    .o-article__category, .o-article__title, .o-article__hero-figure, .c-byline, .o-article__b-rule,
+    .o-article__body, .o-newsletter-appeal, .o-related-links, .o-article__rule--ending, .o-comments,
+    .contributor, .content-partners, .l-column--right, .c-audio--horiz, .c-audio__download, .o-social-tools--horiz,
+    .o-more-from-episode
+      width: ($col * 12) + ($gutter * 11)
+      margin-left: $margin
+      margin-right: $margin
+
+    .c-audio--horiz
+      display: flex
+      display: -ms-flex-box
+      display: -webkit-box
+
+    .c-audio__download
+      display: block
+
+    .o-social-tools--horiz:first-of-type
+      display: flex
+
+    .contributor, .o-program-overview
+      margin-bottom: $margin-in-pixels / 2
+
+    .o-featured-blogs__blog
+      width: 45%
+
+    .o-article__popular-on-blog
+      display: none
+
+  @media all and (max-width: $media-mobile)
+    .o-featured-blogs__blog
+      width: 100%

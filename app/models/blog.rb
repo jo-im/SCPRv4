@@ -38,6 +38,9 @@ class Blog < ActiveRecord::Base
     end
   end
 
+  def latest_entry
+    @latest_entry ||= entries.published.first
+  end
 
   def route_hash
     return {} if !self.persisted?

@@ -1,0 +1,13 @@
+<figure class="o-figure <%= aspect %> <%= @options[:class] %>">
+  <img class="o-figure__img" src="<%= src %>" alt="<%= caption %>" title="<%= title %>" role="img" aria-label="<%= title %>" style="background-image:url(<%= src %>);" />
+  <% if caption || owner %>
+    <figcaption class="o-figure__caption">
+      <% if caption %>
+        <%= caption %>
+      <% end %>
+      <% if owner %>
+        <address class="o-figure__attribution"><%= owner %></address>
+      <% end %>
+    </figcaption>
+  <% end %>
+</figure>

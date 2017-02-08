@@ -1,0 +1,30 @@
+<h1 class="o-schedule__header">Daily Schedule</h1>
+<div class="o-schedule__list">
+
+  <div class="o-schedule__list-date-header">
+    <a
+      href="/schedule/<%= format_adjacent_date '%Y/%m/%d', 'yesterday' %>"
+      class="o-schedule__list-date-header__navigation">
+      <%= format_adjacent_date '< %a.', 'yesterday' %>
+    </a>
+    <h4 class="o-schedule__list-date-header__current-date">
+      <span><%= selected_date.strftime("%A") %></span>, <span><%= selected_date.strftime("%B %e") %></span>
+    </h4>
+    <a
+      href="/schedule/<%= format_adjacent_date '%Y/%m/%d', 'tomorrow' %>"
+      class="o-schedule__list-date-header__navigation">
+      <%= format_adjacent_date '%a. >', 'tomorrow' %>
+    </a>
+  </div>
+
+  <%# sort, and then rotate to get Monday first %>
+  <% model.group_by { |o| [o.wday, o.starts_at.strftime("%A, %B %e")] }.sort_by { |g| g[0] }.rotate.each do |date, occurrences| %>
+    <% occurrences.each do |occurrence| %>
+      <div class="o-schedule__list-item">
+        <div class="o-schedule__list-item__time"><span><%= occurrence.starts_at.strftime("%I:%M %p") %></span></div>
+        <div class="o-schedule__list-item__program"><%= link_to occurrence.title, occurrence.public_url %></div>
+      </div>
+    <% end %>
+  <% end %> <%# schedule occurrences %>
+
+</div> <!-- span -->

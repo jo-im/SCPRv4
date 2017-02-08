@@ -1,0 +1,72 @@
+.l-programs
+  display: block
+  max-width: 1440px
+  margin: 0 auto
+  overflow-y: auto
+  padding-top: $margin-in-pixels
+
+  .o-program-list, .o-program-list__full-list
+    margin-left: $margin
+    margin-right: $margin
+    width: ($col * 7) + ($gutter * 6)
+
+  .o-program-list
+    border-bottom: 1px solid $color-gray-light
+    margin-bottom: $margin-in-pixels
+    padding-bottom: $margin-in-pixels / 2
+
+  #o-ad--pos-a, #o-ad--pos-b, #o-ad--pos-c, .o-appeal--breaking-news, .o-popular-stories-side-bar
+    float: right
+    width: ($col * 3) + ($gutter * 2)
+    margin-right: $gutter + $col + $margin
+    clear: right
+
+  #o-ad--pos-a, #o-ad--pos-b, .o-popular-stories-side-bar
+    border-bottom: 1px solid $color-gray-light
+
+  #o-ad--pos-a
+    margin-bottom: $margin-in-pixels * 0.75
+    padding-bottom: $margin-in-pixels * 0.75
+
+  #o-ad--pos-b, #o-ad--pos-c
+    padding-bottom: $margin-in-pixels
+
+  .o-appeal--breaking-news
+    margin-bottom: $margin-in-pixels / 2
+
+  .o-popular-stories-side-bar
+    margin-bottom: $margin-in-pixels
+    padding-bottom: $margin-in-pixels
+
+  @media (max-width: $media-wide)
+    .o-program-list, .o-program-list__full-list
+      width: ($col * 7) + ($gutter * 7)
+
+    #o-ad--pos-a, #o-ad--pos-b, #o-ad--pos-c, .o-appeal--breaking-news, .o-popular-stories-side-bar
+      margin-right: $margin
+      width: ($col * 3) + ($gutter * 3)
+
+  @media (max-width: $media-desktop)
+    #o-ad--pos-a, #o-ad--pos-b, #o-ad--pos-c, .o-appeal--breaking-news, .o-popular-stories-side-bar
+      width: ($col * 4) + ($gutter * 3)
+
+  @media all and (max-width: $media-tablet)
+    display: flex
+    flex-direction: column
+    padding-top: $margin-in-pixels / 2
+    .o-program-list, .o-program-list__full-list,
+    #o-ad--pos-a, #o-ad--pos-b, #o-ad--pos-c, .o-appeal--breaking-news, .o-popular-stories-side-bar
+      margin-left: $margin
+      margin-right: $margin
+      width: ($col * 12) + ($gutter * 11)
+    #o-ad--pos-a
+      margin-bottom: $margin-in-pixels / 2
+
+  @media all and (max-width: $media-mobile)
+    .o-program-list__item
+      display: flex
+      flex-direction: column
+      .o-program-list__featured-figure, .o-program-list__featured-description
+        width: initial
+        margin-bottom: 0.5em
+        margin-right: 0

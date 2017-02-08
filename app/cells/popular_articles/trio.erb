@@ -1,0 +1,7 @@
+<aside class="o-content-cluster o-category-cluster <%= @options[:class] %>" style="order: <%= order %>" >
+  <h6 class="o-content-cluster__heading b-heading b-heading--h6 b-heading--uppercase u-text-color--gray b-heading--medium">
+    POPULAR NOW ON KPCC
+  </h6>
+  <a class="o-category-cluster__category-link b-heading link link--callout b-heading--uppercase" href="#"></a>
+  <%= cell(:content_cluster, articles.try(:first, 3), category: @options[:category], label: @options[:label]) %>
+</aside>

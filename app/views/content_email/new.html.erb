@@ -1,13 +1,9 @@
-<%= form_for @message, url: content_email_path(obj_key: @content.obj_key), method: :post do |f| %>
-  <h6>Email this to a friend:</h6>
-  <hr />
-  <div class="cbase">
-    <h2 class="story-headline"><%= @content.headline %></h2>
-    <p><%= @content.teaser.html_safe %></p>
-  </div>
-  <hr />
+<%= form_for @message, url: content_email_path(obj_key: @content.try(:obj_key)), method: :post do |f| %>
+  <h6 class="b-heading b-heading--h6 b-heading--serif b-heading--bold">Email this to a friend:</h6>
+  <h4 class="b-heading--h4 b-heading--serif"><%= @content.try(:headline) ||  "#{@content.try(:title)} | 89.3 KPCC" %></h4>
+  <p class="b-heading"><%= @content.try(:teaser).try(:html_safe) || @content.try(:description).try(:html_safe).try(:truncate, 150) %></p>
 
-  <fieldset class="fields">
+  <div class="fields">
 
     <% if @message.errors.present? %>
       <div class="error">
@@ -20,27 +16,28 @@
     <% end %>
 
     <ul class="inputs-list">
-      <li class="field">
-        <%= f.label :to_email, "Send This To:" %>
-        <%= f.text_field :to_email, class: "xlarge", placeholder: "Email address (Maximum one)" %>
-      </li>
-      <li class="field">
-        <%= f.label :from_name, "From:" %>
-        <%= f.label :from_name, "Your Name" %>
-        <%= f.text_field :from_name, class: "xlarge stacked" %>
-        <%= f.label :from_name, "Your E-mail" %>
-        <%= f.text_field :from_email, class: "xlarge" %>
-      </li>
-      <li class="field">
-        <%= f.label :body, "Add a personal message:" %>
-        <%= f.text_area :body, class: "xlarge" %>
+      <div class="b-heading">
+        <%= f.label :to_email, "Send This To:" %><br />
+        <%= f.text_field :to_email, class: "xlarge", placeholder: "Email address (Maximum one)", style: "width: 100%; height: 1.5em" %>
+      </div>
+      <div class="b-heading">
+        <%= f.label :from_name, "Your Name" %><br />
+        <%= f.text_field :from_name, class: "xlarge stacked", style: "width: 100%; height: 1.5em" %>
+      </div>
+      <div class="b-heading">
+        <%= f.label :from_name, "Your E-mail" %><br />
+        <%= f.text_field :from_email, class: "xlarge", style: "width: 100%; height: 1.5em" %>
+      </div>
+      <li class="b-heading">
+        <%= f.label :body, "Add a personal message:" %><br />
+        <%= f.text_area :body, class: "xlarge", style: "width: 100%; height: 4em" %>
       </li>
     </ul>
-  </fieldset>
+  </div>
 
-  <fieldset>
+  <div>
     <%= recaptcha_tags %>
-    <%= f.submit "Share", class: "btn primary" %>
-  </fieldset>
+    <%= f.submit "Share", class: "btn primary c-btn c-btn--primary b-heading", style: "margin-top: 15px" %>
+  </div>
 
 <% end %>

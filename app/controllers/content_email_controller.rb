@@ -9,7 +9,7 @@ class ContentEmailController < ApplicationController
 
   def create
     @message = ContentEmail.new(form_params)
-    @message.content_key = @content.obj_key
+    @message.content_key = @content.try(:obj_key)
 
     if verify_recaptcha(
       :model   => @message,

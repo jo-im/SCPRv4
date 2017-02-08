@@ -24,7 +24,7 @@ describe Outpost::ShowEpisodesController do
           put :preview, id: show_episode.id, obj_key: show_episode.obj_key, show_episode: show_episode.attributes.merge(headline: "Updated")
           assigns(:episode).should eq show_episode
           assigns(:episode).headline.should eq "Updated"
-          response.should render_template "programs/kpcc/episode"
+          response.should render_template "programs/episode"
         end
       end
 
@@ -58,7 +58,7 @@ describe Outpost::ShowEpisodesController do
           put :preview, id: show_episode.id, obj_key: show_episode.obj_key, show_episode: show_episode.attributes.merge(headline: "Updated")
           assigns(:episode).should eq show_episode
           assigns(:episode).headline.should eq "Updated"
-          response.should render_template "programs/kpcc/episode"
+          response.should render_template "programs/episode"
         end
       end
 

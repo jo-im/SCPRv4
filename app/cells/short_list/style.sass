@@ -1,0 +1,84 @@
+.o-short-list__prologue
+  font-size: 54px
+  line-height: 60px
+  color: $color-secondary
+  font-weight: 800
+  margin: 0
+
+.o-short-list__prologue-subheading
+  font-size: 0.70em
+  color: $color-secondary-darkest
+
+.o-short-list__abstract
+  padding-top: $margin-in-pixels
+  padding-bottom: $margin-in-pixels
+  border-bottom: 1px solid $color-gray-secondary-light
+  .o-short-list__abstract-index
+    color: $color-primary
+    font-weight: 500
+  .o-short-list__abstract-headline
+    font-size: 56px
+    line-height: 60px
+    margin-bottom: 15px
+    @media (max-width: $media-tablet)
+      font-size: 36px
+      line-height: 36px
+  .o-short-list__abstract-headline--secondary
+    font-size: 37px
+    line-height: 48px
+    margin-bottom: 15px
+    @media (max-width: $media-tablet)
+      font-size: 29px
+      line-height: 36px
+  .o-short-list__abstract-summary
+    margin-bottom: 1em
+    p
+      font-size: 22px
+      line-height: 30px
+      @media (max-width: $media-tablet)
+        font-size: 20px
+        line-height: 30px
+  .o-short-list__abstract-link
+    color: $color-link
+    font-size: 22px
+    line-height: 30px
+    @media (max-width: $media-tablet)
+      font-size: 20px
+      line-height: 30px
+
+.o-short-list__abstract:first-of-type
+  padding-top: $margin-in-pixels / 2
+
+.o-short-list__abstract:last-of-type
+  border-bottom: 0
+
+.o-short-list__side-bar
+  border-bottom: 1px solid $color-gray-light
+  margin-bottom: $margin-in-pixels
+  .o-short-list__side-bar-subscribe
+    font-size: 0.9em
+    margin-bottom: $margin-in-pixels
+    a
+      color: $color-link
+  .o-social-tools
+    width: initial
+    list-style: none
+    margin-left: -0.41em
+    li
+      margin: 0 0.5em
+  .o-short-list__side-bar__list
+    color: $color-gray
+    list-style: none
+    padding-bottom: $margin-in-pixels
+    li
+      font-size: 0.9em
+      margin-top: 0.5em
+      margin-bottom: 0.75em
+      color: black
+      padding-left: 1em
+      text-indent: -0.5em
+    li::before
+      color: #D4D4D4
+      content: "•"
+      display: inline-block
+      width: 0.5em

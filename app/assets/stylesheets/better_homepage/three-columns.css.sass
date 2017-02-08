@@ -6,7 +6,7 @@
 //   - Theoretically supports IE >= 8 (I've only tested it on IE11)
 //
 // NOTES:
-//   Below 56rem, the layout container switches to `display: flex` and displays 
+//   Below 56rem, the layout container switches to `display: flex` and displays
 // all the elements vertically.  If, for example, you want a right-aside to appear
 // between center elements, you can give the element an explicit order index by
 // giving the element a style property of `order: n;`.  This seems like an appropriate
@@ -24,14 +24,13 @@
   flex-wrap: wrap
   overflow: hidden
   .left, .center, .right
-    box-sizing: border-box
     width: 100%
 
 =columns-three($screen-size, $left-size, $center-size, $right-size)
   @media all and (min-width: $screen-size)
     display: block
     .left
-      position: absolute
+      float: left
       width: $left-size
       $left-aside: 1
       // If your left asides are all the same size
@@ -45,10 +44,10 @@
           transform: translateY((100% * $left-aside) - 100)
         $left-aside: $left-aside + 1
     .center
-      display: inline-block
+      display: flex
       margin-left: $left-size
       width: $center-size
     .right
       float: right
-      clear: both
+      clear: right
       width: $right-size

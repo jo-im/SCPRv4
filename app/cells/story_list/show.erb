@@ -1,0 +1,37 @@
+<section class="o-story-list <%= @options[:class] %>" style="order: <%= @options[:order] %>">
+  <% if heading %>
+    <h4 class="b-heading b-heading--h4 b-heading--uppercase u-text-color--gray b-heading--medium"><%= heading %></h4>
+  <% end %>
+
+  <% model.each do |article| %>
+    <div class="o-story-list__item">
+        <figure class="o-story-list__item-figure o-figure o-figure--<%= asset_aspect %>">
+          <%= link_to article.public_path do %>
+            <img class="o-figure__img" src="<%= asset_path article %>" style="background-image: url(<%= asset_path article %>)">
+          <% end %>
+        </figure>
+
+      <header class="o-story-list__item-description">
+        <h4 class="o-story-list__item-heading"><%= link_to article.short_title, article.public_path %></h4>
+        <span class="o-story-list__item-byline"><%= render_byline(article.original_object) %></span>
+        <span class="o-story-list__item-pipe">|</span>
+        <time class="o-story-list__item-timestamp"><%= article.public_datetime.try(:strftime, "%a %B %d") %></time>
+        <p class="o-story-list__item-teaser"><%= article.teaser.html_safe %></p>
+        <% if article.feature %>
+          <div class="o-story-list__item-feature">
+            <span class="o-media__label" data-media-label="<%= article.feature.name %>">
+              <svg class="icon icon--size-sm">
+                <use class="icon--line icon--color-primary" xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/static/images/scpr-sprite.svg#icon_line-<%= article.feature.name.downcase %>"></use>
+              </svg>
+            </span>
+            <%= article.feature.name %>
+          </div>
+        <% end %>
+      </header>
+
+    </div>
+
+  <% end %>
+
+</section>
+

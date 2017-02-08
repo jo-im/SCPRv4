@@ -131,7 +131,7 @@ class scpr.SocialTools
         disq_api_key    : 'EAlRB1x2Coj262YxEGbmvecZufapzC8IJ8aqKgtG0ILS4L1EMucA66Jq9MlY270b'
         disq_short_name : 'kpcc'
         no_comments     : "Add your comments"
-        comments        : "Comments (<%= count %>)"
+        comments        : "<%= count %>"
 
     constructor: (options) ->
         @options = _.defaults options||{}, @DefaultOptions
@@ -192,7 +192,7 @@ class scpr.SocialTools
             if key = $(@options.emailfinder).attr("data-key")
                 emurl = "/content/share?obj_key=#{key}"
                 window.open emurl, 'pop_up',
-                    'height=650,width=500,' +
+                    'height=830,width=545,' +
                     'resizable,left=10,top=10,scrollbars=no,toolbar=no'
             false
 
@@ -201,7 +201,6 @@ class scpr.SocialTools
     _getDisqusCounts: ->
         # fire off a request to disqus
         urls = []
-
         @disqCache = {}
 
         _(@disq_elements).each (el,idx) =>

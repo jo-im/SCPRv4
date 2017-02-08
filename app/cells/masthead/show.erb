@@ -1,0 +1,324 @@
+<input type="checkbox" class="state-checkbox" id="o-mast__search-toggler-checkbox" />
+<input type="checkbox" class="state-checkbox" id="o-mast__menu-toggler-checkbox" autocomplete="off" />
+<nav class="o-mast o-mast--mobile">
+  <div class="o-mast__nav-background"></div>
+  <div class="o-mast__logo">
+    <a href="/" class="o-mast__logo-link" class="track-event" data-ga-category="Menu" data-ga-action="Clickthrough" data-ga-label="Home">
+      <svg>
+        <use class="" xlink:href="/static/images/scpr-sprite.svg#logo_kpcc-black"/>
+      </svg>
+    </a>
+  </div>
+  <span class="o-mast__caption">Member-supported news for Southern California</span>
+  <ul class="o-mast__sections">
+
+    <ul class="o-mast__actions">
+      <li class="o-mast__action o-mast__menu">
+        <label class="o-mast__menu-toggler" for="o-mast__menu-toggler-checkbox">
+          <svg class="b-icon b-icon--size-sm o-mast__menu-icon--opened">
+            <use class="b-icon--line  b-icon--color-gray-dark " xlink:href="/static/images/scpr-sprite.svg#icon_line-close--with-circle"/>
+          </svg>
+          <span class="o-mast__item-caption o-mast__menu-toggler-caption o-mast__item-caption o-mast__menu-toggler-caption--opened">Close</span>
+        </label>
+      </li>
+    </ul>
+
+    <li class="o-mast__item o-mast__item--mobile-row">
+      <span class="o-mast__caption--mobile" href="/news" class="track-event" data-ga-category="Menu" data-ga-action="Clickthrough" data-ga-label="News">Member-supported news for Southern California</span>
+      <a class="o-mast__nav-link o-mast__nav-link--listen-live" href="/listen_live" class="track-event" data-ga-category="Menu" data-ga-action="Clickthrough" data-ga-label="Listen Live">Listen Live</a>
+    </li>
+
+    <li class="o-mast__item o-mast__item--news">
+      <a class="o-mast__nav-link o-mast__nav-link--with-submenu" href="/news" class="track-event" data-ga-category="Menu" data-ga-action="Clickthrough" data-ga-label="News">
+        News
+        <svg class="b-icon b-icon--size-sm b-icon--left">
+          <use class="b-icon--line" xlink:href="/static/images/scpr-sprite.svg#icon_line-right-arrow"/>
+        </svg>
+      </a>
+      <div class="o-mast__item-details">
+        <div class="o-mast__section">
+          <h6 class="o-mast__section-heading">Covering SoCal</h6>
+          <ul class="o-mast__section-list o-mast__section-list--beat-tags">
+            <% beat_tags.each do |tag| %>
+              <li>
+                <a href="/topics/<%= tag.try(:slug) %>"><%= tag.try(:title) %></a>
+              </li>
+            <% end %>
+          </ul>
+        </div>
+        <div class="o-mast__section">
+          <h6 class="o-mast__section-heading">Categories</h6>
+          <ul class="o-mast__section-list text-columns--sm-2 o-mast__section-list--categories">
+            <li>
+              <a href="/local">Local</a>
+            </li>
+            <li>
+              <a href="/world">US & World</a>
+            </li>
+            <li>
+              <a href="/politics">Politics</a>
+            </li>
+            <li>
+              <a href="/environment">Science</a>
+            </li>
+            <li>
+              <a href="/arts">Arts & Entertainment</a>
+            </li>
+            <li>
+              <a href="/business">Business</a>
+            </li>
+            <li>
+              <a href="/crime">Crime & Justice</a>
+            </li>
+            <li>
+              <a href="/education">Education</a>
+            </li>
+            <li>
+              <a href="/health">Health</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </li>
+
+    <li class="o-mast__item">
+      <a class="o-mast__nav-link o-mast__nav-link--with-submenu" href="/programs" class="track-event" data-ga-category="Menu" data-ga-action="Clickthrough" data-ga-label="Programs">
+        Programs
+        <svg class="b-icon b-icon--size-sm b-icon--left">
+          <use class="b-icon--line" xlink:href="/static/images/scpr-sprite.svg#icon_line-right-arrow"/>
+        </svg>
+      </a>
+      <div class="o-mast__item-details o-mast__item-details--fixed-height">
+        <div class="o-mast__section">
+          <h6 class="o-mast__section-heading">Featured Programs</h6>
+          <ul class="o-mast__section-list">
+            <% featured_programs.each do |program| %>
+              <li>
+                <a href="/programs/<%= program.try(:slug) %>"><%= program.try(:title) %></a>
+              </li>
+            <% end %>
+          </ul>
+        </div>
+        <div class="o-mast__section">
+          <h6 class="o-mast__section-heading">All Programs</h6>
+          <ul class="o-mast__section-list">
+            <li>
+              <a href="/programs">Programs A-Z</a>
+            </li>
+            <li>
+              <a href="/schedule">Program Schedule</a>
+            </li>
+            <li>
+              <a href="/podcasts">Podcasts</a>
+            </li>
+            <li>
+              <a href="/archive/<%= Time.zone.now.yesterday.strftime("%Y/%m/%d") %>/?section=programs">Archive</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <a class="o-mast__nav-link o-mast__nav-link--with-submenu" href="/events/kpcc-in-person" class="track-event" data-ga-category="Menu" data-ga-action="Clickthrough" data-ga-label="Events">
+        Events
+        <svg class="b-icon b-icon--size-sm b-icon--left">
+          <use class="b-icon--line" xlink:href="/static/images/scpr-sprite.svg#icon_line-right-arrow"/>
+        </svg>
+      </a>
+      <div class="o-mast__item-details inspect">
+        <div class="o-mast__section">
+          <h6 class="o-mast__section-heading">KPCC In Person</h6>
+          <ul class="o-mast__section-list">
+            <li>
+              <a href="/events/kpcc-in-person/list">KPCC In Person</a>
+            </li>
+            <li>
+              <a href="/events/kpcc-in-person/upcoming">Upcoming Events</a>
+            </li>
+            <li>
+              <a href="/events/kpcc-in-person/archive">Past Events</a>
+            </li>
+          </ul>
+        </div>
+        <div class="o-mast__section">
+          <h6 class="o-mast__section-heading">Get connected</h6>
+          <ul class="o-mast__section-list">
+            <li>
+              <a href="http://info.americanpublicmediagroup.org/LP=174">KPCC Events Newsletter</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </li>
+
+    <li class="o-mast__item">
+      <a class="o-mast__nav-link o-mast__nav-link--with-submenu" href="/support" class="track-event" data-ga-category="Menu" data-ga-action="Clickthrough" data-ga-label="Support Us">
+        Support Us
+        <svg class="b-icon b-icon--size-sm b-icon--left">
+          <use class="b-icon--line" xlink:href="/static/images/scpr-sprite.svg#icon_line-right-arrow"/>
+        </svg>
+      </a>
+      <div class="o-mast__item-details o-mast__item-details--fixed-height">
+        <div class="o-mast__section">
+          <h6 class="o-mast__section-heading">Membership</h6>
+          <ul class="o-mast__section-list text-columns--sm-2">
+            <li>
+              <a class="o-mast__membership-btn c-btn c-btn--outline-secondary" href="https://scprcontribute.publicradio.org/contribute.php?refId=sustainers&_ga=1.214946964.2096948162.1473892732">
+                Become a Sustainer
+              </a>
+            </li>
+            <li>
+              <a class="o-mast__membership-btn c-btn c-btn--outline-secondary" href="https://scprcontribute.publicradio.org/contribute.php?refId=sustainers&_ga=1.214946964.2096948162.1473892732">
+                Become a Member
+              </a>
+            </li>
+          </ul>
+        </div>
+        <div class="o-mast__section">
+          <ul class="o-mast__section-list o-mast__section-list--no-heading text-columns--sm-2">
+            <li>
+              <a href="/about/faq/#membership">About sustaining membership</a>
+            </li>
+            <li>
+              <a href="https://scprcontribute.publicradio.org/contribute.php?refId=ccupdate&_ga=1.206361616.2096948162.1473892732">Update your credit card</a>
+            </li>
+            <li>
+              <a href="/about/faq/#membership">Member benefits</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+      </div>
+      </div>
+      <a class="o-mast__nav-link o-mast__nav-link--with-submenu" href="/about" class="track-event" data-ga-category="Menu" data-ga-action="Clickthrough" data-ga-label="About Us">
+        About Us
+        <svg class="b-icon b-icon--size-sm b-icon--left">
+          <use class="b-icon--line" xlink:href="/static/images/scpr-sprite.svg#icon_line-right-arrow"/>
+        </svg>
+      </a>
+      <div class="o-mast__item-details">
+        <div class="o-mast__section">
+          <h6 class="o-mast__section-heading">Connect with KPCC</h6>
+          <ul class="o-mast__section-list">
+            <li>
+              <a href="https://www.facebook.com/kpcc/">
+                <svg class="b-icon b-icon--size-med b-icon--left">
+                  <use class="b-icon--color-secondary" xlink:href="/static/images/scpr-sprite.svg#icon_line-facebook"/>
+                </svg>
+              </a>
+              <a href="https://twitter.com/KPCC">
+                <svg class="b-icon b-icon--size-med b-icon--left">
+                  <use class="b-icon--color-secondary" xlink:href="/static/images/scpr-sprite.svg#icon_line-twitter"/>
+                </svg>
+              </a>
+            </li>
+            <li>
+              <a href="/contact">Contact us</a>
+            </li>
+            <li>
+              <a href="/network">Become a source</a>
+            </li>
+            <li>
+              <a href="/contact/#form">Share a news tip</a>
+            </li>
+          </ul>
+          <h6 class="o-mast__section-heading">Learn more about us</h6>
+          <ul class="o-mast__section-list">
+            <li>
+              <a href="/about">About KPCC</a>
+            </li>
+          </ul>
+        </div>
+        <div class="o-mast__section">
+          <h6 class="o-mast__section-heading">People</h6>
+          <ul class="o-mast__section-list">
+            <li>
+              <a href="/about/people/staff">Staff Directory</a>
+            </li>
+            <li>
+              <a href="/about/people/leadership">Executive leadership</a>
+            </li>
+            <li>
+              <a href="/about/people/board">Board of Trustees</a>
+            </li>
+            <li>
+              <a href="/about/people/council">Regional Advisory Council</a>
+            </li>
+            <li>
+              <a href="/about/people/leadershipcouncils">Leadership Councils</a>
+            </li>
+            <li>
+              <a href="/jobs">Careers</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </li>
+
+    <li class="o-mast__item o-mast__item--mobile-row">
+      <div class="o-mast__caption--mobile">
+        <a href="https://twitter.com/KPCC" class="o-mast__nav-link--social">
+          <svg class="b-icon b-icon--size-sm b-icon--left">
+            <use class="b-icon--color-secondary" xlink:href="/static/images/scpr-sprite.svg#icon_line-twitter"/>
+          </svg>
+          @KPCC
+        </a>
+        <a href="https://www.facebook.com/kpcc/" class="o-mast__nav-link--social">
+          <svg class="b-icon b-icon--size-sm b-icon--left">
+            <use class="b-icon--color-secondary" xlink:href="/static/images/scpr-sprite.svg#icon_line-facebook"/>
+          </svg>
+          KPCC
+        </a>
+      </div>
+      <a class="o-mast__nav-link o-mast__nav-link--donate" href="https://scprcontribute.publicradio.org/contribute.php?_ga=2.210668053.1200729342.1505152066-1442186931.1489181856" class="track-event" data-ga-category="Menu" data-ga-action="Clickthrough" data-ga-label="Listen Live">
+        <svg class="b-icon b-icon--size-sm b-icon--left">
+          <use class="b-icon--color-secondary" xlink:href="/static/images/scpr-sprite.svg#icon_line-donate"/>
+        </svg>
+        Donate Now
+      </a>
+    </li>
+  </ul>
+
+
+  <div class="o-mast__action o-mast__search">
+
+    <form method="get" action="/search/">
+      <input type="text" placeholder="Enter your search here" name="q" id="q" />
+      <label for="o-mast__search-toggler-checkbox" class="o-mast__search-link" href="#">
+        <svg class="b-icon b-icon--search-open">
+          <use class="b-icon--line b-icon--color-gray" xlink:href="/static/images/scpr-sprite.svg#icon_line-search"/>
+        </svg>
+      </label>
+    </form>
+
+  </div>
+
+  <div class="o-mast__action o-mast__donate">
+    <a class="o-mast__donate-link" href="https://scprcontribute.publicradio.org/contribute.php?_ga=1.210106262.2096948162.1473892732" data-ga-category="Menu" data-ga-action="Clickthrough" data-ga-label="Donate">
+      <svg class="b-icon b-icon--size-med b-icon--left">
+        <use class="b-icon--line b-icon--color-link" xlink:href="/static/images/scpr-sprite.svg#icon_line-donate"/>
+      </svg>
+      <span class="o-mast__item-caption">Donate</span>
+    </a>
+  </div>
+
+  <div class="o-mast__pipe"></div>
+
+  <div class="o-mast__action o-mast__menu">
+    <label class="o-mast__menu-toggler" for="o-mast__menu-toggler-checkbox">
+      <svg class="b-icon b-icon--size-lg o-mast__menu-icon--closed o-mast__menu-icon__hamburger">
+        <use class="b-icon--line  b-icon--color-gray-dark " xlink:href="/static/images/scpr-sprite.svg#icon_line-menu"/>
+      </svg>
+      <span class="o-mast__item-caption o-mast__menu-toggler-caption o-mast__item-caption o-mast__menu-toggler-caption--closed o-mast__menu-icon__hamburger">Menu</span>
+      <svg class="b-icon b-icon--size-sm o-mast__menu-icon--opened o-mast__menu-icon__cross">
+        <use class="b-icon--line  b-icon--color-gray-dark " xlink:href="/static/images/scpr-sprite.svg#icon_line-close--with-circle"/>
+      </svg>
+      <span class="o-mast__item-caption o-mast__menu-toggler-caption o-mast__item-caption o-mast__menu-toggler-caption--opened o-mast__menu-icon__cross">Close</span>
+    </label>
+    <svg class="b-icon b-icon--size-sm o-mast__menu-icon__back">
+      <use class="b-icon--line  b-icon--color-gray-dark " xlink:href="/static/images/scpr-sprite.svg#icon_line-back"/>
+    </svg>
+    <span class="o-mast__item-caption o-mast__menu-toggler-caption o-mast__item-caption o-mast__menu-toggler-caption--closed o-mast__menu-icon__back o-mast__menu-icon__back-label">Back</span>
+  </div>
+
+
+
+</nav>

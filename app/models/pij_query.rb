@@ -1,3 +1,6 @@
+# PIJ stands for "Public Insight Journalism"
+# i.e. it's a query from the Public Insight Network @ APM
+
 class PijQuery < ActiveRecord::Base
   self.table_name = 'pij_query'
   outpost_model

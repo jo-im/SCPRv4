@@ -1,0 +1,58 @@
+.o-biography__detail
+  border-bottom: 2px solid $color-gray-light
+  display: flex
+  padding-bottom: $margin-in-pixels * 0.75
+  .o-biography__description
+    ul
+      list-style: none
+      margin-left: 1.6em
+      font-size: 0.9em
+
+    li
+      margin: 1em 0
+      padding-left: 1em
+      text-indent: -0.5em
+
+    li::before
+      color: #D4D4D4
+      content: "•"
+      display: inline-block
+      width: 0.5em
+
+    a
+      color: $color-link
+
+    p
+      line-height: 30px
+      margin-bottom: 15px
+
+    h1
+      font-family: $font-serif-titling
+
+    h2, h3, h4, h5, h6
+      @extend .b-heading
+      font-family: $font-serif-titling
+      font-weight: bold
+
+.l-biography
+  .o-biography__figure
+    margin-right: $gutter
+    margin-bottom: $margin-in-pixels / 2
+    width: 100%
+    a
+      color: $color-link
+
+  .o-biography__stories
+    border-bottom: 2px solid $color-gray-light
+    margin-bottom: $margin-in-pixels
+    padding-bottom: $margin-in-pixels / 2
+    padding-top: $margin-in-pixels
+    .o-biography__story
+      padding-bottom: $margin-in-pixels / 2
+      .o-biography__story-heading, .c-byline
+        margin-bottom: $margin-in-pixels / 4
+      .c-byline span
+        display: inline-block
+  .pagination
+    order: 5
+    padding-bottom: $margin-in-pixels

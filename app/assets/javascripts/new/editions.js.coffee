@@ -30,7 +30,7 @@ scpr.Behaviors.Editions = loadBehaviors: ->
   # NOTE: I (Jon) have a thought on this, but it might be
   # unfounded. Hit me up if this strikes anyone as a bad idea.
   # ---------------------------------------------------------
-  $('.contents a,.subscribe-hint a').click ->
+  $('.o-short-list__side-bar-subscribe a').click ->
     desired = $(this).attr('href')
     $('html, body').animate { scrollTop: $(desired).offset().top }, 'slow'
     false
@@ -58,7 +58,7 @@ scpr.Behaviors.Editions = loadBehaviors: ->
       else if myRatio > 2
         $(this).closest('article').addClass 'ratio-squat'
       return
-  # Conditionally add "hidden" class to the ledge when a URL 
+  # Conditionally add "hidden" class to the ledge when a URL
   # hash of #no-prelims is passed to the page.
   # ---------------------------------------------------------
   url = document.location.hash

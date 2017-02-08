@@ -1,0 +1,25 @@
+<aside class="o-host-list <%= @options[:class] %>" style="order: <%= @options[:order] %>">
+  <h6 class="o-host-list__heading b-heading b-heading--h6 b-heading--uppercase u-text-color--gray b-heading--bold">
+    <%= heading %>
+  </h6>
+  <ul class="c-list c-list--vert">
+    <% authors.each do |author| %>
+      <li class="o-host-list__list-item">
+        <figure class="o-host-list__figure o-figure o-figure--portrait">
+          <%= link_to author.public_path, class: "track-event", data: {"ga-category" => "Article", "ga-action" => "Clickthrough", "ga-label" => "Bios Hosts"} do %>
+            <img class="o-figure__img" src="<%= headshot author %>" style="background-image: url(<%= headshot author %>);">
+          <% end %>
+        </figure>
+        <div class="o-host-list__description">
+          <%= link_to author.try(:name), author.try(:public_path), class: "o-host-list__host-name" %>
+          <ul>
+            <%= twitter_link author %>
+            <%= email_link author %>
+            <%= portfolio_link author %>
+          </ul>
+        </div>
+      </li>
+    <% end %>
+  </ul>
+</aside>
+

@@ -15,7 +15,7 @@ describe EditionsController do
 
     it "renders the layout" do
       get :short_list, @edition.route_hash
-      response.should render_template "new/ronin"
+      response.should render_template "application"
     end
 
     it "assigns @edition" do
@@ -52,7 +52,7 @@ describe EditionsController do
 
     it "renders the layout" do
       get :latest
-      response.should render_template "new/ronin"
+      response.should render_template "application"
     end
 
     it "assigns @edition" do

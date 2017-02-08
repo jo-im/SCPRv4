@@ -1,0 +1,21 @@
+<aside class="o-recent-episodes-list--horiz" style="order: <%= @options[:order] %>">
+  <section class="o-recent-episodes__list--horiz__headers">
+    <h4 class="o-recent-episodes-list__heading b-heading--h4 b-heading--uppercase u-text-color--gray b-heading--medium">Recent Episodes from <%= program.try(:title) %></h4>
+  </section>
+  <div class="o-recent-episodes">
+    <% model.first(3).each do |episode| %>
+      <div class="o-recent-episodes__item">
+        <div class="o-recent-episodes__figure o-figure--widescreen">
+          <img class="o-figure__img" src="<%= asset_path episode %>" style="background-image:url(<%= asset_path episode %>);" />
+        </div>
+        <a class="b-link" href="<%= episode.public_path %>">
+          <h3 class="o-recent-episodes__item-headline b-heading--h3"><%= episode.headline %></h3>
+          <time class="o-recent-episodes__item-datetime" datetime="<%= format_date(episode.air_date, with:'%F') %>">
+            <%= episode.air_date.strftime("%A, %B %-d, %Y") %>
+          </time>
+          <div class="o-recent-episodes__item-teaser"><%= episode.teaser.truncate(200, separator: ' ') %></div>
+        </a>
+      </div>
+    <% end %>
+  </div>
+</aside>

@@ -1,0 +1,15 @@
+.masthead
+  @extend .o-mast
+  > *:first-child
+    @extend .o-mast__branding
+    a
+      @extend .o-mast__logo-link
+    svg
+      @extend .o-mast__logo
+    span
+      @extend .o-mast__caption
+
+  > *:second-child
+    @extend .o-mast__sections
+    > ul:first-child
+      @extend .o-mast__actions

@@ -1,0 +1,85 @@
+.o-prologue
+  align-items: center
+  background: $color-gray-lightest
+  border-bottom: 2px solid $color-gray-light
+  color: $color-gray
+  display: flex
+  font-size: 31px
+  height: 120px
+  line-height: 36px
+  margin: 0 auto
+  max-width: 1440px
+  overflow: hidden
+  @media (max-width: $media-tablet)
+    font-size: 26px
+    line-height: 30px
+
+.o-prologue__title
+  font-weight: 700
+  white-space: nowrap
+
+.o-prologue__logo
+  width: ($col * 3) + ($gutter * 2)
+  margin-left: $margin
+  margin-right: $gutter
+
+  img
+    width: 100%
+
+.o-prologue__pipe
+  color: $color-gray
+  font-size: 26px
+  margin-left: 25px
+  margin-right: 25px
+
+.o-prologue__description
+  font-weight: 100
+  @media (max-width: $media-tablet)
+    font-size: 16px
+
+.o-prologue__description address
+  display: inline-block
+  font-style: normal
+  font-weight: 500
+
+.o-prologue--primary
+  color: $color-primary
+  background: $color-primary-lightest
+  border-bottom: 1px solid $color-primary
+
+// FUTURE
+$color-secondary-lightest: #f2fafd
+.o-prologue--secondary
+  color: $color-secondary
+  background: $color-secondary-lightest
+  border-bottom: 1px solid $color-secondary
+
+//FUTURE
+$color-tertiary-lightest: #f2fcfc
+.o-prologue--tertiary
+  color: $color-tertiary
+  background: $color-tertiary-lightest
+  border-bottom: 1px solid $color-tertiary
+
+.o-prologue .o-prologue__description
+  color: $color-secondary-darkest
+  display: block
+
+.o-prologue__airtime
+  color: $color-gray
+  display: flex
+  font-size: 15px
+  justify-content: space-between
+  line-height: 30px
+  margin: 0.5em 0
+  @media (max-width: $media-tablet)
+    display: block
+    font-size: 12px
+    line-height: 18px
+
+@import 'blog'
+@import 'in-person'
+@import 'program'
+@import 'standard_program'
+@import 'vertical'
+@import 'category'

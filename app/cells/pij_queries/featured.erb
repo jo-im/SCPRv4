@@ -1,0 +1,16 @@
+<% if model.present? %>
+  <h2 class="o-pin__section_header heading-block dark" style="order: <%= @options[:order] %>">Featured</h2>
+  <% model.each do |query| %>
+    <div class="o-pin__featured" style="order: <%= @options[:order] %>">
+      <figure class="o-figure o-figure--square">
+        <a href="<%= pij_query_path(query.slug) %>">
+          <img class="o-figure__img" src="<%= asset_path query %>" style="background-image: url(<%= asset_path query %>)">
+        </a>
+      </figure>
+      <div class="o-pin__featured_description">
+        <h3 class="o-pin__description_header"><%= link_to query.headline, pij_query_path(query.slug) %></h3>
+        <p class="o-pin__description_body"><%= query.teaser.html_safe %></p>
+      </div>
+    </div> <!-- card -->
+  <% end %>
+<% end %>

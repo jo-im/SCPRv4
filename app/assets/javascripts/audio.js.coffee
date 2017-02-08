@@ -2,10 +2,10 @@ class scpr.Audio
     DefaultOptions:
         playEl:         "#jquery_jplayer_1"
         titleEl:        "#jplayer1_title"
-        widgetClass:    ".story-audio"
-        playBtn:        ".audio-toggler"
+        widgetClass:    ".c-audio-widget"
+        playBtn:        ".c-play__button"
         audioBar:       "#audio-bar"
-        downloadEl:     ".download"
+        downloadEl:     ".o-audio-bar__download"
     constructor: (options={}) ->
         @options = _.defaults options, @DefaultOptions
 
@@ -84,7 +84,8 @@ class scpr.Audio
     #----------
 
     closeAndStop: ->
-        @widget.removeClass("activated")
+        if @widget
+          @widget.removeClass("activated")
         @audiobar.animate { bottom: @audiobar.height() * -1 }, 300, =>
             @audiobar.removeClass('active')
             $("body").removeClass("with-audio-bar") # which also hides the opaque-cover
@@ -124,10 +125,11 @@ class scpr.Audio
                 false
 
         # animate the bar
-        @widget.addClass("activated")
+        if @widget
+          @widget.addClass("activated")
         @audiobar.addClass("active")
         $("body").addClass("with-audio-bar")
-        @audiobar.animate { bottom: 0 }, 1000
+        @audiobar.animate { bottom: -1 }, 750
         # and hit play
         @player.jPlayer "play", 0
         @player.jPlayer "play" # Need the second one for IE 9...

@@ -36,10 +36,10 @@ describe Api::Public::V3::ListsController do
 
   end
 
-  describe "GET list" do 
+  describe "GET list" do
     it "finds a list and its associated articles" do
       list  = List.create title: "test-list", status: 5
-      story = create :news_story 
+      story = create :news_story
       list.items.create item_id: story.id, item_type: story.class.to_s
       get :show, {id: list.id}.merge(request_params)
       assigns(:list).should eq list

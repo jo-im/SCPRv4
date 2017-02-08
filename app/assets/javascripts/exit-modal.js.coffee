@@ -1,6 +1,7 @@
 $(document).ready( ->
   modalContent = $('#exit-modal')
   if modalContent.length
+    modalContent.insertAfter('main')
     modal = new Modal()
     modal.bindExitEventListeners()
     modal.bindCloseEventListeners()

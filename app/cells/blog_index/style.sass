@@ -1,0 +1,68 @@
+.c-blog-index__heading
+  font-size: 54px
+  line-height: 60px
+  margin-bottom: $margin-in-pixels / 2
+  @media (max-width: $media-tablet)
+    font-size: 36px
+    line-height: 36px
+
+.o-blog-index_item__heading
+  margin-bottom: $margin-in-pixels / 2
+  text-transform: uppercase
+  width: 100%
+
+  .b-link--callout
+    font-size: 26px
+    @media (max-width: $media-tablet)
+      font-size: 23px
+      line-height: 30px
+
+.o-blog-index_item__figure, .o-blog-index_item__description
+  margin-top: 15px
+
+.o-blog-index_item__figure
+  margin-bottom: 0px
+  width: percentage(300/756)
+  @media (max-width: $media-mobile)
+    width: 100%
+
+.o-blog-index_item__description
+  box-sizing: border-box
+  width: percentage(414/756)
+  @media (max-width: $media-mobile)
+    width: 100%
+
+.o-blog-index_item__figure .o-figure__img
+  padding-top: (100 / 1.11111) * 1%
+
+.o-blog-index_item__link
+  color: $color-gray
+  font-size: 18px
+  line-height: 30px
+  margin-bottom: 7px
+
+.o-blog-index_item
+  display: flex
+  flex-wrap: wrap
+  border-bottom: 1px solid $color-gray-light
+  justify-content: space-between
+  margin-bottom: 60px
+  padding-bottom: 60px
+
+.o-blog-index_item:last-of-type
+  border-bottom: 0px
+
+.o-blog-index_item__headline
+  font-family: $font-serif-titling
+  font-size: 31px
+  line-height: 36px
+  font-weight: 800
+  line-height: 1.1
+  margin-bottom: 17px
+  @media (max-width: $media-tablet)
+    font-size: 26px
+    line-height: 36px
+
+.o-blog-index_item__teaser
+  font-size: 18px
+  line-height: 24px

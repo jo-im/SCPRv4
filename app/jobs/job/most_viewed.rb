@@ -35,6 +35,8 @@ module Job
           "views/popular/viewed",
           local: :articles
         )
+
+        articles
       end
 
       #---------------

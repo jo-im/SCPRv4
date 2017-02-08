@@ -1,0 +1,63 @@
+<%= form_block "Landing Page Featured Content" do %>
+  <div class="alert alert-info">
+    Choose the <strong>THREE Featured Events</strong> for the Landing Page. Click "Help: Landing Pages" for more information.
+  </div>
+
+  <div class="pull-right">
+
+  <%= modal_toggle title: "Help: Landing Pages", id: "landing-pages-help-modal" do %>
+    <h4>Featured Content</h4>
+    This aggregator will populate the featured content on a Landing page.
+    The order of the events determines where in the layout they show up.
+    <br /><br />
+
+    <strong>In Order:</strong>
+    <ul>
+      <li><strong>1.</strong> The top event on the page.</li>
+      <li><strong>2, 3.</strong> The two mini events underneath the top event.</li>
+    </ul>
+  <% end %>
+
+  </div>
+
+  <div id="featured_contents_aggregator" class="aggregator"></div>
+  <%= f.input :landing_page_contents_json, as: :hidden, input_html: { id: "landing_page_contents_json" } %>
+
+  <% content_for :footer do %>
+    <script>
+      new outpost.Aggregator(
+        {
+          el: "#featured_contents_aggregator",
+          inputEl: "#landing_page_contents_json",
+          collection: <%= render_json("api/private/v2/articles/collection", articles: record.landing_page_contents.map {|a| a.article.to_article }) %>,
+          apiType: "private",
+          view: {
+            dropMaxLimit: 3,
+            dropMinLimit: 1,
+            dropRejectOverflow: false
+          },
+          params: {
+            limit: 20,
+            types: 'events',
+            token: "<%= Rails.configuration.x.api.kpcc.private.api_token %>",
+            order: "public_datetime",
+            sort_mode: "desc",
+            with: { published: true }
+          }
+        }
+      );
+    </script>
+  <% end %>
+<% end %>
+
+
+<%= form_block "Details" do %>
+  <%= f.input :title, input_html: { class: "sluggable" } %>
+  <%= f.input :slug %>
+  <%= f.input :description, label: "Tagline" %>
+<% end %>
+
+
+<%= form_block "Associations" do %>
+  <%= f.association :reporters, label: "Reporters" %>
+<% end %>

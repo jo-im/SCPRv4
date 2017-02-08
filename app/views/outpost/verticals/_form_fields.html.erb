@@ -34,7 +34,7 @@
     <script>
       new outpost.Aggregator(
         {
-          el: "#featured_articles_aggregator", 
+          el: "#featured_articles_aggregator",
           inputEl: "#vertical_articles_json",
           collection: <%= render_json("api/private/v2/articles/collection", articles: record.vertical_articles.includes(:article).map {|a| a.article.get_article}) %>,
           apiType: "private",
@@ -96,7 +96,7 @@
       <script>
         new outpost.Aggregator(
           {
-            el: "#aggregator_quote_content", 
+            el: "#aggregator_quote_content",
             inputEl: "#quote_content_json",
             collection: <%= render_json("api/private/v2/articles/collection", articles: Array(qf.object.article)) %>,
             apiType: "private",

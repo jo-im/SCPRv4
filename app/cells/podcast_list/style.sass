@@ -1,0 +1,69 @@
+.o-podcast-list__heading
+  font-family: $font-serif-titling
+  font-size: 54px
+  line-height: 60px
+  margin-bottom: $margin-in-pixels / 2
+  @media (max-width: $media-tablet)
+    font-size: 36px
+    line-height: 36px
+
+.o-podcast-list__description
+  font-size: 22px
+  font-weight: 300
+  line-height: 30px
+  margin-bottom: $margin-in-pixels / 2
+  display: inline-block
+  @media (max-width: $media-tablet)
+    font-size: 20px
+    line-height: 30px
+
+.o-podcast-list__description:last-of-type
+  margin-bottom: 0px
+  @media (max-width: $media-tablet)
+    margin-bottom: 30px
+
+.o-podcast-list__item
+  display: flex
+  justify-content: space-between
+  margin-bottom: 30px
+  @media (max-width: $media-tablet)
+    margin-bottom: $margin-in-pixels
+
+.o-podcast-list__item-heading
+  font-family: $font-serif-titling
+  font-size: 26px
+  line-height: 36px
+  margin-bottom: 14px
+  @media (max-width: $media-tablet)
+    font-size: 23px
+    line-height: 30px
+
+.o-podcast-list__item-figure
+  width: percentage(186/756)
+  @media (max-width: $media-mobile)
+    margin: 0 auto
+    padding-bottom: 15px
+    width: 50%
+
+.o-podcast-list__item-details
+  width: percentage(528/756)
+
+.o-podcast-list__item-description
+  font-size: 18px
+  font-weight: 300
+  display: block
+  line-height: 24px
+  margin-bottom: 14px
+
+.o-podcast-list__item-link
+  color: $color-link
+  cursor: pointer
+  display: block
+  font-size: 15px
+  font-weight: bold
+  line-height: 18px
+  margin-bottom: 14px
+  word-wrap: break-word
+  @media (max-width: $media-tablet)
+    font-size: 16px
+    line-height: 24px

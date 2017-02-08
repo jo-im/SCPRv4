@@ -1,0 +1,72 @@
+.o-featured-episode__headers
+
+  .o-featured-episode__title
+    font-weight: normal
+    line-height: 48px
+    margin-top: $gutter / 2
+    margin-bottom: $margin-in-pixels / 2
+    @media (max-width: $media-tablet)
+      font-size: 32px
+      line-height: 36px
+    @media (max-width: $media-mobile)
+      font-size: 26px
+      line-height: 30px
+
+  .c-audio--horiz, .c-audio__download
+    display: none
+    @media all and (max-width: $media-wide)
+      display: flex
+
+.o-featured-episode__center
+  width: 100%
+  .o-featured-episode__list-heading
+    margin-bottom: $margin-in-pixels / 2
+  .o-featured-episode__segment
+    width: 100%
+    display: flex
+    justify-content: space-between
+    margin-bottom: $margin-in-pixels
+    .o-featured-episode__segment-figure
+      width: 25%
+    .o-featured-episode__segment-description
+      font-size: 15px
+      line-height: 30px
+      width: 70%
+      @media (max-width: $media-tablet)
+        font-size: 16px
+        line-height: 24px
+      .o-featured-episode__segment-title
+        font-size: 26px
+        font-weight: 500
+        font-family: $font-serif-titling
+        line-height: 36px
+        margin-top: -0.3em
+        @media (max-width: $media-tablet)
+          font-size: 23px
+          line-height: 30px
+      .o-featured-episode__segment-teaser
+        font-size: 18px
+        margin: 0.5em 0
+        line-height: 24px
+      .o-featured-episode__segment-icon
+        display: inline
+        height: 15px
+        line-height: 30px
+        margin-right: 5px
+        width: 15px
+      .o-featured-episode__segment-audio
+        align-items: center
+        color: $color-link
+        display: inline-flex
+        font-weight: 500
+        margin-right: $margin
+      .o-featured-episode__segment-comments
+        align-items: center
+        color: $color-link
+        display: inline-flex
+        font-weight: 500
+        line-height: 30px
+
+        a
+          align-items: center
+          display: inline-flex

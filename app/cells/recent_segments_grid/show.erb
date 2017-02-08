@@ -1,0 +1,11 @@
+<ul class="o-recent-events-grid">
+  <% segments.each do |segment| %>
+    <li>
+      <figure class="o-recent-events-grid__figure o-figure o-figure--four-by-three">
+        <img class="o-figure__img" src="<%= thumbnail_url(segment) %>" style="background-image: url(<%= thumbnail_url(segment) %>);">
+      </figure>
+      <h6>Monday, December 5</h6>
+      <h5><%= segment.headline %></h5>
+    </li>
+  <% end %>
+</ul>

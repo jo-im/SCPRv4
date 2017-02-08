@@ -1,0 +1,99 @@
+
+// Inputs: Dsfault styling for form inputs.
+//
+//
+// Styleguide 0.2.0
+
+.b-input__text {
+  background: transparent;
+  border: 0;
+  border-bottom: 1px solid $color-gray;
+  border-radius: 0;
+  color: $color-gray-darkest;
+  font-size: ms(0);
+  padding: 0.25rem 0;
+  width: 15rem;
+
+  &::placeholder {
+    color: $color-gray;
+    font-size: 15px;
+    line-height: 18px;
+  }
+
+  &:focus {
+    border-bottom-color: $color-secondary;
+    outline: 0;
+
+    &::placeholder {
+      opacity: 0; // hide placeholder when input is in focus
+    }
+
+  }
+
+}
+
+.b-input {
+  &--wide {
+    width: 22rem;
+
+    @include media-max($media-mobile) {
+      width: 16rem;
+    }
+
+  }
+
+  &--narrow {
+    width: 10rem;
+  }
+
+  &--error, .b-input--error:focus {
+    border-bottom: 1px solid $color-alert;
+  }
+
+  &--align-bottom {
+    vertical-align: bottom;
+  }
+
+  &--focused-placeholder {
+    &:focus::placeholder {
+      opacity: 1;
+    }
+  }
+
+}
+
+.b-input__label {
+  color: $color-gray;
+  display: block;
+  font-size: ms(-1);
+  font-style: italic;
+
+  &--hidden {
+    display: none;
+  }
+
+}
+
+.b-input__group {
+  display: flex;
+  flex-direction: column-reverse;
+
+  .b-input__text:placeholder-shown + .b-input__label {
+    opacity: 0;
+  }
+
+  .b-input__text:focus + .b-input__label {
+    opacity: 1;
+  }
+
+}
+
+.b-input__help {
+  font-size: ms(-2);
+  margin-top: 3px;
+
+  &--error {
+    color: $color-alert;
+  }
+
+}

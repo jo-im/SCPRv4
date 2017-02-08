@@ -1,0 +1,252 @@
+.o-appeal
+  padding-top: $margin-in-pixels
+  padding-bottom: $margin-in-pixels
+  box-sizing: border-box
+
+.o-appeal__heading
+  margin-bottom: 0px
+  line-height: 31px
+
+.o-appeal--ipad
+  padding-top: $margin-in-pixels / 2
+  padding-bottom: $margin-in-pixels / 2
+  margin-bottom: $margin-in-pixels
+  text-align: center
+
+  .o-appeal__heading
+    line-height: 42px
+    @media (max-width: $media-tablet)
+      font-size: 29px
+      line-height: 36px
+
+
+.o-appeal--ipad .o-appeal__submit
+  border-radius: 0px
+  font-size: 18px
+  padding-bottom: 10px
+  margin-top: 10px
+  text-transform: none
+
+.o-appeal--edition
+  background-color: $color-gray-lightest
+  display: flex
+  flex-direction: column
+  flex-wrap: wrap
+  justify-content: space-between
+  align-items: center
+  text-align: center
+  padding-left: $margin
+  padding-right: $margin
+  .o-appeal__heading
+    line-height: 42px
+    margin: 0 auto
+    margin-bottom: 10px
+    width: 100%
+    @media (max-width: $media-tablet)
+      font-size: 29px
+      line-height: 36px
+  .o-appeal__description
+    font-size: 18px
+    line-height: 30px
+    margin-bottom: 30px
+  .o-appeal__caption
+    margin-bottom: 3px
+    text-align: center
+    width: 100%
+  .newsletter-hidden-input
+    display: none
+  form
+    display: flex
+  input[type='text'], input[type='email']
+    @extend .b-input__text
+    border-bottom: 1px solid $color-secondary
+    @media (max-width: $media-mobile)
+      width: initial
+  .o-appeal__submit
+    @extend .c-btn, .c-btn--outline-secondary, .c-btn--small
+    border-radius: 0px
+    font-size: 0.9vw
+    padding-left: 0.5em
+    padding-right: 0.5em
+    padding-top: 0.25rem
+    padding-bottom: 0.25rem
+    text-align: center
+    text-transform: initial
+    font-size: 13px
+    font-family: $font-sans-base
+    line-height: 18px
+    font-weight: 500
+    text-transform: initial
+    white-space: nowrap
+  .o-appeal__action-link
+    @extend .b-link--callout
+    font-size: 12px
+    font-weight: 400
+    margin: 0 auto
+    margin-top: 30px
+
+.o-appeal--podcast
+  display: flex
+  flex-wrap: wrap
+  justify-content: space-between
+  .o-appeal__heading
+    line-height: 36px
+    margin: 0 auto
+    margin-bottom: 10px
+    max-width: 250px
+    width: 100%
+    @media (max-width: $media-tablet)
+      font-size: 23px
+      line-height: 30px
+  .o-appeal__caption
+    font-size: 18px
+    line-height: 24px
+    margin-bottom: 3px
+    text-align: center
+    width: 100%
+  .o-appeal__submit
+    align-items: center
+    border-radius: 0px
+    display: flex
+    font-size: 13px
+    justify-content: center
+    line-height: 18px
+    padding-left: 0.5em
+    padding-right: 0.5em
+    text-align: center
+    text-transform: initial
+    width: 42.5%
+    @media (max-width: $media-desktop)
+      width: 40.5%
+    @media (max-width: $media-tablet)
+      width: 42.5%
+
+.o-appeal--breaking-news
+  display: flex
+  flex-wrap: wrap
+  justify-content: space-between
+  .o-appeal__heading
+    margin: 0 auto
+    margin-bottom: 10px
+    text-align: center
+    width: 100%
+    @media (max-width: $media-tablet)
+      font-size: 23px
+      line-height: 30px
+  .o-appeal__description
+    margin-bottom: 30px
+    text-align: center
+    width: 100%
+  .o-appeal__caption
+    margin-bottom: 3px
+    text-align: center
+    width: 100%
+  .newsletter-hidden-input
+    display: none
+  form
+    display: flex
+    width: 100%
+  input[type='text'], input[type='email']
+    @extend .b-input__text
+    border-bottom: 1px solid $color-secondary
+    width: 100%
+  .o-appeal__submit
+    @extend .c-btn, .c-btn--outline-secondary, .c-btn--small
+    border-radius: 0px
+    font-family: $font-sans-base
+    font-size: 13px
+    font-weight: 500
+    line-height: 18px
+    padding-left: 1em
+    padding-right: 1em
+    padding-top: 0.5rem
+    padding-bottom: 0.5rem
+    text-align: center
+    text-transform: initial
+    white-space: nowrap
+  .o-appeal__action-link
+    @extend .b-link--callout
+    font-size: 13px
+    font-weight: 400
+    line-height: 18px
+    margin: 0 auto
+    margin-top: 30px
+
+  // form
+  //   display: flex
+  //   justify-content: center
+
+  // input[type='text'], input[type='email']
+  //   @extend .b-input__text
+  //   border-bottom: 1px solid $color-secondary
+  // button
+  //   @extend .c-btn, .c-btn--outline-secondary, .c-btn--small
+  //   font-family: $font-sans-alt
+  //   font-size: 12px
+  //   font-weight: 900
+  //   text-transform: initial
+  //   white-space: nowrap
+
+.o-appeal--in-person
+  background-color: $color-gray-lightest
+  display: flex
+  flex-direction: column
+  flex-wrap: wrap
+  justify-content: space-between
+  align-items: center
+  text-align: center
+  padding-left: 1em
+  padding-right: 1em
+  .o-appeal__heading
+    margin: 0 auto
+    margin-bottom: 10px
+    width: 100%
+    @media (max-width: $media-tablet)
+      font-size: 23px
+      line-height: 30px
+  .o-appeal__description
+    font-size: 18px
+    line-height: 30px
+    margin-bottom: 30px
+  .o-appeal__caption
+    margin-bottom: 3px
+    text-align: center
+    width: 100%
+  .newsletter-hidden-input
+    display: none
+  form
+    display: flex
+  input[type='text'], input[type='email']
+    @extend .b-input__text
+    border-bottom: 1px solid $color-secondary
+    width: initial
+  .o-appeal__submit
+    @extend .c-btn, .c-btn--outline-secondary, .c-btn--small
+    border-radius: 0px
+    font-size: 0.9vw
+    padding-left: 0.5em
+    padding-right: 0.5em
+    padding-top: 0.25rem
+    padding-bottom: 0.25rem
+    text-align: center
+    text-transform: initial
+    font-size: 13px
+    font-family: $font-sans-base
+    line-height: 18px
+    font-weight: 500
+    text-transform: initial
+    white-space: nowrap
+  .o-appeal__action-link
+    @extend .b-link--callout
+    font-size: 12px
+    font-weight: 400
+    margin: 0 auto
+    margin-top: 30px
+
+.o-appeal--in-person_side-bar
+  background-color: transparent
+  border-bottom: 1px solid $color-gray-light
+  .o-appeal__newsletters-link
+    color: $color-link
+    font-size: 0.7em
+    margin-top: 2em

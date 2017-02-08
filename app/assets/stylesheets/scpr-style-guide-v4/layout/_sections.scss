@@ -1,0 +1,17 @@
+
+// Sections: Classes for creating blocks of content with bottom margins.
+//
+//
+// Styleguide 0.2.1
+
+.l-section {
+  margin-bottom: $base-line-height;
+
+  &--margin-sm {
+    margin-bottom: ($base-line-height / 2);
+    @media (max-width: $media-tablet) {
+      align-items: center;
+      flex-direction: column;
+    }
+  }
+}

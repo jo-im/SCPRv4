@@ -1,0 +1,17 @@
+<% if @options[:title] %>
+  <h1 class="o-event-list__heading"><%= @options[:title] %></h1>
+<% end %>
+<% model.each_with_index do |event, index| %>
+  <div class="o-event-list__item" style="order: <%= index + 2 %>">
+    <figure class="o-event-list__item-figure o-figure o-figure--<%= asset_aspect %>">
+      <img class="o-figure__img" src="<%= asset_path event %>" style="background-image: url(<%= asset_path event %>)">
+    </figure>
+    <header class="o-event-list__item-details">
+      <h4 class="o-event-list__item-headline"><a href="<%= event.public_path %>"><%= event.headline %></a></h4>
+      <span class="o-event-list__item-location-name"><%= event.location_name %></span>
+      <span class="c-byline__pipe">|</span>
+      <span class="o-event-list__item-timestamp c-byline__timestamp"><%= date event %></span>
+      <span class="o-event-list__item-teaser"><%= event.teaser.html_safe %></span>
+    </header>
+  </div>
+<% end %>

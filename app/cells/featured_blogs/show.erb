@@ -1,0 +1,28 @@
+<section class="o-featured-blogs <%= @options[:class] %>"  style="order: <%= @options[:order] %>">
+  <h2 class="o-featured-blogs__heading">Enjoy <%= blog_title %>? Try KPCC’s other blogs.</h2>
+  <a class="o-featured-blogs__all-blogs-link" href="/blogs"><span class="b-link--callout">See all of our blogs</span></a>
+  <% featured_blogs.each do |entry| %>
+    <div class="o-featured-blogs__blog">
+      <% href = begin entry.asset.small.url rescue '/static/images/fallback-img-square.png' end %>
+
+      <figure class="o-featured-blogs__blog-figure o-figure o-figure--widescreen">
+        <img class="o-figure__img" src="<%= href %>" style="background-image: url(<%= href %>);">
+      </figure>
+
+      <div class="o-featured-blogs__blog-description">
+        <p class="o-featured-blogs__blog-date u-text-color--gray-warm b-heading--bold"><%= entry.public_datetime.try(:strftime, "%B %-d, %Y") %></p>
+        <h1 class="o-featured-blogs__blog-title b-heading--medium"><a href="<%= entry.public_path %>"><%= entry.short_headline %></a></h1>
+      </div>
+
+      <div class="o-featured-blogs__blog-footer">
+        <a class="o-featured-blogs__blog-footer-date" href="<%= entry.public_path %>">
+          <%= entry.blog.name %>
+        </a>
+        <a class="o-featured-blogs__blog-headline" href="<%= entry.public_path %>">
+          <%= entry.blog.teaser.html_safe %>
+        </a>
+      </div>
+    </div>
+  <% end %>
+
+</section>

@@ -1,5 +1,5 @@
 class NewsController < ApplicationController
-  layout 'new/single'
+  # layout 'new/single'
   respond_to :html, :xml, :rss
 
   before_filter :get_popular_articles
@@ -23,6 +23,8 @@ class NewsController < ApplicationController
     if request.original_fullpath != @story.public_path
       redirect_to @story.public_path and return
     end
+
+    @article = @story.to_article
 
     respond_with template: "news/story"
   end

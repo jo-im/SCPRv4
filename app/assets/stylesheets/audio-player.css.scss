@@ -1,0 +1,107 @@
+#audio-bar {
+    max-width: 100%;
+    width: 100%;
+    background-color:#fff;
+    position:fixed;
+    visibility: hidden;
+    z-index:55;
+    bottom:-61px;
+
+    &.active {
+        visibility: visible;
+    }
+
+    .section-left {
+        float: left;
+    }
+    .section-mid {
+        float: left;
+    }
+
+    .jp-gui {
+        border-right:1px solid $color-gray-light;
+        min-height:$margin * 4;
+    }
+    .jp-title {
+        min-height:$margin * 4;
+        p {
+            display: block;
+            padding: 10px;
+            margin: 0;
+            span {
+                margin-right:$margin / 2;
+                color:$color-primary;
+                font-size:12px;
+                text-transform:uppercase;
+            }
+
+            i { font-style: inherit; }
+        }
+    }
+    .jp-play, .jp-pause, .jp-rw, .jp-ff, .jp-unmute {
+        background-repeat:no-repeat;
+        display:block;
+        text-indent:-9999px;
+    }
+    .jp-rw, .jp-ff {
+        width:18px;
+        height:11px;
+        margin-top:25px;
+    }
+    .jp-rw:hover, .jp-ff:hover, .jp-mute:hover, .jp-unmute:hover { opacity:1; }
+    .jp-rw { background-position:-97px -17px; }
+    .jp-ff { background-position:-125px -17px; }
+    .jp-play { background-position:0 0; }
+    // .jp-play:hover { background-position:0 -45px; }
+    // .jp-pause:hover { background-position:-49px -45px; }
+    .jp-unmute { background-position: -174px -10px; }
+
+    .jp-play, .jp-pause {
+        margin: 0 auto;
+        width:54px;
+        height:54px;
+    }
+
+    .jp-pause {
+        // background-position: -48px 0;
+        width:54px;
+        height:54px;
+    }
+    .jp-bar {
+        width: 33%;
+        float:left;
+        margin-right:7px;
+        margin-left:7px;
+    }
+    .jp-progress {
+        .jp-current-time, .jp-duration {
+            color: black;
+            width:35px;
+            float:left;
+            margin-top:20px;
+        }
+        .jp-seek-bar {
+            background-color:#e0e0e0;
+            height:8px;
+            margin-top:26px;
+            .jp-play-bar {
+                background-color:#03b9f2;
+                height:8px;
+            }
+        }
+    }
+    .jp-stop {
+        a {
+            color:#fff;
+            background:transparent image-url('audio-close.png') no-repeat 19px 20px;
+            display:block;
+            font-size:9px;
+            width:58px;
+            padding:42px 0 0 2px;
+            &:hover {
+                color:$color-gray;
+                text-decoration:none;
+            }
+        }
+    }
+}

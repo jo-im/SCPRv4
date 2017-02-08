@@ -1,0 +1,493 @@
+// the term F-U-T-U-R-E means that a set of properties should
+// be merged into the style guide at some point later
+//
+// the term H-A-C-K means it's an override on existing
+// properties in the style guide, and may or may not
+// be something that should be eventually merged into
+// the style guide.  it can refer to either workarounds
+// or simple style choices
+
+@import 'scpr-style-guide-v4/index'
+@import './three-columns'
+@import './audio-player'
+
+$centroid: '*:not(.l-column--boundless):not(.l-column--left):not(.l-column--right)'
+
+a:not(.b-link):not(.o-appeal__submit):not(.c-btn):not(.c-nav__link):hover
+  text-decoration: underline
+
+.c-play__button
+  color: $color-link
+
+mark
+  background-color: transparent
+  display: block
+  font-weight: bold
+
+.wf-loading *
+  opacity: 0
+
+.wf-active *
+  transition: opacity 0.10s ease-in-out
+  opacity: 1
+
+.pagination
+  .current
+    color: black
+
+.c-byline__timestamp, time
+  display: inline-block
+
+.o-article__category
+  font-size: 18px
+  line-height: 30px
+
+.o-article__title
+  @extend .o-media__headline, .o-media__headline--h3
+  color: $color-secondary-darkest
+  font-size: 54px
+  line-height: 60px
+  margin-bottom: 30px
+  @media (max-width: $media-tablet)
+    font-size: 36px
+    line-height: 36px
+
+.o-article--segment > #{$centroid}.o-article__title
+  @media (min-width: $media-tablet)
+    width: 72%
+
+.l-column--boundless
+  // FUTURE
+  //
+  // Essentially ignores the column layout
+  // and takes up the full device width
+  box-sizing: border-box
+  margin-left: 0
+  margin-right: 0
+  width: 100%
+  // width: 100vw
+
+.l-column--right
+  margin-bottom: $margin-in-pixels
+
+#c-ad--a
+  margin-bottom: $margin-in-pixels / 2
+
+.o-related-links
+  // FUTURE
+  .b-heading
+    line-height: 30px
+
+  li
+    font-size: 22px
+    line-height: 30px
+    margin-bottom: 30px
+    @media (max-width: $media-tablet)
+      font-size: 20px
+
+  li:last-of-type
+    margin-bottom: 0px
+
+  @media (max-width: $media-tablet)
+    margin-bottom: $margin-in-pixels / 2
+
+.b-rule
+  // FUTURE
+  @extend .b-rule
+
+.b-rule--primary-lightest
+  // FUTURE
+  background: $color-primary-lightest
+
+.b-rule--secondary
+  // FUTURE
+  background: $color-secondary
+
+.b-rule--secondary-dark
+  // FUTURE
+  background: $color-secondary-dark
+
+.b-rule--secondary-darkest
+  // FUTURE
+  background: $color-secondary-darkest
+
+.b-rule--secondary-light
+  // FUTURE
+  background: $color-secondary-light
+
+.b-rule--secondary-alt
+  // FUTURE
+  $color-secondary-alt: #94d5eb
+  background: $color-secondary-alt
+
+.b-rule--bold
+  // FUTURE
+  height: 2px
+
+.b-rule--padded
+  // okay, 'padded' here is a bit of a misnomer
+  // apply it to anything in the center flow that
+  // needs some space around it
+  display: inline-block
+  margin-bottom: $margin-in-pixels
+  margin-top: $margin-in-pixels
+
+.b-rule--padded-small
+  // okay, 'padded' here is a bit of a misnomer
+  // apply it to anything in the center flow that
+  // needs some space around it
+  display: inline-block
+  margin-bottom: 31.5px
+  margin-top: 31.5px
+
+.o-figure
+  margin-bottom: 30px
+
+> #{$centroid}.o-figure
+  @media (max-width: $media-tablet)
+    margin-left: 0
+    margin-right: 0
+
+.l--centerize
+  // Vertically-centers contents
+  display: flex
+  flex-direction: column
+  align-items: center
+
+.c-audio
+  // FUTURE
+  align-items: center
+  display: flex
+  flex-direction: column
+
+
+
+.c-audio__button
+  // FUTURE
+  $breathe-scale: 1.075
+  $button-size: 47px
+  $circle-size: 73px
+  $translation: ($circle-size - $button-size) / 2
+  background: $color-secondary
+  display: inline-block
+  height: $button-size
+  width: $button-size
+  min-width: $button-size
+  min-height: $button-size
+  border-radius: 50%
+  margin-top: 13px
+  margin-bottom: 20px
+  margin-left: 13px
+  margin-right: 13px
+  // transform: translateY(-30px)
+  &:hover
+    &:before
+      transform: translate(-$translation,-$translation) scale($breathe-scale, $breathe-scale)
+  &:before
+    // the ring around the button
+    content: " "
+    $border-size: 4px
+    box-sizing: border-box
+    border: $border-size solid $color-secondary
+    border-radius: 50%
+    height: $circle-size
+    width: $circle-size
+    position: absolute
+    transform: translate(-$translation,-$translation) scale(1,1)
+    transition: all .5s cubic-bezier(.3,0,.1,1)
+    transform-origin: center
+  &:after
+    // the icon inside the button
+    content: " "
+    $icon-size: 22px
+    width: 0
+    height: 0
+    border-color: white
+    border-width: ($icon-size * 0.5) 0 ($icon-size * 0.5) $icon-size
+    border-style: solid
+    border-top-color: transparent
+    border-bottom-color: transparent
+    position: absolute
+    $translation: ($icon-size - $button-size) / 2
+    transform: translate(-$translation + 2px,-$translation)
+
+.l-column--left
+  @media (max-width: $media-tablet)
+    display: none
+
+.l-column--left > .c-audio
+  margin-bottom: 126px
+  margin-top: 15px
+  @media (min-width: $media-tablet)
+    transform: translateY(-10px)
+
+.c-byline
+  color: $color-gray
+  font-size: 15px
+  line-height: 18px
+  @media (max-width: $media-tablet)
+    font-size: 16px
+    line-height: 24px
+
+.c-byline__name
+  color: $color-secondary
+  font-weight: 700
+
+.c-byline__pipe
+  color: $color-gray-light
+  margin-left: 12px
+  margin-right: 12px
+
+.l-column--right + .b-rule
+  // hide rules underneath right asides
+  // on small screens
+  @media (max-width: $media-tablet)
+    display: none
+
+.o-program-overview
+  & > .o-program-overview__heading, & > .o-content-cluster__datetime, & > .o-content-cluster__description
+    display: inline-block
+  @media (max-width: $media-tablet)
+    margin-bottom: 0px
+
+.o-article__rule--ending
+  @extend .b-rule--padded
+
+.o-article__rule--footer
+  margin-top: 0px
+
+.o-more-from-episode
+  @media (max-width: $media-tablet)
+    margin-bottom: 30px
+    margin-top: 30px
+
+  li:last-of-type
+    margin-bottom: 0px
+
+  .b-heading
+    line-height: 36px
+    @media (max-width: $media-tablet)
+      font-size: 26px
+      line-height: 30px
+
+  .b-heading--medium
+    font-size: 22px
+    line-height: 30px
+    @media (max-width: $media-tablet)
+      font-size: 20px
+
+.o-more-from-episode__message, .o-more-from-episode__link
+  line-height: 30px
+  text-transform: uppercase
+
+.o-more-from-episode__message
+  color: $color-gray
+  display: inline-block
+
+.o-more-from-episode__link
+  display: inline-block
+  margin-bottom: $margin-in-pixels / 2
+
+.o-blog-hosts__list-item
+  display: block
+  overflow: hidden
+  margin-bottom: 30px
+
+.o-blog-hosts__figure
+  float: left
+  margin-bottom: 0
+  margin-right: $margin * 2
+  width: 77px
+
+.o-blog-hosts__description
+  display: inline-block
+  float: left
+
+.o-blog-hosts__description li a
+  margin-bottom: 0px
+
+.o-blog-hosts__description li
+  margin-bottom: 6px
+  // max-width: 305px
+
+.o-blog-hosts__host-name
+  display: inline-block
+  margin-bottom: 12px
+
+.o-overview__heading
+  margin-bottom: 8px
+
+.o-overview__description
+  color: $color-gray-dark
+  font-size: 15px
+  font-weight: 400
+
+.o-figure--square .o-figure__img
+  //FUTURE
+  padding-top: 100%
+
+@import 'layouts/vertical'
+
+@import 'layouts/program'
+
+@import 'layouts/blogs'
+
+@import 'layouts/podcasts'
+
+@import 'layouts/flatpage'
+
+@import 'layouts/about_us'
+
+@import 'layouts/kpcc_in_person'
+
+@import 'layouts/event'
+
+@import 'layouts/events'
+
+@import 'layouts/episode'
+
+@import 'layouts/programs'
+
+@import 'layouts/schedule'
+
+@import 'layouts/short_list'
+
+@import 'layouts/listen_live'
+
+@import 'layouts/latest_news'
+
+@import 'layouts/archive'
+
+@import 'layouts/search'
+
+@import 'layouts/category'
+
+@import 'layouts/article'
+
+@import 'layouts/blog_landing'
+
+@import 'layouts/public_insight_network'
+
+@import 'layouts/public_insight_network_query'
+
+@import 'layouts/error'
+
+@import 'layouts/biography'
+
+@import 'layouts/content_share'
+
+@import 'layouts/standard_program'
+
+@import 'featured_interactive/style'
+
+@import 'appeal/style'
+
+@import 'featured_quote/style'
+
+@import 'upcoming_events/style'
+
+@import 'host_list/style'
+
+@import 'category_cluster/style'
+
+@import 'topic_cluster/style'
+
+@import 'featured_story/style'
+
+@import 'resources/style'
+
+@import 'content_cluster/style'
+
+@import 'prologue/style/index'
+
+@import 'newsletter_appeal/style'
+
+@import 'social_tools/style'
+
+@import 'ad/style'
+
+@import 'epilogue/style'
+
+@import 'story_list/style'
+
+@import 'recent_episodes_list/style'
+
+@import 'suggested_story/style'
+
+@import 'meet_the_team/style'
+
+@import 'featured_programs/style'
+
+@import 'popular_articles/style'
+
+@import 'archive_picker/style'
+
+@import 'blog_index/style'
+
+@import 'podcast_list/style'
+
+@import 'flatpage/style'
+
+@import 'about_us/style'
+
+@import 'event_list/style'
+
+@import 'upcoming_events_list/style'
+
+@import 'highlighted_events/style'
+
+@import 'in_person_map/style'
+
+@import 'in_person_source_appeal/style'
+
+@import 'article_audio/style'
+
+@import 'episode/style'
+
+@import 'archive_browser/style'
+
+@import 'program_list/style'
+
+@import 'schedule/style'
+
+@import 'regular_features_list/style'
+
+@import 'short_list/style'
+
+@import 'listen_live/style'
+
+@import 'latest_news/style'
+
+@import 'archive_tab/style'
+
+@import 'search/style'
+
+@import 'event/style'
+
+@import 'audio_player/style'
+
+@import 'previously/style'
+
+@import 'featured_blogs/style'
+
+@import 'blog_entry/style'
+
+@import 'pij_queries/style'
+
+@import 'recent_content/style'
+
+@import 'pin_query_container/style'
+
+@import 'error/style'
+
+@import 'comments/style'
+
+@import 'exit-modal'
+
+@import 'biography/style'
+
+@import 'footer/style'
+
+@import 'more_events/style'
+
+@import 'program_overview/style'

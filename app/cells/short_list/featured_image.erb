@@ -1,0 +1,9 @@
+<% first_abstract = model.abstracts.first %>
+<figure class="o-figure o-figure--widescreen o-short-list__featured-image">
+  <img class="o-figure__img" src="<%= asset_path first_abstract %>" alt="<%= first_abstract.asset.caption %>" role="img" style="background-image:url(<%= asset_path first_abstract %>);" />
+  <% if first_abstract.asset.owner %>
+    <figcaption class="o-figure__caption">
+      <address class="o-figure__attribution">Photo by <%= first_abstract.asset.owner %></address>
+    </figcaption>
+  <% end %>
+</figure>

@@ -1,0 +1,49 @@
+
+// Links: Styling for hyperlinks.
+// Excludes hyperlinks inside articles, whose appearence are scoped to content styling.
+//
+// .b-link--callout       - Styles a link
+//
+// Styleguide 0.1.0
+
+.b-link {
+  color: $color-base;
+
+  &:hover {
+    @include link-underline($color-gray);
+    color: $color-base;
+  }
+
+  &--white-dark-bg {
+    color: $color-white;
+
+    &:hover {
+      @include link-underline($color-white, $color-gray-darkest);
+      color: $color-white;
+    }
+
+  }
+
+  &--gray-dark-bg {
+    color: $color-gray;
+
+    &:hover {
+      @include link-underline($color-gray, $color-gray-darkest);
+      color: $color-gray;
+    }
+
+  }
+
+  &--callout {
+    color: $color-link;
+    font-size: ms(0);
+    font-weight: 500;
+
+    &:hover {
+      @include link-underline($color-hover);
+      color: $color-hover;
+    }
+
+  }
+
+}

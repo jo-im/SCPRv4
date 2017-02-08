@@ -1,0 +1,16 @@
+<div class="o-archive-tab__blogs o-archive-tab__item o-archive__item">
+  <% if model.assets.present? %>
+    <figure class="o-archive-tab__item-figure">
+      <img src="<%= model.asset.square.url %>" />
+    </figure>
+  <% end %>
+  <div class="o-archive-tab__item-description">
+    <h3 class="o-archive-tab__item-heading b-heading--h4 b-heading--serif"><%= link_to model.short_headline, model.public_path, class: 'b-link' %></h3>
+    <span class="o-archive-tab__item-category"><%= link_to model.blog.name, blog_path(model.blog.slug), class: 'b-link' %></span>
+    <span class="pipe">|</span>
+    <span class="o-archive-tab__item-byline"><%= model.byline %></span>
+    <span class="pipe">|</span>
+    <span class="o-archive-tab__item-date"><%= model.published_at.strftime('%B %d %Y, %l:%M %p') %></span>
+    <p><%= model.teaser.html_safe %></p>
+  </div>
+</div>

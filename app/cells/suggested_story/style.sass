@@ -1,0 +1,50 @@
+.o-suggested-story
+  background-color: $color-gray-lightest
+  overflow: auto
+  padding-top: $margin-in-pixels
+  padding-bottom: $margin-in-pixels
+  padding-left: $margin
+  padding-right: $margin
+  $suggested-story-col: 5.4298643%
+  $suggested-story-gutter: 3.1674208%
+
+  .o-suggested-story__figure
+    float: right
+    width: ($suggested-story-col * 7) + ($suggested-story-gutter * 6)
+
+  .o-suggested-story__figure .o-figure__img
+    padding-top: 66.5%
+
+  .o-suggested-story__datetime
+    color: $color-gray
+    display: block
+    font-size: 18px
+    font-weight: 500
+    line-height: 30px
+    text-transform: uppercase
+    margin-bottom: 10px
+
+  .o-suggested-story__heading, .o-suggested-story__headline, .o-suggested-story__teaser, .o-suggested-story__datetime
+    display: block
+    margin-right: $suggested-story-gutter
+    width: ($suggested-story-col * 5) + ($suggested-story-gutter * 4)
+
+  .o-suggested-story__heading
+    font-weight: 500
+    line-height: 36px
+    @media (max-width: $media-tablet)
+      font-size: 23px
+      line-height: 36px
+
+  .o-suggested-story__headline
+    line-height: 48px
+    @media (max-width: $media-tablet)
+      font-size: 32px
+      line-height: 36px
+
+  .o-suggested-story__teaser
+    font-size: 22px
+    line-height: 30px
+    @media (max-width: $media-tablet)
+      font-size: 20px
+      line-height: 30px

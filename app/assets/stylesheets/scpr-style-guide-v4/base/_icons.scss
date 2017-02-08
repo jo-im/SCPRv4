@@ -1,0 +1,117 @@
+
+// Icons: Styling for icons.
+//
+// .b-icon--line                - overrides the global "fill: inherit;" SVG declaration
+// .b-icon--fill                - overrides the global "stroke: inherit;" SVG declaration
+// .b-icon--left                - adds a right margin when an icon is to the left of a label
+// .b-icon--right               - adds a left margin when an icon is to the right of a label
+// .b-icon--size-xs             - sets icon size to 10px square
+// .b-icon--size-sm             - sets icon size to 16px square
+// .b-icon--size-med            - sets icon size to 24px square
+// .b-icon--color-primary       - sets icon color to orange
+// .b-icon--color-link          - sets icon color to link blue
+// .b-icon--color-gray          - sets icon color to gray
+// .b-icon--color-white         - sets icon color to white
+//
+// Styleguide 0.1.0
+
+.b-icon {
+  vertical-align: middle;
+
+  &--line {
+    fill: transparent !important;
+  }
+
+  &--fill {
+    stroke: transparent !important;
+  }
+
+  &--left {
+    margin-right: 0.25rem;
+  }
+
+  &--right {
+    margin-left: 0.25rem;
+  }
+
+  &--size-xs {
+    height: 0.625rem;
+    width: 0.625rem;
+  }
+
+  &--size-sm {
+    height: 1rem;
+    width: 1rem;
+  }
+
+  &--size-med {
+    height: 1.375rem;
+    width: 1.375rem;
+
+    &\@mobile-tablet {
+      height: 1rem;
+      width: 1rem;
+    }
+
+  }
+
+  &--size-lg {
+    height: 1.75rem;
+    width: 1.75rem;
+
+    &\@mobile-tablet {
+      height: 1.375rem;
+      width: 1.375rem;
+    }
+
+  }
+
+  &--color-primary {
+    color: $color-primary;
+    fill: $color-primary;
+    stroke: $color-primary;
+  }
+
+  &--color-secondary {
+    color: $color-secondary;
+    fill: $color-secondary;
+    stroke: $color-secondary;
+  }
+
+  &--color-link {
+    color: $color-link;
+    fill: $color-link;
+    stroke: $color-link;
+  }
+
+  &--color-gray {
+    color: $color-gray;
+    fill: $color-gray;
+    stroke: $color-gray;
+  }
+
+  &--color-gray-dark {
+    color: $color-gray-dark;
+    fill: $color-gray-dark;
+    stroke: $color-gray-dark;
+  }
+
+  &--color-gray-light {
+    color: $color-gray-light;
+    fill: $color-gray-light;
+    stroke: $color-gray-light;
+  }
+
+  &--color-gray-warm {
+    color: $color-gray-warm;
+    fill: $color-gray-warm;
+    stroke: $color-gray-warm;
+  }
+
+  &--color-white {
+    color: $color-white;
+    fill: $color-white;
+    stroke: $color-white;
+  }
+
+}

@@ -1,0 +1,114 @@
+<script type="text/javascript" src="https://www.google.com/jsapi"></script>
+<script type="text/javascript">
+  google.load('search', '1');
+
+  function onLoad() {
+
+    // Create a Custom Search control that uses a CSE restricted to code.google.com
+    // Change the customSearchId string to the ID of your own Custom Search engine.
+    var customSearchControl = new google.search.CustomSearchControl('015616661084601392604:c7j-ryla-rw');
+
+    // Set drawing options to use my text box as input instead of having the library create one.
+    var options = new google.search.DrawOptions();
+    options.setInput(document.getElementById('o-search__query_input'));
+    options.setAutoComplete(true);
+    // Draw the control in content div
+    customSearchControl.draw('o-search__results', options);
+
+    query = document.location.search.substring(3)
+    if (query != ""){
+      customSearchControl.execute(decodeURIComponent(query.replace(/\+/g,  " ")));
+    }
+
+  }
+
+  google.setOnLoadCallback(onLoad);
+</script>
+<script>
+$('.o-search__results-header').hide();
+$('#o-search__program-results').hide();
+
+if (!String.prototype.includes) {
+  String.prototype.includes = function(search, start) {
+    'use strict';
+    if (typeof start !== 'number') {
+      start = 0;
+    }
+
+    if (start + search.length > this.length) {
+      return false;
+    } else {
+      return this.indexOf(search, start) !== -1;
+    }
+  };
+}
+
+var programs = {
+  <% programs.each do |program| %>
+    "<%= program.try(:title).try(:downcase) %>": {
+      figure: "<%= image_path('kpcc-twitter-logo.png') %>",
+      href: "/programs/<%= program.try(:slug) %>",
+      teaser: <%= program.try(:teaser).try(:to_json) %>,
+      title: "<%= program.try(:title) %>"
+    },
+  <% end %>
+}
+
+var searchQuery = $('#o-search__query_input');
+var programResults = $('#o-search__program-results');
+var query = document.location.search.substring(3)
+var relatedPrograms = [];
+
+for (var key in programs) {
+  if (query.length > 0 && key.includes(query)) {
+    relatedPrograms.push(programs[key]);
+    $('.o-search__results-header').show();
+    $('#o-search__program-results').show();
+    $('#o-search__results').show();
+  }
+}
+
+if (relatedPrograms.length > 0) {
+  relatedPrograms.forEach(function(relatedProgram) {
+    programResults.append(
+      "<div class='o-search__program-results__item'>" +
+      "<figure class='o-figure o-figure--square o-search__program-results__item-figure'><img class='o-figure__img' src='" + relatedProgram.figure + "' style='background-image: url(" + relatedProgram.figure +  ")'/></figure>" +
+      "<div class='o-search__program-results__item-description'><a href='" + relatedProgram.href + "' class='gs-title'>" +
+      relatedProgram.title +
+      "</a><div class='gs-snippet'>" +
+      relatedProgram.teaser +
+      "<div class='gs-visibleUrl'>www.scpr.org</div></div></div></div>");
+  });
+}
+
+searchQuery.on('keyup', function(e) {
+  programResults.empty();
+  $('.o-search__results-header').hide();
+  $('#o-search__program-results').hide();
+  $('#o-search__results').hide();
+  var currentInputValue = $(this).val().toLowerCase();
+  var relatedPrograms = [];
+  for (var key in programs) {
+    if (currentInputValue.length > 0 && key.includes(currentInputValue)) {
+      relatedPrograms.push(programs[key]);
+      $('.o-search__results-header').show();
+      $('#o-search__program-results').show();
+      $('#o-search__results').show();
+    }
+  }
+
+  if (relatedPrograms.length > 0) {
+    relatedPrograms.forEach(function(relatedProgram) {
+      programResults.append(
+        "<div class='o-search__program-results__item'>" +
+        "<figure class='o-figure o-figure--square o-search__program-results__item-figure'><img class='o-figure__img' src='" + relatedProgram.figure + "' style='background-image: url(" + relatedProgram.figure +  ")'/></figure>" +
+        "<div class='o-search__program-results__item-description'><a href='" + relatedProgram.href + "' class='gs-title'>" +
+        relatedProgram.title +
+        "</a><div class='gs-snippet'>" +
+        relatedProgram.teaser +
+        "<div class='gs-visibleUrl'>www.scpr.org</div></div></div></div>");
+    });
+  }
+});
+
+</script>

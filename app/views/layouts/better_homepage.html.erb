@@ -7,17 +7,24 @@
     <meta content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" name="viewport">
     <meta property="fb:pages" content="1033729520070511" />
     <!-- Use title if it's in the page YAML frontmatter -->
-    <title>89.3 KPCC - Southern California Public Radio</title>
+    <% add_to_page_title "89.3 KPCC - Southern California Public Radio" %>
+    <title><%= page_title %></title>
     <script src="https://use.typekit.net/cka2qre.js"></script>
     <script>try{Typekit.load({ async: true });}catch(e){}</script>
+
+    <%= render "shared/new/meta_header" %>
+    <%= stylesheet_link_tag 'application' %>
     <%= stylesheet_link_tag 'better_homepage/application' %>
     <%= javascript_include_tag 'better_homepage/application' %>
     <%= render "shared/ads/dfp_script_config", key_override: "/homepage" %>
     <%= render partial: "shared/header/ad_scripts" %>
   </head>
 
-  <body onunload="console.log()">
+  <body>
     <iframe src="https://www.googletagmanager.com/ns.html?id=GTM-585PL29" height="0" width="0" style="display:none;visibility:hidden"></iframe>
+    <div id="global-pushdown"></div>
+    <div id="homepage-pushdown"></div>
+    <%= render partial: "layouts/better_homepage/header" %>
     <div class='l-page'>
       <!-- figure out a better place to put this later -->
       <% if alert = BreakingNewsAlert.latest_visible_alert %>
@@ -25,12 +32,13 @@
           <%= render "breaking_news/breaking_news_alert", alert:alert %>
         <% end %>
       <% end %>
-      <div id="global-pushdown"></div>
-      <div id="homepage-pushdown"></div>
-      <%= render partial: "layouts/better_homepage/header" %>
       <%= yield %>
       <%= render partial: "shared/footer/tracking_scripts" %>
       <%= javascript_include_tag "better_homepage/style-guide", :async => true %>
     </div>
+    <footer class="<%= content_for :footer_class %>">
+      <%= content_for :footer %>
+      <%= cell :footer %>
+    </footer>
   </body>
 </html>

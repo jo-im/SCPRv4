@@ -1,0 +1,61 @@
+.l-events
+  display: block
+  max-width: 1440px
+  margin: 0 auto
+  overflow-y: auto
+  padding-top: $margin-in-pixels
+  .o-event-list__heading, .o-event-list__item, .pagination, .o-archive__tab-inputs, .b-heading--h1
+    margin-left: $margin
+    margin-right: $margin
+    width: ($col * 7) + ($gutter * 6)
+
+  #o-ad--pos-a, #o-ad--pos-b, #o-ad--pos-c, .o-appeal--in-person, .o-recent-events-cluster
+    float: right
+    width: ($col * 3) + ($gutter * 2)
+    margin-right: $gutter + $col + $margin
+    clear: right
+
+  #o-ad--pos-a
+    border-bottom: 1px solid $color-gray-light
+    margin-bottom: $margin-in-pixels * 0.75
+    padding-bottom: $margin-in-pixels * 0.75
+
+  #o-ad--pos-b
+    border-bottom: 1px solid $color-gray-light
+    padding-bottom: $margin-in-pixels
+
+  .pagination
+    border-top: 1px solid $color-gray-light
+    order: 993
+    padding-top: $margin-in-pixels
+    padding-bottom: $margin-in-pixels
+
+  @media (max-width: $media-wide)
+    .o-event-list__heading, .o-event-list__item, .pagination, .o-archive__tab-inputs, .b-heading--h1
+      width: ($col * 7) + ($gutter * 7)
+
+    #o-ad--pos-a, #o-ad--pos-b, #o-ad--pos-c, .o-appeal--in-person, .o-recent-events-cluster
+      margin-right: $margin
+      width: ($col * 3) + ($gutter * 3)
+
+  @media (max-width: $media-desktop)
+    #o-ad--pos-a, #o-ad--pos-b, #o-ad--pos-c, .o-appeal--in-person, .o-recent-events-cluster
+      width: ($col * 4) + ($gutter * 3)
+
+  @media all and (max-width: $media-tablet)
+    display: flex
+    flex-direction: column
+    padding-top: $margin-in-pixels / 2
+    .o-event-list__heading, .o-event-list__item, .pagination, .o-archive__tab-inputs,
+    #o-ad--pos-a, #o-ad--pos-b, #o-ad--pos-c, .o-appeal--in-person, .o-recent-events-cluster
+      width: ($col * 12) + ($gutter * 11)
+      margin-left: $margin
+      margin-right: $margin
+    #o-ad--pos-a
+      padding-bottom: $margin-in-pixels / 2
+      margin-bottom: $margin-in-pixels / 2
+    #o-ad--pos-b
+      margin-top: 0px
+    #o-ad--pos-c, .o-appeal--in-person
+      margin-bottom: $margin-in-pixels
+

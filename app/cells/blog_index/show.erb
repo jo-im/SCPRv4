@@ -1,0 +1,15 @@
+<ul class="o-blog-index" style="order: <%= @options[:order] %>">
+  <% model.each do |blog| %>
+    <li class="o-blog-index_item">
+      <div class="o-blog-index_item__heading"><a class="b-link--callout" href="<%= blog.public_path %>"><%= blog.name %></a></div>
+      <figure class="o-blog-index_item__figure o-figure o-figure--square">
+        <a href="<%= blog.latest_entry.try(:public_path) %>"><img class="o-figure__img" style="background-image: url(<%= asset_path blog %>)" src="<%= asset_path blog %>"></a>
+      </figure>
+      <div class="o-blog-index_item__description">
+        <h6 class="o-blog-index_item__link">READ THE LATEST POST</h6>
+        <h4 class="o-blog-index_item__headline"><%= link_to blog.latest_entry.try(:headline), blog.latest_entry.try(:public_path) %></h4>
+        <div class="o-blog-index_item__teaser"><%= blog.latest_entry.try(:teaser) %></div>
+      </div>
+    </li>
+  <% end %>
+</ul>

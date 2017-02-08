@@ -1,10 +1,19 @@
-<nav class="filters events">
-  <ul class="clearfix">
-    <li class="heading">View:</li>
-    <li><%= link_to(raw("All Events<span class='active-arrow'></span>"), events_path(list: "all"), id: "all", class: %w{sponsored kpcc-in-person}.include?(params[:list]) ? nil : "active") %></li>
-    <li><%= link_to(raw("KPCC In Person<span class='active-arrow'></span>"), events_path(list: "kpcc-in-person"), id: "kpcc-in-person", class: params[:list] == "kpcc-in-person" ? "active" : nil) %></li>
-    <li><%= link_to(raw("Sponsored Events<span class='active-arrow'></span>"), sponsored_events_path, id: "sponsored", class: params[:list] == "sponsored" ? "active" : nil) %></li>
-  </ul>
-</nav>
+<% content_for :main_class, "l-events" %>
+<% add_to_page_title "KPCC In Person" %>
 
-<%= render 'events_list', events: @events, cssClass: "upcoming-events", direction: :asc %>
+<%= cell :ad, slot: "a", id: "o-ad--pos-a", attribution: false, order: 3 %>
+<%= cell :ad, slot: "b", id: "o-ad--pos-b", order: 5 %>
+<%= cell(:popular_articles).call(:side_bar) %>
+<%= cell(:appeal).call(:in_person_newsletter) %>
+<%= cell :ad, slot: "c", id: "o-ad--pos-c", order: 7 %>
+
+<h1 class="b-heading--h1 b-heading--serif">Events</h1>
+
+<section class="o-archive__tab-inputs">
+  <%= link_to(raw("All Events<span class='active-arrow'></span>"), events_path(list: "all"), id: "all", class: %w{sponsored kpcc-in-person}.include?(params[:list]) ? "o-archive__label" : "o-archive__label o-archive__label-active") %>
+  <%= link_to(raw("KPCC In Person<span class='active-arrow'></span>"), events_path(list: "kpcc-in-person"), id: "kpcc-in-person", class: params[:list] == "kpcc-in-person" ? "o-archive__label o-archive__label-active" : "o-archive__label") %>
+  <%= link_to(raw("Sponsored Events<span class='active-arrow'></span>"), sponsored_events_path, id: "sponsored", class: params[:list] == "sponsored" ? "o-archive__label o-archive__label-active" : "o-archive__label") %>
+</section>
+
+<%= cell :event_list, @events %>
+<%= paginate @events %>

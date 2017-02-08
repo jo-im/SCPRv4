@@ -1,0 +1,8 @@
+<figure class="asset-inset inline <%= asset.orientation %>">
+    <b class="pic"><%= image_tag asset.asset.full.url, alt: asset.caption %></b>
+    <figcaption>
+        <span>
+            <%= asset.caption %><mark> <%= asset.asset.owner if asset.asset.owner.present? %></mark>
+        </span>
+    </figcaption>
+</figure>

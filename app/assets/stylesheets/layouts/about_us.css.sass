@@ -1,0 +1,28 @@
+.l-about-us
+  align-items: center
+  display: flex
+  flex-direction: column
+  margin: 0 auto
+  max-width: 1440px
+  padding-top: $margin-in-pixels * 1.5
+  .o-about-us__introduction, .o-about-us__description, .o-about-us__connect, .o-about-us__stations
+    margin-left: $margin + $col + $gutter
+    margin-right: $margin + $col + $gutter
+    width: ($col * 10) + ($gutter * 9)
+  .o-about-us__navigation
+    margin-left: $margin
+    margin-right: $margin
+    width: ($col * 12) + ($gutter * 11)
+
+  @media all and (max-width: $media-tablet)
+    padding-top: $margin-in-pixels / 2
+
+    .o-about-us__introduction, .o-about-us__description, .o-about-us__connect, .o-about-us__stations
+      margin-left: $margin
+      margin-right: $margin
+      width: ($col * 12) + ($gutter * 11)
+
+    .o-about-us__navigation
+      margin-left: 0px
+      margin-right: 0px
+      width: 100%

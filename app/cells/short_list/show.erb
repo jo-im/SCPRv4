@@ -1,0 +1,13 @@
+<% model.abstracts.each_with_index do |abstract, index| %>
+    <% if index == 0 %>
+      <% headline_style = "o-short-list__abstract-headline" %>
+    <% else %>
+      <% headline_style = "o-short-list__abstract-headline--secondary" %>
+    <% end %>
+    <section id="abstract-<%= (index + 1).to_s.rjust(2, '0') %>" class="o-short-list__abstract" style="order: <%= index + 1 %>">
+      <span class="o-short-list__abstract-index"><%= index+1 %> / <%= model.abstracts.length %></span>
+      <h1 class="<%= headline_style %> b-heading b-heading--serif b-heading--light"><a href="<%= abstract.url %>"><%= abstract.headline %></a></h1>
+      <div class="o-short-list__abstract-summary"><%= abstract.summary.html_safe %></div>
+      <a class="o-short-list__abstract-link" href="<%= abstract.url %>">Read full story at <%= abstract.source %> ></a>
+    </section>
+<% end %>

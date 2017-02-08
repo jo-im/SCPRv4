@@ -1,0 +1,12 @@
+<aside class="o-featured-quote" style="order: <%= @options[:order] %>">
+  <blockquote class="o-featured-quote__text">
+    <%= text %>
+  </blockquote>
+  <span class="o-featured-quote__source-name"><%= source_name %></span>
+  <span class="o-featured-quote__source-context"><%= source_context %></span>
+  <% if article %>
+    <a class="o-featured-quote__article-link b-link b-link--callout" href="<%= article.public_path %>" title="Read this quote's source article">
+      <%= article.short_title %> >
+    </a>
+  <% end %>
+</aside>

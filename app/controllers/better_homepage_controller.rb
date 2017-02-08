@@ -15,6 +15,8 @@ class BetterHomepageController < ApplicationController
     only: :index
 
   def index
+    @featured_programs = (KpccProgram.where(is_featured: true) + ExternalProgram.where(is_featured: true)).try(:sort_by!) { |program| program.title }
+    @beat_tags = Tag.where(:tag_type => 'beat').order(:title)
   end
 
   private

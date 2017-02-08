@@ -1,0 +1,63 @@
+<section class="o-highlighted-events o-highlighted-events--in-person" style="order: <%= @options[:order] %>">
+  <h5 class="o-highlighted-events__event-heading b-heading b-heading--h5 b-heading--uppercase u-text-color--gray" style="order: 1">Highlighted Events</h5>
+  <h2 class="o-highlighted-events__headline b-heading b-heading--h1 b-heading--serif"  style="order: 2; width: 100%">
+    <a class="b-link" href="<%= model.try(:first).try(:public_path) %>"><%= model.try(:first).try(:headline) %></a>
+  </h2>
+
+  <div class="o-highlighted-events__left o-highlighted-events__left-feature"  style="order: 3">
+    <div class="o-highlighted-events__description">
+      <div class="o-highlighted-events__date <%= text_color model.try(:first) %>">
+        <% if model.try(:first).try(:starts_at).try(:future?) %>
+          <svg class="b-icon--calendar b-icon b-icon--size-med b-icon--left">
+            <use class="b-icon--line b-icon--color-link" xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/static/images/scpr-sprite.svg#icon_line-calendar"></use>
+          </svg>
+        <% end %>
+        <%= date model.try(:first) %>
+      </div>
+      <%= model.try(:first).try(:teaser) %>
+    </div>
+  </div>
+
+  <div class="o-highlighted-events__center o-highlighted-events__center-feature"  style="order: 4">
+    <figure class="o-highlighted-events__figure o-figure o-figure--widescreen">
+      <a class="b-link" href="<%= model.try(:first).try(:public_path) %>">
+        <img class="o-figure__img" src="<%= asset_path model.try(:first) %>" style="background-image:url(<%= asset_path model.try(:first) %>);">
+      </a>
+    </figure>
+    <% if model.try(:first).try(:asset).try(:owner) %>
+      <figcaption class="o-figure__caption o-figure__attribution">
+        <%= model.try(:first).try(:asset).try(:owner) %>
+      </figcaption>
+    <% end %>
+  </div>
+
+  <% (model[1..2] || []).each_with_index do |event, index| %>
+    <div class="o-highlighted-events__left o-highlighted-events__sub-event"  style="order: <%= index + 5 %>">
+      <figure class="o-highlighted-events__figure o-figure o-figure--widescreen">
+        <a class="b-link" href="<%= event.try(:public_path) %>">
+          <img class="o-figure__img" src="<%= asset_path event %>" style="background-image:url(<%= asset_path event %>);">
+        </a>
+      </figure>
+    </div>
+
+    <div class="o-highlighted-events__center o-highlighted-events__sub-event"  style="order: <%= index + 5 %>">
+      <h5 class="o-highlighted-events__sub-headline b-heading--h4 b-heading--serif">
+        <a href="<%= event.try(:public_path) %>"><%= event.try(:headline) %></a>
+      </h5>
+      <p class="o-highlighted-events__date <%= text_color event %>">
+        <% if event.try(:starts_at).try(:future?) %>
+          <svg class="b-icon--calendar b-icon b-icon--size-med b-icon--left">
+            <use class="b-icon--line b-icon--color-link" xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/static/images/scpr-sprite.svg#icon_line-calendar"></use>
+          </svg>
+        <% end %>
+        <%= date event %>
+      </p>
+      <div class="o-highlighted-events__description">
+        <%= event.try(:teaser) %>
+        <br>
+      </div>
+    </div>
+  <% end %>
+</section>
+
+

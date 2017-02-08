@@ -1,0 +1,72 @@
+.l-archive
+  display: block
+  max-width: 1440px
+  margin: 0 auto
+  overflow-y: auto
+  padding-top: $margin-in-pixels
+  .o-archive-tab__item, .o-archive__item, .o-archive__tab-inputs, .o-archive__page-heading, .o-archive--small
+    margin-left: $margin
+    margin-right: $margin
+    width: ($col * 7) + ($gutter * 6)
+
+  #o-ad--pos-a, #o-ad--pos-b, #o-ad--pos-c, .o-appeal--breaking-news, .o-popular-stories-side-bar
+    float: right
+    width: ($col * 3) + ($gutter * 2)
+    margin-right: $gutter + $col + $margin
+    clear: right
+
+  #o-ad--pos-a
+    border-bottom: 1px solid $color-gray-light
+    margin-bottom: $margin-in-pixels * 0.75
+    padding-bottom: $margin-in-pixels * 0.75
+
+  #o-ad--pos-b, .o-popular-stories-side-bar
+    border-bottom: 1px solid $color-gray-light
+    padding-bottom: $margin-in-pixels
+
+  .o-popular-stories-side-bar
+    margin-bottom: $margin-in-pixels
+    padding-bottom: $margin-in-pixels / 2
+    padding-top: $margin-in-pixels / 2
+
+  .o-archive--small
+    border-bottom: 0px
+    margin-bottom: 30px
+    margin-top: 30px
+    padding-bottom: 30px
+    padding-top: 30px
+
+  @media (max-width: $media-wide)
+    .o-archive-tab__item, .o-archive__item, .o-archive__tab-inputs, .o-archive__page-heading, .o-archive--small
+      width: ($col * 7) + ($gutter * 7)
+
+    #o-ad--pos-a, #o-ad--pos-b, #o-ad--pos-c, .o-appeal--breaking-news, .o-popular-stories-side-bar
+      margin-right: $margin
+      width: ($col * 3) + ($gutter * 3)
+
+  @media (max-width: $media-desktop)
+    #o-ad--pos-a, #o-ad--pos-b, #o-ad--pos-c, .o-appeal--breaking-news, .o-popular-stories-side-bar
+      width: ($col * 4) + ($gutter * 3)
+
+  @media (max-width: $media-tablet)
+    display: flex
+    flex-direction: column
+    padding-top: $margin-in-pixels / 2
+    .o-archive-tab__item, .o-archive__item, .o-archive__tab-inputs, .o-archive__page-heading, .o-archive--small,
+    #o-ad--pos-a, #o-ad--pos-b, #o-ad--pos-c, .o-appeal--breaking-news, .o-popular-stories-side-bar
+      width: ($col * 12) + ($gutter * 11)
+      margin-left: $margin
+      margin-right: $margin
+    #o-ad--pos-a
+      padding-bottom: $margin-in-pixels / 2
+      margin-bottom: $margin-in-pixels / 2
+    #o-ad--pos-b
+      margin-top: 0px
+    #o-ad--pos-c
+      margin-bottom: $margin-in-pixels
+    .o-archive--small
+      margin-top: 0px
+
+  @media (max-width: $media-mobile)
+    .o-archive--small
+      padding-top: 0px

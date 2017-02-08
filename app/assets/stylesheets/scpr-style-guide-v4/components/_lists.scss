@@ -1,0 +1,91 @@
+
+// Lists: a set of links with a common theme, grouped together.
+// Useful for related links, episode rundowns, trending topics, etc.
+//
+// .c-list--vert                - Styles list for block display.
+// .c-list--horiz               - Styles list for inline display.
+// .c-list--horiz-compact       - Inline list with tigher spacing between items.
+// .c-list--bullet              - Adds bullets to list items.
+// .c-list--bullet-light        - Gives bullets light-grey color.
+// .c-list--bullet-offset       - Makes bullets flow into gutter on large screens.
+//
+// Styleguide 0.1.0
+
+.c-list {
+
+  &--vert {
+    > * {
+      display: block;
+      margin-bottom: ($base-line-height / 2);
+    }
+  }
+
+  &--horiz {
+    > * {
+      display: inline-block;
+      margin-right: $base-line-height;
+
+      @include media-max($media-tablet) {
+        display: block;
+        margin-bottom: 1em;
+        margin-right: 0;
+      }
+
+      &:last-child {
+        margin-right: 0;
+      }
+    }
+  }
+
+  &--horiz-compact {
+    > * {
+      margin-right: ($base-line-height / 2);
+    }
+  }
+
+  &--bullet {
+    padding-left: $font-size-default;
+
+    > * {
+      position: relative;
+
+      &::before {
+        background-color: #D4D4D4;
+        border-radius: 50%;
+        content: '';
+        display: block;
+        height: .375rem;
+        left: ($font-size-default * -1);
+        position: absolute;
+        top: 0.5em;
+        width: .375rem;
+        @media (max-width: $media-tablet) {
+          top: 0.625em;
+        }
+      }
+    }
+  }
+
+  &--bullet-light {
+    > * {
+      &::before {
+        background-color: $color-gray-light;
+      }
+    }
+  }
+
+  &--bullet-lightest {
+    > * {
+      &::before {
+        background-color: $color-gray-secondary-light;
+      }
+    }
+  }
+
+  &--bullet-offset {
+    @include media-min($media-tablet) {
+      padding: 0;
+    }
+  }
+
+}

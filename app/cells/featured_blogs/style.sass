@@ -1,0 +1,122 @@
+.o-featured-blogs
+  margin-left: $margin
+  margin-right: $margin
+  margin-bottom: $margin-in-pixels
+  clear: both
+  background: $color-gray-lightest
+  border-bottom: 1px solid $color-gray-light
+  padding-left: $margin
+  padding-right: $margin
+  padding-top: $margin-in-pixels
+  width: initial
+  display: flex
+  flex-wrap: wrap
+  justify-content: space-between
+  @media (max-width: $media-tablet)
+    margin-left: 0px
+    margin-right: 0px
+
+.o-featured-blogs__heading
+  color: $color-primary
+  font-family: $font-serif-titling
+  font-weight: 800
+  font-size: 31px
+  font-style: italic
+  width: 75%
+  line-height: 36px
+  margin-bottom: $margin-in-pixels / 2
+  @media (max-width: $media-tablet)
+    font-size: 26px
+    line-height: 30px
+    margin-bottom: 0px
+
+.o-featured-blogs__all-blogs-link
+  align-content: center
+  align-items: flex-end
+  color: $color-link
+  display: flex
+  flex-direction: column
+  height: 45px
+  justify-content: flex-end
+  text-align: right
+  width: 25%
+  @media (max-width: $media-tablet)
+    margin-bottom: 30px
+    width: 100%
+
+.o-featured-blogs__blog
+  // flex: 1
+  margin-bottom: $margin-in-pixels
+  width: 25% - $gutter
+  @media (max-width: $media-tablet)
+    width: 50% - $margin
+  @media (max-width: $media-mobile)
+    width: 100%
+
+.o-featured-blogs__blog-figure
+  margin-bottom: 20px
+
+.o-featured-blogs__blog-figure .o-figure__img
+  padding-top: 40.1%
+
+.o-featured-blogs__blog-description
+  display: block
+  height: 8em
+  overflow: hidden
+  text-overflow: ellipsis
+  @media (max-width: $media-tablet)
+    height: initial
+    margin-bottom: 15px
+
+.o-featured-blogs__blog-date
+  font-size: 15px
+  line-height: 30px
+  @media (max-width: $media-tablet)
+    font-size: 16px
+    line-height: 24px
+
+.o-featured-blogs__blog-title
+  color: $color-link
+  display: -webkit-box
+  font-size: 26px
+  -webkit-line-clamp: 3
+  -webkit-box-orient: vertical
+  overflow: hidden
+  text-overflow: ellipsis
+  line-height: 30px
+  @media (max-width: $media-tablet)
+    font-size: 20px
+
+.o-featured-blogs__blog-host
+  color: $color-gray
+
+.o-featured-blogs__blog-airtime
+  color: $color-gray
+  font-size: 14px
+  text-transform: uppercase
+  font-weight: 600
+  margin-top: 10px
+  margin-bottom: 10px
+
+.o-featured-blogs__blog-footer
+  border-top: 1px solid $color-gray-light
+  display: flex
+  flex-direction: column
+  font-weight: 600
+  font-size: 15px
+  line-height: 18px
+  padding-top: 20px
+  @media (max-width: $media-tablet)
+    font-size: 16px
+    line-height: 24px
+
+.o-featured-blogs__blog-footer-date
+  color: $color-primary
+  text-transform: uppercase
+
+.o-featured-blogs__blog-footer-date time
+  display: block
+  font-weight: 300
+
+.o-featured-blogs__blog-headline
+  font-weight: normal

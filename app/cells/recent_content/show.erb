@@ -1,0 +1,4 @@
+<aside class="o-content-cluster <%= @options[:class] %>" <%= order %> >
+  <h6 class="b-heading b-heading--h6 b-heading--uppercase u-text-color--gray b-heading--medium">Recently on <%= link_to title, public_path, class: "u-text-color--sec" %></h6>
+  <%= cell(:content_cluster, recent_content, category: 'Article', label: 'More Sidebar Show Segment') %>
+</aside>

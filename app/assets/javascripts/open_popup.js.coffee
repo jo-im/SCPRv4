@@ -3,8 +3,8 @@ window.open_popup = (url) ->
     window.open(
         url,
         'pop_up',
-        'height=850,'+
-        'width=556,'+
+        'height=572,'+
+        'width=558,'+
         'resizable,'+
         'left=10,'+
         'top=10,'+

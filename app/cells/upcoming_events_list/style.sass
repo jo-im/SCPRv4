@@ -1,0 +1,208 @@
+// by default, a events list is vertical
+// with descriptions to the right of
+// the figures
+
+.o-events-list
+  display: flex
+  flex-direction: column
+
+.o-events-list--nobg
+  background: none
+
+.o-events-list__item
+  width: 100%
+  clear: both
+  display: flex
+
+.o-events-list__item-figure
+  float: left
+  margin-right: $gutter
+  max-width: 300px
+
+.o-events-list__item-description
+  float: left
+  max-width: 510px
+
+.o-events-list__item-pipe
+  display: inline-block
+  color: $color-gray-light
+  font-size: 16px
+  padding-left: 10px
+  padding-right: 10px
+
+.o-events-list__item-byline
+  color: $color-link
+  font-weight: 600
+
+.o-events-list__item-timestamp
+  color: $color-gray
+  font-size: 18px
+  font-weight: 500
+  line-height: 18px
+  margin-bottom: 15px
+  text-transform: uppercase
+  @media (max-width: $media-tablet)
+    font-size: 18px
+    line-height: 24px
+
+  time
+    display: inline-block
+
+.o-events-list__item-heading
+  font-family: $font-serif-titling
+  font-size: 22px !important
+  line-height: 30px
+  margin-bottom: 20px
+  @media (max-width: $media-tablet)
+    font-size: 20px
+    line-height: 30px
+
+.o-events-list__item-teaser
+  margin-top: 15px
+
+.o-events-list__heading
+  display: block
+  flex: 1 0 100%
+  line-height: 18px
+  @media (max-width: $media-tablet)
+    font-size: 23px
+    line-height: 30px
+
+.o-events-list--horiz
+  flex-direction: row
+  flex-wrap: wrap
+  .o-events-list__item
+    flex-direction: column
+    float: left
+    flex: 1 0 31%
+    &:not(:last-child)
+      margin-right: $gutter
+  .o-events-list__item-figure
+    max-width: none
+    margin-bottom: 25px
+  .o-events-list__item-description
+    max-width: none
+  .o-events-list__item-heading
+    font-weight: 800
+  .o-events-list__item-pipe
+    display: inline-block
+
+
+.o-events-list--quad
+  flex-direction: row
+  flex-wrap: wrap
+  justify-content: space-between
+  .o-events-list__item
+    float: left
+    flex-basis: 50% - $gutter
+    margin-bottom: 60px
+    width: percentage(412/870)
+  .o-events-list__item-figure
+    max-width: 184px
+    margin-bottom: 0px
+    margin-right: percentage(42/412)
+    width: percentage(184/412)
+    @media (max-width: $media-mobile)
+      display: none
+  .o-events-list__item-description
+    float: right
+    font-size: 16px
+    max-width: none
+    width: percentage(184/412)
+    @media (max-width: $media-mobile)
+      width: initial
+  .o-events-list__item-heading
+    font-size: 25px
+  .o-events-list__item-pipe
+    // the pipe, in this case, serves a dual
+    // purpose of forcing the timestamp
+    // to the next line
+    display: block
+    height: 0px
+    opacity: 0
+
+
+.o-events-list--two-col
+  flex-direction: row
+  flex-wrap: wrap
+  justify-content: space-between
+  .o-events-list__item
+    float: left
+    flex-basis: 50% - $gutter
+    margin-bottom: 60px
+    overflow: hidden
+    &:nth-child(odd)
+      margin-right: $gutter
+  .o-events-list__item-figure
+    max-width: none
+    margin-right: $gutter-in-pixels
+    width: 180px
+  .o-events-list__item-byline
+    display: none
+  .o-events-list__item-description
+    display: flex
+    flex-direction: column
+    float: right
+    font-size: 16px
+    max-width: none
+    width: 52% - $gutter
+  .o-events-list__item-teaser
+    display: none
+  .o-events-list__item-heading
+    font-size: 21px
+  .o-events-list__item-pipe
+    // the pipe, in this case, serves a dual
+    // purpose of forcing the timestamp
+    // to the next line
+    display: block
+    height: 0px
+    opacity: 0
+  .o-events-list__item-timestamp
+    order: -1
+    margin-bottom: 5px
+    font-weight: 500
+    text-transform: uppercase
+
+.o-upcoming-events-list__label
+  color: $color-gray
+  cursor: pointer
+  display: inline-block
+  font-size: 15px
+  line-height: 18px
+  padding: 10px 0
+  text-align: center
+  width: 18%
+  @media all and (max-width: $media-tablet)
+    width: 25%
+  @media all and (max-width: $media-mobile)
+    width: 32%
+
+.o-upcoming-events-list__input
+  display: none
+
+#o-upcoming-events-list__input-upcoming:checked ~ .o-upcoming-events-list__tab-upcoming,
+#o-upcoming-events-list__input-list:checked ~ .o-upcoming-events-list__tab-list,
+#o-upcoming-events-list__input-sponsored:checked ~ .o-upcoming-events-list__tab-sponsored,
+  display: flex
+
+.o-upcoming-events-list__input:checked + label
+  border-bottom: 4px solid $color-primary
+
+.o-upcoming-events-list__tab
+  border-top: 1px solid $color-gray-secondary-light
+  padding-top: 30px
+  display: none
+  @media (max-width: $media-tablet)
+    .o-events-list__item
+      margin-bottom: $margin-in-pixels / 2
+      width: initial
+
+  @media (max-width: $media-mobile)
+    flex-direction: column
+    padding-bottom: 30px
+
+.o-upcoming-events-list__pagination
+  align-items: center
+  display: none
+  justify-content: center
+  margin-bottom: $margin-in-pixels

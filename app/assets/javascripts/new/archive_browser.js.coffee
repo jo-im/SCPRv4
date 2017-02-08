@@ -101,7 +101,25 @@ class scpr.ArchiveBrowser
       @trigger "click", evt, @model
 
     render: ->
-      @$el.html $("<span/>").text @model.get(@nameAttr)
+      monthDictionary =
+        January: "JAN"
+        February: "FEB"
+        March: "MAR"
+        April: "APR"
+        May: "MAY"
+        June: "JUNE"
+        July: "JULY"
+        August: "AUG"
+        September: "SEPT"
+        October: "OCT"
+        November: "NOV"
+        December: "DEC"
+
+      timeFrame = @model.get(@nameAttr)
+
+      option = if typeof timeFrame is 'number' then timeFrame else monthDictionary[@model.get(@nameAttr)]
+
+      @$el.html $("<span/>").text option
       @$el.addClass "selected" if @selected
       @
 
@@ -184,7 +202,6 @@ class scpr.ArchiveBrowser
 
     load: (year,month) ->
       $.getJSON "#{@url}/#{year}/#{month}", (data) =>
-        console.log "Reseting episodes with ", data.episodes
         @reset data.episodes
 
       true

@@ -24,6 +24,7 @@ Outpost::Config.configure do |config|
     "FeaturedCommentBucket",
     "Flatpage",
     "Homepage",
+    "LandingPage",
     "KpccProgram",
     "MissedItBucket",
     "NewsStory",

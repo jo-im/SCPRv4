@@ -1,0 +1,15 @@
+<% if bios.try(:any?) %>
+  <section class="o-meet-the-team" style="order: <%= @options[:order] %>">
+    <h4 class="o-meet-the-team__heading b-heading b-heading--h4 b-heading--uppercase u-text-color--gray b-heading--medium"><%= team %></h4>
+    <% bios.each do |bio| %>
+    <figure class="o-meet-the-team__figure o-figure o-figure--portrait">
+      <%= link_to bio.public_path do %>
+      <img class="o-figure__img" src="<%= bio.headshot.eight.url %>" style="background-image: url(<%= bio.headshot.eight.url %>);">
+      <figcaption class="o-meet-the-team__caption o-figure__caption">
+        <%= bio.name %>
+      </figcaption>
+      <% end %>
+    </figure>
+    <% end %>
+  </section>
+<% end %>

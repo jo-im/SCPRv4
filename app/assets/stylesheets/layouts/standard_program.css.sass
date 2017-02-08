@@ -1,0 +1,154 @@
+.l-standard-program
+  display: block
+  max-width: 1440px
+  margin: 0 auto
+  overflow-x: hidden
+  padding-top: $margin-in-pixels
+  width: 100%
+
+  .o-article
+    padding-top: 0px
+
+  .o-social-tools--horiz
+    margin-bottom: 30px
+
+  .o-featured-episode__center, .pagination, #o-archive-picker__standard-program-episode,
+  #o-standard-program-episode__episode__segment-list
+    margin-left: $margin
+    margin-right: $margin
+    width: ($col * 7) + ($gutter * 6)
+
+  .pagination
+    margin-bottom: $margin-in-pixels
+    order: 3
+
+  .o-archive--small
+    margin-bottom: 0px
+
+  .o-featured-story ~ .b-rule
+    display: block
+    margin-left: $margin
+    margin-right: $margin
+
+  .o-story-list
+    float: left
+
+  .o-standard-program__episode-list
+    .o-featured-episode__segment-description
+      flex-grow: 1
+
+  #o-archive-picker__standard-program-episode, #o-standard-program-episode__episode__segment-list
+    border-bottom: 0px
+    border-top: 1px solid $color-gray-light
+    clear: none
+    float: none
+    margin-top: 0px
+    padding-top: $margin-in-pixels / 2
+
+  #o-ad--pos-a, #o-ad--pos-b
+    padding-bottom: $margin-in-pixels * 0.75
+    border-bottom: 1px solid $color-gray-light
+
+  #o-ad--pos-b
+    padding-top: $margin-in-pixels * 0.75
+
+  .o-popular-stories-side-bar
+    padding-top: $margin-in-pixels
+
+  .o-popular-stories-side-bar, .o-archive, #o-ad--pos-a, #o-ad--pos-b, .o-appeal--podcast
+    clear: right
+    float: right
+    margin-right: $gutter + $col + $margin
+    width: ($col * 3) + ($gutter * 2)
+
+  .o-suggested-story
+    clear: both
+    margin-bottom: $margin-in-pixels
+
+  .o-meet-the-team
+    margin-top: $margin
+    margin-left: $margin
+    margin-bottom: $margin-in-pixels
+    width: ($col * 8) + ($gutter * 8)
+
+  .o-popular-stories
+    margin-left: $margin
+    margin-right: $margin
+    margin-bottom: $margin
+
+  #o-ad--pos-c
+    float: right
+    margin-bottom: $margin-in-pixels
+    margin-right: $gutter + $col + $margin
+    width: ($col * 3) + ($gutter * 2)
+    clear: right
+
+  .o-archive
+    border-bottom: 1px solid $color-gray-light
+    margin-top: $margin
+    padding-bottom: $margin-in-pixels
+
+  .o-appeal--podcast
+    .o-appeal__heading
+      text-align: center
+      margin-bottom: 10px
+    .o-appeal__caption
+      margin-bottom: 10px
+
+  .o-story-list__item-feature
+    display: none
+
+  @media all and (max-width: $media-tablet)
+    display: flex
+    flex-direction: column
+    padding-top: $margin-in-pixels / 2
+
+    .o-featured-episode__center, .pagination,
+    #o-ad--pos-a, #o-ad--pos-b, #o-ad--pos-c, .o-appeal--breaking-news, .o-popular-stories-side-bar,
+    #o-archive-picker__standard-program-episode, #o-standard-program-episode__episode__segment-list
+      width: ($col * 12) + ($gutter * 11)
+      margin-left: $margin
+      margin-right: $margin
+    #o-ad--pos-a
+      padding-bottom: $margin-in-pixels / 2
+      margin-bottom: $margin-in-pixels / 2
+    #o-ad--pos-b
+      margin-top: 0px
+    #o-ad--pos-c
+      margin-bottom: $margin-in-pixels
+
+    .o-prologue--program
+      .o-prologue__logo
+        width: 30%
+        margin: $margin
+      .o-prologue__pipe
+        display: none
+      .o-prologue__description
+        font-size: 0.5em
+    .o-featured-story
+      margin-left: $margin
+      margin-right: $margin
+      .o-featured-story__center, .o-featured-story__left
+        width: 100%
+    .o-popular-stories-side-bar
+      margin-bottom: $margin-in-pixels
+      margin-left: $margin
+      margin-right: $margin
+      width: auto
+    .o-archive
+      margin-bottom: $margin-in-pixels
+      margin-left: $margin
+      margin-right: $margin
+      margin-top: 0px
+      width: auto
+    .o-appeal
+      width: auto
+      margin-left: $margin
+      margin-right: $margin
+    .o-meet-the-team
+      width: auto
+      margin-left: $margin
+      margin-right: $margin
+    .o-suggested-story
+      .o-suggested-story__figure, .o-suggested-story__heading, .o-suggested-story__headline, .o-suggested-story__teaser, .o-suggested-story__datetime
+        width: 100%

@@ -1,0 +1,7 @@
+<% if model.try(:short_title) %>
+<aside class="o-featured-interactive" style="order: <%= @options[:order] %>">
+  <h6 class="o-featured-interactive__heading b-heading b-heading--h6 b-heading--uppercase u-text-color--gray b-heading--bold">Featured Interactive</h6>
+  <h2 class="o-featured-interactive__headline b-heading b-heading--h2 b-heading--serif"><%= link_to model.try(:short_title), model.try(:public_path), class: 'b-link' %></h2>
+  <span class="o-featured-interactive__byline"><%= model.try(:byline) %></span>
+</aside>
+<% end %>

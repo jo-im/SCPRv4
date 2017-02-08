@@ -1,0 +1,35 @@
+
+// Rules: Horizontal dividers between blocks of content.
+//
+// .b-rule--vertical      - A vertical rule.
+// .b-rule--dark          - A dark gray horizontal rule.
+// .b-rule--darker        - A near-black horizontal rule. It's like, how much more black could this be? and the answer is none. None more black.
+// .b-rule--primary       - An orange horizontal rule.
+//
+// Styleguide 0.2.0
+
+.b-rule {
+  background: $color-gray-light;
+  border: 0;
+  display: block;
+  height: 1px;
+
+  &--vertical {
+    display: inline-block;
+    height: 2rem;
+    vertical-align: middle;
+    width: 1px;
+  }
+
+  &--dark {
+    background: $color-gray-dark;
+  }
+
+  &--darker {
+    background: $color-gray-darkest;
+  }
+
+  &--primary {
+    background: $color-primary;
+  }
+}

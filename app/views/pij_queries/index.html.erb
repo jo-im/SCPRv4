@@ -1,26 +1,29 @@
-<div class="queries">
-  <div class="section-hero">
-    <div class="center-contents">
-      <h2>Public Insight Network&reg;: Share your story</h2>
-      <br>
-      <p>Become a source for KPCC and share what you know about our world to help reporters understand what's really going on - and why it matters.
-      <a href="/network/faq/">Learn More</a> or <a href="/network/questions/becomeasource/">Sign Up</a>.</p>
-    </div>
-  </div>
+<% content_for :main_class, "l-pin" %>
+<% add_to_page_title "Public Insight Network" %>
 
-  <% if @featured.present? %>
-    <%= render "pij_queries/featured", queries: @featured %>
-  <% end %>
+<%= cell :social_tools, nil, display: 'vert', title: 'Public Insight Network: Share your story', order: 2 %>
+<%= cell :ad, slot: "a", id: "o-ad--pos-a", attribution: false, order: -1 %>
+<%= cell :ad, slot: "b", id: "o-ad--pos-b", order: 265 %>
+<%= cell(:recent_content, @past_events, order: 1000).call(:events) %>
+<%= cell(:appeal, @featured.first, order: 1000, class: 'o-appeal--in-person_side-bar').call(:in_person_newsletter) %>
+<%= cell :ad, slot: "c", id: "o-ad--pos-c", order: 999 %>
 
-  <h2 class="heading-block dark">Questions we're asking now:</h2>
-  <div class="news-queries">
-    <%= render 'pij_queries/list', cssClass: "collapse", queries: @news %>
-  </div>
+<h1 class="o-pin__heading" style="order: 1">Public Insight Network&reg;:</br> Share your story</h1>
+<p class="o-pin__heading_description" style="order: 1">
+  Become a source for KPCC and share what you know about our world to help reporters understand what's really going on - and why it matters.
+  <a href="/network/faq/" style="order: 1">Learn More</a> or <a href="/network/questions/becomeasource/">Sign Up</a>.
+</p>
 
-  <hr />
+<%= cell :social_tools, nil, display: 'horiz', title: 'Public Insight Network: Share your story', order: 2 %>
+<%= cell(:pij_queries, @featured, order: 3).call(:featured) %>
+<%= cell :pij_queries, @news, header: "Questions we're asking now:", more: "View more recent questions", class: "current", order: 4 %>
+<%= cell :pij_queries, @evergreen, header: "Questions we're always asking:", more: "More questions in this section", class: "always", order: @news.size + 5 %>
 
-  <h2 class="heading-block dark">Questions we're always asking:</h2>
-  <div class="evergreen">
-    <%= render 'pij_queries/list', queries: @evergreen %>
-  </div>
-</div> <!-- queries -->
+<script>
+$('.o-pin__more-toggle').click(function() {
+  var element = $(this);
+  var target = element.data('target');
+  $('.o-pin__question--' + target).toggleClass('o-pin__question--collapsed');
+  element.children('.o-pin__more-toggle_caret').toggleClass('o-pin__more-toggle_caret--up');
+});
+</script>

@@ -1,0 +1,91 @@
+.o-pin__heading
+  font-family: $font-serif-titling
+  font-size: 54px
+  line-height: 60px
+  margin-bottom: $margin-in-pixels / 2
+  @media (max-width: $media-tablet)
+    font-size: 36px
+    line-height: 36px
+
+.o-pin__featured
+  display: flex
+  justify-content: space-between
+  margin-bottom: $margin-in-pixels / 2
+  .o-figure
+    margin-bottom: 0px
+    width: 25%
+  .o-pin__featured_description
+    width: 70%
+
+.o-pin__description_header
+  font-family: $font-serif-titling
+  font-size: 26px
+  line-height: 36px
+  margin-top: -$gutter / 2
+  margin-bottom: $gutter / 2
+  @media (max-width: $media-tablet)
+    font-size: 23px
+    line-height: 30px
+
+.o-pin__description_header:hover
+  text-decoration: underline
+
+.o-pin__description_body
+  font-size: 18px
+  line-height: 30px
+
+.o-pin__section_header
+  color: $color-link
+  font-family: $font-serif-titling
+  font-size: 31px
+  font-weight: bold
+  line-height: 42px
+  margin-bottom: $margin-in-pixels / 2
+  @media (max-width: $media-tablet)
+    font-size: 26px
+    line-height: 30px
+
+.o-pin__heading_description
+  font-size: 22px
+  margin-bottom: $margin-in-pixels * 1.5
+  line-height: 30px
+  @media (max-width: $media-tablet)
+    font-size: 20px
+    line-height: 30px
+    margin-bottom: $margin-in-pixels / 2
+
+  a
+    color: $color-link
+
+.o-pin__question
+  margin-bottom: $margin-in-pixels
+
+.o-pin__question--collapsed
+  display: none
+
+.o-pin__more-toggle
+  border-bottom: 1px solid $color-gray-light
+  color: $color-gray-dark
+  cursor: pointer
+  font-size: 0.85em
+  font-weight: 300
+  margin-bottom: $margin-in-pixels
+  padding-bottom: 1em
+  text-transform: uppercase
+  width: 100%
+
+.o-pin__more-toggle_caret
+  margin-right: $margin / 2
+  display: inline-block
+  width: 0
+  height: 0
+  vertical-align: middle
+  border-top: 6px solid $color-gray
+  border-left: 6px solid transparent
+  border-right: 6px solid transparent
+
+.o-pin__more-toggle_caret--up
+  border-top: 0
+  border-left: 6px solid transparent
+  border-right: 6px solid transparent
+  border-bottom: 6px solid $color-gray

@@ -1,0 +1,24 @@
+<aside class="o-upcoming-events" style="order: <%= @options[:order] %>">
+  <% if category_name %>
+    <h6 class="o-upcoming-events__heading b-heading b-heading--h6 b-heading--uppercase u-text-color--gray b-heading--bold"><%= time_adjective %> <%= category_name %> Events</h6>
+  <% end %>
+  <ul class="o-upcoming-events__list c-list c-list--vert">
+    <% events.each do |event| %>
+      <li class="o-upcoming-events__event">
+        <figure class="o-upcoming-events__figure o-figure o-figure--four-by-three">
+          <img class="o-figure__img" src="<%= asset_path event %>" style="background-image:url(<%= asset_path event %>);">
+        </figure>
+        <div class="o-upcoming-events__description">
+          <h6 class="o-upcoming-events__event-headline"><%= event.headline %></h6>
+          <a class="" href="<%= event.public_path %>">
+            <svg class="b-icon b-icon--size-med b-icon--left">
+              <use class="b-icon--line b-icon--color-link" xlink:href="/static/images/scpr-sprite.svg#icon_line-article"/>
+            </svg>
+            <span class="b-link b-link--callout">RSVP to this event</span>
+          </a>
+        </div>
+      </li>
+    <% end %>
+  </ul>
+</aside>
+

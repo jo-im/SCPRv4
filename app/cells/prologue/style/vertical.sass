@@ -1,0 +1,40 @@
+.o-prologue--vertical
+  align-items: flex-start
+  background: $color-white
+  border-bottom: 1px solid #27A9D5
+  flex-direction: column
+  height: $margin-in-pixels * 3.5
+  justify-content: center
+  @media all and (max-width: $media-tablet)
+    height: $margin-in-pixels * 2.5
+    padding-bottom: 0
+
+  .o-prologue__pipe
+    display: none
+
+  .o-prologue__title
+    color: $color-secondary
+    font-family: $font-serif-titling
+    font-size: 54px
+    font-weight: 800
+    line-height: 60px
+    padding-left: $margin
+    white-space: normal
+    @media (max-width: $media-tablet)
+      font-size: 36px
+      line-height: 36px
+    @media (max-width: $media-mobile)
+      font-size: 32px
+      line-height: 36px
+
+  .o-prologue__description
+    font-size: 26px
+    line-height: 30px
+    padding-left: $margin
+    padding-right: $margin
+    @media (max-width: $media-tablet)
+      font-size: 20px
+      line-height: 30px
+    @media (max-width: $media-mobile)
+      font-size: 18px
+      line-height: 24px

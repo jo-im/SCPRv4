@@ -1,0 +1,39 @@
+.o-epilogue
+  align-items: flex-start
+  border-top: 1px solid $color-secondary
+  color: $color-gray
+  display: inline-block
+  display: flex
+  padding: $margin-in-pixels
+  @media (max-width: $media-tablet)
+    display: block
+  @media (max-width: $media-mobile)
+    padding-left: $margin-in-pixels / 2
+    padding-right: $margin-in-pixels / 2
+    .o-epilogue__graphic
+      margin-bottom: $margin-in-pixels / 2
+
+.o-epilogue__text
+  display: inline-block
+
+.o-epilogue__heading
+  font-size: 31px
+  font-weight: 300
+  line-height: 36px
+  @media (max-width: $media-tablet)
+    font-size: 26px
+    line-height: 30px
+
+.o-epilogue-callout
+  display: inline-block
+  font-size: 26px
+  line-height: 36px
+  margin-top: $gutter-in-pixels
+  @media (max-width: $media-tablet)
+    font-size: 23px
+    line-height: 30px
+
+.o-epilogue__graphic
+  margin-right: 25px
+
+

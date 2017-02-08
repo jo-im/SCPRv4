@@ -1,0 +1,36 @@
+<section class="o-featured-programs <%= @options[:class] %>"  style="order: <%= @options[:order] %>">
+  <h2 class="o-featured-programs__heading">Enjoy <%= program_title %>? Try KPCC’s other programs.</h2>
+  <a class="o-featured-programs__all-programs-link" href="/programs"><span class="b-link--callout">See all of our programs</span></a>
+  <% featured_programs.each do |program| %>
+    <div class="o-featured-programs__program">
+      <% latest_episode = program.episodes.published.first %>
+
+      <a href="<%= program.public_path %>">
+        <figure class="o-featured-programs__program-figure o-figure o-figure--widescreen">
+          <img class="o-figure__img" src="<%= asset_path("programs/#{program.slug}.jpg") %>" style="background-image: url(<%= asset_path("programs/#{program.slug}.jpg") %>);">
+        </figure>
+      </a>
+
+      <div class="o-featured-programs__program-description">
+        <h1 class="o-featured-programs__program-title"><a href="<%= program.public_path %>"><%= program.title %></a></h1>
+        <h2 class="o-featured-programs__program-host"><a href="<%= program.public_path %>">With <%= program.host %></a></h2>
+        <h3 class="o-featured-programs__program-airtime"><%= program.airtime %></h3>
+        <p class="o-featured-programs__program-teaser"><%= program.teaser.html_safe %></p>
+      </div>
+
+      <% if latest_episode.present? %>
+        <div class="o-featured-programs__program-footer">
+          <div class="o-featured-programs__program-footer-date">
+            Latest <time datetime="<%= format_date(latest_episode.air_date, with: '%F') %>"><%= latest_episode.air_date.strftime("%b.%-d") %></time>
+          </div>
+          <a href="<%= latest_episode.public_path %>">
+            <div class="o-featured-programs__program-headline">
+              <%= latest_episode.headline %>
+            </div>
+          </a>
+        </div>
+      <% end %>
+    </div>
+  <% end %>
+
+</section>

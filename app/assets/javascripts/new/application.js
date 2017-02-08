@@ -12,3 +12,4 @@
 //= require jquery.scrolldepth
 //= require page_mapping
 //= require timeago/jquery.timeago
+//= require svgxuse/svgxuse.min

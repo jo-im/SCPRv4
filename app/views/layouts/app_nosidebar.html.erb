@@ -1,15 +1,39 @@
-<%= render 'shared/header/document_header' %>
+<!doctype html>
+<html>
+  <head>
+    <meta content="IE=edge" http-equiv="X-UA-Compatible">
+    <meta charset="utf-8">
+    <meta content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" name="viewport">
+    <!-- Use title if it's in the page YAML frontmatter -->
+    <title>89.3 KPCC - Southern California Public Radio</title>
+    <script src="https://use.typekit.net/cka2qre.js"></script>
+    <script>try{Typekit.load({ async: true });}catch(e){}</script>
+    <%= stylesheet_link_tag 'application' %>
+    <%= render "shared/ads/dfp_script_config" %>
+    <%= render partial: "shared/header/ad_scripts" %>
+    <%= javascript_include_tag 'aplicayshun' %>
+  </head>
 
-<body>
-<iframe src="https://www.googletagmanager.com/ns.html?id=GTM-585PL29" height="0" width="0" style="display:none;visibility:hidden"></iframe>
-<div class="viewport">
-  <%= render "shared/masthead/layout_header" %>
+  <body class="<%= content_for :body_class %>">
+    <iframe src="https://www.googletagmanager.com/ns.html?id=GTM-585PL29" height="0" width="0" style="display:none;visibility:hidden"></iframe>
+    <% if alert = BreakingNewsAlert.latest_visible_alert %>
+      <%= cell :breaking_news_alert, alert %>
+    <% end %>
+    <div id="global-pushdown"></div>
+    <header class="<%= content_for :header_class %>">
+      <%= cell :masthead %>
+      <%= content_for :header %>
+    </header>
+    <main class="<%= content_for :main_class %>">
+      <%= yield %>
+    </main>
+    <footer class="<%= content_for :footer_class %>">
+      <%= content_for :footer %>
+      <%= cell :footer %>
+    </footer>
+    <%= cell :audio_player %>
+    <%= render "shared/footer/document_footer" %>
 
-  <div id="no-sidebar" class="container-fluid main-content">
-    <%= yield %>
-  </div> <!-- no-sidebar -->
-
-  <%= render "shared/footer/layout_footer" %>
-</div> <!-- viewport -->
-
-<%= render "shared/footer/document_footer" %>
+    <%= javascript_include_tag "better_homepage/style-guide", :async => true %>
+  </body>
+</html>

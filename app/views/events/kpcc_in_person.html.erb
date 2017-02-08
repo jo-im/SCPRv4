@@ -1,169 +1,77 @@
-<% content_for :masthead do %>
-<!-- HERO -->
-  <div class="events-header-small">
-    <%= image_tag "event-headers/kpcc-in-person-horiz-negative.png" %>
+<% content_for :main_class, "l-kpcc-in-person" %>
+<% add_to_page_title "KPCC In Person" %>
+
+<% content_for :header do %>
+<section class="o-prologue o-prologue--in-person">
+  <a class="o-prologue__logo" href="/events/kpcc-in-person"><%= image_tag "event-headers/kpcc-in-person-logo.svg", alt: @landing_page.try(:title) %></a>
+  <span class="o-prologue__description">
+    <div class="o-prologue__teaser">
+      <%= @landing_page.try(:description) %>
+    </div>
+    <span class="o-prologue__pipe">|</span>
+    <div class="o-prologue__social-icons">
+      <a class="o-prologue__social-icon" href="https://www.facebook.com/KPCCInPerson">
+        <svg class="b-icon b-icon--size-sm b-icon--left">
+          <use class="b-icon--color-link" xlink:href="/static/images/scpr-sprite.svg#icon_line-facebook" />
+        </svg>
+      </a>
+      <a class="o-prologue__social-icon" href="https://twitter.com/KPCCInPerson">
+        <svg class="b-icon b-icon--size-sm b-icon--left">
+          <use class="b-icon--color-link" xlink:href="/static/images/scpr-sprite.svg#icon_line-twitter" />
+        </svg>
+      </a>
+    </div>
+  </span>
+</section>
+<% end %>
+
+<%= cell :ad, slot: "a", id: "o-ad--pos-a", attribution: false, order: -1 %>
+<%= cell :ad, slot: "b", id: "o-ad--pos-b", order: 7 %>
+<%= cell(:recent_content, @past_events, order: 995).call(:events) %>
+<%= cell(:appeal, @all_upcoming_events, class: "o-appeal--in-person_side-bar", order: 996).call(:in_person_newsletter) %>
+<%= cell :highlighted_events, @featured_events, order: 1 %>
+<hr id="tabs" class="b-rule b-rule--primary-lightest b-rule--padded" style="order: 2" />
+<section class="o-upcoming-events" style="order: 3">
+  <%= cell(:upcoming_events_list).call(:tabs) %>
+  <%= cell :upcoming_events_list, @kpcc_in_person_events, class: "o-story-list--two-col o-story-list--nobg", asset_aspect: "square", tab: "list" %>
+  <%= cell :upcoming_events_list, @all_upcoming_events, class: "o-story-list--two-col o-story-list--nobg", asset_aspect: "square", tab: "upcoming" %>
+  <%= cell :upcoming_events_list, @sponsored_events, class: "o-story-list--two-col o-story-list--nobg", asset_aspect: "square", tab: "sponsored" %>
+  <div class="o-upcoming-events-list__pagination o-upcoming-events-list__tab-list">
+    <%= paginate @kpcc_in_person_events, params: {subtype: 'list'} %>
   </div>
-  <%= render 'nav', navClass: "horizontal" %>
+  <div class="o-upcoming-events-list__pagination o-upcoming-events-list__tab-upcoming">
+    <%= paginate @all_upcoming_events, params: {subtype: 'upcoming'} %>
+  </div>
+  <div class="o-upcoming-events-list__pagination o-upcoming-events-list__tab-sponsored">
+    <%= paginate @sponsored_events, params: {subtype: 'sponsored'} %>
+  </div>
+</section>
+<%= cell :in_person_source_appeal, nil, order: 4 %>
+<%= cell :ad, slot: "c", id: "o-ad--pos-c", order: 997 %>
+<%= cell :meet_the_team, @team, team_heading: 'Meet the KPCC In Person Team', order: 5 %>
+<%= cell :in_person_map, nil, order: 6 %>
+<%= cell :popular_articles, @upcoming_events, class: "o-popular-stories--horiz", order: 1001 %>
+<%= cell :epilogue, nil, order: 1002 %>
 
-  <header id="events-header">
-    <div class="slides-wrapper">
-      <div class="slide active" id="hero-1">
-        <div class="slide-text">
-<!--           <h3>Where the conversation starts</h3>
-          <p></p> -->
-        </div>
-      </div>
+<script type="text/javascript">
+  $(document).ready(function() {
+    function getUrlParameter(name, url) {
+      name = name.replace(/[\[]/, '\\[').replace(/[\]]/, '\\]');
+      var regex = new RegExp('[\\?&]' + name + '=([^&#]*)');
+      var results = regex.exec(window.location.search);
+      return results === null ? '' : decodeURIComponent(results[1].replace(/\+/g, ' '));
+    }
 
-      <div class="slide" id="hero-2">
-        <div class="slide-text">
-<!--           <h3>Vital voices, important issues</h3>
-          <p></p> -->
-        </div>
-      </div>
+    var page = getUrlParameter('page');
+    var subType = '<%= @subtype_param %>';
 
-      <div class="slide" id="hero-3">
-        <div class="slide-text">
-<!--           <h3>Be part of the conversation</h3>
-          <p></p> -->
-        </div>
-      </div>
+    if (page && subType) {
+      window.location = '#tabs'
+    }
 
-      <div class="slide" id="hero-4">
-        <div class="slide-text">
-<!--           <h3>Engage your community</h3>
-          <p></p> -->
-        </div>
-      </div>
-
-    </div><!-- slides-wrapper -->
-    <div class="choosers">
-      <div class="chooser active" data-slide="hero-1">&nbsp;</div>
-      <div class="chooser" data-slide="hero-2">&nbsp;</div>
-      <div class="chooser" data-slide="hero-3">&nbsp;</div>
-      <div class="chooser" data-slide="hero-4">&nbsp;</div>
-    </div> <!-- choosers -->
-  </header>
-<% end %>
-
-<!-- CONTENT -->
-<div class="events">
-  <div class="row-fluid">
-
-    <!-- LEFT COLUMN -->
-    <div id="kpcc-in-person-span-upcoming-events" class="span13">
-      <section class="upcoming-events">
-        <h6 class="upcoming">Attend an Upcoming Event</h6>
-        <% if @closest_event.present? %>
-          <div class="event closest">
-            <%= render_asset @closest_event, display: 'large' %>
-            <%= link_to format_date(@closest_event.starts_at, format: :event), @closest_event.public_path, class: "event-link" %>
-            <h1 class="story-title"><%= link_to @closest_event.headline, @closest_event.public_path %></h1>
-            <%= @closest_event.teaser.html_safe %>
-          </div>
-        <% end %>
-
-        <%= any_to_list? @future_events, title: "Future Events", message: "We are getting ready to announce more upcoming events. Check back soon!" do %>
-          <% @future_events.each do |event| %>
-            <div class="event future">
-              <div class="row-fluid">
-                <% if event.assets.present? %>
-                  <div class="span8">
-                    <%= render_asset event, display: 'thumbnail' %>
-                  </div>
-                  <div class="span16">
-                <% else %>
-                  <div class="span24">
-                <% end %>
-                  <div class="info">
-                    <%= link_to format_date(event.starts_at, format: :event), event.public_path, class: "event-link" %>
-                    <h2 class="story-title"><%= link_to event.headline, event.public_path %></h2>
-                    <%= event.teaser.html_safe %>
-                  </div>
-                </div> <!-- span -->
-              </div> <!-- row fluid -->
-            </div> <!-- event future -->
-          <% end %>
-        <% end %>
-        <p><a href="<%= events_path(list: 'kpcc-in-person') %>" class="more">More Upcoming Events</a></p>
-      </section> <!-- upcoming-events -->
-      <section class="newsletter-signup">
-        <hr />
-        <%= render partial: "shared/widgets/events_subscribe" %>
-      </section>
-    </div> <!-- span -->
-
-    <!-- MIDDLE COLUMN (social media) -->
-    <div id="kpcc-in-person-span-social" class="span11">
-      <section class="social">
-        <h3>Follow Us on Social Media</h3>
-        <div class="banners">
-          <a href="https://www.facebook.com/KPCCInPerson" class="facebook">Like KPCC In Person on Facebook</a><br />
-          <a href="http://twitter.com/KPCCInPerson" class="twitter">Follow KPCC In Person on Twitter</a>
-        </div>
-
-        <!-- TWITTER -->
-        <% if cached_tweets = Rails.cache.fetch("twitter:KPCCInPerson") %>
-          <a class="twitter-peeker" href="http://twitter.com/KPCCInPerson"><h3>Tweets from KPCC In Person</h3></a>
-          <%= cached_tweets %>
-        <% end %>
-      </section>
-      <!-- RECENT FORUM VIDEOS -->
-      <section class="recent-videos">
-        <h3>Recent Event Videos</h3>
-        <div class="video-player">
-          <iframe width="361" height="203" src="//www.youtube.com/embed/videoseries?list=PLJAfWjMAi8iCuNI2f1fDndS054dwfQTLx" frameborder="0" allowfullscreen></iframe>
-        </div>
-      </section>
-    </div> <!-- span -->
-  </div> <!-- .row-fluid -->
-</div> <!-- events -->
-
-
-<!-- ARCHIVE STRIP -->
-<% if @past_events.present? %>
-  <% content_for :bottom do %>
-    <section class="archive-strip">
-      <h6 class="more-news-title">
-        Events from the Archive
-        <span class="more-link"><%= link_to "More", kpcc_in_person_events_archive_path %></span>
-      </h6>
-      <div class="row-fluid">
-        <% @past_events.each do |event| %>
-          <div class="span8">
-            <div class="event past">
-              <div class="row-fluid">
-                <% if event.assets.present? %>
-                  <div class="span8">
-                    <%= render_asset event, display: 'thumbnail', fallback: true %>
-                  </div>
-                  <div class="span16">
-                <% else %>
-                  <div class="span24">
-                <% end %>
-                  <div class="info">
-                    <h4 class="story-title"><%= link_to event.headline, event.public_path %></h4>
-                    <span class="byline">
-                      <%= format_date event.starts_at, format: :full_date %>
-                    </span>
-
-                    <% if event.audio.present? %>
-                      <%= content_tag :div, link_to("Listen to this event", event.audio.first.url, class: "inline audio-toggler", title: event.headline), class: "story-audio inline" %>
-                      <br />
-                    <% end %>
-
-                    <%= comment_count_for event %>
-
-                  </div> <!-- info -->
-                </div> <!-- span -->
-              </div> <!-- row fluid -->
-            </div> <!-- event past -->
-          </div> <!-- span -->
-        <% end %>
-      </div> <!-- row-fluid -->
-    </section>
-  <% end %>
-<% end %>
-
-<% content_for :footer do %>
-  <script>fader = new scpr.HeroFader;</script>
-<% end %>
+    if (subType) {
+      $('#o-upcoming-events-list__input-' + subType).click();
+      window.location = '#tabs'
+    }
+  });
+</script>

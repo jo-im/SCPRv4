@@ -1,0 +1,67 @@
+.footer__nav--expanded
+  display: block
+  @media (max-width: $media-tablet)
+    display: none
+
+.footer__nav--compact
+  display: none
+  @media (max-width: $media-tablet)
+    display: flex
+    justify-content: center
+    margin-bottom: 15px
+    .l-section--margin-sm .c-list--horiz
+      display: flex
+      li
+        align-items: center
+        border-right: 2px solid white
+        display: flex
+        height: 12px
+      li:last-of-type
+        border-right: 0px
+      .b-link
+        margin-left: 0.75em
+        margin-right: 0.75em
+
+.l-section--margin-sm
+  .l-col
+    margin-bottom: 30px
+  .o-footer__logo-container, .o-footer__donate
+    margin-bottom: 15px
+  .c-list--horiz
+    @media (max-width: $media-tablet)
+      display: flex
+      flex-wrap: wrap
+      justify-content: center
+      .o-footer__partner-label
+        display: flex
+        justify-content: center
+        margin-bottom: 1em
+        width: 100%
+      .o-footer__partner
+        margin-bottom: 1em
+        a
+          margin: 1em
+      li
+        margin-bottom: 0px
+        a
+          margin: 1em
+
+.o-footer
+  @media (max-width: $media-tablet)
+    padding-top: $margin-in-pixels
+    .b-rule
+      margin-left: $margin
+      margin-right: $margin
+
+.o-footer__donate
+  @media (max-width: $media-tablet)
+    width: 100%
+    a
+      border: 1px solid $color-link
+      display: block
+      margin-left: $margin
+      margin-right: $margin
+      padding-bottom: 0.4em
+      padding-top: 0.4em
+      text-align: center
+

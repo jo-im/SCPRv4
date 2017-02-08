@@ -1,19 +1,13 @@
-<h1>KPCC Programs</h1>
+<% add_to_page_title "Programs" %>
+<% content_for :main_class, "l-programs" %>
 
-<ul id="featured-programs" class="list-blocks">
-  <% @featured_programs.each do |program| %>
-    <% present program, ProgramPresenter do |p| %>
-      <a href="<%= p.public_path %>">
-        <li class="headshot <%= p.slug %>">
-          <h4><%= p.title %></h4>
-          <p><%= p.teaser %></p>
-        </li>
-      </a>
-    <% end %>
-  <% end %>
-</ul>
-
-<div class="row-fluid">
-  <%= render("programs_list", programs: @kpcc_programs, title: "KPCC Programs") if @kpcc_programs.present? %>
-  <%= render("programs_list", programs: @external_programs, title: "Other Programs") if @external_programs.present? %>
+<%= cell :ad, slot: "a", id: "o-ad--pos-a", attribution: false, order: -1 %>
+<%= cell :ad, slot: "b", id: "o-ad--pos-b", order: 3 %>
+<%= cell(:appeal, @featured_programs, order: 4).call(:breaking_news) %>
+<%= cell(:popular_articles, @featured_programs, order: 5).call(:side_bar) %>
+<%= cell :ad, slot: "c", id: "o-ad--pos-c", order: 6 %>
+<%= cell(:program_list, @featured_programs, order: 1).call(:featured) %>
+<div class="o-program-list__full-list" style="order: 2">
+  <%= cell :program_list, @kpcc_programs, title: "KPCC Programs", order: 4 %>
+  <%= cell :program_list, @external_programs, title: "Other Programs", order: 6 %>
 </div>

@@ -1,0 +1,32 @@
+<section class="o-latest-news__featured" style="order: 1">
+  <h1 class="o-latest-news__header b-heading b-heading--h1 b-heading--serif">Latest News</h1>
+  <h2 class="o-latest-news__featured-headline b-heading b-heading--h2 b-heading--serif"><%= link_to model.try(:short_headline), model.try(:public_path), "data-ga-category" => '@currentCategory', "data-ga-action" => "Article", "data-ga-label" => '@scrollDepth', class: "track-event" %></h2>
+  <section class="o-latest-news__featured-preview">
+    <div class="o-latest-news__featured-image o-figure--four-by-three">
+      <a href="<%= model.try(:public_path) %>">
+        <img class="o-figure__img" src="<%= asset_path model %>" style="background-image: url(<%= asset_path model %>);"/>
+        <% if model.try(:asset).try(:owner) %>
+          <figcaption class="o-figure__caption o-figure__attribution">
+            <%= model.try(:asset).try(:owner) %>
+          </figcaption>
+        <% end %>
+      </a>
+    </div>
+    <section class="o-latest-news__featured-description">
+      <p class="c-byline">
+        <span class="c-byline__name"><%= model.byline %></span>
+        <span class="c-byline__pipe">|</span>
+        <time class="c-byline__timestamp"><%= model.public_datetime %></time>
+      </p>
+      <p class="o-latest-news__featured-description_body">
+        <%= model.teaser.html_safe %>
+        <span class="o-latest-news__media-type">
+          <svg class="icon icon--size-sm">
+            <use class="icon--line icon--color-primary" xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/icon_line-<%= media_type %>.svg#icon"></use>
+          </svg>
+          <%= model.try(:feature).try(:name) %>
+        </span>
+      </p>
+    </section>
+  </section>
+</section>

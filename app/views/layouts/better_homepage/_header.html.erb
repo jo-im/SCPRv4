@@ -5,7 +5,7 @@
     <div class="o-mast__branding">
       <a href="/" class="o-mast__logo-link">
         <svg class="o-mast__logo">
-          <use class="" xlink:href="#logo_kpcc-black"/>
+          <use class="" xlink:href="/static/images/scpr-sprite.svg#logo_kpcc-black"/>
         </svg>
       </a>
       <h6 class="o-mast__branding-caption b-heading b-heading--h6 b-heading--light">Member-supported news for Southern California</h6>
@@ -16,6 +16,16 @@
         <div class="c-nav__dropdown text--small">
           <div class="l-container">
             <div class="l-row l-row--med-start l-row--sm-between">
+              <div class="c-nav__section l-col--sm-5 l-col--lg-5">
+                <h6 class="c-nav__section-heading">Covering SoCal</h6>
+                <ul class="c-list c-list--vert text-columns--med-3">
+                  <% @beat_tags.each do |tag| %>
+                    <li>
+                      <a href="/topics/<%= tag.try(:slug) %>"><%= tag.try(:title) %></a>
+                    </li>
+                  <% end %>
+                </ul>
+              </div>
               <div class="c-nav__section l-col--sm-5 l-col--lg-4">
                 <h6 class="c-nav__section-heading">Categories</h6>
                 <ul class="c-list c-list--vert text-columns--med-2">
@@ -48,7 +58,7 @@
                   </li>
                 </ul>
               </div>
-              <div class="c-nav__section l-col--sm-5 l-col--lg-3">
+              <div class="c-nav__section l-col--sm-5 l-col--lg-2">
                 <h6 class="c-nav__section-heading">More</h6>
                 <ul class="c-list c-list--vert">
                   <li>
@@ -71,14 +81,11 @@
               <div class="c-nav__section l-col--sm-5 l-col--lg-4">
                 <h6 class="c-nav__section-heading">Featured Programs</h6>
                 <ul class="c-list c-list--vert">
-                  <li>
-                    <a href="/programs/take-two">Take Two</a></li>
-                  <li>
-                    <a href="/programs/offramp">Off-Ramp</a></li>
-                  <li>
-                    <a href="/programs/airtalk">AirTalk</a></li>
-                  <li>
-                    <a href="/programs/the-frame">The Frame</a></li>
+                  <% @featured_programs.each do |program| %>
+                    <li>
+                      <a href="/programs/<%= program.try(:slug) %>"><%= program.try(:title) %></a>
+                    </li>
+                  <% end %>
                 </ul>
               </div>
               <div class="c-nav__section l-col--sm-5 l-col--lg-4">
@@ -103,26 +110,29 @@
         </div>
       </li>
       <li class="c-nav__item c-nav__item--hover-highlight">
-        <a class="c-nav__link" href="/events">Events</a>
+        <a class="c-nav__link" href="/events/kpcc-in-person">Events</a>
         <div class="c-nav__dropdown text--small">
           <div class="l-container">
             <div class="l-row l-row--med-start l-row--sm-between">
               <div class="c-nav__section l-col--lg-4 l-col--sm-5">
-                <h6 class="c-nav__section-heading">KPCC In Person</h6>
+                <h6 class="c-nav__section-heading">Events</h6>
                 <ul class="c-list c-list--vert">
                   <li>
-                    <a href="/events/kpcc-in-person">Upcoming Events</a>
+                    <a href="/events/kpcc-in-person/list">KPCC In Person</a>
                   </li>
                   <li>
-                    <a href="/events/forum/about">The Crawford Family Forum</a>
+                    <a href="/events/kpcc-in-person/upcoming">Upcoming Events</a>
+                  </li>
+                  <li>
+                    <a href="/events/kpcc-in-person/archive">Past Events</a>
                   </li>
                 </ul>
               </div>
               <div class="c-nav__section l-col--lg-3 l-col--sm-5">
-                <h6 class="c-nav__section-heading">More to do in SoCal</h6>
+                <h6 class="c-nav__section-heading">Get connected</h6>
                 <ul class="c-list c-list--vert">
                   <li>
-                    <a href="/events/sponsored">Sponsored Events</a>
+                    <a href="http://info.americanpublicmediagroup.org/LP=174">KPCC Events Newsletter</a>
                   </li>
                 </ul>
               </div>
@@ -301,17 +311,17 @@
         <div class="c-search c-nav__link">
           <label for="o-mast__search-toggler-checkbox" class="o-mast__search-link clickable" href="#">
             <svg class="icon icon--search-open icon--size-med icon--size-med@mobile-tablet">
-              <use class="icon--line icon--color-gray" xlink:href="#icon_line-search"/>
+              <use class="icon--line icon--color-gray" xlink:href="/static/images/scpr-sprite.svg#icon_line-search"/>
             </svg>
             <svg class="icon icon--search-close icon--size-med icon--size-med@mobile-tablet">
-              <use class="icon--line icon--color-gray" xlink:href="#icon_line-close"/>
+              <use class="icon--line icon--color-gray" xlink:href="/static/images/scpr-sprite.svg#icon_line-close--with-circle"/>
             </svg>
           </label>
           <form method="get" action="/search/" id="site-search">
             <input type="text" class=" input-text input--align-bottom input--focused-placeholder" placeholder="Enter your search here" name="q" id="q" />
             <button type="submit" class="c-btn c-btn--icon c-btn--outline-secondary">
               <svg class="icon icon--size-med">
-                <use class="icon--line icon--color-link" xlink:href="#icon_line-search"/>
+                <use class="icon--line icon--color-link" xlink:href="/static/images/scpr-sprite.svg#icon_line-search"/>
               </svg>
             </button>
           </form>
@@ -320,7 +330,7 @@
       <li class="c-nav__item o-mast__donate">
         <a class="o-mast__donate-link c-nav__link c-nav__link--action" href="https://scprcontribute.publicradio.org/contribute.php?_ga=1.210106262.2096948162.1473892732">
           <svg class="icon icon--size-med icon--left">
-            <use class="icon--line icon--color-link" xlink:href="#icon_line-donate"/>
+            <use class="icon--line icon--color-link" xlink:href="/static/images/scpr-sprite.svg#icon_line-donate"/>
           </svg>
           <span class="c-nav__item-caption">Donate</span>
         </a>
@@ -328,10 +338,10 @@
       <li class="c-nav__item o-mast__menu">
         <label class="c-nav__link o-mast__menu-toggler clickable" for="o-mast__menu-toggler-checkbox">
           <svg class="icon icon--size-lg o-mast__menu-icon--closed">
-            <use class="icon--line  icon--color-gray-dark " xlink:href="#icon_line-menu"/>
+            <use class="icon--line  icon--color-gray-dark " xlink:href="/static/images/scpr-sprite.svg#icon_line-menu"/>
           </svg>
           <svg class="icon icon--size-sm o-mast__menu-icon--opened">
-            <use class="icon--line  icon--color-gray-dark " xlink:href="#icon_line-close"/>
+            <use class="icon--line  icon--color-gray-dark " xlink:href="/static/images/scpr-sprite.svg#icon_line-close--with-circle"/>
           </svg>
           <span class="o-mast__menu-toggler-caption c-nav__item-caption o-mast__menu-toggler-caption--closed">Menu</span>
           <span class="o-mast__menu-toggler-caption c-nav__item-caption o-mast__menu-toggler-caption--opened">Close</span>

@@ -1,129 +1,42 @@
-<% add_to_page_title "Listen Live" %>
+<!doctype html>
+<head>
+  <meta content="IE=edge" http-equiv="X-UA-Compatible">
+  <meta charset="utf-8">
+  <meta content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" name="viewport">
+  <script src="https://use.typekit.net/cka2qre.js"></script>
+  <script>try{Typekit.load({ async: true });}catch(e){}</script>
+  <%= stylesheet_link_tag 'application' %>
+  <%= javascript_include_tag "shared", "application" %>
+  <script type="text/javascript" src="https://<%= Rails.configuration.x.assethost.server %>/assets/client.js?bust=20130523"></script>
+  <%= javascript_include_tag "new/application" %>
+</head>
 
-<%= render "shared/header/document_header" %>
-
-<body class="minimal listen">
-  <iframe src="https://www.googletagmanager.com/ns.html?id=GTM-585PL29" height="0" width="0" style="display:none;visibility:hidden"></iframe>
-  <header class="topbar">
-    <div class="wrapper">
-      <a href="/" target="_blank" class="logo"><%= image_tag 'logo-masthead-dark.png' %></a>
-    <span class="contribute"><a href="https://scprcontribute.publicradio.org/contribute.php?" target="_blank">Donate now</a></span>
+<body style="display: flex; flex-direction: column">
+  <nav class="o-mast o-listen-live__mast">
+    <div class="o-mast__logo">
+      <a href="/" class="o-mast__logo-link" class="track-event" data-ga-category="Menu" data-ga-action="Clickthrough" data-ga-label="Home">
+        <svg>
+          <use class="" xlink:href="/static/images/scpr-sprite.svg#logo_kpcc-black"/>
+        </svg>
+      </a>
     </div>
-  </header>
-
-  <div id="content">
-    <div class="player">
-      <div class="wrapper clearfix">
-        <div>
-          <h2>Listen Live</h2>
-          <span class="small">
-            More ways to listen:&nbsp;&nbsp;
-            <a href="http://www.scpr.org/iphone/" target="_blank">KPCC iPhone app</a>
-            <span class="pipe">|</span>
-            <a href="https://live.scpr.org/listen.pls">MP3/Apple Podcasts</a>
-            <span class="pipe">|</span>
-            <a href="mms://kpcclive1.publicradio.org">Windows Media</a>
-          </span>
-        </div>
-      </div> <!-- wrapper -->
-
-      <div id="jquery_jplayer_1" class="jp-jplayer"></div>
-      <div id="jp_container_1" class="jp-audio">
-        <div class="jp-type-single clearfix">
-          <div class="jp-no-solution alert-message error">
-            <strong>Update Required</strong>
-            To play the media you will need to either update your browser to a recent version or update your <a href="http://get.adobe.com/flashplayer/" target="_blank">Flash plugin</a>.
-          </div>
-          <!-- put jp-stop first so it floats right properly when the widget switches to modal
-             On the normal layout, everything here is floated so it still gets pushed to the right properly -->
-
-          <div class="section-left">
-            <div class="jp-gui jp-interface clearfix">
-              <ul class="jp-controls clearfix">
-                <li><a href="javascript:;" class="jp-play">play</a></li>
-                <li><a href="javascript:;" class="jp-pause">pause</a></li>
-              </ul>
-              <div class="jp-progress">
-                  <div class="jp-current-time"></div>
-              </div> <!-- jp-progress -->
-              <div class="clearfix"></div>
-              <ul class="volume-controls">
-                <li><a href="javascript:;" class="jp-mute">mute</a></li>
-                <li><a href="javascript:;" class="jp-unmute">unmute</a></li>
-                <li>
-                  <div class="jp-volume-bar">
-                    <div class="jp-volume-bar-value"></div>
-                  </div>
-                </li>
-                <li><a href="javascript:;" class="jp-volume-max">max vol</a></li>
-              </ul>
-            </div> <!-- jp-gui -->
-          </div> <!-- section-left -->
-
-          <div class="section-mid" id="llschedule">
-          </div> <!-- section-mid -->
-        </div> <!-- jp-type-single -->
-      </div> <!-- jp-audio -->
-    </div> <!-- player -->
-  </div> <!-- content -->
-
-
-
-
-
-<%= cache ["latest-edition", @latest_edition] do %>
-  <section class="shortlist-plug">
-    <a href="/short-list/latest" target="_blank" title="Read the latest edition of The Short List">
-      <header>
-        <div class="bound">
-          <h1>The Short List <mark><%= format_date(@latest_edition.published_at, with: '%a, %B %d') %></mark></h1>
-          <h2 class="<%= @latest_edition.slug %>"><%= @latest_edition.slug.titleize %></h2>
-        </div>
-      </header>
-      <div class="brochure" style="background: url('<%= @latest_edition.slots.first.item.asset.full.url %>') no-repeat center center; background-size: cover;">
-        <div class="brochure-overlay"></div>
-        <figure class="bound">
-          <figcaption>The Short List: <%= @latest_edition.title %></figcaption>
-        </figure>
-      </div><!--/ .brochure -->
-      <aside class="contents">
-        <div class="bound">
-          <header><mark><%= @latest_edition.abstracts.count %></mark> stories in this edition, including:</header>
-          <ul>
-            <% @latest_edition.abstracts[0..3].each_with_index do |abstract, index| %>
-              <li><%= abstract.headline %></li>
-            <% end %>
-          </ul>
-        </div>
-      </aside>
-    </a><!-- big block link -->
-  </section><!--/ .shortlist-plug -->
-<% end %>
-
-
-  <div id="live_ad"></div>
-
-  <footer>
-    <div>
-      <ul class="menu unstyled clearfix">
-        <li><a href="/terms/" target="_blank">Terms &amp; Conditions</a></li>
-        <li><a href="/privacy/" target="_blank">Privacy</a></li>
-        <li style="border:none"><a href="/web_site_feedback" target="_blank">Website Feedback</a></li>
-        <li>Copyright <%= Time.zone.now.year %> &copy; Southern California Public Radio</li>
-      </ul>
+    <div class="o-mast__action o-mast__donate">
+      <a class="o-mast__donate-link" target="_blank" href="https://scprcontribute.publicradio.org/contribute.php?_ga=1.210106262.2096948162.1473892732"  data-ga-category="Menu" data-ga-action="Clickthrough" data-ga-label="Donate">
+        <svg class="b-icon b-icon--size-med b-icon--left">
+          <use class="b-icon--line b-icon--color-link" xlink:href="/static/images/scpr-sprite.svg#icon_line-donate"/>
+        </svg>
+        <span class="o-mast__item-caption">Donate</span>
+      </a>
     </div>
-  </footer>
-
-<% content_for :footer do %>
-  <script>
-    llPlayer = new scpr.ListenLive.CurrentGen({
-      schedule:   <%= @schedule.map(&:listen_live_json).to_json.html_safe %>,
-      nielsen_enabled: <%= Rails.env.production? %>
-    })
-
-    $("#llcontent a").attr("target","_blank");
-  </script>
-
-<% end %>
-
-<%= render "shared/footer/document_footer" %>
+  </nav>
+  <% add_to_page_title "Listen Live" %>
+  <section class="l-listen-live">
+    <%= cell :listen_live, @schedule, latest_edition: @latest_edition %>
+  </section>
+  <div class="o-listen-live__footer">
+    <a href="/terms/" target="_blank">Terms & Conditions</a> |
+    <a href="/privacy/" target="_blank">Privacy</a> |
+    <a href="/web_site_feedback" target="_blank">Website Feedback</a> |
+    <span>Copyright 2017 &copy Southern California Public Radio</span>
+  </div>
+</body>

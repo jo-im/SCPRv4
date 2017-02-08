@@ -1,0 +1,88 @@
+.l-schedule
+  display: block
+  max-width: 1440px
+  margin: 0 auto
+  overflow-y: auto
+  padding-top: $margin-in-pixels
+
+  .o-schedule__header
+    margin-bottom: $margin-in-pixels / 2
+    width: 100%
+    @media (max-width: $media-mobile)
+      margin-bottom: $margin-in-pixels / 4
+
+  .o-schedule__lists
+    display: flex
+    flex-wrap: wrap
+    justify-content: space-between
+    margin-left: $margin
+    width: ($col * 7) + ($gutter * 6)
+
+  .o-schedule__list
+    margin-bottom: $margin-in-pixels
+    width: percentage(414/756)
+
+  .o-schedule__regular-features-list
+    float: right
+    margin-bottom: $margin-in-pixels
+    width: percentage(186/756)
+
+  #o-ad--pos-a, #o-ad--pos-b, #o-ad--pos-c, .o-appeal--breaking-news, .o-popular-stories-side-bar
+    float: right
+    width: ($col * 3) + ($gutter * 2)
+    margin-right: $gutter + $col + $margin
+    clear: right
+
+  #o-ad--pos-a, #o-ad--pos-b, .o-popular-stories-side-bar
+    border-bottom: 1px solid $color-gray-light
+
+  #o-ad--pos-a
+    margin-bottom: $margin-in-pixels * 0.75
+    padding-bottom: $margin-in-pixels * 0.75
+
+  #o-ad--pos-b
+    margin-bottom: $margin-in-pixels
+    padding-bottom: $margin-in-pixels
+
+  #o-ad--pos-c
+    padding-bottom: $margin-in-pixels
+
+  .o-popular-stories-side-bar
+    margin-bottom: $margin-in-pixels
+    padding-bottom: $margin-in-pixels / 2
+
+  @media all and (max-width: $media-wide)
+    .o-schedule__regular-features-list
+      width: percentage(228/756)
+
+  @media all and (max-width: $media-desktop)
+    .o-schedule__lists
+      width: ($col * 7) + ($gutter * 7)
+
+    .o-schedule__list
+      width: percentage(456/756)
+
+    .o-schedule__regular-features-list
+      width: percentage(270/756)
+
+  @media all and (max-width: $media-tablet)
+    display: flex
+    flex-direction: column
+    padding-top: $margin-in-pixels / 2
+    .o-schedule__lists, #o-ad--pos-a, #o-ad--pos-b, #o-ad--pos-c, .o-appeal--breaking-news, .o-popular-stories-side-bar
+      width: ($col * 12) + ($gutter * 11)
+      margin-left: $margin
+      margin-right: $margin
+    .o-appeal--breaking-news, .o-popular-stories-side-bar
+      align-self: center
+    .o-appeal--breaking-news
+      display: flex
+      flex-direction: column
+    #o-ad--pos-a
+      margin-bottom: $margin-in-pixels / 2
+      padding-bottom: $margin-in-pixels / 2
+
+  @media all and (max-width: $media-mobile)
+    .o-schedule__lists
+      .o-schedule__list, .o-schedule__regular-features-list
+        width: 100%

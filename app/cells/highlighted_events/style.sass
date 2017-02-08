@@ -1,0 +1,195 @@
+.o-highlighted-events
+  overflow: auto
+  // display: none
+
+.o-highlighted-events--vertical
+  display: flex
+  justify-content: space-between
+  flex-direction: row
+  flex-wrap: wrap
+
+  .o-highlighted-events__headline
+    flex: 0 1 100%
+    width: 100%
+
+  .o-highlighted-events__left
+    $o-feat-story-l-width: $col * 4
+    // flex: 1 0 $o-feat-story-l-width
+    width: $o-feat-story-l-width
+
+  .o-highlighted-events__center
+    $o-feat-story-c-width: ($col * 10) - ($gutter)
+    // flex: 1 0 $o-feat-story-c-width
+    width: $o-feat-story-c-width
+
+  .o-highlighted-events__right
+    $o-feat-story-r-width: $col * 4
+    // flex: 1 0 $o-feat-story-r-width
+    width: $o-feat-story-r-width
+
+  .o-highlighted-events__byline
+    color: $color-secondary
+    display: block
+    font-size: 14px
+    font-weight: 500
+    margin-top: 10px
+
+  .o-highlighted-events__description
+    border-bottom: 1px solid $color-gray-light
+    margin-bottom: 30px
+    padding-bottom: 60px
+
+  .o-highlighted-events__related-list
+
+  .o-highlighted-events__related-list li
+    font-size: 16px
+    margin-bottom: 20px
+
+  .o-highlighted-events__related-list__heading
+    margin-bottom: 10px
+    a
+      color: $color-link
+
+  .o-highlighted-events__events-heading
+    margin-bottom: 10px
+
+  .o-highlighted-events__events-description
+    font-size: 14px
+    font-style: italic
+
+  .o-highlighted-events__related-list__byline
+    color: $color-gray
+    display: block
+    font-size: 13px
+    margin-top: 4px
+    font-weight: 500
+
+.o-highlighted-events--in-person
+  display: flex
+  justify-content: space-between
+  flex-direction: row
+  flex-wrap: wrap
+  @media (max-width: $media-tablet)
+    display: flex
+
+  .o-highlighted-events__event-heading
+    flex: 0 1 100%
+    margin-bottom: 0px
+    width: 100%
+    @media (max-width: $media-tablet)
+      font-size: 20px
+
+  .o-highlighted-events__headline
+    flex: 0 1 100%
+    line-height: 48px
+    margin-bottom: 25px
+    width: 100%
+    @media (max-width: $media-tablet)
+      font-size: 32px
+      line-height: 36px
+
+  .o-highlighted-events__sub-headline
+    flex: 0 1 100%
+    line-height: 36px
+    width: 100%
+    @media (max-width: $media-tablet)
+      font-size: 23px
+      line-height: 30px
+
+  .o-highlighted-events__figure
+    margin-bottom: 0px
+    .o-figure__img
+      padding-top: (100 / 1.66667) * 1%
+
+  .o-highlighted-events__left
+    $o-feat-story-l-width: $col * 5
+    margin-bottom: $margin-in-pixels
+    width: percentage(300/870)
+    @media (max-width: $media-mobile)
+      display: none
+
+  .o-highlighted-events__center
+    margin-bottom: $margin-in-pixels
+    width: percentage(526/870)
+    @media (max-width: $media-mobile)
+      width: initial
+
+  .o-highlighted-events__left-feature
+    @media (max-width: $media-tablet)
+      display: block
+      order: 4 !important
+      width: 100%
+
+  .o-highlighted-events__center-feature
+    @media (max-width: $media-tablet)
+      margin-bottom: 15px
+      order: 3 !important
+      width: 100%
+
+  .o-highlighted-events__sub-event
+    .o-highlighted-events__description
+      font-size: 18px
+      line-height: 24px
+      @media (max-width: $media-tablet)
+        display: -webkit-box
+        overflow: hidden
+        text-overflow: ellipsis
+        -webkit-line-clamp: 4
+        -webkit-box-orient: vertical
+
+  .o-highlighted-events__byline
+    color: $color-secondary
+    display: block
+    font-size: 14px
+    font-weight: 500
+    margin-top: 10px
+
+  .o-highlighted-events__link
+    display: inline-block
+
+  .o-highlighted-events__description
+    font-size: 22px
+    line-height: 30px
+    @media (max-width: $media-tablet)
+      font-size: 20px
+
+  .o-highlighted-events__related-list
+    display: flex
+    flex-wrap: wrap
+
+  .o-highlighted-events__related-list li
+    font-size: 16px
+    margin-bottom: 20px
+    flex: 1 0 (50% - $margin * 2)
+    &:nth-child(odd)
+      margin-right: $margin * 2
+
+  .o-highlighted-events__related-list__heading
+    margin-bottom: 10px
+    a
+      color: $color-link
+
+  .o-highlighted-events__events-heading
+    margin-bottom: 10px
+
+  .o-highlighted-events__events-description
+    font-size: 14px
+    font-style: italic
+
+  .o-highlighted-events__related-list__byline
+    color: $color-gray
+    display: block
+    font-size: 13px
+    margin-top: 4px
+    font-weight: 500
+
+  .o-highlighted-events__date
+    align-items: center
+    display: flex
+    font-size: 15px
+    font-weight: 500
+    line-height: 30px
+    margin: 0.5em 0
+    clear: right
+    .b-icon--calendar
+      margin-right: 0.5em

@@ -23,7 +23,7 @@ describe NewsController do
 
     it "renders the layout" do
       get :story, @story.route_hash
-      response.should render_template "new/single"
+      response.should render_template "application"
     end
 
     it "assigns @story" do

@@ -1,0 +1,51 @@
+<h4 class="o-event__type" style="order: 0">EVENTS</h4>
+<h1 class="o-event__headline" style="order: 1"><%= model.headline %></h1>
+
+<div class='o-event__RSVP' style="order: 2; flex-direction: <%= flex_direction %>">
+  <div class='o-event__RSVP-date'>
+    <span class="o-event__RSVP-datetime"><%= date model %></span>
+    <% if !model.try(:rsvp_url).try(:empty?) && !model.try(:starts_at).try(:past?) %>
+      <a class="o-event__RSVP-button" href="<%= model.try(:rsvp_url) %>">RSVP for this event</a>
+    <% end %>
+  </div>
+  <div class='o-event__RSVP-address'>
+    <% if !model.try(:address_1).try(:empty?) %>
+      <span class="o-event__RSVP-address-name"><a href="<%= model.try(:location_url) %>"><%= model.try(:location_name) %></a></span>
+      <span><%= model.try(:address_1) %></span>
+      <span><%= model.try(:address_2) %></span>
+      <span><%= model.try(:city) %>, <%= model.try(:state) %> <%= model.try(:zip_code) %></span>
+      <a id="o-event__map-link" href="#">Map and directions</a>
+    <% end %>
+  </div>
+</div>
+
+<% if model.try(:asset_display) != :hidden %>
+<figure class="o-event__figure o-figure" style="order: 3">
+  <img class="o-figure__img" src="<%= model.asset.full.url %>" alt="<%= model.asset.caption %>" title="<%= model.headline %>" role="img" aria-label="<%= model.headline %>" style="background-image:url(<%= model.asset.full.url %>);" />
+  <% if model.asset.caption || model.asset.owner %>
+  <figcaption class="o-event__figure-caption o-figure__caption">
+    <% if model.asset.caption %>
+    <%= model.asset.caption %>
+    <% end %>
+    <% if model.asset.owner %>
+    <address class="o-figure__attribution"><%= model.asset.owner %></address>
+    <% end %>
+  </figcaption>
+  <% end %>
+</figure>
+<% end %>
+
+<%= render_body %>
+
+<script>
+  var locationName = "<%= model.try(:location_name) %>";
+  var params = { q: locationName };
+  var queryString = $.param(params);
+  var googleMapsURL = "https://maps.google.com/?" + queryString;
+  $('#o-event__map-link').attr('href', googleMapsURL);
+</script>
+<script>
+<% if model.category ||= nil %>
+  DFP_CATEGORY = "<%= model.category.slug %>";
+<% end %>
+</script>

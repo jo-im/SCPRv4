@@ -6,13 +6,13 @@
   var megaM, smartTime;
 
   $(function() {
-    smartTime         = new scpr.SmartTime();
+    // smartTime         = new scpr.SmartTime();
     social            = new scpr.SocialTools();
     audio             = new scpr.Audio();
-    modal             = new scpr.Modal();
-    adSizer           = new scpr.adSizer();
+    // modal             = new scpr.Modal();
+    // adSizer           = new scpr.adSizer();
     eventTracking     = new scpr.EventTracking();
-    promoteFacebook   = new scpr.PromoteFacebook();
+    // promoteFacebook   = new scpr.PromoteFacebook();
   });
 </script>
 
@@ -23,7 +23,8 @@
 // can be queued from anywhere.
 $(function() {
   // Handle any queued visual campaigns.
- scpr.VisualCampaign.fetchQueue();
+  scpr.VisualCampaign.enqueue('pushdown-global', $('#global-pushdown'));
+  scpr.VisualCampaign.fetchQueue();
 });
 </script>
 

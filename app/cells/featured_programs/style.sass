@@ -1,0 +1,154 @@
+.o-featured-programs
+  background: $color-gray-lightest
+  border-top: 1px solid $color-gray-light
+  border-bottom: 1px solid $color-gray-light
+  clear: both
+  display: flex
+  flex-wrap: wrap
+  justify-content: space-between
+  margin-bottom: $margin-in-pixels
+  padding-left: $margin
+  padding-right: $margin
+  padding-top: $margin-in-pixels
+  width: initial
+  @media (max-width: $media-tablet)
+    display: block
+    margin-left: 0px
+    margin-right: 0px
+
+.o-featured-programs__heading
+  color: $color-primary
+  font-family: $font-serif-titling
+  font-weight: 800
+  font-size: 31px
+  font-style: italic
+  width: 75%
+  line-height: 36px
+  margin-bottom: $margin-in-pixels / 2
+  @media (max-width: $media-tablet)
+    font-size: 26px
+    line-height: 30px
+    margin-bottom: 0px
+
+.o-featured-programs__all-programs-link
+  align-content: center
+  align-items: flex-end
+  color: $color-link
+  display: flex
+  flex-direction: column
+  height: 45px
+  justify-content: flex-end
+  text-align: right
+  width: 25%
+  @media (max-width: $media-tablet)
+    margin-bottom: 30px
+    width: 100%
+
+.o-featured-programs__program
+  // flex: 1
+  margin-bottom: $margin-in-pixels
+  width: 22.62443439%
+  @media (max-width: $media-tablet)
+    display: block
+    width: 50% - $margin / 2
+  @media (max-width: $media-mobile)
+    width: 100%
+
+.o-featured-programs__program:nth-child(even)
+  @media (max-width: $media-tablet)
+    float: right
+
+.o-featured-programs__program:nth-child(odd)
+  @media (max-width: $media-tablet)
+    clear: both
+    float: left
+
+.o-featured-programs__program-figure
+  margin-bottom: 20px
+
+.o-featured-programs__program-figure .o-figure__img
+  padding-top: 40.1%
+
+.o-featured-programs__program-description
+  display: block
+  height: 10em
+  margin-bottom: 15px
+  overflow: hidden
+  text-overflow: ellipsis
+  @media (max-width: $media-tablet)
+    height: initial
+  @media (max-width: $media-mobile)
+    margin-bottom: 15px
+
+.o-featured-programs__program-title
+  color: $color-link
+  font-size: 26px
+  line-height: 36px
+  @media (max-width: $media-tablet)
+    font-size: 23px
+    line-height: 30px
+
+.o-featured-programs__program-host
+  color: $color-gray
+  font-size: 26px
+  height: 32px
+  line-height: 36px
+  overflow: hidden
+  text-overflow: ellipsis
+  white-space: nowrap
+  width: 100%
+  @media (max-width: $media-tablet)
+    font-size: 23px
+    line-height: 30px
+
+.o-featured-programs__program-teaser
+  display: -webkit-box
+  font-size: 15px
+  line-height: 18px
+  overflow: hidden
+  -webkit-line-clamp: 3
+  -webkit-box-orient: vertical
+  @media (max-width: $media-tablet)
+    font-size: 16px
+    line-height: 24px
+
+.o-featured-programs__program-airtime
+  color: $color-gray
+  font-size: 15px
+  text-transform: uppercase
+  font-weight: 600
+  line-height: 18px
+  margin-top: 10px
+  margin-bottom: 10px
+  @media (max-width: $media-tablet)
+    font-size: 16px
+    line-height: 24px
+
+.o-featured-programs__program-footer
+  display: block
+  display: flex
+  border-top: 1px solid $color-gray-light
+  font-weight: 600
+  padding-top: 20px
+
+.o-featured-programs__program-footer-date
+  color: $color-primary
+  font-size: 15px
+  line-height: 18px
+  text-transform: uppercase
+  @media (max-width: $media-tablet)
+    font-size: 16px
+    line-height: 24px
+
+.o-featured-programs__program-footer-date time
+  display: block
+  font-weight: 300
+
+.o-featured-programs__program-headline
+  font-size: 15px
+  font-weight: normal
+  line-height: 18px
+  padding-left: 20px
+  @media (max-width: $media-tablet)
+    font-size: 16px
+    line-height: 24px
