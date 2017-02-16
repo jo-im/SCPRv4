@@ -13,9 +13,9 @@ module Job
 
     class << self
       def perform(id)
-        audio = Audio.find(id)
+        audio = Audio.find_by_id(id)
 
-        if audio.file.present?
+        if audio && audio.file.present?
           audio.compute_duration if audio.duration.blank?
           audio.compute_size     if audio.size.blank?
           audio.save!
@@ -23,7 +23,7 @@ module Job
           log "Saved #{audio.class.name} ##{audio.id}. " \
               "Duration: #{audio.duration}; Size: #{audio.size}"
         else
-          log "Audio isn't available for #{audio.class.name} ##{audio.id}."
+          log "Audio isn't available for Audio ##{id}."
         end
       end
 
