@@ -1,8 +1,8 @@
 <div class="appeal-newsletter short-list ancillary" id="appeal-newsletter">
     <div class="appeal-background">
         <div class="appeal-content">
-            <h3 class="bound appeal-heading">Like <%= program.try(:title) %>?</h3>
-            <p class="bound">Catch up each afternoon with <%= program.try(:title) %> newsletter.</p>
+            <h3 class="bound appeal-heading"><%= program.try(:safe_newsletter_form_heading) %></h3>
+            <p class="bound"><%= program.try(:safe_newsletter_form_caption) %></p>
             <form class="bound" method="post" name="<%= program.try(:newsletter_form_name) %>" action="https://s1715082578.t.eloqua.com/e/f2" id="form-500011" >
                 <input value="<%= program.try(:newsletter_form_name) %>" type="hidden" name="elqFormName"  />
                 <input value="1715082578" type="hidden" name="elqSiteId"  />

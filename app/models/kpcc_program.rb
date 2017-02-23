@@ -111,6 +111,29 @@ class KpccProgram < ActiveRecord::Base
     true
   end
 
+  def safe_newsletter_form_caption
+    safe_title = ->(title){
+      if (title || "").match(/^The\s/)
+        title
+      else
+        "the #{title}"
+      end
+    }
+    if newsletter_form_caption && !newsletter_form_caption.empty?
+      newsletter_form_caption
+    else
+      "Catch up with #{safe_title.call(title)} newsletter."
+    end
+  end
+
+  def safe_newsletter_form_heading
+    if newsletter_form_heading && !newsletter_form_heading.empty?
+      newsletter_form_heading
+    else
+      "Like #{title}?"
+    end
+  end
+
   private
 
   def should_reject_quote(attributes)

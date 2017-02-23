@@ -20,7 +20,12 @@
   <%= f.input :is_segmented, hint: "Does this program separate its episode into segments?" %>
   <%= f.input :is_featured, hint: "Whether or not this program is featured around the website" %>
   <%= f.input :audio_dir, label: "Audio directory" %>
-  <%= f.input :newsletter_form_name, label: "Newsletter form name" %>
+<% end %>
+
+<%= form_block "Newsletter Form" do %>
+  <%= f.input :newsletter_form_name, label: "Eloqua form name" %>
+  <%= f.input :newsletter_form_heading, label: "Form Heading (optional)" %>
+  <%= f.input :newsletter_form_caption, label: "Form Caption (optional)" %>
 <% end %>
 
 <%= form_block "Featured Content" do %>
