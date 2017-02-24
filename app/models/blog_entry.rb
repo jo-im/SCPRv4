@@ -186,7 +186,7 @@ class BlogEntry < ActiveRecord::Base
     @to_abstract ||= Abstract.new({
       :original_object        => self,
       :headline               => self.short_headline,
-      :summary                => self.teaser,
+      :summary                => !(self.abstract || "").empty? ? self.abstract : self.teaser,
       :source                 => "KPCC",
       :url                    => self.public_url,
       :assets                 => self.assets.top,
