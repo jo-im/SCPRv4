@@ -92,7 +92,6 @@ class Abstract < ActiveRecord::Base
     true
   end
 
-
   def to_article
     @to_article ||= Article.new({
       :original_object    => self,
@@ -117,4 +116,17 @@ class Abstract < ActiveRecord::Base
   def to_abstract
     self
   end
+
+  def asset
+    # This overrides the method in the assets association concern
+    # because the "top" scope has already been called when something
+    # gets converted to an Abstract.
+    @asset ||= (self.assets.first || AssetHost::Asset::Fallback.new)
+  end
+
+  def source
+    sourcetext = (super || "")
+    !sourcetext.blank? ? sourcetext : "KPCC"
+  end
+
 end

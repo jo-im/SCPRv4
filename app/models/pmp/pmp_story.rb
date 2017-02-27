@@ -53,15 +53,6 @@ class PmpStory < PmpContent
         end
       end.compact)
     end
-    if content.respond_to?(:broadcast_contents)
-      doc.links['item'].concat(content.broadcast_contents.map do |b|
-        # Remember that, since broadcast content is related through related_content,
-        # only published broadcast contents will show up here.
-        broadcast_content = pmp_broadcast.where(content: b).first_or_create
-        broadcast_content.publish unless broadcast_content.published?
-        broadcast_content.link
-      end.compact)
-    end
     doc
   end
 

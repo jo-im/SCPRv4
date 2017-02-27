@@ -101,7 +101,7 @@ class ContentShell < ActiveRecord::Base
       :original_object        => self,
       :headline               => self.headline,
       :summary                => self.body,
-      :source                 => self.site,
+      :source                 => !(self.abstract_source || "").blank? ? self.abstract_source : self.site,
       :url                    => self.url,
       :assets                 => self.assets,
       :category               => self.category,
