@@ -117,7 +117,7 @@ class NewsStory < ActiveRecord::Base
       :original_object        => self,
       :headline               => self.short_headline,
       :summary                => !(self.abstract || "").empty? ? self.abstract : self.teaser,
-      :source                 => "KPCC",
+      :source                 => self.abstract_source,
       :url                    => self.public_url,
       :assets                 => self.assets.top,
       :audio                  => self.audio.available,

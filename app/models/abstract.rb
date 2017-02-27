@@ -124,4 +124,9 @@ class Abstract < ActiveRecord::Base
     @asset ||= (self.assets.first || AssetHost::Asset::Fallback.new)
   end
 
+  def source
+    sourcetext = (super || "")
+    !sourcetext.blank? ? sourcetext : "KPCC"
+  end
+
 end

@@ -118,7 +118,7 @@
                         <mark>1 <span>of <b><%= @edition.abstracts.length %></b></span></mark>
                     </header>
                     <div class="eisegesis">
-                        <%= first_abstract.summary.html_safe %>
+                        <p><%= first_abstract.summary.html_safe %></p>
                         <footer>
                             <a href="<%= first_abstract.url %>">Read full story at <%= first_abstract.source %></a>
                         </footer>
@@ -141,7 +141,7 @@
                             <mark><%= index+2 %> <span>of <b><%= @edition.abstracts.length %></b></span></mark>
                         </header>
                         <div class="eisegesis">
-                            <%= abstract.summary.html_safe %>
+                            <p><%= abstract.summary.html_safe %></p>
                             <footer>
                                 <a href="<%= abstract.url %>">Read full story at <%= abstract.source %></a>
                             </footer>
@@ -166,7 +166,7 @@
                                 <mark><%= index+5 %> <span>of <b><%= @edition.abstracts.length %></b></span></mark>
                             </header>
                             <div class="eisegesis">
-                                <%= abstract.summary.html_safe %>
+                                <p><%= abstract.summary.html_safe %></p>
                                 <footer>
                                     <a href="<%= abstract.url %>">Read full story at <%= abstract.source %></a>
                                 </footer>
@@ -192,7 +192,7 @@
                                 <mark><%= index+8 %> <span>of <b><%= @edition.abstracts.length %></b></span></mark>
                             </header>
                             <div class="eisegesis">
-                                <%= abstract.summary.html_safe %>
+                                <p><%= abstract.summary.html_safe %></p>
                                 <footer>
                                     <a href="<%= abstract.url %>">Read full story at <%= abstract.source %></a>
                                 </footer>
