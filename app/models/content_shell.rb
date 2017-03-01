@@ -99,8 +99,8 @@ class ContentShell < ActiveRecord::Base
   def to_abstract
     @to_abstract ||= Abstract.new({
       :original_object        => self,
-      :headline               => self.headline,
-      :summary                => self.body,
+      :headline               => self.short_headline,
+      :summary                => !(self.abstract || "").empty? ? self.abstract : self.teaser,
       :source                 => !(self.abstract_source || "").blank? ? self.abstract_source : self.site,
       :url                    => self.url,
       :assets                 => self.assets,
