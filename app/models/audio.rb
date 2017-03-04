@@ -238,7 +238,7 @@ class Audio < ActiveRecord::Base
       open(self.url, read_timeout: TIMEOUT, allow_redirections: :all) { |f| tmp.write(f.read) }
       tmp.rewind
       tmp
-    rescue OpenURI::HTTPError, Timeout::Error, Errno::ENOENT
+    rescue OpenURI::HTTPError, Timeout::Error, Errno::ENOENT, OpenSSL::SSL::SSLError
       nil
     end
   end
