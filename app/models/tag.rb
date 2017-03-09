@@ -54,6 +54,7 @@ class Tag < ActiveRecord::Base
         .where(tagging_omissions)
         .limit(10)
         .map(&:taggable)
+        .select{|a| a.respond_to?(:to_article)}
         .map(&:to_article)
         .select{|a| a.try(:public_datetime)}
         .first(3)
