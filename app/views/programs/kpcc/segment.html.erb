@@ -35,3 +35,29 @@
       articles: @popular_articles.first(4),
       header: 'Popular Now on KPCC' %>
 <% end %>
+<% if @modal || @pledge %>
+  <div id='exit-modal' class='exit-modal--hidden'>
+    <div class='exit-modal__underlay'></div>
+      <div class='exit-modal__modal'>
+        <span class='exit-modal__close-button'>X</span>
+        <div id='exit-modal__content'>
+          <% if @modal %>
+            <%= @modal.content.html_safe %>
+          <% end %>
+          <%= @pledge %>
+        </div>
+        <% if @form_name %>
+          <form class="bound exit-modal__form" method="post" name="<%= @form_name %>" action="https://s1715082578.t.eloqua.com/e/f2" id="<%= @form_id %>" >
+              <input value="<%= @form_name %>"  type="hidden" name="elqFormName"  />
+              <input value="1715082578" type="hidden" name="elqSiteId"  />
+              <input name="elqCampaignId" type="hidden"  />
+
+              <input class="newsletter-email exit-modal__form--center" id="field0" name="emailAddress" type="email" placeholder="email@somedomain.com" value="" />
+              <input class="newsletter-hidden-input" name="SCPRShortList" type="checkbox" value="on"  />
+              <button type="submit" class="appeal-submit track-event exit-modal__form--center" data-ga-category="Article" data-ga-action="Subscribe" data-ga-label="<%= @program.title %>">Sign Up</button>
+          </form>
+        <% end %>
+    </div>
+  </div>
+<% end %>
+<%= javascript_include_tag params[:controller] %>

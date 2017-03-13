@@ -8,7 +8,7 @@ class PledgeDrive < ActiveRecord::Base
   scope :happening, ->{enabled.where('starts_at < ?', Time.zone.now).where('ends_at > ?', Time.zone.now)}
   class << self
     def happening?
-      happening.any?
+      happening.exists?
     end
   end
 end

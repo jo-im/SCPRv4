@@ -97,6 +97,23 @@ class ProgramsController < ApplicationController
     @program = @kpcc_program = @segment.show
     @featured_programs = KpccProgram.where.not(id: @program.id, is_featured: false).first(4)
 
+    is_pledge_time = PledgeDrive.happening?
+    pledge_time_template = view_context.render 'shared/widgets/donate.html.erb'
+    program_flatpage = Flatpage.visible.find_by path: 'exit-modal/' + @program.slug
+    default_flatpage = Flatpage.visible.find_by path: 'exit-modal/default'
+
+    if is_pledge_time
+      @pledge = pledge_time_template
+    elsif program_flatpage
+      @modal = program_flatpage
+      @form_name = @program.newsletter_form_name
+      @form_id = 'form-500011'
+    elsif default_flatpage
+      @modal = default_flatpage
+      @form_name = 'copyOfSCPR20130130BreakingNewsSignUp-1431032392145'
+      @form_id = 'form725'
+    end
+
     # check whether this is the correct URL for the segment
     if request.original_fullpath != @segment.public_path
       redirect_to @segment.public_path and return
