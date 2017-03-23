@@ -45,7 +45,7 @@ gem 'html-pipeline', require: "html/pipeline"
 gem "carrierwave", "~> 0.6"
 gem "ruby-mp3info", '~> 0.8.2', require: 'mp3info'
 gem "ice_cube", "~> 0.11.0"
-gem "recaptcha", require: "recaptcha/rails"
+gem "recaptcha", "~> 3.4.0", require: "recaptcha/rails"
 gem "yajl-ruby" # Faster JSON parsing
 gem "rack-utf8_sanitizer"
 gem "rufus-scheduler"
