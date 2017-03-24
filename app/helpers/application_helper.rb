@@ -525,7 +525,7 @@ module ApplicationHelper
 
   def strip_inline_assets body
     unless body.present?
-      return
+      return body
     end
     doc = Nokogiri::HTML(body.force_encoding('ASCII-8BIT'))
     doc.css("img.inline-asset").each{|placeholder|
