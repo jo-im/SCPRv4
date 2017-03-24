@@ -202,10 +202,10 @@ GEM
       eco-source
       execjs
     eco-source (1.1.0.rc.1)
-    elasticsearch (5.0.3)
-      elasticsearch-api (= 5.0.3)
-      elasticsearch-transport (= 5.0.3)
-    elasticsearch-api (5.0.3)
+    elasticsearch (1.0.18)
+      elasticsearch-api (= 1.0.18)
+      elasticsearch-transport (= 1.0.18)
+    elasticsearch-api (1.0.18)
       multi_json
     elasticsearch-extensions (0.0.26)
       ansi
@@ -216,7 +216,7 @@ GEM
       elasticsearch (> 0.4)
       hashie
     elasticsearch-rails (0.1.9)
-    elasticsearch-transport (5.0.3)
+    elasticsearch-transport (1.0.18)
       faraday
       multi_json
     erubis (2.7.0)
@@ -522,10 +522,10 @@ DEPENDENCIES
   dalli
   database_cleaner
   eco (~> 1.0)
-  elasticsearch
+  elasticsearch (~> 1.0.8)
   elasticsearch-extensions
-  elasticsearch-model
-  elasticsearch-rails
+  elasticsearch-model (~> 0.1.7)
+  elasticsearch-rails (~> 0.1.7)
   embeditor-rails!
   escape_utils (~> 1.0.1)
   factory_girl_rails

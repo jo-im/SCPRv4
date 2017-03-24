@@ -8,9 +8,9 @@ gem 'jquery-rails', '~> 3.1.0'
 gem "bcrypt-ruby", "~> 3.1.0"
 gem 'secretary-rails', "~> 2.0.1"
 
-gem 'elasticsearch'
-gem 'elasticsearch-rails'
-gem 'elasticsearch-model'
+gem 'elasticsearch', "~>1.0.8"
+gem 'elasticsearch-rails', "~> 0.1.7"
+gem 'elasticsearch-model', "~> 0.1.7"
 gem 'patron'
 gem 'render_anywhere'
 
