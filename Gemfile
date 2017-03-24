@@ -3,14 +3,14 @@ source 'https://rubygems.org'
 ## Core
 gem 'rails', "~> 4.2.0"
 gem 'responders', '~> 2.0'
-gem 'mysql2', '~> 0.3.14'
+gem 'mysql2', '~> 0.3.18'
 gem 'jquery-rails', '~> 3.1.0'
 gem "bcrypt-ruby", "~> 3.1.0"
 gem 'secretary-rails', "~> 2.0.1"
 
-gem 'elasticsearch', "1.0.8"
-gem 'elasticsearch-rails', "0.1.7"
-gem 'elasticsearch-model', "0.1.7"
+gem 'elasticsearch'
+gem 'elasticsearch-rails'
+gem 'elasticsearch-model'
 gem 'patron'
 gem 'render_anywhere'
 
@@ -45,7 +45,7 @@ gem 'html-pipeline', require: "html/pipeline"
 gem "carrierwave", "~> 0.6"
 gem "ruby-mp3info", '~> 0.8.2', require: 'mp3info'
 gem "ice_cube", "~> 0.11.0"
-gem "recaptcha", "~> 3.4.0", require: "recaptcha/rails"
+gem "recaptcha", require: "recaptcha/rails"
 gem "yajl-ruby" # Faster JSON parsing
 gem "rack-utf8_sanitizer"
 gem "rufus-scheduler"
@@ -97,7 +97,7 @@ group :development do
 end
 
 group :test, :development do
-  gem "rspec-rails", "~> 3.5", '>= 3.5.2'
+  gem "rspec-rails", "~> 3.2.1"
   gem 'rb-fsevent', '~> 0.9'
   gem 'launchy'
   gem 'guard', '~> 1.5'
@@ -112,7 +112,7 @@ group :test do
   gem 'database_cleaner'
   gem 'capybara', "~> 2.0"
   gem 'shoulda-matchers'
-  gem 'webmock', "1.24.5"
+  gem 'webmock'
   gem 'test_after_commit'
   gem 'elasticsearch-extensions'
   gem 'rspec_junit_formatter', :github => 'circleci/rspec_junit_formatter'
