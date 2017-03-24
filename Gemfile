@@ -8,9 +8,9 @@ gem 'jquery-rails', '~> 3.1.0'
 gem "bcrypt-ruby", "~> 3.1.0"
 gem 'secretary-rails', "~> 2.0.1"
 
-gem 'elasticsearch', "~>1.0.8"
-gem 'elasticsearch-rails', "~> 0.1.7"
-gem 'elasticsearch-model', "~> 0.1.7"
+gem 'elasticsearch', "1.0.8"
+gem 'elasticsearch-rails', "0.1.7"
+gem 'elasticsearch-model', "0.1.7"
 gem 'patron'
 gem 'render_anywhere'
 
@@ -112,7 +112,7 @@ group :test do
   gem 'database_cleaner'
   gem 'capybara', "~> 2.0"
   gem 'shoulda-matchers'
-  gem 'webmock'
+  gem 'webmock', "1.24.5"
   gem 'test_after_commit'
   gem 'elasticsearch-extensions'
   gem 'rspec_junit_formatter', :github => 'circleci/rspec_junit_formatter'

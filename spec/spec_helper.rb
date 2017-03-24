@@ -19,7 +19,7 @@ Dir[Rails.root.join("spec/support/**/*.rb")].each { |f| require f }
 Dir[Rails.root.join("spec/fixtures/models/*.rb")].each { |f| require f }
 Dir[Rails.root.join("spec/fixtures/factories/*.rb")].each { |f| require f }
 
-WebMock.disable_net_connect!(allow:["127.0.0.1:#{ES_PORT}","localhost:#{ES_PORT}"])
+WebMock.disable_net_connect!(allow:["127.0.0.1:#{ES_PORT}","localhost:#{ES_PORT}", "0.0.0.0:#{ES_PORT}"])
 
 RSpec.configure do |config|
   config.use_transactional_fixtures = false

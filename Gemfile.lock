@@ -202,21 +202,21 @@ GEM
       eco-source
       execjs
     eco-source (1.1.0.rc.1)
-    elasticsearch (1.0.18)
-      elasticsearch-api (= 1.0.18)
-      elasticsearch-transport (= 1.0.18)
-    elasticsearch-api (1.0.18)
+    elasticsearch (1.0.8)
+      elasticsearch-api (= 1.0.7)
+      elasticsearch-transport (= 1.0.7)
+    elasticsearch-api (1.0.7)
       multi_json
     elasticsearch-extensions (0.0.26)
       ansi
       elasticsearch
       ruby-prof
-    elasticsearch-model (0.1.9)
+    elasticsearch-model (0.1.7)
       activesupport (> 3)
       elasticsearch (> 0.4)
       hashie
-    elasticsearch-rails (0.1.9)
-    elasticsearch-transport (1.0.18)
+    elasticsearch-rails (0.1.7)
+    elasticsearch-transport (1.0.7)
       faraday
       multi_json
     erubis (2.7.0)
@@ -494,7 +494,7 @@ GEM
     uri_template (0.7.0)
     vegas (0.1.11)
       rack (>= 1.0.0)
-    webmock (2.3.2)
+    webmock (1.24.5)
       addressable (>= 2.3.6)
       crack (>= 0.3.2)
       hashdiff
@@ -522,10 +522,10 @@ DEPENDENCIES
   dalli
   database_cleaner
   eco (~> 1.0)
-  elasticsearch (~> 1.0.8)
+  elasticsearch (= 1.0.8)
   elasticsearch-extensions
-  elasticsearch-model (~> 0.1.7)
-  elasticsearch-rails (~> 0.1.7)
+  elasticsearch-model (= 0.1.7)
+  elasticsearch-rails (= 0.1.7)
   embeditor-rails!
   escape_utils (~> 1.0.1)
   factory_girl_rails
@@ -591,8 +591,8 @@ DEPENDENCIES
   twitter (~> 4.1)
   twitter-text (~> 1.5)
   uglifier (>= 1.3)
-  webmock
+  webmock (= 1.24.5)
   yajl-ruby
 
 BUNDLED WITH
-   1.14.6
+   1.13.1
