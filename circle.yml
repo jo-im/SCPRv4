@@ -11,7 +11,7 @@ machine:
 
   environment:
     ES_INCLUDE: /home/ubuntu/elasticsearch-1.5.2/bin/elasticsearch.in.sh
-    ES_RUNNING: true
+    ES_RUNNING: false
 
 dependencies:
   pre:
