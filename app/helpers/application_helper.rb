@@ -533,7 +533,6 @@ module ApplicationHelper
     }
     doc.css('body').children.to_s.html_safe
   end
-end
 
   def filter_related_content content, contents
     homepage_content_ids = contents.map(&:obj_key)
