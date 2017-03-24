@@ -524,12 +524,16 @@ module ApplicationHelper
   end
 
   def strip_inline_assets body
+    unless body.present?
+      return
+    end
     doc = Nokogiri::HTML(body.force_encoding('ASCII-8BIT'))
     doc.css("img.inline-asset").each{|placeholder|
       placeholder.replace Nokogiri::HTML::DocumentFragment.parse("")
     }
     doc.css('body').children.to_s.html_safe
   end
+end
 
   def filter_related_content content, contents
     homepage_content_ids = contents.map(&:obj_key)
