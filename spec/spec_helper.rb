@@ -29,7 +29,6 @@ RSpec.configure do |config|
   config.order = 'random'
 
   config.exclude_pattern = [
-    "spec/controllers/outpost/news_stories_controller_spec.rb",
     "spec/controllers/api/public/v2/articles_controller_spec.rb",
     "spec/features/outpost/manage_news_stories_spec.rb",
     "spec/controllers/api/public/v3/articles_controller_spec.rb"
