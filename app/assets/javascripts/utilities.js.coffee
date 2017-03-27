@@ -37,6 +37,10 @@ class scpr.adSizer
             for i in [1..7]
                 @sizedCheck(i)
 
+    setPositionRelative: (element) ->
+        $(element).css
+            "position": "relative"
+
     resize: (element) ->
         $(element).css
             "max-width": "100%",
@@ -55,7 +59,11 @@ class scpr.adSizer
                 ad = $(iframe.contentWindow.document).find(
                         "img, object, embed")[0]
 
+                googleAdContainer = $(iframe.contentWindow.document).find(
+                        "#google_image_div")[0]
+
                 if $(ad).length
+                    @setPositionRelative(googleAdContainer)
                     @resize(ad)
                     $(iframe).closest(".ad .dfp, .c-ad .dfp").addClass("adSized")
 
