@@ -63,6 +63,16 @@ class PijQuery < ActiveRecord::Base
 
   scope :with_article_includes, ->() { includes(:assets) }
 
+  alias_attribute :public_datetime, :published_at
+
+  def short_headline
+    "KPCC Asks: " + self.headline
+  end
+
+  def feature
+    nil # this model doesn't have features
+  end
+
   def publish
     self.update_attributes(status: self.class.status_id(:live))
   end
