@@ -42,7 +42,8 @@ module Scprv4
       "new/ie-lt9.js",  # For ie < 9, separate include
       "new/ie-lt9.css", # For ie < 9, separate include
       "*.eot", "*.ttf", "*.woff", # Font files
-      "amp/application.css.sass"
+      "amp/application.css.sass",
+      "programs.js",
     ]
 
     config.assets.precompile += %w( better_homepage/style-guide.js )
