@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170227182821) do
+ActiveRecord::Schema.define(version: 20170410170041) do
 
   create_table "abstracts", force: :cascade do |t|
     t.string   "source",               limit: 255
@@ -543,6 +543,35 @@ ActiveRecord::Schema.define(version: 20170227182821) do
 
   add_index "layout_homepagecontent", ["content_id", "content_type"], name: "index_layout_homepagecontent_on_content_id_and_content_type", using: :btree
   add_index "layout_homepagecontent", ["homepage_id"], name: "layout_homepagecontent_35da0e60", using: :btree
+
+  create_table "list_items", force: :cascade do |t|
+    t.integer  "list_id",    limit: 4
+    t.integer  "item_id",    limit: 4
+    t.string   "item_type",  limit: 255
+    t.integer  "position",   limit: 4,   default: 0
+    t.datetime "created_at",                         null: false
+    t.datetime "updated_at",                         null: false
+  end
+
+  add_index "list_items", ["item_type", "item_id"], name: "index_list_items_on_item_type_and_item_id", using: :btree
+  add_index "list_items", ["list_id"], name: "index_list_items_on_list_id", using: :btree
+
+  create_table "lists", force: :cascade do |t|
+    t.string   "title",        limit: 255
+    t.string   "context",      limit: 255
+    t.integer  "position",     limit: 4,   default: 0
+    t.integer  "status",       limit: 4
+    t.datetime "start_time"
+    t.datetime "end_time"
+    t.datetime "published_at"
+    t.datetime "created_at",                           null: false
+    t.datetime "updated_at",                           null: false
+  end
+
+  add_index "lists", ["end_time"], name: "index_lists_on_end_time", using: :btree
+  add_index "lists", ["published_at"], name: "index_lists_on_published_at", using: :btree
+  add_index "lists", ["start_time"], name: "index_lists_on_start_time", using: :btree
+  add_index "lists", ["status"], name: "index_lists_on_status", using: :btree
 
   create_table "media_audio", force: :cascade do |t|
     t.integer  "size",         limit: 4

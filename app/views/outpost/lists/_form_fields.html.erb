@@ -1,0 +1,37 @@
+<%= form_block "Details" do %>
+  <%= f.input :title %>
+  <%= f.input :context %>
+  <%= f.section 'status' %>
+  <%= f.input :start_time %>
+  <%= f.input :end_time %>
+<% end %>
+
+<%= form_block "Content" do %>
+  <div id="aggregator" class="aggregator"></div>
+  <%= f.input :items_json, as: :hidden, input_html: { id: "items_json" } %>
+<% end %>
+
+<% content_for :footer do %>
+  <script>
+    aggregator = new outpost.Aggregator(
+      {
+        el: "#aggregator",
+        inputEl: "#items_json",
+        collection: <%= render_json("api/private/v2/articles/collection", articles: record.items.includes(:item).map(&:item).map(&:get_article)) %>,
+        apiType: "private",
+        view: {
+            dropMinLimit: 4
+        },
+        params: {
+          limit: 20,
+          types: "news,blogs,segments,shells,queries,events",
+          token: "<%= Rails.configuration.x.api.kpcc.private.api_token %>",
+          order: "public_datetime",
+          sort_mode: "desc",
+          with: { published: true }
+        }
+      }
+    );
+  </script>
+<% end %>
+
