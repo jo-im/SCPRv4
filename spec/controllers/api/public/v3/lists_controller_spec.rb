@@ -27,6 +27,13 @@ describe Api::Public::V3::ListsController do
       assigns(:lists).should eq []
     end
 
+    it "enforces ordering" do
+      list1  = List.create title: "test-list1", status: 5, position: 2
+      list2  = List.create title: "test-list2", status: 5, position: 1
+      get :index, request_params
+      assigns(:lists).should eq [list2, list1]
+    end
+
   end
 
   describe "GET list" do 
@@ -37,6 +44,15 @@ describe Api::Public::V3::ListsController do
       get :show, {id: list.id}.merge(request_params)
       assigns(:list).should eq list
       assigns(:list_items).should eq [story.get_article]
+    end
+    it "orders items based on positions" do
+      list  = List.create title: "test-list", status: 5
+      story1 = create :news_story
+      story2 = create :news_story
+      list.items.create item_id: story1.id, item_type: story1.class.to_s, position: 2
+      list.items.create item_id: story2.id, item_type: story2.class.to_s, position: 1
+      get :show, {id: list.id}.merge(request_params)
+      assigns(:list_items).should eq [story2.get_article, story1.get_article]
     end
   end
 

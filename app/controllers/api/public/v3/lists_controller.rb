@@ -3,16 +3,22 @@ module Api::Public::V3
 
     def index
       if params[:context]
-        @lists = List.visible.where(context: params[:context])
+        @lists = List.visible
+          .where(context: params[:context])
+          .order('position ASC')
       else
         @lists = List.visible
+          .order('position ASC')
       end
       respond_with @lists
     end
 
     def show
       @list       = List.visible.where(id: params[:id]).first!
-      @list_items = @list.items.map(&:item).map(&:get_article)
+      @list_items = @list
+        .items
+        .order('position ASC')
+        .map(&:item).map(&:get_article)
       respond_with @list_items
     end
 
