@@ -53,6 +53,12 @@
   transform: none;
 }
 
+#exit-modal__content .appeal-background {
+  background-color: transparent;
+  margin: 0;
+  padding: 0;
+}
+
 .exit-modal__underlay {
   width: 100%;
   height: 100%;
