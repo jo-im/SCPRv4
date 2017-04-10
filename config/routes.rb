@@ -197,6 +197,7 @@ Scprv4::Application.routes.draw do
         resources :blogs, only: [:index, :show]
         resources :data_points, only: [:index, :show]
         resources :tags, only: [:index, :show]
+        resources :lists, only: [:index, :show]
 
         get "programs/:id/episodes/archive/:year/:month" => "archive_browser#index"
         get "programs/:id/histogram"                => "programs#histogram"
@@ -308,6 +309,8 @@ Scprv4::Application.routes.draw do
     resources :broadcast_contents, concerns: [:search]
 
     resources :better_homepages, concerns: [:preview, :search]
+
+    resources :lists, concerns: [:search]
 
     resources :remote_articles, only: [:index], concerns: [:search] do
       member do
