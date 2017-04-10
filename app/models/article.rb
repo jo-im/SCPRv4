@@ -82,6 +82,18 @@ class Article
     end
   end
 
+  def context
+    # Normally, we would use this as a "context" parameter
+    # that we provide with our audio URLs to know within
+    # what context they are being served.
+    if slug = (show || blog).try(:slug)
+      return slug
+    end
+    if original_object.class.to_s == "NewsStory"
+      "news"
+    end
+  end
+
   def to_article
     self
   end
