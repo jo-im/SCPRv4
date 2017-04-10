@@ -1,5 +1,4 @@
 // Global Stylesheet Imports
-@import 'scpr-style-guide/src/css/main.scss';
 @import "base/compass";
 @import "base/reset";
 @import "base/bootstrap/mixins";
@@ -33,7 +32,6 @@
 @import "sidebar_tweets";
 // Utilities
 @import "feature_traits";
-@import "exit-modal";
 
 // May Elections
 // Keep this here to support hard-coded results tables in Flatpages.

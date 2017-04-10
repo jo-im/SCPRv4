@@ -53,11 +53,11 @@
               <input name="elqCampaignId" type="hidden"  />
 
               <input class="newsletter-email exit-modal__form--center" id="field0" name="emailAddress" type="email" placeholder="email@somedomain.com" value="" />
-              <input class="newsletter-hidden-input" name="SCPRShortList" type="checkbox" value="on"  />
+              <input class="newsletter-hidden-input" type="checkbox" value="on"  />
               <button type="submit" class="appeal-submit track-event exit-modal__form--center" data-ga-category="Article" data-ga-action="Subscribe" data-ga-label="<%= @program.title %>">Sign Up</button>
           </form>
         <% end %>
     </div>
   </div>
 <% end %>
-<%= javascript_include_tag params[:controller] %>
+<%= javascript_include_tag "programs" %>
