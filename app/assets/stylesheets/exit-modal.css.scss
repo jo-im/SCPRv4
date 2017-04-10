@@ -1,3 +1,5 @@
+@import "scpr-style-guide/src/css/util/_vars";
+
 #exit-modal {
   position: fixed;
   top: 0;
@@ -49,12 +51,6 @@
 #exit-modal__content > .appeal-heading-adaptive {
   display: block;
   transform: none;
-}
-
-.appeal-newsletter > .appeal-background {
-  background-color: transparent;
-  margin: 0;
-  padding: 0;
 }
 
 .exit-modal__underlay {
