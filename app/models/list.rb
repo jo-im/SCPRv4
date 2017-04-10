@@ -11,14 +11,17 @@ class List < ActiveRecord::Base
   validates :title, presence: true
 
   scope :published, ->(){ 
-    where("
+    where(status: 5)
+  }
+
+  scope :visible, ->(){ 
+    published.where("
       (start_time IS NULL AND end_time IS NULL)
       OR
       (start_time < ? AND (end_time > ? OR end_time IS NULL))
       OR
       ((start_time < ? OR start_time IS NULL) AND end_time > ?)
     ", Time.zone.now, Time.zone.now, Time.zone.now, Time.zone.now)
-    .where(status: 5)
   }
 
   status :draft do |s|

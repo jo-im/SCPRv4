@@ -3,16 +3,17 @@ module Api::Public::V3
 
     def index
       if params[:context]
-        @lists = List.published.where(context: params[:context])
+        @lists = List.visible.where(context: params[:context])
       else
-        @lists = List.published
+        @lists = List.visible
       end
       respond_with @lists
     end
 
     def show
-      @list = List.published.where(id: params[:id]).first!
-      respond_with @list
+      @list       = List.visible.where(id: params[:id]).first!
+      @list_items = @list.items.map(&:item).map(&:get_article)
+      respond_with @list_items
     end
 
   end

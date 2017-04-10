@@ -1,10 +1,15 @@
 json.partial! api_view_path("shared", "meta")
 
-json.bucket do
-  json.partial! api_view_path("lists", "list"), bucket: @list
-
-  json.articles do
-    json.partial! api_view_path("list", "items"),
-      articles: @list.items
+json.lists do
+  json.array! @lists do |list|
+    json.id            list.id
+    json.title         list.title
+    json.context       list.context
+    json.status        list.status
+    json.start_time    list.start_time
+    json.end_time      list.end_time
+    json.created_at    list.created_at
+    json.updated_at    list.updated_at
   end
 end
+

@@ -20,9 +20,24 @@ describe Api::Public::V3::ListsController do
       get :index, {context: "fubar"}.merge(request_params)
       assigns(:lists).should eq [list2]
     end
+
+    it "ignores lists that are drafts" do
+      list  = List.create title: "test-list", status: 1
+      get :index, request_params
+      assigns(:lists).should eq []
+    end
+
   end
 
   describe "GET list" do 
+    it "finds a list and its associated articles" do
+      list  = List.create title: "test-list", status: 5
+      story = create :news_story 
+      list.items.create item_id: story.id, item_type: story.class.to_s
+      get :show, {id: list.id}.merge(request_params)
+      assigns(:list).should eq list
+      assigns(:list_items).should eq [story.get_article]
+    end
   end
 
 end
