@@ -15,7 +15,7 @@
 
     <% if audio = @amp_record.audio.first %>
 
-      <% url = url_with_params(audio.url, via: 'website') %>
+      <% url = url_with_params(audio.url, via: 'website', context: @amp_record.to_article.context) %>
       <aside class="audio">
         <amp-audio width="400" height="50" src="<%= url.gsub('http:', '') %>">
           <div fallback>
