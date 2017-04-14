@@ -104,6 +104,7 @@ group :test, :development do
   gem 'guard-resque'
   gem 'guard-rspec'
   gem 'ruby-prof'
+  gem 'byebug'
 end
 
 
