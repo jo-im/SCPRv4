@@ -15,10 +15,7 @@ module Api::Public::V3
 
     def show
       @list       = List.visible.where(id: params[:id]).first!
-      @list_items = @list
-        .items
-        .order('position ASC')
-        .map(&:item).map(&:get_article)
+      @list_items = @list.items.articles
       respond_with @list_items
     end
 

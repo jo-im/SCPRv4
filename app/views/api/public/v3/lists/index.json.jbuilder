@@ -10,6 +10,10 @@ json.lists do
     json.end_time      list.end_time
     json.created_at    list.created_at
     json.updated_at    list.updated_at
+    json.items do
+      json.partial! api_view_path("articles", "collection"),
+        articles: list.items.articles
+    end
   end
 end
 
