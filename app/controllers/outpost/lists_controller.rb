@@ -33,7 +33,7 @@ class Outpost::ListsController < Outpost::ResourceController
   private
 
   def list_params
-    params.require(:list).permit(:title, :context, :status, :start_time, :end_time, :position, :items_json)
+    params.require(:list).permit(:title, :context, :status, :starts_at, :ends_at, :position, :items_json)
   end
 end
 

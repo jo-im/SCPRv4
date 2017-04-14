@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170410170041) do
+ActiveRecord::Schema.define(version: 20170414214509) do
 
   create_table "abstracts", force: :cascade do |t|
     t.string   "source",               limit: 255
@@ -561,16 +561,16 @@ ActiveRecord::Schema.define(version: 20170410170041) do
     t.string   "context",      limit: 255
     t.integer  "position",     limit: 4,   default: 0
     t.integer  "status",       limit: 4
-    t.datetime "start_time"
-    t.datetime "end_time"
+    t.datetime "starts_at"
+    t.datetime "ends_at"
     t.datetime "published_at"
     t.datetime "created_at",                           null: false
     t.datetime "updated_at",                           null: false
   end
 
-  add_index "lists", ["end_time"], name: "index_lists_on_end_time", using: :btree
+  add_index "lists", ["ends_at"], name: "index_lists_on_ends_at", using: :btree
   add_index "lists", ["published_at"], name: "index_lists_on_published_at", using: :btree
-  add_index "lists", ["start_time"], name: "index_lists_on_start_time", using: :btree
+  add_index "lists", ["starts_at"], name: "index_lists_on_starts_at", using: :btree
   add_index "lists", ["status"], name: "index_lists_on_status", using: :btree
 
   create_table "media_audio", force: :cascade do |t|
