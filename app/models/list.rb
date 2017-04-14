@@ -14,7 +14,7 @@ class List < ActiveRecord::Base
     where(status: 5)
   }
 
-  scope :visible, ->(){ 
+  scope :visible, ->(){  
     published.where("
       (start_time IS NULL AND end_time IS NULL)
       OR

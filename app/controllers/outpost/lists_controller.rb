@@ -6,6 +6,8 @@ class Outpost::ListsController < Outpost::ResourceController
     l.default_order_direction   = DESCENDING
     l.per_page                  = 3
 
+    l.column :title
+
     l.column :published_at,
       :sortable                   => true,
       :default_order_direction    => DESCENDING
@@ -18,4 +20,20 @@ class Outpost::ListsController < Outpost::ResourceController
       :default_order_direction    => DESCENDING
   end
 
+  def update
+    if @record.update_attributes(list_params)
+      notice "Saved #{@record.simple_title}"
+      respond_with :outpost, @record, location: requested_location
+    else
+      breadcrumb "Edit", nil, @record.to_title
+      render :edit
+    end
+  end
+
+  private
+
+  def list_params
+    params.require(:list).permit(:title, :context, :status, :start_time, :end_time, :position, :items_json)
+  end
 end
+
