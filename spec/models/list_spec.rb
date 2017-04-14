@@ -19,8 +19,8 @@ describe List, type: :model do
         list = List.create({
           title: "test", 
           status: 5,
-          start_time: Time.now + 10.hours,
-          end_time: Time.now + 11.hours
+          starts_at: Time.now + 10.hours,
+          ends_at: Time.now + 11.hours
         })
         expect(List.visible).to be_empty
       end
@@ -30,8 +30,8 @@ describe List, type: :model do
         list = List.create({
           title: "test", 
           status: 5,
-          start_time: Time.now - 10.hours,
-          end_time: Time.now + 11.hours
+          starts_at: Time.now - 10.hours,
+          ends_at: Time.now + 11.hours
         })
         expect(List.visible).to_not be_empty
       end
@@ -41,7 +41,7 @@ describe List, type: :model do
         list = List.create({
           title: "test", 
           status: 5,
-          start_time: Time.now - 10.hours
+          starts_at: Time.now - 10.hours
         })
         expect(List.visible).to_not be_empty
       end

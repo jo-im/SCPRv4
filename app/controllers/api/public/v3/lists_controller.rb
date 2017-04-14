@@ -2,9 +2,9 @@ module Api::Public::V3
   class ListsController < BaseController
 
     def index
-      if params[:context]
+      if !context.empty?
         @lists = List.visible
-          .where(context: params[:context])
+          .where("FIND_IN_SET(?, context)", context)
           .order('position ASC')
       else
         @lists = List.visible
@@ -17,6 +17,12 @@ module Api::Public::V3
       @list       = List.visible.where(id: params[:id]).first!
       @list_items = @list.items.articles
       respond_with @list_items
+    end
+
+    private
+
+    def context
+      (params[:context] || "").strip
     end
 
   end

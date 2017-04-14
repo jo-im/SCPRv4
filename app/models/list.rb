@@ -16,13 +16,15 @@ class List < ActiveRecord::Base
 
   scope :visible, ->(){  
     published.where("
-      (start_time IS NULL AND end_time IS NULL)
+      (starts_at IS NULL AND ends_at IS NULL)
       OR
-      (start_time < ? AND (end_time > ? OR end_time IS NULL))
+      (starts_at < ? AND (ends_at > ? OR ends_at IS NULL))
       OR
-      ((start_time < ? OR start_time IS NULL) AND end_time > ?)
+      ((starts_at < ? OR starts_at IS NULL) AND ends_at > ?)
     ", Time.zone.now, Time.zone.now, Time.zone.now, Time.zone.now)
   }
+
+  before_save :sanitize_context
 
   status :draft do |s|
     s.id = 0
@@ -44,6 +46,12 @@ class List < ActiveRecord::Base
       position: item_hash["position"].to_i
     })
     ListItem.new(attrs) if item.published?
+  end
+
+  private
+
+  def sanitize_context
+    self.context = (self.context || "").split(",").map(&:strip).join(",")
   end
 
 end
