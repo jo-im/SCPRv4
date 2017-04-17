@@ -14,9 +14,7 @@ json.cache! [Api::Public::V3::VERSION, "v1", program] do
 
   json.is_kpcc program.is_kpcc
   json.cover_thumbnail_image_url do
-    json.iphone do
-      json.small "https://media.scpr.org/iphone/avatar-images/program_avatar_#{program.slug}.png"
-      json.large "https://media.scpr.org/iphone/avatar-images/program_avatar_#{program.slug}@2x.png"
-    end
+    json.set! "1x", "https://media.scpr.org/iphone/avatar-images/program_avatar_#{program.slug}.png"
+    json.set! "2x", "https://media.scpr.org/iphone/avatar-images/program_avatar_#{program.slug}@2x.png"
   end
 end
