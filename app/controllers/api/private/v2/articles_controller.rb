@@ -8,7 +8,8 @@ module Api::Private::V2
       "episodes"    => [ShowEpisode],
       "abstracts"   => [Abstract],
       "events"      => [Event],
-      "queries"     => [PijQuery]
+      "queries"     => [PijQuery],
+      "programs"    => [KpccProgram, ExternalProgram]
     }
 
     DEFAULTS = {
@@ -20,10 +21,10 @@ module Api::Private::V2
     }
 
     before_filter \
+      :sanitize_query,
       :set_classes,
       :sanitize_limit,
       :sanitize_page,
-      :sanitize_query,
       :sanitize_order,
       :sanitize_conditions,
       only: [:index]
@@ -79,9 +80,11 @@ module Api::Private::V2
 
     private
 
+
     def set_classes
       @classes = []
-      types = params[:types] || DEFAULTS[:types]
+
+      types = (params[:query].to_s.match(/^([-\w]+(?:,[-\w]*)*):/) || [])[1] || params[:types] || DEFAULTS[:types]
 
       types.split(",").uniq.each do |type|
         if klasses = TYPES[type]
@@ -108,7 +111,7 @@ module Api::Private::V2
     #---------------------------
 
     def sanitize_query
-      @query = params[:query].to_s
+      @query = params[:query].to_s.gsub(/^([-\w]+(?:,[-\w]*)*):/, "")
     end
 
     #---------------------------

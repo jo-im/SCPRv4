@@ -137,6 +137,37 @@ class ExternalProgram < ActiveRecord::Base
     false
   end
 
+  def to_article
+    @to_article ||= Article.new({
+      :original_object    => self,
+      :id                 => self.obj_key,
+      :title              => self.title,
+      :short_title        => self.title,
+      :public_datetime    => self.created_at,
+      :teaser             => self.description,
+      :body               => self.description,
+      :assets             => [],
+      :attributions       => [ContentByline.new(name: self.host)],
+      :byline             => self.host,
+      :edit_path          => self.admin_edit_path,
+      :public_path        => self.public_path,
+      :tags               => [],
+      :feature            => [],
+      :created_at         => self.created_at,
+      :updated_at         => self.updated_at,
+      :published          => true,
+      :related_content    => [],
+      :links              => [],
+      :asset_display      => "photo"
+    })
+  end
+
+  def obj_key
+    if id
+      "external_program-#{id}"
+    end
+  end
+
   private
 
   def slug_is_unique_in_programs_namespace
