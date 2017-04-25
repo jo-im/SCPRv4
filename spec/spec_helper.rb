@@ -67,6 +67,7 @@ RSpec.configure do |config|
     FileUtils.rm_rf(
       Rails.configuration.x.scpr.media_root.join("audio/upload")
     )
+    silence_output
   end
 
   config.before :suite do
@@ -160,4 +161,24 @@ RSpec.configure do |config|
   config.after :suite do
     DatabaseCleaner.clean_with :truncation
   end
+end
+
+public
+# Redirects stderr and stout to /dev/null
+def silence_output
+  # Store the original stderr and stdout in order to restore them later
+  @original_stderr = $stderr
+  @original_stdout = $stdout
+
+  # Redirect stderr and stdout
+  $stderr = File.new('/dev/null', 'w')
+  $stdout = File.new('/dev/null', 'w')
+end
+
+# Replace stderr and stdout so anything else is output correctly
+def enable_output
+  $stderr = @original_stderr
+  $stdout = @original_stdout
+  @original_stderr = nil
+  @original_stdout = nil
 end
