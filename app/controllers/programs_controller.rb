@@ -96,22 +96,24 @@ class ProgramsController < ApplicationController
     @segment = ShowSegment.published.includes(:show).find(params[:id])
     @program = @kpcc_program = @segment.show
     @featured_programs = KpccProgram.where.not(id: @program.id, is_featured: false).first(4)
+    @url = request.original_url
 
-    is_pledge_time = PledgeDrive.happening?
-    pledge_time_template = view_context.render 'shared/widgets/donate.html.erb'
+    @is_pledge_time = PledgeDrive.happening?
     program_flatpage = Flatpage.visible.find_by path: 'exit-modal/' + @program.slug
     default_flatpage = Flatpage.visible.find_by path: 'exit-modal/default'
 
-    if is_pledge_time
-      @pledge = pledge_time_template
+    if @is_pledge_time
+      @google_analytics_label = 'Modal Type: Pledge Drive | URL: ' + @url
     elsif program_flatpage
       @modal = program_flatpage
       @form_name = @program.newsletter_form_name
       @form_id = 'form-500011'
+      @google_analytics_label = 'Modal Type: ' + @modal.title + ' | URL: ' + @url
     elsif default_flatpage
       @modal = default_flatpage
       @form_name = 'copyOfSCPR20130130BreakingNewsSignUp-1431032392145'
       @form_id = 'form725'
+      @google_analytics_label = 'Modal Type: ' + @modal.title + ' | URL: ' + @url
     end
 
     # check whether this is the correct URL for the segment
