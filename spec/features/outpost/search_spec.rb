@@ -68,26 +68,6 @@ describe "Search", :indexing do
       expect(page).to have_content "No Results"
     end
 
-    xit 'paginates' do
-      create_list :news_story, 30, headline: "Obama"
-
-      login
-
-      within ".form-search" do
-        fill_in "gquery", with: "Obama"
-        find('button').click
-      end
-
-      within ".pagination" do
-        expect(page).to have_link "2"
-        click_link "2"
-      end
-
-      within ".pagination" do
-        expect(page).to have_link "1"
-      end
-    end
-
     it "doesn't show records that can't be edited" do
       ra = create :remote_article, headline: "xxObama Remote Article Headline--"
 

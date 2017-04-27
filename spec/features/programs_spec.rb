@@ -30,7 +30,7 @@ describe "Program page" do
   context "for KPCC program" do
     it "shows the current episode" do
       program = create :kpcc_program, is_segmented: true
-      episode = create :show_episode, show: program, headline: "xxCurrentEpisode--"
+      create :show_episode, show: program, headline: "xxCurrentEpisode--"
 
       visit program.public_path
 
@@ -42,12 +42,12 @@ describe "Program page" do
     it "shows the list of episodes if is_segmented is true" do
       program = create :kpcc_program, is_segmented: true
 
-      episode = create :show_episode,
+      create :show_episode,
         :show           => program,
         :headline       => "xxCurrentEpisode--",
         :air_date       => 1.hour.ago
 
-      episode = create :show_episode,
+      create :show_episode,
         :show           => program,
         :headline       => "xxLastEpisode--",
         :air_date       => 1.day.ago

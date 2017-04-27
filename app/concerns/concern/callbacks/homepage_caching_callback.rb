@@ -57,7 +57,7 @@ module Concern
 
       # Enqueue homepage caching
       def enqueue_homepage_cache
-        Resque.enqueue(Job::HomepageCache)
+        Resque.enqueue(Job::BetterHomepageCache)
       end
 
       # Were any attributes changed that should trigger homepage caching?

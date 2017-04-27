@@ -38,33 +38,4 @@ describe Job::SendEmailNotification do
       end
     end
   end
-
-  # context "with edition" do
-  #   describe '::perform' do
-  #     context "shortlist email" do
-  #       it 'sends the email' do
-  #         story = create :news_story
-  #         edition = create :edition, :published
-  #         slot = create :edition_slot, edition: edition, item: story
-  #         edition.shortlist_email_sent?.should eq false
-
-  #         Job::SendEmailNotification.perform("Edition", edition.id)
-  #         edition.reload.shortlist_email_sent?.should eq true
-  #       end
-
-  #       it "sends the e-mail if any of the abstracts doesn't have a category" do
-  #         edition = create :edition, :published
-  #         abstract1 = create :abstract, category: nil
-  #         abstract2 = create :abstract, category: nil
-
-  #         create :edition_slot, edition: edition, item: abstract1
-  #         create :edition_slot, edition: edition, item: abstract2
-  #         edition.shortlist_email_sent?.should eq false
-
-  #         Job::SendEmailNotification.perform("Edition", edition.id)
-  #         edition.reload.shortlist_email_sent?.should eq true
-  #       end
-  #     end
-  #   end
-  # end
 end

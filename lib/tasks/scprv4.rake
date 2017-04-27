@@ -148,13 +148,6 @@ namespace :scprv4 do
       perform_or_enqueue(Job::TwitterCache)
     end
 
-
-    desc "Cache homepage sections"
-    task :homepage => [:environment] do
-      log "Caching homepage..."
-      perform_or_enqueue(Job::HomepageCache)
-    end
-
     desc "Cache marketplace articles"
     task :marketplace => [:environment] do
       log "Caching marketplace stories..."

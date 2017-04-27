@@ -81,33 +81,9 @@ describe Outpost::AdminUsersController do
       end
     end
 
-    describe 'GET /activity' do
-      it "gets the activity for this user" do
-        story = create :news_story, logged_user_id: @object.id
-        get :activity, id: @object.id
-        assigns(:versions).should eq story.versions.to_a
-      end
-    end
-
-    describe "GET /show" do
-      it "redirects to edit" do
-        get :show, id: @object.id
-        assigns(:record).should eq @object
-        response.should redirect_to @object.admin_edit_path
-      end
-    end
-
     describe "GET /new" do
       it "responds with success" do
         get :new
-        response.should be_success
-      end
-    end
-
-    describe "GET /edit" do
-      it "responds with success" do
-        get :edit, id: @object.id
-        assigns(:record).should eq @object
         response.should be_success
       end
     end
@@ -127,21 +103,6 @@ describe Outpost::AdminUsersController do
 
         # Redirect to index path because there is no commit_action parameter,
         # so it uses index path which is fallback.
-        response.should redirect_to @object.class.admin_index_path
-      end
-    end
-
-    describe "PUT /update" do
-      it "updates the record" do
-        @object.update_column(:updated_at, 1.day.ago)
-
-        expect {
-          put :update,
-            :id         => @object.id,
-            @resource   => { name: "Bricker" }
-        }.to change { @object.reload.updated_at }
-
-        assigns(:record).should eq @object
         response.should redirect_to @object.class.admin_index_path
       end
     end
@@ -196,8 +157,8 @@ describe Outpost::AdminUsersController do
       end
     end
 
-    describe "DELETE /destroy" do
-      it "destroys the resource" do
+    describe "DELETE /destroy user" do
+      it "does not destroy" do
         delete :destroy, id: @current_user.id
         AdminUser.find(@current_user.id).should_not be_destroyed
 

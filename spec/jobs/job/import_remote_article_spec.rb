@@ -13,16 +13,6 @@ describe Job::ImportRemoteArticle do
     })
   end
 
-  it "finds the article and imports it" do
-    # This headline comes from the fixture
-    # Setting the headline here is just for demonstration
-    article = create :npr_article, headline: "Four Men In A Small Boat Face The Northwest Passage"
-    Job::ImportRemoteArticle.perform(article.id, "NewsStory")
-
-    story = NewsStory.all.first
-    story.headline.should eq "Four Men In A Small Boat Face The Northwest Passage"
-  end
-
   it "raises an error if the story isn't found" do
     article = create :npr_article, headline: "Four Men In A Small Boat Face The Northwest Passage"
     RemoteArticle.any_instance.stub(:import)

@@ -1,4 +1,3 @@
-require 'core_ext/time'
 require 'logs_as_task'
 require 'status_builder'
 require 'promise'

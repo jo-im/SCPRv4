@@ -20,8 +20,8 @@ describe CategoryController, :indexing do
 
     context 'with html request' do
       it 'gets the most recent article in news' do
-        story1 = create :news_story, published_at: 1.month.ago, category: category
-        story2 = create :news_story, published_at: 1.week.ago, category: category
+        create :news_story, published_at: 1.month.ago, category: category
+        create :news_story, published_at: 1.week.ago, category: category
         story3 = create :news_story, published_at: 1.day.ago, category: category
 
         get :news
@@ -32,7 +32,7 @@ describe CategoryController, :indexing do
       it 'build sections for the categories, excluding the top article' do
         story1 = create :news_story, published_at: 1.month.ago, category: category
         story2 = create :news_story, published_at: 1.week.ago, category: category
-        story3 = create :news_story, published_at: 1.day.ago, category: category
+        create :news_story, published_at: 1.day.ago, category: category
 
         get :news
         sections = assigns(:sections)

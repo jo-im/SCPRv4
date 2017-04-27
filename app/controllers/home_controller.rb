@@ -71,6 +71,6 @@ class HomeController < ApplicationController
   private
 
   def generate_homepage
-    Job::HomepageCache.perform
+    Job::BetterHomepageCache.perform
   end
 end

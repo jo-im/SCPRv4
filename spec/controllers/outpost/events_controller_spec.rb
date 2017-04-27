@@ -28,7 +28,7 @@ describe Outpost::EventsController do
         response.should render_template "outpost/shared/_preview_errors"
       end
 
-      it "renders for hidden events" do
+      it "renders for unpublished events" do
         event = create :event, :unpublished, headline: "This is a story"
         put :preview, id: event.id, obj_key: event.obj_key, event: event.attributes
         response.should render_template "events/_event"

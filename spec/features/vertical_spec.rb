@@ -37,7 +37,7 @@ describe "Vertical page", :indexing do
     it "does not return the top story in the reverse chronological article sections" do
       vertical = create :vertical
       articles = create_list :news_story, 6, :published, category: vertical.category
-      other_articles = create_list :news_story, 10, :published, category: vertical.category
+      create_list :news_story, 10, :published, category: vertical.category
 
       articles.each do |article|
         # Featured articles
@@ -100,19 +100,19 @@ describe "Vertical page", :indexing do
       blog     = create :blog
       vertical = create :vertical, blog: blog
 
-      blog_entry1 = create :blog_entry, :published,
+      create :blog_entry, :published,
         :published_at => 1.week.ago,
         :category => vertical.category,
         :blog => blog,
         :short_headline => "xxEntry1xx"
 
-      blog_entry2 = create :blog_entry, :published,
+      create :blog_entry, :published,
         :published_at => 1.day.ago,
         :category => vertical.category,
         :blog => blog,
         :short_headline => "xxEntry2xx"
 
-      blog_entry3 = create :blog_entry, :published,
+      create :blog_entry, :published,
         :published_at => 1.hour.ago,
         :category => vertical.category,
         :blog => blog,
@@ -136,7 +136,7 @@ describe "Vertical page", :indexing do
         :category => vertical.category,
         :short_headline => "xxEntry1xx"
 
-      entry2 = create :blog_entry, :published,
+      create :blog_entry, :published,
         :blog => blog,
         :category => vertical.category,
         :short_headline => "xxEntry2xx"

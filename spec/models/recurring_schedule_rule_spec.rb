@@ -142,17 +142,6 @@ describe RecurringScheduleRule do
       rule.build_occurrences(start_date: Time.zone.now, end_date: Time.zone.now + 1.month)
       rule.schedule_occurrences.first.duration.should eq 1.hour
     end
-
-    xit "doesn't duplicate already-existing occurrences" do
-      rule.save!
-      rule.schedule_occurrences.count.should eq 3
-
-      rule.create_occurrences(start_date: Time.zone.now, end_date: Time.zone.now+2.months)
-      rule.schedule_occurrences(true).count.should eq 9
-
-      rule.create_occurrences(start_date: Time.zone.now, end_date: Time.zone.now+3.months)
-      rule.schedule_occurrences(true).count.should be > 9
-    end
   end
 
   describe '#create_occurrences' do
