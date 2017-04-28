@@ -75,7 +75,7 @@ module Filter
               </amp-youtube>
             }
           when 'instagram'
-            id_matcher = /(?:(?:http|https):\/\/)?(?:www.)?(?:instagram.com|instagr.am)\/p\/(?<shortcode>[A-Za-z0-9-_]+)/i
+            id_matcher = /(?:(?:http|https):\/\/)?(?:www.)?(?:instagram.com|instagr.am)\/p\/(?<shortcode>[A-Za-z0-9\-_]+)/i
             shortcode    = (node['href'] || "").match(id_matcher).try(:[], :shortcode)
             node.replace construct_tag  %{
               <amp-instagram
