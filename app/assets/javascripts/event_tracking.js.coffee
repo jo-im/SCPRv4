@@ -3,7 +3,7 @@ class scpr.EventTracking
     constructor: (@options={})->
         @parseOptions(@options)
         new scpr.EventTrackingLink($(link), @options) for link in $(@chooser)
-        
+
     parseOptions: (opts)->
         for option of opts
             @options[option] = opts[option]
@@ -48,7 +48,7 @@ class scpr.EventTracking
             @_evalString @el.attr(@attributes.label)
 
         _gapush: ->
-            category = @category() 
+            category = @category()
             action   = @action()
             label    = @label()
             # Don't send event unless we have all 3 pieces of data (which could happen if no current category is set)
@@ -74,7 +74,7 @@ class scpr.EventTracking
         constructor: (@options={})->
             @enable()
             # Register the scroll depth position the page loads at.
-            $(window).trigger("scroll.scrollDepth") 
+            $(window).trigger("scroll.scrollDepth")
         enable: ->
             # Only track if we have a category we can use
             if @options.currentCategory

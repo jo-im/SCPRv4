@@ -22,6 +22,8 @@ Modal = ->
 Modal.prototype.openModal = ->
   modal = $('#exit-modal')
   if !this.modalVisited
+    gaDataset = modal.data()
+    ga('send', 'event', 'Modal', 'Open Modal', gaDataset.gaModalLabel, {'nonInteraction': true});
     modal.removeClass 'exit-modal--hidden'
     modal.addClass 'exit-modal--shown'
     this.modalVisited = true
@@ -29,6 +31,8 @@ Modal.prototype.openModal = ->
 Modal.prototype.closeModal = (event) ->
   modal = $('#exit-modal')
   if event.type is 'click' or event.keyCode is 27
+    gaDataset = modal.data()
+    ga('send', 'event', 'Modal', 'Close Modal', gaDataset.gaModalLabel, {'nonInteraction': true});
     modal.removeClass 'exit-modal--shown'
     modal.addClass 'exit-modal--hidden'
 
