@@ -36,8 +36,8 @@ module Concern
             template: "amp/default",
             layout: "application.amp.erb",
             content_security_policy: [
-              "default-src *", 
-              "script-src *", 
+              "default-src *",
+              "script-src *",
               "style-src * 'unsafe-inline'",
               "img-src * data:",
               "font-src *"
@@ -63,7 +63,7 @@ module Concern
 
         def _expose exposures, ctrlr
           # This allows us to shoehorn variables and methods
-          # from the host controller into locals available 
+          # from the host controller into locals available
           # to the AMP view.
           exposed = {}
           exposures.each do |k, v|
@@ -118,8 +118,8 @@ module Concern
           unless defined? pipeline_filter
             define_method :pipeline_filter do |record|
               pipeline = ::HTML::Pipeline.new([
-                Filter::CleanupFilter, 
-                # Filter::EmbeditorFilter, 
+                Filter::CleanupFilter,
+                # Filter::EmbeditorFilter,
                 Filter::InlineAssetsFilter,
                 Filter::AmpFilter
                 ], content: record)

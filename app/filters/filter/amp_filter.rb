@@ -2,12 +2,10 @@ module Filter
   class AmpFilter < HTML::Pipeline::Filter
     TAG_MAPPINGS = {
       'img' => lambda { |img|
-        if img['data-width'] && img['data-height']
+        if img['width'] && img['height']
           img.name = "amp-img"
           img['layout'] = 'responsive'
           img['srcset'] = img['src']
-          img['width']  = img['data-width']
-          img['height'] = img['data-height']
           figstring = "<figure>#{img.to_s}"
           if caption = img.attribute('alt') ? img.attribute('alt').value : nil
             figstring += "<figcaption class='media__caption text--light'>#{caption}</figcaption>"
@@ -44,7 +42,7 @@ module Filter
       },
       'a' => lambda { |node|
         # Twitter embeds use script tags, which is not supported
-        # by AMP.  Thus, they have to be converted to a custom 
+        # by AMP.  Thus, they have to be converted to a custom
         # tag that can be understood by the Twitter AMP plugin.
         if node['class'] == "embed-placeholder"
           case node['data-service']
@@ -84,7 +82,7 @@ module Filter
                   height="400"
                   layout="responsive">
               </amp-instagram>
-            }            
+            }
           end
         end
       }
@@ -107,7 +105,7 @@ module Filter
       @tags = %w(a em p span h1 h2 h3 h4 h5 h6 div strong s u br blockquote)
       doc.traverse do |node|
         scrub node
-      end      
+      end
     end
     def scrub node
       if node.name.in?(TAG_MAPPINGS.keys)
