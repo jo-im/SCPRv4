@@ -1,9 +1,9 @@
-<% if content.links.present? || content.related_content.present? %>
+<% if content.links.present? || content.original_object.related_content.present? %>
   <aside class="ancillary related">
     <header><h1>Related Links</h1></header>
     <nav>
       <ul>
-        <% for l in (content.related_content + content.links ) %>
+        <% for l in (content.original_object.related_content + content.links) %>
           <%
             classes = "track-event"
             url         = nil
