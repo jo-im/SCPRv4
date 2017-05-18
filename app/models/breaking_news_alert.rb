@@ -112,24 +112,10 @@ class BreakingNewsAlert < ActiveRecord::Base
   # Publish a mobile notification
   def publish_mobile_notification
     return false if !should_send_mobile_notification?
-    result = parse_push
-    if result['result'] == true
-      self.update_column(:mobile_notification_sent, true)
-    else
-      # TODO: Handle errors from OneSignal
-    end
-    one_signal_push
-  end
-
-  def parse_push
-    push = Parse::Push.new({
-      :title      => "KPCC - #{self.break_type}",
-      :alert      => alert_subject,
-      :badge      => badge,
-      :alertId    => self.id
-    })
-    push.channels = self.alert_type == "audio" ? [IPHONE_CHANNEL,IPAD_CHANNEL] : [IPAD_CHANNEL]
-    result = push.save
+    response = one_signal_push
+    self.update_column(:mobile_notification_sent, true)
+  rescue OneSignal::OneSignalError, OneSignal::NoRecipientsError => err
+    NewRelic.log_error(err)
   end
 
   def one_signal_push

@@ -27,7 +27,7 @@ describe BreakingNewsAlert do
 
   describe '#publish_mobile_notification' do
     before :each do
-      stub_request(:post, /(api\.parse\.com)|(onesignal\.com)/)
+      stub_request(:post, /(onesignal\.com)/)
       .to_return(body: { result: true }.to_json)
     end
 
