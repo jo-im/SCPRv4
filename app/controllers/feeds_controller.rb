@@ -57,7 +57,7 @@ class FeedsController < ApplicationController
 
 
   def latest_news_flash_briefing
-    response.headers["Content-Type"] = 'application/rss+xml'
+    response.headers["Content-Type"] = 'text/xml'
 
     @feed = {
       :title       => "Latest News from 89.3 KPCC",

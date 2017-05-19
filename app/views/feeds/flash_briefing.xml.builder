@@ -1,5 +1,8 @@
-xml.rss({"xmlns:nprml"=>"http://api.npr.org/nprml"}) do
+xml.rss(RSS_SPEC) do
   xml.channel do
+    xml.title       @feed[:title]
+    xml.link        @feed[:link] || "http://www.scpr.org"
+    xml.description @feed[:description]
     @content.each do |content|
       xml.item do
         xml.title content.title
