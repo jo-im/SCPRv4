@@ -13,9 +13,8 @@ xml.rss(RSS_SPEC) do
 
         if audio = (content.audio || []).first
           xml.tag!('enclosure', {
-            :url => audio.url,
-            :type => "audio/mpeg",
-            "nprml:download" => true
+            :url => (audio.url || "").gsub("http://", "https://"),
+            :type => "audio/mpeg"
           })
         end
 
