@@ -55,4 +55,28 @@ class FeedsController < ApplicationController
     render template: 'feeds/npr_ingest.xml.builder', format: :xml
   end
 
+
+  def latest_news_flash_briefing
+    response.headers["Content-Type"] = 'text/xml'
+
+    @feed = {
+      :title       => "Latest News from 89.3 KPCC",
+      :description => "Latest news from KPCC's reporters, bloggers and shows."
+    }
+
+    options = {
+      :classes    => [NewsStory],
+      :limit      => 5,
+      :with       => { "audio" => true }
+    }
+
+    if params[:category]
+      options[:with]['category.slug'] = params[:category]
+    end
+
+    @content = ContentBase.search(options)
+
+    render template: 'feeds/flash_briefing.xml.builder', format: :xml
+  end
+
 end
