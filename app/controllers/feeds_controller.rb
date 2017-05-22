@@ -57,7 +57,7 @@ class FeedsController < ApplicationController
 
 
   def latest_news_flash_briefing
-    response.headers["Content-Type"] = 'application/rss+xml'
+    response.headers["Content-Type"] = 'application/json'
 
     @feed = {
       :title       => "Latest News from 89.3 KPCC",
@@ -76,7 +76,7 @@ class FeedsController < ApplicationController
 
     @content = ContentBase.search(options)
 
-    render template: 'feeds/flash_briefing.xml.builder', format: :xml
+    render template: 'feeds/flash_briefing.json.jbuilder', format: :json
   end
 
 end

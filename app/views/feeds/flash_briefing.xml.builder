@@ -1,4 +1,4 @@
-xml.rss({version: "2.0"}) do
+xml.rss(RSS_SPEC) do
   xml.channel do
     # xml.title       @feed[:title]
     # xml.link        @feed[:link] || "http://www.scpr.org"
