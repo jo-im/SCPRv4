@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170414235404) do
+ActiveRecord::Schema.define(version: 20170522202220) do
 
   create_table "abstracts", force: :cascade do |t|
     t.string   "source",               limit: 255
@@ -624,6 +624,28 @@ ActiveRecord::Schema.define(version: 20170414235404) do
   add_index "media_related", ["content_id", "content_type"], name: "index_media_related_on_content_id_and_content_type", using: :btree
   add_index "media_related", ["related_id", "related_type"], name: "index_media_related_on_related_id_and_related_type", using: :btree
 
+  create_table "members", force: :cascade do |t|
+    t.string   "email",         limit: 255
+    t.boolean  "email_sent"
+    t.string   "first_name",    limit: 255
+    t.string   "last_name",     limit: 255
+    t.string   "name",          limit: 255
+    t.boolean  "pfs_selected"
+    t.integer  "pledge_amount", limit: 4
+    t.string   "pledge_id",     limit: 255
+    t.string   "pledge_token",  limit: 255
+    t.string   "pledge_type",   limit: 255
+    t.string   "record_source", limit: 255
+    t.integer  "views_left",    limit: 4
+    t.string   "member_id",     limit: 255
+    t.datetime "created_at",                null: false
+    t.datetime "updated_at",                null: false
+  end
+
+  add_index "members", ["email"], name: "index_members_on_email", using: :btree
+  add_index "members", ["member_id"], name: "index_members_on_member_id", using: :btree
+  add_index "members", ["pledge_token"], name: "index_members_on_pledge_token", using: :btree
+
   create_table "news_story", force: :cascade do |t|
     t.string   "headline",         limit: 255
     t.string   "slug",             limit: 255
@@ -868,6 +890,14 @@ ActiveRecord::Schema.define(version: 20170414235404) do
   add_index "schedule_occurrences", ["starts_at", "ends_at"], name: "index_schedule_occurrences_on_starts_at_and_ends_at", using: :btree
   add_index "schedule_occurrences", ["starts_at"], name: "index_schedule_occurrences_on_starts_at", using: :btree
   add_index "schedule_occurrences", ["updated_at"], name: "index_schedule_occurrences_on_updated_at", using: :btree
+
+  create_table "settings", force: :cascade do |t|
+    t.string   "key",        limit: 255
+    t.string   "context",    limit: 255
+    t.string   "value",      limit: 255
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
+  end
 
   create_table "shows_episode", force: :cascade do |t|
     t.integer  "show_id",             limit: 4,                          null: false

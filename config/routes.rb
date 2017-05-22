@@ -191,6 +191,7 @@ Scprv4::Application.routes.draw do
         resources :editions, only: [:index, :show]
         resources :categories, only: [:index, :show]
         resources :events, only: [:index, :show]
+        resources :members, only: [:show]
         resources :programs, only: [:index, :show]
         resources :buckets, only: [:index, :show]
         resources :episodes, only: [:index, :show]
@@ -198,6 +199,9 @@ Scprv4::Application.routes.draw do
         resources :data_points, only: [:index, :show]
         resources :tags, only: [:index, :show]
         resources :lists, only: [:index, :show]
+
+        get "settings" => "settings#index"
+        get "settings/:context" => "settings#index"
 
         get "programs/:id/episodes/archive/:year/:month" => "archive_browser#index"
         get "programs/:id/histogram"                => "programs#histogram"
