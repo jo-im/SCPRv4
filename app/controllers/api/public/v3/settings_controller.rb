@@ -1,19 +1,11 @@
 module Api::Public::V3
   class SettingsController < BaseController
 
-    before_filter :get_context, only: [:index]
-
     def index
-      @settings = Setting.where(context: @context).where.not(context: nil)
-      if @context == "global"
-        @pledge_drive = PledgeDrive.happening.order("starts_at DESC").first
-      end
+      @settings = Setting.where(context: [params[:context], 'global']).where.not(context: nil)
+      @pledge_drive = PledgeDrive.happening.order("starts_at DESC").first
       respond_with @settings
     end
-
-  private
-    def get_context
-      @context = params[:context] || "global"
-    end
+    
   end
 end
