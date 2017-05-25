@@ -56,12 +56,14 @@ class FeedsController < ApplicationController
   end
 
 
-  def latest_news_flash_briefing
+  def flash_briefing
     response.headers["Content-Type"] = 'application/json'
 
+    @category = Category.where(slug: params[:category]).first!
+
     @feed = {
-      :title       => "Latest News from 89.3 KPCC",
-      :description => "Latest news from KPCC's reporters, bloggers and shows."
+      :title       => "#{@category.title} News from 89.3 KPCC",
+      :description => "#{@category.title} News from KPCC's reporters, bloggers and shows."
     }
 
     options = {
@@ -70,9 +72,7 @@ class FeedsController < ApplicationController
       :with       => { "audio" => true }
     }
 
-    if params[:category]
-      options[:with]['category.slug'] = params[:category]
-    end
+    options[:with]['category.slug'] = @category.slug
 
     @content = ContentBase.search(options)
 
