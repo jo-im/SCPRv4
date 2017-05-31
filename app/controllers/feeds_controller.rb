@@ -55,4 +55,28 @@ class FeedsController < ApplicationController
     render template: 'feeds/npr_ingest.xml.builder', format: :xml
   end
 
+
+  def flash_briefing
+    response.headers["Content-Type"] = 'application/json'
+
+    @category = Category.where(slug: params[:category]).first!
+
+    @feed = {
+      :title       => "#{@category.title} News from 89.3 KPCC",
+      :description => "#{@category.title} News from KPCC's reporters, bloggers and shows."
+    }
+
+    options = {
+      :classes    => [NewsStory],
+      :limit      => 5,
+      :with       => { "audio" => true }
+    }
+
+    options[:with]['category.slug'] = @category.slug
+
+    @content = ContentBase.search(options)
+
+    render template: 'feeds/flash_briefing.json.jbuilder', format: :json
+  end
+
 end
