@@ -14,7 +14,7 @@ Scprv4::Application.routes.draw do
   get '/listen_live/pledge-free/off-air' => 'listen#pledge_free_off_air', as: :listen_pledge_free_off_air
   get '/listen_live/pledge-free/error' => 'listen#pledge_free_error', as: :listen_pledge_free_error
   get '/listen-live' => redirect('/listen_live')
-  get '/listenlive'  => redirect('/listenlive')
+  get '/listenlive'  => redirect('/listen_live')
 
   # Sections
   get '/category/carousel-content/:object_class/:id' => 'category#carousel_content',  as: :category_carousel, defaults: { format: :js }
