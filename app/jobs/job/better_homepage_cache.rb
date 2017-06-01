@@ -6,10 +6,14 @@ module Job
 
       def perform
         homepage  = ::BetterHomepage.current.last
+        cache_articles homepage
         cache_contents homepage
         cache_right_asides homepage
       end
     private
+      def cache_articles homepage
+        Rails.cache.write "homepage/articles", homepage.content_articles
+      end
       def cache_contents homepage
         @homepage = homepage
         return if !homepage

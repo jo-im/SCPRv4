@@ -1,6 +1,6 @@
 json.array! @content do |content|
   json.uid  content.public_url
-  json.updateDate Time.zone.now
+  json.updateDate content.public_datetime
   json.titleText content.title
   json.mainText content.teaser
   if audio = (content.audio || []).first
