@@ -59,6 +59,18 @@ class FeedsController < ApplicationController
   def flash_briefing
     response.headers["Content-Type"] = 'application/json'
 
+    if params[:category]
+      category_flash_briefing
+    else
+      latest_news_flash_briefing
+    end
+
+    render template: 'feeds/flash_briefing.json.jbuilder', format: :json
+  end
+
+  private
+
+  def category_flash_briefing
     @category = Category.where(slug: params[:category]).first!
 
     @feed = {
@@ -75,8 +87,29 @@ class FeedsController < ApplicationController
     options[:with]['category.slug'] = @category.slug
 
     @content = ContentBase.search(options)
+  end
 
-    render template: 'feeds/flash_briefing.json.jbuilder', format: :json
+  def latest_news_flash_briefing
+    @feed = {
+      title: "Latest News from 89.3 KPCC",
+      description: "Latest News from KPCC's reporters, bloggers, and shows."
+    }
+    @content = (Rails.cache.read('homepage/articles') || []).select do |a| 
+      a.id.try(:match, "news_story") && a.audio.any?
+    end.first(2)
+    
+    needs = 5 - @content.count
+
+    if needs > 0 # in case we have fewer than 5 stories with audio from the homepage
+      options = {
+        :classes    => [NewsStory],
+        :limit      => needs,
+        :with       => { "audio" => true },
+        :without    => { "ids" => @content.map{ |a| a.id } }
+      }
+      @content.concat(ContentBase.search(options)).uniq!
+    end
+
   end
 
 end
