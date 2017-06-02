@@ -57,7 +57,7 @@ class FeedsController < ApplicationController
 
 
   def flash_briefing
-    response.headers["Content-Type"] = 'application/json'
+    response.headers["Content-Type"] = 'application/json; charset=utf-8'
 
     if params[:category]
       category_flash_briefing
