@@ -96,7 +96,7 @@ class FeedsController < ApplicationController
     }
     @content = (Rails.cache.read('homepage/articles') || []).select do |a| 
       a.id.try(:match, "news_story") && a.audio.any?
-    end.first(2)
+    end.first(5)
     
     needs = 5 - @content.count
 
@@ -105,9 +105,9 @@ class FeedsController < ApplicationController
         :classes    => [NewsStory],
         :limit      => needs,
         :with       => { "audio" => true },
-        :without    => { "ids" => @content.map{ |a| a.id } }
+        :without    => { "term"  => {"id" => @content.map{ |a| a.id } }  }
       }
-      @content.concat(ContentBase.search(options)).uniq!
+      @content.concat(ContentBase.search(options)).uniq{|a| a.id}
     end
 
   end
