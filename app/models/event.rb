@@ -211,6 +211,19 @@ class Event < ActiveRecord::Base
     })
   end
 
+  def to_abstract
+    @to_abstract ||= Abstract.new({
+      :original_object        => self,
+      :headline               => "Event: " + self.headline,
+      :summary                => !(self.abstract || "").empty? ? self.abstract : self.teaser,
+      :source                 => self.abstract_source,
+      :url                    => self.public_url,
+      :assets                 => self.assets.top,
+      :audio                  => self.audio.available,
+      :category               => self.category,
+      :article_published_at   => self.created_at
+    })
+  end
 
   def route_hash
     return {} if !self.persisted? || !self.persisted_record.published?

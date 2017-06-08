@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170522202220) do
+ActiveRecord::Schema.define(version: 20170608212515) do
 
   create_table "abstracts", force: :cascade do |t|
     t.string   "source",               limit: 255
@@ -403,6 +403,7 @@ ActiveRecord::Schema.define(version: 20170522202220) do
     t.integer  "asset_display_id",    limit: 4
     t.boolean  "needs_reindex",                          default: false
     t.text     "abstract",            limit: 65535
+    t.string   "abstract_source",     limit: 255
   end
 
   add_index "events", ["asset_display_id"], name: "index_events_on_asset_display_id", using: :btree
