@@ -18,9 +18,9 @@ module Concern
               query:              params[:query],
               default_operator:   "AND",
             }
-          }
+          },
+          sort: [{"#{order_attribute}"=>{:order=>(order_direction||"desc").downcase}}]
         }
-
         @results = model.search(body).page(params[:page]||1).per(50)
         @records = @results.records
       end
