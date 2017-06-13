@@ -94,6 +94,7 @@ class FeedsController < ApplicationController
       title: "Latest News from 89.3 KPCC",
       description: "Latest News from KPCC's reporters, bloggers, and shows."
     }
+
     @content = (Rails.cache.read('homepage/articles') || []).select do |a| 
       a.id.try(:match, "news_story") && a.audio.any?
     end.first(5)
@@ -103,11 +104,13 @@ class FeedsController < ApplicationController
     if needs > 0 # in case we have fewer than 5 stories with audio from the homepage
       options = {
         :classes    => [NewsStory],
-        :limit      => needs,
+        :limit      => 5,
         :with       => { "audio" => true },
-        :without    => { "term"  => {"id" => @content.map{ |a| a.id } }  }
       }
-      @content.concat(ContentBase.search(options)).uniq{|a| a.id}
+      @content = @content
+        .concat(ContentBase.search(options))
+        .uniq{|a| a.id}
+        .first(5)
     end
 
   end
