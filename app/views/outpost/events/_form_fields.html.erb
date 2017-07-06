@@ -25,7 +25,6 @@
   <%= f.input(:abstract, input_html: { class: "cke-editor-basic" }) if f.object.respond_to?(:abstract) %>
 
   <%= f.input(:abstract_source, hint: "The byline displayed when used in an Edition.  Defaults to \"KPCC\" if left blank.") if f.object.respond_to?(:abstract_source) %>
-  <%= f.section "slug" %>
 <% end %>
 
 <%= form_block "Location" do %>
