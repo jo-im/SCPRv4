@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170608212515) do
+ActiveRecord::Schema.define(version: 20170721191919) do
 
   create_table "abstracts", force: :cascade do |t|
     t.string   "source",               limit: 255
@@ -895,9 +895,9 @@ ActiveRecord::Schema.define(version: 20170608212515) do
   create_table "settings", force: :cascade do |t|
     t.string   "key",        limit: 255
     t.string   "context",    limit: 255
-    t.string   "value",      limit: 255
-    t.datetime "created_at",             null: false
-    t.datetime "updated_at",             null: false
+    t.text     "value",      limit: 65535
+    t.datetime "created_at",               null: false
+    t.datetime "updated_at",               null: false
   end
 
   create_table "shows_episode", force: :cascade do |t|
