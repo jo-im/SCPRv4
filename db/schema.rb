@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170721191919) do
+ActiveRecord::Schema.define(version: 20170721211001) do
 
   create_table "abstracts", force: :cascade do |t|
     t.string   "source",               limit: 255
@@ -708,11 +708,13 @@ ActiveRecord::Schema.define(version: 20170721191919) do
   add_index "pij_query", ["status"], name: "index_pij_query_on_status", using: :btree
 
   create_table "pledge_drives", force: :cascade do |t|
-    t.datetime "starts_at",                  null: false
-    t.datetime "ends_at",                    null: false
-    t.boolean  "enabled",    default: false
-    t.datetime "created_at",                 null: false
-    t.datetime "updated_at",                 null: false
+    t.datetime "starts_at",                                 null: false
+    t.datetime "ends_at",                                   null: false
+    t.boolean  "enabled",                   default: false
+    t.datetime "created_at",                                null: false
+    t.datetime "updated_at",                                null: false
+    t.integer  "current_dollars", limit: 4
+    t.integer  "goal_dollars",    limit: 4
   end
 
   add_index "pledge_drives", ["ends_at"], name: "index_pledge_drives_on_ends_at", using: :btree
