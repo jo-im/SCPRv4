@@ -2,13 +2,14 @@ development:
   adapter: mysql2
   reconnect: true
   database: scpr
-  host: <%= ENV['SCPRV4_DEVELOPMENT_DATABASE_IP'] %>
+  host: <%= ENV['SCPRV4_MYSQL_HOST'] || '127.0.0.1' %>
   port: 3306
   username: root
 test:
   adapter: mysql2
   reconnect: true
   database: scprv4_test
-  host: <%= ENV['SCPRV4_DEVELOPMENT_DATABASE_IP'] %>
+  host: <%= ENV['SCPRV4_MYSQL_HOST'] || '127.0.0.1' %>
   port: 3306
   username: root
+
