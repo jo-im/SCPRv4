@@ -110,15 +110,15 @@ In production, assetsync runs on a worker instance.
 
 This is by far the easiest way of getting the application up and running.  All you need is to have [Docker](https://www.docker.com/) with [docker-compose](https://docs.docker.com/compose/) installed.
 
-Obtain a Deploybot key for a database backup and provide that to a new MySQL container.
+Obtain a Deploybot key for a database backup and set it as a temporary environment variable.
 
-      docker-compose run -d mysql <DEPLOYBOT TOKEN>
+      export SCPRV4_DEPLOYBOT_TOKEN=<your token>
 
-This will pull a database backup, which will take a few minutes to do.  Unfortunately, there's currently no way to run the command without daemon mode and be able to exit the container with CTRL+C until we can modify `scpr/restore-percona-backup` to optionally pull a backup without starting the MySQL server.  You can check if your MySQL server is up and running by executing `curl localhost:3306` and seeing if you get a response.
+Then pull/run the services.
 
-Then run the rest of the services.
+      docker-compose up -d mysql redis elasticsearch
 
-      docker-compose up -d redis elasticsearch
+The MySQL container will pull a database backup, which will take a few minutes to do.  Unfortunately, there's currently no way to run the command without daemon mode and be able to exit the container with CTRL+C until we can modify `scpr/restore-percona-backup` to optionally pull a backup without starting the MySQL server.  You can check if your MySQL server is up and running by executing `curl localhost:3306` and seeing if you get a response.
 
 If you have Rails installed on your host, running the web server is simple as:
 
