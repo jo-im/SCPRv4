@@ -174,7 +174,11 @@ class Article
     if self.public_path =~ /^http/
       self.public_path
     else
-      "http://#{Rails.application.default_url_options[:host]}#{self.public_path}"
+      if Rails.application.default_url_options[:host]
+        "http://#{Rails.application.default_url_options[:host]}#{self.public_path}"
+      else
+        self.public_path
+      end
     end
   end
 

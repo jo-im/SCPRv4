@@ -117,7 +117,7 @@
   <script>
     llPlayer = new scpr.ListenLive.CurrentGen({
       schedule:   <%= @schedule.map(&:listen_live_json).to_json.html_safe %>,
-      nielsen_enabled: <%= Rails.application.secrets.api['nielsen']['enabled'] %>
+      nielsen_enabled: <%= Rails.env.production? %>
     })
 
     $("#llcontent a").attr("target","_blank");

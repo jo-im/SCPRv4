@@ -2,25 +2,25 @@
 <div class="story o-media o-media--<%= size %> <%= klass %>" data-obj-key='<%= story.obj_key %>'>  
   <% if size == "med" %>
     <%= media_label content.label, content.try(:label_path) %>
-    <%= media_headline "3", story.short_headline, story.public_url %>
+    <%= media_headline "3", story.short_headline, story.public_path %>
   <% end %>
 
   <% nofigure ||= false %>
   <% unless nofigure %>
-    <%= media_figure "widescreen", url: story.public_url, asset_url: story.asset.full.url, asset_scheme: content.asset_scheme, aspect: "widescreen" %>
+    <%= media_figure "widescreen", url: story.public_path, asset_url: story.asset.full.url, asset_scheme: content.asset_scheme, aspect: "widescreen" %>
   <% end %>
 
   <% if size == "lg" %>
     <%= media_label content.label, content.try(:label_path) %>
     <% if index && index == 0 %>
-      <%= media_headline "1", story.short_headline, story.public_url %>
+      <%= media_headline "1", story.short_headline, story.public_path %>
     <% else %>
-      <%= media_headline "2", story.short_headline, story.public_url %>
+      <%= media_headline "2", story.short_headline, story.public_path %>
     <% end %>
   <% end %>
 
   <% if size == "sm" %>
-    <%= media_headline "5", story.short_headline, story.public_url %>
+    <%= media_headline "5", story.short_headline, story.public_path %>
   <% end %>
 
   <% if size != "sm" %>
