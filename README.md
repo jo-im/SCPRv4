@@ -120,13 +120,11 @@ Then pull/run the services.
 
 The MySQL container will pull a database backup, which will take a few minutes to do.  Unfortunately, there's currently no way to run the command without daemon mode and be able to exit the container with CTRL+C until we can modify `scpr/restore-percona-backup` to optionally pull a backup without starting the MySQL server.  You can check if your MySQL server is up and running by executing `curl localhost:3306` and seeing if you get a response.
 
-If you have Rails installed on your host, running the web server is simple as:
+After acquring `config/secrets.yml` from the wiki, if you have Rails installed on your host, running the web server is simple as...
 
       rails s
 
-Optionally, you can also run the Rails application in a Docker container.  The disadvantages to this approach are that you will have to first build a Docker image and that the application will also run slower, but the advantage is the application environment is self-contained as the rest of the servies are(i.e. no having to maintain version of Ruby, RVM/Rbenv, Node.js, etc. on the host machine).
-
-After acquring `config/secrets.yml` from the wiki, you can run the Rails server:
+... or optionally, you can instead run the Rails application in a Docker container.  The disadvantages to this approach are that you will have to first build a Docker image and that the application will also run slower, but the advantage is the application environment is self-contained as the rest of the servies are(i.e. no having to maintain version of Ruby, RVM/Rbenv, Node.js, etc. on the host machine).
       
       docker-compose run --rm scpr
 
