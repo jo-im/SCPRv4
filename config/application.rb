@@ -4,17 +4,6 @@ require "./lib/actionpack/lib/action_controller/metal/url_for"
 
 Bundler.require(:default, Rails.env)
 
-if Rails.env.development? || ENV['USE_DOCKER_MACHINE']
-  ## Initialize Docker Machine environment variables so
-  ## that database.yml can pick up the MySQL database host
-  `docker-machine env default`.scan(/(\w+)="(.*)"/).each{|p| ENV[p[0]] = p[1]}
-  begin
-    ENV['SCPRV4_DEVELOPMENT_DATABASE_IP'] = URI(ENV['DOCKER_HOST']).host
-  rescue ArgumentError
-    puts "WARNING: Development Database IP Not Defined"
-  end
-end
-
 module Scprv4
   class Application < Rails::Application
     # Custom directories with classes and modules you want to be autoloadable.

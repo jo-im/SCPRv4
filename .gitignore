@@ -19,4 +19,7 @@ dump.rdb
 config/secrets.yml
 /node_modules
 .byebug_history
+.ash_history
+.gem/
+.bundle/
 

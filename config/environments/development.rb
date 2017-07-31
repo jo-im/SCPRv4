@@ -20,10 +20,10 @@ Scprv4::Application.configure do
   config.action_mailer.delivery_method       = :smtp
   config.action_mailer.raise_delivery_errors = true
 
-  config.x.scpr.host          = ENV["SCPRV4_HOST"]              || "scprv4.dev"
+  # config.x.scpr.host          = ENV["SCPRV4_HOST"]              || "scprv4.dev"
   config.x.scpr.audio_root    = ENV["SCPRV4_AUDIO_ROOT"]        || false
   config.x.scpr.media_url     = ENV["SCPRV4_MEDIA_URL"]         || "http://media.scpr.org"
-  config.x.newsroom.url           = ENV["SCPRV4_NEWSROOM"]          || "http://localhost:8888"
+  config.x.newsroom.url       = ENV["SCPRV4_NEWSROOM"]          || "http://localhost:8888"
 
   config.x.assethost.raise_on_errors = true
 

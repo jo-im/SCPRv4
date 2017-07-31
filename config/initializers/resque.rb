@@ -1,4 +1,4 @@
-Resque.redis = "#{Rails.application.secrets["resque"]}/resque:scprv4-#{Rails.env}"
+Resque.redis = "#{ENV["SCPRV4_RESQUE_HOST"] || Rails.application.secrets["resque"]}/resque:scprv4-#{Rails.env}"
 
 Resque.after_fork do |job|
   # Every time a job is started, make sure the connection
