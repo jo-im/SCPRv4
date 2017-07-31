@@ -30,17 +30,6 @@ module Job
         cached    = cacher.render partial: key
         cacher.send :write, key, cached        
       end
-      def latest_headlines homepage
-        ignore_obj_keys = homepage.content
-          .order("position ASC")
-          .limit(2).map{|c| "#{c.class.to_s.underscore}-#{c.id}"}
-        ContentBase.active_query do |query|
-          query
-            .where("status = 5", "category_id IS NOT NULL")
-            .where("id NOT IN (?)", ignore_obj_keys)
-            .order("published_at DESC").limit(5)
-        end 
-      end  
     end
   end
 end
