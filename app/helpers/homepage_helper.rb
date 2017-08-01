@@ -46,21 +46,20 @@ module HomepageHelper
     #
     # This is really only useful in the context of
     # the homepage, where we want to show some of
-    # the latest stories excluding the first two
+    # the latest [news] stories excluding the first two
     # stories on the homepage for visual reasons.
-    ignore_obj_keys = content
+    ignore_ids = content
+      .select{|c| (c.content_type || "").match("NewsStory")}
       .sort_by{|i| i.position}
       .first(2)
       .map{|c| c.content_id}
     # ^^^ Just doing a ruby sort here because we 
     # don't actually have anything to query against
     # when we are previewing a homepage.
-    ContentBase.active_query do |query|
-      query
-        .where("status = 5", "category_id IS NOT NULL")
-        .where("id NOT IN (?)", ignore_obj_keys)
-        .order("published_at DESC").limit(5)
-    end 
+    NewsStory
+      .where("status = 5", "category_id IS NOT NULL")
+      .where("id NOT IN (?)", ignore_ids)
+      .order("published_at DESC").limit(5)
   end  
   def render_right_aside index, &block
     klass = "right l-col l-col--sm-12 l-col--med-3"
