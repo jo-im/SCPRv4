@@ -39,7 +39,7 @@ class Edition < ActiveRecord::Base
   SHORT_LIST_TYPES = {
     'am-edition'      => 'A.M. Edition',
     'pm-edition'      => 'P.M. Edition',
-    'weekend-reads' => 'Weekend Reads'
+    'weekend-reads'   => 'Weekend Reads'
   }
 
   scope :recently, ->{ where("published_at > ?", 3.hours.ago) }
@@ -115,6 +115,79 @@ class Edition < ActiveRecord::Base
 
   def sister_editions
     self.class.published.where.not(id: self.id).first(4)
+  end
+
+  def html_body
+    # NOTE: This is ugly as hell but will only be around for the short term.
+    # Please, PLEASE remove this ASAP.
+
+    subject = "The Short List: #{self.title}"
+    EloquaEmail.new({
+      :emailable     => self,
+      :html_template   => "/editions/email/template",
+      :plain_text_template   => "/editions/email/template",
+      :name        => "[tsl #{Time.zone.now.strftime("%Y%m%d")}] #{self.title[0..30]}",
+      :description => "SCPR Short List\n" \
+                      "Sent: #{Time.zone.now}\nSubject: #{subject}",
+      :subject     => subject,
+      :email       => "theshortlist@scpr.org",
+      :email_type  => "shortlist"
+    }).html_body
+  end
+
+  def monday_html_body
+    # NOTE: This is ugly as hell but will only be around for the short term.
+    # Please, PLEASE remove this ASAP.
+
+    subject = "The Short List: #{self.title}"
+    EloquaEmail.new({
+      :emailable     => self,
+      :html_template   => "/editions/email/monday/template",
+      :plain_text_template   => "/editions/email/monday/template",
+      :name        => "[tslm #{Time.zone.now.strftime("%Y%m%d")}] #{self.title[0..30]}",
+      :description => "SCPR Monday Short List\n" \
+                      "Sent: #{Time.zone.now}\nSubject: #{subject}",
+      :subject     => subject,
+      :email       => "theshortlist@scpr.org",
+      :email_type  => "monday_shortlist"
+    }).html_body
+  end
+
+
+  def text_body
+    # NOTE: This is ugly as hell but will only be around for the short term.
+    # Please, PLEASE remove this ASAP.
+
+    subject = "The Short List: #{self.title}"
+    EloquaEmail.new({
+      :emailable     => self,
+      :html_template   => "/editions/email/template",
+      :plain_text_template   => "/editions/email/template",
+      :name        => "[tsl #{Time.zone.now.strftime("%Y%m%d")}] #{self.title[0..30]}",
+      :description => "SCPR Short List\n" \
+                      "Sent: #{Time.zone.now}\nSubject: #{subject}",
+      :subject     => subject,
+      :email       => "theshortlist@scpr.org",
+      :email_type  => "shortlist"
+    }).plain_text_body
+  end
+
+  def monday_text_body
+    # NOTE: This is ugly as hell but will only be around for the short term.
+    # Please, PLEASE remove this ASAP.
+
+    subject = "The Short List: #{self.title}"
+    EloquaEmail.new({
+      :emailable     => self,
+      :html_template   => "/editions/email/monday/template",
+      :plain_text_template   => "/editions/email/monday/template",
+      :name        => "[tslm #{Time.zone.now.strftime("%Y%m%d")}] #{self.title[0..30]}",
+      :description => "SCPR Monday Short List\n" \
+                      "Sent: #{Time.zone.now}\nSubject: #{subject}",
+      :subject     => subject,
+      :email       => "theshortlist@scpr.org",
+      :email_type  => "monday_shortlist"
+    }).plain_text_body
   end
 
   def send_shortlist_email

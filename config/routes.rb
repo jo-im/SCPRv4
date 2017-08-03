@@ -302,7 +302,12 @@ Scprv4::Application.routes.draw do
     resources :bios, concerns: [:search]
     resources :press_releases, concerns: [:search]
     resources :abstracts, concerns: [:search]
-    resources :editions, concerns: [:search]
+    resources :editions, concerns: [:search] do
+      member do
+        get 'bodies', as: :bodies
+      end
+    end
+
     resources :verticals
     resources :tags, concerns: [:search]
 
