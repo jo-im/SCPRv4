@@ -287,7 +287,11 @@ Scprv4::Application.routes.draw do
     resources :recurring_schedule_rules, concerns: [:preview, :search]
     resources :schedule_occurrences, concerns: [:search]
     resources :podcasts, concerns: [:search]
-    resources :breaking_news_alerts, concerns: [:search]
+    resources :breaking_news_alerts, concerns: [:search] do
+      member do
+        get 'bodies', as: :bodies
+      end
+    end
     resources :featured_comment_buckets, concerns: [:search]
     resources :categories, concerns: [:search]
     resources :topics, concerns: [:search]

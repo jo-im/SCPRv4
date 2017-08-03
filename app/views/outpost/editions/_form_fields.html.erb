@@ -3,9 +3,7 @@
   <%= f.input :slug, collection: Edition.slug_select_collection, include_blank: false, label: "Edition Type" %>
   <% content_for :submit_row do %>
     <% if f.object.try(:id) %>
-
-        <%= link_to "View HTML/Text Bodies", bodies_outpost_edition_path(@record), target: "_blank", class: "btn btn-info" %>
-
+      <%= link_to "View HTML/Text Bodies", bodies_outpost_edition_path(@record), target: "_blank", class: "btn btn-info" %>
     <% end %>
   <% end %>
 <% end %>

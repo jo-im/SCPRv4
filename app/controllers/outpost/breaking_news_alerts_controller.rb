@@ -32,4 +32,8 @@ class Outpost::BreakingNewsAlertsController < Outpost::ResourceController
       :title        => "Mobile Notification Sent?",
       :collection   => :boolean
   end
+
+  def bodies
+    @record = BreakingNewsAlert.find(params[:id])
+  end
 end

@@ -173,6 +173,14 @@ class BreakingNewsAlert < ActiveRecord::Base
     }
   end
 
+  def html_body
+    as_eloqua_email[:html_body]
+  end
+
+  def text_body
+    as_eloqua_email[:plain_text_body]
+  end
+
   def badge
     unless alert_type == "audio"
       "Increment"
