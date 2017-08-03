@@ -30,4 +30,9 @@ class Outpost::EditionsController < Outpost::ResourceController
       :title        => "Monday Email Sent?",
       :collection   => :boolean
   end
+
+  def bodies
+    @record = Edition.find(params[:id])
+  end
+
 end

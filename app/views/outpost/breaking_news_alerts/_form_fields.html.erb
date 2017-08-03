@@ -3,6 +3,11 @@
   <%= f.input :headline, input_html: { class: "wide" } %>
   <%= f.input :teaser, input_html: { class: :tiny } %>
   <%= f.input :alert_url, hint: "A full URL to more information", input_html: { class: "wide" } %>
+  <% content_for :submit_row do %>
+    <% if f.object.try(:id) %>
+      <%= link_to "View HTML/Text Bodies", bodies_outpost_breaking_news_alert_path(@record), target: "_blank", class: "btn btn-info" %>
+    <% end %>
+  <% end %>
 <% end %>
 
 <%= form_block "Actions" do %>

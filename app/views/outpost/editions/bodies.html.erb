@@ -1,0 +1,26 @@
+<script type="text/javascript">
+    function selectText(containerid) {
+        if (document.selection) {
+            var range = document.body.createTextRange();
+            range.moveToElementText(document.getElementById(containerid));
+            range.select();
+        } else if (window.getSelection) {
+            var range = document.createRange();
+            range.selectNode(document.getElementById(containerid));
+            window.getSelection().removeAllRanges();
+            window.getSelection().addRange(range);
+        }
+    }
+</script>
+
+<h3>HTML Body</h3>
+<textarea readonly class="well" onclick="this.select();" style="width: 100%; max-width: 80%; max-width: 80vw; height: 720px; overflow: scroll;"><%= @record.html_body %></textarea>
+<h3>Text Body</h3>
+<textarea readonly class="well" onclick="this.select();" style="width: 100%; max-width: 80%; max-width: 80vw; height: 720px; overflow: scroll;"><%= @record.text_body %></textarea>
+<% if Time.zone.now.to_date.monday? %>
+<h3>Monday HTML Body</h3>
+<textarea readonly class="well" onclick="this.select();" style="width: 100%; max-width: 80%; max-width: 80vw; height: 720px; overflow: scroll;"><%= @record.monday_html_body %></textarea>
+<h3>Monday Text Body</h3>
+<textarea readonly class="well" onclick="this.select();" style="width: 100%; max-width: 80%; max-width: 80vw; height: 720px; overflow: scroll;"><%= @record.monday_text_body %></textarea>
+<% end %>
+

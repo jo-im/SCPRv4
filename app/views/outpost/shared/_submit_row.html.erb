@@ -17,6 +17,7 @@
         <!-- This is for scripts that can take advantage of the 
              submit row to display a piece of information -->
       </span>
+      <%= content_for :submit_row %>
       <% if content_for :preview_button %>
         <%= content_for :preview_button %>
       <% else %>
