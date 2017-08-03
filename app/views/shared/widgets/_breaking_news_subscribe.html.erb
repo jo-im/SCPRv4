@@ -1,17 +1,14 @@
 <div class="widget newsletter">
   <h6>Get KPCC in Your Inbox</h6>
-  <form method="post" name="untitledForm-1359591262588" action="https://s1715082578.t.eloqua.com/e/f2" id="form148">
-    <input value="untitledForm-1359591262588" type="hidden" name="elqFormName"  />
-    <input value="1715082578" type="hidden" name="elqSiteId"  />
-    <input name="elqCampaignId" type="hidden">
-
+  <form action="https://mcpostman.publicradio.org/subscription_requests" method="post">
+    <input name="subscription_request[property_key]" type="hidden" value="0e6c885b-dcd5-4810-9418-3c529713eba9" /><input name="subscription_request[sde_external_key]" type="hidden" value="" />
     <p>Breaking news alerts sent to your inbox</p>
-    <input id="field0" name="emailAddress" type="text" class="required email" placeholder="Email address">
-    <div style="display:none;"><input name="SCPRBreakingAlerts" type="checkbox" value="on" checked="checked"  /></div>
-    <input type="submit" value="Subscribe" name="subscribe" class="btn"><br />
-
-    <input type="hidden" name="elqCustomerGUID" value="">
-    <input type="hidden" name="elqCookieWrite" value="0">
+    <div class="form-group">
+      <input type="email" class="required email" name="subscription_request[fsm][Form_Email_Address]" id="subscription_request_fsm_Form_Email_Address" required="required" maxlength="254" class="form-control" placeholder="Email address" />
+    </div><input name="subscription_request[fsm][Form_BusinessUnit]" type="hidden" value="SCPR" /><input name="subscription_request[fsm][Form_FormName]" type="hidden" value="KPCCInPerson_Newsletter_Sub" /><input name="subscription_request[fsm][Form_Opt_In_Source]" type="hidden" value="SCPR Newsletter" />
+    <input name="subscription_request[publication_lists][489]" type="hidden" value="on" />
+    <button class="btn" type="submit">Subscribe</button>
   </form>
   <p><a href="/newsletters/" class="action-link">More Newsletters &raquo;</a></p>
 </div>
+
