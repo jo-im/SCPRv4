@@ -47,7 +47,7 @@ scpr.Behaviors.Single = {
         //  Segment: Hold off on fun CSS animation until it's safely in view
         //  ------------------------------------------------
         if($(".audio-actuator").length) {
-            
+
           $(".audio-actuator").waypoint(function() {
             if(!$(".audio-actuator").hasClass("in-view")) {
               $(".audio-actuator").addClass("in-view");
@@ -258,7 +258,8 @@ scpr.Behaviors.Single = {
               elements: ['#appeal-newsletter'],
               percentage: false,
               userTiming: false,
-              pixelDepth: false
+              pixelDepth: false,
+              gtmOverride: true
             });
         }
 
