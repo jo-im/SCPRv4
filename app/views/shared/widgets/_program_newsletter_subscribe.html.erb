@@ -3,14 +3,13 @@
         <div class="appeal-content">
             <h3 class="bound appeal-heading"><%= program.try(:safe_newsletter_form_heading) %></h3>
             <p class="bound"><%= program.try(:safe_newsletter_form_caption) %></p>
-            <form class="bound" method="post" name="<%= program.try(:newsletter_form_name) %>" action="https://s1715082578.t.eloqua.com/e/f2" id="form-500011" >
-                <input value="<%= program.try(:newsletter_form_name) %>" type="hidden" name="elqFormName"  />
-                <input value="1715082578" type="hidden" name="elqSiteId"  />
-                <input name="elqCampaignId" type="hidden"  />
-
-                <input class="newsletter-email" id="field0" name="emailAddress" type="email" placeholder="email@somedomain.com" value="" />
-
-                <button type="submit" class="appeal-submit track-event" data-ga-category="Article" data-ga-action="Subscribe" data-ga-label="<%= program.try(:title) %> Newsletter">Sign Up</button>
+            <form action="https://mcpostman.publicradio.org/subscription_requests" class="bound mcpostman-form" method="post">
+              <input name="subscription_request[property_key]" type="hidden" value="1fedd277-c523-4812-a9aa-5bc9e233ff99" /><input name="subscription_request[sde_external_key]" type="hidden" value="" />
+              <div class="form-group" style="display: inline-block">
+                <label for="subscription_request_fsm_Form_Email_Address"></label><input type="email" name="subscription_request[fsm][Form_Email_Address]" id="subscription_request_fsm_Form_Email_Address" required="required" maxlength="254" class="form-control newsletter-email" placeholder="email@somedomain.com" />
+              </div><input name="subscription_request[fsm][Form_BusinessUnit]" type="hidden" value="SCPR" /><input name="subscription_request[fsm][Form_FormName]" type="hidden" value="SCPR 20161110 The Frame Sign-up Form" /><input name="subscription_request[fsm][Form_Opt_In_Source]" type="hidden" value="SCPR Newsletter" />
+              <input name="subscription_request[publication_lists][468]" type="hidden" value="on" />
+              <button type="submit" class="appeal-submit track-event" data-ga-category="Article" data-ga-action="Subscribe" data-ga-label="<%= program.try(:title) %> Newsletter">Sign Up</button>
             </form>
         </div>
     </div>

@@ -7,15 +7,15 @@
     <div class="appeal-content">
     <h3 class="bound appeal-heading"><strong><%= title %></strong></h3>
       <p class="bound"><%= caption %></p>
-      <form method="post" name="SCPREventsSignup-20151005" action="https://s1715082578.t.eloqua.com/e/f2" id="form911" class="elq-form">
-        <input value="SCPREventsSignup-20151005" type="hidden" name="elqFormName"  />
-        <input value="1715082578" type="hidden" name="elqSiteId"   />
-        <input name="elqCampaignId" type="hidden"  />
-
-        <input class="newsletter-email" id="field0" name="emailAddress" type="email" placeholder="email@somedomain.com" value="" />
-        <input class="newsletter-hidden-input" name="SCPREvents" type="hidden" value="on"   />
+      <form action="https://mcpostman.publicradio.org/subscription_requests" class="mcpostman-form" method="post">
+        <input name="subscription_request[property_key]" type="hidden" value="0e6c885b-dcd5-4810-9418-3c529713eba9" /><input name="subscription_request[sde_external_key]" type="hidden" value="" />
+        <div class="form-group" style="display: inline-block">
+          <input type="email" name="subscription_request[fsm][Form_Email_Address]" id="subscription_request_fsm_Form_Email_Address" required="required" maxlength="254" class="newsletter-email form-control" placeholder="email@somedomain.com" />
+        </div><input name="subscription_request[fsm][Form_BusinessUnit]" type="hidden" value="SCPR" /><input name="subscription_request[fsm][Form_FormName]" type="hidden" value="KPCCInPerson_Newsletter_Sub" /><input name="subscription_request[fsm][Form_Opt_In_Source]" type="hidden" value="SCPR Newsletter" />
+        <input name="subscription_request[publication_lists][489]" type="hidden" value="on" />
         <button type="submit" class="btn appeal-submit track-event" data-ga-category="Article" data-ga-action="Subscribe" data-ga-label="Events Newsletter">Sign Up</button>
       </form>
     </div>
   </div>
 </div>
+

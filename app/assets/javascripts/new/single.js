@@ -258,8 +258,7 @@ scpr.Behaviors.Single = {
               elements: ['#appeal-newsletter'],
               percentage: false,
               userTiming: false,
-              pixelDepth: false,
-              gtmOverride: true
+              pixelDepth: false
             });
         }
 

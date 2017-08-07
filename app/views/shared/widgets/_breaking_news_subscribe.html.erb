@@ -1,12 +1,24 @@
 <div class="widget newsletter">
   <h6>Get KPCC in Your Inbox</h6>
   <form action="https://mcpostman.publicradio.org/subscription_requests" method="post">
-    <input name="subscription_request[property_key]" type="hidden" value="0e6c885b-dcd5-4810-9418-3c529713eba9" /><input name="subscription_request[sde_external_key]" type="hidden" value="" />
+    <input name="subscription_request[property_key]" type="hidden" value="0e6c885b-dcd5-4810-9418-3c529713eba9" />
+    <input name="subscription_request[sde_external_key]" type="hidden" value="" />
+    <input name="subscription_request[fsm][Form_BusinessUnit]" type="hidden" value="SCPR" />
+    <input name="subscription_request[fsm][Form_FormName]" type="hidden" value="untitledForm-1359591262588" />
+    <input name="subscription_request[fsm][Form_Opt_In_Source]" type="hidden" value="SCPR Newsletter" />
+    <input name="subscription_request[publication_lists][489]" type="hidden" value="on" />
     <p>Breaking news alerts sent to your inbox</p>
     <div class="form-group">
-      <input type="email" class="required email" name="subscription_request[fsm][Form_Email_Address]" id="subscription_request_fsm_Form_Email_Address" required="required" maxlength="254" class="form-control" placeholder="Email address" />
-    </div><input name="subscription_request[fsm][Form_BusinessUnit]" type="hidden" value="SCPR" /><input name="subscription_request[fsm][Form_FormName]" type="hidden" value="KPCCInPerson_Newsletter_Sub" /><input name="subscription_request[fsm][Form_Opt_In_Source]" type="hidden" value="SCPR Newsletter" />
-    <input name="subscription_request[publication_lists][489]" type="hidden" value="on" />
+      <input
+        type="email"
+        name="subscription_request[fsm][Form_Email_Address]"
+        id="subscription_request_fsm_Form_Email_Address"
+        required="required"
+        maxlength="254"
+        placeholder="Email address"
+        class="required email form-control"
+      />
+    </div>
     <button class="btn" type="submit">Subscribe</button>
   </form>
   <p><a href="/newsletters/" class="action-link">More Newsletters &raquo;</a></p>
