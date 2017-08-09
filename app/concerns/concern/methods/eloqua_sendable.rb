@@ -27,7 +27,6 @@ module Concern
       #
       # Returns nothing.
       def async_send_email
-        Resque.enqueue(Job::SendEmailNotification, self.class.name, self.id)
       end
 
       # Returns the name of the class for the instance as a string.
