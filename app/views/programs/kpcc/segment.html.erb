@@ -58,17 +58,6 @@
             </div>
           <% end %>
         </div>
-        <% if @form_name %>
-          <form class="bound exit-modal__form" method="post" name="<%= @form_name %>" action="https://s1715082578.t.eloqua.com/e/f2" id="<%= @form_id %>" >
-              <input value="<%= @form_name %>"  type="hidden" name="elqFormName"  />
-              <input value="1715082578" type="hidden" name="elqSiteId"  />
-              <input name="elqCampaignId" type="hidden"  />
-
-              <input class="newsletter-email exit-modal__form--center" id="field0" name="emailAddress" type="email" placeholder="email@somedomain.com" value="" />
-              <input class="newsletter-hidden-input" type="checkbox" value="on"  />
-              <button type="submit" id="ga-modal__submit" class="appeal-submit track-event exit-modal__form--center" data-ga-category="Modal" data-ga-action="Subscribe" data-ga-label="<%= @google_analytics_label %> | Subscription: <%= @program.title %>">Sign Up</button>
-          </form>
-        <% end %>
     </div>
   </div>
 <% end %>

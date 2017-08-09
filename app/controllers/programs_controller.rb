@@ -106,13 +106,9 @@ class ProgramsController < ApplicationController
       @google_analytics_label = 'Modal Type: Pledge Drive | URL: ' + @url
     elsif program_flatpage
       @modal = program_flatpage
-      @form_name = @program.newsletter_form_name
-      @form_id = 'form-500011'
       @google_analytics_label = 'Modal Type: ' + @modal.title + ' | URL: ' + @url
     elsif default_flatpage
       @modal = default_flatpage
-      @form_name = 'copyOfSCPR20130130BreakingNewsSignUp-1431032392145'
-      @form_id = 'form725'
       @google_analytics_label = 'Modal Type: ' + @modal.title + ' | URL: ' + @url
     end
 
