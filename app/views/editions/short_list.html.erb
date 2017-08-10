@@ -221,13 +221,12 @@
                     <h1>Start your day informed.</h1>
                     <h2><span>Sign up and we’ll deliver KPCC’s Short List to your inbox.</span> <span>One edition every weekday with the top news and local stories.</span></h2>
                 </header>
-                <form method="post" name="copyOfSCPR20130130BreakingNewsSignUp-1431032392145" action="https://s1715082578.t.eloqua.com/e/f2" id="form725" >
-                    <input value="copyOfSCPR20130130BreakingNewsSignUp-1431032392145" type="hidden" name="elqFormName"  />
-                    <input value="1715082578" type="hidden" name="elqSiteId"  />
-                    <input name="elqCampaignId" type="hidden"  />
-                    <div class="email-bound"><input id="field0" name="emailAddress" type="email" placeholder="Email address" value="" /></div>
-                    <div style="display:none;"><input name="SCPRShortList" type="checkbox" value="on"  /></div>
-                    <input type="submit" value="Subscribe" name="subscribe" class="btn"><br />
+                <form action="https://mcpostman.publicradio.org/subscription_requests" class="mcpostman-form" method="post">
+                  <input name="subscription_request[property_key]" type="hidden" value="6b6962c2-1b5a-4a11-a39a-c8de4f315a80" /><input name="subscription_request[sde_external_key]" type="hidden" value="" />
+                  <div class="form-group">
+                    <input type="email" name="subscription_request[fsm][Form_Email_Address]" id="subscription_request_fsm_Form_Email_Address" required="required" maxlength="254" class="form-control" placeholder="Email address"  />
+                  </div>
+                  <input type="submit" value="Subscribe" name="subscribe" class="btn"><br />
                 </form>
             </aside>
         </section><!--/ .abstracts -->
