@@ -456,7 +456,7 @@ ActiveRecord::Schema.define(version: 20170810193354) do
     t.string   "source",           limit: 255
     t.integer  "external_id",      limit: 4
     t.integer  "days_to_expiry",   limit: 4
-    t.text     "description_text", limit: 65535
+    t.string   "description_text", limit: 255
     t.string   "phone_number",     limit: 255
   end
 
@@ -810,7 +810,7 @@ ActiveRecord::Schema.define(version: 20170810193354) do
     t.string   "newsletter_form_name",    limit: 255
     t.string   "newsletter_form_caption", limit: 255
     t.string   "newsletter_form_heading", limit: 255
-    t.text     "description_text",        limit: 65535
+    t.string   "description_text",        limit: 255
     t.string   "phone_number",            limit: 255
   end
 
