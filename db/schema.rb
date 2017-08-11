@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170721211001) do
+ActiveRecord::Schema.define(version: 20170810193354) do
 
   create_table "abstracts", force: :cascade do |t|
     t.string   "source",               limit: 255
@@ -441,21 +441,23 @@ ActiveRecord::Schema.define(version: 20170721211001) do
   add_index "external_episodes", ["external_program_id", "external_id"], name: "index_external_episodes_on_external_program_id_and_external_id", using: :btree
 
   create_table "external_programs", force: :cascade do |t|
-    t.string   "slug",           limit: 255,      null: false
-    t.string   "title",          limit: 255,      null: false
-    t.text     "teaser",         limit: 16777215
-    t.text     "description",    limit: 16777215
-    t.string   "host",           limit: 255
-    t.string   "organization",   limit: 50
-    t.string   "airtime",        limit: 255
-    t.string   "air_status",     limit: 255,      null: false
-    t.string   "podcast_url",    limit: 255
-    t.text     "sidebar",        limit: 16777215
-    t.datetime "created_at",                      null: false
-    t.datetime "updated_at",                      null: false
-    t.string   "source",         limit: 255
-    t.integer  "external_id",    limit: 4
-    t.integer  "days_to_expiry", limit: 4
+    t.string   "slug",             limit: 255,      null: false
+    t.string   "title",            limit: 255,      null: false
+    t.text     "teaser",           limit: 16777215
+    t.text     "description",      limit: 16777215
+    t.string   "host",             limit: 255
+    t.string   "organization",     limit: 50
+    t.string   "airtime",          limit: 255
+    t.string   "air_status",       limit: 255,      null: false
+    t.string   "podcast_url",      limit: 255
+    t.text     "sidebar",          limit: 16777215
+    t.datetime "created_at",                        null: false
+    t.datetime "updated_at",                        null: false
+    t.string   "source",           limit: 255
+    t.integer  "external_id",      limit: 4
+    t.integer  "days_to_expiry",   limit: 4
+    t.text     "description_text", limit: 65535
+    t.string   "phone_number",     limit: 255
   end
 
   add_index "external_programs", ["air_status"], name: "index_external_programs_on_air_status", using: :btree
@@ -808,6 +810,8 @@ ActiveRecord::Schema.define(version: 20170721211001) do
     t.string   "newsletter_form_name",    limit: 255
     t.string   "newsletter_form_caption", limit: 255
     t.string   "newsletter_form_heading", limit: 255
+    t.text     "description_text",        limit: 65535
+    t.string   "phone_number",            limit: 255
   end
 
   add_index "programs_kpccprogram", ["air_status"], name: "index_programs_kpccprogram_on_air_status", using: :btree
