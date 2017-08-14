@@ -118,9 +118,6 @@ class Edition < ActiveRecord::Base
   end
 
   def html_body
-    # NOTE: This is ugly as hell but will only be around for the short term.
-    # Please, PLEASE remove this ASAP.
-
     subject = "The Short List: #{self.title}"
     EloquaEmail.new({
       :emailable     => self,

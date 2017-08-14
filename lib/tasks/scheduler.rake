@@ -44,7 +44,7 @@ task :scheduler => [:environment] do
     Job::SyncExternalPrograms.enqueue("npr-api")
   end
 
-  # external RSS programs every four hours
+  # external RSS programs every hour
   scheduler.cron "0 * * * *" do |job|
     Job::SyncExternalPrograms.enqueue("rss")
   end
