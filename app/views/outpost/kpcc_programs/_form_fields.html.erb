@@ -3,8 +3,6 @@
   <%= f.section "slug" %>
   <%= f.input :teaser, as: :string, hint: "Shown on summary/list pages that reference the program. Keep it to a sentence or so.", input_html: { class: "wide" } %>
   <%= f.input :description, hint: "Shown on the program's page. Be as descriptive as you like (hosts, topics, staff, etc.)", input_html: { class: "tiny" } %>
-  <%= f.input :description_text, hint: "Shown in the mobile app.  Similar to the teaser, but should not contain any phone numbers or emails.", input_html: { class: "wide" } %>
-  <%= f.input :phone_number, hint: "Shown in the mobile app.  The phone number for listeners to contact the show." %>
 <% end %>
 
 <%= form_block "Who/When" do %>
@@ -22,6 +20,11 @@
   <%= f.input :is_segmented, hint: "Does this program separate its episode into segments?" %>
   <%= f.input :is_featured, hint: "Whether or not this program is featured around the website" %>
   <%= f.input :audio_dir, label: "Audio directory" %>
+<% end %>
+
+<%= form_block "Mobile Apps" do %>
+  <%= f.input :description_text, hint: "Similar to the teaser, but should not contain any phone numbers or emails.", input_html: { class: "wide" } %>
+  <%= f.input :phone_number, hint: "The phone number for listeners to contact the show." %>
 <% end %>
 
 <%= form_block "Newsletter Form" do %>
