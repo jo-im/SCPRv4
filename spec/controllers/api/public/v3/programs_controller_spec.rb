@@ -15,6 +15,27 @@ describe Api::Public::V3::ProgramsController do
       response.should render_template "show"
     end
 
+    it "should return description_text if that has been provided" do
+      description_text = 'bloop bloop bleep bleep'
+      program = create :kpcc_program,
+                       slug: 'hello',
+                       description: 'long description here',
+                       description_text: description_text
+
+      get :show, { id: program.slug }.merge(request_params)
+      JSON.parse(response.body)["program"]["description_text"].should eq description_text
+    end
+
+    it "should return a phone number if that has been provided" do
+      number = '5555551234'
+      program = create :kpcc_program,
+                       slug: 'hello',
+                       phone_number: number
+
+      get :show, { id: program.slug }.merge(request_params)
+      JSON.parse(response.body)["program"]["phone_number"].should eq number
+    end
+
     it "returns a 404 status if it does not exist" do
       get :show, { id: "nonono" }.merge(request_params)
       response.response_code.should eq 404

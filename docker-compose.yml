@@ -70,6 +70,7 @@ services:
     ports:
       - 9200:9200/tcp
       - 9300:9300/tcp
+      - 9250:9250/tcp
     volumes:
       - elasticsearch-data:/var/lib/elasticsearch
     networks:
