@@ -96,7 +96,7 @@ class FeedsController < ApplicationController
     }
 
     @content = (Rails.cache.read('homepage/articles') || []).select do |a| 
-      a.id.try(:match, "news_story") && a.audio.any?
+      a.id.try(:match, "news_story") && a.audio.any? && a.audio[0].duration <= 90
     end.first(5)
     
     needs = 5 - @content.count
@@ -110,6 +110,7 @@ class FeedsController < ApplicationController
       @content = @content
         .concat(ContentBase.search(options))
         .uniq{|a| a.id}
+        .select{|a| a.audio[0].duration <= 90}
         .first(5)
     end
 
