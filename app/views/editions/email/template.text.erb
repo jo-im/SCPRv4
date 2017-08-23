@@ -1,6 +1,6 @@
 89.3 KPCC | The Short List
 -----------------------------------
-<%= render_byline @edition %> | <%= edition.published_at.strftime("%B %d, %Y") %>
+<%= render_byline @edition %> | <%= edition.published_at.try(:strftime, "%B %d, %Y") %>
 -----------------------------------
 <%= "\r\n" %>
 <%= edition.abstracts.first.headline %>
