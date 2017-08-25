@@ -63,13 +63,13 @@ GIT
 
 GIT
   remote: git://github.com/scpr/asset_host_client.git
-  revision: b097a1f9b5b78390bd2bb33f43625c2ea5e43936
-  tag: v2.0.0
+  revision: 3ff13e10b48c6152cb5be3ca2b7dfe917a6fa812
+  tag: v2.1.1
   specs:
     asset_host_client (2.0.0)
       faraday (~> 0.8)
       faraday_middleware (~> 0.8)
-      rails (>= 3.0, < 5)
+      rails (>= 4)
 
 GIT
   remote: git://github.com/scpr/npr.git
