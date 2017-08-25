@@ -36,8 +36,9 @@ module Filter
         node['async'] = true
         # protocol-less urls are now an anti-pattern
         # and need to have an explicit protocol
-        if node['src'].match(/^\/\//)
-          node['src'] = "http:#{node['src']}"
+
+        if node['src'].try(:match, /^\/\//)
+          node['src'] = "https:#{node['src']}"
         end
       },
       'a' => lambda { |node|
