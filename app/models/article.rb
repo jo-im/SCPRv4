@@ -175,7 +175,7 @@ class Article
       self.public_path
     else
       if Rails.application.default_url_options[:host]
-        "http://#{Rails.application.default_url_options[:host]}#{self.public_path}"
+        "#{Rails.application.default_url_options[:protocol] || 'http'}://#{Rails.application.default_url_options[:host]}#{self.public_path}"
       else
         self.public_path
       end
@@ -183,7 +183,7 @@ class Article
   end
 
   def edit_url
-    "http://#{Rails.application.default_url_options[:host]}#{self.edit_path}"
+    "#{Rails.application.default_url_options[:protocol] || 'http'}://#{Rails.application.default_url_options[:host]}#{self.edit_path}"
   end
 
   def asset
