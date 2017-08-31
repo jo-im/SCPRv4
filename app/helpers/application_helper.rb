@@ -14,6 +14,10 @@ module ApplicationHelper
     presenter
   end
 
+  def https_to_http url
+    url.try(:gsub, "https:", "http:")
+  end
+
   # A hash in which to store meta data for the template META tags.
   # This is what should be used in the <head> tag to build the META tags.
   def meta_information
