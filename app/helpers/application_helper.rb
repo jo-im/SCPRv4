@@ -14,15 +14,6 @@ module ApplicationHelper
     presenter
   end
 
-  def https_to_http url
-    # Only used for Twitter image meta tag
-    # because they don't seem to be accepting
-    # AssetHost's HTTPS links for some reason.
-    # Don't use this method anywhere else.
-    url.try(:gsub, "https:", "http:")
-  end
-
-
   # A hash in which to store meta data for the template META tags.
   # This is what should be used in the <head> tag to build the META tags.
   def meta_information
