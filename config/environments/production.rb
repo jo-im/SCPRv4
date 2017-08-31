@@ -35,4 +35,5 @@ Scprv4::Application.configure do
   config.active_support.deprecation = :notify
 
   default_url_options[:host] = config.x.scpr.host = Rails.application.secrets.host
+  default_url_options[:protocol] = 'https'
 end
