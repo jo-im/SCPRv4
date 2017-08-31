@@ -26,7 +26,7 @@
       <meta property="og:image:height" content="<%=image.height%>" />
     <% end %> <%# assets %>
     <link rel="image_src" href="<%= article.asset.full.url %>" />
-    <meta name="twitter:image" content="<%= article.asset.full.url || "http://scpr.org/assets/kpcc-twitter-logo.png" %>">
+    <meta name="twitter:image" content="<%= https_to_http(article.asset.full.url) || "http://scpr.org/assets/kpcc-twitter-logo.png" %>">
   <% else %>
     <meta property="og:image" content="http://scpr.org<%=image_path('kpcc-twitter-logo.png')%>" />
     <meta name="twitter:image" content="http://scpr.org<%=image_path('kpcc-twitter-logo.png')%>">
