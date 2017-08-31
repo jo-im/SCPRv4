@@ -30,5 +30,6 @@ Scprv4::Application.configure do
   config.x.scpr.elasticsearch_host    = ENV["SCPRV4_ELASTICSEARCH_HOST"]    || "127.0.0.1:9200"
   config.x.scpr.elasticsearch_prefix  = ENV["SCPRV4_ELASTICSEARCH_PREFIX"]  || "scprv4"
 
-  default_url_options[:host] ||= config.x.scpr.host
+  default_url_options[:host]   ||= config.x.scpr.host
+  default_url_options[:protocol] = config.x.scpr.protocol = 'http'
 end
