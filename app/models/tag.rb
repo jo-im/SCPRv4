@@ -43,12 +43,12 @@ class Tag < ActiveRecord::Base
     # probably coming from a homepage object
     related_omissions = omit.map{|m| "(related_type NOT LIKE '#{m.class}' AND related_id <> #{m.id})"}.join(" AND ")
     tagging_omissions = omit.map{|m| "(taggable_type NOT LIKE '#{m.class}' AND taggable_id <> #{m.id})"}.join(" AND ")
-    if outgoing_references.count > 3
+    if outgoing_references.count > 2
       outgoing_references
         .order("position ASC")
         .where(related_omissions)
         .limit(3).map(&:related).map(&:to_article)
-    elsif taggings.count > 3
+    elsif taggings.count > 2
       taggings
         .order("created_at DESC")
         .where(tagging_omissions)
