@@ -1,4 +1,9 @@
+<% @latest_stories = latest_stories(@homepage.content) %>
+
 <% @homepage.content.each_with_index do |content, index| %>
+  
+  <% next if (index > 1) && @latest_stories.include?(content) %>
+
   <% source = content.content.try(:source)
     tag = if source != "KPCC" or source != 'kpcc'
               source
@@ -10,9 +15,9 @@
               content.category__title
            end
   %>
-
   <article class="center hp-story <%= content.asset_scheme %>" style="order:<%= index %>;">
     <%= media_object content.asset_scheme, content: content, index: index, contents: @homepage.content %>
   </article>
 
 <% end %>
+
