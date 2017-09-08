@@ -59,35 +59,13 @@ class FeedsController < ApplicationController
   def flash_briefing
     response.headers["Content-Type"] = 'application/json; charset=utf-8'
 
-    if params[:category]
-      category_flash_briefing
-    else
-      latest_news_flash_briefing
-    end
+    latest_news_flash_briefing
 
     render template: 'feeds/flash_briefing.json.jbuilder', format: :json
   end
 
   private
 
-  def category_flash_briefing
-    @category = Category.where(slug: params[:category]).first!
-
-    @feed = {
-      :title       => "#{@category.title} News from 89.3 KPCC",
-      :description => "#{@category.title} News from KPCC's reporters, bloggers and shows."
-    }
-
-    options = {
-      :classes    => [NewsStory],
-      :limit      => 5,
-      :with       => { "audio" => true }
-    }
-
-    options[:with]['category.slug'] = @category.slug
-
-    @content = ContentBase.search(options)
-  end
 
   def latest_news_flash_briefing
     @feed = {
