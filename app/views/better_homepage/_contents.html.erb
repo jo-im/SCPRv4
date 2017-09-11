@@ -2,7 +2,7 @@
 
 <% @homepage.content.each_with_index do |content, index| %>
   
-  <% next if (index > 1) && @latest_stories.include?(content) %>
+  <% next if (index > 1) && @latest_stories.include?(content.try(:content)) %>
 
   <% source = content.content.try(:source)
     tag = if source != "KPCC" or source != 'kpcc'
