@@ -120,7 +120,7 @@ class ProgramsController < ApplicationController
     render 'programs/kpcc/segment' and return
   end
 
-  amplify :segment, expose: {'@amp_record' => "@segment"}, template: "amp/audio"
+  amplify :segment, expose: {'@amp_record' => "@segment"}, template: "amp/segment"
 
   def episode
     if @program.is_a?(KpccProgram)
@@ -128,7 +128,7 @@ class ProgramsController < ApplicationController
       @amp_record = @episode = @program.episodes.find(params[:id])
       # The #amplify method can't be used here because of the unusual way that this
       # action is written.  Another good reason to refactor this cludgy controller.
-      return render(layout: "application.amp.erb", template: "amp/audio") if params.has_key?(:amp)
+      return render(layout: "application.amp.erb", template: "amp/segment") if params.has_key?(:amp)
       render_kpcc_episode
     end
 

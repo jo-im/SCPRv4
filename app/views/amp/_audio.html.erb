@@ -1,0 +1,10 @@
+<% if audio.url.present? %>
+  <% url = url_with_params(audio.url, via: 'website', context: @amp_record.to_article.context) %>
+  <aside class="audio">
+    <amp-audio width="400" height="50" src="<%= url.gsub('http:', '') %>">
+      <div fallback>
+        <p>Your browser doesn’t support HTML5 audio</p>
+      </div>
+    </amp-audio>
+  </aside>
+<% end %>

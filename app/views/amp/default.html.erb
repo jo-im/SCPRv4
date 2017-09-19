@@ -20,6 +20,7 @@
         <%= @amp_record.asset.caption %> <span class="credit"><%= @amp_record.asset.owner %></span>
       </figcaption>
     </figure>
+    <%= render("amp/audio", audio: @amp_record.audio.first) if @amp_record.audio.first.present? %>
   </div>
 </header>
 <main>
