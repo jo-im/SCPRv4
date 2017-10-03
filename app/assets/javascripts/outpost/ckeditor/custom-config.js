@@ -18,7 +18,7 @@ $(function() {
       "i",
       "b",
       "blockquote",
-      "div[*]",
+      "div[*](*){*}",
       "ul",
       "ol",
       "li",
