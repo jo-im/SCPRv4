@@ -5,7 +5,7 @@ CKEDITOR.editorConfig = function(config) {
   config.toolbar = [
     ['Format', 'Bold', 'Italic', 'Underline', "RemoveFormat"],
     ['NumberedList', 'BulletedList', 'Blockquote'],
-    ['Link', 'Unlink', 'DockAssetManager', 'EmbedPlaceholder'],
+    ['Link', 'Unlink', 'DockAssetManager', 'EmbedPlaceholder', 'CreateDiv'],
     ['Find', 'Paste'],
     ['Source', 'Maximize']
   ];
@@ -17,6 +17,7 @@ CKEDITOR.editorConfig = function(config) {
     'image', // This plugin has custom changes so we didn't include it in the build
     'embed-placeholder',
     'webkit-span-fix',
+    'div',
     'divarea',
     'inline-asset-placeholder',
     'widget',
@@ -60,7 +61,7 @@ CKEDITOR.editorConfig = function(config) {
 
   config.language         = 'en';
   config.height           = "400px";
-  config.width            = "635px";
+  config.width            = "645px";
 
   config.bodyClass        = 'ckeditor-body';
   config.contentsCss      = APPLICATION_CSS;
