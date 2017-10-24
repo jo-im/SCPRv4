@@ -37,6 +37,15 @@ class ListenController < ApplicationController
         # to raise an error and prevent the user from
         # viewing the PFS player.
         authorized_user["viewsLeft"] = Farse::Increment.new(-1)
+
+        # Sometimes the records get saved with the string instead of the boolean value by mlab, so account
+        # for it here:
+        if authorized_user["emailSent"] == 'true'
+          authorized_user["emailSent"] = true
+        elsif authorized_user["emailSent"] == 'false'
+          authorized_user["emailSent"] = false
+        end
+
         authorized_user.save
         if authorized_user["viewsLeft"] == 0
            authorized_user["pledgeToken"] = nil
