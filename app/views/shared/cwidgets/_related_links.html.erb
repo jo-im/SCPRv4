@@ -1,73 +1,75 @@
-<% if content.links.present? || content.original_object.related_content.present? %>
-  <aside class="ancillary related">
-    <header><h1>Related Links</h1></header>
-    <nav>
-      <ul>
-        <% for l in (content.original_object.related_content + content.links) %>
-          <%
-            classes = "track-event"
-            url         = nil
-            title       = nil
-            descriptor  = nil
+<%= cache("related_links_#{content.original_object}_v1", expires_in: 30.minutes) do %>
+  <% if content.links.present? || content.original_object.related_content.present? %>a
+    <aside class="ancillary related">
+      <header><h1>Related Links</h1></header>
+      <nav>
+        <ul>
+          <% for l in (content.original_object.related_content + content.links) %>
+            <%
+              classes = "track-event"
+              url         = nil
+              title       = nil
+              descriptor  = nil
 
-            # class_options[:data] = {"ga-category" => "Article", "ga-action" => "Clickthrough", "ga-label" => "Related" }
+              # class_options[:data] = {"ga-category" => "Article", "ga-action" => "Clickthrough", "ga-label" => "Related" }
 
-            is_pij = false
+              is_pij = false
 
-            if l.respond_to?(:link_type)
-              begin
-                domain = URI.parse(l.url.sub(/^([^\?]+)\?.*/,'\1')).host.sub(/^www\./, '')
-              rescue
-                domain = "Link"
-              end
+              if l.respond_to?(:link_type)
+                begin
+                  domain = URI.parse(l.url.sub(/^([^\?]+)\?.*/,'\1')).host.sub(/^www\./, '')
+                rescue
+                  domain = "Link"
+                end
 
-              kpcc_link = domain.split(".").include?("scpr")
+                kpcc_link = domain.split(".").include?("scpr")
 
-              if l.link_type == "query"
-                classes     += " query"
-                descriptor  = "Contribute Your Voice"
-                is_pij      = true
-              elsif kpcc_link
-                descriptor  = "Article"
+                if l.link_type == "query"
+                  classes     += " query"
+                  descriptor  = "Contribute Your Voice"
+                  is_pij      = true
+                elsif kpcc_link
+                  descriptor  = "Article"
+                else
+                  classes     += " outbound" if !kpcc_link
+                  descriptor  = "Source: #{domain}"
+                end
+
+                url     = l.url
+                title   = l.title
               else
-                classes     += " outbound" if !kpcc_link
-                descriptor  = "Source: #{domain}"
+                # hopefully these are content...
+                if l.try(:feature).try(:_key).present?
+                  classes += " #{l.feature._key.to_s}"
+                elsif l.try(:feature).try(:key).present?
+                  classes += " #{l.feature.key.to_s}"
+                end
+
+                url     = l.public_path
+                title   = l.short_title
+
+                descriptor = l.feature.try(:name) || "Article"
               end
 
-              url     = l.url
-              title   = l.title
-            else
-              # hopefully these are content...
-              if l.try(:feature).try(:_key).present?
-                classes += " #{l.feature._key.to_s}"
-              elsif l.try(:feature).try(:key).present?
-                classes += " #{l.feature.key.to_s}"
-              end
-
-              url     = l.public_path
-              title   = l.short_title
-
-              descriptor = l.feature.try(:name) || "Article"
-            end
-
-          %>
-          <li class="<%= classes %>">
-            <a href="<%= url %>">
-              <mark><%= title %></mark>
-              <span><%= descriptor %></span>
-            </a>
-          <% if is_pij %>
-            <span>
-              <a href="/network/" class="pij">
-                Learn more about the Public Insight Network&reg;
+            %>
+            <li class="<%= classes %>">
+              <a href="<%= url %>">
+                <mark><%= title %></mark>
+                <span><%= descriptor %></span>
               </a>
-            </span>
+            <% if is_pij %>
+              <span>
+                <a href="/network/" class="pij">
+                  Learn more about the Public Insight Network&reg;
+                </a>
+              </span>
+            <% end %>
+            </li>
+
           <% end %>
-          </li>
 
-        <% end %>
-
-      </ul>
-    </nav>
-  </aside>
+        </ul>
+      </nav>
+    </aside>
+  <% end %>
 <% end %>
