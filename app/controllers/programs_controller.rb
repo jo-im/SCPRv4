@@ -164,7 +164,11 @@ class ProgramsController < ApplicationController
 
       return
     else
-      redirect_to @program.public_path
+      if @program.public_path
+        redirect_to @program.public_path
+      else
+        redirect_to program_url(@program.slug)
+      end
     end
   end
 
