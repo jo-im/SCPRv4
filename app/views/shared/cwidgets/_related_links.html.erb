@@ -1,4 +1,4 @@
-<%= cache(["related_links", content.original_object, "v1"], expires_in: 10.minutes) do %>
+<%= cache(["related_links", content.original_object, "v1"], expires_in: 30.minutes) do %>
   <% if content.links.present? || content.original_object.related_content.present? %>a
     <aside class="ancillary related">
       <header><h1>Related Links</h1></header>
