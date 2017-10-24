@@ -25,7 +25,7 @@ class ListenController < ApplicationController
 
       pledge_token = params[:pledgeToken]
       parse_user_query = Farse::Query.new("PfsUser")
-      parse_user_query.eq("pledgeToken", params[:pledgeToken])
+      parse_user_query.eq("pledgeToken", pledge_token)
       authorized_user = parse_user_query.get.first
 
       # redirect to flat page if we can't find a valid user
