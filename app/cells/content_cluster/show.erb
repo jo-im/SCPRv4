@@ -1,6 +1,6 @@
 <ul class="o-content-cluster c-list c-list--horiz">
   <% model.try(:each) do |feature| %>
-    <% href = begin feature.asset.thumb.url rescue '/static/images/fallback-img-square.png' end %>
+    <% href = begin feature.asset.try(:lsquare).try(:url) rescue '/static/images/fallback-img-square.png' end %>
     <li class="o-content-cluster__content">
       <div class="o-content-cluster__thumb o-figure o-figure--four-by-three">
         <img class="o-figure__img" src="<%= href %>" style="background-image: url(<%= href %>);">
