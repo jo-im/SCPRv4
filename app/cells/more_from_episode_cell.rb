@@ -1,6 +1,10 @@
 class MoreFromEpisodeCell < Cell::ViewModel
   include Orderable
 
+  cache :show do
+    model.try(:cache_key)
+  end
+
   property :show
   property :headline
   property :public_path

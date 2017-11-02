@@ -2,6 +2,10 @@ class ProgramOverviewCell < Cell::ViewModel
   include Orderable
   include ActionView::Helpers::TagHelper
 
+  cache :show do
+    model.try(:cache_key)
+  end
+
   property :title
 
   def show

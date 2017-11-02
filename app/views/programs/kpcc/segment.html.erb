@@ -1,4 +1,3 @@
-<!-- <script src="//cdn.optimizely.com/js/1611751335.js"></script> -->
 <% add_to_page_title @program.try(:title) %>
 <% add_to_page_title @segment.feature.present? ? "#{@segment.feature.name}: #{@segment.headline}" : @segment.headline %>
 <% content_for :opengraph do %><%= render_content @segment, "opengraph" %><% end %>
@@ -43,11 +42,11 @@
 <%= cell :article_headline, @article %>
 
 <!-- RIGHT ASIDES -->
-<%= cell(:ad, slot: "a", class: "l-column--right", id: "c-ad--a", attribution: false, order: -1).show do
+<%= cell(:ad, @article, slot: "a", class: "l-column--right", id: "c-ad--a", attribution: false, order: -1).show do
   '<hr class="b-rule l-column--right" style="order: 5;" />'
 end %>
 
-<%= cell(:ad, slot: "b", class: "l-column--right", order: 1000).show do
+<%= cell(:ad, @article, slot: "b", class: "l-column--right", order: 1000).show do
   '<hr class="b-rule l-column--right" style="order: 12;" />'
 end %>
 
@@ -59,12 +58,12 @@ end %>
   '<hr class="b-rule l-column--right" />'
 end %>
 
-<%= cell :ad, slot: "c", class: "l-column--right", order: 1001 %>
+<%= cell :ad, @article, slot: "c", class: "l-column--right", order: 1001 %>
 
 <!-- CENTER CONTENT-->
 <%= cell :article, @article, type: 'story', headline: false %>
 
-<%= cell :newsletter_appeal, nil, order: 999 %>
+<%= cell :newsletter_appeal, @article, order: 999 %>
 
 <hr class="o-article__rule--ending b-rule b-rule--primary-lightest b-rule--padded" style="order: 999;" />
 
