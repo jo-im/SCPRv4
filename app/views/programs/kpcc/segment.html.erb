@@ -42,11 +42,11 @@
 <%= cell :article_headline, @article %>
 
 <!-- RIGHT ASIDES -->
-<%= cell(:ad, @article, slot: "a", class: "l-column--right", id: "c-ad--a", attribution: false, order: -1).show do
+<%= cell(:ad, slot: "a", class: "l-column--right", id: "c-ad--a", attribution: false, order: -1).show do
   '<hr class="b-rule l-column--right" style="order: 5;" />'
 end %>
 
-<%= cell(:ad, @article, slot: "b", class: "l-column--right", order: 1000).show do
+<%= cell(:ad, slot: "b", class: "l-column--right", order: 1000).show do
   '<hr class="b-rule l-column--right" style="order: 12;" />'
 end %>
 
@@ -58,7 +58,7 @@ end %>
   '<hr class="b-rule l-column--right" />'
 end %>
 
-<%= cell :ad, @article, slot: "c", class: "l-column--right", order: 1001 %>
+<%= cell :ad, slot: "c", class: "l-column--right", order: 1001 %>
 
 <!-- CENTER CONTENT-->
 <%= cell :article, @article, type: 'story', headline: false %>
