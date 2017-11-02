@@ -10,11 +10,11 @@
 </aside>
 
 <!-- RIGHT ASIDES -->
-<%= cell(:ad, id: "c-ad--a", slot: "a", class: "l-column--right", attribution: false, order: -1).show do
+<%= cell(:ad, @article, id: "c-ad--a", slot: "a", class: "l-column--right", attribution: false, order: -1).show do
   '<hr class="b-rule l-column--right" style="order: 5;" />'
 end %>
 
-<%= cell(:ad, slot: "b", class: "l-column--right", order: 995).show do
+<%= cell(:ad, @article, slot: "b", class: "l-column--right", order: 995).show do
   '<hr class="b-rule l-column--right" style="order: 12;" />'
 end %>
 
@@ -22,7 +22,7 @@ end %>
 
 <%= cell(:popular_articles, @popular_articles.try(:first, 3), class: "l-column--right", order: 997, category: "Article", label: "Popular Now Sidebar").call(:trio) %>
 
-<%= cell :ad, slot: "c", class: "l-column--right", order: 1000 %>
+<%= cell :ad, @article, slot: "c", class: "l-column--right", order: 1000 %>
 
 <!-- ARTICLE BODY -->
 <%= cell :article, @article, type: 'story' %>

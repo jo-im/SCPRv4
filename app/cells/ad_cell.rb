@@ -1,6 +1,10 @@
 class AdCell < Cell::ViewModel
   include Orderable
 
+  cache :show do
+    model.try(:cache_key)
+  end
+
   def show &block
     (render + (block_given? ? yield : "")).html_safe
   end
