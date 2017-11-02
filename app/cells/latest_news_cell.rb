@@ -16,7 +16,7 @@ class LatestNewsCell < Cell::ViewModel
   end
 
   def categories
-    render
+    render if model.try(:any?)
   end
 
   def media_type

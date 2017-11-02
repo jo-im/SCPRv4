@@ -1,4 +1,4 @@
-<% model.each_with_index do |section, index| %>
+<% model.try(:each_with_index) do |section, index| %>
   <h3 class="o-latest-news__category-title" style="order: <%= index + 2 %>">
     <%= link_to section.category.title, section.category.public_path, "data-ga-category" => '@currentCategory', "data-ga-action" => "Article", "data-ga-label" => '@scrollDepth', class: "track-event" %>
   </h3>
