@@ -34,7 +34,6 @@ module Api::Public::V3
     def histogram
       @program = Program.find_by_slug(params[:id])
       @result = ContentBase.histogram "show_episode", {"show.slug" => params[:id]}
-      puts '======================================='
       respond_with @result
     end
 
