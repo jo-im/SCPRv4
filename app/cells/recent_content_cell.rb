@@ -1,6 +1,10 @@
 class RecentContentCell < Cell::ViewModel
   include Orderable
 
+  cache :show do
+    model.try(:cache_key)
+  end
+
   property :title
   property :public_path
 
