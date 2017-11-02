@@ -5,7 +5,7 @@
       <div class="o-biography__story">
         <h3 class="o-biography__story-heading b-heading--h4 b-heading--serif"><%= link_to byline.short_title, byline.public_url %></h3>
         <div class="c-byline">
-          <span class="c-byline__name"><%= byline.byline %></span>
+          <span class="c-byline__name"><%= byline.try(:byline) %></span>
           <span class="c-byline__pipe">|</span>
           <span class="c-byline__timestamp"><%= byline.public_datetime.strftime('%B %d %Y, %l:%M %p') %></span>
         </div>

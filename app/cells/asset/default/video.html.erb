@@ -1,6 +1,6 @@
 <div class="asset-block wide">
   <div class="contentasset media-scaler">
-    <%= assets.first.eight.tag %>
+    <%= assets.first.try(:eight).try(:tag) %>
   </div>
 
   <h4><%= assets.first.owner %></h4>

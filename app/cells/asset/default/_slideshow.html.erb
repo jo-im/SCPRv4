@@ -7,7 +7,7 @@
     <div class="slide">
       <div class="asset-block">
         <div class="contentasset">
-          <%= link_to asset.eight.tag, article.public_url %>
+          <%= link_to asset.try(:eight).try(:tag), article.public_url %>
         </div>
 
         <h4><%= asset.owner %></h4>

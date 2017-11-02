@@ -10,7 +10,7 @@
         <span class="o-archive-tab__item-category"><%= link_to model.category.title, model.category.public_path, class: 'b-link' %></span>
         <span class="pipe">|</span>
       <% end %>
-      <span class="o-archive-tab__item-byline"><%= model.byline %></span>
+      <span class="o-archive-tab__item-byline"><%= model.try(:byline) %></span>
       <span class="pipe">|</span>
       <span class="o-archive-tab__item-date"><%= model.published_at.strftime('%B %d %Y, %l:%M %p') %></span>
       <p><%= model.teaser.html_safe %></p>

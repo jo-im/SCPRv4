@@ -15,7 +15,7 @@
             <div class="asset">
                 <div class="video">
                     <div class="media-scaler">
-                        <%= article.assets.first.eight.tag %>
+                        <%= article.assets.first.try(:eight).try(:tag) %>
                     </div>
                 </div><!--/ .video -->
             </div><!--/ .asset -->
