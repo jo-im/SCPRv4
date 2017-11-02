@@ -10,6 +10,10 @@ class ArticleCell < Cell::ViewModel
   property :asset
   property :category
 
+  cache :show do
+    model.try(:cache_key)
+  end
+
   def show
     render
   end

@@ -1,6 +1,10 @@
 class RelatedLinksCell < Cell::ViewModel
   include Orderable
 
+  cache :show do
+    [model.try(:cache_key), links]
+  end
+
   def show
     render if links.any?
   end
