@@ -2,6 +2,10 @@ class SocialToolsCell < Cell::ViewModel
   include ERB::Util
   include Orderable
 
+  cache :show do
+    model.try(:cache_key)
+  end
+
   property :id
   property :obj_key
   property :title
@@ -16,7 +20,7 @@ class SocialToolsCell < Cell::ViewModel
   def obj_key
     if @options[:email] == false
       return
-    end 
+    end
     model.try(:obj_key)
   end
 

@@ -1,4 +1,9 @@
 class PopularArticlesCell < Cell::ViewModel
+
+  cache :show do
+    model.try(:cache_key)
+  end
+
   def show
     get_popular_articles
     render if articles.try(:any?)

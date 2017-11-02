@@ -1,6 +1,10 @@
 class CategoryClusterCell < Cell::ViewModel
   include Orderable
 
+  cache :show do
+    model.try(:cache_key)
+  end
+
   property :title
   property :slug
   property :public_path

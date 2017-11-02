@@ -2,7 +2,7 @@ Scprv4::Application.configure do
   config.cache_classes  = false
   config.eager_load     = false
   config.consider_all_requests_local = true
-  config.action_controller.perform_caching = false
+  config.action_controller.perform_caching = true
   #config.cache_store = :dalli_store, "localhost:11211", { namespace:"scprv4" }
   config.action_controller.action_on_unpermitted_parameters = :raise
   config.active_record.raise_in_transactional_callbacks = true

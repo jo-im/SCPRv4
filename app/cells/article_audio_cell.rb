@@ -1,5 +1,10 @@
 class ArticleAudioCell < Cell::ViewModel
   property :audio
+
+  cache :show do
+    model.try(:cache_key)
+  end
+
   def show
     render if audio_file
   end
