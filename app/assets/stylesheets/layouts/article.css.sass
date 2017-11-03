@@ -24,6 +24,14 @@
     margin-left: $margin + $col + $gutter
     width: ($col * 6) + ($gutter * 5)
 
+  > figure.o-article__body
+    width: 24%
+    @media (max-width: $media-tablet)
+      align-self: center
+      width: 50%
+    @media (max-width: $media-mobile)
+      width: initial
+
   .o-article__b-rule
     display: block
 
