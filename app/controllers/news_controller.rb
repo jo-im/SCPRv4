@@ -24,7 +24,7 @@ class NewsController < ApplicationController
       redirect_to @story.public_path and return
     end
 
-    @article = @story.to_article
+    @article = @story.get_article
 
     respond_with template: "news/story"
   end
