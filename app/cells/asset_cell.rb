@@ -75,5 +75,9 @@ class AssetCell < Cell::ViewModel
     model.title || model.caption
   end
 
+  def assethost
+    assets.first.eight.asset.native.first.second
+  end
+
 end
 
