@@ -23,7 +23,7 @@ class ArticleCell < Cell::ViewModel
   end
 
   def biographies links=true
-    elements = model.try(:original_object).try(:joined_bylines) do |bylines|
+    elements = model.try(:joined_bylines) do |bylines|
       bylines.map do |byline|
         if links && byline.user.try(:is_public)
           link_to byline.display_name, byline.user.public_path
@@ -44,7 +44,7 @@ class ArticleCell < Cell::ViewModel
   def pij_source options={}
     message = options[:message] || "This story was informed by KPCC listeners."
 
-    if model.from_pij?
+    if model.get_article.from_pij?
       render locals: { message: message }
     end
   end
@@ -100,8 +100,8 @@ class ArticleCell < Cell::ViewModel
   end
 
   def byline links=true
-    return "KPCC" if !model.original_object.respond_to?(:joined_bylines)
-    elements = model.original_object.joined_bylines do |bylines|
+    return "KPCC" if !model.respond_to?(:joined_bylines)
+    elements = model.joined_bylines do |bylines|
       bylines.map do |byline|
         if links && byline.user.try(:is_public)
           link_to byline.display_name, byline.user.public_path

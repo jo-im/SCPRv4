@@ -14,7 +14,7 @@ class RelatedLinksCell < Cell::ViewModel
     # just having it extracted from the template is an improvement,
     # and who knows if we might want to start using some of these
     # returned attributes again in the future.
-    @links ||= (model.original_object.related_content + model.links).map do |content|
+    @links ||= (model.related_content).map do |content|
       classes     = "track-event"
       url         = nil
       title       = nil

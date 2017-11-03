@@ -1,6 +1,5 @@
 class ArticleHeadlineCell < Cell::ViewModel
   property :category
-  property :title
 
   cache :show do
     model.try(:cache_key)
@@ -8,6 +7,10 @@ class ArticleHeadlineCell < Cell::ViewModel
 
   def show
     render
+  end
+
+  def title
+    model.try(:title) || model.try(:headline)
   end
 
 end
