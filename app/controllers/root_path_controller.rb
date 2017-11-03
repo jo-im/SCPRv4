@@ -46,4 +46,10 @@ class RootPathController < ApplicationController
     render_error(404, ActionController::RoutingError.new("Not Found"))
     return false
   end
+
+  def unheard_la
+    if @flatpage = Flatpage.visible.find_by_path('events/kpcc-in-person/unheard-la')
+      handle_flatpage and return
+    end
+  end
 end

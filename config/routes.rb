@@ -69,6 +69,7 @@ Scprv4::Application.routes.draw do
   get '/forum'                             => redirect('/events/kpcc-in-person')
 
   get '/events/kpcc-in-person/archive/'            => 'events#archive',    as: :kpcc_in_person_events_archive
+  get '/events/kpcc-in-person/unheard-la'          => 'root_path#unheard_la'
   get '/events/kpcc-in-person/:subtype'            => 'events#kpcc_in_person'
   get '/events/kpcc-in-person/'                    => 'events#kpcc_in_person',      as: :kpcc_in_person_events
 
