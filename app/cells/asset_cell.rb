@@ -76,13 +76,13 @@ class AssetCell < Cell::ViewModel
   end
 
   def assethost
-    if assets.first.eight.asset.native
+    if assets.first.try(:eight).try(:asset).try(:native)
       assets.first.eight.asset.native["class"]
     end
   end
 
   def videoid
-    if assets.first.eight.asset.native
+    if assets.first.try(:eight).try(:asset).try(:native)
       assets.first.eight.asset.native["videoid"]
     end
   end
