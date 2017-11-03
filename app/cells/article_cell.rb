@@ -72,7 +72,8 @@ class ArticleCell < Cell::ViewModel
 
       ## If kpcc_only is true, only render if the owner of the asset is KPCC
       if asset && (!options[:kpcc_only] || asset.owner.try(:include?, "KPCC"))
-        rendered_asset = AssetCell.new(asset, context: context, display: display, article: model).call(:show)
+        positioning    = (asset.small.width.to_i < asset.small.height.to_i) ? "o-article__body--float-right" : ''
+        rendered_asset = AssetCell.new(asset, context: context, display: display, article: model, class: positioning).call(:show)
         placeholder.replace Nokogiri::HTML::DocumentFragment.parse(rendered_asset)
       else
         # FIXME: I'm sure there's a cleaner "delete"
@@ -84,14 +85,13 @@ class ArticleCell < Cell::ViewModel
   end
 
   def order_body doc
-    i   = 0
-    doc.css("body > *").each do |element|
+    doc.css("body > *").each_with_index do |element, i|
       element['style'] ||= ""
-      unless element['style'].scan(/order:\s(.*);/).any?
+      element['class'] ||= ""
+      unless element['style'].match(/order:\s(.*);/)# || element['class'].split(/\s+/g).include?('o-article__body')
         element['style'] = "#{element['style']}order:#{i}; height: 100%;"
-        element['class'] = 'o-article__body'
+        # element['class'] += ' o-article__body'
       end
-      i += 1
     end
   end
 

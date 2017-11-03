@@ -27,59 +27,74 @@
   .o-article__b-rule
     display: block
 
-  p a
-    // paragraph links
-    color: $color-secondary
-
-  > ul
-    list-style: circle
-    padding-left: 3em
-    font-size: 0.9em
-    margin-bottom: 27.68px
-    li
-      margin: 1em 0
-
-  > h2
-    font-size: 22px
-    font-weight: 400
-
-  > h3:not(.o-article__title)
-    font-size: 18px
-    font-weight: 600
-    text-transform: uppercase
-
-  > h6
-    @extend .b-heading, .b-heading--h6, .b-heading--uppercase, .u-text-color--gray-warm, .b-heading--book
-    margin-bottom: 0
-
-  > .o-article__body
+  .o-article__body
     color: $color-gray-dark
     font-family: $font-sans-base
-    line-height: 30px
-    margin-bottom: $margin-in-pixels / 2
+    > *
+      line-height: 30px
+      margin-bottom: $margin-in-pixels / 2
 
-  > p:first-of-type
-    font-size: 22px
-    line-height: 30px
-    @media (max-width: $media-tablet)
-      font-size: 20px
+  .o-article__body--float-right
+    float: right
+    width: 40%
+    margin-left: 45px
+    margin-top: 45px
 
-  > p:last-of-type
-    @media (max-width: $media-tablet)
-      margin-bottom: 60px
+  .o-article__body
+    color: $color-gray-dark
+    font-family: $font-sans-base
+    > *
+      line-height: 30px
+      margin-bottom: $margin-in-pixels / 2
 
-  > blockquote
-    p
-      border-left: 6px solid $color-primary
-      padding-bottom: $margin-in-pixels / 2
-      margin-left: percentage(31/642)
-      padding-left: percentage(31/642)
+    p a
+      // paragraph links
+      color: $color-secondary
+
+    ul
+      list-style: circle
+      padding-left: 3em
+      font-size: 0.9em
+      margin-bottom: 27.68px
+      li
+        margin: 1em 0
+
+    h2
+      font-size: 22px
+      font-weight: 400
+
+    h3:not(.o-article__title)
+      font-size: 18px
+      font-weight: 600
+      text-transform: uppercase
+
+    h6
+      @extend .b-heading, .b-heading--h6, .b-heading--uppercase, .u-text-color--gray-warm, .b-heading--book
+      margin-bottom: 0
+
+    p:first-of-type
+      font-size: 22px
+      line-height: 30px
+      @media (max-width: $media-tablet)
+        font-size: 20px
+
     p:last-of-type
-      padding-bottom: 0px
+      @media (max-width: $media-tablet)
+        margin-bottom: 60px
 
-  > img.o-article__body
-    @media (max-width: $media-tablet)
-      width: 100% - ($margin * 2) !important
+    blockquote
+      p
+        border-left: 6px solid $color-primary
+        padding-bottom: $margin-in-pixels / 2
+        margin-left: percentage(31/642)
+        padding-left: percentage(31/642)
+      p:last-of-type
+        padding-bottom: 0px
+
+    > img
+      @media (max-width: $media-tablet)
+        width: 100% - ($margin * 2) !important
+
 
   .o-article__body iframe
     width: 100%
@@ -137,6 +152,9 @@
       margin-left: $margin
       margin-right: $margin
 
+    .o-article__body--float-right
+      margin-right: 10%
+
     .c-audio--horiz
       display: flex
       display: -ms-flex-box
@@ -160,3 +178,11 @@
   @media all and (max-width: $media-mobile)
     .o-featured-blogs__blog
       width: 100%
+    .o-article__body--float-right
+      float: none
+      margin: 0 auto
+      margin-bottom: 25px
+      width: 75%
+
+
+
