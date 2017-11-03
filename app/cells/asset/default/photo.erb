@@ -1,5 +1,14 @@
 <figure class="o-figure <%= aspect %> <%= @options[:class] %>">
-  <img class="o-figure__img" src="<%= src %>" alt="<%= caption %>" title="<%= title %>" role="img" aria-label="<%= title %>" style="background-image:url(<%= src %>);" />
+  <img
+    class="o-figure__img"
+    src="<%= src %>"
+    alt="<%= caption %>"
+    title="<%= title %>"
+    role="img"
+    aria-label="<%= title %>"
+    data-assethost="<%= assethost %>"
+    style="background-image:url(<%= src %>);"
+  />
   <% if caption || owner %>
     <figcaption class="o-figure__caption">
       <% if caption %>
@@ -11,3 +20,7 @@
     </figcaption>
   <% end %>
 </figure>
+
+<script>
+  ahClient = new AssetHost.Client();
+</script>
