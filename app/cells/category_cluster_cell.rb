@@ -16,7 +16,7 @@ class CategoryClusterCell < Cell::ViewModel
   end
 
   def content
-    @content ||= (model.try(:content) || []).map{ |a| a.get_article }.first(3)
+    @content ||= (model.try(:content) || []).try(:first, 3).try(:map, &:to_article)
   end
 
 end

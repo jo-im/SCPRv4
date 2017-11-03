@@ -1,8 +1,5 @@
 class PopularArticlesCell < Cell::ViewModel
-
-  cache :show do
-    model.try(:cache_key)
-  end
+  cache :show, expires_in: 12.hours
 
   def show
     get_popular_articles
