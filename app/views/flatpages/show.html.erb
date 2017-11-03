@@ -19,6 +19,8 @@
   <% end %>
 
   <%= render "shared/ads/dfp_script_config" %>
+  <% content_for :header, @flatpage.extra_head.html_safe %>
+  <% content_for :footer, @flatpage.extra_tail.html_safe %>
   <%= cell :social_tools, @flatpage, display: 'vert', email: false %>
 <% end %>
 
