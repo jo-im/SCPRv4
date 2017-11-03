@@ -92,7 +92,7 @@ class ArticleCell < Cell::ViewModel
     doc.css("body > *").each do |element|
       element['style'] ||= ""
       unless element['style'].scan(/order:\s(.*);/).any?
-        element['style'] = "#{element['style']}order:#{i}; height: 100%;"
+        element['style'] = "#{element['style']}order:#{i};"
         element['class'] = 'o-article__body'
       end
       i += 1
