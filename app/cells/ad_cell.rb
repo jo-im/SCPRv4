@@ -1,7 +1,7 @@
 class AdCell < Cell::ViewModel
   include Orderable
   cache :show do
-    "c-ad #{model[:class]}"
+    "c-ad #{model[:id]} #{ad_key} #{model[:class]}"
   end
 
   def show &block
