@@ -31,7 +31,8 @@
     </main>
     <footer class="<%= content_for :footer_class %>">
       <%= content_for :footer %>
-      <%= cell :footer %>
+      <% sponsors = content_for :footer_sponsors %>
+      <%= cell :footer, nil, sponsors: sponsors %>
     </footer>
     <%= cell :audio_player %>
     <%= render "shared/footer/document_footer" %>
