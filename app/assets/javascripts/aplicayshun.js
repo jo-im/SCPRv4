@@ -12,6 +12,8 @@
 //= require svgxuse/svgxuse.min
 //= require spin
 
+//= require_tree ./slideshow/templates
+
 //= require embeditor
 //= require embeditor/templates
 //= require embeditor/adapters/oembed
