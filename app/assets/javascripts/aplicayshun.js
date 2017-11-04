@@ -1,4 +1,3 @@
-//= require jquery
 //= require shared
 //= require page_mapping
 //= require jquery.scrolldepth
@@ -30,7 +29,7 @@
 //= require embeditor/adapters/document_cloud
 
 //= require fastclick/lib/fastclick
-//= require slideshow/new_slideshow
+//= require slideshow/slideshow
 
 //= require new/behaviors
 //= require new/layout

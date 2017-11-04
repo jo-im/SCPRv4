@@ -55,7 +55,7 @@ class ArticleCell < Cell::ViewModel
 
   def hero_asset(figure_class)
     if model.try(:asset_display) != :hidden || !model.try(:assets).try(:empty?)
-      AssetCell.new(asset, article: model, class: figure_class).call(:show)
+      AssetCell.new(asset, article: model, class: figure_class, template: "default/#{model.try(:asset_display)}.html").call(:show)
     end
   end
 

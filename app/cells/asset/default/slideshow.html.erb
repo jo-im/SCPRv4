@@ -1,4 +1,4 @@
-<% html_safe_id = article.id.parameterize %>
+<% html_safe_id = article.id %>
 
 <div id="asset_slideshow_<%=html_safe_id%>" class="slideview">
 
@@ -33,10 +33,6 @@
 
     var slideshow;
     slideshow = new scpr.Slideshow({
-        <% if params[:id].present? %>
-          start: params["slide"],
-          deeplink: true,
-        <% end %>
           el: "#asset_slideshow_<%=html_safe_id%>",
           staticSlides: "staticSlides_<%=html_safe_id%>",
           assets: <%= assets.to_json.html_safe %>
