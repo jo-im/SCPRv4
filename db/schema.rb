@@ -596,9 +596,9 @@ ActiveRecord::Schema.define(version: 20171031210028) do
     t.datetime "updated_at",                           null: false
   end
 
-  add_index "lists", ["ends_at"], name: "index_lists_on_end_time", using: :btree
+  add_index "lists", ["ends_at"], name: "index_lists_on_ends_at", using: :btree
   add_index "lists", ["published_at"], name: "index_lists_on_published_at", using: :btree
-  add_index "lists", ["starts_at"], name: "index_lists_on_start_time", using: :btree
+  add_index "lists", ["starts_at"], name: "index_lists_on_starts_at", using: :btree
   add_index "lists", ["status"], name: "index_lists_on_status", using: :btree
 
   create_table "media_audio", force: :cascade do |t|
