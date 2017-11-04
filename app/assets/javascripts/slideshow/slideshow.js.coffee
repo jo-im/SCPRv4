@@ -327,7 +327,7 @@ class scpr.Slideshow
         #----------
 
         _getTargetHeight: ->
-            $(@slides.el).find(".slide.active img").height()
+            $(@slides.el).find(".slide.active").height()
 
 
     #----------

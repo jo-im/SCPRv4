@@ -1,23 +1,32 @@
 <% html_safe_id = article.id %>
 
-<div id="asset_slideshow_<%=html_safe_id%>" class="o-figure <%= aspect %> <%= @options[:class] %> slideview">
+<div id="asset_slideshow_<%=html_safe_id%>" class="<%= @options[:class] %> slideview">
 
   <div class="static-slides">
   <% assets.each do |asset| %>
-    <div class="slide">
-      <div class="asset-block">
-        <div class="contentasset">
-          <%= link_to asset.try(:eight).try(:tag), article.public_url %>
-        </div>
-
-        <h4><%= asset.owner %></h4>
-
-      <% if asset.caption.present? %>
-        <p><%= asset.caption %></p>
+    <figure class="slide o-figure <%= aspect %>">
+      <img
+        class="o-figure__img"
+        src="<%= asset.try(:eight).try(:url) %>"
+        alt="<%= caption %>"
+        title="<%= title %>"
+        role="img"
+        aria-label="<%= title %>"
+        data-assethost="<%= assethost %>"
+        data-ah-videoid="<%= videoid %>"
+        style="background-image:url(<%= asset.try(:eight).try(:url) %>);"
+      />
+      <% if asset.try(:caption) || asset.try(:owner) %>
+        <figcaption class="o-figure__caption">
+          <% if asset.try(:caption) %>
+            <%= asset.try(:caption) %>
+          <% end %>
+          <% if asset.try(:owner) %>
+            <address class="o-figure__attribution"><%= asset.try(:owner) %></address>
+          <% end %>
+        </figcaption>
       <% end %>
-
-      </div>
-    </div>
+    </figure>
   <% end %>
   </div>
 
