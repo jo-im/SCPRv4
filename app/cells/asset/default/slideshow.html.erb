@@ -1,6 +1,6 @@
 <% html_safe_id = article.id %>
 
-<div id="asset_slideshow_<%=html_safe_id%>" class="slideview">
+<div id="asset_slideshow_<%=html_safe_id%>" class="o-figure <%= aspect %> <%= @options[:class] %> slideview">
 
   <div class="static-slides">
   <% assets.each do |asset| %>
