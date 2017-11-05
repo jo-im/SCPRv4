@@ -3,7 +3,7 @@ class ContentClusterCell < Cell::ViewModel
     render
   end
 
-  def title
-    model.try(:title)
+  def title(feature)
+    feature.try(:title) || feature.try(:short_headline)
   end
 end
