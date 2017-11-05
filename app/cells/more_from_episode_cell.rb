@@ -31,7 +31,6 @@ class MoreFromEpisodeCell < Cell::ViewModel
 
   def episode_content
     @episode_content ||= model.try(:to_article).try(:related_content) || []
-    # model.segments
   end
 
 end

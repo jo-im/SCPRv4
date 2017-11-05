@@ -19,7 +19,7 @@ class MoreEventsCell < Cell::ViewModel
   end
 
   def recent_content
-    @content ||= (model.try(:segments).try(:published).try(:first, 3).try(:map, &:to_article) || model|| [])
+    @content ||= model || [])
   end
 
   def events
