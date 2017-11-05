@@ -186,7 +186,7 @@ describe BlogsController do
         end
 
         it 'assigns @popular_articles' do
-          assigns(:popular_articles).should eq articles
+          assigns(:popular_articles_viewed).should eq articles
         end
       end
     end
