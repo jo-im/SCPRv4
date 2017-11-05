@@ -19,7 +19,7 @@ class MoreEventsCell < Cell::ViewModel
   end
 
   def recent_content
-    @content ||= model || [])
+    @content ||= model || []
   end
 
   def events
