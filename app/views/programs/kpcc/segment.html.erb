@@ -80,7 +80,7 @@ end %>
 
 <%= cell :featured_programs, @program, class: "l-column--boundless", order: 1001 %>
 
-<%= cell :popular_articles, @program, class: "l-column--boundless o-popular-stories--horiz", order: 1001 %>
+<%= cell :popular_articles, nil, popular_articles_viewed: @popular_articles_viewed, class: "l-column--boundless o-popular-stories--horiz", order: 1001 %>
 
 <%= cell :epilogue, @article, class: "l-column--boundless", order: 1001 %>
 

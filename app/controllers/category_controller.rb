@@ -1,5 +1,6 @@
 class CategoryController < ApplicationController
   respond_to :html, :xml, :rss
+  before_filter :get_popular_articles
 
   DEFAULT_LIMIT = 15
 

@@ -8,7 +8,7 @@
         <% end %>
         <figcaption class="o-popular-stories__caption">
           <%= link_to article.public_path, data: {"ga-category" => "Article", "ga-action" => "Clickthrough", "ga-label" => "Popular Now Quadrant"} do %>
-          <%= article.short_title %>
+          <%= article.try(:short_title) || article.try(:short_headline) %>
           <% end %>
         </figcaption>
       </figure>

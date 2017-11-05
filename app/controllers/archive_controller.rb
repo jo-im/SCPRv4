@@ -1,4 +1,6 @@
 class ArchiveController < ApplicationController
+  before_filter :get_popular_articles
+
   # Process the form values for Archive and redirect to canonical URL
   def process_form
     year  = params[:archive]["date(1i)"].to_i

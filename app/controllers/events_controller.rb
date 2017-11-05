@@ -1,4 +1,5 @@
 class EventsController < ApplicationController
+  before_filter :get_popular_articles
 
   def index
     @scoped_events = Event.upcoming_and_current

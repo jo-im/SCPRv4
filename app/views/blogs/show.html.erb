@@ -21,7 +21,7 @@
 <%= cell :blog_hosts, @blog, class: "l-column--right", order: 902 %>
 <%= cell :recent_content, @entries.try(:first).try(:sister_blog_entries), class: "l-column--right", blog: @blog.name, order: 999 %>
 <%= cell(:appeal, order: 1000).call(:breaking_news) %>
-<%= cell(:popular_articles, order: 1001).call(:side_bar) %>
+<%= cell(:popular_articles, nil, popular_articles_discussed: @popular_articles_discussed, popular_articles_viewed: @popular_articles_viewed, order: 1001).call(:side_bar) %>
 <%= cell :ad, slot: "c", id: "o-ad--pos-c", order: 4 %>
 
 <%= any_to_list? @entries, message: @MESSAGE do %>

@@ -1,5 +1,6 @@
 class TopicsController < ApplicationController
   respond_to :html, :xml, :rss
+  before_filter :get_popular_articles
 
   PER_PAGE = 8
 

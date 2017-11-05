@@ -28,7 +28,7 @@
   <%= cell :ad, slot: "a", id: "o-ad--pos-a", attribution: false, order: -1 %>
   <%= cell :ad, slot: "b", id: "o-ad--pos-b", order: 998 %>
   <%= cell(:appeal, nil, order: 999).call(:breaking_news) %>
-  <%= cell(:popular_articles, nil, order: 1000).call(:side_bar) %>
+  <%= cell(:popular_articles, nil, popular_articles_discussed: @popular_articles_discussed, popular_articles_viewed: @popular_articles_viewed, order: 1000).call(:side_bar) %>
   <%= cell :ad, slot: "c", id: "o-ad--pos-c", order: 1001 %>
 <% end %>
 <h1 class="o-flatpage__title" style="order: 1"><%= @flatpage.title %></h1>

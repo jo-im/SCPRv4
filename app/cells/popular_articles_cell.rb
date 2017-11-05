@@ -2,7 +2,6 @@ class PopularArticlesCell < Cell::ViewModel
   cache :show, expires_in: 12.hours
 
   def show
-    get_popular_articles
     render if articles.try(:any?)
   end
 
@@ -11,7 +10,9 @@ class PopularArticlesCell < Cell::ViewModel
   end
 
   def side_bar
-    get_popular_articles
+    if !@options[:popular_articles_viewed] && !@options[:popular_articles_discussed]
+      get_popular_articles
+    end
     render
   end
 
@@ -24,24 +25,22 @@ class PopularArticlesCell < Cell::ViewModel
   end
 
   def articles
-    # (@popular_articles_viewed || []).first(4)
-    # NewsStory.all.limit(4).map(&:get_article)
     popular_articles_viewed.try(:first, 4)
   end
 
   def popular_articles_viewed
-    if (@popular_articles_viewed || []).any?
-      @popular_articles_viewed.try(:first, 4)
+    if (@options[:popular_articles_viewed] || []).any?
+      @options[:popular_articles_viewed].try(:first, 4)
     else
-      NewsStory.published.order(public_datetime: :desc).all.limit(4).map(&:get_article)
+      NewsStory.published.order(public_datetime: :desc).all.limit(4)
     end
   end
 
   def popular_articles_discussed
-    if (@popular_articles_discussed || []).any?
-      @popular_articles_discussed.try(:first, 4)
+    if (@options[:popular_articles_discussed] || []).any?
+      @options[:popular_articles_discussed].try(:first, 4)
     else
-      NewsStory.published.order(public_datetime: :desc).all.limit(4).map(&:get_article).reverse
+      NewsStory.published.order(public_datetime: :desc).all.limit(4).reverse
     end
   end
 
@@ -63,8 +62,7 @@ class PopularArticlesCell < Cell::ViewModel
       # give up.
       if klass == prev_klass
         warn "Error caught: Couldn't deserialize popular articles: #{e}"
-        @popular_articles_viewed = []
-        @popular_articles_discussed = []
+        @popular_articles = nil
         return
       end
 

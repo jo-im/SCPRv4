@@ -31,12 +31,12 @@
 
 <%= cell :ad, slot: "a", id: "o-ad--pos-a", attribution: false, order: 3 %>
 <%= cell :ad, slot: "b", id: "o-ad--pos-b", order: 5 %>
-<%= cell(:popular_articles, @content, order: 6).call(:side_bar) %>
+<%= cell(:popular_articles, nil, popular_articles_discussed: @popular_articles_discussed, popular_articles_viewed: @popular_articles_viewed, order: 6).call(:side_bar) %>
 <%= cell(:appeal, @program, order: 4).call(:podcast) %>
 <%= cell :ad, slot: "c", id: "o-ad--pos-c", order: 7 %>
 <%= cell :episode_list, [@episode], id: 'o-standard-program-episode__episode', class: 'o-standard-program__episode-list', program: @program, order: 1, multiple: false %>
 <%= cell :episode_list, @segments, id: 'o-standard-program-episode__episode__segment-list', class: 'o-standard-program__episode-list', program: @program, header: 'In this episode', order: 2 %>
 <%= cell :archive_picker, @program, id: 'o-archive-picker__standard-program-episode', base_url: "/programs/" + @program.slug + "/archive", header: "Find a specific episode from " + @program.try(:title) + "'s archive", type: "full", order: 3 %>
 <%= cell :featured_programs, @program, order: 11 %>
-<%= cell :popular_articles, @program, class: "o-popular-stories--horiz", order: 1001 %>
+<%= cell :popular_articles, nil, popular_articles_viewed: @popular_articles_viewed, class: "o-popular-stories--horiz", order: 1001 %>
 <%= cell :epilogue, @program, order: 1001 %>

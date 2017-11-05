@@ -21,5 +21,5 @@
 <%= cell :ad, slot: "a", id: "o-ad--pos-a", attribution: false, order: 1 %>
 <%= cell :ad, slot: "b", id: "o-ad--pos-b", order: 3 %>
 <%= cell(:appeal).call(:breaking_news) %>
-<%= cell(:popular_articles).call(:side_bar) %>
+<%= cell(:popular_articles, nil, popular_articles_discussed: @popular_articles_discussed, popular_articles_viewed: @popular_articles_viewed).call(:side_bar) %>
 <%= cell :ad, slot: "c", id: "o-ad--pos-c", order: 1000 %>

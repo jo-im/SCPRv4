@@ -1,4 +1,4 @@
-module FlatpageHandler
+module FlatpageHandler  
   FLATPAGE_TEMPLATE_MAP = {
     "full"    => "app_nosidebar",
     "kpcc_in_person"   => "kpcc_in_person",

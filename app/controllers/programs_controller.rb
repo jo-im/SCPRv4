@@ -9,7 +9,7 @@ class ProgramsController < ApplicationController
   include Concern::Controller::Amp
 
   before_filter :get_program, only: [:show, :episode, :archive, :featured_program, :featured_show]
-  before_filter :get_popular_articles, only: [:featured_program, :segment]
+  before_filter :get_popular_articles
 
   respond_to :html, :xml, :rss
 

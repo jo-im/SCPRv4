@@ -1,5 +1,6 @@
 class EditionsController < ApplicationController
   respond_to :html
+  before_filter :get_popular_articles
 
   def archive
     year = params[:year]

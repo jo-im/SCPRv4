@@ -16,7 +16,8 @@ class ApplicationController < ActionController::Base
   private
 
   def get_popular_articles
-    @popular_articles = Cache.read("popular/viewed")
+    @popular_articles_viewed = Cache.read("popular/viewed")
+    @popular_articles_discussed = Cache.read("popular/commented");
   end
 
   #----------

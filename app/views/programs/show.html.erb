@@ -42,5 +42,5 @@
 <%= cell :ad, slot: "c", id: "o-ad--pos-c", order: 7 %>
 <%= cell :meet_the_team, @program, order: 6 %>
 <%= cell :featured_programs, @program, order: 11 %>
-<%= cell :popular_articles, @program, class: "o-popular-stories--horiz", order: 1001 %>
+<%= cell :popular_articles, nil, popular_articles_viewed: @popular_articles_viewed, class: "o-popular-stories--horiz", order: 1001 %>
 <%= cell :epilogue, @program, order: 1001 %>

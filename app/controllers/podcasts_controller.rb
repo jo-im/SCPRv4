@@ -1,5 +1,6 @@
 class PodcastsController < ApplicationController
   before_filter :set_headers, only: [:podcast]
+  before_filter :get_popular_articles
 
   def index
     @podcasts = Podcast.where(is_listed: true).order("title")

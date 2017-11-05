@@ -4,7 +4,7 @@
 <%= cell :ad, slot: "a", id: "o-ad--pos-a", attribution: false, order: 1 %>
 <%= cell :ad, slot: "b", id: "o-ad--pos-b", order: 3 %>
 <%= cell(:appeal, order: 1000).call(:breaking_news) %>
-<%= cell(:popular_articles, order: 1001).call(:side_bar) %>
+<%= cell(:popular_articles, nil, popular_articles_discussed: @popular_articles_discussed, popular_articles_viewed: @popular_articles_viewed, order: 1001).call(:side_bar) %>
 <%= cell :ad, slot: "c", id: "o-ad--pos-c", order: 6 %>
 <%= cell(:biography, @bio, order: 2).call(:headshot) %>
 <%= cell :biography, @bio, bylines: @bylines, order: 4 %>
