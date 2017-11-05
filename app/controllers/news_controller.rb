@@ -1,5 +1,4 @@
 class NewsController < ApplicationController
-  # layout 'new/single'
   respond_to :html, :xml, :rss
 
   before_filter :get_popular_articles

@@ -19,10 +19,6 @@ end %>
   '<hr class="b-rule l-column--right" style="order: 12;" />'
 end %>
 
-<%= cell(:category_cluster, @category, class: "l-column--right", order: 996, category: "Article", label: "More Sidebar Category") %>
-
-<%= cell(:popular_articles, nil, popular_articles_viewed: @popular_articles_viewed, class: "l-column--right", order: 997, category: "Article", label: "Popular Now Sidebar").call(:trio) %>
-
 <%= cell :ad, slot: "c", class: "l-column--right", order: 1000 %>
 
 <!-- ARTICLE BODY -->
