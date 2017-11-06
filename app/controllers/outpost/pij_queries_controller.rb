@@ -33,6 +33,7 @@ class Outpost::PijQueriesController < Outpost::ResourceController
 
   def preview
     @query = Outpost.obj_by_key(params[:obj_key]) || PijQuery.new
+    @article = @query.to_article
 
     with_rollback @query do
       @query.assign_attributes(params[:pij_query])
@@ -41,7 +42,7 @@ class Outpost::PijQueriesController < Outpost::ResourceController
         @title = @query.to_title
 
         render "pij_queries/_pij_query",
-          :layout => "outpost/preview/application",
+          :layout => "outpost/preview/new/application",
           :locals => { query: @query }
 
       else
