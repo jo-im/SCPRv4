@@ -78,7 +78,7 @@ class ArticleCell < Cell::ViewModel
       ## If kpcc_only is true, only render if the owner of the asset is KPCC
       if asset && (!options[:kpcc_only] || asset.owner.try(:include?, "KPCC"))
         if (asset.small.width.to_i < asset.small.height.to_i)
-          if placeholder.attribute('data-align').value.match(/left/i)
+          if placeholder.attribute('data-align').try(:value).try(:match, /left/i)
             positioning = "o-article__body--float-left"
           else
             positioning = "o-article__body--float-right"
