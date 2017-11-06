@@ -1,14 +1,26 @@
-<div class="asset-block wide">
-  <div class="contentasset media-scaler">
-    <%= assets.first.try(:eight).try(:tag) %>
-  </div>
-
-  <h4><%= assets.first.owner %></h4>
-
-  <% if assets.first.caption %>
-    <p><%= assets.first.caption %></p>
+<figure class="o-figure <%= aspect %> <%= @options[:class] %>">
+  <img
+    class="o-figure__img"
+    src="<%= src %>"
+    alt="<%= caption %>"
+    title="<%= title %>"
+    role="img"
+    aria-label="<%= title %>"
+    data-assethost="<%= assethost %>"
+    data-ah-videoid="<%= videoid %>"
+    style="background-image:url(<%= src %>);"
+  />
+  <% if caption || owner %>
+    <figcaption class="o-figure__caption">
+      <% if caption %>
+        <%= caption %>
+      <% end %>
+      <% if owner %>
+        <address class="o-figure__attribution"><%= owner %></address>
+      <% end %>
+    </figcaption>
   <% end %>
-</div>
+</figure>
 
 <script>
   ahClient = new AssetHost.Client();

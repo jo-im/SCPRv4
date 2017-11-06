@@ -8,13 +8,15 @@
     position: relative;
 
     .slideshow-header {
+        align-items: center;
+        display: flex;
+        justify-content: flex-end;
         margin-bottom: 5px;
-        height: 21px;
 
         h6 {
             display: inline;
             line-height: 21px;
-            font-family:'Helvetica Neue', Helvetica, Arial, sans-serif
+            text-transform: uppercase
         }
 
         .pager-nav {
@@ -27,8 +29,10 @@
             .page-count {
                 color: #ccc;
                 height: 20px;
-                width: 60px;
+                font-size: 12px;
+                line-height: 21px;
                 text-align: center;
+                width: 60px;
             }
         }
 
@@ -90,13 +94,13 @@
         }
 
         .thumbnails {
+            display: flex;
             opacity: 1;
             width: 86%;
             margin: 0 auto;
             .thumbnail {
                 cursor: pointer;
                 margin: 0 5px;
-                display: none;
                 width: 13%;
 
                 &.current-set {
@@ -117,7 +121,6 @@
         .slide {
             position: relative;
             z-index: 5;
-            text-align: center;
             width: 100%;
             display: none;
 

@@ -31,7 +31,7 @@
 //= require embeditor/adapters/document_cloud
 
 //= require fastclick/lib/fastclick
-//= require slideshow/slideshow
+//= require slideshow/new_slideshow
 
 //= require new/behaviors
 //= require new/layout
