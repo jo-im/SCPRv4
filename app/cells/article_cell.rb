@@ -3,6 +3,7 @@
 # NO, JUST NO.  If it's not there, add it to the Article class.
 
 class ArticleCell < Cell::ViewModel
+  include Cell::Caching::Notifications
   include ActionView::Helpers::DateHelper
   property :title
   property :body
