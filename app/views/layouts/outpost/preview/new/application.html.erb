@@ -1,31 +1,73 @@
 <!DOCTYPE html>
-<html lang="en">
-<%= render "shared/new/document_header" %>
+<html>
+  <head>
+    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start': new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src= 'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f); })(window,document,'script','dataLayer','GTM-585PL29');</script>
+    <!-- Use title if it's in the page YAML frontmatter -->
+    <% add_to_page_title @TITLE_ELEMENTS.present? ? "89.3 KPCC" : "89.3 KPCC - Southern California Public Radio" %>
+    <title><%= page_title %></title>
+    <title>89.3 KPCC - Southern California Public Radio</title>
+    <script src="https://use.typekit.net/cka2qre.js"></script>
+    <script>try{Typekit.load({ async: true });}catch(e){}</script>
 
-<body class="<%= yield(:body_class) %>">
-
-    <%= yield %>
-
-    <% content_for :extra_footer do %>
+    <%= render "shared/new/meta_header" %>
+    <%= stylesheet_link_tag 'application' %>
+    <%= render "shared/ads/dfp_script_config" %>
+    <%= render partial: "shared/header/ad_scripts" %>
+    <%= javascript_include_tag 'aplicayshun' %>
     <script>
-        scpr.Behaviors.loadBehaviors(['Layout', 'Single']);
+      // Function for lazy loading slideshow images
+      function imgLoaded(img){
+        var $img = $(img);
 
-        // Load Embeditor
-        embeditor = new Embeditor.Base({
-          Embedly: {
-            query: { key : '0cb3651dde4740db8fcb147850c6b555' }
-          }
-        })
-
-        embeditor.swap()
+        $img.addClass('loaded');
+      };
+      // User agent detection to dynamically display the appropriate Apple App Banners to iPads and iPhones
+      if (navigator.userAgent.match(/iPad/i)) {
+        $('head').append('<meta name="apple-itunes-app" content="app-id=744160424"/>');
+      }
+      else if (navigator.userAgent.match(/iPhone/i) || navigator.userAgent.match(/iPod/i)) {
+        $('head').append('<meta name="apple-itunes-app" content="app-id=293825085"/>');
+      }
     </script>
+    <script type="text/javascript" src="https://<%= Rails.configuration.x.assethost.server %>/resources/client.js?bust=20130523"></script>
+  </head>
+
+  <body>
+    <iframe src="https://www.googletagmanager.com/ns.html?id=GTM-585PL29" height="0" width="0" style="display:none;visibility:hidden"></iframe>
+    <% if alert = BreakingNewsAlert.latest_visible_alert %>
+      <%= cell :breaking_news_alert, alert %>
     <% end %>
+    <div id="global-pushdown"></div>
+    <header class="<%= content_for :header_class %>">
+      <%= cell :masthead %>
+      <%= content_for :header %>
+    </header>
+    <main class="<%= content_for :main_class %>">
+      <%= yield %>
+    </main>
+    <footer class="<%= content_for :footer_class %>">
+      <%= content_for :footer %>
+      <% sponsors = content_for :footer_sponsors %>
+      <%= cell :footer, nil, sponsors: sponsors %>
+      <script>
 
-    <%= render "/shared/audio/new_inpage_audio_player" %>
+          // Load In-Article Membership Appeal from AdHost
+          scpr.VisualCampaign.enqueue('article-appeal', $('#article-membership-appeal'));
 
-    <%= render 'shared/new/document_footer' %>
+          // Load Embeditor
+          embeditor = new Embeditor.Base({
+            Embedly: {
+              query: { key : '0cb3651dde4740db8fcb147850c6b555' }
+            }
+          })
 
-</body>
+          embeditor.swap()
+      </script>
+    </footer>
+    <%= cell :audio_player %>
+    <%= render "shared/footer/document_footer" %>
+
+    <%= javascript_include_tag "better_homepage/style-guide", :async => true %>
+  </body>
 </html>
-
 

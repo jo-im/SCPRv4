@@ -1,7 +1,9 @@
 class AdCell < Cell::ViewModel
   include Orderable
   cache :show do
-    "c-ad #{model[:id]} #{ad_key} #{model[:class]}"
+    if @options[:preview] != true
+      "c-ad #{model[:id]} #{ad_key} #{model[:class]}"
+    end
   end
 
   def show &block
@@ -23,6 +25,10 @@ class AdCell < Cell::ViewModel
 
   def id
     model[:id]
+  end
+
+  def placeholder
+    render
   end
 
 end

@@ -2,7 +2,9 @@ class ArticleAudioCell < Cell::ViewModel
   property :audio
 
   cache :show do
-    model.try(:cache_key)
+    if @options[:preview] != true
+      model.try(:cache_key)
+    end
   end
 
   def show

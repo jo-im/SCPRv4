@@ -3,7 +3,9 @@ class SocialToolsCell < Cell::ViewModel
   include Orderable
 
   cache :show do
-    "#{model.try(:cache_key)} o-social-tools--#{@options[:display]} #{@options[:class]}"
+    if @options[:preview] != true
+      "#{model.try(:cache_key)} o-social-tools--#{@options[:display]} #{@options[:class]}"
+    end
   end
 
   property :id
