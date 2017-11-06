@@ -14,6 +14,20 @@
     <%= render "shared/ads/dfp_script_config" %>
     <%= render partial: "shared/header/ad_scripts" %>
     <%= javascript_include_tag 'aplicayshun' %>
+    <script>
+      // Function for lazy loading slideshow images
+      function imgLoaded(img) {
+        var $img = $(img);
+        $img.addClass('loaded');
+      };
+      // User agent detection to dynamically display the appropriate Apple App Banners to iPads and iPhones
+      if (navigator.userAgent.match(/iPad/i)) {
+        $('head').append('<meta name="apple-itunes-app" content="app-id=744160424"/>');
+      }
+      else if (navigator.userAgent.match(/iPhone/i) || navigator.userAgent.match(/iPod/i)) {
+        $('head').append('<meta name="apple-itunes-app" content="app-id=293825085"/>');
+      }
+    </script>
     <script type="text/javascript" src="https://<%= Rails.configuration.x.assethost.server %>/resources/client.js?bust=20171106"></script>
   </head>
 

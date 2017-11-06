@@ -1,0 +1,186 @@
+// z-index:
+//  .slideview: auto
+//    .slides: auto
+//      .slide: 5
+//      .overlay-nav: 10
+
+.slideview {
+    position: relative;
+
+    .slideshow-header {
+        align-items: center;
+        display: flex;
+        justify-content: flex-end;
+        margin-bottom: 5px;
+
+        h6 {
+            display: inline;
+            line-height: 21px;
+            text-transform: uppercase
+        }
+
+        .pager-nav {
+            padding: 0 5px;
+
+            a {
+                margin-top: 0;
+            }
+
+            .page-count {
+                color: #ccc;
+                height: 20px;
+                font-size: 12px;
+                line-height: 21px;
+                text-align: center;
+                width: 60px;
+            }
+        }
+
+        .thumbtray-toggler {
+            cursor: pointer;
+            margin: 0 10px;
+            width: 88px;
+            height: 22px;
+            background: transparent image-url('thumbnails-btn.png') no-repeat 0 0;
+            vertical-align: middle;
+
+            &:hover, &.active {
+                background-position: 100% 0;
+            }
+        }
+    }
+
+    .thumbtray {
+        position: relative;
+        margin: 10px 0;
+        text-align: center;
+        display: none;
+        padding: 5px 0 0 0 ;
+        border-radius: 0px;
+
+        .nav {
+            position: absolute;
+            top: 0;
+            width: 7%;
+            max-width: 48px;
+            min-width: 31px;
+            height: 100%;
+            background-color: transparent;
+            background-repeat: no-repeat;
+            background-position: 50% 48%;
+
+            &.prev {
+                left: 0;
+                background-image: image-url('overlay-prev-dark-sm.png');
+                border-right: 1px solid $color-gray-light;
+            }
+            &.next {
+                right: 0;
+                background-image: image-url('overlay-next-dark-sm.png');
+                border-left: 1px solid $color-gray-light;
+            }
+
+            &.disabled {
+                 opacity: 0.1;
+             }
+
+             &.active {
+                 cursor: pointer;
+                 opacity: 0.5;
+                 &:hover {
+                    opacity: 0.7;
+                 }
+             }
+        }
+
+        .thumbnails {
+            display: flex;
+            opacity: 1;
+            width: 86%;
+            margin: 0 auto;
+            .thumbnail {
+                cursor: pointer;
+                margin: 0 5px;
+                width: 13%;
+
+                &.current-set {
+                    // @include ie-inline-block();
+                }
+
+                &.active, &:hover {
+                    border-color: $color-primary;
+                }
+            }
+        }
+    }
+
+    .slides {
+        position: relative;
+        width: 100%;
+
+        .slide {
+            position: relative;
+            z-index: 5;
+            width: 100%;
+            display: none;
+
+            p {
+                text-align: left;
+            }
+
+            &.active {
+                display: block;
+            }
+
+            .text {
+                text-align: left;
+            }
+        }
+
+        .overlay-nav {
+            position: absolute;
+            left: 0;
+            top: 0;
+            z-index: 10;
+            display: block;
+            width: 100%;
+            height: 100%;
+
+            div.bar {
+                height: 100%;
+                position: absolute;
+                z-index: 20;
+                display: block;
+                background-color: transparent;
+                background-repeat: no-repeat;
+                opacity: 1;
+
+                &.prev {
+                    left: 0;
+                    width: 30%;
+                    background-position: 6% 48%;
+                    background-image: image-url('overlay-prev-dark.png');
+                }
+
+                &.next {
+                    right: 0;
+                    width: 70%;
+                    background-position: 98% 48%;
+                    background-image: image-url('overlay-next-dark.png');
+                }
+
+                &.disabled {
+                    opacity: 0.1;
+                }
+
+                &.active {
+                    cursor: pointer;
+                    opacity: 0.5;
+                    &:hover {
+                        opacity: 0.7;
+                    }
+                }
+            }
+        }
+    }
+}
