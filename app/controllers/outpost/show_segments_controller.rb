@@ -29,6 +29,9 @@ class Outpost::ShowSegmentsController < Outpost::ResourceController
 
   def preview
     @segment = Outpost.obj_by_key(params[:obj_key]) || ShowSegment.new
+    @article = @segment.to_article
+    @episode = @segment.episode
+    @program = @kpcc_program = @segment.show
 
     with_rollback @segment do
       @segment.assign_attributes(params[:show_segment])
