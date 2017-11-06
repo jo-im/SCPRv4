@@ -19,6 +19,10 @@ end %>
   '<hr class="b-rule l-column--right" style="order: 12;" />'
 end %>
 
+<%= cell(:category_cluster, @category, class: "l-column--right", order: 996, category: "Article", label: "More Sidebar Category") %>
+
+<%= cell(:popular_articles, nil, popular_articles_viewed: @popular_articles_viewed, class: "l-column--right", order: 997, category: "Article", label: "Popular Now Sidebar").call(:trio) %>
+
 <%= cell :ad, slot: "c", class: "l-column--right", order: 1000 %>
 
 <!-- ARTICLE BODY -->
@@ -28,6 +32,8 @@ end %>
 <%= cell :newsletter_appeal, @article, order: 991 %>
 
 <hr class="o-article__rule--ending b-rule b-rule--primary-lightest", style="order: 992;" />
+
+<%= cell :related_links, @article, order: 993 %>
 
 <%= cell :social_tools, @article, display: 'horiz', order: 994 %>
 
