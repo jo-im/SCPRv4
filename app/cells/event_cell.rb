@@ -6,7 +6,14 @@ class EventCell < Cell::ViewModel
   end
 
   def render_body options={}
-    doc = Nokogiri::HTML(model.body.html_safe)
+    starts_at = model.try(:starts_at)
+
+    if starts_at.try(:past?)
+      doc = Nokogiri::HTML(model.archive_description.html_safe)
+    else
+      doc = Nokogiri::HTML(model.body.html_safe)
+    end
+
     order_body doc
     doc.css("body").children.to_s.html_safe
   end
