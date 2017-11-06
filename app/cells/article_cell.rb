@@ -76,7 +76,13 @@ class ArticleCell < Cell::ViewModel
 
       ## If kpcc_only is true, only render if the owner of the asset is KPCC
       if asset && (!options[:kpcc_only] || asset.owner.try(:include?, "KPCC"))
-        positioning    = (asset.small.width.to_i < asset.small.height.to_i) ? "o-article__body--float-right" : ''
+        if (asset.small.width.to_i < asset.small.height.to_i)
+          if placeholder.attribute('data-align').value.match(/left/i)
+            positioning = "o-article__body--float-left"
+          else
+            positioning = "o-article__body--float-right"
+          end
+        end
         rendered_asset = AssetCell.new(asset, context: context, display: display, article: model, class: positioning).call(:show)
         placeholder.replace Nokogiri::HTML::DocumentFragment.parse(rendered_asset)
       else

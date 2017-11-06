@@ -16,8 +16,7 @@ CKEDITOR.plugins.add 'inline-asset-placeholder',
           setup: ( widget ) ->
             this.setValue widget.data.align
           commit: (widget) ->
-            #We are disabling this for the time-being
-            #widget.setData 'align', this.getValue()
+            widget.setData 'align', this.getValue()
           items: [
             [ editor.lang.common.alignLeft, 'left' ]
             [ editor.lang.common.alignRight, 'right' ]
