@@ -49,6 +49,12 @@
       line-height: 30px
       margin-bottom: $margin-in-pixels / 2
 
+  .o-article__body--float-left
+    float: left
+    width: 40%
+    margin-right: 45px
+    margin-top: 45px
+
   .o-article__body--float-right
     float: right
     width: 40%
@@ -193,7 +199,7 @@
   @media all and (max-width: $media-mobile)
     .o-featured-blogs__blog
       width: 100%
-    .o-article__body--float-right
+    .o-article__body--float-right, .o-article__body--float-left
       float: none
       margin: 0 auto
       margin-bottom: 25px
