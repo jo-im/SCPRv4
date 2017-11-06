@@ -11,6 +11,8 @@
 //= require cookie
 //= require visual_campaign
 //= require svgxuse/svgxuse.min
+//= require spin
+//= require cms_popup
 
 //= require embeditor
 //= require embeditor/templates
