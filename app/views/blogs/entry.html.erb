@@ -59,7 +59,7 @@ end %>
 
 <%= cell :featured_blogs, @entry.sister_blog_entries.first(4), blog: @blog.name, class: "l-column--boundless", order: 1002 %>
 
-<%= cell :popular_articles, nil, popular_articles_discussed: @popular_articles_discussed, popular_articles_viewed: @popular_articles_viewed, class: "l-column--boundless o-popular-stories--horiz", order: 1002 %>
+<%= cell :popular_articles, nil, class: "l-column--boundless o-popular-stories--horiz", order: 1002 %>
 
 <%= cell :epilogue, @article, class: "l-column--boundless", order: 1003%>
 

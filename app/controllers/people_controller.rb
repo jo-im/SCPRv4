@@ -1,6 +1,5 @@
 class PeopleController < ApplicationController
   rescue_from ActiveRecord::RecordNotFound, with: :redirect_to_staff_index
-  before_filter :get_popular_articles
 
   def index
     @bios = Bio.where(is_public: true).order("last_name")

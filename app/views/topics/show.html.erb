@@ -27,7 +27,7 @@
 <%= cell :ad, slot: "a", id: "o-ad--pos-a", attribution: false, order: -1 %>
 <%= cell :ad, slot: "b", id: "o-ad--pos-b", order: 5 %>
 <%= cell(:appeal, @tag, order: 6).call(:breaking_news) %>
-<%= cell(:popular_articles, nil, popular_articles_discussed: @popular_articles_discussed, popular_articles_viewed: @popular_articles_viewed, order: 7).call(:side_bar) %>
+<%= cell(:popular_articles, nil, order: 7).call(:side_bar) %>
 <%= cell :ad, slot: "c", id: "o-ad--pos-c", order: 8 %>
 <%= cell(:featured_story, @articles[0], order: 1).call(:category_view) %>
 <%= cell :story_list, @articles[1..8], class: "o-story-list--vert o-story-list--nobg", asset_aspect: "widescreen", order: 3 %>
