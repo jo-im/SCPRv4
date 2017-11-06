@@ -72,11 +72,18 @@ class ArticleCell < Cell::ViewModel
       # we have to fall back to original_object here to get the full list of
       # assets. in any case where we're rendering a body, we'll already have
       # the original object loaded, so that's ok
-      asset = model.try(:assets).select{|a| a.asset_id == asset_id}[0]
+      asset = model.try(:inline_assets).select{|a| a.asset_id == asset_id}[0]
 
       ## If kpcc_only is true, only render if the owner of the asset is KPCC
       if asset && (!options[:kpcc_only] || asset.owner.try(:include?, "KPCC"))
-        rendered_asset = AssetCell.new(asset, context: context, display: display, article: model).call(:show)
+        if (asset.small.width.to_i < asset.small.height.to_i)
+          if placeholder.attribute('data-align').value.match(/left/i)
+            positioning = "o-article__body--float-left"
+          else
+            positioning = "o-article__body--float-right"
+          end
+        end
+        rendered_asset = AssetCell.new(asset, context: context, display: display, article: model, class: positioning).call(:show)
         placeholder.replace Nokogiri::HTML::DocumentFragment.parse(rendered_asset)
       else
         # FIXME: I'm sure there's a cleaner "delete"
@@ -88,14 +95,11 @@ class ArticleCell < Cell::ViewModel
   end
 
   def order_body doc
-    i   = 0
-    doc.css("body > *").each do |element|
+    doc.css("body > *").each_with_index do |element, i|
       element['style'] ||= ""
-      unless element['style'].scan(/order:\s(.*);/).any?
-        element['style'] = "#{element['style']}order:#{i};"
-        element['class'] = 'o-article__body'
+      unless element['style'].match(/order:\s(.*);/)
+        element['style'] += "order:#{i}; height: 100%;"
       end
-      i += 1
     end
   end
 
