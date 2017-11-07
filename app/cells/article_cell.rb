@@ -103,7 +103,7 @@ class ArticleCell < Cell::ViewModel
     doc.css("body > *").each_with_index do |element, i|
       element['style'] ||= ""
       unless element['style'].match(/order:\s(.*);/)
-        element['style'] += "order:#{i}; height: 100%;"
+        element['style'] += "order:#{i};"
       end
     end
   end
@@ -119,7 +119,7 @@ class ArticleCell < Cell::ViewModel
   #   end
   #   primaries = bylines.select{|b| (b.role || 0) > -1}.map(&:name).join(" and ")
   #   extras    = bylines.select{|b| (b.role || 0) < 0 }.map(&:name).join(" | ")
-    
+
   #   source    = NewsStory::SOURCES.select{|x| x[1] == model.try(:source)}.flatten[0]
 
   #   [primaries, extras, source].reject{|b| b.blank?}.join(" | ")
