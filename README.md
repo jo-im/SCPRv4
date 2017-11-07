@@ -136,6 +136,21 @@ To use the Rails console:
 
 The application will be available at http://localhost:3000.  If you are using [docker-machine](https://docs.docker.com/machine/), it will be available at the IP of your virtual machine, which you can find by executing `echo $DOCKER_HOST`.
 
+#### Troubleshooting
+
+If running `rails s` gives you an error like this:
+```
+Caught an error when loading AdminUser: Mysql2::Error: Table 'scpr.auth_user' doesn't exist: SHOW FULL FIELDS FROM `auth_user`
+Caught an error when loading NewsStory: Mysql2::Error: Table 'scpr.news_story' doesn't exist: SHOW FULL FIELDS FROM `news_story`
+```
+
+Then your database schema may be messed up. Reload it by:
+
+```
+bundle exec rake db:drop
+bundle exec rake db:create db:schema:load
+```
+
 ### Native Setup
 
 * Install Ruby 2.1.x

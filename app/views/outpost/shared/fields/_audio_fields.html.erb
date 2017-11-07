@@ -36,7 +36,7 @@
                 <a href="#audio-new-enco-<%=index%>" data-toggle="tab">Enco</a>
               </li>
               <li class="<%= "active" if f.object.errors[:mp3].present? %>"><a href="#audio-new-upload-<%=index%>" data-toggle="tab">Upload</a></li>
-              <li class="<%= "active" if f.object.errors[:url].present? %>"><a href="#audio-new-direct-<%=index%>" data-toggle="tab">URL</a></li>
+              <li class="<%= "active" if f.object.errors[:url].present? %>"><a href="#audio-new-direct-<%=index%>" data-toggle="tab">Resound / URL</a></li>
             </ul>
             <div class="tab-content">
               <div class="tab-pane <%= "active" if f.object.errors.blank? || (f.object.errors[:enco_number] || f.object.errors[:enco_date] || f.object.errors[:base]).present? %>" id="audio-new-enco-<%=index%>">
@@ -52,7 +52,9 @@
               </div> <!-- upload -->
 
               <div class="tab-pane <%= "active" if f.object.errors[:url].present? %>" id="audio-new-direct-<%=index%>">
-                <%= f.input :url, hint: "e.g. http://npr.org/audio/your_cool_audio.mp3", input_html: { class: "span3" }, wrapper_html: { class: "vertical"} %>
+                <a onclick="resound.open();">Resound Store (opens in a new tab)</a>
+                <%= f.input :url, hint: "e.g. http://npr.org/audio/your_cool_audio.mp3", input_html: { class: "span3", id: "audioUrl" },
+                            wrapper_html: { class: "vertical"} %>
               </div> <!-- path -->
             </div> <!-- tab-content -->
           </div> <!-- new-audio -->
@@ -61,3 +63,8 @@
     </div> <!-- span -->
   </div> <!-- row -->
 </div> <!-- audio-fields -->
+<% content_for :footer do %>
+    <script type="text/javascript">
+      resound = new Resound();
+    </script>
+<% end %>

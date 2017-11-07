@@ -9,6 +9,9 @@
 //= require bootstrap-typeahead
 //= require bootstrap-datepicker
 
+//= require outpost/resound/store
+//= require outpost/resound
+
 //= require outpost/base
 //= require outpost/asset_host/assethostbase
 //= require outpost/content_api
@@ -36,5 +39,4 @@
 //= require outpost/aggregator
 //= require outpost/ckeditor/inline_assets
 //= require outpost/dockable
-//  require outpost/autosave
 //= require outpost/homepage/application
