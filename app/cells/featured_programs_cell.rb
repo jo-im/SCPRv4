@@ -13,7 +13,7 @@ class FeaturedProgramsCell < Cell::ViewModel
   end
 
   def program_title
-    model.title
+    model.try(:title)
   end
 
   def featured_programs
