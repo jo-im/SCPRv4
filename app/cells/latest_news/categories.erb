@@ -6,7 +6,7 @@
     <section class="o-latest-news__category-description">
       <h3 class="o-latest-news__category_featured-title"><%= link_to section.articles.first.short_title, section.articles.first.public_path, "data-ga-category" => '@currentCategory', "data-ga-action" => "Article", "data-ga-label" => '@scrollDepth', class: "track-event" %></h3>
       <p class="c-byline">
-        <span class="c-byline__name"><%= section.articles.first.try(:byline) %></span>
+        <span class="c-byline__name"><%= byline section.articles.first %></span>
         <span class="c-byline__pipe">|</span>
         <time class="c-byline__timestamp"><%= section.articles.first.public_datetime %></time>
       </p>

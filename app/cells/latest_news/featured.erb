@@ -14,7 +14,7 @@
     </div>
     <section class="o-latest-news__featured-description">
       <p class="c-byline">
-        <span class="c-byline__name"><%= model.try(:byline) %></span>
+        <span class="c-byline__name"><%= byline model %></span>
         <span class="c-byline__pipe">|</span>
         <time class="c-byline__timestamp"><%= model.try(:public_datetime) %></time>
       </p>

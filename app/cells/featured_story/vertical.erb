@@ -8,7 +8,7 @@
   <div class="o-featured-story__left">
     <div class="o-featured-story__description">
       <%= teaser %>
-      <span class="o-featured-story__byline"><%= byline %></span>
+      <span class="o-featured-story__byline"><%= byline model %></span>
     </div>
     <% if tag && topic_articles.any? %>
       <h6 class="o-featured-story__related-list__heading b-heading b-heading--h6 b-heading--uppercase u-text-color--gray">More from <%= link_to tag.title, topic_path(tag.slug) %></h6>
@@ -53,7 +53,7 @@
         <% blog_content.try(:each) do |content| %>
         <li class="o-featured-story__related-list__item">
           <a href="<%= content.try(:public_path) %>"><%= content.try(:short_headline) %></a>
-          <span class="o-featured-story__related-list__byline"><%= content.try(:byline) %></span>
+          <span class="o-featured-story__related-list__byline"><%= byline content %></span>
         </li>
         <% end %>
       </ul>

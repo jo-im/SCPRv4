@@ -8,7 +8,7 @@
     <h3 class="o-archive-tab__item-heading b-heading--h4 b-heading--serif"><%= link_to model.short_headline, model.public_path, class: 'b-link' %></h3>
     <span class="o-archive-tab__item-category"><%= link_to model.blog.name, blog_path(model.blog.slug), class: 'b-link' %></span>
     <span class="pipe">|</span>
-    <span class="o-archive-tab__item-byline"><%= model.try(:byline) %></span>
+    <span class="o-archive-tab__item-byline"><%= byline %></span>
     <span class="pipe">|</span>
     <span class="o-archive-tab__item-date"><%= model.published_at.strftime('%B %d %Y, %l:%M %p') %></span>
     <p><%= model.teaser.html_safe %></p>

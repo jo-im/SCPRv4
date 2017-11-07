@@ -14,7 +14,7 @@
           <h4 class="o-topic-cluster__headline">
             <a class="o-media__headline-link" href="<%= feature.public_url %>"><%= feature.short_title %></a>
           </h4>
-          <div class="o-topic-cluster__byline"><%= feature.try(:byline) %></div>
+          <div class="o-topic-cluster__byline"><%= byline feature %></div>
           <div class="o-topic-cluster__datetime"><%= feature.public_datetime.try(:strftime, "%B %-d, %Y") %></div>
         </div>
       </li>
