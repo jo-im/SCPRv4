@@ -47,7 +47,7 @@ class Outpost::EventsController < Outpost::ResourceController
       if @event.unconditionally_valid?
         @title = @event.to_title
         render "events/_event",
-          :layout => "outpost/preview/new/application",
+          :layout => "outpost/preview/application",
           :locals => {
             :event => @event
           }
