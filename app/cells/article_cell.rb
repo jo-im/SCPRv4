@@ -45,7 +45,7 @@ class ArticleCell < Cell::ViewModel
   def pij_source options={}
     message = options[:message] || "This story was informed by KPCC listeners."
 
-    if model.try(:is_from_pij?)
+    if model.try(:get_article).try(:from_pij?)
       render locals: { message: message }
     end
   end
