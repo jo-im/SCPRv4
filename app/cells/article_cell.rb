@@ -3,6 +3,7 @@
 # NO, JUST NO.  If it's not there, add it to the Article class.
 
 class ArticleCell < Cell::ViewModel
+  include Cell::Caching::Notifications
   include ActionView::Helpers::DateHelper
   property :title
   property :body
@@ -78,11 +79,18 @@ class ArticleCell < Cell::ViewModel
       # we have to fall back to original_object here to get the full list of
       # assets. in any case where we're rendering a body, we'll already have
       # the original object loaded, so that's ok
-      asset = model.try(:assets).select{|a| a.asset_id == asset_id}[0]
+      asset = model.try(:inline_assets).select{|a| a.asset_id == asset_id}[0]
 
       ## If kpcc_only is true, only render if the owner of the asset is KPCC
       if asset && (!options[:kpcc_only] || asset.owner.try(:include?, "KPCC"))
-        rendered_asset = AssetCell.new(asset, context: context, display: display, article: model).call(:show)
+        if (asset.small.width.to_i < asset.small.height.to_i)
+          if placeholder.attribute('data-align').try(:value).try(:match, /left/i)
+            positioning = "o-article__body--float-left"
+          else
+            positioning = "o-article__body--float-right"
+          end
+        end
+        rendered_asset = AssetCell.new(asset, context: context, display: display, article: model, class: positioning).call(:show)
         placeholder.replace Nokogiri::HTML::DocumentFragment.parse(rendered_asset)
       else
         # FIXME: I'm sure there's a cleaner "delete"
@@ -94,49 +102,31 @@ class ArticleCell < Cell::ViewModel
   end
 
   def order_body doc
-    i   = 0
-    doc.css("body > *").each do |element|
+    doc.css("body > *").each_with_index do |element, i|
       element['style'] ||= ""
-      unless element['style'].scan(/order:\s(.*);/).any?
-        element['style'] = "#{element['style']}order:#{i};"
-        element['class'] = 'o-article__body'
+      unless element['style'].match(/order:\s(.*);/)
+        element['style'] += "order:#{i}; height: 100%;"
       end
-      i += 1
     end
   end
 
-  def byline links=true
-    return "KPCC" if !model.respond_to?(:joined_bylines)
-    elements = model.joined_bylines do |bylines|
-      bylines.map do |byline|
-        if links && byline.user.try(:is_public)
-          link_to byline.display_name, byline.user.public_path
-        else
-          byline.display_name
-        end
-      end
-    end
-    ContentByline.digest(elements).html_safe
-  end
-
-  # #----------
-  # # Render a timestamp inside of a time tag.
-  # #
-  # # time_tag uses i18n's `localize` method, which raises
-  # # if the date passed in doesn't respond to strftime, so we
-  # # need to check that this is the case before rendering the
-  # # time tag. Otherwise previewing unpublished content breaks.
-  # def timestamp
-  #   datetime = model.public_datetime
-  #   if datetime.respond_to?(:strftime)
-  #     time_tag(datetime,
-  #       format_date(datetime,
-  #         :format   => :full_date,
-  #         :time     => true
-  #       ),
-  #       :pubdate => true
-  #     )
+  # def byline links=true
+  #   return "KPCC" if !model.respond_to?(:attributions)
+  #   # The order of priority with ContentByline roles
+  #   # is in ascending order, so we can just do a
+  #   # simple sort.
+  #   bylines   = model.attributions.sort_by{|b| b.role}
+  #   if bylines.empty?
+  #     bylines << Hashie::Mash.new({name: "KPCC", role: -1})
   #   end
+  #   primaries = bylines.select{|b| (b.role || 0) > -1}.map(&:name).join(" and ")
+  #   extras    = bylines.select{|b| (b.role || 0) < 0 }.map(&:name).join(" | ")
+    
+  #   source    = NewsStory::SOURCES.select{|x| x[1] == model.try(:source)}.flatten[0]
+
+  #   [primaries, extras, source].reject{|b| b.blank?}.join(" | ")
+  # rescue NoMethodError
+  #   "KPCC"
   # end
 
   def timestamp

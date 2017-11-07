@@ -16,9 +16,8 @@
     <%= javascript_include_tag 'aplicayshun' %>
     <script>
       // Function for lazy loading slideshow images
-      function imgLoaded(img){
+      function imgLoaded(img) {
         var $img = $(img);
-
         $img.addClass('loaded');
       };
       // User agent detection to dynamically display the appropriate Apple App Banners to iPads and iPhones
@@ -29,7 +28,7 @@
         $('head').append('<meta name="apple-itunes-app" content="app-id=293825085"/>');
       }
     </script>
-    <script type="text/javascript" src="https://<%= Rails.configuration.x.assethost.server %>/resources/client.js?bust=20130523"></script>
+    <script type="text/javascript" src="https://<%= Rails.configuration.x.assethost.server %>/resources/client.js?bust=20171106"></script>
   </head>
 
   <body>

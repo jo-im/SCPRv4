@@ -23,7 +23,9 @@ CKEDITOR.plugins.add('inline-asset-placeholder', {
                 setup: function(widget) {
                   return this.setValue(widget.data.align);
                 },
-                commit: function(widget) {},
+                commit: function(widget, x, y) {
+                  return widget.setData('align', this.getValue());
+                },
                 items: [[editor.lang.common.alignLeft, 'left'], [editor.lang.common.alignRight, 'right']]
               }
             ]

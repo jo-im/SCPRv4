@@ -11,7 +11,7 @@
 //= require visual_campaign
 //= require svgxuse/svgxuse.min
 //= require spin
-
+//= require cms_popup
 //= require_tree ./slideshow/templates
 
 //= require embeditor

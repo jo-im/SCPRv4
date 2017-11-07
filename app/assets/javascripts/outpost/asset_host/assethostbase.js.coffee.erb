@@ -3,5 +3,5 @@
 # Setup window.assethost and grab info
 # from the Rails config
 window.assethost =
-    SERVER:      "<%= Rails.configuration.x.assethost.protocol %>://<%= Rails.configuration.x.assethost.server %>"
+    SERVER:      "<%= Rails.configuration.x.assethost.protocol || 'https'%>://<%= Rails.configuration.x.assethost.server %>"
     TOKEN:       "<%= Rails.configuration.x.assethost.read_only_token %>"
