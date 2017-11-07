@@ -108,19 +108,24 @@ class ArticleCell < Cell::ViewModel
     end
   end
 
-  def byline links=true
-    return "KPCC" if !model.respond_to?(:attributions)
-    # The order of priority with ContentByline roles
-    # is in ascending order, so we can just do a
-    # simple sort.
-    bylines   = model.attributions.sort_by{|b| b.role}
-    if bylines.empty?
-      bylines << Hashie::Mash.new({name: "KPCC", role: -1})
-    end
-    primaries = bylines.select{|b| (b.role || 0) > -1}.map(&:name).join(" and ")
-    extras    = bylines.select{|b| (b.role || 0) < 0 }.map(&:name).join(" | ")
-    [primaries, extras].reject{|b| b.blank?}.join(" | ") 
-  end
+  # def byline links=true
+  #   return "KPCC" if !model.respond_to?(:attributions)
+  #   # The order of priority with ContentByline roles
+  #   # is in ascending order, so we can just do a
+  #   # simple sort.
+  #   bylines   = model.attributions.sort_by{|b| b.role}
+  #   if bylines.empty?
+  #     bylines << Hashie::Mash.new({name: "KPCC", role: -1})
+  #   end
+  #   primaries = bylines.select{|b| (b.role || 0) > -1}.map(&:name).join(" and ")
+  #   extras    = bylines.select{|b| (b.role || 0) < 0 }.map(&:name).join(" | ")
+    
+  #   source    = NewsStory::SOURCES.select{|x| x[1] == model.try(:source)}.flatten[0]
+
+  #   [primaries, extras, source].reject{|b| b.blank?}.join(" | ")
+  # rescue NoMethodError
+  #   "KPCC"
+  # end
 
   def timestamp
     datetime = model.public_datetime.try(:strftime, "%B %-d, %Y")
