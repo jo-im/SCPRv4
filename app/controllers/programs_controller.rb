@@ -42,8 +42,8 @@ class ProgramsController < ApplicationController
       @suggested_story = @episodes.second
       @episodes = @episodes.where.not(id: @episodes.try(:first).try(:id))
     end
-    @featured_story_article  = @featured_story.try(:to_article)
-    @suggested_story_article = @suggested_story.try(:to_article)
+    @featured_story_article  = @featured_story.try(:get_article)
+    @suggested_story_article = @suggested_story.try(:get_article)
     respond_to do |format|
       format.html do
         @current_episode = @featured_story
@@ -69,7 +69,7 @@ class ProgramsController < ApplicationController
 
   def segment
     @segment = ShowSegment.published.includes(:show).find(params[:id])
-    @article = @segment.to_article
+    @article = @segment.get_article
     @episode = @segment.episode
     @program = @kpcc_program = @segment.show
     @featured_programs = KpccProgram.where.not(id: @program.id, is_featured: false).first(4)
