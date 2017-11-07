@@ -36,7 +36,7 @@ class Outpost::BlogEntriesController < Outpost::ResourceController
       if @entry.unconditionally_valid?
         @title = @entry.to_title
         render "shared/new/_single_preview",
-          :layout => "outpost/preview/new/application",
+          :layout => "outpost/preview/application",
           :locals => {
             :entry => @entry,
             :full  => true

@@ -47,7 +47,7 @@ class Outpost::FlatpagesController < Outpost::ResourceController
               :locals => { flatpage: @flatpage }
           else
             render "flatpages/_flatpage",
-              :layout => "outpost/preview/new/application",
+              :layout => "outpost/preview/application",
               :locals => { flatpage: @flatpage }
           end
         end

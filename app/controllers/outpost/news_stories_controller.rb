@@ -36,7 +36,7 @@ class Outpost::NewsStoriesController < Outpost::ResourceController
         @entry.update_inline_assets
         @title = @entry.to_title
         render "shared/new/_single_preview",
-          :layout => "outpost/preview/new/application",
+          :layout => "outpost/preview/application",
           :locals => {
             :story => @entry
           }

@@ -1,25 +1,61 @@
-<%= render 'outpost/shared/header/preview/document_header' %>
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>89.3 KPCC - Southern California Public Radio</title>
+    <script src="https://use.typekit.net/cka2qre.js"></script>
+    <script>try{Typekit.load({ async: true });}catch(e){}</script>
 
-<body>
-<div class="viewport">
-  <%= render 'outpost/shared/header/preview/layout_header' %>
+    <%= stylesheet_link_tag 'application' %>
+    <%= render partial: "shared/header/ad_scripts" %>
+    <%= javascript_include_tag 'aplicayshun' %>
+    <script>
+      // Function for lazy loading slideshow images
+      function imgLoaded(img) {
+        var $img = $(img);
+        $img.addClass('loaded');
+      };
+      // User agent detection to dynamically display the appropriate Apple App Banners to iPads and iPhones
+      if (navigator.userAgent.match(/iPad/i)) {
+        $('head').append('<meta name="apple-itunes-app" content="app-id=744160424"/>');
+      }
+      else if (navigator.userAgent.match(/iPhone/i) || navigator.userAgent.match(/iPod/i)) {
+        $('head').append('<meta name="apple-itunes-app" content="app-id=293825085"/>');
+      }
+    </script>
+    <script type="text/javascript" src="https://<%= Rails.configuration.x.assethost.server %>/resources/client.js?bust=20171106"></script>
+  </head>
 
-  <div id="main" class="container-fluid main-content">
-    <div class="row-fluid">
-      <article class="span16 relative">
-        <%= yield %>
-        <div class="vert-divider"></div>
-      </article>
+  <body>
+    <% if alert = BreakingNewsAlert.latest_visible_alert %>
+      <%= cell :breaking_news_alert, alert %>
+    <% end %>
+    <div id="global-pushdown"></div>
+    <header class="<%= content_for :header_class %>">
+      <%= cell :masthead %>
+      <%= content_for :header %>
+    </header>
+    <main class="<%= content_for :main_class %>">
+      <%= yield %>
+    </main>
+    <footer class="<%= content_for :footer_class %>">
+      <%= content_for :footer %>
+      <% sponsors = content_for :footer_sponsors %>
+      <%= cell :footer, nil, sponsors: sponsors %>
+      <script>
 
-      <div class="span8">
-        <div id="sidebar" class="fake-el" style="height:1000px;">
-          &nbsp; <!-- sidebar -->
-        </div> <!-- sidebar -->
-      </div> <!-- span8 -->
-    </div> <!-- row-fluid -->
-  </div> <!-- container fluid main -->
+          // Load In-Article Membership Appeal from AdHost
+          scpr.VisualCampaign.enqueue('article-appeal', $('#article-membership-appeal'));
 
-  <%= render 'outpost/shared/footer/preview/layout_footer' %>
-</div> <!-- viewport -->
+          // Load Embeditor
+          embeditor = new Embeditor.Base({
+            Embedly: {
+              query: { key : '0cb3651dde4740db8fcb147850c6b555' }
+            }
+          })
 
-<%= render 'outpost/shared/footer/preview/document_footer' %>
+          embeditor.swap()
+      </script>
+    </footer>
+    <%= cell :audio_player %>
+  </body>
+</html>

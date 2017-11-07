@@ -41,7 +41,7 @@ class Outpost::PijQueriesController < Outpost::ResourceController
         @title = @query.to_title
 
         render "pij_queries/_pij_query",
-          :layout => "outpost/preview/new/application",
+          :layout => "outpost/preview/application",
           :locals => { query: @query }
 
       else
