@@ -108,21 +108,6 @@ class ArticleCell < Cell::ViewModel
     end
   end
 
-  # def byline links=true
-  #   byebug
-  #   return "KPCC" if !model.respond_to?(:joined_bylines)
-  #   elements = model.joined_bylines do |bylines|
-  #     bylines.map do |byline|
-  #       if links && byline.user.try(:is_public)
-  #         link_to byline.display_name, byline.user.public_path
-  #       else
-  #         byline.display_name
-  #       end
-  #     end
-  #   end
-  #   ContentByline.digest(elements).html_safe
-  # end
-
   def byline links=true
     return "KPCC" if !model.respond_to?(:attributions)
     # The order of priority with ContentByline roles
@@ -136,26 +121,6 @@ class ArticleCell < Cell::ViewModel
     extras    = bylines.select{|b| (b.role || 0) < 0 }.map(&:name).join(" | ")
     [primaries, extras].reject{|b| b.blank?}.join(" | ") 
   end
-
-  # #----------
-  # # Render a timestamp inside of a time tag.
-  # #
-  # # time_tag uses i18n's `localize` method, which raises
-  # # if the date passed in doesn't respond to strftime, so we
-  # # need to check that this is the case before rendering the
-  # # time tag. Otherwise previewing unpublished content breaks.
-  # def timestamp
-  #   datetime = model.public_datetime
-  #   if datetime.respond_to?(:strftime)
-  #     time_tag(datetime,
-  #       format_date(datetime,
-  #         :format   => :full_date,
-  #         :time     => true
-  #       ),
-  #       :pubdate => true
-  #     )
-  #   end
-  # end
 
   def timestamp
     datetime = model.public_datetime.try(:strftime, "%B %-d, %Y")
