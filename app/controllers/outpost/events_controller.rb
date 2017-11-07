@@ -37,6 +37,9 @@ class Outpost::EventsController < Outpost::ResourceController
 
   def preview
     @event = Outpost.obj_by_key(params[:obj_key]) || Event.new
+    @more_events = Event.kpcc_in_person.upcoming.where("id != ?", @event.id).limit(2)
+    @past_events     = Event.kpcc_in_person.past.limit(5)
+    @landing_page = LandingPage.find_by(title: 'KPCC In Person')
 
     with_rollback @event do
       @event.assign_attributes(params[:event])
@@ -44,7 +47,7 @@ class Outpost::EventsController < Outpost::ResourceController
       if @event.unconditionally_valid?
         @title = @event.to_title
         render "events/_event",
-          :layout => "outpost/preview/application",
+          :layout => "outpost/preview/new/application",
           :locals => {
             :event => @event
           }

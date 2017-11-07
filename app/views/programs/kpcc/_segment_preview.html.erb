@@ -1,59 +1,79 @@
-<% article = @segment %>
-<% content_for :body_class, 'interior single segment' %>
+<% content_for :main_class, "o-article o-article--segment" %>
 
-<div class="appellation bound">
-  <h1><%= article.headline %></h1>
-  <p><span>by <b><%= render_byline article %></b></span> <%= smart_date_js article.published_at %></p>
-</div><!--/ .appellation -->
+<% content_for :header do %>
+  <section id="o-prologue--program__segment" class="o-prologue o-prologue--program">
+    <a class="o-prologue__logo" href="/programs/<%= @program.try(:slug) %>"><%= image_tag "show-logos/#{@program.try(:slug)}.svg" %></a>
+    <span class="o-prologue__description">
+      <div class="o-prologue__teaser">
+        <%= @program.try(:teaser) %>
+      </div>
+      <address>Hosted by <%= @program.try(:host) %></address>
+      <div class="o-prologue__airtime">
+        <div>Airs <%= @program.try(:airtime) %></div>
+        <div class="o-prologue__social-icons">
+          <% present @program, ProgramPresenter do |p| %>
+            <% ['twitter', 'facebook', 'podcast', 'email', 'rss'].each do |social| %>
+              <% if p.send("#{social}_link").present? %>
+                <a class="o-prologue__social-icon" href="<%= p.send("#{social}_link") %>" target="_blank">
+                  <svg class="b-icon b-icon--size-sm b-icon--left">
+                    <use class="b-icon--color-link" xlink:href="<%= "/static/images/scpr-sprite.svg#icon_line-#{social}" %>" />
+                  </svg>
+                </a>
+              <% end %>
+            <% end %>
+          <% end %>
+        </div>
+      </div>
+    </span>
+  </section>
+<% end %>
 
-<div class="report">
-    <div class="inner bound clearfix">
+<!-- LEFT ASIDE -->
+<aside class="l-column--left l--centerize" style="order: -1;">
+  <%= cell :article_audio, @article %>
+  <%= cell :social_tools, @article, display: 'vert' %>
+</aside>
 
+<!-- HEADLINE -->
+<%= cell :article_headline, @article %>
 
-        <article class="prose">
+<!-- RIGHT ASIDES -->
+<%= cell(:ad, slot: "a", class: "l-column--right", id: "c-ad--a", attribution: false, order: -1).show do
+  '<hr class="b-rule l-column--right" style="order: 5;" />'
+end %>
 
-            <%= render_asset article.to_article, context:"segments" %>
+<%= cell(:ad, slot: "b", class: "l-column--right", order: 1000).show do
+  '<hr class="b-rule l-column--right" style="order: 12;" />'
+end %>
 
-            <%= content_widget "new/primary_audio", article, context: article.show.slug %>
+<%= cell :recent_content, @program, class: "l-column--right", order: 1000 %>
 
+<hr class="b-rule l-column--right" />
 
-            <%= render 'shared/new/social_share', article: article.get_article, cssClass: "pinned" %>
+<%= cell(:program_overview, @program, class: "l-column--right", order: 1000).show do
+  '<hr class="b-rule l-column--right" />'
+end %>
 
+<%= cell :ad, slot: "c", class: "l-column--right", order: 1001 %>
 
-            <div class="prose-columns clearfix">
+<!-- CENTER CONTENT-->
+<%= cell :article, @article, type: 'story', headline: false %>
 
-              <div class="primary">
+<%= cell :newsletter_appeal, @article, order: 999 %>
 
-              <%= content_widget "new/extra_audio", article, context: article.show.slug %>
+<hr class="o-article__rule--ending b-rule b-rule--primary-lightest b-rule--padded" style="order: 999;" />
 
+<%= cell :related_links, @article, order: 999 %>
 
-              <div class="prose-body">
-                  <%= render_with_inline_assets article.get_article %>
-                  <% if article.joined_bylines[:contributing].present? %>
-                      <footer class="contributor">
-                          <p><%= render_contributing_byline article %></p>
-                      </footer>
-                  <% end %>
-                  <%= pij_source(article) %>
-              </div><!--/ .prose-body -->
+<%= cell :more_from_episode, @episode, order: 999 %>
 
-              <%= render 'shared/cwidgets/related_links', content: article.to_article %>
+<%= cell :social_tools, @article, display: 'horiz', order: 999 %>
 
-            </div><!--/ .primary -->
+<!-- FOOTER CONTENT -->
+<hr class="o-article__rule--ending b-rule b-rule--secondary-alt b-rule--padded l-column--boundless" style="order: 1001;" />
 
+<%= cell :featured_programs, @program, class: "l-column--boundless", order: 1001 %>
 
+<%= cell :popular_articles, @program, class: "l-column--boundless o-popular-stories--horiz", order: 1001 %>
 
-            <div class="secondary">
-
-              <%= render 'shared/new/social_share', article: article.get_article %>
-
-              <div class="buddy-pairing clearfix">
-                <%= content_widget 'new/comment_count', article %>
-              </div>
-
-            </div><!--/ .secondary -->
-
-
-            </div><!--/ .prose-columns -->
-
-        </article>
+<%= cell :epilogue, @article, class: "l-column--boundless", order: 1001 %>

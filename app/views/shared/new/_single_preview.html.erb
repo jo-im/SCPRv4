@@ -1,48 +1,32 @@
-<%= content_for(:body_class, "single") %>
-
 <% article = @entry.to_article %>
-<%= render_asset article.original_object, context:"news", fallback:true %>
+<% content_for :main_class, "o-article" %>
 
-<div class="report">
-    <div class="inner bound clearfix">
-        <article class="prose">
+<!-- LEFT ASIDE -->
+<aside class="l-column--left l--centerize" style="order: -1;">
+  <%= cell :article_audio, article %>
+  <%= cell :social_tools, article, display: 'vert' %>
+</aside>
 
-            <div class="marginal-tools clearfix">
-                <% if article.audio.any? %>
-                    <% audio = article.audio %>
-                    <nav class="audio-queue">
-                        <header>Listen to audio from this story</header>
-                        <ul>
-                        <% audio.each_with_index do |audio, index| %>
-                            <li class="story-audio">
-                                <a href="<%= audio.url %>" class="play-btn audio-toggler" title="<%= h(article.short_title) %>" data-duration="<%= audio.duration %>">
-                                    <b><%= format_clip_duration audio.duration %></b>
-                                    <span><%= "Clip #{index+1}" %></span>
-                                </a>
-                            </li>
-                        <% end %>
-                        </ul>
-                    </nav>
-                    <% end %>
+<!-- RIGHT ASIDES -->
+<%= cell(:ad, id: "c-ad--a", slot: "a", class: "l-column--right", attribution: false, order: -1).show do
+  '<hr class="b-rule l-column--right" style="order: 5;" />'
+end %>
 
-            </div><!--/ .marginal-tools -->
+<%= cell(:ad, slot: "b", class: "l-column--right", order: 995).show do
+  '<hr class="b-rule l-column--right" style="order: 12;" />'
+end %>
 
-                <div class="prose-body">
+<%= cell(:category_cluster, article.category, class: "l-column--right", order: 996, category: "Article", label: "More Sidebar Category") %>
 
-                    <% if should_inline_top_asset_for(article.original_object) %>
-                      <%= render_asset article, context:"news", display:"inline" %>
-                    <% end %>
+<%= cell :ad, slot: "c", class: "l-column--right", order: 1000 %>
 
-                    <%= render_with_inline_assets article %>
-                    <% if article.original_object.joined_bylines[:contributing].present? %>
-                        <footer class="contributor">
-                            <p><%= render_contributing_byline article.original_object %></p>
-                        </footer>
-                    <% end %>
-                </div><!--/ .prose-body -->
+<!-- ARTICLE BODY -->
+<%= cell :article, article, type: 'story' %>
 
-            <%= render 'shared/cwidgets/related_links', content: article %>
+<!-- MOAR STUFF -->
+<%= cell :newsletter_appeal, article, order: 991 %>
 
-        </article>
-      </div>
-</div><!--/ .report -->
+<hr class="o-article__rule--ending b-rule b-rule--primary-lightest", style="order: 992;" />
+
+<%= cell :epilogue, article, class: "l-column--boundless", order: 1001 %>
+

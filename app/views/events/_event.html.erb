@@ -1,48 +1,38 @@
-<% present event do |p| %>
-<div class="event content-block">
-  <div class="row-fluid">
-    <%= content_widget "social_sidebar", event, audio_options: { context: 'event' } %>
+<% content_for :main_class, "l-event" %>
 
-    <div class="span18 mq-solo-span" id="events-event-detail">
-      <article>
-        <header>
-          <h1 class="story-headline event-headline"><%= link_to p.headline, p.public_path %></h1>
-          <%= p.sponsor %>
-
-          <div class="event-details">
-            <div class="row-fluid">
-              <div class="span12">
-                <%= p.date %>
-                <%= p.rsvp_url %>
-              </div> <!-- span -->
-
-              <div class="span12">
-                <div class="location-text">Location</div>
-                <ul class="address">
-                  <li><span class="blue"><%= p.location_name %></span></li>
-                  <%= p.address %>
-                  <%= p.map %>
-                </ul>
-              </div> <!-- span -->
-            </div> <!-- row fluid -->
-          </div> <!-- event-details -->
-        </header>
-
-        <div class="story-body">
-          <%= render_asset event %>
-          <%= render_with_inline_assets p %>
-          <br style="clear: both" />
-          <hr>
-          <%= render partial: "shared/widgets/events_subscribe" %>
-        </div>
-
-        <footer>
-          <%= pij_source(event, message: "This program was informed by KPCC Listeners.") %>
-        </footer>
-      </article>
-
-      <%= content_widget "social_tools", event, cssClass: "horizontal bottom", templateLayout: "old" %>
-    </div> <!-- span -->
-  </div> <!-- row-fluid -->
-</div> <!-- event -->
+<% content_for :header do %>
+<section id="o-prologue--in-person__event" class="o-prologue o-prologue--in-person">
+  <a class="o-prologue__logo" href="/events/kpcc-in-person"><%= image_tag "event-headers/kpcc-in-person-logo.svg" %></a>
+  <span class="o-prologue__description">
+    <div class="o-prologue__teaser">
+      <%= @landing_page.try(:description) %>
+    </div>
+    <span class="o-prologue__pipe">|</span>
+    <div class="o-prologue__social-icons">
+      <a class="o-prologue__social-icon" href="https://www.facebook.com/KPCCInPerson">
+        <svg class="b-icon b-icon--size-sm b-icon--left">
+          <use class="b-icon--line" xlink:href="/static/images/scpr-sprite.svg#icon_line-facebook" />
+        </svg>
+      </a>
+      <a class="o-prologue__social-icon" href="https://twitter.com/KPCCInPerson">
+        <svg class="b-icon b-icon--size-sm b-icon--left">
+          <use class="b-icon--color-link" xlink:href="/static/images/scpr-sprite.svg#icon_line-twitter" />
+        </svg>
+      </a>
+    </div>
+  </span>
+</section>
 <% end %>
+
+<%= cell :social_tools, @event, display: 'vert' %>
+<%= cell :ad, slot: "a", id: "o-ad--pos-a", attribution: false, order: 0 %>
+<%= cell :ad, slot: "b", id: "o-ad--pos-b", order: 998 %>
+<%= cell(:recent_content, @past_events, order: 999).call(:events) %>
+<%= cell :ad, slot: "c", id: "o-ad--pos-c", order: 1002 %>
+<%= cell :event, @event, order: 2 %>
+<%= cell(:appeal, @event, class: 'o-event__appeal', order: 997).call(:in_person_newsletter) %>
+<hr class="o-event__rule--ending b-rule b-rule--primary-lightest b-rule--bold b-rule--padded" style="order: 997;" />
+<%= cell :more_events, @more_events, order: 997 %>
+<%= cell :social_tools, @event, class: 'o-event__social-tools', display: 'horiz', order: 997 %>
+<%= cell :epilogue, nil, order: 1003 %>
+
