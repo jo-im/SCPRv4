@@ -39,14 +39,7 @@ describe Outpost::FlatpagesController do
       end
 
       it "renders the correct layout" do
-        flatpage = create :flatpage, template: "full"
-        put :preview,
-          :id         => flatpage.id,
-          :obj_key    => flatpage.obj_key,
-          :flatpage   => flatpage.attributes
-
-        response.should render_template "outpost/preview/app_nosidebar"
-        flatpage.template = "none"
+        flatpage = create :flatpage, template: "none"
 
         put :preview,
           :id         => flatpage.id,

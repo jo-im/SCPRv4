@@ -41,9 +41,15 @@ class Outpost::FlatpagesController < Outpost::ResourceController
                           "<strong>#{@flatpage.redirect_to}</strong>".html_safe
               }
         else
-          render "flatpages/_flatpage",
-            :layout => "outpost/preview/new/application",
-            :locals => { flatpage: @flatpage }
+          if @flatpage.template == 'none'
+            render "flatpages/_flatpage",
+              :layout => false,
+              :locals => { flatpage: @flatpage }
+          else
+            render "flatpages/_flatpage",
+              :layout => "outpost/preview/new/application",
+              :locals => { flatpage: @flatpage }
+          end
         end
       else
         render_preview_validation_errors(@flatpage)

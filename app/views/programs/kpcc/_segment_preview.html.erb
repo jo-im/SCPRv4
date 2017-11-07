@@ -11,17 +11,6 @@
       <div class="o-prologue__airtime">
         <div>Airs <%= @program.try(:airtime) %></div>
         <div class="o-prologue__social-icons">
-          <% present @program, ProgramPresenter do |p| %>
-            <% ['twitter', 'facebook', 'podcast', 'email', 'rss'].each do |social| %>
-              <% if p.send("#{social}_link").present? %>
-                <a class="o-prologue__social-icon" href="<%= p.send("#{social}_link") %>" target="_blank">
-                  <svg class="b-icon b-icon--size-sm b-icon--left">
-                    <use class="b-icon--color-link" xlink:href="<%= "/static/images/scpr-sprite.svg#icon_line-#{social}" %>" />
-                  </svg>
-                </a>
-              <% end %>
-            <% end %>
-          <% end %>
         </div>
       </div>
     </span>
@@ -49,10 +38,6 @@ end %>
 <%= cell :recent_content, @program, class: "l-column--right", order: 1000 %>
 
 <hr class="b-rule l-column--right" />
-
-<%= cell(:program_overview, @program, class: "l-column--right", order: 1000).show do
-  '<hr class="b-rule l-column--right" />'
-end %>
 
 <%= cell :ad, slot: "c", class: "l-column--right", order: 1001 %>
 

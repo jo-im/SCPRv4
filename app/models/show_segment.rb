@@ -85,7 +85,7 @@ class ShowSegment < ActiveRecord::Base
   end
 
   def byline_extras
-    [self.show.title]
+    [self.show.try(:title)]
   end
 
 
