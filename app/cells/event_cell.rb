@@ -60,7 +60,7 @@ class EventCell < Cell::ViewModel
     starts_at = event.try(:starts_at)
     ends_at = event.try(:ends_at)
     ends_at_strftime = "- %A, %B %e, %l:%M%P"
-    if ends_at - starts_at < 1.day
+    if starts_at.try(:yday) == ends_at.try(:yday) && starts_at.try(:year) == ends_at.try(:year)
       ends_at_strftime = "- %l:%M%P"
     end
 
