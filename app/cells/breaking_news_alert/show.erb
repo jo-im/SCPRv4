@@ -1,9 +1,9 @@
 <div id="breaking-news">
-    <div class="live-update <%= alert_type %>">
+    <div class="live-update <%= model.try(:alert_type) %>">
       <div class="l-container inner-container">
           <div class="l-row">
             <div class="l-col--sm-12">
-              <strong><%= break_type %></strong><%= link_to headline, alert_url %>
+              <strong><%= model.try(:break_type) %></strong><%= link_to model.try(:headline), model.try(:alert_url) %>
               <a href="http://info.americanpublicmediagroup.org/LP=238" class="newsletter-sign-up">Sign up for alerts</a>
             </div>
           </div>
