@@ -12,4 +12,10 @@ class MeetTheTeamCell < Cell::ViewModel
     model.try(:reporters) || model || []
   end
 
+  def headshot bio
+    if bio.respond_to?(:headshot)
+      bio.headshot.eight.url
+    end
+  end
+
 end

@@ -4,7 +4,7 @@
     <% bios.each do |bio| %>
     <figure class="o-meet-the-team__figure o-figure o-figure--portrait">
       <%= link_to bio.public_path do %>
-      <img class="o-figure__img" src="<%= bio.headshot.try(:eight).try(:url) %>" style="background-image: url(<%= bio.headshot.try(:eight).try(:url) %>);">
+      <img class="o-figure__img" src="<%= headshot bio %>" style="background-image: url(<%= headshot bio %>);">
       <figcaption class="o-meet-the-team__caption o-figure__caption">
         <%= bio.name %>
       </figcaption>
