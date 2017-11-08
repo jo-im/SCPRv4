@@ -80,7 +80,7 @@ Scprv4::Application.routes.draw do
   # Short List
   post '/short-list/archive'                     => "editions#archive"
   get '/short-list/:year/:month/:day'            => "editions#latest", constraints: { year: /\d{4}/, month: /\d{2}/, day: /\d{2}/ }
-  get '/short-list/:year/:month/:day/:id/:slug/' => "editions#latest", as: :short_list, constraints: { year: /\d{4}/, month: /\d{2}/, day: /\d{2}/, id: /\d+/, slug: /[\w-]+/ }
+  get '/short-list/:year/:month/:day/:id/:slug/' => "editions#short_list", as: :short_list, constraints: { year: /\d{4}/, month: /\d{2}/, day: /\d{2}/, id: /\d+/, slug: /[\w-]+/ }
   get '/short-list/latest'                       => "editions#latest"
   get '/short-list/'                             => redirect("/short-list/latest")
 
