@@ -27,7 +27,7 @@ class EventCell < Cell::ViewModel
       element['style'] ||= ""
       unless element['style'].scan(/order:\s(.*);/).any?
         element['style'] = "#{element['style']}order:#{i + 4};"
-        element['class'] = "#{element['class']} o-event__body"
+        element['class'] = "#{element['class']}"
       end
     end
   end

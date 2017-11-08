@@ -35,7 +35,9 @@
 </figure>
 <% end %>
 
-<%= render_body %>
+<div class="o-event__body">
+  <%= render_body %>
+</div>
 
 <script>
   var locationName = "<%= model.try(:location_name) %>";
