@@ -7,8 +7,15 @@ class EventCell < Cell::ViewModel
 
   def render_body options={}
     starts_at = model.try(:starts_at)
+    ends_at = model.try(:ends_at)
 
-    if starts_at.try(:past?)
+    if ends_at
+      original_time = ends_at
+    else
+      original_time = starts_at
+    end
+
+    if original_time.try(:past?) && !model.try(:archive_description).try(:empty?)
       doc = Nokogiri::HTML(model.archive_description.html_safe)
     else
       doc = Nokogiri::HTML(model.body.html_safe)
@@ -26,7 +33,7 @@ class EventCell < Cell::ViewModel
       element['style'] ||= ""
       unless element['style'].scan(/order:\s(.*);/).any?
         element['style'] = "#{element['style']}order:#{i + 4};"
-        element['class'] = "#{element['class']} o-event__body"
+        element['class'] = "#{element['class']}"
       end
     end
   end
@@ -58,11 +65,15 @@ class EventCell < Cell::ViewModel
   def date(event)
     starts_at = event.try(:starts_at)
     ends_at = event.try(:ends_at)
+    ends_at_strftime = "- %A, %B %e, %l:%M%P"
+    if starts_at.try(:yday) == ends_at.try(:yday) && starts_at.try(:year) == ends_at.try(:year)
+      ends_at_strftime = "- %l:%M%P"
+    end
 
     if event.try(:is_all_day)
       starts_at.try(:strftime, "%A, %B %e")
     elsif ends_at
-      "#{starts_at.try(:strftime, "%A, %B %e, %l:%M%P")} - #{ends_at.try(:strftime, "%l:%M%P")}"
+      "#{starts_at.try(:strftime, "%A, %B %e, %l:%M%P")} #{ends_at.try(:strftime, ends_at_strftime)}"
     else
       starts_at.try(:strftime, "%A, %B %e, %l:%M%P")
     end

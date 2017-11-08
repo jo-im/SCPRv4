@@ -1,15 +1,64 @@
-.l-event
-  p
-    margin-bottom: $margin-in-pixels / 4
-    a
-      color: $color-link
-  p:last-of-type
-    margin-bottom: $margin-in-pixels
-
 .o-event__body
   display: inline-block
   font-size: 18px
   line-height: 30px
+
+  > *
+    line-height: 30px
+    margin-bottom: $margin-in-pixels / 2
+
+  p a
+    // paragraph links
+    color: $color-secondary
+
+  ul
+    list-style: circle
+    padding-left: 3em
+    font-size: 0.9em
+    margin-bottom: 27.68px
+    li
+      margin: 1em 0
+
+  h2
+    font-size: 22px
+    font-weight: 400
+
+  h3:not(.o-article__title)
+    font-size: 18px
+    font-weight: 600
+    text-transform: uppercase
+
+  h6
+    @extend .b-heading, .b-heading--h6, .b-heading--uppercase, .u-text-color--gray-warm, .b-heading--book
+    margin-bottom: 0
+
+  p:first-of-type
+    font-size: 22px
+    line-height: 30px
+    @media (max-width: $media-tablet)
+      font-size: 20px
+
+  p:last-of-type
+    margin-bottom: 60px
+å
+  blockquote
+    p
+      border-left: 6px solid $color-primary
+      padding-bottom: $margin-in-pixels / 2
+      margin-left: percentage(31/642)
+      padding-left: percentage(31/642)
+    p:last-of-type
+      padding-bottom: 0px
+
+  > img
+    @media (max-width: $media-tablet)
+      width: 100% - ($margin * 2) !important
+
+  iframe
+    width: 100%
+
+
+
 
 .o-event__figure
   font-size: 0.8em
