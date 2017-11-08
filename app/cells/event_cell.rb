@@ -7,8 +7,9 @@ class EventCell < Cell::ViewModel
 
   def render_body options={}
     starts_at = model.try(:starts_at)
+    ends_at = model.try(:ends_at)
 
-    if starts_at.try(:past?)
+    if ends_at.try(:past?)
       doc = Nokogiri::HTML(model.archive_description.html_safe)
     else
       doc = Nokogiri::HTML(model.body.html_safe)
@@ -58,13 +59,15 @@ class EventCell < Cell::ViewModel
   def date(event)
     starts_at = event.try(:starts_at)
     ends_at = event.try(:ends_at)
+    ends_at_strftime = "- %A, %B %e, %l:%M%P"
+    if ends_at - starts_at < 1.day
+      ends_at_strftime = "- %l:%M%P"
+    end
 
     if event.try(:is_all_day)
       starts_at.try(:strftime, "%A, %B %e")
     elsif ends_at
-      "#{starts_at.try(:strftime, "%A, %B %e, %l:%M%P")} - #{ends_at.try(:strftime, "%l:%M%P")}"
-    else
-      starts_at.try(:strftime, "%A, %B %e, %l:%M%P")
+      "#{starts_at.try(:strftime, "%A, %B %e, %l:%M%P")} #{ends_at.try(:strftime, ends_at_strftime)}"
     end
   end
 end
