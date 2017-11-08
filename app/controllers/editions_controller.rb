@@ -36,6 +36,8 @@ class EditionsController < ApplicationController
 
     @edition = @latest_editions.first
     @other_editions = @latest_editions - [@edition]
+
+    render template: "editions/short_list"
   end
 
   def short_list

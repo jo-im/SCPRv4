@@ -1,269 +1,36 @@
-<% content_for :opengraph do %>
-<% meta_tags(keywords: "The Short List, KPCC, California, Southern California, Los Angeles, Pasadena, SCPR, Southern California Public Radio") %>
-<% meta_tags(description: "The Short List is KPCC's rundown of the day's essentials, so you can get caught up on SoCal news quickly.") %>
-<% meta_tags(url: @edition.public_url) %>
-<% meta_tags(title: h(@edition.title)) %>
-
-  <%= cache ["opengraph", "v1", @edition] do %>
-
-    <meta property="article:published_time" content="<%= @edition.published_at %>" />
-    <meta property="article:modified_time" content="<%= @edition.updated_at %>" />
-    <meta property="article:section" content="The Short List" />
-
-    <meta property="og:title" content="<%= h(@edition.title) %>">
-    <meta property="og:type" content="<%= @OG_TYPE || "article" %>">
-    <meta property="og:url" content="<%= @edition.public_url %>"/>
-    <% edition_lead_story_asset = @edition.slots.first.item.asset.full.url %>
-    <meta property="og:image" content="<%= edition_lead_story_asset %>" />
-
-      <link rel="image_src" href="<%= edition_lead_story_asset %>" />
-      <meta name="twitter:image" content="<%= https_to_http(edition_lead_story_asset) %>">
-
-  <% end %>
+<% content_for :header do %>
+  <section class="o-prologue o-prologue--vertical">
+    <h1 class="o-prologue__title">The Short List</h1>
+    <% if @edition.present? %>
+      <p class="o-prologue__description">Headlines for <%= @edition.published_at.strftime("%A, %B %d %Y") %></p>
+    <% end %>
+  </section>
 <% end %>
-<% content_for :body_class, 'interior ronin short-list' %>
 
-<%= cache ["short-list","v1", @edition] do %>
-    <header class="edition-marquee">
-
-        <nav class="shortlist-ledge" aria-hidden="true">
-            <div class="inner bound">
-                <nav>
-                    <h1>89.3 KPCC</h1>
-                    <ul>
-                        <li><a href="http://scpr.org">KPCC Home</a></li>
-                        <li><a href="http://scpr.org/listen_live/">Listen Live</a></li>
-                        <li><a href="http://scpr.org/news/">News</a></li>
-                        <li><a href="http://scpr.org/programs/">Programs</a></li>
-                        <li><a href="http://scpr.org/events/">Events</a></li>
-                        <li><a href="http://scpr.org/about/">About</a></li>
-                        <li><a href="https://scprcontribute.publicradio.org/contribute.php">Pledge Now</a></li>
-                    </ul>
-                </nav>
-                <h2>Short List <span><%= @edition.short_list_type %></span></h2>
-                <time datetime="<%= format_date(@edition.published_at, with: '%F') %>" class="recents-toggle" aria-hidden="true"><span><%= @edition.published_at.day %></span></time>
-            </div>
-        </nav><!--/ .shortlist-ledge -->
-
-        <div class="inner bound">
-            <div class="titling clearfix">
-                <h1>The Short List <span>headlines for <%= format_date(@edition.published_at, with: '%A, %B %d %Y') %></span></h1>
-                <h2 class="<%= @edition.slug.split('-').first %>"><span><%= @edition.short_list_type %></span></h2><!-- This H2 should always carry either a "pm", "am", or "weekend" class. -->
-            </div>
-            <h3 class="date">
-                <time datetime="<%= format_date(@edition.published_at, with: '%F') %>">
-                    <span><%= format_date(@edition.published_at, with: '%B') %></span>
-                    <mark><%= @edition.published_at.day %></mark>
-               </time>
-            </h3>
-            <span class="byline">
-                <%= render_byline @edition %> <span class="pipe">|</span> <%= timestamp(@edition.published_at) %></time>
-            </span>
-        </div><!--/ .inner -->
-
-        <aside class="recents">
-            <div class="bound">
-                <header>
-                    <div class="clearfix">
-                        <h1>Browse Recent Editions</h1>
-                        <button>Close</button>
-                    </div>
-                </header>
-            <time datetime="<%= format_date(@edition.published_at, with: '%F') %>" class="recents-toggle" aria-hidden="true"><span><%= @edition.published_at.day %></span></time>
-                <nav>
-                    <ul class="clearfix">
-                        <% @other_editions.each do |edition| %>
-                            <% if abstract = edition.abstracts.first %>
-                            <li>
-                                <a href="<%= edition.public_path %>">
-                                    <figure>
-                                        <div class="ratio">
-                                            <div class="fill"></div>
-                                            <% if abstract.asset.present? %>
-                                            <b class="img-contain"><img src="<%= abstract.asset.full.url %>" data-width="<%= abstract.asset.full.width %>" data-height="<%= abstract.asset.full.height %>" /></b>
-                                            <% end %>
-                                        </div>
-                                        <figcaption>
-                                            <time datetime="<%= format_date(edition.published_at, with: '%F') %>"><span data-short="<%= format_date(edition.published_at, with: '%a') %>" data-long="<%= format_date(edition.published_at, with: '%a') %>"><%= format_date(edition.published_at, with: '%A') %></span> <%= format_date(edition.published_at, with: '%m/%d') %> <b><%= edition.short_list_type %></b></time>
-                                            <mark><%= edition.title %></mark>
-                                        </figcaption>
-                                    </figure>
-                                </a>
-                            </li>
-                            <% end %>
-                        <% end %>
-                    </ul>
-                </nav>
-            </div>
-        </aside><!--/ .recents -->
-
-    </header><!--/ .edition-marquee -->
-
-    <div class="page-cols">
-    <div class="inner bound clearfix">
-
-        <section class="abstracts">
-            <% first_abstract = @edition.abstracts.first %>
-            <article name="abstract-01" id="abstract-01" class="abstract">
-                <figure class="photo ratio">
-                    <div class="fill"></div>
-                    <% if first_abstract.asset.present? %>
-                        <b class="img-contain"><img src="<%= first_abstract.asset.full.url %>" data-width="<%= first_abstract.asset.full.width %>" data-height="<%= first_abstract.asset.full.height %>" /></b>
-                    <% end %>
-                    <figcaption class="credit"><span><i><%= first_abstract.asset.owner %></i></span></figcaption>
-                </figure>
-                <div class="prose clearfix">
-                    <header>
-                        <h1><a href="<%= first_abstract.url %>"><%= first_abstract.headline %></a></h1>
-                        <mark>1 <span>of <b><%= @edition.abstracts.length %></b></span></mark>
-                    </header>
-                    <div class="eisegesis">
-                        <p><%= first_abstract.summary.html_safe %></p>
-                        <footer>
-                            <a href="<%= first_abstract.url %>">Read full story at <%= first_abstract.source %></a>
-                        </footer>
-                    </div>
-                </div>
-            </article>
-
-            <aside class="plug">
-                <div class="ad widget">
-                    <%= render "shared/ads/dfp", ad_key: 'slot_a' %>
-                    <span class="appeal"><a href="/support/underwriting/">Become a KPCC sponsor.</a></span>
-                </div>
-            </aside>
-
-            <% @edition.abstracts[1..3].each_with_index do |abstract, index| %>
-                <article name="abstract-<%= (index+2).to_s.rjust(2, "0") %>" id="abstract-<%= (index+2).to_s.rjust(2, "0") %>"  class="abstract">
-                    <div class="prose clearfix">
-                        <header>
-                            <h1><a href="<%= abstract.url %>"><%= abstract.headline %></a></h1>
-                            <mark><%= index+2 %> <span>of <b><%= @edition.abstracts.length %></b></span></mark>
-                        </header>
-                        <div class="eisegesis">
-                            <p><%= abstract.summary.html_safe %></p>
-                            <footer>
-                                <a href="<%= abstract.url %>">Read full story at <%= abstract.source %></a>
-                            </footer>
-                        </div>
-                    </div>
-                </article>
-            <% end %>
-
-
-            <aside class="plug">
-                <div class="ad widget">
-                    <%= render "shared/ads/dfp", ad_key: 'slot_b' %>
-                    <span class="appeal"><a href="/support/underwriting/">Become a KPCC sponsor.</a></span>
-                </div>
-            </aside>
-            <% if @edition.abstracts[4..6] %>
-                <% @edition.abstracts[4..6].each_with_index do |abstract, index| %>
-                    <article name="abstract-<%= (index+5).to_s.rjust(2, "0") %>" id="abstract-<%= (index+5).to_s.rjust(2, "0") %>"  class="abstract">
-                        <div class="prose clearfix">
-                            <header>
-                                <h1><a href="<%= abstract.url %>"><%= abstract.headline %></a></h1>
-                                <mark><%= index+5 %> <span>of <b><%= @edition.abstracts.length %></b></span></mark>
-                            </header>
-                            <div class="eisegesis">
-                                <p><%= abstract.summary.html_safe %></p>
-                                <footer>
-                                    <a href="<%= abstract.url %>">Read full story at <%= abstract.source %></a>
-                                </footer>
-                            </div>
-                        </div>
-                    </article>
-                <% end %>
-            <% end %>
-
-            <aside class="plug">
-                <div class="ad widget">
-                    <%= render "shared/ads/dfp", ad_key: 'slot_c' %>
-                    <span class="appeal"><a href="/support/underwriting/">Become a KPCC sponsor.</a></span>
-                </div>
-            </aside>
-
-            <% if @edition.abstracts[7..-1] %>
-                <% @edition.abstracts[7..-1].each_with_index do |abstract, index| %>
-                    <article name="abstract-<%= (index+8).to_s.rjust(2, "0") %>" id="abstract-<%= (index+8).to_s.rjust(2, "0") %>"  class="abstract">
-                        <div class="prose clearfix">
-                            <header>
-                                <h1><a href="<%= abstract.url %>"><%= abstract.headline %></a></h1>
-                                <mark><%= index+8 %> <span>of <b><%= @edition.abstracts.length %></b></span></mark>
-                            </header>
-                            <div class="eisegesis">
-                                <p><%= abstract.summary.html_safe %></p>
-                                <footer>
-                                    <a href="<%= abstract.url %>">Read full story at <%= abstract.source %></a>
-                                </footer>
-                            </div>
-                        </div>
-                    </article>
-                <% end %>
-            <% end %>
-
-            <section class="share" aria-hidden="true">
-                <div>
-                    <h1>Share this edition</h1>
-                    <ul class="clearfix">
-                      <li class="twitter social_twit" data-url="<%= @edition.public_url %>">
-                        <a href="#" class="track-event twitter" data-ga-category="Article" data-ga-action="Share" data-ga-label="Twitter" data-url="<%= @edition.public_url %>" data-text="<%= u(@edition.title) %>">Share on Twitter</a>
-                      </li>
-                      <li class="facebook social_fb" data-url="<%= @edition.public_url %>">
-                        <a href="#" class="track-event facebook" data-ga-category="Article" data-ga-action="Share" data-ga-label="Facebook" data-url="<%= @edition.public_url %>">Share on Facebook</a>
-                      </li>
-                    </ul>
-                </div>
-            </section>
-
-            <aside class="subscribe" id="subscribe-feature" name="subscribe-feature">
-                <header>
-                    <h1>Start your day informed.</h1>
-                    <h2><span>Sign up and we’ll deliver KPCC’s Short List to your inbox.</span> <span>One edition every weekday with the top news and local stories.</span></h2>
-                </header>
-                <form action="https://mcpostman.publicradio.org/subscription_requests" class="mcpostman-form" method="post">
-                  <input name="subscription_request[property_key]" type="hidden" value="6b6962c2-1b5a-4a11-a39a-c8de4f315a80" /><input name="subscription_request[sde_external_key]" type="hidden" value="" />
-                  <div class="form-group">
-                    <input type="email" name="subscription_request[fsm][Form_Email_Address]" id="subscription_request_fsm_Form_Email_Address" required="required" maxlength="254" class="form-control" placeholder="Email address"  />
-                  </div>
-                  <input type="submit" value="Subscribe" name="subscribe" class="btn"><br />
-                </form>
-            </aside>
-        </section><!--/ .abstracts -->
-
-        <div class="supportive">
-
-            <section class="subscribe-hint">
-              <header><h1>Subscribe to The Short List</h1></header>
-              <p><a href="#subscribe-feature">Click here</a> to get The Short List delivered to your inbox every weekday.</p>
-            </section>
-
-            <section class="contents">
-                <header><h1>Stories in this edition</h1></header>
-                <nav>
-                    <ol>
-                        <% @edition.abstracts.each_with_index do |abstract, index| %>
-                            <li><a href="#abstract-<%= (index+1).to_s.rjust(2, "0") %>"><%= abstract.headline %></a></li>
-                        <% end %>
-                    </ol>
-                </nav>
-            </section>
-
-            <section class="share">
-                <div class="clearfix">
-                    <h1>Share this edition</h1>
-                    <ul class="clearfix">
-                        <li class="twitter social_twit" data-url="<%= @edition.public_url %>">
-                            <a href="#" class="track-event twitter" data-ga-category="Article" data-ga-action="Share" data-ga-label="Twitter" data-url="<%= @edition.public_url %>" data-text="<%= u(@edition.short_list_type) %>">Share on Twitter</a>
-                        </li>
-                        <li class="facebook social_fb" data-url="<%= @edition.public_url %>">
-                            <a href="#" class="track-event facebook" data-ga-category="Article" data-ga-action="Share" data-ga-label="Facebook" data-url="<%= @edition.public_url %>">Share on Facebook</a>
-                        </li>
-                    </ul>
-                </div>
-            </section>
-
-        </div><!--/ .supportive -->
-    </div><!--/ .inner -->
-    </div><!--/ .pagecols -->
+<% if @edition.present? %>
+  <% content_for :main_class, "l-short-list" %>
+  <% add_to_page_title "Short List" %>
+  <%= cell :social_tools, @edition, display: 'vert' %>
+  <%= cell :ad, slot: "a", id: "o-ad--pos-a", attribution: false, order: 2 %>
+  <%= cell(:short_list, @edition, order: 999).call(:side_bar) %>
+  <%= cell :ad, slot: "b", id: "o-ad--pos-b", order: 5 %>
+  <%= cell :ad, slot: "c", id: "o-ad--pos-c", order: 8 %>
+  <%= cell(:short_list, @edition).call(:featured_image) %>
+  <%= cell :short_list, @edition %>
+  <%= cell(:appeal, @edition, order: 1001, id: "subscribe-feature").call(:editions) %>
+  <%= cell :epilogue, @edition, order: 1002 %>
+<% else %>
+  <% content_for :main_class, "l-error" %>
+  <% add_to_page_title "Page Not Found" %>
+  <%= cell :ad, slot: "a", id: "o-ad--pos-a", attribution: false, order: 5 %>
+  <%= cell :ad, slot: "b", id: "o-ad--pos-b", order: 7 %>
+  <%= cell(:appeal, @edition, order: 1000, id: "subscribe-feature").call(:breaking_news) %>
+  <%= cell(:popular_articles, order: 1001).call(:side_bar) %>
+  <%= cell :ad, slot: "c", id: "o-ad--pos-c", order: 9 %>
+  <section class="o-error">
+    <h1 class="o-error__header">There were no Short List entries found on this date.</h1>
+    <p>We're sorry, but there is no content available at the date you requested.</p>
+    <p>If you're looking for a specific piece of content, please try another date:</p>
+  </section>
 <% end %>
+
