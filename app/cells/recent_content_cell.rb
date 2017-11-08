@@ -2,7 +2,7 @@ class RecentContentCell < Cell::ViewModel
   include Orderable
 
   cache :show do
-    model.try(:cache_key)
+    "#{model.try(:cache_key)} #{@options[:class]}"
   end
 
   property :title
