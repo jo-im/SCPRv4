@@ -74,6 +74,8 @@ class EventCell < Cell::ViewModel
       starts_at.try(:strftime, "%A, %B %e")
     elsif ends_at
       "#{starts_at.try(:strftime, "%A, %B %e, %l:%M%P")} #{ends_at.try(:strftime, ends_at_strftime)}"
+    else
+      starts_at.try(:strftime, "%A, %B %e, %l:%M%P")
     end
   end
 end
