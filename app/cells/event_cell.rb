@@ -9,7 +9,13 @@ class EventCell < Cell::ViewModel
     starts_at = model.try(:starts_at)
     ends_at = model.try(:ends_at)
 
-    if ends_at.try(:past?)
+    if ends_at
+      original_time = ends_at
+    else
+      original_time = starts_at
+    end
+
+    if original_time.try(:past?) && !model.try(:archive_description).try(:empty?)
       doc = Nokogiri::HTML(model.archive_description.html_safe)
     else
       doc = Nokogiri::HTML(model.body.html_safe)
