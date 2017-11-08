@@ -71,7 +71,11 @@ class EventCell < Cell::ViewModel
     end
 
     if event.try(:is_all_day)
-      starts_at.try(:strftime, "%A, %B %e")
+      if ends_at
+        "#{starts_at.try(:strftime, "%A, %B %e")} #{ends_at.try(:strftime, "- %A, %B %e")}"
+      else
+        starts_at.try(:strftime, "%A, %B %e")
+      end
     elsif ends_at
       "#{starts_at.try(:strftime, "%A, %B %e, %l:%M%P")} #{ends_at.try(:strftime, ends_at_strftime)}"
     else
