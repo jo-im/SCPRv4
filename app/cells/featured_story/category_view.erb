@@ -12,7 +12,7 @@
   </figure>
 
   <div class="o-featured-story__description">
-    <span class="o-story-list__item-byline"><%= byline %></span>
+    <span class="o-story-list__item-byline"><%= byline model %></span>
     <span class="o-story-list__item-pipe">|</span>
     <time class="o-story-list__item-timestamp"><%= model.try(:public_datetime).try(:strftime, "%B %d, %I:%M %p") %></time>
     <span class="o-story-list__item-teaser"><%= teaser %></span>

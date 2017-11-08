@@ -8,8 +8,9 @@ class BlogEntryCell < Cell::ViewModel
   end
 
   def byline links=true
-    return "KPCC" if !model.respond_to?(:joined_bylines)
-    elements = model.joined_bylines do |bylines|
+    original_object = model.try(:original_object) || model
+    return "KPCC" if !original_object.respond_to?(:joined_bylines)
+    elements = original_object.joined_bylines do |bylines|
       bylines.map do |byline|
         if links && byline.user.try(:is_public)
           link_to byline.display_name, byline.user.public_path
