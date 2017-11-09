@@ -66,12 +66,16 @@ class EventCell < Cell::ViewModel
     starts_at = event.try(:starts_at)
     ends_at = event.try(:ends_at)
     ends_at_strftime = "- %A, %B %e, %l:%M%P"
+    same_day = false
     if starts_at.try(:yday) == ends_at.try(:yday) && starts_at.try(:year) == ends_at.try(:year)
       ends_at_strftime = "- %l:%M%P"
+      same_day = true
     end
 
     if event.try(:is_all_day)
-      if ends_at
+      if same_day == true
+        starts_at.try(:strftime, "%A, %B %e")
+      elsif ends_at
         "#{starts_at.try(:strftime, "%A, %B %e")} #{ends_at.try(:strftime, "- %A, %B %e")}"
       else
         starts_at.try(:strftime, "%A, %B %e")
