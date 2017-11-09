@@ -6,7 +6,7 @@
         // The following are highly recommended additional parameters. Remove the slashes in front to use.
         var disqus_identifier = '<%= model.try(:get_article).try(:original_object).try(:disqus_identifier) %>';
         var disqus_url = '<%= model.public_url %>';
-        var disqus_title = '<%= model.try(:get_article).try(:title).try(:to_json) %>';
+        var disqus_title = <%= model.try(:get_article).try(:title).try(:to_json) %>;
 
         /* * * DON'T EDIT BELOW THIS LINE * * */
         (function() {

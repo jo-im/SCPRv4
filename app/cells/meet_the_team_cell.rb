@@ -13,8 +13,10 @@ class MeetTheTeamCell < Cell::ViewModel
   end
 
   def headshot bio
-    if bio.respond_to?(:headshot)
-      bio.headshot.eight.url
+    if bio.try(:headshot)
+      bio.headshot.small.url
+    else
+      image_url "profile-photo-fallback.jpg"
     end
   end
 
