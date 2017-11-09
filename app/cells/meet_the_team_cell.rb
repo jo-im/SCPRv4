@@ -15,6 +15,8 @@ class MeetTheTeamCell < Cell::ViewModel
   def headshot bio
     if bio.try(:headshot)
       bio.headshot.small.url
+    else
+      image_url "profile-photo-fallback.jpg"
     end
   end
 
