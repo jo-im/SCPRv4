@@ -21,6 +21,8 @@ class HostListCell < Cell::ViewModel
   def headshot author
     if author.try(:headshot)
       author.headshot.thumb.url
+    else
+      image_url "profile-photo-fallback.jpg"
     end
   end
 
