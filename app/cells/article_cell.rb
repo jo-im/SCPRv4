@@ -24,7 +24,8 @@ class ArticleCell < Cell::ViewModel
   end
 
   def biographies links=true
-    elements = model.try(:joined_bylines) do |bylines|
+    original_object = model.try(:original_object) || model
+    elements = original_object.try(:joined_bylines) do |bylines|
       bylines.map do |byline|
         if links && byline.user.try(:is_public)
           link_to byline.display_name, byline.user.public_path
