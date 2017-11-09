@@ -12,7 +12,7 @@ class ArticleCell < Cell::ViewModel
   property :category
 
   cache :show do
-    [model.try(:cache_key), 'v2']
+    [model.try(:cache_key), 'v3']
   end
 
   def show
