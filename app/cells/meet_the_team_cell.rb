@@ -13,8 +13,8 @@ class MeetTheTeamCell < Cell::ViewModel
   end
 
   def headshot bio
-    if bio.respond_to?(:headshot)
-      bio.headshot.eight.url
+    if bio.try(:headshot)
+      bio.headshot.small.url
     end
   end
 
