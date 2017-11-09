@@ -1,19 +1,15 @@
 <aside id="<%= @options[:id] %>" class="o-appeal o-appeal--breaking-news <%= @options[:class] %>" style="order: <%= order %>">
   <h4 class="o-appeal__heading b-heading b-heading--h4 b-heading--serif b-heading--bold b-heading--italic">Get KPCC in your inbox</h4>
   <p class="o-appeal__description">Breaking news alerts sent to your inbox</p>
-  <form method="post" name="untitledForm-1359591262588" action="https://s1715082578.t.eloqua.com/e/f2" id="form148">
-      <input value="untitledForm-1359591262588" type="hidden" name="elqFormName"  />
-      <input value="1715082578" type="hidden" name="elqSiteId"  />
-      <input name="elqCampaignId" type="hidden"  />
-
-      <input class="c-input input-text" id="field0" name="emailAddress" type="email" placeholder="email@somedomain.com" value="" />
-
-      <input class="newsletter-hidden-input" name="SCPRBreakingAlerts" type="checkbox" value="on" checked="checked"  />
-      <input type="hidden" name="elqCustomerGUID" value="">
-      <input type="hidden" name="elqCookieWrite" value="0">
-
-      <button type="submit" class="o-appeal__submit c-btn c-btn--outline-secondary c-btn--small track-event" data-ga-category="Article" data-ga-action="Subscribe" data-ga-label="Breaking News Newsletter">Subscribe</button>
+  <form action="https://mcpostman.publicradio.org/subscription_requests" method="post">
+    <input name="subscription_request[property_key]" type="hidden" value="0e6c885b-dcd5-4810-9418-3c529713eba9" />
+    <input name="subscription_request[sde_external_key]" type="hidden" value="" />
+    <input name="subscription_request[fsm][Form_BusinessUnit]" type="hidden" value="SCPR" />
+    <input name="subscription_request[fsm][Form_FormName]" type="hidden" value="untitledForm-1359591262588" />
+    <input name="subscription_request[fsm][Form_Opt_In_Source]" type="hidden" value="SCPR Newsletter" />
+    <input name="subscription_request[publication_lists][489]" type="hidden" value="on" />
+    <input class="c-input input-text required email form-control" id="subscription_request_fsm_Form_Email_Address" name="subscription_request[fsm][Form_Email_Address]" type="email" placeholder="email@somedomain.com" value="" required="required" maxlength="254" />
+    <button type="submit" class="o-appeal__submit c-btn c-btn--outline-secondary c-btn--small track-event" data-ga-category="Article" data-ga-action="Subscribe" data-ga-label="Breaking News Newsletter">Subscribe</button>
   </form>
   <a href="/newsletters/" class="o-appeal__action-link">Or, check out all our newsletters ></a>
 </aside>
-
