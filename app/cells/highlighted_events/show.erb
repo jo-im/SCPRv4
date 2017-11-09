@@ -7,7 +7,7 @@
   <div class="o-highlighted-events__left o-highlighted-events__left-feature"  style="order: 3">
     <div class="o-highlighted-events__description">
       <div class="o-highlighted-events__date <%= text_color model.try(:first) %>">
-        <% if model.try(:first).try(:starts_at).try(:future?) %>
+        <% if !model.try(:first).try(:ends_at).try(:past?) %>
           <svg class="b-icon--calendar b-icon b-icon--size-med b-icon--left">
             <use class="b-icon--line b-icon--color-link" xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/static/images/scpr-sprite.svg#icon_line-calendar"></use>
           </svg>
@@ -45,7 +45,7 @@
         <a href="<%= event.try(:public_path) %>"><%= event.try(:headline) %></a>
       </h5>
       <p class="o-highlighted-events__date <%= text_color event %>">
-        <% if event.try(:starts_at).try(:future?) %>
+        <% if !event.try(:ends_at).try(:past?) %>
           <svg class="b-icon--calendar b-icon b-icon--size-med b-icon--left">
             <use class="b-icon--line b-icon--color-link" xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/static/images/scpr-sprite.svg#icon_line-calendar"></use>
           </svg>
