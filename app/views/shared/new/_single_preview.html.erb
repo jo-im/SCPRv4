@@ -21,7 +21,7 @@ end %>
 <%= cell :ad, slot: "c", class: "l-column--right", order: 1000 %>
 
 <!-- ARTICLE BODY -->
-<%= cell :article, article, type: 'story' %>
+<%= cell :article, @entry, type: 'story', preview: true %>
 
 <!-- MOAR STUFF -->
 <%= cell :newsletter_appeal, article, order: 991 %>
