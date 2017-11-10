@@ -3,6 +3,11 @@
   <h6 class="o-featured-episode__list-heading b-heading--h6 b-heading--uppercase u-text-color--gray"><%= model.try(:length) > 1 ? @options[:header] : nil %></h6>
     <% model.each do |episode| %>
     <div class="o-featured-episode__segment">
+      <% if episode.try(:asset).try(:lsquare).try(:url) %>
+        <figure class="o-featured-episode__segment-figure">
+          <img src="<%= asset_path episode %>" style="background-image:url(<%= asset_path episode %>);">
+        </figure>
+      <% end %>
       <div class="o-featured-episode__segment-description">
         <h3 class="o-featured-episode__segment-title"><%= link_to episode.try(:title), episode.try(:public_path) || episode.try(:external_url) %></h3>
         <time class="o-story-list__item-timestamp"><%= episode.try(:published_at).try(:strftime, "%a %B %d") || episode.try(:air_date).try(:strftime, "%a %B %d") %></time>
