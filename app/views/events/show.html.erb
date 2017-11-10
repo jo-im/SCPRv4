@@ -3,27 +3,29 @@
 <% add_to_page_title "Events" %>
 
 <% content_for :header do %>
-<section id="o-prologue--in-person__event" class="o-prologue o-prologue--in-person">
-  <a class="o-prologue__logo" href="/events/kpcc-in-person"><%= image_tag "event-headers/kpcc-in-person-logo.svg" %></a>
-  <span class="o-prologue__description">
-    <div class="o-prologue__teaser">
-      <%= @landing_page.try(:description) %>
-    </div>
-    <span class="o-prologue__pipe">|</span>
-    <div class="o-prologue__social-icons">
-      <a class="o-prologue__social-icon" href="https://www.facebook.com/KPCCInPerson">
-        <svg class="b-icon b-icon--size-sm b-icon--left">
-          <use class="b-icon--line" xlink:href="/static/images/scpr-sprite.svg#icon_line-facebook" />
-        </svg>
-      </a>
-      <a class="o-prologue__social-icon" href="https://twitter.com/KPCCInPerson">
-        <svg class="b-icon b-icon--size-sm b-icon--left">
-          <use class="b-icon--color-link" xlink:href="/static/images/scpr-sprite.svg#icon_line-twitter" />
-        </svg>
-      </a>
-    </div>
-  </span>
-</section>
+  <% if @event.try(:is_kpcc_in_person_event?) %>
+    <section id="o-prologue--in-person__event" class="o-prologue o-prologue--in-person">
+      <a class="o-prologue__logo" href="/events/kpcc-in-person"><%= image_tag "event-headers/kpcc-in-person-logo.svg" %></a>
+      <span class="o-prologue__description">
+        <div class="o-prologue__teaser">
+          <%= @landing_page.try(:description) %>
+        </div>
+        <span class="o-prologue__pipe">|</span>
+        <div class="o-prologue__social-icons">
+          <a class="o-prologue__social-icon" href="https://www.facebook.com/KPCCInPerson">
+            <svg class="b-icon b-icon--size-sm b-icon--left">
+              <use class="b-icon--line" xlink:href="/static/images/scpr-sprite.svg#icon_line-facebook" />
+            </svg>
+          </a>
+          <a class="o-prologue__social-icon" href="https://twitter.com/KPCCInPerson">
+            <svg class="b-icon b-icon--size-sm b-icon--left">
+              <use class="b-icon--color-link" xlink:href="/static/images/scpr-sprite.svg#icon_line-twitter" />
+            </svg>
+          </a>
+        </div>
+      </span>
+    </section>
+  <% end %>
 <% end %>
 
 <%= cell :social_tools, @event, display: 'vert' %>
