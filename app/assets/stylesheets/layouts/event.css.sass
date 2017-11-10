@@ -43,15 +43,37 @@
   .o-event__rule--footer
     margin-bottom: $margin-in-pixels
 
-  .o-event__figure
-    img
-      height: auto
-
   .o-comments
     clear: both
 
   .o-epilogue
     clear: both
+
+  .o-article__body--float-right, .o-article__body--float-left
+    .o-figure__img
+      background-size: contain
+      background-repeat: no-repeat
+
+  .o-article__body--float-left
+    float: left
+    width: 40%
+    margin-right: 45px
+    margin-top: 45px
+
+  .o-article__body--float-right
+    float: right
+    width: 40%
+    margin-left: 45px
+    margin-top: 45px
+
+  .o-event__hero-figure
+    .o-figure__img
+      height: auto
+      padding-top: 0px
+
+    .o-figure--portrait
+      .o-figure__img
+        width: 35%
 
   @media (max-width: $media-wide)
     .o-event__body, .o-event__RSVP, .o-event__figure, .o-event__headline, .o-event__type, .o-appeal, .o-more-events, .o-event__social-tools, .o-comments, .o-event__rule--ending
@@ -91,8 +113,16 @@
       display: none
     .o-event__type
       margin-top: 1em
+    .o-article__body--float-right
+      margin-right: 10%
   @media all and (max-width: $media-mobile)
     .o-event__RSVP
       flex-direction: column !important
       div
         width: initial
+
+    .o-article__body--float-right, .o-article__body--float-left
+      float: none
+      margin: 0 auto
+      margin-bottom: 25px
+      width: 75%
