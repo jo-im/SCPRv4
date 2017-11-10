@@ -2,18 +2,13 @@
 # NEVER not an Article.  NOT original_object -- DON'T DO IT.
 # NO, JUST NO.  If it's not there, add it to the Article class.
 
-class ArticleCell < Cell::ViewModel
-  include Cell::Caching::Notifications
+class ArticlePreviewCell < Cell::ViewModel
   include ActionView::Helpers::DateHelper
   property :title
   property :body
   property :assets
   property :asset
   property :category
-
-  cache :show, expires_in: 10.minutes do
-    [model.try(:cache_key), 'v3']
-  end
 
   def show
     render

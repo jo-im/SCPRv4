@@ -16,12 +16,10 @@ end %>
   '<hr class="b-rule l-column--right" style="order: 12;" />'
 end %>
 
-<%= cell(:category_cluster, article.category, class: "l-column--right", order: 996, category: "Article", label: "More Sidebar Category") %>
-
 <%= cell :ad, slot: "c", class: "l-column--right", order: 1000 %>
 
 <!-- ARTICLE BODY -->
-<%= cell :article, @entry, type: 'story', preview: true %>
+<%= cell :article_preview, story, type: 'story' %>
 
 <!-- MOAR STUFF -->
 <%= cell :newsletter_appeal, article, order: 991 %>
