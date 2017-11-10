@@ -60,9 +60,9 @@ class EventsController < ApplicationController
     end
 
     # Instance variable for three tabs
-    @all_upcoming_events = Event.published.upcoming.page(upcoming_page).per(10)
-    @kpcc_in_person_events = Event.kpcc_in_person.upcoming.page(kpcc_in_person_page).per(10)
-    @sponsored_events = Event.sponsored.upcoming.page(sponsored_page).per(10)
+    @all_upcoming_events = Event.published.upcoming_and_current.page(upcoming_page).per(10)
+    @kpcc_in_person_events = Event.kpcc_in_person.upcoming_and_current.page(kpcc_in_person_page).per(10)
+    @sponsored_events = Event.sponsored.upcoming_and_current.page(sponsored_page).per(10)
 
     # Instance variable that populates the "Recent Events" side bar
     @past_events     = Event.kpcc_in_person.past.limit(5)
