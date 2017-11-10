@@ -11,8 +11,8 @@ class ArticleCell < Cell::ViewModel
   property :asset
   property :category
 
-  cache :show, expires_in: 10.minutes do
-    [model.try(:cache_key), 'v3']
+  cache :show, expires_in: 10.minutes, :if => lambda { !@options[:preview] }  do
+    [model.try(:cache_key), 'v4']
   end
 
   def show

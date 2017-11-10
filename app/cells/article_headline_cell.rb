@@ -1,7 +1,7 @@
 class ArticleHeadlineCell < Cell::ViewModel
   property :category
 
-  cache :show, :if => lambda { !@options[:preview] } do
+  cache :show, expires_in: 10.minutes, :if => lambda { !@options[:preview] }  do
     model.try(:cache_key)
   end
 
