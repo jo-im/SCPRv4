@@ -1,52 +1,6 @@
 require "spec_helper"
 
 describe EventsController do
-  describe "GET /index" do
-    describe "view" do
-      render_views
-
-      it "renders the view" do
-        get :index
-      end
-    end
-
-    describe "controller" do
-      it "assigns @events using upcoming_and_current scope" do
-        past    = create :event, :published, :past
-        current = create :event, :published, :current
-        future  = create :event, :published, :future
-        get :index
-        assigns(:events).should eq [current, future]
-      end
-
-      describe "scoping" do
-        before :each do
-          @forum = create :event, :published, :future, event_type: "comm"
-          @spon  = create :event, :published, :future, event_type: "spon"
-        end
-
-        it "scopes by kpcc_in_person if requested" do
-          get :index, list: "kpcc-in-person"
-          assigns(:scoped_events).should eq [@forum]
-        end
-
-        it "scoped by sponsored if requested" do
-          get :index, list: "sponsored"
-          assigns(:scoped_events).should eq [@spon]
-        end
-
-        it "does not scope by event_type if nothing requested" do
-          get :index
-          scoped_events = assigns(:scoped_events)
-          scoped_events.should include @forum
-          scoped_events.should include @spon
-        end
-      end
-    end
-  end
-
-  #-----------------
-
   describe "GET /kpcc_in_person" do
     describe "view" do
       render_views
@@ -62,7 +16,7 @@ describe EventsController do
         current_event = create :event, :published, starts_at: 2.hours.ago, ends_at: 2.hours.from_now, event_type: 'comm'
         future_event  = create :event, :published, starts_at: 2.hours.from_now, ends_at: 3.hours.from_now, event_type: 'comm'
         get :kpcc_in_person
-        assigns(:all_upcoming_events).should eq [future_event]
+        assigns(:all_upcoming_events).should eq [current_event, future_event]
       end
     end
   end
