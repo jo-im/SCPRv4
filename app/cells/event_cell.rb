@@ -38,14 +38,6 @@ class EventCell < Cell::ViewModel
     end
   end
 
-  def flex_direction
-    if model.try(:rsvp_url)
-      return "row"
-    else
-      return "column"
-    end
-  end
-
   def start_date
     if !model.try(:starts_at)
       return ''
@@ -84,6 +76,14 @@ class EventCell < Cell::ViewModel
       "#{starts_at.try(:strftime, "%A, %B %e, %l:%M%P")} #{ends_at.try(:strftime, ends_at_strftime)}"
     else
       starts_at.try(:strftime, "%A, %B %e, %l:%M%P")
+    end
+  end
+
+  def orientation
+    if model.try(:rsvp_url).try(:empty?)
+      'o-event__RSVP--column'
+    else
+      'o-event__RSVP--row'
     end
   end
 end

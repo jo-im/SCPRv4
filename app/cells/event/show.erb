@@ -1,7 +1,7 @@
 <h4 class="o-event__type" style="order: 0">EVENTS</h4>
 <h1 class="o-event__headline" style="order: 1"><%= model.headline %></h1>
 
-<div class='o-event__RSVP' style="order: 2; flex-direction: <%= flex_direction %>">
+<div class='o-event__RSVP <%= orientation %>' style="order: 2;">
   <div class='o-event__RSVP-date'>
     <span class="o-event__RSVP-datetime"><%= date model %></span>
     <% if !model.try(:rsvp_url).try(:empty?) && !model.try(:starts_at).try(:past?) %>
@@ -35,7 +35,7 @@
 </figure>
 <% end %>
 
-<div class="o-event__body">
+<div class="o-event__body" style="order: 4">
   <%= render_body %>
 </div>
 
