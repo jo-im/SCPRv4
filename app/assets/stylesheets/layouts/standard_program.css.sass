@@ -6,13 +6,83 @@
   padding-top: $margin-in-pixels
   width: 100%
 
+  .l-column--left
+    clear: left
+    float: left
+    margin-left: $margin
+    width: $col
+
+  .o-article__category, .o-article__title, .o-article__hero-figure, .c-byline, .o-article__b-rule,
+  .o-article__body, .o-newsletter-appeal, .o-related-links, .o-article__rule--ending, .o-comments,
+  .contributor, .content-partners, .o-more-from-episode, #o-archive-picker__standard-program-episode
+    margin-left: $margin + $col + $gutter
+    width: ($col * 6) + ($gutter * 5)
+
+  .c-audio--horiz, .c-audio__download, .o-social-tools--horiz:first-of-type
+    display: none
+
+  .o-article__body
+    color: $color-gray-dark
+    font-family: $font-sans-base
+    > *
+      line-height: 30px
+      margin-bottom: $margin-in-pixels / 2
+
+    p a
+      // paragraph links
+      color: $color-secondary
+
+    ul
+      list-style: circle
+      padding-left: 3em
+      font-size: 0.9em
+      margin-bottom: 27.68px
+      li
+        margin: 1em 0
+
+    h2
+      font-size: 22px
+      font-weight: 400
+
+    h3:not(.o-article__title)
+      font-size: 18px
+      font-weight: 600
+      text-transform: uppercase
+
+    h6
+      @extend .b-heading, .b-heading--h6, .b-heading--uppercase, .u-text-color--gray-warm, .b-heading--book
+      margin-bottom: 0
+
+    p:first-of-type
+      font-size: 22px
+      line-height: 30px
+      @media (max-width: $media-tablet)
+        font-size: 20px
+
+    p:last-of-type
+      @media (max-width: $media-tablet)
+        margin-bottom: 60px
+
+    blockquote
+      p
+        border-left: 6px solid $color-primary
+        padding-bottom: $margin-in-pixels / 2
+        margin-left: percentage(31/642)
+        padding-left: percentage(31/642)
+      p:last-of-type
+        padding-bottom: 0px
+
+    > img
+      @media (max-width: $media-tablet)
+        width: 100% - ($margin * 2) !important
+
   .o-article
     padding-top: 0px
 
   .o-social-tools--horiz
     margin-bottom: 30px
 
-  .o-featured-episode__center, .pagination, #o-archive-picker__standard-program-episode,
+  .o-featured-episode__center, .pagination,
   #o-standard-program-episode__episode__segment-list
     margin-left: $margin
     margin-right: $margin
