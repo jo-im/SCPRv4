@@ -31,8 +31,8 @@ class AssetCell < Cell::ViewModel
 
   end
 
-  def aspect
-    if model.small.width.to_i < model.small.height.to_i
+  def aspect asset=model
+    if asset.small.width.to_i < asset.small.height.to_i
       "o-figure--portrait"
     else
       "o-figure--widescreen"

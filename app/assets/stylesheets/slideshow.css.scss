@@ -129,7 +129,9 @@
             }
 
             &.active {
-                display: block;
+                align-items: center;
+                display: flex;
+                flex-direction: column;
             }
 
             .text {
