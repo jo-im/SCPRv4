@@ -1,8 +1,14 @@
 class EventCell < Cell::ViewModel
   property :asset
 
-  def hero_asset
-    AssetCell.new(asset, article: model).call(:show)
+  def hero_asset(figure_class)
+    if model.try(:asset_display) != :hidden || !model.try(:assets).try(:empty?)
+      if model.try(:asset_display) == :slideshow
+        AssetCell.new(asset, article: model, class: figure_class, template: "default/slideshow.html").call(:show)
+      else
+        AssetCell.new(asset, article: model, class: figure_class).call(:show)
+      end
+    end
   end
 
   def render_body options={}
@@ -19,6 +25,36 @@ class EventCell < Cell::ViewModel
       doc = Nokogiri::HTML(model.archive_description.html_safe)
     else
       doc = Nokogiri::HTML(model.body.html_safe)
+    end
+
+    cssPath = "img.inline-asset[data-asset-id]"
+    context = options[:context] || "news"
+    display = options[:display] || "inline"
+    doc.css(cssPath).each do |placeholder|
+      asset_id = placeholder.attribute('data-asset-id').value
+      asset_id = asset_id ? asset_id.to_i : nil
+      next if asset_id.nil?
+
+      # we have to fall back to original_object here to get the full list of
+      # assets. in any case where we're rendering a body, we'll already have
+      # the original object loaded, so that's ok
+      asset = model.try(:assets).select{|a| a.asset_id == asset_id}[0]
+
+      ## If kpcc_only is true, only render if the owner of the asset is KPCC
+      if asset && (!options[:kpcc_only] || asset.owner.try(:include?, "KPCC"))
+        if (asset.small.width.to_i < asset.small.height.to_i)
+          if placeholder.attribute('data-align').try(:value).try(:match, /left/i)
+            positioning = "o-article__body--float-left"
+          else
+            positioning = "o-article__body--float-right"
+          end
+        end
+        rendered_asset = AssetCell.new(asset, context: context, display: display, article: model, class: positioning).call(:show)
+        placeholder.replace Nokogiri::HTML::DocumentFragment.parse(rendered_asset)
+      else
+        # FIXME: I'm sure there's a cleaner "delete"
+        placeholder.replace Nokogiri::HTML::DocumentFragment.parse("")
+      end
     end
 
     order_body doc
@@ -38,26 +74,10 @@ class EventCell < Cell::ViewModel
     end
   end
 
-  def start_date
-    if !model.try(:starts_at)
-      return ''
-    end
-
-    model.try(:starts_at).strftime('%A, %B %e, %l:%M')
-  end
-
-  def end_date
-    if !model.try(:ends_at)
-      return ''
-    end
-
-    model.try(:ends_at).strftime('%l:%M%P')
-  end
-
   def date(event)
     starts_at = event.try(:starts_at)
     ends_at = event.try(:ends_at)
-    ends_at_strftime = "- %A, %B %e, %l:%M%P"
+    ends_at_strftime = "- %A, %B %e, %Y, %l:%M%P"
     same_day = false
     if starts_at.try(:yday) == ends_at.try(:yday) && starts_at.try(:year) == ends_at.try(:year)
       ends_at_strftime = "- %l:%M%P"
@@ -66,16 +86,16 @@ class EventCell < Cell::ViewModel
 
     if event.try(:is_all_day)
       if same_day == true
-        starts_at.try(:strftime, "%A, %B %e")
+        starts_at.try(:strftime, "%A, %B %e, %Y")
       elsif ends_at
-        "#{starts_at.try(:strftime, "%A, %B %e")} #{ends_at.try(:strftime, "- %A, %B %e")}"
+        "#{starts_at.try(:strftime, "%A, %B %e, %Y")} #{ends_at.try(:strftime, "- %A, %B %e, %Y")}"
       else
-        starts_at.try(:strftime, "%A, %B %e")
+        starts_at.try(:strftime, "%A, %B %e, %Y")
       end
     elsif ends_at
-      "#{starts_at.try(:strftime, "%A, %B %e, %l:%M%P")} #{ends_at.try(:strftime, ends_at_strftime)}"
+      "#{starts_at.try(:strftime, "%A, %B %e, %Y, %l:%M%P")} #{ends_at.try(:strftime, ends_at_strftime)}"
     else
-      starts_at.try(:strftime, "%A, %B %e, %l:%M%P")
+      starts_at.try(:strftime, "%A, %B %e, %Y, %l:%M%P")
     end
   end
 

@@ -22,7 +22,7 @@ class UpcomingEventsListCell < Cell::ViewModel
   def date(event)
     starts_at = event.try(:starts_at)
     ends_at = event.try(:ends_at)
-    ends_at_strftime = "- %B %e, %l:%M%P"
+    ends_at_strftime = "- %B %e, %Y, %l:%M%P"
     same_day = false
     if starts_at.try(:yday) == ends_at.try(:yday) && starts_at.try(:year) == ends_at.try(:year)
       ends_at_strftime = "- %l:%M%P"
@@ -39,16 +39,17 @@ class UpcomingEventsListCell < Cell::ViewModel
 
     if event.try(:is_all_day)
       if same_day == true
-        starts_at.try(:strftime, "%B %e")
+        starts_at.try(:strftime, "%B %e, %Y")
       elsif ends_at
-        "#{starts_at.try(:strftime, "%B %e")} #{ends_at.try(:strftime, "- %B %e")}"
+        "#{starts_at.try(:strftime, "%B %e, %Y")} #{ends_at.try(:strftime, "- %B %e, %Y")}"
       else
-        starts_at.try(:strftime, "%B %e")
+        starts_at.try(:strftime, "%B %e, %Y")
       end
     elsif ends_at
-      "#{starts_at.try(:strftime, "%B %e, %l:%M%P")} #{ends_at.try(:strftime, ends_at_strftime)}"
+      "#{starts_at.try(:strftime, "%B %e, %Y, %l:%M%P")} #{ends_at.try(:strftime, ends_at_strftime)}"
     else
-      starts_at.try(:strftime, "%B %e, %l:%M%P")
+      starts_at.try(:strftime, "%B %e, %Y, %l:%M%P")
     end
   end
+
 end

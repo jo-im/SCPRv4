@@ -19,21 +19,7 @@
   </div>
 </div>
 
-<% if model.try(:asset_display) != :hidden %>
-<figure class="o-event__figure o-figure" style="order: 3">
-  <img class="o-figure__img" src="<%= model.asset.full.url %>" alt="<%= model.asset.caption %>" title="<%= model.headline %>" role="img" aria-label="<%= model.headline %>" style="background-image:url(<%= model.asset.full.url %>);" />
-  <% if model.asset.caption || model.asset.owner %>
-  <figcaption class="o-event__figure-caption o-figure__caption">
-    <% if model.asset.caption %>
-    <%= model.asset.caption %>
-    <% end %>
-    <% if model.asset.owner %>
-    <address class="o-figure__attribution"><%= model.asset.owner %></address>
-    <% end %>
-  </figcaption>
-  <% end %>
-</figure>
-<% end %>
+<%= hero_asset "o-event__figure o-figure" %>
 
 <div class="o-event__body" style="order: 4">
   <%= render_body %>
