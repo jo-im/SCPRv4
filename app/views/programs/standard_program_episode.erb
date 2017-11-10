@@ -1,6 +1,11 @@
-<% content_for :main_class, "l-standard-program" %>
+<% add_to_page_title @program.try(:title) %>
+<% add_to_page_title @episode.headline %>
+<% content_for :opengraph do %><%= render_content @episode, "opengraph" %><% end %>
+<% content_for :main_class, "o-article o-article--segment" %>
+<%= render 'shared/ads/dfp_script_config', category: @category %>
+
 <% content_for :header do %>
-  <section class="o-prologue o-prologue--standard-program">
+  <section id="o-prologue--program__segment" class="o-prologue o-prologue--program">
     <a class="o-prologue__logo" href="/programs/<%= @program.try(:slug) %>"><%= image_tag "show-logos/#{@program.try(:slug)}.svg" %></a>
     <span class="o-prologue__description">
       <div class="o-prologue__teaser">
@@ -27,23 +32,78 @@
   </section>
 <% end %>
 
-<% add_to_page_title @episode.title %>
-
+<!-- LEFT ASIDE -->
 <aside class="l-column--left l--centerize" style="order: -1;">
-  <%= cell :article_audio, @episode %>
+  <%= cell :article_audio, @episode.get_article %>
   <%= cell :social_tools, @episode, display: 'vert' %>
 </aside>
 
-<%= cell :ad, slot: "a", id: "o-ad--pos-a", attribution: false, order: 3 %>
-<%= cell :ad, slot: "b", id: "o-ad--pos-b", order: 5 %>
-<%= cell(:popular_articles, @content, order: 6).call(:side_bar) %>
-<%= cell(:appeal, @program, order: 4).call(:podcast) %>
-<%= cell :ad, slot: "c", id: "o-ad--pos-c", order: 7 %>
-<%= cell :article, @episode.get_article, type: 'episode' %>
-<%= cell :episode_list, @segments, id: 'o-standard-program-episode__episode__segment-list', class: 'o-standard-program__episode-list', program: @program, header: 'In this episode', order: 2 %>
-<%= cell :archive_picker, @program, id: 'o-archive-picker__standard-program-episode', base_url: "/programs/" + @program.slug + "/archive", header: "Find a specific episode from " + @program.try(:title) + "'s archive", type: "full", order: 3 %>
-<hr class="o-article__rule--ending b-rule b-rule--secondary-alt b-rule--padded l-column--boundless" style="order: 1001;" />
-<%= cell :comments, @episode, order: 1000 %>
-<%= cell :featured_programs, @program, order: 11 %>
-<%= cell :popular_articles, @program, class: "o-popular-stories--horiz", order: 1001 %>
-<%= cell :epilogue, @program, order: 1001 %>
+<!-- HEADLINE -->
+<%= cell :article_headline, @episode.get_article %>
+
+<!-- RIGHT ASIDES -->
+<%= cell(:ad, slot: "a", class: "l-column--right", id: "c-ad--a", attribution: false, order: -1).show do
+  '<hr class="b-rule l-column--right" style="order: 5;" />'
+end %>
+
+<%= cell(:ad, slot: "b", class: "l-column--right", order: 1000).show do
+  '<hr class="b-rule l-column--right" style="order: 12;" />'
+end %>
+
+<%= cell(:popular_articles, @content, order: 6, class: "l-column--right").call(:side_bar) %>
+
+<hr class="b-rule l-column--right" />
+
+<%= cell :ad, slot: "c", class: "l-column--right", order: 1001 %>
+
+<!-- CENTER CONTENT-->
+<%= cell :article, @episode.get_article, type: 'story', headline: false %>
+
+<%= cell :newsletter_appeal, @episode, order: 999 %>
+
+<%= cell :social_tools, @article, display: 'horiz', order: 999 %>
+
+<!-- FOOTER CONTENT -->
+<hr class="o-article__rule--footer b-rule b-rule--secondary-alt b-rule--padded l-column--boundless" style="order: 1001;" />
+
+<%= cell :comments, @episode.get_article, order: 1000 %>
+
+<%= cell :featured_programs, @program, class: "l-column--boundless", order: 1001 %>
+
+<%= cell :popular_articles, @program, class: "l-column--boundless o-popular-stories--horiz", order: 1001 %>
+
+<%= cell :epilogue, @episode, class: "l-column--boundless", order: 1001 %>
+
+<% if @modal || @is_pledge_time %>
+  <div id='exit-modal' class='exit-modal--hidden' data-ga-modal-label="<%= @google_analytics_label %>">
+    <div class='exit-modal__underlay'></div>
+      <div class='exit-modal__modal'>
+        <span class='exit-modal__close-button'>
+          <svg value="close" class="b-icon jp-stop o-audio-bar__collapse" data-ga-category="Article" data-ga-action="Volume" data-ga-label="Player">
+            <use class="" xlink:href="/static/images/scpr-sprite.svg#icon_line-close"/>
+            X
+          </svg>
+        </span>
+        <div id='exit-modal__content'>
+          <% if @modal %>
+            <%= @modal.content.html_safe %>
+          <% end %>
+          <% if @is_pledge_time %>
+            <div class="appeal-newsletter donate-cta ancillary" id="appeal-donate-cta">
+                <div class="appeal-background">
+                    <div class="appeal-content">
+                        <h3 class="bound appeal-heading appeal-heading-adaptive"><span style="display: inline-block;">You care about today's news.</span><span style="display: inline-block;">And you're not alone.</span></h3>
+                        <p class="bound">Join others who support independent journalism.</p>
+                        <p class="bound">
+                            <a class="appeal-link track-event" id="ga-modal__submit" href=" https://scprcontribute.publicradio.org/contribute.php?refId=instoryask&askAmount=20" data-ga-category="Modal" data-ga-action="Click" data-ga-label="<%= @google_analytics_label %>">Give to KPCC</a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+          <% end %>
+        </div>
+    </div>
+  </div>
+<% end %>
+<%= javascript_include_tag "programs" %>
+

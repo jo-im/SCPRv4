@@ -116,7 +116,7 @@ class ProgramsController < ApplicationController
 
     if @program.is_a?(ExternalProgram)
       @episode  = @program.episodes.find(params[:id])
-      render_standard_episode
+      render_external_episode
     end
   end
 
