@@ -73,10 +73,9 @@ Scprv4::Application.routes.draw do
   get '/events/kpcc-in-person/:subtype'            => 'events#kpcc_in_person'
   get '/events/kpcc-in-person/'                    => 'events#kpcc_in_person',      as: :kpcc_in_person_events
 
-  get '/events/sponsored/'                => 'events#index',      as: :sponsored_events,      defaults: { list: "sponsored" }
+  get '/events/sponsored/'                => redirect('/events/kpcc-in-person/sponsored/')
   get '/events/:year/:month/:day/:id/:slug/'  => 'events#show',   as: :event,                 constraints: { year: /\d{4}/, month: /\d{2}/, day: /\d{2}/, id: /\d+/, slug: /[\w_-]+/ }
-  get '/events/(list/:list)'              => 'events#kpcc_in_person',      as: :events,                defaults: { list: "all" }
-
+  get '/events/(list/:list)'              => redirect('/events/kpcc-in-person/list/')
   # Short List
   post '/short-list/archive'                     => "editions#archive"
   get '/short-list/:year/:month/:day'            => "editions#latest", constraints: { year: /\d{4}/, month: /\d{2}/, day: /\d{2}/ }
