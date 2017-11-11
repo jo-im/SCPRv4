@@ -9,29 +9,19 @@
         </figure>
       <% end %>
       <div class="o-featured-episode__segment-description">
-        <h3 class="o-featured-episode__segment-title"><%= link_to episode.try(:title), episode.try(:public_path) || episode.try(:external_url) %></h3>
+        <h3 class="o-featured-episode__segment-title"><%= link_to episode.try(:headline) || episode.try(:title), episode.try(:public_path) || episode.try(:external_url) %></h3>
         <time class="o-story-list__item-timestamp"><%= episode.try(:published_at).try(:strftime, "%a %B %d") || episode.try(:air_date).try(:strftime, "%a %B %d") %></time>
         <div class="o-featured-episode__segment-teaser"><%= episode.try(:summary) || episode.try(:teaser) %></div>
-        <div class="c-audio-widget">
         <% if audio_file(episode) && @options[:multiple] != false %>
+          <div class="c-audio-widget">
             <a href="<%= audio_file(episode).try(:url) %>" class="c-play__button" title="<%= episode.try(:title) || episode.try(:headline) %>" data-duration="<%= audio_file(episode).try(:duration) %>" data-ga-category="Article" data-ga-action="Play" data-ga-label="Player">
               <span class="o-featured-episode__segment-audio">
                 <%= image_tag("o-audio-bar/Miniplayer-Play@2x.png", class: "o-featured-episode__segment-icon") %>
                 <%= format_clip_duration(audio_file(episode).try(:duration)) %>
               </span>
             </a>
+          </div>
         <% end %>
-        <% if @options[:external] != true %>
-          <span class="o-featured-episode__segment-comments <%= options[:non_zero] ? 'non-zero' : '' %>">
-            <a href="<%= episode.try(:public_path) %>#comments">
-              <svg class="o-featured-episode__segment-icon">
-                <use class="" xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/static/images/scpr-sprite.svg#icon_line-comment"></use>
-              </svg>
-              COMMENTS (<%= comment_count_for episode %>)
-            </a>
-          </span>
-        <% end %>
-        </div>
         <% if @options[:multiple] == false %>
           <%= cell(:article_audio, episode, type: 'episode').call(:horizontal) %>
           <%= cell :social_tools, episode.to_article, display: 'horiz', order: 999 %>
