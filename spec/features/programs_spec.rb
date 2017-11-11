@@ -25,9 +25,10 @@ describe "Episode page" do
 
       visit episode.public_url
 
-      within "#o-standard-program-episode__episode__segment-list" do
-        page.should have_content segment.headline
-      end
+      # TEMPORARY: Disabling temporarily until feature is confirmed to be in use
+      # within "#o-standard-program-episode__episode__segment-list" do
+      #   page.should have_content segment.headline
+      # end
     end
   end
 end
