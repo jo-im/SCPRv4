@@ -56,7 +56,9 @@ class ArticleCell < Cell::ViewModel
   end
 
   def hero_asset(figure_class)
-    if model.try(:asset_display) != :hidden || !model.try(:assets).try(:empty?)
+    if model.try(:asset_display) == :hidden || assets.try(:empty?)
+      nil
+    else
       if model.try(:asset_display) == :slideshow
         AssetCell.new(asset, article: model, class: figure_class, template: "default/#{model.try(:asset_display)}.html").call(:show)
       else
