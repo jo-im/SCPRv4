@@ -2,7 +2,7 @@ class RelatedLinksCell < Cell::ViewModel
   include Orderable
 
   cache :show, expires_in: 10.minutes, :if => lambda { !@options[:preview] }  do
-    model.try(:cache_key)
+    [model.try(:cache_key), 'v2']
   end
 
   def show
@@ -14,7 +14,7 @@ class RelatedLinksCell < Cell::ViewModel
     # just having it extracted from the template is an improvement,
     # and who knows if we might want to start using some of these
     # returned attributes again in the future.
-    @links ||= (model.related_content + model.related_links).map do |content|
+    @links ||= (model.try(:related_content) + model.try(:links)).map do |content|
       classes     = "track-event"
       url         = nil
       title       = nil
