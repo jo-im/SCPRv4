@@ -85,6 +85,7 @@
     h2
       font-size: 22px
       font-weight: 400
+      text-transform: uppercase
 
     h3:not(.o-article__title)
       font-size: 18px
@@ -95,13 +96,13 @@
       @extend .b-heading, .b-heading--h6, .b-heading--uppercase, .u-text-color--gray-warm, .b-heading--book
       margin-bottom: 0
 
-    p:first-of-type
+    > p:first-of-type
       font-size: 22px
       line-height: 30px
       @media (max-width: $media-tablet)
         font-size: 20px
 
-    p:last-of-type
+    > p:last-of-type
       @media (max-width: $media-tablet)
         margin-bottom: 60px
 
