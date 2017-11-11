@@ -24,7 +24,6 @@
         <% end %>
         <% if @options[:multiple] == false %>
           <%= cell(:article_audio, episode, type: 'episode').call(:horizontal) %>
-          <%= cell :social_tools, episode.to_article, display: 'horiz', order: 999 %>
           <% if episode.try(:body) %>
           <div class="o-article">
             <%= episode.try(:body) %>
