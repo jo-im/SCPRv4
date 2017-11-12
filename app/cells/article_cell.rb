@@ -112,6 +112,9 @@ class ArticleCell < Cell::ViewModel
   end
 
   def byline links=true
+    if @options[:byline]
+      return @options[:byline]
+    end
     original_object = model.try(:original_object) || model
     return "KPCC" if !original_object.respond_to?(:joined_bylines)
     elements = original_object.joined_bylines do |bylines|

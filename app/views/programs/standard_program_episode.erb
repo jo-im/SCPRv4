@@ -57,7 +57,7 @@ end %>
 <%= cell :ad, slot: "c", class: "l-column--right", order: 1001 %>
 
 <!-- CENTER CONTENT-->
-<%= cell :article, @episode.get_article, type: 'story', headline: false %>
+<%= cell :article, @episode.get_article, type: 'story', headline: false, byline: @program.try(:title) %>
 
 <%= cell :archive_picker, @program, id: 'o-archive-picker__standard-program-episode', base_url: "/programs/" + @program.slug + "/archive", header: "Find a specific episode from " + @program.try(:title) + "'s archive", type: "full", order: 3 %>
 
