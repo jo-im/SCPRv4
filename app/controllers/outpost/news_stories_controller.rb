@@ -31,12 +31,12 @@ class Outpost::NewsStoriesController < Outpost::ResourceController
     with_rollback @entry do
 
       @entry.assign_attributes(unescape_params(params[:news_story]))
-      
+
       if @entry.unconditionally_valid?
         @entry.update_inline_assets
         @title = @entry.to_title
         render "shared/new/_single_preview",
-          :layout => "outpost/preview/application",
+          :layout => "application",
           :locals => {
             :story => @entry
           }
@@ -52,8 +52,8 @@ class Outpost::NewsStoriesController < Outpost::ResourceController
     # Takes params values that are interpreted as binary and convert them to UTF-8.
     params.transform_values { |v|
       if v.respond_to?(:encoding) && v.encoding.to_s.include?("ASCII-8BIT")
-        begin 
-          CGI.unescape v 
+        begin
+          CGI.unescape v
         rescue
           if v.respond_to? :encode
             v.encode("UTF-8", invalid: :replace, undef: :replace, replace: "")

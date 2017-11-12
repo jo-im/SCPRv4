@@ -1,10 +1,10 @@
-<% article = @entry.to_article %>
+<% article = @entry.get_article %>
 <% content_for :main_class, "o-article" %>
 
 <!-- LEFT ASIDE -->
 <aside class="l-column--left l--centerize" style="order: -1;">
-  <%= cell :article_audio, article %>
-  <%= cell :social_tools, article, display: 'vert' %>
+  <%= cell :article_audio, @entry, preview: true %>
+  <%= cell :social_tools, @entry, display: 'vert' %>
 </aside>
 
 <!-- RIGHT ASIDES -->
@@ -16,17 +16,19 @@ end %>
   '<hr class="b-rule l-column--right" style="order: 12;" />'
 end %>
 
-<%= cell(:category_cluster, article.category, class: "l-column--right", order: 996, category: "Article", label: "More Sidebar Category") %>
-
 <%= cell :ad, slot: "c", class: "l-column--right", order: 1000 %>
 
 <!-- ARTICLE BODY -->
-<%= cell :article, article, type: 'story' %>
+<%= cell :article, @entry, type: 'story', preview: true %>
 
 <!-- MOAR STUFF -->
-<%= cell :newsletter_appeal, article, order: 991 %>
+<%= cell :newsletter_appeal, @entry, order: 991 %>
 
 <hr class="o-article__rule--ending b-rule b-rule--primary-lightest", style="order: 992;" />
 
-<%= cell :epilogue, article, class: "l-column--boundless", order: 1001 %>
+<%= cell :related_links, article, order: 993, preview: true %>
+
+<%= cell :social_tools, @entry, display: 'horiz', order: 994 %>
+
+<%= cell :epilogue, @entry, class: "l-column--boundless", order: 1001 %>
 

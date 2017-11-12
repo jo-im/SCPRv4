@@ -5,7 +5,7 @@
 </script>
 
 <% unless @options[:headline] == false %>
-  <%= cell :article_headline, model %>
+  <%= cell :article_headline, model, preview: @options[:preview] %>
 <% end %>
 
 <%= hero_asset 'o-article__hero-figure' %>

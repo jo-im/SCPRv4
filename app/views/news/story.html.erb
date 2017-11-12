@@ -1,4 +1,4 @@
-<% add_to_page_title @story.feature.present? ? "#{@story.feature.name}: #{@story.headline}" : @story.headline %>
+<% add_to_page_title @story.try(:feature).try(:present?) ? "#{@story.try(:feature).try(:name)}: #{@story.try(:headline)}" : @story.try(:headline) %>
 <% content_for :opengraph do %><%= render_content @story, "opengraph" %><% end %>
 <% content_for :main_class, "o-article" %>
 <%= render 'shared/ads/dfp_script_config', category: @category %>
