@@ -16,6 +16,10 @@ module Concern
         @segments = @episode.segments
         render 'programs/standard_program_episode', layout: 'application' and return
       end
+      def render_external_episode
+        @segments = @episode.segments
+        render 'programs/external_program_episode', layout: 'application' and return
+      end
     end
   end
 end

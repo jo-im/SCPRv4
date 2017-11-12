@@ -6,23 +6,27 @@
       <div class="o-prologue__teaser">
         <%= @program.try(:teaser) %>
       </div>
-      <address>Hosted by <%= @program.try(:host) %></address>
-      <div class="o-prologue__airtime">
-        <div>Airs <%= @program.try(:airtime) %></div>
-        <div class="o-prologue__social-icons">
-          <% present @program, ProgramPresenter do |p| %>
-            <% ['twitter', 'facebook', 'podcast', 'email', 'rss'].each do |social| %>
-              <% if p.send("#{social}_link").present? %>
-                <a class="o-prologue__social-icon" href="<%= p.send("#{social}_link") %>" target="_blank">
-                  <svg class="b-icon b-icon--size-sm b-icon--left">
-                    <use class="b-icon--color-link" xlink:href="<%= "/static/images/scpr-sprite.svg#icon_line-#{social}" %>" />
-                  </svg>
-                </a>
+      <% if @program.try(:host).try(:any?) %>
+        <address>Hosted by <%= @program.try(:host) %></address>
+        <% end %>
+      <% if @program.try(:airtime).try(:any?) %>
+        <div class="o-prologue__airtime">
+          <div>Airs <%= @program.try(:airtime) %></div>
+          <div class="o-prologue__social-icons">
+            <% present @program, ProgramPresenter do |p| %>
+              <% ['twitter', 'facebook', 'podcast', 'email', 'rss'].each do |social| %>
+                <% if p.send("#{social}_link").present? %>
+                  <a class="o-prologue__social-icon" href="<%= p.send("#{social}_link") %>" target="_blank">
+                    <svg class="b-icon b-icon--size-sm b-icon--left">
+                      <use class="b-icon--color-link" xlink:href="<%= "/static/images/scpr-sprite.svg#icon_line-#{social}" %>" />
+                    </svg>
+                  </a>
+                <% end %>
               <% end %>
             <% end %>
-          <% end %>
+          </div>
         </div>
-      </div>
+      <% end %>
     </span>
   </section>
 <% end %>
