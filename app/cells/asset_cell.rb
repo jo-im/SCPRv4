@@ -36,14 +36,14 @@ class AssetCell < Cell::ViewModel
     height = asset.small.height.to_i
     if width < height
       "o-figure--portrait"
-    elsif width / height < 1.33
-      "o-figure--four-by-three"
-    elsif width / height < 1.5
-      "o-figure--classic"
-    elsif width / height < 1.77778
-      "o-figure--widescreen"
-    elsif width / height < 2.35
+    elsif width / height > 1.77778
       "o-figure--cinematic"
+    elsif width / height > 1.5
+      "o-figure--widescreen"
+    elsif width / height > 1.33
+      "o-figure--classic"
+    elsif width / height > 1
+      "o-figure--four-by-three"
     end
   end
 
