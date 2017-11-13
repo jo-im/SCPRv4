@@ -3,7 +3,7 @@ class PopularArticlesCell < Cell::ViewModel
   cache :show, expires_in: 12.hours
   cache :trio, expires_in: 12.hours
   cache :side_bar, expires_in: 12.hours do
-    "v3"
+    ["v4", @options[:class]]
   end
 
   def show
