@@ -12,7 +12,7 @@ class ArticleCell < Cell::ViewModel
   property :category
 
   cache :show, expires_in: 10.minutes, :if => lambda { !@options[:preview] }  do
-    [model.try(:cache_key), 'v6']
+    [model.try(:cache_key), 'v7']
   end
 
   def show
@@ -56,11 +56,11 @@ class ArticleCell < Cell::ViewModel
   end
 
   def hero_asset(figure_class)
-    if model.try(:asset_display) == :hidden || assets.try(:empty?)
+    if model.try(:asset_display) == :hidden || model.try(:asset_display) == "hidden" || assets.try(:empty?)
       nil
     else
-      if model.try(:asset_display) == :slideshow
-        AssetCell.new(asset, article: model, class: figure_class, template: "default/#{model.try(:asset_display)}.html").call(:show)
+      if model.try(:asset_display) == :slideshow || model.try(:asset_display) == "slideshow"
+        AssetCell.new(asset, article: model, class: figure_class, template: "default/slideshow.html").call(:show)
       else
         AssetCell.new(asset, article: model, class: figure_class).call(:show)
       end
@@ -77,10 +77,13 @@ class ArticleCell < Cell::ViewModel
       asset_id = asset_id ? asset_id.to_i : nil
       next if asset_id.nil?
 
-      # we have to fall back to original_object here to get the full list of
-      # assets. in any case where we're rendering a body, we'll already have
-      # the original object loaded, so that's ok
-      asset = model.try(:inline_assets).try(:select) {|a| a.asset_id == asset_id}[0]
+      if @options[:preview] == true
+        asset_collection = model.try(:assets)
+      else
+        asset_collection = model.try(:inline_assets)
+      end
+
+      asset = asset_collection.try(:select) {|a| a.asset_id == asset_id}[0]
 
       ## If kpcc_only is true, only render if the owner of the asset is KPCC
       if asset && (!options[:kpcc_only] || asset.owner.try(:include?, "KPCC"))

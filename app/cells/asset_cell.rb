@@ -39,6 +39,10 @@ class AssetCell < Cell::ViewModel
     end
   end
 
+  def slideshow_assets
+    assets.try(:select) {|a| a.inline == false }
+  end
+
   def article
     @options[:article]
   end
