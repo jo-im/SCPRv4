@@ -60,9 +60,9 @@ class ArticleCell < Cell::ViewModel
       nil
     else
       if model.try(:asset_display) == :slideshow || model.try(:asset_display) == "slideshow"
-        AssetCell.new(asset, article: model, class: figure_class, template: "default/slideshow.html").call(:show)
+        AssetCell.new(asset, article: model, class: figure_class, template: "default/slideshow.html", featured: true).call(:show)
       else
-        AssetCell.new(asset, article: model, class: figure_class).call(:show)
+        AssetCell.new(asset, article: model, class: figure_class, featured: true).call(:show)
       end
     end
   end
