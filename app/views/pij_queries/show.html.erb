@@ -1,3 +1,5 @@
+<% add_to_page_title @query.headline %>
+<% content_for :opengraph do %><%= render_content @query, "opengraph" %><% end %>
 <% content_for :main_class, "l-pin-query" %>
 
 <%= cell :social_tools, @article, display: 'vert' %>
