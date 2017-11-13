@@ -12,7 +12,7 @@ class ArticleCell < Cell::ViewModel
   property :category
 
   cache :show, expires_in: 10.minutes, :if => lambda { !@options[:preview] }  do
-    [model.try(:cache_key), 'v6']
+    [model.try(:cache_key), 'v7']
   end
 
   def show
