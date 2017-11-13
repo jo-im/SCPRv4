@@ -3,7 +3,7 @@
 <div id="asset_slideshow_<%=html_safe_id%>" class="<%= @options[:class] %> slideview">
 
   <div class="static-slides">
-  <% assets.each do |asset| %>
+  <% slideshow_assets.each do |asset| %>
     <figure class="slide o-figure <%= aspect asset %>">
       <img
         class="o-figure__img"
