@@ -18,7 +18,7 @@
     <meta property="article:section" content="<%=h(article.category.title)%>" />
   <% end %>
 
-  <% if article.assets.present? %>
+  <% if article.assets.any? %>
     <% article.assets.map(&:full).each do |image| %>
       <meta property="og:image" content="<%=image.url%>" />
       <meta property="og:image:type" content="image/jpeg" />
@@ -27,6 +27,11 @@
     <% end %> <%# assets %>
     <link rel="image_src" href="<%= article.asset.full.url %>" />
     <meta name="twitter:image" content="<%= https_to_http(article.asset.full.url) || "https://scpr.org/assets/kpcc-twitter-logo.png" %>">
+  <% else %>
+    <meta name="twitter:card" content="summary"/>
+    <meta property="og:image" content="<%=image_url('meta/facebook.jpg')%>" />
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:image" content="<%=image_url('meta/twitter.jpg')%>">
   <% end %>
 
 <% end %>
