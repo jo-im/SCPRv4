@@ -1,8 +1,8 @@
 class MoreFromEpisodeCell < Cell::ViewModel
   include Orderable
 
-  cache :show do
-    model.try(:cache_key)
+  cache :show, expires_in: 10.minutes, :if => lambda { !@options[:preview] }  do
+    [model.try(:cache_key), 'v2']
   end
 
   property :show
@@ -10,7 +10,7 @@ class MoreFromEpisodeCell < Cell::ViewModel
   property :public_path
 
   def show
-    render
+    render if model.try(:present?)
   end
 
   def headline
@@ -31,7 +31,6 @@ class MoreFromEpisodeCell < Cell::ViewModel
 
   def episode_content
     @episode_content ||= model.try(:to_article).try(:related_content) || []
-    # model.segments
   end
 
 end

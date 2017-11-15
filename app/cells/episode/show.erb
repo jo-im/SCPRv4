@@ -6,8 +6,8 @@
   <%= cell(:article_audio, model, type: 'episode').call(:horizontal) %>
 </section>
 <div class="o-featured-episode__center" style="order: 3">
-  <h6 class="o-featured-episode__list-heading b-heading--h6 b-heading--uppercase u-text-color--gray">From this episode</h6>
   <% if related_content.any? %>
+    <h6 class="o-featured-episode__list-heading b-heading--h6 b-heading--uppercase u-text-color--gray">From this episode</h6>
     <% related_content.each do |segment| %>
     <div class="o-featured-episode__segment">
       <figure class="o-featured-episode__segment-figure"><img src="<%= asset_path segment %>" style="background-image:url(<%= asset_path segment %>);"></figure>
