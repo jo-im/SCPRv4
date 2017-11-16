@@ -48,7 +48,7 @@ Scprv4::Application.routes.draw do
 
   # Programs / Segments
   get '/programs/:show' => "programs#show"
-  get '/programs/:show/featured' => "programs#list"
+  get '/programs/:show/featured' => "programs#list", as: :list
   # This route is for displaying a clone of the old layout for featured programs for an index of episodes and segments
   # Legacy route for old Episode URLs
   get '/programs/:show/:year/:month/:day/' => "programs#episode", constraints: { year: /\d{4}/, month: /\d{2}/, day: /\d{2}/ }

@@ -168,7 +168,7 @@ class ProgramsController < ApplicationController
     if !@episode
       flash[:alert] = "There is no #{@program.title} " \
                       "episode for #{@date.strftime('%F')}."
-      redirect_to featured_show_path(@program.slug, anchor: "archive")
+      redirect_to list_path(@program.slug, anchor: "archive")
     else
       redirect_to @episode.public_path
     end
