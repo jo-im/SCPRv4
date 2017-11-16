@@ -36,8 +36,11 @@
 <%= cell :archive_picker, @program, base_url: "/programs/" + @program.slug + "/archive", header: "Find a specific episode from " + @program.try(:title) + "'s archive", type: "full", order: 6 %>
 <%= cell(:appeal, @program, order: 4).call(:podcast) %>
 <%= cell :ad, slot: "c", id: "o-ad--pos-c", order: 7 %>
-<%= cell :episode_list, @episodes, class: 'o-standard-program__episode-list', program: @program, header: 'Recent episodes', order: 1 %>
-<%= paginate @episodes %>
+<%= cell :episode_list, @collection, class: 'o-standard-program__episode-list', program: @program, header: "Recent #{@view_type || 'episodes'}", order: 1 %>
+<%= paginate @collection %>
+<% if @view_type == "episodes" %>
+  <%= cell :archive_picker, @program, id: 'o-archive-picker__standard-program-episode', base_url: "/programs/" + @program.slug + "/archive", header: "Find a specific episode from " + @program.try(:title) + "'s archive", type: "full", order: 3 %>
+  <% end %>
 <%= cell :featured_programs, @program, order: 11 %>
 <%= cell :popular_articles, @program, class: "o-popular-stories--horiz", order: 1001 %>
 <%= cell :epilogue, @program, order: 1001 %>
