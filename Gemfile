@@ -50,11 +50,11 @@ gem "carrierwave", "~> 0.6"
 gem "ruby-mp3info", '~> 0.8.2', require: 'mp3info'
 gem "ice_cube", "~> 0.11.0"
 gem "recaptcha", require: "recaptcha/rails"
-gem "yajl-ruby" # Faster JSON parsing
+gem "yajl-ruby", "~> 1.3.1" # Faster JSON parsing
 gem "rack-utf8_sanitizer"
 gem "rufus-scheduler"
-gem 'rubyzip', require: false
-gem 'pygments.rb'
+gem 'rubyzip', "~> 1.2.1", require: false
+gem 'pygments.rb', "~> 1.1.0"
 gem 'reverse_markdown', require: false
 gem 'htmlentities', require: false
 gem 'honeybadger', '~> 2.0'
