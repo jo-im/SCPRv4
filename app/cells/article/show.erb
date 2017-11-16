@@ -20,17 +20,17 @@
 <%= cell(:article_audio, model, type: @options[:type]).call(:horizontal) %>
 <%= cell :social_tools, model, display: 'horiz' %>
 
-<% if popular_blog = @options[:popular_blog] %>
-<aside class="o-article__popular-on-blog">
-    <header class="b-heading b-heading--h6 b-heading--uppercase u-text-color--gray b-heading--bold">Popular now on <%= popular_blog.try(:original_object).try(:blog).try(:name) %></header>
-    <figure class="o-figure o-figure--widescreen">
-      <img class="o-figure__img" src="<%= asset_path popular_blog %>" style="background-image: url(<%= asset_path popular_blog %>">
-    </figure>
-    <span><%= link_to popular_blog.try(:short_title), popular_blog.try(:public_path), class: "track-event", data: {"ga-category" => "Article", "ga-action" => "Clickthrough", "ga-label" => "Popular Now On Blog"} %></span>
-</aside>
-<% end %>
 
 <div class="o-article__body">
+  <% if popular_blog = @options[:popular_blog] %>
+    <aside class="o-article__popular-on-blog">
+      <header class="b-heading b-heading--h6 b-heading--uppercase u-text-color--gray b-heading--bold">Popular now on <%= popular_blog.try(:original_object).try(:blog).try(:name) %></header>
+      <figure class="o-figure o-figure--widescreen">
+        <img class="o-figure__img" src="<%= asset_path popular_blog %>" style="background-image: url(<%= asset_path popular_blog %>">
+      </figure>
+      <span><%= link_to popular_blog.try(:short_title), popular_blog.try(:public_path), class: "track-event", data: {"ga-category" => "Article", "ga-action" => "Clickthrough", "ga-label" => "Popular Now On Blog"} %></span>
+    </aside>
+  <% end %>
   <%= render_body %>
 </div>
 
