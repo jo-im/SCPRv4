@@ -15,12 +15,24 @@ class ArticleCell < Cell::ViewModel
     [model.try(:cache_key), 'v7']
   end
 
+  cache :meta_tags, expires_in: 10.minutes do
+    [model.try(:cache_key), 'v1']
+  end
+
   def show
     render
   end
 
   def audio_nav
     render
+  end
+
+  def meta_tags
+    render
+  end
+
+  def https_to_http url
+    url.try(:gsub, "https:", "http:")
   end
 
   def biographies links=true

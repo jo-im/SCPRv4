@@ -1,6 +1,9 @@
 <% add_to_page_title @program.try(:title) %>
 <% add_to_page_title @segment.feature.present? ? "#{@segment.feature.name}: #{@segment.headline}" : @segment.headline %>
-<% content_for :opengraph do %><%= render_content @segment, "opengraph" %><% end %>
+<% content_for :opengraph do %>
+  <%= cell(:article, @article).call(:meta_tags) %>
+<% end %>
+
 <% content_for :main_class, "o-article o-article--segment" %>
 <%= render 'shared/ads/dfp_script_config', category: @category %>
 
