@@ -53,7 +53,7 @@ gem "recaptcha", require: "recaptcha/rails"
 gem "yajl-ruby", "~> 1.3.1" # Faster JSON parsing
 gem "rack-utf8_sanitizer"
 gem "rufus-scheduler"
-gem 'rubyzip', require: false
+gem 'rubyzip', "~> 1.2.1", require: false
 gem 'pygments.rb', "~> 1.1.0"
 gem 'reverse_markdown', require: false
 gem 'htmlentities', require: false

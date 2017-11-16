@@ -596,7 +596,7 @@ DEPENDENCIES
   rspec_junit_formatter!
   ruby-mp3info (~> 0.8.2)
   ruby-prof
-  rubyzip
+  rubyzip (~> 1.2.1)
   rufus-scheduler
   sanitize (~> 2.0)
   sass-rails (= 5.0.0beta1)
