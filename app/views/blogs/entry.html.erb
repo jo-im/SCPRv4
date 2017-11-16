@@ -1,6 +1,6 @@
 <% add_to_page_title @entry.feature.present? ? "#{@entry.feature.name}: #{@entry.headline}" : @entry.headline %>
 <% content_for :opengraph do %><%= render_content @entry, "opengraph" %><% end %>
-<% content_for :main_class, "o-article" %>
+<% content_for :main_class, "o-article o-article--blog" %>
 
 <% content_for :header do %>
   <section class="o-prologue o-prologue--secondary o-prologue--blog">
@@ -16,13 +16,16 @@
   <%= cell :social_tools, @article, display: 'vert' %>
 </aside>
 
+<!-- HEADLINE -->
+<%= cell :article_headline, @article %>
+
 <!-- RIGHT ASIDES -->
 <%= cell(:ad, slot: "a", class: "l-column--right", id: 'c-ad--a', attribution: false, order: -1).show do
-  '<hr class="b-rule b-rule--bold l-column--right" style="order: 5;" />'
+  '<hr class="b-rule l-column--right" style="order: 5;" />'
 end %>
 
 <%= cell(:ad, slot: "b", class: "l-column--right", order: 999).show do
-  '<hr class="b-rule b-rule--bold l-column--right" style="order: 12;" />'
+  '<hr class="b-rule l-column--right" style="order: 12;" />'
 end %>
 
 <%= cell :ad, slot: "c", class: "l-column--right", order: 1002 %>
@@ -39,12 +42,12 @@ end %>
 <%= cell :recent_content, @entry.sister_blog_entries, class: "l-column--right o-recent-content--blog-entry", blog: @blog.name, order: 1000 %>
 
 <!-- ARTICLE BODY -->
-<%= cell :article, @article, popular_blog: @popular_blog_entry %>
+<%= cell :article, @article, popular_blog: @popular_blog_entry, headline: false %>
 
 <!-- MOAR STUFF -->
 <%= cell :newsletter_appeal, nil, order: 998 %>
 
-<hr class="o-article__rule--ending b-rule b-rule--primary-lightest b-rule--bold b-rule--padded" style="order: 998;" />
+<hr class="o-article__rule--ending b-rule b-rule--primary-lightest b-rule--padded" style="order: 998;" />
 
 <%= cell :related_links, @article, order: 998 %>
 
@@ -53,7 +56,7 @@ end %>
 <%= cell :previously, @entry.sister_blog_entries.first(1), blog: @blog.name, order: 998 %>
 
 <!-- FOOTER CONTENT -->
-<hr class="b-rule b-rule--secondary-alt b-rule--bold b-rule--padded l-column--boundless" style="order: 1001;" />
+<hr class="b-rule b-rule--secondary-alt b-rule--padded l-column--boundless" style="order: 1001;" />
 
 <%= cell :comments, @article, order: 1001 %>
 
