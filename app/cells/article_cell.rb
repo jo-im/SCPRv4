@@ -17,7 +17,7 @@ class ArticleCell < Cell::ViewModel
   end
 
   cache :meta_tags, expires_in: 10.minutes do
-    [model.try(:cache_key), 'v1']
+    [model.try(:cache_key), 'v2']
   end
 
   def show
