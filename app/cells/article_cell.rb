@@ -5,6 +5,7 @@
 class ArticleCell < Cell::ViewModel
   include Cell::Caching::Notifications
   include ActionView::Helpers::DateHelper
+  include ERB::Util
   property :title
   property :body
   property :assets
