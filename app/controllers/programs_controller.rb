@@ -8,7 +8,7 @@ class ProgramsController < ApplicationController
   include Concern::Controller::ShowEpisodes
   include Concern::Controller::Amp
 
-  before_filter :get_program, only: [:show, :episode, :archive, :featured_program, :featured_show]
+  before_filter :get_program, only: [:show, :episode, :archive, :featured_program, :list]
   before_filter :get_popular_articles, only: [:featured_program, :segment]
 
   respond_to :html, :xml, :rss
@@ -52,7 +52,7 @@ class ProgramsController < ApplicationController
           @episodes = (@current_episode ? @episodes.where.not(id:@current_episode.id) : @episodes).page(params[:page]).per(6)
           render
         else
-          @episodes = @program.episodes.published.page(params[:page]).per(6)
+          @collection = @program.episodes.published.page(params[:page]).per(6)
           render 'standard_program'
         end
       end
@@ -66,6 +66,43 @@ class ProgramsController < ApplicationController
     end
   end
 
+  def list
+    if @program.is_a?(KpccProgram) && @program.is_featured?
+      @view_type = params[:view]
+      @segments = @program.segments.published
+      @episodes = @program.episodes.published
+
+      respond_with do |format|
+        format.html do
+          if @current_episode = @episodes.first
+            @episodes = @episodes.where.not(id: @current_episode.id)
+
+            segments = @current_episode.segments.published.to_a
+            @segments = @segments.where.not(id: segments.map(&:id))
+          end
+
+          @segments = @segments.page(params[:page]).per(10)
+          @episodes = @episodes.page(params[:page]).per(6)
+          if @view_type == "episodes" || @view_type.blank?
+            @collection = @episodes
+          else
+            @collection = @segments
+          end
+          render 'standard_program'
+        end
+
+        format.xml { render 'programs/kpcc/old/show' }
+      end
+
+      return
+    else
+      if @program.public_path
+        redirect_to @program.public_path
+      else
+        redirect_to program_url(@program.slug)
+      end
+    end
+  end
 
   def segment
     @segment = ShowSegment.published.includes(:show).find(params[:id])
@@ -131,7 +168,7 @@ class ProgramsController < ApplicationController
     if !@episode
       flash[:alert] = "There is no #{@program.title} " \
                       "episode for #{@date.strftime('%F')}."
-      redirect_to featured_show_path(@program.slug, anchor: "archive")
+      redirect_to list_path(@program.slug, anchor: "archive")
     else
       redirect_to @episode.public_path
     end

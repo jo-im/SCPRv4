@@ -56,7 +56,7 @@ describe ProgramsController do
           "date(3i)" => "1"
         }
       assigns(:episode).should eq nil
-      expect(response).to redirect_to featured_show_path(program.slug, anchor: "archive")
+      expect(response).to redirect_to list_path(program.slug, anchor: "archive")
     end
   end
 
