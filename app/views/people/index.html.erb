@@ -1,7 +1,12 @@
 <% content_for :main_class, "l-flatpage" %>
 <% add_to_page_title "Staff" %>
 
-<h1 class="o-flatpage o-flatpage__title">Staff</h1>
+<%= cell :ad, slot: "a", id: "o-ad--pos-a", attribution: false, order: 1 %>
+<%= cell :ad, slot: "b", id: "o-ad--pos-b", order: 3 %>
+<%= cell(:appeal).call(:breaking_news) %>
+<%= cell(:popular_articles).call(:side_bar) %>
+<%= cell :ad, slot: "c", id: "o-ad--pos-c", order: 1000 %>
+<h1 class="o-flatpage__title o-flatpage--inherit">Staff</h1>
 <div class="o-flatpage o-flatpage--inherit" style="order: 2">
   <p><strong>Southern California Public Radio News Staff</strong></p>
   <p>The hosts, producers and others who make what you hear -- both on air and off.</p>
@@ -18,8 +23,3 @@
   </table>
 </div>
 
-<%= cell :ad, slot: "a", id: "o-ad--pos-a", attribution: false, order: 1 %>
-<%= cell :ad, slot: "b", id: "o-ad--pos-b", order: 3 %>
-<%= cell(:appeal).call(:breaking_news) %>
-<%= cell(:popular_articles).call(:side_bar) %>
-<%= cell :ad, slot: "c", id: "o-ad--pos-c", order: 1000 %>

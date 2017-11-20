@@ -1,13 +1,24 @@
-<h1><%= add_to_page_title "Press" %></h1>
+<% content_for :main_class, "l-flatpage" %>
+<% add_to_page_title "Press" %>
 
-<table class="table table-striped">
-  <tbody>
-    <% @press_releases.each do |press_release| %>
-        <tr>
-          <td><%= link_to press_release.short_title, press_release.public_path %> (<%= format_date(press_release.created_at) %>)</td>
-        </tr>
-    <% end %>
-  </tbody>
-</table>
+<h1 class="o-flatpage__title o-flatpage--full" style="margin-bottom: 30px;"><%= add_to_page_title "Press" %></h1>
+<div class="o-flatpage o-flatpage--full" style="order: 2">
 
-<%= paginate @press_releases %>
+  <table class="table table-striped">
+    <tbody>
+      <% @press_releases.each do |press_release| %>
+          <tr style="height: 30px;">
+            <td>
+              <ul>
+                <li>
+                  <%= link_to press_release.short_title, press_release.public_path %> (<%= format_date(press_release.created_at) %>)
+                </li>
+              </ul>
+            </td>
+          </tr>
+      <% end %>
+    </tbody>
+  </table>
+
+  <%= paginate @press_releases %>
+</div>

@@ -31,6 +31,6 @@
   <%= cell(:popular_articles, nil, order: 1000).call(:side_bar) %>
   <%= cell :ad, slot: "c", id: "o-ad--pos-c", order: 1001 %>
 <% end %>
-<h1 class="o-flatpage__title" style="order: 1"><%= @flatpage.title %></h1>
+<h1 class="o-flatpage__title o-flatpage--<%= @flatpage.template %>" style="order: 1"><%= @flatpage.title %></h1>
 <%= cell :flatpage, @flatpage, order: 2, email: false %>
 

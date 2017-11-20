@@ -1,3 +1,3 @@
-<div class="o-flatpage o-flatpage--<%= model.template %>" style="order: <%= @options[:order] %>">
-  <%= model.content.html_safe %>
+<div class="o-flatpage o-flatpage--<%= template %>" style="order: <%= @options[:order] %>">
+  <%= model.try(:content).try(:html_safe) || model.try(:body).try(:html_safe) %>
 </div>

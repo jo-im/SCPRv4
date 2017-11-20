@@ -3,6 +3,10 @@ class FlatpageCell < Cell::ViewModel
     render
   end
 
+  def template
+    model.try(:template) || "full"
+  end
+
   def render_body options={}
     doc = Nokogiri::HTML(model.content.html_safe)
     order_body doc
