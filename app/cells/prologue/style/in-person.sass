@@ -9,10 +9,12 @@
   .o-prologue__logo
     max-width: 295px
     width: ($col * 3) + ($gutter * 2)
+    @media (max-width: $media-tablet)
+      width: 40%
     @media (max-width: $media-mobile)
       margin-left: $margin
       margin-right: $margin
-      width: 40%
+      width: 100%
 
   .o-prologue__description
     font-size: 22px
@@ -59,15 +61,16 @@
   height: 120px
 
   .o-prologue__logo
-    width: ($col * 2) + $gutter
+    width: 20%
     @media (max-width: $media-tablet)
-      width: ($col * 3) + ($gutter * 2)
+      width: 40%
     @media (max-width: $media-mobile)
       margin-left: $margin
       margin-right: $margin
-      width: 40%
+      width: 100%
 
   .o-prologue__description
+    margin-right: $margin
     text-align: right
     width: ($col * 10) + ($gutter * 9)
     @media (max-width: $media-tablet)
