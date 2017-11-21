@@ -15,7 +15,7 @@ class scpr.Audio
             supplied: "mp3"
             wmode:    "window"
             play: (e) =>
-                if @state?.started != true
+                if @state.started != true
                     @state = {}
                     @sendEvent
                         action: 'start'
@@ -43,6 +43,7 @@ class scpr.Audio
                     @state.started = false
             loadstart: () =>
                 @state = {}
+                @state.started = true
 
 
         @audiobar = $(@options.audioBar)
