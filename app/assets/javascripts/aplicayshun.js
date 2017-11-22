@@ -44,13 +44,3 @@
 require('./nuevo/popup');
 var adSizer = require('./nuevo/ad-sizer');
 new adSizer();
-
-$(document).ready(function() {
-  $.scrollDepth({
-      elements: ['.o-newsletter-appeal'],
-      percentage: false,
-      userTiming: false,
-      pixelDepth: false,
-      gtmOverride: true
-    });
-});
