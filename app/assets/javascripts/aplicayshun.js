@@ -1,7 +1,6 @@
 //= require shared
 //= require page_mapping
 //= require jquery.scrolldepth
-//= require event_tracking
 //= require jplayer/dist/jplayer/jquery.jplayer.min
 //= require audio
 //= require utilities
