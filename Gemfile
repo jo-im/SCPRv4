@@ -58,7 +58,7 @@ gem 'pygments.rb'
 gem 'reverse_markdown', require: false
 gem 'htmlentities', require: false
 gem 'honeybadger', '~> 2.0'
-
+gem 'oink', '~> 0.10.1'
 
 ## HTTP
 gem "faraday", "~> 0.8"
