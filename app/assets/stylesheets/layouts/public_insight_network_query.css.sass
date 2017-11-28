@@ -3,33 +3,35 @@
   max-width: 1440px
   margin: 0 auto
   overflow-y: auto
+  padding-top: $margin-in-pixels
   padding-bottom: $margin
-  .o-social-tools
+  .o-social-tools--vert
     float: left
-    margin-left: $margin / 2
+    margin-left: $margin
     padding-top: $gutter / 2
-    width: $col
+    position: absolute
     text-align: right
+    width: $col
 
   .o-article__title, .o-figure, .c-byline, p, .o-pin-query-container, .b-rule,  .o-pin-query-container__footer_header
-    margin-left: $margin * 3
+    margin-left: $margin + $col + $gutter
     margin-right: $margin
-    width: $col * 9
+    width: ($col * 6) + ($gutter * 5)
 
-  p
+  .o-social-tools--horiz
+    display: none
+
+  .o-article__body p, .o-pin-query-container__footer p
     line-height: 1.4em
     margin-bottom: 1.4em
 
-  a
+  .o-article__body a
     color: $color-link
-
-  .o-article__title, .o-social-tools, #o-ad--pos-a
-    margin-top: $gutter
 
   #o-ad--pos-a, #o-ad--pos-b, #o-ad--pos-c, .o-appeal, .o-recent-events-cluster
     float: right
-    width: $col * 4
-    margin-right: $margin
+    width: ($col * 3) + ($gutter * 2)
+    margin-right: $gutter + $col + $margin
     clear: right
 
   #o-ad--pos-a, #o-ad--pos-b, .o-popular-stories-side-bar
@@ -39,23 +41,44 @@
   #o-ad--pos-b, #o-ad--pos-c
     margin-top: $gutter
 
+  .pin-form fieldset
+    max-width: none
+
+  @media (max-width: $media-wide)
+    .o-article__title, .o-figure, .c-byline, p, .o-pin-query-container, .b-rule,  .o-pin-query-container__footer_header
+      width: ($col * 6) + ($gutter * 6)
+
+    #o-ad--pos-a, #o-ad--pos-b, #o-ad--pos-c, .o-appeal, .o-recent-events-cluster
+      margin-right: $margin
+      width: ($col * 3) + ($gutter * 3)
+
+  @media (max-width: $media-desktop)
+    #o-ad--pos-a, #o-ad--pos-b, #o-ad--pos-c, .o-appeal, .o-recent-events-cluster
+      width: ($col * 4) + ($gutter * 3)
+
   @media all and (max-width: $media-tablet)
     display: flex
     flex-direction: column
+    padding-top: $margin-in-pixels / 2
     .o-article__title, .o-figure, .c-byline, p, .o-pin-query-container, .b-rule,  .o-pin-query-container__footer_header,
     #o-ad--pos-a, #o-ad--pos-b, #o-ad--pos-c, .o-appeal, .o-recent-events-cluster
       width: ($col * 12) + ($gutter * 11)
       margin-left: $margin
     #o-ad--pos-a, #o-ad--pos-b, #o-ad--pos-c, .o-pin__question
-      margin-top: 1em
-      margin-bottom: 1em
+      margin-bottom: $margin-in-pixels / 2
+    .o-appeal
+      margin-bottom: $margin-in-pixels
+    #o-ad--pos-b
+      padding-bottom: $margin-in-pixels
     .o-article__title
       margin-top: 0
-    .o-social-tools
+    .o-social-tools--vert
+      display: none
+    .o-social-tools--horiz
+      display: flex
+      display: -ms-flex-box
+      display: -webkit-box
       margin-left: $margin
-      width: 25%
-      flex-direction: row
-      height: auto
 
   @media all and (max-width: $media-mobile)
     .o-pin__heading

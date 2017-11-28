@@ -3,12 +3,13 @@
 <% content_for :main_class, "l-pin-query" %>
 
 <%= cell :social_tools, @article, display: 'vert' %>
-<%= cell :ad, slot: "a", id: "o-ad--pos-a", attribution: false, order: 3 %>
-<%= cell :ad, slot: "b", id: "o-ad--pos-b", order: 5 %>
-<%= cell(:recent_content, @past_events, order: 1000).call(:events) %>
-<%= cell(:appeal, @article, order: 1000, class: 'o-appeal--in-person_side-bar').call(:in_person_newsletter) %>
-<%= cell :ad, slot: "c", id: "o-ad--pos-c", order: 7 %>
+<%= cell :ad, slot: "a", id: "o-ad--pos-a", attribution: false, order: -1 %>
+<%= cell :ad, slot: "b", id: "o-ad--pos-b", order: 996 %>
+<%= cell(:recent_content, @past_events, order: 997).call(:events) %>
+<%= cell(:appeal, @article, order: 998, class: 'o-appeal--in-person_side-bar').call(:in_person_newsletter) %>
+<%= cell :ad, slot: "c", id: "o-ad--pos-c", order: 999 %>
 
-<%= cell :article, @article %>
+<%= cell :article_headline, @query %>
+<%= cell :article, @article, headline: false %>
 <%= cell :pin_query_container, @query, order: 4 %>
 <%= cell(:pin_query_container, @query, order: 6).call(:footer) %>

@@ -1,6 +1,6 @@
-<% if category %>
+<% if model.try(:category) %>
   <h6 class="o-article__category b-heading b-heading--h6 b-heading--uppercase u-text-color--gray b-heading--book">
-    <%= category.title %>
+    <%= model.category.title %>
   </h6>
 <% end %>
 <h3 class="o-article__title"><%= title %></h3>
