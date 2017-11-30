@@ -20,6 +20,10 @@ class ArticleAudioCell < Cell::ViewModel
     return file
   end
 
+  def extra_audio
+    model.audio[1..-1]
+  end
+
   def horizontal
     render if audio_file
   end
