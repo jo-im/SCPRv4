@@ -2,7 +2,7 @@ class ArticleAudioCell < Cell::ViewModel
   property :audio
 
   cache :show, expires_in: 10.minutes, :if => lambda { !@options[:preview] }  do
-    [model.try(:cache_key), 'v2']
+    [model.try(:cache_key), 'article_audio', 'v2']
   end
 
   def show
