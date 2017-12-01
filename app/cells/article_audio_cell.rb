@@ -10,14 +10,7 @@ class ArticleAudioCell < Cell::ViewModel
   end
 
   def audio_file
-    file = nil
-    model.audio.each do |audio_file|
-      if audio_file.duration
-        file = audio_file
-        break
-      end
-    end
-    return file
+    model.try(:audio).try(:first)
   end
 
   def extra_audio
