@@ -6,10 +6,10 @@
       <div class="o-prologue__teaser">
         <%= @program.try(:teaser) %>
       </div>
-      <% if @program.try(:host).try(:any?) %>
+      <% if !@program.try(:host).try(:empty?) %>
         <address>Hosted by <%= @program.try(:host) %></address>
         <% end %>
-      <% if @program.try(:airtime).try(:any?) %>
+      <% if !@program.try(:airtime).try(:empty?) %>
         <div class="o-prologue__airtime">
           <div>Airs <%= @program.try(:airtime) %></div>
           <div class="o-prologue__social-icons">
