@@ -1,8 +1,27 @@
-<div class="c-audio-widget c-audio--horiz">
-  <a href="<%= audio_file.url %>" class="c-play__button c-audio__button" title="<%= model.try(:title) %>" data-duration="<%= audio_file.duration %>"></a>
+<div class="c-audio--horiz">
+  <div class="c-audio-widget">
+    <a href="<%= audio_file.url %>" class="c-play__button c-audio__button" title="<%= model.try(:title) %>" data-duration="<%= audio_file.duration %>"></a>
+  </div>
   <div class="c-audio__text">
     <p class="c-audio__text-listen">Listen to <%= @options[:type] %></p>
-    <div class="c-audio__duration"><%= audio_file.duration ? format_duration(audio_file.duration) : nil %></div>
+    <% if audio_file.duration %>
+      <div class="c-audio__duration"><%= audio_file.duration ? format_duration(audio_file.duration) : nil %></div>
+    <% end %>
   </div>
+  <% if extra_audio.try(:any?) %>
+    <div class="c-audio__extra-audio--horiz">
+      <h6 class="b-heading--h7 b-heading--uppercase u-text-color--gray b-heading--book">Extra Audio:</h6>
+      <% extra_audio.each_with_index do |audio, index| %>
+        <div class="c-audio-widget">
+          <a href="<%= audio.try(:url) %>" class="c-play__button" title="<%= model.try(:title) || model.try(:headline) %>" data-duration="<%= audio.try(:duration) %>" data-ga-category="Article" data-ga-action="Play" data-ga-label="Player">
+            <span class="o-featured-episode__segment-audio" style="font-size: 14px; display: flex; align-items: center; justify-content: flex-start; margin-top: 15px">
+              <%= image_tag("o-audio-bar/Miniplayer-Play@2x.png", class: "o-featured-episode__segment-icon", style: "display: inline-block; width: 25%; margin-right: 5px") %>
+              #<%= index + 1 %>
+            </span>
+          </a>
+        </div>
+      <% end %>
+    </div>
+  <% end %>
 </div>
 <div class="c-audio__download"><a href="<%= audio_file.url %>"><span>Download this <%= @options[:type] %></span> <%= audio_size %>MB</a></div>

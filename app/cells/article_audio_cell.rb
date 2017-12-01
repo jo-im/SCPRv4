@@ -2,7 +2,7 @@ class ArticleAudioCell < Cell::ViewModel
   property :audio
 
   cache :show, expires_in: 10.minutes, :if => lambda { !@options[:preview] }  do
-    model.try(:cache_key)
+    [model.try(:cache_key), 'article_audio', 'v2']
   end
 
   def show
@@ -10,14 +10,11 @@ class ArticleAudioCell < Cell::ViewModel
   end
 
   def audio_file
-    file = nil
-    model.audio.each do |audio_file|
-      if audio_file.duration
-        file = audio_file
-        break
-      end
-    end
-    return file
+    model.try(:audio).try(:first)
+  end
+
+  def extra_audio
+    model.audio[1..-1]
   end
 
   def horizontal
