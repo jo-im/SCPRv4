@@ -1,29 +1,15 @@
-<script type="text/javascript" src="https://www.google.com/jsapi"></script>
-<script type="text/javascript">
-  google.load('search', '1');
-
-  function onLoad() {
-
-    // Create a Custom Search control that uses a CSE restricted to code.google.com
-    // Change the customSearchId string to the ID of your own Custom Search engine.
-    var customSearchControl = new google.search.CustomSearchControl('015616661084601392604:c7j-ryla-rw');
-
-    // Set drawing options to use my text box as input instead of having the library create one.
-    var options = new google.search.DrawOptions();
-    options.setInput(document.getElementById('o-search__query_input'));
-    options.setAutoComplete(true);
-    // Draw the control in content div
-    customSearchControl.draw('o-search__results', options);
-
-    query = document.location.search.substring(3)
-    if (query != ""){
-      customSearchControl.execute(decodeURIComponent(query.replace(/\+/g,  " ")));
-    }
-
-  }
-
-  google.setOnLoadCallback(onLoad);
+<script>
+  (function() {
+    var cx = '001032392520619443334:tk9zqzo3wbo';
+    var gcse = document.createElement('script');
+    gcse.type = 'text/javascript';
+    gcse.async = true;
+    gcse.src = 'https://cse.google.com/cse.js?cx=' + cx;
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(gcse, s);
+  })();
 </script>
+
 <script>
 $('.o-search__results-header').hide();
 $('#o-search__program-results').hide();

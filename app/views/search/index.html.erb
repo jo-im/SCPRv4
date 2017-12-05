@@ -8,15 +8,6 @@
 <%= cell :ad, slot: "c", id: "o-ad--pos-c", order: 9 %>
 <div id="o-search__search-area" style="order: 1">
   <h3 class="o-search__search-area__heading b-heading b-heading--h3 b-heading--serif b-heading--bold">Search Results</h3>
-  <input type="text" id="o-search__query_input" placeholder="Enter your search here"/>
-  <svg class="o-search__search-area__icon b-icon b-icon--search-open">
-    <use class="b-icon--line b-icon--color-gray" xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/static/images/scpr-sprite.svg#icon_line-search"></use>
-  </svg>
-  <span class="o-search__help-text">Search results automatically appear below as you type</span>
-  <hr class="b-rule b-rule--padded-small" style="order: 2">
-  <div class='o-search__results-header' style="order: 2">Programs</div>
-  <div id="o-search__program-results" style="order: 3"></div>
-  <div class='o-search__results-header' style="order: 4">Posts</div>
-  <div id="o-search__results" style="order: 5"></div>
+  <gcse:search></gcse:search>
 </div>
 <%= cell :search %>
