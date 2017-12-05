@@ -8,7 +8,7 @@
           <img class="o-media__img" src="<%= begin feature.asset.asset.thumb.url rescue '/static/images/fallback-img-square.png' end %>">
         </div>
         <h4>
-          <%= link_to feature.title, feature.public_url %>
+          <%= link_to feature.try(:title) || feature.try(:headline), feature.try(:public_url) || feature.try(:public_path) %>
         </h4>
       </div>
     <% end %>
