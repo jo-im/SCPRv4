@@ -71,7 +71,7 @@ describe "Vertical page", :indexing do
       within(".o-featured-story__related-list") do
         # make sure top story doesn't show up in the promoted
         # 'more from this topic' section
-        page.should_not have_content vertical.featured_articles.first.short_title
+        page.should_not have_content vertical.featured_articles.first.short_headline
       end
 
       # within("aside.o-vertical-topics") do

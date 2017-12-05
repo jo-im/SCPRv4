@@ -75,7 +75,13 @@ module Concern
           # Compact to make sure no nil records get through - those would
           # be unpublished content.
           content.compact.uniq
-            .sort { |a, b| b.public_datetime <=> a.public_datetime }
+            .sort { |a, b|
+              if b.try(:public_datetime) && a.try(:public_datetime)
+                b.public_datetime <=> a.public_datetime
+              elsif b.try(:published_at) && a.try(:published_at)
+                b.published_at  <=> a.published_at
+              end
+            }
         end
       end
 
