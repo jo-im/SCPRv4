@@ -28,7 +28,7 @@
       <h6 class="o-featured-story__related-list__heading b-heading b-heading--h6 b-heading--uppercase u-text-color--gray">Related</h6>
       <ul class="o-featured-story__related-list c-list c-list--bullet">
         <% related_content[0..1].try(:each) do |article| %>
-          <li><%= link_to article.try(:short_title), article.try(:public_path) %></li>
+          <li><%= link_to article.try(:short_title) || article.try(:short_headline), article.try(:public_path) %></li>
         <% end %>
       </ul>
     <% end %>
