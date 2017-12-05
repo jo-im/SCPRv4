@@ -22,7 +22,7 @@ class Quote < ActiveRecord::Base
 
 
   def article
-    self.content.try(:to_article)
+    self.content
   end
 
 

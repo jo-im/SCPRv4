@@ -47,7 +47,6 @@ class Tag < ActiveRecord::Base
       outgoing_references
         .order("position ASC")
         .where(related_omissions)
-        .limit(3).map(&:related).map(&:to_article)
     elsif taggings.count > 2
       taggings
         .order("created_at DESC")
@@ -55,8 +54,6 @@ class Tag < ActiveRecord::Base
         .limit(10)
         .map(&:taggable)
         .select{|a| a.respond_to?(:to_article)}
-        .map(&:to_article)
-        .select{|a| a.try(:public_datetime)}
         .first(3)
     else
       []

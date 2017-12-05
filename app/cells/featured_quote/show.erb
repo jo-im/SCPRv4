@@ -6,7 +6,7 @@
   <span class="o-featured-quote__source-context"><%= source_context %></span>
   <% if article %>
     <a class="o-featured-quote__article-link b-link b-link--callout" href="<%= article.public_path %>" title="Read this quote's source article">
-      <%= article.short_title %> >
+      <%= article.try(:short_title) || article.try(:short_headline) %> >
     </a>
   <% end %>
 </aside>
