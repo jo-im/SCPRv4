@@ -117,13 +117,20 @@
         margin-bottom: 60px
 
     blockquote
-      p
+      > *
         border-left: 6px solid $color-primary
+        display: inline-block
         padding-bottom: $margin-in-pixels / 2
         margin-left: percentage(31/642)
-        padding-left: percentage(31/642)
-      p:last-of-type
+      > *:last-child
         padding-bottom: 0px
+      p, h3, h2
+        padding-left: percentage(31/642)
+      li
+        margin: initial
+        margin-bottom: 1em
+      li:last-of-type
+        margin-bottom: 0em
 
     > img
       @media (max-width: $media-tablet)
