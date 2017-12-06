@@ -61,7 +61,7 @@ class RelatedLinksCell < Cell::ViewModel
         url     = content.public_path
         title   = content.try(:short_title) || content.try(:short_headline)
 
-        descriptor = content.feature.try(:name) || "Article"
+        descriptor = content.try(:feature).try(:name) || "Article"
       end
 
       OpenStruct.new({

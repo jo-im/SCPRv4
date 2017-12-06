@@ -329,15 +329,6 @@ describe ProgramsController do
       #     assigns(:episodes).should_not include ShowEpisode.published.first
       #   end
       # end
-
-      it "renders the correct kpcc template" do
-        get :show, show: @program.slug
-        if ["the-frame","take-two","offramp"].include?(@program.slug)
-          response.should render_template "programs"
-        else
-          response.should render_template "programs"
-        end
-      end
     end
   end
 end
