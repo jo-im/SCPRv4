@@ -9,7 +9,6 @@ class ProgramsController < ApplicationController
   include Concern::Controller::Amp
 
   before_filter :get_program, only: [:show, :episode, :archive, :featured_program, :list]
-  before_filter :get_popular_articles, only: [:featured_program, :segment]
 
   respond_to :html, :xml, :rss
 
@@ -106,7 +105,6 @@ class ProgramsController < ApplicationController
 
   def segment
     @segment = ShowSegment.published.includes(:show).find(params[:id])
-    @article = @segment.get_article
     @episode = @segment.episode
     @program = @kpcc_program = @segment.show
     @featured_programs = KpccProgram.where.not(id: @program.id, is_featured: false).first(4)

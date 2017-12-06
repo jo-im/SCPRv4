@@ -1,11 +1,11 @@
 <meta property="og:description" content="<%= h(strip_tags(model.teaser)) %>">
-<meta property="og:title" content="<%= h(model.short_title) %>">
+<meta property="og:title" content="<%= h(model.try(:short_title) || model.try(:short_headline)) %>">
 <meta property="og:type" content="<%= @OG_TYPE || 'article' %>">
 <meta property="og:url" content="<%= model.public_url %>"/>
 <meta name="twitter:card" value="summary_large_image">
 <meta name="twitter:site" value="@kpcc">
 <meta name="twitter:url" value="<%= model.public_url %>">
-<meta name="twitter:title" value="<%= h(model.short_title) %>">
+<meta name="twitter:title" value="<%= h(model.try(:short_title) || model.try(:short_headline)) %>">
 <meta name="twitter:description" value="<%= h(strip_tags(model.teaser)) %>">
 <meta property="article:published_time" content="<%= model.public_datetime %>" />
 <meta property="article:modified_time" content="<%= model.updated_at %>" />

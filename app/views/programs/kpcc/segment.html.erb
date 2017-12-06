@@ -1,7 +1,7 @@
 <% add_to_page_title @program.try(:title) %>
 <% add_to_page_title @segment.feature.present? ? "#{@segment.feature.name}: #{@segment.headline}" : @segment.headline %>
 <% content_for :opengraph do %>
-  <%= cell(:article, @article).call(:meta_tags) %>
+  <%= cell(:article, @segment).call(:meta_tags) %>
 <% end %>
 
 <% content_for :main_class, "o-article o-article--segment" %>
@@ -37,12 +37,12 @@
 
 <!-- LEFT ASIDE -->
 <aside class="l-column--left l--centerize" style="order: -1;">
-  <%= cell :article_audio, @article %>
-  <%= cell :social_tools, @article, display: 'vert' %>
+  <%= cell :article_audio, @segment %>
+  <%= cell :social_tools, @segment, display: 'vert' %>
 </aside>
 
 <!-- HEADLINE -->
-<%= cell :article_headline, @article %>
+<%= cell :article_headline, @segment %>
 
 <!-- RIGHT ASIDES -->
 <%= cell(:ad, slot: "a", class: "l-column--right", id: "c-ad--a", attribution: false, order: -1).show do
@@ -64,9 +64,9 @@ end %>
 <%= cell :ad, slot: "c", class: "l-column--right", order: 1001 %>
 
 <!-- CENTER CONTENT-->
-<%= cell :article, @article, type: 'story', headline: false %>
+<%= cell :article, @segment, type: 'story', headline: false %>
 
-<%= cell :newsletter_appeal, @article, order: 999 %>
+<%= cell :newsletter_appeal, @segment, order: 999 %>
 
 <hr class="o-article__rule--ending b-rule b-rule--primary-lightest b-rule--padded" style="order: 999;" />
 
@@ -74,18 +74,18 @@ end %>
 
 <%= cell :more_from_episode, @episode, order: 999 %>
 
-<%= cell :social_tools, @article, display: 'horiz', order: 999 %>
+<%= cell :social_tools, @segment, display: 'horiz', order: 999 %>
 
 <!-- FOOTER CONTENT -->
 <hr class="o-article__rule--footer b-rule b-rule--secondary-alt b-rule--padded l-column--boundless" style="order: 1001;" />
 
-<%= cell :comments, @article.try(:original_object), order: 1000 %>
+<%= cell :comments, @segment, order: 1000 %>
 
 <%= cell :featured_programs, @program, class: "l-column--boundless", order: 1001 %>
 
 <%= cell :popular_articles, @program, class: "l-column--boundless o-popular-stories--horiz", order: 1001 %>
 
-<%= cell :epilogue, @article, class: "l-column--boundless", order: 1001 %>
+<%= cell :epilogue, @segment, class: "l-column--boundless", order: 1001 %>
 
 <% if @modal || @is_pledge_time %>
   <div id='exit-modal' class='exit-modal--hidden' data-ga-modal-label="<%= @google_analytics_label %>">

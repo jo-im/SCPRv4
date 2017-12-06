@@ -7,7 +7,7 @@
       </div>
       <div class="o-content-cluster__content-description">
         <h4 class="b-heading--book">
-          <%= link_to feature.title, feature.public_url, :data => { :ga_category => @options[:category], :ga_action => "Clickthrough", :ga_label => @options[:label] } %>
+          <%= link_to feature.try(:title) || feature.try(:headline), feature.public_url, :data => { :ga_category => @options[:category], :ga_action => "Clickthrough", :ga_label => @options[:label] } %>
         </h4>
         <div class="o-content-cluster__datetime b-heading--medium"><%= feature.public_datetime.try(:strftime, "%B %-d, %Y") %></div>
       </div>
