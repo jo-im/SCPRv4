@@ -9,12 +9,20 @@ class RelatedLinksCell < Cell::ViewModel
     render if links.any?
   end
 
+  def related_content
+    model.try(:related_content) || []
+  end
+
+  def related_links
+    model.try(:related_links) || []
+  end
+
   def links
     # There's some legacy code here, but I'm keeping it because
     # just having it extracted from the template is an improvement,
     # and who knows if we might want to start using some of these
     # returned attributes again in the future.
-    @links ||= (model.try(:related_content) + model.try(:links)).map do |content|
+    @links ||= (related_content + related_links).map do |content|
       classes     = "track-event"
       url         = nil
       title       = nil
@@ -41,7 +49,7 @@ class RelatedLinksCell < Cell::ViewModel
         end
 
         url     = content.url
-        title   = content.title
+        title   = content.try(:title) || content.try(:headline)
       else
         # hopefully these are content...
         if content.try(:feature).try(:_key).present?
@@ -51,7 +59,7 @@ class RelatedLinksCell < Cell::ViewModel
         end
 
         url     = content.public_path
-        title   = content.short_title
+        title   = content.try(:short_title) || content.try(:short_headline)
 
         descriptor = content.feature.try(:name) || "Article"
       end
