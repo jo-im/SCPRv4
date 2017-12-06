@@ -12,7 +12,7 @@
         </figure>
         <div class="o-topic-cluster__content-description">
           <h4 class="o-topic-cluster__headline">
-            <a class="o-media__headline-link" href="<%= feature.public_url %>"><%= feature.short_title %></a>
+            <a class="o-media__headline-link" href="<%= feature.try(:public_url) || feature.try(:public_path) %>"><%= feature.try(:short_title) || feature.try(:short_headline) %></a>
           </h4>
           <div class="o-topic-cluster__byline"><%= byline feature %></div>
           <div class="o-topic-cluster__datetime"><%= feature.public_datetime.try(:strftime, "%B %-d, %Y") %></div>

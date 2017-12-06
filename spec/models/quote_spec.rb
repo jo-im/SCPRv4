@@ -22,12 +22,4 @@ describe Quote do
       quote.content(true).should be_nil
     end
   end
-
-  describe '#article' do
-    it "is the content to_article" do
-      story = build :news_story, :published
-      quote = build :quote, content: story
-      quote.article.should eq story.to_article
-    end
-  end
 end

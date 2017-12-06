@@ -9,10 +9,10 @@
   <ul class="o-resources__articles">
     <% articles.try(:each) do |article| %>
       <li>
-        <a href="<%= article.public_path %>">
+        <a href="<%= article.try(:public_url) %>">
           <figure class="o-resources__figure o-figure o-figure--four-by-three">
             <img class="o-figure__img" src="<%= asset_path article %>" style="background-image:url(<%= asset_path article %>);">
-            <figcaption class="o-resources__figure__caption"><%= article.short_title %></figcaption>
+            <figcaption class="o-resources__figure__caption"><%= article.try(:short_title) || article.try(:short_headline) %></figcaption>
           </figure>
         </a>
       </li>

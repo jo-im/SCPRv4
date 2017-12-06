@@ -53,7 +53,7 @@ class Vertical < ActiveRecord::Base
   def featured_articles
     @featured_articles ||= self.vertical_articles
       .includes(:article).select(&:article)
-      .map { |a| a.article.to_article }
+      .map { |a| a.article }
   end
 
 

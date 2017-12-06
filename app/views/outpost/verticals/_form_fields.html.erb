@@ -98,7 +98,7 @@
           {
             el: "#aggregator_quote_content",
             inputEl: "#quote_content_json",
-            collection: <%= render_json("api/private/v2/articles/collection", articles: Array(qf.object.article)) %>,
+            collection: <%= render_json("api/private/v2/articles/collection", articles: Array(qf.object.article.try(:to_article))) %>,
             apiType: "private",
             view: {
               dropMaxLimit: 1,

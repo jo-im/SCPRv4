@@ -8,7 +8,7 @@ describe Concern::Associations::QuoteAssociation do
   end
 
   it "#article is the content.to_article" do
-    @quote.article.should eq @post.to_article
+    @quote.article.should eq @post
   end
 
   it "destroys the join record on destroy" do

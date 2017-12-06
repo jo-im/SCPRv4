@@ -23,7 +23,7 @@ module Concern
         # ^^^
         # Sometimes we use the related content association to relate
         # content to non-content, like Tags and BroadcastContent.  However,
-        # since we need to convert our references to articles here, and 
+        # since we need to convert our references to articles here, and
         # since said non-content does not convert to an article, we need to
         # only include objects that are of content models.
         #
@@ -63,19 +63,25 @@ module Concern
           # Outgoing references: Where `content` is this object
           # So we want to grab `related`
           self.outgoing_references.includes(:related).each do |reference|
-            content.push reference.related.try(:to_article)
+            content.push reference.related
           end
 
           # Incoming references: Where `related` is this object
           # So we want to grab `content`
           self.incoming_references.includes(:content).each do |reference|
-            content.push reference.content.try(:to_article)
+            content.push reference.content
           end
 
           # Compact to make sure no nil records get through - those would
           # be unpublished content.
           content.compact.uniq
-            .sort { |a, b| b.public_datetime <=> a.public_datetime }
+            .sort { |a, b|
+              if b.try(:public_datetime) && a.try(:public_datetime)
+                b.public_datetime <=> a.public_datetime
+              elsif b.try(:published_at) && a.try(:published_at)
+                b.published_at  <=> a.published_at
+              end
+            }
         end
       end
 

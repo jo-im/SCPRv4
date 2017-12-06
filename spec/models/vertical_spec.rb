@@ -20,7 +20,7 @@ describe Vertical do
       story = create :news_story
       vertical_article = create :vertical_article, vertical: vertical, article: story
 
-      vertical.featured_articles.map(&:class).uniq.should eq [Article]
+      vertical.featured_articles.map(&:class).uniq.should eq [NewsStory]
     end
 
     it "only gets published articles" do
@@ -31,7 +31,7 @@ describe Vertical do
       vertical.vertical_articles.create(article: story_published)
       vertical.vertical_articles.create(article: story_unpublished)
 
-      vertical.featured_articles.should eq [story_published].map(&:to_article)
+      vertical.featured_articles.should eq [story_published]
     end
   end
 
