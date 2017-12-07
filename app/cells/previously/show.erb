@@ -3,7 +3,7 @@
   <ul class="c-list c-list--vert c-list--bullet c-list--bullet-lightest">
     <% recent_content.try(:each) do |link| %>
       <li class="b-heading--bold">
-        <%= link_to link.title, link.public_url, :data => { :ga_category => @options[:category], :ga_action => "Clickthrough", :ga_label => @options[:label] } %>
+        <%= link_to link.try(:title) || link.try(:headline), link.try(:public_url), :data => { :ga_category => @options[:category], :ga_action => "Clickthrough", :ga_label => @options[:label] } %>
       </li>
     <% end %>
   </ul>
