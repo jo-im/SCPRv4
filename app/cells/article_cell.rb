@@ -59,7 +59,7 @@ class ArticleCell < Cell::ViewModel
   def pij_source options={}
     message = options[:message] || "This story was informed by KPCC listeners."
 
-    if model.try(:get_article).try(:from_pij?)
+    if model.try(:is_from_pij) || model.try(:original_object).try(:is_from_pij)
       render locals: { message: message }
     end
   end
@@ -90,11 +90,7 @@ class ArticleCell < Cell::ViewModel
       asset_id = asset_id ? asset_id.to_i : nil
       next if asset_id.nil?
 
-      if @options[:preview] == true
-        asset_collection = model.try(:assets)
-      else
-        asset_collection = model.try(:inline_assets)
-      end
+      asset_collection = model.try(:assets)
 
       asset = asset_collection.try(:select) {|a| a.asset_id == asset_id}[0]
 

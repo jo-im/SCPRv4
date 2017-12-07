@@ -29,8 +29,6 @@ class PopularArticlesCell < Cell::ViewModel
   end
 
   def articles
-    # (@popular_articles_viewed || []).first(4)
-    # NewsStory.all.limit(4).map(&:get_article)
     popular_articles_viewed.try(:first, 4)
   end
 
@@ -38,7 +36,7 @@ class PopularArticlesCell < Cell::ViewModel
     if (@popular_articles_viewed || []).any?
       @popular_articles_viewed.try(:first, 4)
     else
-      NewsStory.published.order(public_datetime: :desc).all.limit(4).map(&:get_article)
+      NewsStory.published.order(public_datetime: :desc).all.limit(4)
     end
   end
 
@@ -46,7 +44,7 @@ class PopularArticlesCell < Cell::ViewModel
     if (@popular_articles_discussed || []).any?
       @popular_articles_discussed.try(:first, 4)
     else
-      NewsStory.published.order(public_datetime: :desc).all.limit(4).map(&:get_article).reverse
+      NewsStory.published.order(public_datetime: :desc).all.limit(4).reverse
     end
   end
 
