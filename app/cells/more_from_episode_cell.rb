@@ -30,7 +30,7 @@ class MoreFromEpisodeCell < Cell::ViewModel
   end
 
   def episode_content
-    @episode_content ||= model.try(:related_content) || []
+    @episode_content ||= model.try(:published_content) || []
   end
 
 end

@@ -4,7 +4,7 @@
   <ul class="c-list c-list--vert c-list--bullet">
     <% episode_content.try(:each) do |content| %>
       <li class="b-heading--medium">
-        <%= link_to content.try(:title), content.try(:public_path) %>
+        <%= link_to content.try(:headline), content.try(:public_path) %>
       </li>
     <% end %>
   </ul>
