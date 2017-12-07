@@ -31,7 +31,6 @@ class BlogsController < ApplicationController
 
   def entry
     @entry   = BlogEntry.published.includes(:blog).find(params[:id])
-    @article = @entry.to_article
 
     respond_with template: "blogs/entry"
   end
