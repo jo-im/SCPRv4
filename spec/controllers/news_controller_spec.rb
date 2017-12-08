@@ -38,18 +38,5 @@ describe NewsController do
         get :story, { id: story.id, slug: '' }.merge!(date_path(story.published_at))
       }.should raise_error ActionController::UrlGenerationError
     end
-
-    context "for popular articles" do
-      let(:articles) { create_list(:news_story, 3).map(&:to_article) }
-
-      before :each do
-        Rails.cache.write("popular/viewed", articles)
-        get :story, @story.route_hash
-      end
-
-      it 'assigns @popular_articles' do
-        assigns(:popular_articles).should eq articles
-      end
-    end
   end
 end
