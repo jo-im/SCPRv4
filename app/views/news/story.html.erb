@@ -21,9 +21,9 @@ end %>
   '<hr class="b-rule l-column--right" style="order: 12;" />'
 end %>
 
-<%= cell(:category_cluster, @story.category, class: "l-column--right", order: 996, category: "Article", label: "More Sidebar Category") %>
+<%= cell(:category_cluster, @category, class: "l-column--right", order: 996, category: "Article", label: "More Sidebar Category") %>
 
-<%= cell(:popular_articles, @popular_articles.try(:first, 3), class: "l-column--right", order: 997, category: "Article", label: "Popular Now Sidebar").call(:trio) %>
+<%= cell(:popular_articles, @story, class: "l-column--right", order: 997, category: "Article", label: "Popular Now Sidebar").call(:trio) %>
 
 <%= cell :ad, slot: "c", class: "l-column--right", order: 1000 %>
 
