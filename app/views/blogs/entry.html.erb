@@ -12,12 +12,12 @@
 
 <!-- LEFT ASIDE -->
 <aside class="l-column--left l--centerize" style="order: -1;">
-  <%= cell :article_audio, @article %>
-  <%= cell :social_tools, @article, display: 'vert' %>
+  <%= cell :article_audio, @entry %>
+  <%= cell :social_tools, @entry, display: 'vert' %>
 </aside>
 
 <!-- HEADLINE -->
-<%= cell :article_headline, @article %>
+<%= cell :article_headline, @entry %>
 
 <!-- RIGHT ASIDES -->
 <%= cell(:ad, slot: "a", class: "l-column--right", id: 'c-ad--a', attribution: false, order: -1).show do
@@ -42,7 +42,7 @@ end %>
 <%= cell :recent_content, @entry.sister_blog_entries, class: "l-column--right o-recent-content--blog-entry", blog: @blog.name, order: 1000 %>
 
 <!-- ARTICLE BODY -->
-<%= cell :article, @article, popular_blog: @popular_blog_entry, headline: false %>
+<%= cell :article, @entry, popular_blog: @popular_blog_entry, headline: false %>
 
 <!-- MOAR STUFF -->
 <%= cell :newsletter_appeal, nil, order: 998 %>
@@ -51,7 +51,7 @@ end %>
 
 <%= cell :related_links, @entry, order: 998 %>
 
-<%= cell :social_tools, @article, display: 'horiz', order: 998 %>
+<%= cell :social_tools, @entry, display: 'horiz', order: 998 %>
 
 <%= cell :previously, @entry.sister_blog_entries.first(1), blog: @blog.name, order: 998 %>
 
@@ -62,7 +62,7 @@ end %>
 
 <%= cell :featured_blogs, @entry.sister_blog_entries.first(4), blog: @blog.name, class: "l-column--boundless", order: 1002 %>
 
-<%= cell :popular_articles, @program, class: "l-column--boundless o-popular-stories--horiz", order: 1002 %>
+<%= cell :popular_articles, @popular_articles.try(:first, 4), class: "l-column--boundless o-popular-stories--horiz", order: 1002 %>
 
-<%= cell :epilogue, @article, class: "l-column--boundless", order: 1003%>
+<%= cell :epilogue, @entry, class: "l-column--boundless", order: 1003%>
 
