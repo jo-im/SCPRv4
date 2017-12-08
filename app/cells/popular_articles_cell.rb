@@ -3,7 +3,7 @@ class PopularArticlesCell < Cell::ViewModel
   cache :show, expires_in: 12.hours
   cache :trio, expires_in: 12.hours
   cache :side_bar, expires_in: 12.hours do
-    ["v4", @options[:class]]
+    ["v5", @options[:class]]
   end
 
   def show
@@ -17,11 +17,12 @@ class PopularArticlesCell < Cell::ViewModel
 
   def side_bar
     get_popular_articles
-    render
+    render if articles.try(:any?)
   end
 
   def trio
-    render
+    get_popular_articles
+    render if articles.try(:any?)
   end
 
   def order
