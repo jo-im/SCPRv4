@@ -90,7 +90,8 @@ class ArticleCell < Cell::ViewModel
       asset_id = asset_id ? asset_id.to_i : nil
       next if asset_id.nil?
 
-      asset_collection = model.try(:assets)
+      ## First try for inline_assets if it's an <Article>, then just assets if it's an original object
+      asset_collection = model.try(:inline_assets) || model.try(:assets)
 
       asset = asset_collection.try(:select) {|a| a.asset_id == asset_id}[0]
 
