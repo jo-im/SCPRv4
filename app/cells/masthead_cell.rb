@@ -1,6 +1,6 @@
 class MastheadCell < Cell::ViewModel
   cache :show, expires_in: 12.hours do
-    ["masthead", "v1"]
+    ["masthead", "v2"]
   end
 
   def show
