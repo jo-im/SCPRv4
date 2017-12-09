@@ -34,7 +34,8 @@
     <iframe src="https://www.googletagmanager.com/ns.html?id=GTM-585PL29" height="0" width="0" style="display:none;visibility:hidden"></iframe>
     <div id="global-pushdown"></div>
     <header class="<%= content_for :header_class %>">
-      <%= cell :masthead %>
+      <% current_model = @story || @segment || @entry || @event || @flatpage || @episode || @program || nil %>
+      <%= cell :masthead, current_model %>
       <% if alert = BreakingNewsAlert.latest_visible_alert %>
         <%= cell :breaking_news_alert, alert %>
       <% end %>
