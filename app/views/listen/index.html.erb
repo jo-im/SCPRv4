@@ -3,16 +3,18 @@
   <meta content="IE=edge" http-equiv="X-UA-Compatible">
   <meta charset="utf-8">
   <meta content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" name="viewport">
-  <title>Listen Live</title>
+  <% add_to_page_title"Listen Live" %>
+  <title><%= page_title %></title>
   <script src="https://use.typekit.net/cka2qre.js"></script>
   <script>try{Typekit.load({ async: true });}catch(e){}</script>
+  <%= render "shared/new/meta_header" %>
   <%= stylesheet_link_tag 'application' %>
   <%= javascript_include_tag "shared", "application" %>
   <script type="text/javascript" src="https://<%= Rails.configuration.x.assethost.server %>/assets/client.js?bust=20130523"></script>
   <%= javascript_include_tag "new/application" %>
 </head>
 
-<body style="display: flex; flex-direction: column">
+<body style="display: flex; flex-direction: column; height: 100vh">
   <nav class="o-mast o-listen-live__mast">
     <div class="o-mast__logo">
       <a href="/" class="o-mast__logo-link" class="track-event" data-ga-category="Menu" data-ga-action="Clickthrough" data-ga-label="Home">
@@ -22,7 +24,7 @@
       </a>
     </div>
     <div class="o-mast__action o-mast__donate">
-      <a class="o-mast__donate-link" target="_blank" href="https://scprcontribute.publicradio.org/contribute.php?_ga=1.210106262.2096948162.1473892732"  data-ga-category="Menu" data-ga-action="Clickthrough" data-ga-label="Donate">
+      <a class="o-mast__donate-link" target="_blank" href="https://scprcontribute.publicradio.org/contribute.php?_ga=1.210106262.2096948162.1473892732"  data-ga-category="Menu" data-ga-action="Donate" data-ga-label="<%= request.path %>">
         <svg class="b-icon b-icon--size-med b-icon--left">
           <use class="b-icon--line b-icon--color-link" xlink:href="/static/images/scpr-sprite.svg#icon_line-donate"/>
         </svg>
