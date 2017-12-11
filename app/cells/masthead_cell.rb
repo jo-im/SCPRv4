@@ -1,8 +1,4 @@
 class MastheadCell < Cell::ViewModel
-  cache :show, expires_in: 12.hours do
-    ["masthead", "v2", model.try(:cache_key) || request.path]
-  end
-
   def show
     render
   end
