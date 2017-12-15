@@ -2,8 +2,8 @@ class SocialToolsCell < Cell::ViewModel
   include ERB::Util
   include Orderable
 
-  cache :show do
-    "#{model.try(:cache_key)} o-social-tools--#{@options[:display]} #{@options[:class]}"
+  cache :show, expires_in: 10.minutes do
+    [model.try(:cache_key), "o-social-tools--#{@options[:display]}", @options[:class]]
   end
 
   property :id
@@ -29,7 +29,7 @@ class SocialToolsCell < Cell::ViewModel
   end
 
   def title
-    model.try(:short_title) || model.try(:title) || @options[:title]
+    model.try(:short_title) || model.try(:short_headline) || @options[:title]
   end
 
 end
