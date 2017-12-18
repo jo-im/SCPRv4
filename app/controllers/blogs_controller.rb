@@ -32,19 +32,11 @@ class BlogsController < ApplicationController
   def entry
     @entry   = BlogEntry.published.includes(:blog).find(params[:id])
 
-    respond_to do |format|
-      format.rss do
-        render_to_string formats: [:xml]
-      end
-
-      format.xml do
-        render_to_string formats: [:xml]
-      end
-
-      format.html do
-        render
-      end
+    if request.original_fullpath != @entry.public_path
+      redirect_to @entry.public_path and return
     end
+
+    respond_with template: "blogs/entry"
   end
 
   amplify :entry, expose: {'@amp_record' => "@entry"}
