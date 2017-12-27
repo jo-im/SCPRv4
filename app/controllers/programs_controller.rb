@@ -113,8 +113,10 @@ class ProgramsController < ApplicationController
     @is_pledge_time = PledgeDrive.happening?
     program_flatpage = Flatpage.visible.find_by path: 'exit-modal/' + @program.slug
     default_flatpage = Flatpage.visible.find_by path: 'exit-modal/default'
+    pledge_flatpage = Flatpage.visible.find_by path: 'exit-modal/pledge'
 
-    if @is_pledge_time
+    if @is_pledge_time && pledge_flatpage
+      @modal = pledge_flatpage
       @google_analytics_label = 'Modal Type: Pledge Drive | URL: ' + @url
     elsif program_flatpage
       @modal = program_flatpage

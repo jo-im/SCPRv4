@@ -98,21 +98,10 @@ end %>
           </svg>
         </span>
         <div id='exit-modal__content'>
+          <% content_for :header, @modal.extra_head.html_safe %>
+          <% content_for :footer, @modal.extra_tail.html_safe %>
           <% if @modal %>
             <%= @modal.content.html_safe %>
-          <% end %>
-          <% if @is_pledge_time %>
-            <div class="appeal-newsletter donate-cta ancillary" id="appeal-donate-cta">
-                <div class="appeal-background">
-                    <div class="appeal-content">
-                        <h3 class="bound appeal-heading appeal-heading-adaptive"><span style="display: inline-block;">You care about today's news.</span><span style="display: inline-block;">And you're not alone.</span></h3>
-                        <p class="bound">Join others who support independent journalism.</p>
-                        <p class="bound">
-                            <a class="appeal-link track-event" id="ga-modal__submit" href=" https://scprcontribute.publicradio.org/contribute.php?refId=instoryask&askAmount=20" data-ga-category="Modal" data-ga-action="Click" data-ga-label="<%= @google_analytics_label %>">Give to KPCC</a>
-                        </p>
-                    </div>
-                </div>
-            </div>
           <% end %>
         </div>
     </div>
