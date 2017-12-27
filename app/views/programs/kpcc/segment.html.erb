@@ -87,7 +87,7 @@ end %>
 
 <%= cell :epilogue, @segment, class: "l-column--boundless", order: 1001 %>
 
-<% if @modal || @is_pledge_time %>
+<% if @modal || (@is_pledge_time && @modal) %>
   <div id='exit-modal' class='exit-modal--hidden' data-ga-modal-label="<%= @google_analytics_label %>">
     <div class='exit-modal__underlay'></div>
       <div class='exit-modal__modal'>
@@ -98,8 +98,8 @@ end %>
           </svg>
         </span>
         <div id='exit-modal__content'>
-          <% content_for :header, @modal.extra_head.html_safe %>
-          <% content_for :footer, @modal.extra_tail.html_safe %>
+          <% content_for :header, @modal.try(:extra_head).try(:html_safe) %>
+          <% content_for :footer, @modal.try(:extra_tail).try(:html_safe) %>
           <% if @modal %>
             <%= @modal.content.html_safe %>
           <% end %>
