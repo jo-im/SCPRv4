@@ -98,10 +98,10 @@ end %>
           </svg>
         </span>
         <div id='exit-modal__content'>
-          <% content_for :header, @modal.try(:extra_head).try(:html_safe) %>
-          <% content_for :footer, @modal.try(:extra_tail).try(:html_safe) %>
           <% if @modal %>
+            <% content_for :header, @modal.try(:extra_head).try(:html_safe) %>
             <%= @modal.content.html_safe %>
+            <% content_for :footer, @modal.try(:extra_tail).try(:html_safe) %>
           <% end %>
         </div>
     </div>
