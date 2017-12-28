@@ -4,7 +4,7 @@
 
   <div class="static-slides">
   <% slideshow_assets.each do |asset| %>
-    <figure class="slide o-figure <%= aspect asset %>">
+    <figure class="slide o-figure o-figure--slideshow">
       <img
         class="o-figure__img"
         src="<%= asset.try(:eight).try(:url) %>"
@@ -43,7 +43,7 @@
     slideshow = new scpr.NewSlideshow({
           el: "#asset_slideshow_<%=html_safe_id%>",
           staticSlides: "staticSlides_<%=html_safe_id%>",
-          assets: <%= assets.to_json.html_safe %>
+          assets: <%= slideshow_assets.to_json.html_safe %>
     });
     slideshow.bind("switch", function(idx) {
         // (1.) add slide change listener for analytics
