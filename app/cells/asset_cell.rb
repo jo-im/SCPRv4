@@ -54,7 +54,7 @@ class AssetCell < Cell::ViewModel
   end
 
   def caption
-    (model.caption.blank? ? nil : model.caption) || model.title || ""
+    (model.caption.blank? ? nil : model.caption) || ""
   end
 
   def assets
