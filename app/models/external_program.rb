@@ -47,8 +47,8 @@ class ExternalProgram < ActiveRecord::Base
   #-------------------
   # Associations
   has_many :recurring_schedule_rules, as: :program, dependent: :destroy
-  has_many :episodes, dependent: :destroy, class_name: :ExternalEpisode
-  has_many :segments, class_name: :ExternalSegment
+  has_many :episodes, dependent: :destroy, class_name: :ExternalEpisode, dependent: :destroy
+  has_many :segments, class_name: :ExternalSegment, dependent: :destroy
 
   #-------------------
   # Validations
