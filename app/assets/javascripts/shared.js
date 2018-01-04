@@ -5,6 +5,8 @@
 //= require moment
 //= require jquery_ujs
 //= require spin
+//= require jquery.smooth-scroll
+//= require jquery.lazy.min
 
 //= require bootstrap-transition
 //= require bootstrap-dropdown
