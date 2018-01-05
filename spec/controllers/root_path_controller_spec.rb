@@ -100,10 +100,10 @@ describe RootPathController do
         response.should render_template(layout: "layouts/application")
       end
 
-      it "render no_sidebar if template is full" do
+      it "render application if template is full" do
         flatpage = create :flatpage, template: "full"
         get :handle_path, path: flatpage.path
-        response.should render_template(layout: "layouts/app_nosidebar")
+        response.should render_template(layout: "layouts/application")
       end
     end
   end
