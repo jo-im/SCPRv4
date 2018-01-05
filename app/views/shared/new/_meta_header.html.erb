@@ -80,11 +80,15 @@
            'og:url': overrideLink,
            'og:title': overrideTitle,
            'og:description': overrideDescription,
-           'og:image': overrideImage
+           'og:image': overrideImage,
+           'og:image:type': 'image/jpeg',
+           'og:image:width': '1100',
+           'og:image:height:': '618'
          }
        })
      },
      function (response) {
+       console.log(response);
        // Action after response
      });
    }
