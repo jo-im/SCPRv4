@@ -6,7 +6,7 @@
   <% content_for :opengraph do %>
     <% if @flatpage.try(:extra_metahead) %>
       <%= @flatpage.extra_metahead.html_safe %>
-    <% else %>
+    <% end %>
     <meta property="og:description" content="<%= j @flatpage.description %>">
     <meta property="og:title" content="<%= j @flatpage.title %>">
     <meta property="og:type" content="article">
