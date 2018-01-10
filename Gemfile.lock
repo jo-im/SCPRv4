@@ -314,7 +314,7 @@ GEM
     multipart-post (1.2.0)
     mysql2 (0.3.21)
     netrc (0.11.0)
-    newrelic_rpm (3.16.2.321)
+    newrelic_rpm (4.7.1.340)
     nokogiri (1.7.0.1)
       mini_portile2 (~> 2.1.0)
     oauth2 (0.9.3)
@@ -571,7 +571,7 @@ DEPENDENCIES
   kaminari (~> 0.15.0)
   launchy
   mysql2 (~> 0.3.18)
-  newrelic_rpm (~> 3.16)
+  newrelic_rpm (~> 4.0, >= 4.0.0.332)
   npr (~> 3.0)!
   oauth2 (~> 0.8)
   oink (~> 0.10.1)

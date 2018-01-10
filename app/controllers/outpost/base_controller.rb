@@ -13,7 +13,7 @@ class Outpost::BaseController < Outpost::ApplicationController
 
   def add_params_for_newrelic
     if current_user
-      NewRelic::Agent.add_custom_parameters(
+      NewRelic::Agent.add_custom_attributes(
         :current_user_id   => current_user.id,
         :current_user_name => current_user.name
       )
