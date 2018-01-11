@@ -85,15 +85,15 @@ class AssetCell < Cell::ViewModel
     model.title || model.caption
   end
 
-  def assethost
-    if assets.first.try(:eight).try(:asset).try(:native)
+  def assethost asset
+    if asset.try(:eight).try(:asset).try(:native)
       assets.first.eight.asset.native["class"]
     end
   end
 
-  def videoid
-    if assets.first.try(:eight).try(:asset).try(:native)
-      assets.first.eight.asset.native["videoid"]
+  def videoid asset
+    if asset.try(:eight).try(:asset).try(:native)
+      asset.eight.asset.native["videoid"]
     end
   end
 
