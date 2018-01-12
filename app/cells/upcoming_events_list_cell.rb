@@ -15,14 +15,8 @@ class UpcomingEventsListCell < Cell::ViewModel
     @options[:tab]
   end
 
-  def asset_path(resource)
-    asset_display = resource.try(:asset_display)
-    assets = resource.try(:assets)
-    if asset_display == :hidden || asset_display == "hidden" || assets.try(:empty?)
-      nil
-    else
-      resource.try(:asset).try(:small).try(:url) || "/static/images/fallback-img-rect.png"
-    end
+  def asset_path(article)
+     article.try(:asset).try(:small).try(:url) || '/static/images/fallback-img-rect.png'
   end
 
   def date(event)
