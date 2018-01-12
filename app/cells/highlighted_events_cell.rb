@@ -4,7 +4,13 @@ class HighlightedEventsCell < Cell::ViewModel
   end
 
   def asset_path(resource)
-    resource.try(:asset).try(:eight).try(:url) || "/static/images/fallback-img-rect.png"
+    asset_display = resource.try(:asset_display)
+    assets = resource.try(:assets)
+    if asset_display == :hidden || asset_display == "hidden" || assets.try(:empty?)
+      nil
+    else
+      resource.try(:asset).try(:eight).try(:url) || "/static/images/fallback-img-rect.png"
+    end
   end
 
   def date(event)
