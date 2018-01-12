@@ -1,4 +1,5 @@
 class EventCell < Cell::ViewModel
+  property :assets
   property :asset
 
   def hero_asset(figure_class)
