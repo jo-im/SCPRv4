@@ -1,12 +1,15 @@
 class EventCell < Cell::ViewModel
+  property :assets
   property :asset
 
   def hero_asset(figure_class)
-    if model.try(:asset_display) != :hidden || !model.try(:assets).try(:empty?)
-      if model.try(:asset_display) == :slideshow
-        AssetCell.new(asset, article: model, class: figure_class, template: "default/slideshow.html").call(:show)
+    if model.try(:asset_display) == :hidden || model.try(:asset_display) == "hidden" || assets.try(:empty?)
+      nil
+    else
+      if model.try(:asset_display) == :slideshow || model.try(:asset_display) == "slideshow"
+        AssetCell.new(asset, article: model, class: figure_class, template: "default/slideshow.html", featured: true).call(:show)
       else
-        AssetCell.new(asset, article: model, class: figure_class).call(:show)
+        AssetCell.new(asset, article: model, class: figure_class, featured: true).call(:show)
       end
     end
   end
