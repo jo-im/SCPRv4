@@ -8,14 +8,17 @@
     <meta property="og:title" content="<%= j @flatpage.title %>">
     <meta property="og:type" content="article">
     <meta property="og:url" content="<%= @flatpage.public_url %>"/>
-    <meta property="og:image" content="<%=image_url('meta/facebook.jpg')%>" />
-    <meta name="twitter:card" value="summary">
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:site" value="@kpcc">
     <meta name="twitter:url" value="<%= @flatpage.public_url %>">
     <meta name="twitter:title" value="<%= j @flatpage.title %>">
     <meta name="twitter:description" value="<%= j @flatpage.description %>">
-    <meta name="twitter:image" content="<%=image_url('meta/twitter.jpg')%>">
+    <% if @flatpage.try(:extra_metahead) %>
+      <%= @flatpage.extra_metahead.html_safe %>
+    <% else %>
+      <meta property="og:image" content="<%=image_url('meta/facebook.jpg')%>" />
+      <meta name="twitter:image" content="<%=image_url('meta/twitter.jpg')%>">
+    <% end %>
   <% end %>
 
   <%= render "shared/ads/dfp_script_config" %>

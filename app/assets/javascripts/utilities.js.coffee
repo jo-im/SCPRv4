@@ -177,24 +177,26 @@ class scpr.SocialTools
                     'resizable,left=10,top=10,scrollbars=no,toolbar=no'
 
         # add share functionality for twitter
-        $(@options.twitfinder).on "click", (evt) =>
-            if url = $(@options.twitfinder).attr("data-url")
-                headline = $(@options.twitfinder).attr("data-text")
-                twurl = "https://twitter.com/intent/tweet?" +
-                        "url=#{url}&text=#{headline}&via=kpcc"
-                window.open twurl, 'pop_up',
-                    'height=350,width=556,' +
-                    'resizable,left=10,top=10,scrollbars=no,toolbar=no'
-            false
+        $(@options.twitfinder).each (index, el) =>
+          $(el).on "click", (evt) =>
+              if url = $(el).attr("data-url")
+                  headline = $(el).attr("data-text")
+                  twurl = "https://twitter.com/intent/tweet?" +
+                          "url=#{url}&text=#{headline}&via=kpcc"
+                  window.open twurl, 'pop_up',
+                      'height=350,width=556,' +
+                      'resizable,left=10,top=10,scrollbars=no,toolbar=no'
+              false
 
         # add share functionality for email
-        $(@options.emailfinder).on "click", (evt) =>
-            if key = $(@options.emailfinder).attr("data-key")
-                emurl = "/content/share?obj_key=#{key}"
-                window.open emurl, 'pop_up',
-                    'height=830,width=545,' +
-                    'resizable,left=10,top=10,scrollbars=no,toolbar=no'
-            false
+        $(@options.emailfinder).each (index, el) =>
+          $(el).on "click", (evt) =>
+              if key = $(el).attr("data-key")
+                  emurl = "/content/share?obj_key=#{key}"
+                  window.open emurl, 'pop_up',
+                      'height=830,width=545,' +
+                      'resizable,left=10,top=10,scrollbars=no,toolbar=no'
+              false
 
     #----------
 
