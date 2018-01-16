@@ -47,7 +47,7 @@ class ScheduleOccurrence < ActiveRecord::Base
   belongs_to :recurring_schedule_rule
 
   before_update :detach_from_recurring_rule, if: -> {
-    self.is_recurring? && (self.starts_at_changed? || self.ends_at_changed?)
+    self.is_recurring? && (self.starts_at_changed? || self.ends_at_changed? || self.program_id_changed? || (self.event_title_changed? && self.info_url_changed?))
   }
 
 
