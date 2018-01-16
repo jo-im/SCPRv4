@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180116201203) do
+ActiveRecord::Schema.define(version: 20171031210028) do
 
   create_table "abstracts", force: :cascade do |t|
     t.string   "source",               limit: 255
@@ -482,18 +482,17 @@ ActiveRecord::Schema.define(version: 20180116201203) do
   add_index "external_segments", ["published_at"], name: "index_external_segments_on_published_at", using: :btree
 
   create_table "flatpages_flatpage", force: :cascade do |t|
-    t.string   "path",           limit: 255,                        null: false
-    t.string   "title",          limit: 255,                        null: false
-    t.text     "content",        limit: 4294967295,                 null: false
-    t.text     "extra_head",     limit: 4294967295,                 null: false
-    t.text     "extra_tail",     limit: 4294967295,                 null: false
+    t.string   "path",        limit: 255,                        null: false
+    t.string   "title",       limit: 255,                        null: false
+    t.text     "content",     limit: 4294967295,                 null: false
+    t.text     "extra_head",  limit: 4294967295,                 null: false
+    t.text     "extra_tail",  limit: 4294967295,                 null: false
     t.datetime "updated_at"
-    t.text     "description",    limit: 4294967295,                 null: false
-    t.string   "redirect_to",    limit: 255
-    t.boolean  "is_public",                         default: false, null: false
-    t.datetime "created_at",                                        null: false
-    t.string   "template",       limit: 255,                        null: false
-    t.text     "extra_metahead", limit: 4294967295
+    t.text     "description", limit: 4294967295,                 null: false
+    t.string   "redirect_to", limit: 255
+    t.boolean  "is_public",                      default: false, null: false
+    t.datetime "created_at",                                     null: false
+    t.string   "template",    limit: 255,                        null: false
   end
 
   add_index "flatpages_flatpage", ["is_public"], name: "index_flatpages_flatpage_on_is_public", using: :btree
