@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180108230329) do
+ActiveRecord::Schema.define(version: 20180116201203) do
 
   create_table "abstracts", force: :cascade do |t|
     t.string   "source",               limit: 255
@@ -493,7 +493,7 @@ ActiveRecord::Schema.define(version: 20180108230329) do
     t.boolean  "is_public",                         default: false, null: false
     t.datetime "created_at",                                        null: false
     t.string   "template",       limit: 255,                        null: false
-    t.text     "extra_metahead", limit: 65535
+    t.text     "extra_metahead", limit: 4294967295
   end
 
   add_index "flatpages_flatpage", ["is_public"], name: "index_flatpages_flatpage_on_is_public", using: :btree
