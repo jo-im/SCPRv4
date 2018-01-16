@@ -193,7 +193,6 @@ class scpr.SocialTools
           $(el).on "click", (evt) =>
               if key = $(el).attr("data-key")
                   emurl = "/content/share?obj_key=#{key}"
-                  debugger
                   window.open emurl, 'pop_up',
                       'height=830,width=545,' +
                       'resizable,left=10,top=10,scrollbars=no,toolbar=no'
