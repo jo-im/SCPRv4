@@ -79,7 +79,7 @@ class Event < ActiveRecord::Base
 
   scope :past, -> {
     published
-    .where("ends_at < :now or starts_at < :now and is_all_day = 1", now: Time.zone.now)
+    .where("ends_at < :now", now: Time.zone.now)
     .order("starts_at desc")
   }
 
