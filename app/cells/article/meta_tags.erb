@@ -9,6 +9,7 @@
 <meta name="twitter:description" value="<%= h(strip_tags(model.teaser)) %>">
 <meta property="article:published_time" content="<%= model.public_datetime %>" />
 <meta property="article:modified_time" content="<%= model.updated_at %>" />
+<meta property="article:tag" content="<%= model.try(:tags).try(:map, &:title).try(:join, ', ') %>" />
 
 <% if model.category %>
   <meta property="article:section" content="<% h(model.category.title) %>" />
