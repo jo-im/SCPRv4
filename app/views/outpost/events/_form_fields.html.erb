@@ -9,7 +9,7 @@
 
 <%= form_block "Date/Time" do %>
   <%= f.input :starts_at %>
-  <%= f.input :ends_at %>
+  <%= f.input :ends_at, hint: "An end time is required for events to appear in the past events listing" %>
   <%= f.input :is_all_day, label: "All-Day Event?" %>
 <% end %>
 
