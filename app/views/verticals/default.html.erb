@@ -7,7 +7,7 @@
     <span class="o-prologue__description"><%= @vertical.description %></span>
   </section>
 <% end %>
-<% cache @vertical do %>
+<% cache [@vertical, 'v2'] do %>
   <%= cell(:featured_story, @vertical.featured_articles.first, blog: @vertical.blog, order: 1).call(:vertical) %>
   <%= cell :resources, @vertical, order: 2 %>
   <%= cell :featured_interactive, @vertical.featured_articles[5], order: 4 %>
