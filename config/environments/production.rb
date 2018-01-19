@@ -3,7 +3,7 @@ Scprv4::Application.configure do
   config.eager_load     = true
   config.consider_all_requests_local       = false
   config.action_controller.perform_caching = true
-  config.cache_store = :dalli_store, Rails.application.secrets.cache["servers"], Rails.application.secrets.cache["options"]||{}
+  config.cache_store = :dalli_store, Rails.application.secrets.cache["servers"], Rails.application.secrets.cache["options"] || { :expires_in => 604800 }
   config.action_controller.action_on_unpermitted_parameters = :log
 
   # Not sure if we need this? - EWR
