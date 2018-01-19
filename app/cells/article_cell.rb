@@ -13,11 +13,11 @@ class ArticleCell < Cell::ViewModel
   property :category
 
   cache :show, expires_in: 10.minutes, :if => lambda { !@options[:preview] }  do
-    [model.try(:cache_key), 'v9']
+    [model.try(:cache_key), 'v10']
   end
 
   cache :meta_tags, expires_in: 10.minutes do
-    [model.try(:cache_key), 'v2']
+    [model.try(:cache_key), 'v3']
   end
 
   def show

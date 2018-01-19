@@ -7,6 +7,7 @@ end
 
 # Configure AssetHostClient
 AssetHostClient.setup do |config|
+  config.protocol         = Rails.configuration.x.assethost.protocol
   config.server           = Rails.configuration.x.assethost.server
   config.token            = Rails.configuration.x.assethost.token
   config.raise_on_errors  = Rails.configuration.x.assethost.raise_on_errors || false
