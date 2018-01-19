@@ -3,8 +3,10 @@ Scprv4::Application.configure do
   config.eager_load     = true
   config.consider_all_requests_local       = false
   config.action_controller.perform_caching = true
-  config.cache_store = :dalli_store, Rails.application.secrets.cache["servers"], Rails.application.secrets.cache["options"]||{}
   config.action_controller.action_on_unpermitted_parameters = :log
+
+  # The :expires_in value of 604800 is 1 week in seconds
+  config.cache_store = :dalli_store, Rails.application.secrets.cache["servers"], Rails.application.secrets.cache["options"] || { :expires_in => 604800 }
 
   # Not sure if we need this? - EWR
   config.active_record.raise_in_transactional_callbacks = false
