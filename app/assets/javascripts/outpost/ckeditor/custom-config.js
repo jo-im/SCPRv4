@@ -30,7 +30,7 @@ $(function() {
       "h5",
       "h6",
       "script[src,charset,async]",
-      "iframe[*]",
+      "iframe[*](*){*}",
       "embed[*]",
       "object[*]",
       "cite",
