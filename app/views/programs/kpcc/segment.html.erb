@@ -37,7 +37,7 @@
 
 <!-- LEFT ASIDE -->
 <aside class="l-column--left l--centerize" style="order: -1;">
-  <%= cell :article_audio, @segment %>
+  <%= cell :article_audio, @segment, audio_context: @segment.try(:show).try(:slug) %>
   <%= cell :social_tools, @segment, display: 'vert' %>
 </aside>
 
@@ -64,7 +64,7 @@ end %>
 <%= cell :ad, slot: "c", class: "l-column--right", order: 1001 %>
 
 <!-- CENTER CONTENT-->
-<%= cell :article, @segment, type: 'story', headline: false %>
+<%= cell :article, @segment, type: 'story', headline: false, audio_context: @segment.try(:show).try(:slug) %>
 
 <%= cell :newsletter_appeal, @segment, order: 999 %>
 
