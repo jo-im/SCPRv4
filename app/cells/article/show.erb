@@ -17,7 +17,7 @@
 </div>
 <hr class="o-article__b-rule b-rule b-rule--padded-small" />
 
-<%= cell(:article_audio, model, type: @options[:type]).call(:horizontal) %>
+<%= cell(:article_audio, model, type: @options[:type], audio_context: @options[:audio_context]).call(:horizontal) %>
 <%= cell :social_tools, model, display: 'horiz' %>
 
 
