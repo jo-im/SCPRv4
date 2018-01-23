@@ -1,5 +1,5 @@
 <div class="c-audio c-audio-widget c-audio--vert">
-  <a href="<%= audio_file.url %>" class="c-play__button c-audio__button" title="<%= model.title %>" data-duration="<%= audio_file.duration %>"></a>
+  <a href="<%= audio_url audio_file.url %>" class="c-play__button c-audio__button" title="<%= model.try(:title) || model.try(:headline) %>" data-duration="<%= audio_file.duration %>"></a>
   <div class="c-audio__text">
     <p class="c-audio__text-listen">Listen to this <%= @options[:type] %></p>
     <div class="c-audio__duration"><%= audio_file.duration ? format_duration(audio_file.duration) : nil %></div>
