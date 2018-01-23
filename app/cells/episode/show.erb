@@ -3,7 +3,7 @@
   <h2 class="o-featured-episode__title b-heading b-heading--h1 b-heading--serif">
     <%= title %>
   </h2>
-  <%= cell(:article_audio, model, type: 'episode').call(:horizontal) %>
+  <%= cell(:article_audio, model, type: 'episode', audio_context: model.try(:show).try(:slug)).call(:horizontal) %>
 </section>
 <div class="o-featured-episode__center" style="order: 3">
   <% if related_content.any? %>
