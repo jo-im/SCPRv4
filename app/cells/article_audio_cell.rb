@@ -1,4 +1,5 @@
 class ArticleAudioCell < Cell::ViewModel
+  include ApplicationHelper
   property :audio
 
   cache :show, expires_in: 10.minutes, :if => lambda { !@options[:preview] }  do
@@ -39,6 +40,10 @@ class ArticleAudioCell < Cell::ViewModel
     if audio_file.try(:size)
       (audio_file.size / 1000000).round(2)
     end
+  end
+
+  def audio_url url
+    url_with_params(url context: @options[:audio_context], via: 'website')
   end
 
 end
