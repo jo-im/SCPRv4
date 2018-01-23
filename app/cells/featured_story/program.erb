@@ -6,7 +6,7 @@
   </h2>
 
   <div class="o-featured-story__left">
-    <%= cell(:article_audio, model, type: 'episode').call(:horizontal) %>
+    <%= cell(:article_audio, model, type: 'episode', audio_context: model.try(:show).try(:slug)).call(:horizontal) %>
     <div class="o-featured-story__description">
       <span class="o-feautured-story__description-teaser"><%= teaser %></span>
       <a class="o-featured-story__link b-link b-link--callout" href="<%= public_path %>">See full episode ></a>
