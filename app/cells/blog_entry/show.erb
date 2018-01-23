@@ -1,7 +1,7 @@
 <h1 class="o-blog-list__heading" style="order: <%= @options[:order] %>"><%= link_to model.headline, model.public_path %></h1>
 <section class="o-blog-list__article" style="order: <%= @options[:order] %>">
   <aside class="o-blog-list__article-interactive">
-    <%= cell :article_audio, model %>
+    <%= cell :article_audio, model, audio_context: model.try(:blog).try(:slug) %>
     <div class="o-blog-list__article-social-tools">
       <%= cell :social_tools, model, display: 'vert' %>
       <span class="o-blog-list__article-comments <%= options[:non_zero] ? 'non-zero' : '' %>">
@@ -27,7 +27,7 @@
         </figcaption>
       <% end %>
     </figure>
-    <%= cell :article_audio, model %>
+    <%= cell :article_audio, model, audio_context: model.try(:blog).try(:slug) %>
     <div class="c-byline">
       <span class="c-byline__name"><%= byline %></span>
       <span class="c-byline__pipe">|</span>
