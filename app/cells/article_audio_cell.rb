@@ -43,7 +43,7 @@ class ArticleAudioCell < Cell::ViewModel
   end
 
   def audio_url url
-    url_with_params(url context: @options[:audio_context], via: 'website')
+    url_with_params(url, context: @options[:audio_context], via: 'website')
   end
 
 end
