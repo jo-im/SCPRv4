@@ -1,5 +1,6 @@
 <% content_for :main_class, "l-episode" %>
 <% content_for :opengraph do %><%= render_content @episode, "opengraph" %><% end %>
+<% add_to_page_title @episode.headline %>
 <% content_for :header do %>
   <section id="o-prologue--program__episode" class="o-prologue o-prologue--program">
     <a class="o-prologue__logo" href="/programs/<%= @program.try(:slug) %>"><%= image_tag "show-logos/#{@program.try(:slug)}.svg" %></a>
