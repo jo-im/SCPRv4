@@ -23,7 +23,7 @@
           </div>
         <% end %>
         <% if @options[:multiple] == false %>
-          <%= cell(:article_audio, episode, type: 'episode').call(:horizontal) %>
+          <%= cell(:article_audio, episode, type: 'episode', audio_context: episode.try(:show).try(:slug)).call(:horizontal) %>
           <% if episode.try(:body) %>
           <div class="o-article">
             <%= episode.try(:body) %>
