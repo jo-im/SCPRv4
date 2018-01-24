@@ -1,5 +1,4 @@
 class ArticleAudioCell < Cell::ViewModel
-  include ApplicationHelper
   property :audio
 
   cache :show, expires_in: 10.minutes, :if => lambda { !@options[:preview] }  do
@@ -43,7 +42,7 @@ class ArticleAudioCell < Cell::ViewModel
   end
 
   def audio_url url
-    url_with_params(url, context: @options[:audio_context], via: 'website')
+    ApplicationHelper.url_with_params(url, context: @options[:audio_context], via: 'website')
   end
 
 end
