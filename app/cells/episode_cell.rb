@@ -1,4 +1,5 @@
 class EpisodeCell < Cell::ViewModel
+  include ApplicationHelper
   property :title
   def show
     render
