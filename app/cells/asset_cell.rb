@@ -86,7 +86,7 @@ class AssetCell < Cell::ViewModel
   end
 
   def assethost asset
-    if asset.try(:eight).try(:asset).try(:native)
+    if assets.try(:first).try(:eight).try(:asset).try(:native)
       assets.first.eight.asset.native["class"]
     end
   end
