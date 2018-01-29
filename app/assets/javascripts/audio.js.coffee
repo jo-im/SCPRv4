@@ -16,7 +16,7 @@ class scpr.Audio
             wmode:    "window"
             play: (e) =>
                 # add a play event to the data layer for each play
-                @sendEvent
+                @addToDataLayer
                     action: 'play'
                     nonInteraction: false
                     value: 1
@@ -31,7 +31,7 @@ class scpr.Audio
                     @state.started = true
             pause: (e) =>
                 # add a pause event to the data layer for each pause
-                @sendEvent
+                @addToDataLayer
                     action: 'pause'
                     nonInteraction: false
                     value: 1
@@ -66,7 +66,7 @@ class scpr.Audio
                 # add a change event to the dataLayer
                 if @previousSource != e.jPlayer.status.src
                     @previousSource = e.jPlayer.status.src
-                    @sendEvent
+                    @addToDataLayer
                         action: 'change'
                         nonInteraction: false
                         value: 1
@@ -198,6 +198,7 @@ class scpr.Audio
 
     sendEvent: (options) ->
         options.nonInteraction ?= true
+
         # send an audio event to GA
         ga 'send',
             hitType: 'event'
@@ -207,7 +208,12 @@ class scpr.Audio
             nonInteraction: options.nonInteraction
             eventValue: options.value or 0
 
-        # also push to the dataLayer for other reporting purposes (e.g. NPR)
+    #----------
+
+    addToDataLayer: (options) ->
+        options.nonInteraction ?= true
+
+        # push to the dataLayer for general reporting purposes (e.g. NPR)
         dataLayer.push
             hitType: 'event'
             eventCategory: 'AudioPlayer'
