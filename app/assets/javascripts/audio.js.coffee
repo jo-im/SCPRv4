@@ -15,6 +15,13 @@ class scpr.Audio
             supplied: "mp3"
             wmode:    "window"
             play: (e) =>
+                # add a play event to the data layer for each play
+                @sendEvent
+                    action: 'play'
+                    nonInteraction: false
+                    value: 1
+
+                # if no audio element has played yet, add a start event to the data layer
                 if @state.started != true
                     @state = {}
                     @sendEvent
@@ -22,6 +29,12 @@ class scpr.Audio
                         nonInteraction: false
                         value: 1
                     @state.started = true
+            pause: (e) =>
+                # add a pause event to the data layer for each pause
+                @sendEvent
+                    action: 'pause'
+                    nonInteraction: false
+                    value: 1
             timeupdate: (e) =>
                 time = e.jPlayer.status.currentTime
                 @state ?= {}
@@ -41,9 +54,22 @@ class scpr.Audio
                         nonInteraction: true
                         value: 1
                     @state.started = false
-            loadstart: () =>
-                @state = {}
-                @state.started = true
+            loadstart: (e) =>
+                # initialize the state object if it doesn't already exist
+                @state ?= {}
+                @state.started ?= true
+
+                # initialize the previous audio source as the current source if it doesn't already exist
+                @previousSource ?= e.jPlayer.status.src
+
+                # if an audio is starting to load and the current source is different from the previous source 
+                # add a change event to the dataLayer
+                if @previousSource != e.jPlayer.status.src
+                    @previousSource = e.jPlayer.status.src
+                    @sendEvent
+                        action: 'change'
+                        nonInteraction: false
+                        value: 1
 
 
         @audiobar = $(@options.audioBar)
@@ -172,6 +198,7 @@ class scpr.Audio
 
     sendEvent: (options) ->
         options.nonInteraction ?= true
+        # send an audio event to GA
         ga 'send',
             hitType: 'event'
             eventCategory: 'AudioPlayer'
@@ -180,6 +207,14 @@ class scpr.Audio
             nonInteraction: options.nonInteraction
             eventValue: options.value or 0
 
+        # also push to the dataLayer for other reporting purposes (e.g. NPR)
+        dataLayer.push
+            hitType: 'event'
+            eventCategory: 'AudioPlayer'
+            eventAction: options.action
+            eventLabel: @src()
+            nonInteraction: options.nonInteraction
+            eventValue: options.value or 0
 
     class @PlayWidget
         constructor: (options) ->
