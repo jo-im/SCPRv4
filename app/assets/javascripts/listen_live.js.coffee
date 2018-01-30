@@ -69,6 +69,7 @@ class scpr.ListenLive
                     @_pause_timeout = null
 
                 @nielsen?.play() if !@_inPreroll
+                @_addToDataLayer('play', @options.url) if !@_inPreroll
 
             @player.on $.jPlayer.event.pause, (evt) =>
                 # set a timer to convert this pause to a stop in one minute
@@ -77,6 +78,7 @@ class scpr.ListenLive
                     @_shouldTryAd = true
                 , @options.pause_timeout * 1000
                 @nielsen?.stop() if !@_inPreroll
+                @_addToDataLayer('pause', @options.url) if !@_inPreroll
 
             @player.on $.jPlayer.event.error, (evt) =>
                 if evt.jPlayer.error.type == "e_url_not_set"
@@ -170,6 +172,14 @@ class scpr.ListenLive
                 show_splash_img = 'http://media.scpr.org/assets/images/programs/' + show_slug + '_splash@2x.jpg'
 
                 $('.wrapper, .wrapper-backdrop').css('background-image', 'url(' + show_splash_img + ')')
+
+        _addToDataLayer: (eventAction, eventLabel) ->
+            # push to the dataLayer for general reporting purposes (e.g. NPR)
+            dataLayer.push
+                event: 'LiveStream'
+                eventCategory: 'LiveStream'
+                eventAction: eventAction
+                eventLabel: eventLabel
 
     #----------
 
