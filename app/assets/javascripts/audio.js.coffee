@@ -215,7 +215,7 @@ class scpr.Audio
 
         # push to the dataLayer for general reporting purposes (e.g. NPR)
         dataLayer.push
-            hitType: 'event'
+            event: 'AudioPlayer'
             eventCategory: 'AudioPlayer'
             eventAction: options.action
             eventLabel: @src()
