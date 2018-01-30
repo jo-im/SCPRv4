@@ -20,15 +20,15 @@ class SitemapsController < ApplicationController
     @changefreq = "hourly"
     @priority   = "1"
     @content    = NewsStory.published.since(30.days.ago)
-    render 'sitemap', formats: :xml
+    render 'news', formats: :xml
   end
 
   def blog_entries
     @changefreq = "hourly"
     @priority   = "0.9"
-    @content = BlogEntry.published.since(30.days.ago)
-
-    render 'sitemap', formats: :xml
+    @content    = BlogEntry.published.since(30.days.ago)
+    @genres     = "Blog"
+    render 'news', formats: :xml
   end
 
   def episodes
