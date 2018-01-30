@@ -21,7 +21,7 @@ class scpr.Audio
                     nonInteraction: false
                     value: 1
 
-                # if no audio element has played yet, add a start event to the data layer
+                # if no audio element has played yet, send a start event to GA
                 if @state.started != true
                     @state = {}
                     @sendEvent
