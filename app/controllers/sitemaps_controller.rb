@@ -19,7 +19,7 @@ class SitemapsController < ApplicationController
   def stories
     @changefreq = "hourly"
     @priority   = "1"
-    @content    = NewsStory.published.since(60.days.ago)
+    @content    = NewsStory.published.since(30.days.ago)
     render 'news', formats: :xml
   end
 
