@@ -8,7 +8,7 @@
 
 <!-- LEFT ASIDE -->
 <aside class="l-column--left l--centerize" style="order: -1;">
-  <%= cell :article_audio, @story %>
+  <%= cell :article_audio, @story, audio_context: 'news' %>
   <%= cell :social_tools, @story, display: 'vert' %>
 </aside>
 
@@ -28,7 +28,7 @@ end %>
 <%= cell :ad, slot: "c", class: "l-column--right", order: 1000 %>
 
 <!-- ARTICLE BODY -->
-<%= cell :article, @story, type: 'story' %>
+<%= cell :article, @story, type: 'story', audio_context: 'news' %>
 
 <!-- MOAR STUFF -->
 <%= cell :newsletter_appeal, @story, order: 991 %>

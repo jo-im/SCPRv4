@@ -14,7 +14,7 @@
         <div class="o-featured-episode__segment-teaser"><%= episode.try(:summary) || episode.try(:teaser) %></div>
         <% if audio_file(episode) && @options[:multiple] != false %>
           <div class="c-audio-widget">
-            <a href="<%= audio_file(episode).try(:url) %>" class="c-play__button" title="<%= episode.try(:title) || episode.try(:headline) %>" data-duration="<%= audio_file(episode).try(:duration) %>" data-ga-category="Article" data-ga-action="Play" data-ga-label="Player">
+            <a href="<%= ApplicationHelper.url_with_params(audio_file(episode).try(:url), context: episode.try(:show).try(:slug), via: 'website') %>" class="c-play__button" title="<%= episode.try(:title) || episode.try(:headline) %>" data-duration="<%= audio_file(episode).try(:duration) %>" data-ga-category="Article" data-ga-action="Play" data-ga-label="Player">
               <span class="o-featured-episode__segment-audio">
                 <%= image_tag("o-audio-bar/Miniplayer-Play@2x.png", class: "o-featured-episode__segment-icon") %>
                 <%= format_clip_duration(audio_file(episode).try(:duration)) %>
@@ -23,7 +23,7 @@
           </div>
         <% end %>
         <% if @options[:multiple] == false %>
-          <%= cell(:article_audio, episode, type: 'episode').call(:horizontal) %>
+          <%= cell(:article_audio, episode, type: 'episode', audio_context: episode.try(:show).try(:slug)).call(:horizontal) %>
           <% if episode.try(:body) %>
           <div class="o-article">
             <%= episode.try(:body) %>

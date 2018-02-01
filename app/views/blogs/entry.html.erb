@@ -12,7 +12,7 @@
 
 <!-- LEFT ASIDE -->
 <aside class="l-column--left l--centerize" style="order: -1;">
-  <%= cell :article_audio, @entry %>
+  <%= cell :article_audio, @entry, audio_context: @entry.try(:blog).try(:slug) %>
   <%= cell :social_tools, @entry, display: 'vert' %>
 </aside>
 
@@ -42,7 +42,7 @@ end %>
 <%= cell :recent_content, @entry.sister_blog_entries, class: "l-column--right o-recent-content--blog-entry", blog: @blog.name, order: 1000 %>
 
 <!-- ARTICLE BODY -->
-<%= cell :article, @entry, popular_blog: @popular_blog_entry, headline: false %>
+<%= cell :article, @entry, popular_blog: @popular_blog_entry, headline: false, audio_context: @entry.try(:blog).try(:slug) %>
 
 <!-- MOAR STUFF -->
 <%= cell :newsletter_appeal, nil, order: 998 %>

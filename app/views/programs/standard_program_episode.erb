@@ -34,7 +34,7 @@
 
 <!-- LEFT ASIDE -->
 <aside class="l-column--left l--centerize" style="order: -1;">
-  <%= cell :article_audio, @episode %>
+  <%= cell :article_audio, @episode, audio_context: @episode.try(:show).try(:slug) %>
   <%= cell :social_tools, @episode, display: 'vert' %>
 </aside>
 

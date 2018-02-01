@@ -3,7 +3,7 @@
   <h2 class="o-featured-episode__title b-heading b-heading--h1 b-heading--serif">
     <%= title %>
   </h2>
-  <%= cell(:article_audio, model, type: 'episode').call(:horizontal) %>
+  <%= cell(:article_audio, model, type: 'episode', audio_context: model.try(:show).try(:slug)).call(:horizontal) %>
 </section>
 <div class="o-featured-episode__center" style="order: 3">
   <% if related_content.any? %>
@@ -15,7 +15,7 @@
         <h3 class="o-featured-episode__segment-title"><%= link_to segment.short_title, segment.public_path %></h3>
         <div class="o-featured-episode__segment-teaser"><%= segment.teaser %></div>
         <% if audio_file(segment) %>
-          <a href="<%= audio_file(segment).try(:url) %>" class="c-play__button" title="<%= segment.try(:title) || segment.try(:headline) %>" data-duration="<%= audio_file(segment).try(:duration) %>" data-ga-category="Article" data-ga-action="Play" data-ga-label="Player">
+          <a href="<%= ApplicationHelper.url_with_params(audio_file(segment).try(:url), context: segment.try(:show).try(:slug), via: 'website') %>" class="c-play__button" title="<%= segment.try(:title) || segment.try(:headline) %>" data-duration="<%= audio_file(segment).try(:duration) %>" data-ga-category="Article" data-ga-action="Play" data-ga-label="Player">
             <span class="o-featured-episode__segment-audio">
               <%= image_tag("o-audio-bar/Miniplayer-Play@2x.png", class: "o-featured-episode__segment-icon") %>
               <%= format_clip_duration(audio_file(segment).try(:duration)) %>

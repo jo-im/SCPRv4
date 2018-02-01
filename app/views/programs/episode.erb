@@ -1,5 +1,6 @@
 <% content_for :main_class, "l-episode" %>
 <% content_for :opengraph do %><%= render_content @episode, "opengraph" %><% end %>
+<% add_to_page_title @episode.headline %>
 <% content_for :header do %>
   <section id="o-prologue--program__episode" class="o-prologue o-prologue--program">
     <a class="o-prologue__logo" href="/programs/<%= @program.try(:slug) %>"><%= image_tag "show-logos/#{@program.try(:slug)}.svg" %></a>
@@ -28,7 +29,7 @@
   </section>
 <% end %>
 
-<%= cell(:article_audio, @episode, type: 'episode').call(:vertical) %>
+<%= cell(:article_audio, @episode, type: 'episode', audio_context: @episode.try(:show).try(:slug)).call(:vertical) %>
 <%= cell :ad, slot: "a", id: "o-ad--pos-a", attribution: false, order: -1 %>
 <%= cell :ad, slot: "b", id: "o-ad--pos-b", order: 998 %>
 <%= cell :recent_content, @program, class: "o-recent-segments-cluster", order: 999 %>
