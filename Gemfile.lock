@@ -430,6 +430,9 @@ GEM
       rspec-core (~> 3.2.0)
       rspec-expectations (~> 3.2.0)
       rspec-mocks (~> 3.2.0)
+    rspec-cells (0.3.4)
+      cells (>= 4.0.0, < 6.0.0)
+      rspec-rails (~> 3.2)
     rspec-core (3.2.0)
       rspec-support (~> 3.2.0)
     rspec-expectations (3.2.1)
@@ -599,6 +602,7 @@ DEPENDENCIES
   resque-pool!
   rest-client
   reverse_markdown
+  rspec-cells (~> 0.3.3)
   rspec-rails (~> 3.2.1)
   rspec_junit_formatter!
   ruby-mp3info (~> 0.8.2)

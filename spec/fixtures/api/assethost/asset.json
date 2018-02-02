@@ -4,6 +4,7 @@
   "caption": "Futurama is brought to you by... Glagnar's Human Rinds! It's a buncha muncha cruncha human!",
   "owner": "Futurama",
   "size": "286x257",
+  "image_gravity": "Left",
   "sizes": {
     "thumb": {
       "width": 86,
