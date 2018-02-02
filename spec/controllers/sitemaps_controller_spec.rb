@@ -12,7 +12,7 @@ describe SitemapsController do
 
       it "renders sitemap.xml" do
         get sitemap.to_sym
-        response.should render_template 'sitemap'
+        response.should render_template 'sitemap/news'
         response.header['Content-Type'].should match /xml/
       end
     end
