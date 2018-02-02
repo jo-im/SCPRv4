@@ -19,7 +19,7 @@ describe UpcomingEventsListCell do
       # Defaults to asset fallback (absent of image_gravity) when no asset is attached
       test_event = create :event, :published, starts_at: 2.hours.ago, ends_at: 2.hours.from_now, event_type: 'comm'
       
-      expect(test_event.asset.small).to eq 'center'
+      expect(@cell_instance.call(:asset_position, test_event)).to eq 'center'
     end
     
     it "renders asset with specified gravity if image_gravity is given" do
