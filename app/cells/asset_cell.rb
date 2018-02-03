@@ -37,7 +37,11 @@ class AssetCell < Cell::ViewModel
     if width < height
       "o-figure--portrait"
     else
-      "o-figure--classic"
+      if @options[:featured] || @options[:display] == "slideshow"
+        "o-figure--classic"
+      else
+        "o-figure--full"
+      end
     end
   end
 
