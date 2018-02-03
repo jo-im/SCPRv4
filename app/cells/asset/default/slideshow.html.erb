@@ -4,7 +4,7 @@
 
   <div class="static-slides">
   <% slideshow_assets.each do |asset| %>
-    <figure class="slide o-figure o-figure--slideshow">
+    <figure class="slide o-figure <%= aspect asset %>">
       <img
         class="o-figure__img"
         src="<%= asset.try(:eight).try(:url) %>"
