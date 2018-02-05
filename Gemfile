@@ -55,7 +55,7 @@ gem 'yajl-ruby', '~> 1.3', '>= 1.3.1' # Faster JSON parsing
 gem "rack-utf8_sanitizer"
 gem "rufus-scheduler"
 gem 'rubyzip', '~> 1.2', require: false
-gem 'pygments.rb'
+gem 'pygments.rb', '~> 1.1'
 gem 'reverse_markdown', require: false
 gem 'htmlentities', require: false
 gem 'honeybadger', '~> 2.0'
