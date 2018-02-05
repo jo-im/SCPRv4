@@ -2,6 +2,7 @@ source 'https://rubygems.org'
 
 ## Core
 gem 'rails', '~> 4.2', '>= 4.2.7'
+gem 'rake', '< 11.0'
 gem 'responders', '~> 2.0'
 gem 'mysql2', '~> 0.3.18'
 gem 'jquery-rails', '~> 3.1.0'
