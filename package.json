@@ -28,7 +28,7 @@
     "jplayer": "= 2.8.4",
     "jquery": "^3.1.0",
     "jsdom": "=3.1.2",
-    "moment": "~2.10.3",
+    "moment": "^2.20.1",
     "moment-strftime": "= 0.1.5",
     "moment-twitter": "= 0.2.0",
     "mutationobserver-shim": "^0.3.2",
