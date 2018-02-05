@@ -28,6 +28,7 @@ gem 'outpost-secretary', github:"SCPR/outpost-secretary", tag:"v0.1.1"
 gem "resque", "~> 1.26.pre.0"
 gem 'resque-pool', github:"SCPR/resque-pool"
 gem 'redis-rails'
+gem 'resque_solo'
 
 ## Views
 gem 'kaminari', '~> 0.15.0'

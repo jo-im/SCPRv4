@@ -1,7 +1,7 @@
 module Job
   class Indexer < Base
+    include Resque::Plugins::UniqueJob
     class << self
-
       def queue; QUEUES[:mid_priority]; end
 
       def perform(klass,id,action)
