@@ -19,6 +19,10 @@ class UpcomingEventsListCell < Cell::ViewModel
      article.try(:asset).try(:small).try(:url) || '/static/images/fallback-img-rect.png'
   end
 
+  def asset_position(article)
+    article.try(:asset).try(:small).try(:asset).try(:json).try(:[], 'image_gravity') || 'center';
+  end
+
   def date(event)
     starts_at = event.try(:starts_at)
     ends_at = event.try(:ends_at)
