@@ -11,17 +11,8 @@ describe SitemapsController do
       end
 
       it "renders sitemap.xml" do
-        # Defaults the template check to sitemap first
-        template = 'sitemaps/sitemap'
-
-        # Checks whether the current sitemap should render a news template instead
-        news_format = ['stories', 'blog_entries']
-        if news_format.include?(sitemap)
-          template = 'sitemaps/news'
-        end
-
         get sitemap.to_sym
-        response.should render_template template
+        response.should render_template 'sitemap'
         response.header['Content-Type'].should match /xml/
       end
     end
