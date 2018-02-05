@@ -37,10 +37,12 @@ class AssetCell < Cell::ViewModel
     if width < height
       "o-figure--portrait"
     else
-      if @options[:featured] || @options[:display] == "slideshow"
-        "o-figure--classic"
-      else
+      # If the asset is an inline asset, give the true aspect ratio - J.A.
+      if asset.try(:inline) == true
         "o-figure--full"
+      # If it's a lead asset, crop it to classic (4:3) to ensure design consistency - J.A.
+      else
+        "o-figure--classic"
       end
     end
   end
