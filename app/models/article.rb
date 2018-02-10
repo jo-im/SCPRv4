@@ -259,7 +259,7 @@ class Article
   def category
     # FIXME: This is a hack while we figure out if a slightly deflated category is breaking the iPad app
     if @category && !@category.title?
-      @category = Category.find(@category.id)
+      @category = Category.find_by_id(@category.id)
     end
 
     @category
