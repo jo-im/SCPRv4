@@ -13,7 +13,7 @@ class AppealCell < Cell::ViewModel
 
   def has_podcast_links
     present model, ProgramPresenter do |p|
-      if !p.send("podcast_link").blank? || !p.send("rss_link").blank?
+      if !p.podcast_link.blank? || !p.rss_link.blank?
         return true
       else
         return false
