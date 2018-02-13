@@ -11,6 +11,12 @@ There are a few different appeal templates available.  For example, to render th
   cell(:appeal).call(:newsletter)
 ```
 
-## Notes
+---
 
-The newsletter styling is unfinished.  Finish that up and then deprecate the newsletter-appeal cell.
+## Methods
+
+#### `has_podcast_links`
+- **Input:** model (`kpccprogram`, `external_program`)
+- **Output:** boolean
+- **Tests:** `spec/cells/appeal_cell.rb`
+- This function uses the `ProgramPresenter` to check if there are podcast or xml links associated to the current program. It's then tied to the render of the `podcast` block so that we don't render the cell if we don't have any links.

@@ -2,10 +2,12 @@
   <h4 class="o-appeal__heading b-heading b-heading--h4 b-heading--serif b-heading--bold b-heading--italic">Subscribe to<br /><%= model.title %>'s podcast</h4>
   <p class="o-appeal__caption">Receive every new episode, automatically, as soon as it's released.  Listen on your own time, your own way.</p>
   <% present model, ProgramPresenter do |p| %>
-    <% if p.send("podcast_link").present? %>
-      <a class="o-appeal__submit c-btn c-btn--outline-secondary c-btn--small" href="<%= p.send("podcast_link") %>">Subscribe via iTunes</a>
+    <% if p.podcast_link.present? %>
+      <a class="o-appeal__submit c-btn c-btn--outline-secondary c-btn--small" href="<%= p.podcast_link %>">Subscribe via iTunes</a>
+    <% end %>
+    <% if p.rss_link.present? %>
+      <a class="o-appeal__submit c-btn c-btn--outline-secondary c-btn--small" href="<%= p.rss_link %>">Any podcast app (XML)</a>
     <% end %>
   <% end %>
-  <a href="/podcasts/<%= model.try(:slug) %>" class="o-appeal__submit c-btn c-btn--outline-secondary c-btn--small">Any podcast app (XML)</a>
 </aside>
 

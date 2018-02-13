@@ -35,13 +35,13 @@ class ProgramPresenter < ApplicationPresenter
   end
 
   def podcast_link
-    if link = abstract_program.podcast_url
+    if link = program.get_link("podcast")
       link
     end
   end
 
   def rss_link
-    if link = abstract_program.rss_url
+    if link = program.get_link("rss")
       link
     end
   end
