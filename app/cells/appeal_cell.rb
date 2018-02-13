@@ -8,7 +8,17 @@ class AppealCell < Cell::ViewModel
   end
 
   def podcast
-    render
+    render if has_podcast_links
+  end
+
+  def has_podcast_links
+    present model, ProgramPresenter do |p|
+      if !p.send("podcast_link").blank? || !p.send("rss_link").blank?
+        return true
+      else
+        return false
+      end
+    end
   end
 
   def breaking_news
