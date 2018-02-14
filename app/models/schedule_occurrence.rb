@@ -32,8 +32,8 @@ class ScheduleOccurrence < ActiveRecord::Base
 
   scope :filtered_by_date, ->(date) {
     system_time_zone = Time.now.formatted_offset
-    rails_time_zone = Time.zone.now.formatted_offset
-    where("DATE(CONVERT_TZ(starts_at, :system_tz, :rails_tz)) = :date", date: date, system_tz: system_time_zone, rails_tz: rails_time_zone)
+    application_time_zone = Time.now.in_time_zone.formatted_offset
+    where("DATE(CONVERT_TZ(starts_at, :system_tz, :application_tz)) = :date", date: date, system_tz: system_time_zone, application_tz: application_time_zone)
     .order("starts_at")
   }
 
