@@ -22,6 +22,8 @@
   <% end %>
 </figure>
 
-<script>
-  ahClient = new AssetHost.Client();
-</script>
+<% if display === "video" || display === :video %>
+  <script>
+    ahClient = new AssetHost.Client();
+  </script>
+<% end %>
