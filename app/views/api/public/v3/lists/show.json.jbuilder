@@ -3,6 +3,7 @@ json.partial! api_view_path("shared", "meta")
 json.list do
   json.id            @list.id
   json.title         @list.title
+  json.type          @list.content_type
   json.context       @list.context
   json.starts_at     @list.starts_at
   json.ends_at       @list.ends_at
