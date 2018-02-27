@@ -21,7 +21,8 @@ class Outpost::ListsController < Outpost::ResourceController
   end
 
   def update
-    if @record.update_attributes(list_params)
+    @record.assign_attributes(list_params)
+    if @record.save
       notice "Saved #{@record.simple_title}"
       respond_with :outpost, @record, location: requested_location
     else

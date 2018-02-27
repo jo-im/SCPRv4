@@ -1,4 +1,15 @@
 class List < ActiveRecord::Base
+
+  CONTENT_TYPES = [
+    "NewsStory", 
+    "BlogEntry", 
+    "ShowSegment", 
+    "ContentShell",
+    "PijQuery",
+    "Event", 
+    "Program"
+  ]
+
   outpost_model
   has_status
 
@@ -24,7 +35,7 @@ class List < ActiveRecord::Base
     ", Time.zone.now, Time.zone.now, Time.zone.now, Time.zone.now)
   }
 
-  before_save :sanitize_context
+  before_save :sanitize_context, :enforce_content_type
 
   status :draft do |s|
     s.id = 0
@@ -52,6 +63,12 @@ class List < ActiveRecord::Base
 
   def sanitize_context
     self.context = (self.context || "").split(",").map(&:strip).join(",")
+  end
+
+  def enforce_content_type
+    if content_type && content_type.length
+      items.where.not("item_type LIKE ?", "%#{content_type}%").destroy_all
+    end
   end
 
 end
