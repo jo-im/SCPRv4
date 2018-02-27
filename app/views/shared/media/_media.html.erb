@@ -1,4 +1,8 @@
-<% story = (content.try(:content) || content) %>
+<% if content.class == HomepageContent %>
+  <% story = content.content %>
+<% else %>
+  <% story = content %>
+<% end %>
 <div class="story o-media o-media--<%= size %> <%= klass %>" data-obj-key='<%= story.obj_key %>'>  
   <% if size == "med" %>
     <%= media_label content.label, content.try(:label_path) %>

@@ -16,6 +16,7 @@ class ShowEpisode < ActiveRecord::Base
   include Concern::Associations::FeatureAssociation
   include Concern::Associations::PmpContentAssociation::StoryProfile
   include Concern::Associations::EpisodeRundownAssociation
+  include Concern::Callbacks::GenerateShortHeadlineCallback
   include Concern::Callbacks::SetPublishedAtCallback
   #include Concern::Callbacks::CacheExpirationCallback
   include Concern::Callbacks::PublishNotificationCallback
@@ -112,6 +113,9 @@ class ShowEpisode < ActiveRecord::Base
 
   before_save :generate_body, if: -> { self.body.blank? && should_validate? }
 
+  def short_headline
+    super || self.headline
+  end
 
   def needs_validation?
     self.pending? || self.published?
