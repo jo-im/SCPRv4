@@ -13,6 +13,7 @@ class ShowEpisode < ActiveRecord::Base
   include Concern::Associations::RelatedLinksAssociation
   include Concern::Associations::BylinesAssociation
   include Concern::Associations::EditionsAssociation
+  include Concern::Associations::FeatureAssociation
   include Concern::Associations::PmpContentAssociation::StoryProfile
   include Concern::Associations::EpisodeRundownAssociation
   include Concern::Callbacks::SetPublishedAtCallback
@@ -24,6 +25,7 @@ class ShowEpisode < ActiveRecord::Base
   include Concern::Methods::AssetDisplayMethods
 
   alias_attribute :title, :headline
+  alias_attribute :public_datetime, :published_at
 
   self.public_route_key = "episode"
 
