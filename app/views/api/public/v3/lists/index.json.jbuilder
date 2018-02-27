@@ -4,7 +4,7 @@ json.lists do
   json.array! @lists do |list|
     json.id            list.id
     json.title         list.title
-    json.type          list.content_type
+    json.type          list.content_type.split(',') if list.content_type
     json.context       list.context
     json.starts_at     list.starts_at
     json.ends_at       list.ends_at
