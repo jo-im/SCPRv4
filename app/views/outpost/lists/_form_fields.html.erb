@@ -1,6 +1,6 @@
 <%= form_block "Details" do %>
   <%= f.input :title %>
-  <%= f.input :content_type, collection: List::CONTENT_TYPES, selected: record.content_type, include_blank: false, input_html: { id: "status-select" } %>
+  <%= f.input :content_type, collection: List::CONTENT_TYPES.keys, selected: record.content_type, include_blank: false, input_html: { id: "status-select" } %>
   <%= f.input :context %>
   <%= f.section 'status' %>
   <%= f.input :starts_at %>

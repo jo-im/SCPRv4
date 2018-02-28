@@ -1,14 +1,10 @@
 class List < ActiveRecord::Base
 
-  CONTENT_TYPES = [
-    "NewsStory", 
-    "BlogEntry", 
-    "ShowSegment", 
-    "ContentShell",
-    "PijQuery",
-    "Event", 
-    "Program"
-  ]
+  CONTENT_TYPES = {
+    "article" => ["NewsStory", "BlogEntry", "ShowSegment", "Event"],
+    "program" => ["KpccProgram", "ExternalProgram"],
+    "episode" => ["ShowEpisode"]
+  }
 
   outpost_model
   has_status
@@ -66,9 +62,8 @@ class List < ActiveRecord::Base
   end
 
   def enforce_content_type
-    if content_type && content_type.length
-      items.where.not("item_type LIKE ?", "%#{content_type}%").destroy_all
-    end
+    model_names = CONTENT_TYPES[content_type]
+    items.where.not(item_type: model_names).destroy_all
   end
 
 end
