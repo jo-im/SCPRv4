@@ -28,7 +28,7 @@
     </main>
     <footer class="<%= content_for :footer_class %>">
       <%= content_for :footer %>
-      <%= cell :footer %>
+      <%= cell :footer, nil, homepage: false %>
     </footer>
     <%= cell :audio_player %>
     <%= render "shared/footer/document_footer" %>
