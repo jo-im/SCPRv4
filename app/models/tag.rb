@@ -3,6 +3,7 @@ class Tag < ActiveRecord::Base
   has_secretary
 
   include Concern::Associations::RelatedContentAssociation
+  include Concern::Model::Searchable
 
   validates :slug, uniqueness: true
   validates :title, presence: true
