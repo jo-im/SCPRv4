@@ -34,7 +34,7 @@
 <%= cell :ad, slot: "b", id: "o-ad--pos-b", order: 998 %>
 <%= cell :recent_content, @program, class: "o-recent-segments-cluster", order: 999 %>
 <%= cell :program_overview, @program, order: 1000 %>
-<%= cell :episode, @episode, program: @program, order: 1 %>
+<%= cell :episode, @episode, program: @program, content: @content, order: 1 %>
 <%= cell(:recent_episodes_list, @episodes, program: @program, order: 1001).call(:horizontal) %>
 <%= cell :archive_browser, @program, order: 1002 %>
 <%= cell :ad, slot: "c", id: "o-ad--pos-c", order: 1003 %>
