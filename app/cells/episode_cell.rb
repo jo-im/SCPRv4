@@ -36,7 +36,7 @@ class EpisodeCell < Cell::ViewModel
   end
 
   def related_content
-    model.try(:to_episode).try(:segments)
+    @options[:content] || []
   end
 
   def comment_count_for(object, options={})
