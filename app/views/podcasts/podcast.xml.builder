@@ -1,4 +1,4 @@
-cache ["v3", @podcast, @consumer], expires_in: 1.hour do # Podcasts will refresh every hour.
+cache ["v4", @podcast, @consumer], expires_in: 1.hour do # Podcasts will refresh every hour.
   xml.rss(
     'version'         => "2.0",
     'xmlns:atom'      => "http://www.w3.org/2005/Atom",
