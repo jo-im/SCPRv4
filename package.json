@@ -40,6 +40,7 @@
     "query-string": "^4.2.2",
     "scpr-style-guide": "^3.0.0",
     "selectivizr": "= 1.0.3",
+    "ssri": "^5.3.0",
     "svgxuse": "^1.2.6",
     "swfobject": "= 2.2",
     "timeago": "= 1.5.1",
