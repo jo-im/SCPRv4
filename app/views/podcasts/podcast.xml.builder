@@ -1,8 +1,9 @@
-cache ["v2", @podcast, @consumer], expires_in: 1.hour do # Podcasts will refresh every hour.
+cache ["v4", @podcast, @consumer], expires_in: 1.hour do # Podcasts will refresh every hour.
   xml.rss(
     'version'         => "2.0",
     'xmlns:atom'      => "http://www.w3.org/2005/Atom",
-    'xmlns:itunes'    => "http://www.itunes.com/dtds/podcast-1.0.dtd"
+    'xmlns:itunes'    => "http://www.itunes.com/dtds/podcast-1.0.dtd",
+    'xmlns:megaphone' => "https://developers.megaphone.fm"
   ) do
     xml.channel do
       xml.title @podcast.title
@@ -38,14 +39,15 @@ cache ["v2", @podcast, @consumer], expires_in: 1.hour do # Podcasts will refresh
         audio = article.audio.first
 
         xml.item do |item|
-          item.title              raw(article.title)
-          item.itunes :author,    raw(@podcast.author)
-          item.itunes :summary,   raw(article.teaser)
-          item.description        raw(article.teaser)
-          item.guid               article.public_url, :isPermaLink => true
-          item.pubDate            article.public_datetime.in_time_zone("GMT").strftime("%a, %d %b %Y %T %Z")
-          item.itunes :keywords,  raw(@podcast.keywords)
-          item.link               article.public_url
+          item.megaphone :externalId,   article.obj_key
+          item.title                    raw(article.title)
+          item.itunes :author,          raw(@podcast.author)
+          item.itunes :summary,         raw(article.teaser)
+          item.description              raw(article.teaser)
+          item.guid                     article.public_url, :isPermaLink => true
+          item.pubDate                  article.public_datetime.in_time_zone("GMT").strftime("%a, %d %b %Y %T %Z")
+          item.itunes :keywords,        raw(@podcast.keywords)
+          item.link                     article.public_url
 
           item.enclosure({
             :url => url_with_params(audio.podcast_url, {
