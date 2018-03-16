@@ -166,7 +166,6 @@ class Audio < ActiveRecord::Base
   # If the audio doesn't come from our servers (i.e. doesn't contain
   # the Rails.configuration.x.scpr.audio_url), then just leave it as-is
   def podcast_url
-    # self.url.gsub(Rails.configuration.x.scpr.audio_url, Rails.configuration.x.scpr.podcast_url)
     self.url.gsub(Rails.configuration.x.scpr.audio_url, Rails.configuration.x.scpr.podcast_url)
   end
 
