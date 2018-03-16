@@ -1,7 +1,7 @@
 (->
     class SmarterTime
 
-        moment = class extends require('moment')
+        moment = require('moment')
 
         DefaultOptions:
             finder:             ".smarttime, .smartertime"
