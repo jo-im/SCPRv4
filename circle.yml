@@ -9,18 +9,17 @@ machine:
   node:
     version: '5.1.0'
 
-  environment:
-    ES_INCLUDE: /home/ubuntu/elasticsearch-1.5.2/bin/elasticsearch.in.sh
-
 dependencies:
   pre:
     - npm install -g npm@5.1.0
   cache_directories:
-    - ~/elasticsearch-1.5.2
+    - ~/elasticsearch-1.7.6
   post:
-    - if [[ ! -e ~/elasticsearch-1.5.2 ]]; then cd ~ && wget https://download.elasticsearch.org/elasticsearch/elasticsearch/elasticsearch-1.5.2.tar.gz && tar -xvf elasticsearch-1.5.2.tar.gz; fi
-    - ln -s ~/elasticsearch-1.5.2/bin/elasticsearch ~/bin/elasticsearch
-    - bundle clean
+    - wget https://download.elastic.co/elasticsearch/release/org/elasticsearch/distribution/tar/elasticsearch/1.7.6/elasticsearch-1.7.6.tar.gz
+    - tar -xvf elasticsearch-1.7.6.tar.gz
+    - elasticsearch-1.7.6/bin/elasticsearch: {background: true}
+    # Make sure that Elasticsearch is up before running tests:
+    - sleep 10 && wget --waitretry=5 --retry-connrefused -v http://127.0.0.1:9200/
 
 database:
   override:
