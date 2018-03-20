@@ -22,4 +22,4 @@ config/secrets.yml
 .ash_history
 .gem/
 .bundle/
-
+.npm/

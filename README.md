@@ -1,9 +1,9 @@
-# SCPRv4
+SCPRv4
+======
 
 [![Build Status](https://circleci.com/gh/SCPR/SCPRv4.png)](https://circleci.com/gh/SCPR/SCPRv4)
 
-SCPRv4 is the code that runs [SCPR.org](http://www.scpr.org). It is
-approximately the fourth generation of the software for the site.
+SCPRv4 is the code that runs [SCPR.org](http://www.scpr.org). It is the fourth generation of the software for the site.
 
 ## Requirements
 
@@ -23,6 +23,36 @@ It connects to the following services:
     servers.
 * __[Assethost](http://github.com/scpr/Assethost)__ is used to manage all
     photo and video assets for content.
+
+## Getting Started
+
+### Prerequisites
+
+You will need to have Ruby 2.x, MySQL(~>5.6), Elasticsearch(1.7.x), Redis, and Memcached installed on the host machine.
+
+They can be installed natively, or you can use Docker Compose to run them as containers.
+
+It's as easy as running `docker-compose up -d mysql elasticsearch redis memcached`.
+
+### Installation
+
+Copy `config/templates/secrets.yml.template` to `config/secrets.yml`.
+
+And install dependencies:
+
+`bundle install & npm install`
+
+After that finishes, initialize your database:
+
+`bundle exec rake db:setup`
+
+`bundle exec rake db:seed`
+
+To run the development server, run `rails s`.
+
+### Using Production Database Backups
+
+In the chance that you need to get a backup of the production database and use that for development/debugging, you can use the [scpr/restore-percona-backup](https://github.com/scpr/restore-percona-backup) Docker image in place of the MySQL service defined in `docker-compose.yml`.  The repo for restore-percona-backup includes instructions on how to do this.
 
 ## Quick Tour
 
@@ -59,6 +89,8 @@ around the site.
 ### CMS Login
 
 User accounts for the CMS are in the `AdminUser` model.
+
+If you ran `bundle exec rake db:seed`, database will be seeded with an AdminUser called `admin` with `password` as the password.  You can log in as this user in Outpost under the `/outpost` route.
 
 ### Caching
 
@@ -103,61 +135,4 @@ an asset has been updated. When an asset is updated externally, we need to
 delete our cache of it so that the newest version is picked up.
 
 In production, assetsync runs on a worker instance.
-
-## Getting Started
-
-### Docker Setup (recommended)
-
-This is by far the easiest way of getting the application up and running.  All you need is to have [Docker](https://www.docker.com/) with [docker-compose](https://docs.docker.com/compose/) installed.
-
-Obtain a Deploybot key for a database backup and set it as a temporary environment variable.
-
-      export SCPRV4_DEPLOYBOT_TOKEN=<your token>
-
-Then pull/run the services.
-
-      docker-compose up -d mysql redis elasticsearch
-
-The MySQL container will pull a database backup, which will take a few minutes to do.  Unfortunately, there's currently no way to run the command without daemon mode and be able to exit the container with CTRL+C until we can modify `scpr/restore-percona-backup` to optionally pull a backup without starting the MySQL server.  You can check if your MySQL server is up and running by executing `curl localhost:3306` and seeing if you get a response.
-
-After acquring `config/secrets.yml` from the wiki, if you have Rails installed on your host, running the web server is simple as...
-
-      rails s
-
-... or optionally, you can instead run the Rails application in a Docker container.  The disadvantages to this approach are that you will have to first build a Docker image and that the application will also run slower, but the advantage is the application environment is self-contained as the rest of the servies are(i.e. no having to maintain version of Ruby, RVM/Rbenv, Node.js, etc. on the host machine).
-      
-      docker-compose run --rm scpr
-
-On first run, `bundle install` and `npm install` will pull in dependencies.  This will take a few minutes but will be much shorter in the future because the dependencies get saved in volumes.
-
-To use the Rails console:
-
-      docker-compose run --rm scpr rails c
-
-The application will be available at http://localhost:3000.  If you are using [docker-machine](https://docs.docker.com/machine/), it will be available at the IP of your virtual machine, which you can find by executing `echo $DOCKER_HOST`.
-
-#### Troubleshooting
-
-If running `rails s` gives you an error like this:
-```
-Caught an error when loading AdminUser: Mysql2::Error: Table 'scpr.auth_user' doesn't exist: SHOW FULL FIELDS FROM `auth_user`
-Caught an error when loading NewsStory: Mysql2::Error: Table 'scpr.news_story' doesn't exist: SHOW FULL FIELDS FROM `news_story`
-```
-
-Then your database schema may be messed up. Reload it by:
-
-```
-bundle exec rake db:drop
-bundle exec rake db:create db:schema:load
-```
-
-### Native Setup
-
-* Install Ruby 2.1.x
-* Install Node.js 5.x
-* Install MySQL (5.6.x should be fine) / Elasticsearch (1.5.x) / Redis
-* Acquire a `secrets.yml` file via the wiki
-* `bundle install` and `npm install`
-* `rake scprv4:index_all` to index articles and models into Elasticsearch
-* `rake scprv4:cache` to cache homepage, tweets, etc
 

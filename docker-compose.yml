@@ -22,16 +22,14 @@ services:
       - scpr-gems:/usr/local/lib/ruby/gems/
 
   mysql:
-    image: scpr/restore-percona-backup
+    image: mysql:5.7.21
     container_name: scpr-mysql
     ports:
       - 3200:3200/tcp
       - 3306:3306/tcp
     restart: always
-    command: $SCPRV4_DEPLOYBOT_TOKEN
     environment:
       MYSQL_ROOT_PASSWORD: password
-      SCPRV4_DEPLOYBOT_TOKEN: ${SCPRV4_DEPLOYBOT_TOKEN}
     volumes:
       - mysql-data:/var/lib/mysql
     networks:

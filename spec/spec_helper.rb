@@ -11,7 +11,7 @@ require 'capybara/rspec'
 
 require 'elasticsearch/extensions/test/cluster'
 
-ES_PORT = (ENV['TEST_CLUSTER_PORT'] || 9250)
+ES_PORT = (ENV['TEST_CLUSTER_PORT'] || 9200)
 
 Dir[Rails.root.join("spec/support/**/*.rb")].each { |f| require f }
 
@@ -67,12 +67,9 @@ RSpec.configure do |config|
     FileUtils.rm_rf(
       Rails.configuration.x.scpr.media_root.join("audio/upload")
     )
-    silence_output
   end
 
   config.before :suite do
-    Elasticsearch::Extensions::Test::Cluster.start(nodes:1) unless ENV["ES_RUNNING"]
-
     ContentBase.class_variable_set :@@es_client, Elasticsearch::Client.new(
       hosts:              ["127.0.0.1:#{ES_PORT}"],
       retry_on_failure:   0,
@@ -81,13 +78,13 @@ RSpec.configure do |config|
 
     Elasticsearch::Model.client = ContentBase.es_client
 
-    ContentBase.es_client.indices.delete index:"_all"
+    erase_test_indices
 
-    Article._put_article_mapping()
+    Article._put_article_mapping
   end
 
   config.after :suite do
-    Elasticsearch::Extensions::Test::Cluster.stop unless ENV["ES_RUNNING"]
+    erase_test_indices
   end
 
   es_i = 0
@@ -164,21 +161,12 @@ RSpec.configure do |config|
 end
 
 public
-# Redirects stderr and stout to /dev/null
-def silence_output
-  # Store the original stderr and stdout in order to restore them later
-  @original_stderr = $stderr
-  @original_stdout = $stdout
 
-  # Redirect stderr and stdout
-  $stderr = File.new('/dev/null', 'w')
-  $stdout = File.new('/dev/null', 'w')
+def erase_test_indices
+  ContentBase.es_client.indices.segments["indices"].keys.each do |index|
+    if index.match(ES_ARTICLES_INDEX)
+      ContentBase.es_client.indices.delete index: index
+    end
+  end
 end
 
-# Replace stderr and stdout so anything else is output correctly
-def enable_output
-  $stderr = @original_stderr
-  $stdout = @original_stdout
-  @original_stderr = nil
-  @original_stdout = nil
-end
