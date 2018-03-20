@@ -37,17 +37,12 @@ module NprArticleImporter
 
       added = []
 
-      fetched_story_ids    = npr_stories.map(&:id)
+      npr_stories.each do |npr_story|
+        if existing_story = RemoteArticle.where(article_id: npr_story.id.to_s, source: SOURCE).first
+          existing_story.update headline: npr_story.title, teaser: npr_story.teaser, url: npr_story.link_for("html")
+          next
+        end
 
-      existing_story_ids   = RemoteArticle.where(article_id: fetched_story_ids, source: SOURCE)
-        .pluck(:article_id)
-        .compact
-        .map(&:to_s)
-
-      npr_stories.reject{ |s|
-        # Reject the story if the id is already present in our database.
-        existing_story_ids.include?(s.id.to_s)
-      }.each do |npr_story|
         cached_article = RemoteArticle.new(
           :source       => SOURCE,
           :article_id   => npr_story.id,
@@ -70,7 +65,7 @@ module NprArticleImporter
           log "NPR Story ##{npr_story.id} already exists"
         end
 
-      end # each
+      end
 
       added
     end

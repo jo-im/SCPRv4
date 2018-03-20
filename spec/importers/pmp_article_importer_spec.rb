@@ -56,6 +56,22 @@ describe PmpArticleImporter do
       added = PmpArticleImporter.sync
       added.first.url.should match /marketplace\.org/
     end
+
+    it 'updates existing headlines' do
+      added = PmpArticleImporter.sync
+      added.first.headline.should match /billions and billions/
+      stub_request(:get, %r|pmp\.io/docs|)
+        .with(query: {"limit" => "10", "profile" => "story", "tag" => "marketplace"}).to_return({
+          :headers => {
+            :content_type   => "application/json"
+          },
+          :body => load_fixture('api/pmp/marketplace_stories_altered.json')
+        })
+      PmpArticleImporter.sync
+      cached = RemoteArticle.all
+      cached.first.headline.should match /trillions and trillions/
+    end
+
   end
 
   describe '#import' do

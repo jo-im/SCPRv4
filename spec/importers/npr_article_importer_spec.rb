@@ -17,6 +17,26 @@ describe NprArticleImporter do
       RemoteArticle.count.should eq 2 # Two stories in the JSON fixture
       added.first.headline.should match /Small Boat/
     end
+
+    it 'updates existing headlines, teasers, and hyperlinks' do
+      added = NprArticleImporter.sync
+      RemoteArticle.count.should eq 2
+      added.first.headline.should match /Small Boat/
+      added.first.teaser.should_not match /sail/
+      added.first.url.should_not match /four-men-in-a-small-ship/
+      stub_request(:get, %r|api\.npr|).to_return({
+        :headers => {
+          :content_type   => "application/json"
+        },
+        :body => load_fixture('api/npr/stories-altered.json')
+      })
+      NprArticleImporter.sync
+      cached = RemoteArticle.all
+      cached.count.should eq 2 # The two same stories should remain, not be duplicated
+      cached.first.headline.should match /Small Ship/
+      cached.first.teaser.should match /sail/
+      cached.first.url.should match /four-men-in-a-small-ship/
+    end
   end
 
   describe '#import' do

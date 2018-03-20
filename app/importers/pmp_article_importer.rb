@@ -36,9 +36,14 @@ module PmpArticleImporter
       added = []
       stories = query(query)
       log "#{stories.size} PMP stories from #{news_agency_name} found"
-      stories.reject { |s|
-        RemoteArticle.exists?(source: SOURCE, article_id: s.guid)
-      }.each do |story|
+      stories.each do |story|
+
+        if existing_article = RemoteArticle.where(source: SOURCE, article_id: story.guid).first
+          new_url = if story.alternate.present? then story.alternate.first.href else existing_article.url end
+          existing_article.update headline: story.title, teaser: story.teaser, url: new_url
+          next
+        end
+
         # The PMP API is returning stories with an empty Publish timestamp,
         # so we need to protect against it.
         published  = begin
