@@ -1,7 +1,9 @@
 class PopularArticlesCell < Cell::ViewModel
   include Cell::Caching::Notifications
   cache :show, expires_in: 12.hours
-  cache :trio, expires_in: 12.hours
+  cache :trio, expires_in: 12.hours do
+    ['v2']
+  end
   cache :side_bar, expires_in: 12.hours do
     ["v5", @options[:class]]
   end
