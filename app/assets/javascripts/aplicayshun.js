@@ -28,6 +28,7 @@
 //= require embeditor/adapters/google_fusion
 //= require embeditor/adapters/ranker
 //= require embeditor/adapters/document_cloud
+//= require embeditor/adapters/youtube
 
 //= require fastclick/lib/fastclick
 //= require slideshow/new_slideshow
