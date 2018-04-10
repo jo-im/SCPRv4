@@ -137,6 +137,13 @@ RSpec.configure do |config|
       },
       :body         => load_fixture('media/audio/2sec.mp3')
     })
+
+    stub_request(:get, %r|cms\.megaphone\.fm\/|).to_return({
+      :body => "{}",
+      :headers => {
+        :content_type => "application/json"
+      }
+    })
   end
 
   config.around :each do |example|
