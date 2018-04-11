@@ -7,7 +7,7 @@
           <tr>
             <td><%= f.input :pre_count, as: :integer, disabled: !has_podcast_record, label: "Pre-roll Count", input_html: { class: "tiny thin" } %></td>
             <td><%= f.input :post_count, as: :integer, disabled: !has_podcast_record, label: "Post-roll Count", input_html: { class: "tiny thin" } %></td>
-            <td><%= f.input :insertion_points, as: :string, disabled: !has_podcast_record, label: "Mid-roll Insertion Points", input_html: { class: "tiny thin", pattern: "^(\s*-?\d+(\.\d+)?)(\s*,\s*-?\d+(\.\d+)?)*$" } %></td>
+            <td><%= f.input :insertion_points, as: :string, disabled: !has_podcast_record, label: "Mid-roll Insertion Points", input_html: { class: "tiny thin", pattern: "^(\\s*-?\\d+(\\.\\d+)?)(\\s*,\\s*-?\\d+(\\.\\d+)?)*$" } %></td>
           </tr>
         </div>
         <div class="span4">
