@@ -122,7 +122,12 @@ class ShowEpisode < ActiveRecord::Base
   end
 
   def podcast_record
-    @podcast_record ||= $megaphone.episodes.search({ externalId: "#{self.obj_key}__#{Rails.env}" }).first
+    @podcast_record ||=
+      begin
+        $megaphone.episodes.search({ externalId: "#{self.obj_key}__staging" }).first
+      rescue
+        {}
+      end
   end
 
   def insertion_points
@@ -255,11 +260,15 @@ class ShowEpisode < ActiveRecord::Base
 
   def update_podcast
     if @podcast_request_body.present?
-      $megaphone.episodes.update({
-        podcast_id: podcast_record['podcastId'],
-        episode_id: podcast_record['id'],
-        body: @podcast_request_body
-      })
+      begin
+        $megaphone.episodes.update({
+          podcast_id: podcast_record['podcastId'],
+          episode_id: podcast_record['id'],
+          body: @podcast_request_body
+        })
+      rescue
+        {}
+      end
     end
   end
 end
