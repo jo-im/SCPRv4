@@ -161,23 +161,27 @@ module NprArticleImporter
                 image.crop("standard") ||
                 image
 
-        asset = AssetHost::Asset.create(
-          :url     => crop.src,
-          :title   => image.title,
-          :caption => image.caption,
-          :owner   => [image.producer, image.provider].join("/"),
-          :note    => "Imported from NPR: #{npr_story.link_for('html')}"
-        )
-
-        if asset && asset.id
-          content_asset = ContentAsset.new(
-            :position   => 0,
-            :asset_id   => asset.id,
-            :caption    => image.caption
-          )
-
-          article.assets << content_asset
-        end
+        # # Temporarily silencing Asset creation during test period.
+        # # This is so that we don't add assets unnecessarily as we explore the option of
+        # # publishing NPR articles as they are received.
+        #
+        # asset = AssetHost::Asset.create(
+        #   :url     => crop.src,
+        #   :title   => image.title,
+        #   :caption => image.caption,
+        #   :owner   => [image.producer, image.provider].join("/"),
+        #   :note    => "Imported from NPR: #{npr_story.link_for('html')}"
+        # )
+        #
+        # if asset && asset.id
+        #   content_asset = ContentAsset.new(
+        #     :position   => 0,
+        #     :asset_id   => asset.id,
+        #     :caption    => image.caption
+        #   )
+        #
+        #   article.assets << content_asset
+        # end
       end
 
 
