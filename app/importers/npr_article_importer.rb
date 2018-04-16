@@ -58,6 +58,7 @@ module NprArticleImporter
             added.push cached_article
             log "Saved NPR Story ##{npr_story.id} as " \
                 "RemoteArticle ##{cached_article.id}"
+            self.import cached_article
           else
             log "Couldn't save NPR Story ##{npr_story.id}"
           end
@@ -98,7 +99,7 @@ module NprArticleImporter
       #-------------------
       # Build the NewsStory from the API response
       article = klass.new(
-        :status         => klass.status_id(:draft),
+        :status         => klass.status_id(:live),
         :headline       => npr_story.title,
         :teaser         => npr_story.teaser,
         :short_headline => npr_story.shortTitle.present? ? npr_story.shortTitle : npr_story.title,
