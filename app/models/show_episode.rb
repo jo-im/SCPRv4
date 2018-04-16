@@ -124,7 +124,7 @@ class ShowEpisode < ActiveRecord::Base
   def podcast_record
     @podcast_record ||=
       begin
-        $megaphone.episodes.search({ externalId: "#{self.obj_key}__staging" }).first
+        $megaphone.episodes.search({ externalId: "#{self.obj_key}__#{Rails.env}" }).first
       rescue
         {}
       end

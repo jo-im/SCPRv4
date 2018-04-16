@@ -139,11 +139,26 @@ RSpec.configure do |config|
     })
 
     stub_request(:get, %r|cms\.megaphone\.fm\/|).to_return({
-      :body => "{}",
+      :body => load_fixture("api/megaphone/episode.json"),
       :headers => {
         :content_type => "application/json"
       }
     })
+
+    # Stub requests that have a stubbed token
+    stub_request(:get, %r|cms\.megaphone\.fm\/|)
+      .with(headers: { 'Authorization' => 'Token token=STUB_TOKEN' })
+      .to_return({
+        :body => load_fixture("api/megaphone/episode.json"),
+        :headers => {
+          :content_type => "application/json"
+        }
+    })
+
+    # Stub requests for intentional failures (i.e. incorrect token)
+    stub_request(:get, %r|cms\.megaphone\.fm\/api\/|)
+      .with(headers: { 'Authorization' => 'Token token=INCORRECT_TOKEN' })
+      .to_return(status: [401, "HTTP Token: Access denied"])
   end
 
   config.around :each do |example|
