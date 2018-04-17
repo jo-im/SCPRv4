@@ -71,7 +71,7 @@ module NprArticleImporter
             added.push cached_article
             log "Saved NPR Story ##{npr_story.id} as " \
                 "RemoteArticle ##{cached_article.id}"
-            self.import cached_article
+            self.import cached_article, { npr_story: npr_story }
           else
             log "Couldn't save NPR Story ##{npr_story.id}"
           end
@@ -98,7 +98,7 @@ module NprArticleImporter
     def import(remote_article, options={})
       klass = (options[:import_to_class] || "NewsStory").constantize
 
-      npr_story = NPR::Story.find_by_id(remote_article.article_id)
+      npr_story = options[:npr_story] || NPR::Story.find_by_id(remote_article.article_id)
       return false if !npr_story
 
       text = begin
@@ -109,6 +109,9 @@ module NprArticleImporter
         end
       end
 
+      primary_topic = npr_story.parents.select{|parent| parent.type == 'primaryTopic'}.try(:first)
+      primary_topic_title = primary_topic.try(:title)
+
       #-------------------
       # Build the NewsStory from the API response
       article = klass.new(
@@ -117,7 +120,7 @@ module NprArticleImporter
         :teaser         => npr_story.teaser,
         :short_headline => npr_story.shortTitle.present? ? npr_story.shortTitle : npr_story.title,
         :body           => text,
-        :category_id    => Category.find_by(title: CATEGORY_MAP[npr_story.parents.first.title).id || nil
+        :category_id    => Category.find_by(title: CATEGORY_MAP[primary_topic_title]).try(:id)
       )
 
       if article.is_a? NewsStory
