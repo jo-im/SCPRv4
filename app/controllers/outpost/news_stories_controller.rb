@@ -21,6 +21,7 @@ class Outpost::NewsStoriesController < Outpost::ResourceController
 
     l.filter :status, collection: -> { NewsStory.status_select_collection }
     l.filter :bylines, collection: -> { Bio.select_collection }
+    l.filter :source, collection: -> { NewsStory.source_select_collection }
   end
 
   #----------------
