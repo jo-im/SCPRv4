@@ -14,6 +14,19 @@ module NprArticleImporter
     '102920358'  # All Tech Considered (blog)
   ]
 
+  # Basic map to match our categories with theirs
+  CATEGORY_MAP = {
+    "Art & Design" => "Arts & Entertainment",
+    "Arts & Life" => "Arts & Entertainment",
+    "Education" => "Education",
+    "Environment" => "Environment & Science",
+    "Health" => "Health",
+    "Law" => "Crime & Justice",
+    "National" => "US & World",
+    "Politics" => "Politics",
+    "Science" => "Science",
+    "World" => "US & World"
+  }
 
   class << self
     include ::NewRelic::Agent::Instrumentation::ControllerInstrumentation
@@ -103,7 +116,8 @@ module NprArticleImporter
         :headline       => npr_story.title,
         :teaser         => npr_story.teaser,
         :short_headline => npr_story.shortTitle.present? ? npr_story.shortTitle : npr_story.title,
-        :body           => text
+        :body           => text,
+        :category_id    => Category.find_by(title: CATEGORY_MAP[npr_story.parents.first.title).id || nil
       )
 
       if article.is_a? NewsStory
