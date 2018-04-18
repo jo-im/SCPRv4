@@ -37,6 +37,9 @@ describe NprArticleImporter do
       cached.first.teaser.should match /sail/
       cached.first.url.should match /four-men-in-a-small-ship/
     end
+
+    it 'calls import after a successful sync' do
+    end
   end
 
   describe '#import' do
@@ -81,5 +84,17 @@ describe NprArticleImporter do
     #   news_story.assets.size.should eq 1
     #   news_story.assets.first.caption.should match /European Space Agency/
     # end
+
+    it "adds a category if NPR's primaryTopic matches one of our categories" do
+      remote_article = create :npr_article
+      news_story = NprArticleImporter.import(remote_article)
+      news_story.category.title.should eq 'US & World'
+    end
+
+    it "does not call the API if options[:npr_story] is given" do
+      remote_article = create :npr_article
+      npr_story = load_fixture('api/npr/story.json')
+      news_story = NprArticleImporter.import(remote_article, { npr_story: npr_story })
+    end
   end
 end
