@@ -456,7 +456,7 @@ GEM
       rspec-mocks (~> 3.2.0)
       rspec-support (~> 3.2.0)
     rspec-support (3.2.2)
-    ruby-mp3info (0.8.4)
+    ruby-mp3info (0.8.10)
     ruby-prof (0.15.2)
     rubyzip (1.2.1)
     rufus-scheduler (3.0.9)
@@ -613,7 +613,7 @@ DEPENDENCIES
   rspec-cells (~> 0.3.3)
   rspec-rails (~> 3.2.1)
   rspec_junit_formatter!
-  ruby-mp3info (~> 0.8.2)
+  ruby-mp3info (~> 0.8.10)
   ruby-prof
   rubyzip (~> 1.2)
   rufus-scheduler
