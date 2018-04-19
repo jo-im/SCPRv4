@@ -8,7 +8,7 @@ json.list do
   json.starts_at     @list.starts_at
   json.ends_at       @list.ends_at
   json.created_at    @list.created_at
-  json.updated_at    @list.updated_at  
+  json.updated_at    @list.updated_at
   json.items do
     json.array! @list_items do |article|
       if article.obj_key.match("program")

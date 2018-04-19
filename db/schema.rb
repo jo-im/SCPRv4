@@ -948,8 +948,8 @@ ActiveRecord::Schema.define(version: 20180419171624) do
     t.integer  "original_segment_id", limit: 4
     t.boolean  "needs_reindex",                          default: false
     t.text     "abstract",            limit: 65535
-    t.integer  "feature_type_id",     limit: 4
     t.string   "short_headline",      limit: 255
+    t.integer  "feature_type_id",     limit: 4
   end
 
   add_index "shows_episode", ["air_date"], name: "index_shows_episode_on_air_date", using: :btree

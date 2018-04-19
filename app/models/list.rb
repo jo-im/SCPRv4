@@ -57,6 +57,14 @@ class List < ActiveRecord::Base
     ListItem.new(attrs) if item.published?
   end
 
+  def deduped_category_items
+    self.category.content({
+      page: 1,
+      per_page: 14,
+      exclude: NewsStory.published.order('published_at DESC').limit(16)
+    })
+  end
+
   private
 
   def sanitize_context

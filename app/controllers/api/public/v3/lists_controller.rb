@@ -18,7 +18,7 @@ module Api::Public::V3
       @list_items = @list.items.articles
 
       if @list_items.empty?
-        @list_items = @list.category_items
+        @list_items = @list.deduped_category_items
       end
 
       respond_with @list_items
