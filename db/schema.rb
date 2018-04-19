@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180227011442) do
+ActiveRecord::Schema.define(version: 20180419171624) do
 
   create_table "abstracts", force: :cascade do |t|
     t.string   "source",               limit: 255
@@ -596,6 +596,7 @@ ActiveRecord::Schema.define(version: 20180227011442) do
     t.datetime "created_at",                           null: false
     t.datetime "updated_at",                           null: false
     t.string   "content_type", limit: 255
+    t.integer  "category_id",  limit: 4
   end
 
   add_index "lists", ["ends_at"], name: "index_lists_on_ends_at", using: :btree
@@ -947,8 +948,8 @@ ActiveRecord::Schema.define(version: 20180227011442) do
     t.integer  "original_segment_id", limit: 4
     t.boolean  "needs_reindex",                          default: false
     t.text     "abstract",            limit: 65535
-    t.string   "short_headline",      limit: 255
     t.integer  "feature_type_id",     limit: 4
+    t.string   "short_headline",      limit: 255
   end
 
   add_index "shows_episode", ["air_date"], name: "index_shows_episode_on_air_date", using: :btree

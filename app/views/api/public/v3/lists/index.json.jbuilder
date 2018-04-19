@@ -12,7 +12,7 @@ json.lists do
     json.updated_at    list.updated_at
     json.items do
       json.partial! api_view_path("articles", "collection"),
-        articles: list.items.articles
+        articles: list.items.articles.length > 0 ? list.items.articles : list.category.content
     end
   end
 end

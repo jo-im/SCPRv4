@@ -9,6 +9,8 @@ class List < ActiveRecord::Base
   outpost_model
   has_status
 
+  include Concern::Associations::CategoryAssociation
+
   has_many :items,
     -> { order('position').includes(:item) },
     class_name: "ListItem"
@@ -17,11 +19,11 @@ class List < ActiveRecord::Base
 
   validates :title, presence: true
 
-  scope :published, ->(){ 
+  scope :published, ->(){
     where(status: 5)
   }
 
-  scope :visible, ->(){  
+  scope :visible, ->(){
     published.where("
       (starts_at IS NULL AND ends_at IS NULL)
       OR
