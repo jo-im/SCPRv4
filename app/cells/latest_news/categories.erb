@@ -19,33 +19,6 @@
         <% end %>
       </div>
     </section>
-    <section class="o-latest-news__category-image">
-      <% if feature = section.featured_object %>
-        <% if feature.is_a? FeaturedComment %>
-          <% content = feature.content %>
-          <% if feature && content %>
-            <h6 class="b-heading b-heading--h6 b-heading--uppercase u-text-color--gray b-heading--bold">From the Comments</h6>
-            <blockquote class="o-latest-news__category_side-title"><%= link_to "&ldquo;#{feature.excerpt}&rdquo;".html_safe, content.public_path, :class => 'track-event', :data => {'ga-category' => 'Homepage', 'ga-action' => 'Featured Comment', 'ga-label' => 'Section Block'} %></blockquote>
-            <div class="comments-quotee">&mdash; <%= feature.username %></div>
-          <% end %>
-        <% else %>
-          <a href="<%= feature.try(:public_path) %>">
-            <figure class="o-latest-news__category-image_figure o-figure o-figure--square">
-              <img class="o-figure__img" src="<%= asset_path feature %>" style="background-image: url(<%= asset_path feature %>)">
-              <% if feature.try(:asset).try(:owner) %>
-              <figcaption class="o-figure__caption o-figure__attribution">
-                Photo by <%= feature.try(:asset).try(:owner) %>
-              </figcaption>
-              <% end %>
-            </figure>
-          </a>
-          <% if feature.try(:original_object).try(:show).try(:title) %>
-            <h6 class="o-latest-news__category-image__program b-heading--h6 b-heading--uppercase u-text-color--gray b-heading--medium"><%= feature.try(:original_object).try(:show).try(:title) %></h6>
-          <% end %>
-          <span class="o-latest-news__category_side-title"><%= link_to feature.try(:short_title), feature.try(:public_path), "data-ga-category" => '@currentCategory', "data-ga-action" => "Article", "data-ga-label" => '@scrollDepth', class: "track-event" %></span>
-        <% end %>
-      <% end %>
-    </section>
   </section>
 <% end %>
 <script>
