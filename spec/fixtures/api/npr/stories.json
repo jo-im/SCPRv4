@@ -841,6 +841,454 @@
         "fullText": {
           "$text": "<div class=\"storytitle\">      <h1>Ubuntu Marks 'Bug No. 1' As Fixed, After Nearly Nine Years</h1>   <input type=\"hidden\" id=\"title187318344\" value=\"Ubuntu Marks 'Bug No. 1' As Fixed, After Nearly Nine Years\"></input>   <input type=\"hidden\" id=\"modelShortUrl187318344\" value=\"http://n.pr/11amjB4\"></input>   <input type=\"hidden\" id=\"modelFullUrl187318344\" value=\"http://www.npr.org/blogs/thetwo-way/2013/05/30/187318344/ubuntu-marks-bug-no-1-as-fixed-after-nearly-nine-years\"></input></div><!-- END CLASS=\"STORYTITLE\" --><div id=\"story-meta\">      <div id=\"storybyline\" class=\"  linkLocation\">            <div class=\"bucketwrap byline\" id=\"res187318347\" previewTitle=\"bylines\">                  <p class=\"byline\">by <a rel=\"author\" href=\"http://www.npr.org/people/14562108/bill-chappell\"><span>Bill Chappell</span></a></p>      </div>      <!-- END CLASS=\"BUCKETWRAP BYLINE\" ID=\"RES187318347\" PREVIEWTITLE=\"BYLINES\" -->   </div>   <!-- END ID=\"STORYBYLINE\" CLASS=\"  LINKLOCATION\" -->   <div class=\"dateblock\">            <time datetime=\"2013-05-30\"><span class=\"date\">May 30, 2013</span><span class=\"time\"> 3:02 PM</span></time>   </div></div><!-- END ID=\"STORY-META\" --><div id=\"storytext\" class=\"storytext storylocation linkLocation\">      <div id=\"res187327880\" class=\"bucketwrap image large\" previewTitle=\"Since it was first filed in August of 2004, Ubuntu's Bug #1 attracted many comments. With comment number 1834, Mark Shuttleworth declared the issue fixed today.\">            <div class=\"imagewrap\">                  <img src=\"http://media.npr.org/assets/img/2013/05/30/ubuntu_custom-ffbf6e94f5b5ff4629543ab3d781b3ad6c9bb91d-s6.jpg\" title=\"Since it was first filed in August of 2004, Ubuntu's Bug #1 attracted many comments. With comment number 1834, Mark Shuttleworth declared the issue fixed today.\" alt=\"Since it was first filed in August of 2004, Ubuntu's Bug #1 attracted many comments. With comment number 1834, Mark Shuttleworth declared the issue fixed today.\" />      </div>      <!-- END CLASS=\"IMAGEWRAP\" -->      <div class=\"captionwrap\">                  <div class=\"caption\">                        <p><i>Since it was first filed in August of 2004, Ubuntu's Bug #1 attracted many comments. With comment number 1834, Mark Shuttleworth declared the issue fixed today.</i></p>         </div>         <!-- END CLASS=\"CAPTION\" -->      </div>      <!-- END CLASS=\"CAPTIONWRAP\" -->      <span class=\"creditwrap\"><span class=\"rightsnotice\">Launchpad</span></span>   </div>   <p>In the more than eight years since it was written, the open-source operating system Ubuntu's \"Bug #1\" has been seen as a rallying call. After all, the bug's title is \"Microsoft has a majority market share.\"</p>   <p>But the entry was officially closed Thursday, partly because the \"broader market has healthy competition\" as <a href=\"http://www.ubuntu.com/\">Ubuntu</a> leader Mark Shuttleworth <a href=\"https://bugs.launchpad.net/ubuntu/+bug/1/comments/1834\">writes in his comments</a> on closing the bug today.</p>   <p>Based on Linux, Ubuntu was created at a time when Microsoft dominated the PC market, to the extent that it was difficult to purchase a PC that didn't come with the Windows operating system already installed.</p>   <p>By contrast, Ubuntu's philosophy was that \"Our work is driven by a belief that software should be free and accessible to all,\" as Shuttleworth <a href=\"https://bugs.launchpad.net/ubuntu/+bug/1/\">wrote in August of 2004</a>.</p>   <p>Much has changed in the nearly nine years since then. Most notably, smartphones and tablets have taken over an increasing share of the things people once did on laptop and desktop computers. That change, along with the strong growth of Google's Android and Apple's iOS systems, has meant that Windows plays a less dominant role in the computing market today than it did in 2004.</p>   <p>\"Android may not be my or your first choice of Linux,\" Shuttleworth writes, \"but it is without doubt an open source platform that offers both practical and economic benefits to users and industry. So we have both competition, and good representation for open source, in personal computing.\"</p>   <p>He noted that Microsoft's approach to Ubuntu and other operating systems, particularly when it comes to integrating them into cloud computing, has improved.</p>   <p>\"Circumstances have changed, institutions have adapted, so should we,\" Shuttleworth says.</p>   <p>He also said that the work of Ubuntu and its partners shouldn't have the main goal of supplanting Microsoft:</p>   <blockquote class=\"edTag\"><div>   <p>\"There is a social element to this bug report as well, of course. It served for many as a sort of declaration of intent. But it's better for us to focus our intent on excellence in our own right, rather than our impact on someone else's product.\"</p>   </div></blockquote>   <p>Shuttleworth's comment closing the bug — comment 1834 — sparked a flurry of new comments on the issue. Some said there was never a bug in the first place. But others said that while the computing environment had improved, the bug hadn't really been fixed. They noted the continued prevalence of proprietary software in the marketplace.</p>   <p>\"Declaring a bug to be fixed and actually fixing it are two different things,\" wrote a commenter named PJO.</p></div><div class=\"fullattribution\">Copyright 2013 NPR. To see more, visit http://www.npr.org/.<img src=\"http://www.google-analytics.com/__utm.gif?utmac=UA-5828686-4&utmdt=Ubuntu+Marks+%27Bug+No.+1%27+As+Fixed%2C+After+Nearly+Nine+Years&utme=8(APIKey)9(MDA1OTI3MjQ5MDEyODUwMTE2MzM1YzNmZA004)\"/></div>"
         }
+      },
+      {
+        "id": "187318344",
+        "link": [
+          {
+            "type": "html",
+            "$text": "http://www.npr.org/blogs/thetwo-way/2013/05/30/187318344/ubuntu-marks-bug-no-1-as-fixed-after-nearly-nine-years?ft=3&f="
+          },
+          {
+            "type": "api",
+            "$text": "http://api.npr.org/query?id=187318344&apiKey=MDA1OTI3MjQ5MDEyODUwMTE2MzM1YzNmZA004"
+          },
+          {
+            "type": "short",
+            "$text": "http://n.pr/11amlJd"
+          }
+        ],
+        "title": {
+          "$text": "Watch Live: This is not supposed to be automatically imported."
+        },
+        "partnerId": {
+          "$text": "187318344"
+        },
+        "subtitle": {},
+        "shortTitle": {},
+        "teaser": {
+          "$text": "In the more than eight years since it was written, the open-source operating system Ubuntu's \"Bug #1\" was seen as a rallying call: \"Microsoft has a majority market share.\" But the entry was officially closed Thursday, as Ubuntu leader Mark Shuttleworth said things had changed since 2004."
+        },
+        "miniTeaser": {
+          "$text": "Ubuntu's Mark Shuttleworth closes \"Bug #1\" from 2004: \"Microsoft has a majority market share.\""
+        },
+        "slug": {
+          "$text": "The Two-Way"
+        },
+        "thumbnail": {
+          "medium": {
+            "$text": "http://media.npr.org/assets/img/2013/05/30/ubuntu_sq-e84a4f8b26ffcd941bbb5662c704b90a5f72b3fe.jpg?s=13"
+          },
+          "large": {
+            "$text": "http://media.npr.org/assets/img/2013/05/30/ubuntu_sq-e84a4f8b26ffcd941bbb5662c704b90a5f72b3fe.jpg?s=11"
+          },
+          "provider": {
+            "$text": "Launchpad"
+          }
+        },
+        "storyDate": {
+          "$text": "Thu, 30 May 2013 15:02:00 -0400"
+        },
+        "pubDate": {
+          "$text": "Thu, 30 May 2013 15:02:00 -0400"
+        },
+        "lastModifiedDate": {
+          "$text": "Thu, 30 May 2013 15:02:43 -0400"
+        },
+        "keywords": {},
+        "priorityKeywords": {},
+        "organization": [
+          {
+            "orgId": "1",
+            "orgAbbr": "NPR",
+            "name": {
+              "$text": "NPR"
+            },
+            "website": {
+              "$text": "http://www.npr.org/"
+            }
+          }
+        ],
+        "parent": [
+          {
+            "id": "172989719",
+            "type": "tag",
+            "title": {
+              "$text": "Ubuntu"
+            },
+            "link": [
+              {
+                "type": "html",
+                "$text": "http://www.npr.org/templates/archives/archive.php?thingId=172989719&ft=3&f="
+              },
+              {
+                "type": "api",
+                "$text": "http://api.npr.org/query?id=172989719&apiKey=MDA1OTI3MjQ5MDEyODUwMTE2MzM1YzNmZA004"
+              }
+            ]
+          },
+          {
+            "id": "132832276",
+            "type": "tag",
+            "title": {
+              "$text": "computers"
+            },
+            "link": [
+              {
+                "type": "html",
+                "$text": "http://www.npr.org/templates/archives/archive.php?thingId=132832276&ft=3&f="
+              },
+              {
+                "type": "api",
+                "$text": "http://api.npr.org/query?id=132832276&apiKey=MDA1OTI3MjQ5MDEyODUwMTE2MzM1YzNmZA004"
+              }
+            ]
+          },
+          {
+            "id": "128243057",
+            "type": "tag",
+            "title": {
+              "$text": "Microsoft"
+            },
+            "link": [
+              {
+                "type": "html",
+                "$text": "http://www.npr.org/templates/archives/archive.php?thingId=128243057&ft=3&f="
+              },
+              {
+                "type": "api",
+                "$text": "http://api.npr.org/query?id=128243057&apiKey=MDA1OTI3MjQ5MDEyODUwMTE2MzM1YzNmZA004"
+              }
+            ]
+          },
+          {
+            "id": "127602855",
+            "type": "category",
+            "title": {
+              "$text": "America"
+            },
+            "link": [
+              {
+                "type": "html",
+                "$text": "http://www.npr.org/templates/story/story.php?storyId=127602855&ft=3&f="
+              },
+              {
+                "type": "api",
+                "$text": "http://api.npr.org/query?id=127602855&apiKey=MDA1OTI3MjQ5MDEyODUwMTE2MzM1YzNmZA004"
+              }
+            ]
+          },
+          {
+            "id": "103943429",
+            "type": "blog",
+            "slug": "true",
+            "title": {
+              "$text": "The Two-Way"
+            },
+            "link": [
+              {
+                "type": "html",
+                "$text": "http://www.npr.org/blogs/thetwo-way/?ft=3&f="
+              },
+              {
+                "type": "api",
+                "$text": "http://api.npr.org/query?id=103943429&apiKey=MDA1OTI3MjQ5MDEyODUwMTE2MzM1YzNmZA004"
+              }
+            ]
+          },
+          {
+            "id": "1049",
+            "type": "primaryTopic",
+            "title": {
+              "$text": "Digital Life"
+            },
+            "link": [
+              {
+                "type": "html",
+                "$text": "http://www.npr.org/sections/digital-life/?ft=3&f="
+              },
+              {
+                "type": "api",
+                "$text": "http://api.npr.org/query?id=1049&apiKey=MDA1OTI3MjQ5MDEyODUwMTE2MzM1YzNmZA004"
+              }
+            ]
+          },
+          {
+            "id": "1049",
+            "type": "topic",
+            "title": {
+              "$text": "Digital Life"
+            },
+            "link": [
+              {
+                "type": "html",
+                "$text": "http://www.npr.org/sections/digital-life/?ft=3&f="
+              },
+              {
+                "type": "api",
+                "$text": "http://api.npr.org/query?id=1049&apiKey=MDA1OTI3MjQ5MDEyODUwMTE2MzM1YzNmZA004"
+              }
+            ]
+          },
+          {
+            "id": "1019",
+            "type": "topic",
+            "title": {
+              "$text": "Technology"
+            },
+            "link": [
+              {
+                "type": "html",
+                "$text": "http://www.npr.org/sections/technology/?ft=3&f="
+              },
+              {
+                "type": "api",
+                "$text": "http://api.npr.org/query?id=1019&apiKey=MDA1OTI3MjQ5MDEyODUwMTE2MzM1YzNmZA004"
+              }
+            ]
+          },
+          {
+            "id": "1006",
+            "type": "topic",
+            "title": {
+              "$text": "Business"
+            },
+            "link": [
+              {
+                "type": "html",
+                "$text": "http://www.npr.org/sections/business/?ft=3&f="
+              },
+              {
+                "type": "api",
+                "$text": "http://api.npr.org/query?id=1006&apiKey=MDA1OTI3MjQ5MDEyODUwMTE2MzM1YzNmZA004"
+              }
+            ]
+          },
+          {
+            "id": "1002",
+            "type": "topic",
+            "title": {
+              "$text": "Home Page Top Stories"
+            },
+            "link": [
+              {
+                "type": "html",
+                "$text": "http://www.npr.org/?ft=3&f="
+              },
+              {
+                "type": "api",
+                "$text": "http://api.npr.org/query?id=1002&apiKey=MDA1OTI3MjQ5MDEyODUwMTE2MzM1YzNmZA004"
+              }
+            ]
+          },
+          {
+            "id": "1001",
+            "type": "topic",
+            "title": {
+              "$text": "News"
+            },
+            "link": [
+              {
+                "type": "html",
+                "$text": "http://www.npr.org/sections/news/?ft=3&f="
+              },
+              {
+                "type": "api",
+                "$text": "http://api.npr.org/query?id=1001&apiKey=MDA1OTI3MjQ5MDEyODUwMTE2MzM1YzNmZA004"
+              }
+            ]
+          }
+        ],
+        "byline": [
+          {
+            "id": "187319658",
+            "name": {
+              "personId": "14562108",
+              "$text": "Bill Chappell"
+            },
+            "link": [
+              {
+                "type": "html",
+                "$text": "http://www.npr.org/people/14562108/bill-chappell?ft=3&f="
+              },
+              {
+                "type": "api",
+                "$text": "http://api.npr.org/query?id=14562108&apiKey=MDA1OTI3MjQ5MDEyODUwMTE2MzM1YzNmZA004"
+              }
+            ]
+          }
+        ],
+        "image": [
+          {
+            "id": "187327880",
+            "type": "primary",
+            "width": "200",
+            "src": "http://media.npr.org/assets/img/2013/05/30/ubuntu_custom-ffbf6e94f5b5ff4629543ab3d781b3ad6c9bb91d.jpg?s=12",
+            "hasBorder": "false",
+            "title": {
+              "$text": "Since it was first filed in August of 2004, Ubuntu's Bug #1 attracted many comments. With comment number 1834, Mark Shuttleworth declared the issue fixed today."
+            },
+            "caption": {
+              "$text": "Since it was first filed in August of 2004, Ubuntu's Bug #1 attracted many comments. With comment number 1834, Mark Shuttleworth declared the issue fixed today."
+            },
+            "link": {
+              "url": ""
+            },
+            "producer": {},
+            "provider": {
+              "url": "",
+              "$text": "Launchpad"
+            },
+            "copyright": {},
+            "crop": [
+              {
+                "type": "standard",
+                "src": "http://media.npr.org/assets/img/2013/05/30/ubuntu-ed48e053d6df5b9956e7be8313e7ee886de0241c.jpg",
+                "height": "193",
+                "width": "258"
+              },
+              {
+                "type": "square",
+                "src": "http://media.npr.org/assets/img/2013/05/30/ubuntu_sq-e84a4f8b26ffcd941bbb5662c704b90a5f72b3fe.jpg",
+                "height": "193",
+                "width": "193"
+              },
+              {
+                "type": "wide",
+                "src": "http://media.npr.org/assets/img/2013/05/30/ubuntu_wide-c58d6a4569bd8feead3fd24d42c3ad36b5cc7653.jpg",
+                "height": "193",
+                "width": "344"
+              },
+              {
+                "type": "custom",
+                "src": "http://media.npr.org/assets/img/2013/05/30/ubuntu_custom-ffbf6e94f5b5ff4629543ab3d781b3ad6c9bb91d.jpg",
+                "height": "193",
+                "width": "648"
+              }
+            ]
+          }
+        ],
+        "text": {
+          "paragraph": [
+            {
+              "num": "1",
+              "$text": "In the more than eight years since it was written, the open-source operating system Ubuntu's \"Bug #1\" has been seen as a rallying call. After all, the bug's title is \"Microsoft has a majority market share.\""
+            },
+            {
+              "num": "2",
+              "$text": "But the entry was officially closed Thursday, partly because the \"broader market has healthy competition\" as Ubuntu leader Mark Shuttleworth writes in his comments on closing the bug today."
+            },
+            {
+              "num": "3",
+              "$text": "Based on Linux, Ubuntu was created at a time when Microsoft dominated the PC market, to the extent that it was difficult to purchase a PC that didn't come with the Windows operating system already installed."
+            },
+            {
+              "num": "4",
+              "$text": "By contrast, Ubuntu's philosophy was that \"Our work is driven by a belief that software should be free and accessible to all,\" as Shuttleworth wrote in August of 2004."
+            },
+            {
+              "num": "5",
+              "$text": "Much has changed in the nearly nine years since then. Most notably, smartphones and tablets have taken over an increasing share of the things people once did on laptop and desktop computers. That change, along with the strong growth of Google's Android and Apple's iOS systems, has meant that Windows plays a less dominant role in the computing market today than it did in 2004."
+            },
+            {
+              "num": "6",
+              "$text": "\"Android may not be my or your first choice of Linux,\" Shuttleworth writes, \"but it is without doubt an open source platform that offers both practical and economic benefits to users and industry. So we have both competition, and good representation for open source, in personal computing.\""
+            },
+            {
+              "num": "7",
+              "$text": "He noted that Microsoft's approach to Ubuntu and other operating systems, particularly when it comes to integrating them into cloud computing, has improved."
+            },
+            {
+              "num": "8",
+              "$text": "\"Circumstances have changed, institutions have adapted, so should we,\" Shuttleworth says."
+            },
+            {
+              "num": "9",
+              "$text": "He also said that the work of Ubuntu and its partners shouldn't have the main goal of supplanting Microsoft:"
+            },
+            {
+              "num": "10"
+            },
+            {
+              "num": "11",
+              "$text": "\"There is a social element to this bug report as well, of course. It served for many as a sort of declaration of intent. But it's better for us to focus our intent on excellence in our own right, rather than our impact on someone else's product.\""
+            },
+            {
+              "num": "12"
+            },
+            {
+              "num": "13",
+              "$text": "Shuttleworth's comment closing the bug — comment 1834 — sparked a flurry of new comments on the issue. Some said there was never a bug in the first place. But others said that while the computing environment had improved, the bug hadn't really been fixed. They noted the continued prevalence of proprietary software in the marketplace."
+            },
+            {
+              "num": "14",
+              "$text": "\"Declaring a bug to be fixed and actually fixing it are two different things,\" wrote a commenter named PJO. [Copyright 2013 NPR]"
+            }
+          ]
+        },
+        "textWithHtml": {
+          "paragraph": [
+            {
+              "num": "1",
+              "$text": "In the more than eight years since it was written, the open-source operating system Ubuntu's \"Bug #1\" has been seen as a rallying call. After all, the bug's title is \"Microsoft has a majority market share.\""
+            },
+            {
+              "num": "2",
+              "$text": "But the entry was officially closed Thursday, partly because the \"broader market has healthy competition\" as <a href=\"http://www.ubuntu.com/\">Ubuntu</a> leader Mark Shuttleworth <a href=\"https://bugs.launchpad.net/ubuntu/+bug/1/comments/1834\">writes in his comments</a> on closing the bug today."
+            },
+            {
+              "num": "3",
+              "$text": "Based on Linux, Ubuntu was created at a time when Microsoft dominated the PC market, to the extent that it was difficult to purchase a PC that didn't come with the Windows operating system already installed."
+            },
+            {
+              "num": "4",
+              "$text": "By contrast, Ubuntu's philosophy was that \"Our work is driven by a belief that software should be free and accessible to all,\" as Shuttleworth <a href=\"https://bugs.launchpad.net/ubuntu/+bug/1/\">wrote in August of 2004</a>."
+            },
+            {
+              "num": "5",
+              "$text": "Much has changed in the nearly nine years since then. Most notably, smartphones and tablets have taken over an increasing share of the things people once did on laptop and desktop computers. That change, along with the strong growth of Google's Android and Apple's iOS systems, has meant that Windows plays a less dominant role in the computing market today than it did in 2004."
+            },
+            {
+              "num": "6",
+              "$text": "\"Android may not be my or your first choice of Linux,\" Shuttleworth writes, \"but it is without doubt an open source platform that offers both practical and economic benefits to users and industry. So we have both competition, and good representation for open source, in personal computing.\""
+            },
+            {
+              "num": "7",
+              "$text": "He noted that Microsoft's approach to Ubuntu and other operating systems, particularly when it comes to integrating them into cloud computing, has improved."
+            },
+            {
+              "num": "8",
+              "$text": "\"Circumstances have changed, institutions have adapted, so should we,\" Shuttleworth says."
+            },
+            {
+              "num": "9",
+              "$text": "He also said that the work of Ubuntu and its partners shouldn't have the main goal of supplanting Microsoft:"
+            },
+            {
+              "num": "10",
+              "$text": "<blockquote>"
+            },
+            {
+              "num": "11",
+              "$text": "\"There is a social element to this bug report as well, of course. It served for many as a sort of declaration of intent. But it's better for us to focus our intent on excellence in our own right, rather than our impact on someone else's product.\""
+            },
+            {
+              "num": "12",
+              "$text": "</blockquote>"
+            },
+            {
+              "num": "13",
+              "$text": "Shuttleworth's comment closing the bug — comment 1834 — sparked a flurry of new comments on the issue. Some said there was never a bug in the first place. But others said that while the computing environment had improved, the bug hadn't really been fixed. They noted the continued prevalence of proprietary software in the marketplace."
+            },
+            {
+              "num": "14",
+              "$text": "\"Declaring a bug to be fixed and actually fixing it are two different things,\" wrote a commenter named PJO.  <div class=\"fullattribution\">Copyright 2013 NPR. To see more, visit http://www.npr.org/.<img src=\"http://www.google-analytics.com/__utm.gif?utmac=UA-5828686-4&utmdt=Ubuntu+Marks+%27Bug+No.+1%27+As+Fixed%2C+After+Nearly+Nine+Years&utme=8(APIKey)9(MDA1OTI3MjQ5MDEyODUwMTE2MzM1YzNmZA004)\"/></div>"
+            }
+          ]
+        },
+        "fullText": {
+          "$text": "<div class=\"storytitle\">      <h1>Ubuntu Marks 'Bug No. 1' As Fixed, After Nearly Nine Years</h1>   <input type=\"hidden\" id=\"title187318344\" value=\"Ubuntu Marks 'Bug No. 1' As Fixed, After Nearly Nine Years\"></input>   <input type=\"hidden\" id=\"modelShortUrl187318344\" value=\"http://n.pr/11amjB4\"></input>   <input type=\"hidden\" id=\"modelFullUrl187318344\" value=\"http://www.npr.org/blogs/thetwo-way/2013/05/30/187318344/ubuntu-marks-bug-no-1-as-fixed-after-nearly-nine-years\"></input></div><!-- END CLASS=\"STORYTITLE\" --><div id=\"story-meta\">      <div id=\"storybyline\" class=\"  linkLocation\">            <div class=\"bucketwrap byline\" id=\"res187318347\" previewTitle=\"bylines\">                  <p class=\"byline\">by <a rel=\"author\" href=\"http://www.npr.org/people/14562108/bill-chappell\"><span>Bill Chappell</span></a></p>      </div>      <!-- END CLASS=\"BUCKETWRAP BYLINE\" ID=\"RES187318347\" PREVIEWTITLE=\"BYLINES\" -->   </div>   <!-- END ID=\"STORYBYLINE\" CLASS=\"  LINKLOCATION\" -->   <div class=\"dateblock\">            <time datetime=\"2013-05-30\"><span class=\"date\">May 30, 2013</span><span class=\"time\"> 3:02 PM</span></time>   </div></div><!-- END ID=\"STORY-META\" --><div id=\"storytext\" class=\"storytext storylocation linkLocation\">      <div id=\"res187327880\" class=\"bucketwrap image large\" previewTitle=\"Since it was first filed in August of 2004, Ubuntu's Bug #1 attracted many comments. With comment number 1834, Mark Shuttleworth declared the issue fixed today.\">            <div class=\"imagewrap\">                  <img src=\"http://media.npr.org/assets/img/2013/05/30/ubuntu_custom-ffbf6e94f5b5ff4629543ab3d781b3ad6c9bb91d-s6.jpg\" title=\"Since it was first filed in August of 2004, Ubuntu's Bug #1 attracted many comments. With comment number 1834, Mark Shuttleworth declared the issue fixed today.\" alt=\"Since it was first filed in August of 2004, Ubuntu's Bug #1 attracted many comments. With comment number 1834, Mark Shuttleworth declared the issue fixed today.\" />      </div>      <!-- END CLASS=\"IMAGEWRAP\" -->      <div class=\"captionwrap\">                  <div class=\"caption\">                        <p><i>Since it was first filed in August of 2004, Ubuntu's Bug #1 attracted many comments. With comment number 1834, Mark Shuttleworth declared the issue fixed today.</i></p>         </div>         <!-- END CLASS=\"CAPTION\" -->      </div>      <!-- END CLASS=\"CAPTIONWRAP\" -->      <span class=\"creditwrap\"><span class=\"rightsnotice\">Launchpad</span></span>   </div>   <p>In the more than eight years since it was written, the open-source operating system Ubuntu's \"Bug #1\" has been seen as a rallying call. After all, the bug's title is \"Microsoft has a majority market share.\"</p>   <p>But the entry was officially closed Thursday, partly because the \"broader market has healthy competition\" as <a href=\"http://www.ubuntu.com/\">Ubuntu</a> leader Mark Shuttleworth <a href=\"https://bugs.launchpad.net/ubuntu/+bug/1/comments/1834\">writes in his comments</a> on closing the bug today.</p>   <p>Based on Linux, Ubuntu was created at a time when Microsoft dominated the PC market, to the extent that it was difficult to purchase a PC that didn't come with the Windows operating system already installed.</p>   <p>By contrast, Ubuntu's philosophy was that \"Our work is driven by a belief that software should be free and accessible to all,\" as Shuttleworth <a href=\"https://bugs.launchpad.net/ubuntu/+bug/1/\">wrote in August of 2004</a>.</p>   <p>Much has changed in the nearly nine years since then. Most notably, smartphones and tablets have taken over an increasing share of the things people once did on laptop and desktop computers. That change, along with the strong growth of Google's Android and Apple's iOS systems, has meant that Windows plays a less dominant role in the computing market today than it did in 2004.</p>   <p>\"Android may not be my or your first choice of Linux,\" Shuttleworth writes, \"but it is without doubt an open source platform that offers both practical and economic benefits to users and industry. So we have both competition, and good representation for open source, in personal computing.\"</p>   <p>He noted that Microsoft's approach to Ubuntu and other operating systems, particularly when it comes to integrating them into cloud computing, has improved.</p>   <p>\"Circumstances have changed, institutions have adapted, so should we,\" Shuttleworth says.</p>   <p>He also said that the work of Ubuntu and its partners shouldn't have the main goal of supplanting Microsoft:</p>   <blockquote class=\"edTag\"><div>   <p>\"There is a social element to this bug report as well, of course. It served for many as a sort of declaration of intent. But it's better for us to focus our intent on excellence in our own right, rather than our impact on someone else's product.\"</p>   </div></blockquote>   <p>Shuttleworth's comment closing the bug — comment 1834 — sparked a flurry of new comments on the issue. Some said there was never a bug in the first place. But others said that while the computing environment had improved, the bug hadn't really been fixed. They noted the continued prevalence of proprietary software in the marketplace.</p>   <p>\"Declaring a bug to be fixed and actually fixing it are two different things,\" wrote a commenter named PJO.</p></div><div class=\"fullattribution\">Copyright 2013 NPR. To see more, visit http://www.npr.org/.<img src=\"http://www.google-analytics.com/__utm.gif?utmac=UA-5828686-4&utmdt=Ubuntu+Marks+%27Bug+No.+1%27+As+Fixed%2C+After+Nearly+Nine+Years&utme=8(APIKey)9(MDA1OTI3MjQ5MDEyODUwMTE2MzM1YzNmZA004)\"/></div>"
+        }
       }
     ]
   }

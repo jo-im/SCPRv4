@@ -42,6 +42,17 @@ describe NprArticleImporter do
       expect(NprArticleImporter).to receive(:import).at_least(:once)
       NprArticleImporter.sync
     end
+
+    it 'does not call import if the npr story is a live video' do
+      # There are three stories in the fixture, but the third story has "Watch Live:" in its title.
+      # Therefore, import should only be called for the first two, and not the last one.
+      expect(NprArticleImporter).to receive(:import).at_most(:twice)
+      added = NprArticleImporter.sync
+      expect(added.length).to eq 2
+      added.each do |story|
+        expect(story.headline).not_to match /Watch Live/
+      end
+    end
   end
 
   describe '#import' do

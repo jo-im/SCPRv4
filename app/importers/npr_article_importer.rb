@@ -71,7 +71,11 @@ module NprArticleImporter
             added.push cached_article
             log "Saved NPR Story ##{npr_story.id} as " \
                 "RemoteArticle ##{cached_article.id}"
-            self.import cached_article, { npr_story: npr_story }
+            if npr_story.title =~ /watch\s+live/i
+              log "Skipping a live video with title: #{npr_story.title}"
+            else
+              self.import cached_article, { npr_story: npr_story }
+            end
           else
             log "Couldn't save NPR Story ##{npr_story.id}"
           end
