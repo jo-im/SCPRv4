@@ -39,19 +39,25 @@ describe NprArticleImporter do
     end
 
     it 'calls import after a successful sync' do
-      expect(NprArticleImporter).to receive(:import).at_least(:once)
+      # There are two valid stories in the api/np/stories.json fixture, so it should call at least two times
+      expect(NprArticleImporter).to receive(:import).at_least(:twice)
       NprArticleImporter.sync
     end
 
-    it 'does not call import if the npr story is a live video' do
-      # There are three stories in the fixture, but the third story has "Watch Live:" in its title.
-      # Therefore, import should only be called for the first two, and not the last one.
-      expect(NprArticleImporter).to receive(:import).at_most(:twice)
+    it 'does not call import if the npr story is a live video, but still adds it as a RemoteArticle' do
+      stub_request(:get, %r|api\.npr|).to_return({
+        :headers => {
+          :content_type   => "application/json"
+        },
+        :body => load_fixture('api/npr/stories-with-live-video.json')
+      })
+
+      # There are two stories in the fixture, but the first story has "Watch Live:" in its title.
+      # Therefore, import should only be called once
+      expect(NprArticleImporter).to receive(:import).at_most(:once)
       added = NprArticleImporter.sync
-      expect(added.length).to eq 2
-      added.each do |story|
-        expect(story.headline).not_to match /Watch Live/
-      end
+      cached = RemoteArticle.all
+      expect(cached.count).to eq 2
     end
   end
 
