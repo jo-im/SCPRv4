@@ -54,6 +54,11 @@ describe Api::Public::V3::ListsController do
       get :show, {id: list.id}.merge(request_params)
       assigns(:list_items).should eq [story2.get_article, story1.get_article]
     end
+
+    it "serves associated articles even if a category is associated" do
+    end
+    it "serves category items if there are no associated articles" do
+    end
   end
 
 end
