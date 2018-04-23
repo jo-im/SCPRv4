@@ -60,8 +60,8 @@ class List < ActiveRecord::Base
   def deduped_category_items
     self.category.content({
       page: 1,
-      per_page: 14,
-      exclude: NewsStory.published.order('published_at DESC').limit(16)
+      per_page: 16,
+      exclude: ApplicationHelper.latest_headlines({ limit: 16 })
     })
   end
 

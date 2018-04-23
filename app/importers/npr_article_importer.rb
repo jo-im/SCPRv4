@@ -28,6 +28,8 @@ module NprArticleImporter
     "World" => "US & World"
   }
 
+  WATCH_LIVE_REGEXP = /watch\s+live/i
+
   class << self
     include ::NewRelic::Agent::Instrumentation::ControllerInstrumentation
 
@@ -71,7 +73,7 @@ module NprArticleImporter
             added.push cached_article
             log "Saved NPR Story ##{npr_story.id} as " \
                 "RemoteArticle ##{cached_article.id}"
-            if npr_story.title =~ /watch\s+live/i
+            if npr_story.title =~ WATCH_LIVE_REGEXP
               log "Skipping a live video with title: #{npr_story.title}"
             else
               self.import cached_article, { npr_story: npr_story }

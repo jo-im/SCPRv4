@@ -2,6 +2,11 @@ module ApplicationHelper
   include Twitter::Autolink
   include HomepageHelper
 
+  def latest_headlines options={}
+    collection_limit = options[:limit] || 16
+    NewsStory.published.order('published_at DESC').limit(collection_limit)
+  end
+
   def add_ga_tracking_to(url)
     analytics_params = "?utm_source=kpcc&utm_medium=email&utm_campaign=short-list"
     url =~ /scpr\.org/ ? url + analytics_params : url
@@ -91,9 +96,9 @@ module ApplicationHelper
         cache(["content",context,article,tmplt_digest], skip_digest:true) do
           # NOTE: The following was formerly calling #get_article and has
           # been switched back to #to_article because of a job ordering
-          # issue where the homepage cache calls #get_article before 
+          # issue where the homepage cache calls #get_article before
           # the article index for the content has been updated on content
-          # save.  Not sure why this is, but it explains why content on 
+          # save.  Not sure why this is, but it explains why content on
           # the classic homepage would only update after a second save.
           self.output_buffer << render(
             "shared/content/#{partial}",
@@ -550,7 +555,7 @@ module ApplicationHelper
     related_content = content.related_content || []
     related_content.select do |article|
       !@related_content_manifest.include?(article) &&
-      !homepage_content_ids.include?(article.obj_key) && 
+      !homepage_content_ids.include?(article.obj_key) &&
       ((article.public_datetime || 10.years.ago) > 48.hours.ago) &&
       @related_content_manifest.push(article)
     end
