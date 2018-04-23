@@ -183,10 +183,6 @@ module NprArticleImporter
                 image.crop("standard") ||
                 image
 
-        # Temporarily silencing Asset creation during test period.
-        # This is so that we don't add assets unnecessarily as we explore the option of
-        # publishing NPR articles as they are received.
-
         asset = AssetHost::Asset.create(
           :url     => crop.src,
           :title   => image.title,
