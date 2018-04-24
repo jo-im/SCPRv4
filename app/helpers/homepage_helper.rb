@@ -58,7 +58,7 @@ module HomepageHelper
     # when we are previewing a homepage.
     NewsStory
       .where("status = 5", "category_id IS NOT NULL")
-      .where("source != 'npr'")
+      .where("source = 'npr'")
       .where("id NOT IN (?)", ignore_ids)
       .order("published_at DESC").limit(5)
   end
