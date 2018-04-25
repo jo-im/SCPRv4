@@ -52,14 +52,14 @@
           // Load In-Article Membership Appeal from AdHost
           scpr.VisualCampaign.enqueue('article-appeal', $('#article-membership-appeal'));
 
-          // Load Embeditor
-          embeditor = new Embeditor.Base({
+          // Load PortableHoles
+          holes = new PortableHoles({
             Embedly: {
               query: { key : '0cb3651dde4740db8fcb147850c6b555' }
             }
-          })
+          });
 
-          embeditor.swap()
+          holes.swap();
       </script>
     </footer>
     <%= cell :audio_player %>

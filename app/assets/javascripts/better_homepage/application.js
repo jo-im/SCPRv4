@@ -12,6 +12,8 @@
 //= require ../visual_campaign
 //= require ../../../../node_modules/mutationobserver-shim/dist/mutationobserver.min
 
+PortableHoles = require('portable-holes');
+
 new scpr.adSizer();
 
 jQuery(document).ready(function() {
@@ -23,3 +25,4 @@ jQuery(document).ready(function() {
   scpr.VisualCampaign.enqueue('pushdown-homepage', $('#homepage-pushdown'));
   scpr.VisualCampaign.fetchQueue();
 });
+
