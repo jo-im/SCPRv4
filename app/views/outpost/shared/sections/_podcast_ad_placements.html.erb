@@ -1,7 +1,7 @@
 <% if @record.show.try(:air_status) == "onair" %>
   <% has_podcast_record = @record.podcast_record.present? %>
   <%= form_block "Podcast Ad Placement" do %>
-    <div class="audio-fields well">
+    <div class="audio-fields well" id="o-podcast-ad-placement">
       <div class="row">
         <div class="span4">
           <tr>
