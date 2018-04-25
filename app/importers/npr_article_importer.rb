@@ -28,7 +28,10 @@ module NprArticleImporter
     "World" => "US & World"
   }
 
-  WATCH_LIVE_REGEXP = /watch\s+live/i
+  REGEXP_EXCEPTIONS = [
+    /watch\s+live/i,
+    /video:/i
+  ]
 
   class << self
     include ::NewRelic::Agent::Instrumentation::ControllerInstrumentation
@@ -74,9 +77,22 @@ module NprArticleImporter
             log "Saved NPR Story ##{npr_story.id} as " \
                 "RemoteArticle ##{cached_article.id}"
 
-            # Check if the title has "Watch Live:" or has any external assets (often used as inline embeds)
-            if npr_story.title =~ WATCH_LIVE_REGEXP || npr_story.external_assets.any?
-              log "Skipping a live video with title: #{npr_story.title}"
+            # iterate through our list of exceptions, and if a story contains any of them, mark it as unsupported
+            unsupported_story = false
+            REGEXP_EXCEPTIONS.each do |regex|
+              if npr_story.title =~ regex
+                unsupported_story = true
+                break
+              end
+            end
+
+            # mark the story as unsupported if it has any external assets (usually rich inline content)
+            if npr_story.external_assets.any?
+              unsupported_story = true
+            end
+
+            if unsupported_story
+              log "Skipping auto-import of unsupported_story: #{npr_story.title}"
             else
               self.import cached_article, { npr_story: npr_story }
             end
