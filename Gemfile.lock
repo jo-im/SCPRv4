@@ -5,16 +5,6 @@ GIT
     cells-handlebars (0.2.2)
 
 GIT
-  remote: git://github.com/SCPR/embeditor-rails.git
-  revision: 07c132dc478d135e9295f2e2a31d3f59c3b2f18a
-  tag: v2.2.1
-  specs:
-    embeditor-rails (2.2.1)
-      actionpack (>= 3.2.0, < 5)
-      coffee-rails (>= 3.2.0, < 5)
-      eco (~> 1.0.0)
-
-GIT
   remote: git://github.com/SCPR/outpost-aggregator.git
   revision: 0ddb35922584b978eecaed00c0a9a89d895f6912
   tag: v2.1.0
@@ -560,7 +550,6 @@ DEPENDENCIES
   elasticsearch-extensions
   elasticsearch-model
   elasticsearch-rails
-  embeditor-rails!
   escape_utils (~> 1.0.1)
   factory_girl_rails
   faker
