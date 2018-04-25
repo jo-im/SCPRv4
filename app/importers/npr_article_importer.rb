@@ -73,7 +73,9 @@ module NprArticleImporter
             added.push cached_article
             log "Saved NPR Story ##{npr_story.id} as " \
                 "RemoteArticle ##{cached_article.id}"
-            if npr_story.title =~ WATCH_LIVE_REGEXP
+
+            # Check if the title has "Watch Live:" or has any external assets (often used as inline embeds)
+            if npr_story.title =~ WATCH_LIVE_REGEXP || npr_story.external_assets.any?
               log "Skipping a live video with title: #{npr_story.title}"
             else
               self.import cached_article, { npr_story: npr_story }
