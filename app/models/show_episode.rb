@@ -261,7 +261,7 @@ class ShowEpisode < ActiveRecord::Base
   def update_podcast
     if @podcast_request_body.present?
       begin
-        $megaphone.episodes.update({
+        results = $megaphone.episodes.update({
           podcast_id: podcast_record['podcastId'],
           episode_id: podcast_record['id'],
           body: @podcast_request_body

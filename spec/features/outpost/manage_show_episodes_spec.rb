@@ -65,13 +65,6 @@ describe ShowEpisode do
       expect(insertion_points).to eq "3.0"
     end
 
-    it "only sends a PUT request if new values are different than the old ones" do
-      visit @show_episode.admin_edit_path
-      fill_in('show_episode[pre_count]', with: 5)
-      fill_in('show_episode[post_count]', with: 5)
-      click_button('commit_action')
-    end
-
     it "rescues api calls if something is wrong" do
       # Intentionally throw an error to trigger an empty response
       $megaphone = MegaphoneClient.new({

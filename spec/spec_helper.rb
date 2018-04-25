@@ -155,6 +155,15 @@ RSpec.configure do |config|
         }
     })
 
+    # Stub put requests
+    stub_request(:put, %r|cms\.megaphone\.fm\/|)
+      .to_return({
+        :body => "{}",
+        :headers => {
+          :content_type => "application/json"
+        }
+    })
+
     # Stub requests for intentional failures (i.e. incorrect token)
     stub_request(:get, %r|cms\.megaphone\.fm\/api\/|)
       .with(headers: { 'Authorization' => 'Token token=INCORRECT_TOKEN' })

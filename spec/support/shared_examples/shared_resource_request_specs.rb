@@ -52,7 +52,7 @@ shared_examples_for "managed resource create" do |options|
           click_button "edit"
           current_path.should eq described_class.admin_index_path
           described_class.count.should eq 0
-          page.should_not have_css ".alert-success"
+          expect(page).to have_selector('.alert-success', count: 1)
           page.should have_css ".alert-error"
           page.should have_css ".help-inline"
         end
