@@ -33,7 +33,7 @@ module Scprv4
       "*.eot", "*.ttf", "*.woff", # Font files
       "amp/application.css.sass",
       "programs.js",
-      "aplicayshun.js"
+      "application.js"
     ]
 
     config.assets.precompile += %w( better_homepage/style-guide.js )
