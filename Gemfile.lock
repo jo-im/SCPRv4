@@ -77,6 +77,13 @@ GIT
       rails (>= 4)
 
 GIT
+  remote: git://github.com/scpr/megaphone_client.git
+  revision: 4f557a594737927da9f0cc380bc538d0af76791c
+  specs:
+    megaphone_client (0.1.0)
+      rest-client (~> 2.0)
+
+GIT
   remote: git://github.com/scpr/npr.git
   revision: 6a6a650e92eb9ed0acb2f51d0958685fcf97d931
   specs:
@@ -579,6 +586,7 @@ DEPENDENCIES
   jquery-rails (~> 3.1.0)
   kaminari (~> 0.15.0)
   launchy
+  megaphone_client!
   mysql2 (~> 0.3.18)
   newrelic_rpm (~> 4.0, >= 4.0.0.332)
   npr (~> 3.0)!

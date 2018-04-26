@@ -23,7 +23,6 @@ class Outpost::ShowEpisodesController < Outpost::ResourceController
     l.filter :status, collection: -> { ShowEpisode.status_select_collection }
   end
 
-
   def preview
     @episode = Outpost.obj_by_key(params[:obj_key]) || ShowEpisode.new
 

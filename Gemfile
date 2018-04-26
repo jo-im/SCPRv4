@@ -85,6 +85,7 @@ gem 'audio_vision', '~> 1.0'
 gem 'slack-notifier'
 gem 'aws-sdk', '~> 2'
 gem 'one_signal'
+gem 'megaphone_client', github: "scpr/megaphone_client"
 
 ## Assets
 gem "eco", "~> 1.0"

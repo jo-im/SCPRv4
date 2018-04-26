@@ -1,0 +1,9 @@
+[
+  {
+    "id": "123abc",
+    "podcastId": "456def",
+    "preCount": 1,
+    "postCount": 2,
+    "insertionPoints": ["3.0"]
+  }
+]

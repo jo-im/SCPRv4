@@ -27,7 +27,7 @@
     <script id="rundowns-aggregator">
       aggregator = new outpost.Aggregator(
         {
-          el: "#segmented-aggregator", 
+          el: "#segmented-aggregator",
           inputEl: "#rundowns_json",
           collection: <%= render_json('api/private/v2/articles/collection', articles: record.content.map(&:get_article)) %>,
           apiType: "private",
@@ -50,5 +50,6 @@
 <%= f.section "publishing" %>
 <%= f.section "assets" %>
 <%= f.section "audio" %>
+<%= f.section "podcast_ad_placements" %>
 <%= f.section 'related_links' %>
 <%= f.section 'related_content' %>

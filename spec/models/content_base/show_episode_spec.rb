@@ -24,6 +24,21 @@ describe ShowEpisode do
         episode.reload.headline.should eq "Cool Episode, Bro!"
       end
     end
+
+    describe "update_podast" do
+      it "only executes a PUT request if new values are different than the old ones" do
+        # When nothing has changed, don't fire a put request
+        episode = create :show_episode
+        podcast_record = episode.podcast_record
+        episode.save
+        expect(WebMock).not_to have_requested(:put, %r|cms\.megaphone\.fm\/api\/|)
+
+        # When at least one property has changed, fire the put request
+        episode.pre_count = 2
+        episode.save
+        expect(WebMock).to have_requested(:put, %r|cms\.megaphone\.fm\/api\/|).once
+      end
+    end
   end
 
   #------------------
