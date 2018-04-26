@@ -136,10 +136,16 @@ module NprArticleImporter
       primary_topic = npr_story.parents.select{|parent| parent.type == 'primaryTopic'}.try(:first)
       primary_topic_title = primary_topic.try(:title)
 
+      import_status = :live
+      # If manually importing from the queue, set status to draft
+      if options[:manual] = true
+        import_status = :draft
+      end
+
       #-------------------
       # Build the NewsStory from the API response
       article = klass.new(
-        :status         => klass.status_id(:live),
+        :status         => klass.status_id(import_status),
         :headline       => npr_story.title,
         :teaser         => npr_story.teaser,
         :short_headline => npr_story.shortTitle.present? ? npr_story.shortTitle : npr_story.title,

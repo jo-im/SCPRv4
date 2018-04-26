@@ -20,7 +20,7 @@
       <tr class="<%= model.singular_route_key.dasherize %>">
         <td class="column-manage">
           <div class="btn-group dropdown">
-            <%= link_to "Import", import_outpost_remote_article_path(record, import_to_class: "NewsStory"), method: :post, class: "btn" %>
+            <%= link_to "Import as draft", import_outpost_remote_article_path(record, import_to_class: "NewsStory"), method: :post, class: "btn" %>
             <button class="btn dropdown-toggle" data-toggle="dropdown">
               <span class="caret"></span>
             </button>
