@@ -91,9 +91,9 @@ module ApplicationHelper
         cache(["content",context,article,tmplt_digest], skip_digest:true) do
           # NOTE: The following was formerly calling #get_article and has
           # been switched back to #to_article because of a job ordering
-          # issue where the homepage cache calls #get_article before 
+          # issue where the homepage cache calls #get_article before
           # the article index for the content has been updated on content
-          # save.  Not sure why this is, but it explains why content on 
+          # save.  Not sure why this is, but it explains why content on
           # the classic homepage would only update after a second save.
           self.output_buffer << render(
             "shared/content/#{partial}",
@@ -445,18 +445,6 @@ module ApplicationHelper
 
   #---------------
 
-  def hidden_gem
-    # Renders a hidden gem
-    path = Rails.root.join('app', 'views', 'better_homepage', 'hidden_gems')
-    hidden_gems = Dir.glob("#{path}/*").select{|f| File.file?(f)}
-    hidden_gem  = hidden_gems.sample
-    if hidden_gem
-      render file: hidden_gem
-    end
-  end
-
-  #---------------
-
   # If this is a page with Google AMP enabled
   # include this link tag in HEAD.
   def amp_head_link
@@ -550,7 +538,7 @@ module ApplicationHelper
     related_content = content.related_content || []
     related_content.select do |article|
       !@related_content_manifest.include?(article) &&
-      !homepage_content_ids.include?(article.obj_key) && 
+      !homepage_content_ids.include?(article.obj_key) &&
       ((article.public_datetime || 10.years.ago) > 48.hours.ago) &&
       @related_content_manifest.push(article)
     end
