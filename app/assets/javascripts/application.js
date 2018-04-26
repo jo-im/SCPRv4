@@ -4,6 +4,8 @@
 //= require jplayer/dist/jplayer/jquery.jplayer.min
 //= require audio
 //= require utilities
+//= require_directory ./t_listen/
+//= require listen_live
 //= require new/archive_browser
 //= require masthead
 //= require cookie
