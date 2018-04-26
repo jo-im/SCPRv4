@@ -36,7 +36,6 @@
     "normalize.css": "^4.1.1",
     "pacote": "^2.7.36",
     "portable-holes": "^1.2.1",
-    "pouchdb": "= 5.3.1",
     "query-string": "^4.2.2",
     "scpr-style-guide": "^3.0.0",
     "selectivizr": "= 1.0.3",
