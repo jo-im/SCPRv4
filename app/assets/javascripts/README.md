@@ -1,6 +1,6 @@
 # JavaScript Assets
 
-The JavaScript files in this directory serve as a way to enable dynamic interaction across the site. `aplicayshun.js` currently holds all the scripts required globally. You can find usage details for some major scripts below.
+The JavaScript files in this directory serve as a way to enable dynamic interaction across the site. `application.js` currently holds all the scripts required globally. You can find usage details for some major scripts below.
 
 ---
 

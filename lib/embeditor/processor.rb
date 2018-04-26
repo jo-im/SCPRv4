@@ -17,7 +17,9 @@ module Embeditor
       Timeout.timeout(5) do
         @stdin.write html
         # We expect to receive at least an EOT byte from both stdout and stderr
-        output, error = [@stdout.gets("\x04"), @stderr.gets("\x04")].map{|o| (o || '').gsub("\x04", "")}.map{|o| o.blank? ? nil : o}
+        output, error = [@stdout.gets("\x04"), @stderr.gets("\x04")]
+          .map{|o| (o || '').gsub("\x04", "")}
+          .map{|o| o.blank? ? nil : o}
         unless error
           raise EmbeditorError.new("No output received.") if output.blank?
           return output.gsub("\x04", "") # remove our "end of transmission" signifier
@@ -35,7 +37,7 @@ module Embeditor
       open
     end
     def open
-      @stdin, @stdout, @stderr, @wait_thr = Open3.popen3("bin/embeditor #{@arguments}")
+      @stdin, @stdout, @stderr, @wait_thr = Open3.popen3("node_modules/portable-holes/bin/portable-holes #{@arguments}")
       @pid = @wait_thr.pid
     end
     def closed?

@@ -1,7 +1,6 @@
 //= require jquery-ui-1.10.0.custom.min
 //= require date.min
 //= require select2
-//= require pouchdb/dist/pouchdb
 
 //= require bootstrap-scrollspy
 //= require bootstrap-alert
