@@ -6,7 +6,6 @@ cache ["v4", @podcast, @consumer], expires_in: 1.hour do # Podcasts will refresh
     'xmlns:megaphone' => "https://developers.megaphone.fm"
   ) do
     xml.channel do
-      xml.megaphone :externalId,  "#{@podcast.source.obj_key}__#{Rails.env}"
       xml.title @podcast.title
       xml.link  @podcast.url || root_url
 
