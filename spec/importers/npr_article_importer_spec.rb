@@ -38,14 +38,19 @@ describe NprArticleImporter do
       cached.first.url.should match /four-men-in-a-small-ship/
     end
 
-    it 'calls import after a successful sync' do
+    it 'calls import for articles published less than 2 hours ago' do
       # Sync once to get RemoteArticles into the queue for the first time
-      NprArticleImporter.sync
+      synced_stories = NprArticleImporter.sync
+
+      # Modify the last RemoteArticle to stub that it was published now
+      synced_stories.last.published_at = Time.zone.now
+      synced_stories.last.save
 
       # There are two valid stories in the api/np/stories.json fixture
-      # that have been published less than 2 hours ago,
-      # so it should call at least two times when synced again
-      expect(NprArticleImporter).to receive(:import).at_least(:twice)
+      # that have been published less than 2 hours ago.
+      # The second story was modified above so that it registers as published now.
+      # NprArticleImporter should call only once when synced again (instead of twice)
+      expect(NprArticleImporter).to receive(:import).once
 
       NprArticleImporter.sync
     end
