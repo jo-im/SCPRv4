@@ -54,7 +54,7 @@ module NprArticleImporter
       if unsupported_story
         log "Skipping auto-import of unsupported_story: #{npr_story.title}"
       else
-        self.import remote_article, { npr_story: npr_story }
+        self.import remote_article, { npr_story: npr_story, manual: false }
       end
     end
 
@@ -156,7 +156,7 @@ module NprArticleImporter
 
       import_status = :live
       # If manually importing from the queue, set status to draft
-      if options[:manual] = true
+      if options[:manual] === true
         import_status = :draft
       end
 
