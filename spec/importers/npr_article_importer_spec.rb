@@ -39,8 +39,14 @@ describe NprArticleImporter do
     end
 
     it 'calls import after a successful sync' do
-      # There are two valid stories in the api/np/stories.json fixture, so it should call at least two times
+      # Sync once to get RemoteArticles into the queue for the first time
+      NprArticleImporter.sync
+
+      # There are two valid stories in the api/np/stories.json fixture
+      # that have been published less than 2 hours ago,
+      # so it should call at least two times when synced again
       expect(NprArticleImporter).to receive(:import).at_least(:twice)
+
       NprArticleImporter.sync
     end
 
