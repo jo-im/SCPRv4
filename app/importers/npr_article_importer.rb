@@ -36,14 +36,45 @@ module NprArticleImporter
   class << self
     include ::NewRelic::Agent::Instrumentation::ControllerInstrumentation
 
+    def auto_publish remote_article, npr_story
+      # iterate through our list of exceptions, and if a story contains any of them, mark it as unsupported
+      unsupported_story = false
+      REGEXP_EXCEPTIONS.each do |regex|
+        if npr_story.title =~ regex
+          unsupported_story = true
+          break
+        end
+      end
+
+      # mark the story as unsupported if it has any external assets (usually rich inline content)
+      if npr_story.external_assets.any?
+        unsupported_story = true
+      end
+
+      if unsupported_story
+        log "Skipping auto-import of unsupported_story: #{npr_story.title}"
+      else
+        self.import remote_article, { npr_story: npr_story }
+      end
+    end
+
     def sync
       # The "id" parameter in this case is actually referencing a list.
       # Stories from the last hour are returned... be sure to run this script
       # more often than that!
 
+      # We try to find if a delay was defined as a DataPoint, and if it is, convert it to an integer
+      npr_auto_publish_delay = DataPoint.find_by(data_key: "npr_auto_publish_delay")
+                                        .try(:data_value)
+                                        .try(:to_i)
+
+      # There needs to be a padding greater than the delay  (e.g. "3" hours)
+      # so that articles published earlier than "2" hours ago can be found
+      npr_auto_publish_padding = (npr_auto_publish_delay || 120) + 60
+
       npr_stories = []
       offset      = 0
-      start_date  = RemoteArticle.where(source: "npr").last.try(:published_at) || 1.hour.ago
+      start_date  = npr_auto_publish_padding.try(:minutes).try(:ago) || 180.minutes.ago
       end_date    = Time.zone.now
       begin
         response  = fetch_stories(start_date, end_date, offset)
@@ -58,6 +89,13 @@ module NprArticleImporter
       npr_stories.each do |npr_story|
         if existing_story = RemoteArticle.where(article_id: npr_story.id.to_s, source: SOURCE).first
           existing_story.update headline: npr_story.title, teaser: npr_story.teaser, url: npr_story.link_for("html")
+
+          # If the current npr story was published earlier than our delay period
+          if npr_story.pubDate < (npr_auto_publish_delay || 120).minutes.ago && existing_story.is_new
+            # begin the auto-publish process
+            self.auto_publish(existing_story, npr_story)
+          end
+
           next
         end
 
@@ -76,26 +114,6 @@ module NprArticleImporter
             added.push cached_article
             log "Saved NPR Story ##{npr_story.id} as " \
                 "RemoteArticle ##{cached_article.id}"
-
-            # iterate through our list of exceptions, and if a story contains any of them, mark it as unsupported
-            unsupported_story = false
-            REGEXP_EXCEPTIONS.each do |regex|
-              if npr_story.title =~ regex
-                unsupported_story = true
-                break
-              end
-            end
-
-            # mark the story as unsupported if it has any external assets (usually rich inline content)
-            if npr_story.external_assets.any?
-              unsupported_story = true
-            end
-
-            if unsupported_story
-              log "Skipping auto-import of unsupported_story: #{npr_story.title}"
-            else
-              self.import cached_article, { npr_story: npr_story }
-            end
           else
             log "Couldn't save NPR Story ##{npr_story.id}"
           end
