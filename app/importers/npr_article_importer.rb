@@ -54,6 +54,11 @@ module NprArticleImporter
         elligibility = false
       end
 
+      # mark the story as unsupported if it has more images than the primary image (usually inline images)
+      if npr_story.images.length > 1
+        elligibility = false
+      end
+
       elligibility
     end
 
