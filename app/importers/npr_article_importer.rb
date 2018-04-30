@@ -36,25 +36,30 @@ module NprArticleImporter
   class << self
     include ::NewRelic::Agent::Instrumentation::ControllerInstrumentation
 
-    def auto_publish remote_article, npr_story
-      # iterate through our list of exceptions, and if a story contains any of them, mark it as unsupported
-      unsupported_story = false
+    def elligible_for_autopublish? npr_story
+      elligibility = true
+
+      # iterate through our list of exceptions, and if a story contains any of them, mark it as inelligible
       REGEXP_EXCEPTIONS.each do |regex|
         if npr_story.title =~ regex
-          unsupported_story = true
+          elligibility = false
           break
         end
       end
 
-      # mark the story as unsupported if it has any external assets (usually rich inline content)
+      # mark the story as inelligible if it has any external assets (usually rich inline content)
       if npr_story.external_assets.any?
-        unsupported_story = true
+        elligibility = false
       end
 
-      if unsupported_story
-        log "Skipping auto-import of unsupported_story: #{npr_story.title}"
-      else
+      elligibility
+    end
+
+    def auto_publish remote_article, npr_story
+      if elligible_for_autopublish?(npr_story)
         self.import remote_article, { npr_story: npr_story, manual: false }
+      else
+        log "Skipping auto-import of unsupported_story: #{npr_story.id}"
       end
     end
 
@@ -87,8 +92,15 @@ module NprArticleImporter
       added = []
 
       npr_stories.each do |npr_story|
+        # Prepend [wont-autopublish] to the remote article's title if the story is inelligible
+        if elligible_for_autopublish?(npr_story)
+          remote_article_headline = npr_story.title
+        else
+          remote_article_headline = "[wont-autopublish] #{npr_story.title}"
+        end
+
         if existing_story = RemoteArticle.where(article_id: npr_story.id.to_s, source: SOURCE).first
-          existing_story.update headline: npr_story.title, teaser: npr_story.teaser, url: npr_story.link_for("html")
+          existing_story.update headline: remote_article_headline, teaser: npr_story.teaser, url: npr_story.link_for("html")
 
           # If the current npr story was published earlier than our delay period
           if existing_story.published_at < (npr_auto_publish_delay || 120).minutes.ago && existing_story.is_new
@@ -102,7 +114,7 @@ module NprArticleImporter
         cached_article = RemoteArticle.new(
           :source       => SOURCE,
           :article_id   => npr_story.id,
-          :headline     => npr_story.title,
+          :headline     => remote_article_headline,
           :teaser       => npr_story.teaser,
           :published_at => npr_story.pubDate,
           :url          => npr_story.link_for("html"),
