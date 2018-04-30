@@ -1,6 +1,6 @@
 <% add_to_page_title model.to_title.pluralize %>
 
-<p class="alert alert-info">Most articles from NPR will auto-publish if they've been available for more than 2 hours. The safest way to ensure an article does NOT get auto-published is to IMPORT it and leave it as a draft in Outpost.</p>
+<p class="alert alert-info">Most articles from NPR will auto-publish if they've been available for more than <%= @npr_auto_publish_delay %> hour(s). The safest way to ensure an article does NOT get auto-published is to IMPORT it and leave it as a draft in Outpost.</p>
 <div class="index-header clearfix">
   <%= render "outpost/shared/filters" %>
   <%= render "outpost/shared/search_form" %>

@@ -52,6 +52,12 @@ class Outpost::RemoteArticlesController < Outpost::BaseController
 
   def index
     @records = @records.where(is_new: true)
+    config_data_point = DataPoint
+                          .find_by(data_key: "npr_auto_publish_delay")
+                          .try(:data_value)
+                          .try(:to_i) || 120
+
+    @npr_auto_publish_delay = (config_data_point.to_f / 60.to_f).round(2)
     respond_with :outpost, @records
   end
 
