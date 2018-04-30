@@ -29,8 +29,10 @@ module NprArticleImporter
   }
 
   REGEXP_EXCEPTIONS = [
-    /watch\s+live/i,
-    /video:/i
+    /top\s+stories:/i,
+    /video:/i,
+    /watch\s+live:/i,
+    /watch:/i
   ]
 
   class << self
