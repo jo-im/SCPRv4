@@ -24,6 +24,7 @@ class Outpost::RemoteArticlesController < Outpost::BaseController
 
     l.column :headline
     l.column :published_at,
+      :header                     => "Published from source at",
       :sortable                   => true,
       :default_order_direction    => DESCENDING
 
