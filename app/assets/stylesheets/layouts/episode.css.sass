@@ -47,6 +47,14 @@
     width: ($col * 7) + ($gutter * 6)
 
   @media all and (max-width: $media-wide)
+    .o-featured-episode__headers, .o-featured-episode__center
+      margin-left: $margin + $col
+      width: ($col * 6) + ($gutter * 6)
+
+    #o-ad--pos-a, #o-ad--pos-b, #o-ad--pos-c, .o-program-overview, .o-recent-segments-cluster
+      width: ($col * 4) + ($gutter * 3)
+      margin-right: $margin
+
     .c-audio
       display: none
 
