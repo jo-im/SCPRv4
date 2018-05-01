@@ -61,9 +61,6 @@ end %>
 
 <%= cell :archive_picker, @program, id: 'o-archive-picker__standard-program-episode', base_url: "/programs/" + @program.slug + "/archive", header: "Find a specific episode from " + @program.try(:title) + "'s archive", type: "full", order: 3 %>
 
-<!-- OPTIONAL: Allows for segments to be included in episode pages. It doesn't seem like any program does it this way pre-au, so I'll leave this disabled for now. -->
-<!-- <%= cell :episode_list, @segments, id: 'o-standard-program-episode__episode__segment-list', class: 'o-standard-program__episode-list', program: @program, header: 'In this episode', order: 2 %> -->
-
 <%= cell :newsletter_appeal, @episode, order: 999 %>
 
 <%= cell :social_tools, @article, display: 'horiz', order: 999 %>
