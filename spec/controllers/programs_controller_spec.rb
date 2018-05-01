@@ -264,7 +264,7 @@ describe ProgramsController do
 
 
   describe "GET /episode" do
-    let(:program) { create :kpcc_program }
+    let(:program) { create :kpcc_program, is_featured: true }
     let(:episode) { create :show_episode, show: program }
     let(:segment) { create :show_segment, :published, show: program }
 
@@ -283,11 +283,23 @@ describe ProgramsController do
       assigns(:episode).should eq episode
     end
 
-    # it "gets the episode's content" do
-    #   episode.rundowns.create(content: segment)
-    #   get :episode, params
-    #   assigns(:content).to_a.should eq [segment.to_article]
-    # end
+    it "gets the episode's content" do
+      episode.rundowns.create(content: segment)
+      get :episode, params
+      episode.content.to_a.should eq [segment]
+    end
+
+    it "renders the segment list if there is at least one segment" do
+      episode.rundowns.create(content: segment)
+      get :episode, params
+      episode.content.to_a.should eq [segment]
+      response.should render_template "programs/episode"
+    end
+
+    it "renders an episode template if there are no segments" do
+      get :episode, params
+      response.should render_template "programs/episode"
+    end
   end
 
   describe "GET /featured_program" do

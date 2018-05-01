@@ -15,7 +15,7 @@
         <h1 class="o-featured-programs__program-title"><a href="<%= program.public_path %>"><%= program.title %></a></h1>
         <h2 class="o-featured-programs__program-host"><a href="<%= program.public_path %>">With <%= program.host %></a></h2>
         <h3 class="o-featured-programs__program-airtime"><%= program.airtime %></h3>
-        <p class="o-featured-programs__program-teaser"><%= program.teaser.html_safe %></p>
+        <p class="o-featured-programs__program-teaser"><%= program.teaser.try(:html_safe) %></p>
       </div>
 
       <% if latest_episode.present? %>
