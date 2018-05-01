@@ -9,6 +9,8 @@ class List < ActiveRecord::Base
   outpost_model
   has_status
 
+  include Concern::Associations::CategoryAssociation
+
   has_many :items,
     -> { order('position').includes(:item) },
     class_name: "ListItem"
@@ -17,11 +19,11 @@ class List < ActiveRecord::Base
 
   validates :title, presence: true
 
-  scope :published, ->(){ 
+  scope :published, ->(){
     where(status: 5)
   }
 
-  scope :visible, ->(){  
+  scope :visible, ->(){
     published.where("
       (starts_at IS NULL AND ends_at IS NULL)
       OR
@@ -53,6 +55,14 @@ class List < ActiveRecord::Base
       position: item_hash["position"].to_i
     })
     ListItem.new(attrs) if item.published?
+  end
+
+  def deduped_category_items
+    self.category.content({
+      page: 1,
+      per_page: 16,
+      exclude: ApplicationHelper.latest_headlines({ limit: 16 })
+    })
   end
 
   private

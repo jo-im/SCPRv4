@@ -37,6 +37,39 @@ describe NprArticleImporter do
       cached.first.teaser.should match /sail/
       cached.first.url.should match /four-men-in-a-small-ship/
     end
+
+    it 'calls import for articles published less than 2 hours ago' do
+      # Sync once to get RemoteArticles into the queue for the first time
+      synced_stories = NprArticleImporter.sync
+
+      # Modify the last RemoteArticle to stub that it was published now
+      synced_stories.last.published_at = Time.zone.now
+      synced_stories.last.save
+
+      # There are two valid stories in the api/np/stories.json fixture
+      # that have been published less than 2 hours ago.
+      # The second story was modified above so that it registers as published now.
+      # NprArticleImporter should call only once when synced again (instead of twice)
+      expect(NprArticleImporter).to receive(:import).once
+
+      NprArticleImporter.sync
+    end
+
+    it 'does not call import if the npr story is a live video, but still adds it as a RemoteArticle' do
+      stub_request(:get, %r|api\.npr|).to_return({
+        :headers => {
+          :content_type   => "application/json"
+        },
+        :body => load_fixture('api/npr/stories-with-live-video.json')
+      })
+
+      # There are two stories in the fixture, but the first story has "Watch Live:" in its title.
+      # Therefore, import should only be called once
+      expect(NprArticleImporter).to receive(:import).at_most(:once)
+      added = NprArticleImporter.sync
+      cached = RemoteArticle.all
+      expect(cached.count).to eq 2
+    end
   end
 
   describe '#import' do
@@ -79,6 +112,31 @@ describe NprArticleImporter do
       news_story = NprArticleImporter.import(remote_article)
       news_story.assets.size.should eq 1
       news_story.assets.first.caption.should match /European Space Agency/
+    end
+
+    it "adds a category if NPR's primaryTopic matches one of our categories" do
+      # Create a category with the title 'US & World'.
+      # This should match the response defined in the npr_article fixture (currently "World") - J.A.
+      create :category, title: 'US & World'
+
+      remote_article = create :npr_article
+      news_story = NprArticleImporter.import(remote_article)
+      news_story.category.title.should eq 'US & World'
+    end
+
+    it "does not call the API if options[:npr_story] is given" do
+      remote_article = create :npr_article
+
+      # Call the api once to get an NPR::Entity (id is taken from the fixture, 'api/npr/story.json')
+      npr_story = NPR::Story.find(187325945)
+
+      # Pass the NPR::Entity into the import method. Normally .import would perform an API call,
+      # but if an `npr_story` is already passed in, we want to use that instead
+      news_story = NprArticleImporter.import(remote_article, { npr_story: npr_story })
+
+      # Webmock should only call once because we performed an NPR::Story.find earlier
+      # for the purposes of this test.
+      expect(WebMock).to have_requested(:get, %r|api\.npr|).once
     end
   end
 end

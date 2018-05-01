@@ -1,5 +1,6 @@
 <% add_to_page_title model.to_title.pluralize %>
 
+<p class="alert alert-info">Most articles from NPR will auto-publish if they've been available for more than <%= @npr_auto_publish_delay %> hour(s). The safest way to ensure an article does NOT get auto-published is to IMPORT it and leave it as a draft in Outpost.</p>
 <div class="index-header clearfix">
   <%= render "outpost/shared/filters" %>
   <%= render "outpost/shared/search_form" %>
@@ -20,7 +21,7 @@
       <tr class="<%= model.singular_route_key.dasherize %>">
         <td class="column-manage">
           <div class="btn-group dropdown">
-            <%= link_to "Import", import_outpost_remote_article_path(record, import_to_class: "NewsStory"), method: :post, class: "btn" %>
+            <%= link_to "Import as draft", import_outpost_remote_article_path(record, import_to_class: "NewsStory"), method: :post, class: "btn" %>
             <button class="btn dropdown-toggle" data-toggle="dropdown">
               <span class="caret"></span>
             </button>

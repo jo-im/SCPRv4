@@ -6,7 +6,7 @@ module HomepageHelper
       "sm" => "sm",
       "small" => "sm",
       "med" => "med",
-      "medium" => "med", 
+      "medium" => "med",
       "lg" => "lg",
       "large" => "lg",
       "none" => "med"
@@ -53,14 +53,15 @@ module HomepageHelper
       .sort_by{|i| i.position}
       .first(2)
       .map{|c| c.content_id}
-    # ^^^ Just doing a ruby sort here because we 
+    # ^^^ Just doing a ruby sort here because we
     # don't actually have anything to query against
     # when we are previewing a homepage.
     NewsStory
       .where("status = 5", "category_id IS NOT NULL")
+      .where("source = 'npr'")
       .where("id NOT IN (?)", ignore_ids)
       .order("published_at DESC").limit(5)
-  end  
+  end
   def render_right_aside index, &block
     klass = "right l-col l-col--sm-12 l-col--med-3"
     if block_given?

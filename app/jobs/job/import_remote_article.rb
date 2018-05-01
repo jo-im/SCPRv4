@@ -8,7 +8,7 @@ module Job
     class << self
       def perform(id, import_to_class)
         @remote_article = RemoteArticle.find(id)
-        @story = @remote_article.import(import_to_class: import_to_class)
+        @story = @remote_article.import(import_to_class: import_to_class, manual: true)
 
         # We want a failure to import to be caught by Resque.
         if !@story

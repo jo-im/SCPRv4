@@ -2,6 +2,11 @@ module ApplicationHelper
   include Twitter::Autolink
   include HomepageHelper
 
+  def latest_headlines options={}
+    collection_limit = options[:limit] || 16
+    NewsStory.published.order('published_at DESC').limit(collection_limit)
+  end
+
   def add_ga_tracking_to(url)
     analytics_params = "?utm_source=kpcc&utm_medium=email&utm_campaign=short-list"
     url =~ /scpr\.org/ ? url + analytics_params : url

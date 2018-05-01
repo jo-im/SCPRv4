@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180227011442) do
+ActiveRecord::Schema.define(version: 20180419171624) do
 
   create_table "abstracts", force: :cascade do |t|
     t.string   "source",               limit: 255
@@ -596,6 +596,7 @@ ActiveRecord::Schema.define(version: 20180227011442) do
     t.datetime "created_at",                           null: false
     t.datetime "updated_at",                           null: false
     t.string   "content_type", limit: 255
+    t.integer  "category_id",  limit: 4
   end
 
   add_index "lists", ["ends_at"], name: "index_lists_on_ends_at", using: :btree

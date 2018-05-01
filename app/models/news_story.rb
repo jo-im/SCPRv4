@@ -61,6 +61,13 @@ class NewsStory < ActiveRecord::Base
 
   alias_attribute :public_datetime, :published_at
 
+  class << self
+    # Expose sources to use in filter menus for the NewsStory outpost list
+    def source_select_collection
+      SOURCES
+    end
+  end
+
   def needs_validation?
     self.pending? || self.published?
   end
