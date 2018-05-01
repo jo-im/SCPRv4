@@ -7,7 +7,11 @@ module Concern
         @featured_programs = KpccProgram.where.not(id: @program.id, is_featured: false).first(4)
         if @program.is_segmented?
           @episodes = @program.episodes.published.order("air_date").first(4)
-          render 'programs/standard_program_episode', layout: 'application' and return
+          if @content.length > 0
+            render 'programs/episode', layout: 'application' and return
+          else
+            render 'programs/standard_program_episode', layout: 'application' and return
+          end
         else
           render 'programs/kpcc/old/episode_standalone'
         end
