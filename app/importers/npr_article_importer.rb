@@ -110,7 +110,7 @@ module NprArticleImporter
           existing_story.update headline: remote_article_headline, teaser: npr_story.teaser, url: npr_story.link_for("html")
 
           # If the current npr story was published earlier than our delay period
-          if existing_story.published_at < (npr_auto_publish_delay || 120).minutes.ago && existing_story.is_new
+          if (Rails.env == 'production' || Rails.env == 'test') && existing_story.published_at < (npr_auto_publish_delay || 120).minutes.ago && existing_story.is_new
             # begin the auto-publish process
             self.auto_publish(existing_story, npr_story)
           end
