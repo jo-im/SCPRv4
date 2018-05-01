@@ -298,7 +298,7 @@ describe ProgramsController do
 
     it "renders an episode template if there are no segments" do
       get :episode, params
-      response.should render_template "programs/episode"
+      response.should render_template "programs/standard_program_episode"
     end
   end
 
