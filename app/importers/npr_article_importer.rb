@@ -29,6 +29,7 @@ module NprArticleImporter
   }
 
   REGEXP_EXCEPTIONS = [
+    /exclusive\s+audio:/i,
     /top\s+stories:/i,
     /video:/i,
     /watch\s+live:/i,
