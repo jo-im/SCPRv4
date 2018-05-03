@@ -20,6 +20,7 @@
 <% end %>
 
 <%= form_block "Content" do %>
+  <%= f.input :external_podcast_id, hint: raw("Click <a href='https://cms.megaphone.fm/organizations/#{MegaphoneClient.organization_id}/podcasts/#{@record.external_podcast_id}'>here</a> to visit the external podcast cms page") %>
   <%= f.input :source_type, collection: Podcast::SOURCES %>
   <%= f.input :source_id, label: "Source ID", input_html: { class: 'span1' } %>
   <%= f.section "category" %>
