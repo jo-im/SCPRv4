@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180419171624) do
+ActiveRecord::Schema.define(version: 20180503180527) do
 
   create_table "abstracts", force: :cascade do |t|
     t.string   "source",               limit: 255
@@ -762,24 +762,25 @@ ActiveRecord::Schema.define(version: 20180419171624) do
   end
 
   create_table "podcasts", force: :cascade do |t|
-    t.string   "slug",               limit: 255
-    t.string   "title",              limit: 255
-    t.string   "url",                limit: 255
-    t.string   "podcast_url",        limit: 255
-    t.string   "itunes_url",         limit: 255
-    t.text     "description",        limit: 16777215
-    t.string   "image_url",          limit: 255
-    t.string   "author",             limit: 255
-    t.string   "keywords",           limit: 255
-    t.string   "duration",           limit: 255
-    t.boolean  "is_listed",                           default: false, null: false
-    t.integer  "source_id",          limit: 4
-    t.integer  "category_id",        limit: 4
-    t.string   "item_type",          limit: 255
-    t.datetime "created_at",                                          null: false
-    t.datetime "updated_at",                                          null: false
-    t.string   "source_type",        limit: 255
-    t.integer  "itunes_category_id", limit: 4
+    t.string   "slug",                limit: 255
+    t.string   "title",               limit: 255
+    t.string   "url",                 limit: 255
+    t.string   "podcast_url",         limit: 255
+    t.string   "itunes_url",          limit: 255
+    t.text     "description",         limit: 16777215
+    t.string   "image_url",           limit: 255
+    t.string   "author",              limit: 255
+    t.string   "keywords",            limit: 255
+    t.string   "duration",            limit: 255
+    t.boolean  "is_listed",                            default: false, null: false
+    t.integer  "source_id",           limit: 4
+    t.integer  "category_id",         limit: 4
+    t.string   "item_type",           limit: 255
+    t.datetime "created_at",                                           null: false
+    t.datetime "updated_at",                                           null: false
+    t.string   "source_type",         limit: 255
+    t.integer  "itunes_category_id",  limit: 4
+    t.string   "external_podcast_id", limit: 255
   end
 
   add_index "podcasts", ["category_id"], name: "podcasts_podcast_42dc49bc", using: :btree
@@ -948,8 +949,8 @@ ActiveRecord::Schema.define(version: 20180419171624) do
     t.integer  "original_segment_id", limit: 4
     t.boolean  "needs_reindex",                          default: false
     t.text     "abstract",            limit: 65535
-    t.string   "short_headline",      limit: 255
     t.integer  "feature_type_id",     limit: 4
+    t.string   "short_headline",      limit: 255
   end
 
   add_index "shows_episode", ["air_date"], name: "index_shows_episode_on_air_date", using: :btree
