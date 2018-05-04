@@ -28,7 +28,7 @@ class ShowEpisode < ActiveRecord::Base
   alias_attribute :title, :headline
   alias_attribute :public_datetime, :published_at
 
-  attr_accessor :pre_count, :post_count, :insertion_points, :podcast_request_body
+  attr_accessor :pre_count, :post_count, :insertion_points, :podcast_episode_request_body
 
   self.public_route_key = "episode"
 
@@ -115,51 +115,51 @@ class ShowEpisode < ActiveRecord::Base
 
   before_save :generate_body, if: -> { self.body.blank? && should_validate? }
 
-  after_update :update_podcast
+  after_update :update_podcast_episode
 
-  def podcast_request_body
-    @podcast_request_body ||= {}
+  def podcast_episode_request_body
+    @podcast_episode_request_body ||= {}
   end
 
-  def podcast_record
-    @podcast_record ||=
+  def podcast_episode_record
+    @podcast_episode_record ||=
       begin
-        $megaphone.episodes.search({ externalId: "#{self.obj_key}__#{Rails.env}" }).first
+        $megaphone.episodes.search({ externalId: "#{self.obj_key}__production" }).first
       rescue
         {}
       end
   end
 
   def insertion_points
-    @insertion_points ||= podcast_record.try(:[], 'insertionPoints').try(:join, ", ")
+    @insertion_points ||= podcast_episode_record.try(:[], 'insertionPoints').try(:join, ", ")
   end
 
   def insertion_points=(new_insertion_points)
     if new_insertion_points != insertion_points
       @insertion_points = new_insertion_points
-      @podcast_request_body = podcast_request_body.merge({ insertionPoints: @insertion_points })
+      @podcast_episode_request_body = podcast_episode_request_body.merge({ insertionPoints: @insertion_points })
     end
   end
 
   def post_count
-    @post_count ||= podcast_record.try(:[], 'postCount')
+    @post_count ||= podcast_episode_record.try(:[], 'postCount')
   end
 
   def post_count=(new_count)
     if new_count.to_i != post_count
       @post_count = new_count.to_i
-      @podcast_request_body = podcast_request_body.merge({ postCount: @post_count })
+      @podcast_episode_request_body = podcast_episode_request_body.merge({ postCount: @post_count })
     end
   end
 
   def pre_count
-    @pre_count ||= podcast_record.try(:[], 'preCount')
+    @pre_count ||= podcast_episode_record.try(:[], 'preCount')
   end
 
   def pre_count=(new_count)
     if new_count.to_i != pre_count
       @pre_count = new_count.to_i
-      @podcast_request_body = podcast_request_body.merge({ pre_count: @pre_count })
+      @podcast_episode_request_body = podcast_episode_request_body.merge({ pre_count: @pre_count })
     end
   end
 
@@ -258,13 +258,13 @@ class ShowEpisode < ActiveRecord::Base
     )
   end
 
-  def update_podcast
-    if @podcast_request_body.present?
+  def update_podcast_episode
+    if @podcast_episode_request_body.present?
       begin
         results = $megaphone.episodes.update({
-          podcast_id: podcast_record['podcastId'],
-          episode_id: podcast_record['id'],
-          body: @podcast_request_body
+          podcast_id: podcast_episode_record['podcastId'],
+          episode_id: podcast_episode_record['id'],
+          body: @podcast_episode_request_body
         })
       rescue
         {}
