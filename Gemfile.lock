@@ -68,9 +68,9 @@ GIT
 
 GIT
   remote: git://github.com/scpr/megaphone_client.git
-  revision: 4f557a594737927da9f0cc380bc538d0af76791c
+  revision: a576e3b182209029418823ad2154f1ceb4988bdb
   specs:
-    megaphone_client (0.1.0)
+    megaphone_client (0.2.0)
       rest-client (~> 2.0)
 
 GIT
@@ -211,7 +211,7 @@ GEM
     declarative-option (0.1.0)
     diff-lcs (1.2.5)
     diffy (3.0.7)
-    domain_name (0.5.20160615)
+    domain_name (0.5.20180417)
       unf (>= 0.0.5, < 1.0.0)
     eco (1.0.0)
       coffee-script
@@ -274,7 +274,7 @@ GEM
       activesupport (>= 2)
       nokogiri (>= 1.4)
     htmlentities (4.3.4)
-    http-cookie (1.0.2)
+    http-cookie (1.0.3)
       domain_name (~> 0.5)
     i18n (0.9.3)
       concurrent-ruby (~> 1.0)
@@ -423,7 +423,7 @@ GEM
       vegas (~> 0.1.2)
     resque_solo (0.3.0)
       resque (~> 1.25)
-    rest-client (2.0.0)
+    rest-client (2.0.2)
       http-cookie (>= 1.0.2, < 2.0)
       mime-types (>= 1.16, < 4.0)
       netrc (~> 0.8)
@@ -516,7 +516,7 @@ GEM
       json (>= 1.8.0)
     unf (0.1.4)
       unf_ext
-    unf_ext (0.0.6)
+    unf_ext (0.0.7.5)
     uri_template (0.7.0)
     vegas (0.1.11)
       rack (>= 1.0.0)
