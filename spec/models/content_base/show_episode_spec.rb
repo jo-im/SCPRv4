@@ -29,7 +29,7 @@ describe ShowEpisode do
       it "only executes a PUT request if new values are different than the old ones" do
         # When nothing has changed, don't fire a put request
         episode = create :show_episode
-        podcast_record = episode.podcast_record
+        podcast_record = episode.podcast_episode_record
         episode.save
         expect(WebMock).not_to have_requested(:put, %r|cms\.megaphone\.fm\/api\/|)
 

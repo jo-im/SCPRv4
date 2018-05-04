@@ -115,6 +115,8 @@ class ShowEpisode < ActiveRecord::Base
 
   before_save :generate_body, if: -> { self.body.blank? && should_validate? }
 
+  after_create :create_podcast_episode
+
   after_update :update_podcast_episode
 
   def podcast_episode_request_body
@@ -258,10 +260,50 @@ class ShowEpisode < ActiveRecord::Base
     )
   end
 
+  def create_podcast_episode
+    podcast_id = self.try(:show).try(:podcast).try(:external_podcast_id)
+    draft = self.status == 5 ? false : true
+    body = {
+      byline: self.show.title,
+      draft: draft,
+      externalId: "#{self.obj_key}__production",
+      pubdate: self.air_date,
+      summary: self.teaser,
+      title: self.headline
+    }
+
+    available_audio = self.audio.select(&:available?)
+    available_images = self.assets
+
+    if available_audio.try(:length) > 0
+      body.merge({
+        audioFileProcessing: true,
+        backgroundAudioFileUrl: available_audio.first.url
+      })
+    end
+
+    if available_images.try(:length) > 0
+      body.merge({
+        backgroundImageFileUrl: available_images.first.try(:full).try(:url)
+      })
+    end
+
+    if podcast_id.present?
+      begin
+        $megaphone.episodes.create({
+          podcast_id: podcast_id,
+          body: body
+        })
+      rescue
+        {}
+      end
+    end
+  end
+
   def update_podcast_episode
     if @podcast_episode_request_body.present?
       begin
-        results = $megaphone.episodes.update({
+        $megaphone.episodes.update({
           podcast_id: podcast_episode_record['podcastId'],
           episode_id: podcast_episode_record['id'],
           body: @podcast_episode_request_body
