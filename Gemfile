@@ -35,7 +35,7 @@ gem 'resque_solo'
 gem 'kaminari', '~> 0.15.0'
 gem 'select2-rails', '3.4.1'
 gem 'twitter-text', "~> 1.5"
-gem 'sanitize', "~> 2.0"
+gem 'sanitize', "~> 4.6.3"
 gem 'escape_utils', '~> 1.0.1'
 gem 'simple_form', "~> 3.1.0"
 gem 'jbuilder', '~> 1.5.3'
