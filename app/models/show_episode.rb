@@ -264,7 +264,7 @@ class ShowEpisode < ActiveRecord::Base
     podcast_id = self.try(:show).try(:podcast).try(:external_podcast_id)
     draft = self.status == 5 ? false : true
     body = {
-      byline: self.show.title,
+      author: self.show.title,
       draft: draft,
       externalId: "#{self.obj_key}__production",
       pubdate: self.air_date,
@@ -276,14 +276,13 @@ class ShowEpisode < ActiveRecord::Base
     available_images = self.assets
 
     if available_audio.try(:length) > 0
-      body.merge({
-        audioFileProcessing: true,
+      body = body.merge({
         backgroundAudioFileUrl: available_audio.first.url
       })
     end
 
     if available_images.try(:length) > 0
-      body.merge({
+      body = body.merge({
         backgroundImageFileUrl: available_images.first.try(:full).try(:url)
       })
     end
