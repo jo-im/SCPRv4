@@ -1,7 +1,7 @@
 class List < ActiveRecord::Base
 
   CONTENT_TYPES = {
-    "article" => ["NewsStory", "BlogEntry", "ShowSegment", "Event"],
+    "article" => ["NewsStory", "BlogEntry", "ShowSegment", "Event", "ContentShell"],
     "program" => ["KpccProgram", "ExternalProgram"],
     "episode" => ["ShowEpisode"]
   }
