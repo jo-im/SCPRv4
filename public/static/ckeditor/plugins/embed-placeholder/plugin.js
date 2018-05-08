@@ -26,6 +26,7 @@
           ['Google Fusion', 'googlefusion', 'fusiontables'],
           ['Instagram', 'instagram', 'instagram.com'],
           ['LiveStream', 'livestream', 'livestream.com'],
+          ['NBC Bay Area', 'nbc', 'nbcbayarea.com'],
           ['NBC Los Angeles', 'nbc', 'nbclosangeles.com'],
           ['Polldaddy', 'polldaddy', 'polldaddy.com'],
           ['RebelMouse', 'rebelmouse', 'rebelmouse.com'],
