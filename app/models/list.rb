@@ -1,11 +1,5 @@
 class List < ActiveRecord::Base
 
-  CONTENT_TYPES = {
-    "article" => ["NewsStory", "BlogEntry", "ShowSegment", "Event"],
-    "program" => ["KpccProgram", "ExternalProgram"],
-    "episode" => ["ShowEpisode"]
-  }
-
   outpost_model
   has_status
 
@@ -33,7 +27,7 @@ class List < ActiveRecord::Base
     ", Time.zone.now, Time.zone.now, Time.zone.now, Time.zone.now)
   }
 
-  before_save :sanitize_context, :enforce_content_type
+  before_save :sanitize_context
 
   status :draft do |s|
     s.id = 0
@@ -69,11 +63,6 @@ class List < ActiveRecord::Base
 
   def sanitize_context
     self.context = (self.context || "").split(",").map(&:strip).join(",")
-  end
-
-  def enforce_content_type
-    model_names = CONTENT_TYPES[content_type]
-    items.where.not(item_type: model_names).destroy_all
   end
 
 end
