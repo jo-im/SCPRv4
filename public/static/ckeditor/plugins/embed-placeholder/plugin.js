@@ -26,6 +26,7 @@
           ['Google Fusion', 'googlefusion', 'fusiontables'],
           ['Instagram', 'instagram', 'instagram.com'],
           ['LiveStream', 'livestream', 'livestream.com'],
+          ['NBC Los Angeles', 'nbc', 'nbclosangeles.com'],
           ['Polldaddy', 'polldaddy', 'polldaddy.com'],
           ['RebelMouse', 'rebelmouse', 'rebelmouse.com'],
           ['Scribd', 'scribd', 'scribd.com'],
@@ -199,7 +200,16 @@
 
               if (embedCode) {
                 // Force a wrapper around the embed, for styling.
-                var div = $('<div />', { class: "embed-wrapper" });
+                service     = this.getContentElement(
+                                'embed', 'embedService'
+                              ).getValue();
+
+                var classNames = "embed-wrapper"
+                if (service) {
+                  classNames += " " + service
+                }
+
+                var div = $('<div />', { class: classNames });
                 div.html(embedCode);
                 html = div[0].outerHTML;
 
