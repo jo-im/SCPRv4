@@ -37,6 +37,50 @@ describe ShowEpisode do
         episode = create :show_episode, show: program
         expect(WebMock).to have_requested(:post, %r|cms\.megaphone\.fm\/api\/|).once
       end
+
+      it "adds a backgroundAudioFileUrl if audio is attached" do
+        podcast = build :podcast, title: "The Coolest Podcast", external_podcast_id: "EXTERNAL_PODCAST_ID_STUB"
+        program = build :kpcc_program, title: "The Coolest Show", podcast: podcast
+        audio = create :audio, :live, :direct
+        episode = create :show_episode, show: program, audio: [audio]
+
+        expected_json = {
+          author: episode.show.title,
+          draft: false,
+          externalId: "#{episode.obj_key}__#{Rails.env}",
+          pubdateTimezone: Time.zone.name,
+          pubdate: episode.air_date,
+          summary: episode.teaser,
+          title: episode.headline,
+          backgroundAudioFileUrl: episode.audio.first.url
+        }.to_json
+
+        expect(WebMock)
+          .to have_requested(:post, %r|cms\.megaphone\.fm\/api\/|)
+          .with(body: expected_json)
+      end
+
+      it "adds a backgroundImageFileUrl if an image is attached" do
+        podcast = build :podcast, title: "The Coolest Podcast", external_podcast_id: "EXTERNAL_PODCAST_ID_STUB"
+        program = build :kpcc_program, title: "The Coolest Show", podcast: podcast
+        asset = build :asset
+        episode = create :show_episode, show: program, assets: [asset]
+
+        expected_json = {
+          author: episode.show.title,
+          draft: false,
+          externalId: "#{episode.obj_key}__#{Rails.env}",
+          pubdateTimezone: Time.zone.name,
+          pubdate: episode.air_date,
+          summary: episode.teaser,
+          title: episode.headline,
+          backgroundImageFileUrl: episode.assets.first.full.url
+        }.to_json
+
+        expect(WebMock)
+          .to have_requested(:post, %r|cms\.megaphone\.fm\/api\/|)
+          .with(body: expected_json)
+      end
     end
 
     describe "update_podast_episode" do

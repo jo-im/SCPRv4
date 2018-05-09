@@ -164,7 +164,7 @@ RSpec.configure do |config|
         }
     })
 
-    # Stub put requests
+    # Stub post requests
     stub_request(:post, %r|cms\.megaphone\.fm\/|)
       .to_return({
         :body => "{}",
