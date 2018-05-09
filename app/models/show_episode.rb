@@ -126,7 +126,7 @@ class ShowEpisode < ActiveRecord::Base
   def podcast_episode_record
     @podcast_episode_record ||=
       begin
-        $megaphone.episodes.search({ externalId: "#{self.obj_key}__production" }).first
+        $megaphone.episodes.search({ externalId: "#{self.obj_key}__#{Rails.env}" }).first
       rescue
         {}
       end
@@ -266,8 +266,9 @@ class ShowEpisode < ActiveRecord::Base
     body = {
       author: self.show.title,
       draft: draft,
-      externalId: "#{self.obj_key}__production",
-      pubdate: self.air_date,
+      externalId: "#{self.obj_key}__#{Rails.env}",
+      pubdateTimezone: Time.zone.name,
+      pubdate: self.air_date || Time.zone.now + 1.year,
       summary: self.teaser,
       title: self.headline
     }
@@ -287,7 +288,7 @@ class ShowEpisode < ActiveRecord::Base
       })
     end
 
-    if podcast_id.present?
+    if podcast_id.present? && @podcast_episode_record.nil?
       begin
         $megaphone.episodes.create({
           podcast_id: podcast_id,
@@ -300,6 +301,48 @@ class ShowEpisode < ActiveRecord::Base
   end
 
   def update_podcast_episode
+    property_mapper = {
+      "air_date" => "pubdate",
+      "audio" => "backgroundAudioFileUrl",
+      "draft" => "draft",
+      "headline" => "title",
+      "teaser" => "summary"
+    }
+
+    changes = {};
+
+    self.changes.each do |attribute, change|
+      if property_mapper[attribute].present?
+        key = property_mapper[attribute]
+        value = change[1]
+
+        # The API requires that pubdate not be blank
+        if attribute == "air_date" && change[1].nil?
+          value = Time.zone.now + 1.year
+        end
+
+        if attribute == "audio"
+          puts '==================================='
+          puts change
+          puts change[0].first.try(:url)
+          puts change[1].first.try(:url)
+          puts '==================================='
+
+          if change[1].try(:first).try(:url) != change[0].try(:first).try(:url)
+            value = change[1].try(:first).try(:url)
+          else
+            next
+          end
+        end
+
+        changes[key] = value
+      end
+    end
+
+    puts changes
+    @podcast_episode_request_body = (@podcast_episode_request_body || {}).merge(changes)
+    puts '==================================='
+
     if @podcast_episode_request_body.present?
       begin
         $megaphone.episodes.update({
