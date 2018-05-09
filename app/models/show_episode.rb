@@ -322,12 +322,6 @@ class ShowEpisode < ActiveRecord::Base
         end
 
         if attribute == "audio"
-          puts '==================================='
-          puts change
-          puts change[0].first.try(:url)
-          puts change[1].first.try(:url)
-          puts '==================================='
-
           if change[1].try(:first).try(:url) != change[0].try(:first).try(:url)
             value = change[1].try(:first).try(:url)
           else
@@ -339,10 +333,7 @@ class ShowEpisode < ActiveRecord::Base
       end
     end
 
-    puts changes
     @podcast_episode_request_body = (@podcast_episode_request_body || {}).merge(changes)
-    puts '==================================='
-
     if @podcast_episode_request_body.present?
       begin
         $megaphone.episodes.update({
