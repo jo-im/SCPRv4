@@ -25,7 +25,21 @@ describe ShowEpisode do
       end
     end
 
-    describe "update_podast" do
+    describe "create_podast_episode" do
+      it "only executes a POST request if the associated podcast has an external podcast id" do
+        podcast = build :podcast, title: "The Cooler Podcast"
+        program = build :kpcc_program, title: "The Cooler Show", podcast: podcast
+        episode = create :show_episode, show: program
+        expect(WebMock).to_not have_requested(:post, %r|cms\.megaphone\.fm\/api\/|)
+
+        podcast = build :podcast, title: "The Coolest Podcast", external_podcast_id: "EXTERNAL_PODCAST_ID_STUB"
+        program = build :kpcc_program, title: "The Coolest Show", podcast: podcast
+        episode = create :show_episode, show: program
+        expect(WebMock).to have_requested(:post, %r|cms\.megaphone\.fm\/api\/|).once
+      end
+    end
+
+    describe "update_podast_episode" do
       it "only executes a PUT request if new values are different than the old ones" do
         # When nothing has changed, don't fire a put request
         episode = create :show_episode
