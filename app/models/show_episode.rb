@@ -117,6 +117,8 @@ class ShowEpisode < ActiveRecord::Base
 
   after_create :create_podcast_episode
 
+  after_destroy :delete_podcast_episode
+
   after_update :update_podcast_episode
 
   def podcast_episode_request_body
@@ -297,6 +299,20 @@ class ShowEpisode < ActiveRecord::Base
       rescue
         {}
       end
+    end
+  end
+
+  def delete_podcast_episode
+    podcast_id = podcast_episode_record['podcastId']
+    episode_id = podcast_episode_record['id']
+
+    begin
+      $megaphone
+        .podcast(podcast_id)
+        .episode(episode_id)
+        .delete
+    rescue
+      {}
     end
   end
 
