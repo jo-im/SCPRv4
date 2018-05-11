@@ -320,7 +320,7 @@ class ShowEpisode < ActiveRecord::Base
     property_mapper = {
       "air_date" => "pubdate",
       "audio" => "backgroundAudioFileUrl",
-      "draft" => "draft",
+      "status" => "draft",
       "headline" => "title",
       "teaser" => "summary"
     }
@@ -337,12 +337,8 @@ class ShowEpisode < ActiveRecord::Base
           value = Time.zone.now + 1.year
         end
 
-        if attribute == "audio"
-          if change[1].try(:first).try(:url) != change[0].try(:first).try(:url)
-            value = change[1].try(:first).try(:url)
-          else
-            next
-          end
+        if attribute == "status"
+          change[1] == 5 ? value = false : value = true
         end
 
         changes[key] = value
