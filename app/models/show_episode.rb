@@ -290,10 +290,10 @@ class ShowEpisode < ActiveRecord::Base
 
     if podcast_id.present? && @podcast_episode_record.nil?
       begin
-        $megaphone.episodes.create({
-          podcast_id: podcast_id,
-          body: body
-        })
+        $megaphone
+          .podcast(podcast_id)
+          .episode
+          .create(body)
       rescue
         {}
       end
@@ -335,12 +335,13 @@ class ShowEpisode < ActiveRecord::Base
 
     @podcast_episode_request_body = (@podcast_episode_request_body || {}).merge(changes)
     if @podcast_episode_request_body.present?
+      podcast_id = podcast_episode_record['podcastId']
+      episode_id = podcast_episode_record['id']
       begin
-        $megaphone.episodes.update({
-          podcast_id: podcast_episode_record['podcastId'],
-          episode_id: podcast_episode_record['id'],
-          body: @podcast_episode_request_body
-        })
+        $megaphone
+          .podcast(podcast_id)
+          .episode(episode_id)
+          .update(@podcast_episode_request_body)
       rescue
         {}
       end
