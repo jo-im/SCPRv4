@@ -163,7 +163,7 @@ class ProgramsController < ApplicationController
       params[:archive]["date(2i)"].to_i,
       params[:archive]["date(3i)"].to_i
     )
-    @episode = @program.episodes.for_air_date(@date).first
+    @episode = @program.episodes.for_air_date(@date).published.first
 
     if !@episode
       flash[:alert] = "There is no #{@program.title} " \
