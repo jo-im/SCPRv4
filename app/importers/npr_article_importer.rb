@@ -64,10 +64,15 @@ module NprArticleImporter
     end
 
     def auto_publish remote_article, npr_story
-      if elligible_for_autopublish?(npr_story)
+
+      # A boolean to control whether autopublishing functionality should be on or off (0 #=> false, 1 #=> true)
+      npr_auto_publish_on = DataPoint.find_by(data_key: "npr_auto_publish_on").try(:data_value).try(:to_i) || 1
+
+      # Check that all conditions pass: auth-publish is on, the article is elligible, and the environment is either production or test
+      if !npr_auto_publish_on.zero? && elligible_for_autopublish?(npr_story) && (Rails.env == 'production' || Rails.env == 'test')
         self.import remote_article, { npr_story: npr_story, manual: false }
       else
-        log "Skipping auto-import of unsupported_story: #{npr_story.id}"
+        log "Skipping auto-import of story: #{npr_story.id}"
       end
     end
 
@@ -77,9 +82,7 @@ module NprArticleImporter
       # more often than that!
 
       # We try to find if a delay was defined as a DataPoint, and if it is, convert it to an integer
-      npr_auto_publish_delay = DataPoint.find_by(data_key: "npr_auto_publish_delay")
-                                        .try(:data_value)
-                                        .try(:to_i)
+      npr_auto_publish_delay = DataPoint.find_by(data_key: "npr_auto_publish_delay").try(:data_value).try(:to_i)
 
       # There needs to be a padding greater than the delay  (e.g. "3" hours)
       # so that articles published earlier than "2" hours ago can be found
@@ -111,7 +114,7 @@ module NprArticleImporter
           existing_story.update headline: remote_article_headline, teaser: npr_story.teaser, url: npr_story.link_for("html")
 
           # If the current npr story was published earlier than our delay period
-          if (Rails.env == 'production' || Rails.env == 'test') && existing_story.published_at < (npr_auto_publish_delay || 120).minutes.ago && existing_story.is_new
+          if existing_story.published_at < (npr_auto_publish_delay || 120).minutes.ago && existing_story.is_new
             # begin the auto-publish process
             self.auto_publish(existing_story, npr_story)
           end
