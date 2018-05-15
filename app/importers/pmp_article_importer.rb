@@ -38,7 +38,6 @@ module PmpArticleImporter
       begin
         stories = query(query)
       rescue StandardError => err
-        NewRelic.log_error(err)
         stories = []
       end
 
