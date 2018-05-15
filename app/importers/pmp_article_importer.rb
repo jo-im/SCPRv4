@@ -34,7 +34,14 @@ module PmpArticleImporter
 
     def download_stories news_agency_name, query={}
       added = []
-      stories = query(query)
+
+      begin
+        stories = query(query)
+      rescue StandardError => err
+        NewRelic.log_error(err)
+        stories = []
+      end
+
       log "#{stories.size} PMP stories from #{news_agency_name} found"
       stories.each do |story|
 
@@ -134,7 +141,7 @@ module PmpArticleImporter
         end
 
         audio = pmp_story.items.find do |i|
-          PROFILES[:audio].include? i.profile.first.title 
+          PROFILES[:audio].include? i.profile.first.title
         end
 
         # Import Audio
