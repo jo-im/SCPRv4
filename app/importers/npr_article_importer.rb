@@ -69,7 +69,7 @@ module NprArticleImporter
       npr_auto_publish_on = DataPoint.find_by(data_key: "npr_auto_publish_on").try(:data_value).try(:to_i) || 1
 
       # Check that all conditions pass: auth-publish is on, the article is elligible, and the environment is either production or test
-      if !npr_auto_publish_on.zero? && elligible_for_autopublish?(npr_story) && (Rails.env == 'production' || Rails.env == 'test')
+      if !npr_auto_publish_on.zero? && elligible_for_autopublish?(npr_story) && (Rails.env.production? || Rails.env.test?)
         self.import remote_article, { npr_story: npr_story, manual: false }
       else
         log "Skipping auto-import of story: #{npr_story.id}"
