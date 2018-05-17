@@ -322,6 +322,7 @@ class ShowEpisode < ActiveRecord::Base
     property_mapper = {
       "air_date" => "pubdate",
       "audio" => "backgroundAudioFileUrl",
+      "assets" => "backgroundImageFileUrl",
       "status" => "draft",
       "headline" => "title",
       "teaser" => "summary"
@@ -337,6 +338,14 @@ class ShowEpisode < ActiveRecord::Base
         # The API requires that pubdate not be blank
         if attribute == "air_date" && change[1].nil?
           value = Time.zone.now + 1.year
+        end
+
+        if attribute == "assets"
+          value = change[1].try(:first).try(:full).try(:url) || self.try(:show).try(:podcast).try(:image_url)
+        end
+
+        if attribute == "audio"
+          value = change[1].try(:first).try(:url)
         end
 
         if attribute == "status"
