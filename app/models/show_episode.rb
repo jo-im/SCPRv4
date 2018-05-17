@@ -342,11 +342,6 @@ class ShowEpisode < ActiveRecord::Base
         key = property_mapper[attribute]
         value = change[1]
 
-        # The API requires that pubdate not be blank
-        if attribute == "air_date" && change[1].nil?
-          value = Time.zone.now + 1.year
-        end
-
         if attribute == "assets"
           value = change[1].try(:first).try(:full).try(:url) || self.try(:show).try(:podcast).try(:image_url)
         end

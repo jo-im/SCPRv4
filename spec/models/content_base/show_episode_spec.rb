@@ -81,6 +81,15 @@ describe ShowEpisode do
           .to have_requested(:post, %r|cms\.megaphone\.fm\/api\/|)
           .with(body: expected_json)
       end
+
+      it "defaults with a pubdate in the future if none is given" do
+        podcast = build :podcast, title: "The Cooler Podcast", external_podcast_id: "EXTERNAL_PODCAST_ID_STUB"
+        program = build :kpcc_program, title: "The Cooler Show", podcast: podcast
+        episode = create :show_episode, show: program
+
+        expect(WebMock).to have_requested(:post, %r|cms\.megaphone\.fm\/api\/|)
+          .with { |req| expect(req.body).to match(/pubdate/) }
+      end
     end
 
     describe "delete_podast_episode" do
@@ -114,21 +123,79 @@ describe ShowEpisode do
       end
 
       it "updates the episode's image in the podcast cms" do
+        episode = create :show_episode
+        episode.save
+
+        asset = create :asset
+        episode.assets << asset
+        episode.save
+
+        expected_json = {
+          backgroundImageFileUrl: episode.assets.first.full.url
+        }.to_json
+
+        expect(WebMock).to have_requested(:put, %r|cms\.megaphone\.fm\/api\/|)
+          .with(body: expected_json)
       end
 
       it "defaults to the podcast cover art if no asset is found" do
+        audio1 = create :audio, :live, :direct, url: "http://example.com/path/to/old_file.mp3"
+        episode = create :show_episode, audio: [audio1]
+        episode.save
+
+        audio2 = create :audio, :live, :direct, url: "http://example.com/path/to/new_file.mp3"
+        episode.audio = [audio2]
+        episode.save
+
+        expected_json = {
+          backgroundAudioFileUrl: audio2.url
+        }.to_json
+
+        expect(WebMock).to have_requested(:put, %r|cms\.megaphone\.fm\/api\/|)
+          .with(body: expected_json)
       end
 
       it "updates the episode's audio file in the podcast cms" do
-      end
+        audio1 = create :audio, :live, :direct, url: "http://example.com/path/to/old_file.mp3"
+        episode = create :show_episode, audio: [audio1]
+        episode.save
 
-      it "defaults with a pubdate in the future if none is given" do
+        audio2 = create :audio, :live, :direct, url: "http://example.com/path/to/new_file.mp3"
+        episode.audio = [audio2]
+        episode.save
+
+        expected_json = {
+          backgroundAudioFileUrl: audio2.url
+        }.to_json
+
+        expect(WebMock).to have_requested(:put, %r|cms\.megaphone\.fm\/api\/|)
+          .with(body: expected_json)
       end
 
       it "updates the draft/published status" do
+        episode = create :show_episode, status: 3
+        episode.save
+
+        episode.status = 5
+        episode.save
+
+        expected_json = {
+          draft: false
+        }.to_json
+
+        expect(WebMock).to have_requested(:put, %r|cms\.megaphone\.fm\/api\/|)
+          .with(body: expected_json)
       end
 
       it "creates the episode record in the podcast cms if it doesn't already exist" do
+        episode = create :show_episode
+        podcast = build :podcast, title: "The Cooler Podcast", external_podcast_id: "EXTERNAL_PODCAST_ID_STUB"
+        program = build :kpcc_program, title: "The Cooler Show", podcast: podcast
+        episode.show = program
+        episode.save!
+
+        expect(WebMock).not_to have_requested(:put, %r|cms\.megaphone\.fm\/api\/|)
+        expect(WebMock).to have_requested(:post, %r|cms\.megaphone\.fm\/api\/|)
       end
     end
   end
