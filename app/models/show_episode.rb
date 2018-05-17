@@ -319,8 +319,10 @@ class ShowEpisode < ActiveRecord::Base
   end
 
   def update_podcast_episode
+    podcast_id = self.try(:show).try(:podcast).try(:external_podcast_id)
+
     # If a podcast episode doesn't exist on Megaphone's side, try to create it
-    if @podcast_episode_request_body.nil?
+    if podcast_id && @podcast_episode_request_body.nil?
       return create_podcast_episode
     end
 
