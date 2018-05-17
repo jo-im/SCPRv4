@@ -112,6 +112,24 @@ describe ShowEpisode do
         episode.save
         expect(WebMock).to have_requested(:put, %r|cms\.megaphone\.fm\/api\/|).once
       end
+
+      it "updates the episode's image in the podcast cms" do
+      end
+
+      it "defaults to the podcast cover art if no asset is found" do
+      end
+
+      it "updates the episode's audio file in the podcast cms" do
+      end
+
+      it "defaults with a pubdate in the future if none is given" do
+      end
+
+      it "updates the draft/published status" do
+      end
+
+      it "creates the episode record in the podcast cms if it doesn't already exist" do
+      end
     end
   end
 
