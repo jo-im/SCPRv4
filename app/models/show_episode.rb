@@ -319,6 +319,11 @@ class ShowEpisode < ActiveRecord::Base
   end
 
   def update_podcast_episode
+    # If a podcast episode doesn't exist on Megaphone's side, try to create it
+    if @podcast_episode_request_body.nil?
+      return create_podcast_episode
+    end
+
     property_mapper = {
       "air_date" => "pubdate",
       "audio" => "backgroundAudioFileUrl",
