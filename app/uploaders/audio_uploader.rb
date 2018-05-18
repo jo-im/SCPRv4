@@ -8,6 +8,34 @@ require 'securerandom'
 class AudioUploader < CarrierWave::Uploader::Base
   storage :file
 
+  after :store, :update_podcast_episode
+
+  def update_podcast_episode file
+    associated_model = self.model
+    content_type = associated_model.content_type
+
+    if content_type === "ShowEpisode"
+      id = associated_model.content_id
+      episode = ShowEpisode.find_by(id: id)
+      podcast_episode_record = episode.try(:podcast_episode_record)
+
+      if podcast_episode_record.present?
+        podcast_id = podcast_episode_record["podcastId"]
+        episode_id = podcast_episode_record["id"]
+        begin
+          $megaphone
+            .podcast(podcast_id)
+            .episode(episode_id)
+            .update({
+              backgroundAudioFileUrl: self
+            })
+        rescue
+          {}
+        end
+      end
+    end
+  end
+
   #--------------
   # Override default CarrierWave config
   # to move files instead of copy them.
