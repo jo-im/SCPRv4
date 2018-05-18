@@ -304,9 +304,9 @@ class ShowEpisode < ActiveRecord::Base
 
   def delete_podcast_episode
     podcast_id = self.try(:show).try(:podcast).try(:external_podcast_id)
-    episode_id = podcast_episode_record['id']
 
-    if podcast_id.present?
+    if podcast_id.present? && podcast_episode_record.present?
+      episode_id = podcast_episode_record['id']
       begin
         $megaphone
           .podcast(podcast_id)
