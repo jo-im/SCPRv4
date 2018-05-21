@@ -19,7 +19,7 @@
               <div class="c-nav__section l-col--sm-5 l-col--lg-5">
                 <h6 class="c-nav__section-heading">Covering SoCal</h6>
                 <ul class="c-list c-list--vert text-columns--med-3">
-                  <% @beat_tags.each do |tag| %>
+                  <% @beat_tags.try(:each) do |tag| %>
                     <li>
                       <a href="/topics/<%= tag.try(:slug) %>"><%= tag.try(:title) %></a>
                     </li>
@@ -84,7 +84,7 @@
               <div class="c-nav__section l-col--sm-5 l-col--lg-4">
                 <h6 class="c-nav__section-heading">Featured Programs</h6>
                 <ul class="c-list c-list--vert">
-                  <% @featured_programs.each do |program| %>
+                  <% @featured_programs.try(:each) do |program| %>
                     <li>
                       <a href="/programs/<%= program.try(:slug) %>"><%= program.try(:title) %></a>
                     </li>
