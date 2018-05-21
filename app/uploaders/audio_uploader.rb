@@ -22,12 +22,15 @@ class AudioUploader < CarrierWave::Uploader::Base
       if podcast_episode_record.present?
         podcast_id = podcast_episode_record["podcastId"]
         episode_id = podcast_episode_record["id"]
+
+        backgroundAudioFileUrl = File.join(Rails.configuration.x.scpr.audio_url, relative_dir, filename)
+
         begin
           $megaphone
             .podcast(podcast_id)
             .episode(episode_id)
             .update({
-              backgroundAudioFileUrl: self
+              backgroundAudioFileUrl: backgroundAudioFileUrl
             })
         rescue
           {}
