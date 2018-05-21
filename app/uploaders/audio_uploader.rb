@@ -19,7 +19,7 @@ class AudioUploader < CarrierWave::Uploader::Base
       episode = ShowEpisode.find_by(id: id)
       podcast_episode_record = episode.try(:podcast_episode_record)
 
-      if podcast_episode_record.present?
+      if podcast_episode_record.present? && episode.audio.length === 0
         podcast_id = podcast_episode_record["podcastId"]
         episode_id = podcast_episode_record["id"]
 
