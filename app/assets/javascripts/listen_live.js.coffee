@@ -295,7 +295,7 @@ class scpr.ListenLive
     class Nielsen
         constructor: ->
             @_queued = []
-            $.getScript "http://secure-drm.imrworldwide.com/novms/js/2/ggcmb400.js"
+            $.getScript "https://secure-drm.imrworldwide.com/novms/js/2/ggcmb400.js"
                 .done (script,status) =>
                     @nolcmb = new NOLCMB?.ggInitialize
                         sfcode: "drm"
