@@ -6,7 +6,7 @@
   <% if @event.try(:is_kpcc_in_person_event?) %>
     <section id="o-prologue--in-person__event" class="o-prologue o-prologue--in-person">
       <a class="o-prologue__logo" href="/events/kpcc-in-person">
-        <object data='<%= image_url "event-headers/kpcc-in-person-logo.svg" %>' type="image/svg+xml">
+        <object data='<%= image_path "event-headers/kpcc-in-person-logo.svg" %>' type="image/svg+xml">
           <%= @landing_page.try(:title) %>
         </object>
       </a>

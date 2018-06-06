@@ -7,7 +7,7 @@
 <% content_for :header do %>
   <section id="o-prologue--program__segment" class="o-prologue o-prologue--program">
     <a class="o-prologue__logo" href="/programs/<%= @program.try(:slug) %>">
-      <object data='<%= image_url "show-logos/#{@program.try(:slug)}.svg" %>' type="image/svg+xml">
+      <object data='<%= image_path "show-logos/#{@program.try(:slug)}.svg" %>' type="image/svg+xml">
         <%= @program.try(:title) %>
       </object>
     </a>
