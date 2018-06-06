@@ -153,6 +153,15 @@
   .o-story-list__item-feature
     display: none
 
+  @media (max-width: $media-wide)
+    .o-popular-stories-side-bar, .o-archive, #o-ad--pos-a, #o-ad--pos-b, #o-ad--pos-c, .o-appeal--podcast
+      margin-right: $margin
+      width: ($col * 3) + ($gutter * 3)
+
+  @media (max-width: $media-desktop)
+    .o-popular-stories-side-bar, .o-archive, #o-ad--pos-a, #o-ad--pos-b, #o-ad--pos-c, .o-appeal--podcast
+      width: ($col * 4) + ($gutter * 3)
+
   @media all and (max-width: $media-tablet)
     display: flex
     flex-direction: column
