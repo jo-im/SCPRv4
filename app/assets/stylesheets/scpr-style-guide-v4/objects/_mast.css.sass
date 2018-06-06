@@ -356,26 +356,6 @@ $o-mast-logo-mobile-width: 107px
   .o-mast__item--mobile-row
     display: none
 
-  .o-mast__item--news
-    @media (max-width: $media-tablet)
-      margin-right: 0px
-      width: 100%
-      .o-mast__item-details
-        height: 320px
-      .o-mast__section-list
-        display: flex
-        flex-direction: column
-        flex-wrap: wrap
-        li
-          width: 50%
-          a
-            display: inline-block
-            width: 90%
-      .o-mast__section-list--beat-tags
-        height: 240px
-      .o-mast__section-list--categories
-        height: 190px
-
   .o-mast__nav-link
     border-bottom: solid 2px #f8dac3
     box-sizing: border-box
@@ -411,6 +391,12 @@ $o-mast-logo-mobile-width: 107px
     font-size: 16px
     line-height: 24px
     margin-bottom: 0px
+
+
+  .o-mast__item--news
+    margin-bottom: 30px
+    @media (max-width: $media-mobile)
+      margin-bottom: 0px
 
   > .o-mast__action:nth-child(3)
     margin-left: auto
