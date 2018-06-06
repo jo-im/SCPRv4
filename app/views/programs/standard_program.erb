@@ -1,7 +1,11 @@
 <% content_for :main_class, "l-standard-program" %>
 <% content_for :header do %>
   <section class="o-prologue o-prologue--standard-program">
-    <a class="o-prologue__logo" href="/programs/<%= @program.try(:slug) %>"><%= image_tag "show-logos/#{@program.try(:slug)}.svg", alt: @program.try(:title) %></a>
+    <a class="o-prologue__logo" href="/programs/<%= @program.try(:slug) %>">
+      <object data='<%= image_url "show-logos/#{@program.try(:slug)}.svg" %>' type="image/svg+xml">
+        <%= @program.try(:title) %>
+      </object>
+    </a>
     <span class="o-prologue__description">
       <div class="o-prologue__teaser">
         <%= @program.try(:teaser) %>

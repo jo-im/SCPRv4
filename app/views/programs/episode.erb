@@ -3,7 +3,11 @@
 <% add_to_page_title @episode.headline %>
 <% content_for :header do %>
   <section id="o-prologue--program__episode" class="o-prologue o-prologue--program">
-    <a class="o-prologue__logo" href="/programs/<%= @program.try(:slug) %>"><%= image_tag "show-logos/#{@program.try(:slug)}.svg" %></a>
+    <a class="o-prologue__logo" href="/programs/<%= @program.try(:slug) %>">
+      <object data='<%= image_url "show-logos/#{@program.try(:slug)}.svg" %>' type="image/svg+xml">
+        <%= @program.try(:title) %>
+      </object>
+    </a>
     <span class="o-prologue__description">
       <div class="o-prologue__teaser">
         <%= @program.try(:teaser) %>
