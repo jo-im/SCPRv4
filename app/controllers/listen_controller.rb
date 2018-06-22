@@ -24,7 +24,9 @@ class ListenController < ApplicationController
     elsif params.has_key?(:pledgeToken)
 
       pledge_token = params[:pledgeToken]
-      authorized_user = Member.find_by_pledge_token(pledge_token)
+      parse_user_query = Farse::Query.new("PfsUser")
+      parse_user_query.eq("pledgeToken", pledge_token)
+      authorized_user = parse_user_query.get.first
 
       # redirect to flat page if we can't find a valid user
       return redirect_to '/listen_live/pledge-free/error' unless authorized_user.present?
@@ -48,6 +50,10 @@ class ListenController < ApplicationController
         if authorized_user["viewsLeft"] == 0
            authorized_user["pledgeToken"] = nil
            authorized_user.save
+        end
+
+        if !Member.find_by_pledge_token(pledge_token)
+          Member.create_from_parse(authorized_user)
         end
       rescue => err
         NewRelic.log_error(err)
