@@ -36,10 +36,9 @@
 
 <%= cell(:featured_story, @featured_story_article, order: 1).call(:program) %>
 <hr class="b-rule b-rule--padded b-rule--primary-lightest" style="order: 2">
-<%= cell :story_list, @program.try(:segments).order("published_at DESC").try(:limit, 14).map(&:to_article), heading: "Recently on #{@program.title}", class: "o-story-list--program o-story-list--two-col o-story-list--nobg", asset_aspect: "square", order: 4 %>
+<%= cell :episode_list, @episodes, program: @program, header: "Recent #{@view_type || 'episodes'}", order: 1 %>
 <%= cell :ad, slot: "a", id: "o-ad--pos-a", attribution: false, order: 3 %>
 <%= cell :ad, slot: "b", id: "o-ad--pos-b", order: 5 %>
-<%= cell :recent_episodes_list, @episodes, program: @program, order: 6 %>
 <%= cell :archive_picker, @program, base_url: "/programs/" + @program.slug + "/archive", header: "Find a specific episode from " + @program.try(:title) + "'s archive", type: "full", order: 6 %>
 <%= cell(:appeal, @program, order: 4).call(:podcast) %>
 <%= cell :suggested_story, @suggested_story_article, order: 7 %>
