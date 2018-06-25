@@ -7,6 +7,7 @@
   width: 100%
 
   .o-featured-episode__center, .pagination
+    float: left
     margin-left: $margin
     margin-right: $margin
     width: ($col * 7) + ($gutter * 6)
@@ -76,11 +77,20 @@
   .o-story-list__item-feature
     display: none
 
+  @media (max-width: $media-wide)
+    .o-recent-episodes-list, .o-archive, #o-ad--pos-a, #o-ad--pos-b, .o-appeal--podcast
+      margin-right: $margin
+      width: ($col * 3) + ($gutter * 3)
+
+  @media (max-width: $media-desktop)
+    .o-recent-episodes-list, .o-archive, #o-ad--pos-a, #o-ad--pos-b, .o-appeal--podcast
+      width: ($col * 4) + ($gutter * 3)
+
   @media all and (max-width: $media-tablet)
     display: flex
     flex-direction: column
     padding-top: $margin-in-pixels / 2
-    #o-ad--pos-a, #o-ad--pos-b, #o-ad--pos-c
+    .o-featured-episode__center, #o-ad--pos-a, #o-ad--pos-b, #o-ad--pos-c
       margin-left: $margin
       margin-right: $margin
       padding-bottom: $margin-in-pixels
