@@ -1,7 +1,7 @@
 module Api::Public::V3
   class MembersController < BaseController
     def show
-      if !params[:id] || !(@member = Member.where("pledge_token LIKE (?)", "%#{params[:id]}").first)
+      if !params[:id] || !(@member = Member.where("pledge_token LIKE (?)", "#{params[:id]}%").first)
 
         # Find out if it's in Parse
         parse_user_query = Farse::Query.new("PfsUser")
