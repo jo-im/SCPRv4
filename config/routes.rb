@@ -31,6 +31,7 @@ Scprv4::Application.routes.draw do
 
 
   # Podcasts
+  get '/podcasts/mash-up-americans', to: redirect('https://rss.art19.com/the-mash-up-americans', status: 301)
   get '/podcasts/:slug/' => 'podcasts#podcast', as: :podcast, defaults: { format: :xml }
   get '/podcasts/'       => 'podcasts#index',   as: :podcasts
 
