@@ -40,6 +40,20 @@ module HomepageHelper
   def media_extra content, contents
     render partial: "shared/media/components/extra", locals: {content: content, contents: contents}
   end
+  def latest_from_laist
+    # Perform a get request from the LAist API, and return an empty array if it fails
+    begin
+      response = RestClient.get('http://laist.com/mt/mt-data-api.cgi/v3/sites/1/entries?limit=5')
+      json_response = JSON.parse(response.body)
+      if json_response && json_response["items"]
+        json_response["items"]
+      else
+        []
+      end
+    rescue
+      []
+    end
+  end
   def latest_stories content
     # Takes a collection of any model objects
     # that respond to ContentBase obj_key method.
