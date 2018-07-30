@@ -16,11 +16,8 @@ class PodcastsController < ApplicationController
     # render any content.
     if /scpr.org\/podcast/.match(@podcast.podcast_url)
       render_to_string formats: [:xml]
-    elsif /feeds.megaphone.fm/.match(@podcast.podcast_url)
-      response = RestClient.get(@podcast.podcast_url)
-      render :text => response.body, :layout => false
     else
-      redirect_to @podcast.podcast_url
+      redirect_to @podcast.podcast_url, status: 301
     end
   end
 
