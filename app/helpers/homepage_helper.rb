@@ -43,7 +43,8 @@ module HomepageHelper
   def latest_from_laist
     # Perform a get request from the LAist API, and return an empty array if it fails
     begin
-      response = RestClient.get('http://laist.com/mt/mt-data-api.cgi/v3/sites/1/entries?limit=5')
+      api_base_url = Rails.configuration.x.api.laist.endpoint
+      response = RestClient.get("#{api_base_url}/sites/1/entries?limit=5")
       json_response = JSON.parse(response.body)
       if json_response && json_response["items"]
         json_response["items"]
