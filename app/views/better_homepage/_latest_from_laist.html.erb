@@ -1,0 +1,14 @@
+<% if latest_from_laist.length > 0 %>
+<h6 class="b-heading b-heading--h6 b-heading--uppercase u-text-color--gray b-heading--medium">Latest LAist Headlines</h6>
+<ul class="c-list c-list--vert">
+    <% latest_from_laist.each do |article| %>
+    <li>
+      <div class="o-media o-media--small">
+        <h4>
+          <%= link_to article["title"], article["permalink"] %>
+        </h4>
+      </div>
+    </li>
+    <% end %>
+</ul>
+<% end %>

@@ -1,9 +1,20 @@
 <aside class="right hp-latest-headlines" style="order:2;">
-  <%= render partial: "better_homepage/latest_headlines", locals: {content: @homepage.content} %>
+  <div class="c-ad">
+    <div class="c-ad__container c-ad__container">
+      <div class="c-ad__banner">
+        <%= render "shared/ads/dfp", ad_key: 'slot_a' %>
+      </div>
+    </div>
+  </div>
+  <%= render partial: "better_homepage/latest_from_laist" %>
 </aside>
 
 <aside class="right ad" style="order:6;">
   <%= render partial: "better_homepage/c_ad", locals: {slot: "b"} %>
+</aside>
+
+<aside class="right hp-latest-headlines" style="order:7;">
+  <%= render partial: "better_homepage/latest_headlines", locals: {content: @homepage.content} %>
 </aside>
 
 <%= render_tag_cluster %>
