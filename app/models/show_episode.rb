@@ -358,6 +358,12 @@ class ShowEpisode < ActiveRecord::Base
       end
     end
 
+    # If the audio file is null from the podcast record
+    available_audio = self.audio.select(&:available?)
+    if podcast_episode_record['audioFile'].nil? && available_audio.try(:length) > 0
+      changes["backgroundAudioFileUrl"] = available_audio.first.url
+    end
+
     @podcast_episode_request_body = (@podcast_episode_request_body || {}).merge(changes)
     if @podcast_episode_request_body.present?
       podcast_id = podcast_episode_record['podcastId']
