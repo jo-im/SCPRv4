@@ -333,7 +333,7 @@ class ShowEpisode < ActiveRecord::Base
       status: "draft",
       headline: "title",
       teaser: "summary"
-    }
+    }.stringify_keys
 
     changes = {};
 
