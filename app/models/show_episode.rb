@@ -322,7 +322,7 @@ class ShowEpisode < ActiveRecord::Base
     podcast_id = self.try(:show).try(:podcast).try(:external_podcast_id)
 
     # If a podcast episode doesn't exist on Megaphone's side, try to create it
-    if podcast_id && @podcast_episode_request_body.nil?
+    if podcast_id && @podcast_episode_record.nil?
       return create_podcast_episode
     end
 
@@ -333,24 +333,25 @@ class ShowEpisode < ActiveRecord::Base
       status: "draft",
       headline: "title",
       teaser: "summary"
-    }.stringify_keys
+    }
 
     changes = {};
 
     self.changes.each do |attribute, change|
-      if property_mapper[attribute].present?
-        key = property_mapper[attribute]
+      attribute_symbol = attribute.to_sym
+      if property_mapper[attribute_symbol].present?
+        key = property_mapper[attribute_symbol]
         value = change[1]
 
-        if attribute == "assets"
+        if attribute_symbol == :assets
           value = change[1].try(:first).try(:full).try(:url) || self.try(:show).try(:podcast).try(:image_url)
         end
 
-        if attribute == "audio"
+        if attribute_symbol == :audio
           value = change[1].try(:first).try(:url)
         end
 
-        if attribute == "status"
+        if attribute_symbol == :status
           change[1] == 5 ? value = false : value = true
         end
 
