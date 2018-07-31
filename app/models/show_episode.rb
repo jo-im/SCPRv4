@@ -264,7 +264,7 @@ class ShowEpisode < ActiveRecord::Base
 
   def create_podcast_episode
     podcast_id = self.try(:show).try(:podcast).try(:external_podcast_id)
-    draft = self.status == 5 ? false : true
+    draft = self.status == 5
     body = {
       author: self.show.title,
       draft: draft,
