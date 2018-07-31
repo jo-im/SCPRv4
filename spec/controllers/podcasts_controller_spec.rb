@@ -33,9 +33,8 @@ describe PodcastsController, :indexing do
       assigns(:podcast).should eq podcast
     end
 
-    it "redirects to podcast_url if source is ExternalProgram" do
-      program = create :external_program, :from_rss
-      podcast = create :podcast, source: program
+    it "redirects to podcast_url if podcast_url is not from scpr.org" do
+      podcast = create :podcast, podcast_url: 'http://example.com/external_podcast.xml'
       get :podcast, slug: podcast.slug
       response.should redirect_to podcast.podcast_url
     end

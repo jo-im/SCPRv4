@@ -68,9 +68,9 @@ GIT
 
 GIT
   remote: git://github.com/scpr/megaphone_client.git
-  revision: 4f557a594737927da9f0cc380bc538d0af76791c
+  revision: 7ff8a286c891b17f38184623e4ee23332a9214d2
   specs:
-    megaphone_client (0.1.0)
+    megaphone_client (0.5.0)
       rest-client (~> 2.0)
 
 GIT
@@ -202,7 +202,7 @@ GEM
     concurrent-ruby (1.0.5)
     crack (0.4.3)
       safe_yaml (~> 1.0.0)
-    crass (1.0.3)
+    crass (1.0.4)
     dalli (2.7.2)
     database_cleaner (1.4.1)
     debug_inspector (0.0.2)
@@ -211,7 +211,7 @@ GEM
     declarative-option (0.1.0)
     diff-lcs (1.2.5)
     diffy (3.0.7)
-    domain_name (0.5.20160615)
+    domain_name (0.5.20180417)
       unf (>= 0.0.5, < 1.0.0)
     eco (1.0.0)
       coffee-script
@@ -274,7 +274,7 @@ GEM
       activesupport (>= 2)
       nokogiri (>= 1.4)
     htmlentities (4.3.4)
-    http-cookie (1.0.2)
+    http-cookie (1.0.3)
       domain_name (~> 0.5)
     i18n (0.9.3)
       concurrent-ruby (~> 1.0)
@@ -298,7 +298,7 @@ GEM
       rb-fsevent (>= 0.9.3)
       rb-inotify (>= 0.9)
       rb-kqueue (>= 0.2)
-    loofah (2.1.1)
+    loofah (2.2.2)
       crass (~> 1.0.2)
       nokogiri (>= 1.5.9)
     lumberjack (1.0.9)
@@ -320,6 +320,8 @@ GEM
     newrelic_rpm (4.7.1.340)
     nokogiri (1.8.2)
       mini_portile2 (~> 2.3.0)
+    nokogumbo (1.5.0)
+      nokogiri
     oauth2 (0.9.3)
       faraday (>= 0.8, < 0.10)
       jwt (~> 0.1.8)
@@ -378,8 +380,8 @@ GEM
       activesupport (>= 4.2.0, < 5.0)
       nokogiri (~> 1.6)
       rails-deprecated_sanitizer (>= 1.0.1)
-    rails-html-sanitizer (1.0.3)
-      loofah (~> 2.0)
+    rails-html-sanitizer (1.0.4)
+      loofah (~> 2.2, >= 2.2.2)
     railties (4.2.10)
       actionpack (= 4.2.10)
       activesupport (= 4.2.10)
@@ -423,7 +425,7 @@ GEM
       vegas (~> 0.1.2)
     resque_solo (0.3.0)
       resque (~> 1.25)
-    rest-client (2.0.0)
+    rest-client (2.0.2)
       http-cookie (>= 1.0.2, < 2.0)
       mime-types (>= 1.16, < 4.0)
       netrc (~> 0.8)
@@ -459,8 +461,10 @@ GEM
     rufus-scheduler (3.0.9)
       tzinfo
     safe_yaml (1.0.4)
-    sanitize (2.1.0)
+    sanitize (4.6.4)
+      crass (~> 1.0.2)
       nokogiri (>= 1.4.4)
+      nokogumbo (~> 1.4)
     sass (3.4.16)
     sass-rails (5.0.0.beta1)
       railties (>= 4.0.0, < 5.0)
@@ -516,7 +520,7 @@ GEM
       json (>= 1.8.0)
     unf (0.1.4)
       unf_ext
-    unf_ext (0.0.6)
+    unf_ext (0.0.7.5)
     uri_template (0.7.0)
     vegas (0.1.11)
       rack (>= 1.0.0)
@@ -614,7 +618,7 @@ DEPENDENCIES
   ruby-prof
   rubyzip (~> 1.2)
   rufus-scheduler
-  sanitize (~> 2.0)
+  sanitize (~> 4.6.3)
   sass-rails (= 5.0.0beta1)
   secretary-rails (~> 2.0.1)
   select2-rails (= 3.4.1)

@@ -1,18 +1,18 @@
 <% if @record.show.try(:air_status) == "onair" %>
-  <% has_podcast_record = @record.podcast_record.present? %>
+  <% has_podcast_episode_record = @record.podcast_episode_record.present? %>
   <%= form_block "Podcast Ad Placement" do %>
     <div class="audio-fields well" id="o-podcast-ad-placement">
       <div class="row">
         <div class="span4">
           <tr>
-            <td><%= f.input :pre_count, as: :integer, disabled: !has_podcast_record, label: "Pre-roll Count", input_html: { class: "tiny thin" } %></td>
-            <td><%= f.input :post_count, as: :integer, disabled: !has_podcast_record, label: "Post-roll Count", input_html: { class: "tiny thin" } %></td>
-            <td><%= f.input :insertion_points, as: :string, disabled: !has_podcast_record, label: "Mid-roll Insertion Points", input_html: { class: "tiny thin", pattern: "^(\\s*-?\\d+(\\.\\d+)?)(\\s*,\\s*-?\\d+(\\.\\d+)?)*$" } %></td>
+            <td><%= f.input :pre_count, as: :integer, disabled: !has_podcast_episode_record, label: "Pre-roll Count", input_html: { class: "tiny thin" } %></td>
+            <td><%= f.input :post_count, as: :integer, disabled: !has_podcast_episode_record, label: "Post-roll Count", input_html: { class: "tiny thin" } %></td>
+            <td><%= f.input :insertion_points, as: :string, disabled: !has_podcast_episode_record, label: "Mid-roll Insertion Points", input_html: { class: "tiny thin", pattern: "^(\\s*-?\\d+(\\.\\d+)?)(\\s*,\\s*-?\\d+(\\.\\d+)?)*$" } %></td>
           </tr>
         </div>
         <div class="span4">
           <div class="audio-info">
-            <% if has_podcast_record %>
+            <% if has_podcast_episode_record %>
               <h5 class="alert alert-success">The podcast is available for editing</h5>
             <% else %>
               <h5 class="alert alert-info">The podcast is unavailable for editing</h5>

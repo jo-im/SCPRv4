@@ -28,7 +28,7 @@ class ShowEpisode < ActiveRecord::Base
   alias_attribute :title, :headline
   alias_attribute :public_datetime, :published_at
 
-  attr_accessor :pre_count, :post_count, :insertion_points, :podcast_request_body
+  attr_accessor :pre_count, :post_count, :insertion_points, :podcast_episode_request_body
 
   self.public_route_key = "episode"
 
@@ -115,14 +115,18 @@ class ShowEpisode < ActiveRecord::Base
 
   before_save :generate_body, if: -> { self.body.blank? && should_validate? }
 
-  after_update :update_podcast
+  after_create :create_podcast_episode
 
-  def podcast_request_body
-    @podcast_request_body ||= {}
+  after_destroy :delete_podcast_episode
+
+  after_update :update_podcast_episode
+
+  def podcast_episode_request_body
+    @podcast_episode_request_body ||= {}
   end
 
-  def podcast_record
-    @podcast_record ||=
+  def podcast_episode_record
+    @podcast_episode_record ||=
       begin
         $megaphone.episodes.search({ externalId: "#{self.obj_key}__#{Rails.env}" }).first
       rescue
@@ -131,35 +135,35 @@ class ShowEpisode < ActiveRecord::Base
   end
 
   def insertion_points
-    @insertion_points ||= podcast_record.try(:[], 'insertionPoints').try(:join, ", ")
+    @insertion_points ||= podcast_episode_record.try(:[], 'insertionPoints').try(:join, ", ")
   end
 
   def insertion_points=(new_insertion_points)
     if new_insertion_points != insertion_points
       @insertion_points = new_insertion_points
-      @podcast_request_body = podcast_request_body.merge({ insertionPoints: @insertion_points })
+      @podcast_episode_request_body = podcast_episode_request_body.merge({ insertionPoints: @insertion_points })
     end
   end
 
   def post_count
-    @post_count ||= podcast_record.try(:[], 'postCount')
+    @post_count ||= podcast_episode_record.try(:[], 'postCount')
   end
 
   def post_count=(new_count)
     if new_count.to_i != post_count
       @post_count = new_count.to_i
-      @podcast_request_body = podcast_request_body.merge({ postCount: @post_count })
+      @podcast_episode_request_body = podcast_episode_request_body.merge({ postCount: @post_count })
     end
   end
 
   def pre_count
-    @pre_count ||= podcast_record.try(:[], 'preCount')
+    @pre_count ||= podcast_episode_record.try(:[], 'preCount')
   end
 
   def pre_count=(new_count)
     if new_count.to_i != pre_count
       @pre_count = new_count.to_i
-      @podcast_request_body = podcast_request_body.merge({ pre_count: @pre_count })
+      @podcast_episode_request_body = podcast_episode_request_body.merge({ pre_count: @pre_count })
     end
   end
 
@@ -258,14 +262,118 @@ class ShowEpisode < ActiveRecord::Base
     )
   end
 
-  def update_podcast
-    if @podcast_request_body.present?
+  def create_podcast_episode
+    podcast_id = self.try(:show).try(:podcast).try(:external_podcast_id)
+    draft = self.status == 5
+    body = {
+      author: self.show.title,
+      draft: draft,
+      externalId: "#{self.obj_key}__#{Rails.env}",
+      pubdateTimezone: Time.zone.name,
+      pubdate: self.air_date || Time.zone.now + 1.year,
+      summary: self.teaser,
+      title: self.headline
+    }
+
+    available_audio = self.audio.select(&:available?)
+    available_images = self.assets
+
+    if available_audio.try(:length) > 0
+      body = body.merge({
+        backgroundAudioFileUrl: available_audio.first.url
+      })
+    end
+
+    if available_images.try(:length) > 0
+      body = body.merge({
+        backgroundImageFileUrl: available_images.first.try(:full).try(:url)
+      })
+    end
+
+    if podcast_id.present? && @podcast_episode_record.nil?
       begin
-        results = $megaphone.episodes.update({
-          podcast_id: podcast_record['podcastId'],
-          episode_id: podcast_record['id'],
-          body: @podcast_request_body
-        })
+        $megaphone
+          .podcast(podcast_id)
+          .episode
+          .create(body)
+      rescue
+        {}
+      end
+    end
+  end
+
+  def delete_podcast_episode
+    podcast_id = self.try(:show).try(:podcast).try(:external_podcast_id)
+
+    if podcast_id.present? && podcast_episode_record.present?
+      episode_id = podcast_episode_record['id']
+      begin
+        $megaphone
+          .podcast(podcast_id)
+          .episode(episode_id)
+          .delete
+      rescue
+        {}
+      end
+    end
+  end
+
+  def update_podcast_episode
+    podcast_id = self.try(:show).try(:podcast).try(:external_podcast_id)
+
+    # If a podcast episode doesn't exist on Megaphone's side, try to create it
+    if podcast_id && @podcast_episode_record.nil?
+      return create_podcast_episode
+    end
+
+    property_mapper = {
+      air_date: "pubdate",
+      audio: "backgroundAudioFileUrl",
+      assets: "backgroundImageFileUrl",
+      status: "draft",
+      headline: "title",
+      teaser: "summary"
+    }
+
+    changes = {};
+
+    self.changes.each do |attribute, change|
+      attribute_symbol = attribute.to_sym
+      if property_mapper[attribute_symbol].present?
+        key = property_mapper[attribute_symbol]
+        value = change[1]
+
+        if attribute_symbol == :assets
+          value = change[1].try(:first).try(:full).try(:url) || self.try(:show).try(:podcast).try(:image_url)
+        end
+
+        if attribute_symbol == :audio
+          value = change[1].try(:first).try(:url)
+        end
+
+        if attribute_symbol == :status
+          change[1] == 5 ? value = false : value = true
+        end
+
+        changes[key] = value
+      end
+    end
+
+    # If the audio file is null from the podcast record
+    available_audio = self.audio.select(&:available?)
+    if podcast_episode_record['audioFile'].nil? && available_audio.try(:length) > 0
+      changes["backgroundAudioFileUrl"] = available_audio.first.url
+    end
+
+    @podcast_episode_request_body = (@podcast_episode_request_body || {}).merge(changes)
+    if @podcast_episode_request_body.present?
+      podcast_id = podcast_episode_record['podcastId']
+      episode_id = podcast_episode_record['id']
+      begin
+        $megaphone
+          .podcast(podcast_id)
+          .episode(episode_id)
+          .update(@podcast_episode_request_body)
       rescue
         {}
       end

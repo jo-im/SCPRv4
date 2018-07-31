@@ -25,11 +25,94 @@ describe ShowEpisode do
       end
     end
 
-    describe "update_podast" do
+    describe "create_podast_episode" do
+      it "only executes a POST request if the associated podcast has an external podcast id" do
+        podcast = build :podcast, title: "The Cooler Podcast"
+        program = build :kpcc_program, title: "The Cooler Show", podcast: podcast
+        episode = create :show_episode, show: program
+        expect(WebMock).to_not have_requested(:post, %r|cms\.megaphone\.fm\/api\/|)
+
+        podcast = build :podcast, title: "The Coolest Podcast", external_podcast_id: "EXTERNAL_PODCAST_ID_STUB"
+        program = build :kpcc_program, title: "The Coolest Show", podcast: podcast
+        episode = create :show_episode, show: program
+        expect(WebMock).to have_requested(:post, %r|cms\.megaphone\.fm\/api\/|).once
+      end
+
+      it "adds a backgroundAudioFileUrl if audio is attached" do
+        podcast = build :podcast, title: "The Coolest Podcast", external_podcast_id: "EXTERNAL_PODCAST_ID_STUB"
+        program = build :kpcc_program, title: "The Coolest Show", podcast: podcast
+        audio = create :audio, :live, :direct
+        episode = create :show_episode, show: program, audio: [audio]
+
+        expected_json = {
+          author: episode.show.title,
+          draft: true,
+          externalId: "#{episode.obj_key}__#{Rails.env}",
+          pubdateTimezone: Time.zone.name,
+          pubdate: episode.air_date,
+          summary: episode.teaser,
+          title: episode.headline,
+          backgroundAudioFileUrl: episode.audio.first.url
+        }.to_json
+
+        expect(WebMock)
+          .to have_requested(:post, %r|cms\.megaphone\.fm\/api\/|)
+          .with(body: expected_json)
+      end
+
+      it "adds a backgroundImageFileUrl if an image is attached" do
+        podcast = build :podcast, title: "The Coolest Podcast", external_podcast_id: "EXTERNAL_PODCAST_ID_STUB"
+        program = build :kpcc_program, title: "The Coolest Show", podcast: podcast
+        asset = build :asset
+        episode = create :show_episode, show: program, assets: [asset]
+
+        expected_json = {
+          author: episode.show.title,
+          draft: true,
+          externalId: "#{episode.obj_key}__#{Rails.env}",
+          pubdateTimezone: Time.zone.name,
+          pubdate: episode.air_date,
+          summary: episode.teaser,
+          title: episode.headline,
+          backgroundImageFileUrl: episode.assets.first.full.url
+        }.to_json
+
+        expect(WebMock)
+          .to have_requested(:post, %r|cms\.megaphone\.fm\/api\/|)
+          .with(body: expected_json)
+      end
+
+      it "defaults with a pubdate in the future if none is given" do
+        podcast = build :podcast, title: "The Cooler Podcast", external_podcast_id: "EXTERNAL_PODCAST_ID_STUB"
+        program = build :kpcc_program, title: "The Cooler Show", podcast: podcast
+        episode = create :show_episode, show: program
+
+        expect(WebMock).to have_requested(:post, %r|cms\.megaphone\.fm\/api\/|)
+          .with { |req| expect(req.body).to match(/pubdate/) }
+      end
+    end
+
+    describe "delete_podast_episode" do
+      it "only executes a DELETE request if the associated podcast has an external podcast id" do
+        podcast_1 = build :podcast, title: "The Cooler Podcast"
+        program_1 = build :kpcc_program, title: "The Cooler Show", podcast: podcast_1
+        episode_1 = create :show_episode, show: program_1
+        episode_1.destroy
+        expect(WebMock).to_not have_requested(:delete, %r|cms\.megaphone\.fm\/api\/|)
+
+        podcast_2 = build :podcast, title: "The Coolest Podcast", external_podcast_id: "EXTERNAL_PODCAST_ID_STUB"
+        program_2 = build :kpcc_program, title: "The Coolest Show", podcast: podcast_2
+        episode_2 = create :show_episode, show: program_2
+        episode_2.destroy
+        expect(WebMock).to have_requested(:delete, %r|cms\.megaphone\.fm\/api\/|).once
+      end
+    end
+
+    describe "update_podast_episode" do
       it "only executes a PUT request if new values are different than the old ones" do
         # When nothing has changed, don't fire a put request
         episode = create :show_episode
-        podcast_record = episode.podcast_record
+        podcast_record = episode.podcast_episode_record
         episode.save
         expect(WebMock).not_to have_requested(:put, %r|cms\.megaphone\.fm\/api\/|)
 
@@ -37,6 +120,82 @@ describe ShowEpisode do
         episode.pre_count = 2
         episode.save
         expect(WebMock).to have_requested(:put, %r|cms\.megaphone\.fm\/api\/|).once
+      end
+
+      it "updates the episode's image in the podcast cms" do
+        episode = create :show_episode
+        episode.save
+
+        asset = create :asset
+        episode.assets << asset
+        episode.save
+
+        expected_json = {
+          backgroundImageFileUrl: episode.assets.first.full.url
+        }.to_json
+
+        expect(WebMock).to have_requested(:put, %r|cms\.megaphone\.fm\/api\/|)
+          .with(body: expected_json)
+      end
+
+      it "defaults to the podcast cover art if no asset is found" do
+        audio1 = create :audio, :live, :direct, url: "http://example.com/path/to/old_file.mp3"
+        episode = create :show_episode, audio: [audio1]
+        episode.save
+
+        audio2 = create :audio, :live, :direct, url: "http://example.com/path/to/new_file.mp3"
+        episode.audio = [audio2]
+        episode.save
+
+        expected_json = {
+          backgroundAudioFileUrl: audio2.url
+        }.to_json
+
+        expect(WebMock).to have_requested(:put, %r|cms\.megaphone\.fm\/api\/|)
+          .with(body: expected_json)
+      end
+
+      it "updates the episode's audio file in the podcast cms" do
+        audio1 = create :audio, :live, :direct, url: "http://example.com/path/to/old_file.mp3"
+        episode = create :show_episode, audio: [audio1]
+        episode.save
+
+        audio2 = create :audio, :live, :direct, url: "http://example.com/path/to/new_file.mp3"
+        episode.audio = [audio2]
+        episode.save
+
+        expected_json = {
+          backgroundAudioFileUrl: audio2.url
+        }.to_json
+
+        expect(WebMock).to have_requested(:put, %r|cms\.megaphone\.fm\/api\/|)
+          .with(body: expected_json)
+      end
+
+      it "updates the draft/published status" do
+        episode = create :show_episode, status: 3
+        episode.save
+
+        episode.status = 5
+        episode.save
+
+        expected_json = {
+          draft: false
+        }.to_json
+
+        expect(WebMock).to have_requested(:put, %r|cms\.megaphone\.fm\/api\/|)
+          .with(body: expected_json)
+      end
+
+      it "creates the episode record in the podcast cms if it doesn't already exist" do
+        episode = create :show_episode
+        podcast = build :podcast, title: "The Cooler Podcast", external_podcast_id: "EXTERNAL_PODCAST_ID_STUB"
+        program = build :kpcc_program, title: "The Cooler Show", podcast: podcast
+        episode.show = program
+        episode.save!
+
+        expect(WebMock).not_to have_requested(:put, %r|cms\.megaphone\.fm\/api\/|)
+        expect(WebMock).to have_requested(:post, %r|cms\.megaphone\.fm\/api\/|)
       end
     end
   end

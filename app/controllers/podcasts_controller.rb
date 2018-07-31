@@ -14,10 +14,10 @@ class PodcastsController < ApplicationController
     # Otherwise, grab the content, build the XML, and return it.
     # This allows us to "host" other podcasts without actually having to
     # render any content.
-    if @podcast.source.is_a? ExternalProgram
-      redirect_to @podcast.podcast_url
-    else
+    if /scpr.org\/podcast/.match(@podcast.podcast_url)
       render_to_string formats: [:xml]
+    else
+      redirect_to @podcast.podcast_url, status: 301
     end
   end
 

@@ -7,5 +7,6 @@ end
 
 $megaphone = MegaphoneClient.new({
   token: Rails.configuration.x.megaphone.token,
-  network_id: Rails.configuration.x.megaphone.network_id
+  network_id: Rails.configuration.x.megaphone.network_id,
+  organization_id: Rails.configuration.x.megaphone.organization_id
 })

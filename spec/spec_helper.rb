@@ -164,6 +164,24 @@ RSpec.configure do |config|
         }
     })
 
+    # Stub post requests
+    stub_request(:post, %r|cms\.megaphone\.fm\/|)
+      .to_return({
+        :body => "{}",
+        :headers => {
+          :content_type => "application/json"
+        }
+    })
+
+    # Stub delete requests
+    stub_request(:delete, %r|cms\.megaphone\.fm\/|)
+      .to_return({
+        :body => "{}",
+        :headers => {
+          :content_type => "application/json"
+        }
+    })
+
     # Stub requests for intentional failures (i.e. incorrect token)
     stub_request(:get, %r|cms\.megaphone\.fm\/api\/|)
       .with(headers: { 'Authorization' => 'Token token=INCORRECT_TOKEN' })

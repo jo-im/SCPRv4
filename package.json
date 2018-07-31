@@ -24,6 +24,7 @@
     "fastclick": "= 0.6.11",
     "handlebars": "^4.0.0",
     "history": "= 2.0.1",
+    "hoek": "^5.0.3",
     "jQuery-ajaxTransport-XDomainRequest": "git+https://github.com/MoonScript/jQuery-ajaxTransport-XDomainRequest.git#47de50fd4c1376642e8386ee1154b35694b60afe",
     "jplayer": "= 2.8.4",
     "jquery": "^3.1.0",
