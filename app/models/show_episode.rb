@@ -327,12 +327,12 @@ class ShowEpisode < ActiveRecord::Base
     end
 
     property_mapper = {
-      "air_date" => "pubdate",
-      "audio" => "backgroundAudioFileUrl",
-      "assets" => "backgroundImageFileUrl",
-      "status" => "draft",
-      "headline" => "title",
-      "teaser" => "summary"
+      air_date: "pubdate",
+      audio: "backgroundAudioFileUrl",
+      assets: "backgroundImageFileUrl",
+      status: "draft",
+      headline: "title",
+      teaser: "summary"
     }
 
     changes = {};
