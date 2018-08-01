@@ -68,9 +68,9 @@ GIT
 
 GIT
   remote: git://github.com/scpr/megaphone_client.git
-  revision: 7ff8a286c891b17f38184623e4ee23332a9214d2
+  revision: 53e070c4de9e2f13d562c551a672ca87af6bc43c
   specs:
-    megaphone_client (0.5.0)
+    megaphone_client (0.5.1)
       rest-client (~> 2.0)
 
 GIT
