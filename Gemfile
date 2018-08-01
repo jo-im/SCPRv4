@@ -123,7 +123,7 @@ group :test do
   gem 'webmock'
   gem 'test_after_commit'
   gem 'elasticsearch-extensions'
-  gem 'rspec_junit_formatter', :github => 'circleci/rspec_junit_formatter'
+  gem 'rspec_junit_formatter'
   gem 'timecop'
   gem 'faker'
 end
