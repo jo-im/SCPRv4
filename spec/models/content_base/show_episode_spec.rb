@@ -46,7 +46,7 @@ describe ShowEpisode do
 
         expected_json = {
           author: episode.show.title,
-          draft: true,
+          draft: false,
           externalId: "#{episode.obj_key}__#{Rails.env}",
           pubdateTimezone: Time.zone.name,
           pubdate: episode.air_date,
@@ -68,7 +68,7 @@ describe ShowEpisode do
 
         expected_json = {
           author: episode.show.title,
-          draft: true,
+          draft: false,
           externalId: "#{episode.obj_key}__#{Rails.env}",
           pubdateTimezone: Time.zone.name,
           pubdate: episode.air_date,
