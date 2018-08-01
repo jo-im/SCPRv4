@@ -356,7 +356,7 @@ class ShowEpisode < ActiveRecord::Base
     end
 
     @podcast_episode_request_body = (@podcast_episode_request_body || {}).merge(changes)
-    if @podcast_episode_request_body.present?
+    if @podcast_episode_request_body.present? && podcast_episode_record.present?
       podcast_id = podcast_episode_record['podcastId']
       episode_id = podcast_episode_record['id']
       begin
