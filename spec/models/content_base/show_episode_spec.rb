@@ -100,23 +100,6 @@ describe ShowEpisode do
         expect(WebMock).to have_requested(:put, %r|cms\.megaphone\.fm\/api\/|).once
       end
 
-      it "defaults to the podcast cover art if no asset is found" do
-        audio1 = create :audio, :live, :direct, url: "http://example.com/path/to/old_file.mp3"
-        episode = create :show_episode, audio: [audio1]
-        episode.save
-
-        audio2 = create :audio, :live, :direct, url: "http://example.com/path/to/new_file.mp3"
-        episode.audio = [audio2]
-        episode.save
-
-        expected_json = {
-          backgroundAudioFileUrl: audio2.url
-        }.to_json
-
-        expect(WebMock).to have_requested(:put, %r|cms\.megaphone\.fm\/api\/|)
-          .with(body: expected_json)
-      end
-
       it "updates the episode's audio file in the podcast cms" do
         audio1 = create :audio, :live, :direct, url: "http://example.com/path/to/old_file.mp3"
         episode = create :show_episode, audio: [audio1]
