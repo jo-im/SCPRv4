@@ -276,17 +276,10 @@ class ShowEpisode < ActiveRecord::Base
     }
 
     available_audio = self.audio.select(&:available?)
-    available_images = self.assets
 
     if available_audio.try(:length) > 0
       body = body.merge({
         backgroundAudioFileUrl: available_audio.first.url
-      })
-    end
-
-    if available_images.try(:length) > 0
-      body = body.merge({
-        backgroundImageFileUrl: available_images.first.try(:full).try(:url)
       })
     end
 
@@ -329,7 +322,6 @@ class ShowEpisode < ActiveRecord::Base
     property_mapper = {
       air_date: "pubdate",
       audio: "backgroundAudioFileUrl",
-      assets: "backgroundImageFileUrl",
       status: "draft",
       headline: "title",
       teaser: "summary"
@@ -342,10 +334,6 @@ class ShowEpisode < ActiveRecord::Base
       if property_mapper[attribute_symbol].present?
         key = property_mapper[attribute_symbol]
         value = change[1]
-
-        if attribute_symbol == :assets
-          value = change[1].try(:first).try(:full).try(:url) || self.try(:show).try(:podcast).try(:image_url)
-        end
 
         if attribute_symbol == :audio
           value = change[1].try(:first).try(:url)
