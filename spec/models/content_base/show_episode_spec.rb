@@ -60,28 +60,6 @@ describe ShowEpisode do
           .with(body: expected_json)
       end
 
-      it "adds a backgroundImageFileUrl if an image is attached" do
-        podcast = build :podcast, title: "The Coolest Podcast", external_podcast_id: "EXTERNAL_PODCAST_ID_STUB"
-        program = build :kpcc_program, title: "The Coolest Show", podcast: podcast
-        asset = build :asset
-        episode = create :show_episode, show: program, assets: [asset]
-
-        expected_json = {
-          author: episode.show.title,
-          draft: false,
-          externalId: "#{episode.obj_key}__#{Rails.env}",
-          pubdateTimezone: Time.zone.name,
-          pubdate: episode.air_date,
-          summary: episode.teaser,
-          title: episode.headline,
-          backgroundImageFileUrl: episode.assets.first.full.url
-        }.to_json
-
-        expect(WebMock)
-          .to have_requested(:post, %r|cms\.megaphone\.fm\/api\/|)
-          .with(body: expected_json)
-      end
-
       it "defaults with a pubdate in the future if none is given" do
         podcast = build :podcast, title: "The Cooler Podcast", external_podcast_id: "EXTERNAL_PODCAST_ID_STUB"
         program = build :kpcc_program, title: "The Cooler Show", podcast: podcast
@@ -120,22 +98,6 @@ describe ShowEpisode do
         episode.pre_count = 2
         episode.save
         expect(WebMock).to have_requested(:put, %r|cms\.megaphone\.fm\/api\/|).once
-      end
-
-      it "updates the episode's image in the podcast cms" do
-        episode = create :show_episode
-        episode.save
-
-        asset = create :asset
-        episode.assets << asset
-        episode.save
-
-        expected_json = {
-          backgroundImageFileUrl: episode.assets.first.full.url
-        }.to_json
-
-        expect(WebMock).to have_requested(:put, %r|cms\.megaphone\.fm\/api\/|)
-          .with(body: expected_json)
       end
 
       it "defaults to the podcast cover art if no asset is found" do
