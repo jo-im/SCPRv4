@@ -2,5 +2,6 @@ test: &test
   adapter: mysql2
   reconnect: true
   database: mercer_test
+  host: '127.0.0.1'
   username: root
   password: 

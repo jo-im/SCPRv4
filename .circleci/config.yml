@@ -1,0 +1,62 @@
+version: 2
+jobs:
+  build:
+    parallelism: 4
+    docker:
+      - image: circleci/ruby:2.3-node
+        environment:
+          - BUNDLE_PATH=vendor/bundle
+          - RAILS_ENV=test
+      - image: mysql:5.7
+        environment:
+          - MYSQL_DATABASE=mercer_test
+          - MYSQL_HOST=127.0.0.1
+          - MYSQL_ROOT_HOST=%
+          - MYSQL_USER=root
+          - MYSQL_ALLOW_EMPTY_PASSWORD=true
+      - image: elasticsearch:1.7-alpine
+    steps:
+      - checkout
+      - run:
+          name: Which bundler?
+          command: bundle -v
+      - restore_cache:
+          keys:
+            - v2-ruby-dependencies-{{ checksum "Gemfile.lock"}}
+            - v2-ruby-dependencies-
+      - run:
+          name: Bundle install
+          command: bundle check || bundle install
+      - save_cache:
+          key: v2-ruby-dependencies-{{ checksum "Gemfile.lock" }}
+          paths:
+            - vendor/bundle
+      - restore_cache:
+          keys:
+            - v1-npm-dependencies-{{ checksum "package-lock.json"}}
+            - v1-npm-dependencies-
+      - run:
+          name: NPM Install
+          command: npm install
+      - save_cache:
+          key: v1-npm-dependencies-{{ checksum "package-lock.json" }}
+          paths:
+            - node_modules
+      - run:
+          name: Wait for DB
+          command: dockerize -wait tcp://127.0.0.1:3306 -timeout 1m
+      - run:
+          name: Database
+          command: |
+            cp config/templates/database.yml.ci config/database.yml
+            cp config/templates/secrets.yml.ci config/secrets.yml
+            bundle exec rake db:create db:schema:load
+      - run:
+          name: Run rspec in parallel
+          command: |
+            bundle exec rspec --format RspecJunitFormatter \
+                              --out test_results/rspec.xml \
+                              --format progress \
+                              $(circleci tests glob "spec/**/*_spec.rb" | circleci tests split)
+      - store_test_results:
+          path: test_results

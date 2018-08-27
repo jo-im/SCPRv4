@@ -311,15 +311,6 @@ describe Audio do
         audio.url.should match /point1sec-.+?\.mp3/
         audio.status.should eq Audio.status_id(:live)
       end
-
-      it "updates the podcast episode cms record if one exists" do
-        podcast = build :podcast, title: "The Coolest Podcast", external_podcast_id: "EXTERNAL_PODCAST_ID_STUB"
-        program = build :kpcc_program, title: "The Coolest Show", podcast: podcast
-        audio2 = build :audio, :uploaded, mp3: load_audio_fixture("point1sec.mp3")
-        episode2 = create :show_episode, show: program, audio: [audio2]
-
-        expect(WebMock).to have_requested(:put, %r|cms\.megaphone\.fm\/api\/|).once
-      end
     end
   end
 
