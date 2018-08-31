@@ -88,7 +88,7 @@
   <div class="o-listen-live__meta-data">
     <span class="o-listen-live__on-now__timeslot">ON NOW | <%= model.try(:first).try(:starts_at).try(:strftime, '%l') %> - <%= model.try(:first).try(:ends_at).try(:strftime, '%l %p') %></span>
     <h4 class="o-listen-live__on-now__header b-heading--h4 b-heading--serif"><%= link_to model.try(:first).try(:title), model.try(:first).try(:public_url), target: :_blank %></h4>
-    <span class="o-listen-live__up-next__timeslot">UP NEXT | <%= model.try(:second).try(:ends_at).try(:strftime, '%l') %> - <%= model.try(:second).try(:ends_at).try(:strftime, '%l %p.') %></span> <span class="o-listen-live__up-next__title"><%= link_to model.try(:second).try(:title), model.try(:second).try(:public_url), target: :_blank %></span>
+    <span class="o-listen-live__up-next__timeslot">UP NEXT | <%= model.try(:second).try(:starts_at).try(:strftime, '%l') %> - <%= model.try(:second).try(:ends_at).try(:strftime, '%l %p.') %></span> <span class="o-listen-live__up-next__title"><%= link_to model.try(:second).try(:title), model.try(:second).try(:public_url), target: :_blank %></span>
     <div class="o-listen-live__links">
       <span class="o-listen-live__links-preface">More ways to listen:</span>
       <a href="http://www.scpr.org/iphone/" target="_blank">KPCC iPhone app</a>
