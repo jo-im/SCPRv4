@@ -2,6 +2,10 @@ module ApplicationHelper
   include Twitter::Autolink
   include HomepageHelper
 
+  def asset_exist?(path)
+    Rails.application.assets.find_asset(path).present?
+  end
+
   def latest_headlines options={}
     collection_limit = options[:limit] || 16
     NewsStory.published.order('published_at DESC').limit(collection_limit)

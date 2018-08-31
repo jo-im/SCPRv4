@@ -4,9 +4,11 @@
 <% content_for :header do %>
   <section id="o-prologue--program__episode" class="o-prologue o-prologue--program">
     <a class="o-prologue__logo" href="/programs/<%= @program.try(:slug) %>">
-      <object data='<%= image_path "show-logos/#{@program.try(:slug)}.svg" %>' type="image/svg+xml">
-        <%= @program.try(:title) %>
-      </object>
+      <% if asset_exist?("show-logos/#{@program.try(:slug)}.svg") %>
+        <img src='<%= image_path "show-logos/#{@program.try(:slug)}.svg" %>' />
+      <% else %>
+        <h1><%= @program.try(:title) %></h1>
+      <% end %>
     </a>
     <span class="o-prologue__description">
       <div class="o-prologue__teaser">
