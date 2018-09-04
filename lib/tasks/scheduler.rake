@@ -15,10 +15,6 @@ task :scheduler => [:environment] do
     Job::SyncAudio.enqueue ["AudioSync::Pending", "AudioSync::Program"]
   end
 
-  scheduler.every '15m' do |job|
-    Job::TwitterCache.enqueue()
-  end
-
   scheduler.every '1d' do |job|
     Job::BuildRecurringSchedule.enqueue()
     Job::ReportScheduleProblems.enqueue
