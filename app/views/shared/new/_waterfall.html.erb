@@ -49,15 +49,6 @@
             </section><!--/ .reporters -->
         <% end %>
 
-        <% if cached_tweets = Rails.cache.fetch("verticals/#{vertical.slug}/twitter_feed") %>
-            <section class="tweets">
-                <h1>In Brief</h1>
-                <ul>
-                    <%= cached_tweets %>
-                </ul>
-            </section><!--/ .tweets -->
-        <% end %>
-
         </div><!--/ .secondary -->
     <% end %>
 

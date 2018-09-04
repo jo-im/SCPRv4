@@ -118,19 +118,6 @@
             </div>
             <%= render "shared/widgets/breaking_news_subscribe" %>
 
-            <!-- TWITTER -->
-            <% if cached_tweets = Rails.cache.fetch("twitter:kpcc") %>
-              <aside class="curated-tweets widget">
-                <header>
-                  <h1>The latest from Twitter</h1>
-                    <p>For more SoCal photos, breaking news, traffic updates and community coverage, <a href="http://twitter.com/kpcc" data-ga-category="Homepage" data-ga-action="Follow KPCC Twitter" data-ga-label="Twitter Module">follow @KPCC</a>.</p>
-                </header>
-                <ul class="timeline">
-                  <%= cached_tweets %>
-                </ul>
-              </aside>
-            <% end %>
-
           </div> <!-- sidebar-top -->
         </div> <!-- span8 -->
       </div> <!-- row-fluid -->
