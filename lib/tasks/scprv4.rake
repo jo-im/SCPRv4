@@ -142,12 +142,6 @@ namespace :scprv4 do
 
     #----------
 
-    desc "Cache twitter feeds"
-    task :twitter => [:environment] do
-      log "Caching twitter feeds..."
-      perform_or_enqueue(Job::TwitterCache)
-    end
-
     desc "Cache marketplace articles"
     task :marketplace => [:environment] do
       log "Caching marketplace stories..."
