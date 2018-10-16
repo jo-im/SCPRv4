@@ -41,13 +41,14 @@ module HomepageHelper
     render partial: "shared/media/components/extra", locals: {content: content, contents: contents}
   end
   def latest_from_laist
-    # Perform a get request from the LAist API, and return an empty array if it fails
+    # Perform a get request to the LAist RSS FEED, and return an empty array if it fails
     begin
-      api_base_url = Rails.configuration.x.api.laist.endpoint
-      response = RestClient.get("#{api_base_url}/sites/1/entries?limit=5")
-      json_response = JSON.parse(response.body)
-      if json_response && json_response["items"]
-        json_response["items"]
+      rss_feed_url = Rails.configuration.x.api.laist.rss_feed_url
+      response = RestClient.get(rss_feed_url)
+      response_hash = Hash.from_xml(response.body)
+
+      if response_hash && response_hash["rss"] && response_hash["rss"]["channel"] && response_hash["rss"]["channel"]["item"]
+        response_hash["rss"]["channel"]["item"].try(:first, 5)
       else
         []
       end
