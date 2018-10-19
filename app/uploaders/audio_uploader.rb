@@ -22,19 +22,14 @@ class AudioUploader < CarrierWave::Uploader::Base
       if podcast_episode_record.present? && episode.audio.length === 0
         podcast_id = podcast_episode_record["podcastId"]
         episode_id = podcast_episode_record["id"]
+        background_audio_file_url = File.join(Rails.configuration.x.scpr.audio_url, relative_dir, filename)
 
-        backgroundAudioFileUrl = File.join(Rails.configuration.x.scpr.audio_url, relative_dir, filename)
-
-        begin
-          $megaphone
-            .podcast(podcast_id)
-            .episode(episode_id)
-            .update({
-              backgroundAudioFileUrl: backgroundAudioFileUrl
-            })
-        rescue
-          {}
-        end
+        # Enqueue the UpdatePodcastAudio Job 2 seconds from now to give some buffer between processing and uploading
+        Resque.enqueue_in(2.seconds, Job::UpdateMegaphoneAudio, {
+          podcast_id: podcast_id,
+          episode_id: episode_id,
+          background_audio_file_url: background_audio_file_url
+        });
       end
     end
   end

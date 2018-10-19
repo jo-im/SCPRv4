@@ -4,7 +4,6 @@ class ShowEpisode < ActiveRecord::Base
   has_secretary
   has_status
 
-
   include Concern::Scopes::SinceScope
   include Concern::Associations::ContentAlarmAssociation
   include Concern::Associations::AudioAssociation
@@ -262,6 +261,10 @@ class ShowEpisode < ActiveRecord::Base
     )
   end
 
+  def not_from_media_server(available_audio)
+    available_audio.try(:length) > 0 && !available_audio.try(:first).try(:url).include?('media.scpr.org')
+  end
+
   def create_podcast_episode
     podcast_id = self.try(:show).try(:podcast).try(:external_podcast_id)
     draft = self.status == 5 ? false : true
@@ -277,7 +280,7 @@ class ShowEpisode < ActiveRecord::Base
 
     available_audio = self.audio.select(&:available?)
 
-    if available_audio.try(:length) > 0
+    if not_from_media_server(available_audio)
       body = body.merge({
         backgroundAudioFileUrl: available_audio.first.url
       })
@@ -350,7 +353,7 @@ class ShowEpisode < ActiveRecord::Base
     if podcast_episode_record.present?
       # If the audio file is null from the podcast record
       available_audio = self.audio.select(&:available?)
-      if podcast_episode_record['audioFile'].nil? && available_audio.try(:length) > 0
+      if podcast_episode_record['audioFile'].nil? && not_from_media_server(available_audio)
         changes["backgroundAudioFileUrl"] = available_audio.first.url
       end
     end

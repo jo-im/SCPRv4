@@ -60,6 +60,7 @@ gem 'reverse_markdown', require: false
 gem 'htmlentities', require: false
 gem 'honeybadger', '~> 2.0'
 gem 'oink', '~> 0.10.1'
+gem 'resque-scheduler', '~> 4.0'
 
 ## HTTP
 gem "faraday", "~> 0.8"

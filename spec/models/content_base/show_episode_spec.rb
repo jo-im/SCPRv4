@@ -25,7 +25,7 @@ describe ShowEpisode do
       end
     end
 
-    describe "create_podast_episode" do
+    describe "create_podcast_episode" do
       it "only executes a POST request if the associated podcast has an external podcast id" do
         podcast = build :podcast, title: "The Cooler Podcast"
         program = build :kpcc_program, title: "The Cooler Show", podcast: podcast
@@ -38,26 +38,30 @@ describe ShowEpisode do
         expect(WebMock).to have_requested(:post, %r|cms\.megaphone\.fm\/api\/|).once
       end
 
-      it "adds a backgroundAudioFileUrl if audio is attached" do
+      it "performs a PUT request if an mp3 is uploaded" do
         podcast = build :podcast, title: "The Coolest Podcast", external_podcast_id: "EXTERNAL_PODCAST_ID_STUB"
         program = build :kpcc_program, title: "The Coolest Show", podcast: podcast
-        audio = create :audio, :live, :direct
-        episode = create :show_episode, show: program, audio: [audio]
+        episode = create :show_episode, show: program
+        audio = build :audio, :uploaded, mp3: load_audio_fixture("point1sec.mp3"), content: episode
+        audio.save!
 
-        expected_json = {
+        expected_json_from_post = {
           author: episode.show.title,
           draft: false,
           externalId: "#{episode.obj_key}__#{Rails.env}",
           pubdateTimezone: Time.zone.name,
           pubdate: episode.air_date,
           summary: episode.teaser,
-          title: episode.headline,
-          backgroundAudioFileUrl: episode.audio.first.url
+          title: episode.headline
+        }.to_json
+
+        expected_json_from_put = {
+          backgroundAudioFileUrl: audio.url
         }.to_json
 
         expect(WebMock)
           .to have_requested(:post, %r|cms\.megaphone\.fm\/api\/|)
-          .with(body: expected_json)
+          .with(body: expected_json_from_post)
       end
 
       it "defaults with a pubdate in the future if none is given" do

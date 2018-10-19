@@ -15,6 +15,7 @@ jobs:
           - MYSQL_USER=root
           - MYSQL_ALLOW_EMPTY_PASSWORD=true
       - image: elasticsearch:1.7-alpine
+      - image: redis:4.0.1-alpine
     steps:
       - checkout
       - run:
