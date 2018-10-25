@@ -1,20 +1,18 @@
 module Api::Public::V3
   class MembersController < BaseController
     def show
-      if !params[:id] || !(@member = Member.where("pledge_token LIKE (?)", "#{params[:id]}%").first)
-
-        # Find out if it's in Parse
-        parse_user_query = Farse::Query.new("PfsUser")
-        parse_user_query.eq("pledgeToken", params[:id])
-        authorized_user = parse_user_query.get.first
-        if authorized_user.present?
-          authorized_user["viewsLeft"] = Farse::Increment.new(-1)
-          Member.create_from_parse(authorized_user)
+      if params[:id] && (@member = Member.where("pledge_token LIKE (?)",
+                                                params[:id]).first)
+        if @member.views_left > 0
+          @member.views_left -= 1
+          @member.save
+          respond_with @member
         else
           render_not_found and return false
         end
+      else
+        render_not_found and return false
       end
-      respond_with @member
     end
   end
 end
