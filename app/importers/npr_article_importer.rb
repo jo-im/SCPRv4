@@ -60,6 +60,16 @@ module NprArticleImporter
         elligibility = false
       end
 
+      # check if another story with an identical slug was already recently autopublished
+      slug = npr_story.title.parameterize[0...50].sub(/-+\z/, "")
+      recent_stories_with_identical_slug = NewsStory
+        .where('published_at > ?', DateTime.yesterday)
+        .where(slug: slug)
+
+      if recent_stories_with_identical_slug.present?
+        elligibility = false
+      end
+
       elligibility
     end
 

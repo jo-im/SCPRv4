@@ -51,13 +51,5 @@ describe ArchiveController do
         assigns(content.pluralize.to_sym).should eq [yesterday]
       end
     end
-
-    it "only gets show episodes published on requested date" do
-      yesterday = create :show_episode, air_date: Time.zone.now.yesterday
-      today     = create :show_episode, air_date: Time.zone.now
-      tomorrow  = create :show_episode, air_date: Time.zone.now.tomorrow
-      get :show, date_path(Time.zone.now.yesterday.beginning_of_day)
-      assigns(:show_episodes).should eq [yesterday]
-    end
   end
 end

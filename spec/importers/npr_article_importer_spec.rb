@@ -70,6 +70,27 @@ describe NprArticleImporter do
       cached = RemoteArticle.all
       expect(cached.count).to eq 2
     end
+
+    it 'does not call import if an identical slug was published in the last day' do
+      stub_request(:get, %r|api\.npr|).to_return({
+        :headers => {
+          :content_type   => "application/json"
+        },
+        :body => load_fixture('api/npr/story.json')
+      })
+
+      # Sync once to get RemoteArticles into the queue for the first time
+      NprArticleImporter.sync
+
+      # Create a story that was published 1 day ago with the same slug as an expected npr import
+      story = create :news_story, published_at: 1.day.ago, slug: "four-men-in-a-small-boat-face-the-northwest-passag"
+      story.save
+
+      # When it syncs again, it should not try to import because there is a story with an identical slug
+      expect(NprArticleImporter).not_to receive(:import)
+
+      NprArticleImporter.sync
+    end
   end
 
   describe '#import' do
