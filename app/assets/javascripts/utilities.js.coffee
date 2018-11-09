@@ -37,15 +37,18 @@ class scpr.adSizer
             for i in [1..7]
                 @sizedCheck(i)
 
-    setPositionRelative: (element) ->
+    setPositionStatic: (element) ->
         $(element).css
-            "position": "relative"
+            "position": "static"
 
     resize: (element) ->
         $(element).css
-            "max-width": "100%",
-            "height": "auto"
+            "width": "100%",
+            "height": "100%"
         @removeFixedDimensions(element)
+
+        if (element.nodeName == "AMP-IMG")
+            @setPositionStatic(element)
 
     sizedCheck: (i) ->
         setTimeout () =>
@@ -57,15 +60,35 @@ class scpr.adSizer
         $.each $(".dfp:not(.adSized) iframe"), (i, iframe) =>
             $(iframe.contentWindow.document).ready () =>
                 ad = $(iframe.contentWindow.document).find(
-                        "img, object, embed")[0]
-
-                googleAdContainer = $(iframe.contentWindow.document).find(
-                        "#google_image_div")[0]
-
+                        "amp-img, img, object, embed")[0]
                 if $(ad).length
-                    @setPositionRelative(googleAdContainer)
-                    @resize(ad)
-                    $(iframe).closest(".ad .dfp, .c-ad .dfp").addClass("adSized")
+
+                    googleAdContainer = $(iframe.contentWindow.document).find("#google_image_div")[0]
+                    @setPositionStatic(googleAdContainer)
+                    @resize(ad);
+
+                    widthPx  = parseFloat($(iframe).attr('width'))
+                    heightPx = parseFloat($(iframe).attr('height'))
+
+                    wrapper = $(iframe).closest(".ad .dfp, .c-ad .dfp")
+
+                    $(iframe).css
+                        "width": "100%"
+                        "height": "100%"
+                        "top": "0"
+                        "left": "0"
+                        "position": "absolute"
+
+                    @removeFixedDimensions(iframe)
+
+                    wrapper.css
+                        "position": "relative"
+                        "padding-bottom": ((heightPx / widthPx) * 100) + "%"
+                        "height": "0px"
+                        "padding-top": "0px"
+                        "overflow": "hidden"
+
+                    wrapper.addClass("adSized")
 
     removeFixedDimensions: (element) ->
         $(element).removeAttr("width").removeAttr("height")

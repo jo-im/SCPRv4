@@ -31,5 +31,4 @@
 PortableHoles = require('portable-holes');
 
 require('./nuevo/popup');
-var adSizer = require('./nuevo/ad-sizer');
-new adSizer();
+new scpr.adSizer();
