@@ -20,46 +20,27 @@
     var keySuffix, key;
 
     if (typeof DFP_KEY_SUFFIX_OVERRIDE !== "undefined") {
-      keySuffix = DFP_KEY_SUFFIX_OVERRIDE
+      keySuffix = DFP_KEY_SUFFIX_OVERRIDE;
     } else {
-      keySuffix = "/" + window.location.pathname.split("/").filter(function(v){return v!==''}).splice(0, 2).join("/")
+      keySuffix = "/interior";
     }
 
-    key = '/3468/ibs.scpr.scpr' + keySuffix;
+    key = '/127204706/scpr_<%= Rails.env %>' + keySuffix;
 
+    // Position A
+    gptadslots[3]= googletag.defineSlot(key, [[300,50]],'dfp-slot_a').setTargeting('scpr_position',['top']).addService(googletag.pubads());
 
-    // Only print the Ad Slots we need for the given page,
-    // or else the empty ad requests will count against us in DFP
-    <% if current_page?(:listen) || current_page?(:listen_pledge_free) %>
+    // Position B
+    gptadslots[1]= googletag.defineSlot(key, [[300,250]],'dfp-slot_b').setTargeting('scpr_position',['middle']).addService(googletag.pubads());
 
-      // Listen Live Position A
-      gptadslots[4]= googletag.defineSlot(key, [[300,50]],'dfp-slot_live_a').setTargeting('pos',['top']).addService(googletag.pubads());
-
-      // Listen Live Position B
-      gptadslots[5]= googletag.defineSlot(key, [[300,50]],'dfp-slot_live_b').setTargeting('pos',['middle']).addService(googletag.pubads());
-
-      // Listen Live Position C
-      gptadslots[6]= googletag.defineSlot(key, [[300,50]],'dfp-slot_live_c').setTargeting('pos',['bottom']).addService(googletag.pubads());
-
-
-    <% else %>
-
-      // Position A
-      gptadslots[3]= googletag.defineSlot(key, [[300,50]],'dfp-slot_a').setTargeting('pos',['banner-top']).addService(googletag.pubads());
-
-      // Position B
-      gptadslots[1]= googletag.defineSlot(key, [[300,250]],'dfp-slot_b').setTargeting('pos',['mr-top']).addService(googletag.pubads());
-
-      // Position C
-      gptadslots[2]= googletag.defineSlot(key, [[300,250]],'dfp-slot_c').setTargeting('pos',['mr-bottom']).addService(googletag.pubads());
-
-    <% end %>
+    // Position C
+    gptadslots[2]= googletag.defineSlot(key, [[300,250]],'dfp-slot_c').setTargeting('scpr_position',['bottom']).addService(googletag.pubads());
 
     googletag.pubads().enableSingleRequest();
 
     // If this page is an article and has a category, add in the targeting tag
     if (typeof DFP_CATEGORY !== "undefined") {
-      googletag.pubads().setTargeting('category',[DFP_CATEGORY]);
+      googletag.pubads().setTargeting('scpr_category',[DFP_CATEGORY]);
     }
 
 
