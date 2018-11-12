@@ -24,41 +24,12 @@ class ListenController < ApplicationController
     elsif params.has_key?(:pledgeToken)
 
       pledge_token = params[:pledgeToken]
-      parse_user_query = Farse::Query.new("PfsUser")
-      parse_user_query.eq("pledgeToken", pledge_token)
-      authorized_user = parse_user_query.get.first
+      member = Member.where(pledge_token: pledge_token)
 
       # redirect to flat page if we can't find a valid user
-      return redirect_to '/listen_live/pledge-free/error' unless authorized_user.present?
+      return redirect_to '/listen_live/pledge-free/error' unless member.present?
 
-      begin
-        # Since we already have a token, we don't want
-        # some further issue with simply incrementing viewsLeft
-        # to raise an error and prevent the user from
-        # viewing the PFS player.
-        authorized_user["viewsLeft"] = Farse::Increment.new(-1)
-
-        # Sometimes the records get saved with the string instead of the boolean value by mlab, so account
-        # for it here:
-        if authorized_user["emailSent"] == 'true'
-          authorized_user["emailSent"] = true
-        elsif authorized_user["emailSent"] == 'false'
-          authorized_user["emailSent"] = false
-        end
-
-        authorized_user.save
-        if authorized_user["viewsLeft"] == 0
-           authorized_user["pledgeToken"] = nil
-           authorized_user.save
-        end
-
-        if !Member.find_by_pledge_token(pledge_token)
-          Member.create_from_parse(authorized_user)
-        end
-      rescue => err
-        NewRelic.log_error(err)
-      end
-      cookies.permanent[:member_session] = params[:pledgeToken]
+      cookies.permanent[:member_session] = pledge_token
       render layout: false
     end
   end
