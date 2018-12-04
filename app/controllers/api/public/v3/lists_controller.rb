@@ -2,13 +2,15 @@ module Api::Public::V3
   class ListsController < BaseController
 
     def index
-      if !context.empty?
-        @lists = List.visible
-          .where("FIND_IN_SET(?, context)", context)
-          .order('position ASC')
-      else
-        @lists = List.visible
-          .order('position ASC')
+      @lists = Rails.cache.fetch('/api/v3/lists', expires_in: 5.minutes) do
+        if !context.empty?
+          List.visible
+            .where("FIND_IN_SET(?, context)", context)
+            .order('position ASC')
+        else
+          List.visible
+            .order('position ASC')
+        end
       end
       respond_with @lists
     end

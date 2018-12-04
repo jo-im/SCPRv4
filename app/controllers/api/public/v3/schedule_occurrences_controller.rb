@@ -21,6 +21,11 @@ module Api::Public::V3
       @schedule_occurrences = ScheduleOccurrence.block(@start_time, @length)
       @pledge_drive = false
       @display_pledge_status = params[:pledge_status]
+
+      @schedule_occurrences = Rails.cache.fetch('/api/v3/schedule', expires_in: 5.minutes) do
+        ScheduleOccurrence.block(@start_time, @length)
+      end
+
       respond_with @schedule_occurrences
     end
 
