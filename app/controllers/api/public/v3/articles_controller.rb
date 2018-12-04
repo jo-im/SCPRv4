@@ -34,12 +34,19 @@ module Api::Public::V3
 
     def index
       @articles = Rails.cache.fetch('/api/v3/articles', expires_in: 5.minutes) do
-        ContentBase.search(@query, {
-          :classes => @classes,
-          :limit   => @limit,
-          :page    => @page,
-          :with    => @conditions
-        })
+        articles =
+          ContentBase.search(@query, {
+            :classes => @classes,
+            :limit   => @limit,
+            :page    => @page,
+            :with    => @conditions
+          })
+
+        if articles.empty?
+          return []
+        else
+          return articles
+        end
       end
 
       respond_with @articles
