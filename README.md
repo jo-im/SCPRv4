@@ -42,6 +42,8 @@ And install dependencies:
 
 `bundle install & npm install`
 
+Note: `bundle install` will try to use a specific native MySQL installation to compile the mysql gem, so you'll need to install that first. The latest MySQL version won't work, so the easiest method would be to `brew install mysql@5.6` and add `mysql` to `PATH` (i.e. `echo 'export PATH="/usr/local/opt/mysql@5.6/bin:$PATH"' >> ~/.bash_profile`).
+
 After that finishes, initialize your database:
 
 `bundle exec rake db:setup`

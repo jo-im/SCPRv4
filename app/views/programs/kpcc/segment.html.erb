@@ -5,7 +5,7 @@
 <% end %>
 
 <% content_for :main_class, "o-article o-article--segment" %>
-<%= render 'shared/ads/dfp_script_config', category: @category %>
+<%= render 'shared/ads/dfp_script_config', category: @category, story: @segment %>
 
 <% content_for :header do %>
   <section id="o-prologue--program__segment" class="o-prologue o-prologue--program">

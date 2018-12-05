@@ -38,11 +38,16 @@
 
     googletag.pubads().enableSingleRequest();
 
-    // If this page is an article and has a category, add in the targeting tag
+    // If this page is an article and has a category, add in the category targeting tag
     if (typeof DFP_CATEGORY !== "undefined") {
       googletag.pubads().setTargeting('scpr_category',[DFP_CATEGORY]);
     }
 
+    // If this page is an article and has a tag, add in a tag targeting tag
+    if (typeof DFP_TAG !== "undefined") {
+      tagArray = DFP_TAG.split(', ');
+      googletag.pubads().setTargeting('scpr_tag',tagArray);
+    }
 
     googletag.pubads().enableAsyncRendering();
     googletag.enableServices();
