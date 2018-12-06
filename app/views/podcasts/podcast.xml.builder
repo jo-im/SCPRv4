@@ -21,6 +21,13 @@ cache ["v4", @podcast, @consumer], expires_in: 1.hour do # Podcasts will refresh
 
       xml.language          "en-us"
       xml.description       h(@podcast.description)
+
+      xml.image do
+        xml.url @podcast.image_url
+        xml.title @podcast.title
+        xml.link  @podcast.url || root_url
+      end
+
       xml.itunes :author,   @podcast.author
       xml.itunes :summary,  h(@podcast.description)
 

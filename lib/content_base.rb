@@ -71,6 +71,10 @@ module ContentBase
       { exists: { field: k } }
     when Range
       { range: { k => { gte: v.first, lt: v.last }}}
+    when Regexp
+      # When the corresponding value is a regular expression,
+      # print it in a human readable format and shave off the first and last forward slahes
+      { regexp: { k => v.inspect[1...-1] } }
     else
       { term: { k => v } }
     end

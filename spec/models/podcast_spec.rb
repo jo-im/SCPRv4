@@ -73,6 +73,35 @@ describe Podcast do
         .reject {|k| !content.include?(k) }
         .should eq content
       end
+
+      it "doesn't grab content from NPR" do
+        # Create 3 different content types
+        story   = create :news_story, published_at: 1.days.ago
+        entry   = create :blog_entry, published_at: 2.days.ago
+        segment = create :show_segment, published_at: 3.days.ago
+
+        # Add an NPR byline to the show segment
+        byline  = create :byline, name: "John Doe | NPR", content: segment
+
+        # For each of our content types, attach audio
+        content = [story, entry, segment]
+        content.each do |content|
+          create :audio, :direct, content: content
+        end
+
+        podcast = create :podcast, item_type: "content", source: nil
+
+        # Set the expectation that the show segment shouldn't be grabbed
+        # because of the NPR byline we added to it earlier
+        expected_content = [story, entry]
+        expected_content.map!(&:obj_key)
+
+        # Verify that the show segment isn't grabbed
+        podcast.content
+        .map {|a| a.obj_key }
+        .reject {|k| !expected_content.include?(k)}
+        .should eq expected_content
+      end
     end
   end
 

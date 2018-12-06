@@ -43,10 +43,12 @@ class Podcast < ActiveRecord::Base
     @content ||= begin
       klasses    = []
       conditions = {}
+      conditions[:with] = {};
+      conditions[:without] = {};
 
       case self.source_type
       when "KpccProgram"
-        conditions.merge!("show.id" => self.source.id)
+        conditions[:with].merge!("show.id" => self.source.id)
         klasses.push ShowEpisode if self.item_type == "episodes"
         klasses.push ShowSegment if self.item_type == "segments"
 
@@ -57,11 +59,14 @@ class Podcast < ActiveRecord::Base
         return []
 
       when "Blog"
-        conditions.merge!("blog.id" => self.source.id)
+        conditions[:with].merge!("blog.id" => self.source.id)
         klasses.push BlogEntry
 
       else
         if item_type == "content"
+          # Exclude NPR articles from our ES query result
+          # by providing a byline regex that looks for "| NPR" at the end
+          conditions[:without].merge!("byline" => /NPR/)
           klasses = [NewsStory, BlogEntry, ShowSegment]
         end
       end
@@ -100,9 +105,10 @@ class Podcast < ActiveRecord::Base
 
   def content_query(limit, klasses, conditions={})
     ContentBase.search({
-      :with    => conditions.reverse_merge({
+      :with    => conditions[:with].reverse_merge({
         "audio.url" => true
       }),
+      :without => conditions[:without],
       :classes => klasses,
       :limit   => limit
     })
