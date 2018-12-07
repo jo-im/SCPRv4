@@ -65,8 +65,17 @@ class Podcast < ActiveRecord::Base
       else
         if item_type == "content"
           # Exclude NPR articles from our ES query result
-          # by providing a byline regex that looks for "| NPR" at the end
-          conditions[:without].merge!("byline" => /NPR/)
+          # by providing a query hash that performs a match
+          # for bylines that include "NPR"
+          options = {
+            query: {
+              match: {
+                byline: "NPR"
+              }
+            }
+          }
+          
+          conditions[:without].merge!({ options: options })
           klasses = [NewsStory, BlogEntry, ShowSegment]
         end
       end

@@ -67,13 +67,16 @@ module ContentBase
       { terms: { k => v } }
     when FalseClass
       { missing: { field: k } }
+    when Hash
+      # Return the hash itself
+      v
     when TrueClass
       { exists: { field: k } }
     when Range
       { range: { k => { gte: v.first, lt: v.last }}}
     when Regexp
-      # When the corresponding value is a regular expression,
-      # print it in a human readable format and shave off the first and last forward slahes
+      # Print the regexp in a human readable format
+      # and shave off the first and last forward slashes
       { regexp: { k => v.inspect[1...-1] } }
     else
       { term: { k => v } }
