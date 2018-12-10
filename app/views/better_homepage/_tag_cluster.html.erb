@@ -3,6 +3,7 @@
   <ul class="c-list c-list--horiz">
     <% omit ||= [] %>
     <% tag.featured_content(omit).each do |feature| %>
+      <% next if feature.nil? %>
       <div class="o-media o-media--horizontal o-media--sm">
         <div class="o-media__figure o-media__figure--four-by-three">
           <img class="o-media__img" src="<%= begin feature.asset.asset.thumb.url rescue '/static/images/fallback-img-square.png' end %>">

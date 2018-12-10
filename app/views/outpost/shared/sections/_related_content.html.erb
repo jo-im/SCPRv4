@@ -16,7 +16,7 @@
       {
         el: "#related_content-aggregator",
         inputEl: "#outgoing_references_json",
-        collection: <%= render_json('api/private/v2/articles/collection', articles: record.outgoing_references.includes(:related).map(&:related).map(&:get_article)) %>,
+        collection: <%= render_json('api/private/v2/articles/collection', articles: record.outgoing_references.includes(:related).select{ |item| item.present? }.map(&:related).map(&:get_article)) %>,
         referenceCollection: <%= render_json('api/private/v2/articles/collection', articles: record.incoming_references.includes(:content).map(&:content).compact.map(&:get_article)) %>,
         view: { active: 'search' },
         apiType: "private",
