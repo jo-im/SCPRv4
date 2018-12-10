@@ -34,17 +34,6 @@
     <% end %>
   </aside>
 
-  <aside class="right hp-latest-headlines" style="order:2;">
-    <div class="c-ad">
-      <div class="c-ad__container c-ad__container">
-        <div class="c-ad__banner">
-          <%= render "shared/ads/dfp", ad_key: 'slot_a' %>
-        </div>
-      </div>
-    </div>
-    <%= render partial: "better_homepage/latest_from_laist" %>
-  </aside>
-
   <%= precached "better_homepage/right_asides", preview: @homepage %>
 
   <%= precached "better_homepage/contents", preview: @homepage %>
