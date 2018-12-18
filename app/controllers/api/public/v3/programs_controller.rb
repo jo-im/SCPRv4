@@ -16,7 +16,7 @@ module Api::Public::V3
 
 
     def index
-      @programs = Rails.cache.fetch('/api/v3/programs', expires_in: 5.minutes) do
+      @programs = Rails.cache.fetch("/api/v3/programs/#{@conditions}", expires_in: 5.minutes) do
         Program.where(@conditions)
       end
 
