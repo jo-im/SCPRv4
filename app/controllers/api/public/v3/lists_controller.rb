@@ -2,8 +2,9 @@ module Api::Public::V3
   class ListsController < BaseController
 
     def index
-      @lists = Rails.cache.fetch("/api/v3/lists/#{context}", expires_in: 5.minutes) do
-        if !context.empty?
+      @context = context
+      @lists = Rails.cache.fetch("/api/v3/lists/#{@context}", expires_in: 5.minutes) do
+        if !@context.empty?
           List.visible
             .where("FIND_IN_SET(?, context)", context)
             .order('position ASC').to_a

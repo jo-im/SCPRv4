@@ -1,6 +1,6 @@
 json.partial! api_view_path("shared", "meta")
 
-json.cache! ['/api/v3/lists'], expires_in: 5.minutes do
+json.cache! ['/api/v3/lists', @context], expires_in: 5.minutes do
   json.lists do
     json.array! @lists do |list|
       json.id            list.id
