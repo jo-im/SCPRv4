@@ -1,11 +1,9 @@
 json.partial! api_view_path("shared", "meta")
 
-json.cache! ['/api/v3/schedule', @start_time, @length, @pledge_drive, @display_pledge_status], expires_in: 5.minutes do
-	if @display_pledge_status
-	  json.pledge_drive @pledge_drive || false
-	end
-	json.schedule_occurrences do
-	  json.partial! api_view_path("schedule_occurrences", "collection"),
-	    schedule_occurrences: @schedule_occurrences
-	end
+if @display_pledge_status
+  json.pledge_drive @pledge_drive || false
+end
+json.schedule_occurrences do
+  json.partial! api_view_path("schedule_occurrences", "collection"),
+    schedule_occurrences: @schedule_occurrences
 end
