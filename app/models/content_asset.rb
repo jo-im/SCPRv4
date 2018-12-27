@@ -37,8 +37,10 @@ class ContentAsset < ActiveRecord::Base
 
   def asset
     @asset ||= begin
-      _asset = AssetHost::Asset.find(self.asset_id)
-
+      _asset = Rails.cache.fetch("/content_asset/#{self.asset_id}", expires_in: 15.minutes) do
+        AssetHost::Asset.find(self.asset_id)
+      end
+      
       if _asset.is_a? AssetHost::Asset::Fallback
         self.caption = "We encountered a problem, and this photo is currently unavailable."
       end
