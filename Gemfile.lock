@@ -49,10 +49,10 @@ GIT
 
 GIT
   remote: git://github.com/scpr/asset_host_client.git
-  revision: e2c299114fe346b36e424b714a2cc493830cdc28
-  tag: v2.1.4
+  revision: 4ab80edd149c0566c53a50703e6669d79adfa866
+  tag: v2.1.5
   specs:
-    asset_host_client (2.1.4)
+    asset_host_client (2.1.5)
       faraday (~> 0.8)
       faraday_middleware (~> 0.8)
       rails (>= 4)
