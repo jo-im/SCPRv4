@@ -33,24 +33,17 @@ module Api::Public::V3
     #---------------------------
 
     def index
-      # @articles = Rails.cache.fetch("/api/v3/articles/#{@query}/#{@classes.map(&:name).join(',')}/#{@limit}/#{@page}/#{@conditions}", expires_in: 5.minutes) do
-      #   articles = ContentBase.search(@query, {
-      #     :classes => @classes,
-      #     :limit   => @limit,
-      #     :page    => @page,
-      #     :with    => @conditions
-      #   })
-      #
-      #   # Strip out singleton methods so that rails can cache it properly
-      #   stripped_articles = strip_singleton articles
-      # end
+      @articles = Rails.cache.fetch("/api/v3/articles/#{@query}/#{@classes.map(&:name).join(',')}/#{@limit}/#{@page}/#{@conditions}", expires_in: 5.minutes) do
+        articles = ContentBase.search(@query, {
+          :classes => @classes,
+          :limit   => @limit,
+          :page    => @page,
+          :with    => @conditions
+        })
 
-      @articles = ContentBase.search(@query, {
-        :classes => @classes,
-        :limit   => @limit,
-        :page    => @page,
-        :with    => @conditions
-      })
+        # Strip out singleton methods so that rails can cache it properly
+        stripped_articles = strip_singleton articles
+      end
 
       respond_with @articles
     end
