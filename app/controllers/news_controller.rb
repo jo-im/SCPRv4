@@ -16,7 +16,13 @@ class NewsController < ApplicationController
 
     @content_params[:exclude] = @story
 
-    @category = @story.category
+    @category = Rails.cache.fetch("news_stories/#{@story.cache_key}/category") do
+        @story.category
+    end
+
+    @tags = Rails.cache.fetch("news_stories/#{@story.cache_key}/tags") do
+        @story.try(:tags).try(:map, &:title).try(:join, ', ')
+    end
 
     if request.original_fullpath != @story.public_path
       redirect_to @story.public_path and return

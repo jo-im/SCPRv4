@@ -1,3 +1,5 @@
+<% current_model = @story || @segment %>
+<% cache current_model do %>
 <script>
   dataLayer = [{
     'storyId': '<%= @story.try(:id) %>',
@@ -93,3 +95,4 @@
      });
    }
  </script>
+<% end %>
