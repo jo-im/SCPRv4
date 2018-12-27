@@ -3,5 +3,5 @@
 json.partial! api_view_path("shared", "meta")
 
 json.articles do
-	json.partial! api_view_path("articles", "collection"), articles: @articles
+  json.partial! api_view_path("articles", "collection"), articles: @articles
 end
