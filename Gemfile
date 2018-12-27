@@ -80,7 +80,7 @@ gem 'farse-ruby-client', github: "scpr/parse-ruby-client"
 gem 'pmp', '0.5.6'
 #gem "npr", path:"../npr"
 gem 'npr', '~> 3.0', github:"scpr/npr"
-gem 'asset_host_client', github:"scpr/asset_host_client", tag:"v2.1.2"
+gem 'asset_host_client', github:"scpr/asset_host_client", tag:"v2.1.3"
 gem 'audio_vision', '~> 1.0'
 gem 'slack-notifier'
 gem 'aws-sdk', '~> 2'
