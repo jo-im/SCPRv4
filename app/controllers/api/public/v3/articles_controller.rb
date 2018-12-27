@@ -33,7 +33,7 @@ module Api::Public::V3
     #---------------------------
 
     def index
-      @articles = Rails.cache.fetch("/api/v3/articles/#{@query}/#{@classes.map(&:name).join(',')}/#{@limit}/#{@page}/#{@conditions}", expires_in: 5.minutes) do
+      @articles = Rails.cache.fetch("/api/v3/articles/#{@query}/#{@classes.map(&:name).join(',')}/#{@limit}/#{@page}/#{@conditions}", expires_in: 15.minutes) do
         articles = ContentBase.search(@query, {
           :classes => @classes,
           :limit   => @limit,
