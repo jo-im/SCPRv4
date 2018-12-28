@@ -34,12 +34,10 @@
     <iframe src="https://www.googletagmanager.com/ns.html?id=GTM-585PL29" height="0" width="0" style="display:none;visibility:hidden"></iframe>
     <div id="global-pushdown"></div>
     <header class="<%= content_for :header_class %>">
-        <% cache(["masthead", "v1"], expires_in: 1.hour) do %>
-            <%= cell :masthead %>
-        <% end %>
-        <% if alert = BreakingNewsAlert.latest_visible_alert %>
-            <%= cell :breaking_news_alert, alert %>
-        <% end %>
+      <%= cell :masthead %>
+      <% if alert = BreakingNewsAlert.latest_visible_alert %>
+        <%= cell :breaking_news_alert, alert %>
+      <% end %>
       <%= content_for :header %>
     </header>
     <main class="<%= content_for :main_class %>">

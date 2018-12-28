@@ -1,15 +1,17 @@
 <% content_for :dfp_script_config do %>
     <script>
     <% if category ||= nil %>
-        DFP_CATEGORY = "<%=category.slug%>";
+      DFP_CATEGORY = "<%=category.slug%>";
     <% end %>
 
-    <% if tag ||= nil %>
-        DFP_TAG = "<%=tag%>";
+    <% if story ||= nil %>
+      <% if (tag_list = story.try(:tags).try(:map, &:title).try(:join, ', ')).present? %>
+        DFP_TAG = "<%=tag_list%>";
+      <% end %>
     <% end %>
 
     <% if key_override ||= nil %>
-        DFP_KEY_SUFFIX_OVERRIDE = "<%=key_override%>";
+      DFP_KEY_SUFFIX_OVERRIDE = "<%=key_override%>";
     <% end %>
     </script>
 <% end %>

@@ -1,50 +1,47 @@
 <% add_to_page_title @story.try(:feature).try(:present?) ? "#{@story.try(:feature).try(:name)}: #{@story.try(:headline)}" : @story.try(:headline) %>
-<% cache [@story, "opengraph", "v1"] do %>
-    <% content_for :opengraph do %>
-        <%= cell(:article, @story).call(:meta_tags) %>
-    <% end %>
+<% content_for :opengraph do %>
+  <%= cell(:article, @story).call(:meta_tags) %>
 <% end %>
 
 <% content_for :main_class, "o-article" %>
+<%= render 'shared/ads/dfp_script_config', category: @category, story: @story %>
 
-<% cache [@story, "main", "v1"] do %>
-    <!-- LEFT ASIDE -->
-    <aside class="l-column--left l--centerize" style="order: -1;">
-    <%= cell :article_audio, @story, audio_context: 'news' %>
-    <%= cell :social_tools, @story, display: 'vert' %>
-    </aside>
+<!-- LEFT ASIDE -->
+<aside class="l-column--left l--centerize" style="order: -1;">
+  <%= cell :article_audio, @story, audio_context: 'news' %>
+  <%= cell :social_tools, @story, display: 'vert' %>
+</aside>
 
-    <!-- RIGHT ASIDES -->
-    <%= cell(:ad, id: "c-ad--a", slot: "a", class: "l-column--right", attribution: false, order: -1).show do
-    '<hr class="b-rule l-column--right" style="order: 5;" />'
-    end %>
+<!-- RIGHT ASIDES -->
+<%= cell(:ad, id: "c-ad--a", slot: "a", class: "l-column--right", attribution: false, order: -1).show do
+  '<hr class="b-rule l-column--right" style="order: 5;" />'
+end %>
 
-    <%= cell(:ad, slot: "b", class: "l-column--right", order: 995).show do
-    '<hr class="b-rule l-column--right" style="order: 12;" />'
-    end %>
+<%= cell(:ad, slot: "b", class: "l-column--right", order: 995).show do
+  '<hr class="b-rule l-column--right" style="order: 12;" />'
+end %>
 
-    <%= cell(:category_cluster, @category, class: "l-column--right", order: 996, category: "Article", label: "More Sidebar Category") %>
+<%= cell(:category_cluster, @category, class: "l-column--right", order: 996, category: "Article", label: "More Sidebar Category") %>
 
-    <%= cell(:popular_articles, @story, class: "l-column--right", order: 997, category: "Article", label: "Popular Now Sidebar").call(:trio) %>
+<%= cell(:popular_articles, @story, class: "l-column--right", order: 997, category: "Article", label: "Popular Now Sidebar").call(:trio) %>
 
-    <%= cell :ad, slot: "c", class: "l-column--right", order: 1000 %>
+<%= cell :ad, slot: "c", class: "l-column--right", order: 1000 %>
 
-    <!-- ARTICLE BODY -->
-    <%= cell :article, @story, type: 'story', audio_context: 'news' %>
+<!-- ARTICLE BODY -->
+<%= cell :article, @story, type: 'story', audio_context: 'news' %>
 
-    <!-- MOAR STUFF -->
-    <%= cell :newsletter_appeal, @story, order: 991 %>
+<!-- MOAR STUFF -->
+<%= cell :newsletter_appeal, @story, order: 991 %>
 
-    <hr class="o-article__rule--ending b-rule b-rule--primary-lightest", style="order: 992;" />
+<hr class="o-article__rule--ending b-rule b-rule--primary-lightest", style="order: 992;" />
 
-    <%= cell :related_links, @story, order: 993 %>
+<%= cell :related_links, @story, order: 993 %>
 
-    <%= cell :social_tools, @story, display: 'horiz', order: 994 %>
+<%= cell :social_tools, @story, display: 'horiz', order: 994 %>
 
-    <!-- FOOTER CONTENT -->
-    <hr class="o-article__rule--footer b-rule b-rule--secondary-alt b-rule--padded l-column--boundless" style="order: 998;" />
+<!-- FOOTER CONTENT -->
+<hr class="o-article__rule--footer b-rule b-rule--secondary-alt b-rule--padded l-column--boundless" style="order: 998;" />
 
-    <%= cell :comments, @story, order: 999 %>
+<%= cell :comments, @story, order: 999 %>
 
-    <%= cell :epilogue, @story, class: "l-column--boundless", order: 1001 %>
-<% end %>
+<%= cell :epilogue, @story, class: "l-column--boundless", order: 1001 %>
