@@ -49,10 +49,10 @@ GIT
 
 GIT
   remote: git://github.com/scpr/asset_host_client.git
-  revision: 4ab80edd149c0566c53a50703e6669d79adfa866
-  tag: v2.1.5
+  revision: e4864f47a29e1f81baf01a0b55669b9ab67605a4
+  tag: v2.1.6
   specs:
-    asset_host_client (2.1.5)
+    asset_host_client (2.1.6)
       faraday (~> 0.8)
       faraday_middleware (~> 0.8)
       rails (>= 4)
@@ -625,4 +625,4 @@ DEPENDENCIES
   yajl-ruby (~> 1.3, >= 1.3.1)
 
 BUNDLED WITH
-   1.16.5
+   1.17.1
