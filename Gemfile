@@ -75,8 +75,6 @@ gem "twitter", "~> 4.1"
 gem "oauth2", "~> 0.8"
 gem 'postmark-rails', "~> 0.6.0"
 gem 'newrelic_rpm', '~> 4.0', '>= 4.0.0.332'
-gem 'parse-ruby-client', github: "sheerun/parse-ruby-client", ref: "a4eb5618c8167e88857b449cd522b23a8b0c02e9"
-gem 'farse-ruby-client', github: "scpr/parse-ruby-client"
 gem 'pmp', '0.5.6'
 #gem "npr", path:"../npr"
 gem 'npr', '~> 3.0', github:"scpr/npr"

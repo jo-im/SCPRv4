@@ -72,24 +72,6 @@ GIT
       faraday (~> 0.8.0)
       faraday_middleware (~> 0.9.0)
 
-GIT
-  remote: git://github.com/scpr/parse-ruby-client.git
-  revision: e6da8af93cdbe75e242fafe0d5a0ff017c68e55e
-  specs:
-    farse-ruby-client (0.3.0)
-      faraday
-      faraday_middleware
-
-GIT
-  remote: git://github.com/sheerun/parse-ruby-client.git
-  revision: a4eb5618c8167e88857b449cd522b23a8b0c02e9
-  ref: a4eb5618c8167e88857b449cd522b23a8b0c02e9
-  specs:
-    parse-ruby-client (0.2.0)
-      faraday
-      faraday_middleware
-      yajl-ruby
-
 GEM
   remote: http://rubygems.org/
   specs:
@@ -556,7 +538,6 @@ DEPENDENCIES
   faker
   faraday (~> 0.8)
   faraday_middleware (~> 0.8)
-  farse-ruby-client!
   guard (~> 1.5)
   guard-resque
   guard-rspec
@@ -582,7 +563,6 @@ DEPENDENCIES
   outpost-cms!
   outpost-publishing
   outpost-secretary!
-  parse-ruby-client!
   patron
   pmp (= 0.5.6)
   postmark-rails (~> 0.6.0)
