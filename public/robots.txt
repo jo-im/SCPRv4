@@ -1,5 +1,6 @@
 User-agent: *
 Disallow: /outpost/
+Disallow: /programs/the-big-one/
 Allow: /
 
 Sitemap: http://scpr.org/sitemap.xml
