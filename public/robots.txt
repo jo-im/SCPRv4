@@ -1,11 +1,11 @@
 User-agent: *
 Disallow: /outpost/
 
-Disallow: /programs/the-big-one/
-Disallow: /programs/repeat/
+Disallow: /programs/the-big-one
+Disallow: /programs/repeat
 
-Noindex: /programs/the-big-one/
-Noindex: /programs/repeat/
+Noindex: /programs/the-big-one
+Noindex: /programs/repeat
 
 Allow: /
 
