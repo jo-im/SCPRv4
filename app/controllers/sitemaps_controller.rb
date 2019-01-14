@@ -34,7 +34,9 @@ class SitemapsController < ApplicationController
   def episodes
     @changefreq = "daily"
     @priority   = "0.5"
-    @content    = ShowEpisode.published.since(30.days.ago)
+    @content    = Rails.cache.fetch("/sitemaps/episodes", expires_in: 30.minutes) do
+        ShowEpisode.published.joins(:show).where(programs_kpccprogram: { air_status: "onair" }).since(30.days.ago)
+    end
     render 'sitemap', formats: :xml
   end
 
@@ -63,7 +65,7 @@ class SitemapsController < ApplicationController
   def programs
     @changefreq = "daily"
     @priority   = "0.3"
-    @content    = KpccProgram.active.order(:title) + ExternalProgram.active.order(:title)
+    @content    = KpccProgram.where(air_status: "onair").order(:title) + ExternalProgram.active.order(:title)
     render 'sitemap', formats: :xml
   end
 
