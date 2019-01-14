@@ -4,9 +4,6 @@ Disallow: /outpost/
 Disallow: /programs/the-big-one
 Disallow: /programs/repeat
 
-Noindex: /programs/the-big-one
-Noindex: /programs/repeat
-
 Allow: /
 
 Sitemap: http://scpr.org/sitemap.xml
