@@ -115,6 +115,13 @@ describe ProgramsController do
         @program = create :kpcc_program, is_segmented: false
       end
 
+      it "redirects if a flatpage exists with that program's path" do
+        @flatpage = create :flatpage, path: "programs/#{@program.slug}"
+
+        get :show, show: @program.slug
+        response.should render_template "flatpages/show"
+      end
+
       it "sets @program" do
         get :show, show: @program.slug
         assigns(:program).should eq @program

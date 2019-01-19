@@ -3,7 +3,7 @@
 # namespace, so we have to send all traffic to this controller and then
 # basically split every action into two.
 class ProgramsController < ApplicationController
-
+  include FlatpageHandler
   include Concern::Controller::GetPopularArticles
   include Concern::Controller::ShowEpisodes
   include Concern::Controller::Amp
@@ -199,6 +199,11 @@ class ProgramsController < ApplicationController
     @program = KpccProgram.find_by_slug(params[:show]) ||
       ExternalProgram.find_by_slug(params[:show])
 
+    # Check if there's a flatpage first before routing to the program page
+    path = "programs/#{params[:show]}"
+    if @flatpage = Flatpage.visible.find_by_path(path.downcase)
+      handle_flatpage and return
+    end
 
     if !@program
       render_error(404, ActionController::RoutingError.new("Not Found"))
