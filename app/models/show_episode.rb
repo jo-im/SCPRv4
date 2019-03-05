@@ -261,8 +261,8 @@ class ShowEpisode < ActiveRecord::Base
     )
   end
 
-  def not_from_media_server(available_audio)
-    available_audio.try(:length) > 0 && !available_audio.try(:first).try(:url).include?('media.scpr.org')
+  def audio_ready_for_upload(available_audio)
+    available_audio.try(:length) > 0
   end
 
   def create_podcast_episode
@@ -280,13 +280,13 @@ class ShowEpisode < ActiveRecord::Base
 
     available_audio = self.audio.select(&:available?)
 
-    if not_from_media_server(available_audio)
+    if audio_ready_for_upload(available_audio)
       body = body.merge({
-        backgroundAudioFileUrl: available_audio.first.url
+        backgroundAudioFileUrl: available_audio.first.try(:url)
       })
     end
 
-    if podcast_id.present? && @podcast_episode_record.nil?
+    if podcast_id.present? && podcast_episode_record.blank?
       begin
         $megaphone
           .podcast(podcast_id)
@@ -318,7 +318,7 @@ class ShowEpisode < ActiveRecord::Base
     podcast_id = self.try(:show).try(:podcast).try(:external_podcast_id)
 
     # If a podcast episode doesn't exist on Megaphone's side, try to create it
-    if podcast_id && @podcast_episode_record.nil?
+    if podcast_id.present? && podcast_episode_record.blank?
       return create_podcast_episode
     end
 
@@ -353,8 +353,8 @@ class ShowEpisode < ActiveRecord::Base
     if podcast_episode_record.present?
       # If the audio file is null from the podcast record
       available_audio = self.audio.select(&:available?)
-      if podcast_episode_record['audioFile'].nil? && not_from_media_server(available_audio)
-        changes["backgroundAudioFileUrl"] = available_audio.first.url
+      if podcast_episode_record['audioFile'].nil? && audio_ready_for_upload(available_audio)
+        changes["backgroundAudioFileUrl"] = available_audio.first.try(:url)
       end
     end
 

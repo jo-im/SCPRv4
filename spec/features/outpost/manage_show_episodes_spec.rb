@@ -37,7 +37,7 @@ describe ShowEpisode do
       expect(page).not_to have_selector('#form-block-podcast-ad-placement')
     end
 
-    it "fields are enabled if the podcast record is available" do
+    it "fields are enabled if the podcast record and podcast record audio is available" do
       visit @show_episode.admin_edit_path
       expect(page).not_to have_css('#show_episode_pre_count[disabled]')
       expect(page).not_to have_css('#show_episode_post_count[disabled]')
@@ -55,7 +55,7 @@ describe ShowEpisode do
       expect(page).to have_css('#show_episode_insertion_points[disabled]')
     end
 
-    it "is populated with data if the podcast record already exists" do
+    it "is populated with data if the podcast record and audio file already exist" do
       visit @show_episode.admin_edit_path
       pre_count = find_field('show_episode[pre_count]').value
       post_count = find_field('show_episode[post_count]').value

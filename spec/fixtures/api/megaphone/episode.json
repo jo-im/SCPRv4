@@ -1,5 +1,6 @@
 [
   {
+    "audioFile": "http://link.to/audio.mp3",
     "id": "123abc",
     "podcastId": "456def",
     "preCount": 1,

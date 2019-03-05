@@ -155,6 +155,16 @@ RSpec.configure do |config|
         }
     })
 
+    # Stub requests that return empty
+    stub_request(:get, %r|cms\.megaphone\.fm\/|)
+      .with(headers: { 'Authorization' => 'Token token=INITIAL_EMPTY_RESPONSE_STUB' })
+      .to_return({
+        :body => "{}",
+        :headers => {
+          :content_type => "application/json"
+        }
+    })
+
     # Stub put requests
     stub_request(:put, %r|cms\.megaphone\.fm\/|)
       .to_return({

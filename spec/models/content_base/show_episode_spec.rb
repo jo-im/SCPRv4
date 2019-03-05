@@ -26,6 +26,12 @@ describe ShowEpisode do
     end
 
     describe "create_podcast_episode" do
+      before :each do
+        $megaphone = MegaphoneClient.new({
+          token: "INITIAL_EMPTY_RESPONSE_STUB"
+        })
+      end
+
       it "only executes a POST request if the associated podcast has an external podcast id" do
         podcast = build :podcast, title: "The Cooler Podcast"
         program = build :kpcc_program, title: "The Cooler Show", podcast: podcast
@@ -74,7 +80,13 @@ describe ShowEpisode do
       end
     end
 
-    describe "update_podast_episode" do
+    describe "update_podcast_episode" do
+      before :each do
+        $megaphone = MegaphoneClient.new({
+          token: "INITIAL_EMPTY_RESPONSE_STUB"
+        })
+      end
+
       it "creates the episode record in the podcast cms if it doesn't already exist" do
         episode = create :show_episode
         podcast = build :podcast, title: "The Cooler Podcast", external_podcast_id: "EXTERNAL_PODCAST_ID_STUB"
