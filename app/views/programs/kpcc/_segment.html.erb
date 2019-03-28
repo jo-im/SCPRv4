@@ -36,8 +36,6 @@
 
               <% if article.try(:show).try(:newsletter_form_name) && !article.try(:show).try(:newsletter_form_name).empty? %>
                 <%= render partial: 'shared/widgets/program_newsletter_subscribe', locals: {program: article.try(:show)} %>
-              <% else %>
-                <%= render 'shared/widgets/short_list_subscribe' %>
               <% end %>
 
               <%= render 'shared/cwidgets/related_links', content: article.get_article %>

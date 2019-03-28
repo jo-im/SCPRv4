@@ -251,11 +251,11 @@ scpr.Behaviors.Single = {
 
 
         //  ================================================
-        //  Single: Fire scrollDepth event to track views of newsletter signup module
+        //  Single: Fire scrollDepth event to track views of the comment module
         //  ------------------------------------------------
-        if($(".o-newsletter-appeal").length) {
+        if($("#comments").length) {
             $.scrollDepth({
-              elements: ['.o-newsletter-appeal'],
+              elements: ['#comments'],
               percentage: false,
               userTiming: false,
               pixelDepth: false,

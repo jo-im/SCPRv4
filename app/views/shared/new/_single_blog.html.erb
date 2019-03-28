@@ -43,10 +43,6 @@
 
             <%= raw Cache.read("views/popular/#{@entry.blog.slug}") %>
 
-
-            <%= render 'shared/widgets/short_list_subscribe' %>
-
-
             <%= render 'shared/cwidgets/related_links', content: article %>
 
             <%= render 'shared/new/social_share', article: article, cssClass: "share" %>

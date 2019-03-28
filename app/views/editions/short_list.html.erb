@@ -17,14 +17,12 @@
   <%= cell :ad, slot: "c", id: "o-ad--pos-c", order: 8 %>
   <%= cell(:short_list, @edition).call(:featured_image) %>
   <%= cell :short_list, @edition %>
-  <%= cell(:appeal, @edition, order: 1001, id: "subscribe-feature").call(:editions) %>
   <%= cell :epilogue, @edition, order: 1002 %>
 <% else %>
   <% content_for :main_class, "l-error" %>
   <% add_to_page_title "Page Not Found" %>
   <%= cell :ad, slot: "a", id: "o-ad--pos-a", attribution: false, order: 5 %>
   <%= cell :ad, slot: "b", id: "o-ad--pos-b", order: 7 %>
-  <%= cell(:appeal, @edition, order: 1000, id: "subscribe-feature").call(:breaking_news) %>
   <%= cell(:popular_articles, order: 1001).call(:side_bar) %>
   <%= cell :ad, slot: "c", id: "o-ad--pos-c", order: 9 %>
   <section class="o-error">

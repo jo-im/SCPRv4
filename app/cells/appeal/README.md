@@ -5,10 +5,10 @@ An appeal is an aside that appears anywhere in the middle of article or landing 
 
 ## Use
 
-There are a few different appeal templates available.  For example, to render the newsletter appeal:
+There are a few different appeal templates available.  For example, to render the Breaking News appeal:
 
 ```ruby
-  cell(:appeal).call(:newsletter)
+  cell(:appeal).call(:breaking_news)
 ```
 
 ---

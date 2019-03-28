@@ -30,7 +30,7 @@ describe PmpArticleImporter do
           :body => load_fixture('api/pmp/marketplace_stories.json')
         })
       stub_request(:get, %r|pmp\.io/docs|)
-          .with(query: {"collection" => '4c6e24e5-484f-49e8-be8d-452cfddd6252', "limit" => "10", "profile" => "story"}).to_return({
+          .with(query: {"guid" => '277b1b36-8ddb-44ea-8c75-6678b8d18922', "limit" => "10", "profile" => "story"}).to_return({
           :headers => {
             :content_type   => "application/json"
           },

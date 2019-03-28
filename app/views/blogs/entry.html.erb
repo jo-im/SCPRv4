@@ -44,9 +44,6 @@ end %>
 <!-- ARTICLE BODY -->
 <%= cell :article, @entry, popular_blog: @popular_blog_entry, headline: false, audio_context: @entry.try(:blog).try(:slug) %>
 
-<!-- MOAR STUFF -->
-<%= cell :newsletter_appeal, nil, order: 998 %>
-
 <hr class="o-article__rule--ending b-rule b-rule--primary-lightest b-rule--padded" style="order: 998;" />
 
 <%= cell :related_links, @entry, order: 998 %>

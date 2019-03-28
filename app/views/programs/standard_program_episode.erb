@@ -67,8 +67,6 @@ end %>
 
 <%= cell :archive_picker, @program, id: 'o-archive-picker__standard-program-episode', base_url: "/programs/" + @program.slug + "/archive", header: "Find a specific episode from " + @program.try(:title) + "'s archive", type: "full", order: 3 %>
 
-<%= cell :newsletter_appeal, @episode, order: 999 %>
-
 <%= cell :social_tools, @article, display: 'horiz', order: 999 %>
 
 <!-- FOOTER CONTENT -->
