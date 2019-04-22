@@ -89,10 +89,13 @@ class scpr.ListenLive
                     @_play()
 
             @player.on $.jPlayer.event.ended, (evt) =>
-                @adResponse?.touchImpressions() if @_inPreroll
+                @adResponse?.prerollEndImpressions() if @_inPreroll
                 @_shouldTryAd = false
                 @_inPreroll   = false
                 @_play()
+
+            @player.on $.jPlayer.event.timeupdate, (evt) =>
+                @adResponse?.quartileImpressions(evt) if @_inPreroll
 
             $.jPlayer.timeFormat.showHour = true;
 
@@ -130,7 +133,7 @@ class scpr.ListenLive
                 # hit our ad endpoint and see if there is something to play
                 $.ajax
                     type:       "GET"
-                    url:        "https://adserver.adtechus.com/?adrawdata/3.0/5511.1/3590535/0/0/header=yes;adct=text/xml;cors=yes"
+                    url:        "//cmod701.live.streamtheworld.com/ondemand/ars?version=1.6.9&banners=300x250,600x500,900x750&type=preroll&fmt=vast&stid=266963&ttag=context:listen_live"
                     dataType:   "xml"
                     xhrFields:
                         withCredentials: true
@@ -236,26 +239,37 @@ class scpr.ListenLive
             @obj?.Ad?.InLine
         renderVisual: (el)->
             companions = @companions()
+            _submitViewEvent = @_submitViewEvent
             resources = {}
             # ordered by precedence
             resourceTypes = [
+              {
+                name: 'StaticResource'
+                render: (c) ->
+                    img = $("<img>",src:c.StaticResource.toString(),width:c._width,height:c._height)
+                    link = $("<a>", href:c.CompanionClickThrough?.toString())
+                    link.append(img)
+                    el?.html link
+                    el.css(margin:"0 auto").width(c._width)
+                    _submitViewEvent(c)
+              }
               {
                 name: 'HTMLResource'
                 render: (c) ->
                     el?.html(c.HTMLResource.toString())
                     el.css(margin:"0 auto").width(c._width)
+                    _submitViewEvent(c)
               }
               {
                 name: 'IFrameResource'
                 render: (c) ->
                     el?.html $("<iframe>",src:c.IFrameResource.toString(),width:c._width,height:c._height)
-                    @_submitViewEvent(c)
               }
             ]
 
             for r in resourceTypes
                 break if _(companions).find (c) =>
-                    if c[r.name]?
+                    if c[r.name]? && c['_height'] is '250' && c['_width'] is '300'
                         r.render(c)
                         return true
                     else
@@ -280,19 +294,31 @@ class scpr.ListenLive
         _submitViewEvent: (companion) ->
             trackingEvents = _.flatten([companion.TrackingEvents.Tracking])
             # only use the creativeView tracking event
-            _.find trackingEvents, (e) ->
+            _.each trackingEvents, (e) ->
                 if e._event == "creativeView"
                     url = e.toString()
-                    $.get("#{url};cors=yes")
-                    return true
-                else
-                    return false
-        touchImpressions: ->
+                    $.get(url)
+        prerollEndImpressions: ->
             impressions = @impressions()
             _.each impressions, (url) =>
                 # create an img and append it to our DOM
-                img = $("<img src='#{url}'>").css("display:none")
+                img = $("<img src='#{url}' style='display:none;'>")
                 $('body').append(img)
+        quartileImpressions: (e) ->
+            time = e.jPlayer.status.currentTime
+            duration = e.jPlayer.status.duration
+            if !time && !duration
+                return
+            dictionary = { quartile0: "start", quartile1: "firstQuartile", quartile2: "midpoint", quartile3: "thirdQuartile", quartile4: "complete" };
+            @state ?= {}
+            _.each [0,1,2,3,4], (i) =>
+                if (time >= (duration * i/4)) and !@state["quartile#{i}"]
+                    @state["quartile#{i}"] = true
+                    trackingEvents = _.flatten([@preroll()?.TrackingEvents?.Tracking])
+                    _.find trackingEvents, (e) ->
+                        if e?._event == dictionary["quartile#{i}"]
+                            url = e.toString()
+                            $.get(url)
 
     #----------
 

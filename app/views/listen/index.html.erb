@@ -9,12 +9,13 @@
   <script>try{Typekit.load({ async: true });}catch(e){}</script>
   <%= render "shared/new/meta_header" %>
   <%= stylesheet_link_tag 'application' %>
-  <%= javascript_include_tag "shared", "application" %>
-  <script type="text/javascript" src="https://<%= Rails.configuration.x.assethost.server %>/resources/client.js?bust=20130523"></script>
-  <%= javascript_include_tag "new/application" %>
 </head>
 
 <body style="display: flex; flex-direction: column; height: 100vh">
+  <script type="text/javascript" src="https://playerservices.live.streamtheworld.com/api/idsync.js?stationId=266963"></script>
+  <%= javascript_include_tag "shared", "application" %>
+  <script type="text/javascript" src="https://<%= Rails.configuration.x.assethost.server %>/resources/client.js?bust=20130523"></script>
+  <%= javascript_include_tag "new/application" %>
   <nav class="o-mast o-listen-live__mast">
     <div class="o-mast__logo">
       <a href="/" class="o-mast__logo-link" class="track-event" data-ga-category="Menu" data-ga-action="Clickthrough" data-ga-label="Home">

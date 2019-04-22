@@ -42,11 +42,13 @@ module Job
           )
         end
 
-        Rails.cache.write(
-          LAIST_ENTRIES_CACHE,
-          list_items,
-          expires_in: LAIST_ENTRIES_CACHE_TTL
-        )
+        if list_items.length > 0
+          Rails.cache.write(
+            LAIST_ENTRIES_CACHE,
+            list_items,
+            expires_in: LAIST_ENTRIES_CACHE_TTL
+          )
+        end
 
         self.log "Imported LAist articles and wrote to cache"
       end
