@@ -3,6 +3,7 @@ Disallow: /outpost/
 
 Disallow: /programs/the-big-one
 Disallow: /programs/repeat
+Disallow: /search
 
 Allow: /
 
