@@ -7,3 +7,9 @@ Disallow: /programs/repeat
 Allow: /
 
 Sitemap: http://scpr.org/sitemap.xml
+
+User-agent: AhrefsBot
+Disallow: /
+
+User-agent: SemrushBot
+Disallow: /
