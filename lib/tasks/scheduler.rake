@@ -60,6 +60,10 @@ task :scheduler => [:environment] do
     Job::SyncRemoteArticles.enqueue()
   end
 
+  scheduler.every '60m' do |job|
+    Job::ImportLaistArticles.enqueue()
+  end
+
   # Go!
   puts "Scheduler running."
   scheduler.join

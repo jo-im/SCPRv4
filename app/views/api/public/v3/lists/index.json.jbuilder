@@ -10,10 +10,14 @@ json.lists do
     json.ends_at       list.ends_at
     json.created_at    list.created_at
     json.updated_at    list.updated_at
-    json.items do
-      json.partial! api_view_path("articles", "collection"),
-        articles: list.items.articles.length > 0 ?
-          list.items.articles : list.deduped_category_items
+    if list.title ==  LAIST_LIST_TITLE
+      json.items         Rails.cache.read(LAIST_ENTRIES_CACHE) || []
+    else
+      json.items do
+        json.partial! api_view_path("articles", "collection"),
+          articles: list.items.articles.length > 0 ?
+            list.items.articles : list.deduped_category_items
+      end
     end
   end
 end

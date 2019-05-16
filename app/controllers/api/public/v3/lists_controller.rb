@@ -1,6 +1,5 @@
 module Api::Public::V3
   class ListsController < BaseController
-
     def index
       @lists = Rails.cache.fetch("/api/v3/lists/#{context}", expires_in: 15.minutes) do
         if !context.empty?
