@@ -33,28 +33,27 @@
             <!-- new audio -->
             <ul class="nav nav-tabs">
               <li class="<%= "active" if f.object.errors.blank? || (f.object.errors[:enco_number] || f.object.errors[:enco_date] || f.object.errors[:base]).present? %>">
-                <a href="#audio-new-enco-<%=index%>" data-toggle="tab">Enco</a>
+                <a href="#audio-removed-feature-<%=index%>" data-toggle="tab">Enco</a>
               </li>
-              <li class="<%= "active" if f.object.errors[:mp3].present? %>"><a href="#audio-new-upload-<%=index%>" data-toggle="tab">Upload</a></li>
+              <li class="<%= "active" if f.object.errors[:mp3].present? %>"><a href="#audio-removed-feature-<%=index%>" data-toggle="tab">Upload</a></li>
               <li class="<%= "active" if f.object.errors[:url].present? %>"><a href="#audio-new-direct-<%=index%>" data-toggle="tab">Resound / URL</a></li>
             </ul>
             <div class="tab-content">
-              <div class="tab-pane <%= "active" if f.object.errors.blank? || (f.object.errors[:enco_number] || f.object.errors[:enco_date] || f.object.errors[:base]).present? %>" id="audio-new-enco-<%=index%>">
-                <%= f.input :enco_number, as: :string, input_html: { id: "enco_number_#{index}", class: "thin" }, wrapper_html: { class: "vertical" } %>
-                <%= f.input :enco_date, as: :date, input_html: { class: "thin" }, wrapper_html: { class: "vertical" } %>
-              </div> <!-- enco -->
-
-              <div class="tab-pane <%= "active" if f.object.errors[:mp3].present? %>" id="audio-new-upload-<%=index%>">
+              <div class="tab-pane <%= "active" if f.object.errors.blank? || (f.object.errors[:enco_number] || f.object.errors[:enco_date] || f.object.errors[:base]).present? %>" id="audio-removed-feature-<%=index%>">
                 <div class="alert alert-info">
-                  <span class="label label-success">mp3</span> files only. Maximum file size <span class="label label-warning">70mb</strong>
+                  <div>This feature has been removed. Please use the Resound tab.</div>
+                  <br />
+                  <div><a href="https://resound.gitbooks.io/resound-store-manage/content/">Click here for a guide on using Resound</a></div>
+                  <br />
+                  <div>If you have any questions, reach out to the Product team at the #kpcc-web-ops Slack channel.</div>
                 </div>
-                <%= f.input :mp3, as: :file, wrapper_html: { class: "vertical" } %>
-              </div> <!-- upload -->
+              </div> <!-- removed feature message -->
 
               <div class="tab-pane <%= "active" if f.object.errors[:url].present? %>" id="audio-new-direct-<%=index%>">
                 <a onclick="resound.open();">Resound Store (opens in a new tab)</a>
                 <%= f.input :url, hint: "e.g. http://npr.org/audio/your_cool_audio.mp3", input_html: { class: "span3", id: "audioUrl" },
                             wrapper_html: { class: "vertical"} %>
+                <div><a href="https://resound.gitbooks.io/resound-store-manage/content/">Click here for a guide on using Resound</a></div>
               </div> <!-- path -->
             </div> <!-- tab-content -->
           </div> <!-- new-audio -->
