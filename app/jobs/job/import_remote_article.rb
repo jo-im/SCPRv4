@@ -16,49 +16,8 @@ module Job
         end
       end
 
-      #---------------------
-
-      def after_perform(id, import_to_class)
-        hook = Newsroom::Client.new(
-          :path => "/task/finished/#{@remote_article.obj_key}:import",
-          :data => {
-            :location         => @story.admin_edit_path,
-            :notifications    => {
-              :notice =>  "Successfully imported " \
-                          "<strong>#{@remote_article.headline}</strong>"
-            }
-          }
-        )
-
-        # The current Newsroom server is very slow - retry the hook
-        # a few times so the user will be redirected properly.
-        timeout_retry(3) do
-          hook.publish
-        end
-      end
-
-      #---------------------
-
-      def on_failure(error, id, import_to_class)
-        hook = Newsroom::Client.new(
-          :path => "/task/finished/#{@remote_article.obj_key}:import",
-          :data => {
-            :location         => RemoteArticle.admin_index_path,
-            :notifications    => {
-              :alert => \
-                if @story
-                  "The story was imported, but another error occurred. " \
-                  "(#{error.message})"
-                else
-                  "The story could not be imported. (#{error.message})"
-                end
-            }
-          }
-        )
-
-        timeout_retry(3) do
-          hook.publish
-        end
+      def on_failure(error)
+        raise error
       end
     end
   end

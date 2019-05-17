@@ -14,41 +14,8 @@ module Job
         self.log "Synced Remote Articles."
       end
 
-      #---------------------
-
-      def after_perform
-        hook = Newsroom::Client.new(
-          :path => "/task/finished/remote_articles:sync",
-          :data => {
-            :location         => RemoteArticle.admin_index_path,
-            :notifications    => {
-              :notice =>  "Successfully synced " \
-                          "<strong>#{@synced.size} stories</strong>."
-            }
-          }
-        )
-
-        timeout_retry(3) do
-          hook.publish
-        end
-      end
-
-      #---------------------
-
       def on_failure(error)
-        hook = Newsroom::Client.new(
-          :path => "/task/finished/remote_articles:sync",
-          :data => {
-            :location         => RemoteArticle.admin_index_path,
-            :notifications    => {
-              :alert => "There was a problem during the sync. (#{error})"
-            }
-          }
-        )
-
-        timeout_retry(3) do
-          hook.publish
-        end
+        raise error
       end
     end
   end
