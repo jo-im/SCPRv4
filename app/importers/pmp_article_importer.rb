@@ -21,7 +21,7 @@ module PmpArticleImporter
       ## a collection that is specific to veteran stories.  Both sets of results are
       ## concatenated to the stories array.
       stories.concat download_stories("Marketplace", tag: "marketplace")
-      stories.concat download_stories("American Homefront Project", guid: "277b1b36-8ddb-44ea-8c75-6678b8d18922")
+      stories.concat download_stories("American Homefront Project", text: '"American Homefront"')
       stories.concat download_stories("California Counts", tag: "CACounts", creator: "!aa9342f6-6e25-4ea2-93e3-31d89a010668") # stories that are not our own
       stories
     end
