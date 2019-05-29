@@ -24,7 +24,7 @@ class RssProgramImporter
   def sync
     feed = nil
     begin
-      open(@external_program.podcast_url, :allow_redirections => :all) do |rss|
+      open(@external_program.podcast_url, :allow_redirections => :all, :read_timeout => 30) do |rss|
         feed = RSS::Parser.parse(rss, false)
       end
     rescue => e
