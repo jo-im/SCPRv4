@@ -15,7 +15,7 @@ module Job
       end
 
       def on_failure(error)
-        raise error
+        return
       end
     end
   end
