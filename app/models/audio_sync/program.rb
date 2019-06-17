@@ -32,59 +32,60 @@ module AudioSync
           begin
             audio_path = File.join(Rails.configuration.x.scpr.audio_root, program.audio_dir)
 
-            # Each file in this program's audio directory
-            Dir.foreach(audio_path).each do |file|
-              absolute_mp3_path = File.join(audio_path, file)
+            Timeout::timeout(5) do
+              # Each file in this program's audio directory
+              Dir.foreach(audio_path).each do |file|
+                absolute_mp3_path = File.join(audio_path, file)
 
-              # Move on if:
-              # 1. The file is too old -
-              #    To keep this process quick, only
-              #    worry about files less than 14 days old
-              file_date = File.mtime(absolute_mp3_path)
-              next if file_date < THRESHOLD.ago
+                # Move on if:
+                # 1. The file is too old -
+                #    To keep this process quick, only
+                #    worry about files less than 14 days old
+                file_date = File.mtime(absolute_mp3_path)
+                next if file_date < THRESHOLD.ago
 
-              # 2. The filename doesn't match our regex
-              # (won't be able to get date)
-              match = file.match(FILENAME_REGEX)
-              next if !match
+                # 2. The filename doesn't match our regex
+                # (won't be able to get date)
+                match = file.match(FILENAME_REGEX)
+                next if !match
 
-              # Get the date for this episode/segment based on the filename
-              # If the date for the audio file can't be discerned, an
-              # ArgumentError will be thrown and will be caught by the rescue
-              # below.
-              date = Time.zone.local(match[:year], match[:month], match[:day])
+                # Get the date for this episode/segment based on the filename
+                # If the date for the audio file can't be discerned, an
+                # ArgumentError will be thrown and will be caught by the rescue
+                # below.
+                date = Time.zone.local(match[:year], match[:month], match[:day])
 
-              # Figure out what type of content we should attach the audio to.
-              content = program.episodes.for_air_date(date).includes(:audio).first
+                # Figure out what type of content we should attach the audio to.
+                content = program.episodes.for_air_date(date).includes(:audio).first
 
-              # Compile the URL for this audio
-              url = Audio.url(program.audio_dir, file)
+                # Compile the URL for this audio
+                url = Audio.url(program.audio_dir, file)
 
-              # If there is nothing to attach the audio to, or
-              # if the content already has this audio attached to it,
-              # then move on.
-              next if !content || content.audio.any? { |a| a.url == url }
+                # If there is nothing to attach the audio to, or
+                # if the content already has this audio attached to it,
+                # then move on.
+                next if !content || content.audio.any? { |a| a.url == url }
 
-              # Build the audio
-              audio = content.audio.build(
-                :url         => url,
-                :byline      => program.title,
-                :description => content.headline
-              )
+                # Build the audio
+                audio = content.audio.build(
+                  :url         => url,
+                  :byline      => program.title,
+                  :description => content.headline
+                )
 
-              # Even though we could, I'd rather not set the
-              # file info here. I feel it's better to let the
-              # ComputeAudioFileInfo job always handle that.
+                # Even though we could, I'd rather not set the
+                # file info here. I feel it's better to let the
+                # ComputeAudioFileInfo job always handle that.
 
-              # Save the content to touch its timestamp.
-              # This will also save the audio and fire its callbacks.
-              content.save!
-              synced += 1
+                # Save the content to touch its timestamp.
+                # This will also save the audio and fire its callbacks.
+                content.save!
+                synced += 1
 
-              self.log  "Saved Audio ##{audio.id} for " \
-                        "#{content.simple_title}"
-            end # Dir
-
+                self.log  "Saved Audio ##{audio.id} for " \
+                          "#{content.simple_title}"
+              end # Dir
+            end
           rescue => e
             # This needs to rescue StandardError because we don't want a single
             # failed instance to halt the entire process. We know we're dealing
