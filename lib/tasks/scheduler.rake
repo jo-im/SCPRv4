@@ -12,7 +12,7 @@ task :scheduler => [:environment] do
   end
 
   scheduler.every '10m' do |job|
-    Job::SyncAudio.enqueue ["AudioSync::Pending", "AudioSync::Program"]
+    Job::SyncAudio.enqueue ["AudioSync::Pending"]
   end
 
   scheduler.every '1d' do |job|
