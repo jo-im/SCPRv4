@@ -195,22 +195,21 @@ module PmpArticleImporter
             end
 
             if primary_image
-              asset = AssetHost::Asset.create(
-                :url     => primary_image.href,
-                :title   => pmp_story.title,
-                :owner   => article.news_agency,
-                :note    => "Imported from PMP: #{pmp_story.guid}"
+              external_asset = {
+                title: pmp_story.title,
+                caption: "",
+                owner: article.news_agency,
+                url: primary_image.href
+              }.to_json
+
+              # Create a content asset and store the external asset as a json string
+              content_asset = ContentAsset.new(
+                :position   => 0,
+                :external_asset => external_asset,
+                :caption    => ""
               )
 
-              if asset && asset.id
-                content_asset = ContentAsset.new(
-                  :position   => 0,
-                  :asset_id   => asset.id,
-                  :caption => "" # To avoid 'doesn't have a default value' err
-                )
-
-                article.assets << content_asset
-              end
+              article.assets << content_asset
             end # primary_image
 
           end # images

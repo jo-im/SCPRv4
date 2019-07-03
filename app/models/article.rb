@@ -221,14 +221,14 @@ class Article
   def assets
     # Assets that are meant to be displayed outside the article body. i.e. not inline
     (@assets||[]).collect do |a|
-      ContentAsset.new(a.to_hash.merge({id:a.asset_id, inline: a.inline}))
+      ContentAsset.new(a.to_hash.merge({id:a.id, inline: a.inline}))
     end.reject(&:inline)
   end
 
   def inline_assets
     # Only assets that appear within the body of the article.
     (@assets||[]).collect do |a|
-      ContentAsset.new(a.to_hash.merge({id:a.asset_id, inline: a.inline}))
+      ContentAsset.new(a.to_hash.merge({id:a.id, inline: a.inline}))
     end.select(&:inline)
   end
 
@@ -293,7 +293,7 @@ class Article
 
   def assets=(assets)
     @assets = (assets||[]).collect do |a|
-      Hashie::Mash.new(asset_id:a.asset_id, caption:a.caption, position:a.position, inline: a.inline)
+      Hashie::Mash.new(id: a.id, asset_id:a.asset_id, caption:a.caption, position:a.position, inline: a.inline, external_asset: a.external_asset)
     end
   end
 

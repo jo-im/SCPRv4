@@ -260,23 +260,21 @@ module NprArticleImporter
                 image.crop("standard") ||
                 image
 
-        asset = AssetHost::Asset.create(
-          :url     => crop.src,
-          :title   => image.title,
-          :caption => image.caption,
-          :owner   => [image.producer, image.provider].join("/"),
-          :note    => "Imported from NPR: #{npr_story.link_for('html')}"
+        external_asset = {
+          title: image.title,
+          caption: image.caption,
+          owner: [image.producer, image.provider].join("/"),
+          url: crop.src
+        }.to_json
+
+        # Create a content asset and store the external asset as a json string
+        content_asset = ContentAsset.new(
+          :position   => 0,
+          :external_asset => external_asset,
+          :caption    => image.caption
         )
 
-        if asset && asset.id
-          content_asset = ContentAsset.new(
-            :position   => 0,
-            :asset_id   => asset.id,
-            :caption    => image.caption
-          )
-
-          article.assets << content_asset
-        end
+        article.assets << content_asset
       end
 
 
