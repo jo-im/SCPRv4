@@ -16,7 +16,7 @@ module Job
         end
       end
 
-      def on_failure(error)
+      def on_failure(*args)
         return
       end
     end
