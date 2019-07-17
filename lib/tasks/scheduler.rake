@@ -35,30 +35,34 @@ task :scheduler => [:environment] do
 
   # -- Externals -- #
 
-  # external NPR programs every hour
-  scheduler.cron "0 * * * *" do |job|
-    Job::SyncExternalPrograms.enqueue("npr-api")
-  end
-
-  # external RSS programs every hour
-  scheduler.cron "0 * * * *" do |job|
-    Job::SyncExternalPrograms.enqueue("rss")
-  end
-
-  # remove external RSS episodes that have expired
-  scheduler.cron "0 1 * * * " do |job|
-    Job::RemoveExternalEpisodes.enqueue
-  end
-
-  # marketplace every hour
-  scheduler.cron "0 * * * *" do |job|
-    Job::FetchMarketplaceArticles.enqueue()
-  end
-
-  # remote articles every 20 minutes
-  scheduler.cron "*/20 * * * *" do |job|
-    Job::SyncRemoteArticles.enqueue()
-  end
+  # The following group of importers are turned off because we're running out
+  # of space in our image store and should we be copying these images and storing
+  # them anyway? -lyang
+  # 
+  # # external NPR programs every hour
+  # scheduler.cron "0 * * * *" do |job|
+  #   Job::SyncExternalPrograms.enqueue("npr-api")
+  # end
+  #
+  # # external RSS programs every hour
+  # scheduler.cron "0 * * * *" do |job|
+  #   Job::SyncExternalPrograms.enqueue("rss")
+  # end
+  #
+  # # remove external RSS episodes that have expired
+  # scheduler.cron "0 1 * * * " do |job|
+  #   Job::RemoveExternalEpisodes.enqueue
+  # end
+  #
+  # # marketplace every hour
+  # scheduler.cron "0 * * * *" do |job|
+  #   Job::FetchMarketplaceArticles.enqueue()
+  # end
+  #
+  # # remote articles every 20 minutes
+  # scheduler.cron "*/20 * * * *" do |job|
+  #   Job::SyncRemoteArticles.enqueue()
+  # end
 
   scheduler.every '60m' do |job|
     Job::ImportLaistArticles.enqueue()
