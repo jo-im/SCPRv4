@@ -55,12 +55,10 @@ task :scheduler => [:environment] do
     Job::FetchMarketplaceArticles.enqueue()
   end
 
-  # # Disabling the remote article sync to prevent it from creating new assets - J.A.
-
-  # # remote articles every 20 minutes
-  # scheduler.cron "*/20 * * * *" do |job|
-  #   Job::SyncRemoteArticles.enqueue()
-  # end
+  # remote articles every 20 minutes
+  scheduler.cron "*/20 * * * *" do |job|
+    Job::SyncRemoteArticles.enqueue()
+  end
 
   scheduler.every '60m' do |job|
     Job::ImportLaistArticles.enqueue()
