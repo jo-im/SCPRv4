@@ -55,7 +55,7 @@ class FeaturedStoryCell < Cell::ViewModel
   end
 
   def asset_path
-    model.try(:asset).try(:small).try(:url) || "/static/images/fallback-img-rect.png"
+    model.try(:asset).try(:eight).try(:url) || "/static/images/fallback-img-rect.png"
   end
 
   def category_title

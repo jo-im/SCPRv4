@@ -48,15 +48,20 @@ class ContentAsset < ActiveRecord::Base
           external_asset.json["title"] = external_asset_metadata["title"]
           external_asset.json["caption"] = external_asset_metadata["caption"]
           external_asset.json["owner"] = external_asset_metadata["owner"]
-          external_asset.json["url"] = external_asset_metadata["url"]
+          external_asset.json["url"] = external_asset_metadata["urls"]["thumb"]
 
-          # Since we don't have the usual cuts from an external image that we get from AssetHost,
-          # populate each size property and tag with the same url.
-          # Note: We're assuming that there are the same number of urls as there are tags
+          # Try to populate each size with a url
           external_asset.json["urls"].each do |size|
             size_property = size.first
-            external_asset.json["urls"][size_property] = external_asset_metadata["url"]
-            external_asset.json["tags"][size_property] = "<img src=\"#{external_asset_metadata["url"]}\" />"
+            # If the size exists for a given external asset, add it to the json
+            if external_asset_metadata["urls"][size_property].present?
+              external_asset.json["urls"][size_property] = external_asset_metadata["urls"][size_property]
+              external_asset.json["tags"][size_property] = "<img src=\"#{external_asset_metadata["urls"][size_property]}\" />"
+            # If not, fall back to the original url
+            else
+              external_asset.json["urls"][size_property] = external_asset_metadata["urls"]["original"]
+              external_asset.json["tags"][size_property] = "<img src=\"#{external_asset_metadata["urls"]["original"]}\" />"
+            end
           end
 
           # Return an asset object. Instantiating it like this doesn't perform a POST

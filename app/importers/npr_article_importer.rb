@@ -255,16 +255,42 @@ module NprArticleImporter
       if image = npr_story.primary_image
         # Try a few different crops to see which one is available.
         # We prefer the largest possible image with the least cropped out.
-        crop =  image.enlargement ||
+        full =  image.enlargement ||
                 image.crop("enlargment") ||
                 image.crop("standard") ||
                 image
+
+        square = image.crop("square") || image
+
+        # Remove any query params from the full source image
+        full_src = full.src
+        full_src_parsed = URI.parse(full_src)
+        full_src_clean = "#{full_src_parsed.scheme}://#{full_src_parsed.host}#{full_src_parsed.path}"
+
+        # Remove any query params from the square source image
+        square_src = square.src
+        square_src_parsed = URI.parse(square_src)
+        square_src_clean = "#{square_src_parsed.scheme}://#{square_src_parsed.host}#{square_src_parsed.path}"
 
         external_asset = {
           title: image.title,
           caption: image.caption,
           owner: [image.producer, image.provider].join("/"),
-          url: crop.src
+          # Add size attributes via query params (i.e. ?s=200 means 200px wide)
+          urls: {
+            original: full_src_clean,
+            thumb: "#{square_src_clean}?s=100",
+            lsquare: "#{square_src_clean}?s=200",
+            lead: "#{full_src_clean}?s=400",
+            wide: "#{full_src_clean}?s=700",
+            full: "#{full_src_clean}?s=1000",
+            six: "#{full_src_clean}?s=600",
+            eight: "#{full_src_clean}?s=800",
+            four: "#{full_src_clean}?s=400",
+            three: "#{full_src_clean}?s=300",
+            five: "#{full_src_clean}?s=500",
+            small: "#{full_src_clean}?s=500"
+          }
         }.to_json
 
         # Create a content asset and store the external asset as a json string

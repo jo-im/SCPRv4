@@ -193,13 +193,20 @@ module PmpArticleImporter
             primary_image ||= images.max do |a, b|
               a.meta["width"].to_i <=> b.meta["width"].to_i
             end
+            thumbnail_image = images.find { |i| i.meta["crop"] == "small" }
+            thumbnail_image ||= images.min do |a, b|
+              a.meta["width"].to_i <=> b.meta["width"].to_i
+            end
 
             if primary_image
               external_asset = {
                 title: pmp_story.title,
                 caption: "",
                 owner: article.news_agency,
-                url: primary_image.href
+                urls: {
+                  original: primary_image.href,
+                  thumb: thumbnail_image.href
+                }
               }.to_json
 
               # Create a content asset and store the external asset as a json string
