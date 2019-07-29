@@ -14,4 +14,19 @@ test:
   port: 3306
   username: root
   password: password
-
+production:
+  adapter: <%= ENV['DB_ADAPTER'] ||= 'mysql2' %>
+  reconnect: true
+  host: <%= ENV['DB_HOST'] %>
+  database: <%= ENV['DB_NAME'] %>
+  port: 3306
+  username: <%= ENV['DB_USERNAME'] %>
+  password: <%= ENV['DB_PASSWORD'] %>
+staging:
+  adapter: <%= ENV['DB_ADAPTER'] ||= 'mysql2' %>
+  reconnect: true
+  host: <%= ENV['DB_HOST'] %>
+  database: <%= ENV['DB_NAME'] %>
+  port: 3306
+  username: <%= ENV['DB_USERNAME'] %>
+  password: <%= ENV['DB_PASSWORD'] %>

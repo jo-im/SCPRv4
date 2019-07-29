@@ -353,12 +353,13 @@ class Article
   end
 
   def to_es_bulk_operation
-    [ { index: { _index:ContentBase.es_index, _type:self.obj_class.underscore, _id:self.id } }, self.to_hash ]
+    [ { index: { _index:ContentBase.es_index, _id:self.id } }, self.to_hash ]
   end
 
   def to_hash
     {
       obj_key:          @id,
+      type:             self.obj_class.underscore,
       title:            @title,
       short_title:      @short_title,
       public_datetime:  @public_datetime,
@@ -420,8 +421,9 @@ class Article
     klasses = ["NewsStory","BlogEntry","ShowSegment","ShowEpisode","ContentShell","Event","PijQuery","Abstract"]
 
     klasses.each do |k|
-      k.constantize.with_article_includes.find_in_batches(batch_size:1000) do |b|
-        ES_CLIENT.bulk body:b.collect { |s| s.to_article.try(:to_es_bulk_operation) }.compact().flatten(1)
+      k.constantize.with_article_includes.find_in_batches(batch_size:100) do |b|
+        body = b.collect { |s| s.to_article.try(:to_es_bulk_operation) }.compact().flatten(1)
+        Resque.enqueue(Job::BulkIndexer, body)
       end
     end
   end
@@ -440,7 +442,8 @@ class Article
     }
 
     mapping = JSON.parse(File.read("#{Rails.root}/config/article_mapping.json"))
-    ContentBase.es_client.indices.put_template name:"#{ES_PREFIX}-articles", body:{template:"#{ES_PREFIX}-articles-*",mappings:mapping}
+    ContentBase.es_client.indices.put_template name:"#{ES_PREFIX}-articles",
+                                               body:{template:"#{ES_PREFIX}-articles-*",mappings:mapping}
   end
 
 end

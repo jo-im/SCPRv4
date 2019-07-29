@@ -188,7 +188,15 @@ class ShowEpisode < ActiveRecord::Base
 
   def to_article
     return nil if !self.show
-    related_content = to_article_called_more_than_twice? ? [] : self.published_content.map(&:get_article).map(&:to_reference)
+    # If we're going to run Article._index_all_articles, we need to set related
+    # content to [] or else the jobs go into self-referencing hell and we end up
+    # with tons of index jobs in the Resque Queue.
+    if ENV['INDEX_ALL_ARTICLES']
+      related_content = []
+    else
+      related_content = to_article_called_more_than_twice? ? [] : self.published_content.map(&:get_article).map(&:to_reference)
+    end
+
     @to_article ||= Article.new({
       :original_object    => self,
       :id                 => self.obj_key,

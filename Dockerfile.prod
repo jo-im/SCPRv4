@@ -1,0 +1,53 @@
+FROM phusion/passenger-ruby23
+MAINTAINER SCPR Developers <scprdev@scpr.org>
+
+RUN apt-get update
+
+RUN apt-get install -y \
+  make \
+  gcc \
+  libgcc-4.8-dev \
+  g++ \
+  libc-dev \
+  libffi-dev \
+  git \
+  libmysqlclient-dev \
+  ruby-json \
+  libyaml-dev \
+  zlib1g \
+  libxml2-dev \
+  libxslt-dev \
+  tzdata \
+  openssl \
+  libcurl4-openssl-dev
+
+RUN apt-get install -y ruby`ruby -e 'puts RUBY_VERSION[/\d+\.\d+/]'`-dev
+
+
+RUN curl -sL https://deb.nodesource.com/setup_10.x | bash \
+    && apt-get install -y nodejs
+
+RUN groupadd scpr && useradd -g scpr scpr
+
+ENV HOME /scprv4
+RUN mkdir $HOME
+WORKDIR $HOME
+
+RUN gem install bundler -v '1.16.5'
+
+ENV PATH="${HOME}/bin:${PATH}"
+
+COPY Gemfile* $HOME/
+COPY package.json $HOME/.
+RUN bundle install --without development test && npm install
+
+COPY . $HOME
+RUN cp config/templates/secrets.yml.template config/secrets.yml
+
+ENV RAILS_ENV=production
+ENV RAILS_LOG_TO_STDOUT true
+
+RUN DB_ADAPTER=nulldb bundle exec rake assets:precompile
+
+RUN rm config/secrets.yml \
+    && rm /etc/nginx/nginx.conf

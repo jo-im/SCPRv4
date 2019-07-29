@@ -151,7 +151,14 @@ class BlogEntry < ActiveRecord::Base
   end
 
   def to_article
-    related_content = to_article_called_more_than_twice? ? [] : self.related_content.map(&:to_reference)
+    # If we're going to run Article._index_all_articles, we need to set related
+    # content to [] or else the jobs go into self-referencing hell and we end up
+    # with tons of index jobs in the Resque Queue.
+    if ENV['INDEX_ALL_ARTICLES']
+      related_content = []
+    else
+      related_content = to_article_called_more_than_twice? ? [] : self.related_content.map(&:to_reference)
+    end
     @to_article ||= Article.new({
       :original_object    => self,
       :id                 => self.obj_key,
@@ -173,7 +180,7 @@ class BlogEntry < ActiveRecord::Base
       :updated_at         => self.updated_at,
       :published          => self.published?,
       :blog               => self.blog,
-      :related_content    => to_article_called_more_than_twice? ? [] : self.related_content.map(&:to_reference),
+      :related_content    => related_content,
       :links              => related_links.map(&:to_hash),
       :asset_display      => asset_display,
       :disqus_identifier  => self.disqus_identifier,

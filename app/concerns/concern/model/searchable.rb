@@ -3,7 +3,8 @@ module Concern::Model::Searchable
 
   included do
     include Elasticsearch::Model
-    index_name "#{ES_PREFIX}-models"
+    index_name ES_MODELS_INDEX
+    document_type "OutpostModel"
 
     [:create,:update,:destroy].each do |a|
       after_commit on:a do

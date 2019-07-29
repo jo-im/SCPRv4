@@ -1,117 +1,107 @@
 {
-  "_default_": {
-    "dynamic": false,
-    "_id": {
-      "path": "obj_key"
+  "properties": {
+    "obj_key": {
+      "type": "keyword",
+      "index": "true"
     },
-    "properties": {
-      "obj_key": {
-        "type": "string",
-        "index": "not_analyzed",
-        "include_in_all": false
-      },
-      "published": {
-        "type": "boolean"
-      },
-      "edit_path": {
-        "type": "string",
-        "index": "not_analyzed",
-        "include_in_all": false
-      },
-      "public_path": {
-        "type": "string",
-        "index": "not_analyzed",
-        "include_in_all": false
-      },
-      "title": {
-        "type": "string",
-        "boost": 2.0
-      },
-      "short_title": {
-        "type": "string",
-        "boost": 2.0
-      },
-      "public_datetime": {
-        "type": "date",
-        "format": "date_optional_time"
-      },
-      "created_at": {
-        "type": "date",
-        "format": "date_time"
-      },
-      "updated_at": {
-        "type": "date",
-        "format": "date_time"
-      },
-      "teaser": {
-        "type": "string"
-      },
-      "body": {
-        "type": "string"
-      },
-      "category": {
-        "properties": {
-          "slug": { "type": "string", "index": "not_analyzed", "include_in_all": false },
-          "id": { "type": "integer" }
-        }
-      },
-      "byline": {
-        "type": "string"
-      },
-      "attributions": {
-        "type": "nested",
-        "include_in_parent": true,
-        "properties": {
-          "name": { "type":"string" },
-          "user_id": { "type": "integer" },
-          "role": { "type": "integer" }
-        }
-      },
-      "feature": {
-        "type": "string"
-      },
-      "tags": {
-        "properties": {
-          "slug": { "type": "string", "index": "not_analyzed", "include_in_all": false },
-          "title": { "type": "string", "include_in_all": false }
-        },
-        "index_name": "tag"
-      },
-      "assets": {
-        "type": "nested",
-        "include_in_parent": true,
-        "properties": {
-          "asset_id": { "type": "integer" },
-          "caption": { "type": "string" },
-          "position": { "type": "integer" }
-        }
-      },
-      "audio": {
-        "type": "nested",
-        "include_in_parent": true,
-        "properties": {
-          "url": { "type": "string", "index": "not_analyzed", "include_in_all": false },
-          "description": { "type": "string" },
-          "byline": { "type": "string" },
-          "position": { "type": "integer" },
-          "size": { "type": "integer" },
-          "duration": { "type": "integer" },
-          "content-type": { "type": "string", "index": "not_analyzed", "include_in_all": false }
-        }
-      },
-      "show": {
-        "properties": {
-          "id": { "type": "integer" },
-          "slug": { "type": "string", "index": "not_analyzed", "include_in_all": false },
-          "title": { "type": "string", "index": "not_analyzed", "include_in_all": false }
-        }
-      },
-      "blog": {
-        "properties": {
-          "id": { "type": "integer" },
-          "slug": { "type": "string", "index": "not_analyzed", "include_in_all": false },
-          "name": { "type": "string", "index": "not_analyzed", "include_in_all": false }
-        }
+    "published": {
+      "type": "boolean"
+    },
+    "edit_path": {
+      "type": "keyword",
+      "index": "true"
+    },
+    "public_path": {
+      "type": "keyword",
+      "index": "true"
+    },
+    "title": {
+      "type": "text",
+      "boost": 2.0
+    },
+    "short_title": {
+      "type": "text",
+      "boost": 2.0
+    },
+    "public_datetime": {
+      "type": "date",
+      "format": "date_optional_time"
+    },
+    "created_at": {
+      "type": "date",
+      "format": "date_time"
+    },
+    "updated_at": {
+      "type": "date",
+      "format": "date_time"
+    },
+    "teaser": {
+      "type": "text"
+    },
+    "body": {
+      "type": "text"
+    },
+    "category": {
+      "properties": {
+        "slug": { "type": "keyword", "index": "true" },
+        "id": { "type": "integer" }
+      }
+    },
+    "byline": {
+      "type": "text"
+    },
+    "attributions": {
+      "type": "nested",
+      "include_in_parent": true,
+      "properties": {
+        "name": { "type":"text" },
+        "user_id": { "type": "integer" },
+        "role": { "type": "integer" }
+      }
+    },
+    "feature": {
+      "type": "text"
+    },
+    "tags": {
+      "properties": {
+        "slug": { "type": "keyword", "index": "true" },
+        "title": { "type": "text" }
+      }
+    },
+    "assets": {
+      "type": "nested",
+      "include_in_parent": true,
+      "properties": {
+        "asset_id": { "type": "integer" },
+        "caption": { "type": "text" },
+        "position": { "type": "integer" }
+      }
+    },
+    "audio": {
+      "type": "nested",
+      "include_in_parent": true,
+      "properties": {
+        "url": { "type": "keyword", "index": "true" },
+        "description": { "type": "text" },
+        "byline": { "type": "text" },
+        "position": { "type": "integer" },
+        "size": { "type": "integer" },
+        "duration": { "type": "integer" },
+        "content-type": { "type": "keyword", "index": "true" }
+      }
+    },
+    "show": {
+      "properties": {
+        "id": { "type": "integer" },
+        "slug": { "type": "keyword", "index": "true" },
+        "title": { "type": "keyword", "index": "true" }
+      }
+    },
+    "blog": {
+      "properties": {
+        "id": { "type": "integer" },
+        "slug": { "type": "keyword", "index": "true" },
+        "name": { "type": "keyword", "index": "true" }
       }
     }
   }

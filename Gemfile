@@ -9,9 +9,9 @@ gem 'jquery-rails', '~> 3.1.0'
 gem "bcrypt-ruby", "~> 3.1.0"
 gem 'secretary-rails', "~> 2.0.1"
 
-gem 'elasticsearch'
+gem 'elasticsearch', "~> 6.0.0"
 gem 'elasticsearch-rails'
-gem 'elasticsearch-model'
+gem 'elasticsearch-model', "~> 5.0.0"
 gem 'patron'
 gem 'render_anywhere'
 
@@ -93,6 +93,8 @@ gem 'coffee-rails', "~> 4.0.0"
 gem 'uglifier', '>= 1.3'
 gem "browserify-rails"
 gem "autoprefixer-rails"
+gem "activerecord-nulldb-adapter"
+
 
 group :development do
   gem 'pry'

@@ -63,24 +63,24 @@ module ContentBase
   def _filter_for(k,v)
     # term filters
     return case v
-    when Array
-      { terms: { k => v } }
-    when FalseClass
-      { missing: { field: k } }
-    when Hash
-      # Return the hash itself
-      v
-    when TrueClass
-      { exists: { field: k } }
-    when Range
-      { range: { k => { gte: v.first, lt: v.last }}}
-    when Regexp
-      # Print the regexp in a human readable format
-      # and shave off the first and last forward slashes
-      { regexp: { k => v.inspect[1...-1] } }
-    else
-      { term: { k => v } }
-    end
+           when Array
+             { terms: { k => v } }
+           when FalseClass
+             { missing: { field: k } }
+           when Hash
+             # Return the hash itself
+             v
+           when TrueClass
+             { exists: { field: k } }
+           when Range
+             { range: { k => { gte: v.first, lt: v.last }}}
+           when Regexp
+             # Print the regexp in a human readable format
+             # and shave off the first and last forward slashes
+             { regexp: { k => v.inspect[1...-1] } }
+           else
+             { term: { k => v } }
+           end
   end
 
   def active_query &block
@@ -102,21 +102,21 @@ module ContentBase
 
   def histogram content_type, match, options={}
     query = {:query=>
-      {:filtered=>
-        {:query=>{:match_all=>{}}, :filter=>{:term=>match}}},
-     :sort=>[{"public_datetime"=>{:order=>"desc"}}],
-     :size=>0,
-     :aggs=>
-      {:years=>
-        {
-          :date_histogram=>{:field=>"public_datetime", :interval=>"year", :time_zone=>"-07:00", :format=>"YYYY"},
-          :aggs => {
-            :months=> {
-              :date_histogram=>{:field=>"public_datetime", :interval=>"month", :time_zone=>"-07:00"}
-            }
-          }
-        }
-      }
+               {:filtered=>
+                  {:query=>{:match_all=>{}}, :filter=>{:term=>match}}},
+             :sort=>[{"public_datetime"=>{:order=>"desc"}}],
+             :size=>0,
+             :aggs=>
+               {:years=>
+                  {
+                    :date_histogram=>{:field=>"public_datetime", :interval=>"year", :time_zone=>"-07:00", :format=>"YYYY"},
+                    :aggs => {
+                      :months=> {
+                        :date_histogram=>{:field=>"public_datetime", :interval=>"month", :time_zone=>"-07:00"}
+                      }
+                    }
+                  }
+               }
     }
     es_client.search({index:@@es_index, type: content_type, body: query}.merge(options))
   end
@@ -139,11 +139,11 @@ module ContentBase
     articles = results.hits.hits.collect do |r|
       # turn ES _source into Article
       Article.new(r._source.merge({
-        id:               r._source.obj_key,
-        public_datetime:  r._source.public_datetime ? Time.zone.parse(r._source.public_datetime) : nil,
-        created_at:       Time.zone.parse(r._source.created_at),
-        updated_at:       Time.zone.parse(r._source.updated_at),
-      }).except(:obj_key))
+                                    id:               r._source.obj_key,
+                                    public_datetime:  r._source.public_datetime ? Time.zone.parse(r._source.public_datetime) : nil,
+                                    created_at:       Time.zone.parse(r._source.created_at),
+                                    updated_at:       Time.zone.parse(r._source.updated_at),
+                                  }).except(:obj_key))
     end
 
     # -- inject pagination bits into the array -- #
@@ -151,10 +151,10 @@ module ContentBase
     articles.instance_variable_set :@_body, query
 
     articles.instance_variable_set :@_pagination, Hashie::Mash.new({
-      per_page:       (query[:size] || 10),
-      offset:         (query[:from] || 0),
-      total_results:  results.hits.total,
-    })
+                                                                     per_page:       (query[:size] || 10),
+                                                                     offset:         (query[:from] || 0),
+                                                                     total_results:  results.hits.total,
+                                                                   })
 
     articles.singleton_class.class_eval do
       define_method :current_page do
@@ -193,10 +193,10 @@ module ContentBase
     query_string  = args[0].to_s
 
     options.reverse_merge!({
-      :classes     => [NewsStory, ShowSegment, BlogEntry, ContentShell, Event],
-      :page        => 1,
-      :order       => "public_datetime #{DESCENDING}"
-    })
+                             :classes     => [NewsStory, ShowSegment, BlogEntry, ContentShell, Event],
+                             :page        => 1,
+                             :order       => "public_datetime #{DESCENDING}"
+                           })
 
     # We'll want to search only among live content 99% of the
     # time. For the times when we want unpublished stuff,
@@ -207,14 +207,18 @@ module ContentBase
 
     # -- build search query -- #
 
-    query = { match_all:{} }
-
-    if query_string && !query_string.empty?
-      query = { query_string: { query: query_string, default_operator:"AND" } }
-    end
-
     # what content types are we searching?
     types = options[:classes].collect(&:to_s).collect(&:underscore)
+    types_array = []
+    types.each do |t|
+      types_array.push(
+                       {
+                         match: {
+                           type: t
+                         }
+                       }
+      )
+    end
 
     # -- search filters -- #
 
@@ -243,25 +247,39 @@ module ContentBase
     end
 
     # -- build search body -- #
-
-    body = {
-      query: {
-        filtered: {
-          query: query,
-          filter: case filters.length
-          when 1
-            filters[0]
-          else
-            { and: filters }
-          end
+    body = {}
+    if query_string.blank?
+      body[:query] =
+        {
+          bool: {
+            minimum_should_match: 1,
+            should: types_array
+          }
         }
-      },
-      sort: [ sort ],
-      size: per_page,
-      from: from
-    }
+    else
+      body[:query] = {
+        bool: {
+          minimum_should_match: 1,
+          should: types_array,
+          must: {
+            multi_match: {
+              query: query_string
+            }
+          }
+        }
+      }
+    end
+    body[:query][:bool][:filter] = case filters.length
+                                   when 1
+                                     filters[0]
+                                   else
+                                     { and: filters }
+                                   end
+    body[:sort] = [ sort ]
+    body[:size] = per_page
+    body[:from] = from
 
-    query body, ignore_unavailable: true, type: types
+    query body, ignore_unavailable: true
   end
 
   #--------------------
@@ -292,7 +310,7 @@ module ContentBase
     teaser = ''
 
     stripped_body = ActionController::Base.helpers.strip_tags(text)
-      .gsub("&nbsp;"," ").gsub(/\r/,'').strip
+                      .gsub("&nbsp;"," ").gsub(/\r/,'').strip
 
     stripped_body.match(/^.+/) do |match|
       first_paragraph = match[0]
@@ -303,10 +321,10 @@ module ContentBase
         shortened_paragraph = first_paragraph.match(/\A.{#{length}}[^\.]*\.?/)
 
         teaser = if shortened_paragraph
-          "#{shortened_paragraph[0]}"
-        else
-          first_paragraph
-        end
+                   "#{shortened_paragraph[0]}"
+                 else
+                   first_paragraph
+                 end
       end
     end
 

@@ -34,7 +34,7 @@ class Outpost::HomeController < Outpost::BaseController
       from: from,
     }
 
-    results = Hashie::Mash.new(Elasticsearch::Model.client.search index:"#{ES_PREFIX}-models", body:body)
+    results = Hashie::Mash.new(Elasticsearch::Model.client.search index: ES_MODELS_INDEX, body:body)
 
     records = results.hits.hits.collect do |h|
       h._source.merge({
