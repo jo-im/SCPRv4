@@ -135,7 +135,6 @@ module ContentBase
     end
 
     # -- convert results into Article objects -- #
-
     articles = results.hits.hits.collect do |r|
       # turn ES _source into Article
       Article.new(r._source.merge({
@@ -153,7 +152,7 @@ module ContentBase
     articles.instance_variable_set :@_pagination, Hashie::Mash.new({
                                                                      per_page:       (query[:size] || 10),
                                                                      offset:         (query[:from] || 0),
-                                                                     total_results:  results.hits.total,
+                                                                     total_results:  results.hits.total.value,
                                                                    })
 
     articles.singleton_class.class_eval do
@@ -223,14 +222,14 @@ module ContentBase
     # -- search filters -- #
 
     filters = []
-
+    must_not = []
 
     (options[:with]||[]).each do |k,v|
       filters << self._filter_for(k,v)
     end
 
     (options[:without]||[]).each do |k,v|
-      filters << { not: self._filter_for(k,v) }
+      must_not << self._filter_for(k,v)
     end
 
     # -- sort -- #
@@ -253,7 +252,8 @@ module ContentBase
         {
           bool: {
             minimum_should_match: 1,
-            should: types_array
+            should: types_array,
+            must_not: must_not
           }
         }
     else
@@ -261,6 +261,7 @@ module ContentBase
         bool: {
           minimum_should_match: 1,
           should: types_array,
+          must_not: must_not,
           must: {
             multi_match: {
               query: query_string
@@ -273,7 +274,7 @@ module ContentBase
                                    when 1
                                      filters[0]
                                    else
-                                     { and: filters }
+                                     [ filters ]
                                    end
     body[:sort] = [ sort ]
     body[:size] = per_page
