@@ -43,17 +43,17 @@ module Concern::Model::Searchable
     end
 
     def to_reference
-      a = get_article
+      thumbnail = (self.try(:assets) || []).first.try(:asset).try(:json).try(:[], 'urls').try(:[], 'thumb');
       { 
-        id:              a.id, 
-        public_path:     a.public_path, 
-        title:           a.title, 
-        short_title:     a.short_title,
-        category:        a.category,
-        thumbnail:       a.thumbnail,
-        public_datetime: a.public_datetime,
-        has_audio?:      a.audio.any?,
-        has_assets?:     a.assets.any?
+        id:              self.obj_key,
+        public_path:     self.public_path,
+        title:           self.try(:headline) || self.try(:title),
+        short_title:     self.try(:short_headline) || self.try(:headline) || self.try(:short_title) || self.try(:title),
+        category:        self.try(:category),
+        thumbnail:       thumbnail,
+        public_datetime: self.try(:published_at) || self.try(:starts_at) || self.try(:created_at),
+        has_audio?:      (self.try(:audio) || []).any?,
+        has_assets?:     (self.try(:assets) || []).any?
       }
     end
 
