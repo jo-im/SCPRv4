@@ -102,8 +102,8 @@ module ContentBase
 
   def histogram content_type, match, options={}
     query = {:query=>
-               {:filtered=>
-                  {:query=>{:match_all=>{}}, :filter=>{:term=>match}}},
+               {:bool=>
+                  {:must=>{:match =>{:type => content_type}},:filter=>{:term=>match}}},
              :sort=>[{"public_datetime"=>{:order=>"desc"}}],
              :size=>0,
              :aggs=>
@@ -118,7 +118,7 @@ module ContentBase
                   }
                }
     }
-    es_client.search({index:@@es_index, type: content_type, body: query}.merge(options))
+    es_client.search({index:@@es_index, body: query}.merge(options))
   end
 
   #--------------------
