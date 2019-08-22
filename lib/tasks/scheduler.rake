@@ -27,11 +27,14 @@ task :scheduler => [:environment] do
   # -- Caches -- #
 
   # most whatevers...
-  scheduler.every '30m' do |job|
-    Job::MostViewed.enqueue()
-    Job::MostViewedBlogEntries.enqueue()
-    Job::MostCommented.enqueue()
-  end
+  # lyang -- I commented these out because since we haven't been writing content
+  # for scpr.org as often, this may not be needed.
+  # 
+  # scheduler.every '30m' do |job|
+  #   Job::MostViewed.enqueue()
+  #   Job::MostViewedBlogEntries.enqueue()
+  #   Job::MostCommented.enqueue()
+  # end
 
   # -- Externals -- #
 
