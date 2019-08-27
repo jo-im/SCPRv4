@@ -168,7 +168,8 @@ module PmpArticleImporter
             when "American Homefront Project"
               audio_attributes.merge!({
                 url: remote_audio.href,
-                duration: remote_audio.meta.duration.to_i / 1000,
+                # default to 0 if duration isn't given
+                duration: (remote_audio.try(:meta).try(:duration).try(:to_i) || 0) / 1000,
                 description: audio.title
               })
             end
