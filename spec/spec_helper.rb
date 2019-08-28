@@ -107,6 +107,16 @@ RSpec.configure do |config|
     DeferredGarbageCollection.start
   end
 
+
+  config.before(:each) do |example|
+    path = example.metadata[:example_group][:file_path]
+    curr_path = config.instance_variable_get(:@curr_file_path)
+    if (curr_path.nil? || path != curr_path)
+      config.instance_variable_set(:@curr_file_path, path)
+      puts path
+    end
+  end
+
   config.before :each do
     WebMock.reset!
 

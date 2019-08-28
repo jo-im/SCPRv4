@@ -1,7 +1,7 @@
 require "spec_helper"
 
 describe "Search", :indexing do
-  it "shows the search results" do
+  xit "shows the search results" do
     story = create :news_story, headline: "Mary Poppins"
     story2 = create :news_story, headline: "Not Interesting"
 
@@ -20,7 +20,7 @@ describe "Search", :indexing do
     page.should_not have_content story2.headline
   end
 
-  it "Allows special characters" do
+  xit "Allows special characters" do
     story = create :news_story, headline: "$800 dollars"
     story2 = create :news_story, headline: "Not Interesting"
 
@@ -40,7 +40,7 @@ describe "Search", :indexing do
   end
 
   describe 'global search' do
-    it 'shows the search results' do
+    xit 'shows the search results' do
       ns = create :news_story, headline: "Obama"
       be = create :blog_entry, headline: "President Obama"
       pq = create :pij_query, headline: "Something about Obama"

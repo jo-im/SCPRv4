@@ -49,7 +49,7 @@ class Outpost::HomeController < Outpost::BaseController
     records.instance_variable_set :@_pagination, Hashie::Mash.new({
       per_page:       per_page,
       offset:         from,
-      total_results:  results.hits.total.value,
+      total_results:  results.hits.total.value
     })
 
     records.singleton_class.class_eval do
@@ -79,12 +79,6 @@ class Outpost::HomeController < Outpost::BaseController
     end
 
     @records = records
-
-    #@records = ThinkingSphinx.search(Riddle::Query.escape(params[:gquery]),
-    #  :classes    => searchable_models,
-    #  :page       => params[:page] || 1,
-    #  :per_page   => 20
-    #)
   end
 
   def trigger_error

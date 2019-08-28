@@ -28,23 +28,4 @@ describe Outpost::HomeController do
       assigns(:latest_activities).should eq story2.versions.to_a
     end
   end
-
-  describe 'GET search', :indexing do
-    routes { Rails.application.routes }
-
-    it 'gets the records from the query' do
-      ns = create :news_story, headline: "Obama"
-      be = create :blog_entry, headline: "President Obama"
-      pq = create :pij_query, headline: "Something about Obama"
-
-      get :search, gquery: "Obama"
-
-      records = assigns(:records)
-
-      obj_keys = records.map(&:obj_key)
-      expect(obj_keys).to include ns.obj_key
-      expect(obj_keys).to include be.obj_key
-      expect(obj_keys).to include pq.obj_key
-    end
-  end
 end

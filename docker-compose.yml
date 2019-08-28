@@ -1,26 +1,6 @@
 version: '3'
 
 services:
-
-  scpr:
-    build: .
-    container_name: scpr
-    ports:
-      - 3000:3000/tcp
-    networks:
-      scpr-network:
-        aliases:
-          - scpr
-    command: ./docker-startup.sh
-    environment:
-      SCPRV4_ELASTICSEARCH_HOST: elasticsearch:9200
-      SCPRV4_RESQUE_HOST: redis://redis:6379
-      SCPRV4_MYSQL_HOST: mysql
-    volumes:
-      - ./:/home/scpr
-      - scpr-bundle:/usr/local/bundle
-      - scpr-gems:/usr/local/lib/ruby/gems/
-
   mysql:
     image: mysql:5.7.21
     container_name: scpr-mysql
@@ -62,15 +42,17 @@ services:
           - memcached
 
   elasticsearch:
-    image: elasticsearch:1.7-alpine
+    image: elasticsearch:7.1.0
     container_name: scpr-elasticsearch
     restart: always
     ports:
       - 9200:9200/tcp
       - 9300:9300/tcp
       - 9250:9250/tcp
+    environment:
+      "discovery.type": single-node
     volumes:
-      - elasticsearch-data:/var/lib/elasticsearch
+      - ./esdata:/var/lib/elasticsearch
     networks:
       scpr-network:
         aliases:

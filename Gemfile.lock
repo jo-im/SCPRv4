@@ -28,8 +28,8 @@ GIT
 
 GIT
   remote: git://github.com/SCPR/outpost.git
-  revision: c2a82f852a5a621c43e9e1273619197e3569ad61
-  tag: v0.3.1
+  revision: ad5d35e82b44f4e392feb9acda23cf897aff1cba
+  tag: v0.3.2
   specs:
     outpost-cms (0.1.7)
       bcrypt-ruby (>= 3.0.0, < 4)
@@ -112,7 +112,7 @@ GEM
       thread_safe (~> 0.3, >= 0.3.4)
       tzinfo (~> 1.1)
     addressable (2.4.0)
-    ansi (1.4.3)
+    ansi (1.5.0)
     arel (6.0.4)
     audio_vision (1.0.0)
       faraday (~> 0.8.8)
@@ -193,20 +193,20 @@ GEM
       eco-source
       execjs
     eco-source (1.1.0.rc.1)
-    elasticsearch (6.0.3)
-      elasticsearch-api (= 6.0.3)
-      elasticsearch-transport (= 6.0.3)
-    elasticsearch-api (6.0.3)
+    elasticsearch (7.0.0)
+      elasticsearch-api (= 7.0.0)
+      elasticsearch-transport (= 7.0.0)
+    elasticsearch-api (7.0.0)
       multi_json
-    elasticsearch-extensions (0.0.17)
+    elasticsearch-extensions (0.0.31)
       ansi
-      ruby-prof
-    elasticsearch-model (5.0.0)
+      elasticsearch
+    elasticsearch-model (7.0.0)
       activesupport (> 3)
       elasticsearch (> 1)
       hashie
-    elasticsearch-rails (0.1.7)
-    elasticsearch-transport (6.0.3)
+    elasticsearch-rails (7.0.0)
+    elasticsearch-transport (7.0.0)
       faraday
       multi_json
     erbse (0.0.2)
@@ -221,7 +221,7 @@ GEM
       railties (>= 3.0.0)
     faker (1.6.1)
       i18n (~> 0.5)
-    faraday (0.8.9)
+    faraday (0.8.11)
       multipart-post (~> 1.2.0)
     faraday_middleware (0.9.1)
       faraday (>= 0.7.4, < 0.10)
@@ -240,7 +240,7 @@ GEM
       resque
     guard-rspec (1.2.1)
       guard (>= 1.1)
-    hashdiff (0.3.0)
+    hashdiff (1.0.0)
     hashie (1.2.0)
     hike (1.2.3)
     hodel_3000_compliant_logger (0.1.1)
@@ -436,7 +436,7 @@ GEM
     rubyzip (1.2.1)
     rufus-scheduler (3.0.9)
       tzinfo
-    safe_yaml (1.0.4)
+    safe_yaml (1.0.5)
     sanitize (2.1.0)
       nokogiri (>= 1.4.4)
     sass (3.4.16)
@@ -498,7 +498,7 @@ GEM
     uri_template (0.7.0)
     vegas (0.1.11)
       rack (>= 1.0.0)
-    webmock (1.24.5)
+    webmock (2.3.2)
       addressable (>= 2.3.6)
       crack (>= 0.3.2)
       hashdiff
@@ -532,9 +532,9 @@ DEPENDENCIES
   dalli
   database_cleaner
   eco (~> 1.0)
-  elasticsearch (~> 6.0.0)
+  elasticsearch (~> 7.0.0)
   elasticsearch-extensions
-  elasticsearch-model (~> 5.0.0)
+  elasticsearch-model (~> 7.0.0)
   elasticsearch-rails
   escape_utils (~> 1.0.1)
   factory_girl_rails
@@ -604,7 +604,7 @@ DEPENDENCIES
   twitter (~> 4.1)
   twitter-text (~> 1.5)
   uglifier (>= 1.3)
-  webmock
+  webmock (~> 2.3.2)
   yajl-ruby (~> 1.3, >= 1.3.1)
 
 BUNDLED WITH

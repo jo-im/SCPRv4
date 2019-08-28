@@ -12,6 +12,12 @@ module Concern
       def search
         breadcrumb "Search"
 
+        sort_by_field = if order_attribute == 'id'
+                          'created_at'
+                        else
+                          order_attribute
+                        end
+
         body = {
           query: {
             query_string: {
@@ -19,8 +25,9 @@ module Concern
               default_operator:   "AND",
             }
           },
-          sort: [{"#{order_attribute}"=>{:order=>(order_direction||"desc").downcase}}]
+          sort: [{"#{sort_by_field}"=>{:order=>(order_direction||"desc").downcase}}]
         }
+
         @results = model.search(body).page(params[:page]||1).per(50)
         @records = @results.records
       end

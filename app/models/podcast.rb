@@ -68,13 +68,8 @@ class Podcast < ActiveRecord::Base
           # by providing a query hash that performs a match
           # for bylines that include "NPR"
           options = {
-            query: {
-              match: {
-                byline: "NPR"
-              }
-            }
+            term: { byline: "NPR" }
           }
-          
           conditions[:without].merge!({ options: options })
           klasses = [NewsStory, BlogEntry, ShowSegment]
         end

@@ -1,20 +1,26 @@
 version: 2
 jobs:
   build:
-    parallelism: 3
+    parallelism: 1
     docker:
       - image: circleci/ruby:2.3-node
         environment:
           - BUNDLE_PATH=vendor/bundle
+          - BUNDLE_JOBS: 3
+          - BUNDLE_RETRY: 3
           - RAILS_ENV=test
-      - image: mysql:5.7
+      - image: circleci/mysql:5.7-ram
         environment:
           - MYSQL_DATABASE=mercer_test
           - MYSQL_HOST=127.0.0.1
           - MYSQL_ROOT_HOST=%
           - MYSQL_USER=root
           - MYSQL_ALLOW_EMPTY_PASSWORD=true
-      - image: elasticsearch:1.7-alpine
+      - image: elasticsearch:7.1.0
+        environment:
+          xpack.security.enabled: false
+          transport.host: localhost
+          discovery.type: single-node
       - image: redis:4.0.1-alpine
     steps:
       - checkout
@@ -54,10 +60,13 @@ jobs:
             bundle exec rake db:create db:schema:load
       - run:
           name: Run rspec in parallel
+          shell: /bin/bash
+          no_output_timeout: 5m
           command: |
             bundle exec rspec --format RspecJunitFormatter \
                               --out test_results/rspec.xml \
                               --format progress \
-                              $(circleci tests glob "spec/**/*_spec.rb" | circleci tests split)
+                              --order defined \
+                              $(circleci tests glob "spec/{features,helpers}/**/*_spec.rb")
       - store_test_results:
           path: test_results
