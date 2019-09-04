@@ -54,6 +54,10 @@ class scpr.ListenLive
                   playbook: null
                 ready: =>
                     @_playerReady = true
+                error: =>
+                    # If an error occurs while loading an ad, play the livestream instead.
+                    @player.jPlayer("clearMedia")
+                    @player.jPlayer("setMedia",mp3:@options.url).jPlayer("play")
 
             # -- Ad Code -- #
 
