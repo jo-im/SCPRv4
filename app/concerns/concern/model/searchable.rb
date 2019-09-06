@@ -20,15 +20,27 @@ module Concern::Model::Searchable
       end
     end
 
+    class << self
+      def index_all
+        find_in_batches(batch_size: 100) do |batch|
+          batch.each do |object|
+            object.async_index
+          end
+        end
+      end
+    end
+
     def as_indexed_json(opts={})
       model = self.class.name.underscore
       h = as_json(opts)
-      if h[ model ]
-        h[model].delete('needs_reindex') #grumble
-        {}.merge(h[ model ]).merge(h).except(model)
-      else
-        h
-      end
+      hash_to_return =
+        if h[ model ]
+          h[model].delete('needs_reindex') #grumble
+          {}.merge(h[ model ]).merge(h).merge({type: model}).except(model)
+        else
+          h
+        end
+      return hash_to_return
     end
 
     def get_article
@@ -83,17 +95,6 @@ module Concern::Model::Searchable
         index
         update_attribute(:needs_reindex, false)
       end
-    end
-
-    private
-
-    def to_article_called_more_than_twice?
-      ## Not sure if there's a better way to do this, but this needs to
-      ## be here to prevent infinite recursion with content that has both
-      ## outgoing and incoming references.  Also not certain yet whether
-      ## or not this needs to be the default.
-      stack_level = caller.select{|s| s.include?("`to_article'")}.count
-      stack_level > 2
     end
 
   end
