@@ -11,4 +11,6 @@ AssetHostClient.setup do |config|
   config.server           = Rails.configuration.x.assethost.server
   config.token            = Rails.configuration.x.assethost.token
   config.raise_on_errors  = Rails.configuration.x.assethost.raise_on_errors || false
+  config.open_timeout     = Rails.configuration.x.assethost.open_timeout || 1
+  config.timeout          = Rails.configuration.x.assethost.timeout || 2
 end

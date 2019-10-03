@@ -77,7 +77,7 @@ gem 'postmark-rails', "~> 0.6.0"
 gem 'newrelic_rpm', '~> 4.0', '>= 4.0.0.332'
 gem 'pmp', '0.5.6'
 gem 'npr', '~> 3.0', github:"scpr/npr"
-gem 'asset_host_client', github:"scpr/asset_host_client", tag:"v2.1.6"
+gem 'asset_host_client', github:"scpr/asset_host_client", tag:"v2.1.7"
 gem 'audio_vision', '~> 1.0'
 gem 'slack-notifier'
 gem 'aws-sdk', '~> 2'
