@@ -38,3 +38,4 @@ config/*secrets.yml
 config/private/*
 *.env
 .circleci
+package-lock.json
