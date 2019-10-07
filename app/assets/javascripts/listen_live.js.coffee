@@ -247,7 +247,7 @@ class scpr.ListenLive
                 name: 'StaticResource'
                 render: (c) ->
                     img = $("<img>",src:c.StaticResource.toString(),width:c._width,height:c._height)
-                    link = $("<a>", href:c.CompanionClickThrough?.toString())
+                    link = $("<a>", href:c.CompanionClickThrough?.toString(),target:"_blank")
                     link.append(img)
                     el?.html link
                     el.css(margin:"0 auto").width(c._width)
