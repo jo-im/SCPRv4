@@ -4,10 +4,6 @@ task :scheduler => [:environment] do
   # -- Content -- #
 
   scheduler.every '1m' do |job|
-    Job::MastheadCache.enqueue()
-  end
-
-  scheduler.every '1m' do |job|
     ContentAlarm.fire_pending
   end
 
