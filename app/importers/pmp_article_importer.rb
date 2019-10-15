@@ -194,30 +194,24 @@ module PmpArticleImporter
             primary_image ||= images.max do |a, b|
               a.meta["width"].to_i <=> b.meta["width"].to_i
             end
-            thumbnail_image = images.find { |i| i.meta["crop"] == "small" }
-            thumbnail_image ||= images.min do |a, b|
-              a.meta["width"].to_i <=> b.meta["width"].to_i
-            end
 
             if primary_image
-              external_asset = {
-                title: pmp_story.title,
-                caption: "",
-                owner: article.news_agency,
-                urls: {
-                  original: primary_image.href,
-                  thumb: thumbnail_image.href
-                }
-              }.to_json
-
-              # Create a content asset and store the external asset as a json string
-              content_asset = ContentAsset.new(
-                :position   => 0,
-                :external_asset => external_asset,
-                :caption    => ""
+              asset = AssetHost::Asset.create(
+                :url     => primary_image.href,
+                :title   => pmp_story.title,
+                :owner   => article.news_agency,
+                :note    => "Imported from PMP: #{pmp_story.guid}"
               )
 
-              article.assets << content_asset
+              if asset && asset.id
+                content_asset = ContentAsset.new(
+                  :position   => 0,
+                  :asset_id   => asset.id,
+                  :caption => "" # To avoid 'doesn't have a default value' err
+                )
+
+                article.assets << content_asset
+              end
             end # primary_image
 
           end # images
