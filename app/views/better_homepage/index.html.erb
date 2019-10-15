@@ -49,6 +49,152 @@
 
   <%= precached "better_homepage/right_asides", preview: @homepage %>
 
+  <article class="center hp-story large" style="display: flex">
+    <form id="springboard" autocomplete="off">
+      <h1 class="springboard__title">Say YES! to Free Press by donating now to KPCC during our Fall Member Drive.</h1>
+      <p class="springboard__description">Your support is vital to the news and programming you depend on from KPCC and NPR.</p>
+      <div class="springboard__radios">
+        <div class="springboard__recurs-container">
+          <input
+            id="springboard__monthly-donation"
+            name="recurs"
+            type="radio"
+            value="monthly"
+            checked
+          />
+          <label
+            for="springboard__monthly-donation"
+            class="springboard__recurs"
+          >
+            Monthly Donation
+            <span class="springboard__recurs-radio"></span>
+          </label>
+        </div>
+        <div class="springboard__recurs-container">
+          <input
+            id="springboard__one-time-donation"
+            name="recurs"
+            type="radio"
+            value="one-time-donation"
+          />
+          <label
+            for="springboard__one-time-donation"
+            class="springboard__recurs"
+          >
+            One-time Donation
+            <span class="springboard__recurs-radio"></span>
+          </label>
+        </div>
+      </div>
+      <div id="springboard__monthly-donation-fields" class="springboard__donation-fields">
+        <input
+          id="springboard__five-per-month"
+          class="springboard__per-month"
+          name="donation-per-month"
+          type="radio"
+          value="5"
+          checked
+        />
+        <label for="springboard__five-per-month" class="springboard__label">
+          $5 / mo
+        </label>
+        <input
+          id="springboard__ten-per-month"
+          class="springboard__per-month"
+          name="donation-per-month"
+          type="radio"
+          value="10"
+        />
+        <label for="springboard__ten-per-month" class="springboard__label">
+          $10 / mo
+        </label>
+        <input
+          id="springboard__fifteen-per-month"
+          class="springboard__per-month"
+          name="donation-per-month"
+          type="radio"
+          value="15"
+        />
+        <label for="springboard__fifteen-per-month" class="springboard__label">
+          $15 / mo
+        </label>
+        <input
+          id="springboard__one-twenty-five-per-month"
+          class="springboard__per-month"
+          name="donation-per-month"
+          type="radio"
+          value="125"
+        />
+        <label
+          for="springboard__one-twenty-five-per-month"
+          class="springboard__label springboard__leadership-circle"
+        >
+          $125 / mo - Leadership Circle
+        </label>
+        <div class="springboard__other-amount">
+          <div class="springboard__dollar-sign-prefix">$</div>
+          <input
+            id="springboard__per-month-other-amount"
+            type="text"
+            placeholder="Other amount"
+          />
+          <div class="springboard__per-month-suffix">/ mo</div>
+        </div>
+      </div>
+      <div id="springboard__one-time-donation-fields" class="springboard__donation-fields">
+        <input
+          id="springboard__60"
+          class="springboard__one-time"
+          name="one-time-donation"
+          type="radio"
+          value="60"
+        />
+        <label for="springboard__60" class="springboard__label">$60</label>
+        <input
+          id="springboard__120"
+          class="springboard__one-time"
+          name="one-time-donation"
+          type="radio"
+          value="120"
+          checked
+        />
+        <label for="springboard__120" class="springboard__label">$120</label>
+        <input
+          id="springboard__180"
+          class="springboard__one-time"
+          name="one-time-donation"
+          type="radio"
+          value="180"
+        />
+        <label for="springboard__180" class="springboard__label">$180</label>
+        <input
+          id="springboard__1500"
+          class="springboard__one-time"
+          name="one-time-donation"
+          type="radio"
+          value="1500"
+        />
+        <label
+          for="springboard__1500"
+          class="springboard__label springboard__leadership-circle"
+        >
+          $1500 - Leadership Circle
+        </label>
+        <div class="springboard__other-amount">
+          <div class="springboard__dollar-sign-prefix">$</div>
+          <input
+            id="springboard__one-time-other-amount"
+            class="springboard__other-amount"
+            type="text"
+            placeholder="Other amount"
+          />
+        </div>
+      </div>
+      <a id="springboard__continue" href="https://support.kpcc.org/f19hptakeover2?amount=5&recurs=monthly" target="_blank" type="submit">Continue</a>
+    </form>
+    <%= javascript_include_tag "better_homepage/donation-form-widget" %>
+  </article>
+
   <%= precached "better_homepage/contents", preview: @homepage %>
 
 </div>

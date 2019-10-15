@@ -1,0 +1,205 @@
+
+//  ################################################################################################
+//  ################################################################################################
+//  NEWSLETTER SIGNUP MODULE: FOR USE ON SINGLE ARTICLES
+//  ################################################################################################
+//  ################################################################################################
+
+.appeal-newsletter {
+    margin-bottom: 25px;
+
+    .segment & {
+        margin-left: -13.458262350937%;
+        padding-left: 13.458262350937%;
+    }
+
+}
+
+.appeal-background {
+    background: #f4f4f4;
+    overflow:hidden;
+    position: relative;
+
+    .segment & {
+        margin-left: -13.458262350937%;
+        padding-left: 13.458262350937%;
+    }
+}
+
+.appeal-content {
+    padding: 60px 0;
+    position:relative;
+    text-align: center;
+
+    @media (max-width: 562px) {
+        margin-left: 0;
+        padding-left: 0;
+        padding: 20px 0;
+        text-align: left;
+    }
+
+    .segment & {
+        margin-left: -13.458262350937%;
+        padding-left: 13.458262350937%;
+    }
+
+    h3.appeal-heading {
+        font-size: 2.3em;
+        line-height: 1.2em;
+        margin-bottom: 20px;
+
+        @media (max-width: 562px) {
+            font-size: 1.5em;
+            line-height: 1em;
+            margin-left: 0;
+            padding-left: 0;
+        }
+
+        .segment & {
+            margin-left: -13.458262350937%;
+            padding-left: 13.458262350937%;
+        }
+    }
+    p {
+        font-size: 1.1em;
+        margin-bottom: 20px;
+
+        @media (max-width: 562px) {
+            font-size: 0.875em;
+            margin-left: 0;
+            padding-left: 0;
+            width: 90% !important;
+        }
+
+        .segment & {
+            margin-left: -13.458262350937%;
+            padding-left: 13.458262350937%;
+        }
+    }
+    form {
+        margin-top:60px;
+
+        @media (max-width: 562px) {
+            margin-top: 30px;
+            margin-left: 0;
+            padding-left: 0;
+        }
+
+        .segment & {
+            margin-left: -13.458262350937%;
+            padding-left: 13.458262350937%;
+        }
+    }
+}
+
+.newsletter-email {
+    background:white;
+    border:1px solid #ccc;
+    color:black;
+    font-family:'Merriweather',serif;
+    font-size:1.2em;
+    padding:0 10px;
+    width:300px;
+    height:40px;
+
+    @media (max-width: 562px) {
+        display: block;
+    }
+
+    &:focus {
+        outline: 0;
+    }
+
+    &::-webkit-input-placeholder {
+       color: #bbb; 
+    }
+    &:-moz-placeholder { /* Firefox 18- */
+       color: #bbb;   
+    }
+    &::-moz-placeholder {  /* Firefox 19+ */
+       color: #bbb;  
+    }
+    &:-ms-input-placeholder {  
+       color: #bbb; 
+    }
+
+    &:focus::-webkit-input-placeholder {
+       color: #ddd; 
+    }
+    &:focus:-moz-placeholder { /* Firefox 18- */
+       color: #ddd;   
+    }
+    &:focus::-moz-placeholder {  /* Firefox 19+ */
+       color: #ddd;  
+    }
+    &:focus:-ms-input-placeholder {  
+       color: #ddd; 
+    }
+}
+
+.newsletter-hidden-input {
+    display: none;
+}
+
+.appeal-submit {
+    background:#F87E21;
+    border:1px solid #F87E21;
+    color:#fff;
+    font-family:'Merriweather',serif;
+    font-size:1.2em;
+    font-wight:bold;
+    margin-left:10px;
+    width:120px;
+    height:42px;
+
+    @media (max-width: 562px) {
+        display: block;
+        margin: 14px 0 0;
+    }
+}
+
+a.appeal-link {
+    @extend .appeal-submit;
+    box-sizing: border-box;
+    color: white !important; // hrm
+    display: inline-block;
+    line-height: 40px;
+    vertical-align: bottom;
+    text-align: center;
+    width: initial;
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+.segment .appeal-content h3.appeal-heading.appeal-heading-adaptive {
+    // display: inline-table;
+    font-size: 2.0rem;
+    span {
+        white-space: nowrap;
+    }
+    @media (max-width: 1294px) {
+        display: inline-table;
+        transform: scale(0.9, 0.9) translateX(-6%);
+    }
+    @media (max-width: 1232px) {
+        display: inline-table;
+        transform: scale(0.8, 0.8) translateX(-9%);
+    }
+    @media (max-width: 1109px) {
+        display: inline-table;
+        transform: scale(0.8, 0.8) translateX(-3.5%);
+    }
+    @media (max-width: 870px) {
+        display: inline-table;
+        transform: scale(0.8, 0.8) translateX(0%);
+    }
+    @media (max-width: 562px) {
+        display: inline-table;
+        transform: scale(0.7, 0.7) translateX(-16%);
+    }
+    @media (max-width: 488px) {
+        // display: inline-table;
+        transform: scale(0.6, 0.6) translateX(-27%);
+    }
+
+}

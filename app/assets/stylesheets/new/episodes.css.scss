@@ -1,0 +1,536 @@
+/*
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+------------------------------------------------------------------------
+SINGLE EPISODE
+------------------------------------------------------------------------
+Started by JPW on 16 December 2014.
+------------------------------------------------------------------------
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ */
+body.episode {
+  
+
+
+
+  /*
+  ####################################################################################
+  ####################################################################################
+  STRAIGHTFORWARD EXCEPTIONS FOR "EPISODE"
+  ####################################################################################
+  #################################################################################### */
+  .appellation                    { margin-bottom: 14px; }                    // As opposed to 55px
+  .report                         { margin-bottom: 0; border-bottom: none; }  // As opposed to 30px. There should be an airless gap between this and "episode-postlude".
+  .report .prose                  { background: none; }                       // As opposed to a thin gray vertical hairline
+  .report .prose p:first-of-type  { width: auto; }                            // As opposed to 100% (i.e., this isn't a news article)
+  //-------------------------------------------------------------------------------------
+  @media screen and (max-width: 870px) {
+    // override positioning of Position A ad on smaller screens to ensure it's not
+    // getting cut off by the titling area.
+    .report .supportive aside.placard:first-child {
+      top: 200px;
+    } 
+  }
+  @media screen and (max-width: 550px) {
+  .appellation                    { margin-bottom: 35px; padding-bottom: 0; }
+  .appellation h1                 { text-align: left; }
+  }
+  //-------------------------------------------------------------------------------------
+
+
+
+
+
+  /*
+  ####################################################################################
+  ####################################################################################
+  EPISODE-SYNOPSIS
+  ####################################################################################
+  #################################################################################### */
+  .episode-synopsis {
+    font-size: 1.06666666666667em; // Reset ourselves back to "16"
+    font-family: $font-prox;
+    margin-bottom: 10px;
+    h1,.teaser        { box-sizing: border-box; }
+    h1 {
+      color: #9b9b9b;
+      font-weight: 400;
+      line-height: 1.1;
+      font-size: 0.9375em; // 15
+      letter-spacing: -0.03em;
+      padding-top: 11px;
+    }
+    span { 
+      display: inline-block; 
+      font-variant: small-caps;
+      margin-right: 0;
+    }
+  //-------------------------------------------------------------------------------------
+    @media screen and (max-width: 610px) {
+      h1,.teaser      { float: none; width: auto; }
+      h1              { padding-bottom: 18px; margin-bottom: 8px; border-bottom: 1px solid #b9e2f0; }
+      time            { display: inline; }
+      .teaser         { padding: 0; box-shadow: none; min-height: 0; }
+      .teaser p       { margin: 0 !important; }
+    }
+  //-------------------------------------------------------------------------------------
+  }//.episode-synopsis
+
+
+
+
+
+
+  /*
+  ####################################################################################
+  ####################################################################################
+  EPISODE-ENUMERATION
+  (Because too much other stuff in this site could be called "episode-segments".)
+  ####################################################################################
+  #################################################################################### */
+  .episode-enumeration {
+    font-size: 1.06666666666667em; // Resetting ourselves back to 16
+    & > h1 {
+      color: #9b9b9b; font: normal 300 1.875em/1 $font-freight; margin-bottom: 50px;
+      @media screen and (max-width: 870px) { padding-top: 20px; margin-bottom: 70px; }
+    }
+    article {
+      margin-bottom: 50px;
+      position: relative;
+      font-family: $font-prox;
+      line-height: 1;
+      .asset                                  { width: 24.453024453024%; float: left; z-index: 1; }
+      .ratio                                  { position: relative; z-index: 2; }
+      .ratio .img-contain                     { background: white; }
+      &.ratio-squat .ratio .img-contain img   { height: 100%; width: auto !important; max-width: none !important; }
+      .order {
+        display: block;
+        text-align: center;
+        background: white;
+        padding-top: 7px;
+        width: 35px;
+        height: 35px;
+        box-sizing: border-box;
+        font-size: 1.375em;
+        color: $blue;
+        line-height: 1;
+        border-radius: 20px;
+        font-weight: 300;
+        position: absolute;
+        top: 17px;
+        z-index: 3;
+        left: -17px;
+      }
+      a, a:hover      { color: inherit; text-decoration: none; }
+      .exposition     { width: 71.428571428571%; float: right; }
+      .author         { display: block; color: #b2b2b2; font-size: 0.75em; margin-bottom: 4px; font-weight: 700; }
+      h1              { color: black; font: normal 1.4375em/1.15 $font-freight; border-bottom: 1px solid #91d2e8; padding-bottom: 11px; }
+      .precis         { position: relative; box-sizing: border-box; min-height: 77px; }
+      .precis p       { margin-right: 180px; padding-top: 9px; font-size: 0.875em; line-height: 1.35; }
+      .meta {
+        position: absolute;
+        top: 0;
+        right: 0;
+        width: 164px;
+        height: 77px;
+        li {
+          display: block;
+          width: 46.456692913386%;
+          text-align: center;
+          font-size: 0.75em;
+          color: #76c4de;
+          font-weight: bold;
+          height: 77px;
+          box-sizing: border-box;
+          position: absolute;
+          left: 0;
+          top: 0;
+          margin: 0;
+          line-height: 0.9;
+          list-style: none;
+          padding: 0;
+          &.comingsoon              { background: #e6f5fa; box-shadow: inset 0 3px 0 #c8e9f4; }
+          &:nth-of-type(2)          { left: auto; right: 0; }
+          a                         { display: block; box-sizing: border-box; padding: 11px 4px 0; width: 100%; height: 100%; }
+          span, b                   { display: block; }
+          b                         { text-align: center; color: #76c4de; font: normal 700 1em/0.8 $font-prox; text-transform: lowercase; }
+          a:hover                   { text-decoration: none; }
+          a:hover b                 { color: $orange; }
+          .comments span , &.play a { width: 18px; height: 20px; margin: 0 auto 8px; @include texthide; background: image-url("i/episode-meta-icons.png") no-repeat; background-size: 454px 40px; }
+          span           { background-position: 0 0; }
+          a:hover span   { background-position: 0 -20px; }
+          .comments {
+            > span { margin-top: 12px; }
+            b a {
+              padding-top: 0;
+            }
+            &.non-zero { display: none; }
+          }
+          &.play {
+            .audio-content, .audio-tools, .bracket { display: none; }
+            .story-audio, .story-audio .inner-container { height: 100%; }
+            a {
+              margin-top: 11px;
+            }
+          }
+          &.play a                  { background-position: -218px 0; }
+          &.play a:hover            { background-position: -218px -20px; }
+          &.comingsoon span         { background-position: -436px 0; }
+          &.comingsoon a:hover span { background-position: -436px -20px; }
+        }
+
+      }// .meta
+      .legacy {
+        position: absolute;
+        background: image-url("i/calendar.png") no-repeat;
+        background-size: 13px 12px;
+        box-sizing: border-box;
+        padding: 1px 0 0 18px;
+        letter-spacing: -0.02em;
+        font-size: 0.625em;
+        font-weight: 700;
+        color: $blue;
+        text-transform: lowercase;
+        left: 0;
+        top: 132px;               // Okay, so because .asset can be a variable (proportional) height, this won't *always* look right. But it's good enough...
+        width: 24.453024453024%;  // ...and that'll at least keep its *horizontal* alignment in check.
+        min-height: 12px;
+        time                                    { color: #9d9d9d; white-space: nowrap; }
+      //-------------------------------------------------------------------------------------
+        @media screen and (max-width: 1320px)   { top: 122px; }
+        @media screen and (max-width: 1220px)   { top: 112px; }
+        @media screen and (max-width: 1120px)   { top: 102px; }
+        @media screen and (max-width: 1020px)   { top: 92px; }
+        @media screen and (max-width: 940px)    { top: 85px; }
+        @media screen and (max-width: 870px)    { top: 116px; }
+        @media screen and (max-width: 710px)    { top: 106px; }
+        @media screen and (max-width: 640px)    { top: 99px; }
+        @media screen and (max-width: 590px)    { top: 92px; }
+      //-------------------------------------------------------------------------------------
+      }// .legacy
+    //-------------------------------------------------------------------------------------
+    @media screen and (max-width: 550px) {
+    .exposition                   { float: none; width: 100%; }
+    .asset                        { float: none; width: 191px; margin-bottom: 8px; }
+    .precis                       { position: static; min-height: 0; }
+    .precis p                     { margin: 0; }
+    h1                            { font-size: 1.375em; padding-bottom: 13px; }
+    .legacy                       { position: static; width: 100%; margin-top: 9px; }
+    .meta                         { top: 0; width: 100%; box-sizing: border-box; padding-left: 197px; right: auto; left: 0; }
+    .meta ul                      { border-top: 1px solid #cbeaf4; }
+    .meta li                      { position: relative; width: 100%; margin: 0; padding: 0; height: 42px; border-bottom: 1px solid #cbeaf4; }
+    .meta li a                    { padding: 15px 0 0 37px; position: relative; }
+    .meta li span                 { position: absolute; left: 10px; top: 10px; margin: 0; overflow: hidden; }
+    .meta li b                    { text-align: left; }
+    .meta li.play a               { position: absolute; left: 10px; }
+    .meta li.play span            { left: 36px; top: 17px; }
+    .meta li .comments > span     { margin-top: 0; }
+    .meta li .comments b a        { padding-top: 18px; }
+    .meta li.comingsoon           { box-shadow: none; }
+    .meta li.comingsoon a         { padding-top: 8px; }
+    .meta li.comingsoon b         { max-width: 5em; line-height: 0.7; }
+    }// max: 550
+    //-------------------------------------------------------------------------------------
+    }// article
+  }// .episode-enumeration
+
+
+
+
+
+
+
+  /*
+  ####################################################################################
+  ####################################################################################
+  EPISODE-POSTLUDE
+  ####################################################################################
+  #################################################################################### */
+  .episode-postlude {
+
+    background: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/Pgo8c3ZnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgdmlld0JveD0iMCAwIDEgMSIgcHJlc2VydmVBc3BlY3RSYXRpbz0ibm9uZSI+CiAgPGxpbmVhckdyYWRpZW50IGlkPSJncmFkLXVjZ2ctZ2VuZXJhdGVkIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgeDE9IjAlIiB5MT0iMCUiIHgyPSIxMDAlIiB5Mj0iMCUiPgogICAgPHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iIzY4Njg2OCIgc3RvcC1vcGFjaXR5PSIxIi8+CiAgICA8c3RvcCBvZmZzZXQ9IjM0JSIgc3RvcC1jb2xvcj0iIzY4Njg2OCIgc3RvcC1vcGFjaXR5PSIxIi8+CiAgICA8c3RvcCBvZmZzZXQ9IjM0JSIgc3RvcC1jb2xvcj0iI2ZmZmZmZiIgc3RvcC1vcGFjaXR5PSIxIi8+CiAgICA8c3RvcCBvZmZzZXQ9IjEwMCUiIHN0b3AtY29sb3I9IiNmZmZmZmYiIHN0b3Atb3BhY2l0eT0iMSIvPgogIDwvbGluZWFyR3JhZGllbnQ+CiAgPHJlY3QgeD0iMCIgeT0iMCIgd2lkdGg9IjEiIGhlaWdodD0iMSIgZmlsbD0idXJsKCNncmFkLXVjZ2ctZ2VuZXJhdGVkKSIgLz4KPC9zdmc+);
+    background: -webkit-linear-gradient(to left,  #686868 0%,#686868 50%,#ffffff 50%,#ffffff 50%);   //safari 5.1+
+    background-image: linear-gradient(to right, #686868, #686868 50%, white 50% );               //modernity
+    filter: none;
+
+    box-shadow:
+      inset 0 1px 0 rgba(0,0,0,0.5),
+      inset 0 5px 0 rgba(0,0,0,0.2);
+
+    & > .inner {
+
+      background: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/Pgo8c3ZnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgdmlld0JveD0iMCAwIDEgMSIgcHJlc2VydmVBc3BlY3RSYXRpbz0ibm9uZSI+CiAgPGxpbmVhckdyYWRpZW50IGlkPSJncmFkLXVjZ2ctZ2VuZXJhdGVkIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgeDE9IjAlIiB5MT0iMCUiIHgyPSIxMDAlIiB5Mj0iMCUiPgogICAgPHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iIzY4Njg2OCIgc3RvcC1vcGFjaXR5PSIxIi8+CiAgICA8c3RvcCBvZmZzZXQ9IjM0JSIgc3RvcC1jb2xvcj0iIzY4Njg2OCIgc3RvcC1vcGFjaXR5PSIxIi8+CiAgICA8c3RvcCBvZmZzZXQ9IjM0JSIgc3RvcC1jb2xvcj0iI2ZmZmZmZiIgc3RvcC1vcGFjaXR5PSIxIi8+CiAgICA8c3RvcCBvZmZzZXQ9IjEwMCUiIHN0b3AtY29sb3I9IiNmZmZmZmYiIHN0b3Atb3BhY2l0eT0iMSIvPgogIDwvbGluZWFyR3JhZGllbnQ+CiAgPHJlY3QgeD0iMCIgeT0iMCIgd2lkdGg9IjEiIGhlaWdodD0iMSIgZmlsbD0idXJsKCNncmFkLXVjZ2ctZ2VuZXJhdGVkKSIgLz4KPC9zdmc+);
+      background: -webkit-linear-gradient(to left,  #686868 0%,#686868 34.153846153846%,#ffffff 34.153846153846%,#ffffff 34.153846153846%);    //safari 5.1+
+      background-image: linear-gradient( to right, #686868, #686868 34.153846153846%, white 34.153846153846% );                             //modernity
+      filter: none;
+
+      padding-bottom: 60px;
+      box-shadow:
+        inset 0 1px 0 rgba(0,0,0,0.5),
+        inset 0 5px 0 rgba(0,0,0,0.2);
+
+    }
+
+    .collateral     { border-top: 1px solid #c3c3c3; padding: 57px 0 80px; }
+  //-------------------------------------------------------------------------------------
+    @media screen and (max-width: 940px) {
+      background: none;
+      & > .inner    { background: none; box-shadow: none; width: 100%; margin: 0; padding-bottom: 0; }
+    }
+  //-------------------------------------------------------------------------------------
+  }// .episode-postlude
+
+
+
+
+
+
+  /*
+  ####################################################################################
+  ####################################################################################
+  EPISODE-POSTLUDE: RECENT EPISODES
+  ####################################################################################
+  #################################################################################### */
+  .episode-postlude .recents {
+    width: 31.692307692308%;
+    float: left;
+    color: #dddddd;
+    header h1 {
+      background: rgba(0,0,0,0.5);
+      padding: 51px 7.766990291262% 14px 3.883495145631%;
+      margin: 0 0 36px -3.883495145631%;
+      width: 100%;
+      color: white;
+      font: normal 700 0.875em/1 $font-prox;
+    }
+    article {
+      margin-bottom: 49px;
+      a         { display: block; }
+      h1        { font: normal 1.375em/1.1 $font-freight; color: white; margin-bottom: 17px; }
+      .brief    { position: relative; }
+      .asset    { position: absolute; width: 79px; }
+      img       { width: 100%; height: auto; }
+      .synopsis { margin-left: 95px; }
+      p         { font: normal 0.8125em/1.35 $font-prox; }
+      time      {
+        color: #a4a4a4;
+        text-transform: uppercase;
+        font: normal 700 0.6875em/1 $font-prox;
+        border-top: 1px solid #7a7a7a;
+        padding-top: 6px;
+        display: block;
+        margin-bottom: 9px;
+      }
+      a:hover {
+        h1      { text-decoration: underline; }
+        time,p  { color: white; }
+      }
+    }
+  //-------------------------------------------------------------------------------------
+    @media screen and (max-width: 940px) {
+      width: 100%;
+      float: none;
+      background: #686868;
+      box-sizing: border-box;
+      padding: 0 5% 45px;
+      > header {
+        background: rgba(0,0,0,0.5);
+        padding: 51px 0 14px;
+        margin: 0 0 36px 0;
+        h1 {
+          background: transparent;
+          padding: 0 2.5%;
+          margin: 0;
+        }
+      }
+      // ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~
+        @media screen and (min-width: 571px) {
+          article {
+            float: left;
+            width: 48%;
+            &:nth-of-type(even) { float: right; }
+            &:nth-of-type(odd)  { clear: both; }
+          }
+        }
+      // ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~
+    }
+  //-------------------------------------------------------------------------------------
+  }// .episode-postlude .recents
+
+
+
+
+
+
+
+  /*
+  ####################################################################################
+  ####################################################################################
+  ARCHIVE BROWSER
+  ####################################################################################
+  #################################################################################### */
+  .archive-browser {
+    width: 65.846153846154%;
+    float: right;
+    font-family: $font-prox;
+    line-height: 1;
+    & > h1,.columns   { margin-left: 9.228971962617%; }
+    & > h1 span {
+      padding: 45px 0 11px 0;
+      font: normal 1.375em/1 $font-freight;
+      letter-spacing: -0.02em;
+      display: block;
+      width: 100%;
+      padding-left: 7px;
+      margin-left: -7px;
+      border-bottom: 1px solid #c5c5c5;
+    }
+    .columns {
+      position: relative;
+      padding: 37px 0 60px;
+      box-shadow:
+        inset 54px 0 0 white,
+        inset 55px 0 0 #f7cbab,
+        inset 167px 0 0 white,
+        inset 168px 0 0 #f7cbab;
+    }
+    .liminal-picker {
+      position: absolute;
+      width: 174px;
+      min-height: 400px;
+      box-sizing: border-box;
+      color: #c8c8c8;
+      text-transform: uppercase;
+      font-size: 0.8125em;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      left: -8px;
+      top: 37px;
+      .years,.months        { position: absolute; top: 0; }
+      .years                { width: 69px; left: 0; }
+      .months               { width: 119px; left: 63px; }
+      span,li               { display: block; width: 100%; height: 31px; box-sizing: border-box; }
+      span                  { padding: 10px 0 0 9px; cursor: pointer; }
+      span:hover            { color: $orange; background: rgba(0,0,0,0.08); box-shadow: inset -6px 0 0 white; }
+      .selected span        { background: image-url("i/archive-browser-flag.png") no-repeat right top; background-size: 119px 31px; color: white; }
+      .selected span:hover  { box-shadow: none; color: white; }
+      .months span          { padding: 11px 0 0 18px; }
+    }
+    .directory {
+      margin-left: 205px;
+    }
+    .standard-picker {
+      box-shadow: inset 0 -7px 0 white;
+      background: #c1e5f2; // pale blue
+      border-top: 1px solid #31aad3;
+      display: none;
+      padding: 16px 4.6875% 0;
+      margin-bottom: 26px;
+      box-sizing: border-box;
+      form,.fields    { width: 100%; }
+      form            {
+        display: block;
+        padding-bottom: 25px;
+        background: image-url("i/inverted-triangle-blue.png") no-repeat left bottom;
+        background-size: 14px 7px;
+      }
+      .field          { width: 46.551724137931%; float: left; }
+      .months         { float: right; }
+      select          { display: block; width: 100%; font-size: 14px; /* Look, I know...I know. But unless anyone can show me a bulletproof way to get all browsers in agreement with 'em's, then I gotta do it. */ }
+    }
+    .results {
+      min-height: 400px;
+      li,a,time,span  { display: block; }
+      li,a            { width: 100%; }
+      li              { border-bottom: 1px solid #e6e6e6; }
+      li:last-of-type { border-bottom: none; }
+      a               { box-sizing: border-box; position: relative; padding: 8px 5px 8px 0; }
+      time {
+        position: absolute;
+        width: 17px;
+        height: 17px;
+        background: image-url("i/archive-browser-calendar.png") no-repeat;
+        background-size: 17px 137px;
+        padding-top: 5px;
+        text-align: center;
+        color: white;
+        box-sizing: border-box;
+        font: normal 700 0.625em/1 $font-prox;
+      }
+      span            { font: normal 0.9375em/1.2 $font-freight; margin-left: 32px; }
+      a:hover span    { text-decoration: underline; color: $orange; }
+      a:hover time    { background-position: 0 -120px; }
+      &.loading {
+        opacity: 0.3;
+      }
+    }
+  //-------------------------------------------------------------------------------------
+    @media screen and (max-width: 940px) {
+      width: 100%;
+      float: none;
+      box-sizing: border-box;
+      padding: 0 5%;
+      & > h1, & > .columns  { margin: 0; }
+      .results              { min-height: 0; }
+    }
+  //-------------------------------------------------------------------------------------
+    @media screen and (max-width: 570px) {
+      & > h1 span           { border-bottom: none; padding-bottom: 20px; }
+      .columns              { box-shadow: none; padding-top: 0; }
+      .liminal-picker       { display: none; }
+      .directory            { margin-left: 0; }
+      .standard-picker      { display: block; width: 110%; margin-left: -5.5%; padding: 16px 5.5% 0; }
+    }
+  //-------------------------------------------------------------------------------------
+    @media screen and (min-width: 501px) {
+      .show-full-results    { display: none; }
+    }
+  //-------------------------------------------------------------------------------------
+    @media screen and (max-width: 500px) {
+      .results              { position: relative; z-index: 1; }
+      .results ul           { max-height: 280px; overflow: hidden; z-index: 2; position: relative; }
+      .show-full-results {
+        background-image: linear-gradient( rgba(255,255,255,0.0), white 75%, white );
+        z-index: 3;
+        height: 130px;
+        width: 100%;
+        position: absolute;
+        bottom: 0;
+        button {
+          display: block;
+          -webkit-appearance: none;
+          cursor: pointer;
+          margin: 0 auto;
+          position: absolute;
+          bottom: 0;
+          width: 100%;
+          height: 34px;
+          color: white;
+          font: normal 700 0.875em/1 $font-prox;
+          text-align: center;
+          border: none;
+          box-sizing: border-box;
+          background:
+            image-url("i/inverted-carets.png") no-repeat left 43px top 12px,
+            image-url("i/inverted-carets.png") no-repeat right 43px top 12px;
+          background-size: 10px 10px, 10px 10px;
+          background-color: $blue;
+          &:hover   { background-color: $orange; }
+        }
+      }
+      .results.show-everything {
+        ul                    { max-height: none; }
+        .show-full-results    { display: none; }
+      }
+    }
+  //-------------------------------------------------------------------------------------
+  }// .archive-browser
+
+
+
+
+
+
+}//body.episode

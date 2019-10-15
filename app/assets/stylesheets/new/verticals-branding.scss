@@ -1,0 +1,6 @@
+$verticals: ("education", "politics", "business", "health", "environment");
+
+@each $vertical in $verticals {
+        body.#{$vertical}.landing .masthead  { background-image: image-url("i/masthead-#{$vertical}.jpg"); }
+}
+

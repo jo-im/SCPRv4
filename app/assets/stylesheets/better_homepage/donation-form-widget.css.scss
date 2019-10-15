@@ -1,0 +1,283 @@
+#springboard {
+  font-family: "franklin-gothic-urw";
+  border: 2px solid rgb(0, 116, 150);
+  box-sizing: border-box;
+  padding: 20px 20px 41px 22px;
+  -webkit-box-shadow: -5px 5px 0px 0px rgba(0,116,150,1);
+  -moz-box-shadow: -5px 5px 0px 0px rgba(0,116,150,1);
+  box-shadow: -5px 5px 0px 0px rgba(0,116,150,1);
+  margin-top: 28px;
+  margin-left: 15px;
+  margin-right: 13px;
+  width: 100%;
+}
+
+.springboard__title {
+  color: rgb(0, 116, 150);
+  font-family: "abril-titling";
+  font-size: 22px;
+  font-weight: 700;
+  line-height: 30px;
+  margin: 0px;
+}
+
+.springboard__description {
+  font-size: 16px; 
+  line-height: 22px;
+  margin-bottom: 0px;
+  margin-top: 10px;
+}
+
+#springboard__one-time-donation-fields {
+  display: none;
+}
+
+.springboard__donation-fields {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  margin-top: 20px;
+}
+
+#springboard input[type="radio"] {
+  display: none;
+}
+
+#springboard input[type="radio"]:checked+.springboard__label {
+  background-color: rgb(49, 171, 212);
+  color: white;
+}
+
+.springboard__label {
+  align-items: center;
+  background-color: rgb(238, 238, 238);
+  border-radius: 3px;
+  display: flex;
+  font-size: 16px;
+  justify-content: center;
+  height: 50px;
+  margin-bottom: 20px;
+  width: 110px;
+}
+
+.springboard__label:hover {
+  cursor: pointer;
+}
+
+.springboard__leadership-circle {
+  width: 100%;
+}
+
+.springboard__other-amount {
+  position: relative;
+  width: 100%;
+}
+
+.springboard__other-amount .springboard__dollar-sign-prefix {
+  align-items: center;
+  display: flex;
+  font-size: 18px;
+  font-weight: 100;
+  justify-content: center;
+  height: 50px;
+  width: 30px;
+  position: absolute;
+  z-index: 1;
+}
+
+.springboard__other-amount input {
+  border: 1px solid rgb(137, 137, 137);
+  box-sizing: border-box;
+  font-family: "franklin-gothic-urw";
+  font-size: 16px;
+  height: 50px;
+  padding-left: 30px;
+  width: 100%;
+}
+
+.springboard__other-amount .springboard__per-month-suffix {
+  align-items: center;
+  bottom: 0px;
+  box-sizing: border-box;
+  color: rgb(108, 117, 121);
+  display: flex;
+  height: 50px;
+  font-size: 16px;
+  justify-content: flex-end;
+  padding-right: 16px;
+  position: absolute;
+  right: 0px;
+  width: 60px;
+}
+
+#springboard__continue {
+  font-size: 1rem;
+  background-color: white;
+  border: solid 1px #31abd4;
+  color: #31abd4;
+  display: block;
+  font-weight: 500;
+  letter-spacing: 0.03px;
+  line-height: 3;
+  margin: 0 auto;
+  margin-top: 30px;
+  max-width: 250px;
+  text-align: center;
+  text-decoration: none;
+  width: 80%;
+}
+
+#springboard__continue:hover {
+  background-color: #dbf0f7;
+  color: #4db3d9;
+}
+
+.springboard__recurs {
+  display: block;
+  font-size: 18px;
+  margin-bottom: 12px;
+  margin-right: 10px;
+  position: relative;
+  padding-left: 35px;
+  cursor: pointer;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+.springboard__recurs input {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+  height: 0;
+  width: 0;
+}
+
+.springboard__recurs-radio {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 22px;
+  width: 22px;
+  border: 1px solid rgb(137, 137, 137);
+  border-radius: 50%;
+}
+
+/* Create the checkmark/indicator (hidden when not checked) */
+.springboard__recurs-radio:after {
+  content: "";
+  position: absolute;
+  display: none;
+}
+
+input:checked + .springboard__recurs {
+  font-weight: bold;
+}
+
+input:checked + .springboard__recurs .springboard__recurs-radio {
+  border: 1px solid rgb(49, 171, 212);
+}
+
+/* Show the checkmark when checked */
+input:checked + .springboard__recurs .springboard__recurs-radio:after {
+  display: block;
+}
+
+.springboard__recurs .springboard__recurs-radio:after {
+  background: rgb(49, 171, 212);
+  border-radius: 50%;
+  height: 14px;
+  left: 4px;
+  top: 4px;
+  width: 14px;
+}
+
+.springboard__radios {
+  display: flex;
+  margin-top: 20px;
+}
+
+.springboard__recurs-container {
+  width: 50%;
+}
+
+.tool-tip-wrapper {
+  width: auto;
+  clear: none;
+  margin-right: 10px;
+  margin-bottom: 0;
+  left: unset;
+  right: -275px;
+  top: -55px;
+  margin-bottom: 20px;
+  margin-top: 0px;
+  overflow: hidden;
+  display: none;
+  overflow: visible;
+  padding-left: 20px;
+  position: absolute;
+  top: -55px;
+  left: 20px;
+  z-index: 9;
+}
+
+@media only screen and (min-width: 321px) {
+  .springboard__label {
+      width: 45%;
+  }
+
+  .springboard__leadership-circle {
+      width: 100%;
+  }
+}
+
+@media only screen and (min-width: 1300px) {
+  #springboard {
+    -webkit-box-shadow: -10px 10px 0px 0px rgba(0,116,150,1);
+    -moz-box-shadow: -10px 10px 0px 0px rgba(0,116,150,1);
+    box-shadow: -10px 10px 0px 0px rgba(0,116,150,1);
+    padding: 30px 52px 38px 38px;
+  }
+
+  .springboard__title {
+    font-size: 35px;
+    line-height: 42px;
+  }
+
+  .springboard__description {
+    font-size: 18px;
+    line-height: 24px;
+  }
+
+  .springboard__radios {
+    justify-content: flex-start;
+  }
+
+  .springboard__recurs-container {
+    margin-right: 55px;
+    width: auto;
+  }
+
+  .springboard__label {
+    height: 50px;
+    width: 30%;
+  }
+
+  .springboard__leadership-circle {
+    height: 50px;
+    width: 47.5%;
+  }
+
+  .springboard__other-amount {
+    height: 50px;
+    width: 47.5%;
+  }
+
+  #springboard__continue {
+    height: 45px;
+    margin-bottom: 0px;
+    margin-top: 18px;
+    width: 246px;
+  }
+}

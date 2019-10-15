@@ -1,0 +1,113 @@
+
+
+/* ########################################################################################################################## */
+
+.bound												{ width: 1150px; }
+
+/* ########################################################################################################################## */
+
+.trait												{ background-image: image-url("i/1x/attribute-icons.png"); }
+
+/* ########################################################################################################################## */
+
+.masthead											{ background-image: image-url("i/1x/masthead-politics.jpg"); }
+.masthead .station h4 a								{ background-image: image-url("i/1x/logo-kpcc.png"); }
+.masthead .titling h1 a								{ background-image: image-url("i/1x/logo-represent.png"); }
+body.education .masthead .titling h1 a              { background-image: image-url("i/1x/logo-education.png"); }
+.masthead .titling h2								{ background: black; }
+.masthead .station .kpcc-links li:first-child a		{ background-image: image-url("i/1x/workbench-icons.png"); }
+.masthead .station .donate a						{ background-image: image-url("i/1x/workbench-icons.png"); }
+.masthead .station .search-trigger					{ background-image: image-url("i/1x/workbench-icons.png"); font-size: 1px; }
+.masthead .kpcc-ledge								{ display: none; }
+.masthead .kpcc-search								{ background: black; }
+.masthead .follow-us a								{ background-image: image-url("i/1x/workbench-icons.png"); }
+.masthead .pane h1 a								{ background-image: image-url("i/1x/logo-kpcc.png"); }
+.masthead .pane .close								{ background-image: image-url("i/1x/btn-ledge-close.png"); }
+.masthead .kpcc-search form .submit					{ background-image: image-url("i/1x/btn-search-submit.png"); }
+.masthead .station .shownav							{ display: none; }
+.welcome .ataglance .crawford header				{ background-image: image-url("i/1x/hq-exterior.png"); }
+.welcome .ataglance .crawford header h1				{ background: white; }
+.welcome .curated .photo figure figcaption			{ background: #515151; }
+.resources-row										{ background-image: image-url("i/1x/backdrop-palmtrees.jpg"); }
+.resources-row header                               { width: 30%; }
+.resources-row header h1 span                       { background-image: image-url("i/1x/logo-resources-represent.png"); }
+body.education .resources-row header h1 span        { background-image: image-url("i/1x/logo-resources-education.png"); }
+.resources-row nav a figcaption                     { padding-top: 10px; }
+.lunchbox											{ background-image: image-url("i/1x/fauxcol-lunchbox-subfloor.png"); }
+.lunchbox .inner									{ background-image: image-url("i/1x/fauxcol-lunchbox-floor.png"); background-position: 33% center; }
+.lunchbox .treats .featured div						{ background-image: image-url("i/1x/ephemera-lunchbox-ledge.png"); }
+.lunchbox .treats .inbrief .quote footer a			{ background-image: image-url("i/1x/workbench-icons.png"); }
+.lunchbox .treats .events ul figure					{ background-image: image-url("i/1x/fauxcol-lunchbox-event.png"); background-position: 27% center; }
+.triptych article .byline.special					{ background-image: image-url("i/1x/attribute-ring.png"); }
+.quadrant article.has-trait .prose .byline			{ background-image: image-url("i/1x/attribute-ring.png"); }
+.waterfall											{ background-image: image-url("i/1x/fauxcol-waterfall-base.png"); }
+.waterfall .inner									{ background-image: image-url("i/1x/fauxcol-waterfall-inner.png"); }
+.waterfall .backlog									{ background-image: image-url("i/1x/fauxrow-waterfall-title.png"); }
+.waterfall .reporters figure figcaption ul a		{ background-image: image-url("i/1x/workbench-icons.png"); }
+.membership											{ background-image: image-url("i/1x/backdrop-bluecity.jpg"); }
+.membership .inner h1								{ font-size: 2em; }
+.membership .inner .brand a							{ background-image: image-url("i/1x/logo-kpcc-white.png"); }
+.epilogue header .inner h1 a						{ background-image: image-url("i/1x/logo-kpcc.png"); }
+.epilogue header .inner .pledge a					{ background-image: image-url("i/1x/workbench-icons.png"); }
+.epilogue .lastwords .partners ul li a				{ background-image: image-url("i/1x/partner-logos.png"); }
+.epilogue .cols nav .call							{ background-image: image-url("i/1x/workbench-icons.png"); }
+
+.interior .masthead .station h4 a                   { background-image: image-url("i/1x/logo-kpcc-black.png"); }
+
+.catalog                                            { background: image-url("i/fauxcol-topics-splitflood.png") repeat-y center top; }
+.catalog .inner                                     { background: image-url("i/fauxcol-topics-inner.png") repeat-y 23.153846153846% top; }
+.catalog .showcase .details .timeline .range dl     { background-image: image-url("i/1x/topics-timeline.png"); }
+.catalog .showcase                                  { border-top: 1px solid #e1e1e1; }
+.catalog .terms a:hover                             { text-decoration: underline; }
+.catalog footer a                                   { color: #31aad3; }
+.catalog footer a:hover                             { color: #f17b21; text-decoration: underline; }
+
+.prologue .share a                                  { background-image: image-url("i/1x/single-share-icons.png"); }
+.interior .masthead .station .follow-us a,
+.interior .masthead .station .search-trigger        { background-image: image-url("i/1x/workbench-icons-gray-alternates.png"); }
+.interior .masthead .titling .brand                 { }
+.interior .masthead .titling h1                     { margin-left: 25px; width: 130px; }
+.interior .masthead .titling h1 a                   { background-image: image-url("i/1x/logo-represent-interior-fitted.png"); }
+body.education.interior .masthead .titling h1 a     { background-image: image-url("i/1x/logo-education-interior-fitted.png"); }
+.interior .masthead .titling h2                     { left: 160px; }
+
+.interior .report .inner                            { background: image-url("i/fauxcol-single-report-base.png") repeat-y scroll 74.352% 0; }
+
+.interior .report .related                          { float: none; margin-left: 0; }
+.interior .report .related header,
+.interior .report .related nav a,
+.interior .report .supportive aside header          { background-image: image-url("i/1x/single-report-icons.png"); }
+.interior .report .prose blockquote                 { background-image: image-url("i/1x/flourish-blockquote.png"); }
+.report .comments-trigger a                         { background-image: image-url("i/1x/single-comments-balloons.png"); }
+.report .audio .audio-trigger button                { background: transparent image-url("i/1x/workbench-icons.png") no-repeat -258px -250px; }
+
+.partner.mercedes                                   { background-color: #dcdcdc; }
+
+.interior .townhall .inner                          { background: image-url("i/1x/fauxcol-townhall-ie8-triage.png") repeat-y center top; }
+.townhall .supportive .reporter figcaption ul a     { background-image: image-url("i/1x/townhall-contact-icons.png"); }
+.townhall .backlog footer a                         { color: #31AAD3; }
+.townhall .backlog footer a:hover                   { text-decoration: underline; }
+
+.partner.kpccforipad a:hover .inner .action         { background: #f17b21; }
+.partner.kpccforipad a:hover .inner .action mark    { color: white; }
+
+.epilogue .cols nav .mobile a                       { background: none; padding: 0 0 0 0; display: inline-block; }
+.epilogue .grant li                                 { background: none !important; }
+
+.audio-player                                       { background: #ececec; border-top: 1px solid gray; }
+.audio-player button                                { background-image: image-url("i/1x/audio-player-utilities.png"); }
+
+.listen-live .masthead,
+.listen-live .player .volume-toggle,
+.listen-live .player .schedule-toggle,
+.listen-live .schedule,
+.listen-live .volume-controls                       { display: none; }
+
+.listen-live .player {
+  .jp-pause,
+  .jp-play                                          { background: transparent; }
+}
+
+.listen-live .wrapper-overlay                       { filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#99000000', endColorstr='#99000000',GradientType=0 ); }
+.listen-live .titling                               { border-bottom: 1px solid #fff; }
+.listen-live .player a                              { color: #fff; }

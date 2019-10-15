@@ -1,0 +1,1330 @@
+
+/*
+###############################################################################
+###############################################################################
+
+OVERALL TWEAKS
+
+###############################################################################
+############################################################################### */
+
+body.program {
+  mark    { color: inherit; }
+  cite    { font-style: italic; font-weight: inherit; }
+  b       { font-weight: inherit; }
+}
+
+
+
+
+/*
+###############################################################################
+###############################################################################
+
+PLUG
+-------------------------------------------------------------------------------
+Big ads are too big.
+
+###############################################################################
+############################################################################### */
+
+.plug iframe {
+  display: block;
+  width: 100% !important;
+  max-width: 300px !important;
+}
+.exordium .plug iframe {
+  height: 50px !important;
+}
+
+
+
+
+
+
+
+/*
+###############################################################################
+###############################################################################
+
+MASTHEAD
+-------------------------------------------------------------------------------
+This builds on top of rules already established in ( masthead.css.scss ).
+
+###############################################################################
+############################################################################### */
+
+body.program .masthead {
+  .inner                      { padding-top: 172px; /* more than the default 102 */ }
+  .brand                      { overflow: hidden; position: relative; margin-bottom: 16px; }
+  .titling h1                 { margin-bottom: 0; }
+  .subscribe {
+    position: absolute;
+    bottom: 6px;
+    right: 0;
+    li {
+      display: block;
+      float: left;
+      width: 25px;
+      height: 25px;
+      margin-right: 17px;
+      &:last-child            { margin-right: 0; }
+    }
+    a {
+      @include texthide;
+      background: image-url("i/ephemera-program-social.png") no-repeat 2px 2px;
+      background-size: 179px 62px;
+      width: 100%;
+      height: 100%;
+      &.facebook              { background-position: -38px 2px; }
+      &.podcast               { background-position: -78px 2px; }
+      &.email                 { background-position: -118px 2px; }
+      &.rss                   { background-position: -158px 2px; }
+    }
+  }
+  .details                    { position: relative; border-top: 1px solid #31aad3; }
+  h2 {
+    padding-top: 16px;
+    font-size: 1.0625em;
+    line-height: 1.15;
+    color: white;
+    border-top: none;
+    margin-right: 350px;
+    mark        { color: $blue; }
+  }
+  h3 {
+    position: absolute;
+    top: 16px;
+    right: 0;
+    text-align: right;
+    color: rgba(49,170,211,0.7);
+    font: normal 0.8125em/1.1 $font-prox;
+    background: image-url("i/ephemera-program-social.png") no-repeat right -45px;
+    background-size: 179px 62px;
+    min-height: 20px;
+    box-sizing: border-box;
+    width: 330px;
+    padding: 3px 25px 0 0;
+  }
+}
+
+
+//  ==============================================================================
+//  WORDMARK-NOT-LIVE-TYPE TITLING EXCEPTIONS
+//  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    body.program.the-frame .masthead,
+    body.program.take-two .masthead,
+    body.program.offramp .masthead {
+      .titling h1 a {
+        @include texthide;
+        width: 282px;
+        height: 49px;
+        background-repeat: no-repeat;
+        background-size: 100%;
+      }
+    }
+//  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    body.program.the-frame .masthead .titling h1 a  { background-image: image-url("i/program-wordmark-the-frame.png"); }
+    body.program.take-two .masthead .titling h1 a   { background-image: image-url("i/program-wordmark-take-two.png"); }
+    body.program.offramp .masthead .titling h1 a    { background-image: image-url("i/program-wordmark-offramp.png"); }
+//  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+//  ==============================================================================
+
+
+
+//----------------------------------------------------------------------------------
+  @media screen and (max-width: 750px) {
+
+    body.program .masthead {
+      .inner          { padding-top: 100px; }
+      .subscribe      { position: static; }
+      .titling h1     { margin-bottom: 18px; }
+      h2              { padding-bottom: 15px; border-bottom: 1px solid rgba(49,170,211,0.7); margin: 0 0 15px 0; text-align: left; }
+      h2 mark         { display: block; }
+      h3              { position: static; margin: 0 auto; width: auto; }
+    }
+
+  }
+//----------------------------------------------------------------------------------
+
+
+
+
+
+
+
+
+
+/*
+###############################################################################
+###############################################################################
+
+EXORDIUM
+-------------------------------------------------------------------------------
+The top content part of a Program Landing Page. Includes its curated feature.
+
+###############################################################################
+############################################################################### */
+
+.exordium {
+  border-bottom: 1px solid #e0e0e0;
+  padding-bottom: 55px;
+  & > header {
+    margin-top: -51px;
+    margin-bottom: 40px;
+    h1 {
+      background: white;
+      padding-top: 25px;
+      padding-right: 4.5%;
+      padding-left: 4.5%;
+      width: 100%;
+      margin-left: -4.5%;
+      font: normal 300 3em/1 $font-freight;
+    }
+  }
+
+  a:hover                       { text-decoration: underline; }
+
+  .content {
+    font-family: $font-prox;
+    z-index: 1;
+    background:
+      image-url("i/fauxcol-program-exordium-topper.png") no-repeat 65.846153846154% top,
+      image-url("i/fauxcol-program-exordium-lightgray.png") repeat-y 68.307692307692% top;
+    background-size:
+      1500px 1px,
+      1500px 10px;
+    padding-top: 1px;
+    .featured {
+      width: 65.846153846154%;
+      float: left;
+      .photo                      { width: 74.065420560748%; float: right; position: relative; z-index: 2; }
+      .photo.ratio .img-contain   { background: white; }
+      .summary                    { width: 22.196261682243%; float: left; position: relative; z-index: 3; }
+    }
+
+    .summary {
+      .play a,
+      .download a,
+      footer a {
+        font-weight: 700;
+        line-height: 1;
+        background: image-url("i/program-listen-icons.png") no-repeat;
+        background-size: 45px 381px;
+        box-sizing: border-box;
+      }
+      .prompt {
+        background: white;
+        box-shadow: 0 7px 0 rgba(0,0,0,0.12);
+        width: 147.368421052632%; // 190 + 90 / 190
+        box-sizing: border-box;
+        padding: 7px 15px 18px 0;
+        margin-bottom: 16px;
+        h1                      { margin-bottom: 15px; }
+        .play,.play *           { display: block; }
+        .play a {
+          min-height: 45px;
+          padding: 1px 0 0 53px;
+          color: $blue;
+          display: block;
+          b,span                { line-height: 1; }
+          b                     { font-size: 1.5625em; margin-bottom: 1px; letter-spacing: -0.025em; }
+          span                  { font-size: 1.0625em; color: #9ad6ea; }
+          &:hover {
+            background-position: 0 -90px;
+            color: $orange;
+            text-decoration: none;
+            b                   { text-decoration: underline; }
+            span                { color: #ffc191; }
+          }
+        }
+      }
+      .download {
+        margin-bottom: 11px;
+        a {
+          font-size: 0.75em;
+          font-weight: bold;
+          display: inline-block;
+          color: #b4b3b3;
+          background-position: 0 -180px;
+          min-height: 14px;
+          padding: 1px 0 0 20px;
+          span,i                { white-space: nowrap; }
+          i                     { font-style: normal; font-weight: normal; color: #c5c5c5; font-size: 0.83333333333333em; }
+          &:hover               { color: $orange; background-position: 0 -244px; text-decoration: none; }
+          &:hover span          { text-decoration: underline; }
+          &:hover i             { color: #ffc191; }
+        }
+      }
+      .description {
+        margin-bottom: 13px;
+        font: normal 0.8125em/1.72 $font-merri;
+      }
+      footer {
+        a {
+          display: block;
+          padding: 5px 8px 0 0;
+          border-top: 1px solid $blue;
+          text-align: right;
+          font-size: 0.875em;
+          letter-spacing: -0.02em;
+          padding-right: 10px;
+          color: $blue;
+          background-position: right -295px;
+          &:hover               { background-position: right -359px; color: $orange; border-top: 1px solid $orange; }
+        }
+      }
+    }// .summary
+
+    .plug {
+      iframe                    { margin: 0 auto; }
+      .appeal                   { text-align: center; display: block; color: #7e7e7e; padding-top: 7px; padding: 7px 0 15px; }
+      .appeal a                 { display: inline-block; font: normal 0.8125em/1.1 $font-freight; } 
+    }
+
+    .supporting                 { width: 31.692307692308%; float: right; }
+    .prompt h1,
+    .segments h2,
+    .segments footer figcaption { font-weight: 700; text-transform: uppercase; font-size: 0.6875em; line-height: 1; }
+
+    .segments {
+      background: white;
+      margin-bottom: 30px;
+      padding: 7px 0 30px;
+      h2                        { color: $orange; margin-bottom: 19px; }
+      nav {
+        padding-bottom: 12px;
+        font-size: 0.875em;
+        color: #313131;
+        li {
+          line-height: 1.1;
+          margin-bottom: 0.65em;
+          background: image-url("i/ephemera-disc-lightgray.png") no-repeat left 5px;
+          background-size: 4px 4px;
+          padding-left: 2.669902912621%;
+          margin-left: -2.669902912621%;
+          padding-left: 11px;
+          margin-left: -11px;
+        }
+      }
+      footer {
+        border-top: 1px solid #fbd7bc;
+        width: 100%;
+        padding-left: 7.766990291262%; // 32 / 412
+        margin-left: -7.766990291262%;
+        a                       { display: block; }
+        figure                  { position: relative; width: 100%; padding-top: 1px; }
+        mark {
+          display: inline-block;
+          position: absolute;
+          right: 0;
+          top: 5px;
+          text-align: right;
+          color: $orange;
+          font-weight: 700;
+          font-size: 0.875em;
+          letter-spacing: -0.035em;
+          line-height: 1.1;
+          padding-right: 12px;
+          background: image-url("i/ephemera-triangle-orange.png") no-repeat right 5px;
+          background-size: 5px 6px;
+        }
+        figcaption {
+          display: inline-block;
+          background: image-url("i/ephemera-plus.png") no-repeat left 2px;
+          background-size: 6px 6px;
+          color: #b3b3b3;
+          padding-left: 2.669902912621%;
+          margin-left: -2.669902912621%;
+          span                  { color: #ffa662; }
+        }
+        a:hover {
+          mark,figcaption       { text-decoration: underline; color: $orange; }
+        }
+      }
+    }
+  }
+}
+
+
+
+
+/*
+###############################################################################
+###############################################################################
+
+EXORDIUM, BUT THE KIND THAT FEATURES A NON-AUDIO SINGLE SEGMENT
+
+###############################################################################
+############################################################################### */
+
+.exordium.curated-segment {
+  .content {
+    background:
+      image-url("i/fauxcol-program-exordium-topper-alt.png") no-repeat 65.846153846154% top,
+      image-url("i/fauxcol-program-exordium-lightgray.png") repeat-y 68.307692307692% top;
+    background-size:
+      1500px 1px,
+      1500px 10px;
+    .summary {
+      .byline {
+        font: normal 1.1875em/1 $font-prox;
+        color: $blue;
+        letter-spacing: -0.03em;
+        padding-top: 11px; // not 7
+        padding-bottom: 21px; // not 18
+        margin-bottom: 22px; // not 16
+        h2,h3                       { font-weight: 700; }
+        h2                          { color: #066585; margin-bottom: 4px; }
+      }
+      .description {
+        font-size: 0.9375em; // not 0.8125
+        line-height: 1.85;
+        margin-bottom: 21px; // not 13
+      }
+    }
+  }
+  .supporting .segments {
+    padding-bottom: 45px; // not just 30
+    h2                          { margin-bottom: 12px; /* not 19 */ }
+    h2 span                     { color: #f9b582; display: inline-block; padding-left: 4px; }
+    .freshest                   { display: block; width: 100%; padding-bottom: 20px; }
+    .freshest:hover figcaption  { text-decoration: underline; }
+    .freshest:hover .ratio      { box-shadow: 0 4px 0 $orange; }
+    .ratio                      { width: 49.757281553398%; float: left; }
+    .ratio .img-contain img     { width: 140%; margin-left: -20%; }
+    figcaption                  { width: 46.116504854369%; float: right; font: normal 300 1.5em/1.05 $font-freight; }
+  }
+}
+
+
+
+
+
+
+
+/*
+###############################################################################
+###############################################################################
+
+EXORDIUM MEDIA QUERIES
+
+###############################################################################
+############################################################################### */
+
+//----------------------------------------------------------------------------------
+  @media screen and (min-width: 1131px) and (max-width: 1300px) {
+
+    .exordium {
+      .content {
+        .segments nav   { font-size: 0.75em; }
+        .summary {
+          .download     { margin-bottom: 6px; }
+          .prompt,.byline {
+            padding-bottom: 10px;
+            h1          { margin-bottom: 8px; }
+            .play a {
+              padding-top: 8px;
+              b         { font-size: 1em; }
+              span      { font-size: 0.875em; }
+            }
+            h2,h3       { font-size: 0.8125em; }
+          }
+          .description  { font-size: 0.75em; }
+        }
+      }
+    }// .exordium
+
+  }
+//----------------------------------------------------------------------------------
+  @media screen and (max-width: 1130px) {
+
+    .exordium {
+      padding-bottom: 0;
+      & > header {
+        font-size: 85%; // Child declarations to specifically target the H1's font size, based on character length.
+        margin-bottom: 30px;
+      }
+      .content {
+        background: none !important;
+        border-top: 1px solid gray;
+        padding-top: 0;
+        .supporting {
+          float: none; width: 100%;
+          padding-top: 15px;
+          padding-bottom: 30px;
+          background: image-url("i/flourish-gray-dot.png") repeat-y center top;
+          background-size: 1px 1px;
+          .segments             { width: 48.5%; float: left; padding-top: 0; margin-bottom: 0; padding-bottom: 0; }
+          .segments footer      { padding-left: 0; margin-left: 0; }
+          .plug                 { width: 48.5%; float: right; background: #e9e9e9; padding: 28px 0 20px; }
+        }
+        .featured {
+          float: none; width: 100%;
+          border-bottom: 1px solid rgba(0,0,0,0.15);
+          padding-bottom: 25px;
+          .photo                { width: 60%; }
+          .summary              { width: 37%; }
+          .summary .prompt      { width: 115%; }
+        }
+      }
+    }// .exordium
+
+  }
+//----------------------------------------------------------------------------------
+  @media screen and (max-width: 830px) {
+
+    .exordium {
+      .content {
+        .segments {
+          nav             { font-size: 0.75em; }
+        }
+        .featured {
+          .photo          { width: 55%; }
+          .summary {
+            width: 43%;
+            .prompt {
+              padding-bottom: 8px;
+              box-shadow: 0 4px 0 rgba(0, 0, 0, 0.12);
+              margin-bottom: 9px;
+              h1          { margin-bottom: 8px; }
+              .play a {
+                background-size: 23px 191px;
+                min-height: 0;
+                padding: 0 0 0 30px;
+                &:hover   { background-position: 0 -45px; }
+                b         { font-size: 1em; }
+                span      { font-size: 0.875em; }
+              }
+              &.byline {
+                padding: 12px 0;
+                margin-bottom: 15px;
+                h2,h3     { font-size: 0.8125em; }
+              }
+            }
+            .description  { font-size: 0.75em; line-height: 1.5; }
+          }
+        }
+      }
+    }// .exordium
+
+  }
+//----------------------------------------------------------------------------------
+  @media screen and (max-width: 950px) {
+
+    .exordium {
+      & > header {
+        font-size: 70%;
+      }
+    }// .exordium
+
+  }
+//----------------------------------------------------------------------------------
+  @media screen and (max-width: 635px) {
+
+    .exordium {
+      .content .supporting {
+        background: none;
+        .segments     { float: none; width: 100%; margin-bottom: 30px; }
+        .segments nav { font-size: 0.8125em; }
+        .plug         { float: none; width: 100%; }
+      }
+    }
+
+  }
+//----------------------------------------------------------------------------------
+  @media screen and (min-width: 486px) and (max-width: 635px) {
+
+    .exordium.curated-segment {
+      .supporting .segments .latest figure {
+        figcaption  { float: left; width: 42%; font-size: 1.2em; }
+        .ratio      { float: right; width: 55%; }
+      }
+    }
+
+  }
+//----------------------------------------------------------------------------------
+  @media screen and (max-width: 560px) {
+
+    .exordium {
+      & > header {
+        font-size: 60%;
+        margin-bottom: 18px;
+      }
+      .content {
+        .featured {
+          .photo {
+            width: 100%;
+            float: none;
+            margin-bottom: 6px;
+          }
+          .summary {
+            width: 100%;
+            float: none;
+            .prompt     { width: 100%; }
+          }
+        }
+      }
+    }// .exordium
+
+  }
+//----------------------------------------------------------------------------------
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*
+###############################################################################
+###############################################################################
+
+NEOTERIC
+-------------------------------------------------------------------------------
+The long two-column flow of recent content (segments and episodes, mostly).
+
+###############################################################################
+############################################################################### */
+
+.neoteric {
+  background: image-url("i/fauxcol-program-neoteric-base.png") repeat-y center top;
+  & > .inner {
+    padding-bottom: 90px;
+    background: image-url("i/fauxcol-program-neoteric-inner.png") repeat-y 74.384615384615% top;
+    background-size: 1500px 10px;
+  }
+
+  .segments {
+    width: 68.307692307692%;
+    float: left;
+    padding-top: 38px;
+    font-family: $font-freight;
+    & > h1 {
+      font-weight: 300;
+      font-size: 2em;
+      color: #7f7f7f;
+      line-height: 1;
+      margin-bottom: 37px;
+    }
+
+    figure {
+      width: 30.855855855856%;
+      float: left;
+      margin: 0 3.716216216216% 39px 0; // R: 33 / 888
+      &:nth-child(3n)             { margin-right: 0; }
+      &:nth-child(3n+1)           { clear: both; }
+      .photo {
+        border-bottom: 5px solid $blue;
+        z-index: 1;
+        font-family: $font-prox;
+        font-weight: 700;
+        line-height: 1;
+        margin-bottom: 4px;
+        text-transform: uppercase;
+        &:hover                   { border-bottom: 5px solid $orange; }
+        &.ratio .img-contain img  { width: 140%; margin-left: -20%; } // Sean is clever
+        a {
+          display: block;
+          width: 100%;
+          .fill                   { padding-top: 75.5%; }
+          .img-contain            { z-index: 2; background: $blue; }
+          .has-audio,time         { position: absolute; z-index: 3; left: 0; }
+          time {
+            top: 13px;
+            display: inline-block;
+            font-size: 0.625em;
+            color: #6e6e6e;
+            background: white;
+            padding: 6px 10px 5px 0;
+            span                  { color: $blue; }
+          }
+          &:hover time,
+          &:hover time span       { color: $orange; }
+          .has-audio {
+            bottom: 0;
+            width: 100%;
+            display: block;
+            height: 25px;
+            background: image-url("i/ephemera-program-speaker.png") no-repeat 0 0;
+            background-size: 24px 25px;
+            background-color: rgba(0,0,0,0.3);
+            overflow: hidden;
+            font-size: 0.75em;
+            color: white;
+            box-sizing: border-box;
+            padding: 8px 0 0 31px;
+            letter-spacing: 0.08em;
+          }
+        }
+      }
+      figcaption {
+        font-size: 1.3125em;
+        line-height: 1;
+        a:hover                 { text-decoration: underline; color: $orange; }
+      }
+      &:last-child {
+        .photo                  { border-bottom: 5px solid $orange; }
+        .photo a .img-contain   { background: black; }
+        figcaption a {
+          color: $orange;
+          background: image-url("i/ephemera-caret-orange.png") no-repeat right 3px;
+          background-size: 12px 19px;
+          display: block;
+          width: 100%;
+          box-sizing: border-box;
+          padding-right: 15px;
+        }
+      }
+    }// .figure
+
+  }// .segments
+
+
+  .podcast-appeal {
+    background: #3c9ecf;
+    color: white;
+    box-shadow: inset 0 38px 0 white;
+    font-family: $font-prox;
+    .prose  { text-align: center; letter-spacing: -0.02em; text-shadow: 0 0 5px #3c9ecf, 0 0 5px #3c9ecf; }
+    h1      { font-size: 1.375em; line-height: 1.18; margin-bottom: 20px; }
+    ul      { overflow: hidden; }
+    li {
+      display: block;
+      float: left;
+      width: 48%;
+      font-size: 0.9375em;
+      line-height: 1.1;
+      font-weight: 700;
+      a {
+        display: block;
+        width: 100%;
+        box-sizing: border-box;
+        padding-top: 59px;
+        background: image-url("i/ephemera-program-podcast-feeds.png") no-repeat center top;
+        background-size: 52px 432px;
+        color: #b4e7ff;
+        &:hover           { color: white; background-position: center -72px; }
+      }
+      &.any               { float: right; }
+      &.any a             { background-position: center -288px; }
+      &.any a:hover       { background-position: center -360px; }
+    }
+    span                  { display: block; border-top: 1px solid #66bbe5; padding-top: 4px; min-height: 2em; background: #3c9ecf; }
+  }
+
+
+  .library {
+    width: 23.153846153846%;
+    float: right;
+    padding-top: 45px;
+    font-family: $font-prox;
+    & > section,& > aside       { margin-bottom: 64px; }
+    h2 {
+      font: normal 1.25em/1.05 $font-freight;
+      margin-bottom: 32px;
+      color: #717171;
+    }
+    .archive h2 {
+      padding: 0 0 12px 10.63122923588%; // 32 / 301
+      margin: 0 0 12px -10.63122923588%; // 32 / 301
+      width: 100%;
+      border-bottom: 1px solid white;
+    }
+    .plug {
+      iframe                    { margin-bottom: 7px; }
+      .appeal {
+        font: normal 0.8125em/1 $font-freight;
+        color: #7e7e7e;
+        text-align: right;
+        display: block;
+        width: 100%;
+        a                       { display: inline; }
+        a:hover                 { color: black; text-decoration: underline; }
+      }
+    }
+  }
+
+  .episodes {
+    nav                         { margin-bottom: 32px; }
+    li,a,time,span              { display: block; width: 100%; }
+    li {
+      margin-bottom: 21px;
+      &:last-child              { margin-bottom: 0; }
+      time {
+        font-size: 0.75em;
+        line-height: 1;
+        color: $blue;
+        font-weight: 700;
+        border-bottom: 1px solid #d3d3d3;
+        padding: 0 0 2px 10.63122923588%; // 32 / 301
+        margin: 0 0 2px -10.63122923588%; // 32 / 301
+        mark                    { color: #004c66; }
+      }
+      span                      { font-size: 0.9375em; line-height: 1.3; }
+      a:hover {
+        time                    { color: $orange; border-bottom: 1px solid #ecbd99; }
+        time mark               { color: $orange; }
+        span                    { text-decoration: underline; }
+      }
+    }
+    footer {
+      a {
+        display: block;
+        font-weight: 700;
+        color: white;
+        background: $blue;
+        text-align: right;
+        width: 100%;
+        font-size: 0.875em;
+        line-height: 1;
+        padding: 8px 8px 8px 10.63122923588%; // 32 / 301
+        margin-left: -10.63122923588%; // 32 / 301
+        &:hover                 { background: $orange; }
+        span {
+          display: inline-block;
+          padding-right: 12px;
+          box-sizing: border-box;
+          background: image-url("i/ephemera-dart-white.png") no-repeat right 4px;
+          background-size: 7px 8px;
+        }
+      }
+    }
+  }// .episodes
+  
+  .flux-capacitor {
+    width: 100%;
+    .fields       { /* ... */ }
+    label,
+    .commit input {
+      display: block;
+      text-transform: uppercase;
+      font: normal 700 0.625em/1 $font-prox;
+      cursor: pointer;
+    }
+    label         { color: $blue; margin: 0 0 4px 6px; }
+    .field {
+      float: left;
+      margin-right: 3%;
+      &.month     { width: 38%; }
+      &.day       { width: 22%; }
+      &.year      { width: 34%; float: right; margin-right: 0; }
+      select      { display: block; width: 100%; }
+    }
+    .commit {
+      width: 100%;
+      padding-top: 20px;
+      input {
+        color: white;
+        background: $blue;
+        border: none;
+        font-size: 0.875em;
+        padding: 8px 13px 7px;
+        float: right;
+        &:hover   { background: $orange; }
+      }
+    }
+  }// .flux-capacitor
+
+}// .neoteric
+
+
+
+
+
+/*
+###############################################################################
+###############################################################################
+
+NEOTERIC MEDIA QUERIES
+
+###############################################################################
+############################################################################### */
+
+.neoteric {
+//----------------------------------------------------------------------------------
+  @media screen and (max-width: 1359px) {
+
+    .podcast-appeal {
+      box-shadow: inset 0 20px 0 white;
+      .inner                        { padding-top: 40px; }
+      h1                            { font-size: 1.1875em; }
+    }
+
+  }
+//----------------------------------------------------------------------------------
+  @media screen and (max-width: 1200px) {
+
+    .podcast-appeal {
+      h1                            { font-size: 1em; }
+      li                            { font-size: 0.8125em; }
+    }
+
+  }
+//----------------------------------------------------------------------------------  
+  @media screen and (max-width: 999px) {
+
+    .podcast-appeal {
+      box-shadow: none;
+      .inner                        { padding: 20px 2.364864864865% 20px 2.364864864865%; background-size: 30% auto; }
+      ul                            { margin-right: 29%; }
+    }
+
+  }
+
+//----------------------------------------------------------------------------------  
+  @media screen and (max-width: 490px) {
+
+    .podcast-appeal {
+      .inner {
+        background-size: 180px auto;
+        background-position: right bottom;
+        padding: 20px 2.364864864865% 144px 2.364864864865%;
+      }
+      ul                            { margin-right: 0; }
+    }
+
+  }
+
+//----------------------------------------------------------------------------------
+  @media screen and (max-width: 1100px) {
+
+    .segments figure figcaption     { font-size: 1em; }
+    .episodes li span               { font-size: 0.8125em; }
+
+  }
+//----------------------------------------------------------------------------------
+  @media screen and (min-width: 751px) and (max-width: 920px) {
+
+    .segments figure {
+      width: 47%;
+      margin-right: 0;
+
+      &:nth-child(3n+1)             { clear: none; }
+      &:nth-child(odd)              { clear: both; float: left; margin-right: 0; }
+      &:nth-child(even)             { clear: none; float: right; margin-right: 0; }
+    }
+
+  }
+//----------------------------------------------------------------------------------
+  @media screen and (max-width: 750px) {
+
+    background: none;
+    & > .inner                      { background: none; padding-bottom: 0; }
+    .segments                       { float: none; width: 100%; }
+    .library {
+      float: none;
+      width: 100%;
+      background: #e9e9e9;
+      margin-left: -5.5%;
+      padding: 40px 5.5%;
+      & > .archive                  { margin-bottom: 0; }
+      .plug {
+        border-bottom: 1px solid rgba(0,0,0,0.15);
+        margin: 0 0 40px -5.5%;
+        width: 100%;
+        padding: 0 5.5% 30px;
+      }
+      .plug iframe                  { margin: 0 auto 12px; }
+      .plug .appeal                 { text-align: center; }
+    }
+
+  }
+//---------------------------------------------------------------------------------- 
+  @media screen and (max-width: 600px) {
+
+    .segments figure {
+      width: 47%;
+      margin-right: 0;
+
+      &:nth-child(3n+1)             { clear: none; }
+      &:nth-child(odd)              { clear: both; float: left; margin-right: 0; }
+      &:nth-child(even)             { clear: none; float: right; margin-right: 0; }
+    }
+
+  }
+//----------------------------------------------------------------------------------
+}// .neoteric
+
+
+
+
+
+
+
+
+
+
+/*
+###############################################################################
+###############################################################################
+
+INTERREGNUM
+-------------------------------------------------------------------------------
+The intermission-y mishmash section of Team, Quote, Exemplary, and Ad C.
+
+###############################################################################
+############################################################################### */
+
+.interregnum {
+  border-top: 1px solid #8e8e8e;
+  background:
+    image-url("i/fauxcol-program-interregnum-base-shade.png") no-repeat center top,
+    image-url("i/fauxcol-program-interregnum-base.png") repeat-y center top;
+  background-size:
+    3000px 6px,
+    3000px 20px;
+  font-family: $font-prox;
+  & > .inner {
+    background:
+      image-url("i/fauxcol-program-interregnum-inner-shade.png") no-repeat 23.153846153846% top,
+      image-url("i/ephemera-program-dot-lightgray.png") repeat-y 74.384615384615% top,
+      image-url("i/fauxcol-program-interregnum-inner.png") repeat-y 23.153846153846% top;
+    background-size:  
+      1500px 6px,
+      1px 1px,
+      1500px 10px;
+  }
+  .team {
+    width: 21.076923076923%; // 274p
+    float: left;
+    color: #cdcdcd;
+    padding: 25px 0 50px;
+    a                     { display: block; }
+    h1 {
+      margin-bottom: 30px;
+      border-top: 1px solid rgba(255,255,255,0.28);
+      padding-top: 5px;
+      font-size: 0.875em;
+      width: 100%;
+      padding-right: 9.85401459854%; // 27 / 274
+      font-weight: 700;
+      line-height: 1.2;
+    }
+    figure {
+      width: 45.255474452555%; // 124p
+      float: left;
+      margin-bottom: 19px;
+      &:nth-child(odd)    { margin-right: 9.124087591241%; /* 25 / 274 */ }
+      .ratio .fill        { padding-top: 125%; }
+      .ratio .img-contain { background: $blue; }
+      .photo              { border-bottom: 3px solid $blue; margin-bottom: 5px; }
+      figcaption          { font: normal 0.9375em/1.1 $font-freight; color: $blue; }
+      a:hover             { text-decoration: underline; color: #a8e9ff; }
+    }
+  }
+  .melange {
+    width: 76.846153846154%; // 999p
+    float: right;
+  }
+  .quote {
+    padding-bottom: 42px;
+    border-bottom: 1px solid rgba(0,0,0,0.2);
+    background-color: #f2f2f2;
+    box-shadow: inset 0 6px 0 #e7e7e7;
+  }
+  blockquote {
+    background:
+      image-url("i/ephemera-program-quote-open.png") no-repeat 1.201201201201% top,
+      image-url("i/ephemera-program-quote-close.png") no-repeat right 0 bottom 19px;
+    background-size:
+      122px 84px,
+      137px 101px;
+    width: 100%;
+    padding-right: 1.601601601602%;
+    min-height: 100px;
+    padding-top: 14px;
+    p,footer      { margin-left: 9.60960960961%; } // 96 / 999
+    p             { color: #3c3c3c; font: italic 300 2.5625em/1.2 $font-freight; margin-bottom: 11px; }
+    footer {
+      color: #656565;
+      text-align: right;
+      span,cite   { display: block; }
+      span        { font-size: 1.125; margin-bottom: 5px; }
+      mark        { font-weight: 700; }
+      cite        { font-style: normal; text-transform: uppercase; font-size: 0.75em; }
+      b           { color: $orange; text-decoration: underline; }
+    }
+  }
+  .quote a        { display: block; }
+  .quote a:hover blockquote {
+    p             { text-decoration: underline; }
+    footer        { color: black; }
+    footer b      { color: $blue; }
+  }
+  .diptych        { padding: 24px 0 50px; }
+  .exemplary {
+    width: 61.661661661662%; // 616p
+    margin-left: 3.203203203203%; // 32p
+    float: left;
+    h1            { font-weight: 700; color: #a1a1a1; font-size: 0.875em; margin-bottom: 8px; }
+    h2            { color: #138ab3; font: normal 1.8125em/1.1 $font-freight; margin-bottom: 24px; }
+    h3 {
+      text-transform: uppercase;
+      font-weight: 700;
+      font-size: 0.6875em;
+      color: #999999;
+      padding: 3px 0 8px;
+      margin-bottom: 7px;
+      width: 100%;
+      padding-left: 11.3074204947%; // 32 / 283
+      margin-left: -11.3074204947%; // 32 / 283
+      border-bottom: 1px solid #d0d0d0;
+    }
+    a             { display: block; }
+    a:hover       { text-decoration: underline; }
+    p             { color: #3c3c3c; font: normal 0.8125em/1.5 $font-merri; }
+    .photo        { width: 48.863636363636%; /* 301p */ float: left; }
+    .ratio .img-contain { background: #f2f2f2; }
+    .prose        { width: 45.941558441558%; /* 283p */ float: right; }
+  }
+  .plug {
+    width: 30.13013013013%; // 301p
+    float: right;
+    .appeal {
+      text-align: right;
+      display: block;
+      a {
+        background: image-url("i/ephemera-dart-darkgray.png") no-repeat right 5px;
+        background-size: 6px 7px;
+        font: normal 0.8125em/1.2 $font-freight;
+        color: #303030;
+        padding-right: 11px;
+        display: inline-block;
+        &:hover   { text-decoration: underline; }
+      }
+    }
+  }
+}// . interregnum
+
+
+/*
+###############################################################################
+###############################################################################
+
+INTERREGNUM MEDIA QUERIES
+
+###############################################################################
+############################################################################### */
+
+.interregnum {
+//----------------------------------------------------------------------------------
+  @media screen and (max-width: 950px) {
+
+    background: #f2f2f2;
+    & > .inner                { background: #f2f2f2; }
+    .team {
+      width: 100%;
+      margin-left: -5.5%;
+      padding: 30px 5.5%;
+      box-shadow: inset 0 6px 0 black;
+      float: none;
+      background: #333333;
+      h1 {
+        padding: 0 0 7px;
+        border-top: none;
+        border-bottom: 1px solid rgba(255,255,255,0.2);
+        margin-bottom: 20px;
+      }
+      figure {
+        width: 17.6%;
+        margin-right: 3%;   // comfortably five across
+        &:nth-child(2n+1)   { margin-right: 3%; }
+        &:last-child        { margin-right: 0; }
+        &:nth-child(6n)     { clear: both; }
+      }
+    }
+    .melange                { width: 100%; float: none; }
+    .quote                  { width: 100%; margin-left: -5.5%; padding: 0 5.5% 35px; }
+    .diptych {
+      background: image-url("i/ephemera-program-dot-lightgray.png") repeat-y 65.563598759049% top;
+      background-size: 1px 1px;
+    }
+    .exemplary {
+      margin-left: 0;
+    }
+
+  }
+//----------------------------------------------------------------------------------
+  @media screen and (max-width: 845px) {
+
+    blockquote              { padding-top: 20px; padding-left: 3%; margin-left: -3%; }
+    blockquote p            { font-size: 1.75em; margin-bottom: 18px; margin-left: 0; }
+    .exemplary h2           { font-size: 1.25em; }
+
+  }
+//----------------------------------------------------------------------------------
+  @media screen and (max-width: 780px) {
+
+    .diptych                { background: none; }
+    .plug                   { float: none; width: 100%; }
+    .plug iframe            { margin: 0 auto 10px; }
+    .plug .appeal           { text-align: center; }
+    .exemplary {
+      float: none;
+      width: 100%;
+      padding-bottom: 30px;
+      border-bottom: 1px solid rgba(0,0,0,0.2);
+      margin-bottom: 30px;
+      .photo                { width: 33%; }
+      .prose                { width: 62%; }
+    }
+
+  }
+//----------------------------------------------------------------------------------
+  @media screen and (max-width: 520px) {
+
+    .team {
+      figure {
+        width: 31%;
+        margin-right: 3.5%;   // comfortably three across
+        &:nth-child(2n+1)     { margin-right: 3.5%; }
+        &:nth-child(3n),
+        &:last-child          { margin-right: 0; }
+        &:nth-child(4n)       { clear: both; }
+        figcaption            { font-size: 0.8125em; }
+      }      
+    }
+
+  }
+//----------------------------------------------------------------------------------
+  @media screen and (max-width: 465px) {
+
+    .exemplary {
+      .photo                { float: none; width: 100%; margin-bottom: 15px; }
+      .prose                { float: none; width: 100%; }
+    }
+
+  }
+//----------------------------------------------------------------------------------
+
+}// .interregnum
+
+
+
+
+
+
+
+
+/*
+###############################################################################
+###############################################################################
+
+OTHER PROGRAMS
+-------------------------------------------------------------------------------
+Don't like this show? That's fine, here's four others.
+
+###############################################################################
+############################################################################### */
+
+.other-programs {
+  background: #161616;
+  padding: 42px 0 61px;
+  color: #8a8a8a;
+  font-family: $font-prox;
+  & > header {
+    padding-bottom: 28px;
+    border-bottom: 1px solid #333333;
+    margin-bottom: 31px;
+    h1              { font: normal 300 1.75em/1.1 $font-freight; color: #919191; }
+    cite            { font-weight: inherit; }
+  }
+  .troupe           { padding-bottom: 46px; }
+  article {
+    width: 23.153846153846%; // 301p
+    float: left;
+    margin-right: 2.461538461538%; // 32 / 1300
+    &:last-child    { margin-right: 0; float: right; }
+    a               { display: block; min-height: 140px; }
+    .photo          { margin-bottom: 12px; }
+    .ratio .fill    { padding-top: 24.252491694352%; }
+    h1,h2,h3,dt     { font-weight: 700; line-height: 1; }
+    h3,dt           { text-transform: uppercase; }
+    h1              { color: white; font-size: 1.5625em; margin-bottom: 6px; }
+    h2              { color: #f17b21; font-size: 0.8125em; margin-bottom: 3px; }
+    h3              { color: #9e4603; font-size: 0.6875em; margin-bottom: 10px; }
+    p               { font-size: 0.75em; border-top: 1px solid #3a3a3a; padding-top: 5px; line-height: 1.2; margin-bottom: 26px; }
+    dl              { border-top: 1px solid #246075; padding-top: 5px; position: relative; color: $blue; }
+    dt,
+    dt mark,
+    dt time,
+    dd              { display: block; }
+    dt              { position: absolute; top: 7px; left: 0; }
+    dt mark         { font-size: 0.75em; margin-bottom: 2px; }
+    dt time         { font-size: 0.625em; color: #16657f; }
+    dd              { font-size: 0.8125em; line-height: 1.2; margin-left: 36.87707641196%; /* 111 / 301 */ }
+    a:hover {
+      h1            { text-decoration: underline; }
+      h3            { color: #f17b21; }
+      p             { color: white; border-top: 1px solid #b6b6b6; }
+      dl            { border-top: 1px solid #5db2cf; }
+      dt time       { color: $blue; }
+      dd            { color: #97e2fc; text-decoration: underline; }
+    }
+  }
+  footer {
+    border-top: 1px solid #84491c;
+    padding-top: 9px;
+    color: white;
+    font: normal 300 1.375em/1 $font-freight;
+    text-align: right;
+    a {
+      display: inline-block;
+      padding-right: 17px;
+      background: image-url("i/ephemera-dart-white.png") no-repeat right 0.4em;
+      background-size: 7px 8px;
+      &:hover       { text-decoration: underline; }
+    }
+  }
+}
+
+
+
+/*
+###############################################################################
+###############################################################################
+
+OTHER-PROGRAMS MEDIA QUERIES
+
+###############################################################################
+############################################################################### */
+
+.other-programs {
+//----------------------------------------------------------------------------------
+  @media screen and (max-width: 950px) {
+
+    & > header h1         { font-size: 1.25em; }
+    .troupe               { padding-bottom: 10px; }
+    article {
+      width: 48%;
+      margin: 0 4% 30px 0;
+      &:nth-child(even)   { margin-right: 0; }
+      &:nth-child(odd)    { clear: both; }
+    }
+
+  }
+//----------------------------------------------------------------------------------
+  @media screen and (max-width: 500px) {
+
+    article               { 
+      width: 100%; 
+      float: none; 
+      margin: 0 0 40px; 
+      a {
+        min-height: inherit;
+      }
+    }
+    footer                { font-size: 1em; }
+
+  }
+//----------------------------------------------------------------------------------
+
+}
+

@@ -1,0 +1,690 @@
+.masthead {
+	background: black image-url("i/masthead-politics.jpg") no-repeat center top;
+	background-size: auto 100%;
+	color: white;
+	padding-bottom: 58px; // makes room for .headline
+	.inner {
+		position: relative;
+		padding: 102px 0 28px;
+	}
+
+//	~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~
+	.titling {
+		position: relative;
+		h1 {
+			margin-bottom: 13px;
+			font-family: $font-prox;
+			font-weight: 700;
+            font-size: 3em; // had been "3", before the discovery of "Immigration & Emerging Communities"
+            line-height: 0.8;
+            padding-bottom: 3px;
+            letter-spacing: -0.02em;
+		}
+		&.verbose h1        { font-size: 2.2em; }
+		h2 {
+			font-size: 1.125em; // 18 / 16
+			font-family: $font-prox;
+			color: $blue;
+			border-top: 1px solid $blue;
+			padding-top: 3px;
+			text-shadow: 0 0 7px black;
+		}
+		.partner {
+			position: absolute;
+			text-align: right;
+			right: 0;
+			top: 16px;
+			top: 7px;
+			a {
+				position: relative;
+				display: inline-block;
+				padding: 8px 45px 0 0;
+				font-family: $font-prox;
+				font-weight: 300;
+				&:hover {
+					text-decoration: underline;
+				}
+				.img {
+					display: block;
+					position: absolute;
+					top: 0;
+					right: 0;
+					width: 35px;
+					height: 35px;
+					img {
+						width: 100%;
+						height: auto;
+					}
+				}
+			}
+		}
+	}
+
+//	~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~
+	.station > * {
+		position: absolute;
+	}
+	.station {
+		position: absolute;
+		top: 0;
+		left: 0;
+		width: 100%;
+		text-transform: uppercase;
+		font-family: $font-proxcond;
+		font-weight: 400;
+		a:hover {
+			text-decoration: underline;
+		}
+		h4 {
+			width: 11.230769230769%; // 146 / 1300
+			min-width: 100px;
+			height: 22px;
+			margin-top: 34px;
+			a {
+				@include mask;
+				background: image-url("i/logo-kpcc.png") no-repeat left center;
+				background-size: 100%;
+			}
+		}
+		.kpcc-links {
+			top: 33px;
+			left: 14.307692307692%; // 186 / 1300
+			li {
+				display: inline-block;
+				margin-left: 25px;
+				color: $orange;
+				a {
+					display: inline-block;
+					padding-top: 3px;
+				}
+				&:first-child {
+					margin-left: 0;
+				}
+				&:first-child a {
+					@include icon;
+					padding-left: 25px;
+				}
+				@media screen and (max-width: 1270px) {
+			    	margin-left: 14px;
+					font-size: 0.8125em;
+					a {
+						padding: 5px 0 2px;
+					}
+			  	}
+			}
+		}
+		.donate {
+			right: 0;
+			color: #31aad3;
+			border-left: 1px solid #1a596f;
+			padding: 34px 0 3px 19px;
+			a {
+				@include icon;
+				display: inline-block;
+				background-position: right 1px;
+				padding: 0 28px 0 0;
+				&:hover {
+					color: #c6f1ff;
+					background-position: right -37px;
+				}
+				@media screen and (max-width: 1270px) {
+					font-size: 0.8125em;
+					padding-top: 2px;
+			  	}
+			}
+		}
+		.search-trigger {
+			right: 277px;
+			top: 33px;
+			@include icon;
+			width: 24px;
+			height: 24px;
+			background-position: 2px -78px;
+			border: none;
+			color: transparent;
+			cursor: pointer;
+			&:hover { background-position: 2px -109px; }
+		}
+	}
+
+//	~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~
+	.follow-us {
+		top: 33px;
+		right: 148px;
+		overflow: hidden;
+		li	{ display: inline; }
+		a	{
+			@include icon;
+			@include texthide;
+			width: 22px;
+			height: 21px;
+			float: left;
+			margin-left: 11px;
+		}
+		li:nth-child(1) a {
+			margin-left: 0;
+			background-position: -51px -78px;
+			&:hover { background-position: -51px -110px; }
+		}
+		li:nth-child(2) a {
+			background-position: -93px -78px;
+			&:hover { background-position: -93px -110px; }
+		}
+		li:nth-child(3) a {
+			background-position: -136px -79px;
+			&:hover { background-position: -136px -111px; }
+		}
+	}
+
+//	~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~
+	.pane {
+		h1 {
+			position: absolute;
+			width: 100px;
+			height: 22px;
+			top: 15px;
+			left: 5%;
+			a {
+				@include mask;
+				background: image-url("i/logo-kpcc.png") no-repeat left center;
+				background-size: 100%;
+			}
+		}
+		.close {
+			display: block;
+			position: absolute;
+			top: 13px;
+			right: 5%;
+			width: 63px;
+			height: 24px;
+			background: transparent image-url("i/btn-ledge-close.png") no-repeat;
+			text-indent: 999px;
+			background-size: 100%;
+			cursor: pointer;
+			border: none;
+			overflow: hidden;
+		}
+	}
+
+//	~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~
+	.kpcc-search {
+		@include pane;
+		padding-top: 60px; // default is 53px
+		display:none;
+    top:0;
+    &.active {
+      display:block;
+    }
+		form {
+			width: 100%;
+			position: relative;
+			.toggle-search						{ display: none; }
+			label,.search,.submit,.search-wrap	{ display: block; }
+			label,.submit						{ position: absolute; }
+
+			label {
+				font-size: 0.6875em;
+				text-transform: uppercase;
+				top: 9px;
+				color: rgba(255,255,255,0.7);
+			}
+			.search-wrap {
+				margin: 0 33px 0 51px;
+				position: relative;
+			}
+			.search {
+				border: 1px solid white;
+				box-shadow: inset 0 1px 4px rgba(0,0,0,0.5);
+				width: 100%;
+				font-family: $font-prox;
+				font-size: 1em;
+				-webkit-box-sizing: border-box;
+				-moz-box-sizing: border-box;
+				box-sizing: border-box;
+				padding: 4px 4px 3px;
+			}
+			.submit {
+				top: 3px;
+				right: 0;
+				width: 23px;
+				height: 23px;
+				background: image-url("i/btn-search-submit.png") no-repeat;
+				text-indent: 999px;
+				background-size: 100%;
+				cursor: pointer;
+				border: none;
+				overflow: hidden;
+			}
+		}
+	}
+
+//	. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+	@media screen and (min-width: 976px) {
+		.kpcc-search {
+			background: rgba(46,237,226,0.4);
+			background: black;
+			box-shadow:
+				0 0 10px rgba(0,0,0,0.4),
+				inset 0 39px 0 black,
+				inset 0 40px 0 rgba(255,255,255,0.3);
+			border-right: 1px solid rgba(255,255,255,0.5);
+			border-bottom: 1px solid rgba(255,255,255,0.5);
+			border-left: 1px solid rgba(255,255,255,0.5);
+			margin: 0 -10px 0 0;
+			padding: 49px 10px 10px 10px;
+			left: auto;
+			right: -10px;
+			width: 310px;
+			@media screen and (max-width: 1080px) {
+				width: 263px;
+			}
+			h1 {
+				display: none;
+			}
+			.close {
+				top: 8px;
+				right: 10px;
+			}
+			form {
+			}
+		}
+	}
+
+
+
+//	~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~
+	.kpcc-ledge {
+		@include pane;
+    display:none;
+		top:0;
+    &.active {
+      display:block;
+    }
+		.links {
+			font-weight: 700;
+			-moz-column-count: 2;
+			-webkit-column-count: 2;
+			column-count: 2;
+			line-height: 2;
+			a:hover { text-decoration: underline; }
+		}
+		h2 {
+			text-transform: uppercase;
+			font-size: 0.625em; // 10/16
+			color: rgba(255,255,255,0.6);
+			border-top: 1px solid rgba(255,255,255,0.3);
+			width: 100%;
+			margin: 13px 0 10px -5.5%;
+			padding: 4px 5.5%;
+		}
+		.follow-us {
+			a						{ margin-left: 22px; }
+			li:nth-child(1) a		{ margin-left: 0; }
+		}
+	}
+
+
+}
+
+
+
+//	------------------------------------------------------------------------------------------------
+
+	@media screen and (min-width: 751px) {
+		.masthead .station .shownav		{ display: none; }
+	}
+
+//	------------------------------------------------------------------------------------------------
+
+	@media screen and (max-width: 1080px) {
+		.masthead {
+			.station {
+				.kpcc-links {
+					li {
+						&:first-child a {
+							padding-left: 0;
+							background: none;
+						}
+					}
+				}
+				.search-trigger {
+					right: 240px;
+				}
+				.donate {
+					padding-left: 15px;
+				}
+				.follow-us {
+					right: 125px;
+				}
+			}
+		}
+	}
+
+
+//	------------------------------------------------------------------------------------------------
+
+	@media screen and (max-width: 975px) {
+		.masthead {
+			.inner {
+				padding-top: 130px;
+			}
+			.station {
+				h4 { margin-top: 15px; }
+				.kpcc-links {
+					left: 0;
+					top: 48px;
+					padding-top: 5px;
+					border-top: 1px solid rgba(255,255,255,0.35);
+					width: 100%;
+					li { color: rgba(255,255,255,0.5); }
+				}
+				.search-trigger	{ top: 15px; }
+				.follow-us		{ top: 16px; }
+				.donate			{ padding: 17px 0 11px 19px; border-left: 1px solid rgba(255,255,255,0.35); }
+			}
+		}
+	}
+
+//	------------------------------------------------------------------------------------------------
+
+	@media screen and (max-width: 750px) {
+		.masthead {
+			.inner {
+				padding-top: 80px;
+				padding-bottom: 25px;
+			}
+			.titling {
+				h1 {
+                    text-align: center;
+                    font-size: 2.75em;
+				}
+				h2 {
+					font-size: 0.8125em;
+					padding-top: 7px;
+					text-align: center;
+					margin-bottom: 15px;
+				}
+				.partner {
+					position: static;
+					font-size: 0.8125em;
+					display: inline-block;
+					text-align: center;
+					width: 100%;
+					a { padding-top: 11px; }
+				}
+			}
+			.station {
+				.kpcc-links {
+					display: none;
+				}
+				.follow-us {
+					display: none;
+				}
+				.search-trigger {
+					right: 120px;
+					@media screen and (max-width: 360px) {
+						right: 90px;
+					}
+				}
+				.donate {
+					border-left: 1px solid #1a5a70;
+					padding-left: 12px;
+					@media screen and (max-width: 360px) {
+						a { background: none; padding: 0; }
+					}
+				}
+				.shownav {
+					background: image-url("i/btn-shownav.png") no-repeat;
+					background-size: 100%;
+					color: transparent;
+					border: none;
+					width: 23px;
+					height: 23px;
+					left: 112px;
+					top: 15px;
+					cursor: pointer;
+				}
+			}
+		}
+	}
+
+//	------------------------------------------------------------------------------------------------
+
+
+
+
+
+
+
+//	################################################################################################
+//	################################################################################################
+//	INTERIOR-PAGE MASTHEAD
+//	################################################################################################
+//	################################################################################################
+
+.interior .masthead {
+    padding-bottom: 0;
+    background: none;
+    .inner {
+        padding: 14px 0 82px;
+        @media screen and (max-width: 975px)                { padding-bottom: 110px; }
+        @media screen and (max-width: 750px)                { padding-bottom: 0; padding-top: 50px; }
+    }
+    .follow-us {
+        @media screen and (min-width: 976px)                { top: 19px; }
+		li:nth-child(3) a                                   { margin-top: 1px; }
+    }
+    .station {
+        .follow-us a,
+        .search-trigger                                     { background-image: image-url("i/workbench-icons-gray-alternates.png"); }
+        .search-trigger {
+			@media screen and (min-width: 976px)            { top: 19px; }
+		}
+        .donate {
+            border-left: none;
+			@media screen and (min-width: 1271px)           { font-size: 0.875em; }
+            @media screen and (min-width: 976px)            { padding-top: 21px; }
+            a {
+                padding: 2px 26px 0 0;
+                @media screen and (max-width: 360px)        { padding-right: 0; }
+                &:hover                                     { color: $blue; background-position: right 1px; }
+            }
+        }
+        h4 {
+            @media screen and (min-width: 976px)            { margin-top: 22px; }
+            @media screen and (max-width: 975px)            { margin-top: 17px; }
+            max-width: 130px;
+            height: 20px;
+            a                                               { background-image: image-url("i/logo-kpcc-black.png"); }
+        }
+        .kpcc-links {
+            @media screen and (min-width: 976px)            { top: 20px; }
+            @media screen and (max-width: 975px)            { border-top: 1px solid rgba(0,0,0,0.15); }
+            li {
+                color: black;
+                @media screen and (min-width: 1271px)       { font-size: 0.875em; }
+            }
+            li:first-child a {
+                background-position: 0 -27px;
+                background-size: 255px 383px;               // 300 450 @ 0.85
+                @media screen and (min-width: 1081px)       { padding-left: 23px; }
+            }
+        }
+    }
+    .titling {
+        background: $blue;
+        padding: 0 0 0 0;
+        height: 34px;
+        padding: 12px 0 0;
+        z-index: 1;
+        h1,h2   { line-height: 1; float: left; }
+        h1 {
+            width: auto;
+            height: auto;
+            margin: 0 0 0 0;
+            font-size: 1.5em;
+            font-weight: 700;
+            a {
+                display: inline;
+                width: auto;
+                height: auto;
+                color: white;
+                background: none;
+                overflow: visible;
+                font-family: $font-prox;
+                text-indent: 0;
+            }
+            @media screen and (max-width: 750px)                            { text-align: center; margin: 0 auto 10px auto; float: none; }
+        }
+        h2 {
+            padding: 5px 0 0 18px;
+            font-family: $font-freight;
+            background: none;
+            color: #c1efff;
+            font-size: 0.9375em; // 15 / 16
+            border-top: none;
+            text-shadow: none;
+        }
+        .partner {
+            z-index: 3;
+            right: 2.461538461538%;
+            top: 9px; // not Landing's 16
+            a {
+                font-size: 0.875em; // 14 / 16
+                padding: 6px 40px 0 0;
+                font-family: $font-freight;
+                .img {
+                    width: 28px;
+                    height: 28px;
+                }
+            }
+        }
+    }   // .titling
+}       // .interior .masthead
+
+
+//  ################################################################################################
+//  ################################################################################################
+//  MASTHEAD (specific only to pages that are unaffiliated with a blog/show/branded entity)
+//  ################################################################################################
+//  ################################################################################################
+
+.ronin.interior .masthead {
+    background: #f3f3f3;
+    border-bottom: 1px solid rgba(0,0,0,0.12);
+    padding-bottom: 0 !important;
+    .inner {
+        padding-bottom: 50px;
+        @media screen and (max-width: 975px)                { padding-bottom: 80px; }
+        @media screen and (min-width: 751px)                { padding-top: 14px !important; }
+        @media screen and (max-width: 750px)                { padding-bottom: 10px; padding-top: 50px !important; }
+    }
+}
+
+
+
+
+
+//	################################################################################################
+//	################################################################################################
+//	INTERIOR, BUT SPECIFICALLY FOR BLOGS
+//	################################################################################################
+//	################################################################################################
+
+.interior .masthead.blog {
+    .inner                              { padding-top: 64px; }
+    .titling {
+        height: 78px; // 99
+        padding: 21px 0 0 0;
+        h1                              { font-size: 2.125em; font-weight: 300; border-bottom: 1px solid #65c0de; float: none; padding-bottom: 4px; margin-bottom: 9px; }
+        .secondary {
+            position: relative;
+            h2                          { float: none; padding: 0; color: white; font-family: $font-prox; font-size: 1em; margin-right: 270px; }
+            .subscribe {
+                position: absolute; text-align: right; width: 255px; right: 0; top: 0;
+                ul { float: right; }
+                figcaption {
+                    float: right;
+                    padding: 3px 8px 0 0;
+                    text-align: right;
+                    color: #addded;
+                    font-size: 0.6875em;
+                    text-transform: uppercase;
+                    font-family: $font-prox;
+                    font-weight: 700;
+                }
+                li {
+                    display: inline;
+                    a                   { @include texthide; @include redux-icons; float: left; width: 18px; height: 18px; background-size: 18px 434px; margin-right: 6px;  }
+                    &.rss a             { background-position: 0 -100px; }
+                    &.twitter a         { background-position: 0 -75px; }
+                    &.facebook a        { background-position: 0 -124px; }
+                    &:last-child a      { margin-right: 0; }
+                }
+            }
+        }
+    }   // .titling
+}       // .interior .masthead.blog
+
+
+
+
+
+
+
+//	################################################################################################
+//	################################################################################################
+//	INTERIOR RESIZINGS
+//	################################################################################################
+//	################################################################################################
+
+// --------------------------------------------------------------------------------------------------------------------
+@media screen and (min-width: 871px) {
+    .interior .masthead {
+        .titling {
+            width: 105%;
+            margin-left: -2.5%;
+            position: absolute;
+            bottom: -11px;
+            .brand {
+                position: absolute;
+                left: 2.4%;
+                width: 95%;
+                z-index: 2;
+            }
+        }
+    }
+}
+// --------------------------------------------------------------------------------------------------------------------
+@media screen and (max-width: 870px) {
+    .interior .masthead {
+        .inner              { padding-bottom: 20px; }
+        &.blog .inner,
+        .inner              { padding-top: 95px; }
+        .titling,
+        &.blog .titling {
+            height: auto; padding-bottom: 15px; width: 111%; margin-left: -5.5%;
+            .brand          { width: 90%; margin: 0 auto; }
+        }
+    }
+}
+// --------------------------------------------------------------------------------------------------------------------
+@media screen and (max-width: 750px) {
+    .interior .masthead {
+        &.blog .inner,
+        .inner              { padding-top: 55px; }
+        .titling h2         { padding-left: 0; text-align: center; width: 100%; margin-bottom: 5px; }
+        &.blog .titling .secondary {
+            h2              { float: none; width: 100%; margin: 0 0 20px 0; }
+            .subscribe      { position: relative; margin: 0 auto; overflow: hidden; }
+        }
+    }
+}
+// --------------------------------------------------------------------------------------------------------------------
+
+
+
+
+
+

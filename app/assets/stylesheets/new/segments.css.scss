@@ -1,0 +1,826 @@
+body.segment {
+/*
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+
+SINGLE SEGMENT
+
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ */
+
+
+
+
+
+/*
+########################################################################
+########################################################################
+MASTHEAD
+########################################################################
+######################################################################## */
+.masthead {
+  .inner {
+    padding: 70px 0 0;
+//-------------------------------------------------------------------------------------
+    @media screen and (max-width: 975px)  { padding-top: 95px; }
+    @media screen and (min-width: 871px)  { padding-bottom: 45px; } // For clearance between .masthead and .appellation
+    @media screen and (max-width: 750px)  { padding-top: 60px; }
+//-------------------------------------------------------------------------------------
+  }
+//-------------------------------------------------------------------------------------
+  @media screen and (max-width: 870px)  { padding-bottom: 100px; }
+//-------------------------------------------------------------------------------------
+  .titling {
+    padding: 0;
+    height: auto;
+    bottom: auto;
+    position: static;
+    margin: 0;
+    width: 111%;
+    margin: 0 0 0 -5.5%;
+    box-sizing: border-box;
+    padding: 13px 5.5% 14px;
+    h1 {
+      padding: 0;
+      float: left;
+      width: 25%;
+//-------------------------------------------------------------------------------------
+      @media screen and (max-width: 750px)  { float: none; width: 100%; }
+//-------------------------------------------------------------------------------------
+    }
+    p {
+      font: normal 700 0.875em/1.1 $font-prox;
+      color: #ccf2ff;
+      float: right;
+      text-align: right;
+      width: 70%;
+      padding-top: 5px;
+      mark      { color: white; white-space: nowrap; }
+//-------------------------------------------------------------------------------------
+      @media screen and (max-width: 750px)  { float: none; width: 100%; text-align: center; }
+//-------------------------------------------------------------------------------------
+    }
+  }
+}//.masthead
+
+
+
+
+
+/*
+########################################################################
+########################################################################
+------------------------------------------------------------------------
+APPELLATION
+------------------------------------------------------------------------
+The editorial title of an article/segemnt.
+This used to be a <section> (c. 2013-14), but that was dumb.
+------------------------------------------------------------------------
+########################################################################
+######################################################################## */
+.appellation {
+  padding: 0 0 55px;
+  h1                  { font: normal 300 3em/1.1 $font-freight; }
+  p                   { padding-top: 40px; font: normal 0.75em/1 $font-prox; color: #acacac; -webkit-font-smoothing: antialiased; }
+  span                { display: inline-block; margin-right: 20px; }
+  p a                 { color: $blue; font-weight: 700; }
+  p a:hover           { text-decoration: underline; }
+  time                { white-space: nowrap; }
+//-------------------------------------------------------------------------------------
+  @media screen and (max-width: 870px)  { text-align: center; }
+//-------------------------------------------------------------------------------------
+  @media screen and (max-width: 540px)  { h1 { font-size: 2.25em; } }
+//-------------------------------------------------------------------------------------
+  @media screen and (max-width: 610px)  {
+    span                                { display: block; margin-right: 0; }
+    time                                { display: block; padding-top: 1em; }
+  }
+//-------------------------------------------------------------------------------------
+}
+
+
+
+
+
+
+
+/*
+########################################################################
+########################################################################
+REPORT
+########################################################################
+######################################################################## */
+.report {
+
+  .inner                      { background-image: image-url("i/fauxcol-segment-base.png"); background-position: 65.846153846154% 0; }
+  .prose {
+    width: 59.769230769231%;
+    padding: 0 0 60px;
+    background: image-url("i/flourish-faint-dot.png") repeat-y 14.157014157014% 0;
+    background-size: 1px 1px;
+    p.inaugural               { width: auto; }
+    .primary                  { width: 75.546975546976%; float: right; }
+    .secondary                { width: 14.285714285714%; float: left; }
+    .buddy {
+      &.pinned                { display: none; } // hiddenness gets undone when certain width requirements are met
+      -webkit-font-smoothing: antialiased;
+      font: normal bold 0.75em/1.1 $font-prox;
+      color: #909090;
+      border-top: 1px solid rgba(0,0,0,0.08);
+      box-sizing: border-box;
+      padding: 7px 10px 0 0;
+      margin-bottom: 57px;
+      ul                    { margin-bottom: 0; }
+      ul li                 { padding-left: 0; list-style: none; margin: 0 0 0.7em; }
+      h1                    { font-weight: bold; margin-bottom: 1em; }
+      &.disseminate {
+        border-top: 1px solid rgba(236,124,45,0.2);
+        h1                  { color: $orange; }
+        li                  { display: block; overflow: none; margin-bottom: 4px; }
+        a {
+          display: block;
+          position: relative;
+          overflow: hidden;
+          width: 100%;
+          min-height: 21px;
+          span              { @include texthide; @include segment-icons; background-position: 0 -609px; width: 20px; height: 18px; }
+          mark              { display: block; position: absolute; top: 5px; left: 24px; color: #ffbc8d; }
+          &:hover           { background: #fff1e8; outline: 1px solid #fccfb0; }
+          &:hover mark      { color: $orange; }
+        }
+        li.email a span     { background-position: 0 -605px;  }
+        li.email a mark     { display: none; }
+        li.email a:hover mark { display: block; }
+        li.twitter a span   { background-position: 0 -706px;  }
+        li.facebook a span  { background-position: 0 -808px;  }
+      }
+      &.comments-plug figure {
+        mark,figcaption a   { display: block; @include segment-icons; }
+        mark {
+          background-position: 0 -250px;
+          font: normal 2em/1 $font-proxcond;
+          color: $blue;
+          padding-left: 27px;
+          margin-bottom: 10px;
+        }
+        figcaption a {
+          text-transform: lowercase;
+          background-position: 0 -286px;
+          margin-left: -12px;
+          padding-left: 12px;
+        }
+      }
+      &.taxonomy {
+        margin-bottom: 0;
+      }
+    }//.buddy
+    .ancillary {
+      background: transparent;
+      font-size: 1.06666666666667em; // reset to equivalent of 16
+      border-top: 1px solid rgba(236,124,45,0.5);
+      padding: 18px 0 0 13.458262350937%; // 79 / 587
+      margin: 0 0 50px -13.458262350937%;
+      &:first-of-type   { margin-top: 3em; }
+      &:last-child      { margin-bottom: 0; }
+      & > header        { color: $orange; font: normal bold 0.8125em/1.1 $font-prox; }
+      & > h1            { font: normal 300 1.75em/1.1 $font-freight; padding-top: 20px; color: #3a3a3a; }
+      & > header a,
+      & > h1 a          { color: inherit !important; }
+      nav               { padding-top: 28px; }
+    }
+  }//.prose
+
+  .asset-inset {
+    &.inline {
+        &.portrait {
+            width: 52%;
+            float: right;
+            margin: 0 0 55px 7.075471698113%;
+            @media screen and (max-width: 1100px) {
+                float: none; 
+                width: 100%; 
+                margin: 0 0 35px 0; 
+                border-bottom: 1px solid #e8e8e8; 
+                max-width: 100%;
+                img             { max-height: 400px; width: auto; }
+                figcaption      { 
+                  text-align: left;
+                  padding-bottom: 25px;
+                }
+                span            { display: block; padding-left: 0; }
+            }
+            figcaption {
+                text-align: left;
+                -webkit-font-smoothing: auto;
+            }
+            span {
+                padding-left: 0;
+            }
+            mark {
+                padding-left: 0;
+            }
+        }
+    }
+  }
+
+  .prose-body,
+  .related,
+  .episode-contents     { -webkit-font-smoothing: antialiased; }
+
+  .supportive           { width: 34.153846153846%; border-top: 0; padding-bottom: 64px; }
+
+  .related {
+    @include related-link-icons;
+    header {
+      background-image: none;
+      margin-bottom: 0;
+      padding-top: 0;
+      padding-bottom: 0;
+      h1 { color: $orange; font: normal bold 1em/1.1 $font-prox; margin-left: 0; text-transform: none; }
+    }
+    nav             { margin: 0; }
+    li              { list-style: none; margin: 0 0 14px; display: block; }
+    a               { display: block; box-sizing: border-box; padding-left: 30px; margin-left: -30px; color: #333; }
+    h1              { font: normal 1em/1.1 $font-freight; }
+    p               { margin: 0; padding: 7px 0 0; font: normal 0.6875em/1 $font-prox; color: #b8b8b8; }
+    p > *           { white-space: nowrap; }
+    mark            { color: #333; display: block; vertical-align: top; padding-bottom: 3px; border-bottom: 1px solid white; }
+    a span          { color: $orange !important; display: block; font: normal 0.75em/1 $font-prox; padding: 2px 4px 0 0; text-transform: none; }
+    a:hover         { text-decoration: none; }
+    a:hover mark    { border-bottom: 1px solid rgba(0,0,0,0.15); }
+    li > span       { padding-top: 2px; } // PIJ "learn more"
+  }
+
+  .episode-contents {
+    & > header cite { padding-left: 5px; white-space: nowrap; }
+    nav {
+      li {
+        list-style: none;
+        margin: 0 0 2px -13.458262350937%;
+        padding-left: 13.458262350937%;
+        display: block;
+        font: normal 0.875em/1.2 $font-freight;
+        &.selected      { background: #f0f0f3; font-weight: 600; }
+      }
+      a {
+        color: #333333;
+        display: inline-block;
+        padding: 4px 0 5px;
+        @include segment-icons;
+        background-position: 0 -160px;
+        margin-left: -18px;
+        padding-left: 18px;
+      }
+      li.selected a     { background-position: 0 -80px; }
+    }
+  }
+
+//-------------------------------------------------------------------------------------
+      @media screen and (max-width: 1109px)  {
+
+        .prose {
+          background: none; // Scraps the 1px gray dot divider
+          .buddy.disseminate {
+            &.pinned        { display: block; }
+            padding-bottom: 7px;
+            margin-bottom: 40px;
+            border-bottom: 1px solid rgba(236,124,45,0.2);
+            h1              { float: left; padding-top: 9px; }
+            ul              { float: right; width: 230px; } // meh
+            li              { width: 30%; float: left; margin: 0 5% 0 0; }
+            li:nth-child(3) { float: right; margin-right: 0; }
+            a               { width: 100%; min-height: 52px; }
+            a span          { top: 5px; left: 50%; margin-left: -10px; position: absolute; }
+            a mark          { top: 35px; left: 0; text-align: center; width: 100%; }
+          }
+          .primary          { width: 100%; float: none; }
+          .secondary        { width: 100%; float: none; }
+        }
+
+      }
+//-------------------------------------------------------------------------------------
+      @media screen and (min-width: 871px) and (max-width: 1109px)  {
+
+        .prose .buddy {
+          &.comments-plug   { display: none; }
+          &.taxonomy        { border-top: none; padding-top: 0; }
+        }
+
+      }
+//-------------------------------------------------------------------------------------
+      @media screen and (max-width: 870px)  {
+
+        .inner          { background: none; }
+        .supportive     { width: auto; max-width: 670px; padding-bottom: 50px; background: #f4f4f4; box-shadow: none; }
+        .prose {
+          width: auto;
+          max-width: 670px;
+          margin-bottom: 40px;
+          padding-bottom: 0;
+          font-size: 0.9375em; /* Earlier, for "News/Blog," I conditionally dropped this down to 0.875em. That, in hindsight, was dumb. */
+          .buddy-pairing {
+            background: #e5f4f9;
+            box-sizing: border-box;
+            padding: 26px 5.5% 35px;
+            margin-left: -5.5%;
+            width: 111%;
+            .buddy          { border: none; padding: 0; width: 45%; margin-bottom: 0; }
+            .taxonomy       { float: right; }
+            .comments-plug {
+              float: left;
+              figure figcaption a {
+                margin: 0;
+                padding: 0 12px 0 0;
+                display: inline-block;
+                background-position: right -12px top -285px;
+              }
+            }
+
+          }
+        }
+
+
+      }
+//-------------------------------------------------------------------------------------
+      @media screen and (max-width: 780px)  {
+
+        .related a,
+        .episode-contents nav a           { margin-left: 0; }
+        .episode-contents > header cite   { padding: 5px 0 0 0; display: block; }
+
+      }
+//-------------------------------------------------------------------------------------
+
+
+
+}// .report
+
+
+
+
+
+
+/*
+########################################################################
+########################################################################
+SIDEBAR BOXLETS
+########################################################################
+######################################################################## */
+.report .supportive aside {
+  position: relative;
+  z-index: 1;
+  -webkit-font-smoothing: antialiased;
+  &.placard:first-child       { padding-top: 0; z-index: 1; }
+  &.overview header           { background-position: 0 -640px; }
+  header {
+    padding: 5px 0 0 13px;
+    position: relative;
+    z-index: 2;
+    & + *                     { padding-top: 23px; }
+    h1 {
+      box-sizing: border-box;
+      color: #9a9a9a;
+      text-transform: none;
+      font: normal 400 1.0625em/1 $font-freight;
+      margin-left: 0;
+      padding: 0 6% 17px 7.207207207207%;
+      border-bottom: 1px solid rgba(0,0,0,0.07);
+    }
+  }
+  nav,.exposition,.externals  { padding-left: 7.207207207207%; box-sizing: border-box; }
+  nav,.externals              { padding-right: 7.207207207207%; }
+  nav {
+    article                   { margin-bottom: 20px; }
+    a                         { display: block; position: relative; min-height: 62px; }
+    b                         { display: block; width: 62px; position: absolute; top: 0; left: 0; }
+    img                       { width: 100%; height: auto; }
+    time                      { display: block; text-transform: uppercase; color: $blue; font: normal 700 0.625em/1 $font-prox; padding: 4px 0; }
+    h1                        { color: #323131; font: normal 0.9375em/1.2 $font-freight; }
+    time,h1                   { margin-left: 79px; }
+    a:hover h1                { color: black; text-decoration: underline; }
+    a:hover img               { outline: 2px solid $blue; }
+  }
+  .exposition {
+    border-bottom: 1px solid rgba(0,0,0,0.07);
+    padding-right: 0;
+    padding-bottom: 12px;
+    margin-bottom: 12px;
+    position: relative;
+    z-index: 3;
+    p                         { font-size: 0.8125em; margin-bottom: 15px; letter-spacing: -0.01em; }
+    footer {
+      color: #acacac;
+      font: normal 700 0.6875em/1.1 $font-prox;
+      padding: 2px 0 2px 18px;
+      @include segment-icons;
+    }
+    @each $featuredProgram in $featuredPrograms {
+      &[data-host="#{$featuredProgram}"] {
+        @include overview-desktop-assumptions;
+        background-image: image-url("i/host-#{$featuredProgram}.png");
+        background-repeat: no-repeat !important;
+      }
+    }
+  }//.exposition
+  .externals {
+    color: #2388aa;
+    font-size: 0.8125em;
+    line-height: 1.15;
+    letter-spacing: -0.01em;
+    li                        { display: block; margin-bottom: 10px; }
+    li:last-child             { margin-bottom: 0; }
+    a {
+      display: inline-block; padding-left: 20px;
+      @include segment-icons;
+      background-position: 0 -327px;
+      &:hover { text-decoration: underline; }
+    }
+    li.twitter a              { background-position: 0 -383px; }
+    li.facebook a             { background-position: 0 -439px; }
+    li.podcast a              { background-position: 0 -495px; }
+    li.rss a                  { background-position: 0 -551px; }
+  //-------------------------------------------------------------------------------------
+    @media screen and (min-width: 475px) and (max-width: 870px)  {
+
+      ul {
+        -webkit-column-count: 2;
+        -moz-column-count: 2;
+        column-count: 2;
+        -webkit-column-gap: 25px;
+        -moz-column-gap: 25px;
+        column-gap: 25px;
+      }
+
+    }
+  //-------------------------------------------------------------------------------------
+  }//. externals
+
+
+
+
+//-------------------------------------------------------------------------------------
+  @media screen and (min-width: 871px) and (max-width: 1109px)  {
+
+    @each $featuredProgram in $featuredPrograms {
+      .exposition[data-host="#{$featuredProgram}"] {
+        @include overview-narrow-assumptions;
+      }
+    }
+
+  }
+//-------------------------------------------------------------------------------------
+  @media screen and (max-width: 870px) {
+
+    &.placard:nth-child(2)                { padding: 0 0 30px; }
+
+  }
+//-------------------------------------------------------------------------------------
+  @media screen and (max-width: 500px) {
+
+    @each $featuredProgram in $featuredPrograms {
+      .exposition[data-host="#{$featuredProgram}"] {
+        @include overview-narrow-assumptions;
+      }
+    }
+
+  }
+//-------------------------------------------------------------------------------------
+
+}// .report .supportive aside
+
+
+
+
+
+
+
+
+/*
+########################################################################
+########################################################################
+------------------------------------------------------------------------
+COMMENTS
+------------------------------------------------------------------------
+########################################################################
+######################################################################## */
+&.single .comments {
+  .discussion {
+    width: 51.230769230769%;
+    margin-left: 14.615384615385%;
+  }
+//-------------------------------------------------------------------------------------
+  @media screen and (max-width: 1109px) {
+    .discussion {
+      width: 59.79797979798%;
+      margin-left: 0;
+    }
+    .secondary {
+      width: 34.040404040404%;
+    }
+  }
+//-------------------------------------------------------------------------------------
+  @media screen and (max-width: 870px) {
+    .discussion {
+      width: 100%;
+      max-width: 670px;
+      margin: 0 auto 30px auto;
+    }
+    .secondary {
+      width: 100%;
+    }
+  }
+//-------------------------------------------------------------------------------------
+}
+
+
+
+
+
+
+/*
+########################################################################
+########################################################################
+------------------------------------------------------------------------
+LEAD ASSET
+------------------------------------------------------------------------
+In "News/Blog," this used to be a far more complicated affair, involving
+the ".prologue" component, and a bunch of variants. No longer.
+Now, it's just ".lead-asset", comprised of two internal flavors:
+Straight-up (i.e., a photo/slideshow/video naturally filling its full
+container's width), or, if it's deemed square-or-narrower, than a
+cosmetic width-constrained tweak.
+------------------------------------------------------------------------
+########################################################################
+######################################################################## */
+.lead-asset {
+  background: white;
+  padding-bottom: 30px;
+  b {
+    display: block;
+    width: 100%;
+//    margin-bottom: 10px;
+//-------------------------------------------------------------------------------------
+    @media screen and (max-width: 699px) {
+      margin-left: -5.5%;
+      width: 111%;
+      box-sizing: border-box;
+    }
+//-------------------------------------------------------------------------------------
+  }
+  .slideview          { max-height: none; }
+  .slideview .slides  { background: none; }
+  img                 { width: 100%; height: auto; } // Assume it's wide by default
+  img.skinny          { width: auto; max-height: 524px; }
+  figcaption {
+    color: #a6a6a6;
+    width: 100%;
+    padding-top: 10px;
+    display: block;
+    span              { display: block; }
+    .credit           { font: normal 600 0.625em/1.1 $font-freight; text-transform: uppercase; float: left; width: 19.305019305019%; /* 150 / 777 */ }
+    .brief            { font: italic 400 0.8125em/1.2 $font-prox; float: right; width: 75.546975546976%; /* 587 / 777 */ }
+  //-------------------------------------------------------------------------------------
+    @media screen and (max-width: 440px) {
+      .credit,.brief  { float: none; width: auto; }
+      .credit         { padding-top: 5px; }
+    }
+  //-------------------------------------------------------------------------------------
+  }
+  &.exiguous {
+    overflow: hidden;
+    padding-bottom: 0;
+    border-bottom: 30px solid white;
+    position: relative;
+    b { width: 67.310167310167%; margin-bottom: 0; }
+    figcaption {
+      height: 100%;
+      top: 0;
+      right: 0;
+      width: 28.571428571429%;
+      position: absolute;
+      div             { position: absolute; bottom: 0; padding-bottom: 10px; border-bottom: 1px solid rgba(0,0,0,0.15); }
+      .credit,.brief  { float: none; width: auto; }
+      .credit         { padding-top: 5px; }
+    }
+  //-------------------------------------------------------------------------------------
+    @media screen and (max-width: 870px) {
+      b               { margin-left: 0; }
+    }
+  //-------------------------------------------------------------------------------------
+    @media screen and (max-width: 500px) {
+      b               { width: 100% !important; max-width: 320px !important; margin: 0 auto 20px auto !important; }
+      figcaption      { height: auto; position: static; width: 100%; }
+      figcaption div  { padding-bottom: 0; border-bottom: none; position: static; }
+    }
+  //-------------------------------------------------------------------------------------
+  }
+  .media-scaler {
+      width: 100%;
+      position: relative;
+      padding-bottom: 56.25%;
+      height: 0;
+      overflow: hidden;
+      iframe,object,embed {
+          display: block;
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+      }
+  }
+  .ratio .img-contain                       { background: rgba(0,0,0,0.15); }
+  .slideview .slides .slide img.not-wide    { height: 100%; width: auto; }
+}//.lead-asset
+
+
+
+
+
+
+
+/*
+########################################################################
+########################################################################
+------------------------------------------------------------------------
+AUDIO ACTUATOR
+------------------------------------------------------------------------
+The trigger that launches the audio drawer. Powered by jPlayer.
+------------------------------------------------------------------------
+########################################################################
+######################################################################## */
+.audio-actuator {
+  font: normal bold 1.375em/1 $font-prox;
+  -webkit-font-smoothing: antialiased;
+  color: white;
+  width: 100%;
+  box-sizing: border-box;
+  margin-bottom: 45px;
+  a {
+    min-height: 60px;
+    position: relative;
+    color: inherit;
+    display: block;
+    background: $blue;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+  }
+  .flourish {
+    display: block;
+    background: #1990c3;
+    box-shadow: inset -7px 0 15px rgba(0,0,0,0.08);
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 14.285714285714%; // 111 / 777
+    min-width: 54px;
+    height: 100%;
+    overflow: hidden;
+  }
+  img {
+    display: block;
+    width: 26px;
+    height: 33px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    opacity: 0;
+    margin-top: -16px;
+    margin-left: -13px;
+  }
+  div         { margin-left: 24.453024453024%; box-sizing: border-box; padding-top: 0.95em; } // 190 / 777
+  span        { white-space: nowrap; }
+  b           { font-weight: inherit; font-style: inherit; font-family: inherit; }
+  .duration   { text-transform: uppercase; color: #9ff0ff; font-size: 0.72727272727273em; /* 16 / 22 */ }
+  a:hover {
+    text-decoration: none;
+    background: $orange;
+    color: white;
+    .flourish { background-color: #c14901; }
+    .duration { color: rgba(255,255,255,0.5); }
+  }
+  &.in-view img {
+    -webkit-animation: triangle 600ms 1 ease-in-out forwards; /* Safari 4+ */
+    -moz-animation:    triangle 600ms 1 ease-in-out forwards; /* Fx 5+ */
+    -o-animation:      triangle 600ms 1 ease-in-out forwards; /* Opera 12+ */
+    animation:         triangle 600ms 1 ease-in-out forwards; /* IE 10+, Fx 29+ */
+  }
+  &.activated {
+    a                   { background: #a1a1a1 !important; }
+    .prompt:before      { content: "Now playing"; }
+    .prompt b,.duration { display: none; }
+    .flourish           { background: image-url("i/audio-actuator-playing.png") no-repeat center center; background-size: 46px 35px; background-color: #6e6e6e !important; }
+    .flourish img       { display: none; }
+  }
+//-------------------------------------------------------------------------------------
+  @media screen and (max-width: 545px) {
+
+    div                 { padding-top: 0.65em; }
+    span                { display: block; }
+    &.activated div     { padding-top: 0.95em; }
+    &.activated .flourish { background-size: 28px 21px; }
+
+  }
+//-------------------------------------------------------------------------------------
+  &.no-animation {
+    .flourish img       { display: none; }
+    .flourish           { background: image-url("i/audio-actuator-static-triangle.png") no-repeat center center; background-size: 26px 32px; background-color: #1990c3; }
+  }
+
+}// .audio-actuator
+
+
+
+
+
+
+
+/*
+########################################################################
+########################################################################
+------------------------------------------------------------------------
+BONUS AUDIO
+------------------------------------------------------------------------
+########################################################################
+######################################################################## */
+.prose .bonus-audio {
+  background: #f4f4f4;
+  box-sizing: border-box;
+  margin: -45px 0 45px -13.458262350937%;
+  padding: 20px 0 23px 13.458262350937%;
+  h1          { font: normal 700 0.6875em/1.1 $font-prox; text-transform: uppercase; margin-bottom: 10px; color: #979797; }
+  ul,li       { margin: 0; }
+  li {
+    list-style: none;
+    display: block;
+    font: normal 700 0.9375em/1.1 $font-prox;
+    border-bottom: 1px solid white;
+    &:last-child  { border-bottom: none; }
+  }
+  a {
+    @include segment-icons;
+    display: inline-block;
+    background-position: 0 -957px;
+    color: green;
+    box-sizing: border-box;
+    padding: 7px 1em 6px 16px;
+    margin-left: -16px;
+    mark          { color: #1990c3; }
+    span          { text-transform: uppercase; color: #82c4db; font-size: 0.8em; padding-left: 0.5em; white-space: nowrap; }
+    &:hover       { text-decoration: none; background-position: 0 -901px; }
+    &:hover mark  { text-decoration: underline; color: #e45a06; }
+    &:hover span  { color: #fb9137; }
+  }
+//-------------------------------------------------------------------------------------
+  @media screen and (max-width: 1109px)   { margin-top: 30px; }
+//-------------------------------------------------------------------------------------
+  @media screen and (max-width: 870px) {
+    margin-left: -3%;
+    width: 106%;
+    padding-left: 3%;
+    a         { margin-left: 0; }
+  }
+//-------------------------------------------------------------------------------------
+
+  @media screen and (max-width: 499px) {
+    a         { margin-left: 0; }
+    a mark    { display: block; }
+    a span    { display: block; padding: 3px 0 0 0; }
+  }
+//-------------------------------------------------------------------------------------
+
+}//.bonus-audio
+
+
+
+
+
+}// body.segment
+
+
+
+
+
+@-webkit-keyframes triangle {
+  0%   { opacity: 0.4;  transform: scale(0.1,0.1); }
+  50% { opacity: 1;    transform: scale(1.2,1.2); }
+  100% { opacity: 1;    transform: scale(1,1); }
+}
+@-moz-keyframes triangle {
+  0%   { opacity: 0.4;  transform: scale(0.1,0.1); }
+  50% { opacity: 1;    transform: scale(1.2,1.2); }
+  100% { opacity: 1;    transform: scale(1,1); }
+}
+@-o-keyframes triangle {
+  0%   { opacity: 0.4;  transform: scale(0.1,0.1); }
+  50% { opacity: 1;    transform: scale(1.2,1.2); }
+  100% { opacity: 1;    transform: scale(1,1); }
+}
+@keyframes triangle {
+  0%   { opacity: 0.4;  transform: scale(0.1,0.1); }
+  50% { opacity: 1;    transform: scale(1.2,1.2); }
+  100% { opacity: 1;    transform: scale(1,1); }
+}

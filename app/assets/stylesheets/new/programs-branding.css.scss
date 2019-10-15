@@ -1,0 +1,40 @@
+
+
+$programs: ("the-frame", "offramp", "take-two", "airtalk");
+
+@each $program in $programs {
+
+  // Masthead Photo
+  body.#{$program}.program .masthead {
+    background-image: image-url("i/masthead-#{$program}.jpg");
+  }
+
+  // "See More Segments"
+  body.#{$program} .neoteric .segments figure:last-child a .img-contain {
+    background: image-url("i/seemore-#{$program}.jpg") no-repeat center top;
+    background-color: black;
+    background-size: 100% auto;
+  }
+
+  // Podcast Appeal
+  body.program.#{$program} .neoteric .podcast-appeal .inner  { 
+    background-image: image-url("i/model-#{$program}.png");
+    background-position: right bottom;
+    background-repeat: no-repeat;
+    background-size: auto 100%;
+    box-sizing: border-box;
+    padding: 60px 40.427927927928% 23px 2.364864864865%; // L: 21/888
+  }
+}
+
+
+// PROGRAM BRANDING MEDIA QUERIES FOR SHOW-SPECIFIC TWEAKS
+body.airtalk.program .masthead {
+  @media screen and (max-width: 640px) {
+    background-position: 36% top;
+  }
+}
+
+body.offramp.program .masthead {
+  background-position: 66% top;
+}

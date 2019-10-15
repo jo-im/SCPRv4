@@ -1,0 +1,923 @@
+//  ################################################################################################
+//  ################################################################################################
+//  SHORT LIST styles go here
+//  ################################################################################################
+//  ################################################################################################
+
+body.short-list {
+
+  .edition-marquee {
+    padding: 40px 0 19px;
+    font-family: $font-prox;
+    line-height: 1;
+    position: relative;
+    z-index: 1;
+    mark                { background: transparent; color: inherit; }
+    & > .inner          { position: relative; z-index: 2; }
+
+    .titling {
+      position: relative;
+      width: 100%;
+      min-height: 47px;
+      box-sizing: border-box;
+      overflow: hidden;
+      text-transform: uppercase;
+      border-bottom: 1px solid #eee;
+      margin: 0 0 10px 0;
+      padding-bottom: 22px;
+      h1,h2             { float: left; }
+      h1                { font-size: 2.9375em; /* 47 / 16 */ font-weight: 300; }
+      h1 span           { display: none; }
+      h2 {
+        padding: 12px 0 0 6px;
+        span {
+          display: block;
+          color: $orange;
+          font-weight: 700;
+          font-size: 0.75em;
+          line-height: 1;
+          background: image-url("i/shortlist-timeofday-icons.png") no-repeat;
+          background-size: 20px 80px;
+          min-height: 20px;
+          box-sizing: border-box;
+          overflow: hidden;
+          padding: 0.485em 0 0 23px;
+        }
+        &.am span       { background-position: 0 0; }
+        &.pm span       { background-position: 0 -60px; }
+        &.weekend span  { background-position: 0 -29px; }
+      }
+    }
+
+    .byline {
+      font-family: "proxima-nova", "Avenir Next", "Avenir", "Lucida Grande", "Corbel", "Tahoma", Arial, sans-serif;
+      font-size: 0.75em;
+      font-weight: normal;
+      color: #b3b3b3;
+    }
+    
+    .date {
+      position: absolute;
+      top: 3px;
+      right: 0;
+      text-align: right;
+      text-transform: uppercase;
+      time,span,mark    { display: block; }
+      time              { position: relative; padding: 14px 42px 0 0; }
+      span              { font-size: 0.8125em; color: #929292; font-weight: 300; }
+      mark {
+        position: absolute;
+        top: 0;
+        right: 0;
+        text-align: center;
+        background: image-url("i/shortlist-calendar-icon.png") no-repeat;
+        background-size: 33px 291px;
+        cursor: pointer;
+        font-weight: 700;
+        font-size: 1.0625em;
+        letter-spacing: -0.03em;
+        color: white;
+        width: 33px;
+        height: 43px;
+        overflow: hidden;
+        padding-top: 11px;
+        box-sizing: border-box;
+        &:hover   { background-position: 0 -62px; }
+      }
+      
+    }
+
+    .recents {
+      display: none;
+      background: black;
+      color: white;
+      position: relative;
+      z-index: 3;
+      margin-top: -8px;
+      box-shadow: inset 0 6px 0 white;
+      & > .bound {
+        background: image-url("i/shortlist-triangle-upward.png") no-repeat right top;
+        background-size: 21px 6px;
+        position: relative;
+        padding-bottom: 30px;
+      }
+      header {
+        background: white;
+        position: absolute;
+        top: -23px;
+        text-transform: uppercase;
+        color: black;
+        box-sizing: border-box;
+        h1,button { display: block; float: left; }
+        h1        { font-size: 0.8125em; /* 13 / 16 */ font-weight: 700; margin-right: 7px; padding-top: 1px; }
+        button {
+          width: 13px;
+          height: 13px;
+          border: none;
+          @include texthide;
+          text-indent: 150%;
+          background: image-url("i/shortlist-close-btn.png") no-repeat;
+          background-size: 13px 36px;
+          cursor: pointer;
+          &:hover { background-position: 0 -23px; }
+        }
+      }
+      nav {
+        padding-top: 27px;
+        li {
+          display: block;
+          float: left;
+          width: 23.153846153846%; // 301 / 1300
+          padding-bottom: 5px;
+          margin-right: 2.461538461538%; // 32 / 1300
+          overflow: hidden;
+          &:last-child        { margin-right: 0; float: right; }
+          i                   { font-style: inherit; }
+          a                   { display: block; }
+          .ratio              { margin-bottom: 2px; }
+          .ratio .fill        { padding-top: 21.5%; }
+          .ratio img          { /* margin-top: -40%; ...nah, led to clipping. Might revisit later, but too risky for now. */ }
+          figcaption {
+            time {
+              display: block;
+              width: 100%;
+              border-bottom: 1px solid #144454;
+              text-transform: uppercase;
+              font-weight: 700;
+              font-size: 0.625em; // 10 / 16
+              display: inline-block;
+              padding-bottom: 5px;
+              margin-bottom: 3px;
+              color: #1b6c88;
+              letter-spacing: -0.03em;
+              span,b          { display: inline-block; }
+              span            { padding-right: 7px; color: #31aad3; }
+              b               { padding-left: 7px; color: #fa7836; }
+            }
+            mark {
+              font-family: $font-freight;
+              font-weight: 300;
+              font-size: 1.25em;
+              line-height: 1.1;
+            }
+          }
+          a:hover {
+            time              { border-bottom: 1px solid #fa7836; color: #fa7836; }
+            time span         { color: #fa7836; }
+            mark              { text-decoration: underline; }
+          }
+        }
+
+      }
+    }
+
+    &.exposed {
+      .recents                { display: block; }
+    //----------------------------------------------------------------
+      @media screen and (min-width: 571px) {
+      .titling h1,.titling h2 { display: none; }
+      .date span              { color: #31aad3; }
+      .date mark              { background-position: 0 -124px; }
+      }
+    //----------------------------------------------------------------
+    }
+
+  } // .edition-marquee
+
+
+
+
+  .page-cols {
+    border-bottom: 1px solid white;
+    background:
+      image-url("i/shortlist-fauxcol-shade-base.png") no-repeat center top,
+      image-url("i/shortlist-fauxcol-base.png") repeat-y center top;
+    background-size:
+      3000px 5px,
+      3000px 10px;
+    box-shadow: inset 0 1px 0 rgba(0,0,0,0.1);
+    & > .inner {
+      padding-top: 44px;
+      box-shadow: inset 0 1px 0 rgba(0,0,0,0.1);
+      background:
+        image-url("i/shortlist-fauxcol-shade-inner.png") no-repeat 71.153846153846% top,
+        image-url("i/shortlist-fauxcol-inner.png") repeat-y 71.153846153846% top;
+      background-size:
+        1500px 5px,
+        1500px 10px;
+    }
+
+    .abstracts {
+      width: 65.846153846154%; // 856 / 1300 ...but some of the stuff inside it will push out excessively westward
+      background: image-url("i/shortlist-dot-gray.png") repeat-y center top;
+      background-size: 1px 1px;
+      float: left;
+      .share                    { display: none; } // ...oooohhh but he'll be back
+      > .abstract:first-of-type .prose {
+        margin-top: 40px;
+      }
+      > .abstract:last-of-type {
+        padding-bottom: 80px;
+      }
+      article {
+        padding-bottom: 40px;
+        .photo {
+          width: 103.738317757009%;
+          margin-left: -3.738317757009%;
+          overflow: hidden;
+          z-index: 1;
+          /*
+          -------------------------------------------------------------------------------
+          The original design for The Short List On The Web sported a very-cinematic,
+          very-shallow photo container. The problem with this, in the real world, was
+          that too many photos ended up being cropped "weirdly" -- that the most
+          interesting parts of them were, unwittingly/undesirably, out of frame.
+          Until we can add smarter detection (or human-aided detection that carries
+          through to the front-end) into AssetHost, for now, we're simply going to
+          tall-ify the container. I'm leaving the older ratio in here just as
+          reference to what we'll later, eventually, want to come back to.
+          - JPW, 9/15/2014
+          -------------------------------------------------------------------------------
+          */
+          &.ratio .fill           { padding-top: 27.15%; }    // Original ratio.
+          &.ratio .fill           { padding-top: 42%; }       // Ratio after the 9/15/2014 tall-ification.
+          img                     { margin-top: -8%; }        // Clumsy re-"centering".
+        }
+        .img-contain              { z-index: 2; }
+        &.ratio-squat .photo img  { margin-top: -3%; }
+        &.ratio-square .photo img { margin-top: -22.5%; }
+        &.ratio-tall .photo img   { margin-top: -42%; }
+
+        .prose                    { padding: 30px 0 4px; position: relative; }
+        header,.eisegesis         { width: 48.130841121495%; /* 412 / 856 */ }
+        header                    { float: left; }
+        h1                        { font-family: $font-freight; font-weight: 300; font-size: 2.5em; /* 40 / 16 */ line-height: 1.125; }
+        h1 a                      { color: black; }
+        a                         { color: $blue; }
+        a:hover                   { text-decoration: underline; }
+
+        .credit {
+          position: absolute;
+          bottom: 0;
+          right: 0;
+          z-index: 3;
+          display: block;
+          cursor: default;
+          width: 100%;
+          overflow: hidden;
+          box-sizing: border-box;
+          padding-left: 80px;
+          height: 17px;
+          span {
+            position: relative;
+            width: 100%;
+            box-sizing: border-box;
+            text-align: right;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            font: normal 700 0.5625em/1 $font-prox;
+            text-transform: uppercase;
+            letter-spacing: -0.02em;
+            color: rgba(255,255,255,0.7);
+            box-sizing: border-box;
+            display: inline-block;
+          }
+          i {
+            font-style: inherit;
+            display: inline-block;
+            background: rgba(0,0,0,0.35);
+            padding: 4px 6px;
+            box-sizing: border-box;
+          }
+        }
+
+        mark {
+          display: block;
+          width: 30px;
+          height: 40px;
+          text-align: center;
+          overflow: hidden;
+          z-index: 4;
+          border-bottom: 3px solid #fa7836;
+          font-family: $font-prox;
+          position: absolute;
+          top: -23px;
+          left: 0;
+          font-size: 1.375em; // 22 / 16
+          line-height: 1.1;
+          box-sizing: border-box;
+          padding-top: 11px;
+          font-weight: 300;
+          color: #fa7836;
+          z-index: 0;
+        }
+        .eisegesis {
+          float: right;
+          font-size: 0.875em;
+          line-height: 1.72;
+          padding-top: 8px;
+          p                 { margin-bottom: 1.2em; }
+        }
+        footer {
+          font-family: $font-freight;
+          font-size: 1.125em;
+          a {
+            display: inline-block;
+            background: image-url("i/shortlist-caret-blue.png") no-repeat right 9px;
+            background-size: 8px 9px;
+            padding-right: 24px;
+          }
+        }
+      }
+      .plug {
+        background: white;
+        border-top: 1px solid #d6d6d6;
+        width: 103.738317757009%;
+        margin-left: -3.738317757009%;
+        // Give abstracts that follow an ad some vertical breathing room
+        & + .abstract {
+          margin-top: 40px;
+        }
+        & > div {
+          padding: 27px 0;
+          border-bottom: 1px solid #d6d6d6;
+          position: relative;
+          width: 100%;
+        }
+        iframe {
+          display: block;
+          margin: 0 auto;
+        }
+        .appeal {
+          font-family: $font-freight;
+          color: #7e7e7e;
+          font-size: 0.8125em;
+          line-height: 1;
+          text-align: right;
+          position: absolute;
+          right: 0;
+          bottom: 27px;
+          display: block;
+          a {
+            display: inline-block;
+            background: image-url("i/shortlist-caret-gray.png") no-repeat right 5px;
+            background-size: 5px 6px;
+            padding-right: 10px;
+            &:hover   { text-decoration: underline; color: #5c5c5c; }
+          }
+        }
+      }
+    } // .abstracts
+
+
+    .supportive {
+      width: 28.846153846154%; // 375 / 1300
+      float: right;
+      color: #c1c1c1;
+      font-family: $font-prox;
+
+      section {
+        header {
+          border-bottom: 1px solid #a8a8a8;
+          padding-bottom: 9px;
+          margin-bottom: 10px;
+        }
+        h1 {
+          text-transform: uppercase;
+          font-size: 0.75em;
+          line-height: 1; 
+          font-weight: 700;
+        }
+        header h1 {          
+          margin-left: 19.733333333333%; // 74 / 375
+          background: image-url("i/shortlist-sidebar-icons.png") no-repeat 10px 0.16em;
+          background-size: 15px 60px;
+          padding-left: 27px;
+        }
+      }
+
+      .subscribe-hint {
+        margin-bottom: 50px;
+        header h1 {
+          color: white;
+          padding-top: 5px;
+          background-position: 0 -44px;
+        }
+        p {
+          font-size: 0.8125em; // 13 / 16
+          color: #dcdcdc;
+          margin-left: 19.733333333333%; // 74 / 375
+          a         { text-decoration: underline; }
+          a:hover   { color: white; }
+        }
+      }
+
+      .contents {
+        margin-bottom: 32px;
+        header {
+          border-bottom-color: #956146;
+          h1 {
+            margin-left: 19.733333333333%; // 74 / 375
+            background: image-url("i/shortlist-sidebar-icons.png") no-repeat 10px 0.16em;
+            background-size: 15px 60px;
+            padding-left: 27px;
+            color: #fa7836;
+          }
+        }
+        nav {
+          color: #c1c1c1;
+          font-size: 0.8125em; // 13 / 16
+          line-height: 1.1;
+          margin-left: 20.266666666667%; // 76 / 375
+          ol {
+            li {
+              margin-bottom: 5px;
+              position: relative;
+              display: block;
+              padding: 4px 0 0 28px;
+              box-sizing: border-box;
+              min-height: 22px; // to contain the "selected marker" ellipse
+              mark {
+                display: block;
+                position: absolute;
+                top: 0;
+                left: 0;
+                border-radius: 20px;
+                text-align: center;
+                box-sizing: border-box;
+                padding-top: 4px;
+                font-size: 1.07692307692308em; // 14 / 13
+                line-height: 1;
+                font-weight: 700;
+                background: transparent;
+                color: #c6c6c6;
+                height: 20px;
+                width: 20px;
+                letter-spacing: -0.03em;
+              }
+              a {
+                display: block;
+                &:hover {
+                  color: white;
+                  mark      { background: white; color: $orange; }
+                }
+              }
+            }
+          }
+        }
+      } // .contents
+      
+      .share {
+        border-top: 1px solid #3e869f;
+        padding-top: 8px;
+        & > div   { margin-left: 19.733333333333%; /* 74 / 375 */ }
+        h1,ul     { float: left; }
+        h1        { color: #3dc6f4; padding: 7px 22px 8px 0; }
+        ul {
+          li      { display: inline; }
+          a {
+            @include texthide;
+            width: 27px;
+            height: 27px;
+            background: image-url("i/shortlist-share-icons.png") no-repeat;
+            background-size: 107px 67px;
+            margin-right: 13px;
+            float: left;
+          }
+          @include shortlist-share-states;
+        }
+      } // .share
+
+    } // .supportive
+
+    .subscribe {
+      background: #c38686 image-url("i/shortlist-la-river.jpg") no-repeat center top;
+      background-size: auto 100%;
+      box-shadow: inset 0 26px 0 white;
+      padding-bottom: 56px;
+      color: white;
+      header {
+        background: image-url("i/shortlist-subscribe-icon.png") no-repeat center top;
+        background-size: 52px 52px;
+        font-family: $font-freight;
+        text-align: center;
+        margin-top: -26px;
+        margin-bottom: 30px;
+        padding-top: 80px;
+        h1,h2                 { margin-right: 20px; margin-left: 20px; }
+        h1                    { font-weight: 300; font-size: 3.125em; margin-bottom: 20px; line-height: 1; }
+        h2                    { font-size: 1.125em; line-height: 1.2; }
+        h2 span               { white-space: nowrap; /* i'll undo this as needed once the viewport narrows */ }
+      }
+      form {
+        display: block;
+        position: relative;
+        margin: 0 auto;
+        max-width: 459px;
+        height: 37px;
+        overflow: hidden;
+        input[type="text"],
+        input[type="submit"] {
+          display: block;
+          border: none;
+          height: 100%;
+          box-sizing: border-box;
+        }
+        .email-bound {
+          display: block;
+          height: 37px;
+          margin-right: 150px;
+        }
+        input[type="text"] {
+          background: rgba(255,255,255,0.7);
+          width: 100%;
+          font-family: $font-freight;
+          color: #842501;
+          font-size: 1.0625em;
+          padding: 0 9px;
+        }
+        input[type="submit"] {
+          position: absolute;
+          top: 0;
+          right: 0;
+          background: white image-url("i/shortlist-caret-orange.png") no-repeat 90% 13px;
+          background-size: 7px 10px;
+          cursor: pointer;
+          font-family: $font-prox;
+          font-weight: 700;
+          text-transform: uppercase;
+          text-align: left;
+          width: 118px;
+          font-size: 0.875em;
+          line-height: 38px;
+          color: #fa7836;
+          padding: 0 0 0 14px;
+          &:hover     { text-decoration: underline; }
+        }
+        ::-webkit-input-placeholder { /* WebKit browsers */
+            color:    #fa7836;
+        }
+        :-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+            color:    #fa7836;
+            opacity:  1;
+        }
+        ::-moz-placeholder { /* Mozilla Firefox 19+ */
+            color:    #fa7836;
+            opacity:  1;
+        }
+        :-ms-input-placeholder { /* Internet Explorer 10+ */
+            color:    #fa7836;
+        }
+      }
+    } // .subscribe    
+
+
+  } // .page-cols (under basic/baseline/desktop assumptions)
+
+
+
+
+
+
+//  ###########################################################################
+//  TWEAKPOINTS
+//  ###########################################################################
+
+
+//  ...........................................................................
+
+@media screen and (max-width: 1023px) {
+
+    .edition-marquee .recents nav li figcaption {
+        time b i                { display: none; }
+        mark                    { font-size: 0.9375em; }
+    }
+    .page-cols .abstracts {
+      background: transparent;
+      article {
+        .prose                  { padding-bottom: 1em; background: white; }
+        header,.eisegesis       { width: 100%; float: none; }
+        header h1               { font-size: 1.75em; }
+        header                  { margin-bottom: 0.7em; }
+      }
+      .plug .appeal             { position: static; padding-top: 10px; text-align: center; }
+      .subscribe header h1      { font-size: 2.35em; }
+      .subscribe header h2      { font-size: 0.875em; }
+    }
+
+} // 1023
+
+//  ...........................................................................
+
+@media screen and (min-width: 700px) and (max-width: 880px) {
+
+  .page-cols .abstracts .subscribe {
+      form {
+        margin: 0 32px;
+        height: 37px;
+      }
+  }
+
+} // 880
+
+//  ...........................................................................
+
+@media screen and (max-width: 760px) {
+
+    .edition-marquee .recents {
+      & > .bound          { padding-bottom: 10px; } // not 30
+      nav li {
+        width: 47%;
+        margin-right: 6%;
+        margin-bottom: 15px;
+        &:nth-child(2)    { margin-right: 0; }
+        &:nth-child(3)    { clear: both; }
+      }
+    }
+
+} // 760
+
+//  ...........................................................................
+
+@media screen and (max-width: 699px) {
+
+    .edition-marquee {
+      .titling {
+        h1 {
+          float:none;
+        }
+        h2 {
+          float:none;
+          padding:4px 0 0 0;
+        }
+      }
+    }
+
+    .page-cols {
+      background: white;
+      & > .inner              { background: white; }
+      .abstracts,.supportive  { width: 100%; float: none; }
+      .abstracts {
+        width: 100%;
+        float: none;
+        article {
+          .prose              { border-bottom: 1px solid #cecece; }
+          header h1           { font-size: 1.5em; }
+          .eisegesis          { font-size: 0.8125em; }
+          .photo              { width: 100%; margin-left: 0; }
+          footer              { font-size: 0.875em; width: 100%; margin-left: 0; padding: 10px 0 12px; }
+          footer a            { background-position: right 6px; padding-right: 18px; }
+          // The following three Abstracts are called out because they each are followed by banner ads.
+          &:nth-of-type(1),
+          &:nth-of-type(4),
+          &:nth-of-type(7) {
+            .prose {
+              border-bottom: 0;
+            }
+          }
+        }
+        .share {
+          display: block;
+          background: #515151;
+          padding: 25px 0 35px;
+          margin: -30px 0 70px;
+          & > div             { margin: 0 auto; width: 90%; }
+          h1 {
+            color: #3dc6f4;
+            font-size: 1.75em;
+            font-family: $font-freight;
+            font-weight: 300;
+            text-align: center;
+            border-bottom: 1px solid #3e869f;
+            padding-bottom: 8px;
+            margin-bottom: 12px;
+          }
+          ul {
+            width: 109px;
+            margin: 0 auto;
+            li      { display: inline; }
+            a {
+              @include texthide;
+              width: 27px;
+              height: 27px;
+              background: image-url("i/shortlist-share-icons.png") no-repeat;
+              background-size: 107px 67px;
+              margin-right: 13px;
+              float: left;
+            }
+            @include shortlist-share-states;
+          }
+        }
+      }
+      .supportive {
+        display: none;
+      }
+    }
+
+} // 699
+
+
+//  ...........................................................................
+
+@media screen and (min-width: 571px) {
+
+  .page-cols .abstracts article mark span,
+  .shortlist-ledge,
+  .edition-marquee .recents time  { display: none; }
+
+}
+
+//  ...........................................................................
+
+@media screen and (max-width: 570px) {
+
+  .masthead               { display: none; }
+
+  .shortlist-ledge {
+    & > .bound            { position: relative; }
+    background: black;
+    height: 38px;
+    color: white;
+    font-family: $font-prox;
+    width: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 5;
+    &.hidden {
+      display:none;
+    }
+    nav,h2                { display: block; position: absolute; }
+    nav {
+      top: 0;
+      left: 0;
+      h1 {
+        height: 38px;
+        width: 93px;
+        border-right: 1px solid #404040;
+        overflow: hidden;
+        background: image-url("i/shortlist-kpcc-logo.png") no-repeat;
+        background-size: 82px 114px;
+        @include texthide;
+        cursor: pointer;
+        &:hover           { background-position: 0 -38px; }
+      }
+      ul {
+        display: none;
+        position: absolute;
+        top: 38px;
+        background: black;
+        color: white;
+        margin-left: -10px;
+        box-sizing: border-box;
+        width: 150px;
+        padding: 0 10px 5px 10px;
+        li, a             { display: block; }
+        li                { border-bottom: 1px solid #404040; }
+        li:last-child     { border-bottom: none; }
+        li a              { font-size: 0.8125em; padding: 8px 0; font-weight: 700; text-transform: uppercase; }
+        li a:hover        { color: $orange; }
+        li:first-child a  { padding-top: 0; }
+      }
+      &.exposed {
+        h1                { background-position: 0 -76px; }
+        ul                { display: block; }
+      }
+    }
+    h2 {
+      top: 14px;
+      left: 103px;
+      text-transform: uppercase;
+      font-size: 0.75em;
+      line-height: 1;
+      font-weight: 700;
+      span                { color: $orange; }
+    }
+  }
+
+  .edition-marquee {
+    padding: 71px 0 32px; /* top: 33 + 38 */
+    & > .inner          { /* ... */ }
+    .titling {
+      position: static;
+      min-height: 0;
+      h1                { float: none; font-size: 1.3125em; /* 21 / 16 */ font-weight: 700; }
+      h1 span           { display: block; font-weight: 300; padding-top: 4px; }
+      h2                { padding: 1px 0 0 0; margin-left: -3px; }
+    }
+    // Old <time>:
+    & > .inner > .date  { display: none; }
+    // New <time>s:
+    .recents-toggle {        
+      display: block;
+      width: 33px;
+      height: 20px;
+      position: absolute;
+      z-index: 7;
+      top: 7px;
+      right: 0;
+      background: image-url("i/shortlist-calendar-icon.png") no-repeat 0 -186px;
+      background-size: 33px 291px;
+      overflow: hidden;
+      cursor: pointer;
+      font-size: 0.75em;
+      line-height: 1;
+      color: white;
+      font-weight: 700;
+      box-sizing: border-box;
+      padding: 6px 0 0 12px;
+      span                      { display: block; text-align: center; }
+    }
+    &.exposed .recents-toggle   { right: 0; background-position: 0 -248px; }
+
+    .recents {
+      margin-top: 0;
+      position: fixed;
+      box-shadow: none;
+      top: 0;
+      left: 0;
+      z-index: 6;
+      background:
+        image-url("i/shortlist-ledge-notch.png") no-repeat right 5% top 38px,
+        image-url("i/shortlist-ledge-rule.png") repeat-x left 38px;
+      background-size:
+        15px 6px,
+        1px 1px;
+      background-color: black;
+      & > .bound  { background: none; }
+      header {
+        color: #b1b1b1;
+        top: 11px;
+        background: none;
+        & > div   { height: 17px; position: relative; padding-left: 20px; box-sizing: border-box; overflow: hidden; }
+        h1,button { float: none; }
+        button    { position: absolute; top: 0; left: 0; width: 15px; height: 15px; }
+      }
+      nav         { padding-top: 64px; }
+    }
+  }
+
+  .page-cols {
+    box-shadow: none;
+    & > .inner          { box-shadow: none; padding-top: 0; }
+    .abstracts {
+      article {
+        .photo {
+          margin-left: -5.5%;
+          width: 111%;
+          z-index: 0;
+          &.ratio .fill { padding-top: 39%; }
+        }
+        mark {
+          width: auto;
+          height: 25px;
+          top: -20px;
+          padding: 5px 11px 0 10px;
+          text-transform: uppercase;
+          text-align: left;
+          font-weight: 700;
+          font-size: 0.9375em;
+          border-bottom-width: 2px;
+          letter-spacing: -0.02em;
+          span      { font-size: 0.66666666666667em; /* 10 / 15 */ color: #bbbbbb; }
+          span b    { color: #6d6d6d; }
+        }
+        .prose      { padding-top: 15px; }
+      }
+      .subscribe {
+        h2 span {
+          white-space: normal;
+        }
+        form {
+          margin: 0 25px;
+          height: 37px;
+          .email-bound    { margin-right: 130px; }
+        }
+      }
+    }
+  }
+
+} // 570
+
+//  ...........................................................................
+
+@media screen and (max-width: 400px) {
+
+  .page-cols .abstracts .subscribe {
+      header h2 span          { white-space: normal; }
+      form {
+        height: auto;
+        input[type="submit"]  { position: static; margin: 0 auto; }
+        .email-bound          { margin-right: 0; margin-bottom: 15px; }
+      }
+  }
+
+} // 400
+
+//  ...........................................................................
+
+
+
+
+} // body.short-list

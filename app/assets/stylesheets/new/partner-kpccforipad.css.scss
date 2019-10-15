@@ -1,0 +1,160 @@
+// Variables
+$font-freight: "freight-sans-pro", "Avenir Next", "Avenir", "Lucida Grande", "Tahoma", Arial, sans-serif;
+$font-prox: "proxima-nova", "Avenir Next", "Avenir", "Lucida Grande", "Tahoma", Arial, sans-serif;
+$font-proxcond: "proxima-nova-condensed", "Avenir Next Condensed", "Arial Narrow", Arial, sans-serif;
+$font-merri: "merriweatherregular", "Baskerville", "Garamond", "Cambria", Georgia, serif;
+$font-merri-lightital: "merriweatherlight_italic", "Baskerville", "Garamond", "Cambria", Georgia, serif;
+$blue: #31aad3;
+$orange: #f17b21;
+
+
+
+
+//  ################################################################################################
+//  ################################################################################################
+//  PARTNER
+//  ################################################################################################
+//  ################################################################################################
+
+.partner.kpccforipad {
+    background: #727272 image-url("sponsor-assets/kpccforipad-scenery.jpg") no-repeat;
+    background-size: 100% auto;
+    overflow: hidden;
+    & > a {
+        display: block;
+        width: 100%;
+        height: 100%;
+    }
+    .inner {
+        min-height: 234px; // 268
+        position: relative;
+        padding-top: 34px;
+        h1 {
+            background: rgba(55,86,119,0.62);
+            color: white;
+            width: 102.461538461538%;
+            padding: 20px 0 24px 2.461538461538%;
+            margin: 0 0 24px -2.461538461538%;
+            font-family: $font-prox;
+            font-size: 2.5em; // 40/16
+            line-height: 1.05;
+            letter-spacing: -0.01em;
+            b       { font-weight: 300; display: block; }
+            mark    { font-weight: 700; color: white; display: block; }
+        }
+        .prop {
+            display: block;
+            width: 506px;
+            position: absolute;
+            z-index: 2;
+            bottom: 0;
+            right: -3.769230769231%; // 49 / 1300
+            img {
+                width: 100%;
+                height: auto;
+            }
+        }
+        .action {
+            position: relative;
+            z-index: 1;
+            background: white;
+            display: inline-block;
+            letter-spacing: -0.015em;
+            padding: 15px 58px 14px 1.25%;
+            margin-left: -1.25%;
+            mark {
+                color: $orange;
+                display: block;
+                text-transform: uppercase;
+                font-size: 1.125em; // 18 / 16
+                font-family: $font-prox;
+                font-weight: 700;
+                &:after { content: " \203A"; }
+            }
+        }
+        .logo {
+            width: 96px;
+            left: 0;
+            top: 184px;
+            position: absolute;
+            a           { display: block; }
+            img         { width: 100%; height: auto; }
+        }
+    }
+    & > a:hover .inner .action      { background: rgba(241,123,33,0.62); box-shadow: 0 0 15px rgba(0,0,0,0.3); }
+    & > a:hover .inner .action mark { color: white; }
+}
+
+
+
+//  ####################################################################################################
+//  ####################################################################################################
+//  ####################################################################################################
+
+    @media screen and (max-width: 1235px) {
+        .partner.kpccforipad .inner {
+            h1      { font-size: 2.2em; }
+            .prop   { width: 450px; }
+        }
+    }
+
+//  ####################################################################################################
+
+    @media screen and (max-width: 1090px) {
+        .partner.kpccforipad .inner {
+            min-height: 0;
+            padding-top: 0;
+            h1      { font-size: 2em; margin-top: 20px; margin-bottom: 20px; }
+            h1 b    { margin-right: 355px; }
+            .action { margin-bottom: 25px; font-size: 0.875em; }
+            .prop   { width: 380px; }
+        }
+    }
+
+//  ####################################################################################################
+
+    @media screen and (max-width: 960px) {
+        .partner.kpccforipad .inner {
+            h1 span { display: block; }
+        }
+    }
+
+//  ####################################################################################################
+
+    @media screen and (max-width: 730px) {
+        .partner.kpccforipad .inner {
+            h1      { font-size: 1.7em; margin-bottom: 15px; }
+            h1 b    { margin-right: 355px; }
+            .action { margin-bottom: 25px; font-size: 0.875em; }
+            .prop   { width: 350px; }
+        }
+    }
+
+//  ####################################################################################################
+
+    @media screen and (max-width: 670px) {
+        .partner.kpccforipad .inner {
+            h1      { font-size: 1.5em; }
+            h1 b    { margin-right: 320px; }
+        }
+    }
+
+
+
+//  ####################################################################################################
+
+    @media screen and (max-width: 640px) {
+        .partner.kpccforipad {
+            background-position: center top;
+            background-size: auto 100%;
+        }
+        .partner.kpccforipad .inner {
+            padding-bottom: 173px;
+            h1      { text-align: center; }
+            h1 b    { margin-right: 0; }
+            .action { display: block; margin: 0 auto 0 auto; text-align: center; padding: 13px 0 15px 0; font-size: 0.8125em; }
+            .prop   { width: 280px; right: auto; left: 50%; margin-left: -120px; }
+        }
+    }
+
+//  ####################################################################################################
